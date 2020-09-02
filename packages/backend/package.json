@@ -1,0 +1,13 @@
+{
+  "name": "@label/backend",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "scripts": {
+    "compile": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "~4.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.build.json",
+
+  "compilerOptions": {
+    "outDir": "./dist",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "target": "ES5",
+  },
+
+  "include": [
+    "src/**/*"
+  ]
+}

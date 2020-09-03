@@ -1,1 +1,26 @@
 *node_modules
+
+
+# Front-end 
+
+## dependencies
+/packages/client/node_modules
+/packages/client/.pnp
+/packages/client/.pnp.js
+
+## testing
+/packages/client/coverage
+
+## production
+/packages/client/build
+
+## misc
+/packages/client/.DS_Store
+/packages/client/.env.local
+/packages/client/.env.development.local
+/packages/client/.env.test.local
+/packages/client/.env.production.local
+
+/packages/client/npm-debug.log*
+/packages/client/yarn-debug.log*
+/packages/client/yarn-error.log*

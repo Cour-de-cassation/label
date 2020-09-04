@@ -1,6 +1,3 @@
-*node_modules
-
-
 # Front-end 
 
 ## dependencies
@@ -27,11 +24,14 @@
 
 # Back-end
 
-# compiled output
+## Test data files of court decision
+/backend/**/ignored_*
+
+## compiled output
 /backend/dist
 /backend/node_modules
 
-# Logs
+## Logs
 /backend/logs
 /backend/*.log
 /backend/npm-debug.log*
@@ -39,9 +39,9 @@
 /backend/yarn-error.log*
 /backend/lerna-debug.log*
 
-# OS
+## OS
 /backend/.DS_Store
 
-# Tests
+## Tests
 /backend/coverage
 /backend/.nyc_output

@@ -24,3 +24,24 @@
 /client/npm-debug.log*
 /client/yarn-debug.log*
 /client/yarn-error.log*
+
+# Back-end
+
+# compiled output
+/backend/dist
+/backend/node_modules
+
+# Logs
+/backend/logs
+/backend/*.log
+/backend/npm-debug.log*
+/backend/yarn-debug.log*
+/backend/yarn-error.log*
+/backend/lerna-debug.log*
+
+# OS
+/backend/.DS_Store
+
+# Tests
+/backend/coverage
+/backend/.nyc_output

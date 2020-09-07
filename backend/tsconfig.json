@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
     "target": "es2017",
     "sourceMap": true,
+    "strict": true,
     "outDir": "./dist",
+    "declaration": true,
+    "removeComments": true,
     "baseUrl": "./",
     "incremental": true
-  }
+  },
+
+  "exclude": ["node_modules", "dist"],
+
+  "include": ["src/**/*"]
 }

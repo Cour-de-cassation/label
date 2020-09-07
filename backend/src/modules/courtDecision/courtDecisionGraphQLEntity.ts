@@ -1,8 +1,8 @@
-import { GraphQLObjectType, GraphQLInt } from "graphql";
-import { GraphQLEntityType } from "../GraphQLEntityType";
+import { GraphQLObjectType, GraphQLInt } from 'graphql';
+import { graphQLEntityType } from '../graphQLEntityType';
 
 const courtDecisionGraphQLEntityType = new GraphQLObjectType({
-  name: "courtDecisionType",
+  name: 'courtDecisionType',
   fields: {
     id: {
       type: GraphQLInt,
@@ -12,8 +12,8 @@ const courtDecisionGraphQLEntityType = new GraphQLObjectType({
 
 const resolveCourtDecisionGraphQLEntity = () => ({ id: 1 });
 
-const courtDecisionGraphQLEntity: GraphQLEntityType = {
-  name: "courtDecision",
+const courtDecisionGraphQLEntity: graphQLEntityType = {
+  name: 'courtDecision',
   resolve: resolveCourtDecisionGraphQLEntity,
   type: courtDecisionGraphQLEntityType,
 };

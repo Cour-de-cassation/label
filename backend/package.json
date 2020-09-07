@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "compose:start": "docker-compose up",
+    "start": "yarn compile; node dist/app.js",
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

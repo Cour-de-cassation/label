@@ -5,7 +5,7 @@ import { GraphQLSchema } from "graphql";
 import { graphQLQuery } from "./modules/graphQLQuery";
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.use(
   "/graphql",

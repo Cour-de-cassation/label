@@ -1,5 +1,5 @@
 import { pick } from 'lodash';
-import { courtDecisionType } from '../../courtDecisionEntity';
+import { courtDecisionType } from '../../modules/courtDecision/courtDecisionEntity';
 import { xmlParser } from './utils/xmlParser';
 import { XML_COURT_DECISION_TAG } from './xmlCourtDecisionConfig';
 

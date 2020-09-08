@@ -1,4 +1,4 @@
-import { courtDecisionType } from '../../modules/courtDecision/courtDecisionEntity';
+import { courtDecisionType } from '../../modules/courtDecision';
 import { XML_COURT_DECISION_TAG } from './xmlCourtDecisionConfig';
 
 export { convertToXml };

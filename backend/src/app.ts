@@ -3,6 +3,7 @@ import { graphqlHTTP } from "express-graphql";
 import { GraphQLSchema } from "graphql";
 
 import { graphQLQuery } from "./modules/graphQLQuery";
+import { mongo } from './mongo'
 
 const app = express();
 const port = 8080;
@@ -17,6 +18,10 @@ app.use(
   })
 );
 
-app.listen(port, () => {
-  console.log(`GraphQL test on http://localhost:${port}`);
+
+app.listen(port, async () => {
+  console.log(`Loading the Mongo database...`)
+  await mongo.initialize();
+  console.log(`MongoDB ready!`)
+  console.log(`GraphQL available on http://localhost:${port}`);
 });

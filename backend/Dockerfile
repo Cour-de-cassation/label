@@ -8,10 +8,11 @@ WORKDIR /usr/src/app
 # Copy context files
 COPY package.json ./
 COPY yarn.lock ./
-COPY . .
 
 # Install dependencies
 RUN yarn install --pure-lockfile
+COPY . .
+
 
 # Start the app
 ENTRYPOINT ["yarn", "start"]

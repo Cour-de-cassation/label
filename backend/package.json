@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "compose:build": "docker-compose build",
     "compose:start": "docker-compose up",
     "start": "yarn compile; node dist/app.js",
     "compile": "tsc -p tsconfig.json",
@@ -17,7 +18,8 @@
     "fast-xml-parser": "^3.17.4",
     "graphql": "^15.3.0",
     "iconv-lite": "^0.6.2",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "mongodb": "^3.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -28,6 +30,7 @@
     "@types/express": "^4.17.8",
     "@types/lodash": "^4.14.161",
     "@types/jest": "^26.0.13",
+    "@types/mongodb": "^3.5.27",
     "@types/node": "^14.6.4",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "3.9.1",

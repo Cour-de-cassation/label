@@ -7,6 +7,8 @@ WORKDIR /usr/src/app
 
 # Copy context files
 COPY ./package.json ./
+COPY packages/core/package.json ./packages/core/
+COPY packages/backend/package.json ./packages/backend/
 COPY yarn.lock ./
 
 # Install dependencies

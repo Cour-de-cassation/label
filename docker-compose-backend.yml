@@ -3,8 +3,8 @@ version: "3.7"
 services:
   backend:
     build:
-      context: ../../
-      dockerfile: docker/backend/Dockerfile
+      context: ./
+      dockerfile: DockerfileBackend
     ports:
       - "8080:8080"
     depends_on:

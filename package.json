@@ -1,6 +1,7 @@
 {
   "description": "EIG 4 - LABEL Challenge",
   "devDependencies": {
+    "@lerna/filter-options": "^3.20.0",
     "lerna": "~3.22.0",
     "rimraf": "~3.0.2",
     "typescript": "~4.0.0"
@@ -12,12 +13,13 @@
     "build": "lerna run build",
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",
-    "clientStart": "cd packages/client && yarn start",
+    "clientBuild": "lerna run --ignore @label/backend build",
+    "clientStart": "lerna run --scope @label/client start",
     "compile": "lerna run compile",
-    "dockerBackendBuild": "docker-compose -f docker/backend/docker-compose.yml build",
-    "dockerBackendStart": "docker-compose -f docker/backend/docker-compose.yml up",
-    "dockerClientBuild": "docker-compose -f docker/client/docker-compose.yml build",
-    "dockerClientStart": "docker-compose -f docker/client/docker-compose.yml up",
+    "dockerBackendBuild": "docker-compose -f docker-compose-backend.yml build",
+    "dockerBackendStart": "docker-compose -f docker-compose-backend.yml up",
+    "dockerClientBuild": "docker-compose -f docker-compose-client.yml build",
+    "dockerClientStart": "docker-compose -f docker-compose-client.yml up",
     "test": "lerna run test",
     "type": "lerna run type"
   },

@@ -1,4 +1,0 @@
-.dockerignore
-build
-Dockerfile
-node_modules

@@ -9,6 +9,8 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
+COPY packages/core/package.json ./packages/core/
+COPY packages/client/package.json ./packages/client/
 COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 
@@ -16,7 +18,7 @@ RUN yarn install --pure-lockfile
 COPY . .
 
 # build the app
-RUN yarn build
+RUN yarn clientBuild
 
 # start app
 CMD ["yarn", "clientStart"]

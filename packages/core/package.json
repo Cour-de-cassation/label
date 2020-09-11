@@ -1,0 +1,24 @@
+{
+  "devDependencies": {
+    "rimraf": "~3.0.2",
+    "typescript": "~4.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index",
+  "name": "@label/core",
+  "scripts": {
+    "build": "yarn clean && yarn compile",
+    "clean": "rimraf -rf ./dist",
+    "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",
+    "compile": "tsc -p tsconfig.json",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "start": "yarn compile; node dist/app.js",
+    "test": "jest",
+    "type": "yarn build"
+  },
+  "types": "dist/index",
+  "version": "1.0.0"
+}

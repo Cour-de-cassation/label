@@ -1,0 +1,62 @@
+{
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@label/core": "*",
+    "@apollo/client": "^3.1.4",
+    "graphql": "^15.3.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.3",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.55",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "@types/testing-library__dom": "^7.5.0",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "jest": "24.9.0",
+    "prettier": "^2.1.1",
+    "react-dev-utils": "^10.2.1",
+    "rimraf": "^3.0.2"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "name": "@label/client",
+  "private": true,
+  "scripts": {
+    "build": "yarn clean && react-scripts build",
+    "clean": "rimraf -rf ./dist && rimraf -rf ./build",
+    "cleanAll": "yarn clean && rimraf -rf ./node_modules",
+    "compile": "tsc -p tsconfig.json",
+    "dockerBuild": "docker-compose build",
+    "dockerStart": "docker-compose up",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "type": "yarn clean && yarn compile"
+  },
+  "version": "1.0.0"
+}

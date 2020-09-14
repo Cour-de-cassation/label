@@ -1,5 +1,4 @@
 import { pick } from 'lodash';
-import { courtDecisionType } from '../../modules/courtDecision';
 import { xmlParser } from './utils/xmlParser';
 import { XML_COURT_DECISION_TAG } from './xmlCourtDecisionConfig';
 
@@ -9,20 +8,20 @@ type xmlJsonType = {
   [XML_COURT_DECISION_TAG]: string;
 };
 
-function convertFromXml(xml: string): courtDecisionType {
+function convertFromXml(xml: string) {
   const xmlJson: xmlJsonType = xmlParser.parseXmlToJson(xml);
   const header = extractHeaders(xmlJson);
   const footer = extractFooters(xmlJson);
-  const body = extractBody(xmlJson);
+  const text = extractText(xmlJson);
 
   return {
-    body,
+    text,
     footer,
     header,
   };
 }
 
-function extractHeaders(xmlJson: xmlJsonType) {
+function extractHeaders(xmlJson: xmlJsonType): string {
   const tagsList = Object.keys(xmlJson);
   const headerTagsList = tagsList.slice(
     0,
@@ -33,7 +32,7 @@ function extractHeaders(xmlJson: xmlJsonType) {
   return xmlParser.parseJsonToXml(jsonHeader);
 }
 
-function extractFooters(xmlJson: xmlJsonType) {
+function extractFooters(xmlJson: xmlJsonType): string {
   const tagsList = Object.keys(xmlJson);
   const footerTagsList = tagsList.slice(
     1 + tagsList.findIndex(tag => tag === XML_COURT_DECISION_TAG),
@@ -43,6 +42,6 @@ function extractFooters(xmlJson: xmlJsonType) {
   return xmlParser.parseJsonToXml(jsonFooter);
 }
 
-function extractBody(xmlJson: xmlJsonType): string {
+function extractText(xmlJson: xmlJsonType): string {
   return xmlJson[XML_COURT_DECISION_TAG];
 }

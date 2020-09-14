@@ -1,3 +1,4 @@
+import { courtDecisionGenerator } from '@label/core';
 import { converter } from './converter';
 
 describe('converter', () => {
@@ -9,7 +10,9 @@ describe('converter', () => {
 <footer1>FOOTER 1</footer1>`;
 
       const generatedXmlCourtDecision = converter.convertToXml(
-        converter.convertFromXml(xmlCourtDecision),
+        courtDecisionGenerator.generate(
+          converter.convertFromXml(xmlCourtDecision),
+        ),
       );
 
       expect(generatedXmlCourtDecision)
@@ -22,17 +25,17 @@ describe('converter', () => {
   describe('convertFromXml(convertToXml)', () => {
     it('should be identity', () => {
       const courtDecision = {
-        body: 'COURT DECISION BODY',
+        text: 'COURT DECISION BODY',
         footer: '<footer1>FOOTER 1</footer1>',
         header: '<header1>HEADER 1</header1><header2></header2>',
       };
 
       const generatedCourtDecision = converter.convertFromXml(
-        converter.convertToXml(courtDecision),
+        converter.convertToXml(courtDecisionGenerator.generate(courtDecision)),
       );
 
       expect(generatedCourtDecision).toEqual({
-        body: 'COURT DECISION BODY',
+        text: 'COURT DECISION BODY',
         footer: '<footer1>FOOTER 1</footer1>',
         header: '<header1>HEADER 1</header1><header2></header2>',
       });

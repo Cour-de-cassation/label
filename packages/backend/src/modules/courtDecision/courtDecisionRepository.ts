@@ -1,8 +1,8 @@
-import { MongoDbType } from '../../mongo';
+import { mongoDbType } from '../../mongo';
 
 export { buildCourtDecisionRepository };
 
-function buildCourtDecisionRepository(db: MongoDbType) {
+function buildCourtDecisionRepository(db: mongoDbType) {
   const collection = db.collection('courtDecisions');
 
   return {

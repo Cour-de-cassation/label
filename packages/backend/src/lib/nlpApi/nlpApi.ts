@@ -1,5 +1,5 @@
 import { httpRequester } from '../httpRequester';
-import { courtDecisionType } from '../../modules/courtDecision';
+import { courtDecisionType } from '@label/core';
 
 const NLP_API_BASE_URL = 'TO_BE_DEFINED';
 

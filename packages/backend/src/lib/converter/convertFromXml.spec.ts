@@ -2,7 +2,7 @@ import { convertFromXml } from './convertFromXml';
 
 const xmlCourtDecision = `<header1>HEADER 1</header1>
 <header2></header2>
-<TEXTE_ARRET>COURT DECISION BODY</TEXTE_ARRET>
+<TEXTE_ARRET>COURT DECISION TEXT</TEXTE_ARRET>
 <footer1>FOOTER 1</footer1>`;
 
 describe('convertFromXml', () => {
@@ -10,7 +10,7 @@ describe('convertFromXml', () => {
     const courtDecision = convertFromXml(xmlCourtDecision);
 
     expect(courtDecision).toEqual({
-      body: 'COURT DECISION BODY',
+      text: 'COURT DECISION TEXT',
       footer: '<footer1>FOOTER 1</footer1>',
       header: '<header1>HEADER 1</header1><header2></header2>',
     });
@@ -27,9 +27,9 @@ describe('convertFromXml', () => {
 
     expect(courtDecision.footer).toEqual('<footer1>FOOTER 1</footer1>');
   });
-  it('should parse the body of a xml court decision', () => {
+  it('should parse the text of a xml court decision', () => {
     const courtDecision = convertFromXml(xmlCourtDecision);
 
-    expect(courtDecision.body).toEqual('COURT DECISION BODY');
+    expect(courtDecision.text).toEqual('COURT DECISION TEXT');
   });
 });

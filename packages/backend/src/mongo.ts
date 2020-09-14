@@ -1,8 +1,9 @@
 import { MongoClient, Db } from 'mongodb';
+import { buildMongoId, mongoIdType } from '@label/core';
 
-export { mongo, MongoDbType };
+export { buildMongoId, mongo, mongoDbType, mongoIdType };
 
-type MongoDbType = Db;
+type mongoDbType = Db;
 
 const uri = 'mongodb://db:27017';
 

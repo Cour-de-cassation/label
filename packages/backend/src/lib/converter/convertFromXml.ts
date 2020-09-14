@@ -1,18 +1,23 @@
 import { pick } from 'lodash';
 import { xmlParser } from './utils/xmlParser';
-import { XML_COURT_DECISION_TAG } from './xmlCourtDecisionConfig';
+import { XML_COURT_DECISION_TEXT_TAG, XML_COURT_DECISION_GLOBAL_TAG } from './xmlCourtDecisionConfig';
 
 export { convertFromXml };
 
-type xmlJsonType = {
-  [XML_COURT_DECISION_TAG]: string;
+type jurinetXmlJsonType = {
+  [XML_COURT_DECISION_GLOBAL_TAG]: jurinetContentJsonType
 };
 
+type jurinetContentJsonType = {
+  [XML_COURT_DECISION_TEXT_TAG]: string;
+}
+
 function convertFromXml(xml: string) {
-  const xmlJson: xmlJsonType = xmlParser.parseXmlToJson(xml);
-  const header = extractHeaders(xmlJson);
-  const footer = extractFooters(xmlJson);
-  const text = extractText(xmlJson);
+  const xmlJson: jurinetXmlJsonType = xmlParser.parseXmlToJson(xml);
+  const jsonContent = xmlJson[XML_COURT_DECISION_GLOBAL_TAG]
+  const header = extractHeaders(jsonContent);
+  const footer = extractFooters(jsonContent);
+  const text = extractText(jsonContent);
 
   return {
     text,
@@ -21,27 +26,27 @@ function convertFromXml(xml: string) {
   };
 }
 
-function extractHeaders(xmlJson: xmlJsonType): string {
+function extractHeaders(xmlJson: jurinetContentJsonType): string {
   const tagsList = Object.keys(xmlJson);
   const headerTagsList = tagsList.slice(
     0,
-    tagsList.findIndex(tag => tag === XML_COURT_DECISION_TAG),
+    tagsList.findIndex(tag => tag === XML_COURT_DECISION_TEXT_TAG),
   );
   const jsonHeader = pick(xmlJson, headerTagsList);
 
   return xmlParser.parseJsonToXml(jsonHeader);
 }
 
-function extractFooters(xmlJson: xmlJsonType): string {
+function extractFooters(xmlJson: jurinetContentJsonType): string {
   const tagsList = Object.keys(xmlJson);
   const footerTagsList = tagsList.slice(
-    1 + tagsList.findIndex(tag => tag === XML_COURT_DECISION_TAG),
+    1 + tagsList.findIndex(tag => tag === XML_COURT_DECISION_TEXT_TAG),
   );
   const jsonFooter = pick(xmlJson, footerTagsList);
 
   return xmlParser.parseJsonToXml(jsonFooter);
 }
 
-function extractText(xmlJson: xmlJsonType): string {
-  return xmlJson[XML_COURT_DECISION_TAG];
+function extractText(xmlJson: jurinetContentJsonType): string {
+  return xmlJson[XML_COURT_DECISION_TEXT_TAG];
 }

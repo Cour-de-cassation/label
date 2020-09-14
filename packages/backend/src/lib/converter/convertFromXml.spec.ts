@@ -1,9 +1,9 @@
 import { convertFromXml } from './convertFromXml';
 
-const xmlCourtDecision = `<header1>HEADER 1</header1>
+const xmlCourtDecision = `<DOCUMENT><header1>HEADER 1</header1>
 <header2></header2>
 <TEXTE_ARRET>COURT DECISION TEXT</TEXTE_ARRET>
-<footer1>FOOTER 1</footer1>`;
+<footer1>FOOTER 1</footer1></DOCUMENT>`;
 
 describe('convertFromXml', () => {
   it('should parse a xml court decision into our court decision format', () => {

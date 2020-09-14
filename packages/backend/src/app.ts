@@ -3,7 +3,7 @@ import { graphqlHTTP } from "express-graphql";
 import { GraphQLSchema } from "graphql";
 
 import { graphQLQuery } from "./modules/graphQLQuery";
-import { mongo } from './mongo'
+import { mongo } from './lib/mongo'
 
 import { maVariable } from '@label/core';
 

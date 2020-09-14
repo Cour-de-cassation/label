@@ -1,13 +1,11 @@
 import { GraphQLObjectType } from "graphql";
-import { courtDecisionGraphQLEntity } from "./courtDecision/courtDecisionGraphQLEntity";
+import { courtDecisionsQuery, insertCourtDecisionQuery } from "./courtDecision/courtDecisionGraphlQueries";
 
 const graphQLQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    courtDecision: {
-      type: courtDecisionGraphQLEntity.type,
-      resolve: courtDecisionGraphQLEntity.resolve,
-    },
+    courtDecisions: courtDecisionsQuery,
+    insertCourtDecision: insertCourtDecisionQuery
   },
 });
 

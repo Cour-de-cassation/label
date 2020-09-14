@@ -55,7 +55,6 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "start": "react-scripts start",
-    "test": "react-scripts test",
     "type": "yarn clean && yarn compile"
   },
   "version": "1.0.0"

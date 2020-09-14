@@ -40,12 +40,3 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-## Troubleshooting
-
-**When running `yarn compose:start`, I get a `Permission denied` error**
-
-Run the following command in your terminal:
-```
-sudo chmod 666 /var/run/docker.sock
-```

@@ -34,7 +34,7 @@
     "compile": "tsc -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "start": "yarn compile; node dist/app.js",
+    "start": "node dist/app.js",
     "test": "jest",
     "type": "yarn build"
   },

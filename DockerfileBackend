@@ -15,6 +15,7 @@ COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 COPY . .
 
+RUN yarn backendBuild
 
 # Start the app
 ENTRYPOINT ["yarn", "backendStart"]

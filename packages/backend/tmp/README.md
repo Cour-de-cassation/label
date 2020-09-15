@@ -25,4 +25,4 @@ storage/
 
 The name of the files in `storage/nlpEngine/jurinet` and `storage/oracle/jurinet` should have corresponding names.
 
-If you want a complete dataset, ask the mains maintainers.
+If you want a complete data set, ask the mains maintainers.

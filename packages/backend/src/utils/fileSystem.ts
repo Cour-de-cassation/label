@@ -22,14 +22,15 @@ async function readFiles(
   encoding: 'utf8' | 'latin1',
   basePath?: string,
 ) {
-  const fileContents: Array<string> = [];
+  const fileContents = [];
 
   for await (const fileName of fileNames) {
-    fileContents.push(
-      await fs.readFile(`${basePath}${fileName}`, {
+    fileContents.push({
+      fileName,
+      content: await fs.readFile(`${basePath}${fileName}`, {
         encoding,
       }),
-    );
+    });
   }
 
   return fileContents;

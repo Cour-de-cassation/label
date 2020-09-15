@@ -1,5 +1,13 @@
 export { oracleType };
 
 type oracleType = {
-  fetchJurinetCourtDecisions: () => Promise<string[]>;
+  fetchJurinetCourtDecisions: () => Promise<
+    Array<{
+      date: Date;
+      metadata: string;
+      oracleId: string;
+      source: 'jurinet';
+      xmlCourtDecision: string;
+    }>
+  >;
 };

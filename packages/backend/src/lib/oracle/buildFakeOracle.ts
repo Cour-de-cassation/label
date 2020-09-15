@@ -4,19 +4,27 @@ import { oracleType } from './oracleType';
 export { buildFakeOracle };
 
 function buildFakeOracle(): oracleType {
-  const pathToJurinetLocalCourtDecisions = './tmp/storage/oracle/';
+  const pathToJurinetCourtDecisions = './tmp/storage/oracle/jurinet/';
 
   return {
     async fetchJurinetCourtDecisions() {
       const jurinetCourtDecisionFileNames = await fileSystem.listFilesOfDirectory(
-        pathToJurinetLocalCourtDecisions,
+        pathToJurinetCourtDecisions,
       );
 
-      return fileSystem.readFiles(
+      const jurinetCourtDecisions = await fileSystem.readFiles(
         jurinetCourtDecisionFileNames,
         'latin1',
-        pathToJurinetLocalCourtDecisions,
+        pathToJurinetCourtDecisions,
       );
+
+      return jurinetCourtDecisions.map(({ fileName, content }) => ({
+        date: new Date(),
+        metadata: '',
+        oracleId: fileName.slice(0, fileName.length - 4),
+        source: 'jurinet',
+        xmlCourtDecision: content,
+      }));
     },
   };
 }

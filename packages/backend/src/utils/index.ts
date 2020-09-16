@@ -1,3 +1,4 @@
+import { dependencyManager } from './dependencyManager';
 import { fileSystem } from './fileSystem';
 
-export { fileSystem };
+export { dependencyManager, fileSystem };

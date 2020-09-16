@@ -1,9 +1,10 @@
 import { courtDecisionType } from '@label/core';
 import { mongo } from '../../../lib/mongo';
+import { courtDecisionRepositoryType } from './courtDecisionRepositoryType';
 
 export { buildCourtDecisionRepository };
 
-function buildCourtDecisionRepository() {
+function buildCourtDecisionRepository(): courtDecisionRepositoryType {
   const db = mongo.getDb();
   const collection = db.collection('courtDecisions');
 
@@ -17,7 +18,7 @@ function buildCourtDecisionRepository() {
     return courtDecisions;
   }
 
-  async function insert(courtDecision: Partial<courtDecisionType>) {
+  async function insert(courtDecision: courtDecisionType) {
     const insertResult = await collection.insertOne(courtDecision);
     return { success: !!insertResult.result.ok };
   }

@@ -1,11 +1,9 @@
-import { mongo } from '../../../lib/mongo'
-import { buildCourtDecisionRepository } from '../courtDecisionRepository';
+import { buildCourtDecisionRepository } from '../repository';
 
-export { resolveCourtDecisions }
+export { resolveCourtDecisions };
 
 async function resolveCourtDecisions() {
-  const db = mongo.getDb();
-  const courtDecisionRepository = buildCourtDecisionRepository(db)
+  const courtDecisionRepository = buildCourtDecisionRepository();
   const courtDecisions = courtDecisionRepository.findAll();
   return courtDecisions;
-};
+}

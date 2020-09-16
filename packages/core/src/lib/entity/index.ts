@@ -1,4 +1,4 @@
 import { entityGenerator } from "./generator";
-import { entityType } from "./type";
+import { entityType } from "./entityType";
 
 export { entityGenerator, entityType };

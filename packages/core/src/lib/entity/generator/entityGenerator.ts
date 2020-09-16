@@ -1,6 +1,6 @@
 import { random } from "lodash";
 import { generatorType } from "../../type";
-import { entityType } from "../type";
+import { entityType } from "../entityType";
 
 export { entityGenerator };
 

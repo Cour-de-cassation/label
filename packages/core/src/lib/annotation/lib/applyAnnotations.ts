@@ -1,5 +1,5 @@
 import { entityType } from "../../entity";
-import { annotationType } from "../type";
+import { annotationType } from "../annotationType";
 
 export { applyAnnotations };
 

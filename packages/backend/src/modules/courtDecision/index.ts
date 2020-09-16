@@ -1,2 +1,7 @@
-export * from './graphQl'
-export * from './repository'
+export {
+  buildCourtDecisionGraphQLType,
+  courtDecisionsGraphQLEntity,
+  courtDecisionsQuery,
+  insertCourtDecisionQuery,
+  successGraphQLType,
+} from './graphQl';

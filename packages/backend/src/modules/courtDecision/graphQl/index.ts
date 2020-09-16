@@ -1,3 +1,9 @@
-export * from './courtDecisionGraphlQueries'
-export * from './courtDecisionsGraphQLEntity'
-export * from './resolvers'
+export {
+  insertCourtDecisionQuery,
+  courtDecisionsQuery,
+} from './courtDecisionGraphlQueries';
+export {
+  buildCourtDecisionGraphQLType,
+  successGraphQLType,
+  courtDecisionsGraphQLEntity,
+} from './courtDecisionsGraphQLEntity';

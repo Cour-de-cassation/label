@@ -1,2 +1,1 @@
-export * from './graphQl'
-export * from './repository'
+export { insertUserMutation, loginQuery } from './graphQl';

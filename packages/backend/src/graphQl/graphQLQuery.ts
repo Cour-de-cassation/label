@@ -1,11 +1,16 @@
-import { GraphQLObjectType } from "graphql";
-import { courtDecisionsQuery, insertCourtDecisionQuery } from "../modules/courtDecision";
+import { GraphQLObjectType } from 'graphql';
+import {
+  courtDecisionsQuery,
+  insertCourtDecisionQuery,
+} from '../modules/courtDecision';
+import { loginQuery } from '../modules/user';
 
 const graphQLQuery = new GraphQLObjectType({
-  name: "RootQueryType",
+  name: 'RootQueryType',
   fields: {
     courtDecisions: courtDecisionsQuery,
-    insertCourtDecision: insertCourtDecisionQuery
+    insertCourtDecision: insertCourtDecisionQuery,
+    login: loginQuery,
   },
 });
 

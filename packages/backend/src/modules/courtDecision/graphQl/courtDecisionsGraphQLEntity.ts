@@ -2,14 +2,17 @@ import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from 'graphql';
 import { graphQLEntityType } from '../../../graphQl';
 import { resolveCourtDecisions } from './resolvers';
 
-export { courtDecisionsGraphQLEntity, buildCourtDecisionGraphQLType, successGraphQLType };
+export {
+  courtDecisionsGraphQLEntity,
+  buildCourtDecisionGraphQLType,
+  successGraphQLType,
+};
 
 const courtDecisionsGraphQLEntity: graphQLEntityType = {
   name: 'courtDecisions',
   resolve: resolveCourtDecisions,
   type: buildCourtDecisionGraphQLType(),
 };
-
 
 function buildCourtDecisionGraphQLType() {
   return new GraphQLObjectType({
@@ -47,11 +50,7 @@ const successGraphQLType = new GraphQLObjectType({
   name: 'success',
   fields: {
     success: {
-      type: GraphQLBoolean
-    }
+      type: GraphQLBoolean,
+    },
   },
 });
-
-
-
-

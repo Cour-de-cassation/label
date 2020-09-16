@@ -1,2 +1,2 @@
-export * from './userMutations'
-export * from './resolvers'
+export { insertUserMutation } from './userMutations';
+export { loginQuery } from './userQueries';

@@ -1,2 +1,2 @@
-export { resolveCourtDecisions } from './resolveCourtDecisions'
-export { resolveInsertCourtDecision } from './resolveInsertCourtDecision'
+export { resolveCourtDecisions } from './resolveCourtDecisions';
+export { resolveInsertCourtDecision } from './resolveInsertCourtDecision';

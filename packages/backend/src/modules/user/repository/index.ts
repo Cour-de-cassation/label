@@ -1,1 +1,1 @@
-export { buildUserRepository } from './buildUserRepository'
+export { buildUserRepository } from './buildUserRepository';

@@ -1,8 +1,8 @@
-import { GraphQLObjectType } from 'graphql';
+import { GraphQLObjectType, GraphQLFieldResolver } from 'graphql';
 
 type graphQLEntityType = {
   name: string;
-  resolve: (...args: any[]) => any;
+  resolve: GraphQLFieldResolver<any, any, any>;
   type: GraphQLObjectType<any, any>;
 };
 

@@ -1,3 +1,3 @@
-export * from './graphQLQuery'
-export * from './graphQLMutation'
-export * from './graphQLEntityType'
+export * from './graphQLQuery';
+export * from './graphQLMutation';
+export * from './graphQLEntityType';

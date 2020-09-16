@@ -1,9 +1,14 @@
-import { courtDecisionGenerator, courtDecisionType } from "./lib";
+import {
+  courtDecisionGenerator,
+  courtDecisionType,
+  generatorType,
+} from "./lib";
 import { buildMongoId, mongoIdType } from "./utils";
 
 export {
   courtDecisionGenerator,
   courtDecisionType,
+  generatorType,
   buildMongoId,
   mongoIdType,
   // TO BE REMOVED WHEN CLEANING

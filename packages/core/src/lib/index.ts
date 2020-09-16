@@ -1,3 +1,4 @@
 import { courtDecisionGenerator, courtDecisionType } from "./courtDecision";
+import { generatorType } from "./type";
 
-export { courtDecisionGenerator, courtDecisionType };
+export { courtDecisionGenerator, courtDecisionType, generatorType };

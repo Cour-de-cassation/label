@@ -1,11 +1,11 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import { GraphQLSchema } from "graphql";
+import { maVariable } from '@label/core';
 
-import { graphQLQuery } from "./modules/graphQLQuery";
+import { graphQLQuery, graphQLMutation } from "./graphQl";
 import { mongo } from './lib/mongo'
 
-import { maVariable } from '@label/core';
 
 console.log('maVariable', maVariable);
 
@@ -17,6 +17,7 @@ app.use(
   graphqlHTTP({
     schema: new GraphQLSchema({
       query: graphQLQuery,
+      mutation: graphQLMutation
     }),
     graphiql: true,
   })

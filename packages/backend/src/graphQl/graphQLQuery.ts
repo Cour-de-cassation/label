@@ -1,5 +1,5 @@
 import { GraphQLObjectType } from "graphql";
-import { courtDecisionsQuery, insertCourtDecisionQuery } from "./courtDecision/courtDecisionGraphlQueries";
+import { courtDecisionsQuery, insertCourtDecisionQuery } from "../modules/courtDecision";
 
 const graphQLQuery = new GraphQLObjectType({
   name: "RootQueryType",

@@ -1,4 +1,4 @@
-import { buildCourtDecisionRepository } from '../repository';
+import { buildCourtDecisionRepository } from '../../repository';
 
 export { resolveCourtDecisions };
 

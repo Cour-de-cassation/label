@@ -1,5 +1,5 @@
-import { buildCourtDecisionRepository } from '../repository';
-import { converter } from '../../../lib/converter';
+import { buildCourtDecisionRepository } from '../../repository';
+import { converter } from '../../../../lib/converter';
 import { GraphQLFieldResolver } from 'graphql';
 
 export { resolveInsertCourtDecision };

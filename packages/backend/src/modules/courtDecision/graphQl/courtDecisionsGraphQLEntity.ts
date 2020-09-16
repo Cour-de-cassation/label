@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from 'graphql';
-import { graphQLEntityType } from '../graphQLEntityType';
-import { resolveCourtDecisions } from './resolvers/resolveCourtDecisions';
+import { graphQLEntityType } from '../../../graphQl';
+import { resolveCourtDecisions } from './resolvers';
 
 export { courtDecisionsGraphQLEntity, buildCourtDecisionGraphQLType, successGraphQLType };
 

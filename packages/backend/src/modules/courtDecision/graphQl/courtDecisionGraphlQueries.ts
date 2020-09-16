@@ -1,4 +1,4 @@
-import { resolveInsertCourtDecision } from "./resolvers/resolveInsertCourtDecision"
+import { resolveInsertCourtDecision } from "./resolvers"
 import { GraphQLList, GraphQLInputObjectType, GraphQLString } from "graphql"
 import { courtDecisionsGraphQLEntity, successGraphQLType } from "./courtDecisionsGraphQLEntity"
 

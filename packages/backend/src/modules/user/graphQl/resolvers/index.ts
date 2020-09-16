@@ -1,0 +1,1 @@
+export { resolveInsertUser } from './resolveInsertUser'

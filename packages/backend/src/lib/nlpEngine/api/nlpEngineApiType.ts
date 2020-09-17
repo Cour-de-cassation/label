@@ -1,8 +1,8 @@
 import { courtDecisionType } from '@label/core';
 
-export { nlpApiType };
+export { nlpEngineApiType, nlpEngineCourtDecisionAnnotationsType };
 
-type nlpApiType = {
+type nlpEngineApiType = {
   fetchNlpEngineAnnotations: (
     courtDecision: courtDecisionType,
   ) => Promise<nlpEngineCourtDecisionAnnotationsType>;

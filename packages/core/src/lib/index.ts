@@ -1,5 +1,6 @@
 import { annotationType } from "./annotation";
 import { courtDecisionGenerator, courtDecisionType } from "./courtDecision";
+import { userType } from "./user";
 import { generatorType } from "./type";
 
 export {
@@ -7,4 +8,5 @@ export {
   courtDecisionGenerator,
   courtDecisionType,
   generatorType,
+  userType,
 };

@@ -1,6 +1,6 @@
 import { GraphQLString } from 'graphql';
 import { resolveLogin } from './resolvers/resolveLogin';
-import { tokenGraphQLType } from './types';
+import { tokenGraphQLType } from '../graphQl/types';
 
 export { loginQuery };
 

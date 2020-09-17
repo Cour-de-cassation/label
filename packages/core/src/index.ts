@@ -2,6 +2,7 @@ import {
   annotationType,
   courtDecisionGenerator,
   courtDecisionType,
+  userType,
   generatorType,
 } from "./lib";
 import { buildMongoId, mongoIdType } from "./utils";
@@ -13,12 +14,9 @@ export {
   generatorType,
   buildMongoId,
   mongoIdType,
-  // TO BE REMOVED WHEN CLEANING
-  maVariable,
   CourtDecision,
+  userType,
 };
-
-const maVariable = 1;
 
 type CourtDecision = {
   id: number;

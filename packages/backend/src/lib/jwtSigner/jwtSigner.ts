@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { userType } from '@label/core';
 
 export { jwtSigner };
 
@@ -10,6 +11,8 @@ const jwtSigner = {
   sign,
 };
 
-function sign(userId: string) {
+type userIdType = Pick<userType, '_id'>;
+
+function sign(userId: userIdType) {
   return jwt.sign({ userId }, LOCAL_SECRET, { expiresIn: ONE_WEEK });
 }

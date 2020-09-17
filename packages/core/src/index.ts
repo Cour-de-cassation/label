@@ -1,21 +1,31 @@
 import {
+  annotationModule,
   annotationType,
-  courtDecisionGenerator,
+  courtDecisionModule,
   courtDecisionType,
+  nlpEntityModule,
+  nlpEntityType,
+  nlpReportModule,
+  nlpReportType,
   userType,
-  generatorType,
-} from "./lib";
+} from "./modules";
+import { generatorType } from "./types";
 import { buildMongoId, mongoIdType } from "./utils";
 
 export {
+  annotationModule,
   annotationType,
-  courtDecisionGenerator,
+  courtDecisionModule,
   courtDecisionType,
+  nlpEntityModule,
+  nlpEntityType,
+  nlpReportModule,
+  nlpReportType,
+  userType,
   generatorType,
   buildMongoId,
   mongoIdType,
   CourtDecision,
-  userType,
 };
 
 type CourtDecision = {

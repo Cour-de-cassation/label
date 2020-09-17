@@ -1,4 +1,4 @@
-import { courtDecisionGenerator } from '@label/core';
+import { courtDecisionModule } from '@label/core';
 import { xmlConverter } from './xmlConverter';
 
 describe('xmlConverter', () => {
@@ -10,7 +10,7 @@ describe('xmlConverter', () => {
 <footer1>FOOTER 1</footer1></DOCUMENT>`;
 
       const generatedXmlCourtDecision = xmlConverter.convertToXml(
-        courtDecisionGenerator.generate(
+        courtDecisionModule.generator.generate(
           xmlConverter.convertFromXml(xmlCourtDecision),
         ),
       );
@@ -32,7 +32,7 @@ describe('xmlConverter', () => {
 
       const generatedCourtDecision = xmlConverter.convertFromXml(
         xmlConverter.convertToXml(
-          courtDecisionGenerator.generate(courtDecision),
+          courtDecisionModule.generator.generate(courtDecision),
         ),
       );
 

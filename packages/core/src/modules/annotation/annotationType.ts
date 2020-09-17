@@ -7,6 +7,7 @@ type annotationType = {
   nlpEntity: nlpEntityType;
   courtDecisionId: mongoIdType;
   source: string;
+  _id: mongoIdType;
   start: number;
   text: string;
 };

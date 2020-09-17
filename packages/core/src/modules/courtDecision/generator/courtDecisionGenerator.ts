@@ -1,5 +1,5 @@
 import { buildMongoId } from "../../../utils";
-import { generatorType } from "../../type";
+import { generatorType } from "../../../types";
 import { courtDecisionType } from "../courtDecisionType";
 
 export { courtDecisionGenerator };

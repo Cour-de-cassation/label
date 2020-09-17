@@ -1,4 +1,4 @@
-import { courtDecisionGenerator } from '@label/core';
+import { courtDecisionModule } from '@label/core';
 import { GraphQLFieldResolver } from 'graphql';
 import { xmlConverter } from '../../../../lib/xmlConverter';
 import { buildCourtDecisionRepository } from '../../repository';
@@ -9,7 +9,7 @@ const resolveInsertCourtDecision: GraphQLFieldResolver<any, any, any> = (
   _root,
   { xmlCourtDecision },
 ) => {
-  const courtDecision = courtDecisionGenerator.generate(
+  const courtDecision = courtDecisionModule.generator.generate(
     xmlConverter.convertFromXml(xmlCourtDecision.text),
   );
   const courtDecisionRepository = buildCourtDecisionRepository();

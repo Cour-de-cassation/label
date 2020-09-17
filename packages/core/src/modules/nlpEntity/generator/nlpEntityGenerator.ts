@@ -1,5 +1,5 @@
 import { random } from "lodash";
-import { generatorType } from "../../type";
+import { generatorType } from "../../../types";
 import { nlEntityLib } from "../lib";
 import { nlpEntityType } from "../nlpEntityType";
 

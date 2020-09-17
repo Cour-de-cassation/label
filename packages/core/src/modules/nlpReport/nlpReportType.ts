@@ -6,4 +6,5 @@ type nlpReportType = {
   checkList: Array<string>;
   checkNeeded: boolean;
   courtDecisionId: mongoIdType;
+  _id: mongoIdType;
 };

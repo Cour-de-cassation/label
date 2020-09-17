@@ -1,9 +1,9 @@
-import { courtDecisionGenerator } from '@label/core';
+import { courtDecisionModule } from '@label/core';
 import { convertToXml } from './convertToXml';
 
 describe('convertToXml', () => {
   it('should convert a court decision to a xml court decision', () => {
-    const courtDecision = courtDecisionGenerator.generate({
+    const courtDecision = courtDecisionModule.generator.generate({
       text: 'COURT DECISION TEXT',
       footer: '<footer1>FOOTER 1</footer1>',
       header: '<header1>HEADER 1</header1><header2></header2>',

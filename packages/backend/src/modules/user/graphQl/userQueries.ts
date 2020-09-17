@@ -1,12 +1,12 @@
 import { GraphQLString } from 'graphql';
-import { successGraphQLType } from '../../courtDecision';
 import { resolveLogin } from './resolvers/resolveLogin';
+import { tokenGraphQLType } from './types';
 
 export { loginQuery };
 
 const loginQuery = {
   resolve: resolveLogin,
-  type: successGraphQLType,
+  type: tokenGraphQLType,
   args: {
     email: {
       type: GraphQLString,

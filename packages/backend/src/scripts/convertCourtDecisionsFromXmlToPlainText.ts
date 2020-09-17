@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { converter } from '../lib/converter';
+import { xmlConverter } from '../lib/xmlConverter';
 
 const courtDecisionFolderPath = './tmp/xmlCourtDecisions/';
 const plainTextCourtDecisionFolderPath = './tmp/plainTextCourtDecisions/';
@@ -42,7 +42,7 @@ async function convertCourtDecisionFromXmlToPlainText(
       encoding: 'latin1',
     },
   );
-  const parsedCourtDecision = converter.convertFromXml(xmlCourtDecision);
+  const parsedCourtDecision = xmlConverter.convertFromXml(xmlCourtDecision);
   const plainTextCourtDecision = parsedCourtDecision.text;
   const newCourtDecisionFileName = `${courtDecisionFileName.slice(
     0,

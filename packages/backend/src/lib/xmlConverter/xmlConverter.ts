@@ -1,9 +1,9 @@
 import { convertFromXml } from './convertFromXml';
 import { convertToXml } from './convertToXml';
 
-const converter = {
+const xmlConverter = {
   convertFromXml,
   convertToXml,
 };
 
-export { converter };
+export { xmlConverter };

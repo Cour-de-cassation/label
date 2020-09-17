@@ -1,17 +1,17 @@
 import { courtDecisionGenerator } from '@label/core';
-import { converter } from './converter';
+import { xmlConverter } from './xmlConverter';
 
-describe('converter', () => {
-  describe('converter.convertToXml(converter.convertFromXml(xml))', () => {
+describe('xmlConverter', () => {
+  describe('xmlConverter.convertToXml(xmlConverter.convertFromXml(xml))', () => {
     it('should be identity', () => {
       const xmlCourtDecision = `<DOCUMENT><header1>HEADER 1</header1>
 <header2></header2>
 <TEXTE_ARRET>COURT DECISION BODY</TEXTE_ARRET>
 <footer1>FOOTER 1</footer1></DOCUMENT>`;
 
-      const generatedXmlCourtDecision = converter.convertToXml(
+      const generatedXmlCourtDecision = xmlConverter.convertToXml(
         courtDecisionGenerator.generate(
-          converter.convertFromXml(xmlCourtDecision),
+          xmlConverter.convertFromXml(xmlCourtDecision),
         ),
       );
 
@@ -30,8 +30,10 @@ describe('converter', () => {
         header: '<header1>HEADER 1</header1><header2></header2>',
       };
 
-      const generatedCourtDecision = converter.convertFromXml(
-        converter.convertToXml(courtDecisionGenerator.generate(courtDecision)),
+      const generatedCourtDecision = xmlConverter.convertFromXml(
+        xmlConverter.convertToXml(
+          courtDecisionGenerator.generate(courtDecision),
+        ),
       );
 
       expect(generatedCourtDecision).toEqual({

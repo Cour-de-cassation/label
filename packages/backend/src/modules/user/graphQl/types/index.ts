@@ -1,0 +1,1 @@
+export { tokenGraphQLType } from './tokenGraphQLType';

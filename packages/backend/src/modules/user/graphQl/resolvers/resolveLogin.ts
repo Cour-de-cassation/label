@@ -1,6 +1,7 @@
 import { GraphQLFieldResolver } from 'graphql';
 import { buildUserRepository } from '../../repository';
 import { hasher } from '../../../../lib/hasher';
+import { jwtSigner } from '../../../../lib/jwtSigner';
 
 export { resolveLogin };
 
@@ -19,7 +20,8 @@ const resolveLogin: GraphQLFieldResolver<any, any, any> = async (
       `The received password does not match the stored one for ${user.email}`,
     );
   }
+  const token = jwtSigner.sign(storedUser._id);
   return {
-    success: true,
+    token,
   };
 };

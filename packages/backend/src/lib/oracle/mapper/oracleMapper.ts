@@ -1,5 +1,5 @@
 import { buildMongoId, courtDecisionType } from '@label/core';
-import { converter } from '../../converter';
+import { xmlConverter } from '../../xmlConverter';
 import { jurinetCourtDecisionType } from '../api';
 
 export { oracleMapper };
@@ -9,7 +9,7 @@ const oracleMapper = { mapJurinetCourtDecisionToCourtDecision };
 function mapJurinetCourtDecisionToCourtDecision(
   jurinetCourtDecision: jurinetCourtDecisionType,
 ): courtDecisionType {
-  const parsedXmlCourtDecision = converter.convertFromXml(
+  const parsedXmlCourtDecision = xmlConverter.convertFromXml(
     jurinetCourtDecision.xmlCourtDecision,
   );
 

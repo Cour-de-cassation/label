@@ -9,8 +9,8 @@
   "name": "label",
   "private": true,
   "scripts": {
-    "backendBuild": "lerna run --ignore @label/client build",
-    "backendStart": "lerna run --scope @label/backend start",
+    "backendBuild": "lerna run --ignore @label/client build --stream",
+    "backendStart": "lerna run --scope @label/backend start --stream",
     "build": "lerna run build",
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",

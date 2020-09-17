@@ -9,10 +9,25 @@ const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
 
 const jwtSigner = {
   sign,
+  verifyToken,
 };
 
 type userIdType = Pick<userType, '_id'>;
 
 function sign(userId: userIdType) {
   return jwt.sign({ userId }, LOCAL_SECRET, { expiresIn: ONE_WEEK });
+}
+
+function verifyToken(token: string) {
+  const decodedToken: any = jwt.verify(token, LOCAL_SECRET);
+  if (
+    typeof decodedToken === 'string' ||
+    !decodedToken ||
+    !decodedToken.userId
+  ) {
+    throw new Error(
+      `Invalid userId in decoded token : ${JSON.stringify(decodedToken)}`,
+    );
+  }
+  return decodedToken.userId as string;
 }

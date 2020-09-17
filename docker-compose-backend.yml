@@ -5,6 +5,8 @@ services:
     build:
       context: ./
       dockerfile: DockerfileBackend
+    environment:
+      - RUN_MODE=LOCAL
     ports:
       - "8080:8080"
     depends_on:

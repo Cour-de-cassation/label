@@ -1,10 +1,10 @@
 import { mongoIdType } from "../../utils";
-import { entityType } from "../entity";
+import { nlpEntityType } from "../nlpEntity";
 
 export { annotationType };
 
 type annotationType = {
-  entity: entityType;
+  nlpEntity: nlpEntityType;
   courtDecisionId: mongoIdType;
   source: string;
   start: number;

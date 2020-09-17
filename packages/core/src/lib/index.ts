@@ -1,4 +1,10 @@
+import { annotationType } from "./annotation";
 import { courtDecisionGenerator, courtDecisionType } from "./courtDecision";
 import { generatorType } from "./type";
 
-export { courtDecisionGenerator, courtDecisionType, generatorType };
+export {
+  annotationType,
+  courtDecisionGenerator,
+  courtDecisionType,
+  generatorType,
+};

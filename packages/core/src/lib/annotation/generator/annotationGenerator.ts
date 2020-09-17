@@ -1,13 +1,13 @@
 import { buildMongoId } from "../../../utils";
 import { generatorType } from "../../type";
-import { entityGenerator } from "../../entity";
+import { nlpEntityGenerator } from "../../nlpEntity";
 import { annotationType } from "../annotationType";
 
 export { annotationGenerator };
 
 const annotationGenerator: generatorType<annotationType> = {
-  generate: ({ entity, courtDecisionId, source, start, text } = {}) => ({
-    entity: entity ? entity : entityGenerator.generate(),
+  generate: ({ nlpEntity, courtDecisionId, source, start, text } = {}) => ({
+    nlpEntity: nlpEntity ? nlpEntity : nlpEntityGenerator.generate(),
     courtDecisionId: courtDecisionId
       ? buildMongoId(courtDecisionId)
       : buildMongoId(),

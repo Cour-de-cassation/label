@@ -1,4 +1,5 @@
 import {
+  annotationType,
   courtDecisionGenerator,
   courtDecisionType,
   generatorType,
@@ -6,6 +7,7 @@ import {
 import { buildMongoId, mongoIdType } from "./utils";
 
 export {
+  annotationType,
   courtDecisionGenerator,
   courtDecisionType,
   generatorType,

@@ -1,5 +1,11 @@
+import { ExpressRequestHandlerType } from '../../../lib/express';
+
 export { fakeAuthenticationMiddleware };
 
-const fakeAuthenticationMiddleware = (req: any, res: any, next: any) => {
+const fakeAuthenticationMiddleware: ExpressRequestHandlerType = (
+  _req,
+  _res,
+  next,
+) => {
   next();
 };

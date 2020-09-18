@@ -11,7 +11,7 @@ import {
   userType,
 } from "./modules";
 import { generatorType } from "./types";
-import { buildMongoId, mongoIdType } from "./utils";
+import { buildMongoId, mongoIdType, httpRequester } from "./utils";
 
 export {
   annotationModule,
@@ -27,6 +27,7 @@ export {
   generatorType,
   buildMongoId,
   mongoIdType,
+  httpRequester,
   CourtDecision,
 };
 

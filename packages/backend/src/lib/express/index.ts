@@ -1,0 +1,1 @@
+export { ExpressRequestHandlerType } from './express';

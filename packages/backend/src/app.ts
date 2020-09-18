@@ -2,6 +2,7 @@ import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import { graphQLQuery, graphQLMutation } from './graphQl';
 import { mongo } from './lib/mongo';
@@ -9,6 +10,8 @@ import { authenticationMiddleware, userController } from './modules/user';
 
 const app = express();
 const port = 8080;
+
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(bodyParser.json());
 

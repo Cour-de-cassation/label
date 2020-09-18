@@ -2,16 +2,16 @@ import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink } from '@apollo
 import { environment } from '../../config/environment';
 
 const httpLink = createHttpLink({
-  uri: environment.API_URL,
+  uri: `/${environment.API_URL}/graphql`,
 });
 
-const link = ApolloLink.from([httpLink])
+const link = ApolloLink.from([httpLink]);
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 
 const client = new ApolloClient({
   link,
-  cache
+  cache,
 });
 
-export { client }
+export { client };

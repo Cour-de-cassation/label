@@ -1,4 +1,4 @@
-import { httpRequester } from '../../httpRequester';
+import { httpRequester } from '@label/core';
 import { nlpEngineApiType } from './nlpEngineApiType';
 
 export { nlpEngineApi };

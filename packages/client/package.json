@@ -52,7 +52,7 @@
     "dockerBuild": "docker-compose build",
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "start": "react-scripts start"
   },
   "version": "1.0.0"

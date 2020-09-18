@@ -21,6 +21,7 @@
     "dockerBackendStart": "docker-compose -f docker-compose-backend.yml up",
     "dockerClientBuild": "docker-compose -f docker-compose-client.yml build",
     "dockerClientStart": "docker-compose -f docker-compose-client.yml up",
+    "lint": "lerna run lint",
     "test": "lerna run test",
     "type": "lerna run type"
   },

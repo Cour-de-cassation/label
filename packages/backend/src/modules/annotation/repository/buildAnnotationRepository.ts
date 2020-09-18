@@ -1,19 +1,13 @@
 import { annotationType } from '@label/core';
-import { mongo } from '../../../lib/mongo';
-import { annotationRepositoryType } from './annotationRepositoryType';
+import { buildRepositoryBuilder } from '../../../repository';
+import { customAnnotationRepositoryType } from './customAnnotationRepositoryType';
 
 export { buildAnnotationRepository };
 
-function buildAnnotationRepository(): annotationRepositoryType {
-  const db = mongo.getDb();
-  const collection = db.collection('annotations');
-
-  return {
-    insert,
-  };
-
-  async function insert(annotation: annotationType) {
-    const insertResult = await collection.insertOne(annotation);
-    return { success: !!insertResult.result.ok };
-  }
-}
+const buildAnnotationRepository = buildRepositoryBuilder<
+  annotationType,
+  customAnnotationRepositoryType
+>({
+  collectionName: 'annotations',
+  buildCustomRepository: () => ({}),
+});

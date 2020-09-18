@@ -1,11 +1,10 @@
-import { moduleType } from "../../types";
 import { annotationGenerator } from "./generator";
 import { annotationLib } from "./lib";
 import { annotationType } from "./annotationType";
 
 export { annotationModule, annotationType };
 
-const annotationModule: moduleType<annotationType> = {
+const annotationModule = {
   generator: annotationGenerator,
   lib: annotationLib,
 };

@@ -1,26 +1,21 @@
-import { mongo } from '../../../lib/mongo';
+import { userType } from '@label/core';
+import { buildRepositoryBuilder } from '../../../repository';
+import { customUserRepositoryType } from './customUserRepositoryType';
 
 export { buildUserRepository };
 
-function buildUserRepository() {
-  const db = mongo.getDb();
-  const collection = db.collection('users');
-
-  return {
-    insert,
-    findOne,
-  };
-
-  async function insert(user: { email: string; password: string }) {
-    const insertResult = await collection.insertOne(user);
-    return { success: !!insertResult.result.ok };
-  }
-
-  async function findOne(user: { email: string }) {
-    const result = await collection.findOne({ email: user.email });
-    if (!result) {
-      throw new Error(`No matching user for email ${user.email}`);
-    }
-    return result;
-  }
-}
+const buildUserRepository = buildRepositoryBuilder<
+  userType,
+  customUserRepositoryType
+>({
+  collectionName: 'users',
+  buildCustomRepository: collection => ({
+    async findByEmail(email) {
+      const result = await collection.findOne({ email });
+      if (!result) {
+        throw new Error(`No matching user for email ${email}`);
+      }
+      return result;
+    },
+  }),
+});

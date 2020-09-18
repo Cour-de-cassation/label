@@ -1,25 +1,23 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, Collection } from 'mongodb';
 import { buildMongoId, mongoIdType } from '@label/core';
 
-export { buildMongoId, mongo, mongoIdType };
+export { buildMongoId, mongo, mongoCollectionType, mongoIdType };
 
-const uri = 'mongodb://db:27017';
+type mongoCollectionType<T> = Collection<T>;
 
-const mongo = buildMongo();
+const mongo = {
+  initialize,
+  getDb,
+};
 
-function buildMongo() {
-  const client = new MongoClient(uri, { useUnifiedTopology: true });
+const client = new MongoClient('mongodb://db:27017', {
+  useUnifiedTopology: true,
+});
 
-  return {
-    initialize,
-    getDb,
-  };
+function initialize() {
+  return client.connect();
+}
 
-  function initialize() {
-    return client.connect();
-  }
-
-  function getDb() {
-    return client.db('db');
-  }
+function getDb() {
+  return client.db('db');
 }

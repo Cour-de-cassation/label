@@ -12,9 +12,7 @@ const jwtSigner = {
   verifyToken,
 };
 
-type userIdType = Pick<userType, '_id'>;
-
-function sign(userId: userIdType) {
+function sign(userId: userType['_id']) {
   return jwt.sign({ userId }, LOCAL_SECRET, { expiresIn: ONE_WEEK });
 }
 

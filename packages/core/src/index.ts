@@ -7,6 +7,7 @@ import {
   nlpEntityType,
   nlpReportModule,
   nlpReportType,
+  userModule,
   userType,
 } from "./modules";
 import { generatorType } from "./types";
@@ -21,6 +22,7 @@ export {
   nlpEntityType,
   nlpReportModule,
   nlpReportType,
+  userModule,
   userType,
   generatorType,
   buildMongoId,

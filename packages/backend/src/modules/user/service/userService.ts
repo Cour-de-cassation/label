@@ -8,7 +8,7 @@ export { userService };
 const userService = {
   async login(user: userDtoType) {
     const userRepository = buildUserRepository();
-    const storedUser = await userRepository.findOne({ email: user.email });
+    const storedUser = await userRepository.findByEmail(user.email);
     const isPasswordValid = await hasher.compare(
       user.password,
       storedUser.password,

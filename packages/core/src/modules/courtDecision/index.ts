@@ -1,10 +1,9 @@
-import { moduleType } from "../../types";
 import { courtDecisionGenerator } from "./generator";
 import { courtDecisionType } from "./courtDecisionType";
 
 export { courtDecisionModule, courtDecisionType };
 
-const courtDecisionModule: moduleType<courtDecisionType> = {
+const courtDecisionModule = {
   generator: courtDecisionGenerator,
   lib: undefined,
 };

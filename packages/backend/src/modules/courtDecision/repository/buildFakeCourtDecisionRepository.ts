@@ -1,18 +1,16 @@
 import { courtDecisionType } from '@label/core';
-import { fakeRepositoryType } from '../../../tests';
+import { buildFakeRepositoryBuilder } from '../../../tests';
 import { courtDecisionRepositoryType } from './courtDecisionRepositoryType';
 
 export { buildFakeCourtDecisionRepository };
 
-let collection: courtDecisionType[] = [];
-
-function buildFakeCourtDecisionRepository(): fakeRepositoryType<
+const buildFakeCourtDecisionRepository = buildFakeRepositoryBuilder<
+  courtDecisionType,
   courtDecisionRepositoryType
-> {
+>(collection => {
   return {
     findAll,
     insert,
-    reinitialize: () => (collection = []),
   };
 
   async function findAll() {
@@ -23,4 +21,4 @@ function buildFakeCourtDecisionRepository(): fakeRepositoryType<
     collection.push(courtDecision);
     return { success: true };
   }
-}
+});

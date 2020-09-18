@@ -1,3 +1,3 @@
-import { fakeRepositoryType } from './fakeRepositoryType';
+import { buildFakeRepositoryBuilder } from './buildFakeRepositoryBuilder';
 
-export { fakeRepositoryType };
+export { buildFakeRepositoryBuilder };

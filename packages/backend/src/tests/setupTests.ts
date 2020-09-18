@@ -1,7 +1,17 @@
 import '@babel/polyfill';
+import { buildFakeAnnotationRepository } from '../modules/annotation';
 import { buildFakeCourtDecisionRepository } from '../modules/courtDecision';
+import { buildFakeNlpReportRepository } from '../modules/nlpReport';
 
 global.beforeEach(() => {
-  const fakeCourtDecisionRepository = buildFakeCourtDecisionRepository();
-  fakeCourtDecisionRepository.reinitialize();
+  const fakeRepositoryBuilders = [
+    buildFakeAnnotationRepository,
+    buildFakeCourtDecisionRepository,
+    buildFakeNlpReportRepository,
+  ];
+
+  fakeRepositoryBuilders.forEach(buildFakeRepository => {
+    const fakeRepository = buildFakeRepository();
+    fakeRepository.reinitialize();
+  });
 });

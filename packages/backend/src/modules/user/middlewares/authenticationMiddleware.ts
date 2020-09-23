@@ -1,10 +1,10 @@
-import { ExpressRequestHandlerType } from '../../../lib/express';
+import { expressRequestHandlerType } from '../../../lib/express';
 import { jwtSigner } from '../../../lib/jwtSigner';
 import { logger } from '../../../utils';
 
 export { authenticationMiddleware };
 
-const authenticationMiddleware: ExpressRequestHandlerType = (
+const authenticationMiddleware: expressRequestHandlerType = (
   req,
   res,
   next,

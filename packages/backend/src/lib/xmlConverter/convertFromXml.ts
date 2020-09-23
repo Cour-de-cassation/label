@@ -1,20 +1,23 @@
 import { pick } from 'lodash';
 import { xmlParser } from './utils/xmlParser';
-import { XML_COURT_DECISION_TEXT_TAG, XML_COURT_DECISION_GLOBAL_TAG } from './xmlCourtDecisionConfig';
+import {
+  XML_COURT_DECISION_TEXT_TAG,
+  XML_COURT_DECISION_GLOBAL_TAG,
+} from './xmlCourtDecisionConfig';
 
 export { convertFromXml };
 
 type jurinetXmlJsonType = {
-  [XML_COURT_DECISION_GLOBAL_TAG]: jurinetContentJsonType
+  [XML_COURT_DECISION_GLOBAL_TAG]: jurinetContentJsonType;
 };
 
 type jurinetContentJsonType = {
   [XML_COURT_DECISION_TEXT_TAG]: string;
-}
+};
 
 function convertFromXml(xml: string) {
-  const xmlJson: jurinetXmlJsonType = xmlParser.parseXmlToJson(xml);
-  const jsonContent = xmlJson[XML_COURT_DECISION_GLOBAL_TAG]
+  const xmlJson = xmlParser.parseXmlToJson(xml) as jurinetXmlJsonType;
+  const jsonContent = xmlJson[XML_COURT_DECISION_GLOBAL_TAG];
   const header = extractHeaders(jsonContent);
   const footer = extractFooters(jsonContent);
   const text = extractText(jsonContent);

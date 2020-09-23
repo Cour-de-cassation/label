@@ -1,5 +1,10 @@
 import { RequestHandler } from 'express';
 
-type ExpressRequestHandlerType = RequestHandler;
+export { expressRequestHandlerType };
 
-export { ExpressRequestHandlerType };
+type expressRequestHandlerType<expressReqBodyType = any> = RequestHandler<
+  any,
+  any,
+  expressReqBodyType,
+  any
+>;

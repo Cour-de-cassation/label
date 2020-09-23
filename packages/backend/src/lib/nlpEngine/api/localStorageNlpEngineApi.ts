@@ -1,5 +1,8 @@
 import { promises as fs } from 'fs';
-import { nlpEngineApiType } from './nlpEngineApiType';
+import {
+  nlpEngineApiType,
+  nlpEngineCourtDecisionAnnotationsType,
+} from './nlpEngineApiType';
 
 export { localStorageNlpEngineApi };
 
@@ -14,6 +17,6 @@ const localStorageNlpEngineApi: nlpEngineApiType = {
           encoding: 'utf8',
         },
       ),
-    );
+    ) as nlpEngineCourtDecisionAnnotationsType;
   },
 };

@@ -1,5 +1,8 @@
 import { httpRequester } from '@label/core';
-import { nlpEngineApiType } from './nlpEngineApiType';
+import {
+  nlpEngineApiType,
+  nlpEngineCourtDecisionAnnotationsType,
+} from './nlpEngineApiType';
 
 export { nlpEngineApi };
 
@@ -14,6 +17,6 @@ const nlpEngineApi: nlpEngineApiType = {
       url: `${NLP_API_BASE_URL}/ner`,
     });
 
-    return response.data.text;
+    return response.data as nlpEngineCourtDecisionAnnotationsType;
   },
 };

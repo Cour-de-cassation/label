@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import { sign as jsonwebtokenSign, verify } from 'jsonwebtoken';
 import { userType } from '@label/core';
 
 export { jwtSigner };
@@ -12,12 +12,15 @@ const jwtSigner = {
   verifyToken,
 };
 
-function sign(userId: userType['_id']) {
-  return jwt.sign({ userId }, LOCAL_SECRET, { expiresIn: ONE_WEEK });
+function sign(userId: userType['_id']): string {
+  return jsonwebtokenSign({ userId }, LOCAL_SECRET, { expiresIn: ONE_WEEK });
 }
 
-function verifyToken(token: string) {
-  const decodedToken: any = jwt.verify(token, LOCAL_SECRET);
+function verifyToken(token: string): string {
+  const decodedToken: string | { userId?: string } = verify(
+    token,
+    LOCAL_SECRET,
+  );
   if (
     typeof decodedToken === 'string' ||
     !decodedToken ||
@@ -27,5 +30,5 @@ function verifyToken(token: string) {
       `Invalid userId in decoded token : ${JSON.stringify(decodedToken)}`,
     );
   }
-  return decodedToken.userId as string;
+  return decodedToken.userId;
 }

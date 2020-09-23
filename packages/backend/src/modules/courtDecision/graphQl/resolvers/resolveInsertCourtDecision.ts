@@ -10,7 +10,7 @@ const resolveInsertCourtDecision: GraphQLFieldResolver<any, any, any> = (
   { xmlCourtDecision },
 ) => {
   const courtDecision = courtDecisionModule.generator.generate(
-    xmlConverter.convertFromXml(xmlCourtDecision.text),
+    xmlConverter.convertFromXml((xmlCourtDecision as { text: string }).text),
   );
   const courtDecisionRepository = buildCourtDecisionRepository();
   return courtDecisionRepository.insert(courtDecision);

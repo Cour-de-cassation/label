@@ -1,1 +1,1 @@
-export { ExpressRequestHandlerType } from './express';
+export { expressRequestHandlerType } from './express';

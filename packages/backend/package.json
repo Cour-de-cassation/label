@@ -68,7 +68,7 @@
     "dockerBuild": "docker-compose build",
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "runScript": "yarn compile && RUN_MODE=LOCAL node",
     "start": "node dist/app.js",
     "test": "RUN_MODE=TEST jest",

@@ -38,7 +38,7 @@
     "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "start": "node dist/app.js",
     "test": "jest",
     "type": "yarn build"

@@ -65,9 +65,9 @@ describe('nlpEngineMapper', () => {
         },
       ) {
         expect(annotation.courtDecisionId).toEqual(expectedCourtDecisionId);
-        expect(annotation.nlpEntity.startsWith(expectedNlpEntity)).toEqual(
-          true,
-        );
+        expect(
+          annotation.annotationEntity.startsWith(expectedNlpEntity),
+        ).toEqual(true);
         expect(annotation.source).toEqual(expectedSource);
         expect(annotation.start).toEqual(expectedStart);
         expect(annotation.text).toEqual(expectedText);

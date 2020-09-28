@@ -1,4 +1,4 @@
-import { nlpEntityType } from "../../nlpEntity";
+import { annotationEntityType } from "../../annotationEntity";
 import { annotationType } from "../annotationType";
 
 export { applyAnnotations };
@@ -6,7 +6,7 @@ export { applyAnnotations };
 function applyAnnotations(
   text: string,
   annotations: Array<annotationType>,
-  anonymiser: (nlpEntity: nlpEntityType) => string
+  anonymiser: (annotationEntity: annotationEntityType) => string
 ): string {
   const sortedAnnotations = sortAnnotations(annotations);
   const anonymisedTextChunks = slicedAndAnonymiseText(
@@ -31,14 +31,14 @@ function sortAnnotations(annotations: Array<annotationType>) {
 function slicedAndAnonymiseText(
   text: string,
   sortedAnnotations: Array<annotationType>,
-  anonymiser: (nlpEntity: nlpEntityType) => string
+  anonymiser: (annotationEntity: annotationEntityType) => string
 ) {
   const anonymisedTextChunks = [];
 
   let currentIndex = 0;
   sortedAnnotations.forEach((annotation) => {
     anonymisedTextChunks.push(text.slice(currentIndex, annotation.start));
-    anonymisedTextChunks.push(anonymiser(annotation.nlpEntity));
+    anonymisedTextChunks.push(anonymiser(annotation.annotationEntity));
     currentIndex = annotation.start + annotation.text.length;
   });
   anonymisedTextChunks.push(text.slice(currentIndex));

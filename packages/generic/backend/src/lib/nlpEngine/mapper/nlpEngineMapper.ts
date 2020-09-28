@@ -2,7 +2,7 @@ import {
   annotationType,
   buildMongoId,
   courtDecisionType,
-  nlpEntityModule,
+  annotationEntityModule,
   nlpReportType,
 } from '@label/core';
 import { nlpEngineCourtDecisionAnnotationsType } from '../api';
@@ -19,7 +19,9 @@ function mapNlpEngineAnnotationstoAnnotations(
   courtDecision: courtDecisionType,
 ): annotationType[] {
   return nlpEngineAnnotations.entities.map(nlpEngineAnnotation => ({
-    nlpEntity: nlpEntityModule.lib.buildNlpEntity(nlpEngineAnnotation.label),
+    annotationEntity: annotationEntityModule.lib.buildAnnotationEntity(
+      nlpEngineAnnotation.label,
+    ),
     courtDecisionId: courtDecision._id,
     _id: buildMongoId(),
     source: nlpEngineAnnotation.source,

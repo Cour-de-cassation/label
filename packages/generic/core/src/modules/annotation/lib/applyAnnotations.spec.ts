@@ -6,12 +6,12 @@ describe("applyAnnotations", () => {
     const text = "Monsieur Dupont et Madame Durand";
     const annotations = [
       annotationGenerator.generate({
-        nlpEntity: "ENTITY_1",
+        annotationEntity: "ENTITY_1",
         start: 9,
         text: "Dupont",
       }),
       annotationGenerator.generate({
-        nlpEntity: "ENTITY_2",
+        annotationEntity: "ENTITY_2",
         start: 26,
         text: "Durand",
       }),

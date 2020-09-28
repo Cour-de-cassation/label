@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@label/*": ["packages/generic/*/src"]
+      "@label/*": ["packages/generic/*/src", "packages/courDeCassation/*/src"]
     }
   },
 

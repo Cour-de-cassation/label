@@ -32,6 +32,7 @@
     "type": "lerna run type"
   },
   "workspaces": [
-    "packages/generic/*"
+    "packages/generic/*",
+    "packages/courDeCassation/*"
   ]
 }

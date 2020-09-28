@@ -1,0 +1,3 @@
+export { jurinetConnector };
+
+const jurinetConnector = {};

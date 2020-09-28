@@ -32,6 +32,6 @@
     "type": "lerna run type"
   },
   "workspaces": [
-    "packages/*"
+    "packages/generic/*"
   ]
 }

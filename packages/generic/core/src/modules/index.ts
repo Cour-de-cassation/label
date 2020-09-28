@@ -8,6 +8,7 @@ import {
   annotationReportModule,
   annotationReportType,
 } from "./annotationReport";
+import { documentType } from "./document";
 import { userModule, userType } from "./user";
 
 export {
@@ -19,6 +20,7 @@ export {
   annotationEntityType,
   annotationReportModule,
   annotationReportType,
+  documentType,
   userModule,
   userType,
 };

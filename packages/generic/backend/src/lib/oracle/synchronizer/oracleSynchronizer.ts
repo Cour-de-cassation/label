@@ -1,6 +1,6 @@
 import { courtDecisionType } from '@label/core';
 import { logger } from '../../../utils';
-import { buildCourtDecisionRepository } from '../../../modules/courtDecision/repository';
+import { buildDocumentRepository } from '../../../modules/courtDecision/repository';
 import { oracleApi } from '../api';
 import { oracleMapper } from '../mapper';
 
@@ -27,9 +27,11 @@ async function synchronizeJurinetCourtDecisions() {
 }
 
 async function insertCourtDecisions(courtDecisions: courtDecisionType[]) {
-  const courtDecisionRepository = buildCourtDecisionRepository();
+  const courtDecisionRepository = buildDocumentRepository();
 
+  /*
   for await (const courtDecision of courtDecisions) {
     await courtDecisionRepository.insert(courtDecision);
   }
+  */
 }

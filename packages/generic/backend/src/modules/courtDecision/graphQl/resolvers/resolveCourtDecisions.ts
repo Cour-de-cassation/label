@@ -1,9 +1,9 @@
-import { buildCourtDecisionRepository } from '../../repository';
+import { buildDocumentRepository } from '../../repository';
 
 export { resolveCourtDecisions };
 
 async function resolveCourtDecisions() {
-  const courtDecisionRepository = buildCourtDecisionRepository();
+  const courtDecisionRepository = buildDocumentRepository();
   const courtDecisions = courtDecisionRepository.findAll();
   return courtDecisions;
 }

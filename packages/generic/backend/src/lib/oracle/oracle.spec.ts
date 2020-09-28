@@ -1,12 +1,12 @@
 import { oracle } from './oracle';
 import { oracleTestServer } from './test';
-import { buildCourtDecisionRepository } from '../../modules/courtDecision';
+import { buildDocumentRepository } from '../../modules/courtDecision';
 
 describe('oracle', () => {
-  let courtDecisionRepository = buildCourtDecisionRepository();
+  let courtDecisionRepository = buildDocumentRepository();
 
   beforeEach(() => {
-    courtDecisionRepository = buildCourtDecisionRepository();
+    courtDecisionRepository = buildDocumentRepository();
     oracleTestServer.reinitialize();
   });
 
@@ -20,7 +20,7 @@ describe('oracle', () => {
         expect(
           courtDecisions.some(
             courtDecision =>
-              courtDecision.oracleId === jurinetCourtDecision.oracleId,
+              courtDecision.documentId === jurinetCourtDecision.oracleId,
           ),
         ),
       );

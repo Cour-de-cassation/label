@@ -6,8 +6,8 @@ import {
   successGraphQLType,
 } from './graphQl';
 import {
-  buildCourtDecisionRepository,
-  buildFakeCourtDecisionRepository,
+  buildDocumentRepository,
+  buildFakeDocumentRepository,
 } from './repository';
 
 export {
@@ -16,6 +16,6 @@ export {
   courtDecisionsQuery,
   insertCourtDecisionQuery,
   successGraphQLType,
-  buildCourtDecisionRepository,
-  buildFakeCourtDecisionRepository,
+  buildDocumentRepository,
+  buildFakeDocumentRepository,
 };

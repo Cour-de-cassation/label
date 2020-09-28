@@ -1,14 +1,14 @@
 import { dependencyManager } from '../../../utils';
-import { buildCourtDecisionRepository } from './buildCourtDecisionRepository';
-import { buildFakeCourtDecisionRepository } from './buildFakeCourtDecisionRepository';
+import { buildDocumentRepository } from './buildDocumentRepository';
+import { buildFakeDocumentRepository } from './buildFakeDocumentRepository';
 
 export {
-  buildRepository as buildCourtDecisionRepository,
-  buildFakeCourtDecisionRepository,
+  buildRepository as buildDocumentRepository,
+  buildFakeDocumentRepository,
 };
 
 const buildRepository = dependencyManager.inject({
-  forLocal: buildCourtDecisionRepository,
-  forProd: buildCourtDecisionRepository,
-  forTest: buildFakeCourtDecisionRepository,
+  forLocal: buildDocumentRepository,
+  forProd: buildDocumentRepository,
+  forTest: buildFakeDocumentRepository,
 });

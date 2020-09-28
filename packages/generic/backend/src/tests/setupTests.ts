@@ -1,13 +1,13 @@
 import '@babel/polyfill';
 import { buildFakeAnnotationRepository } from '../modules/annotation';
-import { buildFakeCourtDecisionRepository } from '../modules/courtDecision';
-import { buildFakeNlpReportRepository } from '../modules/nlpReport';
+import { buildFakeAnnotationReportRepository } from '../modules/annotationReport';
+import { buildFakeDocumentRepository } from '../modules/courtDecision';
 
 global.beforeEach(() => {
   const fakeRepositoryBuilders = [
     buildFakeAnnotationRepository,
-    buildFakeCourtDecisionRepository,
-    buildFakeNlpReportRepository,
+    buildFakeAnnotationReportRepository,
+    buildFakeDocumentRepository,
   ];
 
   fakeRepositoryBuilders.forEach(buildFakeRepository => {

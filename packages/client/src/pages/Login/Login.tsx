@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import { login } from '../../services/api';
+import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
 
 export { Login };
 
@@ -7,12 +8,6 @@ const Login: FunctionComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const changeEmail = (event: any) => setEmail(event.target.value);
-  const changePassword = (event: any) => setPassword(event.target.value);
-  const handleSubmit = async () => {
-    const response = await login(email, password);
-    console.log(response);
-  };
   return (
     <div>
       <input name="email" placeholder="email" onChange={changeEmail} value={email} />
@@ -20,4 +15,17 @@ const Login: FunctionComponent = () => {
       <button onClick={handleSubmit}>Se connecter</button>
     </div>
   );
+
+  function changeEmail(event: any) {
+    setEmail(event.target.value);
+  }
+
+  function changePassword(event: any) {
+    setPassword(event.target.value);
+  }
+
+  async function handleSubmit() {
+    const { data } = await login(email, password);
+    setBearerTokenIntoLocalStorage(data);
+  }
 };

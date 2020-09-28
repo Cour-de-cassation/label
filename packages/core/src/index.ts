@@ -32,5 +32,5 @@ export {
 };
 
 type CourtDecision = {
-  id: number;
+  _id: string;
 };

@@ -1,11 +1,11 @@
-import { nlpReportType } from '@label/core';
+import { annotationReportType } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { customNlpReportRepositoryType } from './customNlpReportRepositoryType';
 
 export { buildNlpReportRepository };
 
 const buildNlpReportRepository = buildRepositoryBuilder<
-  nlpReportType,
+  annotationReportType,
   customNlpReportRepositoryType
 >({
   collectionName: 'nlpReports',

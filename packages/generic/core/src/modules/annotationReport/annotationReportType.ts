@@ -1,10 +1,10 @@
 import { mongoIdType } from "../../utils";
 
-export { nlpReportType };
+export { annotationReportType };
 
-type nlpReportType = {
+type annotationReportType = {
   checkList: Array<string>;
   checkNeeded: boolean;
-  courtDecisionId: mongoIdType;
+  documentId: mongoIdType;
   _id: mongoIdType;
 };

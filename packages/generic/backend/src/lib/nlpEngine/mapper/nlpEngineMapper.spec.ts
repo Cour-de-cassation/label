@@ -64,7 +64,7 @@ describe('nlpEngineMapper', () => {
           expectedText: string;
         },
       ) {
-        expect(annotation.courtDecisionId).toEqual(expectedCourtDecisionId);
+        expect(annotation.documentId).toEqual(expectedCourtDecisionId);
         expect(
           annotation.annotationEntity.startsWith(expectedNlpEntity),
         ).toEqual(true);
@@ -76,14 +76,14 @@ describe('nlpEngineMapper', () => {
   });
   describe('mapNlpEngineAnnotationstoReport', () => {
     it('should convert the nlp annotations into our nlp report', () => {
-      const nlpReport = nlpEngineMapper.mapNlpEngineAnnotationstoReport(
+      const annotationReport = nlpEngineMapper.mapNlpEngineAnnotationstoReport(
         nlpEngineAnnotations,
         courtDecision,
       );
 
-      expect(nlpReport.checkList).toEqual(['CHECK 1', 'CHECK 1']);
-      expect(nlpReport.checkNeeded).toEqual(true);
-      expect(nlpReport.courtDecisionId).toEqual(courtDecision._id);
+      expect(annotationReport.checkList).toEqual(['CHECK 1', 'CHECK 1']);
+      expect(annotationReport.checkNeeded).toEqual(true);
+      expect(annotationReport.documentId).toEqual(courtDecision._id);
     });
   });
 });

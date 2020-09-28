@@ -1,10 +1,10 @@
-import { nlpReportType } from '@label/core';
+import { annotationReportType } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customNlpReportRepositoryType } from './customNlpReportRepositoryType';
 
 export { buildFakeNlpReportRepository };
 
 const buildFakeNlpReportRepository = buildFakeRepositoryBuilder<
-  nlpReportType,
+  annotationReportType,
   customNlpReportRepositoryType
 >({ buildCustomFakeRepository: () => ({}) });

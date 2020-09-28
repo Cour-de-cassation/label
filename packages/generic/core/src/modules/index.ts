@@ -4,7 +4,10 @@ import {
   annotationEntityModule,
   annotationEntityType,
 } from "./annotationEntity";
-import { nlpReportModule, nlpReportType } from "./nlpReport";
+import {
+  annotationReportModule,
+  annotationReportType,
+} from "./annotationReport";
 import { userModule, userType } from "./user";
 
 export {
@@ -14,8 +17,8 @@ export {
   courtDecisionType,
   annotationEntityModule,
   annotationEntityType,
-  nlpReportModule,
-  nlpReportType,
+  annotationReportModule,
+  annotationReportType,
   userModule,
   userType,
 };

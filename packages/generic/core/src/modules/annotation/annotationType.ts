@@ -5,7 +5,7 @@ export { annotationType };
 
 type annotationType = {
   annotationEntity: annotationEntityType;
-  courtDecisionId: mongoIdType;
+  documentId: mongoIdType;
   source: string;
   _id: mongoIdType;
   start: number;

@@ -3,7 +3,7 @@ import {
   buildMongoId,
   courtDecisionType,
   annotationEntityModule,
-  nlpReportType,
+  annotationReportType,
 } from '@label/core';
 import { nlpEngineCourtDecisionAnnotationsType } from '../api';
 
@@ -22,7 +22,7 @@ function mapNlpEngineAnnotationstoAnnotations(
     annotationEntity: annotationEntityModule.lib.buildAnnotationEntity(
       nlpEngineAnnotation.label,
     ),
-    courtDecisionId: courtDecision._id,
+    documentId: courtDecision._id,
     _id: buildMongoId(),
     source: nlpEngineAnnotation.source,
     start: nlpEngineAnnotation.start,
@@ -33,11 +33,11 @@ function mapNlpEngineAnnotationstoAnnotations(
 function mapNlpEngineAnnotationstoReport(
   nlpEngineAnnotations: nlpEngineCourtDecisionAnnotationsType,
   courtDecision: courtDecisionType,
-): nlpReportType {
+): annotationReportType {
   return {
     checkList: nlpEngineAnnotations.checklist,
     checkNeeded: nlpEngineAnnotations.check_needed,
-    courtDecisionId: courtDecision._id,
+    documentId: courtDecision._id,
     _id: buildMongoId(),
   };
 }

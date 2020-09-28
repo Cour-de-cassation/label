@@ -8,7 +8,7 @@ export { annotationGenerator };
 const annotationGenerator: generatorType<annotationType> = {
   generate: ({
     annotationEntity,
-    courtDecisionId,
+    documentId,
     _id,
     source,
     start,
@@ -17,9 +17,7 @@ const annotationGenerator: generatorType<annotationType> = {
     annotationEntity: annotationEntity
       ? annotationEntity
       : annotationEntityModule.generator.generate(),
-    courtDecisionId: courtDecisionId
-      ? buildMongoId(courtDecisionId)
-      : buildMongoId(),
+    documentId: documentId ? buildMongoId(documentId) : buildMongoId(),
     _id: _id ? buildMongoId(_id) : buildMongoId(),
     source: source ? source : `SOURCE_${Math.random()}`,
     start: start ? start : 0,

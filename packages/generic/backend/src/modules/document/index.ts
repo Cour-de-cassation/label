@@ -1,8 +1,7 @@
 import {
-  buildCourtDecisionGraphQLType,
-  courtDecisionsGraphQLEntity,
-  courtDecisionsQuery,
-  insertCourtDecisionQuery,
+  documentsGraphQLEntity,
+  documentsQuery,
+  insertDocumentQuery,
   successGraphQLType,
 } from './graphQl';
 import {
@@ -11,10 +10,9 @@ import {
 } from './repository';
 
 export {
-  buildCourtDecisionGraphQLType,
-  courtDecisionsGraphQLEntity,
-  courtDecisionsQuery,
-  insertCourtDecisionQuery,
+  documentsGraphQLEntity,
+  documentsQuery,
+  insertDocumentQuery,
   successGraphQLType,
   buildDocumentRepository,
   buildFakeDocumentRepository,

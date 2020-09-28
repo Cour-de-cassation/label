@@ -7,11 +7,12 @@ import {
   annotationEntityType,
   annotationReportModule,
   annotationReportType,
+  documentModule,
   documentType,
   userModule,
   userType,
 } from "./modules";
-import { generatorType } from "./types";
+import { dataModelFieldType, dataModelType, generatorType } from "./types";
 import { buildMongoId, mongoIdType, httpRequester } from "./utils";
 
 export {
@@ -23,9 +24,12 @@ export {
   annotationEntityType,
   annotationReportModule,
   annotationReportType,
+  documentModule,
   documentType,
   userModule,
   userType,
+  dataModelFieldType,
+  dataModelType,
   generatorType,
   buildMongoId,
   mongoIdType,

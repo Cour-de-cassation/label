@@ -1,6 +1,6 @@
 import { courtDecisionType } from '@label/core';
 import { logger } from '../../../utils';
-import { buildDocumentRepository } from '../../../modules/courtDecision/repository';
+import { buildDocumentRepository } from '../../../modules/document';
 import { oracleApi } from '../api';
 import { oracleMapper } from '../mapper';
 

@@ -1,5 +1,5 @@
 import { resolveInsertUser } from './resolvers';
-import { successGraphQLType } from '../../courtDecision';
+import { successGraphQLType } from '../../document';
 import { GraphQLString } from 'graphql';
 
 export { insertUserMutation };

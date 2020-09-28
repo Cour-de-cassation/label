@@ -1,4 +1,10 @@
 import { documentGenerator } from "./generator";
-import { documentType } from "./documentType";
+import { documentDataModel, documentType } from "./documentType";
 
-export { documentType };
+export { documentModule, documentType };
+
+const documentModule = {
+  dataModel: documentDataModel,
+  generator: documentGenerator,
+  lib: undefined,
+};

@@ -1,6 +1,6 @@
 import { oracle } from './oracle';
 import { oracleTestServer } from './test';
-import { buildDocumentRepository } from '../../modules/courtDecision';
+import { buildDocumentRepository } from '../../modules/document';
 
 describe('oracle', () => {
   let courtDecisionRepository = buildDocumentRepository();

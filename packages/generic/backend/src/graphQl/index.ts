@@ -1,3 +1,4 @@
-export * from './graphQLQuery';
-export * from './graphQLMutation';
-export * from './graphQLEntityType';
+import { buildGraphQLType } from './buildGraphQLType';
+import { graphQLEntityType } from './graphQLEntityType';
+
+export { buildGraphQLType, graphQLEntityType };

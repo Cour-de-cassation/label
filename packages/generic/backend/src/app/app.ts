@@ -4,9 +4,10 @@ import { GraphQLSchema } from 'graphql';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import { graphQLQuery, graphQLMutation } from './graphQl';
-import { mongo } from './lib/mongo';
-import { authenticationMiddleware, userController } from './modules/user';
+import { mongo } from '../lib/mongo';
+import { authenticationMiddleware, userController } from '../modules/user';
+import { graphQLMutation } from './graphQLMutation';
+import { graphQLQuery } from './graphQLQuery';
 
 const app = express();
 const port = 8080;

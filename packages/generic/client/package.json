@@ -18,6 +18,7 @@
     "graphql": "^15.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "typescript": "^3.7.5"
   },
@@ -30,6 +31,7 @@
     "@types/node": "^12.12.55",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
     "@types/testing-library__dom": "^7.5.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
@@ -51,10 +53,12 @@
     "build": "yarn clean && react-scripts build",
     "clean": "rimraf -rf ./dist && rimraf -rf ./build",
     "cleanAll": "yarn clean && rimraf -rf ./node_modules",
+    "compile": "react-scripts build",
     "dockerBuild": "docker-compose build",
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "test": "jest --passWithNoTests"
   },
   "version": "1.0.0"
 }

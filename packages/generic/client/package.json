@@ -53,7 +53,7 @@
     "build": "yarn clean && react-scripts build",
     "clean": "rimraf -rf ./dist && rimraf -rf ./build",
     "cleanAll": "yarn clean && rimraf -rf ./node_modules",
-    "compile": "react-scripts build",
+    "compile": "tsc -p tsconfig.json",
     "dockerBuild": "docker-compose build",
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

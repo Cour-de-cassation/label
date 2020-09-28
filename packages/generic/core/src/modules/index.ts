@@ -13,15 +13,18 @@ import { userModule, userType } from "./user";
 
 export {
   annotationModule,
-  annotationType,
   courtDecisionModule,
-  courtDecisionType,
   annotationEntityModule,
-  annotationEntityType,
   annotationReportModule,
-  annotationReportType,
   documentModule,
-  documentType,
   userModule,
+};
+
+export type {
+  annotationType,
+  courtDecisionType,
+  annotationEntityType,
+  annotationReportType,
+  documentType,
   userType,
 };

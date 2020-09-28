@@ -1,6 +1,8 @@
 import { ObjectId } from "mongodb";
 
-export { buildMongoId, mongoIdType };
+export { buildMongoId };
+
+export type { mongoIdType };
 
 type mongoIdType = ObjectId;
 

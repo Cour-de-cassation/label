@@ -1,7 +1,9 @@
 import { documentGenerator } from "./generator";
 import { documentDataModel, documentType } from "./documentType";
 
-export { documentModule, documentType };
+export { documentModule };
+
+export type { documentType };
 
 const documentModule = {
   dataModel: documentDataModel,

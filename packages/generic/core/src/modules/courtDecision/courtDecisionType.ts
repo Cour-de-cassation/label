@@ -1,6 +1,6 @@
 import { mongoIdType } from "../../utils";
 
-export { courtDecisionType };
+export type { courtDecisionType };
 
 type courtDecisionType = {
   date: Date;

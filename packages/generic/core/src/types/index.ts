@@ -1,4 +1,4 @@
 import { dataModelFieldType, dataModelType } from "./dataModelType";
 import { generatorType } from "./generatorType";
 
-export { dataModelFieldType, dataModelType, generatorType };
+export type { dataModelFieldType, dataModelType, generatorType };

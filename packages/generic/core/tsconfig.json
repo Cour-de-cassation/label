@@ -3,6 +3,7 @@
     "baseUrl": "./",
     "declaration": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./dist",

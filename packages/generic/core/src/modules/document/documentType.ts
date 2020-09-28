@@ -1,7 +1,9 @@
 import { dataModelType } from "../../types";
 import { mongoIdType } from "../../utils";
 
-export { documentDataModel, documentType };
+export { documentDataModel };
+
+export type { documentType };
 
 type documentType = {
   creationDate: Date;

@@ -1,7 +1,9 @@
 import { courtDecisionGenerator } from "./generator";
 import { courtDecisionType } from "./courtDecisionType";
 
-export { courtDecisionModule, courtDecisionType };
+export { courtDecisionModule };
+
+export type { courtDecisionType };
 
 const courtDecisionModule = {
   generator: courtDecisionGenerator,

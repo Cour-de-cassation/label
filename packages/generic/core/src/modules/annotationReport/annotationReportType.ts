@@ -1,6 +1,6 @@
 import { mongoIdType } from "../../utils";
 
-export { annotationReportType };
+export type { annotationReportType };
 
 type annotationReportType = {
   checkList: Array<string>;

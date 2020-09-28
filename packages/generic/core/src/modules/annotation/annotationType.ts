@@ -1,7 +1,7 @@
 import { mongoIdType } from "../../utils";
 import { annotationEntityType } from "../annotationEntity";
 
-export { annotationType };
+export type { annotationType };
 
 type annotationType = {
   annotationEntity: annotationEntityType;

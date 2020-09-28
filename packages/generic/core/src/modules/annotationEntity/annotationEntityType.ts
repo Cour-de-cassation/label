@@ -1,3 +1,3 @@
-export { annotationEntityType };
+export type { annotationEntityType };
 
 type annotationEntityType = string;

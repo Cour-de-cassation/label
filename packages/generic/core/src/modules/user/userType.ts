@@ -1,6 +1,6 @@
 import { mongoIdType } from "../../utils";
 
-export { userType };
+export type { userType };
 
 type userType = {
   _id: mongoIdType;

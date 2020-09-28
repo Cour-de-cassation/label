@@ -17,23 +17,26 @@ import { buildMongoId, mongoIdType, httpRequester } from "./utils";
 
 export {
   annotationModule,
-  annotationType,
   courtDecisionModule,
-  courtDecisionType,
   annotationEntityModule,
-  annotationEntityType,
   annotationReportModule,
-  annotationReportType,
   documentModule,
-  documentType,
   userModule,
+  buildMongoId,
+  httpRequester,
+};
+
+export type {
+  annotationType,
+  courtDecisionType,
+  annotationEntityType,
+  annotationReportType,
+  documentType,
   userType,
   dataModelFieldType,
   dataModelType,
   generatorType,
-  buildMongoId,
   mongoIdType,
-  httpRequester,
   CourtDecision,
 };
 

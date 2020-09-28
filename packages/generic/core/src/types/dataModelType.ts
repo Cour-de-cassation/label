@@ -1,4 +1,4 @@
-export { dataModelFieldType, dataModelType };
+export type { dataModelFieldType, dataModelType };
 
 type dataModelType<T> = { [key in keyof T]: dataModelFieldType };
 

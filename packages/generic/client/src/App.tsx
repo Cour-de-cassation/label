@@ -1,22 +1,26 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
+import { ThemeProvider } from '@material-ui/core';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { client } from './services/apollo/client';
 import { Login } from './pages/Login';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { theme } from './theme';
 
 const App = () => (
   <ApolloProvider client={client}>
-    <BrowserRouter>
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   </ApolloProvider>
 );
 

@@ -1,6 +1,6 @@
-import { connectorType } from './lib/connectorSynchronizer';
-import { dependencyManager, fileSystem } from './utils';
+import { buildConnector, connectorConfigType } from './lib/connector';
+import { dependencyManager, fileSystem, scriptRunner } from './utils';
 
-export { dependencyManager, fileSystem };
+export { buildConnector, dependencyManager, fileSystem, scriptRunner };
 
-export type { connectorType };
+export type { connectorConfigType };

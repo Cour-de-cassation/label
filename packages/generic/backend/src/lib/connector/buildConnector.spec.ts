@@ -1,19 +1,20 @@
 import { documentModule } from '@label/core';
-import { connectorSynchronizer } from './connectorSynchronizer';
 import { buildDocumentRepository } from '../../modules/document';
+import { buildConnector } from './buildConnector';
 
-describe('connectorSynchronizer', () => {
+describe('buildConnector', () => {
   let documentRepository = buildDocumentRepository();
 
   beforeEach(() => {
     documentRepository = buildDocumentRepository();
   });
 
-  describe('synchronizeFromConnector', () => {
-    it('should synchronize the document fetched by the connector', async () => {
+  describe('importAllDocuments', () => {
+    it('should import all the document fetched by the connector', async () => {
       const fakeConnector = buildFakeConnectorWithNDocuments(5);
+      const connector = buildConnector(fakeConnector);
 
-      await connectorSynchronizer.synchronizeFromConnector(fakeConnector);
+      await connector.importAllDocuments();
 
       const connectorDocuments = fakeConnector.getAllDocuments();
       const insertedDocuments = await documentRepository.findAll();

@@ -1,8 +1,8 @@
 import { documentType } from '@label/core';
 
-export type { connectorType };
+export type { connectorConfigType };
 
-type connectorType = {
+type connectorConfigType = {
   name: string;
   fetchAllDocuments(): Promise<documentType[]>;
 };

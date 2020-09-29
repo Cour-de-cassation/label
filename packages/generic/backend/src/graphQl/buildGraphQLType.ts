@@ -10,7 +10,9 @@ function buildGraphQLType<T>(name: string, dataModel: dataModelType<T>) {
   };
 
   for (const key in dataModel) {
-    Object.assign(graphQLType.fields, buildGraphQLFieldType(dataModel[key]));
+    Object.assign(graphQLType.fields, {
+      [key]: { type: buildGraphQLFieldType(dataModel[key]) },
+    });
   }
 
   return new GraphQLObjectType(graphQLType);

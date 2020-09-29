@@ -9,8 +9,8 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
-COPY packages/core/package.json ./packages/core/
-COPY packages/client/package.json ./packages/client/
+COPY packages/generic/core/package.json ./packages/generic/core/
+COPY packages/generic/client/package.json ./packages/generic/client/
 COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 

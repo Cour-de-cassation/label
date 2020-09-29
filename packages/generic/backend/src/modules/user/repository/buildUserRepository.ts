@@ -9,7 +9,7 @@ const buildUserRepository = buildRepositoryBuilder<
   customUserRepositoryType
 >({
   collectionName: 'users',
-  buildCustomRepository: collection => ({
+  buildCustomRepository: (collection) => ({
     async findByEmail(email) {
       const result = await collection.findOne({ email });
       if (!result) {

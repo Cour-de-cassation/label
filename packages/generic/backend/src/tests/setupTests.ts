@@ -10,7 +10,7 @@ global.beforeEach(() => {
     buildFakeDocumentRepository,
   ];
 
-  fakeRepositoryBuilders.forEach(buildFakeRepository => {
+  fakeRepositoryBuilders.forEach((buildFakeRepository) => {
     const fakeRepository = buildFakeRepository();
     fakeRepository.reinitialize();
   });

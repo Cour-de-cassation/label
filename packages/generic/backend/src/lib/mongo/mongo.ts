@@ -3,7 +3,7 @@ import { buildMongoId, mongoIdType } from '@label/core';
 
 export { buildMongoId, mongo };
 
-export type { mongoCollectionType, mongoIdType }
+export type { mongoCollectionType, mongoIdType };
 
 type mongoCollectionType<T> = Collection<T>;
 

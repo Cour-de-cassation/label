@@ -4,7 +4,7 @@ import { localStorageOracleApi } from './localStorageOracleApi';
 import { oracleApi } from './oracleApi';
 import { jurinetCourtDecisionType, oracleApiType } from './oracleApiType';
 
-export { api as oracleApi};
+export { api as oracleApi };
 
 export type { jurinetCourtDecisionType, oracleApiType };
 

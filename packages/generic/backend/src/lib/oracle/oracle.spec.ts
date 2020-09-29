@@ -16,10 +16,10 @@ describe('oracle', () => {
 
       const jurinetCourtDecisions = oracleTestServer.getJurinetCourtDecisions();
       const courtDecisions = await courtDecisionRepository.findAll();
-      jurinetCourtDecisions.forEach(jurinetCourtDecision =>
+      jurinetCourtDecisions.forEach((jurinetCourtDecision) =>
         expect(
           courtDecisions.some(
-            courtDecision =>
+            (courtDecision) =>
               courtDecision.documentId === jurinetCourtDecision.oracleId,
           ),
         ),

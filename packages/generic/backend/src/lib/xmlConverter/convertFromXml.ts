@@ -33,7 +33,7 @@ function extractHeaders(xmlJson: jurinetContentJsonType): string {
   const tagsList = Object.keys(xmlJson);
   const headerTagsList = tagsList.slice(
     0,
-    tagsList.findIndex(tag => tag === XML_COURT_DECISION_TEXT_TAG),
+    tagsList.findIndex((tag) => tag === XML_COURT_DECISION_TEXT_TAG),
   );
   const jsonHeader = pick(xmlJson, headerTagsList);
 
@@ -43,7 +43,7 @@ function extractHeaders(xmlJson: jurinetContentJsonType): string {
 function extractFooters(xmlJson: jurinetContentJsonType): string {
   const tagsList = Object.keys(xmlJson);
   const footerTagsList = tagsList.slice(
-    1 + tagsList.findIndex(tag => tag === XML_COURT_DECISION_TEXT_TAG),
+    1 + tagsList.findIndex((tag) => tag === XML_COURT_DECISION_TEXT_TAG),
   );
   const jsonFooter = pick(xmlJson, footerTagsList);
 

@@ -18,7 +18,7 @@ function mapNlpEngineAnnotationstoAnnotations(
   nlpEngineAnnotations: nlpEngineCourtDecisionAnnotationsType,
   courtDecision: courtDecisionType,
 ): annotationType[] {
-  return nlpEngineAnnotations.entities.map(nlpEngineAnnotation => ({
+  return nlpEngineAnnotations.entities.map((nlpEngineAnnotation) => ({
     annotationEntity: annotationEntityModule.lib.buildAnnotationEntity(
       nlpEngineAnnotation.label,
     ),

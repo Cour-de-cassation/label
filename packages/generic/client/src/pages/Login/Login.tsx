@@ -1,4 +1,5 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import { TextInput } from '../../components/TextInput';
 import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
 
@@ -10,17 +11,17 @@ const Login: FunctionComponent = () => {
 
   return (
     <div>
-      <input name="email" placeholder="email" onChange={changeEmail} value={email} />
-      <input name="password" placeholder="password" onChange={changePassword} value={password} />
+      <TextInput name="email" placeholder="email" onChange={changeEmail} value={email} />
+      <TextInput name="password" placeholder="password" onChange={changePassword} value={password} />
       <button onClick={handleSubmit}>Se connecter</button>
     </div>
   );
 
-  function changeEmail(event: any) {
+  function changeEmail(event: ChangeEvent<HTMLInputElement>) {
     setEmail(event.target.value);
   }
 
-  function changePassword(event: any) {
+  function changePassword(event: ChangeEvent<HTMLInputElement>) {
     setPassword(event.target.value);
   }
 

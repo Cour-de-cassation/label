@@ -14,6 +14,7 @@
   "dependencies": {
     "@apollo/client": "^3.1.4",
     "@label/core": "*",
+    "@material-ui/core": "^4.11.0",
     "axios": "^0.20.0",
     "graphql": "^15.3.0",
     "react": "^16.13.1",

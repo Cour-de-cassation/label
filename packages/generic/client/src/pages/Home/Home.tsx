@@ -8,10 +8,16 @@ const Home = () => {
   if (loading) {
     return <div>Chargement...</div>;
   }
-  if (error) {
+  if (error || !data) {
     return <div>Une erreur est survenue</div>;
   }
-  return <div>Youpi ! Voici l'id de la décision : {data && data.documents[0] && data.documents[0]._id}</div>;
+  return (
+    <div>
+      {data.documents.map((document) => (
+        <div>{document._id}</div>
+      ))}
+    </div>
+  );
 };
 
 export { Home };

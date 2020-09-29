@@ -1,4 +1,4 @@
-export { repositoryType };
+export type { repositoryType };
 
 type repositoryType<T> = {
   findAll: () => Promise<T[]>;

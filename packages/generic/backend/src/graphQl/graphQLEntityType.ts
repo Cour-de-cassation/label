@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLFieldResolver } from 'graphql';
 
-export { graphQLEntityType };
+export type { graphQLEntityType };
 
 type graphQLEntityType = {
   name: string;

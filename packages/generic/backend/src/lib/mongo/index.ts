@@ -1,1 +1,3 @@
-export { buildMongoId, mongo, mongoCollectionType, mongoIdType } from './mongo';
+export { buildMongoId, mongo } from './mongo';
+
+export type { mongoCollectionType, mongoIdType } from './mongo'

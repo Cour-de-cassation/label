@@ -1,6 +1,6 @@
 import { courtDecisionType } from '@label/core';
 
-export { nlpEngineApiType, nlpEngineCourtDecisionAnnotationsType };
+export type { nlpEngineApiType, nlpEngineCourtDecisionAnnotationsType };
 
 type nlpEngineApiType = {
   fetchNlpEngineAnnotations: (

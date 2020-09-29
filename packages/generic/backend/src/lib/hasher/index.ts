@@ -1,1 +1,1 @@
-export { hasher } from './hasher'
+export { hasher } from './hasher';

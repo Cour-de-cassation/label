@@ -1,7 +1,9 @@
 import { MongoClient, Collection } from 'mongodb';
 import { buildMongoId, mongoIdType } from '@label/core';
 
-export { buildMongoId, mongo, mongoCollectionType, mongoIdType };
+export { buildMongoId, mongo };
+
+export type { mongoCollectionType, mongoIdType }
 
 type mongoCollectionType<T> = Collection<T>;
 

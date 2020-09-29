@@ -1,5 +1,5 @@
 import { generatorType } from '@label/core';
-import { jurinetCourtDecisionType } from '../../api';
+import { jurinetCourtDecisionType } from '../../fetcher/api';
 
 export { jurinetCourtDecisionGenerator };
 

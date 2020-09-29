@@ -1,3 +1,7 @@
+import { jurinetFetcher } from './fetcher';
+
 export { jurinetConnector };
 
-const jurinetConnector = {};
+const jurinetConnector = {
+  ...jurinetFetcher,
+};

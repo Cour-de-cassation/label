@@ -12,7 +12,12 @@ import {
   userModule,
   userType,
 } from "./modules";
-import { dataModelFieldType, dataModelType, generatorType } from "./types";
+import {
+  dataModelFieldType,
+  dataModelType,
+  generatorType,
+  omitMongoIdType,
+} from "./types";
 import { buildMongoId, mongoIdType, httpRequester } from "./utils";
 
 export {
@@ -36,6 +41,7 @@ export type {
   dataModelFieldType,
   dataModelType,
   generatorType,
+  omitMongoIdType,
   mongoIdType,
   CourtDecision,
 };

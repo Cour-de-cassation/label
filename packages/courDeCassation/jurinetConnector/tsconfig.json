@@ -4,6 +4,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "incremental": true,
+    "isolatedModules": true,
     "module": "commonjs",
     "outDir": "./dist",
     "removeComments": true,

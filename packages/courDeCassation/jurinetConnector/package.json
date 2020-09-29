@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@label/backend": "*",
+    "@label/core": "*",
+    "fast-xml-parser": "^3.17.4",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
@@ -29,6 +32,9 @@
       "ts"
     ],
     "rootDir": "src",
+    "setupFilesAfterEnv": [
+      "./test/setupTests.ts"
+    ],
     "testRegex": ".spec.ts$",
     "testEnvironment": "node"
   },

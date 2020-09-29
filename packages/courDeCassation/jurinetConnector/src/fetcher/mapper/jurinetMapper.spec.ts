@@ -1,6 +1,6 @@
 import { omit } from 'lodash';
 import { jurinetCourtDecisionType } from '../api';
-import { oracleMapper } from './oracleMapper';
+import { jurinetMapper } from './jurinetMapper';
 
 const jurinetCourtDecision: jurinetCourtDecisionType = {
   date: new Date(),
@@ -13,19 +13,17 @@ const jurinetCourtDecision: jurinetCourtDecisionType = {
 <footer1>FOOTER 1</footer1></DOCUMENT>`,
 };
 
-describe('oracleMapper', () => {
-  describe('mapJurinetCourtDecisionToCourtDecision', () => {
-    it('should convert the jurinet court decision into a court decision', () => {
-      const courtDecision = oracleMapper.mapJurinetCourtDecisionToCourtDecision(
+describe('jurinetMapper', () => {
+  describe('mapJurinetCourtDecisionToDocument', () => {
+    it('should convert the jurinet court decision into a document', () => {
+      const document = jurinetMapper.mapJurinetCourtDecisionToDocument(
         jurinetCourtDecision,
       );
 
-      expect(omit(courtDecision, '_id')).toEqual({
-        date: jurinetCourtDecision.date,
-        footer: '<footer1>FOOTER 1</footer1>',
-        header: '<header1>HEADER 1</header1><header2></header2>',
+      expect(omit(document, '_id')).toEqual({
+        creationDate: jurinetCourtDecision.date,
         metadata: jurinetCourtDecision.metadata,
-        oracleId: jurinetCourtDecision.oracleId,
+        documentId: jurinetCourtDecision.oracleId,
         source: jurinetCourtDecision.source,
         text: 'COURT DECISION TEXT',
       });

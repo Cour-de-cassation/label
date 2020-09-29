@@ -1,11 +1,11 @@
-import { fileSystem } from '../../../utils';
-import { oracleApiType } from './oracleApiType';
+import { fileSystem } from '@label/backend';
+import { jurinetApiType } from './jurinetApiType';
 
-export { localStorageOracleApi };
+export { jurinetLocalApi };
 
-const pathToJurinetCourtDecisions = './tmp/storage/oracle/jurinet/';
+const pathToJurinetCourtDecisions = './storage/';
 
-const localStorageOracleApi: oracleApiType = {
+const jurinetLocalApi: jurinetApiType = {
   async fetchJurinetCourtDecisions() {
     const jurinetCourtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToJurinetCourtDecisions,

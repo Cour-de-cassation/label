@@ -1,6 +1,6 @@
-export type { jurinetCourtDecisionType, oracleApiType };
+export type { jurinetApiType, jurinetCourtDecisionType };
 
-type oracleApiType = {
+type jurinetApiType = {
   fetchJurinetCourtDecisions: () => Promise<Array<jurinetCourtDecisionType>>;
 };
 

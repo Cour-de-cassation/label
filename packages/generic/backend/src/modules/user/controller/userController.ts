@@ -6,10 +6,10 @@ export { userController };
 const login: expressRequestHandlerType<{
   email: string;
   password: string;
-}> = async (req, res) => {
+}> = async (req, res, next) => {
   const { email, password } = req.body;
   const { token } = await userService.login({ email, password });
-  res.send(token);
+  return token;
 };
 
 const userController = { login };

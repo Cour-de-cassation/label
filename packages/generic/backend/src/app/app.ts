@@ -8,6 +8,7 @@ import { mongo } from '../lib/mongo';
 import { authenticationMiddleware, userController } from '../modules/user';
 import { graphQLMutation } from './graphQLMutation';
 import { graphQLQuery } from './graphQLQuery';
+import { buildHandlingErrorController } from '../lib/express';
 
 const app = express();
 const port = 8080;
@@ -16,7 +17,7 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(bodyParser.json());
 
-app.post('/login', userController.login);
+app.post('/login', buildHandlingErrorController(userController.login));
 
 app.use(authenticationMiddleware);
 

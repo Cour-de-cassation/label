@@ -1,0 +1,3 @@
+export { nlpAnnotator };
+
+const nlpAnnotator = {};

@@ -26,7 +26,11 @@ const Login: FunctionComponent = () => {
   }
 
   async function handleSubmit() {
-    const { data } = await login(email, password);
-    setBearerTokenIntoLocalStorage(data);
+    try {
+      const { data } = await login(email, password);
+      setBearerTokenIntoLocalStorage(data);
+    } catch (error) {
+      console.warn(error);
+    }
   }
 };

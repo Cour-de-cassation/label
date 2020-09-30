@@ -23,4 +23,12 @@ const userService = {
       token,
     };
   },
+  async resetPasswordRequest(email: string) {
+    const userRepository = buildUserRepository();
+    const storedUser = await userRepository.findByEmail(email);
+    const resetPasswordRequestToken = jwtSigner.sign(storedUser._id);
+    // Here the mailer will be called to send to the user a link to reset his password
+    console.log(resetPasswordRequestToken);
+    return;
+  },
 };

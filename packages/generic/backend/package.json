@@ -70,7 +70,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "start": "node dist/app/app.js",
-    "test": "RUN_MODE=TEST jest",
+    "test": "RUN_MODE=TEST jest --passWithNoTests",
     "type": "yarn build"
   },
   "types": "dist/index",

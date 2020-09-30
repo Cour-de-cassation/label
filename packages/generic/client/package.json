@@ -59,7 +59,7 @@
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "react-scripts start",
-    "test": "jest --passWithNoTests"
+    "test": "RUN_MODE=TEST jest --passWithNoTests"
   },
   "version": "1.0.0"
 }

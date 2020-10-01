@@ -1,1 +1,1 @@
-export { insertUserMutation } from './userMutations';
+export { signUpUserMutation } from './userMutations';

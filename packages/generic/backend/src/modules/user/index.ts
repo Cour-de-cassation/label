@@ -1,11 +1,13 @@
 import { userController } from './controller';
-import { insertUserMutation } from './graphQl';
+import { signUpUserMutation } from './graphQl';
 import { authenticationMiddleware } from './middlewares';
 import { buildUserRepository } from './repository';
+import { userService } from './service';
 
 export {
   userController,
-  insertUserMutation,
+  signUpUserMutation,
   authenticationMiddleware,
   buildUserRepository,
+  userService,
 };

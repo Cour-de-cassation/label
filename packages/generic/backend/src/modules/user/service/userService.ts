@@ -1,3 +1,4 @@
+import { userModule } from '@label/core';
 import { userDtoType } from '../types/userDtoType';
 import { buildUserRepository } from '../repository';
 import { hasher } from '../../../lib/hasher';
@@ -30,5 +31,14 @@ const userService = {
     // Here the mailer will be called to send to the user a link to reset his password
     console.log(resetPasswordRequestToken);
     return;
+  },
+  async signUpUser(user: userDtoType) {
+    const hashedPassword = await hasher.hash(user.password);
+    const userRepository = buildUserRepository();
+    const newUser = userModule.lib.buildUser({
+      email: user.email,
+      password: hashedPassword,
+    });
+    return userRepository.insert(newUser);
   },
 };

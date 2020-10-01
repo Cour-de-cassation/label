@@ -1,1 +1,1 @@
-export { resolveInsertUser } from './resolveInsertUser';
+export { resolveSignUpUser } from './resolveSignUpUser';

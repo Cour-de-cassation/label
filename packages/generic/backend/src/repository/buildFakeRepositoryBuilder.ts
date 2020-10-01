@@ -7,7 +7,7 @@ function buildFakeRepositoryBuilder<T, U>({
 }: {
   buildCustomFakeRepository: (collection: T[]) => U;
 }): () => repositoryType<T> & U {
-  let collection: T[] = [];
+  const collection: T[] = [];
   const customRepository = buildCustomFakeRepository(collection);
 
   return () => ({
@@ -18,7 +18,9 @@ function buildFakeRepositoryBuilder<T, U>({
   });
 
   async function clear() {
-    collection = [];
+    while (collection.length) {
+      collection.pop();
+    }
   }
 
   async function findAll() {

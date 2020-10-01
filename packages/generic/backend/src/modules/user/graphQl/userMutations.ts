@@ -1,11 +1,11 @@
-import { resolveInsertUser } from './resolvers';
+import { resolveSignUpUser } from './resolvers';
 import { successGraphQLType } from '../../document';
 import { GraphQLString } from 'graphql';
 
-export { insertUserMutation };
+export { signUpUserMutation };
 
-const insertUserMutation = {
-  resolve: resolveInsertUser,
+const signUpUserMutation = {
+  resolve: resolveSignUpUser,
   type: successGraphQLType,
   args: {
     email: {

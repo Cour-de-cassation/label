@@ -1,13 +1,18 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { TextInput } from '../../components/TextInput';
 import { resetPassword } from '../../services/api';
 
 export { ResetPassword };
 
+type ResetPasswordParamsType = {
+  resetPasswordToken: string;
+};
+
 const ResetPassword: FunctionComponent = () => {
   const [password, setPassword] = useState('');
   const [confirmationPassword, setConfirmationPassword] = useState('');
-
+  const params = useParams<ResetPasswordParamsType>();
   return (
     <div>
       <TextInput name="password" placeholder="password" onChange={changePassword} value={password} />
@@ -31,7 +36,7 @@ const ResetPassword: FunctionComponent = () => {
 
   async function handleSubmit() {
     try {
-      await resetPassword(password);
+      await resetPassword(password, params.resetPasswordToken);
     } catch (error) {
       console.warn(error);
     }

@@ -3,10 +3,10 @@ import { environment } from '../../config/environment';
 
 export { resetPassword };
 
-const resetPassword = (email: string) =>
+const resetPassword = (password: string, resetPasswordToken: string) =>
   httpRequester.request({
     url: `${environment.API_URL}/reset-password`,
     headers: null,
     method: 'post',
-    data: { email },
+    data: { password, resetPasswordToken },
   });

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { useQuery } from '@apollo/client';
 import { DOCUMENTS_QUERY } from './graphql/documents.query';
 import { documentQueryType } from './graphql/documents.types';
 
-const Home = () => {
+const Home: FunctionComponent = () => {
   const { data, loading, error } = useQuery<documentQueryType>(DOCUMENTS_QUERY);
   if (loading) {
     return <div>Chargement...</div>;

@@ -27,7 +27,7 @@ const Router: FunctionComponent = () => (
   </BrowserRouter>
 );
 
-const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => (
+const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
   <Route
     {...rest}
     render={({ location }) =>

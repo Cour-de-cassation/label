@@ -1,25 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import axios from "axios";
 
-type httpRequestType = {
-  data: any;
+type httpRequestType<RequestDataType> = {
+  data: RequestDataType;
   headers: any;
   method: "get" | "post";
   url: string;
 };
 
-type httpResponseType = {
-  data: any;
+type httpResponseType<ResponseDataType> = {
+  data: ResponseDataType;
   statusCode: number;
 };
 
 const httpRequester = {
-  async request({
+  async request<RequestDataType = any, ResponseDataType = any>({
     data,
     headers,
     method,
     url,
-  }: httpRequestType): Promise<httpResponseType> {
+  }: httpRequestType<RequestDataType>): Promise<
+    httpResponseType<ResponseDataType>
+  > {
     const response = await axios({
       data,
       headers,

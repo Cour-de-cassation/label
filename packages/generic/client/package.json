@@ -20,8 +20,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
-    "typescript": "^3.7.5"
+    "react-scripts": "3.4.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -36,14 +35,15 @@
     "@types/testing-library__dom": "^7.5.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
-    "eslint": "^6.6.0",
+    "eslint": "7.7.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.6",
     "jest": "24.9.0",
     "prettier": "^2.1.2",
     "react-dev-utils": "^10.2.1",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "~4.0.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -58,6 +58,7 @@
     "dockerBuild": "docker-compose build",
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "start": "react-scripts start",
     "test": "RUN_MODE=TEST jest --passWithNoTests"
   },

@@ -10,6 +10,6 @@ type propsType = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const TextInput: FunctionComponent<propsType> = ({ name, placeholder, value, onChange }) => (
+const TextInput: FunctionComponent<propsType> = ({ name, placeholder, value, onChange }: propsType) => (
   <TextField id={name} label={placeholder} onChange={onChange} value={value} />
 );

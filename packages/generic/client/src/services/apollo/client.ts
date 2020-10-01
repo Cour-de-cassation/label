@@ -9,7 +9,7 @@ const httpLink = createHttpLink({
   uri: `${environment.API_URL}/graphql`,
 });
 
-const authenticationLink = setContext((_, { headers }) => {
+const authenticationLink = setContext((_, { headers }: { headers: Record<string, string> }) => {
   const bearerToken = getBearerTokenFromLocalStorage();
   if (!bearerToken) {
     return {

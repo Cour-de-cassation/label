@@ -3,8 +3,10 @@ import { environment } from '../../config/environment';
 
 export { resetPasswordRequest };
 
+type resetPasswordRequestRequestDataType = { email: string };
+
 const resetPasswordRequest = (email: string) =>
-  httpRequester.request({
+  httpRequester.request<resetPasswordRequestRequestDataType>({
     url: `${environment.API_URL}/reset-password-request`,
     headers: null,
     method: 'post',

@@ -14,7 +14,7 @@ const Home: FunctionComponent = () => {
   return (
     <div>
       {data.documents.map((document) => (
-        <div>{document._id}</div>
+        <div key={document._id}>{document._id}</div>
       ))}
     </div>
   );

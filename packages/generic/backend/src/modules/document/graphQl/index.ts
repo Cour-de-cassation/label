@@ -1,12 +1,7 @@
-import { documentsQuery, insertDocumentQuery } from './documentGraphQLQueries';
+import { documentsQuery } from './documentGraphQLQueries';
 import {
   documentsGraphQLEntity,
   successGraphQLType,
 } from './documentsGraphQLEntity';
 
-export {
-  documentsQuery,
-  insertDocumentQuery,
-  documentsGraphQLEntity,
-  successGraphQLType,
-};
+export { documentsQuery, documentsGraphQLEntity, successGraphQLType };

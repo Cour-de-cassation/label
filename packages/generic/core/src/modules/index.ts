@@ -1,5 +1,4 @@
 import { annotationModule, annotationType } from "./annotation";
-import { courtDecisionModule, courtDecisionType } from "./courtDecision";
 import {
   annotationEntityModule,
   annotationEntityType,
@@ -13,7 +12,6 @@ import { userModule, userType } from "./user";
 
 export {
   annotationModule,
-  courtDecisionModule,
   annotationEntityModule,
   annotationReportModule,
   documentModule,
@@ -22,7 +20,6 @@ export {
 
 export type {
   annotationType,
-  courtDecisionType,
   annotationEntityType,
   annotationReportType,
   documentType,

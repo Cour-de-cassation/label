@@ -1,1 +1,5 @@
-export { getBearerTokenFromLocalStorage, setBearerTokenIntoLocalStorage } from './localStorage';
+export {
+  getBearerTokenFromLocalStorage,
+  setBearerTokenIntoLocalStorage,
+  deleteBearerTokenInLocalStorage,
+} from './localStorage';

@@ -5,22 +5,33 @@ import { resetPassword } from '../../services/api';
 export { ResetPassword };
 
 const ResetPassword: FunctionComponent = () => {
-  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmationPassword, setConfirmationPassword] = useState('');
 
   return (
     <div>
-      <TextInput name="email" placeholder="email" onChange={changeEmail} value={email} />
-      <button onClick={handleSubmit}>Envoyer un mail de réinitialisation</button>
+      <TextInput name="password" placeholder="password" onChange={changePassword} value={password} />
+      <TextInput
+        name="confirmationPassword"
+        placeholder="confirmationPassword"
+        onChange={changeConfirmationPassword}
+        value={confirmationPassword}
+      />
+      <button onClick={handleSubmit}>Réinitialiser le mot de passe</button>
     </div>
   );
 
-  function changeEmail(event: ChangeEvent<HTMLInputElement>) {
-    setEmail(event.target.value);
+  function changePassword(event: ChangeEvent<HTMLInputElement>) {
+    setPassword(event.target.value);
+  }
+
+  function changeConfirmationPassword(event: ChangeEvent<HTMLInputElement>) {
+    setConfirmationPassword(event.target.value);
   }
 
   async function handleSubmit() {
     try {
-      await resetPassword(email);
+      await resetPassword(password);
     } catch (error) {
       console.warn(error);
     }

@@ -6,6 +6,7 @@ import { Home } from './pages/Home';
 import { client } from './services/apollo/client';
 import { Login } from './pages/Login';
 import { ResetPasswordRequest } from './pages/ResetPasswordRequest';
+import { ResetPassword } from './pages/ResetPassword';
 import { theme } from './theme';
 
 const App = () => (
@@ -15,6 +16,9 @@ const App = () => (
         <Switch>
           <Route path="/reset-password-request">
             <ResetPasswordRequest />
+          </Route>
+          <Route path="/reset-password">
+            <ResetPassword />
           </Route>
           <Route path="/login">
             <Login />

@@ -1,6 +1,3 @@
-import {
-  buildAnnotationRepository,
-  buildFakeAnnotationRepository,
-} from './repository';
+import { buildAnnotationRepository } from './repository';
 
-export { buildAnnotationRepository, buildFakeAnnotationRepository };
+export { buildAnnotationRepository };

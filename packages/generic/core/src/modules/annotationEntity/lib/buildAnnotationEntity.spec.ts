@@ -6,6 +6,6 @@ describe("buildAnnotationEntity", () => {
 
     const annotationEntity = buildAnnotationEntity(label);
 
-    expect(annotationEntity.startsWith("LABEL_")).toEqual(true);
+    expect(annotationEntity.startsWith("LABEL")).toEqual(true);
   });
 });

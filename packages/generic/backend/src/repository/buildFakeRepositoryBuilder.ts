@@ -6,18 +6,20 @@ function buildFakeRepositoryBuilder<T, U>({
   buildCustomFakeRepository,
 }: {
   buildCustomFakeRepository: (collection: T[]) => U;
-}): () => repositoryType<T> & { reinitialize: () => void } & U {
+}): () => repositoryType<T> & U {
   let collection: T[] = [];
   const customRepository = buildCustomFakeRepository(collection);
 
   return () => ({
+    clear,
     findAll,
     insert,
     ...customRepository,
-    reinitialize: () => {
-      collection = [];
-    },
   });
+
+  async function clear() {
+    collection = [];
+  }
 
   async function findAll() {
     return collection;

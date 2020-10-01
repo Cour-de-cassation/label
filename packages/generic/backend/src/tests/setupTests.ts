@@ -1,17 +1,14 @@
 import '@babel/polyfill';
-import { buildFakeAnnotationRepository } from '../modules/annotation';
-import { buildFakeAnnotationReportRepository } from '../modules/annotationReport';
-import { buildFakeDocumentRepository } from '../modules/document';
+import { buildAnnotationRepository } from '../modules/annotation';
+import { buildAnnotationReportRepository } from '../modules/annotationReport';
+import { buildDocumentRepository } from '../modules/document';
 
-global.beforeEach(() => {
-  const fakeRepositoryBuilders = [
-    buildFakeAnnotationRepository,
-    buildFakeAnnotationReportRepository,
-    buildFakeDocumentRepository,
-  ];
+global.beforeEach(async () => {
+  const repositories = [
+    buildAnnotationRepository,
+    buildAnnotationReportRepository,
+    buildDocumentRepository,
+  ].map((buildRepository) => buildRepository());
 
-  fakeRepositoryBuilders.forEach((buildFakeRepository) => {
-    const fakeRepository = buildFakeRepository();
-    fakeRepository.reinitialize();
-  });
+  await Promise.all(repositories.map((repository) => repository.clear()));
 });

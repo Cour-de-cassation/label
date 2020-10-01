@@ -16,10 +16,15 @@ function buildRepositoryBuilder<T, U>({
     const customRepository = buildCustomRepository(collection);
 
     return {
+      clear,
       findAll,
       insert,
       ...customRepository,
     };
+
+    async function clear() {
+      await collection.deleteMany({});
+    }
 
     async function findAll() {
       return collection.find().toArray();

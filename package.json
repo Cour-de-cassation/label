@@ -28,7 +28,6 @@
     "dockerClientBuild": "docker-compose -f docker-compose-client.yml build",
     "dockerClientStart": "docker-compose -f docker-compose-client.yml up",
     "lint": "lerna run lint",
-    "runScript": "yarn compile && RUN_MODE=LOCAL node",
     "test": "lerna run test",
     "type": "lerna run type"
   },

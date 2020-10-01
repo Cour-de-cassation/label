@@ -18,6 +18,7 @@ RUN yarn install --pure-lockfile
 COPY . .
 
 RUN yarn backendBuild
+RUN chmod +x startBackend.sh
 
 # Start the app
-ENTRYPOINT ["yarn", "backendStart"]
+ENTRYPOINT ["./startBackend.sh"]

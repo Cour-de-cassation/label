@@ -7,19 +7,29 @@ export type { mongoCollectionType, mongoIdType };
 
 type mongoCollectionType<T> = Collection<T>;
 
-const mongo = {
-  initialize,
-  getDb,
-};
+const mongo = buildMongo();
 
-const client = new MongoClient('mongodb://db:27017', {
-  useUnifiedTopology: true,
-});
+function buildMongo() {
+  let client = new MongoClient('mongodb://db:27017', {
+    useUnifiedTopology: true,
+  });
 
-function initialize() {
-  return client.connect();
-}
+  return {
+    close,
+    initialize,
+    getDb,
+  };
 
-function getDb() {
-  return client.db('db');
+  async function close() {
+    await client.close();
+  }
+
+  async function initialize() {
+    client = await client.connect();
+    return client;
+  }
+
+  function getDb() {
+    return client.db('db');
+  }
 }

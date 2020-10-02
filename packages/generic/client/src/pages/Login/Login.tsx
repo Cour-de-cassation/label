@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { TextInput } from '../../components/TextInput';
 import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
@@ -16,6 +16,7 @@ const Login: FunctionComponent = () => {
       <TextInput name="email" type="email" placeholder="email" onChange={changeEmail} value={email} />
       <TextInput name="password" type="password" placeholder="password" onChange={changePassword} value={password} />
       <button onClick={handleSubmit}>Se connecter</button>
+      <Link to="/reset-password-request">Mot de passe oublié ?</Link>
     </div>
   );
 

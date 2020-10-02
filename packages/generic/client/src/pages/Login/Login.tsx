@@ -11,8 +11,8 @@ const Login: FunctionComponent = () => {
 
   return (
     <div>
-      <TextInput name="email" placeholder="email" onChange={changeEmail} value={email} />
-      <TextInput name="password" placeholder="password" onChange={changePassword} value={password} />
+      <TextInput name="email" type="password" placeholder="email" onChange={changeEmail} value={email} />
+      <TextInput name="password" type="password" placeholder="password" onChange={changePassword} value={password} />
       <button onClick={handleSubmit}>Se connecter</button>
     </div>
   );

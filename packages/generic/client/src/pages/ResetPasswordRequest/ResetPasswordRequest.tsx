@@ -9,7 +9,7 @@ const ResetPasswordRequest: FunctionComponent = () => {
 
   return (
     <div>
-      <TextInput name="email" placeholder="email" onChange={changeEmail} value={email} />
+      <TextInput name="email" placeholder="email" type="email" onChange={changeEmail} value={email} />
       <button onClick={handleSubmit}>Envoyer un mail de réinitialisation</button>
     </div>
   );

@@ -1,4 +1,4 @@
-import { userModule } from '@label/core';
+import { buildMongoId, userModule } from '@label/core';
 import { userDtoType } from '../types/userDtoType';
 import { buildUserRepository } from '../repository';
 import { hasher } from '../../../lib/hasher';
@@ -40,5 +40,13 @@ const userService = {
       password: hashedPassword,
     });
     return userRepository.insert(newUser);
+  },
+  async resetPassword(password: string, resetPasswordToken: string) {
+    const userId = jwtSigner.verifyToken(resetPasswordToken);
+    const userRepository = buildUserRepository();
+    const userMongoId = buildMongoId(userId);
+    const user = await userRepository.findById(userMongoId);
+    const hashedPassword = await hasher.hash(password);
+    return await userRepository.updatePassword(user, hashedPassword);
   },
 };

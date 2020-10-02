@@ -17,5 +17,21 @@ const buildUserRepository = buildRepositoryBuilder<
       }
       return result;
     },
+    async findById(_id) {
+      const result = await collection.findOne({ _id });
+      if (!result) {
+        throw new Error(`No matching user for _id ${_id}`);
+      }
+      return result;
+    },
+    async updatePassword(user, password) {
+      const { result } = await collection.updateOne(
+        { _id: user._id },
+        { $set: { password } },
+      );
+      return {
+        success: result.ok === 1,
+      };
+    },
   }),
 });

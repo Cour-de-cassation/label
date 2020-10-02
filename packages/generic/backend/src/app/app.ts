@@ -22,6 +22,10 @@ app.post(
   '/reset-password-request',
   buildHandlingErrorController(userController.resetPasswordRequest),
 );
+app.post(
+  '/reset-password',
+  buildHandlingErrorController(userController.resetPassword),
+);
 
 app.use(authenticationMiddleware);
 

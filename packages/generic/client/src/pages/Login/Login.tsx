@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { TextInput } from '../../components/TextInput';
 import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
@@ -8,6 +9,7 @@ export { Login };
 const Login: FunctionComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
   return (
     <div>
@@ -29,6 +31,7 @@ const Login: FunctionComponent = () => {
     try {
       const { data } = await login(email, password);
       setBearerTokenIntoLocalStorage(data);
+      history.push('/');
     } catch (error) {
       console.warn(error);
     }

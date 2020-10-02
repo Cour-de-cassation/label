@@ -1,11 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { useQuery } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 import { DOCUMENTS_QUERY } from './graphql/documents.query';
 import { documentQueryType } from './graphql/documents.types';
 import { deleteBearerTokenInLocalStorage } from '../../services/localStorage';
 
 const Home: FunctionComponent = () => {
   const { data, loading, error } = useQuery<documentQueryType>(DOCUMENTS_QUERY);
+  const history = useHistory();
   if (loading) {
     return <div>Chargement...</div>;
   }
@@ -23,6 +25,7 @@ const Home: FunctionComponent = () => {
 
   function logout() {
     deleteBearerTokenInLocalStorage();
+    history.push('/login');
   }
 };
 

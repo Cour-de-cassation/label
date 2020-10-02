@@ -1,7 +1,7 @@
-import { CourtDecision } from '@label/core';
+import { documentType } from '@label/core';
 
-export type { documentQueryType, CourtDecision };
+export type { documentQueryType };
 
 type documentQueryType = {
-  documents: CourtDecision[];
+  documents: documentType[];
 };

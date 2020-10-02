@@ -4,6 +4,7 @@ const DOCUMENTS_QUERY = gql`
   query documents {
     documents {
       _id
+      text
     }
   }
 `;

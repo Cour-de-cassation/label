@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { DOCUMENTS_QUERY } from './graphql/documents.query';
 import { documentQueryType } from './graphql/documents.types';
 import { deleteBearerTokenInLocalStorage } from '../../services/localStorage';
+import { Document } from '../../components/Document';
 
 const Home: FunctionComponent = () => {
   const { data, loading, error } = useQuery<documentQueryType>(DOCUMENTS_QUERY);
@@ -17,9 +18,7 @@ const Home: FunctionComponent = () => {
   return (
     <div>
       <button onClick={logout}>Se déconnecter</button>
-      {data.documents.map((document) => (
-        <div key={document._id}>{document._id}</div>
-      ))}
+      {data.documents.length > 0 && <Document document={data.documents[0]} />}
     </div>
   );
 

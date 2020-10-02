@@ -39,9 +39,4 @@ export type {
   generatorType,
   omitMongoIdType,
   mongoIdType,
-  CourtDecision,
-};
-
-type CourtDecision = {
-  _id: string;
 };

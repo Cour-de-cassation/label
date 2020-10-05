@@ -4,9 +4,9 @@ import {
   successGraphQLType,
 } from './documentsGraphQLEntity';
 
-export { documentsQuery };
+export { documentsGraphQLQuery };
 
-const documentsQuery = {
+const documentsGraphQLQuery = {
   type: new GraphQLList(documentsGraphQLEntity.type),
   resolve: documentsGraphQLEntity.resolve,
 };

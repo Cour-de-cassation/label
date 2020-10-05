@@ -1,14 +1,14 @@
 import {
   documentsGraphQLEntity,
-  documentsQuery,
+  documentsGraphQLQuery,
   successGraphQLType,
-} from './graphQl';
+} from './graphQL';
 import { documentService } from './service';
 import { buildDocumentRepository } from './repository';
 
 export {
   documentsGraphQLEntity,
-  documentsQuery,
+  documentsGraphQLQuery,
   successGraphQLType,
   documentService,
   buildDocumentRepository,

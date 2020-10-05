@@ -1,1 +1,0 @@
-export { signUpUserMutation } from './userMutations';

@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLBoolean } from 'graphql';
 import { documentModule } from '@label/core';
-import { buildGraphQLType, graphQLEntityType } from '../../../graphQl';
+import { buildGraphQLType, graphQLEntityType } from '../../../graphQL';
 import { resolveDocuments } from './resolvers';
 
 export { documentsGraphQLEntity, successGraphQLType };

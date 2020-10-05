@@ -3,6 +3,8 @@ import { userDtoType } from '../types/userDtoType';
 import { buildUserRepository } from '../repository';
 import { hasher } from '../../../lib/hasher';
 import { jwtSigner } from '../../../lib/jwtSigner';
+import { mailer } from '../../../lib/mailer';
+import { wordings } from '../../../wordings';
 
 export { userService };
 
@@ -28,9 +30,13 @@ const userService = {
     const userRepository = buildUserRepository();
     const storedUser = await userRepository.findByEmail(email);
     const resetPasswordRequestToken = jwtSigner.sign(storedUser._id);
-    // Here the mailer will be called to send to the user a link to reset his password
-    console.log(resetPasswordRequestToken);
-    return;
+    const resetPasswordLink = `${process.env.WEBAPP_URL}/reset-password/${resetPasswordRequestToken}`;
+    const text = `${wordings.resetPasswordMailText}${resetPasswordLink}`;
+    await mailer.sendMail({
+      to: email,
+      subject: wordings.resetPasswordMailSubject,
+      text: text,
+    });
   },
   async signUpUser(user: userDtoType) {
     const hashedPassword = await hasher.hash(user.password);

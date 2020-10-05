@@ -1,12 +1,13 @@
-import { GraphQLList, GraphQLInputObjectType, GraphQLString } from 'graphql';
-import {
-  documentsGraphQLEntity,
-  successGraphQLType,
-} from './documentsGraphQLEntity';
+import { GraphQLList } from 'graphql';
+import { documentModule } from '@label/core';
+import { buildGraphQLType } from '../../../graphQL';
+import { resolveDocuments } from './resolvers';
 
 export { documentsGraphQLQuery };
 
 const documentsGraphQLQuery = {
-  type: new GraphQLList(documentsGraphQLEntity.type),
-  resolve: documentsGraphQLEntity.resolve,
+  type: new GraphQLList(
+    buildGraphQLType('documentType', documentModule.dataModel),
+  ),
+  resolve: resolveDocuments,
 };

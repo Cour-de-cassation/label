@@ -1,6 +1,6 @@
-import { resolveSignUpUser } from './resolvers';
-import { successGraphQLType } from '../../document';
 import { GraphQLString } from 'graphql';
+import { successGraphQLType } from '../../../graphQL';
+import { resolveSignUpUser } from './resolvers';
 
 export { signUpUserGraphQLMutation };
 

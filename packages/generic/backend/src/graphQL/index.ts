@@ -1,6 +1,4 @@
 import { buildGraphQLType } from './buildGraphQLType';
-import { graphQLEntityType } from './graphQLEntityType';
+import { successGraphQLType } from './successGraphQLType';
 
-export { buildGraphQLType };
-
-export type { graphQLEntityType };
+export { buildGraphQLType, successGraphQLType };

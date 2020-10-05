@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import { mongo } from '../lib/mongo';
 import { authenticationMiddleware, userController } from '../modules/user';
+import { logger } from '../utils';
 import { graphQLMutation } from './graphQLMutation';
 import { graphQLQuery } from './graphQLQuery';
 import { buildHandlingErrorController } from '../lib/express';
@@ -41,8 +42,8 @@ app.use(
 );
 
 app.listen(port, async () => {
-  console.log(`Loading the Mongo database...`);
+  logger.log(`Loading the Mongo database...`);
   await mongo.initialize();
-  console.log(`MongoDB ready!`);
-  console.log(`GraphQL available on http://localhost:${port}`);
+  logger.log(`MongoDB ready!`);
+  logger.log(`GraphQL available on http://localhost:${port}`);
 });

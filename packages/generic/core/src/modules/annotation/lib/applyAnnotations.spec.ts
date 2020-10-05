@@ -6,21 +6,21 @@ describe("applyAnnotations", () => {
     const text = "Monsieur Dupont et Madame Durand";
     const annotations = [
       annotationGenerator.generate({
-        annotationEntity: "ENTITY_1",
+        category: "CATEGORY_1",
         start: 9,
         text: "Dupont",
       }),
       annotationGenerator.generate({
-        annotationEntity: "ENTITY_2",
+        category: "CATEGORY_2",
         start: 26,
         text: "Durand",
       }),
     ];
     const resolver = (entity: string) => {
       switch (entity) {
-        case "ENTITY_1":
+        case "CATEGORY_1":
           return "ANONYMISED_1";
-        case "ENTITY_2":
+        case "CATEGORY_2":
           return "ANONYMISED_2";
         default:
           return "";

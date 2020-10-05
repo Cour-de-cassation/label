@@ -1,10 +1,9 @@
 import { mongoIdType } from "../../utils";
-import { annotationEntityType } from "../annotationEntity";
 
 export type { annotationType };
 
 type annotationType = {
-  annotationEntity: annotationEntityType;
+  category: string;
   documentId: mongoIdType;
   source: string;
   _id: mongoIdType;

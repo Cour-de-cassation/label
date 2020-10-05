@@ -2,7 +2,6 @@ import {
   annotationType,
   buildMongoId,
   documentType,
-  annotationEntityModule,
   annotationReportType,
 } from '@label/core';
 import { nlpAnnotationsType } from '../api';
@@ -19,9 +18,7 @@ function mapNlpAnnotationsToAnnotations(
   document: documentType,
 ): annotationType[] {
   return nlpAnnotations.entities.map(nlpAnnotation => ({
-    annotationEntity: annotationEntityModule.lib.buildAnnotationEntity(
-      nlpAnnotation.label,
-    ),
+    category: nlpAnnotation.label,
     documentId: document._id,
     _id: buildMongoId(),
     source: nlpAnnotation.source,

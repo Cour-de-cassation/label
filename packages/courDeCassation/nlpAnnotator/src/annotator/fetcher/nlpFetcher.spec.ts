@@ -35,7 +35,7 @@ describe('nlpFetcher', () => {
             annotation =>
               annotation.text === nlpAnnotation.text &&
               annotation.start === nlpAnnotation.start &&
-              annotation.annotationEntity === nlpAnnotation.label,
+              annotation.category === nlpAnnotation.label,
           ),
         ).toEqual(true);
       });

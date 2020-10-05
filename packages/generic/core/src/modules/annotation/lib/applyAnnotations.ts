@@ -1,4 +1,3 @@
-import { annotationEntityType } from "../../annotationEntity";
 import { annotationType } from "../annotationType";
 
 export { applyAnnotations };
@@ -6,7 +5,7 @@ export { applyAnnotations };
 function applyAnnotations(
   text: string,
   annotations: Array<annotationType>,
-  anonymiser: (annotationEntity: annotationEntityType) => string
+  anonymiser: (annotationCategory: string) => string
 ): string {
   const sortedAnnotations = sortAnnotations(annotations);
   const anonymisedTextChunks = slicedAndAnonymiseText(
@@ -31,14 +30,14 @@ function sortAnnotations(annotations: Array<annotationType>) {
 function slicedAndAnonymiseText(
   text: string,
   sortedAnnotations: Array<annotationType>,
-  anonymiser: (annotationEntity: annotationEntityType) => string
+  anonymiser: (annotationCategory: string) => string
 ) {
   const anonymisedTextChunks = [];
 
   let currentIndex = 0;
   sortedAnnotations.forEach((annotation) => {
     anonymisedTextChunks.push(text.slice(currentIndex, annotation.start));
-    anonymisedTextChunks.push(anonymiser(annotation.annotationEntity));
+    anonymisedTextChunks.push(anonymiser(annotation.category));
     currentIndex = annotation.start + annotation.text.length;
   });
   anonymisedTextChunks.push(text.slice(currentIndex));

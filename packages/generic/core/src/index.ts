@@ -1,8 +1,6 @@
 import {
   annotationModule,
   annotationType,
-  annotationEntityModule,
-  annotationEntityType,
   annotationReportModule,
   annotationReportType,
   documentModule,
@@ -20,7 +18,6 @@ import { buildMongoId, mongoIdType, httpRequester } from "./utils";
 
 export {
   annotationModule,
-  annotationEntityModule,
   annotationReportModule,
   documentModule,
   userModule,
@@ -30,7 +27,6 @@ export {
 
 export type {
   annotationType,
-  annotationEntityType,
   annotationReportType,
   documentType,
   userType,

@@ -1,3 +1,4 @@
+import { annotationsGraphQLQuery } from './graphQL';
 import { buildAnnotationRepository } from './repository';
 
-export { buildAnnotationRepository };
+export { annotationsGraphQLQuery, buildAnnotationRepository };

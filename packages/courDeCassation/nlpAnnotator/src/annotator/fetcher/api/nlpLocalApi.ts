@@ -9,7 +9,7 @@ const nlpLocalApi: nlpApiType = {
   async fetchNlpAnnotations(document) {
     return JSON.parse(
       await fs.readFile(`${pathToNlpAnnotations}${document.documentId}.json`, {
-        encoding: 'utf8',
+        encoding: 'latin1',
       }),
     ) as nlpAnnotationsType;
   },

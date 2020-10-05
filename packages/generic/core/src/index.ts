@@ -14,7 +14,12 @@ import {
   generatorType,
   omitMongoIdType,
 } from "./types";
-import { buildMongoId, mongoIdType, httpRequester } from "./utils";
+import {
+  buildMongoId,
+  areMongoIdEqual,
+  mongoIdType,
+  httpRequester,
+} from "./utils";
 
 export {
   annotationModule,
@@ -22,6 +27,7 @@ export {
   documentModule,
   userModule,
   buildMongoId,
+  areMongoIdEqual,
   httpRequester,
 };
 

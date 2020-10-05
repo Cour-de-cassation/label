@@ -1,6 +1,6 @@
-import { buildMongoId, mongoIdType } from "./mongo";
+import { buildMongoId, mongoIdType, areMongoIdEqual } from "./mongo";
 import { httpRequester } from "./httpRequester";
 
-export { buildMongoId, httpRequester };
+export { buildMongoId, areMongoIdEqual, httpRequester };
 
 export type { mongoIdType };

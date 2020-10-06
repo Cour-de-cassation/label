@@ -4,12 +4,11 @@ import { GraphQLSchema } from 'graphql';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import { mongo } from '../lib/mongo';
+import { buildHandlingErrorController } from '../lib/express';
 import { authenticationMiddleware, userController } from '../modules/user';
-import { logger } from '../utils';
 import { graphQLMutation } from './graphQLMutation';
 import { graphQLQuery } from './graphQLQuery';
-import { buildHandlingErrorController } from '../lib/express';
+import { setup } from './setup';
 
 const app = express();
 const port = 8080;
@@ -42,8 +41,5 @@ app.use(
 );
 
 app.listen(port, async () => {
-  logger.log(`Loading the Mongo database...`);
-  await mongo.initialize();
-  logger.log(`MongoDB ready!`);
-  logger.log(`GraphQL available on http://localhost:${port}`);
+  await setup(port);
 });

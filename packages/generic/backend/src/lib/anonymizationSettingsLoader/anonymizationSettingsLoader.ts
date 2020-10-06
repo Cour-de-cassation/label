@@ -1,13 +1,13 @@
 import { promises as fs } from 'fs';
 import { anonymizationSettingsType } from '@label/core';
 
-export { anonymizationSettings };
+export { anonymizationSettingsLoader };
 
-const anonymizationSettings = buildAnonymizationSettings();
+const anonymizationSettingsLoader = buildAnonymizationSettingsLoader();
 
 const PATH_TO_ANONYMIZATION_SETTINGS = `./settings/anonymisationSettings.json`;
 
-function buildAnonymizationSettings() {
+function buildAnonymizationSettingsLoader() {
   let anonymizationSettings: anonymizationSettingsType = {};
 
   return {

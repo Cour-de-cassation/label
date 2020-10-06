@@ -1,3 +1,4 @@
+import { buildAnonymizer, anonymizationSettingsType } from "./lib";
 import {
   annotationModule,
   annotationType,
@@ -22,6 +23,7 @@ import {
 } from "./utils";
 
 export {
+  buildAnonymizer,
   annotationModule,
   annotationReportModule,
   documentModule,
@@ -32,6 +34,7 @@ export {
 };
 
 export type {
+  anonymizationSettingsType,
   annotationType,
   annotationReportType,
   documentType,

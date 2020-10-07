@@ -1,0 +1,1 @@
+export { AnnotationsPanel } from './AnnotationPanel';

@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { DOCUMENTS_QUERY } from './graphql/documents.query';
 import { documentQueryType } from './graphql/documents.types';
 import { deleteBearerTokenInLocalStorage } from '../../services/localStorage';
-import { Document } from '../../components/Document';
+import { Document } from './Document';
+import { AnnotationsPanel } from './AnnotationsPanel';
 
 const Home: FunctionComponent = () => {
   const { data, loading, error } = useQuery<documentQueryType>(DOCUMENTS_QUERY);
@@ -21,11 +22,18 @@ const Home: FunctionComponent = () => {
     if (loading) {
       return <div>Chargement...</div>;
     }
-    if (error || !data) {
+    if (error || !data || data.documents.length === 0) {
       return <div>Une erreur est survenue</div>;
     }
 
-    return data.documents.length > 0 && <Document document={data.documents[0]} />;
+    const document = data.documents[0];
+
+    return (
+      <div>
+        <AnnotationsPanel />
+        <Document document={document} />;
+      </div>
+    );
   }
 
   function logout() {

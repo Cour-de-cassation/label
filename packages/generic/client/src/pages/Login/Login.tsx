@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { TextInput } from '../../components/TextInput';
+import { TextInput } from '../../components';
 import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
 

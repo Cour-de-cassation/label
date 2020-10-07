@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Header } from '../../../../components/Header';
-import { Button, SwitchButton } from '../../../../components/buttons';
+import { Button, Header, SwitchButton } from '../../../../components';
 
 export { DocumentPanelHeader };
 

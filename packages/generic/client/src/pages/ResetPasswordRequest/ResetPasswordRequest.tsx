@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
-import { TextInput } from '../../components/TextInput';
+import { TextInput } from '../../components';
 import { resetPasswordRequest } from '../../services/api';
 
 export { ResetPasswordRequest };

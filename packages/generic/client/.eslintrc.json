@@ -17,6 +17,7 @@
   "rules": {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
+    "react/jsx-key": "off",
     "@typescript-eslint/no-unsafe-assignment": 2,
     "@typescript-eslint/no-unsafe-call": 2,
     "@typescript-eslint/no-unsafe-member-access": 2,

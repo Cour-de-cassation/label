@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { DOCUMENTS_QUERY } from './graphql/documents.query';
 import { documentQueryType } from './graphql/documents.types';
 import { deleteBearerTokenInLocalStorage } from '../../services/localStorage';
-import { Document } from './Document';
 import { AnnotationsPanel } from './AnnotationsPanel';
+import { DocumentPanel } from './DocumentPanel';
 
 const Home: FunctionComponent = () => {
   const { data, loading, error } = useQuery<documentQueryType>(DOCUMENTS_QUERY);
@@ -31,7 +31,7 @@ const Home: FunctionComponent = () => {
     return (
       <div>
         <AnnotationsPanel />
-        <Document document={document} />;
+        <DocumentPanel document={data.documents[0]} />;
       </div>
     );
   }

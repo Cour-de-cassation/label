@@ -1,16 +1,12 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 import { documentType } from '@label/core';
 
-export { Document };
+export { DocumentViewer };
 
-type propsType = {
-  document: documentType;
-};
-
-const Document: FunctionComponent<propsType> = ({ document }: propsType) => {
+function DocumentViewer(props: { document: documentType }): ReactElement {
   return (
     <table>
-      {document.text.split('\r').map((row, index) => (
+      {props.document.text.split('\r').map((row, index) => (
         <tr key={index}>
           <td>{index + 1}</td>
           <td>
@@ -22,4 +18,4 @@ const Document: FunctionComponent<propsType> = ({ document }: propsType) => {
       ))}
     </table>
   );
-};
+}

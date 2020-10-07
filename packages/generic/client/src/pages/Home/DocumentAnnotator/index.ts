@@ -1,0 +1,1 @@
+export { DocumentAnnotator } from './DocumentAnnotator';

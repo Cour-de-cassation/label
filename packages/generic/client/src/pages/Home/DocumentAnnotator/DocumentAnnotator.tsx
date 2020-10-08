@@ -5,6 +5,7 @@ import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { annotationsQueryType } from './graphql/annotations.types';
 import { ANNOTATIONS_QUERY } from './graphql/annotations.query';
+import { LayoutGrid } from '../../../components';
 
 export { DocumentAnnotator };
 
@@ -23,10 +24,14 @@ function DocumentAnnotator(props: { document: documentType }): ReactElement {
     }
     const { annotations } = data;
     return (
-      <div>
-        <AnnotationsPanel annotations={annotations} />
-        <DocumentPanel document={props.document} />
-      </div>
+      <LayoutGrid container>
+        <LayoutGrid container item xs={3}>
+          <AnnotationsPanel annotations={annotations} />
+        </LayoutGrid>
+        <LayoutGrid container item xs={9}>
+          <DocumentPanel document={props.document} />
+        </LayoutGrid>
+      </LayoutGrid>
     );
   }
 }

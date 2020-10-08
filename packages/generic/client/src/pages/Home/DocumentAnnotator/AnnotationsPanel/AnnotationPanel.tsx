@@ -1,5 +1,6 @@
 import React from 'react';
 import { annotationType } from '@label/core';
+import orderBy from 'lodash/orderBy';
 import { groupAnnotations } from './lib';
 import { LayoutGrid, Accordion, AccordionHeader, AccordionBody } from '../../../../components';
 
@@ -20,7 +21,7 @@ function AnnotationsPanel(props: { annotations: annotationType[] }) {
             </AccordionHeader>
             <AccordionBody>
               <LayoutGrid container>
-                {Object.keys(groupedAnnotations[annotationCategory]).map((annotationText) => (
+                {sortByOccurrences(groupedAnnotations, annotationCategory).map((annotationText) => (
                   <LayoutGrid container justifyContent="space-between" item key={annotationText}>
                     <LayoutGrid xs={8} item>
                       {annotationText}
@@ -37,4 +38,19 @@ function AnnotationsPanel(props: { annotations: annotationType[] }) {
       ))}
     </LayoutGrid>
   );
+
+  function sortByOccurrences(
+    groupedAnnotations: {
+      [key: string]: {
+        [key: string]: annotationType[];
+      };
+    },
+    annotationCategory: string,
+  ) {
+    return orderBy(
+      Object.keys(groupedAnnotations[annotationCategory]),
+      (annotationText) => groupedAnnotations[annotationCategory][annotationText].length,
+      'desc',
+    );
+  }
 }

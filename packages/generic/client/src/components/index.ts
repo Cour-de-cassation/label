@@ -1,4 +1,4 @@
 import { Header } from './custom';
-import { Button, SwitchButton, LayoutGrid, TextInput } from './materialUI';
+import { Button, SwitchButton, LayoutGrid, TextInput, Accordion, AccordionHeader, AccordionBody } from './materialUI';
 
-export { Header, Button, SwitchButton, LayoutGrid, TextInput };
+export { Header, Button, SwitchButton, LayoutGrid, TextInput, Accordion, AccordionHeader, AccordionBody };

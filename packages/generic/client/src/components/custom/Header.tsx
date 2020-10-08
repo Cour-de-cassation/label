@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { buildStyledComponentList } from '../../utils';
 import { LayoutGrid } from '../materialUI';
 
 export { Header };
@@ -8,12 +9,12 @@ function Header(props: { leftHeaderComponents: ReactElement[]; rightHeaderCompon
     <LayoutGrid container>
       <LayoutGrid container item xs={6}>
         <LayoutGrid container item alignItems="center">
-          {props.leftHeaderComponents}
+          {buildStyledComponentList(props.leftHeaderComponents)}
         </LayoutGrid>
       </LayoutGrid>
       <LayoutGrid container item xs={6}>
         <LayoutGrid container item justifyContent="flex-end" alignItems="center">
-          {props.rightHeaderComponents}
+          {buildStyledComponentList(props.rightHeaderComponents)}
         </LayoutGrid>
       </LayoutGrid>
     </LayoutGrid>

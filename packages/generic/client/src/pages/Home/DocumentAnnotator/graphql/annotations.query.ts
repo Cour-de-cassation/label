@@ -6,6 +6,7 @@ const ANNOTATIONS_QUERY = gql`
       _id
       category
       text
+      start
     }
   }
 `;

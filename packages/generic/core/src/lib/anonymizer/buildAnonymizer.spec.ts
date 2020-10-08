@@ -1,4 +1,4 @@
-import { annotationModule } from "../../modules/annotation";
+import { annotationModule, documentModule } from "../../modules";
 import { buildAnonymizer } from "./buildAnonymizer";
 
 describe("buildAnonymizer", () => {
@@ -6,14 +6,31 @@ describe("buildAnonymizer", () => {
     firstName: ["Spirou", "Fantasio"],
     lastName: [],
   });
+  const annotations = [
+    { category: "firstName", text: "Benoit", start: 0 },
+    { category: "firstName", text: "Nicolas", start: 29 },
+    { category: "firstName", text: "Romain", start: 61 },
+  ].map(annotationModule.generator.generate);
+
+  describe("anonymizeDocument", () => {
+    it("should anonymize a document", () => {
+      const document = documentModule.generator.generate({
+        text:
+          "Benoit is software engineer. Nicolas is a software engineer. Romain is a designer.",
+      });
+
+      const anonymizedDocument = anonymizer.anonymizeDocument(
+        document,
+        annotations
+      );
+
+      expect(anonymizedDocument.text).toEqual(
+        "Spirou is software engineer. Fantasio is a software engineer. Spirou is a designer."
+      );
+    });
+  });
 
   describe("anonymize", () => {
-    const annotations = [
-      { category: "firstName", text: "Benoit" },
-      { category: "firstName", text: "Nicolas" },
-      { category: "firstName", text: "Romain" },
-    ].map(annotationModule.generator.generate);
-
     it("should anonymize a text with the given settings", () => {
       const anonymizedTexts = annotations.map(anonymizer.anonymize);
 

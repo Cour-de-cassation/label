@@ -1,3 +1,4 @@
 {
-  "name": ["Spirou", "Fantasio"]
+  "personnephysiqueprenom": ["Spirou", "Fantasio"],
+  "personnephysiquenom": ["Lagaffe"]
 }

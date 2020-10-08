@@ -1,5 +1,5 @@
-import React, { ChangeEvent, ReactElement, useState } from 'react';
-import { Button, Header, SwitchButton } from '../../../../components';
+import React, { ReactElement } from 'react';
+import { Button, Header, SwitchButton, Text } from '../../../../components';
 
 export { DocumentPanelHeader };
 
@@ -13,7 +13,7 @@ function DocumentPanelHeader(props: { isAnonymizedView: boolean; switchAnonymize
         <Button color="primary" onClick={() => {}} text="Ctrl-Maj-Z" />,
       ]}
       rightHeaderComponents={[
-        <div>Vue Anonymisée</div>,
+        <Text>Vue anonymisée</Text>,
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         <SwitchButton checked={props.isAnonymizedView} color="primary" onChange={props.switchAnonymizedView} />,
       ]}

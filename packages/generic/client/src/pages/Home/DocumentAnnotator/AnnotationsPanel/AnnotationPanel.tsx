@@ -3,6 +3,7 @@ import { annotationType } from '@label/core';
 import orderBy from 'lodash/orderBy';
 import { groupAnnotations } from './lib';
 import { LayoutGrid, Accordion, AccordionHeader, AccordionBody } from '../../../../components';
+import { Text } from '../../../../components';
 
 export { AnnotationsPanel };
 
@@ -15,8 +16,12 @@ function AnnotationsPanel(props: { annotations: annotationType[] }) {
           <Accordion>
             <AccordionHeader>
               <LayoutGrid container justifyContent="space-between">
-                <LayoutGrid item>{annotationCategory}</LayoutGrid>
-                <LayoutGrid item>{Object.keys(groupedAnnotations[annotationCategory]).length}</LayoutGrid>
+                <LayoutGrid item>
+                  <Text>{annotationCategory}</Text>
+                </LayoutGrid>
+                <LayoutGrid item>
+                  <Text>{Object.keys(groupedAnnotations[annotationCategory]).length}</Text>
+                </LayoutGrid>
               </LayoutGrid>
             </AccordionHeader>
             <AccordionBody>
@@ -24,10 +29,10 @@ function AnnotationsPanel(props: { annotations: annotationType[] }) {
                 {sortByOccurrences(groupedAnnotations, annotationCategory).map((annotationText) => (
                   <LayoutGrid container justifyContent="space-between" item key={annotationText}>
                     <LayoutGrid xs={8} item>
-                      {annotationText}
+                      <Text>{annotationText}</Text>
                     </LayoutGrid>
                     <LayoutGrid xs={1} item>
-                      {groupedAnnotations[annotationCategory][annotationText].length}
+                      <Text>{groupedAnnotations[annotationCategory][annotationText].length}</Text>
                     </LayoutGrid>
                   </LayoutGrid>
                 ))}

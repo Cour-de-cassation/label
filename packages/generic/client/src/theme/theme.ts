@@ -12,4 +12,5 @@ const theme = createMuiTheme({
       main: palette.red,
     },
   },
+  typography: { body1: { fontFamily: 'Montserrat', fontSize: 16 }, body2: { fontFamily: 'CourierNew', fontSize: 16 } },
 });

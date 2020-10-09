@@ -1,18 +1,18 @@
-import { anonymizationSettingsLoader } from '../../lib/anonymizationSettingsLoader';
+import { settingsLoader } from '../../lib/settingsLoader';
 import { mongo } from '../../lib/mongo';
 import { logger } from '../../utils';
 
 export { setup };
 
 async function setup(port: number) {
-  await setupAnonymizationSettings();
+  await setupSettings();
   await setupMongo(port);
 }
 
-async function setupAnonymizationSettings() {
-  logger.log(`Loading anonymization settings...`);
-  await anonymizationSettingsLoader.loadAnonymizationSettings();
-  logger.log(`Anonymization settings ready!`);
+async function setupSettings() {
+  logger.log(`Loading settings...`);
+  await settingsLoader.loadSettings();
+  logger.log(`Settings ready!`);
 }
 
 async function setupMongo(port: number) {

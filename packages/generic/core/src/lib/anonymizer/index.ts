@@ -1,9 +1,5 @@
-import {
-  buildAnonymizer,
-  anonymizationSettingsType,
-  anonymizerType,
-} from "./buildAnonymizer";
+import { buildAnonymizer, anonymizerType } from "./buildAnonymizer";
 
 export { buildAnonymizer };
 
-export type { anonymizationSettingsType, anonymizerType };
+export type { anonymizerType };

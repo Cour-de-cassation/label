@@ -1,8 +1,4 @@
-import {
-  buildAnonymizer,
-  anonymizationSettingsType,
-  anonymizerType,
-} from "./lib";
+import { buildAnonymizer, anonymizerType } from "./lib";
 import {
   annotationModule,
   annotationType,
@@ -10,6 +6,8 @@ import {
   annotationReportType,
   documentModule,
   documentType,
+  settingsModule,
+  settingsType,
   userModule,
   userType,
 } from "./modules";
@@ -31,6 +29,7 @@ export {
   annotationModule,
   annotationReportModule,
   documentModule,
+  settingsModule,
   userModule,
   buildMongoId,
   areMongoIdEqual,
@@ -38,11 +37,11 @@ export {
 };
 
 export type {
-  anonymizationSettingsType,
   anonymizerType,
   annotationType,
   annotationReportType,
   documentType,
+  settingsType,
   userType,
   dataModelFieldType,
   dataModelType,

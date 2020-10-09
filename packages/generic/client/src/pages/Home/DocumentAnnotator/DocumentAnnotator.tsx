@@ -1,14 +1,14 @@
 import React, { ReactElement } from 'react';
 import { useQuery, ApolloError } from '@apollo/client';
-import { buildAnonymizer } from '@label/core';
+import { buildAnonymizer, settingsModule } from '@label/core';
 import { LayoutGrid } from '../../../components';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import {
   ANNOTATIONS_GRAPHQL_QUERY,
   annotationsGraphQLType,
-  ANONYMIZATION_SETTINGS_GRAPHQL_QUERY,
-  anonymizationSettingsGraphQLType,
+  SETTINGS_GRAPHQL_QUERY,
+  settingsGraphQLType,
   DOCUMENTS_GRAPHQL_QUERY,
   documentGraphQLType,
 } from './graphql';
@@ -16,9 +16,7 @@ import {
 export { DocumentAnnotator };
 
 function DocumentAnnotator(): ReactElement {
-  const anonymizationSettingsFetchInfo = useQuery<anonymizationSettingsGraphQLType>(
-    ANONYMIZATION_SETTINGS_GRAPHQL_QUERY,
-  );
+  const settingsFetchInfo = useQuery<settingsGraphQLType>(SETTINGS_GRAPHQL_QUERY);
   const documentFetchInfo = useQuery<documentGraphQLType>(DOCUMENTS_GRAPHQL_QUERY);
   const annotationFetchInfo = useQuery<annotationsGraphQLType>(ANNOTATIONS_GRAPHQL_QUERY, {
     skip: !documentFetchInfo.data?.documents[0]?._id,
@@ -28,22 +26,20 @@ function DocumentAnnotator(): ReactElement {
   return renderContent();
 
   function renderContent() {
-    if (isLoading([annotationFetchInfo, anonymizationSettingsFetchInfo, documentFetchInfo])) {
+    if (isLoading([annotationFetchInfo, settingsFetchInfo, documentFetchInfo])) {
       return <div>Chargement...</div>;
     }
     if (
-      isFailure([annotationFetchInfo, anonymizationSettingsFetchInfo, documentFetchInfo]) ||
+      isFailure([annotationFetchInfo, settingsFetchInfo, documentFetchInfo]) ||
       !annotationFetchInfo.data ||
-      !anonymizationSettingsFetchInfo.data ||
+      !settingsFetchInfo.data ||
       !documentFetchInfo.data
     ) {
       return <div>Une erreur est survenue</div>;
     }
 
     const { annotations } = annotationFetchInfo.data;
-    const anynomizationSettings = JSON.parse(anonymizationSettingsFetchInfo.data.anonymizationSettings.json) as {
-      [key: string]: string[];
-    };
+    const anynomizationSettings = settingsModule.lib.parseFromJson(settingsFetchInfo.data.settings.json);
     const { documents } = documentFetchInfo.data;
 
     return (

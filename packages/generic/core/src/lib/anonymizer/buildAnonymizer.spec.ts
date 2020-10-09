@@ -1,11 +1,16 @@
-import { annotationModule, documentModule } from "../../modules";
+import {
+  annotationModule,
+  documentModule,
+  settingsModule,
+} from "../../modules";
 import { buildAnonymizer } from "./buildAnonymizer";
 
 describe("buildAnonymizer", () => {
-  const anonymizer = buildAnonymizer({
-    firstName: ["Spirou", "Fantasio"],
-    lastName: [],
+  const settings = settingsModule.lib.buildSettings({
+    firstName: { anonymizationTexts: ["Spirou", "Fantasio"] },
+    lastName: { anonymizationTexts: [] },
   });
+  const anonymizer = buildAnonymizer(settings);
   const annotations = [
     { category: "firstName", text: "Benoit", start: 0 },
     { category: "firstName", text: "Nicolas", start: 29 },

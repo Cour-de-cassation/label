@@ -1,6 +1,6 @@
 import { GraphQLObjectType } from 'graphql';
 import { annotationsGraphQLQuery } from '../modules/annotation';
-import { anonymizationSettingsGraphQLQuery } from '../modules/anonymizationSettings';
+import { settingsGraphQLQuery } from '../modules/settings';
 import { documentsGraphQLQuery } from '../modules/document';
 
 export { graphQLQuery };
@@ -9,7 +9,7 @@ const graphQLQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
     annotations: annotationsGraphQLQuery,
-    anonymizationSettings: anonymizationSettingsGraphQLQuery,
     documents: documentsGraphQLQuery,
+    settings: settingsGraphQLQuery,
   },
 });

@@ -4,8 +4,21 @@ import {
   annotationReportType,
 } from "./annotationReport";
 import { documentModule, documentType } from "./document";
+import { settingsModule, settingsType } from "./settings";
 import { userModule, userType } from "./user";
 
-export { annotationModule, annotationReportModule, documentModule, userModule };
+export {
+  annotationModule,
+  annotationReportModule,
+  documentModule,
+  settingsModule,
+  userModule,
+};
 
-export type { annotationType, annotationReportType, documentType, userType };
+export type {
+  annotationType,
+  annotationReportType,
+  documentType,
+  settingsType,
+  userType,
+};

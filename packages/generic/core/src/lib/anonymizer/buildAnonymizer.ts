@@ -1,12 +1,10 @@
-import { annotationType, documentType } from "../../modules";
+import { annotationType, documentType, settingsType } from "../../modules";
 
 export { buildAnonymizer };
 
-export type { anonymizationSettingsType, anonymizerType };
+export type { anonymizerType };
 
 const ANONYMIZATION_DEFAULT_TEXT = "XXX";
-
-type anonymizationSettingsType = { [key: string]: string[] | undefined };
 
 type anonymizerType = {
   anonymize: (annotation: annotationType) => string;
@@ -16,9 +14,7 @@ type anonymizerType = {
   ) => documentType;
 };
 
-function buildAnonymizer(
-  anonymizationSettings: anonymizationSettingsType
-): anonymizerType {
+function buildAnonymizer(settings: settingsType): anonymizerType {
   const mapper: { [key: string]: string | undefined } = {};
 
   return {
@@ -71,7 +67,8 @@ function buildAnonymizer(
   }
 
   function addNewMapping(annotation: annotationType) {
-    const anonymizationTexts = anonymizationSettings[annotation.category] || [];
+    const anonymizationTexts =
+      settings[annotation.category]?.anonymizationTexts || [];
     const anonymizedText =
       anonymizationTexts.shift() || ANONYMIZATION_DEFAULT_TEXT;
     anonymizationTexts.push(anonymizedText);

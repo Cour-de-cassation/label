@@ -4,17 +4,20 @@ import { groupAnnotations } from './groupAnnotations';
 describe('groupAnnotations', () => {
   it('should group annotations by category and text', () => {
     const annotations = [
-      { category: 'prenom', text: 'benoit' },
-      { category: 'prenom', text: 'nicolas' },
-      { category: 'nom', text: 'serrano' },
-      { category: 'nom', text: 'serrano' },
+      { category: 'prenom', text: 'benoit', start: 10 },
+      { category: 'prenom', text: 'nicolas', start: 0 },
+      { category: 'nom', text: 'serrano', start: 30 },
+      { category: 'nom', text: 'serrano', start: 15 },
     ].map(annotationModule.generator.generate);
 
     const groupedAnnotations = groupAnnotations(annotations);
 
     expect(groupedAnnotations).toEqual({
-      prenom: { benoit: [annotations[0]], nicolas: [annotations[1]] },
-      nom: { serrano: [annotations[2], annotations[3]] },
+      prenom: [
+        { annotation: annotations[0], occurences: 1 },
+        { annotation: annotations[1], occurences: 1 },
+      ],
+      nom: [{ annotation: annotations[3], occurences: 2 }],
     });
   });
 });

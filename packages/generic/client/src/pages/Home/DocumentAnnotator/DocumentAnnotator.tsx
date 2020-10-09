@@ -42,17 +42,15 @@ function DocumentAnnotator(): ReactElement {
     const anynomizationSettings = settingsModule.lib.parseFromJson(settingsFetchInfo.data.settings.json);
     const { documents } = documentFetchInfo.data;
 
+    const anonymizer = buildAnonymizer(anynomizationSettings);
+
     return (
       <LayoutGrid container>
         <LayoutGrid container item xs={3}>
-          <AnnotationsPanel annotations={annotations} />
+          <AnnotationsPanel annotations={annotations} anonymizer={anonymizer} />
         </LayoutGrid>
         <LayoutGrid container item xs={9}>
-          <DocumentPanel
-            annotations={annotations}
-            anonymizer={buildAnonymizer(anynomizationSettings)}
-            document={documents[0]}
-          />
+          <DocumentPanel annotations={annotations} anonymizer={anonymizer} document={documents[0]} />
         </LayoutGrid>
       </LayoutGrid>
     );

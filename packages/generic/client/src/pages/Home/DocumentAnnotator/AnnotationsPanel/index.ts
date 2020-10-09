@@ -1,1 +1,1 @@
-export { AnnotationsPanel } from './AnnotationPanel';
+export { AnnotationsPanel } from './AnnotationsPanel';

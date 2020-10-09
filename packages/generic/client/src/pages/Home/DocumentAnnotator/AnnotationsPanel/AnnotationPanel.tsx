@@ -4,6 +4,7 @@ import orderBy from 'lodash/orderBy';
 import { groupAnnotations } from './lib';
 import { LayoutGrid, Accordion, AccordionHeader, AccordionBody } from '../../../../components';
 import { Text } from '../../../../components';
+import { wordings } from '../../../../wordings';
 
 export { AnnotationsPanel };
 
@@ -11,6 +12,14 @@ function AnnotationsPanel(props: { annotations: annotationType[] }) {
   const groupedAnnotations = groupAnnotations(props.annotations);
   return (
     <LayoutGrid>
+      <LayoutGrid container justifyContent="space-between" alignItems="center">
+        <LayoutGrid item>
+          <Text variant="h1">{wordings.askedAnnotations}</Text>
+        </LayoutGrid>
+        <LayoutGrid item>
+          <Text variant="subtitle1">{wordings.annotationGuide}</Text>
+        </LayoutGrid>
+      </LayoutGrid>
       {Object.keys(groupedAnnotations).map((annotationCategory) => (
         <LayoutGrid item key={annotationCategory}>
           <Accordion>

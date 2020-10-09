@@ -1,18 +1,12 @@
+import { omitMongoIdType } from "../../../types";
 import { buildMongoId } from "../../../utils";
 import { userType } from "../userType";
 
 export { buildUser };
 
-function buildUser({
-  email,
-  password,
-}: {
-  email: userType["email"];
-  password: userType["password"];
-}): userType {
+function buildUser(userFields: omitMongoIdType<userType>): userType {
   return {
-    email,
+    ...userFields,
     _id: buildMongoId(),
-    password,
   };
 }

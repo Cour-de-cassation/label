@@ -8,6 +8,7 @@ export type { annotationType };
 type annotationType = {
   category: string;
   documentId: mongoIdType;
+  entityId: string;
   source: string;
   _id: mongoIdType;
   start: number;
@@ -17,6 +18,7 @@ type annotationType = {
 const annotationDataModel: dataModelType<annotationType> = {
   category: "string",
   documentId: "mongoIdType",
+  entityId: "string",
   source: "string",
   _id: "mongoIdType",
   start: "number",

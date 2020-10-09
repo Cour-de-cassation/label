@@ -1,8 +1,9 @@
 import {
   annotationType,
-  buildMongoId,
+  annotationModule,
   documentType,
   annotationReportType,
+  annotationReportModule,
 } from '@label/core';
 import { nlpAnnotationsType } from '../api';
 
@@ -17,24 +18,24 @@ function mapNlpAnnotationsToAnnotations(
   nlpAnnotations: nlpAnnotationsType,
   document: documentType,
 ): annotationType[] {
-  return nlpAnnotations.entities.map(nlpAnnotation => ({
-    category: nlpAnnotation.label,
-    documentId: document._id,
-    _id: buildMongoId(),
-    source: nlpAnnotation.source,
-    start: nlpAnnotation.start,
-    text: nlpAnnotation.text,
-  }));
+  return nlpAnnotations.entities.map(nlpAnnotation =>
+    annotationModule.lib.buildAnnotation({
+      category: nlpAnnotation.label,
+      documentId: document._id,
+      source: nlpAnnotation.source,
+      start: nlpAnnotation.start,
+      text: nlpAnnotation.text,
+    }),
+  );
 }
 
 function mapNlpAnnotationstoReport(
   nlpAnnotations: nlpAnnotationsType,
   document: documentType,
 ): annotationReportType {
-  return {
+  return annotationReportModule.lib.buildAnnotationReport({
     checkList: nlpAnnotations.checklist,
     checkNeeded: nlpAnnotations.check_needed,
     documentId: document._id,
-    _id: buildMongoId(),
-  };
+  });
 }

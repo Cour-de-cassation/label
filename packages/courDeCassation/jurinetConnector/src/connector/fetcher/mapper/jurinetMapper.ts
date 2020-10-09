@@ -1,5 +1,5 @@
 import { parse } from 'fast-xml-parser';
-import { buildMongoId, documentType } from '@label/core';
+import { buildMongoId, documentType, documentModule } from '@label/core';
 import { jurinetCourtDecisionType } from '../api';
 
 export { jurinetMapper };
@@ -13,14 +13,13 @@ function mapJurinetCourtDecisionToDocument(
     jurinetCourtDecision.xmlCourtDecision,
   );
 
-  return {
+  return documentModule.lib.buildDocument({
     creationDate: jurinetCourtDecision.date,
     documentId: jurinetCourtDecision.oracleId,
-    _id: buildMongoId(),
     metadata: jurinetCourtDecision.metadata,
     source: jurinetCourtDecision.source,
     text: parsedXmlCourtDecision,
-  };
+  });
 }
 
 function parseJurinetXml(xml: string) {

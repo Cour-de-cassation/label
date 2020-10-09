@@ -36,6 +36,7 @@ describe('nlpMapper', () => {
       expect(annotations[0]).toEqual({
         category: 'LABEL1',
         documentId: document._id,
+        entityId: 'LABEL1_ANNOTATION1',
         source: 'NLP',
         _id: annotations[0]._id,
         start: 0,
@@ -44,6 +45,7 @@ describe('nlpMapper', () => {
       expect(annotations[1]).toEqual({
         category: 'LABEL2',
         documentId: document._id,
+        entityId: 'LABEL2_ANNOTATION2',
         source: 'NLP',
         _id: annotations[1]._id,
         start: 6,

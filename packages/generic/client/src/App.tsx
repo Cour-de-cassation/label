@@ -1,13 +1,12 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { ThemeProvider } from '@material-ui/core';
 import { client } from './services/apollo/client';
-import { theme } from './theme';
 import { Router } from './pages';
+import { ThemeProvider } from './theme';
 
 const App = () => (
   <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <Router />
     </ThemeProvider>
   </ApolloProvider>

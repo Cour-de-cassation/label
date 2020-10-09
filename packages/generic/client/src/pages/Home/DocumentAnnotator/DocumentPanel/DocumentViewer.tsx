@@ -1,12 +1,15 @@
 import React, { ReactElement } from 'react';
+import { Theme, useTheme } from '@material-ui/core';
 import { documentType } from '@label/core';
 import { Text } from '../../../../components';
 
 export { DocumentViewer };
 
 function DocumentViewer(props: { document: documentType }): ReactElement {
+  const theme = useTheme();
+  const style = buildStyle(theme);
   return (
-    <table>
+    <table style={style}>
       <tbody>
         {props.document.text.split('\r').map((row, index) => (
           <tr key={index}>
@@ -25,4 +28,11 @@ function DocumentViewer(props: { document: documentType }): ReactElement {
       </tbody>
     </table>
   );
+}
+
+function buildStyle(theme: Theme) {
+  return {
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.common.black,
+  };
 }

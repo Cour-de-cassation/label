@@ -46,10 +46,10 @@ function DocumentAnnotator(): ReactElement {
 
     return (
       <LayoutGrid container>
-        <LayoutGrid container item xs={3}>
+        <LayoutGrid container item xs={4}>
           <AnnotationsPanel annotations={annotations} anonymizer={anonymizer} />
         </LayoutGrid>
-        <LayoutGrid container item xs={9}>
+        <LayoutGrid container item xs={8}>
           <DocumentPanel annotations={annotations} anonymizer={anonymizer} document={documents[0]} />
         </LayoutGrid>
       </LayoutGrid>

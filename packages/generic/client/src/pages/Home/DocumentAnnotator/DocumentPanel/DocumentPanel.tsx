@@ -3,6 +3,7 @@ import { annotationType, anonymizerType, documentType } from '@label/core';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';
 import { LayoutGrid } from '../../../../components';
+import { DocumentPanelFooter } from './DocumentPanelFooter';
 
 export { DocumentPanel };
 
@@ -18,6 +19,7 @@ function DocumentPanel(props: {
     <LayoutGrid container>
       <DocumentPanelHeader isAnonymizedView={isAnonymizedView} switchAnonymizedView={switchAnonymizedView} />
       <DocumentViewer document={documentView} />
+      <DocumentPanelFooter />
     </LayoutGrid>
   );
 

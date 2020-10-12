@@ -3,9 +3,9 @@ export { heights };
 const heights = buildHeights();
 
 function buildHeights() {
-  const HEADER_HEIGHT = '50px';
-  const PANEL_HEADER_HEIGHT = '50px';
-  const PANEL_FOOTER_HEIGHT = '100px';
+  const HEADER_HEIGHT = '72px';
+  const PANEL_HEADER_HEIGHT = '72px';
+  const PANEL_FOOTER_HEIGHT = '72px';
   const PANEL_HEIGHT = `calc(100vh - ${HEADER_HEIGHT} - ${PANEL_FOOTER_HEIGHT} - ${PANEL_HEADER_HEIGHT})`;
 
   return {

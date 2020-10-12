@@ -15,6 +15,7 @@ function ThemeProvider(props: { children: ReactNode }) {
 
 function buildStyle() {
   return {
+    height: '100vh',
     backgroundColor: theme.palette.background.default,
     color: theme.palette.text.primary,
   };

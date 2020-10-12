@@ -32,6 +32,7 @@ function DocumentViewer(props: { document: documentType }): ReactElement {
 
 function buildStyle(theme: Theme) {
   return {
+    padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
     backgroundColor: theme.palette.common.black,
   };

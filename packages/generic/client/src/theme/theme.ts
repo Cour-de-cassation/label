@@ -26,6 +26,7 @@ const typography = {
 
 const darkTheme = createMuiTheme({
   shape: { borderRadius: 25 },
+  spacing: 8,
   palette: {
     text: { primary: palette.white },
     primary: {

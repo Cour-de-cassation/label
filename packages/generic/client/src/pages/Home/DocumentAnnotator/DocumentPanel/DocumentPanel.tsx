@@ -13,23 +13,21 @@ function DocumentPanel(props: {
   document: documentType;
 }): ReactElement {
   const [isAnonymizedView, setIsAnonymizedView] = useState(false);
-  const [documentView, setDocumentView] = useState(props.document);
 
   return (
     <LayoutGrid container>
       <DocumentPanelHeader isAnonymizedView={isAnonymizedView} switchAnonymizedView={switchAnonymizedView} />
-      <DocumentViewer document={documentView} />
+      <DocumentViewer
+        annotations={props.annotations}
+        anonymizer={props.anonymizer}
+        document={props.document}
+        isAnonymizedView={isAnonymizedView}
+      />
       <DocumentPanelFooter />
     </LayoutGrid>
   );
 
   function switchAnonymizedView() {
-    const newIsAnonymizedView = !isAnonymizedView;
-    const newDocumentView = newIsAnonymizedView
-      ? props.anonymizer.anonymizeDocument(props.document, props.annotations)
-      : props.document;
-
-    setIsAnonymizedView(newIsAnonymizedView);
-    setDocumentView(newDocumentView);
+    setIsAnonymizedView(!isAnonymizedView);
   }
 }

@@ -1,4 +1,5 @@
 import { annotationType, documentType, settingsType } from "../../modules";
+import { textSplitter } from "../textSplitter";
 
 export { buildAnonymizer };
 
@@ -7,11 +8,11 @@ export type { anonymizerType };
 const ANONYMIZATION_DEFAULT_TEXT = "XXX";
 
 type anonymizerType = {
-  anonymize: (annotation: annotationType) => string;
   anonymizeDocument: (
     document: documentType,
     annotations: annotationType[]
   ) => documentType;
+  anonymize: (annotation: annotationType) => string;
 };
 
 function buildAnonymizer(settings: settingsType): anonymizerType {
@@ -26,33 +27,21 @@ function buildAnonymizer(settings: settingsType): anonymizerType {
     document: documentType,
     annotations: annotationType[]
   ): documentType {
-    const sortedAnnotations = [...annotations].sort(
-      (annotation1, annotation2) => annotation1.start - annotation2.start
+    const splittedText = textSplitter.splitTextAccordingToAnnotations(
+      document.text,
+      annotations
     );
-    const anonymisedText = anonymizeText(document.text, sortedAnnotations);
-
-    return { ...document, text: anonymisedText };
-  }
-
-  function anonymizeText(
-    text: string,
-    sortedAnnotations: Array<annotationType>
-  ) {
-    const anonymisedTextChunks = [];
-
-    let currentIndex = 0;
-    sortedAnnotations.forEach((annotation) => {
-      anonymisedTextChunks.push(text.slice(currentIndex, annotation.start));
-      anonymisedTextChunks.push(anonymize(annotation));
-      currentIndex = annotation.start + annotation.text.length;
-    });
-    anonymisedTextChunks.push(text.slice(currentIndex));
-
-    return anonymisedTextChunks.reduce(
-      (anonymisedText, anomisedTextChunk) =>
-        `${anonymisedText}${anomisedTextChunk}`,
-      ""
+    const splittedAnonymizedText = splittedText.map((chunk) =>
+      textSplitter.applyToChunk(chunk, (text) => text, anonymize)
     );
+
+    return {
+      ...document,
+      text: splittedAnonymizedText.reduce(
+        (text, anonymizedText) => `${text}${anonymizedText}`,
+        ""
+      ),
+    };
   }
 
   function anonymize(annotation: annotationType): string {

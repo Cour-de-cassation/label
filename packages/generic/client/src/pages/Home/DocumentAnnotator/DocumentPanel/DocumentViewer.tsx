@@ -1,29 +1,44 @@
 import React, { ReactElement } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { documentType } from '@label/core';
+import { annotationType, anonymizerType, documentType, textSplitter } from '@label/core';
 import { Text } from '../../../../components';
 import { heights } from '../../../../styles';
+import { getSplittedTextByLine } from './lib';
 
 export { DocumentViewer };
 
-function DocumentViewer(props: { document: documentType }): ReactElement {
+function DocumentViewer(props: {
+  annotations: annotationType[];
+  anonymizer: anonymizerType;
+  document: documentType;
+  isAnonymizedView: boolean;
+}): ReactElement {
   const theme = useTheme();
   const style = buildStyle(theme);
+  const splittedTextByLine = getSplittedTextByLine(props.document.text, props.annotations);
+
   return (
     <div style={style.container}>
       <table style={style.table}>
         <tbody>
-          {props.document.text.split('\r').map((row, index) => (
-            <tr key={index}>
+          {splittedTextByLine.map((splittedText, lineNumber) => (
+            <tr key={lineNumber}>
               <td>
-                <Text variant="body2">{index + 1}</Text>
+                <Text variant="body2">{lineNumber + 1}</Text>
               </td>
               <td>
-                {row.split('\t').map((tabulatedText, index) => (
-                  <span key={index}>
-                    <Text variant="body2">&ensp;{tabulatedText}</Text>
-                  </span>
-                ))}
+                <span key={lineNumber}>
+                  <Text variant="body2">
+                    {splittedText.map((chunk) =>
+                      textSplitter.applyToChunk(
+                        chunk,
+                        (text) => text,
+                        (annotation) =>
+                          props.isAnonymizedView ? props.anonymizer.anonymize(annotation) : annotation.text,
+                      ),
+                    )}
+                  </Text>
+                </span>
               </td>
             </tr>
           ))}

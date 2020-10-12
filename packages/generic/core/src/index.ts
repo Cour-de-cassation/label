@@ -1,4 +1,10 @@
-import { buildAnonymizer, anonymizerType } from "./lib";
+import {
+  buildAnonymizer,
+  anonymizerType,
+  textSplitter,
+  annotationChunkType,
+  textChunkType,
+} from "./lib";
 import {
   annotationModule,
   annotationType,
@@ -26,6 +32,7 @@ import {
 
 export {
   buildAnonymizer,
+  textSplitter,
   annotationModule,
   annotationReportModule,
   documentModule,
@@ -38,6 +45,8 @@ export {
 
 export type {
   anonymizerType,
+  annotationChunkType,
+  textChunkType,
   annotationType,
   annotationReportType,
   documentType,

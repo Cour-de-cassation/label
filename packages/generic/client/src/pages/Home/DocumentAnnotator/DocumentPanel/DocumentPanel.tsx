@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { annotationType, anonymizerType, documentType } from '@label/core';
+import { annotationType, anonymizerType, documentType, settingsType } from '@label/core';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';
 import { LayoutGrid } from '../../../../components';
@@ -11,6 +11,7 @@ function DocumentPanel(props: {
   annotations: annotationType[];
   anonymizer: anonymizerType;
   document: documentType;
+  settings: settingsType;
 }): ReactElement {
   const [isAnonymizedView, setIsAnonymizedView] = useState(false);
 
@@ -22,6 +23,7 @@ function DocumentPanel(props: {
         anonymizer={props.anonymizer}
         document={props.document}
         isAnonymizedView={isAnonymizedView}
+        settings={props.settings}
       />
       <DocumentPanelFooter />
     </LayoutGrid>

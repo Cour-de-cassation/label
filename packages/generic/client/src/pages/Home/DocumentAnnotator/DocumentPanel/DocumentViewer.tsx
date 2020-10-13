@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { annotationType, anonymizerType, documentType, textSplitter } from '@label/core';
+import { annotationType, anonymizerType, documentType, settingsType, textSplitter } from '@label/core';
 import { Text } from '../../../../components';
 import { heights } from '../../../../styles';
 import { getSplittedTextByLine } from './lib';
+import { DocumentAnnotationText } from './DocumentAnnotationText';
 
 export { DocumentViewer };
 
@@ -12,6 +13,7 @@ function DocumentViewer(props: {
   anonymizer: anonymizerType;
   document: documentType;
   isAnonymizedView: boolean;
+  settings: settingsType;
 }): ReactElement {
   const theme = useTheme();
   const style = buildStyle(theme);
@@ -32,9 +34,16 @@ function DocumentViewer(props: {
                     {splittedText.map((chunk) =>
                       textSplitter.applyToChunk(
                         chunk,
-                        (text) => text,
-                        (annotation) =>
-                          props.isAnonymizedView ? props.anonymizer.anonymize(annotation) : annotation.text,
+                        (text) => <span>{text}</span>,
+                        (annotation) => (
+                          <DocumentAnnotationText
+                            annotation={annotation}
+                            annotationDisplayedText={
+                              props.isAnonymizedView ? props.anonymizer.anonymize(annotation) : annotation.text
+                            }
+                            settings={props.settings}
+                          />
+                        ),
                       ),
                     )}
                   </Text>

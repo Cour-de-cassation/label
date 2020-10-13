@@ -1,7 +1,7 @@
 import React from 'react';
-import { annotationType, anonymizerType } from '@label/core';
-import { LayoutGrid, Accordion, AccordionHeader, AccordionBody } from '../../../../components';
-import { Text } from '../../../../components';
+import { annotationType, anonymizerType, settingsType } from '@label/core';
+import { LayoutGrid, Accordion, AccordionHeader, AccordionBody, Text } from '../../../../components';
+import { getAnnotationCategoryColor } from '../../../../styles';
 
 export { CategoryPanel };
 
@@ -9,9 +9,12 @@ function CategoryPanel(props: {
   annotationsAndOccurences: Array<{ annotation: annotationType; occurences: number }>;
   anonymizer: anonymizerType;
   category: string;
+  settings: settingsType;
 }) {
+  const style = buildStyle();
+
   return (
-    <Accordion>
+    <Accordion style={style.accordion}>
       <AccordionHeader>
         <LayoutGrid container justifyContent="space-between">
           <LayoutGrid item>
@@ -41,4 +44,12 @@ function CategoryPanel(props: {
       </AccordionBody>
     </Accordion>
   );
+
+  function buildStyle() {
+    return {
+      accordion: {
+        backgroundColor: getAnnotationCategoryColor(props.category, props.settings),
+      },
+    };
+  }
 }

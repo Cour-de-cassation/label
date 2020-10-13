@@ -1,26 +1,26 @@
 {
   "adresse": {
     "anonymizationTexts": ["[...]"],
-    "color": "0B5AB4"
+    "color": "#0B5AB4"
   },
   "personnemorale": {
     "anonymizationTexts": ["Los Pollos Hermanos", "Duff", "World Company"],
-    "color": "A997C4"
+    "color": "#A997C4"
   },
   "personnephysicomorale": {
     "anonymizationTexts": ["Edition Dupuis", "Krusty Burger"],
-    "color": "5A3B96"
+    "color": "#5A3B96"
   },
   "personnephysiqueprenom": {
     "anonymizationTexts": ["Spirou", "Fantasio"],
-    "color": "E64901"
+    "color": "#E64901"
   },
   "personnephysiquenom": {
     "anonymizationTexts": ["Lagaffe"],
-    "color": "AB0800"
+    "color": "#AB0800"
   },
   "professionnelnom": {
     "anonymizationTexts": ["Leon"],
-    "color": "85644B"
+    "color": "#85644B"
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { annotationType, anonymizerType } from '@label/core';
+import { annotationType, anonymizerType, settingsType } from '@label/core';
 import { LayoutGrid, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
 import { heights } from '../../../../styles';
@@ -8,7 +8,11 @@ import { CategoryPanel } from './CategoryPanel';
 
 export { AnnotationsPanel };
 
-function AnnotationsPanel(props: { annotations: annotationType[]; anonymizer: anonymizerType }) {
+function AnnotationsPanel(props: {
+  annotations: annotationType[];
+  anonymizer: anonymizerType;
+  settings: settingsType;
+}) {
   const groupedAnnotations = groupAnnotations(props.annotations);
   const styles = buildStyles();
   return (
@@ -28,6 +32,7 @@ function AnnotationsPanel(props: { annotations: annotationType[]; anonymizer: an
               annotationsAndOccurences={annotationsAndOccurences}
               anonymizer={props.anonymizer}
               category={annotationCategory}
+              settings={props.settings}
             />
           </LayoutGrid>
         ))}

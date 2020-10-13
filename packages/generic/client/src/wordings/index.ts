@@ -1,5 +1,6 @@
+import { fillTemplate } from './fillTemplate';
 import { fr } from './fr';
 
-export { wordings };
+export { fillTemplate, wordings };
 
 const wordings = fr;

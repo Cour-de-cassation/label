@@ -14,6 +14,7 @@ const ANNOTATIONS_GRAPHQL_QUERY = gql`
     annotations(documentId: $documentId) {
       _id
       category
+      entityId
       text
       start
     }

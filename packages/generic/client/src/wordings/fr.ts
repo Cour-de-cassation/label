@@ -5,7 +5,7 @@ const fr = {
   annotationGuide: "Guide d'annotation",
   applyEveryWhere: 'Appliquer partout',
   delete: 'Supprimer',
-  nOccurencesToObliterate: ' occurences à occulter',
+  nOccurencesToObliterate: '{0} occurences à occulter',
   passwordsMustBeIdentical: 'Les deux mots de passe doivent être identiques.',
   reset: 'Réinitialiser',
   saveDraft: 'Sauvegarder le brouillon',

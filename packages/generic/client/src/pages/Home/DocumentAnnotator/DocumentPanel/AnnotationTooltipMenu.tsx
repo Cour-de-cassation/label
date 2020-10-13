@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
+import { uniq } from 'lodash';
 import { annotationType } from '@label/core';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../components';
 import { annotatorStateType } from '../../../../services/annotatorState';
-import { wordings } from '../../../../wordings';
+import { fillTemplate, wordings } from '../../../../wordings';
 
 export { AnnotationTooltipMenu };
 
@@ -14,18 +15,22 @@ function AnnotationTooltipMenu(props: {
   open: boolean;
 }): ReactElement {
   const style = buildStyle();
+  const categories = uniq(props.annotatorState.annotations.map((annotation) => annotation.category));
+  const nbOfEntities = props.annotatorState.annotations.filter(
+    (annotation) => annotation.entityId === props.annotation.entityId,
+  ).length;
 
   return (
     <TooltipMenu anchorEl={props.anchorAnnotation} open={props.open} onClose={props.onClose}>
       <LayoutGrid style={style.annotationTooltipMenu}>
         <LayoutGrid>
-          <Text>TODO{wordings.nOccurencesToObliterate}</Text>
+          <Text>{fillTemplate(wordings.nOccurencesToObliterate, JSON.stringify(nbOfEntities))}</Text>
         </LayoutGrid>
         <LayoutGrid>
           <Checkbox text={wordings.applyEveryWhere}></Checkbox>
         </LayoutGrid>
         <LayoutGrid>
-          <Dropdown defaultItem="TODO" items={['TODO']} onChange={() => console.log}></Dropdown>
+          <Dropdown defaultItem={props.annotation.category} items={categories} onChange={() => console.log}></Dropdown>
         </LayoutGrid>
         <LayoutGrid>
           <Button onClick={() => console.log()}>{wordings.delete}</Button>

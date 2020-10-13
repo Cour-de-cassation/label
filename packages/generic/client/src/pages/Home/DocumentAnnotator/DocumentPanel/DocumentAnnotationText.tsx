@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, MouseEvent } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
 import { annotationType, settingsType } from '@label/core';
 import { Button } from '../../../../components';
 import { getAnnotationCategoryColor } from '../../../../styles';
+import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 
 export { DocumentAnnotationText };
 
@@ -13,13 +14,33 @@ function DocumentAnnotationText(props: {
 }): ReactElement {
   const theme = useTheme();
   const style = buildStyle(theme);
+  const [anchorAnnotation, setAnchorAnnotation] = useState<Element | undefined>(undefined);
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    <Button onClick={() => {}} style={style.annotationText}>
-      {props.annotationDisplayedText}
-    </Button>
+    <span>
+      <Button onClick={openTooltipMenu} style={style.annotationText}>
+        {props.annotationDisplayedText}
+      </Button>
+      <AnnotationTooltipMenu
+        anchorAnnotation={anchorAnnotation}
+        annotation={props.annotation}
+        open={isOpened()}
+        onClose={closeTooltipMenu}
+      />
+    </span>
   );
+
+  function isOpened() {
+    return !!anchorAnnotation;
+  }
+
+  function openTooltipMenu(event: MouseEvent<Element>) {
+    setAnchorAnnotation(event.currentTarget);
+  }
+
+  function closeTooltipMenu() {
+    setAnchorAnnotation(undefined);
+  }
 
   function buildStyle(theme: Theme) {
     return {

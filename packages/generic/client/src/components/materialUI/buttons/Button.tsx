@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, ReactNode } from 'react';
+import React, { CSSProperties, ReactElement, ReactNode, MouseEvent } from 'react';
 import { Button as MUButton } from '@material-ui/core';
 
 export { Button };
@@ -6,11 +6,11 @@ export { Button };
 function Button(props: {
   children: ReactNode;
   color?: 'primary' | 'secondary' | 'default';
-  onClick: () => void;
+  onClick: (event: MouseEvent) => void;
   style?: CSSProperties;
 }): ReactElement {
   return (
-    <MUButton variant="contained" color={props.color} style={props.style}>
+    <MUButton variant="contained" color={props.color} onClick={props.onClick} style={props.style}>
       {props.children}
     </MUButton>
   );

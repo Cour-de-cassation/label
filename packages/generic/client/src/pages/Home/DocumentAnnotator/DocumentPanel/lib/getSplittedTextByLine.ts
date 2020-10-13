@@ -1,4 +1,4 @@
-import { isEqual, range } from 'lodash';
+import { range } from 'lodash';
 import { textSplitter, textChunkType, annotationChunkType, annotationType } from '@label/core';
 
 export { getSplittedTextByLine };

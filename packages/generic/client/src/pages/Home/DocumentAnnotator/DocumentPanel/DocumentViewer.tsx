@@ -16,17 +16,19 @@ function DocumentViewer(props: {
   settings: settingsType;
 }): ReactElement {
   const theme = useTheme();
-  const style = buildStyle(theme);
+  const styles = buildStyle(theme);
   const splittedTextByLine = getSplittedTextByLine(props.document.text, props.annotations);
 
   return (
-    <div style={style.container}>
-      <table style={style.table}>
+    <div style={styles.container}>
+      <table style={styles.table}>
         <tbody>
           {splittedTextByLine.map((splittedText, lineNumber) => (
             <tr key={lineNumber}>
-              <td>
-                <Text variant="body2">{lineNumber + 1}</Text>
+              <td style={styles.lineNumberCell}>
+                <Text variant="body2" color="textSecondary">
+                  {lineNumber + 1}
+                </Text>
               </td>
               <td>
                 <span key={lineNumber}>
@@ -65,9 +67,14 @@ function buildStyle(theme: Theme) {
       borderRadius: theme.shape.borderRadius,
       backgroundColor: theme.palette.common.black,
       height: heights.panel,
+      width: '100%',
     },
     table: {
+      maxWidth: 900,
       padding: theme.spacing(2),
+    },
+    lineNumberCell: {
+      paddingRight: theme.spacing(2),
     },
   };
 }

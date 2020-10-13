@@ -8,7 +8,7 @@ export { DocumentPanelFooter };
 function DocumentPanelFooter() {
   const styles = buildStyles();
   return (
-    <LayoutGrid container style={styles.container} justifyContent="space-between">
+    <LayoutGrid container style={styles.container} justifyContent="space-between" alignItems="center">
       <LayoutGrid item>
         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
         <Button onClick={() => {}} color="default" text={wordings.reset}></Button>

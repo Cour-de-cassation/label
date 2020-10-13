@@ -1,29 +1,23 @@
 import React, { ReactElement, useState } from 'react';
-import { annotationType, anonymizerType, documentType, settingsType } from '@label/core';
+import { anonymizerType } from '@label/core';
+import { LayoutGrid } from '../../../../components';
+import { annotatorStateType } from '../../../../services/annotatorState';
+import { DocumentPanelFooter } from './DocumentPanelFooter';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';
-import { LayoutGrid } from '../../../../components';
-import { DocumentPanelFooter } from './DocumentPanelFooter';
 
 export { DocumentPanel };
 
-function DocumentPanel(props: {
-  annotations: annotationType[];
-  anonymizer: anonymizerType;
-  document: documentType;
-  settings: settingsType;
-}): ReactElement {
+function DocumentPanel(props: { annotatorState: annotatorStateType; anonymizer: anonymizerType }): ReactElement {
   const [isAnonymizedView, setIsAnonymizedView] = useState(false);
 
   return (
     <LayoutGrid container>
       <DocumentPanelHeader isAnonymizedView={isAnonymizedView} switchAnonymizedView={switchAnonymizedView} />
       <DocumentViewer
-        annotations={props.annotations}
+        annotatorState={props.annotatorState}
         anonymizer={props.anonymizer}
-        document={props.document}
         isAnonymizedView={isAnonymizedView}
-        settings={props.settings}
       />
       <DocumentPanelFooter />
     </LayoutGrid>

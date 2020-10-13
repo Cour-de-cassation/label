@@ -1,12 +1,14 @@
 import React, { ReactElement } from 'react';
 import { annotationType } from '@label/core';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../components';
+import { annotatorStateType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 
 export { AnnotationTooltipMenu };
 
 function AnnotationTooltipMenu(props: {
   anchorAnnotation: Element | undefined;
+  annotatorState: annotatorStateType;
   annotation: annotationType;
   onClose: () => void;
   open: boolean;

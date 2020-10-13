@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { annotationType, anonymizerType, documentType, settingsType, textSplitter } from '@label/core';
+import { anonymizerType, textSplitter } from '@label/core';
 import { Text } from '../../../../components';
+import { annotatorStateType } from '../../../../services/annotatorState';
 import { heights } from '../../../../styles';
 import { getSplittedTextByLine } from './lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
@@ -9,15 +10,16 @@ import { DocumentAnnotationText } from './DocumentAnnotationText';
 export { DocumentViewer };
 
 function DocumentViewer(props: {
-  annotations: annotationType[];
+  annotatorState: annotatorStateType;
   anonymizer: anonymizerType;
-  document: documentType;
   isAnonymizedView: boolean;
-  settings: settingsType;
 }): ReactElement {
   const theme = useTheme();
   const styles = buildStyle(theme);
-  const splittedTextByLine = getSplittedTextByLine(props.document.text, props.annotations);
+  const splittedTextByLine = getSplittedTextByLine(
+    props.annotatorState.document.text,
+    props.annotatorState.annotations,
+  );
 
   return (
     <div style={styles.container}>
@@ -39,11 +41,10 @@ function DocumentViewer(props: {
                         (text) => <span>{text}</span>,
                         (annotation) => (
                           <DocumentAnnotationText
+                            annotatorState={props.annotatorState}
                             annotation={annotation}
-                            annotationDisplayedText={
-                              props.isAnonymizedView ? props.anonymizer.anonymize(annotation) : annotation.text
-                            }
-                            settings={props.settings}
+                            anonymizer={props.anonymizer}
+                            isAnonymizedView={props.isAnonymizedView}
                           />
                         ),
                       ),

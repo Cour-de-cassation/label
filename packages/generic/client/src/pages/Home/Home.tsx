@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LayoutGrid } from '../../components';
+import { DataFetcher } from '../../services/dataFetcher';
 import { deleteBearerTokenInLocalStorage } from '../../services/localStorage';
 import { heights } from '../../styles';
 import { DocumentAnnotator } from './DocumentAnnotator';
@@ -14,7 +15,11 @@ const Home: FunctionComponent = () => {
         <button onClick={logout}>Se déconnecter</button>
       </LayoutGrid>
       <LayoutGrid item>
-        <DocumentAnnotator />
+        <DataFetcher>
+          {({ settingsJson, document, annotations }: any) => (
+            <DocumentAnnotator document={document} annotations={annotations} settingsJson={settingsJson} />
+          )}
+        </DataFetcher>
       </LayoutGrid>
     </LayoutGrid>
   );

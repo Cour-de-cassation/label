@@ -1,11 +1,12 @@
 import { Typography } from '@material-ui/core';
 import React, { ReactElement, ReactNode } from 'react';
+import { typographyType } from '../../styles';
 
 export { Text };
 
 function Text(props: {
   children: ReactNode;
-  variant?: 'body1' | 'body2' | 'h1' | 'subtitle1';
+  variant?: typographyType;
   color?: 'textPrimary' | 'textSecondary';
 }): ReactElement {
   return (

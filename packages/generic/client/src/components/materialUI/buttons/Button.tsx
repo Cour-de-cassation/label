@@ -1,16 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { CSSProperties, ReactElement, ReactNode } from 'react';
 import { Button as MUButton } from '@material-ui/core';
 
 export { Button };
 
 function Button(props: {
-  color: 'primary' | 'secondary' | 'default';
+  children: ReactNode;
+  color?: 'primary' | 'secondary' | 'default';
   onClick: () => void;
-  text: string;
+  style?: CSSProperties;
 }): ReactElement {
   return (
-    <MUButton variant="contained" color={props.color}>
-      {props.text}
+    <MUButton variant="contained" color={props.color} style={props.style}>
+      {props.children}
     </MUButton>
   );
 }

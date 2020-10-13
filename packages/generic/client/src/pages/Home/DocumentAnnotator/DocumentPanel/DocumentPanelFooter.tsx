@@ -11,13 +11,19 @@ function DocumentPanelFooter() {
     <LayoutGrid container style={styles.container} justifyContent="space-between" alignItems="center">
       <LayoutGrid item>
         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-        <Button onClick={() => {}} color="default" text={wordings.reset}></Button>
+        <Button onClick={() => {}} color="default">
+          {wordings.reset}
+        </Button>
       </LayoutGrid>
       <LayoutGrid item>
         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-        <Button onClick={() => {}} color="default" text={wordings.saveDraft}></Button>
+        <Button onClick={() => {}} color="default">
+          {wordings.saveDraft}
+        </Button>
         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-        <Button onClick={() => {}} color="primary" text={wordings.validate}></Button>
+        <Button onClick={() => {}} color="primary">
+          {wordings.validate}
+        </Button>
       </LayoutGrid>
     </LayoutGrid>
   );

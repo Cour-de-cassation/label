@@ -8,9 +8,13 @@ function DocumentPanelHeader(props: { isAnonymizedView: boolean; switchAnonymize
     <Header
       leftHeaderComponents={[
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        <Button color="primary" onClick={() => {}} text="Ctrl-Z" />,
+        <Button color="primary" onClick={() => {}}>
+          Ctrl-Z
+        </Button>,
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        <Button color="primary" onClick={() => {}} text="Ctrl-Maj-Z" />,
+        <Button color="primary" onClick={() => {}}>
+          Ctrl-Maj-Z
+        </Button>,
       ]}
       rightHeaderComponents={[
         <Text>Vue anonymisée</Text>,

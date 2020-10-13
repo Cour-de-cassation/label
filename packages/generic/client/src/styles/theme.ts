@@ -2,6 +2,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 export { darkTheme as theme };
 
+export type { typographyType };
+
 const palette = {
   tealBlue: '#00737D',
   gray100: '#121212',
@@ -23,6 +25,8 @@ const typography = {
   h1: { fontFamily: 'Montserrat-Bold', fontSize: fontSizes.medium },
   subtitle1: { fontFamily: 'Montserrat', fontSize: fontSizes.small, textDecoration: 'underline' },
 };
+
+type typographyType = keyof typeof typography;
 
 const darkTheme = createMuiTheme({
   shape: { borderRadius: 25 },

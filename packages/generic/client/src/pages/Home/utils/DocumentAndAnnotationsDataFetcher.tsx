@@ -6,7 +6,7 @@ import {
   annotationsGraphQLType,
   ANNOTATIONS_GRAPHQL_QUERY,
   documentGraphQLType,
-  DOCUMENTS_GRAPHQL_QUERY,
+  DOCUMENT_GRAPHQL_QUERY,
 } from '../DocumentAnnotator/graphql';
 
 export { DocumentAndAnnotationsDataFetcher };
@@ -14,16 +14,16 @@ export { DocumentAndAnnotationsDataFetcher };
 function DocumentAndAnnotationsDataFetcher(props: {
   children: (fetched: { document: documentType; annotations: annotationType[] }) => ReactElement;
 }) {
-  const documentsFetchInfo = useQuery<documentGraphQLType>(DOCUMENTS_GRAPHQL_QUERY);
+  const documentsFetchInfo = useQuery<documentGraphQLType>(DOCUMENT_GRAPHQL_QUERY);
   const annotationsFetchInfo = useQuery<annotationsGraphQLType>(ANNOTATIONS_GRAPHQL_QUERY, {
-    skip: !documentsFetchInfo.data?.documents[0]?._id,
-    variables: { documentId: documentsFetchInfo.data?.documents[0]?._id },
+    skip: !documentsFetchInfo.data?.document,
+    variables: { documentId: documentsFetchInfo.data?.document._id },
   });
 
   const documentAndAnnotationsDataAdapter = ([documentsData, annotationsData]: [
     documentGraphQLType,
     annotationsGraphQLType,
-  ]) => [documentsData.documents[0], annotationsData.annotations] as [documentType, annotationType[]];
+  ]) => [documentsData.document, annotationsData.annotations] as [documentType, annotationType[]];
 
   return (
     <DataFetcher<[documentGraphQLType, annotationsGraphQLType], [documentType, annotationType[]]>

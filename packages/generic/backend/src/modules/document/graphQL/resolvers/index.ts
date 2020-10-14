@@ -1,3 +1,3 @@
-import { resolveDocuments } from './resolveDocuments';
+import { resolveDocument } from './resolveDocument';
 
-export { resolveDocuments };
+export { resolveDocument };

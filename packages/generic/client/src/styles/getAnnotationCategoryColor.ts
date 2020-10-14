@@ -1,4 +1,4 @@
-import { annotationType, settingsType } from '@label/core';
+import { settingsType } from '@label/core';
 
 export { getAnnotationCategoryColor };
 

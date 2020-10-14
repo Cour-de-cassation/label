@@ -1,3 +1,3 @@
-import { documentsGraphQLQuery } from './documentGraphQLQueries';
+import { documentGraphQLQuery } from './documentGraphQLQueries';
 
-export { documentsGraphQLQuery };
+export { documentGraphQLQuery };

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useQuery } from '@apollo/client';
 import { documentType, buildMongoId } from '@label/core';
 import { DataFetcher } from '../../../services/dataFetcher';
-import { fetchedAnnotationType } from '../../../types';
+import { fetchedAnnotationType, fetchedDocumentType } from '../../../types';
 import {
   annotationsGraphQLType,
   ANNOTATIONS_GRAPHQL_QUERY,
@@ -13,7 +13,7 @@ import {
 export { DocumentAndAnnotationsDataFetcher };
 
 function DocumentAndAnnotationsDataFetcher(props: {
-  children: (fetched: { document: documentType; annotations: fetchedAnnotationType[] }) => ReactElement;
+  children: (fetched: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => ReactElement;
 }) {
   const documentsFetchInfo = useQuery<documentGraphQLType>(DOCUMENT_GRAPHQL_QUERY);
   const annotationsFetchInfo = useQuery<annotationsGraphQLType>(ANNOTATIONS_GRAPHQL_QUERY, {
@@ -27,7 +27,6 @@ function DocumentAndAnnotationsDataFetcher(props: {
   ]) => {
     const document = {
       ...fetchedDocument,
-      creationDate: new Date(fetchedDocument.creationDate),
       _id: buildMongoId(fetchedDocument._id),
     };
     const annotations = fetchedAnnotations.map((annotation) => ({
@@ -35,11 +34,11 @@ function DocumentAndAnnotationsDataFetcher(props: {
       _id: buildMongoId(annotation._id),
     }));
 
-    return [document, annotations] as [documentType, fetchedAnnotationType[]];
+    return [document, annotations] as [fetchedDocumentType, fetchedAnnotationType[]];
   };
 
   return (
-    <DataFetcher<[documentGraphQLType, annotationsGraphQLType], [documentType, fetchedAnnotationType[]]>
+    <DataFetcher<[documentGraphQLType, annotationsGraphQLType], [fetchedDocumentType, fetchedAnnotationType[]]>
       fetchInfos={[documentsFetchInfo, annotationsFetchInfo]}
       dataAdapter={documentAndAnnotationsDataAdapter}
     >

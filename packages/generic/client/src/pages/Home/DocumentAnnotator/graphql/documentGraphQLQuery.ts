@@ -1,12 +1,13 @@
 import { gql } from '@apollo/client';
-import { documentType, graphQLReceivedDataType } from '@label/core';
+import { graphQLReceivedDataType } from '@label/core';
+import { fetchedDocumentType } from '../../../../types';
 
 export { DOCUMENT_GRAPHQL_QUERY };
 
 export type { documentGraphQLType };
 
 type documentGraphQLType = {
-  document: graphQLReceivedDataType<documentType>;
+  document: graphQLReceivedDataType<fetchedDocumentType>;
 };
 
 const DOCUMENT_GRAPHQL_QUERY = gql`

@@ -1,44 +1,50 @@
-import React from 'react';
-import { ApolloError, useQuery } from '@apollo/client';
-import {
-  annotationsGraphQLType,
-  ANNOTATIONS_GRAPHQL_QUERY,
-  documentGraphQLType,
-  DOCUMENTS_GRAPHQL_QUERY,
-  settingsGraphQLType,
-  SETTINGS_GRAPHQL_QUERY,
-} from '../../pages/Home/DocumentAnnotator/graphql';
+import React, { ReactElement } from 'react';
+import { ApolloError } from '@apollo/client';
 
 export { DataFetcher };
 
-function DataFetcher(props: { children: any }) {
-  const settingsFetchInfo = useQuery<settingsGraphQLType>(SETTINGS_GRAPHQL_QUERY);
-  const documentFetchInfo = useQuery<documentGraphQLType>(DOCUMENTS_GRAPHQL_QUERY);
-  const annotationFetchInfo = useQuery<annotationsGraphQLType>(ANNOTATIONS_GRAPHQL_QUERY, {
-    skip: !documentFetchInfo.data?.documents[0]?._id,
-    variables: { documentId: documentFetchInfo.data?.documents[0]?._id },
-  });
+function DataFetcher<fetchedType, dataType>(props: {
+  children: (returnedData: dataType) => ReactElement;
+  fetchInfos: Array<{ loading: boolean; error?: ApolloError; data: unknown }>;
+  dataAdapter: (fetchedData: fetchedType) => dataType;
+}) {
+  const { loading, failure, fetchedData } = computeFetchStatus(props.fetchInfos);
 
-  if (isLoading([annotationFetchInfo, settingsFetchInfo, documentFetchInfo])) {
+  if (loading) {
     return <div>Chargement...</div>;
   }
-  if (
-    isFailure([annotationFetchInfo, settingsFetchInfo, documentFetchInfo]) ||
-    !annotationFetchInfo.data ||
-    !settingsFetchInfo.data ||
-    !documentFetchInfo.data
-  ) {
+
+  if (failure) {
     return <div>Une erreur est survenue</div>;
   }
-  const { annotations } = annotationFetchInfo.data;
-  const { documents } = documentFetchInfo.data;
-  return props.children({ settingsJson: settingsFetchInfo.data.settings.json, document: documents[0], annotations });
+
+  const data = props.dataAdapter(fetchedData);
+
+  return props.children(data);
+
+  function computeFetchStatus(fetchInfos: Array<{ loading: boolean; error?: ApolloError; data: unknown }>) {
+    const loading = isLoading(fetchInfos);
+    const error = isError(fetchInfos);
+    const { fetchedData, dataMissing } = computeData(fetchInfos);
+
+    return { loading, failure: error || dataMissing, fetchedData };
+  }
 
   function isLoading(fetchInfos: Array<{ loading: boolean }>): boolean {
     return fetchInfos.reduce((loading: boolean, fetchInfo) => loading || fetchInfo.loading, false);
   }
 
-  function isFailure(fetchInfos: Array<{ error?: ApolloError }>): boolean {
+  function isError(fetchInfos: Array<{ error?: ApolloError }>): boolean {
     return fetchInfos.reduce((error: boolean, fetchInfo) => error || !!fetchInfo.error, false);
+  }
+
+  function computeData(fetchInfos: Array<{ data: unknown }>): { fetchedData: fetchedType; dataMissing: boolean } {
+    const fetchedData = fetchInfos.reduce(
+      (fetchedData, fetchInfo) => (fetchInfo.data !== undefined ? [...fetchedData, fetchInfo.data] : fetchedData),
+      [] as unknown[],
+    );
+    const dataMissing = fetchedData.length !== fetchInfos.length;
+
+    return { fetchedData: (fetchedData as unknown) as fetchedType, dataMissing };
   }
 }

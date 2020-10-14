@@ -1,10 +1,12 @@
+import { annotationType, documentType, settingsType } from '@label/core';
 import React, { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LayoutGrid } from '../../components';
-import { DataFetcher } from '../../services/dataFetcher';
 import { deleteBearerTokenInLocalStorage } from '../../services/localStorage';
 import { heights } from '../../styles';
 import { DocumentAnnotator } from './DocumentAnnotator';
+import { DocumentAndAnnotationsDataFetcher } from './utils/DocumentAndAnnotationsDataFetcher';
+import { SettingsDataFetcher } from './utils/SettingsDataFetcher';
 
 const Home: FunctionComponent = () => {
   const history = useHistory();
@@ -15,11 +17,15 @@ const Home: FunctionComponent = () => {
         <button onClick={logout}>Se déconnecter</button>
       </LayoutGrid>
       <LayoutGrid item>
-        <DataFetcher>
-          {({ settingsJson, document, annotations }: any) => (
-            <DocumentAnnotator document={document} annotations={annotations} settingsJson={settingsJson} />
+        <SettingsDataFetcher>
+          {({ settings }: { settings: settingsType }) => (
+            <DocumentAndAnnotationsDataFetcher>
+              {({ document, annotations }: { document: documentType; annotations: annotationType[] }) => (
+                <DocumentAnnotator settings={settings} document={document} annotations={annotations} />
+              )}
+            </DocumentAndAnnotationsDataFetcher>
           )}
-        </DataFetcher>
+        </SettingsDataFetcher>
       </LayoutGrid>
     </LayoutGrid>
   );

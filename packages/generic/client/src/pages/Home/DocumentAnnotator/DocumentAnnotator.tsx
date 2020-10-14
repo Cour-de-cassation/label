@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { buildAnonymizer, settingsModule, annotationType, documentType } from '@label/core';
+import { buildAnonymizer, settingsModule, annotationType, documentType, settingsType } from '@label/core';
 import { LayoutGrid } from '../../../components';
 import { annotatorStateType } from '../../../services/annotatorState';
 import { AnnotationsPanel } from './AnnotationsPanel';
@@ -9,18 +9,16 @@ export { DocumentAnnotator };
 
 function DocumentAnnotator(props: {
   annotations: annotationType[];
-  settingsJson: string;
+  settings: settingsType;
   document: documentType;
 }): ReactElement {
-  const settings = settingsModule.lib.parseFromJson(props.settingsJson);
-
   const annotatorState: annotatorStateType = {
     annotations: props.annotations,
     document: props.document,
-    settings: settings,
+    settings: props.settings,
   };
 
-  const anonymizer = buildAnonymizer(settings);
+  const anonymizer = buildAnonymizer(props.settings);
 
   return (
     <LayoutGrid container>

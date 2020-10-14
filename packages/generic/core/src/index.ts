@@ -21,6 +21,7 @@ import {
   dataModelFieldType,
   dataModelType,
   generatorType,
+  graphQLReceivedDataType,
   omitMongoIdType,
 } from "./types";
 import {
@@ -55,6 +56,7 @@ export type {
   dataModelFieldType,
   dataModelType,
   generatorType,
+  graphQLReceivedDataType,
   omitMongoIdType,
   mongoIdType,
 };

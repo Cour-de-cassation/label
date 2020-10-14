@@ -4,6 +4,7 @@ import { anonymizerType, textSplitter } from '@label/core';
 import { Text } from '../../../../components';
 import { annotatorStateType } from '../../../../services/annotatorState';
 import { heights } from '../../../../styles';
+import { fetchedAnnotationType } from '../../../../types';
 import { getSplittedTextByLine } from './lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 
@@ -11,7 +12,7 @@ export { DocumentViewer };
 
 function DocumentViewer(props: {
   annotatorState: annotatorStateType;
-  anonymizer: anonymizerType;
+  anonymizer: anonymizerType<fetchedAnnotationType>;
   isAnonymizedView: boolean;
 }): ReactElement {
   const theme = useTheme();

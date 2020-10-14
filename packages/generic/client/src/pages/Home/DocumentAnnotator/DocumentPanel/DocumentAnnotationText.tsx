@@ -1,17 +1,18 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { annotationType, anonymizerType } from '@label/core';
+import { anonymizerType } from '@label/core';
 import { Button } from '../../../../components';
 import { annotatorStateType } from '../../../../services/annotatorState';
 import { getAnnotationCategoryColor } from '../../../../styles';
+import { fetchedAnnotationType } from '../../../../types';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 
 export { DocumentAnnotationText };
 
 function DocumentAnnotationText(props: {
   annotatorState: annotatorStateType;
-  annotation: annotationType;
-  anonymizer: anonymizerType;
+  annotation: fetchedAnnotationType;
+  anonymizer: anonymizerType<fetchedAnnotationType>;
   isAnonymizedView: boolean;
 }): ReactElement {
   const theme = useTheme();

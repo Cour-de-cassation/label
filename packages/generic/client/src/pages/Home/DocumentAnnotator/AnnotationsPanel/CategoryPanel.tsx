@@ -1,15 +1,16 @@
 import React from 'react';
-import { annotationType, anonymizerType } from '@label/core';
+import { anonymizerType } from '@label/core';
 import { LayoutGrid, Accordion, AccordionHeader, AccordionBody, Text } from '../../../../components';
 import { annotatorStateType } from '../../../../services/annotatorState';
 import { getAnnotationCategoryColor } from '../../../../styles';
+import { fetchedAnnotationType } from '../../../../types';
 
 export { CategoryPanel };
 
 function CategoryPanel(props: {
-  annotationsAndOccurences: Array<{ annotation: annotationType; occurences: number }>;
+  annotationsAndOccurences: Array<{ annotation: fetchedAnnotationType; occurences: number }>;
   annotatorState: annotatorStateType;
-  anonymizer: anonymizerType;
+  anonymizer: anonymizerType<fetchedAnnotationType>;
   category: string;
 }) {
   const style = buildStyle();

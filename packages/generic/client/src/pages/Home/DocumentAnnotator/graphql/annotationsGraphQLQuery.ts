@@ -1,12 +1,13 @@
 import { gql } from '@apollo/client';
-import { annotationType } from '@label/core';
+import { graphQLReceivedDataType } from '@label/core';
+import { fetchedAnnotationType } from '../../../../types';
 
 export { ANNOTATIONS_GRAPHQL_QUERY };
 
 export type { annotationsGraphQLType };
 
 type annotationsGraphQLType = {
-  annotations: annotationType[];
+  annotations: Array<graphQLReceivedDataType<fetchedAnnotationType>>;
 };
 
 const ANNOTATIONS_GRAPHQL_QUERY = gql`

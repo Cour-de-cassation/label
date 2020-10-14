@@ -1,10 +1,10 @@
 import { groupBy, orderBy } from 'lodash';
-import { annotationType } from '@label/core';
+import { fetchedAnnotationType } from '../../../../../types';
 
 export { groupAnnotations };
 
-function groupAnnotations(annotations: annotationType[]) {
-  const annotationsByCategory: { [category: string]: { annotation: annotationType; occurences: number }[] } = {};
+function groupAnnotations(annotations: fetchedAnnotationType[]) {
+  const annotationsByCategory: { [category: string]: { annotation: fetchedAnnotationType; occurences: number }[] } = {};
 
   for (const [category, annotationsOfCategory] of Object.entries(groupBy(annotations, 'category'))) {
     const annotationsAndOccurences = Object.values(groupBy(annotationsOfCategory, 'text')).map((annotationsByText) => ({

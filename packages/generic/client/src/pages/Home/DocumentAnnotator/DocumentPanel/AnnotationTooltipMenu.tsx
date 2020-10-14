@@ -3,6 +3,7 @@ import { uniq } from 'lodash';
 import { annotationType } from '@label/core';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../components';
 import { annotatorStateType } from '../../../../services/annotatorState';
+import { fetchedAnnotationType } from '../../../../types';
 import { fillTemplate, wordings } from '../../../../wordings';
 
 export { AnnotationTooltipMenu };
@@ -10,7 +11,7 @@ export { AnnotationTooltipMenu };
 function AnnotationTooltipMenu(props: {
   anchorAnnotation: Element | undefined;
   annotatorState: annotatorStateType;
-  annotation: annotationType;
+  annotation: fetchedAnnotationType;
   onClose: () => void;
   open: boolean;
 }): ReactElement {

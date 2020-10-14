@@ -1,4 +1,4 @@
-import { annotationModule, annotationType } from '@label/core';
+import { annotationModule } from '@label/core';
 import { groupAnnotations } from './groupAnnotations';
 
 describe('groupAnnotations', () => {

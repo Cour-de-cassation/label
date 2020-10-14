@@ -4,12 +4,16 @@ import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { heights } from '../../../../styles';
+import { fetchedAnnotationType } from '../../../../types';
 import { groupAnnotations } from './lib';
 import { CategoryPanel } from './CategoryPanel';
 
 export { AnnotationsPanel };
 
-function AnnotationsPanel(props: { annotatorState: annotatorStateType; anonymizer: anonymizerType }) {
+function AnnotationsPanel(props: {
+  annotatorState: annotatorStateType;
+  anonymizer: anonymizerType<fetchedAnnotationType>;
+}) {
   const groupedAnnotations = groupAnnotations(props.annotatorState.annotations);
   const styles = buildStyles();
 

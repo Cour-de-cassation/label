@@ -1,5 +1,6 @@
 import { range } from 'lodash';
-import { annotationModule, annotationType, documentModule } from '@label/core';
+import { annotationModule, documentModule } from '@label/core';
+import { fetchedAnnotationType } from '../../types';
 import { annotatorStateType } from './annotatorStateType';
 import { buildAnnotatorStateCommitter } from './buildAnnotatorStateCommitter';
 
@@ -59,13 +60,13 @@ describe('buildAnnotatorStateCommitter', () => {
   });
 });
 
-function sortAnnotations(annotations: annotationType[]) {
+function sortAnnotations(annotations: fetchedAnnotationType[]) {
   return annotations.sort((annotation1, annotation2) =>
     JSON.stringify(annotation1._id).localeCompare(JSON.stringify(annotation2._id)),
   );
 }
 
-function buildAnnotatorState(annotations: annotationType[]): annotatorStateType {
+function buildAnnotatorState(annotations: fetchedAnnotationType[]): annotatorStateType {
   return {
     annotations,
     document: documentModule.generator.generate(),

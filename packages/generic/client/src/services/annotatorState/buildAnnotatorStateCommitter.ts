@@ -1,4 +1,4 @@
-import { annotationType } from '@label/core';
+import { fetchedAnnotationType } from '../../types';
 import { annotatorStateType, annotationActionType } from './annotatorStateType';
 
 export { buildAnnotatorStateCommitter };
@@ -41,8 +41,8 @@ function buildAnnotatorStateCommitter() {
   }
 
   function getDiffBetweenAnnotationsStates(
-    previousAnnotationsState: annotationType[],
-    nextAnnotationsState: annotationType[],
+    previousAnnotationsState: fetchedAnnotationType[],
+    nextAnnotationsState: fetchedAnnotationType[],
   ) {
     return {
       before: previousAnnotationsState.filter(
@@ -55,7 +55,7 @@ function buildAnnotatorStateCommitter() {
   }
 
   function applyAnnotationAction(
-    previousAnnotationsState: annotationType[],
+    previousAnnotationsState: fetchedAnnotationType[],
     previousAnnotationActions: annotationActionType[],
     nextAnnotationActions: annotationActionType[],
   ) {

@@ -7,15 +7,22 @@ export type { anonymizerType };
 
 const ANONYMIZATION_DEFAULT_TEXT = "XXX";
 
-type anonymizerType = {
+type annotationNeededFieldsType = Pick<
+  annotationType,
+  "text" | "category" | "start"
+>;
+
+type anonymizerType<annotationT extends annotationNeededFieldsType> = {
   anonymizeDocument: (
     document: documentType,
-    annotations: annotationType[]
+    annotations: annotationT[]
   ) => documentType;
-  anonymize: (annotation: annotationType) => string;
+  anonymize: (annotation: annotationT) => string;
 };
 
-function buildAnonymizer(settings: settingsType): anonymizerType {
+function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
+  settings: settingsType
+): anonymizerType<annotationT> {
   const mapper: { [key: string]: string | undefined } = {};
 
   return {
@@ -25,7 +32,7 @@ function buildAnonymizer(settings: settingsType): anonymizerType {
 
   function anonymizeDocument(
     document: documentType,
-    annotations: annotationType[]
+    annotations: annotationT[]
   ): documentType {
     const splittedText = textSplitter.splitTextAccordingToAnnotations(
       document.text,
@@ -44,7 +51,7 @@ function buildAnonymizer(settings: settingsType): anonymizerType {
     };
   }
 
-  function anonymize(annotation: annotationType): string {
+  function anonymize(annotation: annotationT): string {
     const anonymizedText = mapAnnotationToAnonymizedText(annotation);
 
     if (anonymizedText !== undefined) {
@@ -55,7 +62,7 @@ function buildAnonymizer(settings: settingsType): anonymizerType {
     }
   }
 
-  function addNewMapping(annotation: annotationType) {
+  function addNewMapping(annotation: annotationT) {
     const anonymizationTexts =
       settings[annotation.category]?.anonymizationTexts || [];
     const anonymizedText =
@@ -65,12 +72,12 @@ function buildAnonymizer(settings: settingsType): anonymizerType {
     addAnnotationToAnonymizedTextMapping(annotation, anonymizedText);
   }
 
-  function mapAnnotationToAnonymizedText(annotation: annotationType) {
+  function mapAnnotationToAnonymizedText(annotation: annotationT) {
     return mapper[`${annotation.category}_${annotation.text}`];
   }
 
   function addAnnotationToAnonymizedTextMapping(
-    annotation: annotationType,
+    annotation: annotationT,
     anonymizedText: string
   ) {
     mapper[`${annotation.category}_${annotation.text}`] = anonymizedText;

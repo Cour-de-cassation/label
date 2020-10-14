@@ -18,9 +18,9 @@ const Home: FunctionComponent = () => {
       </LayoutGrid>
       <LayoutGrid item>
         <SettingsDataFetcher>
-          {({ settings }: { settings: settingsType }) => (
+          {({ settings }) => (
             <DocumentAndAnnotationsDataFetcher>
-              {({ document, annotations }: { document: documentType; annotations: annotationType[] }) => (
+              {({ document, annotations }) => (
                 <DocumentAnnotator settings={settings} document={document} annotations={annotations} />
               )}
             </DocumentAndAnnotationsDataFetcher>

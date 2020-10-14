@@ -1,23 +1,24 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
-import { annotationType } from '@label/core';
+import { areMongoIdEqual } from '@label/core';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../components';
-import { annotatorStateType } from '../../../../services/annotatorState';
 import { fetchedAnnotationType } from '../../../../types';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { fillTemplate, wordings } from '../../../../wordings';
 
 export { AnnotationTooltipMenu };
 
 function AnnotationTooltipMenu(props: {
   anchorAnnotation: Element | undefined;
-  annotatorState: annotatorStateType;
+  annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   onClose: () => void;
   open: boolean;
 }): ReactElement {
   const style = buildStyle();
-  const categories = uniq(props.annotatorState.annotations.map((annotation) => annotation.category));
-  const nbOfEntities = props.annotatorState.annotations.filter(
+  const annotatorState = props.annotatorStateHandler.get();
+  const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
+  const nbOfEntities = annotatorState.annotations.filter(
     (annotation) => annotation.entityId === props.annotation.entityId,
   ).length;
 
@@ -34,7 +35,7 @@ function AnnotationTooltipMenu(props: {
           <Dropdown defaultItem={props.annotation.category} items={categories} onChange={() => console.log}></Dropdown>
         </LayoutGrid>
         <LayoutGrid>
-          <Button onClick={() => console.log()}>{wordings.delete}</Button>
+          <Button onClick={deleteAnnotation}>{wordings.delete}</Button>
         </LayoutGrid>
       </LayoutGrid>
     </TooltipMenu>
@@ -46,5 +47,15 @@ function AnnotationTooltipMenu(props: {
         padding: '0px 10px',
       },
     };
+  }
+
+  function deleteAnnotation() {
+    props.onClose();
+
+    const newAnnotations = annotatorState.annotations.filter(
+      (annotation) => !areMongoIdEqual(annotation._id, props.annotation._id),
+    );
+    const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
+    props.annotatorStateHandler.set(newAnnotatorState);
   }
 }

@@ -1,26 +1,36 @@
 import React, { ReactElement } from 'react';
 import { Button, Header, SwitchButton, Text } from '../../../../components';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 
 export { DocumentPanelHeader };
 
-function DocumentPanelHeader(props: { isAnonymizedView: boolean; switchAnonymizedView: () => void }): ReactElement {
+function DocumentPanelHeader(props: {
+  annotatorStateHandler: annotatorStateHandlerType;
+  isAnonymizedView: boolean;
+  switchAnonymizedView: () => void;
+}): ReactElement {
   return (
     <Header
       leftHeaderComponents={[
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        <Button color="primary" onClick={() => {}}>
+        <Button color="primary" onClick={revertLastAction}>
           Ctrl-Z
         </Button>,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        <Button color="primary" onClick={() => {}}>
+        <Button color="primary" onClick={restoreLastAction}>
           Ctrl-Maj-Z
         </Button>,
       ]}
       rightHeaderComponents={[
         <Text>Vue anonymisée</Text>,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         <SwitchButton checked={props.isAnonymizedView} color="primary" onChange={props.switchAnonymizedView} />,
       ]}
     />
   );
+
+  function revertLastAction() {
+    props.annotatorStateHandler.revert();
+  }
+
+  function restoreLastAction() {
+    props.annotatorStateHandler.restore();
+  }
 }

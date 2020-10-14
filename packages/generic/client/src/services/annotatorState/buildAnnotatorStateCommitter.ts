@@ -3,7 +3,15 @@ import { annotatorStateType, annotationActionType } from './annotatorStateType';
 
 export { buildAnnotatorStateCommitter };
 
-function buildAnnotatorStateCommitter() {
+export type { annotatorStateCommitterType };
+
+type annotatorStateCommitterType = {
+  commit: (previousState: annotatorStateType, nextState: annotatorStateType) => void;
+  revert: (previousState: annotatorStateType) => annotatorStateType;
+  restore: (previousState: annotatorStateType) => annotatorStateType;
+};
+
+function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
   const annotationActionsToRevert: annotationActionType[] = [];
   const annotationActionsToRestore: annotationActionType[] = [];
 

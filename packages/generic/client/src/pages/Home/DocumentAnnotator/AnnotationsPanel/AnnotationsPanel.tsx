@@ -1,7 +1,7 @@
 import React from 'react';
 import { anonymizerType } from '@label/core';
 import { LayoutGrid, Text } from '../../../../components';
-import { annotatorStateType } from '../../../../services/annotatorState';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { heights } from '../../../../styles';
 import { fetchedAnnotationType } from '../../../../types';
@@ -11,10 +11,10 @@ import { CategoryPanel } from './CategoryPanel';
 export { AnnotationsPanel };
 
 function AnnotationsPanel(props: {
-  annotatorState: annotatorStateType;
+  annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
 }) {
-  const groupedAnnotations = groupAnnotations(props.annotatorState.annotations);
+  const groupedAnnotations = groupAnnotations(props.annotatorStateHandler.get().annotations);
   const styles = buildStyles();
 
   return (
@@ -32,7 +32,7 @@ function AnnotationsPanel(props: {
           <LayoutGrid key={annotationCategory}>
             <CategoryPanel
               annotationsAndOccurences={annotationsAndOccurences}
-              annotatorState={props.annotatorState}
+              annotatorStateHandler={props.annotatorStateHandler}
               anonymizer={props.anonymizer}
               category={annotationCategory}
             />

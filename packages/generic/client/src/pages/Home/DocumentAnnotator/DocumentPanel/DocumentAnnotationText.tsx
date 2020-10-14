@@ -2,7 +2,7 @@ import React, { ReactElement, useState, MouseEvent } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType } from '@label/core';
 import { Button } from '../../../../components';
-import { annotatorStateType } from '../../../../services/annotatorState';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { getAnnotationCategoryColor } from '../../../../styles';
 import { fetchedAnnotationType } from '../../../../types';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
@@ -10,7 +10,7 @@ import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 export { DocumentAnnotationText };
 
 function DocumentAnnotationText(props: {
-  annotatorState: annotatorStateType;
+  annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
   isAnonymizedView: boolean;
@@ -26,7 +26,7 @@ function DocumentAnnotationText(props: {
       </Button>
       <AnnotationTooltipMenu
         anchorAnnotation={anchorAnnotation}
-        annotatorState={props.annotatorState}
+        annotatorStateHandler={props.annotatorStateHandler}
         annotation={props.annotation}
         open={isOpened()}
         onClose={closeTooltipMenu}
@@ -50,7 +50,10 @@ function DocumentAnnotationText(props: {
     return {
       annotationText: {
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: getAnnotationCategoryColor(props.annotation.category, props.annotatorState.settings),
+        backgroundColor: getAnnotationCategoryColor(
+          props.annotation.category,
+          props.annotatorStateHandler.get().settings,
+        ),
         padding: '0px 5px',
       },
     };

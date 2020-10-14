@@ -1,7 +1,7 @@
 import React from 'react';
 import { anonymizerType } from '@label/core';
 import { LayoutGrid, Accordion, AccordionHeader, AccordionBody, Text } from '../../../../components';
-import { annotatorStateType } from '../../../../services/annotatorState';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { getAnnotationCategoryColor } from '../../../../styles';
 import { fetchedAnnotationType } from '../../../../types';
 
@@ -9,7 +9,7 @@ export { CategoryPanel };
 
 function CategoryPanel(props: {
   annotationsAndOccurences: Array<{ annotation: fetchedAnnotationType; occurences: number }>;
-  annotatorState: annotatorStateType;
+  annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
   category: string;
 }) {
@@ -50,7 +50,7 @@ function CategoryPanel(props: {
   function buildStyle() {
     return {
       accordion: {
-        backgroundColor: getAnnotationCategoryColor(props.category, props.annotatorState.settings),
+        backgroundColor: getAnnotationCategoryColor(props.category, props.annotatorStateHandler.get().settings),
       },
     };
   }

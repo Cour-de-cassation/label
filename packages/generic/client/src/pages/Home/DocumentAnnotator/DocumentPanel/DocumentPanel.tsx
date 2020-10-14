@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { anonymizerType } from '@label/core';
 import { LayoutGrid } from '../../../../components';
-import { annotatorStateType } from '../../../../services/annotatorState';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { fetchedAnnotationType } from '../../../../types';
 import { DocumentPanelFooter } from './DocumentPanelFooter';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
@@ -10,16 +10,20 @@ import { DocumentViewer } from './DocumentViewer';
 export { DocumentPanel };
 
 function DocumentPanel(props: {
-  annotatorState: annotatorStateType;
+  annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
 }): ReactElement {
   const [isAnonymizedView, setIsAnonymizedView] = useState(false);
 
   return (
     <LayoutGrid container>
-      <DocumentPanelHeader isAnonymizedView={isAnonymizedView} switchAnonymizedView={switchAnonymizedView} />
+      <DocumentPanelHeader
+        annotatorStateHandler={props.annotatorStateHandler}
+        isAnonymizedView={isAnonymizedView}
+        switchAnonymizedView={switchAnonymizedView}
+      />
       <DocumentViewer
-        annotatorState={props.annotatorState}
+        annotatorStateHandler={props.annotatorStateHandler}
         anonymizer={props.anonymizer}
         isAnonymizedView={isAnonymizedView}
       />

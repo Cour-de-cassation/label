@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType, textSplitter } from '@label/core';
 import { Text } from '../../../../components';
-import { annotatorStateType } from '../../../../services/annotatorState';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { heights } from '../../../../styles';
 import { fetchedAnnotationType } from '../../../../types';
 import { getSplittedTextByLine } from './lib';
@@ -11,16 +11,14 @@ import { DocumentAnnotationText } from './DocumentAnnotationText';
 export { DocumentViewer };
 
 function DocumentViewer(props: {
-  annotatorState: annotatorStateType;
+  annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
   isAnonymizedView: boolean;
 }): ReactElement {
   const theme = useTheme();
   const styles = buildStyle(theme);
-  const splittedTextByLine = getSplittedTextByLine(
-    props.annotatorState.document.text,
-    props.annotatorState.annotations,
-  );
+  const annotatorState = props.annotatorStateHandler.get();
+  const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
 
   return (
     <div style={styles.container}>
@@ -42,7 +40,7 @@ function DocumentViewer(props: {
                         (text) => <span>{text}</span>,
                         (annotation) => (
                           <DocumentAnnotationText
-                            annotatorState={props.annotatorState}
+                            annotatorStateHandler={props.annotatorStateHandler}
                             annotation={annotation}
                             anonymizer={props.anonymizer}
                             isAnonymizedView={props.isAnonymizedView}

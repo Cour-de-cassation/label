@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import { buildAnonymizer, annotationType, documentType, settingsType } from '@label/core';
+import { buildAnonymizer, settingsType } from '@label/core';
 import { LayoutGrid } from '../../../components';
-import { annotatorStateType } from '../../../services/annotatorState';
+import { useAnnotatorState } from '../../../services/annotatorState';
 import { fetchedAnnotationType, fetchedDocumentType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
@@ -13,21 +13,21 @@ function DocumentAnnotator(props: {
   settings: settingsType;
   document: fetchedDocumentType;
 }): ReactElement {
-  const annotatorState: annotatorStateType = {
+  const { annotatorStateHandler } = useAnnotatorState({
     annotations: props.annotations,
     document: props.document,
     settings: props.settings,
-  };
+  });
 
   const anonymizer = buildAnonymizer(props.settings);
 
   return (
     <LayoutGrid container>
       <LayoutGrid container item xs={4}>
-        <AnnotationsPanel annotatorState={annotatorState} anonymizer={anonymizer} />
+        <AnnotationsPanel annotatorStateHandler={annotatorStateHandler} anonymizer={anonymizer} />
       </LayoutGrid>
       <LayoutGrid container item xs={8}>
-        <DocumentPanel annotatorState={annotatorState} anonymizer={anonymizer} />
+        <DocumentPanel annotatorStateHandler={annotatorStateHandler} anonymizer={anonymizer} />
       </LayoutGrid>
     </LayoutGrid>
   );

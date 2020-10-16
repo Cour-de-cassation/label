@@ -1,4 +1,3 @@
-import { annotationType, documentType, settingsType } from '@label/core';
 import React, { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LayoutGrid } from '../../components';

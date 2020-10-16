@@ -2,10 +2,7 @@ import {
   annotationModule,
   annotationReportModule,
   documentModule,
-  documentType,
 } from '@label/core';
-import { buildAnnotationRepository } from '../../modules/annotation';
-import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import {
   documentService,
   buildDocumentRepository,
@@ -14,18 +11,10 @@ import { annotatorConfigType } from './annotatorConfigType';
 import { buildAnnotator } from './buildAnnotator';
 
 describe('buildAnnotator', () => {
-  let annotationRepository = buildAnnotationRepository();
-  let annotationReportRepository = buildAnnotationReportRepository();
-
-  beforeEach(() => {
-    annotationRepository = buildAnnotationRepository();
-    annotationReportRepository = buildAnnotationReportRepository();
-  });
-
   describe('annotateDocumentsWithoutAnnotations', () => {
     it('should annotate all the documents without annotations', async () => {
-      const documents = await insertNDocumentsWithoutAnnotationsInDb(5);
-      const fakeAnnotator = buildFakeAnnotatorConfigForDocuments(documents);
+      await insertNDocumentsWithoutAnnotationsInDb(5);
+      const fakeAnnotator = buildFakeAnnotatorConfig();
       const annotator = buildAnnotator(fakeAnnotator);
 
       await annotator.annotateDocumentsWithoutAnnotations();
@@ -47,9 +36,7 @@ async function insertNDocumentsWithoutAnnotationsInDb(n: number) {
   return documents;
 }
 
-function buildFakeAnnotatorConfigForDocuments(
-  documents: documentType[],
-): annotatorConfigType {
+function buildFakeAnnotatorConfig(): annotatorConfigType {
   return {
     name: 'FAKE_ANNOTATOR',
     async fetchAnnotationOfDocument(document) {

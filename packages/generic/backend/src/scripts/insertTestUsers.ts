@@ -1,4 +1,3 @@
-import { userModule } from '@label/core';
 import { userService } from '../modules/user';
 import { scriptRunner } from '../utils';
 

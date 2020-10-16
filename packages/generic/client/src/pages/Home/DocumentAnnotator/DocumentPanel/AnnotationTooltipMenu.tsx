@@ -15,6 +15,7 @@ function AnnotationTooltipMenu(props: {
   onClose: () => void;
   open: boolean;
 }): ReactElement {
+  const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(false);
   const style = buildStyle();
   const annotatorState = props.annotatorStateHandler.get();
   const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
@@ -29,10 +30,17 @@ function AnnotationTooltipMenu(props: {
           <Text>{fillTemplate(wordings.nOccurencesToObliterate, JSON.stringify(nbOfEntities))}</Text>
         </LayoutGrid>
         <LayoutGrid>
-          <Checkbox text={wordings.applyEveryWhere}></Checkbox>
+          <Checkbox
+            onChange={(_, checked: boolean) => setShouldApplyEverywhere(checked)}
+            text={wordings.applyEveryWhere}
+          ></Checkbox>
         </LayoutGrid>
         <LayoutGrid>
-          <Dropdown defaultItem={props.annotation.category} items={categories} onChange={() => console.log}></Dropdown>
+          <Dropdown
+            defaultItem={props.annotation.category}
+            items={categories}
+            onChange={changeAnnotationCategory}
+          ></Dropdown>
         </LayoutGrid>
         <LayoutGrid>
           <Button onClick={deleteAnnotation}>{wordings.delete}</Button>
@@ -49,13 +57,35 @@ function AnnotationTooltipMenu(props: {
     };
   }
 
+  function changeAnnotationCategory(newCategory: string) {
+    const annotationsToChange = shouldApplyEverywhere
+      ? annotatorState.annotations.filter((annotation) => annotation.entityId === props.annotation.entityId)
+      : [props.annotation];
+
+    const otherAnnotations = shouldApplyEverywhere
+      ? removeAllOccurences(props.annotation, annotatorState.annotations)
+      : removeOneOccurence(props.annotation, annotatorState.annotations);
+
+    const changedAnnotations = annotationsToChange.map((annotation) => ({ ...annotation, category: newCategory }));
+    const newAnnotatorState = { ...annotatorState, annotations: [...changedAnnotations, ...otherAnnotations] };
+    props.annotatorStateHandler.set(newAnnotatorState);
+  }
+
   function deleteAnnotation() {
     props.onClose();
 
-    const newAnnotations = annotatorState.annotations.filter(
-      (annotation) => !areMongoIdEqual(annotation._id, props.annotation._id),
-    );
+    const newAnnotations = shouldApplyEverywhere
+      ? removeAllOccurences(props.annotation, annotatorState.annotations)
+      : removeOneOccurence(props.annotation, annotatorState.annotations);
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);
+  }
+
+  function removeOneOccurence(annotationToRemove: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {
+    return annotations.filter((annotation) => !areMongoIdEqual(annotation._id, annotationToRemove._id));
+  }
+
+  function removeAllOccurences(annotationToRemove: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {
+    return annotations.filter((annotation) => annotation.entityId !== annotationToRemove.entityId);
   }
 }

@@ -12,12 +12,15 @@ describe('groupAnnotations', () => {
 
     const groupedAnnotations = groupAnnotations(annotations);
 
-    expect(groupedAnnotations).toEqual({
-      prenom: [
-        { annotation: annotations[0], occurences: 1 },
-        { annotation: annotations[1], occurences: 1 },
-      ],
-      nom: [{ annotation: annotations[3], occurences: 2 }],
-    });
+    expect(groupedAnnotations).toEqual([
+      {
+        category: 'prenom',
+        annotationsAndOccurences: [
+          { annotation: annotations[0], occurences: 1 },
+          { annotation: annotations[1], occurences: 1 },
+        ],
+      },
+      { category: 'nom', annotationsAndOccurences: [{ annotation: annotations[3], occurences: 2 }] },
+    ]);
   });
 });

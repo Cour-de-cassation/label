@@ -21,5 +21,6 @@ function Dropdown(props: { defaultItem: string; items: string[]; onChange: (item
   function handleChange(event: ChangeEvent<{ value: unknown }>) {
     const value = event.target.value as string;
     setValue(value);
+    props.onChange(value);
   }
 }

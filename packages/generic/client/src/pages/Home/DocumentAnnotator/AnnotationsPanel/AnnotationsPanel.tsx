@@ -28,13 +28,13 @@ function AnnotationsPanel(props: {
         </LayoutGrid>
       </LayoutGrid>
       <LayoutGrid style={styles.panel}>
-        {Object.entries(groupedAnnotations).map(([annotationCategory, annotationsAndOccurences]) => (
-          <LayoutGrid key={annotationCategory}>
+        {groupedAnnotations.map(({ category, annotationsAndOccurences }) => (
+          <LayoutGrid key={category}>
             <CategoryPanel
               annotationsAndOccurences={annotationsAndOccurences}
               annotatorStateHandler={props.annotatorStateHandler}
               anonymizer={props.anonymizer}
-              category={annotationCategory}
+              category={category}
             />
           </LayoutGrid>
         ))}

@@ -4,7 +4,10 @@ import { fetchedAnnotationType } from '../../../../../types';
 export { groupAnnotations };
 
 function groupAnnotations(annotations: fetchedAnnotationType[]) {
-  const annotationsByCategory: { [category: string]: { annotation: fetchedAnnotationType; occurences: number }[] } = {};
+  const annotationsByCategory: Array<{
+    category: string;
+    annotationsAndOccurences: Array<{ annotation: fetchedAnnotationType; occurences: number }>;
+  }> = [];
 
   for (const [category, annotationsOfCategory] of Object.entries(groupBy(annotations, 'category'))) {
     const annotationsAndOccurences = Object.values(groupBy(annotationsOfCategory, 'text')).map((annotationsByText) => ({
@@ -12,12 +15,15 @@ function groupAnnotations(annotations: fetchedAnnotationType[]) {
       occurences: annotationsByText.length,
     }));
 
-    annotationsByCategory[category] = orderBy(
-      annotationsAndOccurences,
-      (annotationAndOccurences) => annotationAndOccurences.occurences,
-      'desc',
-    );
+    annotationsByCategory.push({
+      category,
+      annotationsAndOccurences: orderBy(
+        annotationsAndOccurences,
+        (annotationAndOccurences) => annotationAndOccurences.occurences,
+        'desc',
+      ),
+    });
   }
 
-  return annotationsByCategory;
+  return orderBy(annotationsByCategory, (annotations) => annotations.annotationsAndOccurences.length, 'desc');
 }

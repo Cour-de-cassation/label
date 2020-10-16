@@ -3,11 +3,6 @@ import { annotationReportType } from "../annotationReportType";
 
 export { buildAnnotationReport };
 
-function buildAnnotationReport(
+const buildAnnotationReport: (
   annotationReportFields: omitIdType<annotationReportType>
-): annotationReportType {
-  return {
-    ...annotationReportFields,
-    _id: idModule.lib.buildId(),
-  };
-}
+) => annotationReportType = idModule.lib.buildObjectWithId;

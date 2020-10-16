@@ -3,11 +3,6 @@ import { assignationType } from "../assignationType";
 
 export { buildAssignation };
 
-function buildAssignation(
+const buildAssignation: (
   assignationFields: omitIdType<assignationType>
-): assignationType {
-  return {
-    ...assignationFields,
-    _id: idModule.lib.buildId(),
-  };
-}
+) => assignationType = idModule.lib.buildObjectWithId;

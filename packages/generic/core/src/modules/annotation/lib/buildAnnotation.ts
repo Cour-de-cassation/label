@@ -8,8 +8,7 @@ function buildAnnotation(
   annotationFields: Omit<omitIdType<annotationType>, "entityId">
 ): annotationType {
   return {
-    ...annotationFields,
+    ...idModule.lib.buildObjectWithId(annotationFields),
     entityId: computeAnnotationEntityId(annotationFields),
-    _id: idModule.lib.buildId(),
   };
 }

@@ -1,4 +1,4 @@
-import { mongoIdType } from '@label/core';
+import { assignationModule, mongoIdType } from '@label/core';
 import { groupBy } from 'lodash';
 import { buildAssignationRepository } from '../repository/buildAssignationRepository';
 
@@ -24,5 +24,19 @@ const assignationService = {
     }, {} as Record<string, mongoIdType[]>);
 
     return documentIdsAssignatedByUser;
+  },
+  createAssignation({
+    userId,
+    documentId,
+  }: {
+    userId: mongoIdType;
+    documentId: mongoIdType;
+  }) {
+    const assignationRepository = buildAssignationRepository();
+    const assignation = assignationModule.lib.buildAssignation({
+      userId,
+      documentId,
+    });
+    return assignationRepository.insert(assignation);
   },
 };

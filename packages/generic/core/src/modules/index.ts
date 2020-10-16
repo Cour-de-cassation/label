@@ -3,7 +3,7 @@ import {
   annotationReportModule,
   annotationReportType,
 } from "./annotationReport";
-import { assignationType } from "./assignation";
+import { assignationModule, assignationType } from "./assignation";
 import { documentModule, documentType } from "./document";
 import { settingsModule, settingsType } from "./settings";
 import { userModule, userType } from "./user";
@@ -11,6 +11,7 @@ import { userModule, userType } from "./user";
 export {
   annotationModule,
   annotationReportModule,
+  assignationModule,
   documentModule,
   settingsModule,
   userModule,

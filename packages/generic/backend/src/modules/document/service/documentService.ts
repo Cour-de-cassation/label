@@ -38,6 +38,11 @@ const documentService = {
       assignatedDocumentIds,
     );
 
+    await assignationService.createAssignation({
+      userId,
+      documentId: document._id,
+    });
+
     return document;
   },
 };

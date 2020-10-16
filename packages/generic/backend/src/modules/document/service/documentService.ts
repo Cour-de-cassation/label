@@ -1,4 +1,4 @@
-import { documentType, mongoIdType } from '@label/core';
+import { documentType, idType } from '@label/core';
 import { buildAnnotationReportRepository } from '../../annotationReport';
 import { buildDocumentRepository } from '..';
 import { assignationService } from '../../assignation/service';
@@ -18,7 +18,7 @@ const documentService = {
         !reports.some((report) => report.documentId === document._id),
     );
   },
-  async fetchDocumentForUser(userId: mongoIdType) {
+  async fetchDocumentForUser(userId: idType) {
     const stringifiedUserId = JSON.stringify(userId);
     const documentRepository = buildDocumentRepository();
     const documentIdsAssignatedByUser = await assignationService.fetchDocumentIdsAssignatedByUser();

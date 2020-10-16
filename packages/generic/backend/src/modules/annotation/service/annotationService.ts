@@ -1,4 +1,4 @@
-import { annotationType, buildMongoId } from '@label/core';
+import { annotationType, idModule } from '@label/core';
 import { buildAnnotationRepository } from '../repository';
 
 export { annotationService };
@@ -8,6 +8,8 @@ const annotationService = {
     documentId: string,
   ): Promise<annotationType[]> {
     const annotationRepository = buildAnnotationRepository();
-    return annotationRepository.findAllByDocumentId(buildMongoId(documentId));
+    return annotationRepository.findAllByDocumentId(
+      idModule.lib.buildId(documentId),
+    );
   },
 };

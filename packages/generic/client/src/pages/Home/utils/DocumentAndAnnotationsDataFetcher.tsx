@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useQuery } from '@apollo/client';
-import { documentType, buildMongoId } from '@label/core';
+import { idModule } from '@label/core';
 import { DataFetcher } from '../../../services/dataFetcher';
 import { fetchedAnnotationType, fetchedDocumentType } from '../../../types';
 import {
@@ -27,11 +27,11 @@ function DocumentAndAnnotationsDataFetcher(props: {
   ]) => {
     const document = {
       ...fetchedDocument,
-      _id: buildMongoId(fetchedDocument._id),
+      _id: idModule.lib.buildId(fetchedDocument._id),
     };
     const annotations = fetchedAnnotations.map((annotation) => ({
       ...annotation,
-      _id: buildMongoId(annotation._id),
+      _id: idModule.lib.buildId(annotation._id),
     }));
 
     return [document, annotations] as [fetchedDocumentType, fetchedAnnotationType[]];

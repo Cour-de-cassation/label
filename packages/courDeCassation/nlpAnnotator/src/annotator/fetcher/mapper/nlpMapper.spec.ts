@@ -1,4 +1,4 @@
-import { annotationType, documentModule, mongoIdType } from '@label/core';
+import { documentModule } from '@label/core';
 import { nlpAnnotationsType } from '../api';
 import { nlpMapper } from './nlpMapper';
 

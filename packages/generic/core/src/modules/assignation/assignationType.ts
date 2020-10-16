@@ -1,9 +1,9 @@
-import { mongoIdType } from "../../lib";
+import { idType } from "../id";
 
 export type { assignationType };
 
 type assignationType = {
-  _id: mongoIdType;
-  userId: mongoIdType;
-  documentId: mongoIdType;
+  _id: idType;
+  userId: idType;
+  documentId: idType;
 };

@@ -1,4 +1,4 @@
-import { annotationType, mongoIdType, areMongoIdEqual } from '@label/core';
+import { annotationType, idType, idModule } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customAnnotationRepositoryType } from './customAnnotationRepositoryType';
 
@@ -9,9 +9,9 @@ const buildFakeAnnotationRepository = buildFakeRepositoryBuilder<
   customAnnotationRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
-    async findAllByDocumentId(documentId: mongoIdType) {
+    async findAllByDocumentId(documentId: idType) {
       return collection.filter((annotation) =>
-        areMongoIdEqual(annotation.documentId, documentId),
+        idModule.lib.equalId(annotation.documentId, documentId),
       );
     },
   }),

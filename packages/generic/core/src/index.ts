@@ -1,10 +1,8 @@
 import {
   buildAnonymizer,
   anonymizerType,
+  graphQLReceivedDataType,
   httpRequester,
-  buildMongoId,
-  areMongoIdEqual,
-  mongoIdType,
   textSplitter,
   annotationChunkType,
   textChunkType,
@@ -18,18 +16,14 @@ import {
   assignationModule,
   documentModule,
   documentType,
+  idModule,
+  idType,
   settingsModule,
   settingsType,
   userModule,
   userType,
 } from "./modules";
-import {
-  dataModelFieldType,
-  dataModelType,
-  generatorType,
-  graphQLReceivedDataType,
-  omitMongoIdType,
-} from "./types";
+import { dataModelFieldType, dataModelType, generatorType } from "./types";
 
 export {
   buildAnonymizer,
@@ -38,27 +32,25 @@ export {
   annotationReportModule,
   assignationModule,
   documentModule,
+  idModule,
   settingsModule,
   userModule,
-  buildMongoId,
-  areMongoIdEqual,
   httpRequester,
 };
 
 export type {
   anonymizerType,
+  graphQLReceivedDataType,
   annotationChunkType,
   textChunkType,
   annotationType,
   annotationReportType,
   assignationType,
   documentType,
+  idType,
   settingsType,
   userType,
   dataModelFieldType,
   dataModelType,
   generatorType,
-  graphQLReceivedDataType,
-  omitMongoIdType,
-  mongoIdType,
 };

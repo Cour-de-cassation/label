@@ -1,5 +1,5 @@
 import { dataModelType } from "../../types";
-import { mongoIdType } from "../../lib";
+import { idType } from "../id";
 
 export { annotationDataModel };
 
@@ -7,20 +7,20 @@ export type { annotationType };
 
 type annotationType = {
   category: string;
-  documentId: mongoIdType;
+  documentId: idType;
   entityId: string;
   source: string;
-  _id: mongoIdType;
+  _id: idType;
   start: number;
   text: string;
 };
 
 const annotationDataModel: dataModelType<annotationType> = {
   category: "string",
-  documentId: "mongoIdType",
+  documentId: "id",
   entityId: "string",
   source: "string",
-  _id: "mongoIdType",
+  _id: "id",
   start: "number",
   text: "string",
 };

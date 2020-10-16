@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
-import { areMongoIdEqual } from '@label/core';
+import { idModule } from '@label/core';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../components';
 import { fetchedAnnotationType } from '../../../../types';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
@@ -82,7 +82,7 @@ function AnnotationTooltipMenu(props: {
   }
 
   function removeOneOccurence(annotationToRemove: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {
-    return annotations.filter((annotation) => !areMongoIdEqual(annotation._id, annotationToRemove._id));
+    return annotations.filter((annotation) => !idModule.lib.equalId(annotation._id, annotationToRemove._id));
   }
 
   function removeAllOccurences(annotationToRemove: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {

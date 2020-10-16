@@ -1,16 +1,15 @@
-import { buildMongoId } from "../../../lib";
-import { omitMongoIdType } from "../../../types";
+import { idModule, omitIdType } from "../../id";
 import { annotationType } from "../annotationType";
 import { computeAnnotationEntityId } from "./computeAnnotationEntityId";
 
 export { buildAnnotation };
 
 function buildAnnotation(
-  annotationFields: Omit<omitMongoIdType<annotationType>, "entityId">
+  annotationFields: Omit<omitIdType<annotationType>, "entityId">
 ): annotationType {
   return {
     ...annotationFields,
     entityId: computeAnnotationEntityId(annotationFields),
-    _id: buildMongoId(),
+    _id: idModule.lib.buildId(),
   };
 }

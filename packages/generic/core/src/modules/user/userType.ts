@@ -1,9 +1,9 @@
-import { mongoIdType } from "../../lib";
+import { idType } from "../id";
 
 export type { userType };
 
 type userType = {
-  _id: mongoIdType;
+  _id: idType;
   email: string;
   password: string;
 };

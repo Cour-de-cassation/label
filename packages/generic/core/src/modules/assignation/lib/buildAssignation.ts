@@ -1,14 +1,13 @@
-import { buildMongoId } from "../../../lib";
-import { omitMongoIdType } from "../../../types";
+import { idModule, omitIdType } from "../../id";
 import { assignationType } from "../assignationType";
 
 export { buildAssignation };
 
 function buildAssignation(
-  assignationFields: omitMongoIdType<assignationType>
+  assignationFields: omitIdType<assignationType>
 ): assignationType {
   return {
     ...assignationFields,
-    _id: buildMongoId(),
+    _id: idModule.lib.buildId(),
   };
 }

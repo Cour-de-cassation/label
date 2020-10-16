@@ -1,4 +1,4 @@
-import { annotationType, mongoIdType } from '@label/core';
+import { annotationType, idType } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { customAnnotationRepositoryType } from './customAnnotationRepositoryType';
 
@@ -10,7 +10,7 @@ const buildAnnotationRepository = buildRepositoryBuilder<
 >({
   collectionName: 'annotations',
   buildCustomRepository: (collection) => ({
-    async findAllByDocumentId(documentId: mongoIdType) {
+    async findAllByDocumentId(documentId: idType) {
       return collection.find({ documentId }).toArray();
     },
   }),

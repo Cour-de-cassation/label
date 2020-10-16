@@ -2,7 +2,6 @@ import { annotationModule, documentModule } from '@label/core';
 import { buildDocumentRepository } from '../../document';
 import { buildAnnotationRepository } from '../repository';
 import { annotationService } from './annotationService';
-import { ObjectId, ObjectID } from 'mongodb';
 
 describe('annotationService', () => {
   describe('fetchAnnotationsOfDocument', () => {

@@ -1,18 +1,17 @@
 import { buildAnonymizer, anonymizerType } from "./anonymizer";
+import { graphQLReceivedDataType } from "./graphQL";
 import { httpRequester } from "./httpRequester";
-import { buildMongoId, areMongoIdEqual, mongoIdType } from "./mongo";
 import {
   annotationChunkType,
   textChunkType,
   textSplitter,
 } from "./textSplitter";
 
-export {
-  buildAnonymizer,
-  httpRequester,
-  buildMongoId,
-  areMongoIdEqual,
-  textSplitter,
-};
+export { buildAnonymizer, httpRequester, textSplitter };
 
-export type { anonymizerType, mongoIdType, annotationChunkType, textChunkType };
+export type {
+  anonymizerType,
+  graphQLReceivedDataType,
+  annotationChunkType,
+  textChunkType,
+};

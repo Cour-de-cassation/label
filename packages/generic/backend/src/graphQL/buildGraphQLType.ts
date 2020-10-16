@@ -29,7 +29,7 @@ function buildGraphQLFieldType(
   switch (dataModelfield) {
     case 'date':
       return GraphQLString;
-    case 'mongoIdType':
+    case 'id':
       return GraphQLString;
     case 'number':
       return GraphQLInt;

@@ -1,5 +1,5 @@
 import { parse } from 'fast-xml-parser';
-import { buildMongoId, documentType, documentModule } from '@label/core';
+import { documentType, documentModule } from '@label/core';
 import { jurinetCourtDecisionType } from '../api';
 
 export { jurinetMapper };

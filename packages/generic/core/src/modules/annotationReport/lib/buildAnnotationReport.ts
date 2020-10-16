@@ -1,14 +1,13 @@
-import { buildMongoId } from "../../../lib";
-import { omitMongoIdType } from "../../../types";
+import { idModule, omitIdType } from "../../id";
 import { annotationReportType } from "../annotationReportType";
 
 export { buildAnnotationReport };
 
 function buildAnnotationReport(
-  annotationReportFields: omitMongoIdType<annotationReportType>
+  annotationReportFields: omitIdType<annotationReportType>
 ): annotationReportType {
   return {
     ...annotationReportFields,
-    _id: buildMongoId(),
+    _id: idModule.lib.buildId(),
   };
 }

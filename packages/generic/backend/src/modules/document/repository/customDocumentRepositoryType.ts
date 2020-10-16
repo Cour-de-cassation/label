@@ -1,8 +1,8 @@
-import { documentType, mongoIdType } from '@label/core';
+import { documentType, idType } from '@label/core';
 
 export type { customDocumentRepositoryType };
 
 type customDocumentRepositoryType = {
-  findById: (id: mongoIdType) => Promise<documentType>;
-  findOneExceptIds: (idsToExclude: mongoIdType[]) => Promise<documentType>;
+  findById: (id: idType) => Promise<documentType>;
+  findOneExceptIds: (idsToExclude: idType[]) => Promise<documentType>;
 };

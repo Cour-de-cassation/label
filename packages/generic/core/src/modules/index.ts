@@ -5,6 +5,7 @@ import {
 } from "./annotationReport";
 import { assignationModule, assignationType } from "./assignation";
 import { documentModule, documentType } from "./document";
+import { idModule, idType } from "./id";
 import { settingsModule, settingsType } from "./settings";
 import { userModule, userType } from "./user";
 
@@ -13,6 +14,7 @@ export {
   annotationReportModule,
   assignationModule,
   documentModule,
+  idModule,
   settingsModule,
   userModule,
 };
@@ -22,6 +24,7 @@ export type {
   annotationReportType,
   assignationType,
   documentType,
+  idType,
   settingsType,
   userType,
 };

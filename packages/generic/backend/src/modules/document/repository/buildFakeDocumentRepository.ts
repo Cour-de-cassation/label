@@ -1,4 +1,4 @@
-import { documentType } from '@label/core';
+import { documentType, idModule } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';
 
@@ -10,7 +10,9 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
 >({
   buildCustomFakeRepository: (collection) => ({
     async findById(_id) {
-      const result = collection.find((document) => document._id === _id);
+      const result = collection.find((document) =>
+        idModule.lib.equalId(document._id, _id),
+      );
       if (!result) {
         throw new Error(`No matching document for _id ${_id}`);
       }

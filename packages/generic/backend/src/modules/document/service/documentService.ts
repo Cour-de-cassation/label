@@ -1,6 +1,6 @@
-import { documentType, idType } from '@label/core';
+import { documentType, idModule, idType } from '@label/core';
 import { buildAnnotationReportRepository } from '../../annotationReport';
-import { buildDocumentRepository } from '..';
+import { buildDocumentRepository } from '../repository';
 import { assignationService } from '../../assignation/service';
 
 export { documentService };
@@ -18,15 +18,14 @@ const documentService = {
         !reports.some((report) => report.documentId === document._id),
     );
   },
-  async fetchDocumentForUser(userId: idType) {
-    const stringifiedUserId = JSON.stringify(userId);
+  async fetchDocumentForUser(userId: idType): Promise<documentType> {
     const documentRepository = buildDocumentRepository();
-    const documentIdsAssignatedByUser = await assignationService.fetchDocumentIdsAssignatedByUser();
-    if (
-      documentIdsAssignatedByUser[stringifiedUserId] &&
-      documentIdsAssignatedByUser[stringifiedUserId].length > 0
-    ) {
-      const documentId = documentIdsAssignatedByUser[stringifiedUserId][0];
+    const documentIdsAssignatedByUser = await assignationService.fetchDocumentIdsAssignatedByUserId();
+    const documentIdsAssignatedToUser =
+      documentIdsAssignatedByUser[idModule.lib.convertToString(userId)];
+
+    if (documentIdsAssignatedToUser && documentIdsAssignatedToUser.length > 0) {
+      const documentId = documentIdsAssignatedToUser[0];
       return documentRepository.findById(documentId);
     }
 

@@ -1,30 +1,31 @@
 import { assignationModule, idType } from '@label/core';
 import { groupBy } from 'lodash';
-import { buildAssignationRepository } from '../repository/buildAssignationRepository';
+import { buildAssignationRepository } from '../repository';
 
 export { assignationService };
 
 const assignationService = {
-  async fetchDocumentIdsAssignatedByUser() {
+  async fetchDocumentIdsAssignatedByUserId(): Promise<{
+    [userId: string]: idType[];
+  }> {
     const assignationRepository = buildAssignationRepository();
     const assignations = await assignationRepository.findAll();
     const assignationsGroupedByUser = groupBy(
       assignations,
       (assignation) => assignation.userId,
     );
-    const documentIdsAssignatedByUser = Object.keys(
-      assignationsGroupedByUser,
-    ).reduce((accumulator, userId) => {
-      return {
-        ...accumulator,
-        [userId]: assignationsGroupedByUser[userId].map(
+
+    const documentIdsAssignatedByUser: { [userId: string]: idType[] } = {};
+    Object.entries(assignationsGroupedByUser).forEach(
+      ([userId, assignations]) =>
+        (documentIdsAssignatedByUser[userId] = assignations.map(
           (assignation) => assignation.documentId,
-        ),
-      };
-    }, {} as Record<string, idType[]>);
+        )),
+    );
 
     return documentIdsAssignatedByUser;
   },
+
   createAssignation({
     userId,
     documentId,

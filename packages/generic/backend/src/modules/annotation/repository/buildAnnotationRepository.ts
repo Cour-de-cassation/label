@@ -10,7 +10,7 @@ const buildAnnotationRepository = buildRepositoryBuilder<
 >({
   collectionName: 'annotations',
   buildCustomRepository: (collection) => ({
-    async findByDocumentId(documentId: mongoIdType) {
+    async findAllByDocumentId(documentId: mongoIdType) {
       return collection.find({ documentId }).toArray();
     },
   }),

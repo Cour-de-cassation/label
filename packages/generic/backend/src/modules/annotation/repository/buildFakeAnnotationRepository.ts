@@ -9,7 +9,7 @@ const buildFakeAnnotationRepository = buildFakeRepositoryBuilder<
   customAnnotationRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
-    async findByDocumentId(documentId: mongoIdType) {
+    async findAllByDocumentId(documentId: mongoIdType) {
       return collection.filter((annotation) =>
         areMongoIdEqual(annotation.documentId, documentId),
       );

@@ -4,5 +4,5 @@ export type { customAnnotationRepositoryType };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type customAnnotationRepositoryType = {
-  findByDocumentId(documentId: mongoIdType): Promise<annotationType[]>;
+  findAllByDocumentId(documentId: mongoIdType): Promise<annotationType[]>;
 };

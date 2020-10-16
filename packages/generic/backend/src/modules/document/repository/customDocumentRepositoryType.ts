@@ -1,4 +1,8 @@
+import { documentType, mongoIdType } from '@label/core';
+
 export type { customDocumentRepositoryType };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type customDocumentRepositoryType = {};
+type customDocumentRepositoryType = {
+  findById: (id: mongoIdType) => Promise<documentType>;
+  findOneExceptIds: (idsToExclude: mongoIdType[]) => Promise<documentType>;
+};

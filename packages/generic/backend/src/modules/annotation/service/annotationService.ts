@@ -8,6 +8,6 @@ const annotationService = {
     documentId: string,
   ): Promise<annotationType[]> {
     const annotationRepository = buildAnnotationRepository();
-    return annotationRepository.findByDocumentId(buildMongoId(documentId));
+    return annotationRepository.findAllByDocumentId(buildMongoId(documentId));
   },
 };

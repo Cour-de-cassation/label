@@ -1,6 +1,10 @@
 import {
   buildAnonymizer,
   anonymizerType,
+  httpRequester,
+  buildMongoId,
+  areMongoIdEqual,
+  mongoIdType,
   textSplitter,
   annotationChunkType,
   textChunkType,
@@ -24,12 +28,6 @@ import {
   graphQLReceivedDataType,
   omitMongoIdType,
 } from "./types";
-import {
-  buildMongoId,
-  areMongoIdEqual,
-  mongoIdType,
-  httpRequester,
-} from "./utils";
 
 export {
   buildAnonymizer,

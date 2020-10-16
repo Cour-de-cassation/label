@@ -1,5 +1,5 @@
+import { buildMongoId } from "../../../lib";
 import { omitMongoIdType } from "../../../types";
-import { buildMongoId } from "../../../utils";
 import { annotationType } from "../annotationType";
 import { computeAnnotationEntityId } from "./computeAnnotationEntityId";
 

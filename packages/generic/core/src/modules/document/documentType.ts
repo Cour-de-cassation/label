@@ -1,5 +1,5 @@
+import { mongoIdType } from "../../lib";
 import { dataModelType } from "../../types";
-import { mongoIdType } from "../../utils";
 
 export { documentDataModel };
 

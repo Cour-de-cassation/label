@@ -1,4 +1,4 @@
-import { buildMongoId } from "../../../utils";
+import { buildMongoId } from "../../../lib";
 import { generatorType } from "../../../types";
 import { documentType } from "../documentType";
 

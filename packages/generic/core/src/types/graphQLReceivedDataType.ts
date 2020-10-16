@@ -1,4 +1,4 @@
-import { mongoIdType } from "../utils";
+import { mongoIdType } from "../lib";
 
 export type { graphQLReceivedDataType };
 

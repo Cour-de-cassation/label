@@ -1,5 +1,5 @@
+import { buildMongoId } from "../../../lib";
 import { omitMongoIdType } from "../../../types";
-import { buildMongoId } from "../../../utils";
 import { userType } from "../userType";
 
 export { buildUser };

@@ -12,12 +12,8 @@ function DocumentPanelHeader(props: {
   return (
     <Header
       leftHeaderComponents={[
-        <Button color="primary" onClick={revertLastAction}>
-          Ctrl-Z
-        </Button>,
-        <Button color="primary" onClick={restoreLastAction}>
-          Ctrl-Maj-Z
-        </Button>,
+        <Button color="primary" onClick={revertLastAction} iconName="undo" />,
+        <Button color="primary" onClick={restoreLastAction} iconName="redo" />,
       ]}
       rightHeaderComponents={[
         <Text>Vue anonymisée</Text>,

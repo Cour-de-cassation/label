@@ -1,7 +1,7 @@
 import { documentType, idModule, idType } from '@label/core';
 import { buildAnnotationReportRepository } from '../../annotationReport';
 import { buildDocumentRepository } from '../repository';
-import { assignationService } from '../../assignation/service';
+import { assignationService } from '../../assignation';
 
 export { documentService };
 

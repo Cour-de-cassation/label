@@ -1,0 +1,1 @@
+export { buildAuthenticatedResolver } from './buildAuthenticatedResolver';

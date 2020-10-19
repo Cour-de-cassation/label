@@ -1,3 +1,4 @@
 import { buildAssignationRepository } from './repository';
+import { assignationService } from './service';
 
-export { buildAssignationRepository };
+export { buildAssignationRepository, assignationService };

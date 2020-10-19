@@ -1,10 +1,9 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { anonymizerType } from '@label/core';
+import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { Button } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { getAnnotationCategoryColor } from '../../../../styles';
-import { fetchedAnnotationType } from '../../../../types';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 
 export { DocumentAnnotationText };

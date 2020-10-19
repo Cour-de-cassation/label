@@ -1,22 +1,31 @@
 import React, { ReactElement } from 'react';
 import { useQuery } from '@apollo/client';
-import { idModule } from '@label/core';
-import { DataFetcher } from '../../../services/dataFetcher';
-import { fetchedAnnotationType, fetchedDocumentType } from '../../../types';
 import {
-  annotationsGraphQLType,
-  ANNOTATIONS_GRAPHQL_QUERY,
-  documentGraphQLType,
-  DOCUMENT_GRAPHQL_QUERY,
-} from '../DocumentAnnotator/graphql';
+  annotationModule,
+  fetchedAnnotationType,
+  documentModule,
+  fetchedDocumentType,
+  idModule,
+  graphQLReceivedDataType,
+} from '@label/core';
+import { DataFetcher } from '../../services/dataFetcher';
+import { buildGraphQLQuery } from '../../graphQL';
 
 export { DocumentAndAnnotationsDataFetcher };
+
+type annotationsGraphQLType = {
+  annotations: Array<graphQLReceivedDataType<fetchedAnnotationType>>;
+};
+
+type documentGraphQLType = {
+  document: graphQLReceivedDataType<fetchedDocumentType>;
+};
 
 function DocumentAndAnnotationsDataFetcher(props: {
   children: (fetched: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => ReactElement;
 }) {
-  const documentsFetchInfo = useQuery<documentGraphQLType>(DOCUMENT_GRAPHQL_QUERY);
-  const annotationsFetchInfo = useQuery<annotationsGraphQLType>(ANNOTATIONS_GRAPHQL_QUERY, {
+  const documentsFetchInfo = useQuery<documentGraphQLType>(buildDocumentGraphQLQuery());
+  const annotationsFetchInfo = useQuery<annotationsGraphQLType>(buildAnnotationGraphQLQuery(), {
     skip: !documentsFetchInfo.data?.document,
     variables: { documentId: documentsFetchInfo.data?.document._id },
   });
@@ -45,4 +54,16 @@ function DocumentAndAnnotationsDataFetcher(props: {
       {([document, annotations]) => props.children({ document, annotations })}
     </DataFetcher>
   );
+}
+
+function buildAnnotationGraphQLQuery() {
+  return buildGraphQLQuery(
+    'annotations($documentId: String!)',
+    'annotations(documentId: $documentId)',
+    annotationModule.dataModel,
+  );
+}
+
+function buildDocumentGraphQLQuery() {
+  return buildGraphQLQuery('document', 'document', documentModule.dataModel);
 }

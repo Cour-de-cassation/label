@@ -1,5 +1,5 @@
 import { groupBy, orderBy } from 'lodash';
-import { fetchedAnnotationType } from '../../../../../types';
+import { fetchedAnnotationType } from '@label/core';
 
 export { groupAnnotations };
 

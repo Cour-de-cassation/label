@@ -4,8 +4,8 @@ import { LayoutGrid } from '../../components';
 import { deleteBearerTokenInLocalStorage } from '../../services/localStorage';
 import { heights } from '../../styles';
 import { DocumentAnnotator } from './DocumentAnnotator';
-import { DocumentAndAnnotationsDataFetcher } from './utils/DocumentAndAnnotationsDataFetcher';
-import { SettingsDataFetcher } from './utils/SettingsDataFetcher';
+import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
+import { SettingsDataFetcher } from './SettingsDataFetcher';
 
 const Home: FunctionComponent = () => {
   const history = useHistory();

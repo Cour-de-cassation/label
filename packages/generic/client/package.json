@@ -55,6 +55,22 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src/",
+    "setupFiles": [
+      "core-js"
+    ],
+    "setupFilesAfterEnv": [
+      "./tests/setupTests.ts"
+    ],
+    "testRegex": ".spec.ts$",
+    "testEnvironment": "node"
+  },
   "name": "@label/client",
   "private": true,
   "scripts": {

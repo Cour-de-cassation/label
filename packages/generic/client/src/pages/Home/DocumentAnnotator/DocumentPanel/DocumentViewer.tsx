@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { anonymizerType, textSplitter } from '@label/core';
+import { anonymizerType, fetchedAnnotationType, textSplitter } from '@label/core';
 import { Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { heights } from '../../../../styles';
-import { fetchedAnnotationType } from '../../../../types';
 import { getSplittedTextByLine } from './lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 

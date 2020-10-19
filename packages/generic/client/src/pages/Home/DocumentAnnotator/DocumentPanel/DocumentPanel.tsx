@@ -1,8 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { anonymizerType } from '@label/core';
+import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { fetchedAnnotationType } from '../../../../types';
 import { DocumentPanelFooter } from './DocumentPanelFooter';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';

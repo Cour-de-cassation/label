@@ -1,10 +1,14 @@
 import { annotationGenerator } from "./generator";
-import { annotationDataModel, annotationType } from "./annotationType";
+import {
+  annotationDataModel,
+  annotationType,
+  fetchedAnnotationType,
+} from "./annotationType";
 import { buildAnnotation, computeAnnotationEntityId } from "./lib";
 
 export { annotationModule };
 
-export type { annotationType };
+export type { annotationType, fetchedAnnotationType };
 
 const annotationModule = {
   dataModel: annotationDataModel,

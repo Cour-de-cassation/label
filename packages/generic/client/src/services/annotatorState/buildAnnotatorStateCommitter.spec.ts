@@ -1,6 +1,5 @@
 import { range } from 'lodash';
-import { annotationModule, documentModule } from '@label/core';
-import { fetchedAnnotationType } from '../../types';
+import { annotationModule, fetchedAnnotationType, documentModule } from '@label/core';
 import { annotatorStateType } from './annotatorStateType';
 import { buildAnnotatorStateCommitter } from './buildAnnotatorStateCommitter';
 

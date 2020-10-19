@@ -1,10 +1,9 @@
 import React from 'react';
-import { anonymizerType } from '@label/core';
+import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { heights } from '../../../../styles';
-import { fetchedAnnotationType } from '../../../../types';
 import { groupAnnotations } from './lib';
 import { CategoryPanel } from './CategoryPanel';
 

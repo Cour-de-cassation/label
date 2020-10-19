@@ -1,4 +1,4 @@
-import { fetchedAnnotationType } from '../../types';
+import { fetchedAnnotationType } from '@label/core';
 import { annotatorStateType, annotationActionType } from './annotatorStateType';
 
 export { buildAnnotatorStateCommitter };

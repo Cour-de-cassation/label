@@ -1,9 +1,8 @@
 import React from 'react';
-import { anonymizerType } from '@label/core';
+import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid, Accordion, AccordionHeader, AccordionBody, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { getAnnotationCategoryColor } from '../../../../styles';
-import { fetchedAnnotationType } from '../../../../types';
 
 export { CategoryPanel };
 

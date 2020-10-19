@@ -1,10 +1,14 @@
 import { documentGenerator } from "./generator";
-import { documentDataModel, documentType } from "./documentType";
+import {
+  documentDataModel,
+  documentType,
+  fetchedDocumentType,
+} from "./documentType";
 import { buildDocument } from "./lib";
 
 export { documentModule };
 
-export type { documentType };
+export type { documentType, fetchedDocumentType };
 
 const documentModule = {
   dataModel: documentDataModel,

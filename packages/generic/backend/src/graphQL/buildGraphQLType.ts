@@ -15,9 +15,11 @@ function buildGraphQLType<T>(name: string, dataModel: dataModelType<T>) {
   };
 
   for (const key in dataModel) {
-    Object.assign(graphQLType.fields, {
-      [key]: { type: buildGraphQLFieldType(dataModel[key]) },
-    });
+    if (dataModel[key].graphQL) {
+      Object.assign(graphQLType.fields, {
+        [key]: { type: buildGraphQLFieldType(dataModel[key]) },
+      });
+    }
   }
 
   return new GraphQLObjectType(graphQLType);
@@ -26,7 +28,7 @@ function buildGraphQLType<T>(name: string, dataModel: dataModelType<T>) {
 function buildGraphQLFieldType(
   dataModelfield: dataModelFieldType,
 ): GraphQLScalarType {
-  switch (dataModelfield) {
+  switch (dataModelfield.type) {
     case 'date':
       return GraphQLString;
     case 'id':

@@ -1,13 +1,17 @@
 import React, { ReactElement } from 'react';
 import { useQuery } from '@apollo/client';
 import { settingsModule, settingsType } from '@label/core';
-import { DataFetcher } from '../../../services/dataFetcher';
-import { settingsGraphQLType, SETTINGS_GRAPHQL_QUERY } from '../DocumentAnnotator/graphql';
+import { DataFetcher } from '../../services/dataFetcher';
+import { buildGraphQLQuery } from '../../graphQL';
 
 export { SettingsDataFetcher };
 
+type settingsGraphQLType = {
+  settings: { json: string };
+};
+
 function SettingsDataFetcher(props: { children: (fetched: { settings: settingsType }) => ReactElement }) {
-  const settingsFetchInfo = useQuery<settingsGraphQLType>(SETTINGS_GRAPHQL_QUERY);
+  const settingsFetchInfo = useQuery<settingsGraphQLType>(buildSettingsGraphQLQuery());
   const settingsDataAdapter = ([data]: [settingsGraphQLType]) =>
     [settingsModule.lib.parseFromJson(data.settings.json)] as [settingsType];
 
@@ -19,4 +23,8 @@ function SettingsDataFetcher(props: { children: (fetched: { settings: settingsTy
       {([settings]: [settingsType]) => props.children({ settings })}
     </DataFetcher>
   );
+}
+
+function buildSettingsGraphQLQuery() {
+  return buildGraphQLQuery('settings', 'settings', settingsModule.dataModel);
 }

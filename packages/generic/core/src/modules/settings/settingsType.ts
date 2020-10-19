@@ -12,5 +12,5 @@ type settingsType = {
 
 // The settings are passed as a JSON string to parse
 const settingsDataModel: dataModelType<{ json: string }> = {
-  json: "string",
+  json: { type: "string", graphQL: true },
 };

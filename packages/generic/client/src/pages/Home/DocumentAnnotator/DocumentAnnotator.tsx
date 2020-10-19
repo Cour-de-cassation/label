@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
-import { buildAnonymizer, settingsType } from '@label/core';
+import { buildAnonymizer, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { LayoutGrid } from '../../../components';
 import { useAnnotatorState } from '../../../services/annotatorState';
-import { fetchedAnnotationType, fetchedDocumentType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 

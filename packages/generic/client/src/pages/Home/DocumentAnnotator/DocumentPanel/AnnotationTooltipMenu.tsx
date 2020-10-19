@@ -1,8 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
-import { idModule } from '@label/core';
+import { fetchedAnnotationType, idModule } from '@label/core';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../components';
-import { fetchedAnnotationType } from '../../../../types';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { fillTemplate, wordings } from '../../../../wordings';
 

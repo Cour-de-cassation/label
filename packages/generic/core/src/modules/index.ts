@@ -1,10 +1,14 @@
-import { annotationModule, annotationType } from "./annotation";
+import {
+  annotationModule,
+  annotationType,
+  fetchedAnnotationType,
+} from "./annotation";
 import {
   annotationReportModule,
   annotationReportType,
 } from "./annotationReport";
 import { assignationModule, assignationType } from "./assignation";
-import { documentModule, documentType } from "./document";
+import { documentModule, documentType, fetchedDocumentType } from "./document";
 import { idModule, idType } from "./id";
 import { settingsModule, settingsType } from "./settings";
 import { userModule, userType } from "./user";
@@ -21,9 +25,11 @@ export {
 
 export type {
   annotationType,
+  fetchedAnnotationType,
   annotationReportType,
   assignationType,
   documentType,
+  fetchedDocumentType,
   idType,
   settingsType,
   userType,

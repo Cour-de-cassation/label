@@ -4,7 +4,7 @@ import {
   annotationType,
   fetchedAnnotationType,
 } from "./annotationType";
-import { buildAnnotation, computeAnnotationEntityId } from "./lib";
+import { annotationLinker, buildAnnotation, entityIdHandler } from "./lib";
 
 export { annotationModule };
 
@@ -13,5 +13,5 @@ export type { annotationType, fetchedAnnotationType };
 const annotationModule = {
   dataModel: annotationDataModel,
   generator: annotationGenerator,
-  lib: { buildAnnotation, computeAnnotationEntityId },
+  lib: { annotationLinker, buildAnnotation, entityIdHandler },
 };

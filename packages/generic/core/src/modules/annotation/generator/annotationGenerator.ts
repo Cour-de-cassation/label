@@ -1,5 +1,5 @@
 import { generatorType } from "../../../types";
-import { computeAnnotationEntityId } from "../lib";
+import { entityIdHandler } from "../lib";
 import { idModule } from "../../id";
 import { annotationType } from "../annotationType";
 
@@ -20,7 +20,10 @@ const annotationGenerator: generatorType<annotationType> = {
 
     return {
       ...annotationFields,
-      entityId: computeAnnotationEntityId(annotationFields),
+      entityId: entityIdHandler.compute(
+        annotationFields.category,
+        annotationFields.text
+      ),
     };
   },
 };

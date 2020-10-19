@@ -1,6 +1,6 @@
 import { idModule, omitIdType } from "../../id";
 import { annotationType } from "../annotationType";
-import { computeAnnotationEntityId } from "./computeAnnotationEntityId";
+import { entityIdHandler } from "./entityIdHandler";
 
 export { buildAnnotation };
 
@@ -9,6 +9,9 @@ function buildAnnotation(
 ): annotationType {
   return {
     ...idModule.lib.buildObjectWithId(annotationFields),
-    entityId: computeAnnotationEntityId(annotationFields),
+    entityId: entityIdHandler.compute(
+      annotationFields.category,
+      annotationFields.text
+    ),
   };
 }

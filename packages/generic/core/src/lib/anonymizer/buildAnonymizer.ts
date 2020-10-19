@@ -9,7 +9,7 @@ const ANONYMIZATION_DEFAULT_TEXT = "XXX";
 
 type annotationNeededFieldsType = Pick<
   annotationType,
-  "text" | "category" | "start"
+  "text" | "category" | "start" | "entityId"
 >;
 
 type anonymizerType<annotationT extends annotationNeededFieldsType> = {
@@ -73,13 +73,13 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
   }
 
   function mapAnnotationToAnonymizedText(annotation: annotationT) {
-    return mapper[`${annotation.category}_${annotation.text}`];
+    return mapper[annotation.entityId];
   }
 
   function addAnnotationToAnonymizedTextMapping(
     annotation: annotationT,
     anonymizedText: string
   ) {
-    mapper[`${annotation.category}_${annotation.text}`] = anonymizedText;
+    mapper[annotation.entityId] = anonymizedText;
   }
 }

@@ -1,4 +1,5 @@
+import { annotationLinker } from "./annotationLinker";
 import { buildAnnotation } from "./buildAnnotation";
-import { computeAnnotationEntityId } from "./computeAnnotationEntityId";
+import { entityIdHandler } from "./entityIdHandler";
 
-export { buildAnnotation, computeAnnotationEntityId };
+export { annotationLinker, buildAnnotation, entityIdHandler };

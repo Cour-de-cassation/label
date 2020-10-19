@@ -30,7 +30,8 @@ function AnnotationTooltipMenu(props: {
         </LayoutGrid>
         <LayoutGrid>
           <Checkbox
-            onChange={(_, checked: boolean) => setShouldApplyEverywhere(checked)}
+            defaultChecked={true}
+            onChange={(checked: boolean) => setShouldApplyEverywhere(checked)}
             text={wordings.applyEveryWhere}
           ></Checkbox>
         </LayoutGrid>

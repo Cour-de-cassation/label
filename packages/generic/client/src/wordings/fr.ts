@@ -10,4 +10,8 @@ const fr = {
   reset: 'Réinitialiser',
   saveDraft: 'Enregistrer le brouillon',
   validate: 'Valider',
+  email: 'E-mail',
+  password: 'Mot de passe',
+  forgottenPassword: 'Mot de passe oublié ?',
+  login: 'Connexion',
 };

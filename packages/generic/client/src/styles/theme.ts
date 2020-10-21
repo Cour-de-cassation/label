@@ -22,7 +22,7 @@ const fontSizes = {
 const typography = {
   body1: { fontFamily: 'Montserrat', fontSize: fontSizes.medium },
   button: { fontFamily: 'Montserrat', fontSize: fontSizes.medium },
-  body2: { fontFamily: 'CourierNew', fontSize: fontSizes.medium, lineHeight: '19px' },
+  body2: { fontFamily: 'Courier New', fontSize: fontSizes.medium, lineHeight: '19px' },
   h1: { fontFamily: 'Montserrat-Bold', fontSize: fontSizes.medium },
   subtitle1: { fontFamily: 'Montserrat', fontSize: fontSizes.small, textDecoration: 'underline' },
 };

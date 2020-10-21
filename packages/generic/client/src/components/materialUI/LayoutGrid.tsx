@@ -1,5 +1,5 @@
 import React, { CSSProperties, ReactElement, ReactNode } from 'react';
-import { Grid as MUGrid, GridTypeMap } from '@material-ui/core';
+import { Grid as MUGrid, GridDirection, GridTypeMap } from '@material-ui/core';
 
 export { LayoutGrid };
 
@@ -11,6 +11,7 @@ function LayoutGrid(props: {
   justifyContent?: GridTypeMap['props']['justify'];
   alignItems?: GridTypeMap['props']['alignItems'];
   style?: CSSProperties;
+  direction?: GridDirection;
 }): ReactElement {
   return (
     <MUGrid
@@ -20,6 +21,7 @@ function LayoutGrid(props: {
       justify={props.justifyContent}
       item={props.item}
       xs={props.xs}
+      direction={props.direction}
     >
       {props.children}
     </MUGrid>

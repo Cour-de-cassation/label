@@ -1,4 +1,4 @@
-# Label
+![Logo Label](./packages/generic/client/src/assets/logo/logo.svg)
 
 EIG 4 promotion
 

@@ -5,6 +5,7 @@ import { LayoutGrid, Text, TextInput, Button } from '../../components';
 import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
+import { LogoIcon } from '../../components/materialUI/icons';
 
 export { Login };
 
@@ -16,7 +17,10 @@ const Login: FunctionComponent = () => {
   const styles = buildStyles(theme);
 
   return (
-    <LayoutGrid container justifyContent="center" alignItems="center" style={styles.mainContainer}>
+    <LayoutGrid container direction="column" justifyContent="center" alignItems="center" style={styles.mainContainer}>
+      <LayoutGrid item style={styles.logoContainer}>
+        <LogoIcon size="medium" />
+      </LayoutGrid>
       <LayoutGrid item style={styles.formContainer}>
         <LayoutGrid item style={styles.inputContainer}>
           <TextInput name="email" type="email" placeholder={wordings.email} onChange={changeEmail} value={email} />
@@ -66,6 +70,9 @@ const Login: FunctionComponent = () => {
     return {
       mainContainer: {
         height: '100vh',
+      },
+      logoContainer: {
+        marginBottom: theme.spacing(2),
       },
       formContainer: {
         padding: theme.spacing(6),

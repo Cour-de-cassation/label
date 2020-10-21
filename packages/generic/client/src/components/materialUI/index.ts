@@ -6,7 +6,7 @@ import { TextInput } from './TextInput';
 import { Accordion } from './Accordion';
 import { AccordionBody } from './AccordionBody';
 import { AccordionHeader } from './AccordionHeader';
-import { Icon } from './Icon';
+import { Icon } from './icons';
 import { Text } from './Text';
 import { TooltipMenu } from './TooltipMenu';
 

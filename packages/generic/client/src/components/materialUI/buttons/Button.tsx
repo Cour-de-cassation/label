@@ -13,6 +13,7 @@ function Button(props: {
 }): ReactElement {
   const theme = useTheme();
   const styles = buildStyles(theme);
+
   return (
     <MUButton
       variant="contained"
@@ -31,10 +32,11 @@ function Button(props: {
     </MUButton>
   );
 
-  function buildStyles(theme: Theme) {
+  function buildStyles(theme: Theme): { [cssClass: string]: CSSProperties } {
     return {
       button: {
         minWidth: theme.shape.borderRadius * 2,
+        textTransform: 'none',
       },
       iconContainer: {
         display: 'flex',

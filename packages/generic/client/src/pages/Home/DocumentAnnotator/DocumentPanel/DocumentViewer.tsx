@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, CSSProperties } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType, textSplitter } from '@label/core';
 import { Text } from '../../../../components';
@@ -58,11 +58,10 @@ function DocumentViewer(props: {
   );
 }
 
-function buildStyle(theme: Theme) {
+function buildStyle(theme: Theme): { [cssClass: string]: CSSProperties } {
   return {
     container: {
-      // eslint-disable-next-line @typescript-eslint/prefer-as-const
-      overflowY: 'auto' as 'auto',
+      overflowY: 'auto',
       borderRadius: theme.shape.borderRadius,
       backgroundColor: theme.palette.common.black,
       height: heights.panel,
@@ -73,6 +72,7 @@ function buildStyle(theme: Theme) {
       padding: theme.spacing(2),
     },
     lineNumberCell: {
+      display: 'flex',
       paddingRight: theme.spacing(2),
     },
   };

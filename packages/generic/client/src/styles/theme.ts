@@ -5,7 +5,7 @@ export { darkTheme as theme };
 export type { typographyType };
 
 const palette = {
-  tealBlue: '#00737D',
+  brightSun: '#FFD835',
   gray100: '#121212',
   gray200: '#242424',
   gray300: '#383838',
@@ -21,6 +21,7 @@ const fontSizes = {
 
 const typography = {
   body1: { fontFamily: 'Montserrat', fontSize: fontSizes.medium },
+  button: { fontFamily: 'Montserrat', fontSize: fontSizes.medium },
   body2: { fontFamily: 'CourierNew', fontSize: fontSizes.medium, lineHeight: '19px' },
   h1: { fontFamily: 'Montserrat-Bold', fontSize: fontSizes.medium },
   subtitle1: { fontFamily: 'Montserrat', fontSize: fontSizes.small, textDecoration: 'underline' },
@@ -34,7 +35,7 @@ const darkTheme = createMuiTheme({
   palette: {
     text: { primary: palette.white, secondary: palette.gray400 },
     primary: {
-      main: palette.tealBlue,
+      main: palette.brightSun,
     },
     common: { black: palette.black, white: palette.white },
     grey: {

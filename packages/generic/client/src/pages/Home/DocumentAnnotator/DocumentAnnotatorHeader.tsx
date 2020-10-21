@@ -12,7 +12,7 @@ function DocumentAnnotatorHeader() {
   const styles = buildStyles(theme);
 
   return (
-    <LayoutGrid container justifyContent="space-between" alignItems="center">
+    <LayoutGrid container justifyContent="space-between" alignItems="center" style={styles.header}>
       <LayoutGrid item>
         <div />
       </LayoutGrid>
@@ -24,6 +24,10 @@ function DocumentAnnotatorHeader() {
 
   function buildStyles(theme: Theme) {
     return {
+      header: {
+        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(2),
+      },
       logoutButton: {
         height: theme.shape.borderRadius * 2,
         width: theme.shape.borderRadius * 2,

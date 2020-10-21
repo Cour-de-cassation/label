@@ -8,6 +8,6 @@ const fr = {
   nOccurencesToObliterate: '{0} occurences à occulter',
   passwordsMustBeIdentical: 'Les deux mots de passe doivent être identiques.',
   reset: 'Réinitialiser',
-  saveDraft: 'Sauvegarder le brouillon',
+  saveDraft: 'Enregistrer le brouillon',
   validate: 'Valider',
 };

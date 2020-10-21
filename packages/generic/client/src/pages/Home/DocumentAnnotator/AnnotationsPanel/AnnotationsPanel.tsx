@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
+import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
@@ -14,10 +15,11 @@ function AnnotationsPanel(props: {
   anonymizer: anonymizerType<fetchedAnnotationType>;
 }) {
   const groupedAnnotations = groupAnnotations(props.annotatorStateHandler.get().annotations);
-  const styles = buildStyles();
+  const theme = useTheme();
+  const styles = buildStyles(theme);
 
   return (
-    <LayoutGrid>
+    <LayoutGrid style={styles.panel}>
       <LayoutGrid container justifyContent="space-between" alignItems="center" style={styles.panelHeader}>
         <LayoutGrid item>
           <Text variant="h1">{wordings.askedAnnotations}</Text>
@@ -26,9 +28,9 @@ function AnnotationsPanel(props: {
           <Text variant="subtitle1">{wordings.annotationGuide}</Text>
         </LayoutGrid>
       </LayoutGrid>
-      <LayoutGrid style={styles.panel}>
+      <LayoutGrid style={styles.categoriesContainer}>
         {groupedAnnotations.map(({ category, annotationsAndOccurences }) => (
-          <LayoutGrid key={category}>
+          <LayoutGrid key={category} style={styles.category}>
             <CategoryPanel
               annotationsAndOccurences={annotationsAndOccurences}
               annotatorStateHandler={props.annotatorStateHandler}
@@ -41,15 +43,21 @@ function AnnotationsPanel(props: {
     </LayoutGrid>
   );
 
-  function buildStyles() {
+  function buildStyles(theme: Theme): { [cssClass: string]: CSSProperties } {
     return {
+      panel: {
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(4),
+      },
       panelHeader: {
         height: heights.panelHeader,
       },
-      panel: {
-        // eslint-disable-next-line @typescript-eslint/prefer-as-const
-        overflowY: 'auto' as 'auto',
+      categoriesContainer: {
+        overflowY: 'auto',
         height: heights.panel,
+      },
+      category: {
+        marginBottom: theme.spacing(3),
       },
     };
   }

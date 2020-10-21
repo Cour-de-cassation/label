@@ -2,13 +2,15 @@ import React from 'react';
 import { heights } from '../../../../styles';
 import { Button, LayoutGrid } from '../../../../components';
 import { wordings } from '../../../../wordings';
+import { useTheme, Theme } from '@material-ui/core';
 
 export { DocumentPanelFooter };
 
 function DocumentPanelFooter() {
-  const styles = buildStyles();
+  const theme = useTheme();
+  const styles = buildStyles(theme);
   return (
-    <LayoutGrid container style={styles.container} justifyContent="space-between" alignItems="center">
+    <LayoutGrid container style={styles.footer} justifyContent="space-between" alignItems="center">
       <LayoutGrid item>
         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
         <Button onClick={() => {}} color="default" iconName="reset">
@@ -17,7 +19,7 @@ function DocumentPanelFooter() {
       </LayoutGrid>
       <LayoutGrid item>
         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-        <Button onClick={() => {}} color="default" iconName="save">
+        <Button onClick={() => {}} color="default" iconName="save" style={styles.saveDraftButton}>
           {wordings.saveDraft}
         </Button>
         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
@@ -28,10 +30,14 @@ function DocumentPanelFooter() {
     </LayoutGrid>
   );
 
-  function buildStyles() {
+  function buildStyles(theme: Theme) {
     return {
-      container: {
+      footer: {
         height: heights.panelFooter,
+        paddingRight: theme.spacing(2),
+      },
+      saveDraftButton: {
+        marginRight: theme.spacing(2),
       },
     };
   }

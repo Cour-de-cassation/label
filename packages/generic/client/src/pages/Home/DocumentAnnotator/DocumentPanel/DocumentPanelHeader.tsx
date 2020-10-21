@@ -1,3 +1,4 @@
+import { Theme, useTheme } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import { Button, Header, SwitchButton, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
@@ -9,11 +10,13 @@ function DocumentPanelHeader(props: {
   isAnonymizedView: boolean;
   switchAnonymizedView: () => void;
 }): ReactElement {
+  const theme = useTheme();
+  const styles = buildStyles(theme);
   return (
     <Header
       leftHeaderComponents={[
-        <Button color="primary" onClick={revertLastAction} iconName="undo" />,
-        <Button color="primary" onClick={restoreLastAction} iconName="redo" />,
+        <Button color="default" onClick={revertLastAction} iconName="undo" style={styles.undoButton} />,
+        <Button color="default" onClick={restoreLastAction} iconName="redo" />,
       ]}
       rightHeaderComponents={[
         <Text>Vue anonymisée</Text>,
@@ -28,5 +31,13 @@ function DocumentPanelHeader(props: {
 
   function restoreLastAction() {
     props.annotatorStateHandler.restore();
+  }
+
+  function buildStyles(theme: Theme) {
+    return {
+      undoButton: {
+        marginRight: theme.spacing(),
+      },
+    };
   }
 }

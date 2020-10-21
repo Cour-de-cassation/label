@@ -1,9 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
 import { fetchedAnnotationType, idModule } from '@label/core';
-import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../components';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { fillTemplate, wordings } from '../../../../wordings';
+import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
+import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { fillTemplate, wordings } from '../../../../../wordings';
+import { AnnotationTooltipMenuLinkerSection } from './AnnotationTooltipMenuLinkerSection';
 
 export { AnnotationTooltipMenu };
 
@@ -14,7 +15,7 @@ function AnnotationTooltipMenu(props: {
   onClose: () => void;
   open: boolean;
 }): ReactElement {
-  const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(false);
+  const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const style = buildStyle();
   const annotatorState = props.annotatorStateHandler.get();
   const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
@@ -30,7 +31,7 @@ function AnnotationTooltipMenu(props: {
         </LayoutGrid>
         <LayoutGrid>
           <Checkbox
-            defaultChecked={true}
+            defaultChecked={shouldApplyEverywhere}
             onChange={(checked: boolean) => setShouldApplyEverywhere(checked)}
             text={wordings.applyEveryWhere}
           ></Checkbox>
@@ -39,9 +40,15 @@ function AnnotationTooltipMenu(props: {
           <Dropdown
             defaultItem={props.annotation.category}
             items={categories}
+            label={wordings.category}
             onChange={changeAnnotationCategory}
           ></Dropdown>
         </LayoutGrid>
+        <AnnotationTooltipMenuLinkerSection
+          annotatorStateHandler={props.annotatorStateHandler}
+          annotation={props.annotation}
+          disabled={!shouldApplyEverywhere}
+        />
         <LayoutGrid>
           <Button onClick={deleteAnnotation}>{wordings.delete}</Button>
         </LayoutGrid>

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { buildAnonymizer, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { anonymizerType, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { heights } from '../../../styles';
 import { LayoutGrid } from '../../../components';
 import { useAnnotatorState } from '../../../services/annotatorState';
@@ -11,6 +11,7 @@ export { DocumentAnnotator };
 
 function DocumentAnnotator(props: {
   annotations: fetchedAnnotationType[];
+  anonymizer: anonymizerType<fetchedAnnotationType>;
   settings: settingsType;
   document: fetchedDocumentType;
 }): ReactElement {
@@ -19,8 +20,6 @@ function DocumentAnnotator(props: {
     document: props.document,
     settings: props.settings,
   });
-
-  const anonymizer = buildAnonymizer(props.settings);
   const styles = buildStyles();
 
   return (
@@ -30,10 +29,10 @@ function DocumentAnnotator(props: {
       </LayoutGrid>
       <LayoutGrid container item xs={12}>
         <LayoutGrid container item xs={4}>
-          <AnnotationsPanel annotatorStateHandler={annotatorStateHandler} anonymizer={anonymizer} />
+          <AnnotationsPanel annotatorStateHandler={annotatorStateHandler} anonymizer={props.anonymizer} />
         </LayoutGrid>
         <LayoutGrid container item xs={8}>
-          <DocumentPanel annotatorStateHandler={annotatorStateHandler} anonymizer={anonymizer} />
+          <DocumentPanel annotatorStateHandler={annotatorStateHandler} anonymizer={props.anonymizer} />
         </LayoutGrid>
       </LayoutGrid>
     </LayoutGrid>

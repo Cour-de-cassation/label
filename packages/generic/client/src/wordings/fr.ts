@@ -1,17 +1,19 @@
 export { fr };
 
 const fr = {
-  askedAnnotations: 'Annotations demandées',
   annotationGuide: "Guide d'annotation",
   applyEveryWhere: 'Appliquer partout',
+  askedAnnotations: 'Annotations demandées',
+  associateTo: 'Associer à',
+  category: 'Catégorie',
   delete: 'Supprimer',
+  email: 'E-mail',
+  forgottenPassword: 'Mot de passe oublié ?',
+  login: 'Connexion',
   nOccurencesToObliterate: '{0} occurences à occulter',
+  password: 'Mot de passe',
   passwordsMustBeIdentical: 'Les deux mots de passe doivent être identiques.',
   reset: 'Réinitialiser',
   saveDraft: 'Enregistrer le brouillon',
   validate: 'Valider',
-  email: 'E-mail',
-  password: 'Mot de passe',
-  forgottenPassword: 'Mot de passe oublié ?',
-  login: 'Connexion',
 };

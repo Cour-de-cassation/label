@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { buildAnonymizer } from '@label/core';
 import { LayoutGrid } from '../../components';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
@@ -12,7 +13,12 @@ const Home: FunctionComponent = () => {
           {({ settings }) => (
             <DocumentAndAnnotationsDataFetcher>
               {({ document, annotations }) => (
-                <DocumentAnnotator settings={settings} document={document} annotations={annotations} />
+                <DocumentAnnotator
+                  settings={settings}
+                  document={document}
+                  annotations={annotations}
+                  anonymizer={buildAnonymizer(settings)}
+                />
               )}
             </DocumentAndAnnotationsDataFetcher>
           )}

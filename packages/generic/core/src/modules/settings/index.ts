@@ -1,11 +1,25 @@
-import { buildSettings, parseFromJson } from "./lib";
-import { settingsDataModel, settingsType } from "./settingsType";
+import {
+  buildSettings,
+  parseFromJson,
+  getAnnotationCategoryColor,
+  getAnnotationCategoryIconName,
+} from "./lib";
+import {
+  settingsDataModel,
+  settingsType,
+  categoryIconNameType,
+} from "./settingsType";
 
 export { settingsModule };
 
-export type { settingsType };
+export type { settingsType, categoryIconNameType };
 
 const settingsModule = {
   dataModel: settingsDataModel,
-  lib: { buildSettings, parseFromJson },
+  lib: {
+    buildSettings,
+    parseFromJson,
+    getAnnotationCategoryColor,
+    getAnnotationCategoryIconName,
+  },
 };

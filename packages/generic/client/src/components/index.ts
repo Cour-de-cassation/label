@@ -12,6 +12,7 @@ import {
   AccordionBody,
   Text,
   TooltipMenu,
+  Icon,
 } from './materialUI';
 
 export {
@@ -28,4 +29,5 @@ export {
   AccordionBody,
   TooltipMenu,
   MenuBar,
+  Icon,
 };

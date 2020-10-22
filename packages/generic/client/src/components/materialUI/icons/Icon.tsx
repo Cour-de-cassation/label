@@ -7,7 +7,13 @@ import {
   UndoRounded,
   MeetingRoom,
   ExitToAppRounded,
+  PersonRounded,
+  BusinessRounded,
+  HomeRounded,
+  WorkRounded,
+  ContactMailRounded,
 } from '@material-ui/icons';
+import { categoryIconNameType } from '@label/core/src';
 
 export { Icon };
 export type { iconNameType };
@@ -22,9 +28,21 @@ const materialIconMapping = {
   undo: UndoRounded,
 };
 
-type iconNameType = keyof typeof materialIconMapping;
+const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {
+  person: PersonRounded,
+  building: BusinessRounded,
+  house: HomeRounded,
+  work: WorkRounded,
+  contact: ContactMailRounded,
+};
+const iconMapping = {
+  ...materialIconMapping,
+  ...categoryIconMapping,
+};
+
+type iconNameType = keyof typeof materialIconMapping | keyof typeof categoryIconMapping;
 
 function Icon(props: { iconName: iconNameType }) {
-  const IconComponent = materialIconMapping[props.iconName];
+  const IconComponent = iconMapping[props.iconName];
   return <IconComponent />;
 }

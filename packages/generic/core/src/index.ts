@@ -22,6 +22,7 @@ import {
   idType,
   settingsModule,
   settingsType,
+  categoryIconNameType,
   userModule,
   userType,
 } from "./modules";
@@ -53,6 +54,7 @@ export type {
   fetchedDocumentType,
   idType,
   settingsType,
+  categoryIconNameType,
   userType,
   dataModelFieldType,
   dataModelType,

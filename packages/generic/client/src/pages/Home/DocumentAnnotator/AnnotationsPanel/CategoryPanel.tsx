@@ -1,8 +1,8 @@
 import React from 'react';
-import { anonymizerType, fetchedAnnotationType } from '@label/core';
-import { LayoutGrid, Accordion, AccordionHeader, AccordionBody, Text } from '../../../../components';
+import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
+import { LayoutGrid, Accordion, AccordionHeader, AccordionBody, Text, Icon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { getAnnotationCategoryColor } from '../../../../styles';
+import { Theme, useTheme } from '@material-ui/core';
 
 export { CategoryPanel };
 
@@ -12,16 +12,28 @@ function CategoryPanel(props: {
   anonymizer: anonymizerType<fetchedAnnotationType>;
   category: string;
 }) {
-  const style = buildStyle();
-
+  const theme = useTheme();
+  const styles = buildStyles(theme);
   return (
-    <Accordion style={style.accordion}>
-      <AccordionHeader>
-        <LayoutGrid container justifyContent="space-between">
-          <LayoutGrid item>
-            <Text>{props.category}</Text>
+    <Accordion>
+      <AccordionHeader style={styles.accordionHeader}>
+        <LayoutGrid container>
+          <LayoutGrid container alignItems="center" xs={11}>
+            <LayoutGrid item>
+              <div style={styles.iconContainer}>
+                <Icon
+                  iconName={settingsModule.lib.getAnnotationCategoryIconName(
+                    props.category,
+                    props.annotatorStateHandler.get().settings,
+                  )}
+                />
+              </div>
+            </LayoutGrid>
+            <LayoutGrid item style={styles.categoryContainer}>
+              <Text>{props.category}</Text>
+            </LayoutGrid>
           </LayoutGrid>
-          <LayoutGrid item>
+          <LayoutGrid container item alignItems="center" xs={1}>
             <Text>{props.annotationsAndOccurences.length}</Text>
           </LayoutGrid>
         </LayoutGrid>
@@ -46,10 +58,27 @@ function CategoryPanel(props: {
     </Accordion>
   );
 
-  function buildStyle() {
+  function buildStyles(theme: Theme) {
+    const ACCORDION_HEADER_PADDING = 2;
+    const ICON_CONTAINER_HEIGHT = theme.shape.borderRadius * 2 - ACCORDION_HEADER_PADDING;
     return {
-      accordion: {
-        backgroundColor: getAnnotationCategoryColor(props.category, props.annotatorStateHandler.get().settings),
+      accordionHeader: {
+        padding: ACCORDION_HEADER_PADDING,
+      },
+      iconContainer: {
+        width: ICON_CONTAINER_HEIGHT,
+        height: ICON_CONTAINER_HEIGHT,
+        borderRadius: ICON_CONTAINER_HEIGHT / 2,
+        backgroundColor: settingsModule.lib.getAnnotationCategoryColor(
+          props.category,
+          props.annotatorStateHandler.get().settings,
+        ),
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      categoryContainer: {
+        paddingLeft: theme.spacing(),
       },
     };
   }

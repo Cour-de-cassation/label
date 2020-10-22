@@ -1,7 +1,6 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
-import { anonymizerType, fetchedAnnotationType } from '@label/core';
+import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { getAnnotationCategoryColor } from '../../../../styles';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 
 export { DocumentAnnotationText };
@@ -45,7 +44,7 @@ function DocumentAnnotationText(props: {
   function buildStyle() {
     return {
       annotationText: {
-        backgroundColor: getAnnotationCategoryColor(
+        backgroundColor: settingsModule.lib.getAnnotationCategoryColor(
           props.annotation.category,
           props.annotatorStateHandler.get().settings,
         ),

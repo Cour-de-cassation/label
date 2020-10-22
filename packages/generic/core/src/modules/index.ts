@@ -10,7 +10,7 @@ import {
 import { assignationModule, assignationType } from "./assignation";
 import { documentModule, documentType, fetchedDocumentType } from "./document";
 import { idModule, idType } from "./id";
-import { settingsModule, settingsType } from "./settings";
+import { settingsModule, settingsType, categoryIconNameType } from "./settings";
 import { userModule, userType } from "./user";
 
 export {
@@ -32,5 +32,6 @@ export type {
   fetchedDocumentType,
   idType,
   settingsType,
+  categoryIconNameType,
   userType,
 };

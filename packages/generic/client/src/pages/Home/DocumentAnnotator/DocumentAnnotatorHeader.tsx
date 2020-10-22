@@ -1,12 +1,12 @@
 import { useTheme, Theme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, LayoutGrid } from '../../../components';
+import { Button, LayoutGrid, Text } from '../../../components';
 import { deleteBearerTokenInLocalStorage } from '../../../services/localStorage';
 
 export { DocumentAnnotatorHeader };
 
-function DocumentAnnotatorHeader() {
+function DocumentAnnotatorHeader(props: { title: string }) {
   const history = useHistory();
   const theme = useTheme();
   const styles = buildStyles(theme);
@@ -14,7 +14,7 @@ function DocumentAnnotatorHeader() {
   return (
     <LayoutGrid container justifyContent="space-between" alignItems="center" style={styles.header}>
       <LayoutGrid item>
-        <div />
+        <Text>{props.title}</Text>
       </LayoutGrid>
       <LayoutGrid item>
         <Button style={styles.logoutButton} onClick={logout} iconName="logout"></Button>

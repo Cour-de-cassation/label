@@ -11,6 +11,7 @@ type documentType = {
   _id: idType;
   metadata: string;
   source: string;
+  title: string;
   text: string;
 };
 
@@ -20,6 +21,7 @@ const documentDataModel = {
   _id: { type: "id", graphQL: true },
   metadata: { type: "string", graphQL: false },
   source: { type: "string", graphQL: false },
+  title: { type: "string", graphQL: true },
   text: { type: "string", graphQL: true },
 } as const;
 

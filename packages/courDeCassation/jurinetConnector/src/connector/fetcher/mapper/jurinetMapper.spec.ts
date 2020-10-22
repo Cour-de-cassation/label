@@ -7,8 +7,11 @@ const jurinetCourtDecision: jurinetCourtDecisionType = {
   metadata: 'METADATA',
   oracleId: 'ORACLE_ID',
   source: 'jurinet',
-  xmlCourtDecision: `<DOCUMENT><header1>HEADER 1</header1>
-<header2></header2>
+  xmlCourtDecision: `<DOCUMENT>
+<NUM_DECISION>12345</NUM_DECISION>
+<CHAMBRE>CIV.2</CHAMBRE>
+<DT_DECISION>17/04/1995</DT_DECISION>
+<JURIDICTION>Cour de cassation</JURIDICTION>
 <TEXTE_ARRET>COURT DECISION TEXT</TEXTE_ARRET>
 <footer1>FOOTER 1</footer1></DOCUMENT>`,
 };
@@ -25,6 +28,8 @@ describe('jurinetMapper', () => {
         metadata: jurinetCourtDecision.metadata,
         documentId: jurinetCourtDecision.oracleId,
         source: jurinetCourtDecision.source,
+        title:
+          'Décision n°12345 · Cour de cassation · Chambre civile · 17/04/1995',
         text: 'COURT DECISION TEXT',
       });
     });

@@ -11,6 +11,7 @@ const documentGenerator: generatorType<documentType> = {
     _id,
     metadata,
     source,
+    title,
     text,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date(),
@@ -18,6 +19,7 @@ const documentGenerator: generatorType<documentType> = {
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     metadata: metadata ? metadata : `METADATA_${Math.random()}`,
     source: source ? source : `SOURCE_${Math.random()}`,
+    title: title ? title : `TITLE_${Math.random()}`,
     text: text ? text : `TEXT_${Math.random()}`,
   }),
 };

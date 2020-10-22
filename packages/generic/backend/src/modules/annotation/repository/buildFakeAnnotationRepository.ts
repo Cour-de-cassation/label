@@ -14,5 +14,19 @@ const buildFakeAnnotationRepository = buildFakeRepositoryBuilder<
         idModule.lib.equalId(annotation.documentId, documentId),
       );
     },
+    async removeAllByDocumentId(documentId: idType): Promise<void> {
+      const newCollection = collection.filter(
+        (annotation) =>
+          !idModule.lib.equalId(annotation.documentId, documentId),
+      );
+
+      while (collection.length) {
+        collection.pop();
+      }
+
+      for (const annotation of newCollection) {
+        collection.push(annotation);
+      }
+    },
   }),
 });

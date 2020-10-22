@@ -13,5 +13,8 @@ const buildAnnotationRepository = buildRepositoryBuilder<
     async findAllByDocumentId(documentId: idType) {
       return collection.find({ documentId }).toArray();
     },
+    async removeAllByDocumentId(documentId: idType): Promise<void> {
+      await collection.remove({ documentId });
+    },
   }),
 });

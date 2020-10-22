@@ -1,28 +1,39 @@
 import {
   GraphQLObjectType,
+  GraphQLInputObjectType,
   GraphQLInt,
   GraphQLScalarType,
   GraphQLString,
 } from 'graphql';
 import { dataModelFieldType, dataModelType } from '@label/core';
 
-export { buildGraphQLType };
+export { buildGraphQLInputType, buildGraphQLType };
+
+function buildGraphQLInputType<T>(name: string, dataModel: dataModelType<T>) {
+  const graphQLDataSchema = buildGraphQLDataSchema(name, dataModel);
+  return new GraphQLInputObjectType(graphQLDataSchema);
+}
 
 function buildGraphQLType<T>(name: string, dataModel: dataModelType<T>) {
-  const graphQLType = {
+  const graphQLDataSchema = buildGraphQLDataSchema(name, dataModel);
+  return new GraphQLObjectType(graphQLDataSchema);
+}
+
+function buildGraphQLDataSchema<T>(name: string, dataModel: dataModelType<T>) {
+  const graphQLDataSchema = {
     name,
     fields: {},
   };
 
   for (const key in dataModel) {
     if (dataModel[key].graphQL) {
-      Object.assign(graphQLType.fields, {
+      Object.assign(graphQLDataSchema.fields, {
         [key]: { type: buildGraphQLFieldType(dataModel[key]) },
       });
     }
   }
 
-  return new GraphQLObjectType(graphQLType);
+  return graphQLDataSchema;
 }
 
 function buildGraphQLFieldType(

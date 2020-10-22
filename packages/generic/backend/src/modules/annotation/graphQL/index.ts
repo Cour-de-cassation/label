@@ -1,3 +1,4 @@
+import { annotationsGraphQLMutation } from './annotationsGraphQLMutations';
 import { annotationsGraphQLQuery } from './annotationsGraphQLQueries';
 
-export { annotationsGraphQLQuery };
+export { annotationsGraphQLMutation, annotationsGraphQLQuery };

@@ -3,6 +3,7 @@ import {
   parseFromJson,
   getAnnotationCategoryColor,
   getAnnotationCategoryIconName,
+  getAnnotationCategoryText,
 } from "./lib";
 import {
   settingsDataModel,
@@ -21,5 +22,6 @@ const settingsModule = {
     parseFromJson,
     getAnnotationCategoryColor,
     getAnnotationCategoryIconName,
+    getAnnotationCategoryText,
   },
 };

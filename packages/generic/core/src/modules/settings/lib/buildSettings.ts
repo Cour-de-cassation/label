@@ -10,6 +10,7 @@ type partialSettingsType = {
         anonymizationTexts?: string[];
         color?: string;
         iconName?: categoryIconNameType;
+        text?: string;
       }
     | undefined;
 };
@@ -25,6 +26,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
         ),
         color: buildColor(partialSettings[category]?.color),
         iconName: buildIconName(partialSettings[category]?.iconName),
+        text: buildText(partialSettings[category]?.text),
       })
   );
 
@@ -41,4 +43,8 @@ function buildColor(color: string | undefined) {
 
 function buildIconName(iconName: categoryIconNameType | undefined) {
   return iconName ? iconName : "person";
+}
+
+function buildText(text: string | undefined) {
+  return text ? text : "category";
 }

@@ -30,7 +30,12 @@ function CategoryPanel(props: {
               </div>
             </LayoutGrid>
             <LayoutGrid item style={styles.categoryContainer}>
-              <Text>{props.category}</Text>
+              <Text>
+                {settingsModule.lib.getAnnotationCategoryText(
+                  props.category,
+                  props.annotatorStateHandler.get().settings,
+                )}
+              </Text>
             </LayoutGrid>
           </LayoutGrid>
           <LayoutGrid container item alignItems="center" xs={1}>

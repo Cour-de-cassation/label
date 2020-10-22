@@ -10,6 +10,7 @@ type settingsType = {
         anonymizationTexts: string[];
         color: string;
         iconName: categoryIconNameType;
+        text: string;
       }
     | undefined;
 };

@@ -26,7 +26,7 @@ function DocumentPanel(props: {
         anonymizer={props.anonymizer}
         isAnonymizedView={isAnonymizedView}
       />
-      <DocumentPanelFooter />
+      <DocumentPanelFooter annotatorStateHandler={props.annotatorStateHandler} />
     </LayoutGrid>
   );
 

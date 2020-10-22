@@ -1,19 +1,19 @@
 import React from 'react';
 import { heights } from '../../../../styles';
 import { Button, LayoutGrid } from '../../../../components';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { useTheme, Theme } from '@material-ui/core';
 
 export { DocumentPanelFooter };
 
-function DocumentPanelFooter() {
+function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandlerType }) {
   const theme = useTheme();
   const styles = buildStyles(theme);
   return (
     <LayoutGrid container style={styles.footer} justifyContent="space-between" alignItems="center">
       <LayoutGrid item>
-        {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-        <Button onClick={() => {}} color="default" iconName="reset">
+        <Button onClick={() => props.annotatorStateHandler.reinitialize()} color="default" iconName="reset">
           {wordings.reset}
         </Button>
       </LayoutGrid>

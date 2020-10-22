@@ -19,7 +19,7 @@ const annotationDataModel = {
   category: { type: "string", graphQL: true },
   documentId: { type: "id", graphQL: false },
   entityId: { type: "string", graphQL: true },
-  source: { type: "string", graphQL: false },
+  source: { type: "string", graphQL: true },
   _id: { type: "id", graphQL: true },
   start: { type: "number", graphQL: true },
   text: { type: "string", graphQL: true },

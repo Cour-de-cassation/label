@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
-import { fetchedAnnotationType, idModule } from '@label/core';
+import { annotationModule, fetchedAnnotationType, idModule } from '@label/core';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { fillTemplate, wordings } from '../../../../../wordings';
@@ -65,7 +65,7 @@ function AnnotationTooltipMenu(props: {
   }
 
   function changeAnnotationCategory(newCategory: string) {
-    const annotationsToChange = shouldApplyEverywhere
+    const annotationsToUpdate = shouldApplyEverywhere
       ? annotatorState.annotations.filter((annotation) => annotation.entityId === props.annotation.entityId)
       : [props.annotation];
 
@@ -73,8 +73,12 @@ function AnnotationTooltipMenu(props: {
       ? removeAllOccurences(props.annotation, annotatorState.annotations)
       : removeOneOccurence(props.annotation, annotatorState.annotations);
 
-    const changedAnnotations = annotationsToChange.map((annotation) => ({ ...annotation, category: newCategory }));
-    const newAnnotatorState = { ...annotatorState, annotations: [...changedAnnotations, ...otherAnnotations] };
+    const updatedAnnotations = annotationModule.lib.updateAnnotations(annotationsToUpdate, (annotation) => ({
+      ...annotation,
+      category: newCategory,
+    }));
+
+    const newAnnotatorState = { ...annotatorState, annotations: [...updatedAnnotations, ...otherAnnotations] };
     props.annotatorStateHandler.set(newAnnotatorState);
   }
 

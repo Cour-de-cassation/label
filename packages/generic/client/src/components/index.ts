@@ -5,6 +5,7 @@ import {
   Checkbox,
   Dropdown,
   LayoutGrid,
+  MenuBar,
   TextInput,
   Accordion,
   AccordionHeader,
@@ -26,4 +27,5 @@ export {
   AccordionHeader,
   AccordionBody,
   TooltipMenu,
+  MenuBar,
 };

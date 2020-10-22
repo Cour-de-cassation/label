@@ -3,6 +3,7 @@ import { Checkbox } from './Checkbox';
 import { Dropdown } from './Dropdown';
 import { LayoutGrid } from './LayoutGrid';
 import { TextInput } from './TextInput';
+import { MenuBar } from './MenuBar';
 import { Accordion } from './Accordion';
 import { AccordionBody } from './AccordionBody';
 import { AccordionHeader } from './AccordionHeader';
@@ -16,6 +17,7 @@ export {
   Checkbox,
   Dropdown,
   LayoutGrid,
+  MenuBar,
   TextInput,
   Accordion,
   AccordionHeader,

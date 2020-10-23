@@ -6,6 +6,7 @@ import { useAnnotatorState } from '../../../services/annotatorState';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { DocumentAnnotatorHeader } from './DocumentAnnotatorHeader';
+import { useKeyboardShortcutsHandler } from './hooks';
 
 export { DocumentAnnotator };
 
@@ -21,6 +22,7 @@ function DocumentAnnotator(props: {
     settings: props.settings,
   });
   const styles = buildStyles();
+  useKeyboardShortcutsHandler(annotatorStateHandler.revert, annotatorStateHandler.restore);
 
   return (
     <LayoutGrid container>

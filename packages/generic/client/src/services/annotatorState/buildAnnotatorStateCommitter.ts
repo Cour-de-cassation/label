@@ -9,6 +9,8 @@ type annotatorStateCommitterType = {
   commit: (previousState: annotatorStateType, nextState: annotatorStateType) => void;
   revert: (previousState: annotatorStateType) => annotatorStateType;
   restore: (previousState: annotatorStateType) => annotatorStateType;
+  canRevert: () => boolean;
+  canRestore: () => boolean;
 };
 
 function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
@@ -19,6 +21,8 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
     commit,
     revert,
     restore,
+    canRevert,
+    canRestore,
   };
 
   function commit(previousState: annotatorStateType, nextState: annotatorStateType) {
@@ -46,6 +50,14 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
         annotationActionsToRevert,
       ),
     };
+  }
+
+  function canRevert() {
+    return annotationActionsToRevert.length > 0;
+  }
+
+  function canRestore() {
+    return annotationActionsToRestore.length > 0;
   }
 
   function getDiffBetweenAnnotationsStates(

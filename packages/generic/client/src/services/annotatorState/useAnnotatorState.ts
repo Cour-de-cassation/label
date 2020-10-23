@@ -11,6 +11,8 @@ type annotatorStateHandlerType = {
   set: (nextAnnotatorState: annotatorStateType) => void;
   revert: () => void;
   restore: () => void;
+  canRevert: () => boolean;
+  canRestore: () => boolean;
   reinitialize: () => void;
 };
 
@@ -27,6 +29,8 @@ function useAnnotatorState(
       set: setAnnotatorStateAndCommitChange,
       revert: revertAnnotatorState,
       restore: restoreAnnotatorState,
+      canRevert: canRevertAnnotatorState,
+      canRestore: canRestoreAnnotatorState,
       reinitialize: reinitializeAnnotatorState,
     },
   };
@@ -49,5 +53,13 @@ function useAnnotatorState(
   function reinitializeAnnotatorState() {
     annotatorStateCommitter = buildAnnotatorStateCommitter();
     setAnnotatorState(initialAnnotatorState);
+  }
+
+  function canRevertAnnotatorState() {
+    return annotatorStateCommitter.canRevert();
+  }
+
+  function canRestoreAnnotatorState() {
+    return annotatorStateCommitter.canRestore();
   }
 }

@@ -8,7 +8,7 @@ function useKeyboardShortcutsHandler(shortcuts: shortcutType[]): void {
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, []);
+  });
 
   function onKeyDown(event: KeyboardEvent) {
     shortcuts.forEach((shortcut) => {

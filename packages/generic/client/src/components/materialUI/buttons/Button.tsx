@@ -10,6 +10,7 @@ function Button(props: {
   onClick: (event: MouseEvent) => void;
   style?: CSSProperties;
   iconName?: iconNameType;
+  disabled?: boolean;
 }): ReactElement {
   const theme = useTheme();
   const styles = buildStyles(theme);
@@ -19,6 +20,7 @@ function Button(props: {
       variant="contained"
       color={props.color}
       onClick={props.onClick}
+      disabled={props.disabled}
       style={{ ...styles.button, ...props.style }}
     >
       {!!props.iconName && (

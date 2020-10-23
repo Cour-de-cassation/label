@@ -48,6 +48,10 @@ const darkTheme = createMuiTheme({
       default: palette.gray100,
       paper: palette.gray300,
     },
+    action: {
+      disabled: palette.gray300,
+      disabledBackground: palette.gray200,
+    },
   },
   typography,
 });

@@ -15,8 +15,14 @@ function DocumentPanelHeader(props: {
   return (
     <Header
       leftHeaderComponents={[
-        <Button color="default" onClick={revertLastAction} iconName="undo" style={styles.undoButton} />,
-        <Button color="default" onClick={restoreLastAction} iconName="redo" />,
+        <Button
+          disabled={!canRevertLastAction()}
+          color="default"
+          onClick={revertLastAction}
+          iconName="undo"
+          style={styles.undoButton}
+        />,
+        <Button disabled={!canRestoreLastAction()} color="default" onClick={restoreLastAction} iconName="redo" />,
       ]}
       rightHeaderComponents={[
         <Text>Vue anonymisée</Text>,
@@ -31,6 +37,14 @@ function DocumentPanelHeader(props: {
 
   function restoreLastAction() {
     props.annotatorStateHandler.restore();
+  }
+
+  function canRevertLastAction() {
+    return props.annotatorStateHandler.canRevert();
+  }
+
+  function canRestoreLastAction() {
+    return props.annotatorStateHandler.canRestore();
   }
 
   function buildStyles(theme: Theme) {

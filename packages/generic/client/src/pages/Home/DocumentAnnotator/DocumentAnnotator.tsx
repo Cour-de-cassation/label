@@ -22,7 +22,10 @@ function DocumentAnnotator(props: {
     settings: props.settings,
   });
   const styles = buildStyles();
-  useKeyboardShortcutsHandler(annotatorStateHandler.revert, annotatorStateHandler.restore);
+  useKeyboardShortcutsHandler([
+    { key: 'z', ctrlKey: true, action: annotatorStateHandler.revert },
+    { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
+  ]);
 
   return (
     <LayoutGrid container>

@@ -2,17 +2,21 @@ import { useEffect } from 'react';
 
 export { useKeyboardShortcutsHandler };
 
-function useKeyboardShortcutsHandler(onUndo: () => void, onRedo: () => void): void {
+type shortcutType = { key: string; ctrlKey?: boolean; shiftKey?: boolean; action: () => void };
+
+function useKeyboardShortcutsHandler(shortcuts: shortcutType[]): void {
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
   function onKeyDown(event: KeyboardEvent) {
-    if (event.ctrlKey && event.shiftKey && event.key === 'Z') {
-      onRedo();
-    } else if (event.ctrlKey && event.key === 'z') {
-      onUndo();
-    }
+    shortcuts.forEach((shortcut) => {
+      const doesShortcutMatch =
+        shortcut.key === event.key && !!shortcut.ctrlKey === event.ctrlKey && !!shortcut.shiftKey === event.shiftKey;
+      if (doesShortcutMatch) {
+        shortcut.action();
+      }
+    });
   }
 }

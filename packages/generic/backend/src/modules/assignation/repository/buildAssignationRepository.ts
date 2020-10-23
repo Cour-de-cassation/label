@@ -8,5 +8,9 @@ const buildAssignationRepository = buildRepositoryBuilder<
   customAssignationRepositoryType
 >({
   collectionName: 'assignations',
-  buildCustomRepository: () => ({}),
+  buildCustomRepository: (collection) => ({
+    async updateStatus(userId, documentId, status) {
+      await collection.update({ userId, documentId }, { $set: { status } });
+    },
+  }),
 });

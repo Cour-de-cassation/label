@@ -1,4 +1,4 @@
-import { assignationModule, idType } from '@label/core';
+import { assignationStatusType, assignationModule, idType } from '@label/core';
 import { groupBy } from 'lodash';
 import { buildAssignationRepository } from '../repository';
 
@@ -26,7 +26,7 @@ const assignationService = {
     return documentIdsAssignatedByUser;
   },
 
-  createAssignation({
+  async createAssignation({
     userId,
     documentId,
   }: {
@@ -37,7 +37,17 @@ const assignationService = {
     const assignation = assignationModule.lib.buildAssignation({
       userId,
       documentId,
+      status: 'pending',
     });
     return assignationRepository.insert(assignation);
+  },
+
+  async updateStatus(
+    userId: idType,
+    documentId: idType,
+    status: assignationStatusType,
+  ) {
+    const assignationRepository = buildAssignationRepository();
+    await assignationRepository.updateStatus(userId, documentId, status);
   },
 };

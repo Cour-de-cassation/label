@@ -1,4 +1,4 @@
-import { assignationType } from '@label/core';
+import { assignationType, idModule } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customAssignationRepositoryType } from './customAssignationRepositoryType';
 
@@ -8,5 +8,17 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
   assignationType,
   customAssignationRepositoryType
 >({
-  buildCustomFakeRepository: () => ({}),
+  buildCustomFakeRepository: (collection) => ({
+    async updateStatus(userId, documentId, status) {
+      const assignation = collection.find(
+        (assignation) =>
+          idModule.lib.equalId(assignation.documentId, documentId) &&
+          idModule.lib.equalId(assignation.userId, userId),
+      );
+
+      if (assignation) {
+        assignation.status = status;
+      }
+    },
+  }),
 });

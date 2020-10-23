@@ -7,7 +7,11 @@ import {
   annotationReportModule,
   annotationReportType,
 } from "./annotationReport";
-import { assignationModule, assignationType } from "./assignation";
+import {
+  assignationModule,
+  assignationType,
+  assignationStatusType,
+} from "./assignation";
 import { documentModule, documentType, fetchedDocumentType } from "./document";
 import { idModule, idType } from "./id";
 import { settingsModule, settingsType, categoryIconNameType } from "./settings";
@@ -28,6 +32,7 @@ export type {
   fetchedAnnotationType,
   annotationReportType,
   assignationType,
+  assignationStatusType,
   documentType,
   fetchedDocumentType,
   idType,

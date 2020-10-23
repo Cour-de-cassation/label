@@ -33,4 +33,23 @@ describe('assignationService', () => {
       });
     });
   });
+
+  describe('updateStatus', () => {
+    const assignationRepository = buildAssignationRepository();
+
+    it('should fetch all the document ids indexed by userId', async () => {
+      const userId = idModule.lib.buildId();
+      const documentId = idModule.lib.buildId();
+      const assignement = assignationModule.generator.generate({
+        userId,
+        documentId,
+      });
+      await assignationRepository.insert(assignement);
+
+      await assignationService.updateStatus(userId, documentId, 'done');
+
+      const assignementAfterCall = (await assignationRepository.findAll())[0];
+      expect(assignementAfterCall.status).toEqual('done');
+    });
+  });
 });

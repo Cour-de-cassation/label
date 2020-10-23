@@ -1,10 +1,10 @@
-import { assignationType } from "./assignationType";
+import { assignationType, assignationStatusType } from "./assignationType";
 import { assignationGenerator } from "./generator";
 import { buildAssignation } from "./lib";
 
 export { assignationModule };
 
-export type { assignationType };
+export type { assignationType, assignationStatusType };
 
 const assignationModule = {
   generator: assignationGenerator,

@@ -1,4 +1,9 @@
+import { updateAssignationStatusGraphQLMutation } from './graphQL';
 import { buildAssignationRepository } from './repository';
 import { assignationService } from './service';
 
-export { buildAssignationRepository, assignationService };
+export {
+  updateAssignationStatusGraphQLMutation,
+  buildAssignationRepository,
+  assignationService,
+};

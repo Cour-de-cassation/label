@@ -11,12 +11,12 @@ type contextType = {
 };
 
 function buildAuthenticatedResolver<T>(
-  resolver: (userId: idType) => T,
+  resolver: (userId: idType, args: any) => T,
 ): GraphQLFieldResolver<any, contextType> {
-  return (_root: any, _args: any, context) => {
+  return (_root: any, args: any, context) => {
     const userId = userService.extractUserIdFromAuthorizationHeader(
       context.headers.authorization,
     );
-    return resolver(userId);
+    return resolver(userId, args);
   };
 }

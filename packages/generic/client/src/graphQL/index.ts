@@ -1,3 +1,3 @@
-import { buildGraphQLQuery } from './buildGraphQLQuery';
+import { graphQLClientBuilder } from './graphQLClientBuilder';
 
-export { buildGraphQLQuery };
+export { graphQLClientBuilder };

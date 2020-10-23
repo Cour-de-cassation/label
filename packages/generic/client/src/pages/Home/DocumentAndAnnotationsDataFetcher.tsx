@@ -9,7 +9,7 @@ import {
   graphQLReceivedDataType,
 } from '@label/core';
 import { DataFetcher } from '../../services/dataFetcher';
-import { buildGraphQLQuery } from '../../graphQL';
+import { graphQLClientBuilder } from '../../graphQL';
 
 export { DocumentAndAnnotationsDataFetcher };
 
@@ -57,7 +57,7 @@ function DocumentAndAnnotationsDataFetcher(props: {
 }
 
 function buildAnnotationGraphQLQuery() {
-  return buildGraphQLQuery(
+  return graphQLClientBuilder.buildQuery(
     'annotations($documentId: String!)',
     'annotations(documentId: $documentId)',
     annotationModule.dataModel,
@@ -65,5 +65,5 @@ function buildAnnotationGraphQLQuery() {
 }
 
 function buildDocumentGraphQLQuery() {
-  return buildGraphQLQuery('document', 'document', documentModule.dataModel);
+  return graphQLClientBuilder.buildQuery('document', 'document', documentModule.dataModel);
 }

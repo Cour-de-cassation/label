@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useQuery } from '@apollo/client';
 import { settingsModule, settingsType } from '@label/core';
 import { DataFetcher } from '../../services/dataFetcher';
-import { buildGraphQLQuery } from '../../graphQL';
+import { graphQLClientBuilder } from '../../graphQL';
 
 export { SettingsDataFetcher };
 
@@ -26,5 +26,5 @@ function SettingsDataFetcher(props: { children: (fetched: { settings: settingsTy
 }
 
 function buildSettingsGraphQLQuery() {
-  return buildGraphQLQuery('settings', 'settings', settingsModule.dataModel);
+  return graphQLClientBuilder.buildQuery('settings', 'settings', settingsModule.dataModel);
 }

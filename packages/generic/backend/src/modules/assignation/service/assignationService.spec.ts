@@ -48,7 +48,9 @@ describe('assignationService', () => {
 
       await assignationService.updateStatus(userId, documentId, 'done');
 
-      const assignementAfterCall = (await assignationRepository.findAll())[0];
+      const assignementAfterCall = await assignationRepository.findById(
+        assignement._id,
+      );
       expect(assignementAfterCall.status).toEqual('done');
     });
   });

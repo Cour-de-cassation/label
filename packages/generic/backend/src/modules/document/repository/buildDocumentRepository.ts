@@ -10,13 +10,6 @@ const buildDocumentRepository = buildRepositoryBuilder<
 >({
   collectionName: 'documents',
   buildCustomRepository: (collection) => ({
-    async findById(_id) {
-      const result = await collection.findOne({ _id });
-      if (!result) {
-        throw new Error(`No matching document for _id ${_id}`);
-      }
-      return result;
-    },
     async findOneExceptIds(_ids) {
       const result = await collection.findOne({ _id: { $nin: _ids } });
       if (!result) {

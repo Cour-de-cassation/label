@@ -16,13 +16,6 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
       }
       return result;
     },
-    async findById(_id) {
-      const result = collection.find((user) => user._id === _id);
-      if (!result) {
-        throw new Error(`No matching user for _id ${_id}`);
-      }
-      return result;
-    },
     async updatePassword(user, password) {
       const storedUserIndex = collection.findIndex(
         ({ _id }) => _id === user._id,

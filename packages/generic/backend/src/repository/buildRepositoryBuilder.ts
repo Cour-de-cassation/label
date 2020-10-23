@@ -1,9 +1,10 @@
+import { idType } from '@label/core';
 import { mongo, mongoCollectionType } from '../lib/mongo';
 import { repositoryType } from './repositoryType';
 
 export { buildRepositoryBuilder };
 
-function buildRepositoryBuilder<T, U>({
+function buildRepositoryBuilder<T extends { _id: idType }, U>({
   collectionName,
   buildCustomRepository,
 }: {
@@ -18,6 +19,7 @@ function buildRepositoryBuilder<T, U>({
     return {
       clear,
       findAll,
+      findById,
       insert,
       ...customRepository,
     };
@@ -28,6 +30,16 @@ function buildRepositoryBuilder<T, U>({
 
     async function findAll() {
       return collection.find().toArray();
+    }
+
+    async function findById(id: idType) {
+      const result = await collection.findOne({ _id: id } as any);
+
+      if (!result) {
+        throw new Error(`No matching ${collectionName} for _id ${id}`);
+      }
+
+      return result;
     }
 
     async function insert(newObject: T) {

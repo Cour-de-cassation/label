@@ -1,8 +1,9 @@
+import { idModule, idType } from '@label/core';
 import { repositoryType } from './repositoryType';
 
 export { buildFakeRepositoryBuilder };
 
-function buildFakeRepositoryBuilder<T, U>({
+function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   buildCustomFakeRepository,
 }: {
   buildCustomFakeRepository: (collection: T[]) => U;
@@ -13,6 +14,7 @@ function buildFakeRepositoryBuilder<T, U>({
   return () => ({
     clear,
     findAll,
+    findById,
     insert,
     ...customRepository,
   });
@@ -25,6 +27,18 @@ function buildFakeRepositoryBuilder<T, U>({
 
   async function findAll() {
     return collection;
+  }
+
+  async function findById(id: idType) {
+    const result = collection.find((document) =>
+      idModule.lib.equalId(document._id, id),
+    );
+
+    if (!result) {
+      throw new Error(`No matching object for _id ${id}`);
+    }
+
+    return result;
   }
 
   async function insert(newObject: T) {

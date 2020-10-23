@@ -5,7 +5,6 @@ export { graphQLClientBuilder, buildSchema };
 
 const graphQLClientBuilder = {
   buildQuery,
-  buildMutation,
 };
 
 function buildQuery<T>(queryNameAndParameters: string, nameAndParameters: string, dataModel: dataModelType<T>) {
@@ -13,14 +12,6 @@ function buildQuery<T>(queryNameAndParameters: string, nameAndParameters: string
 
   return gql`
     ${query}
-  `;
-}
-
-function buildMutation<T>(mutationNameAndParameters: string, nameAndParameters: string, dataModel: dataModelType<T>) {
-  const mutation = buildSchema('mutation', mutationNameAndParameters, nameAndParameters, dataModel);
-
-  return gql`
-    ${mutation}
   `;
 }
 

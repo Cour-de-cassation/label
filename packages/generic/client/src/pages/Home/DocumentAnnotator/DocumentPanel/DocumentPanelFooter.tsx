@@ -1,4 +1,6 @@
 import React from 'react';
+import { gql, useMutation } from '@apollo/client';
+import { assignationStatusType } from '@label/core';
 import { heights } from '../../../../styles';
 import { Button, LayoutGrid } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
@@ -10,6 +12,23 @@ export { DocumentPanelFooter };
 function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandlerType }) {
   const theme = useTheme();
   const styles = buildStyles(theme);
+  const annotatorState = props.annotatorStateHandler.get();
+
+  const [saveAnnotations] = useMutation(gql`
+    mutation saveAnnotations($documentIdString: String, $fetchedGraphQLAnnotations: [fetchedAnnotationType]) {
+      annotations(documentIdString: $documentIdString, fetchedGraphQLAnnotations: $fetchedGraphQLAnnotations) {
+        success
+      }
+    }
+  `);
+  const [updateAssignationStatus] = useMutation(gql`
+    mutation updateAssignationStatus($documentIdString: String, $statusString: String) {
+      updateAssignationStatus(documentIdString: $documentIdString, statusString: $statusString) {
+        success
+      }
+    }
+  `);
+
   return (
     <LayoutGrid container style={styles.footer} justifyContent="space-between" alignItems="center">
       <LayoutGrid item>
@@ -18,12 +37,10 @@ function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandl
         </Button>
       </LayoutGrid>
       <LayoutGrid item>
-        {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-        <Button onClick={() => {}} color="default" iconName="save" style={styles.saveDraftButton}>
+        <Button onClick={saveDraft} color="default" iconName="save" style={styles.saveDraftButton}>
           {wordings.saveDraft}
         </Button>
-        {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-        <Button onClick={() => {}} color="primary" iconName="send">
+        <Button onClick={validate} color="primary" iconName="send">
           {wordings.validate}
         </Button>
       </LayoutGrid>
@@ -40,5 +57,23 @@ function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandl
         marginRight: theme.spacing(2),
       },
     };
+  }
+
+  function saveDraft() {
+    saveAnnotationsAndUpdateAssignationStatus('saved');
+  }
+
+  function validate() {
+    saveAnnotationsAndUpdateAssignationStatus('done');
+  }
+
+  function saveAnnotationsAndUpdateAssignationStatus(status: assignationStatusType) {
+    saveAnnotations({
+      variables: {
+        documentIdString: annotatorState.document._id,
+        fetchedGraphQLAnnotations: annotatorState.annotations,
+      },
+    });
+    updateAssignationStatus({ variables: { documentIdString: annotatorState.document._id, statusString: status } });
   }
 }

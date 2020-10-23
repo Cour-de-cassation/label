@@ -26,7 +26,7 @@ const authenticationLink = setContext((_, { headers }: { headers: Record<string,
 
 const link = ApolloLink.from([authenticationLink, httpLink]);
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({ addTypename: false });
 
 const client = new ApolloClient({
   link,

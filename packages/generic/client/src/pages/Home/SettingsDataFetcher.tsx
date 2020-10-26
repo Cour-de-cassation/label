@@ -11,7 +11,7 @@ type settingsGraphQLType = {
 };
 
 function SettingsDataFetcher(props: { children: (fetched: { settings: settingsType }) => ReactElement }) {
-  const settingsFetchInfo = useQuery<settingsGraphQLType>(buildSettingsGraphQLQuery());
+  const settingsFetchInfo = useQuery<settingsGraphQLType>(graphQLClientBuilder.buildQuery('settings'));
   const settingsDataAdapter = ([data]: [settingsGraphQLType]) =>
     [settingsModule.lib.parseFromJson(data.settings.json)] as [settingsType];
 
@@ -23,8 +23,4 @@ function SettingsDataFetcher(props: { children: (fetched: { settings: settingsTy
       {([settings]: [settingsType]) => props.children({ settings })}
     </DataFetcher>
   );
-}
-
-function buildSettingsGraphQLQuery() {
-  return graphQLClientBuilder.buildQuery('settings', 'settings', settingsModule.dataModel);
 }

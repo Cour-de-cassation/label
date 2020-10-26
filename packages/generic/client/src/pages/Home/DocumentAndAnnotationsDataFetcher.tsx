@@ -1,13 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useQuery } from '@apollo/client';
-import {
-  annotationModule,
-  fetchedAnnotationType,
-  documentModule,
-  fetchedDocumentType,
-  idModule,
-  graphQLReceivedDataType,
-} from '@label/core';
+import { fetchedAnnotationType, fetchedDocumentType, idModule, graphQLReceivedDataType } from '@label/core';
 import { DataFetcher } from '../../services/dataFetcher';
 import { graphQLClientBuilder } from '../../graphQL';
 
@@ -24,8 +17,8 @@ type documentGraphQLType = {
 function DocumentAndAnnotationsDataFetcher(props: {
   children: (fetched: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => ReactElement;
 }) {
-  const documentsFetchInfo = useQuery<documentGraphQLType>(buildDocumentGraphQLQuery());
-  const annotationsFetchInfo = useQuery<annotationsGraphQLType>(buildAnnotationGraphQLQuery(), {
+  const documentsFetchInfo = useQuery<documentGraphQLType>(graphQLClientBuilder.buildQuery('document'));
+  const annotationsFetchInfo = useQuery<annotationsGraphQLType>(graphQLClientBuilder.buildQuery('annotations'), {
     skip: !documentsFetchInfo.data?.document,
     variables: { documentId: documentsFetchInfo.data?.document._id },
   });
@@ -54,16 +47,4 @@ function DocumentAndAnnotationsDataFetcher(props: {
       {([document, annotations]) => props.children({ document, annotations })}
     </DataFetcher>
   );
-}
-
-function buildAnnotationGraphQLQuery() {
-  return graphQLClientBuilder.buildQuery(
-    'annotations($documentId: String!)',
-    'annotations(documentId: $documentId)',
-    annotationModule.dataModel,
-  );
-}
-
-function buildDocumentGraphQLQuery() {
-  return graphQLClientBuilder.buildQuery('document', 'document', documentModule.dataModel);
 }

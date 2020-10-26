@@ -1,44 +1,33 @@
-import { buildSchema } from './graphQLClientBuilder';
+import { buildMutationString, buildQueryString } from './graphQLClientBuilder';
 
 describe('graphQLClientBuilder', () => {
-  describe('buildSchema', () => {
-    const schemaNameAndParameters = 'data($parameter: parameterType!)';
-    const nameAndParameters = 'data(parameter: $parameter)';
-    const dataModel = {
-      field1: { type: 'string', graphQL: true },
-      field2: { type: 'string', graphQL: true },
-      fieldNotWanted: { type: 'string', graphQL: false },
-      field3: { type: 'string', graphQL: true },
-    } as const;
+  describe('buildMutationString', () => {
+    it('should build a valid mutation', async () => {
+      const mutation = buildMutationString('annotations');
 
-    it('should build a valid graphQL query from the data model', async () => {
-      const query = buildSchema('query', schemaNameAndParameters, nameAndParameters, dataModel);
-
-      expect(query).toEqual(
-        `query data($parameter: parameterType!) {
-data(parameter: $parameter) {
-field1
-field2
-field3
+      expect(mutation)
+        .toEqual(`mutation annotations($documentIdString: String, $fetchedGraphQLAnnotations: [annotationInputType]) {
+annotations(documentIdString: $documentIdString, fetchedGraphQLAnnotations: $fetchedGraphQLAnnotations) {
+success
 }
-}
-`,
-      );
+}`);
     });
+  });
 
-    it('should build a valid graphQL mutation from the data model', async () => {
-      const mutation = buildSchema('mutation', schemaNameAndParameters, nameAndParameters, dataModel);
+  describe('buildQueryString', () => {
+    it('should build a valid mutation', async () => {
+      const query = buildQueryString('annotations');
 
-      expect(mutation).toEqual(
-        `mutation data($parameter: parameterType!) {
-data(parameter: $parameter) {
-field1
-field2
-field3
+      expect(query).toEqual(`query annotations($documentId: String) {
+annotations(documentId: $documentId) {
+category
+entityId
+source
+_id
+start
+text
 }
-}
-`,
-      );
+}`);
     });
   });
 });

@@ -4,6 +4,7 @@ import {
   GraphQLInt,
   GraphQLScalarType,
   GraphQLString,
+  GraphQLBoolean,
 } from 'graphql';
 import { dataModelFieldType, dataModelType } from '@label/core';
 
@@ -28,7 +29,7 @@ function buildGraphQLDataSchema<T>(name: string, dataModel: dataModelType<T>) {
   for (const key in dataModel) {
     if (dataModel[key].graphQL) {
       Object.assign(graphQLDataSchema.fields, {
-        [key]: { type: buildGraphQLFieldType(dataModel[key]) },
+        [key]: { type: buildGraphQLFieldType(dataModel[key].type) },
       });
     }
   }
@@ -39,7 +40,9 @@ function buildGraphQLDataSchema<T>(name: string, dataModel: dataModelType<T>) {
 function buildGraphQLFieldType(
   dataModelfield: dataModelFieldType,
 ): GraphQLScalarType {
-  switch (dataModelfield.type) {
+  switch (dataModelfield) {
+    case 'boolean':
+      return GraphQLBoolean;
     case 'date':
       return GraphQLString;
     case 'id':

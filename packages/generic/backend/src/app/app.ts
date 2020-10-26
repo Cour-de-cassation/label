@@ -1,14 +1,12 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
-import { GraphQLSchema } from 'graphql';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import { buildHandlingErrorController } from '../lib/express';
 import { authenticationMiddleware, userController } from '../modules/user';
-import { graphQLMutation } from './graphQLMutation';
-import { graphQLQuery } from './graphQLQuery';
 import { setup } from './setup';
+import { serverGraphQLSchema } from '../graphQL/serverGraphQLSchema';
 
 const app = express();
 const port = 8080;
@@ -32,10 +30,7 @@ app.use(authenticationMiddleware);
 app.use(
   '/graphql',
   graphqlHTTP({
-    schema: new GraphQLSchema({
-      query: graphQLQuery,
-      mutation: graphQLMutation,
-    }),
+    schema: serverGraphQLSchema,
     graphiql: true,
   }),
 );

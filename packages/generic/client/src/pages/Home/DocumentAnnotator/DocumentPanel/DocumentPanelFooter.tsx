@@ -1,8 +1,9 @@
 import React from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { assignationStatusType } from '@label/core';
 import { heights } from '../../../../styles';
 import { Button, LayoutGrid } from '../../../../components';
+import { graphQLClientBuilder } from '../../../../graphQL';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { useTheme, Theme } from '@material-ui/core';
@@ -14,20 +15,8 @@ function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandl
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
 
-  const [saveAnnotations] = useMutation(gql`
-    mutation saveAnnotations($documentIdString: String, $fetchedGraphQLAnnotations: [fetchedAnnotationType]) {
-      annotations(documentIdString: $documentIdString, fetchedGraphQLAnnotations: $fetchedGraphQLAnnotations) {
-        success
-      }
-    }
-  `);
-  const [updateAssignationStatus] = useMutation(gql`
-    mutation updateAssignationStatus($documentIdString: String, $statusString: String) {
-      updateAssignationStatus(documentIdString: $documentIdString, statusString: $statusString) {
-        success
-      }
-    }
-  `);
+  const [saveAnnotations] = useMutation(graphQLClientBuilder.buildMutation('annotations'));
+  const [updateAssignationStatus] = useMutation(graphQLClientBuilder.buildMutation('updateAssignationStatus'));
 
   return (
     <LayoutGrid container style={styles.footer} justifyContent="space-between" alignItems="center">

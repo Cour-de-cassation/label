@@ -1,34 +1,105 @@
 import { gql } from '@apollo/client';
-import { dataModelType } from '@label/core';
+import {
+  buildGraphQLTypeName,
+  graphQLSchema,
+  graphQLCustomTypes,
+  graphQLTypeType,
+  graphQLEntryType,
+} from '@label/core';
 
-export { graphQLClientBuilder, buildSchema };
+export { graphQLClientBuilder, buildMutationString, buildQueryString };
 
 const graphQLClientBuilder = {
   buildQuery,
+  buildMutation,
 };
 
-function buildQuery<T>(queryNameAndParameters: string, nameAndParameters: string, dataModel: dataModelType<T>) {
-  const query = buildSchema('query', queryNameAndParameters, nameAndParameters, dataModel);
-
+function buildMutation(mutationEntryName: keyof typeof graphQLSchema.mutation) {
   return gql`
-    ${query}
+    ${buildMutationString(mutationEntryName)}
   `;
 }
 
-function buildSchema<T>(
-  graphQLSchemaType: 'query' | 'mutation',
-  schemaNameAndParameters: string,
-  nameAndParameters: string,
-  dataModel: dataModelType<T>,
-): string {
-  let query = `${graphQLSchemaType} ${schemaNameAndParameters} {\n`;
-  query = `${query}${nameAndParameters} {\n`;
+function buildMutationString(mutationEntryName: keyof typeof graphQLSchema.mutation) {
+  return buildgraphQLEntryString('mutation', mutationEntryName, graphQLSchema.mutation[mutationEntryName]);
+}
 
-  for (const field in dataModel) {
-    if (dataModel[field].graphQL) {
-      query = `${query}${field}\n`;
-    }
+function buildQuery(queryEntryName: keyof typeof graphQLSchema.query) {
+  return gql`
+    ${buildQueryString(queryEntryName)}
+  `;
+}
+
+function buildQueryString(queryEntryName: keyof typeof graphQLSchema.query) {
+  return buildgraphQLEntryString('query', queryEntryName, graphQLSchema.query[queryEntryName]);
+}
+
+function buildgraphQLEntryString(kind: 'mutation' | 'query', entryName: string, entry: graphQLEntryType) {
+  const body = buildSchemaBody(entry.type);
+
+  if (entry.args) {
+    const argDeclarations = buildArgDeclarations(entry.args);
+    const entryArgs = buildEntryArgs(entry.args);
+
+    return `${kind} ${entryName}(${argDeclarations}) {
+${entryName}(${entryArgs}) {
+${body}
+}
+}`;
+  } else {
+    return `${kind} ${entryName} {
+${entryName} {
+${body}
+}
+}`;
   }
+}
 
-  return `${query}}\n}\n`;
+function buildSchemaBody(graphQLType: graphQLTypeType): string {
+  switch (graphQLType.kind) {
+    case 'primitive':
+      return '';
+    case 'list':
+      return buildSchemaBody(graphQLType.type);
+    case 'custom':
+      return Object.keys(graphQLCustomTypes[graphQLType.type].fields).join('\n');
+  }
+}
+
+function buildArgDeclarations(args: { [argName: string]: graphQLTypeType }) {
+  return Object.entries(args)
+    .map(([arg, argType]) => `${buildArgVariable(arg)}: ${buildArgType(argType)}`)
+    .join(', ');
+}
+
+function buildEntryArgs(args: { [argName: string]: graphQLTypeType }) {
+  return Object.keys(args)
+    .map((arg) => `${arg}: ${buildArgVariable(arg)}`)
+    .join(', ');
+}
+
+function buildArgVariable(arg: string) {
+  return `$${arg}`;
+}
+
+function buildArgType(argType: graphQLTypeType): string {
+  switch (argType.kind) {
+    case 'custom':
+      return buildGraphQLTypeName('input', argType.type);
+    case 'list':
+      return `[${buildArgType(argType.type)}]`;
+    case 'primitive':
+      switch (argType.type) {
+        case 'boolean':
+          return 'Boolean';
+        case 'date':
+          return 'String';
+        case 'id':
+          return 'String';
+        case 'number':
+          return 'Int';
+        case 'string':
+          return 'String';
+      }
+  }
 }

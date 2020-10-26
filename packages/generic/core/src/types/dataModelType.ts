@@ -1,8 +1,10 @@
 export type { dataModelFieldType, dataModelType };
 
-type dataModelType<T> = { [key in keyof T]: dataModelFieldType };
-
-type dataModelFieldType = {
-  type: "date" | "id" | "string" | "number";
-  graphQL: boolean;
+type dataModelType<T> = {
+  [key in keyof T]: {
+    type: dataModelFieldType;
+    graphQL: boolean;
+  };
 };
+
+type dataModelFieldType = "boolean" | "date" | "id" | "string" | "number";

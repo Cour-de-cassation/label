@@ -1,4 +1,15 @@
 import {
+  buildGraphQLTypeName,
+  graphQLCustomTypes,
+  graphQLSchema,
+  graphQLCustomTypeType,
+  graphQLSchemaType,
+  graphQLMutationType,
+  graphQLQueryType,
+  graphQLEntryType,
+  graphQLTypeType,
+} from "./graphQL";
+import {
   buildAnonymizer,
   anonymizerType,
   graphQLReceivedDataType,
@@ -30,6 +41,9 @@ import {
 import { dataModelFieldType, dataModelType, generatorType } from "./types";
 
 export {
+  buildGraphQLTypeName,
+  graphQLCustomTypes,
+  graphQLSchema,
   buildAnonymizer,
   textSplitter,
   annotationModule,
@@ -43,6 +57,12 @@ export {
 };
 
 export type {
+  graphQLCustomTypeType,
+  graphQLSchemaType,
+  graphQLMutationType,
+  graphQLQueryType,
+  graphQLEntryType,
+  graphQLTypeType,
   anonymizerType,
   graphQLReceivedDataType,
   annotationChunkType,

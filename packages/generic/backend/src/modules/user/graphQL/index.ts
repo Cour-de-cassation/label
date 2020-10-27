@@ -1,1 +1,0 @@
-export { signUpUserGraphQLMutation } from './userMutations';

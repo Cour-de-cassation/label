@@ -4,7 +4,7 @@ import {
   fetchedAnnotationType,
   idModule,
 } from '@label/core';
-import { annotationService } from '../../service';
+import { annotationService } from '../service';
 
 export { resolveAnnotationsMutation };
 

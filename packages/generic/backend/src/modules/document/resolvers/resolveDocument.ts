@@ -1,5 +1,5 @@
-import { buildAuthenticatedResolver } from '../../../user';
-import { documentService } from '../../service';
+import { buildAuthenticatedResolver } from '../../user';
+import { documentService } from '../service';
 
 export { resolveDocument };
 

@@ -1,4 +1,4 @@
-import { settingsLoader } from '../../../../lib/settingsLoader';
+import { settingsLoader } from '../../../lib/settingsLoader';
 
 export { resolveSettings };
 

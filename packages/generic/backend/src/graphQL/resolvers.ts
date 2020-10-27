@@ -1,13 +1,10 @@
 import { GraphQLFieldResolver } from 'graphql';
 import { graphQLSchema } from '@label/core';
-import {
-  resolveAnnotations,
-  resolveAnnotationsMutation,
-} from '../modules/annotation/graphQL/resolvers';
-import { resolveUpdateAssignationStatus } from '../modules/assignation/graphQL/resolvers';
-import { resolveDocument } from '../modules/document/graphQL/resolvers';
-import { resolveSettings } from '../modules/settings/graphQL/resolvers';
-import { resolveSignUpUser } from '../modules/user/graphQL/resolvers';
+import { annotationResolvers } from '../modules/annotation';
+import { assignationResolvers } from '../modules/assignation';
+import { documentResolvers } from '../modules/document';
+import { settingsResolvers } from '../modules/settings';
+import { userResolvers } from '../modules/user';
 
 export { resolvers };
 
@@ -18,9 +15,9 @@ const mutationResolvers: {
     any
   >;
 } = {
-  annotations: resolveAnnotationsMutation,
-  updateAssignationStatus: resolveUpdateAssignationStatus,
-  signUpUser: resolveSignUpUser,
+  annotations: annotationResolvers.resolveAnnotationsMutation,
+  updateAssignationStatus: assignationResolvers.resolveUpdateAssignationStatus,
+  signUpUser: userResolvers.resolveSignUpUser,
 };
 
 const queryResolvers: {
@@ -30,9 +27,9 @@ const queryResolvers: {
     any
   >;
 } = {
-  annotations: resolveAnnotations,
-  document: resolveDocument,
-  settings: resolveSettings,
+  annotations: annotationResolvers.resolveAnnotations,
+  document: documentResolvers.resolveDocument,
+  settings: settingsResolvers.resolveSettings,
 };
 
 const resolvers = {

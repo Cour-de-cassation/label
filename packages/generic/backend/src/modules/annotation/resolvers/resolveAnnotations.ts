@@ -1,5 +1,5 @@
 import { GraphQLFieldResolver } from 'graphql';
-import { annotationService } from '../../service';
+import { annotationService } from '../service';
 
 export { resolveAnnotations };
 

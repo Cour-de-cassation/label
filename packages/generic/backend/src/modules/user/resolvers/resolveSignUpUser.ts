@@ -1,6 +1,6 @@
 import { GraphQLFieldResolver } from 'graphql';
-import { userService } from '../../service';
-import { userDtoType } from '../../types/userDtoType';
+import { userService } from '../service';
+import { userDtoType } from '../types/userDtoType';
 
 export { resolveSignUpUser };
 

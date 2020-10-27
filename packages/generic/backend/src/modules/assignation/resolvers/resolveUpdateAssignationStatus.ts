@@ -1,6 +1,6 @@
 import { assignationStatusType, idModule } from '@label/core';
-import { buildAuthenticatedResolver } from '../../../user';
-import { assignationService } from '../../service';
+import { buildAuthenticatedResolver } from '../../user';
+import { assignationService } from '../service';
 
 export { resolveUpdateAssignationStatus };
 

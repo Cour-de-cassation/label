@@ -1,4 +1,4 @@
-import { dataModelType } from "../../types";
+import { dataModelType } from "../dataModelType";
 
 export { settingsDataModel };
 
@@ -29,4 +29,4 @@ const settingsDataModel = {
 
 // We need this line for type checking
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _typeCheck: dataModelType<{ json: string }> = settingsDataModel;
+const _typeCheck: dataModelType = settingsDataModel;

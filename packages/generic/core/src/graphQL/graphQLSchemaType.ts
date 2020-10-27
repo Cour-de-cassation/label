@@ -1,4 +1,4 @@
-import { dataModelFieldType } from "../types";
+import { dataModelFieldType } from "../modules";
 import { graphQLCustomTypes } from "./graphQLCustomTypes";
 
 export type {

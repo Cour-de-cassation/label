@@ -37,8 +37,13 @@ import {
   categoryIconNameType,
   userModule,
   userType,
+  dataModelFieldType,
+  dataModelType,
+  graphQLTypeOfDataModel,
+  typeOfDataModel,
+  typeOfDataModelFieldType,
 } from "./modules";
-import { dataModelFieldType, dataModelType, generatorType } from "./types";
+import { generatorType } from "./types";
 
 export {
   buildGraphQLTypeName,
@@ -80,5 +85,8 @@ export type {
   userType,
   dataModelFieldType,
   dataModelType,
+  graphQLTypeOfDataModel,
+  typeOfDataModel,
+  typeOfDataModelFieldType,
   generatorType,
 };

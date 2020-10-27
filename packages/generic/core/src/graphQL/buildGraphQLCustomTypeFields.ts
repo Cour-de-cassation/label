@@ -1,4 +1,5 @@
-import { filterGraphQLKeysType, dataModelFieldType } from "../types";
+import { dataModelFieldType } from "../modules";
+import { filterGraphQLKeysType } from "../types";
 
 export { buildGraphQLCustomTypeFields };
 

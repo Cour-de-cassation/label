@@ -1,7 +1,5 @@
-export type { filterGraphQLKeysType };
+import { filterKeysType } from "./utilityTypes";
 
-type filterKeysType<T, U> = {
-  [P in keyof T]: T[P] extends U ? P : never;
-}[keyof T];
+export type { filterGraphQLKeysType };
 
 type filterGraphQLKeysType<T> = filterKeysType<T, { graphQL: true }>;

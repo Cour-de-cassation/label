@@ -1,5 +1,9 @@
-import { annotationModule, documentModule, settingsModule } from "../modules";
-import { dataModelFieldType } from "../types";
+import {
+  annotationModule,
+  documentModule,
+  settingsModule,
+  dataModelFieldType,
+} from "../modules";
 import { buildGraphQLCustomTypeFields } from "./buildGraphQLCustomTypeFields";
 
 export { graphQLCustomTypes };

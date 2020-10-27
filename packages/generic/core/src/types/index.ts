@@ -1,10 +1,11 @@
-import { dataModelFieldType, dataModelType } from "./dataModelType";
 import { filterGraphQLKeysType } from "./filterGraphQLKeysType";
 import { generatorType } from "./generatorType";
+import { filterKeysType, filterType, writeableType } from "./utilityTypes";
 
 export type {
-  dataModelFieldType,
-  dataModelType,
   filterGraphQLKeysType,
   generatorType,
+  filterKeysType,
+  filterType,
+  writeableType,
 };

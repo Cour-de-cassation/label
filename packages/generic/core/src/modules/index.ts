@@ -16,6 +16,13 @@ import { documentModule, documentType, fetchedDocumentType } from "./document";
 import { idModule, idType } from "./id";
 import { settingsModule, settingsType, categoryIconNameType } from "./settings";
 import { userModule, userType } from "./user";
+import {
+  dataModelFieldType,
+  dataModelType,
+  graphQLTypeOfDataModel,
+  typeOfDataModel,
+  typeOfDataModelFieldType,
+} from "./dataModelType";
 
 export {
   annotationModule,
@@ -39,4 +46,9 @@ export type {
   settingsType,
   categoryIconNameType,
   userType,
+  dataModelFieldType,
+  dataModelType,
+  graphQLTypeOfDataModel,
+  typeOfDataModel,
+  typeOfDataModelFieldType,
 };

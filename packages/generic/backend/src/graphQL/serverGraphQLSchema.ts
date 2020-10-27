@@ -6,9 +6,10 @@ import {
   GraphQLInputType,
   GraphQLOutputType,
 } from 'graphql';
-import { graphQLTypeType, graphQLSchema } from '@label/core';
+import { graphQLTypeType, graphQLMutation, graphQLQuery } from '@label/core';
 import { buildGraphQLPrimitiveType } from './buildGraphQLPrimitiveType';
-import { resolvers } from './resolvers';
+import { mutationResolvers } from './mutationResolvers';
+import { queryResolvers } from './queryResolvers';
 import { serverGraphQLCustomTypes } from './serverGraphQLCustomTypes';
 
 export { serverGraphQLSchema };
@@ -20,12 +21,10 @@ function buildGraphQLSchema() {
     mutation: new GraphQLObjectType({
       name: 'RootMutationType',
       fields: mapValues(
-        graphQLSchema.mutation,
+        graphQLMutation,
         ({ type, args }, graphQLEntryName) => ({
           resolve:
-            resolvers.mutation[
-              graphQLEntryName as keyof typeof graphQLSchema.mutation
-            ],
+            mutationResolvers[graphQLEntryName as keyof typeof graphQLMutation],
           type: buildGraphQLOutputType(type),
           args: mapValues(args, (argType) => ({
             type: buildGraphQLInputType(argType),
@@ -36,12 +35,10 @@ function buildGraphQLSchema() {
     query: new GraphQLObjectType({
       name: 'RootQueryType',
       fields: mapValues(
-        graphQLSchema.query,
+        graphQLQuery,
         ({ type, args }: any, graphQLEntryName) => ({
           resolve:
-            resolvers.query[
-              graphQLEntryName as keyof typeof graphQLSchema.query
-            ],
+            queryResolvers[graphQLEntryName as keyof typeof graphQLQuery],
           type: buildGraphQLOutputType(type),
           args: mapValues(args, (argType) => ({
             type: buildGraphQLInputType(argType),

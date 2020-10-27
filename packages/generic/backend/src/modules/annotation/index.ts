@@ -1,4 +1,4 @@
 import { buildAnnotationRepository } from './repository';
-import { annotationResolvers } from './resolvers';
+import { annotationService } from './service';
 
-export { buildAnnotationRepository, annotationResolvers };
+export { buildAnnotationRepository, annotationService };

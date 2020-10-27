@@ -1,5 +1,4 @@
-import { documentService } from './service';
 import { buildDocumentRepository } from './repository';
-import { documentResolvers } from './resolvers';
+import { documentService } from './service';
 
-export { documentService, buildDocumentRepository, documentResolvers };
+export { buildDocumentRepository, documentService };

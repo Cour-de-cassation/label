@@ -1,4 +1,4 @@
-import { graphQLMutationType } from "./graphQLSchemaType";
+import { graphQLMutationType } from "./graphQLTypes";
 
 export { graphQLMutation };
 

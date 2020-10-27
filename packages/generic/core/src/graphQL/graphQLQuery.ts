@@ -1,4 +1,4 @@
-import { graphQLQueryType } from "./graphQLSchemaType";
+import { graphQLQueryType } from "./graphQLTypes";
 
 export { graphQLQuery };
 

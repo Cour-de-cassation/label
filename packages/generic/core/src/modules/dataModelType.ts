@@ -31,7 +31,7 @@ type typeOfDataModel<dataModelT extends dataModelType> = writeableType<
 >;
 
 type typeOfDataModelFieldType<
-  dataModelFieldT extends dataModelFieldType
+  dataModelFieldT
 > = dataModelFieldT extends "boolean"
   ? boolean
   : dataModelFieldT extends "date"

@@ -1,7 +1,8 @@
 import { gql } from '@apollo/client';
 import {
   buildGraphQLTypeName,
-  graphQLSchema,
+  graphQLMutation,
+  graphQLQuery,
   graphQLCustomTypes,
   graphQLTypeType,
   graphQLEntryType,
@@ -14,24 +15,24 @@ const graphQLClientBuilder = {
   buildMutation,
 };
 
-function buildMutation(mutationEntryName: keyof typeof graphQLSchema.mutation) {
+function buildMutation(mutationEntryName: keyof typeof graphQLMutation) {
   return gql`
     ${buildMutationString(mutationEntryName)}
   `;
 }
 
-function buildMutationString(mutationEntryName: keyof typeof graphQLSchema.mutation) {
-  return buildgraphQLEntryString('mutation', mutationEntryName, graphQLSchema.mutation[mutationEntryName]);
+function buildMutationString(mutationEntryName: keyof typeof graphQLMutation) {
+  return buildgraphQLEntryString('mutation', mutationEntryName, graphQLMutation[mutationEntryName]);
 }
 
-function buildQuery(queryEntryName: keyof typeof graphQLSchema.query) {
+function buildQuery(queryEntryName: keyof typeof graphQLQuery) {
   return gql`
     ${buildQueryString(queryEntryName)}
   `;
 }
 
-function buildQueryString(queryEntryName: keyof typeof graphQLSchema.query) {
-  return buildgraphQLEntryString('query', queryEntryName, graphQLSchema.query[queryEntryName]);
+function buildQueryString(queryEntryName: keyof typeof graphQLQuery) {
+  return buildgraphQLEntryString('query', queryEntryName, graphQLQuery[queryEntryName]);
 }
 
 function buildgraphQLEntryString(kind: 'mutation' | 'query', entryName: string, entry: graphQLEntryType) {

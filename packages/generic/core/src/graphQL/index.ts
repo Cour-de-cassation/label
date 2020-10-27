@@ -3,22 +3,30 @@ import {
   graphQLCustomTypes,
   graphQLCustomTypeType,
 } from "./graphQLCustomTypes";
-import { graphQLSchema } from "./graphQLSchema";
+import { graphQLMutation } from "./graphQLMutation";
+import { graphQLQuery } from "./graphQLQuery";
 import {
-  graphQLSchemaType,
   graphQLMutationType,
   graphQLQueryType,
   graphQLEntryType,
   graphQLTypeType,
-} from "./graphQLSchemaType";
+  typeOfGraphQLType,
+  networkType,
+} from "./graphQLTypes";
 
-export { buildGraphQLTypeName, graphQLCustomTypes, graphQLSchema };
+export {
+  buildGraphQLTypeName,
+  graphQLCustomTypes,
+  graphQLMutation,
+  graphQLQuery,
+};
 
 export type {
   graphQLCustomTypeType,
-  graphQLSchemaType,
   graphQLMutationType,
   graphQLQueryType,
   graphQLEntryType,
   graphQLTypeType,
+  typeOfGraphQLType,
+  networkType,
 };

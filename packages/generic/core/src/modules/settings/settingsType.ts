@@ -23,6 +23,10 @@ type categoryIconNameType =
   | "contact";
 
 // The settings are passed as a JSON string to parse
-const settingsDataModel: dataModelType<{ json: string }> = {
+const settingsDataModel = {
   json: { type: "string", graphQL: true },
-};
+} as const;
+
+// We need this line for type checking
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _typeCheck: dataModelType<{ json: string }> = settingsDataModel;

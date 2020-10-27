@@ -1,11 +1,6 @@
-import {
-  annotationModule,
-  annotationType,
-  documentModule,
-  documentType,
-  settingsModule,
-} from "../modules";
-import { dataModelType, dataModelFieldType } from "../types";
+import { annotationModule, documentModule, settingsModule } from "../modules";
+import { dataModelFieldType } from "../types";
+import { buildGraphQLCustomTypeFields } from "./buildGraphQLCustomTypeFields";
 
 export { graphQLCustomTypes };
 
@@ -17,15 +12,24 @@ type graphQLCustomTypeType = {
 };
 
 const graphQLCustomTypes = {
-  annotation: buildGraphQLCustomType<annotationType>(
-    "annotation",
-    annotationModule.dataModel
-  ),
-  document: buildGraphQLCustomType<documentType>(
-    "document",
-    documentModule.dataModel
-  ),
-  settings: buildGraphQLCustomType("settings", settingsModule.dataModel),
+  annotation: {
+    name: "annotation",
+    fields: buildGraphQLCustomTypeFields<typeof annotationModule.dataModel>(
+      annotationModule.dataModel
+    ),
+  },
+  document: {
+    name: "document",
+    fields: buildGraphQLCustomTypeFields<typeof documentModule.dataModel>(
+      documentModule.dataModel
+    ),
+  },
+  settings: {
+    name: "settings",
+    fields: buildGraphQLCustomTypeFields<typeof settingsModule.dataModel>(
+      settingsModule.dataModel
+    ),
+  },
   success: {
     name: "success",
     fields: {
@@ -39,21 +43,3 @@ const graphQLCustomTypes = {
 const _typeCheck: {
   [customTypeName: string]: graphQLCustomTypeType;
 } = graphQLCustomTypes;
-
-function buildGraphQLCustomType<T>(
-  name: string,
-  dataModel: dataModelType<T>
-): graphQLCustomTypeType {
-  const graphQLCustomType = {
-    name,
-    fields: {},
-  } as graphQLCustomTypeType;
-
-  for (const key in dataModel) {
-    if (dataModel[key].graphQL) {
-      graphQLCustomType.fields[key] = dataModel[key].type;
-    }
-  }
-
-  return graphQLCustomType;
-}

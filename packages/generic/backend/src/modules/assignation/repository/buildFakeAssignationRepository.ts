@@ -9,6 +9,11 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
   customAssignationRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
+    async findByUserId(userId) {
+      return collection.filter((assignation) =>
+        idModule.lib.equalId(assignation.userId, userId),
+      );
+    },
     async updateStatus(userId, documentId, status) {
       const assignation = collection.find(
         (assignation) =>

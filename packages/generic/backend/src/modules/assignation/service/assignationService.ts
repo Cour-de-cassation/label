@@ -5,6 +5,35 @@ import { buildAssignationRepository } from '../repository';
 export { assignationService };
 
 const assignationService = {
+  async fetchDocumentIdAssignatedToUserId(userId: idType) {
+    const assignationRepository = buildAssignationRepository();
+    const assignations = await assignationRepository.findByUserId(userId);
+
+    const someSavedAssignation = assignations.find(
+      (assignation) => assignation.status === 'saved',
+    );
+    const somePendingAssignation = assignations.find(
+      (assignation) => assignation.status === 'pending',
+    );
+
+    return (
+      someSavedAssignation?.documentId || somePendingAssignation?.documentId
+    );
+  },
+
+  async fetchAllAssignatedDocumentIds() {
+    const assignationRepository = buildAssignationRepository();
+    const assignations = await assignationRepository.findAll();
+
+    return assignations
+      .filter(
+        (assignation) =>
+          assignation.status === 'pending' || assignation.status === 'saved',
+      )
+      .map((assignation) => assignation.documentId);
+  },
+
+  // UNUSED, SHOULD MAYBE BE DELETED
   async fetchDocumentIdsAssignatedByUserId(): Promise<{
     [userId: string]: idType[];
   }> {

@@ -1,4 +1,4 @@
-import { documentType, idModule, idType } from '@label/core';
+import { documentType, idType } from '@label/core';
 import { buildAnnotationReportRepository } from '../../annotationReport';
 import { buildDocumentRepository } from '../repository';
 import { assignationService } from '../../assignation';
@@ -20,28 +20,29 @@ const documentService = {
   },
   async fetchDocumentForUser(userId: idType): Promise<documentType> {
     const documentRepository = buildDocumentRepository();
-    const documentIdsAssignatedByUser = await assignationService.fetchDocumentIdsAssignatedByUserId();
-    const documentIdsAssignatedToUser =
-      documentIdsAssignatedByUser[idModule.lib.convertToString(userId)];
-
-    if (documentIdsAssignatedToUser && documentIdsAssignatedToUser.length > 0) {
-      const documentId = documentIdsAssignatedToUser[0];
-      return documentRepository.findById(documentId);
-    }
-
-    const assignatedDocumentIds = Object.values(
-      documentIdsAssignatedByUser,
-    ).flat();
-
-    const document = await documentRepository.findOneExceptIds(
-      assignatedDocumentIds,
+    const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdAssignatedToUserId(
+      userId,
     );
 
-    await assignationService.createAssignation({
-      userId,
-      documentId: document._id,
-    });
+    if (documentIdAssignatedToUserId) {
+      return documentRepository.findById(documentIdAssignatedToUserId);
+    } else {
+      return assignateANewDocument();
+    }
 
-    return document;
+    async function assignateANewDocument() {
+      const assignatedDocumentIds = await assignationService.fetchAllAssignatedDocumentIds();
+
+      const document = await documentRepository.findOneExceptIds(
+        assignatedDocumentIds,
+      );
+
+      await assignationService.createAssignation({
+        userId,
+        documentId: document._id,
+      });
+
+      return document;
+    }
   },
 };

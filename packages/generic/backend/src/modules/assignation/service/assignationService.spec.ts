@@ -3,6 +3,79 @@ import { buildAssignationRepository } from '../repository';
 import { assignationService } from './assignationService';
 
 describe('assignationService', () => {
+  describe('fetchDocumentIdAssignatedToUserId', () => {
+    const assignationRepository = buildAssignationRepository();
+
+    it('should fetch a document id assignated to the given userId', async () => {
+      const userId1 = idModule.lib.buildId();
+      const userId2 = idModule.lib.buildId();
+      const assignements = ([
+        { userId: userId1, status: 'pending' },
+        { userId: userId1, status: 'done' },
+        { userId: userId2, status: 'pending' },
+      ] as const).map(assignationModule.generator.generate);
+      await Promise.all(assignements.map(assignationRepository.insert));
+
+      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdAssignatedToUserId(
+        userId1,
+      );
+
+      expect(documentIdAssignatedToUserId).toEqual(assignements[0].documentId);
+    });
+    it('should fetch a document id assignated to the given userId with the biggest priority', async () => {
+      const userId1 = idModule.lib.buildId();
+      const userId2 = idModule.lib.buildId();
+      const assignements = ([
+        { userId: userId1, status: 'pending' },
+        { userId: userId1, status: 'saved' },
+        { userId: userId2, status: 'pending' },
+      ] as const).map(assignationModule.generator.generate);
+      await Promise.all(assignements.map(assignationRepository.insert));
+
+      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdAssignatedToUserId(
+        userId1,
+      );
+
+      expect(documentIdAssignatedToUserId).toEqual(assignements[1].documentId);
+    });
+    it('should return undefined if there is no document id assignated to the given userId', async () => {
+      const userId1 = idModule.lib.buildId();
+      const userId2 = idModule.lib.buildId();
+      const assignements = ([
+        { userId: userId1, status: 'pending' },
+      ] as const).map(assignationModule.generator.generate);
+      await Promise.all(assignements.map(assignationRepository.insert));
+
+      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdAssignatedToUserId(
+        userId2,
+      );
+
+      expect(documentIdAssignatedToUserId).toEqual(undefined);
+    });
+  });
+
+  describe('fetchAllAssignatedDocumentIds', () => {
+    const assignationRepository = buildAssignationRepository();
+
+    it('should fetch all the assignated document id which are pending or saved', async () => {
+      const userId1 = idModule.lib.buildId();
+      const userId2 = idModule.lib.buildId();
+      const assignements = ([
+        { userId: userId1, status: 'pending' },
+        { userId: userId1, status: 'done' },
+        { userId: userId2, status: 'pending' },
+      ] as const).map(assignationModule.generator.generate);
+      await Promise.all(assignements.map(assignationRepository.insert));
+
+      const assignatedDocumentIds = await assignationService.fetchAllAssignatedDocumentIds();
+
+      expect(assignatedDocumentIds).toEqual([
+        assignements[0].documentId,
+        assignements[2].documentId,
+      ]);
+    });
+  });
+
   describe('fetchDocumentIdsAssignatedByUserId', () => {
     const assignationRepository = buildAssignationRepository();
 

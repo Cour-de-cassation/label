@@ -4,9 +4,8 @@ import React, { ReactElement } from 'react';
 export { TooltipMenu };
 
 function TooltipMenu(props: {
-  anchorEl: Element | undefined;
+  anchorElement: Element | undefined;
   children: ReactElement;
-  open: boolean;
   onClose: () => void;
 }): ReactElement {
   const displayPosition = getDisplayPosition();
@@ -15,11 +14,11 @@ function TooltipMenu(props: {
 
   return (
     <Menu
-      anchorEl={props.anchorEl}
+      anchorEl={props.anchorElement}
       anchorOrigin={tooltipMenuConfiguration.anchorOrigin}
       getContentAnchorEl={null} // To prevent materialUI to log cryptic error
       onClose={props.onClose}
-      open={props.open}
+      open={isOpen()}
       style={style.menu}
       transformOrigin={tooltipMenuConfiguration.transformOrigin}
     >
@@ -44,6 +43,10 @@ function TooltipMenu(props: {
     }
   }
 
+  function isOpen() {
+    return !!props.anchorElement;
+  }
+
   function buildTooltipMenuConfiguration(displayPosition: 'bottom' | 'top') {
     switch (displayPosition) {
       case 'bottom':
@@ -60,7 +63,7 @@ function TooltipMenu(props: {
   }
 
   function getDisplayPosition() {
-    const { bottom: tooltipMenuVerticalPosition } = props.anchorEl?.getBoundingClientRect() || { bottom: 0 };
+    const { bottom: tooltipMenuVerticalPosition } = props.anchorElement?.getBoundingClientRect() || { bottom: 0 };
     const { windowHeight } = getWindowSize();
     const tooltipMenuVerticalWindowPercentagePosition = (100 * tooltipMenuVerticalPosition) / windowHeight;
 

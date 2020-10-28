@@ -1,6 +1,7 @@
-import React, { ReactElement, useState, MouseEvent } from 'react';
+import React, { ReactElement, MouseEvent } from 'react';
 import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { useAnchorElementUnderMouse } from '../../../../utils';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 
 export { DocumentAnnotationText };
@@ -12,7 +13,7 @@ function DocumentAnnotationText(props: {
   isAnonymizedView: boolean;
 }): ReactElement {
   const style = buildStyle();
-  const [anchorAnnotation, setAnchorAnnotation] = useState<Element | undefined>(undefined);
+  const { anchorElementUnderMouse, setAnchorElementUnderMouse } = useAnchorElementUnderMouse();
 
   return (
     <span>
@@ -20,25 +21,20 @@ function DocumentAnnotationText(props: {
         {props.isAnonymizedView ? props.anonymizer.anonymize(props.annotation) : props.annotation.text}
       </span>
       <AnnotationTooltipMenu
-        anchorAnnotation={anchorAnnotation}
+        anchorAnnotation={anchorElementUnderMouse}
         annotatorStateHandler={props.annotatorStateHandler}
         annotation={props.annotation}
-        open={isOpened()}
         onClose={closeTooltipMenu}
       />
     </span>
   );
 
-  function isOpened() {
-    return !!anchorAnnotation;
-  }
-
   function openTooltipMenu(event: MouseEvent<Element>) {
-    setAnchorAnnotation(event.currentTarget);
+    setAnchorElementUnderMouse(event);
   }
 
   function closeTooltipMenu() {
-    setAnchorAnnotation(undefined);
+    setAnchorElementUnderMouse(undefined);
   }
 
   function buildStyle() {

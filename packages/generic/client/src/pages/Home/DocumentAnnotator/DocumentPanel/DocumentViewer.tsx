@@ -6,6 +6,7 @@ import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { heights } from '../../../../styles';
 import { getSplittedTextByLine } from './lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
+import { DocumentText } from './DocumentText';
 
 export { DocumentViewer };
 
@@ -36,7 +37,7 @@ function DocumentViewer(props: {
                     {splittedText.map((chunk) =>
                       textSplitter.applyToChunk(
                         chunk,
-                        (text) => <span>{text}</span>,
+                        (text) => <DocumentText annotatorStateHandler={props.annotatorStateHandler} text={text} />,
                         (annotation) => (
                           <DocumentAnnotationText
                             annotatorStateHandler={props.annotatorStateHandler}

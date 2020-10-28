@@ -13,7 +13,6 @@ function AnnotationTooltipMenu(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   onClose: () => void;
-  open: boolean;
 }): ReactElement {
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const style = buildStyle();
@@ -24,7 +23,7 @@ function AnnotationTooltipMenu(props: {
   ).length;
 
   return (
-    <TooltipMenu anchorEl={props.anchorAnnotation} open={props.open} onClose={props.onClose}>
+    <TooltipMenu anchorElement={props.anchorAnnotation} onClose={props.onClose}>
       <LayoutGrid style={style.annotationTooltipMenu}>
         <LayoutGrid>
           <Text>{fillTemplate(wordings.nOccurencesToObliterate, JSON.stringify(nbOfEntities))}</Text>

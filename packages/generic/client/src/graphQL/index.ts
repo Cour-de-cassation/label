@@ -1,3 +1,4 @@
-import { graphQLClientBuilder } from './graphQLClientBuilder';
+import { useGraphQLMutation } from './useGraphQLMutation';
+import { useGraphQLQuery } from './useGraphQLQuery';
 
-export { graphQLClientBuilder };
+export { useGraphQLMutation, useGraphQLQuery };

@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
-import { useQuery } from '@apollo/client';
 import { settingsModule, settingsType } from '@label/core';
 import { DataFetcher } from '../../services/dataFetcher';
-import { graphQLClientBuilder } from '../../graphQL';
+import { useGraphQLQuery } from '../../graphQL';
 
 export { SettingsDataFetcher };
 
@@ -11,7 +10,7 @@ type settingsGraphQLType = {
 };
 
 function SettingsDataFetcher(props: { children: (fetched: { settings: settingsType }) => ReactElement }) {
-  const settingsFetchInfo = useQuery<settingsGraphQLType>(graphQLClientBuilder.buildQuery('settings'));
+  const settingsFetchInfo = useGraphQLQuery<'settings'>('settings');
   const settingsDataAdapter = ([data]: [settingsGraphQLType]) =>
     [settingsModule.lib.parseFromJson(data.settings.json)] as [settingsType];
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import { useMutation } from '@apollo/client';
 import { assignationStatusType } from '@label/core';
 import { heights } from '../../../../styles';
 import { Button, LayoutGrid } from '../../../../components';
-import { graphQLClientBuilder } from '../../../../graphQL';
+import { useGraphQLMutation } from '../../../../graphQL';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { useTheme, Theme } from '@material-ui/core';
@@ -15,8 +14,8 @@ function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandl
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
 
-  const [saveAnnotations] = useMutation(graphQLClientBuilder.buildMutation('annotations'));
-  const [updateAssignationStatus] = useMutation(graphQLClientBuilder.buildMutation('updateAssignationStatus'));
+  const [saveAnnotations] = useGraphQLMutation<'annotations'>('annotations');
+  const [updateAssignationStatus] = useGraphQLMutation<'updateAssignationStatus'>('updateAssignationStatus');
 
   return (
     <LayoutGrid container style={styles.footer} justifyContent="space-between" alignItems="center">
@@ -56,13 +55,15 @@ function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandl
     saveAnnotationsAndUpdateAssignationStatus('done');
   }
 
-  function saveAnnotationsAndUpdateAssignationStatus(status: assignationStatusType) {
+  async function saveAnnotationsAndUpdateAssignationStatus(status: assignationStatusType) {
     saveAnnotations({
       variables: {
-        documentIdString: annotatorState.document._id,
+        documentIdString: JSON.stringify(annotatorState.document._id),
         fetchedGraphQLAnnotations: annotatorState.annotations,
       },
     });
-    updateAssignationStatus({ variables: { documentIdString: annotatorState.document._id, statusString: status } });
+    updateAssignationStatus({
+      variables: { documentIdString: JSON.stringify(annotatorState.document._id), statusString: status },
+    });
   }
 }

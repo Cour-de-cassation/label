@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
-import { useQuery } from '@apollo/client';
 import { fetchedAnnotationType, fetchedDocumentType, idModule, graphQLReceivedDataType } from '@label/core';
 import { DataFetcher } from '../../services/dataFetcher';
-import { graphQLClientBuilder } from '../../graphQL';
+import { useGraphQLQuery } from '../../graphQL';
 
 export { DocumentAndAnnotationsDataFetcher };
 
@@ -17,10 +16,10 @@ type documentGraphQLType = {
 function DocumentAndAnnotationsDataFetcher(props: {
   children: (fetched: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => ReactElement;
 }) {
-  const documentsFetchInfo = useQuery<documentGraphQLType>(graphQLClientBuilder.buildQuery('document'));
-  const annotationsFetchInfo = useQuery<annotationsGraphQLType>(graphQLClientBuilder.buildQuery('annotations'), {
+  const documentsFetchInfo = useGraphQLQuery<'document'>('document');
+  const annotationsFetchInfo = useGraphQLQuery<'annotations'>('annotations', {
+    args: { documentId: documentsFetchInfo.data?.document._id },
     skip: !documentsFetchInfo.data?.document,
-    variables: { documentId: documentsFetchInfo.data?.document._id },
   });
 
   const documentAndAnnotationsDataAdapter = ([{ document: fetchedDocument }, { annotations: fetchedAnnotations }]: [

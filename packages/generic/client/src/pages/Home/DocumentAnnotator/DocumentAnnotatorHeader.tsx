@@ -1,8 +1,9 @@
 import { useTheme, Theme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, LayoutGrid, Text, MenuBar } from '../../../components';
+import { Button, Text, MenuBar, Header } from '../../../components';
 import { deleteBearerTokenInLocalStorage } from '../../../services/localStorage';
+import { wordings } from '../../../wordings';
 
 export { DocumentAnnotatorHeader };
 
@@ -13,14 +14,24 @@ function DocumentAnnotatorHeader(props: { title: string }) {
 
   return (
     <MenuBar color="default">
-      <LayoutGrid container justifyContent="space-between" alignItems="center" style={styles.header}>
-        <LayoutGrid item>
-          <Text>{props.title}</Text>
-        </LayoutGrid>
-        <LayoutGrid item>
-          <Button style={styles.logoutButton} onClick={logout} iconName="logout"></Button>
-        </LayoutGrid>
-      </LayoutGrid>
+      <Header
+        style={styles.header}
+        leftHeaderComponents={[<Text>{props.title}</Text>]}
+        rightHeaderComponents={[
+          <div style={styles.reportProblemButton}>
+            <Button
+              onClick={() => {
+                console.log();
+              }}
+              iconName="reportProblem"
+              color="secondary"
+            >
+              {wordings.reportProblem}
+            </Button>
+          </div>,
+          <Button style={styles.logoutButton} onClick={logout} iconName="logout"></Button>,
+        ]}
+      />
     </MenuBar>
   );
 
@@ -29,6 +40,9 @@ function DocumentAnnotatorHeader(props: { title: string }) {
       header: {
         paddingRight: theme.spacing(2),
         paddingLeft: theme.spacing(2),
+      },
+      reportProblemButton: {
+        paddingRight: theme.spacing(2),
       },
       logoutButton: {
         height: theme.shape.borderRadius * 2,

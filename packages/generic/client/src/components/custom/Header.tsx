@@ -1,14 +1,19 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, CSSProperties } from 'react';
 import { heights } from '../../styles';
 import { buildStyledComponentList } from '../../utils';
 import { LayoutGrid } from '../materialUI';
 
 export { Header };
 
-function Header(props: { leftHeaderComponents: ReactElement[]; rightHeaderComponents: ReactElement[] }): ReactElement {
+function Header(props: {
+  leftHeaderComponents: ReactElement[];
+  rightHeaderComponents: ReactElement[];
+  style?: CSSProperties;
+}): ReactElement {
   const styles = buildStyles();
+
   return (
-    <LayoutGrid container style={styles.container}>
+    <LayoutGrid container style={{ ...props.style, ...styles.container }}>
       <LayoutGrid container item xs={6}>
         <LayoutGrid container item alignItems="center">
           {buildStyledComponentList(props.leftHeaderComponents)}

@@ -6,6 +6,7 @@ export type { typographyType };
 
 const palette = {
   brightSun: '#FFD835',
+  orange: '#FF6105',
   gray100: '#121212',
   gray200: '#242424',
   gray300: '#383838',
@@ -36,6 +37,9 @@ const darkTheme = createMuiTheme({
     text: { primary: palette.white, secondary: palette.gray400 },
     primary: {
       main: palette.brightSun,
+    },
+    secondary: {
+      main: palette.orange,
     },
     common: { black: palette.black, white: palette.white },
     grey: {

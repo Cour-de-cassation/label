@@ -12,6 +12,7 @@ import {
   HomeRounded,
   WorkRounded,
   ContactMailRounded,
+  ReportProblemRounded,
 } from '@material-ui/icons';
 import { categoryIconNameType } from '@label/core/src';
 
@@ -22,6 +23,7 @@ const materialIconMapping = {
   login: ExitToAppRounded,
   logout: MeetingRoom,
   redo: RedoRounded,
+  reportProblem: ReportProblemRounded,
   reset: LoopRounded,
   send: SendRounded,
   save: SaveAltRounded,

@@ -13,6 +13,7 @@ const fr = {
   nOccurencesToObliterate: '{0} occurences à occulter',
   password: 'Mot de passe',
   passwordsMustBeIdentical: 'Les deux mots de passe doivent être identiques.',
+  reportProblem: 'Signaler un problème',
   reset: 'Réinitialiser',
   saveDraft: 'Enregistrer le brouillon',
   validate: 'Valider',

@@ -38,9 +38,14 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
       document.text,
       annotations
     );
-    const splittedAnonymizedText = splittedText.map((chunk) =>
-      textSplitter.applyToChunk(chunk, (text) => text, anonymize)
-    );
+    const splittedAnonymizedText = splittedText.map((chunk) => {
+      switch (chunk.type) {
+        case "text":
+          return chunk.text;
+        case "annotation":
+          return anonymize(chunk.annotation);
+      }
+    });
 
     return {
       ...document,

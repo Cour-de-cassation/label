@@ -24,24 +24,26 @@ function computeSplittedTextByLine(
   ).map(() => []);
 
   let currentLine = 0;
-  splittedText.forEach((chunk) =>
-    textSplitter.applyToChunk(
-      chunk,
-      (text) => {
-        const splittedTextAccordingToNewline = splitTextAccordingToNewLine(text);
-        splittedTextAccordingToNewline.forEach((textLine, ind) =>
+  splittedText.forEach((chunk) => {
+    switch (chunk.type) {
+      case 'text':
+        const splittedTextAccordingToNewline = splitTextAccordingToNewLine(chunk.text);
+        let currentIndex = chunk.index;
+        splittedTextAccordingToNewline.forEach((textLine, ind) => {
           splittedTextByLine[currentLine + ind].push({
-            ...textSplitter.buildTextChunk(textLine),
-          }),
-        );
+            ...textSplitter.buildTextChunk(textLine, currentIndex),
+          });
+          currentIndex = currentIndex + textLine.length + 1;
+        });
         currentLine = currentLine + splittedTextAccordingToNewline.length - 1;
-      },
-      (annotation) =>
+        break;
+      case 'annotation':
         splittedTextByLine[currentLine].push({
-          ...textSplitter.buildAnnotationChunk(annotation),
-        }),
-    ),
-  );
+          ...textSplitter.buildAnnotationChunk(chunk.annotation),
+        });
+        break;
+    }
+  });
 
   return splittedTextByLine;
 }

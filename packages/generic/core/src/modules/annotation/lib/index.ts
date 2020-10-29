@@ -1,12 +1,11 @@
 import { annotationLinker } from "./annotationLinker";
 import { buildAnnotation } from "./buildAnnotation";
 import { entityIdHandler } from "./entityIdHandler";
-import { updateAnnotations, updateAnnotation } from "./updateAnnotations";
+import { fetchedAnnotationHandler } from "./fetchedAnnotationHandler";
 
 export {
   annotationLinker,
   buildAnnotation,
   entityIdHandler,
-  updateAnnotations,
-  updateAnnotation,
+  fetchedAnnotationHandler,
 };

@@ -8,8 +8,7 @@ import {
   annotationLinker,
   buildAnnotation,
   entityIdHandler,
-  updateAnnotations,
-  updateAnnotation,
+  fetchedAnnotationHandler,
 } from "./lib";
 
 export { annotationModule };
@@ -23,7 +22,6 @@ const annotationModule = {
     annotationLinker,
     buildAnnotation,
     entityIdHandler,
-    updateAnnotations,
-    updateAnnotation,
+    fetchedAnnotationHandler,
   },
 };

@@ -1,6 +1,6 @@
 import React, { ReactElement, CSSProperties } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { anonymizerType, fetchedAnnotationType, textSplitter } from '@label/core';
+import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { heights } from '../../../../styles';
@@ -34,20 +34,27 @@ function DocumentViewer(props: {
               <td>
                 <span key={lineNumber}>
                   <Text variant="body2">
-                    {splittedText.map((chunk) =>
-                      textSplitter.applyToChunk(
-                        chunk,
-                        (text) => <DocumentText annotatorStateHandler={props.annotatorStateHandler} text={text} />,
-                        (annotation) => (
-                          <DocumentAnnotationText
-                            annotatorStateHandler={props.annotatorStateHandler}
-                            annotation={annotation}
-                            anonymizer={props.anonymizer}
-                            isAnonymizedView={props.isAnonymizedView}
-                          />
-                        ),
-                      ),
-                    )}
+                    {splittedText.map((chunk) => {
+                      switch (chunk.type) {
+                        case 'text':
+                          return (
+                            <DocumentText
+                              annotatorStateHandler={props.annotatorStateHandler}
+                              index={chunk.index}
+                              text={chunk.text}
+                            />
+                          );
+                        case 'annotation':
+                          return (
+                            <DocumentAnnotationText
+                              annotatorStateHandler={props.annotatorStateHandler}
+                              annotation={chunk.annotation}
+                              anonymizer={props.anonymizer}
+                              isAnonymizedView={props.isAnonymizedView}
+                            />
+                          );
+                      }
+                    })}
                   </Text>
                 </span>
               </td>

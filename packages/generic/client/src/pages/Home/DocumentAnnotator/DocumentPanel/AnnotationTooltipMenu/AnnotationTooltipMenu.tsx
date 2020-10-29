@@ -72,10 +72,13 @@ function AnnotationTooltipMenu(props: {
       ? removeAllOccurences(props.annotation, annotatorState.annotations)
       : removeOneOccurence(props.annotation, annotatorState.annotations);
 
-    const updatedAnnotations = annotationModule.lib.updateAnnotations(annotationsToUpdate, (annotation) => ({
-      ...annotation,
-      category: newCategory,
-    }));
+    const updatedAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateMany(
+      annotationsToUpdate,
+      (annotation) => ({
+        ...annotation,
+        category: newCategory,
+      }),
+    );
 
     const newAnnotatorState = { ...annotatorState, annotations: [...updatedAnnotations, ...otherAnnotations] };
     props.annotatorStateHandler.set(newAnnotatorState);

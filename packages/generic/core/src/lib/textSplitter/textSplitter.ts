@@ -1,4 +1,3 @@
-import { isEqual } from "lodash";
 import { annotationType } from "../../modules";
 
 export { textSplitter };
@@ -9,15 +8,16 @@ const textSplitter = {
   splitTextAccordingToAnnotations,
   buildTextChunk,
   buildAnnotationChunk,
-  applyToChunk,
   removeEmptyTextChunks,
 };
 
 type annotationChunkType<annotationT extends annotationNeededFieldsType> = {
   type: "annotation";
+  index: number;
   annotation: annotationT;
 };
-type textChunkType = { type: "text"; text: string };
+
+type textChunkType = { type: "text"; index: number; text: string };
 
 type annotationNeededFieldsType = Pick<
   annotationType,
@@ -41,46 +41,36 @@ function splitTextAccordingToAnnotations<
   let currentIndex = 0;
   sortedAnnotations.forEach((annotation) => {
     splittedText.push(
-      buildTextChunk(text.slice(currentIndex, annotation.start))
+      buildTextChunk(text.slice(currentIndex, annotation.start), currentIndex)
     );
     splittedText.push(buildAnnotationChunk(annotation));
     currentIndex = annotation.start + annotation.text.length;
   });
-  splittedText.push(buildTextChunk(text.slice(currentIndex)));
+  splittedText.push(buildTextChunk(text.slice(currentIndex), currentIndex));
 
   return removeEmptyTextChunks(splittedText);
 }
 
-function buildTextChunk(text: string) {
+function buildTextChunk(text: string, index: number): textChunkType {
   return {
     type: "text",
+    index,
     text,
   } as const;
 }
 
 function buildAnnotationChunk<annotationT extends annotationNeededFieldsType>(
   annotation: annotationT
-) {
-  return { type: "annotation", annotation: annotation } as const;
-}
-
-function applyToChunk<annotationT extends annotationNeededFieldsType, T>(
-  chunk: annotationChunkType<annotationT> | textChunkType,
-  textChunkFunction: (text: string) => T,
-  annotationChunkFunction: (annotation: annotationT) => T
-): T {
-  switch (chunk.type) {
-    case "annotation":
-      return annotationChunkFunction(chunk.annotation);
-    case "text":
-      return textChunkFunction(chunk.text);
-  }
+): annotationChunkType<annotationT> {
+  return {
+    type: "annotation",
+    index: annotation.start,
+    annotation: annotation,
+  } as const;
 }
 
 function removeEmptyTextChunks<annotationT extends annotationNeededFieldsType>(
   chunks: Array<textChunkType | annotationChunkType<annotationT>>
 ): Array<textChunkType | annotationChunkType<annotationT>> {
-  return chunks.filter(
-    (chunk) => !isEqual(chunk, textSplitter.buildTextChunk(""))
-  );
+  return chunks.filter((chunk) => chunk.type !== "text" || chunk.text !== "");
 }

@@ -19,12 +19,24 @@ describe("textSplitter", () => {
       );
 
       expect(splittedText).toEqual([
-        { type: "annotation", annotation: annotations[0] },
-        { type: "text", text: " is software engineer. " },
-        { type: "annotation", annotation: annotations[1] },
-        { type: "text", text: " is a software engineer. " },
-        { type: "annotation", annotation: annotations[2] },
-        { type: "text", text: " is a designer." },
+        {
+          type: "annotation",
+          index: annotations[0].start,
+          annotation: annotations[0],
+        },
+        { type: "text", index: 6, text: " is software engineer. " },
+        {
+          type: "annotation",
+          index: annotations[1].start,
+          annotation: annotations[1],
+        },
+        { type: "text", index: 36, text: " is a software engineer. " },
+        {
+          type: "annotation",
+          index: annotations[2].start,
+          annotation: annotations[2],
+        },
+        { type: "text", index: 67, text: " is a designer." },
       ]);
     });
   });

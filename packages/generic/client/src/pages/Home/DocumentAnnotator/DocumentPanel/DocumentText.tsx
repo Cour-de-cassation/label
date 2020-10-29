@@ -5,8 +5,13 @@ import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
 
 export { DocumentText };
 
-function DocumentText(props: { annotatorStateHandler: annotatorStateHandlerType; text: string }): ReactElement {
+function DocumentText(props: {
+  annotatorStateHandler: annotatorStateHandlerType;
+  index: number;
+  text: string;
+}): ReactElement {
   const { anchorElementUnderMouse, setAnchorElementUnderMouse } = useAnchorElementUnderMouse();
+  const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
   const [selectedText, setSelectedText] = useState<string>('');
 
   return (
@@ -15,8 +20,9 @@ function DocumentText(props: { annotatorStateHandler: annotatorStateHandlerType;
       <AnnotationCreationTooltipMenu
         anchorText={anchorElementUnderMouse}
         annotatorStateHandler={props.annotatorStateHandler}
+        annotationText={selectedText}
+        annotationIndex={selectedTextIndex}
         onClose={closeTooltipMenu}
-        text={selectedText}
       />
     </span>
   );
@@ -24,13 +30,21 @@ function DocumentText(props: { annotatorStateHandler: annotatorStateHandlerType;
   function handleSelection(event: MouseEvent<Element>) {
     const selection = window.getSelection();
 
-    if (!selection || selection.anchorOffset === selection.focusOffset) {
+    if (!selection || !isValidSelection(selection)) {
       closeTooltipMenu();
       return;
     }
 
     setSelectedText(selection.toString());
+    setSelectedTextIndex(Math.min(selection.anchorOffset, selection.focusOffset) + props.index);
     openTooltipMenu(event);
+  }
+
+  function isValidSelection(selection: Selection) {
+    return (
+      selection.anchorOffset !== selection.focusOffset &&
+      selection.anchorNode?.nodeValue === selection.focusNode?.nodeValue
+    );
   }
 
   function openTooltipMenu(event: MouseEvent<Element>) {

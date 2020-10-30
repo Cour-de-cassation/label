@@ -2,6 +2,7 @@ import { GraphQLFieldResolver } from 'graphql';
 import { graphQLMutation, idModule } from '@label/core';
 import { annotationService } from '../modules/annotation';
 import { assignationService } from '../modules/assignation';
+import { problemReportService } from '../modules/problemReport';
 import { userService } from '../modules/user';
 import { buildAuthenticatedResolver } from './buildAuthenticatedResolver';
 import { resolversType } from './resolversType';
@@ -24,6 +25,24 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
       return { success: false };
     }
   },
+
+  problemReport: buildAuthenticatedResolver(
+    async (userId, { documentId, problemText, problemType, isBlocking }) => {
+      try {
+        await problemReportService.createProblemReport({
+          userId,
+          documentId: idModule.lib.buildId(documentId),
+          problemText,
+          problemType,
+          isBlocking,
+        });
+
+        return { success: true };
+      } catch (e) {
+        return { success: false };
+      }
+    },
+  ),
 
   updateAssignationStatus: buildAuthenticatedResolver(
     async (userId, { documentIdString, statusString }) => {

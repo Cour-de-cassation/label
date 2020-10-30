@@ -14,6 +14,7 @@ import {
 } from "./assignation";
 import { documentModule, documentType, fetchedDocumentType } from "./document";
 import { idModule, idType } from "./id";
+import { problemReportModule, problemReportType } from "./problemReport";
 import { settingsModule, settingsType, categoryIconNameType } from "./settings";
 import { userModule, userType } from "./user";
 import {
@@ -30,6 +31,7 @@ export {
   assignationModule,
   documentModule,
   idModule,
+  problemReportModule,
   settingsModule,
   userModule,
 };
@@ -43,6 +45,7 @@ export type {
   documentType,
   fetchedDocumentType,
   idType,
+  problemReportType,
   settingsType,
   categoryIconNameType,
   userType,

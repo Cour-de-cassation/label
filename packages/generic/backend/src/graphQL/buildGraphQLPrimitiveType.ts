@@ -15,5 +15,7 @@ function buildGraphQLPrimitiveType(primitiveType: dataModelFieldType) {
       return GraphQLInt;
     case 'string':
       return GraphQLString;
+    default:
+      return GraphQLString;
   }
 }

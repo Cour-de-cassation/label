@@ -1,26 +1,29 @@
 import React, { MouseEvent, ReactElement, useState } from 'react';
+import { problemReportType } from '@label/core';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TextInputLarge, TooltipMenu } from '../../../../components';
+import { useGraphQLMutation } from '../../../../graphQL';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 
 export { ReportProblemToolTipMenu };
 
-type problemCategoryType = 'BUG' | 'ANNOTATION_PROBLEM' | 'SUGGESTION';
-
-function ReportProblemToolTipMenu(props: { anchorElement: Element | undefined; onClose: () => void }): ReactElement {
+function ReportProblemToolTipMenu(props: {
+  annotatorStateHandler: annotatorStateHandlerType;
+  anchorElement: Element | undefined;
+  onClose: () => void;
+}): ReactElement {
   const style = buildStyle();
   const problemCategories = buildProblemCategories();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [problemCategory, setProblemCategory] = useState<problemCategoryType | undefined>(undefined);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [problemCategory, setProblemCategory] = useState<problemReportType['type'] | undefined>(undefined);
   const [problemDescription, setProblemDescription] = useState<string>('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isBlocking, setIsBlocking] = useState<boolean>(false);
+  const [sendProblemReport] = useGraphQLMutation<'problemReport'>('problemReport');
 
   return (
     <TooltipMenu anchorElement={props.anchorElement} onClose={props.onClose}>
       <LayoutGrid style={style.annotationCreationTooltipMenu}>
         <LayoutGrid>
-          <Dropdown<problemCategoryType>
+          <Dropdown<problemReportType['type']>
             items={problemCategories.map(([problemCategory, problemCategoryText]) => ({
               value: problemCategory,
               displayedText: problemCategoryText,
@@ -54,7 +57,7 @@ function ReportProblemToolTipMenu(props: { anchorElement: Element | undefined; o
             <Button onClick={closeTooltipMenu} color="default" iconName="close">
               {wordings.cancel}
             </Button>
-            <Button onClick={sendProblemReport} color="primary" iconName="send">
+            <Button onClick={sendProblemReportAndClose} color="primary" iconName="send">
               {wordings.send}
             </Button>
           </LayoutGrid>
@@ -74,11 +77,11 @@ function ReportProblemToolTipMenu(props: { anchorElement: Element | undefined; o
     };
   }
 
-  function buildProblemCategories(): Array<[problemCategoryType, string]> {
+  function buildProblemCategories(): Array<[problemReportType['type'], string]> {
     return [
-      ['BUG', wordings.problemCategory.BUG],
-      ['ANNOTATION_PROBLEM', wordings.problemCategory.ANNOTATION_PROBLEM],
-      ['SUGGESTION', wordings.problemCategory.SUGGESTION],
+      ['bug', wordings.problemCategory.bug],
+      ['annotationProblem', wordings.problemCategory.annotationProblem],
+      ['suggestion', wordings.problemCategory.suggestion],
     ];
   }
 
@@ -91,7 +94,17 @@ function ReportProblemToolTipMenu(props: { anchorElement: Element | undefined; o
     props.onClose();
   }
 
-  function sendProblemReport(_event: MouseEvent) {
+  function sendProblemReportAndClose(_event: MouseEvent) {
+    if (problemCategory) {
+      sendProblemReport({
+        variables: {
+          documentId: props.annotatorStateHandler.get().document._id,
+          problemType: problemCategory,
+          problemText: problemDescription,
+          isBlocking: isBlocking,
+        },
+      });
+    }
     closeTooltipMenu(_event);
   }
 }

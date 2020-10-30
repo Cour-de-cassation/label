@@ -1,12 +1,13 @@
 import { useTheme, Theme } from '@material-ui/core';
 import React, { MouseEvent, useState } from 'react';
 import { Button } from '../../../../components';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { ReportProblemToolTipMenu } from './ReportProblemToolTipMenu';
 
 export { ReportProblemButton };
 
-function ReportProblemButton() {
+function ReportProblemButton(props: { annotatorStateHandler: annotatorStateHandlerType }) {
   const theme = useTheme();
   const styles = buildStyles(theme);
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
@@ -16,7 +17,11 @@ function ReportProblemButton() {
       <Button onClick={openToolTip} iconName="reportProblem" color="secondary">
         {wordings.reportProblem}
       </Button>
-      <ReportProblemToolTipMenu anchorElement={anchorElement} onClose={closeToolTip} />
+      <ReportProblemToolTipMenu
+        annotatorStateHandler={props.annotatorStateHandler}
+        anchorElement={anchorElement}
+        onClose={closeToolTip}
+      />
     </div>
   );
 

@@ -101,6 +101,8 @@ function buildArgType(argType: graphQLTypeType): string {
           return 'Int';
         case 'string':
           return 'String';
+        default:
+          return 'String';
       }
   }
 }

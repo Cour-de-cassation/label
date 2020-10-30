@@ -16,7 +16,7 @@ const fr = {
   nOccurencesToObliterate: '{0} occurences à occulter',
   password: 'Mot de passe',
   passwordsMustBeIdentical: 'Les deux mots de passe doivent être identiques.',
-  problemCategory: { BUG: 'Bug', ANNOTATION_PROBLEM: "Problème lié à l'annotation", SUGGESTION: 'Suggestion' },
+  problemCategory: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
   problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
   problemType: 'Type de problème',
   reportProblem: 'Signaler un problème',

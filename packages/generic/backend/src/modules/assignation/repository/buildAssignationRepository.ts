@@ -1,6 +1,7 @@
 import { assignationType } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { customAssignationRepositoryType } from './customAssignationRepositoryType';
+
 export { buildAssignationRepository };
 
 const buildAssignationRepository = buildRepositoryBuilder<
@@ -9,7 +10,7 @@ const buildAssignationRepository = buildRepositoryBuilder<
 >({
   collectionName: 'assignations',
   buildCustomRepository: (collection) => ({
-    async findByUserId(userId) {
+    async findAllByUserId(userId) {
       return collection.find({ userId }).toArray();
     },
     async updateStatus(userId, documentId, status) {

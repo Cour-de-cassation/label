@@ -16,7 +16,13 @@ type dataModelType = {
   };
 };
 
-type dataModelFieldType = "boolean" | "date" | "id" | "string" | "number";
+type dataModelFieldType =
+  | "boolean"
+  | "date"
+  | "id"
+  | "string"
+  | "number"
+  | readonly string[];
 
 type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
   filterType<dataModelT, { graphQL: true }>
@@ -42,4 +48,6 @@ type typeOfDataModelFieldType<
   ? string
   : dataModelFieldT extends "number"
   ? number
+  : dataModelFieldT extends readonly any[]
+  ? dataModelFieldT[number]
   : never;

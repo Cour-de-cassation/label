@@ -30,7 +30,7 @@ function DocumentAnnotator(props: {
   return (
     <LayoutGrid container>
       <LayoutGrid container item style={styles.annotatorHeader} xs={12}>
-        <DocumentAnnotatorHeader title={props.document.title} />
+        <DocumentAnnotatorHeader annotatorStateHandler={annotatorStateHandler} />
       </LayoutGrid>
       <LayoutGrid container item xs={12}>
         <LayoutGrid container item xs={4}>

@@ -3,12 +3,44 @@ import { buildAssignationRepository } from '../repository';
 import { assignationService } from './assignationService';
 
 describe('assignationService', () => {
+  describe('fetchAssignationId', () => {
+    const assignationRepository = buildAssignationRepository();
+
+    const userId = idModule.lib.buildId();
+    const documentId = idModule.lib.buildId();
+
+    it('should fetch the assignation id corresponding to the given user id and document id', async () => {
+      const assignation = assignationModule.generator.generate({
+        userId,
+        documentId,
+        status: 'pending',
+      });
+      await assignationRepository.insert(assignation);
+
+      const assignationId = await assignationService.fetchAssignationId({
+        userId,
+        documentId,
+      });
+
+      expect(assignationId).toEqual(assignation._id);
+    });
+    it('should return undefined if no assignation exists for the given user id and document id', async () => {
+      const assignationId = await assignationService.fetchAssignationId({
+        userId,
+        documentId,
+      });
+
+      expect(assignationId).toEqual(undefined);
+    });
+  });
+
   describe('fetchDocumentIdAssignatedToUserId', () => {
     const assignationRepository = buildAssignationRepository();
 
+    const userId1 = idModule.lib.buildId();
+    const userId2 = idModule.lib.buildId();
+
     it('should fetch a document id assignated to the given userId', async () => {
-      const userId1 = idModule.lib.buildId();
-      const userId2 = idModule.lib.buildId();
       const assignements = ([
         { userId: userId1, status: 'pending' },
         { userId: userId1, status: 'done' },
@@ -23,8 +55,6 @@ describe('assignationService', () => {
       expect(documentIdAssignatedToUserId).toEqual(assignements[0].documentId);
     });
     it('should fetch a document id assignated to the given userId with the biggest priority', async () => {
-      const userId1 = idModule.lib.buildId();
-      const userId2 = idModule.lib.buildId();
       const assignements = ([
         { userId: userId1, status: 'pending' },
         { userId: userId1, status: 'saved' },
@@ -39,8 +69,6 @@ describe('assignationService', () => {
       expect(documentIdAssignatedToUserId).toEqual(assignements[1].documentId);
     });
     it('should return undefined if there is no document id assignated to the given userId', async () => {
-      const userId1 = idModule.lib.buildId();
-      const userId2 = idModule.lib.buildId();
       const assignements = ([
         { userId: userId1, status: 'pending' },
       ] as const).map(assignationModule.generator.generate);

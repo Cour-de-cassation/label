@@ -1,3 +1,4 @@
+import { problemReportModule } from "../modules";
 import { graphQLMutationType } from "./graphQLTypes";
 
 export { graphQLMutation };
@@ -19,6 +20,30 @@ const graphQLMutation = {
           kind: "custom",
           type: "annotation",
         },
+      },
+    },
+  },
+  problemReport: {
+    type: {
+      kind: "custom",
+      type: "success",
+    },
+    args: {
+      documentId: {
+        kind: "primitive",
+        type: "id",
+      },
+      problemType: {
+        kind: "primitive",
+        type: problemReportModule.dataModel.type.type,
+      },
+      problemText: {
+        kind: "primitive",
+        type: "string",
+      },
+      isBlocking: {
+        kind: "primitive",
+        type: "boolean",
       },
     },
   },

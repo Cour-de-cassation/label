@@ -1,13 +1,34 @@
-import { assignationStatusType, assignationModule, idType } from '@label/core';
+import {
+  assignationStatusType,
+  assignationModule,
+  idModule,
+  idType,
+} from '@label/core';
 import { groupBy } from 'lodash';
 import { buildAssignationRepository } from '../repository';
 
 export { assignationService };
 
 const assignationService = {
+  async fetchAssignationId({
+    userId,
+    documentId,
+  }: {
+    userId: idType;
+    documentId: idType;
+  }) {
+    const assignationRepository = buildAssignationRepository();
+    const assignations = await assignationRepository.findAllByUserId(userId);
+    const assignation = assignations.find((assignation) =>
+      idModule.lib.equalId(assignation.documentId, documentId),
+    );
+
+    return assignation?._id;
+  },
+
   async fetchDocumentIdAssignatedToUserId(userId: idType) {
     const assignationRepository = buildAssignationRepository();
-    const assignations = await assignationRepository.findByUserId(userId);
+    const assignations = await assignationRepository.findAllByUserId(userId);
 
     const someSavedAssignation = assignations.find(
       (assignation) => assignation.status === 'saved',

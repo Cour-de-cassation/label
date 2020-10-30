@@ -11,6 +11,7 @@ export { DocumentPanel };
 function DocumentPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
+  fetchNewDocument: () => Promise<void>;
 }): ReactElement {
   const [isAnonymizedView, setIsAnonymizedView] = useState(false);
 
@@ -26,7 +27,10 @@ function DocumentPanel(props: {
         anonymizer={props.anonymizer}
         isAnonymizedView={isAnonymizedView}
       />
-      <DocumentPanelFooter annotatorStateHandler={props.annotatorStateHandler} />
+      <DocumentPanelFooter
+        annotatorStateHandler={props.annotatorStateHandler}
+        fetchNewDocument={props.fetchNewDocument}
+      />
     </LayoutGrid>
   );
 

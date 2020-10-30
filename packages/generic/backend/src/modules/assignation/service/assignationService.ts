@@ -46,12 +46,7 @@ const assignationService = {
     const assignationRepository = buildAssignationRepository();
     const assignations = await assignationRepository.findAll();
 
-    return assignations
-      .filter(
-        (assignation) =>
-          assignation.status === 'pending' || assignation.status === 'saved',
-      )
-      .map((assignation) => assignation.documentId);
+    return assignations.map((assignation) => assignation.documentId);
   },
 
   // UNUSED, SHOULD MAYBE BE DELETED

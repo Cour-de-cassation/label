@@ -14,7 +14,11 @@ type documentGraphQLType = {
 };
 
 function DocumentAndAnnotationsDataFetcher(props: {
-  children: (fetched: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => ReactElement;
+  children: (fetched: {
+    document: fetchedDocumentType;
+    annotations: fetchedAnnotationType[];
+    fetchNewDocument: () => Promise<void>;
+  }) => ReactElement;
 }) {
   const documentsFetchInfo = useGraphQLQuery<'document'>('document');
   const annotationsFetchInfo = useGraphQLQuery<'annotations'>('annotations', {
@@ -43,7 +47,12 @@ function DocumentAndAnnotationsDataFetcher(props: {
       fetchInfos={[documentsFetchInfo, annotationsFetchInfo]}
       dataAdapter={documentAndAnnotationsDataAdapter}
     >
-      {([document, annotations]) => props.children({ document, annotations })}
+      {([document, annotations]) => props.children({ document, annotations, fetchNewDocument })}
     </DataFetcher>
   );
+
+  async function fetchNewDocument() {
+    await documentsFetchInfo.refetch();
+    await annotationsFetchInfo.refetch();
+  }
 }

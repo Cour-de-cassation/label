@@ -15,6 +15,7 @@ function DocumentAnnotator(props: {
   anonymizer: anonymizerType<fetchedAnnotationType>;
   settings: settingsType;
   document: fetchedDocumentType;
+  fetchNewDocument: () => Promise<void>;
 }): ReactElement {
   const { annotatorStateHandler } = useAnnotatorState({
     annotations: props.annotations,
@@ -37,7 +38,11 @@ function DocumentAnnotator(props: {
           <AnnotationsPanel annotatorStateHandler={annotatorStateHandler} anonymizer={props.anonymizer} />
         </LayoutGrid>
         <LayoutGrid container item xs={8}>
-          <DocumentPanel annotatorStateHandler={annotatorStateHandler} anonymizer={props.anonymizer} />
+          <DocumentPanel
+            annotatorStateHandler={annotatorStateHandler}
+            anonymizer={props.anonymizer}
+            fetchNewDocument={props.fetchNewDocument}
+          />
         </LayoutGrid>
       </LayoutGrid>
     </LayoutGrid>

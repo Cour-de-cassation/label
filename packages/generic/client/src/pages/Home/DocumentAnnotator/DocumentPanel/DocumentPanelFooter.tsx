@@ -9,7 +9,10 @@ import { useTheme, Theme } from '@material-ui/core';
 
 export { DocumentPanelFooter };
 
-function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandlerType }) {
+function DocumentPanelFooter(props: {
+  annotatorStateHandler: annotatorStateHandlerType;
+  fetchNewDocument: () => Promise<void>;
+}) {
   const theme = useTheme();
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
@@ -47,22 +50,23 @@ function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandl
     };
   }
 
-  function saveDraft() {
-    saveAnnotationsAndUpdateAssignationStatus('saved');
+  async function saveDraft() {
+    await saveAnnotationsAndUpdateAssignationStatus('saved');
   }
 
-  function validate() {
-    saveAnnotationsAndUpdateAssignationStatus('done');
+  async function validate() {
+    await saveAnnotationsAndUpdateAssignationStatus('done');
+    await props.fetchNewDocument();
   }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: assignationType['status']) {
-    saveAnnotations({
+    await saveAnnotations({
       variables: {
         documentId: annotatorState.document._id,
         fetchedGraphQLAnnotations: annotatorState.annotations,
       },
     });
-    updateAssignationStatus({
+    await updateAssignationStatus({
       variables: { documentId: annotatorState.document._id, status },
     });
   }

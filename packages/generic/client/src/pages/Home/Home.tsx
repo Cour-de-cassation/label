@@ -12,12 +12,13 @@ const Home: FunctionComponent = () => {
         <SettingsDataFetcher>
           {({ settings }) => (
             <DocumentAndAnnotationsDataFetcher>
-              {({ document, annotations }) => (
+              {({ document, annotations, fetchNewDocument }) => (
                 <DocumentAnnotator
                   settings={settings}
                   document={document}
                   annotations={annotations}
                   anonymizer={buildAnonymizer(settings)}
+                  fetchNewDocument={fetchNewDocument}
                 />
               )}
             </DocumentAndAnnotationsDataFetcher>

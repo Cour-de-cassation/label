@@ -10,6 +10,13 @@ function TextInputLarge(props: {
   style?: CSSProperties;
 }): ReactElement {
   return (
-    <TextField placeholder={props.placeholder} multiline rows={props.size} style={props.style} variant={'outlined'} />
+    <TextField
+      placeholder={props.placeholder}
+      multiline
+      onChange={props.onChange}
+      rows={props.size}
+      style={props.style}
+      variant={'outlined'}
+    />
   );
 }

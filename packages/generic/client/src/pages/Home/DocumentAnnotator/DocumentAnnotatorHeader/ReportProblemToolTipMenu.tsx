@@ -1,25 +1,32 @@
-import React, { ReactElement } from 'react';
+import React, { MouseEvent, ReactElement, useState } from 'react';
 import { Button, Checkbox, Dropdown, LayoutGrid, Text, TextInputLarge, TooltipMenu } from '../../../../components';
 import { wordings } from '../../../../wordings';
 
 export { ReportProblemToolTipMenu };
 
-const problemCategories = ['BUG', 'ANNOTATION_PROBLEM', 'SUGGESTION'] as const;
+type problemCategoryType = 'BUG' | 'ANNOTATION_PROBLEM' | 'SUGGESTION';
 
 function ReportProblemToolTipMenu(props: { anchorElement: Element | undefined; onClose: () => void }): ReactElement {
   const style = buildStyle();
+  const problemCategories = buildProblemCategories();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [problemCategory, setProblemCategory] = useState<problemCategoryType | undefined>(undefined);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [problemDescription, setProblemDescription] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isBlocking, setIsBlocking] = useState<boolean>(false);
 
   return (
     <TooltipMenu anchorElement={props.anchorElement} onClose={props.onClose}>
       <LayoutGrid style={style.annotationCreationTooltipMenu}>
         <LayoutGrid>
-          <Dropdown
-            items={problemCategories.map((problemCategory) => ({
+          <Dropdown<problemCategoryType>
+            items={problemCategories.map(([problemCategory, problemCategoryText]) => ({
               value: problemCategory,
-              displayedText: wordings.problemCategory[problemCategory],
+              displayedText: problemCategoryText,
             }))}
             label={wordings.problemType}
-            onChange={() => console.log()}
+            onChange={(newProblemCategory) => setProblemCategory(newProblemCategory)}
             style={style.tooltipElement}
           ></Dropdown>
         </LayoutGrid>
@@ -30,24 +37,24 @@ function ReportProblemToolTipMenu(props: { anchorElement: Element | undefined; o
           <TextInputLarge
             placeholder={wordings.enterYourText}
             size={10}
-            onChange={() => console.log()}
+            onChange={(event) => setProblemDescription(event.target.value)}
             style={style.tooltipElement}
           />
         </LayoutGrid>
         <LayoutGrid>
           <Checkbox
             defaultChecked={false}
-            onChange={() => console.log()}
+            onChange={(checked) => setIsBlocking(checked)}
             text={wordings.problemIsBlocking}
             style={style.tooltipElement}
           ></Checkbox>
         </LayoutGrid>
         <LayoutGrid container>
           <LayoutGrid item>
-            <Button onClick={() => console.log()} color="default" iconName="close">
+            <Button onClick={closeTooltipMenu} color="default" iconName="close">
               {wordings.cancel}
             </Button>
-            <Button onClick={() => console.log()} color="primary" iconName="send">
+            <Button onClick={sendProblemReport} color="primary" iconName="send">
               {wordings.send}
             </Button>
           </LayoutGrid>
@@ -65,5 +72,26 @@ function ReportProblemToolTipMenu(props: { anchorElement: Element | undefined; o
         width: '350px',
       },
     };
+  }
+
+  function buildProblemCategories(): Array<[problemCategoryType, string]> {
+    return [
+      ['BUG', wordings.problemCategory.BUG],
+      ['ANNOTATION_PROBLEM', wordings.problemCategory.ANNOTATION_PROBLEM],
+      ['SUGGESTION', wordings.problemCategory.SUGGESTION],
+    ];
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function closeTooltipMenu(_event: MouseEvent) {
+    setProblemCategory(undefined);
+    setProblemDescription('');
+    setIsBlocking(false);
+
+    props.onClose();
+  }
+
+  function sendProblemReport(_event: MouseEvent) {
+    closeTooltipMenu(_event);
   }
 }

@@ -3,12 +3,12 @@ import React, { ChangeEvent, ReactElement, useState, CSSProperties } from 'react
 
 export { Dropdown };
 
-function Dropdown(props: {
+function Dropdown<T extends string>(props: {
   defaultItem?: string;
   disabled?: boolean;
-  items: Array<{ value: string; displayedText: string }>;
+  items: Array<{ value: T; displayedText: string }>;
   label: string;
-  onChange: (item: string) => void;
+  onChange: (value: T) => void;
   style?: CSSProperties;
 }): ReactElement {
   const style = buildStyle();
@@ -38,7 +38,7 @@ function Dropdown(props: {
   }
 
   function handleChange(event: ChangeEvent<{ value: unknown }>) {
-    const value = event.target.value as string;
+    const value = event.target.value as T;
     setValue(value);
     props.onChange(value);
   }

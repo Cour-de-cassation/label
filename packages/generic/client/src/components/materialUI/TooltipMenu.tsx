@@ -19,17 +19,20 @@ function TooltipMenu(props: {
       getContentAnchorEl={null} // To prevent materialUI to log cryptic error
       onClose={props.onClose}
       open={isOpen()}
-      style={style.menu}
+      style={style.tooltipMenu}
       transformOrigin={tooltipMenuConfiguration.transformOrigin}
     >
-      {props.children}
+      <div style={style.tooltipMenuContent}>{props.children}</div>
     </Menu>
   );
 
   function buildStyle(displayPosition: 'bottom' | 'top') {
     return {
-      menu: {
+      tooltipMenu: {
         top: computeTopOffset(),
+      },
+      tooltipMenuContent: {
+        padding: '0px 10px',
       },
     };
 

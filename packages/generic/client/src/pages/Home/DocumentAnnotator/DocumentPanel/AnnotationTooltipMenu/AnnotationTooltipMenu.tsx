@@ -15,7 +15,6 @@ function AnnotationTooltipMenu(props: {
   onClose: () => void;
 }): ReactElement {
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
-  const style = buildStyle();
   const annotatorState = props.annotatorStateHandler.get();
   const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
   const nbOfEntities = annotatorState.annotations.filter(
@@ -24,7 +23,7 @@ function AnnotationTooltipMenu(props: {
 
   return (
     <TooltipMenu anchorElement={props.anchorAnnotation} onClose={props.onClose}>
-      <LayoutGrid style={style.annotationTooltipMenu}>
+      <LayoutGrid>
         <LayoutGrid>
           <Text>{fillTemplate(wordings.nOccurencesToObliterate, JSON.stringify(nbOfEntities))}</Text>
         </LayoutGrid>
@@ -54,14 +53,6 @@ function AnnotationTooltipMenu(props: {
       </LayoutGrid>
     </TooltipMenu>
   );
-
-  function buildStyle() {
-    return {
-      annotationTooltipMenu: {
-        padding: '0px 10px',
-      },
-    };
-  }
 
   function changeAnnotationCategory(newCategory: string) {
     const annotationsToUpdate = shouldApplyEverywhere

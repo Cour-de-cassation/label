@@ -24,8 +24,8 @@ function ReportProblemToolTipMenu(props: {
 
   return (
     <TooltipMenu anchorElement={props.anchorElement} onClose={props.onClose}>
-      <LayoutGrid style={style.annotationCreationTooltipMenu}>
-        <LayoutGrid>
+      <LayoutGrid>
+        <LayoutGrid style={style.tooltipItem}>
           <Dropdown<problemReportType['type']>
             items={problemCategories.map(([problemCategory, problemCategoryText]) => ({
               value: problemCategory,
@@ -36,10 +36,8 @@ function ReportProblemToolTipMenu(props: {
             style={style.tooltipElement}
           ></Dropdown>
         </LayoutGrid>
-        <LayoutGrid>
+        <LayoutGrid style={style.tooltipItem}>
           <Text>{wordings.describeTheProblem}</Text>
-        </LayoutGrid>
-        <LayoutGrid>
           <TextInputLarge
             placeholder={wordings.enterYourText}
             size={10}
@@ -47,7 +45,7 @@ function ReportProblemToolTipMenu(props: {
             style={style.tooltipElement}
           />
         </LayoutGrid>
-        <LayoutGrid>
+        <LayoutGrid style={style.tooltipItem}>
           <Checkbox
             defaultChecked={false}
             onChange={(checked) => setIsBlocking(checked)}
@@ -55,14 +53,18 @@ function ReportProblemToolTipMenu(props: {
             style={style.tooltipElement}
           ></Checkbox>
         </LayoutGrid>
-        <LayoutGrid container>
+        <LayoutGrid container style={style.tooltipItem} direction="row-reverse">
           <LayoutGrid item>
-            <Button onClick={closeTooltipMenu} color="default" iconName="close">
-              {wordings.cancel}
-            </Button>
-            <Button onClick={sendProblemReportAndClose} color="primary" iconName="send">
-              {wordings.send}
-            </Button>
+            <span style={style.tooltipButton}>
+              <Button onClick={closeTooltipMenu} color="default" iconName="close">
+                {wordings.cancel}
+              </Button>
+            </span>
+            <span style={style.tooltipButton}>
+              <Button onClick={sendProblemReportAndClose} color="primary" iconName="send">
+                {wordings.send}
+              </Button>
+            </span>
           </LayoutGrid>
         </LayoutGrid>
       </LayoutGrid>
@@ -71,11 +73,14 @@ function ReportProblemToolTipMenu(props: {
 
   function buildStyle() {
     return {
-      annotationCreationTooltipMenu: {
-        padding: '0px 10px',
-      },
       tooltipElement: {
         width: '350px',
+      },
+      tooltipItem: {
+        padding: '10px 0px',
+      },
+      tooltipButton: {
+        paddingRight: '10px',
       },
     };
   }

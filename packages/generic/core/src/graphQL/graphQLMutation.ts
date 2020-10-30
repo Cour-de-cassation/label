@@ -41,10 +41,6 @@ const graphQLMutation = {
         kind: "primitive",
         type: "string",
       },
-      isBlocking: {
-        kind: "primitive",
-        type: "boolean",
-      },
     },
   },
   updateAssignationStatus: {

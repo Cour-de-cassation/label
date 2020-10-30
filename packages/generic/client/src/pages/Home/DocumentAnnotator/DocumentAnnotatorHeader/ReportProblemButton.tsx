@@ -7,7 +7,10 @@ import { ReportProblemToolTipMenu } from './ReportProblemToolTipMenu';
 
 export { ReportProblemButton };
 
-function ReportProblemButton(props: { annotatorStateHandler: annotatorStateHandlerType }) {
+function ReportProblemButton(props: {
+  annotatorStateHandler: annotatorStateHandlerType;
+  fetchNewDocument: () => Promise<void>;
+}) {
   const theme = useTheme();
   const styles = buildStyles(theme);
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
@@ -20,6 +23,7 @@ function ReportProblemButton(props: { annotatorStateHandler: annotatorStateHandl
       <ReportProblemToolTipMenu
         annotatorStateHandler={props.annotatorStateHandler}
         anchorElement={anchorElement}
+        fetchNewDocument={props.fetchNewDocument}
         onClose={closeToolTip}
       />
     </div>

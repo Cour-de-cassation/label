@@ -10,14 +10,11 @@ const problemReportService = {
     documentId,
     problemText,
     problemType,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    isBlocking,
   }: {
     userId: idType;
     documentId: idType;
     problemText: string;
     problemType: problemReportType['type'];
-    isBlocking: boolean;
   }) {
     const problemReportRepository = buildProblemReportRepository();
     const assignationId = await assignationService.fetchAssignationId({

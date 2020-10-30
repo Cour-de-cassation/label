@@ -8,7 +8,10 @@ import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorHeader };
 
-function DocumentAnnotatorHeader(props: { annotatorStateHandler: annotatorStateHandlerType }) {
+function DocumentAnnotatorHeader(props: {
+  annotatorStateHandler: annotatorStateHandlerType;
+  fetchNewDocument: () => Promise<void>;
+}) {
   const history = useHistory();
   const theme = useTheme();
   const styles = buildStyles(theme);
@@ -19,7 +22,10 @@ function DocumentAnnotatorHeader(props: { annotatorStateHandler: annotatorStateH
         style={styles.header}
         leftHeaderComponents={[<Text>{props.annotatorStateHandler.get().document.title}</Text>]}
         rightHeaderComponents={[
-          <ReportProblemButton annotatorStateHandler={props.annotatorStateHandler} />,
+          <ReportProblemButton
+            annotatorStateHandler={props.annotatorStateHandler}
+            fetchNewDocument={props.fetchNewDocument}
+          />,
           <Button style={styles.logoutButton} onClick={logout} iconName="logout"></Button>,
         ]}
       />

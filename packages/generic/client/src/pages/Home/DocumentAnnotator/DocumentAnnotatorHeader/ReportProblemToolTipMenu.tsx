@@ -10,6 +10,7 @@ export { ReportProblemToolTipMenu };
 function ReportProblemToolTipMenu(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anchorElement: Element | undefined;
+  fetchNewDocument: () => Promise<void>;
   onClose: () => void;
 }): ReactElement {
   const style = buildStyle();
@@ -18,6 +19,8 @@ function ReportProblemToolTipMenu(props: {
   const [problemDescription, setProblemDescription] = useState<string>('');
   const [isBlocking, setIsBlocking] = useState<boolean>(false);
   const [sendProblemReport] = useGraphQLMutation<'problemReport'>('problemReport');
+  const [updateAssignationStatus] = useGraphQLMutation<'updateAssignationStatus'>('updateAssignationStatus');
+  const annotatorState = props.annotatorStateHandler.get();
 
   return (
     <TooltipMenu anchorElement={props.anchorElement} onClose={props.onClose}>
@@ -94,17 +97,21 @@ function ReportProblemToolTipMenu(props: {
     props.onClose();
   }
 
-  function sendProblemReportAndClose(_event: MouseEvent) {
+  async function sendProblemReportAndClose(_event: MouseEvent) {
     if (problemCategory) {
-      sendProblemReport({
+      await sendProblemReport({
         variables: {
-          documentId: props.annotatorStateHandler.get().document._id,
+          documentId: annotatorState.document._id,
           problemType: problemCategory,
           problemText: problemDescription,
-          isBlocking: isBlocking,
         },
       });
+      if (isBlocking) {
+        await updateAssignationStatus({ variables: { documentId: annotatorState.document._id, status: 'rejected' } });
+        await props.fetchNewDocument();
+      }
     }
+
     closeTooltipMenu(_event);
   }
 }

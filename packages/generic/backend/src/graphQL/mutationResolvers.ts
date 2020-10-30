@@ -27,14 +27,13 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
   },
 
   problemReport: buildAuthenticatedResolver(
-    async (userId, { documentId, problemText, problemType, isBlocking }) => {
+    async (userId, { documentId, problemText, problemType }) => {
       try {
         await problemReportService.createProblemReport({
           userId,
           documentId: idModule.lib.buildId(documentId),
           problemText,
           problemType,
-          isBlocking,
         });
 
         return { success: true };

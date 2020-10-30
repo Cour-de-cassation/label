@@ -12,7 +12,6 @@ describe('problemReportService', () => {
     const documentId = idModule.lib.buildId();
     const problemText = 'PROBLEM_TEXT';
     const problemType = 'bug';
-    const isBlocking = false;
     const assignation = assignationModule.lib.buildAssignation({
       userId,
       documentId,
@@ -27,7 +26,6 @@ describe('problemReportService', () => {
         documentId,
         problemText,
         problemType,
-        isBlocking,
       });
 
       const problemReport = (await problemReportRepository.findAll())[0];
@@ -46,7 +44,6 @@ describe('problemReportService', () => {
           documentId,
           problemText,
           problemType,
-          isBlocking,
         });
 
       await expect(promise()).rejects.toThrow(

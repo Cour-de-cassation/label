@@ -22,7 +22,11 @@ function AnnotationCreationTooltipMenu(props: {
     <TooltipMenu anchorElement={props.anchorText} onClose={props.onClose}>
       <LayoutGrid style={style.annotationCreationTooltipMenu}>
         <LayoutGrid>
-          <Dropdown items={categories} label={wordings.category} onChange={createAnnotation}></Dropdown>
+          <Dropdown
+            items={categories.map((category) => ({ value: category, displayedText: category }))}
+            label={wordings.category}
+            onChange={createAnnotation}
+          ></Dropdown>
         </LayoutGrid>
       </LayoutGrid>
     </TooltipMenu>

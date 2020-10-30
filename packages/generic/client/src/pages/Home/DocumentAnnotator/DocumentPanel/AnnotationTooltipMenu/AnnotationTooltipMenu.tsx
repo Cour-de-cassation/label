@@ -38,7 +38,7 @@ function AnnotationTooltipMenu(props: {
         <LayoutGrid>
           <Dropdown
             defaultItem={props.annotation.category}
-            items={categories}
+            items={categories.map((category) => ({ value: category, displayedText: category }))}
             label={wordings.category}
             onChange={changeAnnotationCategory}
           ></Dropdown>

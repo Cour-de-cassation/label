@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CloseRounded,
   LoopRounded,
   SendRounded,
   SaveAltRounded,
@@ -20,6 +21,7 @@ export { Icon };
 export type { iconNameType };
 
 const materialIconMapping = {
+  close: CloseRounded,
   login: ExitToAppRounded,
   logout: MeetingRoom,
   redo: RedoRounded,

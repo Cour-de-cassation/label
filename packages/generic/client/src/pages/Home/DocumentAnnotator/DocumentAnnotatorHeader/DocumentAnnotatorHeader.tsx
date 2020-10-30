@@ -1,9 +1,9 @@
 import { useTheme, Theme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Text, MenuBar, Header } from '../../../components';
-import { deleteBearerTokenInLocalStorage } from '../../../services/localStorage';
-import { wordings } from '../../../wordings';
+import { Button, Text, MenuBar, Header } from '../../../../components';
+import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
+import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorHeader };
 
@@ -18,17 +18,7 @@ function DocumentAnnotatorHeader(props: { title: string }) {
         style={styles.header}
         leftHeaderComponents={[<Text>{props.title}</Text>]}
         rightHeaderComponents={[
-          <div style={styles.reportProblemButton}>
-            <Button
-              onClick={() => {
-                console.log();
-              }}
-              iconName="reportProblem"
-              color="secondary"
-            >
-              {wordings.reportProblem}
-            </Button>
-          </div>,
+          <ReportProblemButton />,
           <Button style={styles.logoutButton} onClick={logout} iconName="logout"></Button>,
         ]}
       />

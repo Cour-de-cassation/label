@@ -29,7 +29,10 @@ function AnnotationTooltipMenuLinkerSection(props: {
         <LayoutGrid>
           <Dropdown
             disabled={props.disabled}
-            items={linkableAnnotations.map((annotation) => annotation.text)}
+            items={linkableAnnotations.map((annotation) => ({
+              value: annotation.text,
+              displayedText: annotation.text,
+            }))}
             label={wordings.associateTo}
             onChange={linkToAnnotation}
           ></Dropdown>

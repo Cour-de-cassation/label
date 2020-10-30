@@ -1,27 +1,28 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import React, { ChangeEvent, ReactElement, useState } from 'react';
+import React, { ChangeEvent, ReactElement, useState, CSSProperties } from 'react';
 
 export { Dropdown };
 
 function Dropdown(props: {
   defaultItem?: string;
   disabled?: boolean;
-  items: Array<string>;
+  items: Array<{ value: string; displayedText: string }>;
   label: string;
   onChange: (item: string) => void;
+  style?: CSSProperties;
 }): ReactElement {
   const style = buildStyle();
   const [value, setValue] = useState(props.defaultItem);
   const labelId = `label-id-${Math.random()}`;
 
   return (
-    <FormControl disabled={props.disabled} style={style.formControl} variant="outlined">
+    <FormControl disabled={props.disabled} style={{ ...style.formControl, ...props.style }} variant="outlined">
       <InputLabel id={labelId}>{props.label}</InputLabel>
 
       <Select labelId={labelId} value={value} onChange={handleChange}>
-        {props.items.map((item, ind) => (
-          <MenuItem key={ind} value={item}>
-            {item}
+        {props.items.map(({ value, displayedText }, ind) => (
+          <MenuItem key={ind} value={value}>
+            {displayedText}
           </MenuItem>
         ))}
       </Select>
@@ -31,7 +32,7 @@ function Dropdown(props: {
   function buildStyle() {
     return {
       formControl: {
-        minWidth: 160,
+        minWidth: 200,
       },
     };
   }

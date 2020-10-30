@@ -1,12 +1,18 @@
-import { idType } from "../id";
+import { dataModelType, typeOfDataModel } from "../dataModelType";
 
-export type { assignationType, assignationStatusType };
+export { assignationDataModel };
 
-type assignationType = {
-  _id: idType;
-  userId: idType;
-  documentId: idType;
-  status: assignationStatusType;
-};
+export type { assignationType };
 
-type assignationStatusType = "rejected" | "pending" | "saved" | "done";
+const assignationDataModel = {
+  documentId: { type: "id", graphQL: true },
+  _id: { type: "id", graphQL: true },
+  status: { type: ["rejected", "pending", "saved", "done"], graphQL: true },
+  userId: { type: "id", graphQL: true },
+} as const;
+
+// We need this line for type checking
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _typeCheck: dataModelType = assignationDataModel;
+
+type assignationType = typeOfDataModel<typeof assignationDataModel>;

@@ -10,10 +10,10 @@ import { resolversType } from './resolversType';
 export { _typeCheck as mutationResolvers };
 
 const mutationResolvers: resolversType<typeof graphQLMutation> = {
-  annotations: async (_, { documentIdString, fetchedGraphQLAnnotations }) => {
+  annotations: async (_, { documentId, fetchedGraphQLAnnotations }) => {
     try {
       await annotationService.updateAnnotations(
-        idModule.lib.buildId(documentIdString),
+        idModule.lib.buildId(documentId),
         fetchedGraphQLAnnotations.map((fetchedGraphQLAnnotation) => ({
           ...fetchedGraphQLAnnotation,
           _id: idModule.lib.buildId(fetchedGraphQLAnnotation._id),
@@ -45,12 +45,12 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
   ),
 
   updateAssignationStatus: buildAuthenticatedResolver(
-    async (userId, { documentIdString, statusString }) => {
+    async (userId, { documentId, status }) => {
       try {
         await assignationService.updateStatus(
           userId,
-          idModule.lib.buildId(documentIdString),
-          statusString,
+          idModule.lib.buildId(documentId),
+          status,
         );
 
         return { success: true };

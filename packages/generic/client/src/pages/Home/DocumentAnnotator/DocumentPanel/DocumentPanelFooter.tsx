@@ -1,5 +1,5 @@
 import React from 'react';
-import { assignationStatusType } from '@label/core';
+import { assignationType } from '@label/core';
 import { heights } from '../../../../styles';
 import { Button, LayoutGrid } from '../../../../components';
 import { useGraphQLMutation } from '../../../../graphQL';
@@ -55,15 +55,15 @@ function DocumentPanelFooter(props: { annotatorStateHandler: annotatorStateHandl
     saveAnnotationsAndUpdateAssignationStatus('done');
   }
 
-  async function saveAnnotationsAndUpdateAssignationStatus(status: assignationStatusType) {
+  async function saveAnnotationsAndUpdateAssignationStatus(status: assignationType['status']) {
     saveAnnotations({
       variables: {
-        documentIdString: JSON.stringify(annotatorState.document._id),
+        documentId: annotatorState.document._id,
         fetchedGraphQLAnnotations: annotatorState.annotations,
       },
     });
     updateAssignationStatus({
-      variables: { documentIdString: JSON.stringify(annotatorState.document._id), statusString: status },
+      variables: { documentId: annotatorState.document._id, status },
     });
   }
 }

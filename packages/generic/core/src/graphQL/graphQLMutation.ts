@@ -1,4 +1,4 @@
-import { problemReportModule } from "../modules";
+import { assignationModule, problemReportModule } from "../modules";
 import { graphQLMutationType } from "./graphQLTypes";
 
 export { graphQLMutation };
@@ -10,9 +10,9 @@ const graphQLMutation = {
       type: "success",
     },
     args: {
-      documentIdString: {
+      documentId: {
         kind: "primitive",
-        type: "string",
+        type: "id",
       },
       fetchedGraphQLAnnotations: {
         kind: "list",
@@ -53,13 +53,13 @@ const graphQLMutation = {
       type: "success",
     },
     args: {
-      documentIdString: {
+      documentId: {
         kind: "primitive",
-        type: "string",
+        type: "id",
       },
-      statusString: {
+      status: {
         kind: "primitive",
-        type: "string",
+        type: assignationModule.dataModel.status.type,
       },
     },
   },

@@ -7,11 +7,7 @@ import {
   annotationReportModule,
   annotationReportType,
 } from "./annotationReport";
-import {
-  assignationModule,
-  assignationType,
-  assignationStatusType,
-} from "./assignation";
+import { assignationModule, assignationType } from "./assignation";
 import { documentModule, documentType, fetchedDocumentType } from "./document";
 import { idModule, idType } from "./id";
 import { problemReportModule, problemReportType } from "./problemReport";
@@ -41,7 +37,6 @@ export type {
   fetchedAnnotationType,
   annotationReportType,
   assignationType,
-  assignationStatusType,
   documentType,
   fetchedDocumentType,
   idType,

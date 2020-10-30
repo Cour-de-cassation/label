@@ -1,4 +1,4 @@
-import { assignationStatusType, assignationType, idType } from '@label/core';
+import { assignationType, idType } from '@label/core';
 
 export type { customAssignationRepositoryType };
 
@@ -7,6 +7,6 @@ type customAssignationRepositoryType = {
   updateStatus: (
     userId: idType,
     documentId: idType,
-    status: assignationStatusType,
+    status: assignationType['status'],
   ) => Promise<void>;
 };

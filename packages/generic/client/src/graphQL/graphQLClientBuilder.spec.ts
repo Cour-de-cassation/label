@@ -6,8 +6,8 @@ describe('graphQLClientBuilder', () => {
       const mutation = buildMutationString('annotations');
 
       expect(mutation)
-        .toEqual(`mutation annotations($documentIdString: String, $fetchedGraphQLAnnotations: [annotationInputType]) {
-annotations(documentIdString: $documentIdString, fetchedGraphQLAnnotations: $fetchedGraphQLAnnotations) {
+        .toEqual(`mutation annotations($documentId: String, $fetchedGraphQLAnnotations: [annotationInputType]) {
+annotations(documentId: $documentId, fetchedGraphQLAnnotations: $fetchedGraphQLAnnotations) {
 success
 }
 }`);

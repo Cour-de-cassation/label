@@ -1,6 +1,6 @@
 import {
-  assignationStatusType,
   assignationModule,
+  assignationType,
   idModule,
   idType,
 } from '@label/core';
@@ -92,27 +92,12 @@ const assignationService = {
     return assignationRepository.insert(assignation);
   },
 
-  async updateStatus(userId: idType, documentId: idType, status: string) {
+  async updateStatus(
+    userId: idType,
+    documentId: idType,
+    status: assignationType['status'],
+  ) {
     const assignationRepository = buildAssignationRepository();
-    await assignationRepository.updateStatus(
-      userId,
-      documentId,
-      parseStatus(status),
-    );
+    await assignationRepository.updateStatus(userId, documentId, status);
   },
 };
-
-function parseStatus(statusString: string): assignationStatusType {
-  switch (statusString) {
-    case 'pending':
-      return 'pending';
-    case 'saved':
-      return 'saved';
-    case 'done':
-      return 'done';
-    case 'rejected':
-      return 'rejected';
-    default:
-      throw new Error(`Assignation status ${statusString} is not handled`);
-  }
-}

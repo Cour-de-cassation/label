@@ -81,6 +81,7 @@ function buildStyle(theme: Theme): { [cssClass: string]: CSSProperties } {
     },
     lineNumberCell: {
       display: 'flex',
+      flexDirection: 'row-reverse',
       paddingRight: theme.spacing(2),
     },
   };

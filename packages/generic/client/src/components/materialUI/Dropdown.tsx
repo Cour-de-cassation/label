@@ -6,6 +6,7 @@ export { Dropdown };
 function Dropdown<T extends string>(props: {
   defaultItem?: string;
   disabled?: boolean;
+  error?: boolean;
   items: Array<{ value: T; displayedText: string }>;
   label: string;
   onChange: (value: T) => void;
@@ -16,7 +17,12 @@ function Dropdown<T extends string>(props: {
   const labelId = `label-id-${Math.random()}`;
 
   return (
-    <FormControl disabled={props.disabled} style={{ ...style.formControl, ...props.style }} variant="outlined">
+    <FormControl
+      disabled={props.disabled}
+      error={props.error}
+      style={{ ...style.formControl, ...props.style }}
+      variant="outlined"
+    >
       <InputLabel id={labelId}>{props.label}</InputLabel>
 
       <Select labelId={labelId} value={value} onChange={handleChange}>

@@ -18,6 +18,7 @@ function ReportProblemToolTipMenu(props: {
   const [problemCategory, setProblemCategory] = useState<problemReportType['type'] | undefined>(undefined);
   const [problemDescription, setProblemDescription] = useState<string>('');
   const [isBlocking, setIsBlocking] = useState<boolean>(false);
+  const [isSentWithoutCategory, setIsSentWithoutCategory] = useState<boolean>(false);
   const [sendProblemReport] = useGraphQLMutation<'problemReport'>('problemReport');
   const [updateAssignationStatus] = useGraphQLMutation<'updateAssignationStatus'>('updateAssignationStatus');
   const annotatorState = props.annotatorStateHandler.get();
@@ -27,6 +28,7 @@ function ReportProblemToolTipMenu(props: {
       <LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
           <Dropdown<problemReportType['type']>
+            error={isSentWithoutCategory}
             items={problemCategories.map(([problemCategory, problemCategoryText]) => ({
               value: problemCategory,
               displayedText: problemCategoryText,
@@ -102,8 +104,10 @@ function ReportProblemToolTipMenu(props: {
     props.onClose();
   }
 
-  async function sendProblemReportAndClose(_event: MouseEvent) {
+  async function sendProblemReportAndClose(event: MouseEvent) {
     if (problemCategory) {
+      setIsSentWithoutCategory(false);
+
       await sendProblemReport({
         variables: {
           documentId: annotatorState.document._id,
@@ -111,12 +115,15 @@ function ReportProblemToolTipMenu(props: {
           problemText: problemDescription,
         },
       });
+
       if (isBlocking) {
         await updateAssignationStatus({ variables: { documentId: annotatorState.document._id, status: 'rejected' } });
         await props.fetchNewDocument();
       }
-    }
 
-    closeTooltipMenu(_event);
+      closeTooltipMenu(event);
+    } else {
+      setIsSentWithoutCategory(true);
+    }
   }
 }

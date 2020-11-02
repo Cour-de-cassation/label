@@ -45,7 +45,8 @@ function DocumentAnnotationText(props: {
           props.annotatorStateHandler.get().settings,
         ),
         cursor: 'pointer',
-        padding: '0px 5px',
+        padding: '0px 2px',
+        borderRadius: '3px',
       },
     };
   }

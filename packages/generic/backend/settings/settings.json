@@ -21,13 +21,13 @@
     "anonymizationTexts": ["Spirou", "Fantasio"],
     "color": "#E64901",
     "iconName": "person",
-    "text": "Personne physique (Prénom)"
+    "text": "Prénom"
   },
   "personnephysiquenom": {
     "anonymizationTexts": ["Lagaffe"],
     "color": "#AB0800",
     "iconName": "person",
-    "text": "Personne physique (NOM)"
+    "text": "Nom"
   },
   "professionnelnom": {
     "anonymizationTexts": ["Leon"],

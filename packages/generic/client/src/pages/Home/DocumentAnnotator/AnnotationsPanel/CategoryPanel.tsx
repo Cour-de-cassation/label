@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
-import { LayoutGrid, Accordion, AccordionHeader, AccordionBody, Text, Icon } from '../../../../components';
+import { LayoutGrid, Accordion, Text, Icon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { Theme, useTheme } from '@material-ui/core';
 
@@ -14,9 +14,16 @@ function CategoryPanel(props: {
 }) {
   const theme = useTheme();
   const styles = buildStyles(theme);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const categoryName = settingsModule.lib.getAnnotationCategoryText(
+    props.category,
+    props.annotatorStateHandler.get().settings,
+  );
+
   return (
-    <Accordion>
-      <AccordionHeader style={styles.accordionHeader}>
+    <Accordion
+      headerStyle={styles.accordionHeader}
+      header={
         <LayoutGrid container>
           <LayoutGrid container alignItems="center" xs={11}>
             <LayoutGrid item>
@@ -30,45 +37,49 @@ function CategoryPanel(props: {
               </div>
             </LayoutGrid>
             <LayoutGrid item style={styles.categoryContainer}>
-              <Text>
-                {settingsModule.lib.getAnnotationCategoryText(
-                  props.category,
-                  props.annotatorStateHandler.get().settings,
-                )}
-              </Text>
+              <Text>{`${categoryName} (${props.annotationsAndOccurences.length})`}</Text>
             </LayoutGrid>
           </LayoutGrid>
           <LayoutGrid container item alignItems="center" xs={1}>
-            <Text>{props.annotationsAndOccurences.length}</Text>
+            <Icon iconName={isExpanded ? 'arrowReduce' : 'arrowExpand'} />
           </LayoutGrid>
         </LayoutGrid>
-      </AccordionHeader>
-      <AccordionBody>
+      }
+      body={
         <LayoutGrid container>
           {props.annotationsAndOccurences.map(({ annotation, occurences }) => (
             <LayoutGrid container justifyContent="space-between" item key={annotation.text}>
               <LayoutGrid xs={8} item>
-                <Text>{annotation.text}</Text>
+                <Text variant="body2">{annotation.text}</Text>
               </LayoutGrid>
               <LayoutGrid xs={3} item>
-                <Text>{props.anonymizer.anonymize(annotation)}</Text>
+                <Text style={styles.anonymizedText} variant="body2">
+                  {props.anonymizer.anonymize(annotation)}
+                </Text>
               </LayoutGrid>
               <LayoutGrid xs={1} item>
-                <Text>{occurences}</Text>
+                <Text style={styles.occurencesNumber}>{occurences}</Text>
               </LayoutGrid>
             </LayoutGrid>
           ))}
         </LayoutGrid>
-      </AccordionBody>
-    </Accordion>
+      }
+      onChange={setIsExpanded}
+    />
   );
 
   function buildStyles(theme: Theme) {
-    const ACCORDION_HEADER_PADDING = 2;
+    const ACCORDION_HEADER_PADDING = 5;
     const ICON_CONTAINER_HEIGHT = theme.shape.borderRadius * 2 - ACCORDION_HEADER_PADDING;
+
     return {
       accordionHeader: {
         padding: ACCORDION_HEADER_PADDING,
+        // Should be set in order to have a fixed header (Material UI dependent)
+        minHeight: ICON_CONTAINER_HEIGHT,
+        '&$expanded': {
+          minHeight: ICON_CONTAINER_HEIGHT,
+        },
       },
       iconContainer: {
         width: ICON_CONTAINER_HEIGHT,
@@ -85,6 +96,13 @@ function CategoryPanel(props: {
       categoryContainer: {
         paddingLeft: theme.spacing(),
       },
-    };
+      anonymizedText: {
+        fontStyle: 'italic',
+      },
+      occurencesNumber: {
+        textAlign: 'right',
+        paddingRight: theme.spacing(3),
+      },
+    } as const;
   }
 }

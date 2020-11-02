@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import './assets/fonts/Montserrat/Montserrat-Regular.ttf';
+import './assets/fonts/Luciole/Luciole-Regular.ttf';
 
 ReactDOM.render(
   <React.StrictMode>

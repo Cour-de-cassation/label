@@ -4,12 +4,12 @@ body {
 
 @font-face {
   font-weight: 'normal';
-  font-family: 'Montserrat';
-  src: local('Montserrat'), url('./assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+  font-family: 'Luciole';
+  src: local('Luciole'), url('./assets/fonts/Luciole/Luciole-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-weight: 'bold';
-  font-family: 'Montserrat-Bold';
-  src: local('Montserrat-Bold'), url('./assets/fonts/Montserrat/Montserrat-Bold.ttf') format('truetype');
+  font-family: 'Luciole-Bold';
+  src: local('Luciole-Bold'), url('./assets/fonts/Luciole/Luciole-Bold.ttf') format('truetype');
 }

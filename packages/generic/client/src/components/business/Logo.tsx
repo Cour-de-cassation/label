@@ -1,13 +1,15 @@
 import React from 'react';
-import { SvgIcon, useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
+import { SvgImage } from '../generic';
 
-export { LogoIcon };
+export { Logo };
 
-function LogoIcon(props: { size: 'medium' }) {
+function Logo(props: { size: 'medium' }) {
   const theme = useTheme();
   const styles = buildStyles();
+
   return (
-    <SvgIcon style={styles[props.size]}>
+    <SvgImage style={styles[props.size]}>
       <svg version="1.1" id="Calque_1" x="0px" y="0px" viewBox="0 0 1494.3 871.7">
         <path
           fill={theme.palette.primary.main}
@@ -51,7 +53,7 @@ function LogoIcon(props: { size: 'medium' }) {
 	c43.2,0,78.4-35.2,78.4-78.4h53.1C895.6,744.7,836.6,803.6,764.1,803.6z"
         />
       </svg>
-    </SvgIcon>
+    </SvgImage>
   );
 
   function buildStyles() {

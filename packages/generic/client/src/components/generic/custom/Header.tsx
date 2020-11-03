@@ -1,6 +1,6 @@
 import React, { ReactElement, CSSProperties } from 'react';
-import { heights } from '../../styles';
-import { buildStyledComponentList } from '../../utils';
+import { heights } from '../../../styles';
+import { buildStyledComponentList } from '../../../utils';
 import { LayoutGrid } from '../materialUI';
 
 export { Header };

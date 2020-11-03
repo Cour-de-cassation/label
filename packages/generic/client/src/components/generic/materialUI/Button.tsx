@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactElement, ReactNode, MouseEvent } from 'react';
 import { Button as MUButton, Theme, useTheme } from '@material-ui/core';
-import { iconNameType, Icon } from '../icons';
+import { iconNameType, Icon } from './Icon';
 
 export { Button };
 

@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React, { ReactElement, ReactNode, CSSProperties } from 'react';
-import { typographyType } from '../../styles';
+import { typographyType } from '../../../styles';
 
 export { Text };
 

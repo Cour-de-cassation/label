@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import {
   CloseRounded,
   ExpandLessRounded,
@@ -20,6 +20,7 @@ import {
 import { categoryIconNameType } from '@label/core/src';
 
 export { Icon };
+
 export type { iconNameType };
 
 const materialIconMapping = {
@@ -50,7 +51,7 @@ const iconMapping = {
 
 type iconNameType = keyof typeof materialIconMapping | keyof typeof categoryIconMapping;
 
-function Icon(props: { iconName: iconNameType }) {
+function Icon(props: { iconName: iconNameType; style?: CSSProperties }) {
   const IconComponent = iconMapping[props.iconName];
-  return <IconComponent />;
+  return <IconComponent style={props.style} />;
 }

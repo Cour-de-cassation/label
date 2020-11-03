@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
-import { LayoutGrid, Accordion, Text, Icon } from '../../../../components';
+import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { Theme, useTheme } from '@material-ui/core';
 
 export { CategoryPanel };
+
+const ACCORDION_HEADER_PADDING = 5;
 
 function CategoryPanel(props: {
   annotationsAndOccurences: Array<{ annotation: fetchedAnnotationType; occurences: number }>;
@@ -13,6 +15,7 @@ function CategoryPanel(props: {
   category: string;
 }) {
   const theme = useTheme();
+  const iconSize = theme.shape.borderRadius * 2 - ACCORDION_HEADER_PADDING;
   const styles = buildStyles(theme);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const categoryName = settingsModule.lib.getAnnotationCategoryText(
@@ -27,14 +30,11 @@ function CategoryPanel(props: {
         <LayoutGrid container>
           <LayoutGrid container alignItems="center" xs={11}>
             <LayoutGrid item>
-              <div style={styles.iconContainer}>
-                <Icon
-                  iconName={settingsModule.lib.getAnnotationCategoryIconName(
-                    props.category,
-                    props.annotatorStateHandler.get().settings,
-                  )}
-                />
-              </div>
+              <CategoryIcon
+                annotatorStateHandler={props.annotatorStateHandler}
+                category={props.category}
+                iconSize={iconSize}
+              />
             </LayoutGrid>
             <LayoutGrid item style={styles.categoryContainer}>
               <Text>{`${categoryName} (${props.annotationsAndOccurences.length})`}</Text>
@@ -69,29 +69,14 @@ function CategoryPanel(props: {
   );
 
   function buildStyles(theme: Theme) {
-    const ACCORDION_HEADER_PADDING = 5;
-    const ICON_CONTAINER_HEIGHT = theme.shape.borderRadius * 2 - ACCORDION_HEADER_PADDING;
-
     return {
       accordionHeader: {
         padding: ACCORDION_HEADER_PADDING,
         // Should be set in order to have a fixed header (Material UI dependent)
-        minHeight: ICON_CONTAINER_HEIGHT,
+        minHeight: iconSize,
         '&$expanded': {
-          minHeight: ICON_CONTAINER_HEIGHT,
+          minHeight: iconSize,
         },
-      },
-      iconContainer: {
-        width: ICON_CONTAINER_HEIGHT,
-        height: ICON_CONTAINER_HEIGHT,
-        borderRadius: ICON_CONTAINER_HEIGHT / 2,
-        backgroundColor: settingsModule.lib.getAnnotationCategoryColor(
-          props.category,
-          props.annotatorStateHandler.get().settings,
-        ),
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
       },
       categoryContainer: {
         paddingLeft: theme.spacing(),

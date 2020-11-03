@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
-import { annotationModule, fetchedAnnotationType, idModule } from '@label/core';
-import { Button, Checkbox, Dropdown, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
+import { annotationModule, fetchedAnnotationType, idModule, settingsModule } from '@label/core';
+import { Button, Checkbox, Dropdown, CategoryIcon, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { fillTemplate, wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuLinkerSection } from './AnnotationTooltipMenuLinkerSection';
@@ -14,6 +14,7 @@ function AnnotationTooltipMenu(props: {
   annotation: fetchedAnnotationType;
   onClose: () => void;
 }): ReactElement {
+  const style = buildStyle();
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const annotatorState = props.annotatorStateHandler.get();
   const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
@@ -24,6 +25,23 @@ function AnnotationTooltipMenu(props: {
   return (
     <TooltipMenu anchorElement={props.anchorAnnotation} onClose={props.onClose}>
       <LayoutGrid>
+        <LayoutGrid container alignItems="center">
+          <LayoutGrid>
+            <CategoryIcon
+              annotatorStateHandler={props.annotatorStateHandler}
+              category={props.annotation.category}
+              iconSize={30}
+            />
+          </LayoutGrid>
+          <LayoutGrid>
+            <Text style={style.categoryText}>
+              {settingsModule.lib.getAnnotationCategoryText(
+                props.annotation.category,
+                props.annotatorStateHandler.get().settings,
+              )}
+            </Text>
+          </LayoutGrid>
+        </LayoutGrid>
         <LayoutGrid>
           <Text>{fillTemplate(wordings.nOccurencesToObliterate, JSON.stringify(nbOfEntities))}</Text>
         </LayoutGrid>
@@ -53,6 +71,14 @@ function AnnotationTooltipMenu(props: {
       </LayoutGrid>
     </TooltipMenu>
   );
+
+  function buildStyle() {
+    return {
+      categoryText: {
+        marginLeft: '12px',
+      },
+    };
+  }
 
   function changeAnnotationCategory(newCategory: string) {
     const annotationsToUpdate = shouldApplyEverywhere

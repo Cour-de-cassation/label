@@ -1,31 +1,30 @@
-import { CategoryIcon, Logo } from './business';
+import { Header } from './custom';
 import {
   Accordion,
   Button,
   Checkbox,
   Dropdown,
-  Header,
   Icon,
   LayoutGrid,
   MenuBar,
+  SvgImage,
   SwitchButton,
   Text,
   TextInput,
   TextInputLarge,
   TooltipMenu,
-} from './generic';
+} from './materialUI';
 
 export {
   Accordion,
   Button,
-  CategoryIcon,
   Checkbox,
   Dropdown,
   Header,
   Icon,
   LayoutGrid,
-  Logo,
   MenuBar,
+  SvgImage,
   SwitchButton,
   Text,
   TextInput,

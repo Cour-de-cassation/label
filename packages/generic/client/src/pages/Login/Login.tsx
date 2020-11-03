@@ -1,11 +1,10 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Theme, useTheme } from '@material-ui/core';
-import { LayoutGrid, Text, TextInput, Button } from '../../components';
+import { Button, LayoutGrid, Logo, Text, TextInput } from '../../components';
 import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
-import { LogoIcon } from '../../components/materialUI/icons';
 
 export { Login };
 
@@ -19,7 +18,7 @@ const Login: FunctionComponent = () => {
   return (
     <LayoutGrid container direction="column" justifyContent="center" alignItems="center" style={styles.mainContainer}>
       <LayoutGrid item style={styles.logoContainer}>
-        <LogoIcon size="medium" />
+        <Logo size="medium" />
       </LayoutGrid>
       <LayoutGrid item style={styles.formContainer}>
         <LayoutGrid item style={styles.inputContainer}>

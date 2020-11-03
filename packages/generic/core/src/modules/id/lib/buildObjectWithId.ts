@@ -1,5 +1,5 @@
-import { idType } from "../idType";
-import { buildId } from "./buildId";
+import { idType } from '../idType';
+import { buildId } from './buildId';
 
 export { buildObjectWithId };
 

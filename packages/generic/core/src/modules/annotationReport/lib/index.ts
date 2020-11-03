@@ -1,3 +1,3 @@
-import { buildAnnotationReport } from "./buildAnnotationReport";
+import { buildAnnotationReport } from './buildAnnotationReport';
 
 export { buildAnnotationReport };

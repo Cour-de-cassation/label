@@ -1,5 +1,5 @@
-import { idType } from "../idType";
-import { buildMongoId } from "../utils";
+import { idType } from '../idType';
+import { buildMongoId } from '../utils';
 
 export { buildId };
 

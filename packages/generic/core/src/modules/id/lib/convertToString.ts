@@ -1,4 +1,4 @@
-import { idType } from "../idType";
+import { idType } from '../idType';
 
 export { convertToString };
 

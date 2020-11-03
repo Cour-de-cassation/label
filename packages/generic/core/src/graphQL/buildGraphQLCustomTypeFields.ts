@@ -1,5 +1,5 @@
-import { dataModelFieldType } from "../modules";
-import { filterGraphQLKeysType } from "../types";
+import { dataModelFieldType } from '../modules';
+import { filterGraphQLKeysType } from '../types';
 
 export { buildGraphQLCustomTypeFields };
 
@@ -8,12 +8,12 @@ function buildGraphQLCustomTypeFields<
     [field: string]: { graphQL: boolean; type: dataModelFieldType };
   }
 >(
-  dataModel: dataModelT
+  dataModel: dataModelT,
 ): {
   [k in keyof Pick<
     dataModelT,
     filterGraphQLKeysType<dataModelT>
-  >]: dataModelT[k]["type"];
+  >]: dataModelT[k]['type'];
 } {
   const graphQLCustomTypeFields = {} as {
     [field in keyof dataModelT]: dataModelFieldType;

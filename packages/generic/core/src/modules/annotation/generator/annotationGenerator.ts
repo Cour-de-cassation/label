@@ -1,7 +1,7 @@
-import { generatorType } from "../../../types";
-import { entityIdHandler } from "../lib";
-import { idModule } from "../../id";
-import { annotationType } from "../annotationType";
+import { generatorType } from '../../../types';
+import { entityIdHandler } from '../lib';
+import { idModule } from '../../id';
+import { annotationType } from '../annotationType';
 
 export { annotationGenerator };
 
@@ -22,7 +22,7 @@ const annotationGenerator: generatorType<annotationType> = {
       ...annotationFields,
       entityId: entityIdHandler.compute(
         annotationFields.category,
-        annotationFields.text
+        annotationFields.text,
       ),
     };
   },

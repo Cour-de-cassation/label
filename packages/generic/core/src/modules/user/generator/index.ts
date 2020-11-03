@@ -1,3 +1,3 @@
-import { userGenerator } from "./userGenerator";
+import { userGenerator } from './userGenerator';
 
 export { userGenerator };

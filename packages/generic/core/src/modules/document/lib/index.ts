@@ -1,3 +1,3 @@
-import { buildDocument } from "./buildDocument";
+import { buildDocument } from './buildDocument';
 
 export { buildDocument };

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import axios from "axios";
+import axios from 'axios';
 
 type httpRequestType<RequestDataType> = {
   data: RequestDataType;
   headers: any;
-  method: "get" | "post";
+  method: 'get' | 'post';
   url: string;
 };
 

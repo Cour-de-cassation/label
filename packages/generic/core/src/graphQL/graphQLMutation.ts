@@ -1,77 +1,77 @@
-import { assignationModule, problemReportModule } from "../modules";
-import { graphQLMutationType } from "./graphQLTypes";
+import { assignationModule, problemReportModule } from '../modules';
+import { graphQLMutationType } from './graphQLTypes';
 
 export { graphQLMutation };
 
 const graphQLMutation = {
   annotations: {
     type: {
-      kind: "custom",
-      type: "success",
+      kind: 'custom',
+      type: 'success',
     },
     args: {
       documentId: {
-        kind: "primitive",
-        type: "id",
+        kind: 'primitive',
+        type: 'id',
       },
       fetchedGraphQLAnnotations: {
-        kind: "list",
+        kind: 'list',
         type: {
-          kind: "custom",
-          type: "annotation",
+          kind: 'custom',
+          type: 'annotation',
         },
       },
     },
   },
   problemReport: {
     type: {
-      kind: "custom",
-      type: "success",
+      kind: 'custom',
+      type: 'success',
     },
     args: {
       documentId: {
-        kind: "primitive",
-        type: "id",
+        kind: 'primitive',
+        type: 'id',
       },
       problemType: {
-        kind: "primitive",
+        kind: 'primitive',
         type: problemReportModule.dataModel.type.type,
       },
       problemText: {
-        kind: "primitive",
-        type: "string",
+        kind: 'primitive',
+        type: 'string',
       },
     },
   },
   updateAssignationStatus: {
     type: {
-      kind: "custom",
-      type: "success",
+      kind: 'custom',
+      type: 'success',
     },
     args: {
       documentId: {
-        kind: "primitive",
-        type: "id",
+        kind: 'primitive',
+        type: 'id',
       },
       status: {
-        kind: "primitive",
+        kind: 'primitive',
         type: assignationModule.dataModel.status.type,
       },
     },
   },
   signUpUser: {
     type: {
-      kind: "custom",
-      type: "success",
+      kind: 'custom',
+      type: 'success',
     },
     args: {
       email: {
-        kind: "primitive",
-        type: "string",
+        kind: 'primitive',
+        type: 'string',
       },
       password: {
-        kind: "primitive",
-        type: "string",
+        kind: 'primitive',
+        type: 'string',
       },
     },
   },

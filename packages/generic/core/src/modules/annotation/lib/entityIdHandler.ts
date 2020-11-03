@@ -23,7 +23,7 @@ function getText(entityId: string): string {
 }
 
 function parseEntityId(entityId: string) {
-  const parsedEntityId = entityId.split("_");
+  const parsedEntityId = entityId.split('_');
 
   return { category: parsedEntityId[0], text: parsedEntityId[1] };
 }

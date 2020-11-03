@@ -1,3 +1,3 @@
-import { documentGenerator } from "./documentGenerator";
+import { documentGenerator } from './documentGenerator';
 
 export { documentGenerator };

@@ -1,6 +1,6 @@
-import { generatorType } from "../../../types";
-import { idModule } from "../../id";
-import { assignationType } from "../assignationType";
+import { generatorType } from '../../../types';
+import { idModule } from '../../id';
+import { assignationType } from '../assignationType';
 
 export { assignationGenerator };
 
@@ -11,6 +11,6 @@ const assignationGenerator: generatorType<assignationType> = {
       : idModule.lib.buildId(),
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     userId: userId ? idModule.lib.buildId(userId) : idModule.lib.buildId(),
-    status: status ? status : "pending",
+    status: status ? status : 'pending',
   }),
 };

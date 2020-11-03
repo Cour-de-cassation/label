@@ -1,3 +1,3 @@
-import { problemReportGenerator } from "./problemReportGenerator";
+import { problemReportGenerator } from './problemReportGenerator';
 
 export { problemReportGenerator };

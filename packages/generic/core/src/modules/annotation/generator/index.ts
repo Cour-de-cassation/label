@@ -1,3 +1,3 @@
-import { annotationGenerator } from "./annotationGenerator";
+import { annotationGenerator } from './annotationGenerator';
 
 export { annotationGenerator };

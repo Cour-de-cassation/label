@@ -1,3 +1,3 @@
-import { httpRequester } from "./httpRequester";
+import { httpRequester } from './httpRequester';
 
 export { httpRequester };

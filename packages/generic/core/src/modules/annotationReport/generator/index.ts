@@ -1,3 +1,3 @@
-import { annotationReportGenerator } from "./annotationReportGenerator";
+import { annotationReportGenerator } from './annotationReportGenerator';
 
 export { annotationReportGenerator };

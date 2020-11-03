@@ -1,5 +1,5 @@
-import { idType } from "../idType";
-import { areMongoIdEqual } from "../utils";
+import { idType } from '../idType';
+import { areMongoIdEqual } from '../utils';
 
 export { equalId };
 

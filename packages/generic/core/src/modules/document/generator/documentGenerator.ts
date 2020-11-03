@@ -1,6 +1,6 @@
-import { generatorType } from "../../../types";
-import { idModule } from "../../id";
-import { documentType } from "../documentType";
+import { generatorType } from '../../../types';
+import { idModule } from '../../id';
+import { documentType } from '../documentType';
 
 export { documentGenerator };
 

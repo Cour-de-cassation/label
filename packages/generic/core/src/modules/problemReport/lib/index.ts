@@ -1,3 +1,3 @@
-import { buildProblemReport } from "./buildProblemReport";
+import { buildProblemReport } from './buildProblemReport';
 
 export { buildProblemReport };

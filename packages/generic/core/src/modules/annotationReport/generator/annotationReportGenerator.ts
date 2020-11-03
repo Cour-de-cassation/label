@@ -1,6 +1,6 @@
-import { generatorType } from "../../../types";
-import { idModule } from "../../id";
-import { annotationReportType } from "../annotationReportType";
+import { generatorType } from '../../../types';
+import { idModule } from '../../id';
+import { annotationReportType } from '../annotationReportType';
 
 export { annotationReportGenerator };
 

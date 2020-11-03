@@ -1,33 +1,33 @@
-import { graphQLQueryType } from "./graphQLTypes";
+import { graphQLQueryType } from './graphQLTypes';
 
 export { graphQLQuery };
 
 const graphQLQuery = {
   annotations: {
     type: {
-      kind: "list",
+      kind: 'list',
       type: {
-        kind: "custom",
-        type: "annotation",
+        kind: 'custom',
+        type: 'annotation',
       },
     },
     args: {
       documentId: {
-        kind: "primitive",
-        type: "string",
+        kind: 'primitive',
+        type: 'string',
       },
     },
   },
   document: {
     type: {
-      kind: "custom",
-      type: "document",
+      kind: 'custom',
+      type: 'document',
     },
   },
   settings: {
     type: {
-      kind: "custom",
-      type: "settings",
+      kind: 'custom',
+      type: 'settings',
     },
   },
 } as const;

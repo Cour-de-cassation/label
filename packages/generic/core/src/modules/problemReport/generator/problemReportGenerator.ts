@@ -1,6 +1,6 @@
-import { generatorType } from "../../../types";
-import { idModule } from "../../id";
-import { problemReportType } from "../problemReportType";
+import { generatorType } from '../../../types';
+import { idModule } from '../../id';
+import { problemReportType } from '../problemReportType';
 
 export { problemReportGenerator };
 
@@ -12,7 +12,7 @@ const problemReportGenerator: generatorType<problemReportType> = {
         : idModule.lib.buildId(),
       _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
       text: text ? text : `TEXT_${Math.random()}`,
-      type: type ? type : "bug",
+      type: type ? type : 'bug',
     };
   },
 };

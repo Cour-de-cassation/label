@@ -1,10 +1,10 @@
 export { buildGraphQLTypeName };
 
-function buildGraphQLTypeName(kind: "input" | "output", name: string) {
+function buildGraphQLTypeName(kind: 'input' | 'output', name: string) {
   switch (kind) {
-    case "input":
+    case 'input':
       return `${name}InputType`;
-    case "output":
+    case 'output':
       return `${name}OutputType`;
   }
 }

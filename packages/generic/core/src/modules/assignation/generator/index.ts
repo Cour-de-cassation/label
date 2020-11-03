@@ -1,3 +1,3 @@
-import { assignationGenerator } from "./assignationGenerator";
+import { assignationGenerator } from './assignationGenerator';
 
 export { assignationGenerator };

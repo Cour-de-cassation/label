@@ -1,4 +1,4 @@
-import { settingsType } from "../settingsType";
+import { settingsType } from '../settingsType';
 
 export { getAnnotationCategoryText };
 

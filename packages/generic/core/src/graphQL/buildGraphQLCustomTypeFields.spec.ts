@@ -1,11 +1,11 @@
-import { buildGraphQLCustomTypeFields } from "./buildGraphQLCustomTypeFields";
+import { buildGraphQLCustomTypeFields } from './buildGraphQLCustomTypeFields';
 
-describe("buildGraphQLCustomType", () => {
-  it("should compute an annotation entity id", () => {
+describe('buildGraphQLCustomType', () => {
+  it('should compute an annotation entity id', () => {
     const dataModel = {
-      field1: { graphQL: true, type: "string" },
-      field2: { graphQL: false, type: "string" },
-      field3: { graphQL: true, type: "number" },
+      field1: { graphQL: true, type: 'string' },
+      field2: { graphQL: false, type: 'string' },
+      field3: { graphQL: true, type: 'number' },
     } as const;
 
     const graphQLCustomTypeFields = buildGraphQLCustomTypeFields<
@@ -13,8 +13,8 @@ describe("buildGraphQLCustomType", () => {
     >(dataModel);
 
     expect(graphQLCustomTypeFields).toEqual({
-      field1: "string",
-      field3: "number",
+      field1: 'string',
+      field3: 'number',
     });
   });
 });

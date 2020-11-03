@@ -1,5 +1,5 @@
-import { idModule, omitIdType } from "../../id";
-import { userType } from "../userType";
+import { idModule, omitIdType } from '../../id';
+import { userType } from '../userType';
 
 export { buildUser };
 

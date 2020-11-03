@@ -1,3 +1,3 @@
-import { buildAssignation } from "./buildAssignation";
+import { buildAssignation } from './buildAssignation';
 
 export { buildAssignation };

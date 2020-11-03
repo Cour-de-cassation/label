@@ -10,13 +10,9 @@ describe('textSplitter', () => {
     ].map(annotationModule.generator.generate);
 
     it('should split a text according to the given annotations', () => {
-      const text =
-        'Benoit is software engineer. Nicolas is a software engineer. Romain is a designer.';
+      const text = 'Benoit is software engineer. Nicolas is a software engineer. Romain is a designer.';
 
-      const splittedText = textSplitter.splitTextAccordingToAnnotations(
-        text,
-        annotations,
-      );
+      const splittedText = textSplitter.splitTextAccordingToAnnotations(text, annotations);
 
       expect(splittedText).toEqual([
         {

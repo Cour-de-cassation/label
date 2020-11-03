@@ -21,9 +21,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
   Object.keys(partialSettings).forEach(
     (category) =>
       (settings[category] = {
-        anonymizationTexts: buildAnonymizationTexts(
-          partialSettings[category]?.anonymizationTexts,
-        ),
+        anonymizationTexts: buildAnonymizationTexts(partialSettings[category]?.anonymizationTexts),
         color: buildColor(partialSettings[category]?.color),
         iconName: buildIconName(partialSettings[category]?.iconName),
         text: buildText(partialSettings[category]?.text),

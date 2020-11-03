@@ -1,13 +1,7 @@
 import { filterType, writeableType } from '../types/utilityTypes';
 import { idType } from './id';
 
-export type {
-  dataModelFieldType,
-  dataModelType,
-  graphQLTypeOfDataModel,
-  typeOfDataModel,
-  typeOfDataModelFieldType,
-};
+export type { dataModelFieldType, dataModelType, graphQLTypeOfDataModel, typeOfDataModel, typeOfDataModelFieldType };
 
 type dataModelType = {
   [key in string]: {
@@ -16,13 +10,7 @@ type dataModelType = {
   };
 };
 
-type dataModelFieldType =
-  | 'boolean'
-  | 'date'
-  | 'id'
-  | 'string'
-  | 'number'
-  | readonly string[];
+type dataModelFieldType = 'boolean' | 'date' | 'id' | 'string' | 'number' | readonly string[];
 
 type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
   filterType<dataModelT, { graphQL: true }>
@@ -30,15 +18,11 @@ type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
 
 type typeOfDataModel<dataModelT extends dataModelType> = writeableType<
   {
-    [field in keyof dataModelT]: typeOfDataModelFieldType<
-      dataModelT[field]['type']
-    >;
+    [field in keyof dataModelT]: typeOfDataModelFieldType<dataModelT[field]['type']>;
   }
 >;
 
-type typeOfDataModelFieldType<
-  dataModelFieldT
-> = dataModelFieldT extends 'boolean'
+type typeOfDataModelFieldType<dataModelFieldT> = dataModelFieldT extends 'boolean'
   ? boolean
   : dataModelFieldT extends 'date'
   ? Date

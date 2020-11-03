@@ -1,8 +1,4 @@
-import {
-  dataModelType,
-  graphQLTypeOfDataModel,
-  typeOfDataModel,
-} from '../dataModelType';
+import { dataModelType, graphQLTypeOfDataModel, typeOfDataModel } from '../dataModelType';
 
 export { annotationDataModel };
 

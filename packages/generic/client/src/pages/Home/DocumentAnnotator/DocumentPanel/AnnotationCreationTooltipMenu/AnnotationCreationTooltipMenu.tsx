@@ -53,18 +53,13 @@ function AnnotationCreationTooltipMenu(props: {
     if (shouldApplyEverywhere) {
       return annotationModule.lib.fetchedAnnotationHandler.createAll(
         category,
-        annotatorState.document._id,
         annotatorState.document.text,
         props.annotationText,
+        annotatorState.annotations,
       );
     } else {
       return [
-        annotationModule.lib.fetchedAnnotationHandler.create(
-          category,
-          annotatorState.document._id,
-          props.annotationIndex,
-          props.annotationText,
-        ),
+        annotationModule.lib.fetchedAnnotationHandler.create(category, props.annotationIndex, props.annotationText),
       ];
     }
   }

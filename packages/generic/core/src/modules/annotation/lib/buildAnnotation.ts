@@ -4,14 +4,9 @@ import { entityIdHandler } from './entityIdHandler';
 
 export { buildAnnotation };
 
-function buildAnnotation(
-  annotationFields: Omit<omitIdType<annotationType>, 'entityId'>,
-): annotationType {
+function buildAnnotation(annotationFields: Omit<omitIdType<annotationType>, 'entityId'>): annotationType {
   return {
     ...idModule.lib.buildObjectWithId(annotationFields),
-    entityId: entityIdHandler.compute(
-      annotationFields.category,
-      annotationFields.text,
-    ),
+    entityId: entityIdHandler.compute(annotationFields.category, annotationFields.text),
   };
 }

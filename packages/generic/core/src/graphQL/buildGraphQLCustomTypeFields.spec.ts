@@ -8,9 +8,7 @@ describe('buildGraphQLCustomType', () => {
       field3: { graphQL: true, type: 'number' },
     } as const;
 
-    const graphQLCustomTypeFields = buildGraphQLCustomTypeFields<
-      typeof dataModel
-    >(dataModel);
+    const graphQLCustomTypeFields = buildGraphQLCustomTypeFields<typeof dataModel>(dataModel);
 
     expect(graphQLCustomTypeFields).toEqual({
       field1: 'string',

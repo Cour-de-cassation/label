@@ -4,9 +4,6 @@ export { getAnnotationCategoryIconName };
 
 const DEFAULT_ANNOTATION_ICON_NAME = 'person';
 
-function getAnnotationCategoryIconName(
-  category: string,
-  settings: settingsType,
-) {
+function getAnnotationCategoryIconName(category: string, settings: settingsType) {
   return settings[category]?.iconName || DEFAULT_ANNOTATION_ICON_NAME;
 }

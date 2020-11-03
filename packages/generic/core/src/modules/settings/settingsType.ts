@@ -15,12 +15,7 @@ type settingsType = {
     | undefined;
 };
 
-type categoryIconNameType =
-  | 'person'
-  | 'building'
-  | 'house'
-  | 'work'
-  | 'contact';
+type categoryIconNameType = 'person' | 'building' | 'house' | 'work' | 'contact';
 
 // The settings are passed as a JSON string to parse
 const settingsDataModel = {

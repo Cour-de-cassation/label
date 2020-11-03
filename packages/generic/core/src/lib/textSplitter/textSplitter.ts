@@ -19,30 +19,19 @@ type annotationChunkType<annotationT extends annotationNeededFieldsType> = {
 
 type textChunkType = { type: 'text'; index: number; text: string };
 
-type annotationNeededFieldsType = Pick<
-  annotationType,
-  'text' | 'category' | 'start'
->;
+type annotationNeededFieldsType = Pick<annotationType, 'text' | 'category' | 'start'>;
 
-function splitTextAccordingToAnnotations<
-  annotationT extends annotationNeededFieldsType
->(
+function splitTextAccordingToAnnotations<annotationT extends annotationNeededFieldsType>(
   text: string,
   annotations: annotationT[],
 ): Array<annotationChunkType<annotationT> | textChunkType> {
-  const sortedAnnotations = [...annotations].sort(
-    (annotation1, annotation2) => annotation1.start - annotation2.start,
-  );
+  const sortedAnnotations = [...annotations].sort((annotation1, annotation2) => annotation1.start - annotation2.start);
 
-  const splittedText: Array<
-    annotationChunkType<annotationT> | textChunkType
-  > = [];
+  const splittedText: Array<annotationChunkType<annotationT> | textChunkType> = [];
 
   let currentIndex = 0;
   sortedAnnotations.forEach((annotation) => {
-    splittedText.push(
-      buildTextChunk(text.slice(currentIndex, annotation.start), currentIndex),
-    );
+    splittedText.push(buildTextChunk(text.slice(currentIndex, annotation.start), currentIndex));
     splittedText.push(buildAnnotationChunk(annotation));
     currentIndex = annotation.start + annotation.text.length;
   });

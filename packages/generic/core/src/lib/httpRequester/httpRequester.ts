@@ -19,9 +19,7 @@ const httpRequester = {
     headers,
     method,
     url,
-  }: httpRequestType<RequestDataType>): Promise<
-    httpResponseType<ResponseDataType>
-  > {
+  }: httpRequestType<RequestDataType>): Promise<httpResponseType<ResponseDataType>> {
     const response = await axios({
       data,
       headers,

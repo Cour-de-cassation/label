@@ -28,9 +28,7 @@ function isLinked<annotationT extends fetchedAnnotationType>(
   annotations: annotationT[],
 ): boolean {
   return annotations.some(
-    (otherAnnotation) =>
-      otherAnnotation.entityId === annotation.entityId &&
-      otherAnnotation.text !== annotation.text,
+    (otherAnnotation) => otherAnnotation.entityId === annotation.entityId && otherAnnotation.text !== annotation.text,
   );
 }
 
@@ -41,8 +39,7 @@ function getLinkableAnnotations<annotationT extends fetchedAnnotationType>(
   return uniqBy(
     annotations.filter(
       (otherAnnotation) =>
-        otherAnnotation.category === annotation.category &&
-        otherAnnotation.entityId !== annotation.entityId,
+        otherAnnotation.category === annotation.category && otherAnnotation.entityId !== annotation.entityId,
     ),
     (otherAnnotation) => otherAnnotation.entityId,
   );

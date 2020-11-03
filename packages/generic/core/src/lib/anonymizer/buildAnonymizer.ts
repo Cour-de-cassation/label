@@ -7,16 +7,10 @@ export type { anonymizerType };
 
 const ANONYMIZATION_DEFAULT_TEXT = 'XXX';
 
-type annotationNeededFieldsType = Pick<
-  annotationType,
-  'text' | 'category' | 'start' | 'entityId'
->;
+type annotationNeededFieldsType = Pick<annotationType, 'text' | 'category' | 'start' | 'entityId'>;
 
 type anonymizerType<annotationT extends annotationNeededFieldsType> = {
-  anonymizeDocument: (
-    document: documentType,
-    annotations: annotationT[],
-  ) => documentType;
+  anonymizeDocument: (document: documentType, annotations: annotationT[]) => documentType;
   anonymize: (annotation: annotationT) => string;
 };
 
@@ -30,14 +24,8 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
     anonymize,
   };
 
-  function anonymizeDocument(
-    document: documentType,
-    annotations: annotationT[],
-  ): documentType {
-    const splittedText = textSplitter.splitTextAccordingToAnnotations(
-      document.text,
-      annotations,
-    );
+  function anonymizeDocument(document: documentType, annotations: annotationT[]): documentType {
+    const splittedText = textSplitter.splitTextAccordingToAnnotations(document.text, annotations);
     const splittedAnonymizedText = splittedText.map((chunk) => {
       switch (chunk.type) {
         case 'text':
@@ -49,10 +37,7 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
 
     return {
       ...document,
-      text: splittedAnonymizedText.reduce(
-        (text, anonymizedText) => `${text}${anonymizedText}`,
-        '',
-      ),
+      text: splittedAnonymizedText.reduce((text, anonymizedText) => `${text}${anonymizedText}`, ''),
     };
   }
 
@@ -68,10 +53,8 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
   }
 
   function addNewMapping(annotation: annotationT) {
-    const anonymizationTexts =
-      settings[annotation.category]?.anonymizationTexts || [];
-    const anonymizedText =
-      anonymizationTexts.shift() || ANONYMIZATION_DEFAULT_TEXT;
+    const anonymizationTexts = settings[annotation.category]?.anonymizationTexts || [];
+    const anonymizedText = anonymizationTexts.shift() || ANONYMIZATION_DEFAULT_TEXT;
     anonymizationTexts.push(anonymizedText);
 
     addAnnotationToAnonymizedTextMapping(annotation, anonymizedText);
@@ -81,10 +64,7 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
     return mapper[annotation.entityId];
   }
 
-  function addAnnotationToAnonymizedTextMapping(
-    annotation: annotationT,
-    anonymizedText: string,
-  ) {
+  function addAnnotationToAnonymizedTextMapping(annotation: annotationT, anonymizedText: string) {
     mapper[annotation.entityId] = anonymizedText;
   }
 }

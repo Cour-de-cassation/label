@@ -1,8 +1,4 @@
-import {
-  annotationModule,
-  documentModule,
-  settingsModule,
-} from '../../modules';
+import { annotationModule, documentModule, settingsModule } from '../../modules';
 import { buildAnonymizer } from './buildAnonymizer';
 
 describe('buildAnonymizer', () => {
@@ -20,14 +16,10 @@ describe('buildAnonymizer', () => {
   describe('anonymizeDocument', () => {
     it('should anonymize a document', () => {
       const document = documentModule.generator.generate({
-        text:
-          'Benoit is software engineer. Nicolas is a software engineer. Romain is a designer.',
+        text: 'Benoit is software engineer. Nicolas is a software engineer. Romain is a designer.',
       });
 
-      const anonymizedDocument = anonymizer.anonymizeDocument(
-        document,
-        annotations,
-      );
+      const anonymizedDocument = anonymizer.anonymizeDocument(document, annotations);
 
       expect(anonymizedDocument.text).toEqual(
         'Spirou is software engineer. Fantasio is a software engineer. Spirou is a designer.',

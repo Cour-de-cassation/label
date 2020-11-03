@@ -15,11 +15,7 @@ describe('annotationLinker', () => {
       ].map(annotationGenerator.generate);
       const entityIdOfTextTarget = annotations[2].entityId;
 
-      const newAnnotations = annotationLinker.link(
-        annotations[0],
-        annotations[2],
-        annotations,
-      );
+      const newAnnotations = annotationLinker.link(annotations[0], annotations[2], annotations);
 
       expect(newAnnotations).toEqual([
         { ...annotations[0], entityId: entityIdOfTextTarget },
@@ -39,11 +35,7 @@ describe('annotationLinker', () => {
         { category: category, text: text3 },
       ].map(annotationGenerator.generate);
       const entityIdOfText3 = annotations[2].entityId;
-      const annotationsWithLinks = annotationLinker.link(
-        annotations[0],
-        annotations[1],
-        annotations,
-      );
+      const annotationsWithLinks = annotationLinker.link(annotations[0], annotations[1], annotations);
 
       const newAnnotations = annotationLinker.link(
         annotationsWithLinks[1],
@@ -68,11 +60,7 @@ describe('annotationLinker', () => {
         { category: category, text: text3 },
       ].map(annotationGenerator.generate);
       const entityIdOfText3 = annotations[2].entityId;
-      const annotationsWithLinks = annotationLinker.link(
-        annotations[1],
-        annotations[2],
-        annotations,
-      );
+      const annotationsWithLinks = annotationLinker.link(annotations[1], annotations[2], annotations);
 
       const newAnnotations = annotationLinker.link(
         annotationsWithLinks[0],
@@ -91,19 +79,10 @@ describe('annotationLinker', () => {
   describe('isLinked', () => {
     it('should return true if the annotation is linked to another one', () => {
       const category = 'CATEGORY';
-      const annotations = [{ category: category }, { category: category }].map(
-        annotationGenerator.generate,
-      );
-      const annotationsWithLinks = annotationLinker.link(
-        annotations[0],
-        annotations[1],
-        annotations,
-      );
+      const annotations = [{ category: category }, { category: category }].map(annotationGenerator.generate);
+      const annotationsWithLinks = annotationLinker.link(annotations[0], annotations[1], annotations);
 
-      const annotationIsLinked = annotationLinker.isLinked(
-        annotationsWithLinks[0],
-        annotationsWithLinks,
-      );
+      const annotationIsLinked = annotationLinker.isLinked(annotationsWithLinks[0], annotationsWithLinks);
 
       expect(annotationIsLinked).toEqual(true);
     });
@@ -119,14 +98,9 @@ describe('annotationLinker', () => {
         { category: 'ANOTHER_CATEGORY' },
       ].map(annotationGenerator.generate);
 
-      const linkableAnnotations = annotationLinker.getLinkableAnnotations(
-        annotations[0],
-        annotations,
-      );
+      const linkableAnnotations = annotationLinker.getLinkableAnnotations(annotations[0], annotations);
 
-      expect(linkableAnnotations.sort()).toEqual(
-        [annotations[1], annotations[2]].sort(),
-      );
+      expect(linkableAnnotations.sort()).toEqual([annotations[1], annotations[2]].sort());
     });
   });
 
@@ -141,16 +115,9 @@ describe('annotationLinker', () => {
         { category: category, text: textTarget },
         {},
       ].map(annotationGenerator.generate);
-      const annotationsWithLinks = annotationLinker.link(
-        annotations[0],
-        annotations[2],
-        annotations,
-      );
+      const annotationsWithLinks = annotationLinker.link(annotations[0], annotations[2], annotations);
 
-      const newAnnotations = annotationLinker.unlink(
-        annotationsWithLinks[0],
-        annotationsWithLinks,
-      );
+      const newAnnotations = annotationLinker.unlink(annotationsWithLinks[0], annotationsWithLinks);
 
       expect(newAnnotations).toEqual(annotations);
     });

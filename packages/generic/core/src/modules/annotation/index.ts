@@ -1,15 +1,6 @@
 import { annotationGenerator } from './generator';
-import {
-  annotationDataModel,
-  annotationType,
-  fetchedAnnotationType,
-} from './annotationType';
-import {
-  annotationLinker,
-  buildAnnotation,
-  entityIdHandler,
-  fetchedAnnotationHandler,
-} from './lib';
+import { annotationDataModel, annotationType, fetchedAnnotationType } from './annotationType';
+import { annotationLinker, buildAnnotation, entityIdHandler, fetchedAnnotationHandler } from './lib';
 
 export { annotationModule };
 

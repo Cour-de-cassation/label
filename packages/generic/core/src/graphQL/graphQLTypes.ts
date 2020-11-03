@@ -1,8 +1,4 @@
-import {
-  idType,
-  dataModelFieldType,
-  typeOfDataModelFieldType,
-} from '../modules';
+import { idType, dataModelFieldType, typeOfDataModelFieldType } from '../modules';
 import { graphQLCustomTypes } from './graphQLCustomTypes';
 
 export type {
@@ -27,10 +23,7 @@ type graphQLEntryType = {
   args?: { [argName: string]: graphQLTypeType };
 };
 
-type graphQLTypeType =
-  | graphQLTypePrimitiveType
-  | { kind: 'list'; type: graphQLTypeType }
-  | graphQLTypeCustomType;
+type graphQLTypeType = graphQLTypePrimitiveType | { kind: 'list'; type: graphQLTypeType } | graphQLTypeCustomType;
 
 type graphQLTypePrimitiveType = { kind: 'primitive'; type: dataModelFieldType };
 
@@ -50,9 +43,7 @@ type typeOfGraphQLType<graphQLT> = graphQLT extends graphQLTypePrimitiveType
   ? typeOfGraphQLCustomType<graphQLT['type']>
   : never;
 
-type typeOfGraphQLCustomType<
-  graphQLCustomT extends keyof typeof graphQLCustomTypes
-> = {
+type typeOfGraphQLCustomType<graphQLCustomT extends keyof typeof graphQLCustomTypes> = {
   [key in keyof typeof graphQLCustomTypes[graphQLCustomT]['fields']]: typeOfDataModelFieldType<
     typeof graphQLCustomTypes[graphQLCustomT]['fields'][key]
   >;

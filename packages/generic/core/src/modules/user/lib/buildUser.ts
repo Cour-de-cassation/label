@@ -3,5 +3,4 @@ import { userType } from '../userType';
 
 export { buildUser };
 
-const buildUser: (userFields: omitIdType<userType>) => userType =
-  idModule.lib.buildObjectWithId;
+const buildUser: (userFields: omitIdType<userType>) => userType = idModule.lib.buildObjectWithId;

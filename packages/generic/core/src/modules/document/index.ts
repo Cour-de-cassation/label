@@ -1,9 +1,5 @@
 import { documentGenerator } from './generator';
-import {
-  documentDataModel,
-  documentType,
-  fetchedDocumentType,
-} from './documentType';
+import { documentDataModel, documentType, fetchedDocumentType } from './documentType';
 import { buildDocument } from './lib';
 
 export { documentModule };

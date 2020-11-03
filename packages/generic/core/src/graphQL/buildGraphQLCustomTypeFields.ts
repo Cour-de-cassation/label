@@ -10,10 +10,7 @@ function buildGraphQLCustomTypeFields<
 >(
   dataModel: dataModelT,
 ): {
-  [k in keyof Pick<
-    dataModelT,
-    filterGraphQLKeysType<dataModelT>
-  >]: dataModelT[k]['type'];
+  [k in keyof Pick<dataModelT, filterGraphQLKeysType<dataModelT>>]: dataModelT[k]['type'];
 } {
   const graphQLCustomTypeFields = {} as {
     [field in keyof dataModelT]: dataModelFieldType;

@@ -5,11 +5,7 @@ import {
   getAnnotationCategoryIconName,
   getAnnotationCategoryText,
 } from './lib';
-import {
-  settingsDataModel,
-  settingsType,
-  categoryIconNameType,
-} from './settingsType';
+import { settingsDataModel, settingsType, categoryIconNameType } from './settingsType';
 
 export { settingsModule };
 

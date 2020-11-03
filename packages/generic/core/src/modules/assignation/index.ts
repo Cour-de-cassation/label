@@ -1,6 +1,6 @@
-import { assignationType, assignationDataModel } from "./assignationType";
-import { assignationGenerator } from "./generator";
-import { buildAssignation } from "./lib";
+import { assignationType, assignationDataModel } from './assignationType';
+import { assignationGenerator } from './generator';
+import { buildAssignation } from './lib';
 
 export { assignationModule };
 

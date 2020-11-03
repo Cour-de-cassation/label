@@ -1,4 +1,4 @@
-import { buildMongoId, areMongoIdEqual, mongoIdType } from "./mongo";
+import { buildMongoId, areMongoIdEqual, mongoIdType } from './mongo';
 
 export { buildMongoId, areMongoIdEqual };
 

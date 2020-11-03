@@ -1,6 +1,6 @@
-import { problemReportGenerator } from "./generator";
-import { problemReportDataModel, problemReportType } from "./problemReportType";
-import { buildProblemReport } from "./lib";
+import { problemReportGenerator } from './generator';
+import { problemReportDataModel, problemReportType } from './problemReportType';
+import { buildProblemReport } from './lib';
 
 export { problemReportModule };
 

@@ -1,4 +1,4 @@
-import { buildAnonymizer, anonymizerType } from "./buildAnonymizer";
+import { buildAnonymizer, anonymizerType } from './buildAnonymizer';
 
 export { buildAnonymizer };
 

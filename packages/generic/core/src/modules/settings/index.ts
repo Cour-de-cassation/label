@@ -4,12 +4,12 @@ import {
   getAnnotationCategoryColor,
   getAnnotationCategoryIconName,
   getAnnotationCategoryText,
-} from "./lib";
+} from './lib';
 import {
   settingsDataModel,
   settingsType,
   categoryIconNameType,
-} from "./settingsType";
+} from './settingsType';
 
 export { settingsModule };
 

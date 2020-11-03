@@ -1,19 +1,32 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "module": "commonjs",
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "./dist",
-    "removeComments": true,
-    "rootDir": "src",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "es5"
   },
-  "exclude": ["node_modules", "dist"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
   "extends": "../../../tsconfig.json",
-  "include": ["src/**/*"]
+  "include": [
+    "src"
+  ]
 }

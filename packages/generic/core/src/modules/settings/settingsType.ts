@@ -1,4 +1,4 @@
-import { dataModelType } from "../dataModelType";
+import { dataModelType } from '../dataModelType';
 
 export { settingsDataModel };
 
@@ -16,15 +16,15 @@ type settingsType = {
 };
 
 type categoryIconNameType =
-  | "person"
-  | "building"
-  | "house"
-  | "work"
-  | "contact";
+  | 'person'
+  | 'building'
+  | 'house'
+  | 'work'
+  | 'contact';
 
 // The settings are passed as a JSON string to parse
 const settingsDataModel = {
-  json: { type: "string", graphQL: true },
+  json: { type: 'string', graphQL: true },
 } as const;
 
 // We need this line for type checking

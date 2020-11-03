@@ -2,7 +2,7 @@ import {
   annotationChunkType,
   textChunkType,
   textSplitter,
-} from "./textSplitter";
+} from './textSplitter';
 
 export { textSplitter };
 

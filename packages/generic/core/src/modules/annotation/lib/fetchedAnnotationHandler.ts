@@ -45,17 +45,30 @@ function createAll(
   );
 
   function findAllIndicesOfSearch(text: string, searchString: string) {
-    let currentOccurrence = -1;
-    const occurrences: number[] = [];
+    let currentIndex = -1;
+    const indices: number[] = [];
 
     do {
-      currentOccurrence = text.indexOf(searchString, currentOccurrence + 1);
-      if (currentOccurrence !== -1) {
-        occurrences.push(currentOccurrence);
+      currentIndex = text.indexOf(searchString, currentIndex + 1);
+      if (
+        currentIndex !== -1 &&
+        !isSearchStringInsideLargerWord(currentIndex)
+      ) {
+        indices.push(currentIndex);
       }
-    } while (currentOccurrence !== -1);
+    } while (currentIndex !== -1);
 
-    return occurrences;
+    return indices;
+
+    function isSearchStringInsideLargerWord(index: number) {
+      const nonBoundaryCharacterRegex = /^[a-zA-Z0-9-_ÈÉÊÎÏÔÖÙÚÛÜèéêîïôöùû]/;
+      const isWordBeginningOnBoundary =
+        index === 0 || !text[index - 1].match(nonBoundaryCharacterRegex);
+      const isWordEndingOnBoundary =
+        index + searchString.length === text.length - 1 ||
+        !text[index + searchString.length].match(nonBoundaryCharacterRegex);
+      return !isWordBeginningOnBoundary || !isWordEndingOnBoundary;
+    }
   }
 }
 

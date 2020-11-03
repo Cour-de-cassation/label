@@ -1,5 +1,5 @@
-import { filterType, writeableType } from "../types/utilityTypes";
-import { idType } from "./id";
+import { filterType, writeableType } from '../types/utilityTypes';
+import { idType } from './id';
 
 export type {
   dataModelFieldType,
@@ -17,11 +17,11 @@ type dataModelType = {
 };
 
 type dataModelFieldType =
-  | "boolean"
-  | "date"
-  | "id"
-  | "string"
-  | "number"
+  | 'boolean'
+  | 'date'
+  | 'id'
+  | 'string'
+  | 'number'
   | readonly string[];
 
 type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
@@ -31,22 +31,22 @@ type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
 type typeOfDataModel<dataModelT extends dataModelType> = writeableType<
   {
     [field in keyof dataModelT]: typeOfDataModelFieldType<
-      dataModelT[field]["type"]
+      dataModelT[field]['type']
     >;
   }
 >;
 
 type typeOfDataModelFieldType<
   dataModelFieldT
-> = dataModelFieldT extends "boolean"
+> = dataModelFieldT extends 'boolean'
   ? boolean
-  : dataModelFieldT extends "date"
+  : dataModelFieldT extends 'date'
   ? Date
-  : dataModelFieldT extends "id"
+  : dataModelFieldT extends 'id'
   ? idType
-  : dataModelFieldT extends "string"
+  : dataModelFieldT extends 'string'
   ? string
-  : dataModelFieldT extends "number"
+  : dataModelFieldT extends 'number'
   ? number
   : dataModelFieldT extends readonly any[]
   ? dataModelFieldT[number]

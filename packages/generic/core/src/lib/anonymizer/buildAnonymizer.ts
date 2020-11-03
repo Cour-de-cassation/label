@@ -1,27 +1,27 @@
-import { annotationType, documentType, settingsType } from "../../modules";
-import { textSplitter } from "../textSplitter";
+import { annotationType, documentType, settingsType } from '../../modules';
+import { textSplitter } from '../textSplitter';
 
 export { buildAnonymizer };
 
 export type { anonymizerType };
 
-const ANONYMIZATION_DEFAULT_TEXT = "XXX";
+const ANONYMIZATION_DEFAULT_TEXT = 'XXX';
 
 type annotationNeededFieldsType = Pick<
   annotationType,
-  "text" | "category" | "start" | "entityId"
+  'text' | 'category' | 'start' | 'entityId'
 >;
 
 type anonymizerType<annotationT extends annotationNeededFieldsType> = {
   anonymizeDocument: (
     document: documentType,
-    annotations: annotationT[]
+    annotations: annotationT[],
   ) => documentType;
   anonymize: (annotation: annotationT) => string;
 };
 
 function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
-  settings: settingsType
+  settings: settingsType,
 ): anonymizerType<annotationT> {
   const mapper: { [key: string]: string | undefined } = {};
 
@@ -32,17 +32,17 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
 
   function anonymizeDocument(
     document: documentType,
-    annotations: annotationT[]
+    annotations: annotationT[],
   ): documentType {
     const splittedText = textSplitter.splitTextAccordingToAnnotations(
       document.text,
-      annotations
+      annotations,
     );
     const splittedAnonymizedText = splittedText.map((chunk) => {
       switch (chunk.type) {
-        case "text":
+        case 'text':
           return chunk.text;
-        case "annotation":
+        case 'annotation':
           return anonymize(chunk.annotation);
       }
     });
@@ -51,7 +51,7 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
       ...document,
       text: splittedAnonymizedText.reduce(
         (text, anonymizedText) => `${text}${anonymizedText}`,
-        ""
+        '',
       ),
     };
   }
@@ -83,7 +83,7 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
 
   function addAnnotationToAnonymizedTextMapping(
     annotation: annotationT,
-    anonymizedText: string
+    anonymizedText: string,
   ) {
     mapper[annotation.entityId] = anonymizedText;
   }

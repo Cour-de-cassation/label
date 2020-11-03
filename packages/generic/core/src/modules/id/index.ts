@@ -1,5 +1,5 @@
-import { idType, omitIdType } from "./idType";
-import { buildId, buildObjectWithId, convertToString, equalId } from "./lib";
+import { idType, omitIdType } from './idType';
+import { buildId, buildObjectWithId, convertToString, equalId } from './lib';
 
 export { idModule };
 

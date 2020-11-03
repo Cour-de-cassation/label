@@ -3,8 +3,8 @@ import {
   documentModule,
   settingsModule,
   dataModelFieldType,
-} from "../modules";
-import { buildGraphQLCustomTypeFields } from "./buildGraphQLCustomTypeFields";
+} from '../modules';
+import { buildGraphQLCustomTypeFields } from './buildGraphQLCustomTypeFields';
 
 export { graphQLCustomTypes };
 
@@ -17,27 +17,27 @@ type graphQLCustomTypeType = {
 
 const graphQLCustomTypes = {
   annotation: {
-    name: "annotation",
+    name: 'annotation',
     fields: buildGraphQLCustomTypeFields<typeof annotationModule.dataModel>(
-      annotationModule.dataModel
+      annotationModule.dataModel,
     ),
   },
   document: {
-    name: "document",
+    name: 'document',
     fields: buildGraphQLCustomTypeFields<typeof documentModule.dataModel>(
-      documentModule.dataModel
+      documentModule.dataModel,
     ),
   },
   settings: {
-    name: "settings",
+    name: 'settings',
     fields: buildGraphQLCustomTypeFields<typeof settingsModule.dataModel>(
-      settingsModule.dataModel
+      settingsModule.dataModel,
     ),
   },
   success: {
-    name: "success",
+    name: 'success',
     fields: {
-      success: "boolean",
+      success: 'boolean',
     },
   },
 } as const;

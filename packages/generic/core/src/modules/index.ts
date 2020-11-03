@@ -2,24 +2,24 @@ import {
   annotationModule,
   annotationType,
   fetchedAnnotationType,
-} from "./annotation";
+} from './annotation';
 import {
   annotationReportModule,
   annotationReportType,
-} from "./annotationReport";
-import { assignationModule, assignationType } from "./assignation";
-import { documentModule, documentType, fetchedDocumentType } from "./document";
-import { idModule, idType } from "./id";
-import { problemReportModule, problemReportType } from "./problemReport";
-import { settingsModule, settingsType, categoryIconNameType } from "./settings";
-import { userModule, userType } from "./user";
+} from './annotationReport';
+import { assignationModule, assignationType } from './assignation';
+import { documentModule, documentType, fetchedDocumentType } from './document';
+import { idModule, idType } from './id';
+import { problemReportModule, problemReportType } from './problemReport';
+import { settingsModule, settingsType, categoryIconNameType } from './settings';
+import { userModule, userType } from './user';
 import {
   dataModelFieldType,
   dataModelType,
   graphQLTypeOfDataModel,
   typeOfDataModel,
   typeOfDataModelFieldType,
-} from "./dataModelType";
+} from './dataModelType';
 
 export {
   annotationModule,

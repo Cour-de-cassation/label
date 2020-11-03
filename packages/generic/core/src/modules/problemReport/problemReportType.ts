@@ -1,14 +1,14 @@
-import { dataModelType, typeOfDataModel } from "../dataModelType";
+import { dataModelType, typeOfDataModel } from '../dataModelType';
 
 export { problemReportDataModel };
 
 export type { problemReportType };
 
 const problemReportDataModel = {
-  assignationId: { type: "id", graphQL: true },
-  _id: { type: "id", graphQL: true },
-  text: { type: "string", graphQL: true },
-  type: { type: ["bug", "annotationProblem", "suggestion"], graphQL: true },
+  assignationId: { type: 'id', graphQL: true },
+  _id: { type: 'id', graphQL: true },
+  text: { type: 'string', graphQL: true },
+  type: { type: ['bug', 'annotationProblem', 'suggestion'], graphQL: true },
 } as const;
 
 // We need this line for type checking

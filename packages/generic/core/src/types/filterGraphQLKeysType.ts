@@ -1,4 +1,4 @@
-import { filterKeysType } from "./utilityTypes";
+import { filterKeysType } from './utilityTypes';
 
 export type { filterGraphQLKeysType };
 

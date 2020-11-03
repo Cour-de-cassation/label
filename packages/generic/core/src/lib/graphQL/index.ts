@@ -1,3 +1,3 @@
-import { graphQLReceivedDataType } from "./graphQLReceivedDataType";
+import { graphQLReceivedDataType } from './graphQLReceivedDataType';
 
 export type { graphQLReceivedDataType };

@@ -16,7 +16,7 @@ function link<annotationT extends fetchedAnnotationType>(
   annotationTarget: annotationT,
   annotations: annotationT[],
 ): annotationT[] {
-  return annotations.map(annotation =>
+  return annotations.map((annotation) =>
     annotation.entityId === annotationSource.entityId
       ? { ...annotation, entityId: annotationTarget.entityId }
       : annotation,
@@ -28,7 +28,7 @@ function isLinked<annotationT extends fetchedAnnotationType>(
   annotations: annotationT[],
 ): boolean {
   return annotations.some(
-    otherAnnotation =>
+    (otherAnnotation) =>
       otherAnnotation.entityId === annotation.entityId &&
       otherAnnotation.text !== annotation.text,
   );
@@ -40,11 +40,11 @@ function getLinkableAnnotations<annotationT extends fetchedAnnotationType>(
 ): annotationT[] {
   return uniqBy(
     annotations.filter(
-      otherAnnotation =>
+      (otherAnnotation) =>
         otherAnnotation.category === annotation.category &&
         otherAnnotation.entityId !== annotation.entityId,
     ),
-    otherAnnotation => otherAnnotation.entityId,
+    (otherAnnotation) => otherAnnotation.entityId,
   );
 }
 
@@ -54,7 +54,7 @@ function unlink<annotationT extends fetchedAnnotationType>(
 ): annotationT[] {
   const { category, text } = annotationToUnlink;
 
-  return annotations.map(annotation =>
+  return annotations.map((annotation) =>
     annotation.category === category && annotation.text == text
       ? { ...annotation, entityId: entityIdHandler.compute(category, text) }
       : annotation,

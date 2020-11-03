@@ -1,4 +1,4 @@
-import { categoryIconNameType, settingsType } from "../settingsType";
+import { categoryIconNameType, settingsType } from '../settingsType';
 
 export { buildSettings };
 
@@ -22,12 +22,12 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
     (category) =>
       (settings[category] = {
         anonymizationTexts: buildAnonymizationTexts(
-          partialSettings[category]?.anonymizationTexts
+          partialSettings[category]?.anonymizationTexts,
         ),
         color: buildColor(partialSettings[category]?.color),
         iconName: buildIconName(partialSettings[category]?.iconName),
         text: buildText(partialSettings[category]?.text),
-      })
+      }),
   );
 
   return settings;
@@ -38,13 +38,13 @@ function buildAnonymizationTexts(anonymizationTexts: string[] | undefined) {
 }
 
 function buildColor(color: string | undefined) {
-  return color ? color : "000000";
+  return color ? color : '000000';
 }
 
 function buildIconName(iconName: categoryIconNameType | undefined) {
-  return iconName ? iconName : "person";
+  return iconName ? iconName : 'person';
 }
 
 function buildText(text: string | undefined) {
-  return text ? text : "category";
+  return text ? text : 'category';
 }

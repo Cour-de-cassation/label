@@ -1,6 +1,6 @@
-import { annotationReportGenerator } from "./generator";
-import { annotationReportType } from "./annotationReportType";
-import { buildAnnotationReport } from "./lib";
+import { annotationReportGenerator } from './generator';
+import { annotationReportType } from './annotationReportType';
+import { buildAnnotationReport } from './lib';
 
 export { annotationReportModule };
 

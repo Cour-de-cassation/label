@@ -1,11 +1,11 @@
-import { buildAnonymizer, anonymizerType } from "./anonymizer";
-import { graphQLReceivedDataType } from "./graphQL";
-import { httpRequester } from "./httpRequester";
+import { buildAnonymizer, anonymizerType } from './anonymizer';
+import { graphQLReceivedDataType } from './graphQL';
+import { httpRequester } from './httpRequester';
 import {
   annotationChunkType,
   textChunkType,
   textSplitter,
-} from "./textSplitter";
+} from './textSplitter';
 
 export { buildAnonymizer, httpRequester, textSplitter };
 

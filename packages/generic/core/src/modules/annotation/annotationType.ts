@@ -2,20 +2,20 @@ import {
   dataModelType,
   graphQLTypeOfDataModel,
   typeOfDataModel,
-} from "../dataModelType";
+} from '../dataModelType';
 
 export { annotationDataModel };
 
 export type { annotationType, fetchedAnnotationType };
 
 const annotationDataModel = {
-  category: { type: "string", graphQL: true },
-  documentId: { type: "id", graphQL: false },
-  entityId: { type: "string", graphQL: true },
-  source: { type: "string", graphQL: true },
-  _id: { type: "id", graphQL: true },
-  start: { type: "number", graphQL: true },
-  text: { type: "string", graphQL: true },
+  category: { type: 'string', graphQL: true },
+  documentId: { type: 'id', graphQL: false },
+  entityId: { type: 'string', graphQL: true },
+  source: { type: 'string', graphQL: true },
+  _id: { type: 'id', graphQL: true },
+  start: { type: 'number', graphQL: true },
+  text: { type: 'string', graphQL: true },
 } as const;
 
 // We need this line for type checking

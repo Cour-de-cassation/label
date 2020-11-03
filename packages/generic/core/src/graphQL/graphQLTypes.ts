@@ -2,8 +2,8 @@ import {
   idType,
   dataModelFieldType,
   typeOfDataModelFieldType,
-} from "../modules";
-import { graphQLCustomTypes } from "./graphQLCustomTypes";
+} from '../modules';
+import { graphQLCustomTypes } from './graphQLCustomTypes';
 
 export type {
   graphQLMutationType,
@@ -29,32 +29,32 @@ type graphQLEntryType = {
 
 type graphQLTypeType =
   | graphQLTypePrimitiveType
-  | { kind: "list"; type: graphQLTypeType }
+  | { kind: 'list'; type: graphQLTypeType }
   | graphQLTypeCustomType;
 
-type graphQLTypePrimitiveType = { kind: "primitive"; type: dataModelFieldType };
+type graphQLTypePrimitiveType = { kind: 'primitive'; type: dataModelFieldType };
 
 type graphQLTypeCustomType = {
-  kind: "custom";
+  kind: 'custom';
   type: keyof typeof graphQLCustomTypes;
 };
 
 type typeOfGraphQLType<graphQLT> = graphQLT extends graphQLTypePrimitiveType
-  ? typeOfDataModelFieldType<graphQLT["type"]>
+  ? typeOfDataModelFieldType<graphQLT['type']>
   : graphQLT extends {
-      kind: "list";
+      kind: 'list';
       type: graphQLTypeCustomType;
     }
-  ? Array<typeOfGraphQLCustomType<graphQLT["type"]["type"]>>
+  ? Array<typeOfGraphQLCustomType<graphQLT['type']['type']>>
   : graphQLT extends graphQLTypeCustomType
-  ? typeOfGraphQLCustomType<graphQLT["type"]>
+  ? typeOfGraphQLCustomType<graphQLT['type']>
   : never;
 
 type typeOfGraphQLCustomType<
   graphQLCustomT extends keyof typeof graphQLCustomTypes
 > = {
-  [key in keyof typeof graphQLCustomTypes[graphQLCustomT]["fields"]]: typeOfDataModelFieldType<
-    typeof graphQLCustomTypes[graphQLCustomT]["fields"][key]
+  [key in keyof typeof graphQLCustomTypes[graphQLCustomT]['fields']]: typeOfDataModelFieldType<
+    typeof graphQLCustomTypes[graphQLCustomT]['fields'][key]
   >;
 };
 

@@ -1,10 +1,10 @@
-import { buildGraphQLTypeName } from "./buildGraphQLTypeName";
+import { buildGraphQLTypeName } from './buildGraphQLTypeName';
 import {
   graphQLCustomTypes,
   graphQLCustomTypeType,
-} from "./graphQLCustomTypes";
-import { graphQLMutation } from "./graphQLMutation";
-import { graphQLQuery } from "./graphQLQuery";
+} from './graphQLCustomTypes';
+import { graphQLMutation } from './graphQLMutation';
+import { graphQLQuery } from './graphQLQuery';
 import {
   graphQLMutationType,
   graphQLQueryType,
@@ -12,7 +12,7 @@ import {
   graphQLTypeType,
   typeOfGraphQLType,
   networkType,
-} from "./graphQLTypes";
+} from './graphQLTypes';
 
 export {
   buildGraphQLTypeName,

@@ -1,30 +1,30 @@
-import { idModule } from "../../id";
+import { idModule } from '../../id';
 import {
   fetchedAnnotationHandler,
   LABEL_ANNOTATION_SOURCE,
-} from "./fetchedAnnotationHandler";
-import { entityIdHandler } from "./entityIdHandler";
+} from './fetchedAnnotationHandler';
+import { entityIdHandler } from './entityIdHandler';
 
-describe("fetchedAnnotationHandler", () => {
-  describe("createAll", () => {
-    it("should create all the valid annotations for the given text and document", () => {
-      const category = "CATEGORY";
+describe('fetchedAnnotationHandler', () => {
+  describe('createAll', () => {
+    it('should create all the valid annotations for the given text and document', () => {
+      const category = 'CATEGORY';
       const documentId = idModule.lib.buildId();
       const documentText =
-        "Benoit is a software engineer. Nicolas is a software engineer.";
-      const annotationText = "engineer";
+        'engineering: Benoit is a software engineer. Nicolas is a software engineer. They are engineers.';
+      const annotationText = 'engineer';
 
       const annotations = fetchedAnnotationHandler.createAll(
         category,
         documentId,
         documentText,
-        annotationText
+        annotationText,
       );
 
       expect(annotations).toEqual([
         {
           category,
-          start: 21,
+          start: 34,
           documentId,
           entityId: entityIdHandler.compute(category, annotationText),
           _id: annotations[0]._id,
@@ -33,7 +33,7 @@ describe("fetchedAnnotationHandler", () => {
         },
         {
           category,
-          start: 53,
+          start: 66,
           documentId,
           entityId: entityIdHandler.compute(category, annotationText),
           _id: annotations[1]._id,

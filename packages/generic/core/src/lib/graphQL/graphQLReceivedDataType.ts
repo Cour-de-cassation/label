@@ -1,4 +1,4 @@
-import { idType } from "../../modules";
+import { idType } from '../../modules';
 
 export type { graphQLReceivedDataType };
 

@@ -1,4 +1,4 @@
-import { idType } from "../id";
+import { idType } from '../id';
 
 export type { annotationReportType };
 

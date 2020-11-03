@@ -28,7 +28,7 @@ function CategoryPanel(props: {
       headerStyle={styles.accordionHeader}
       header={
         <LayoutGrid container>
-          <LayoutGrid container alignItems="center" xs={11}>
+          <LayoutGrid container item alignItems="center" xs={11}>
             <LayoutGrid item>
               <CategoryIcon
                 annotatorStateHandler={props.annotatorStateHandler}

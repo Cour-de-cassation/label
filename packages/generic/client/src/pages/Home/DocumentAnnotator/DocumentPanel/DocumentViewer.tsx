@@ -39,6 +39,7 @@ function DocumentViewer(props: {
                         case 'text':
                           return (
                             <DocumentText
+                              key={chunk.index}
                               annotatorStateHandler={props.annotatorStateHandler}
                               index={chunk.index}
                               text={chunk.text}
@@ -47,6 +48,7 @@ function DocumentViewer(props: {
                         case 'annotation':
                           return (
                             <DocumentAnnotationText
+                              key={chunk.index}
                               annotatorStateHandler={props.annotatorStateHandler}
                               annotation={chunk.annotation}
                               anonymizer={props.anonymizer}

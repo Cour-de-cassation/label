@@ -24,6 +24,8 @@ function DocumentAnnotationText(props: {
         anchorAnnotation={anchorElementUnderMouse}
         annotatorStateHandler={props.annotatorStateHandler}
         annotation={props.annotation}
+        anonymizer={props.anonymizer}
+        isAnonymizedView={props.isAnonymizedView}
         onClose={closeTooltipMenu}
       />
     </span>

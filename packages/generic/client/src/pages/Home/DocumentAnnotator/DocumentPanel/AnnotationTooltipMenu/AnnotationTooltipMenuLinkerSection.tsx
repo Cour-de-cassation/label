@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, CSSProperties } from 'react';
 import { annotationModule, fetchedAnnotationType } from '@label/core';
 import { Button, Dropdown, LayoutGrid } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
@@ -10,6 +10,7 @@ function AnnotationTooltipMenuLinkerSection(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   disabled: boolean;
+  linkerCommandStyle: CSSProperties;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
   const linkableAnnotations = annotationModule.lib.annotationLinker.getLinkableAnnotations(
@@ -21,12 +22,12 @@ function AnnotationTooltipMenuLinkerSection(props: {
   return (
     <span>
       {isLinked && (
-        <LayoutGrid>
+        <LayoutGrid style={props.linkerCommandStyle}>
           <Button onClick={unlinkAnnotation}>Dissocier</Button>
         </LayoutGrid>
       )}
       {linkableAnnotations.length !== 0 && (
-        <LayoutGrid>
+        <LayoutGrid style={props.linkerCommandStyle}>
           <Dropdown
             disabled={props.disabled}
             items={linkableAnnotations.map((annotation) => ({

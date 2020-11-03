@@ -1,4 +1,5 @@
 import { idModule } from '../../id';
+import { annotationGenerator } from '../generator';
 import {
   fetchedAnnotationHandler,
   LABEL_ANNOTATION_SOURCE,
@@ -43,4 +44,27 @@ describe('fetchedAnnotationHandler', () => {
       ]);
     });
   });
+
+  describe('getAnnotationIndex', () => {
+    it('should return the index and the total of the annotation of a same entity', () => {
+      const annotations = [
+        { category: 'CATEGORY', start: 4, text: 'TEXT' },
+        { category: 'CATEGORY', start: 17, text: 'TEXT' },
+        { category: 'ANOTHER_CATEGORY', start: 8, text: 'ANOTHER_TEXT' },
+        { category: 'CATEGORY', start: 1, text: 'TEXT' },
+        { category: 'ANOTHER_CATEGORY', start: 23, text: 'ANOTHER_TEXT' },
+      ].map(generateFetchedAnnotation);
+
+      const annotationIndex = fetchedAnnotationHandler.getAnnotationIndex(
+        annotations[0],
+        annotations,
+      );
+
+      expect(annotationIndex).toEqual({ index: 2, total: 3 });
+    });
+  });
 });
+
+function generateFetchedAnnotation(fields: { start: number }) {
+  return annotationGenerator.generate(fields);
+}

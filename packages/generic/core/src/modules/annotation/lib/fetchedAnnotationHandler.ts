@@ -6,9 +6,10 @@ export { fetchedAnnotationHandler, LABEL_ANNOTATION_SOURCE };
 
 const fetchedAnnotationHandler = {
   create,
+  createAll,
   update,
   updateMany,
-  createAll,
+  getAnnotationIndex,
 };
 
 const LABEL_ANNOTATION_SOURCE = 'label';
@@ -91,4 +92,22 @@ function update(
     ...updateAnnotation(annotation),
     source: LABEL_ANNOTATION_SOURCE,
   };
+}
+
+function getAnnotationIndex(
+  annotation: fetchedAnnotationType,
+  annotations: fetchedAnnotationType[],
+) {
+  const sameEntityAnnotations = annotations.filter(
+    (anotherAnnotation) => anotherAnnotation.entityId === annotation.entityId,
+  );
+  const sortedSameEntityAnnotations = sameEntityAnnotations.sort(
+    (sameEntityAnnotation1, sameEntityAnnotation2) =>
+      sameEntityAnnotation1.start - sameEntityAnnotation2.start,
+  );
+  const annotationIndex = sortedSameEntityAnnotations.findIndex(
+    (sameEntityAnnotation) => sameEntityAnnotation.start === annotation.start,
+  );
+
+  return { index: annotationIndex + 1, total: sameEntityAnnotations.length };
 }

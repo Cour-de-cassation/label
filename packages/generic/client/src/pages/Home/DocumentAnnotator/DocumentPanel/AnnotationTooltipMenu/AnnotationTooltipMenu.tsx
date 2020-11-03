@@ -1,9 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
-import { annotationModule, fetchedAnnotationType, idModule, settingsModule } from '@label/core';
+import { anonymizerType, annotationModule, fetchedAnnotationType, idModule, settingsModule } from '@label/core';
 import { Button, Checkbox, Dropdown, CategoryIcon, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { fillTemplate, wordings } from '../../../../../wordings';
+import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuLinkerSection } from './AnnotationTooltipMenuLinkerSection';
 
 export { AnnotationTooltipMenu };
@@ -12,20 +12,23 @@ function AnnotationTooltipMenu(props: {
   anchorAnnotation: Element | undefined;
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
+  anonymizer: anonymizerType<fetchedAnnotationType>;
+  isAnonymizedView: boolean;
   onClose: () => void;
 }): ReactElement {
   const style = buildStyle();
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const annotatorState = props.annotatorStateHandler.get();
   const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
-  const nbOfEntities = annotatorState.annotations.filter(
-    (annotation) => annotation.entityId === props.annotation.entityId,
-  ).length;
+  const annotationIndex = annotationModule.lib.fetchedAnnotationHandler.getAnnotationIndex(
+    props.annotation,
+    annotatorState.annotations,
+  );
 
   return (
     <TooltipMenu anchorElement={props.anchorAnnotation} onClose={props.onClose}>
       <LayoutGrid>
-        <LayoutGrid container alignItems="center">
+        <LayoutGrid container alignItems="center" style={style.tooltipItem}>
           <LayoutGrid>
             <CategoryIcon
               annotatorStateHandler={props.annotatorStateHandler}
@@ -41,18 +44,26 @@ function AnnotationTooltipMenu(props: {
               )}
             </Text>
           </LayoutGrid>
+          <LayoutGrid>
+            <Text style={style.categoryText}>{`${annotationIndex.index}/${annotationIndex.total}`}</Text>
+          </LayoutGrid>
         </LayoutGrid>
-        <LayoutGrid>
-          <Text>{fillTemplate(wordings.nOccurencesToObliterate, JSON.stringify(nbOfEntities))}</Text>
+        <LayoutGrid style={style.tooltipItem}>
+          <Text variant="body1">
+            {`${props.isAnonymizedView ? wordings.originalText : wordings.pseudonymisation} : `}
+            <Text inline variant="body2">
+              {props.isAnonymizedView ? props.annotation.text : props.anonymizer.anonymize(props.annotation)}
+            </Text>
+          </Text>
         </LayoutGrid>
-        <LayoutGrid>
+        <LayoutGrid style={style.tooltipItem}>
           <Checkbox
             defaultChecked={shouldApplyEverywhere}
             onChange={(checked: boolean) => setShouldApplyEverywhere(checked)}
             text={wordings.applyEveryWhere}
           ></Checkbox>
         </LayoutGrid>
-        <LayoutGrid>
+        <LayoutGrid style={style.tooltipItem}>
           <Dropdown
             defaultItem={props.annotation.category}
             items={categories.map((category) => ({ value: category, displayedText: category }))}
@@ -64,8 +75,9 @@ function AnnotationTooltipMenu(props: {
           annotatorStateHandler={props.annotatorStateHandler}
           annotation={props.annotation}
           disabled={!shouldApplyEverywhere}
+          linkerCommandStyle={style.tooltipItem}
         />
-        <LayoutGrid>
+        <LayoutGrid style={style.tooltipItem}>
           <Button onClick={deleteAnnotation}>{wordings.delete}</Button>
         </LayoutGrid>
       </LayoutGrid>
@@ -76,6 +88,9 @@ function AnnotationTooltipMenu(props: {
     return {
       categoryText: {
         marginLeft: '12px',
+      },
+      tooltipItem: {
+        padding: '4px 0px',
       },
     };
   }

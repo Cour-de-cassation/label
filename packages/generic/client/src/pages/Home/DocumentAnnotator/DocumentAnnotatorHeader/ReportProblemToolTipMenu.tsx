@@ -79,7 +79,7 @@ function ReportProblemToolTipMenu(props: {
         width: '350px',
       },
       tooltipItem: {
-        padding: '10px 0px',
+        padding: '12px 0px',
       },
       tooltipButton: {
         paddingRight: '10px',

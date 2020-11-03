@@ -32,7 +32,7 @@ function TooltipMenu(props: {
         top: computeTopOffset(),
       },
       tooltipMenuContent: {
-        padding: '0px 10px',
+        padding: '12px 24px',
       },
     };
 

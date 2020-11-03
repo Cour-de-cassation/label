@@ -8,10 +8,16 @@ function Text(props: {
   children: ReactNode;
   variant?: typographyType;
   color?: 'textPrimary' | 'textSecondary';
+  inline?: boolean;
   style?: CSSProperties;
 }): ReactElement {
   return (
-    <Typography color={props.color || 'textPrimary'} style={props.style} variant={props.variant}>
+    <Typography
+      color={props.color || 'textPrimary'}
+      display={props.inline ? 'inline' : 'initial'}
+      style={props.style}
+      variant={props.variant}
+    >
       {props.children}
     </Typography>
   );

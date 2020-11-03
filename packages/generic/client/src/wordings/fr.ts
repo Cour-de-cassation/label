@@ -2,7 +2,7 @@ export { fr };
 
 const fr = {
   annotationGuide: "Guide d'annotation",
-  applyEveryWhere: 'Appliquer partout',
+  applyEveryWhere: 'Appliquer à tous',
   askedAnnotations: 'Annotations demandées',
   associateTo: 'Associer à',
   cancel: 'Annuler',
@@ -13,12 +13,13 @@ const fr = {
   enterYourText: 'Saisissez votre texte...',
   forgottenPassword: 'Mot de passe oublié ?',
   login: 'Connexion',
-  nOccurencesToObliterate: '{0} occurences à occulter',
+  originalText: 'Texte original',
   password: 'Mot de passe',
   passwordsMustBeIdentical: 'Les deux mots de passe doivent être identiques.',
   problemCategory: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
   problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
   problemType: 'Type de problème',
+  pseudonymisation: 'Pseudonymisation',
   reportProblem: 'Signaler un problème',
   reset: 'Réinitialiser',
   saveDraft: 'Enregistrer le brouillon',

@@ -37,7 +37,6 @@ function createAll(
   function findAllNewAnnotationIndices() {
     let currentIndex = -1;
     const indices: number[] = [];
-
     do {
       currentIndex = documentText.indexOf(annotationText, currentIndex + 1);
       if (
@@ -48,7 +47,6 @@ function createAll(
         indices.push(currentIndex);
       }
     } while (currentIndex !== -1);
-
     return indices;
 
     function isAnnotationTextInsideLargerWord(index: number) {
@@ -61,12 +59,24 @@ function createAll(
     }
 
     function isAnnotationTextOverlappedWithAnyAnnotations(index: number) {
-      return annotations.some(isAnnotationTextOverlappedWithOtherAnnotation);
-
-      function isAnnotationTextOverlappedWithOtherAnnotation(annotation: fetchedAnnotationType) {
-        return annotation.start + annotation.text.length > index || annotation.start < index + annotationText.length;
-      }
+      return annotations.some((annotation) =>
+        areOverlapping(
+          annotation.start,
+          annotation.start + annotation.text.length,
+          index,
+          index + annotationText.length,
+        ),
+      );
     }
+  }
+
+  function areOverlapping(startA: number, endA: number, startB: number, endB: number) {
+    return (
+      (startA < startB && endA > startB) ||
+      (startA <= startB && endA >= endB) ||
+      (startB < startA && endB > startA) ||
+      (startB <= startA && endB >= endA)
+    );
   }
 }
 

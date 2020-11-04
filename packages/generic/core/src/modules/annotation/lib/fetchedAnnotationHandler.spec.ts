@@ -9,15 +9,32 @@ describe('fetchedAnnotationHandler', () => {
       const documentText =
         'engineering: Benoit is a software engineer. Nicolas is a software engineer. They are engineers.';
       const annotationText = 'engineer';
+      const annotations = [
+        generateFetchedAnnotation({
+          category: 'FIRST_NAME',
+          start: 13,
+          text: 'Benoit',
+        }),
+        generateFetchedAnnotation({
+          category: 'FIRST_NAME',
+          start: 44,
+          text: 'Nicolas',
+        }),
+      ];
 
-      const annotations = fetchedAnnotationHandler.createAll(category, documentText, annotationText, []);
+      const createdAnnotations = fetchedAnnotationHandler.createAll(
+        category,
+        documentText,
+        annotationText,
+        annotations,
+      );
 
-      expect(annotations).toEqual([
+      expect(createdAnnotations).toEqual([
         {
           category,
           start: 34,
           entityId: entityIdHandler.compute(category, annotationText),
-          _id: annotations[0]._id,
+          _id: createdAnnotations[0] && createdAnnotations[0]._id,
           source: LABEL_ANNOTATION_SOURCE,
           text: annotationText,
         },
@@ -25,7 +42,7 @@ describe('fetchedAnnotationHandler', () => {
           category,
           start: 66,
           entityId: entityIdHandler.compute(category, annotationText),
-          _id: annotations[1]._id,
+          _id: createdAnnotations[1] && createdAnnotations[1]._id,
           source: LABEL_ANNOTATION_SOURCE,
           text: annotationText,
         },

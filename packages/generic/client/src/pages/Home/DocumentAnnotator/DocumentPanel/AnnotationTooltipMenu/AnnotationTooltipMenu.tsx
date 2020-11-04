@@ -111,6 +111,7 @@ function AnnotationTooltipMenu(props: {
         width: ANNOTATION_TOOLTIP_MENU_WIDTH,
       },
       tooltipItem: {
+        maxWidth: ANNOTATION_TOOLTIP_MENU_WIDTH,
         padding: '4px 0px',
       },
     };

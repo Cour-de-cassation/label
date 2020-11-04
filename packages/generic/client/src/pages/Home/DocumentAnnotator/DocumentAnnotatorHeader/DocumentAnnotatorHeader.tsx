@@ -1,9 +1,10 @@
 import { useTheme, Theme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Header, IconButton, MenuBar, Text } from '../../../../components';
+import { ButtonWithIcon, Header, IconButton, MenuBar, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
+import { wordings } from '../../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorHeader };
@@ -26,6 +27,9 @@ function DocumentAnnotatorHeader(props: {
             annotatorStateHandler={props.annotatorStateHandler}
             fetchNewDocument={props.fetchNewDocument}
           />,
+          <div style={styles.spaceBetweenButton}></div>,
+          <ButtonWithIcon iconName="settings" onClick={() => console.log} text={wordings.settings} />,
+          <div style={styles.spaceBetweenButton}></div>,
           <IconButton onClick={logout} iconName="logout" />,
         ]}
       />
@@ -38,12 +42,8 @@ function DocumentAnnotatorHeader(props: {
         paddingRight: theme.spacing(2),
         paddingLeft: theme.spacing(2),
       },
-      reportProblemButton: {
-        paddingRight: theme.spacing(2),
-      },
-      logoutButton: {
-        height: theme.shape.borderRadius * 2,
-        width: theme.shape.borderRadius * 2,
+      spaceBetweenButton: {
+        paddingLeft: theme.spacing(2),
       },
     };
   }

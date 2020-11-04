@@ -1,24 +1,25 @@
 import React, { CSSProperties } from 'react';
 import {
+  BusinessRounded,
   CloseRounded,
+  ContactMailRounded,
   DeleteOutlineRounded,
+  ExitToAppRounded,
   ExpandLessRounded,
   ExpandMoreRounded,
+  HomeRounded,
   Link,
   LinkOff,
   LoopRounded,
-  SendRounded,
-  SaveAltRounded,
-  RedoRounded,
-  UndoRounded,
   MeetingRoom,
-  ExitToAppRounded,
   PersonRounded,
-  BusinessRounded,
-  HomeRounded,
-  WorkRounded,
-  ContactMailRounded,
+  RedoRounded,
   ReportProblemRounded,
+  SaveAltRounded,
+  SendRounded,
+  SettingsRounded,
+  UndoRounded,
+  WorkRounded,
 } from '@material-ui/icons';
 import { categoryIconNameType } from '@label/core/src';
 
@@ -39,6 +40,7 @@ const materialIconMapping = {
   reset: LoopRounded,
   send: SendRounded,
   save: SaveAltRounded,
+  settings: SettingsRounded,
   undo: UndoRounded,
   unlink: LinkOff,
 };

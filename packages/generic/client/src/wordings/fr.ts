@@ -23,5 +23,6 @@ const fr = {
   reset: 'Réinitialiser',
   saveDraft: 'Enregistrer le brouillon',
   send: 'Envoyer',
+  settings: 'Réglages',
   validate: 'Valider',
 };

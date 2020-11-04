@@ -3,7 +3,7 @@ import { problemReportType } from '@label/core';
 import {
   ButtonWithIcon,
   Checkbox,
-  Dropdown,
+  LabelledDropdown,
   LayoutGrid,
   Text,
   TextInputLarge,
@@ -14,6 +14,8 @@ import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 
 export { ReportProblemToolTipMenu };
+
+const REPORT_PROBLEM_TOOLTIP_MENU_WIDTH = 350;
 
 function ReportProblemToolTipMenu(props: {
   annotatorStateHandler: annotatorStateHandlerType;
@@ -35,7 +37,7 @@ function ReportProblemToolTipMenu(props: {
     <TooltipMenu anchorElement={props.anchorElement} onClose={props.onClose}>
       <LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
-          <Dropdown<problemReportType['type']>
+          <LabelledDropdown<problemReportType['type']>
             error={isSentWithoutCategory}
             items={problemCategories.map(([problemCategory, problemCategoryText]) => ({
               value: problemCategory,
@@ -43,8 +45,8 @@ function ReportProblemToolTipMenu(props: {
             }))}
             label={wordings.problemType}
             onChange={(newProblemCategory) => setProblemCategory(newProblemCategory)}
-            style={style.tooltipElement}
-          ></Dropdown>
+            width={REPORT_PROBLEM_TOOLTIP_MENU_WIDTH}
+          />
         </LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
           <Text>{wordings.describeTheProblem}</Text>
@@ -85,7 +87,7 @@ function ReportProblemToolTipMenu(props: {
   function buildStyle() {
     return {
       tooltipElement: {
-        width: '350px',
+        width: `${REPORT_PROBLEM_TOOLTIP_MENU_WIDTH}px`,
       },
       tooltipItem: {
         padding: '12px 0px',

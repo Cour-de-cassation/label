@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
 import { annotationModule } from '@label/core';
-import { Checkbox, Dropdown, LayoutGrid, TooltipMenu } from '../../../../../components';
+import { Checkbox, LabelledDropdown, LayoutGrid, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 
@@ -28,7 +28,7 @@ function AnnotationCreationTooltipMenu(props: {
           ></Checkbox>
         </LayoutGrid>
         <LayoutGrid>
-          <Dropdown
+          <LabelledDropdown
             items={categories.map((category) => ({ value: category, displayedText: category }))}
             label={wordings.category}
             onChange={applyAnnotationCreation}

@@ -1,6 +1,6 @@
 import React, { ReactElement, CSSProperties } from 'react';
 import { annotationModule, fetchedAnnotationType } from '@label/core';
-import { ButtonWithIcon, Dropdown, LayoutGrid } from '../../../../../components';
+import { ButtonWithIcon, LabelledDropdown, LayoutGrid } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 
@@ -11,7 +11,9 @@ function AnnotationTooltipMenuLinkerSection(props: {
   annotation: fetchedAnnotationType;
   disabled: boolean;
   linkerCommandStyle: CSSProperties;
+  width: number;
 }): ReactElement {
+  const style = buildStyle();
   const annotatorState = props.annotatorStateHandler.get();
   const linkableAnnotations = annotationModule.lib.annotationLinker.getLinkableAnnotations(
     props.annotation,
@@ -23,12 +25,12 @@ function AnnotationTooltipMenuLinkerSection(props: {
     <span>
       {isLinked && (
         <LayoutGrid style={props.linkerCommandStyle}>
-          <ButtonWithIcon iconName="unlink" onClick={unlinkAnnotation} text={'Dissocier'} />
+          <ButtonWithIcon iconName="unlink" onClick={unlinkAnnotation} style={style.unlinkButton} text={'Dissocier'} />
         </LayoutGrid>
       )}
       {linkableAnnotations.length !== 0 && (
         <LayoutGrid style={props.linkerCommandStyle}>
-          <Dropdown
+          <LabelledDropdown
             disabled={props.disabled}
             items={linkableAnnotations.map((annotation) => ({
               value: annotation.text,
@@ -36,11 +38,20 @@ function AnnotationTooltipMenuLinkerSection(props: {
             }))}
             label={wordings.associateTo}
             onChange={linkToAnnotation}
-          ></Dropdown>
+            width={props.width}
+          />
         </LayoutGrid>
       )}
     </span>
   );
+
+  function buildStyle() {
+    return {
+      unlinkButton: {
+        width: props.width,
+      },
+    };
+  }
 
   function linkToAnnotation(text: string) {
     const annotationToLinkTo = linkableAnnotations.find((annotation) => annotation.text === text);

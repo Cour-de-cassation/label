@@ -4,7 +4,7 @@ import { anonymizerType, annotationModule, fetchedAnnotationType, idModule, sett
 import {
   ButtonWithIcon,
   Checkbox,
-  Dropdown,
+  CategoryDropdown,
   CategoryIcon,
   LayoutGrid,
   Text,
@@ -15,6 +15,8 @@ import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuLinkerSection } from './AnnotationTooltipMenuLinkerSection';
 
 export { AnnotationTooltipMenu };
+
+const ANNOTATION_TOOLTIP_MENU_WIDTH = 280;
 
 function AnnotationTooltipMenu(props: {
   anchorAnnotation: Element | undefined;
@@ -72,21 +74,29 @@ function AnnotationTooltipMenu(props: {
           ></Checkbox>
         </LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
-          <Dropdown
-            defaultItem={props.annotation.category}
-            items={categories.map((category) => ({ value: category, displayedText: category }))}
-            label={wordings.category}
+          <CategoryDropdown
+            annotatorStateHandler={props.annotatorStateHandler}
+            categories={categories}
+            defaultCategory={props.annotation.category}
             onChange={changeAnnotationCategory}
-          ></Dropdown>
+            width={ANNOTATION_TOOLTIP_MENU_WIDTH}
+          />
         </LayoutGrid>
         <AnnotationTooltipMenuLinkerSection
           annotatorStateHandler={props.annotatorStateHandler}
           annotation={props.annotation}
           disabled={!shouldApplyEverywhere}
           linkerCommandStyle={style.tooltipItem}
+          width={ANNOTATION_TOOLTIP_MENU_WIDTH}
         />
         <LayoutGrid style={style.tooltipItem}>
-          <ButtonWithIcon color="secondary" iconName="delete" onClick={deleteAnnotation} text={wordings.delete} />
+          <ButtonWithIcon
+            color="secondary"
+            iconName="delete"
+            onClick={deleteAnnotation}
+            style={style.deleteButton}
+            text={wordings.delete}
+          />
         </LayoutGrid>
       </LayoutGrid>
     </TooltipMenu>
@@ -96,6 +106,9 @@ function AnnotationTooltipMenu(props: {
     return {
       categoryText: {
         marginLeft: '12px',
+      },
+      deleteButton: {
+        width: ANNOTATION_TOOLTIP_MENU_WIDTH,
       },
       tooltipItem: {
         padding: '4px 0px',

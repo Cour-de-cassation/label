@@ -11,6 +11,7 @@ const palette = {
   gray200: '#242424',
   gray300: '#383838',
   gray400: '#8D8D8D',
+  gray500: '#9E9E9E',
   white: '#ffffff',
   black: '#000000',
 };
@@ -47,6 +48,7 @@ const darkTheme = createMuiTheme({
       '200': palette.gray200,
       '300': palette.gray300,
       '400': palette.gray400,
+      '500': palette.gray500,
     },
     background: {
       default: palette.gray100,

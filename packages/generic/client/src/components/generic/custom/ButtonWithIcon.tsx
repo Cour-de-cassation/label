@@ -33,6 +33,7 @@ function ButtonWithIcon(props: {
   function buildStyle(theme: Theme): { [cssClass: string]: CSSProperties } {
     return {
       button: {
+        justifyContent: 'start',
         textTransform: 'none',
       },
       iconContainer: {

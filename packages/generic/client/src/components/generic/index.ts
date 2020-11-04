@@ -1,4 +1,4 @@
-import { ButtonWithIcon, Header, IconButton } from './custom';
+import { ButtonWithIcon, DropdownWithIcon, Header, IconButton, LabelledDropdown } from './custom';
 import {
   Accordion,
   Checkbox,
@@ -19,9 +19,11 @@ export {
   ButtonWithIcon,
   Checkbox,
   Dropdown,
+  DropdownWithIcon,
   Header,
   Icon,
   IconButton,
+  LabelledDropdown,
   LayoutGrid,
   MenuBar,
   SvgImage,

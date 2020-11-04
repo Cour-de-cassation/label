@@ -1,12 +1,12 @@
-import { CategoryIcon, Logo } from './business';
+import { CategoryDropdown, CategoryIcon, Logo } from './business';
 import {
   Accordion,
   ButtonWithIcon,
   Checkbox,
-  Dropdown,
   Header,
   Icon,
   IconButton,
+  LabelledDropdown,
   LayoutGrid,
   MenuBar,
   SwitchButton,
@@ -19,12 +19,13 @@ import {
 export {
   Accordion,
   ButtonWithIcon,
+  CategoryDropdown,
   CategoryIcon,
   Checkbox,
-  Dropdown,
   Header,
   Icon,
   IconButton,
+  LabelledDropdown,
   LayoutGrid,
   Logo,
   MenuBar,

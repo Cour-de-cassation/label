@@ -9,7 +9,7 @@ function Button(props: {
   disabled?: boolean;
   onClick: (event: MouseEvent) => void;
   style?: CSSProperties;
-  variant: 'contained';
+  variant: 'contained' | 'outlined';
 }): ReactElement {
   return (
     <MUButton

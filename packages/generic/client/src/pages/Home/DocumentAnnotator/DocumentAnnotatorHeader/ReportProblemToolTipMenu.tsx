@@ -1,6 +1,14 @@
 import React, { MouseEvent, ReactElement, useState } from 'react';
 import { problemReportType } from '@label/core';
-import { Button, Checkbox, Dropdown, LayoutGrid, Text, TextInputLarge, TooltipMenu } from '../../../../components';
+import {
+  ButtonWithIcon,
+  Checkbox,
+  Dropdown,
+  LayoutGrid,
+  Text,
+  TextInputLarge,
+  TooltipMenu,
+} from '../../../../components';
 import { useGraphQLMutation } from '../../../../graphQL';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
@@ -58,14 +66,15 @@ function ReportProblemToolTipMenu(props: {
         <LayoutGrid container style={style.tooltipItem} direction="row-reverse">
           <LayoutGrid item>
             <span style={style.tooltipButton}>
-              <Button onClick={closeTooltipMenu} color="default" iconName="close">
-                {wordings.cancel}
-              </Button>
+              <ButtonWithIcon color="default" iconName="close" onClick={closeTooltipMenu} text={wordings.cancel} />
             </span>
             <span style={style.tooltipButton}>
-              <Button onClick={sendProblemReportAndClose} color="primary" iconName="send">
-                {wordings.send}
-              </Button>
+              <ButtonWithIcon
+                color="primary"
+                iconName="send"
+                onClick={sendProblemReportAndClose}
+                text={wordings.send}
+              />
             </span>
           </LayoutGrid>
         </LayoutGrid>

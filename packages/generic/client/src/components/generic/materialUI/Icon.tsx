@@ -1,8 +1,11 @@
 import React, { CSSProperties } from 'react';
 import {
   CloseRounded,
+  DeleteOutlineRounded,
   ExpandLessRounded,
   ExpandMoreRounded,
+  Link,
+  LinkOff,
   LoopRounded,
   SendRounded,
   SaveAltRounded,
@@ -27,6 +30,8 @@ const materialIconMapping = {
   arrowExpand: ExpandMoreRounded,
   arrowReduce: ExpandLessRounded,
   close: CloseRounded,
+  delete: DeleteOutlineRounded,
+  link: Link,
   login: ExitToAppRounded,
   logout: MeetingRoom,
   redo: RedoRounded,
@@ -35,6 +40,7 @@ const materialIconMapping = {
   send: SendRounded,
   save: SaveAltRounded,
   undo: UndoRounded,
+  unlink: LinkOff,
 };
 
 const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {

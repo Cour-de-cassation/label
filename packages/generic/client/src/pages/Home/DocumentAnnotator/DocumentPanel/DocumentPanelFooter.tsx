@@ -1,7 +1,7 @@
 import React from 'react';
 import { assignationType } from '@label/core';
 import { heights } from '../../../../styles';
-import { Button, LayoutGrid } from '../../../../components';
+import { ButtonWithIcon, LayoutGrid } from '../../../../components';
 import { useGraphQLMutation } from '../../../../graphQL';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
@@ -23,17 +23,22 @@ function DocumentPanelFooter(props: {
   return (
     <LayoutGrid container style={styles.footer} justifyContent="space-between" alignItems="center">
       <LayoutGrid item>
-        <Button onClick={() => props.annotatorStateHandler.reinitialize()} color="default" iconName="reset">
-          {wordings.reset}
-        </Button>
+        <ButtonWithIcon
+          color="default"
+          iconName="reset"
+          onClick={() => props.annotatorStateHandler.reinitialize()}
+          text={wordings.reset}
+        />
       </LayoutGrid>
       <LayoutGrid item>
-        <Button onClick={saveDraft} color="default" iconName="save" style={styles.saveDraftButton}>
-          {wordings.saveDraft}
-        </Button>
-        <Button onClick={validate} color="primary" iconName="send">
-          {wordings.validate}
-        </Button>
+        <ButtonWithIcon
+          color="default"
+          iconName="save"
+          onClick={saveDraft}
+          style={styles.saveDraftButton}
+          text={wordings.saveDraft}
+        />
+        <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.validate} />
       </LayoutGrid>
     </LayoutGrid>
   );

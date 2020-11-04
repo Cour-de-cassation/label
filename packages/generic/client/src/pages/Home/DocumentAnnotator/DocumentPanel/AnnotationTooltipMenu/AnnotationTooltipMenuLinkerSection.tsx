@@ -1,6 +1,6 @@
 import React, { ReactElement, CSSProperties } from 'react';
 import { annotationModule, fetchedAnnotationType } from '@label/core';
-import { Button, Dropdown, LayoutGrid } from '../../../../../components';
+import { ButtonWithIcon, Dropdown, LayoutGrid } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 
@@ -23,7 +23,7 @@ function AnnotationTooltipMenuLinkerSection(props: {
     <span>
       {isLinked && (
         <LayoutGrid style={props.linkerCommandStyle}>
-          <Button onClick={unlinkAnnotation}>Dissocier</Button>
+          <ButtonWithIcon iconName="unlink" onClick={unlinkAnnotation} text={'Dissocier'} />
         </LayoutGrid>
       )}
       {linkableAnnotations.length !== 0 && (

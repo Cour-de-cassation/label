@@ -1,7 +1,7 @@
 import { useTheme, Theme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Text, MenuBar, Header } from '../../../../components';
+import { Header, IconButton, MenuBar, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
 import { ReportProblemButton } from './ReportProblemButton';
@@ -26,7 +26,7 @@ function DocumentAnnotatorHeader(props: {
             annotatorStateHandler={props.annotatorStateHandler}
             fetchNewDocument={props.fetchNewDocument}
           />,
-          <Button style={styles.logoutButton} onClick={logout} iconName="logout"></Button>,
+          <IconButton onClick={logout} iconName="logout" />,
         ]}
       />
     </MenuBar>

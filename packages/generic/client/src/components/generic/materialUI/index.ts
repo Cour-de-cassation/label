@@ -2,7 +2,7 @@ import { Accordion } from './Accordion';
 import { Button } from './Button';
 import { Checkbox } from './Checkbox';
 import { Dropdown } from './Dropdown';
-import { Icon } from './Icon';
+import { Icon, iconNameType } from './Icon';
 import { LayoutGrid } from './LayoutGrid';
 import { MenuBar } from './MenuBar';
 import { SvgImage } from './SvgImage';
@@ -27,3 +27,5 @@ export {
   TextInputLarge,
   TooltipMenu,
 };
+
+export type { iconNameType };

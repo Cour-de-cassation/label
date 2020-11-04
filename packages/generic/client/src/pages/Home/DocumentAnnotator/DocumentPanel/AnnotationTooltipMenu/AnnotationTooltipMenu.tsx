@@ -1,7 +1,15 @@
 import React, { ReactElement, useState } from 'react';
 import { uniq } from 'lodash';
 import { anonymizerType, annotationModule, fetchedAnnotationType, idModule, settingsModule } from '@label/core';
-import { Button, Checkbox, Dropdown, CategoryIcon, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
+import {
+  ButtonWithIcon,
+  Checkbox,
+  Dropdown,
+  CategoryIcon,
+  LayoutGrid,
+  Text,
+  TooltipMenu,
+} from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuLinkerSection } from './AnnotationTooltipMenuLinkerSection';
@@ -78,7 +86,7 @@ function AnnotationTooltipMenu(props: {
           linkerCommandStyle={style.tooltipItem}
         />
         <LayoutGrid style={style.tooltipItem}>
-          <Button onClick={deleteAnnotation}>{wordings.delete}</Button>
+          <ButtonWithIcon color="secondary" iconName="delete" onClick={deleteAnnotation} text={wordings.delete} />
         </LayoutGrid>
       </LayoutGrid>
     </TooltipMenu>

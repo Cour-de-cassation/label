@@ -1,6 +1,6 @@
 import { useTheme, Theme } from '@material-ui/core';
 import React, { MouseEvent, useState } from 'react';
-import { Button } from '../../../../components';
+import { ButtonWithIcon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { ReportProblemToolTipMenu } from './ReportProblemToolTipMenu';
@@ -17,9 +17,7 @@ function ReportProblemButton(props: {
 
   return (
     <div style={styles.reportProblemButton}>
-      <Button onClick={openToolTip} iconName="reportProblem" color="secondary">
-        {wordings.reportProblem}
-      </Button>
+      <ButtonWithIcon color="secondary" iconName="reportProblem" onClick={openToolTip} text={wordings.reportProblem} />
       <ReportProblemToolTipMenu
         annotatorStateHandler={props.annotatorStateHandler}
         anchorElement={anchorElement}

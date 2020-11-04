@@ -1,6 +1,6 @@
 import { Theme, useTheme } from '@material-ui/core';
 import React, { ReactElement } from 'react';
-import { Button, Header, SwitchButton, Text } from '../../../../components';
+import { Header, IconButton, SwitchButton, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 
 export { DocumentPanelHeader };
@@ -11,18 +11,13 @@ function DocumentPanelHeader(props: {
   switchAnonymizedView: () => void;
 }): ReactElement {
   const theme = useTheme();
-  const styles = buildStyles(theme);
+  const style = buildStyle(theme);
   return (
     <Header
       leftHeaderComponents={[
-        <Button
-          disabled={!canRevertLastAction()}
-          color="default"
-          onClick={revertLastAction}
-          iconName="undo"
-          style={styles.undoButton}
-        />,
-        <Button disabled={!canRestoreLastAction()} color="default" onClick={restoreLastAction} iconName="redo" />,
+        <IconButton disabled={!canRevertLastAction()} color="default" onClick={revertLastAction} iconName="undo" />,
+        <div style={style.spaceBetweenButtons} />,
+        <IconButton disabled={!canRestoreLastAction()} color="default" onClick={restoreLastAction} iconName="redo" />,
       ]}
       rightHeaderComponents={[
         <Text>Vue anonymisée</Text>,
@@ -47,10 +42,10 @@ function DocumentPanelHeader(props: {
     return props.annotatorStateHandler.canRestore();
   }
 
-  function buildStyles(theme: Theme) {
+  function buildStyle(theme: Theme) {
     return {
-      undoButton: {
-        marginRight: theme.spacing(),
+      spaceBetweenButtons: {
+        paddingRight: theme.spacing(3),
       },
     };
   }

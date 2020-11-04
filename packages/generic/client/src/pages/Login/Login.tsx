@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Theme, useTheme } from '@material-ui/core';
-import { Button, LayoutGrid, Logo, Text, TextInput } from '../../components';
+import { ButtonWithIcon, LayoutGrid, Logo, Text, TextInput } from '../../components';
 import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
@@ -39,9 +39,7 @@ const Login: FunctionComponent = () => {
           </Link>
         </LayoutGrid>
         <LayoutGrid item style={styles.loginButtonContainer}>
-          <Button iconName="login" onClick={handleSubmit} color="primary">
-            {wordings.login}
-          </Button>
+          <ButtonWithIcon iconName="login" onClick={handleSubmit} color="primary" text={wordings.login} />
         </LayoutGrid>
       </LayoutGrid>
     </LayoutGrid>

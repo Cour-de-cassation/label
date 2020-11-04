@@ -2,6 +2,7 @@ import { Theme, useTheme } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import { Header, IconButton, SwitchButton, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { wordings } from '../../../../wordings';
 
 export { DocumentPanelHeader };
 
@@ -15,9 +16,21 @@ function DocumentPanelHeader(props: {
   return (
     <Header
       leftHeaderComponents={[
-        <IconButton disabled={!canRevertLastAction()} color="default" onClick={revertLastAction} iconName="undo" />,
+        <IconButton
+          color="default"
+          disabled={!canRevertLastAction()}
+          hint={wordings.undo}
+          iconName="undo"
+          onClick={revertLastAction}
+        />,
         <div style={style.spaceBetweenButtons} />,
-        <IconButton disabled={!canRestoreLastAction()} color="default" onClick={restoreLastAction} iconName="redo" />,
+        <IconButton
+          color="default"
+          disabled={!canRestoreLastAction()}
+          hint={wordings.redo}
+          iconName="redo"
+          onClick={restoreLastAction}
+        />,
       ]}
       rightHeaderComponents={[
         <Text>Vue anonymisée</Text>,

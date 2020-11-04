@@ -7,6 +7,7 @@ export { IconButton };
 function IconButton(props: {
   color?: 'primary' | 'secondary' | 'default';
   disabled?: boolean;
+  hint: string;
   iconName: iconNameType;
   onClick: (event: MouseEvent) => void;
 }): ReactElement {
@@ -17,6 +18,7 @@ function IconButton(props: {
     <Button
       color={props.color}
       disabled={props.disabled}
+      hint={props.hint}
       onClick={props.onClick}
       style={style.button}
       variant="contained"

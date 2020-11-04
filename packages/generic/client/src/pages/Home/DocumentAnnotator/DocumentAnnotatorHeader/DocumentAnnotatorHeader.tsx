@@ -30,7 +30,7 @@ function DocumentAnnotatorHeader(props: {
           <div style={styles.spaceBetweenButton}></div>,
           <ButtonWithIcon iconName="settings" onClick={() => console.log} text={wordings.settings} />,
           <div style={styles.spaceBetweenButton}></div>,
-          <IconButton onClick={logout} iconName="logout" />,
+          <IconButton iconName="logout" hint={wordings.logout} onClick={logout} />,
         ]}
       />
     </MenuBar>

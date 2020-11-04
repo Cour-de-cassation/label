@@ -20,12 +20,9 @@ function AnnotationsPanel(props: {
 
   return (
     <LayoutGrid style={styles.panel}>
-      <LayoutGrid container justifyContent="space-between" alignItems="center" style={styles.panelHeader}>
+      <LayoutGrid container alignItems="center" style={styles.panelHeader}>
         <LayoutGrid item>
           <Text variant="h1">{wordings.askedAnnotations}</Text>
-        </LayoutGrid>
-        <LayoutGrid item>
-          <Text variant="subtitle1">{wordings.annotationGuide}</Text>
         </LayoutGrid>
       </LayoutGrid>
       <LayoutGrid style={styles.categoriesContainer}>

@@ -1,7 +1,6 @@
 export { fr };
 
 const fr = {
-  annotationGuide: "Guide d'annotation",
   applyEveryWhere: 'Appliquer à tous',
   askedAnnotations: 'Annotations demandées',
   associateTo: 'Associer à',

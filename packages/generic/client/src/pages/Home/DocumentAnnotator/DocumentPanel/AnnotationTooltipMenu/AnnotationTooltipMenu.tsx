@@ -6,13 +6,13 @@ import {
   Checkbox,
   CategoryDropdown,
   CategoryIcon,
+  ComponentsList,
   Header,
   LayoutGrid,
   Text,
   TooltipMenu,
 } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { buildComponentList } from '../../../../../utils';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuLinkerSection } from './AnnotationTooltipMenuLinkerSection';
 import { DeleteAnnotationButton } from './DeleteAnnotationButton';
@@ -96,8 +96,8 @@ function AnnotationTooltipMenu(props: {
           width={ANNOTATION_TOOLTIP_MENU_WIDTH}
         />
         <LayoutGrid container style={style.tooltipItem}>
-          {buildComponentList(
-            [
+          <ComponentsList
+            components={[
               <UnlinkAnnotationButton
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
@@ -110,9 +110,9 @@ function AnnotationTooltipMenu(props: {
                 onClick={props.onClose}
                 shouldApplyEverywhere={shouldApplyEverywhere}
               />,
-            ],
-            theme.spacing(),
-          )}
+            ]}
+            spaceBetweenComponents={theme.spacing()}
+          />
         </LayoutGrid>
       </LayoutGrid>
     </TooltipMenu>

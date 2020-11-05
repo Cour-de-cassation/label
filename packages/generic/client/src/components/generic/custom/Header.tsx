@@ -1,5 +1,5 @@
 import React, { ReactElement, CSSProperties } from 'react';
-import { buildComponentList } from '../../../utils';
+import { ComponentsList } from '../../../components';
 import { LayoutGrid } from '../materialUI';
 
 export { Header };
@@ -17,12 +17,18 @@ function Header(props: {
     <LayoutGrid container style={props.style}>
       <LayoutGrid container item xs={left}>
         <LayoutGrid container item alignItems="center">
-          {buildComponentList(props.leftHeaderComponents, props.spaceBetweenComponents)}
+          <ComponentsList
+            components={props.leftHeaderComponents}
+            spaceBetweenComponents={props.spaceBetweenComponents}
+          />
         </LayoutGrid>
       </LayoutGrid>
       <LayoutGrid container item xs={right}>
         <LayoutGrid container item justifyContent="flex-end" alignItems="center">
-          {buildComponentList(props.rightHeaderComponents, props.spaceBetweenComponents)}
+          <ComponentsList
+            components={props.rightHeaderComponents}
+            spaceBetweenComponents={props.spaceBetweenComponents}
+          />
         </LayoutGrid>
       </LayoutGrid>
     </LayoutGrid>

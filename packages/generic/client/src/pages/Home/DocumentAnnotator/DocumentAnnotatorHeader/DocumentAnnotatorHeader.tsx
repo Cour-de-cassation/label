@@ -1,9 +1,10 @@
-import { useTheme, Theme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useTheme } from '@material-ui/core';
 import { ButtonWithIcon, Header, IconButton, MenuBar, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
+import { heights } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
 
@@ -13,37 +14,33 @@ function DocumentAnnotatorHeader(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   fetchNewDocument: () => Promise<void>;
 }) {
-  const history = useHistory();
   const theme = useTheme();
-  const styles = buildStyles(theme);
+  const style = buildStyle();
+  const history = useHistory();
 
   return (
     <MenuBar color="default">
       <Header
-        style={styles.header}
         leftHeaderComponents={[<Text>{props.annotatorStateHandler.get().document.title}</Text>]}
         rightHeaderComponents={[
           <ReportProblemButton
             annotatorStateHandler={props.annotatorStateHandler}
             fetchNewDocument={props.fetchNewDocument}
           />,
-          <div style={styles.spaceBetweenButton}></div>,
           <ButtonWithIcon iconName="settings" onClick={() => console.log} text={wordings.settings} />,
-          <div style={styles.spaceBetweenButton}></div>,
           <IconButton iconName="logout" hint={wordings.logout} onClick={logout} />,
         ]}
+        spaceBetweenComponents={theme.spacing(2)}
+        style={style.header}
+        variant="classic"
       />
     </MenuBar>
   );
 
-  function buildStyles(theme: Theme) {
+  function buildStyle() {
     return {
       header: {
-        paddingRight: theme.spacing(2),
-        paddingLeft: theme.spacing(2),
-      },
-      spaceBetweenButton: {
-        paddingLeft: theme.spacing(2),
+        height: heights.header,
       },
     };
   }

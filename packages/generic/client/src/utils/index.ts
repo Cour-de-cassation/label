@@ -1,4 +1,4 @@
-import { buildStyledComponentList } from './buildStyledComponentList';
+import { buildComponentList } from './buildComponentList';
 import { useAnchorElementUnderMouse } from './useAnchorElementUnderMouse';
 
-export { buildStyledComponentList, useAnchorElementUnderMouse };
+export { buildComponentList, useAnchorElementUnderMouse };

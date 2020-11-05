@@ -1,22 +1,27 @@
 import React, { ReactElement, useState } from 'react';
+import { useTheme, Theme } from '@material-ui/core';
 import { uniq } from 'lodash';
 import { anonymizerType, annotationModule, fetchedAnnotationType, idModule, settingsModule } from '@label/core';
 import {
-  ButtonWithIcon,
   Checkbox,
   CategoryDropdown,
   CategoryIcon,
+  Header,
   LayoutGrid,
   Text,
   TooltipMenu,
 } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { buildComponentList } from '../../../../../utils';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuLinkerSection } from './AnnotationTooltipMenuLinkerSection';
+import { DeleteAnnotationButton } from './DeleteAnnotationButton';
+import { ResizeAnnotationButton } from './ResizeAnnotationButton';
+import { UnlinkAnnotationButton } from './UnlinkAnnotationButton';
 
 export { AnnotationTooltipMenu };
 
-const ANNOTATION_TOOLTIP_MENU_WIDTH = 280;
+const ANNOTATION_TOOLTIP_MENU_WIDTH = 300;
 
 function AnnotationTooltipMenu(props: {
   anchorAnnotation: Element | undefined;
@@ -26,7 +31,8 @@ function AnnotationTooltipMenu(props: {
   isAnonymizedView: boolean;
   onClose: () => void;
 }): ReactElement {
-  const style = buildStyle();
+  const theme = useTheme();
+  const style = buildStyle(theme);
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const annotatorState = props.annotatorStateHandler.get();
   const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
@@ -39,24 +45,24 @@ function AnnotationTooltipMenu(props: {
     <TooltipMenu anchorElement={props.anchorAnnotation} onClose={props.onClose}>
       <LayoutGrid>
         <LayoutGrid container alignItems="center" style={style.tooltipItem}>
-          <LayoutGrid>
-            <CategoryIcon
-              annotatorStateHandler={props.annotatorStateHandler}
-              category={props.annotation.category}
-              iconSize={30}
-            />
-          </LayoutGrid>
-          <LayoutGrid>
-            <Text style={style.categoryText}>
-              {settingsModule.lib.getAnnotationCategoryText(
-                props.annotation.category,
-                props.annotatorStateHandler.get().settings,
-              )}
-            </Text>
-          </LayoutGrid>
-          <LayoutGrid>
-            <Text style={style.categoryText}>{`${annotationIndex.index}/${annotationIndex.total}`}</Text>
-          </LayoutGrid>
+          <Header
+            leftHeaderComponents={[
+              <CategoryIcon
+                annotatorStateHandler={props.annotatorStateHandler}
+                category={props.annotation.category}
+                iconSize={40}
+              />,
+              <Text inline>
+                {settingsModule.lib.getAnnotationCategoryText(
+                  props.annotation.category,
+                  props.annotatorStateHandler.get().settings,
+                )}
+              </Text>,
+            ]}
+            rightHeaderComponents={[<Text>{`${annotationIndex.index}/${annotationIndex.total}`}</Text>]}
+            spaceBetweenComponents={theme.spacing()}
+            variant="mainLeft"
+          />
         </LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
           <Text variant="body1">
@@ -89,30 +95,34 @@ function AnnotationTooltipMenu(props: {
           linkerCommandStyle={style.tooltipItem}
           width={ANNOTATION_TOOLTIP_MENU_WIDTH}
         />
-        <LayoutGrid style={style.tooltipItem}>
-          <ButtonWithIcon
-            color="secondary"
-            iconName="delete"
-            onClick={deleteAnnotation}
-            style={style.deleteButton}
-            text={wordings.delete}
-          />
+        <LayoutGrid container style={style.tooltipItem}>
+          {buildComponentList(
+            [
+              <UnlinkAnnotationButton
+                annotatorStateHandler={props.annotatorStateHandler}
+                annotation={props.annotation}
+                disabled={!shouldApplyEverywhere}
+              />,
+              <ResizeAnnotationButton />,
+              <DeleteAnnotationButton
+                annotatorStateHandler={props.annotatorStateHandler}
+                annotation={props.annotation}
+                onClick={props.onClose}
+                shouldApplyEverywhere={shouldApplyEverywhere}
+              />,
+            ],
+            theme.spacing(),
+          )}
         </LayoutGrid>
       </LayoutGrid>
     </TooltipMenu>
   );
 
-  function buildStyle() {
+  function buildStyle(theme: Theme) {
     return {
-      categoryText: {
-        marginLeft: '12px',
-      },
-      deleteButton: {
-        width: ANNOTATION_TOOLTIP_MENU_WIDTH,
-      },
       tooltipItem: {
         maxWidth: ANNOTATION_TOOLTIP_MENU_WIDTH,
-        padding: '4px 0px',
+        padding: `${theme.spacing()}px 0px`,
       },
     };
   }
@@ -127,19 +137,6 @@ function AnnotationTooltipMenu(props: {
         ...annotation,
         category: newCategory,
       }),
-    );
-
-    const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
-    props.annotatorStateHandler.set(newAnnotatorState);
-  }
-
-  function deleteAnnotation() {
-    props.onClose();
-
-    const newAnnotations = annotatorState.annotations.filter((annotation) =>
-      shouldApplyEverywhere
-        ? annotation.entityId !== props.annotation.entityId
-        : !idModule.lib.equalId(annotation._id, props.annotation._id),
     );
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };

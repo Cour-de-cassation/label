@@ -23,9 +23,11 @@ const fr = {
   redo: 'Rétablir',
   reportProblem: 'Signaler un problème',
   reset: 'Réinitialiser',
+  resize: 'Redimensionner',
   saveDraft: 'Enregistrer le brouillon',
   send: 'Envoyer',
   settings: 'Réglages',
   undo: 'Annuler',
+  unlink: 'Dissocier',
   validate: 'Valider',
 };

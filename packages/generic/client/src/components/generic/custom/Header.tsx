@@ -1,6 +1,5 @@
 import React, { ReactElement, CSSProperties } from 'react';
-import { heights } from '../../../styles';
-import { buildStyledComponentList } from '../../../utils';
+import { buildComponentList } from '../../../utils';
 import { LayoutGrid } from '../materialUI';
 
 export { Header };
@@ -8,30 +7,35 @@ export { Header };
 function Header(props: {
   leftHeaderComponents: ReactElement[];
   rightHeaderComponents: ReactElement[];
+  spaceBetweenComponents: number;
   style?: CSSProperties;
+  variant: 'classic' | 'mainLeft' | 'mainRight';
 }): ReactElement {
-  const styles = buildStyles();
+  const { left, right } = buildHeaderSized();
 
   return (
-    <LayoutGrid container style={{ ...props.style, ...styles.container }}>
-      <LayoutGrid container item xs={6}>
+    <LayoutGrid container style={props.style}>
+      <LayoutGrid container item xs={left}>
         <LayoutGrid container item alignItems="center">
-          {buildStyledComponentList(props.leftHeaderComponents)}
+          {buildComponentList(props.leftHeaderComponents, props.spaceBetweenComponents)}
         </LayoutGrid>
       </LayoutGrid>
-      <LayoutGrid container item xs={6}>
+      <LayoutGrid container item xs={right}>
         <LayoutGrid container item justifyContent="flex-end" alignItems="center">
-          {buildStyledComponentList(props.rightHeaderComponents)}
+          {buildComponentList(props.rightHeaderComponents, props.spaceBetweenComponents)}
         </LayoutGrid>
       </LayoutGrid>
     </LayoutGrid>
   );
 
-  function buildStyles() {
-    return {
-      container: {
-        height: heights.panelHeader,
-      },
-    };
+  function buildHeaderSized() {
+    switch (props.variant) {
+      case 'classic':
+        return { left: 6, right: 6 } as const;
+      case 'mainLeft':
+        return { left: 11, right: 1 } as const;
+      case 'mainRight':
+        return { left: 1, right: 11 } as const;
+    }
   }
 }

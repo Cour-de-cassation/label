@@ -1,7 +1,8 @@
-import { Theme, useTheme } from '@material-ui/core';
 import React, { ReactElement } from 'react';
+import { useTheme } from '@material-ui/core';
 import { Header, IconButton, SwitchButton, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { heights } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 
 export { DocumentPanelHeader };
@@ -12,7 +13,8 @@ function DocumentPanelHeader(props: {
   switchAnonymizedView: () => void;
 }): ReactElement {
   const theme = useTheme();
-  const style = buildStyle(theme);
+  const style = buildStyle();
+
   return (
     <Header
       leftHeaderComponents={[
@@ -23,7 +25,6 @@ function DocumentPanelHeader(props: {
           iconName="undo"
           onClick={revertLastAction}
         />,
-        <div style={style.spaceBetweenButtons} />,
         <IconButton
           color="default"
           disabled={!canRestoreLastAction()}
@@ -36,8 +37,19 @@ function DocumentPanelHeader(props: {
         <Text>Vue anonymisée</Text>,
         <SwitchButton checked={props.isAnonymizedView} color="primary" onChange={props.switchAnonymizedView} />,
       ]}
+      spaceBetweenComponents={theme.spacing(2)}
+      style={style.header}
+      variant="classic"
     />
   );
+
+  function buildStyle() {
+    return {
+      header: {
+        height: heights.panelHeader,
+      },
+    };
+  }
 
   function revertLastAction() {
     props.annotatorStateHandler.revert();
@@ -53,13 +65,5 @@ function DocumentPanelHeader(props: {
 
   function canRestoreLastAction() {
     return props.annotatorStateHandler.canRestore();
-  }
-
-  function buildStyle(theme: Theme) {
-    return {
-      spaceBetweenButtons: {
-        paddingRight: theme.spacing(3),
-      },
-    };
   }
 }

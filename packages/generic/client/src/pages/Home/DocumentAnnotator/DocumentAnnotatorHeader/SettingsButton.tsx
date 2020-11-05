@@ -6,7 +6,7 @@ import { SettingsDrawer } from './SettingsDrawer';
 export { SettingsButton };
 
 function SettingsButton() {
-  const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(true);
+  const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
 
   return (
     <>

@@ -1,6 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { Dropdown, LayoutGrid, Text } from '../materialUI';
+import { LayoutGrid, Text } from '../materialUI';
+import { Dropdown } from './Dropdown';
 
 export { DropdownWithIcon };
 

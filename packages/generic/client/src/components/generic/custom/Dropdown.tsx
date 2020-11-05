@@ -1,8 +1,6 @@
 import React, { MouseEvent, ReactElement, ReactNode, useState } from 'react';
-import { makeStyles, Menu, MenuItem, useTheme, Theme } from '@material-ui/core';
-import { Button } from './Button';
-import { Icon } from './Icon';
-import { LayoutGrid } from './LayoutGrid';
+import { useTheme, Theme } from '@material-ui/core';
+import { Button, Icon, LayoutGrid, Menu } from '../materialUI';
 
 export { Dropdown };
 
@@ -21,14 +19,9 @@ function Dropdown<T extends string>(props: {
 }): ReactElement {
   const theme = useTheme();
   const style = buildStyle(theme);
-  const classes = buildMenuClasses();
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
   const [selectedValue, setSelectedValue] = useState<T | undefined>(props.defaultItem);
   const [dropdownPosition, setdDropdownPosition] = useState<'bottom' | 'top'>('bottom');
-  const dropdownMenuConfiguration = {
-    anchorOrigin: { horizontal: 'left', vertical: dropdownPosition },
-    transformOrigin: { horizontal: 'left', vertical: oppositePosition(dropdownPosition) },
-  } as const;
 
   return (
     <div>
@@ -50,30 +43,15 @@ function Dropdown<T extends string>(props: {
         </LayoutGrid>
       </Button>
       <Menu
-        anchorEl={anchorElement}
-        anchorOrigin={dropdownMenuConfiguration?.anchorOrigin}
-        classes={{ paper: classes.paper }}
-        getContentAnchorEl={null} // To prevent materialUI to log cryptic error
+        anchorElement={anchorElement}
+        dropdownPosition={dropdownPosition}
+        items={props.items.map((item) => ({ value: item.value, element: item.displayedText }))}
+        onChange={handleSelection}
         onClose={closeDropdown}
-        open={isOpen()}
-        transformOrigin={dropdownMenuConfiguration.transformOrigin}
-      >
-        {props.items.map(({ value, displayedText }, ind) => (
-          <MenuItem key={ind} value={value} onClick={() => handleSelection(value)}>
-            {displayedText}
-          </MenuItem>
-        ))}
-      </Menu>
+        width={props.width}
+      />
     </div>
   );
-
-  function buildMenuClasses() {
-    return makeStyles({
-      paper: {
-        width: `${props.width}px`,
-      },
-    })();
-  }
 
   function buildStyle(theme: Theme) {
     const borderColor = props.color || theme.palette.grey[500];
@@ -128,10 +106,5 @@ function Dropdown<T extends string>(props: {
   function handleSelection(value: T) {
     setSelectedValue(value);
     props.onChange(value);
-    closeDropdown();
   }
-}
-
-function oppositePosition(position: 'bottom' | 'top') {
-  return position === 'bottom' ? 'top' : 'bottom';
 }

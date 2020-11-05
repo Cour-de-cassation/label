@@ -1,9 +1,16 @@
-import { ButtonWithIcon, ComponentsList, DropdownWithIcon, Header, IconButton, LabelledDropdown } from './custom';
+import {
+  ButtonWithIcon,
+  ComponentsList,
+  Dropdown,
+  DropdownWithIcon,
+  Header,
+  IconButton,
+  LabelledDropdown,
+} from './custom';
 import {
   Accordion,
   Checkbox,
   Drawer,
-  Dropdown,
   Icon,
   LayoutGrid,
   MenuBar,

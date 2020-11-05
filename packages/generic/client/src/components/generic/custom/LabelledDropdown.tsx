@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Dropdown } from '../materialUI';
+import { Dropdown } from './Dropdown';
 
 export { LabelledDropdown };
 

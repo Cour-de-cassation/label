@@ -6,6 +6,7 @@ import { Icon, iconNameType } from './Icon';
 import { LayoutGrid } from './LayoutGrid';
 import { Menu } from './Menu';
 import { MenuBar } from './MenuBar';
+import { RadioButton } from './RadioButton';
 import { SvgImage } from './SvgImage';
 import { SwitchButton } from './SwitchButton';
 import { Text } from './Text';
@@ -22,6 +23,7 @@ export {
   LayoutGrid,
   Menu,
   MenuBar,
+  RadioButton,
   SvgImage,
   SwitchButton,
   Text,

@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 export { darkTheme as theme };
 
-export type { typographyType };
+export type { typographyType, displayModeType };
 
 const palette = {
   brightSun: '#FFD835',
@@ -33,11 +33,13 @@ const typography = {
 
 type typographyType = keyof typeof typography;
 
+type displayModeType = 'light' | 'dark';
+
 const darkTheme = createMuiTheme({
   shape: { borderRadius: 25 },
   spacing: 8,
   palette: {
-    text: { primary: palette.white, secondary: palette.gray400 },
+    text: { primary: palette.white, secondary: palette.white },
     primary: {
       main: palette.brightSun,
     },

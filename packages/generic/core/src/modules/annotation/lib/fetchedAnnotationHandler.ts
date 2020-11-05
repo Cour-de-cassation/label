@@ -82,9 +82,12 @@ function createAll(
 
 function updateMany(
   annotations: fetchedAnnotationType[],
+  shouldBeUpdated: (annotation: fetchedAnnotationType) => boolean,
   updateAnnotation: (annotation: fetchedAnnotationType) => fetchedAnnotationType,
 ): fetchedAnnotationType[] {
-  return annotations.map((annotation) => update(annotation, updateAnnotation));
+  return annotations.map((annotation) =>
+    shouldBeUpdated(annotation) ? update(annotation, updateAnnotation) : annotation,
+  );
 }
 
 function update(

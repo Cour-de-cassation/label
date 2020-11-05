@@ -118,41 +118,31 @@ function AnnotationTooltipMenu(props: {
   }
 
   function changeAnnotationCategory(newCategory: string) {
-    const annotationsToUpdate = shouldApplyEverywhere
-      ? annotatorState.annotations.filter((annotation) => annotation.entityId === props.annotation.entityId)
-      : [props.annotation];
-
-    const otherAnnotations = shouldApplyEverywhere
-      ? removeAllOccurences(props.annotation, annotatorState.annotations)
-      : removeOneOccurence(props.annotation, annotatorState.annotations);
-
-    const updatedAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateMany(
-      annotationsToUpdate,
+    const newAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateMany(
+      annotatorState.annotations,
+      shouldApplyEverywhere
+        ? (annotation) => annotation.entityId === props.annotation.entityId
+        : (annotation) => idModule.lib.equalId(annotation._id, props.annotation._id),
       (annotation) => ({
         ...annotation,
         category: newCategory,
       }),
     );
 
-    const newAnnotatorState = { ...annotatorState, annotations: [...updatedAnnotations, ...otherAnnotations] };
+    const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);
   }
 
   function deleteAnnotation() {
     props.onClose();
 
-    const newAnnotations = shouldApplyEverywhere
-      ? removeAllOccurences(props.annotation, annotatorState.annotations)
-      : removeOneOccurence(props.annotation, annotatorState.annotations);
+    const newAnnotations = annotatorState.annotations.filter((annotation) =>
+      shouldApplyEverywhere
+        ? annotation.entityId !== props.annotation.entityId
+        : !idModule.lib.equalId(annotation._id, props.annotation._id),
+    );
+
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);
-  }
-
-  function removeOneOccurence(annotationToRemove: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {
-    return annotations.filter((annotation) => !idModule.lib.equalId(annotation._id, annotationToRemove._id));
-  }
-
-  function removeAllOccurences(annotationToRemove: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {
-    return annotations.filter((annotation) => annotation.entityId !== annotationToRemove.entityId);
   }
 }

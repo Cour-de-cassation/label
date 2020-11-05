@@ -1,10 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import { useTheme, Theme } from '@material-ui/core';
-import { uniq } from 'lodash';
-import { anonymizerType, annotationModule, fetchedAnnotationType, idModule, settingsModule } from '@label/core';
+import { anonymizerType, annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
 import {
   Checkbox,
-  CategoryDropdown,
   CategoryIcon,
   ComponentsList,
   Header,
@@ -14,8 +12,9 @@ import {
 } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
-import { AnnotationTooltipMenuLinkerSection } from './AnnotationTooltipMenuLinkerSection';
+import { ChangeAnnotationCategoryButton } from './ChangeAnnotationCategoryButton';
 import { DeleteAnnotationButton } from './DeleteAnnotationButton';
+import { LinkAnnotationButton } from './LinkAnnotationButton';
 import { ResizeAnnotationButton } from './ResizeAnnotationButton';
 import { UnlinkAnnotationButton } from './UnlinkAnnotationButton';
 
@@ -35,7 +34,6 @@ function AnnotationTooltipMenu(props: {
   const style = buildStyle(theme);
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const annotatorState = props.annotatorStateHandler.get();
-  const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
   const annotationIndex = annotationModule.lib.fetchedAnnotationHandler.getAnnotationIndex(
     props.annotation,
     annotatorState.annotations,
@@ -79,31 +77,25 @@ function AnnotationTooltipMenu(props: {
             text={wordings.applyEveryWhere}
           ></Checkbox>
         </LayoutGrid>
-        <LayoutGrid style={style.tooltipItem}>
-          <CategoryDropdown
-            annotatorStateHandler={props.annotatorStateHandler}
-            categories={categories}
-            defaultCategory={props.annotation.category}
-            onChange={changeAnnotationCategory}
-            width={ANNOTATION_TOOLTIP_MENU_WIDTH}
-          />
-        </LayoutGrid>
-        <AnnotationTooltipMenuLinkerSection
-          annotatorStateHandler={props.annotatorStateHandler}
-          annotation={props.annotation}
-          disabled={!shouldApplyEverywhere}
-          linkerCommandStyle={style.tooltipItem}
-          width={ANNOTATION_TOOLTIP_MENU_WIDTH}
-        />
         <LayoutGrid container style={style.tooltipItem}>
           <ComponentsList
             components={[
+              <ChangeAnnotationCategoryButton
+                annotatorStateHandler={props.annotatorStateHandler}
+                annotation={props.annotation}
+                shouldApplyEverywhere={shouldApplyEverywhere}
+              />,
+              <ResizeAnnotationButton />,
+              <LinkAnnotationButton
+                annotatorStateHandler={props.annotatorStateHandler}
+                annotation={props.annotation}
+                disabled={!shouldApplyEverywhere}
+              />,
               <UnlinkAnnotationButton
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
                 disabled={!shouldApplyEverywhere}
               />,
-              <ResizeAnnotationButton />,
               <DeleteAnnotationButton
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
@@ -125,21 +117,5 @@ function AnnotationTooltipMenu(props: {
         padding: `${theme.spacing()}px 0px`,
       },
     };
-  }
-
-  function changeAnnotationCategory(newCategory: string) {
-    const newAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateMany(
-      annotatorState.annotations,
-      shouldApplyEverywhere
-        ? (annotation) => annotation.entityId === props.annotation.entityId
-        : (annotation) => idModule.lib.equalId(annotation._id, props.annotation._id),
-      (annotation) => ({
-        ...annotation,
-        category: newCategory,
-      }),
-    );
-
-    const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
-    props.annotatorStateHandler.set(newAnnotatorState);
   }
 }

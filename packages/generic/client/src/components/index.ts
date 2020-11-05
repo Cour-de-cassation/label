@@ -1,4 +1,4 @@
-import { CategoryDropdown, CategoryIcon, Logo } from './business';
+import { CategoryIcon, Logo } from './business';
 import {
   Accordion,
   ButtonWithIcon,
@@ -8,6 +8,7 @@ import {
   Header,
   Icon,
   IconButton,
+  IconDropdown,
   LabelledDropdown,
   LayoutGrid,
   MenuBar,
@@ -22,7 +23,6 @@ import {
 export {
   Accordion,
   ButtonWithIcon,
-  CategoryDropdown,
   CategoryIcon,
   Checkbox,
   ComponentsList,
@@ -30,6 +30,7 @@ export {
   Header,
   Icon,
   IconButton,
+  IconDropdown,
   LabelledDropdown,
   LayoutGrid,
   Logo,

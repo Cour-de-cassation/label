@@ -3,9 +3,9 @@ export { fr };
 const fr = {
   applyEveryWhere: 'Appliquer à tous',
   askedAnnotations: 'Annotations demandées',
-  associateTo: 'Associer à',
   cancel: 'Annuler',
   category: 'Catégorie',
+  changeCategory: 'Changer de catégorie',
   darkMode: 'Mode sombre',
   describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
   delete: 'Supprimer',
@@ -14,6 +14,7 @@ const fr = {
   enterYourText: 'Saisissez votre texte...',
   forgottenPassword: 'Mot de passe oublié ?',
   lightMode: 'Mode lumineux',
+  link: 'Associer à',
   login: 'Connexion',
   logout: 'Déconnexion',
   originalText: 'Texte original',

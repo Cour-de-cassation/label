@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core';
-import { ButtonWithIcon, Header, IconButton, MenuBar, Text } from '../../../../components';
+import { ButtonWithIcon, Drawer, Header, IconButton, MenuBar, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
 import { heights } from '../../../../styles';
@@ -17,6 +17,7 @@ function DocumentAnnotatorHeader(props: {
   const theme = useTheme();
   const style = buildStyle();
   const history = useHistory();
+  const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
 
   return (
     <MenuBar color="default">
@@ -27,13 +28,14 @@ function DocumentAnnotatorHeader(props: {
             annotatorStateHandler={props.annotatorStateHandler}
             fetchNewDocument={props.fetchNewDocument}
           />,
-          <ButtonWithIcon iconName="settings" onClick={() => console.log} text={wordings.settings} />,
+          <ButtonWithIcon iconName="settings" onClick={openDrawer} text={wordings.settings} />,
           <IconButton iconName="logout" hint={wordings.logout} onClick={logout} />,
         ]}
         spaceBetweenComponents={theme.spacing(2)}
         style={style.header}
         variant="classic"
       />
+      <Drawer onClose={closeDrawer} isOpen={isSettingsDrawerOpen}></Drawer>
     </MenuBar>
   );
 
@@ -43,6 +45,14 @@ function DocumentAnnotatorHeader(props: {
         height: heights.header,
       },
     };
+  }
+
+  function openDrawer() {
+    setIsSettingsDrawerOpen(true);
+  }
+
+  function closeDrawer() {
+    setIsSettingsDrawerOpen(false);
   }
 
   function logout() {

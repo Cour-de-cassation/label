@@ -1,6 +1,7 @@
 import { Accordion } from './Accordion';
 import { Button } from './Button';
 import { Checkbox } from './Checkbox';
+import { Drawer } from './Drawer';
 import { Dropdown } from './Dropdown';
 import { Icon, iconNameType } from './Icon';
 import { LayoutGrid } from './LayoutGrid';
@@ -16,6 +17,7 @@ export {
   Accordion,
   Button,
   Checkbox,
+  Drawer,
   Dropdown,
   Icon,
   LayoutGrid,

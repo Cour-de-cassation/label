@@ -2,6 +2,7 @@ import { ButtonWithIcon, DropdownWithIcon, Header, IconButton, LabelledDropdown 
 import {
   Accordion,
   Checkbox,
+  Drawer,
   Dropdown,
   Icon,
   LayoutGrid,
@@ -18,6 +19,7 @@ export {
   Accordion,
   ButtonWithIcon,
   Checkbox,
+  Drawer,
   Dropdown,
   DropdownWithIcon,
   Header,

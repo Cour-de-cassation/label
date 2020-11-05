@@ -1,6 +1,6 @@
 import React, { ReactElement, CSSProperties } from 'react';
 import { Theme, useTheme } from '@material-ui/core';
-import { anonymizerType, fetchedAnnotationType } from '@label/core';
+import { annotationChunkType, anonymizerType, fetchedAnnotationType, textChunkType } from '@label/core';
 import { Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { heights } from '../../../../styles';
@@ -33,31 +33,7 @@ function DocumentViewer(props: {
               </td>
               <td>
                 <span key={lineNumber}>
-                  <Text variant="body2">
-                    {splittedText.map((chunk) => {
-                      switch (chunk.type) {
-                        case 'text':
-                          return (
-                            <DocumentText
-                              key={chunk.index}
-                              annotatorStateHandler={props.annotatorStateHandler}
-                              index={chunk.index}
-                              text={chunk.text}
-                            />
-                          );
-                        case 'annotation':
-                          return (
-                            <DocumentAnnotationText
-                              key={chunk.index}
-                              annotatorStateHandler={props.annotatorStateHandler}
-                              annotation={chunk.annotation}
-                              anonymizer={props.anonymizer}
-                              isAnonymizedView={props.isAnonymizedView}
-                            />
-                          );
-                      }
-                    })}
-                  </Text>
+                  <Text variant="body2">{splittedText.map(renderChunk)}</Text>
                 </span>
               </td>
             </tr>
@@ -66,6 +42,30 @@ function DocumentViewer(props: {
       </table>
     </div>
   );
+
+  function renderChunk(chunk: textChunkType | annotationChunkType<fetchedAnnotationType>) {
+    switch (chunk.type) {
+      case 'text':
+        return (
+          <DocumentText
+            key={chunk.index}
+            annotatorStateHandler={props.annotatorStateHandler}
+            index={chunk.index}
+            text={chunk.text}
+          />
+        );
+      case 'annotation':
+        return (
+          <DocumentAnnotationText
+            key={chunk.index}
+            annotatorStateHandler={props.annotatorStateHandler}
+            annotation={chunk.annotation}
+            anonymizer={props.anonymizer}
+            isAnonymizedView={props.isAnonymizedView}
+          />
+        );
+    }
+  }
 }
 
 function buildStyle(theme: Theme): { [cssClass: string]: CSSProperties } {

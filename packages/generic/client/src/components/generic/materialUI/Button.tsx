@@ -15,7 +15,7 @@ function Button(props: {
 }): ReactElement {
   return props.hint ? (
     <Tooltip arrow title={<Text>{props.hint}</Text>}>
-      {buildButton()}
+      <div>{buildButton()}</div>
     </Tooltip>
   ) : (
     buildButton()

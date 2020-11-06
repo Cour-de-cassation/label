@@ -1,15 +1,16 @@
 import { Theme, useTheme } from '@material-ui/core';
-import React, { useState } from 'react';
-import { displayModeType } from '../../../../styles';
+import React from 'react';
 import { Drawer, IconButton, LayoutGrid, RadioButton, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
+import { useDisplayMode } from '../../../../styles';
 
 export { SettingsDrawer };
 
 function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
   const theme = useTheme();
+  const { displayMode, setDisplayMode } = useDisplayMode();
+
   const styles = buildStyles(theme);
-  const [selectedDisplayMode, selectDisplayMode] = useState<displayModeType>('light');
 
   return (
     <Drawer onClose={props.close} isOpen={props.isOpen}>
@@ -29,15 +30,15 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
           <LayoutGrid style={styles.radioButton} item>
             <RadioButton
               label={wordings.lightMode}
-              isChecked={selectedDisplayMode === 'light'}
-              onClick={() => selectDisplayMode('light')}
+              isChecked={displayMode === 'light'}
+              onClick={() => setDisplayMode('light')}
             />
           </LayoutGrid>
           <LayoutGrid style={styles.radioButton} item>
             <RadioButton
               label={wordings.darkMode}
-              isChecked={selectedDisplayMode === 'dark'}
-              onClick={() => selectDisplayMode('dark')}
+              isChecked={displayMode === 'dark'}
+              onClick={() => setDisplayMode('dark')}
             />
           </LayoutGrid>
         </LayoutGrid>

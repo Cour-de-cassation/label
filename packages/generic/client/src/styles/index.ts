@@ -1,7 +1,8 @@
 import { heights } from './heights';
-import { theme, typographyType, displayModeType } from './theme';
+import { typographyType, displayModeType } from './theme';
 import { ThemeProvider } from './ThemeProvider';
+import { useDisplayMode } from './useDisplayMode';
 
-export { heights, theme, ThemeProvider };
+export { heights, ThemeProvider, useDisplayMode };
 
 export type { typographyType, displayModeType };

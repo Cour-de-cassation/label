@@ -1,6 +1,7 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { merge } from 'lodash';
+import { createMuiTheme } from '@material-ui/core';
 
-export { darkTheme as theme };
+export { themes };
 
 export type { typographyType, displayModeType };
 
@@ -35,11 +36,11 @@ type typographyType = keyof typeof typography;
 
 type displayModeType = 'light' | 'dark';
 
-const darkTheme = createMuiTheme({
+const commonTheme = {
   shape: { borderRadius: 25 },
   spacing: 8,
+  typography,
   palette: {
-    text: { primary: palette.white, secondary: palette.white },
     primary: {
       main: palette.brightSun,
     },
@@ -54,14 +55,62 @@ const darkTheme = createMuiTheme({
       '400': palette.gray400,
       '500': palette.gray500,
     },
-    background: {
-      default: palette.gray100,
-      paper: palette.gray300,
-    },
-    action: {
-      disabled: palette.gray300,
-      disabledBackground: palette.gray200,
-    },
   },
-  typography,
-});
+};
+
+const getDarkTheme = () =>
+  createMuiTheme(
+    buildTheme({
+      palette: {
+        text: { primary: palette.white, secondary: palette.white },
+        background: {
+          default: palette.gray100,
+          paper: palette.gray300,
+        },
+        action: {
+          disabled: palette.gray300,
+          disabledBackground: palette.gray200,
+        },
+      },
+    }),
+  );
+
+const getLightTheme = () =>
+  createMuiTheme(
+    buildTheme({
+      palette: {
+        text: { primary: palette.black, secondary: palette.black },
+        background: {
+          default: palette.white,
+          paper: palette.white,
+        },
+        action: {
+          disabled: palette.gray300,
+          disabledBackground: palette.gray200,
+        },
+      },
+    }),
+  );
+
+type customThemeType = {
+  palette: {
+    text: { primary: string; secondary: string };
+    background: {
+      default: string;
+      paper: string;
+    };
+    action: {
+      disabled: string;
+      disabledBackground: string;
+    };
+  };
+};
+
+function buildTheme(themeOptions: customThemeType) {
+  return merge(commonTheme, themeOptions);
+}
+
+const themes = {
+  light: getLightTheme,
+  dark: getDarkTheme,
+};

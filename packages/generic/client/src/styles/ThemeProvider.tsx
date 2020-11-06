@@ -13,7 +13,7 @@ const DisplayModeContext = createContext<{
 });
 
 function ThemeProvider(props: { children: ReactNode }) {
-  const [displayMode, setDisplayMode] = useState<displayModeType>('dark');
+  const [displayMode, setDisplayMode] = useState<displayModeType>('light');
   const theme = themes[displayMode]();
   const displayModeContext = { displayMode, setDisplayMode };
   const style = buildStyle();

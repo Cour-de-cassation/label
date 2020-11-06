@@ -73,7 +73,7 @@ function buildStyle(theme: Theme): { [cssClass: string]: CSSProperties } {
     container: {
       overflowY: 'auto',
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: theme.palette.common.black,
+      backgroundColor: theme.palette.grey[100],
       height: heights.panel,
       width: '100%',
     },

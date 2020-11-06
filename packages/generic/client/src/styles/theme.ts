@@ -8,11 +8,13 @@ export type { typographyType, displayModeType };
 const palette = {
   brightSun: '#FFD835',
   orange: '#FF6105',
-  gray100: '#121212',
-  gray200: '#242424',
-  gray300: '#383838',
-  gray400: '#8D8D8D',
-  gray500: '#9E9E9E',
+  gray100: '#000000',
+  gray200: '#121212',
+  gray300: '#242424',
+  gray400: '#383838',
+  gray500: '#8D8D8D',
+  gray600: '#9E9E9E',
+  grayBlue: '#ECEFF1',
   white: '#ffffff',
   black: '#000000',
 };
@@ -48,13 +50,6 @@ const commonTheme = {
       main: palette.orange,
     },
     common: { black: palette.black, white: palette.white },
-    grey: {
-      '100': palette.gray100,
-      '200': palette.gray200,
-      '300': palette.gray300,
-      '400': palette.gray400,
-      '500': palette.gray500,
-    },
   },
 };
 
@@ -62,14 +57,21 @@ const getDarkTheme = () =>
   createMuiTheme(
     buildTheme({
       palette: {
-        text: { primary: palette.white, secondary: palette.white },
+        text: { primary: palette.white, secondary: palette.gray500 },
         background: {
-          default: palette.gray100,
-          paper: palette.gray300,
+          default: palette.gray200,
+          paper: palette.gray400,
         },
         action: {
-          disabled: palette.gray300,
-          disabledBackground: palette.gray200,
+          disabled: palette.gray400,
+          disabledBackground: palette.gray300,
+        },
+        grey: {
+          '100': palette.gray100,
+          '200': palette.gray200,
+          '300': palette.gray300,
+          '400': palette.gray400,
+          '500': palette.gray500,
         },
       },
     }),
@@ -79,14 +81,21 @@ const getLightTheme = () =>
   createMuiTheme(
     buildTheme({
       palette: {
-        text: { primary: palette.black, secondary: palette.black },
+        text: { primary: palette.black, secondary: palette.gray500 },
         background: {
           default: palette.white,
-          paper: palette.white,
+          paper: palette.grayBlue,
         },
         action: {
-          disabled: palette.gray300,
-          disabledBackground: palette.gray200,
+          disabled: palette.white,
+          disabledBackground: palette.grayBlue,
+        },
+        grey: {
+          '100': palette.grayBlue,
+          '200': palette.gray400,
+          '300': palette.gray300,
+          '400': palette.gray200,
+          '500': '#ff0000',
         },
       },
     }),
@@ -102,6 +111,13 @@ type customThemeType = {
     action: {
       disabled: string;
       disabledBackground: string;
+    };
+    grey: {
+      '100': string;
+      '200': string;
+      '300': string;
+      '400': string;
+      '500': string;
     };
   };
 };

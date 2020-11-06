@@ -20,7 +20,7 @@ function DocumentAnnotatorHeader(props: {
   const history = useHistory();
 
   return (
-    <MenuBar color="default">
+    <MenuBar color="inherit">
       <Header
         leftHeaderComponents={[<Text>{props.annotatorStateHandler.get().document.title}</Text>]}
         rightHeaderComponents={[

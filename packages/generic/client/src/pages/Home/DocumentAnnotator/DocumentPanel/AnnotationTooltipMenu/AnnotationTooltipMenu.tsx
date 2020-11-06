@@ -1,17 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 import { useTheme, Theme } from '@material-ui/core';
-import { anonymizerType, annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
-import {
-  Checkbox,
-  CategoryIcon,
-  ComponentsList,
-  Header,
-  LayoutGrid,
-  Text,
-  TooltipMenu,
-} from '../../../../../components';
+import { anonymizerType, fetchedAnnotationType } from '@label/core';
+import { Checkbox, ComponentsList, LayoutGrid, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
+import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryButton } from './ChangeAnnotationCategoryButton';
 import { DeleteAnnotationButton } from './DeleteAnnotationButton';
 import { LinkAnnotationButton } from './LinkAnnotationButton';
@@ -33,42 +26,17 @@ function AnnotationTooltipMenu(props: {
   const theme = useTheme();
   const style = buildStyle(theme);
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
-  const annotatorState = props.annotatorStateHandler.get();
-  const annotationIndex = annotationModule.lib.fetchedAnnotationHandler.getAnnotationIndex(
-    props.annotation,
-    annotatorState.annotations,
-  );
 
   return (
     <TooltipMenu anchorElement={props.anchorAnnotation} onClose={props.onClose}>
       <LayoutGrid>
         <LayoutGrid container alignItems="center" style={style.tooltipItem}>
-          <Header
-            leftHeaderComponents={[
-              <CategoryIcon
-                annotatorStateHandler={props.annotatorStateHandler}
-                category={props.annotation.category}
-                iconSize={40}
-              />,
-              <Text inline>
-                {settingsModule.lib.getAnnotationCategoryText(
-                  props.annotation.category,
-                  props.annotatorStateHandler.get().settings,
-                )}
-              </Text>,
-            ]}
-            rightHeaderComponents={[<Text>{`${annotationIndex.index}/${annotationIndex.total}`}</Text>]}
-            spaceBetweenComponents={theme.spacing()}
-            variant="mainLeft"
+          <AnnotationTooltipMenuHeader
+            annotatorStateHandler={props.annotatorStateHandler}
+            annotation={props.annotation}
+            anonymizer={props.anonymizer}
+            isAnonymizedView={props.isAnonymizedView}
           />
-        </LayoutGrid>
-        <LayoutGrid style={style.tooltipItem}>
-          <Text variant="body1">
-            {`${props.isAnonymizedView ? wordings.originalText : wordings.pseudonymisation} : `}
-            <Text inline variant="body2">
-              {props.isAnonymizedView ? props.annotation.text : props.anonymizer.anonymize(props.annotation)}
-            </Text>
-          </Text>
         </LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
           <Checkbox

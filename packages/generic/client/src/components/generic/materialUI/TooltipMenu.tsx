@@ -1,23 +1,29 @@
 import { Menu } from '@material-ui/core';
-import React, { ReactElement } from 'react';
+import React, { CSSProperties, MouseEvent, ReactElement } from 'react';
 
 export { TooltipMenu };
 
 function TooltipMenu(props: {
   anchorElement: Element | undefined;
   children: ReactElement;
+  hover?: boolean;
+  onClickOnAnchorElement?: () => void;
   onClose: () => void;
+  style?: CSSProperties;
 }): ReactElement {
   const displayPosition = getDisplayPosition();
   const style = buildStyle(displayPosition);
   const tooltipMenuConfiguration = buildTooltipMenuConfiguration(displayPosition);
+  const anchorElementHandler = buildAnchorElementHandler();
 
   return (
     <Menu
       anchorEl={props.anchorElement}
       anchorOrigin={tooltipMenuConfiguration.anchorOrigin}
       getContentAnchorEl={null} // To prevent materialUI to log cryptic error
+      onBackdropClick={anchorElementHandler.onClick}
       onClose={props.onClose}
+      onMouseMove={props.hover ? anchorElementHandler.onMouseMove : undefined}
       open={isOpen()}
       style={style.tooltipMenu}
       transformOrigin={tooltipMenuConfiguration.transformOrigin}
@@ -82,5 +88,37 @@ function TooltipMenu(props: {
     const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
     return { windowWidth, windowHeight };
+  }
+
+  function buildAnchorElementHandler() {
+    return {
+      onClick,
+      onMouseMove,
+    };
+
+    function onClick(event: MouseEvent<Element>) {
+      if (isEventOnAnchorElement(event)) {
+        document.body.style.cursor = 'auto';
+        props.onClickOnAnchorElement && props.onClickOnAnchorElement();
+      }
+    }
+
+    function onMouseMove(event: MouseEvent<Element>) {
+      if (isEventOnAnchorElement(event)) {
+        document.body.style.cursor = 'pointer';
+      } else {
+        document.body.style.cursor = 'auto';
+        props.onClose();
+      }
+    }
+
+    function isEventOnAnchorElement(event: MouseEvent<Element>) {
+      if (props.anchorElement) {
+        const { bottom, left, right, top } = props.anchorElement.getBoundingClientRect();
+        return event.clientX > left && event.clientX < right && event.clientY > top && event.clientY < bottom;
+      } else {
+        return false;
+      }
+    }
   }
 }

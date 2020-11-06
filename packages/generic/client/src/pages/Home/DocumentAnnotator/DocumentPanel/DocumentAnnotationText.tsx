@@ -1,8 +1,8 @@
-import React, { ReactElement, MouseEvent } from 'react';
+import React, { MouseEvent, ReactElement, useState } from 'react';
 import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { useAnchorElementUnderMouse } from '../../../../utils';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
+import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
 
 export { DocumentAnnotationText };
 
@@ -13,15 +13,29 @@ function DocumentAnnotationText(props: {
   isAnonymizedView: boolean;
 }): ReactElement {
   const style = buildStyle();
-  const { anchorElementUnderMouse, setAnchorElementUnderMouse } = useAnchorElementUnderMouse();
+  const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
+  const [summaryAnchorElement, setSummaryAnchorElement] = useState<Element | undefined>(undefined);
 
   return (
     <span>
-      <span onClick={openTooltipMenu} style={style.annotationText}>
+      <span
+        onClick={(event: MouseEvent<Element>) => openTooltipMenu(event.currentTarget)}
+        onMouseOver={(event: MouseEvent<Element>) => openTooltipSummary(event.currentTarget)}
+        style={style.annotationText}
+      >
         {props.isAnonymizedView ? props.anonymizer.anonymize(props.annotation) : props.annotation.text}
       </span>
+      <AnnotationTooltipSummary
+        anchorAnnotation={summaryAnchorElement}
+        annotatorStateHandler={props.annotatorStateHandler}
+        annotation={props.annotation}
+        anonymizer={props.anonymizer}
+        isAnonymizedView={props.isAnonymizedView}
+        onClickOnAnchorAnnotation={() => openTooltipMenu(summaryAnchorElement)}
+        onClose={closeTooltipSummary}
+      />
       <AnnotationTooltipMenu
-        anchorAnnotation={anchorElementUnderMouse}
+        anchorAnnotation={anchorElement}
         annotatorStateHandler={props.annotatorStateHandler}
         annotation={props.annotation}
         anonymizer={props.anonymizer}
@@ -30,14 +44,6 @@ function DocumentAnnotationText(props: {
       />
     </span>
   );
-
-  function openTooltipMenu(event: MouseEvent<Element>) {
-    setAnchorElementUnderMouse(event);
-  }
-
-  function closeTooltipMenu() {
-    setAnchorElementUnderMouse(undefined);
-  }
 
   function buildStyle() {
     return {
@@ -51,5 +57,22 @@ function DocumentAnnotationText(props: {
         borderRadius: '3px',
       },
     };
+  }
+
+  function openTooltipSummary(element: Element | undefined) {
+    setSummaryAnchorElement(element);
+  }
+
+  function closeTooltipSummary() {
+    setSummaryAnchorElement(undefined);
+  }
+
+  function openTooltipMenu(element: Element | undefined) {
+    setAnchorElement(element);
+    closeTooltipSummary();
+  }
+
+  function closeTooltipMenu() {
+    setAnchorElement(undefined);
   }
 }

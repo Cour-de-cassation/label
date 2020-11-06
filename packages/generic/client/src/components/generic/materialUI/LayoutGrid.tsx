@@ -4,14 +4,14 @@ import { Grid as MUGrid, GridDirection, GridTypeMap } from '@material-ui/core';
 export { LayoutGrid };
 
 function LayoutGrid(props: {
+  alignItems?: GridTypeMap['props']['alignItems'];
   children: ReactNode;
   container?: boolean;
-  item?: boolean;
-  xs?: GridTypeMap['props']['xs'];
-  justifyContent?: GridTypeMap['props']['justify'];
-  alignItems?: GridTypeMap['props']['alignItems'];
-  style?: CSSProperties;
   direction?: GridDirection;
+  item?: boolean;
+  justifyContent?: GridTypeMap['props']['justify'];
+  style?: CSSProperties;
+  xs?: GridTypeMap['props']['xs'];
 }): ReactElement {
   return (
     <MUGrid

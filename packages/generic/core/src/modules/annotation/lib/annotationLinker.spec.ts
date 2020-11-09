@@ -105,7 +105,7 @@ describe('annotationLinker', () => {
   });
 
   describe('unlink', () => {
-    it('should unlink the given annotation', () => {
+    it('should unlink the given annotation (source of a link)', () => {
       const category = 'CATEGORY';
       const textSource = 'SOURCE';
       const textTarget = 'TARGET';
@@ -118,6 +118,22 @@ describe('annotationLinker', () => {
       const annotationsWithLinks = annotationLinker.link(annotations[0], annotations[2], annotations);
 
       const newAnnotations = annotationLinker.unlink(annotationsWithLinks[0], annotationsWithLinks);
+
+      expect(newAnnotations).toEqual(annotations);
+    });
+    it('should unlink the given annotation (target of a link)', () => {
+      const category = 'CATEGORY';
+      const textSource = 'SOURCE';
+      const textTarget = 'TARGET';
+      const annotations = [
+        { category: category, text: textSource },
+        { category: category, text: textSource },
+        { category: category, text: textTarget },
+        {},
+      ].map(annotationGenerator.generate);
+      const annotationsWithLinks = annotationLinker.link(annotations[0], annotations[2], annotations);
+
+      const newAnnotations = annotationLinker.unlink(annotationsWithLinks[2], annotationsWithLinks);
 
       expect(newAnnotations).toEqual(annotations);
     });

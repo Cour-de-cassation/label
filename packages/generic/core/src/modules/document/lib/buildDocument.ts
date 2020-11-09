@@ -3,4 +3,9 @@ import { documentType } from '../documentType';
 
 export { buildDocument };
 
-const buildDocument: (documentFields: omitIdType<documentType>) => documentType = idModule.lib.buildObjectWithId;
+function buildDocument(documentFields: omitIdType<documentType>): documentType {
+  return {
+    ...documentFields,
+    _id: idModule.lib.buildId(),
+  };
+}

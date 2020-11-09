@@ -1,25 +1,25 @@
-import { idModule } from '../../id';
+import { idModule, idType } from '../../id';
 import { fetchedAnnotationType } from '../annotationType';
-import { entityIdHandler } from './entityIdHandler';
+import { annotationUpdater } from './annotationUpdater';
+import { buildFetchedAnnotation } from './buildAnnotation';
 
 export { fetchedAnnotationHandler, LABEL_ANNOTATION_SOURCE };
 
 const fetchedAnnotationHandler = {
   create,
   createAll,
-  update,
-  updateMany,
+  updateOneCategory,
+  updateManyCategory,
   getAnnotationIndex,
 };
 
 const LABEL_ANNOTATION_SOURCE = 'label';
 
 function create(category: string, index: number, text: string): fetchedAnnotationType {
-  return idModule.lib.buildObjectWithId({
+  return buildFetchedAnnotation({
     category,
-    start: index,
-    entityId: entityIdHandler.compute(category, text),
     source: LABEL_ANNOTATION_SOURCE,
+    start: index,
     text,
   });
 }
@@ -80,22 +80,25 @@ function createAll(
   }
 }
 
-function updateMany(
+function updateManyCategory(
   annotations: fetchedAnnotationType[],
-  shouldBeUpdated: (annotation: fetchedAnnotationType) => boolean,
-  updateAnnotation: (annotation: fetchedAnnotationType) => fetchedAnnotationType,
+  entityId: string,
+  category: string,
 ): fetchedAnnotationType[] {
   return annotations.map((annotation) =>
-    shouldBeUpdated(annotation) ? update(annotation, updateAnnotation) : annotation,
+    annotation.entityId === entityId ? updateCategory(annotation, category) : annotation,
   );
 }
 
-function update(
-  annotation: fetchedAnnotationType,
-  updateAnnotation: (annotation: fetchedAnnotationType) => fetchedAnnotationType,
-): fetchedAnnotationType {
+function updateOneCategory(annotations: fetchedAnnotationType[], annotationId: idType, category: string) {
+  return annotations.map((annotation) =>
+    idModule.lib.equalId(annotation._id, annotationId) ? updateCategory(annotation, category) : annotation,
+  );
+}
+
+function updateCategory(annotation: fetchedAnnotationType, category: string): fetchedAnnotationType {
   return {
-    ...updateAnnotation(annotation),
+    ...annotationUpdater.updateCategory(annotation, category),
     source: LABEL_ANNOTATION_SOURCE,
   };
 }

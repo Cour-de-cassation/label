@@ -1,5 +1,4 @@
 import { annotationGenerator } from '../generator';
-import { fetchedAnnotationType } from '../annotationType';
 import { fetchedAnnotationHandler, LABEL_ANNOTATION_SOURCE } from './fetchedAnnotationHandler';
 import { entityIdHandler } from './entityIdHandler';
 
@@ -117,16 +116,21 @@ describe('fetchedAnnotationHandler', () => {
     });
   });
 
-  describe('updateMany', () => {
-    it('should update all the given annotations that satisfy the given predicate with the given update', () => {
+  describe('updateManyCategory', () => {
+    it('should update the category of all the given annotations of the given entityId', () => {
       const newCategory = 'ANOTHER_CATEGORY';
-      const annotations = [{ category: 'CATEGORY1' }, { category: 'CATEGORY2' }, { category: 'CATEGORY1' }].map(
-        generateFetchedAnnotation,
-      );
-      const shouldBeUpdate = (annotation: fetchedAnnotationType) => annotation.category === 'CATEGORY1';
-      const updateAnnotation = (annotation: fetchedAnnotationType) => ({ ...annotation, category: newCategory });
+      const text = 'TEXT';
+      const annotations = [
+        { category: 'CATEGORY1', text },
+        { category: 'CATEGORY2' },
+        { category: 'CATEGORY1', text },
+      ].map(generateFetchedAnnotation);
 
-      const updatedAnnotations = fetchedAnnotationHandler.updateMany(annotations, shouldBeUpdate, updateAnnotation);
+      const updatedAnnotations = fetchedAnnotationHandler.updateManyCategory(
+        annotations,
+        annotations[0].entityId,
+        newCategory,
+      );
 
       expect(updatedAnnotations.map((annotation) => annotation.category)).toEqual([
         newCategory,
@@ -136,15 +140,31 @@ describe('fetchedAnnotationHandler', () => {
     });
   });
 
-  describe('update', () => {
-    it('should update the given annotation with the given update', () => {
+  describe('updateOneCategory', () => {
+    it('should update the given annotation with the given category', () => {
       const newCategory = 'ANOTHER_CATEGORY';
-      const annotation = generateFetchedAnnotation({ category: 'CATEGORY' });
-      const updateAnnotation = (annotation: fetchedAnnotationType) => ({ ...annotation, category: newCategory });
+      const annotations = [{ category: 'CATEGORY' }, { category: 'CATEGORY2' }].map(generateFetchedAnnotation);
 
-      const updatedAnnotation = fetchedAnnotationHandler.update(annotation, updateAnnotation);
+      const updatedAnnotations = fetchedAnnotationHandler.updateOneCategory(
+        annotations,
+        annotations[0]._id,
+        newCategory,
+      );
 
-      expect(updatedAnnotation.category).toEqual(newCategory);
+      expect(updatedAnnotations[0].category).toEqual(newCategory);
+    });
+    it('should update the entityId if needed', () => {
+      const newCategory = 'ANOTHER_CATEGORY';
+      const text = 'TEXT';
+      const annotations = [{ category: 'CATEGORY', text }, { category: 'CATEGORY2' }].map(generateFetchedAnnotation);
+
+      const updatedAnnotations = fetchedAnnotationHandler.updateOneCategory(
+        annotations,
+        annotations[0]._id,
+        newCategory,
+      );
+
+      expect(updatedAnnotations[0].entityId).toEqual(entityIdHandler.compute(newCategory, text));
     });
   });
 

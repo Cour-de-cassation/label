@@ -3,5 +3,9 @@ import { problemReportType } from '../problemReportType';
 
 export { buildProblemReport };
 
-const buildProblemReport: (assignationFields: omitIdType<problemReportType>) => problemReportType =
-  idModule.lib.buildObjectWithId;
+function buildProblemReport(assignationFields: omitIdType<problemReportType>): problemReportType {
+  return {
+    ...assignationFields,
+    _id: idModule.lib.buildId(),
+  };
+}

@@ -49,11 +49,9 @@ function unlink<annotationT extends fetchedAnnotationType>(
   annotationToUnlink: annotationT,
   annotations: annotationT[],
 ): annotationT[] {
-  const { category, text } = annotationToUnlink;
-
   return annotations.map((annotation) =>
-    annotation.category === category && annotation.text == text
-      ? { ...annotation, entityId: entityIdHandler.compute(category, text) }
+    annotation.entityId === annotationToUnlink.entityId
+      ? { ...annotation, entityId: entityIdHandler.compute(annotation.category, annotation.text) }
       : annotation,
   );
 }

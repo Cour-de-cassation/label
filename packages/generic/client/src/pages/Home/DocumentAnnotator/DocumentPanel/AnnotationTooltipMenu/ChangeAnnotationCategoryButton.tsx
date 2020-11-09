@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationModule, fetchedAnnotationType, idModule, settingsModule } from '@label/core';
+import { annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
 import { uniq } from 'lodash';
 import { IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
@@ -31,16 +31,17 @@ function ChangeAnnotationCategoryButton(props: {
   );
 
   function changeAnnotationCategory(newCategory: string) {
-    const newAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateMany(
-      annotatorState.annotations,
-      props.shouldApplyEverywhere
-        ? (annotation) => annotation.entityId === props.annotation.entityId
-        : (annotation) => idModule.lib.equalId(annotation._id, props.annotation._id),
-      (annotation) => ({
-        ...annotation,
-        category: newCategory,
-      }),
-    );
+    const newAnnotations = props.shouldApplyEverywhere
+      ? annotationModule.lib.fetchedAnnotationHandler.updateManyCategory(
+          annotatorState.annotations,
+          props.annotation.entityId,
+          newCategory,
+        )
+      : annotationModule.lib.fetchedAnnotationHandler.updateOneCategory(
+          annotatorState.annotations,
+          props.annotation._id,
+          newCategory,
+        );
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);

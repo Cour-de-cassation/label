@@ -1,7 +1,7 @@
 import React, { MouseEvent, ReactElement, ReactNode } from 'react';
-import { Theme, useTheme } from '@material-ui/core';
 import { Button, Icon, LayoutGrid } from '../materialUI';
 import { Dropdown } from './Dropdown';
+import { useCustomTheme, customThemeType } from '../../../styles';
 
 export { LabelledDropdown };
 
@@ -42,7 +42,7 @@ function LabelledDropdownButton<T extends string>(props: {
   onClick: (event: MouseEvent) => void;
   width?: number;
 }) {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const style = buildStyle(theme);
 
   return (
@@ -58,10 +58,10 @@ function LabelledDropdownButton<T extends string>(props: {
     </Button>
   );
 
-  function buildStyle(theme: Theme) {
+  function buildStyle(theme: customThemeType) {
     return {
       dropdown: {
-        border: `${LABELLED_DROPDOWN_BORDER_THICKNESS}px solid ${theme.palette.grey[500]}`,
+        border: `${LABELLED_DROPDOWN_BORDER_THICKNESS}px solid ${theme.colors.dropdown.border}`,
         textTransform: 'none',
         width: `${props.width}px`,
       },

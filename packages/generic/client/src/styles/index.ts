@@ -1,8 +1,13 @@
 import { heights } from './heights';
-import { typographyType, displayModeType } from './theme';
-import { ThemeProvider } from './ThemeProvider';
-import { useDisplayMode } from './useDisplayMode';
+import {
+  typographyType,
+  displayModeType,
+  useCustomTheme,
+  customThemeType,
+  useDisplayMode,
+  ThemeProvider,
+} from './theme';
 
-export { heights, ThemeProvider, useDisplayMode };
+export { heights, ThemeProvider, useDisplayMode, useCustomTheme };
 
-export type { typographyType, displayModeType };
+export type { typographyType, displayModeType, customThemeType };

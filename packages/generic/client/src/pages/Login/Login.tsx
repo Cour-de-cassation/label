@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Theme, useTheme } from '@material-ui/core';
 import { ButtonWithIcon, LayoutGrid, Logo, Text, TextInput } from '../../components';
 import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
+import { customThemeType, useCustomTheme } from '../../styles';
 
 export { Login };
 
@@ -12,7 +12,7 @@ const Login: FunctionComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
   return (
@@ -63,24 +63,24 @@ const Login: FunctionComponent = () => {
     }
   }
 
-  function buildStyles(theme: Theme) {
+  function buildStyles(theme: customThemeType) {
     return {
       mainContainer: {
         height: '100vh',
       },
       logoContainer: {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing * 2,
       },
       formContainer: {
-        padding: theme.spacing(6),
+        padding: theme.spacing * 6,
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.colors.background.highlight,
       },
       inputContainer: {
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing * 3,
       },
       forgottenPasswordContainer: {
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing * 3,
       },
       loginButtonContainer: {
         display: 'flex',

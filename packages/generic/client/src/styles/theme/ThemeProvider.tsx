@@ -1,20 +1,15 @@
-import React, { ReactNode, createContext, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core';
-import { displayModeType, themes } from './theme';
+import { buildMuiTheme } from './theme';
+import { displayModeType, DisplayModeContext } from './displayMode';
 
-export { ThemeProvider, DisplayModeContext };
+export { ThemeProvider };
 
-const DisplayModeContext = createContext<{
-  displayMode: displayModeType;
-  setDisplayMode: (displayMode: displayModeType) => void;
-}>({
-  displayMode: 'dark',
-  setDisplayMode: () => null,
-});
+const DEFAULT_DISPLAY_MODE = 'dark';
 
 function ThemeProvider(props: { children: ReactNode }) {
-  const [displayMode, setDisplayMode] = useState<displayModeType>('light');
-  const theme = themes[displayMode]();
+  const [displayMode, setDisplayMode] = useState<displayModeType>(DEFAULT_DISPLAY_MODE);
+  const theme = buildMuiTheme(displayMode);
   const displayModeContext = { displayMode, setDisplayMode };
   const style = buildStyle();
 

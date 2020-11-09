@@ -1,13 +1,12 @@
-import { Theme, useTheme } from '@material-ui/core';
 import React from 'react';
 import { Drawer, IconButton, LayoutGrid, RadioButton, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
-import { useDisplayMode } from '../../../../styles';
+import { useCustomTheme, customThemeType, useDisplayMode } from '../../../../styles';
 
 export { SettingsDrawer };
 
 function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const { displayMode, setDisplayMode } = useDisplayMode();
 
   const styles = buildStyles(theme);
@@ -46,25 +45,25 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
     </Drawer>
   );
 
-  function buildStyles(theme: Theme) {
+  function buildStyles(theme: customThemeType) {
     return {
       drawer: {
         width: 600,
-        padding: theme.spacing(6),
+        padding: theme.spacing * 6,
       },
       header: {
-        paddingBottom: theme.spacing(5),
+        paddingBottom: theme.spacing * 5,
         borderBottom: 'solid 1px',
-        borderBottomColor: theme.palette.grey[400],
+        borderBottomColor: theme.colors.separator,
       },
       displayModeContainer: {
-        paddingTop: theme.spacing(6),
+        paddingTop: theme.spacing * 6,
       },
       displayModeTitle: {
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing * 3,
       },
       radioButton: {
-        paddingLeft: theme.spacing(3),
+        paddingLeft: theme.spacing * 3,
       },
     };
   }

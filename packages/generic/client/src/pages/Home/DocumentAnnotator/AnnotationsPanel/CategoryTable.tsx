@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { uniq } from 'lodash';
+import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { Theme, useTheme } from '@material-ui/core';
+import { CategoryTableEntry } from './CategoryTableEntry';
 
-export { CategoryPanel };
+export { CategoryTable };
 
 const ACCORDION_HEADER_PADDING = 5;
 
-function CategoryPanel(props: {
-  annotationsAndOccurences: Array<{ annotation: fetchedAnnotationType; occurences: number }>;
+function CategoryTable(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
   category: string;
@@ -18,10 +19,11 @@ function CategoryPanel(props: {
   const iconSize = theme.shape.borderRadius * 2 - ACCORDION_HEADER_PADDING;
   const styles = buildStyles(theme);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const categoryName = settingsModule.lib.getAnnotationCategoryText(
-    props.category,
-    props.annotatorStateHandler.get().settings,
-  );
+  const annotatorState = props.annotatorStateHandler.get();
+
+  const categoryName = settingsModule.lib.getAnnotationCategoryText(props.category, annotatorState.settings);
+  const categoryAnnotations = annotatorState.annotations.filter((annotation) => annotation.category === props.category);
+  const categoryAnnotationEntityIds = computeSortedEntityIds(categoryAnnotations);
 
   return (
     <Accordion
@@ -37,7 +39,7 @@ function CategoryPanel(props: {
               />
             </LayoutGrid>
             <LayoutGrid item style={styles.categoryContainer}>
-              <Text>{`${categoryName} (${props.annotationsAndOccurences.length})`}</Text>
+              <Text>{`${categoryName} (${categoryAnnotations.length})`}</Text>
             </LayoutGrid>
           </LayoutGrid>
           <LayoutGrid container item alignItems="center" xs={1}>
@@ -47,20 +49,12 @@ function CategoryPanel(props: {
       }
       body={
         <LayoutGrid container>
-          {props.annotationsAndOccurences.map(({ annotation, occurences }) => (
-            <LayoutGrid container justifyContent="space-between" item key={annotation.text}>
-              <LayoutGrid xs={8} item>
-                <Text variant="body2">{annotation.text}</Text>
-              </LayoutGrid>
-              <LayoutGrid xs={3} item>
-                <Text style={styles.anonymizedText} variant="body2">
-                  {props.anonymizer.anonymize(annotation)}
-                </Text>
-              </LayoutGrid>
-              <LayoutGrid xs={1} item>
-                <Text style={styles.occurencesNumber}>{occurences}</Text>
-              </LayoutGrid>
-            </LayoutGrid>
+          {Object.values(categoryAnnotationEntityIds).map((entityId) => (
+            <CategoryTableEntry
+              annotatorStateHandler={props.annotatorStateHandler}
+              anonymizer={props.anonymizer}
+              entityId={entityId}
+            />
           ))}
         </LayoutGrid>
       }
@@ -81,13 +75,14 @@ function CategoryPanel(props: {
       categoryContainer: {
         paddingLeft: theme.spacing(),
       },
-      anonymizedText: {
-        fontStyle: 'italic',
-      },
-      occurencesNumber: {
-        textAlign: 'right',
-        paddingRight: theme.spacing(3),
-      },
     } as const;
+  }
+
+  function computeSortedEntityIds(annotations: fetchedAnnotationType[]) {
+    return uniq(annotations.map((annotation) => annotation.entityId)).sort(
+      (entityId1, entityId2) =>
+        annotations.filter((annotation) => annotation.entityId === entityId2).length -
+        annotations.filter((annotation) => annotation.entityId === entityId1).length,
+    );
   }
 }

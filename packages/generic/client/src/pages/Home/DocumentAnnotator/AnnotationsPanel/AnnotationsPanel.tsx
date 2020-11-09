@@ -1,12 +1,12 @@
 import React, { CSSProperties } from 'react';
+import { uniq } from 'lodash';
 import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { heights } from '../../../../styles';
-import { groupAnnotations } from './lib';
-import { CategoryPanel } from './CategoryPanel';
+import { CategoryTable } from './CategoryTable';
 
 export { AnnotationsPanel };
 
@@ -14,9 +14,9 @@ function AnnotationsPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
 }) {
-  const groupedAnnotations = groupAnnotations(props.annotatorStateHandler.get().annotations);
   const theme = useTheme();
   const styles = buildStyles(theme);
+  const categories = uniq(props.annotatorStateHandler.get().annotations.map((annotation) => annotation.category));
 
   return (
     <LayoutGrid style={styles.panel}>
@@ -26,10 +26,9 @@ function AnnotationsPanel(props: {
         </LayoutGrid>
       </LayoutGrid>
       <LayoutGrid style={styles.categoriesContainer}>
-        {groupedAnnotations.map(({ category, annotationsAndOccurences }) => (
+        {categories.map((category) => (
           <LayoutGrid key={category} style={styles.category}>
-            <CategoryPanel
-              annotationsAndOccurences={annotationsAndOccurences}
+            <CategoryTable
               annotatorStateHandler={props.annotatorStateHandler}
               anonymizer={props.anonymizer}
               category={category}

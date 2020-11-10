@@ -3,6 +3,7 @@ import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/co
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
+import { headerModeType } from './DocumentPanelHeader';
 
 export { DocumentAnnotationText };
 
@@ -11,6 +12,7 @@ function DocumentAnnotationText(props: {
   annotation: fetchedAnnotationType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
   isAnonymizedView: boolean;
+  setHeaderMode: (headerMode: headerModeType) => void;
 }): ReactElement {
   const style = buildStyle();
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
@@ -41,6 +43,7 @@ function DocumentAnnotationText(props: {
         anonymizer={props.anonymizer}
         isAnonymizedView={props.isAnonymizedView}
         onClose={closeTooltipMenu}
+        setHeaderMode={props.setHeaderMode}
       />
     </span>
   );

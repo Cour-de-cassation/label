@@ -1,6 +1,7 @@
 export { fr };
 
 const fr = {
+  anonymisedView: 'Vue anonymisée',
   applyEveryWhere: 'Appliquer à tous',
   askedAnnotations: 'Annotations demandées',
   cancel: 'Annuler',

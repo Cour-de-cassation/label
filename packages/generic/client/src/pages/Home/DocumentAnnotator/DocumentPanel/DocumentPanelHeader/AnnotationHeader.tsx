@@ -1,16 +1,16 @@
-import React, { ReactElement } from 'react';
-import { Header, IconButton, SwitchButton, Text } from '../../../../components';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { heights, useCustomTheme } from '../../../../styles';
-import { wordings } from '../../../../wordings';
+import React from 'react';
+import { Header, IconButton, SwitchButton, Text } from '../../../../../components';
+import { heights, useCustomTheme } from '../../../../../styles';
+import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { wordings } from '../../../../../wordings';
 
-export { DocumentPanelHeader };
+export { AnnotationHeader };
 
-function DocumentPanelHeader(props: {
+function AnnotationHeader(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   isAnonymizedView: boolean;
   switchAnonymizedView: () => void;
-}): ReactElement {
+}) {
   const theme = useCustomTheme();
   const style = buildStyle();
 
@@ -33,7 +33,7 @@ function DocumentPanelHeader(props: {
         />,
       ]}
       rightHeaderComponents={[
-        <Text>Vue anonymisée</Text>,
+        <Text>{wordings.anonymisedView}</Text>,
         <SwitchButton checked={props.isAnonymizedView} color="primary" onChange={props.switchAnonymizedView} />,
       ]}
       spaceBetweenComponents={theme.spacing * 2}

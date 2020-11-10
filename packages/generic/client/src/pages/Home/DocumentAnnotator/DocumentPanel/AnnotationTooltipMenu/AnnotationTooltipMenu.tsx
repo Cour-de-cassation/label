@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { useTheme, Theme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { Checkbox, ComponentsList, DeleteAnnotationButton, LayoutGrid, TooltipMenu } from '../../../../../components';
+import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
@@ -22,7 +22,7 @@ function AnnotationTooltipMenu(props: {
   isAnonymizedView: boolean;
   onClose: () => void;
 }): ReactElement {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const style = buildStyle(theme);
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
 
@@ -70,18 +70,18 @@ function AnnotationTooltipMenu(props: {
                 shouldApplyEverywhere={shouldApplyEverywhere}
               />,
             ]}
-            spaceBetweenComponents={theme.spacing()}
+            spaceBetweenComponents={theme.spacing}
           />
         </LayoutGrid>
       </LayoutGrid>
     </TooltipMenu>
   );
 
-  function buildStyle(theme: Theme) {
+  function buildStyle(theme: customThemeType) {
     return {
       tooltipItem: {
         maxWidth: ANNOTATION_TOOLTIP_MENU_WIDTH,
-        padding: `${theme.spacing()}px 0px`,
+        padding: `${theme.spacing}px 0px`,
       },
     };
   }

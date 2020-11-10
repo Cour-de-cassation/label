@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType, annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
 import { CategoryIcon, Header, Text } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
+import { customThemeType, useCustomTheme } from '../../../../../styles';
 
 export { AnnotationTooltipMenuHeader };
 
@@ -13,7 +13,7 @@ function AnnotationTooltipMenuHeader(props: {
   anonymizer: anonymizerType<fetchedAnnotationType>;
   isAnonymizedView: boolean;
 }): ReactElement {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const style = buildStyle(theme);
   const annotatorState = props.annotatorStateHandler.get();
   const annotationIndex = annotationModule.lib.fetchedAnnotationHandler.getAnnotationIndex(
@@ -38,7 +38,7 @@ function AnnotationTooltipMenuHeader(props: {
           </Text>,
         ]}
         rightHeaderComponents={[<Text>{`${annotationIndex.index}/${annotationIndex.total}`}</Text>]}
-        spaceBetweenComponents={theme.spacing()}
+        spaceBetweenComponents={theme.spacing}
         style={style.header}
         variant="mainLeft"
       />
@@ -51,10 +51,10 @@ function AnnotationTooltipMenuHeader(props: {
     </div>
   );
 
-  function buildStyle(theme: Theme) {
+  function buildStyle(theme: customThemeType) {
     return {
       header: {
-        padding: `${theme.spacing()}px 0px`,
+        padding: `${theme.spacing}px 0px`,
       },
     };
   }

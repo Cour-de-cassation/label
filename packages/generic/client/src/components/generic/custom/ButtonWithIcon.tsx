@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactElement, MouseEvent } from 'react';
-import { Theme, useTheme } from '@material-ui/core';
 import { Button, iconNameType, Icon } from '../materialUI';
+import { customThemeType, useCustomTheme } from '../../../styles';
 
 export { ButtonWithIcon };
 
@@ -12,7 +12,7 @@ function ButtonWithIcon(props: {
   style?: CSSProperties;
   text: string;
 }): ReactElement {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const style = buildStyle(theme);
 
   return (
@@ -30,7 +30,7 @@ function ButtonWithIcon(props: {
     </Button>
   );
 
-  function buildStyle(theme: Theme): { [cssClass: string]: CSSProperties } {
+  function buildStyle(theme: customThemeType): { [cssClass: string]: CSSProperties } {
     return {
       button: {
         justifyContent: 'start',
@@ -40,7 +40,7 @@ function ButtonWithIcon(props: {
         display: 'flex',
       },
       buttonText: {
-        paddingLeft: theme.spacing(),
+        paddingLeft: theme.spacing,
       },
     };
   }

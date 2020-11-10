@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import { useTheme, Theme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid, TooltipMenu } from '../../../../../components';
+import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 
@@ -18,7 +18,7 @@ function AnnotationTooltipSummary(props: {
   onClickOnAnchorAnnotation: () => void;
   onClose: () => void;
 }): ReactElement {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const style = buildStyle(theme);
 
   return (
@@ -40,14 +40,14 @@ function AnnotationTooltipSummary(props: {
     </TooltipMenu>
   );
 
-  function buildStyle(theme: Theme) {
+  function buildStyle(theme: customThemeType) {
     return {
       tooltip: {
         zIndex: 1,
       },
       tooltipItem: {
         maxWidth: ANNOTATION_TOOLTIP_SUMMARY_WIDTH,
-        padding: `${theme.spacing()}px 0px`,
+        padding: `${theme.spacing}px 0px`,
       },
     };
   }

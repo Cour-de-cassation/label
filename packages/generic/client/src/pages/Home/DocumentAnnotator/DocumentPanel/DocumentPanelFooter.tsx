@@ -1,11 +1,10 @@
 import React from 'react';
 import { assignationType } from '@label/core';
-import { heights } from '../../../../styles';
+import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { ButtonWithIcon, LayoutGrid } from '../../../../components';
 import { useGraphQLMutation } from '../../../../graphQL';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
-import { useTheme, Theme } from '@material-ui/core';
 
 export { DocumentPanelFooter };
 
@@ -13,7 +12,7 @@ function DocumentPanelFooter(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   fetchNewDocument: () => Promise<void>;
 }) {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
 
@@ -43,14 +42,14 @@ function DocumentPanelFooter(props: {
     </LayoutGrid>
   );
 
-  function buildStyles(theme: Theme) {
+  function buildStyles(theme: customThemeType) {
     return {
       footer: {
         height: heights.panelFooter,
-        paddingRight: theme.spacing(2),
+        paddingRight: theme.spacing * 2,
       },
       saveDraftButton: {
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing * 2,
       },
     };
   }

@@ -17,6 +17,8 @@ const palette = {
 };
 
 const customDarkColors = {
+  primary: palette.brightSun,
+  secondary: palette.orange,
   background: {
     default: palette.gray200,
     highlight: palette.gray300,
@@ -47,6 +49,8 @@ const customDarkColors = {
 type colorsType = typeof customDarkColors;
 
 const customLightColors: colorsType = {
+  primary: palette.brightSun,
+  secondary: palette.orange,
   background: {
     default: palette.white,
     highlight: palette.grayBlue,

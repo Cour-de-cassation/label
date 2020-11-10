@@ -2,7 +2,7 @@ import { merge } from 'lodash';
 import { createMuiTheme, ThemeOptions } from '@material-ui/core';
 import { ThemeProvider } from './ThemeProvider';
 import { useDisplayMode, displayModeType } from './displayMode';
-import { customColors, palette, colorsType } from './colors';
+import { customColors, colorsType } from './colors';
 import { typography, typographyType } from './typography';
 
 export { buildMuiTheme, useCustomTheme, ThemeProvider, useDisplayMode };
@@ -13,14 +13,6 @@ const commonTheme = {
   shape: { borderRadius: 25 },
   spacing: 8,
   typography,
-  palette: {
-    primary: {
-      main: palette.brightSun,
-    },
-    secondary: {
-      main: palette.orange,
-    },
-  },
 };
 
 type customThemeType = typeof commonTheme & { colors: colorsType };
@@ -44,6 +36,12 @@ const buildMuiTheme = (displayMode: displayModeType) => {
   return createMuiTheme(
     buildTheme({
       palette: {
+        primary: {
+          main: colors.primary,
+        },
+        secondary: {
+          main: colors.secondary,
+        },
         text: { primary: colors.text.default, secondary: colors.text.disabled },
         background: {
           default: colors.background.default,

@@ -1,10 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTheme } from '@material-ui/core';
 import { Header, IconButton, MenuBar, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
-import { heights } from '../../../../styles';
+import { heights, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
 import { SettingsButton } from './SettingsButton';
@@ -15,7 +14,7 @@ function DocumentAnnotatorHeader(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   fetchNewDocument: () => Promise<void>;
 }) {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const style = buildStyle();
   const history = useHistory();
 
@@ -31,7 +30,7 @@ function DocumentAnnotatorHeader(props: {
           <SettingsButton />,
           <IconButton iconName="logout" hint={wordings.logout} onClick={logout} />,
         ]}
-        spaceBetweenComponents={theme.spacing(2)}
+        spaceBetweenComponents={theme.spacing * 2}
         style={style.header}
         variant="classic"
       />

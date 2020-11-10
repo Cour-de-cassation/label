@@ -1,11 +1,10 @@
 import React, { CSSProperties } from 'react';
 import { uniq } from 'lodash';
-import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
-import { heights } from '../../../../styles';
+import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { CategoryTable } from './CategoryTable';
 
 export { AnnotationsPanel };
@@ -14,7 +13,7 @@ function AnnotationsPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
 }) {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const categories = uniq(props.annotatorStateHandler.get().annotations.map((annotation) => annotation.category));
 
@@ -39,11 +38,11 @@ function AnnotationsPanel(props: {
     </LayoutGrid>
   );
 
-  function buildStyles(theme: Theme): { [cssClass: string]: CSSProperties } {
+  function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
     return {
       panel: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(4),
+        paddingLeft: theme.spacing * 2,
+        paddingRight: theme.spacing * 4,
       },
       panelHeader: {
         height: heights.panelHeader,
@@ -53,7 +52,7 @@ function AnnotationsPanel(props: {
         height: heights.panel,
       },
       category: {
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing * 3,
       },
     };
   }

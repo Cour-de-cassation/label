@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { uniq } from 'lodash';
-import { Theme, useTheme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
+import { customThemeType, useCustomTheme } from '../../../../styles';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { CategoryTableEntry } from './CategoryTableEntry';
@@ -15,7 +15,7 @@ function CategoryTable(props: {
   anonymizer: anonymizerType<fetchedAnnotationType>;
   category: string;
 }) {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const iconSize = theme.shape.borderRadius * 2 - ACCORDION_HEADER_PADDING;
   const styles = buildStyles(theme);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -62,7 +62,7 @@ function CategoryTable(props: {
     />
   );
 
-  function buildStyles(theme: Theme) {
+  function buildStyles(theme: customThemeType) {
     return {
       accordionHeader: {
         padding: ACCORDION_HEADER_PADDING,
@@ -73,7 +73,7 @@ function CategoryTable(props: {
         },
       },
       categoryContainer: {
-        paddingLeft: theme.spacing(),
+        paddingLeft: theme.spacing,
       },
     } as const;
   }

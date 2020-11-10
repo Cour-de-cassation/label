@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
-import { useTheme } from '@material-ui/core';
 import { Header, IconButton, SwitchButton, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { heights } from '../../../../styles';
+import { heights, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 
 export { DocumentPanelHeader };
@@ -12,7 +11,7 @@ function DocumentPanelHeader(props: {
   isAnonymizedView: boolean;
   switchAnonymizedView: () => void;
 }): ReactElement {
-  const theme = useTheme();
+  const theme = useCustomTheme();
   const style = buildStyle();
 
   return (
@@ -37,7 +36,7 @@ function DocumentPanelHeader(props: {
         <Text>Vue anonymisée</Text>,
         <SwitchButton checked={props.isAnonymizedView} color="primary" onChange={props.switchAnonymizedView} />,
       ]}
-      spaceBetweenComponents={theme.spacing(2)}
+      spaceBetweenComponents={theme.spacing * 2}
       style={style.header}
       variant="classic"
     />

@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { annotationModule, fetchedAnnotationType } from '@label/core';
-import { IconButton } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { wordings } from '../../../../../wordings';
+import { annotatorStateHandlerType } from '../../services/annotatorState';
+import { wordings } from '../../wordings';
+import { IconButton } from '../generic';
 
 export { UnlinkAnnotationButton };
 

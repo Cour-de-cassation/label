@@ -1,14 +1,20 @@
 import React, { ReactElement, useState } from 'react';
 import { anonymizerType, fetchedAnnotationType } from '@label/core';
-import { Checkbox, ComponentsList, DeleteAnnotationButton, LayoutGrid, TooltipMenu } from '../../../../../components';
+import {
+  Checkbox,
+  ComponentsList,
+  DeleteAnnotationButton,
+  LayoutGrid,
+  LinkAnnotationDropdown,
+  TooltipMenu,
+  UnlinkAnnotationButton,
+} from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
-import { ChangeAnnotationCategoryButton } from './ChangeAnnotationCategoryButton';
-import { LinkAnnotationButton } from './LinkAnnotationButton';
+import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { ResizeAnnotationButton } from './ResizeAnnotationButton';
-import { UnlinkAnnotationButton } from './UnlinkAnnotationButton';
 
 export { AnnotationTooltipMenu };
 
@@ -47,13 +53,13 @@ function AnnotationTooltipMenu(props: {
         <LayoutGrid container style={style.tooltipItem}>
           <ComponentsList
             components={[
-              <ChangeAnnotationCategoryButton
+              <ChangeAnnotationCategoryDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
                 shouldApplyEverywhere={shouldApplyEverywhere}
               />,
               <ResizeAnnotationButton />,
-              <LinkAnnotationButton
+              <LinkAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
                 disabled={!shouldApplyEverywhere}

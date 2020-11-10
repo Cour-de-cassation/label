@@ -42,7 +42,7 @@ function getLinkableAnnotations<annotationT extends fetchedAnnotationType>(
         otherAnnotation.category === annotation.category && otherAnnotation.entityId !== annotation.entityId,
     ),
     (otherAnnotation) => otherAnnotation.entityId,
-  );
+  ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
 }
 
 function unlink<annotationT extends fetchedAnnotationType>(

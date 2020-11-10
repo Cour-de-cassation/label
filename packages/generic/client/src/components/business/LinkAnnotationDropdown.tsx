@@ -1,17 +1,18 @@
 import React, { ReactElement } from 'react';
 import { annotationModule, fetchedAnnotationType } from '@label/core';
-import { IconDropdown } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { wordings } from '../../../../../wordings';
+import { annotatorStateHandlerType } from '../../services/annotatorState';
+import { wordings } from '../../wordings';
+import { IconDropdown } from '../generic';
 
-export { LinkAnnotationButton };
+export { LinkAnnotationDropdown };
 
 const LINK_ANNOTATION_MENU_WIDTH = 300;
 
-function LinkAnnotationButton(props: {
+function LinkAnnotationDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   disabled: boolean;
+  onClose?: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
   const linkableAnnotations = annotationModule.lib.annotationLinker.getLinkableAnnotations(
@@ -29,6 +30,7 @@ function LinkAnnotationButton(props: {
         value: annotation.text,
       }))}
       onChange={linkToAnnotation}
+      onClose={props.onClose}
       width={LINK_ANNOTATION_MENU_WIDTH}
     />
   );

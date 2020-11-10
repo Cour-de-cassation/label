@@ -1,4 +1,4 @@
-import { CategoryIcon, DeleteAnnotationButton, Logo } from './business';
+import { CategoryIcon, DeleteAnnotationButton, LinkAnnotationDropdown, Logo, UnlinkAnnotationButton } from './business';
 import {
   Accordion,
   ButtonWithIcon,
@@ -34,6 +34,7 @@ export {
   IconDropdown,
   LabelledDropdown,
   LayoutGrid,
+  LinkAnnotationDropdown,
   Logo,
   MenuBar,
   RadioButton,
@@ -42,4 +43,5 @@ export {
   TextInput,
   TextInputLarge,
   TooltipMenu,
+  UnlinkAnnotationButton,
 };

@@ -11,6 +11,7 @@ function IconDropdown<T extends string>(props: {
   iconName: iconNameType;
   items: Array<{ displayedText: string; value: T }>;
   onChange: (value: T) => void;
+  onClose?: () => void;
   width?: number;
 }): ReactElement {
   return (
@@ -20,6 +21,7 @@ function IconDropdown<T extends string>(props: {
       )}
       items={props.items.map((item) => ({ element: item.displayedText, value: item.value }))}
       onChange={props.onChange}
+      onClose={props.onClose}
       width={props.width}
     ></Dropdown>
   );

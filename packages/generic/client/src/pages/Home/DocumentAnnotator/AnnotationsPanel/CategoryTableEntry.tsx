@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { uniq } from 'lodash';
 import { anonymizerType, fetchedAnnotationType } from '@label/core';
-import { DeleteAnnotationButton, LayoutGrid, Text } from '../../../../components';
+import {
+  ComponentsList,
+  DeleteAnnotationButton,
+  LayoutGrid,
+  LinkAnnotationDropdown,
+  Text,
+  UnlinkAnnotationButton,
+} from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 
@@ -13,8 +20,9 @@ function CategoryTableEntry(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: anonymizerType<fetchedAnnotationType>;
   entityId: string;
+  setShouldShowActionButtons: (isHovered: boolean) => void;
+  shouldShowActionButtons: boolean;
 }) {
-  const [hovered, setHovered] = useState<boolean>(false);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -23,55 +31,97 @@ function CategoryTableEntry(props: {
     .annotations.filter((annotation) => annotation.entityId === props.entityId);
   const entityAnnotationTexts = uniq(entityAnnotations.map((annotation) => annotation.text));
 
-  return (
-    <LayoutGrid
-      container
-      key={entityAnnotations[0].entityId}
-      item
-      justifyContent="space-between"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={styles.categoryTableEntry}
-    >
-      <LayoutGrid item style={styles.textCell} xs={8}>
-        {entityAnnotationTexts.map((text) => (
-          <Text variant="body2">{text}</Text>
-        ))}
-      </LayoutGrid>
-      <LayoutGrid item style={styles.textCell} xs={3}>
-        <Text style={styles.anonymizedText} variant="body2">
-          {props.anonymizer.anonymize(entityAnnotations[0])}
-        </Text>
-      </LayoutGrid>
-      <LayoutGrid item style={hovered ? styles.actionCell : styles.textCell} xs={1}>
-        {hovered ? (
-          <DeleteAnnotationButton
-            annotatorStateHandler={props.annotatorStateHandler}
-            annotation={entityAnnotations[0]}
-            buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onClick={() => {}}
-            shouldApplyEverywhere={true}
-          />
-        ) : (
+  return props.shouldShowActionButtons ? buildEntryWithAction() : buildEntry();
+
+  function buildEntry() {
+    return (
+      <LayoutGrid
+        container
+        key={entityAnnotations[0].entityId}
+        item
+        justifyContent="space-between"
+        onMouseEnter={() => props.setShouldShowActionButtons(true)}
+        style={styles.categoryTableEntry}
+      >
+        <LayoutGrid item style={styles.textCell} xs={8}>
+          {entityAnnotationTexts.map((text) => (
+            <Text variant="body2">{text}</Text>
+          ))}
+        </LayoutGrid>
+        <LayoutGrid item style={styles.textCell} xs={3}>
+          <Text style={styles.anonymizedText} variant="body2">
+            {props.anonymizer.anonymize(entityAnnotations[0])}
+          </Text>
+        </LayoutGrid>
+        <LayoutGrid item style={styles.textCell} xs={1}>
           <Text style={styles.occurencesNumber}>{entityAnnotations.length}</Text>
-        )}
+        </LayoutGrid>
       </LayoutGrid>
-    </LayoutGrid>
-  );
+    );
+  }
+
+  function buildEntryWithAction() {
+    return (
+      <LayoutGrid
+        container
+        key={entityAnnotations[0].entityId}
+        item
+        justifyContent="space-between"
+        onMouseLeave={() => props.setShouldShowActionButtons(false)}
+        style={styles.categoryTableEntryWithActions}
+      >
+        <LayoutGrid item style={styles.textCell} xs={8}>
+          {entityAnnotationTexts.map((text) => (
+            <Text variant="body2">{text}</Text>
+          ))}
+        </LayoutGrid>
+        <LayoutGrid item style={styles.actionCell} xs={4}>
+          <ComponentsList
+            components={[
+              <LinkAnnotationDropdown
+                annotatorStateHandler={props.annotatorStateHandler}
+                annotation={entityAnnotations[0]}
+                disabled={false}
+                onClose={() => props.setShouldShowActionButtons(false)}
+              />,
+              <UnlinkAnnotationButton
+                annotatorStateHandler={props.annotatorStateHandler}
+                annotation={entityAnnotations[0]}
+                disabled={false}
+              />,
+              <DeleteAnnotationButton
+                annotatorStateHandler={props.annotatorStateHandler}
+                annotation={entityAnnotations[0]}
+                buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                onClick={() => {}}
+                shouldApplyEverywhere={true}
+              />,
+            ]}
+            spaceBetweenComponents={theme.spacing}
+          />
+        </LayoutGrid>
+      </LayoutGrid>
+    );
+  }
 
   function buildStyles(theme: customThemeType) {
     return {
       actionCell: {
-        display: 'flex',
         alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'flex-end',
         padding: `${theme.spacing / 2}px 0`,
       },
       anonymizedText: {
         fontStyle: 'italic',
       },
       categoryTableEntry: {
-        backgroundColor: hovered ? '#FF0000' : undefined,
+        borderRadius: theme.shape.borderRadius,
+        paddingLeft: `${theme.spacing * 2}px`,
+      },
+      categoryTableEntryWithActions: {
+        backgroundColor: '#FF0000',
         borderRadius: theme.shape.borderRadius,
         paddingLeft: `${theme.spacing * 2}px`,
       },

@@ -93,14 +93,14 @@ describe('annotationLinker', () => {
       const category = 'CATEGORY';
       const annotations = [
         { category: category },
-        { category: category },
-        { category: category },
+        { category: category, text: 'Z' },
+        { category: category, text: 'A' },
         { category: 'ANOTHER_CATEGORY' },
       ].map(annotationGenerator.generate);
 
       const linkableAnnotations = annotationLinker.getLinkableAnnotations(annotations[0], annotations);
 
-      expect(linkableAnnotations.sort()).toEqual([annotations[1], annotations[2]].sort());
+      expect(linkableAnnotations).toEqual([annotations[2], annotations[1]]);
     });
   });
 

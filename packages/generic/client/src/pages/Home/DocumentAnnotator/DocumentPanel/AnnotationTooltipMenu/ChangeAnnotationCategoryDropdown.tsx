@@ -5,11 +5,11 @@ import { IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 
-export { ChangeAnnotationCategoryButton };
+export { ChangeAnnotationCategoryDropdown };
 
 const CHANGE_ANNOTATION_CATEGORY_MENU_WIDTH = 300;
 
-function ChangeAnnotationCategoryButton(props: {
+function ChangeAnnotationCategoryDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   shouldApplyEverywhere: boolean;

@@ -12,6 +12,7 @@ function Dropdown<T extends string>(props: {
   defaultValue?: T;
   items: Array<{ element: ReactNode; value: T }>;
   onChange: (value: T) => void;
+  onClose?: () => void;
   width?: number;
 }): ReactElement {
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
@@ -56,6 +57,7 @@ function Dropdown<T extends string>(props: {
 
   function closeDropdown() {
     setAnchorElement(undefined);
+    props.onClose && props.onClose();
   }
 
   function handleSelection(value: T) {

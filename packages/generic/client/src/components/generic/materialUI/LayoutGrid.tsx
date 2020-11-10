@@ -10,18 +10,22 @@ function LayoutGrid(props: {
   direction?: GridDirection;
   item?: boolean;
   justifyContent?: GridTypeMap['props']['justify'];
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   style?: CSSProperties;
   xs?: GridTypeMap['props']['xs'];
 }): ReactElement {
   return (
     <MUGrid
-      style={props.style}
-      container={props.container}
       alignItems={props.alignItems}
-      justify={props.justifyContent}
-      item={props.item}
-      xs={props.xs}
+      container={props.container}
       direction={props.direction}
+      item={props.item}
+      justify={props.justifyContent}
+      onMouseEnter={props.onMouseEnter}
+      onMouseLeave={props.onMouseLeave}
+      style={props.style}
+      xs={props.xs}
     >
       {props.children}
     </MUGrid>

@@ -1,12 +1,11 @@
 import React, { ReactElement, useState } from 'react';
 import { useTheme, Theme } from '@material-ui/core';
 import { anonymizerType, fetchedAnnotationType } from '@label/core';
-import { Checkbox, ComponentsList, LayoutGrid, TooltipMenu } from '../../../../../components';
+import { Checkbox, ComponentsList, DeleteAnnotationButton, LayoutGrid, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryButton } from './ChangeAnnotationCategoryButton';
-import { DeleteAnnotationButton } from './DeleteAnnotationButton';
 import { LinkAnnotationButton } from './LinkAnnotationButton';
 import { ResizeAnnotationButton } from './ResizeAnnotationButton';
 import { UnlinkAnnotationButton } from './UnlinkAnnotationButton';

@@ -11,7 +11,6 @@ function Accordion(props: {
   style?: CSSProperties;
 }): ReactElement {
   const accordionHeaderClasses = buildAccordionHeaderClasses();
-  const style = buildStyle();
 
   return (
     <MuiAccordion onChange={(_event, expanded) => props.onChange(expanded)} style={props.style}>
@@ -24,7 +23,7 @@ function Accordion(props: {
       >
         {props.header}
       </AccordionSummary>
-      <AccordionDetails style={style.accordionBody}>{props.body}</AccordionDetails>
+      <AccordionDetails>{props.body}</AccordionDetails>
     </MuiAccordion>
   );
 }
@@ -39,12 +38,4 @@ function buildAccordionHeaderClasses() {
     },
     expanded: {},
   })();
-}
-
-function buildStyle() {
-  return {
-    accordionBody: {
-      padding: '10px 0 20px 30px',
-    },
-  };
 }

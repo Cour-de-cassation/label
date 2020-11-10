@@ -1,4 +1,4 @@
-import { CategoryIcon, Logo } from './business';
+import { CategoryIcon, DeleteAnnotationButton, Logo } from './business';
 import {
   Accordion,
   ButtonWithIcon,
@@ -26,6 +26,7 @@ export {
   CategoryIcon,
   Checkbox,
   ComponentsList,
+  DeleteAnnotationButton,
   Drawer,
   Header,
   Icon,

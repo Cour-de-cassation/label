@@ -9,12 +9,14 @@ export { UnlinkAnnotationButton };
 function UnlinkAnnotationButton(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
+  buttonSize?: number;
   disabled: boolean;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
 
   return (
     <IconButton
+      buttonSize={props.buttonSize}
       color="default"
       disabled={isDisabled()}
       hint={wordings.unlink}

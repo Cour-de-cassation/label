@@ -11,6 +11,7 @@ const LINK_ANNOTATION_MENU_WIDTH = 300;
 function LinkAnnotationDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
+  buttonSize?: number;
   disabled: boolean;
   onClose?: () => void;
 }): ReactElement {
@@ -22,6 +23,7 @@ function LinkAnnotationDropdown(props: {
 
   return (
     <IconDropdown
+      buttonSize={props.buttonSize}
       disabled={isDisabled()}
       hint={wordings.link}
       iconName="link"

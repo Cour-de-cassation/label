@@ -81,12 +81,14 @@ function CategoryTableEntry(props: {
               <LinkAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={entityAnnotations[0]}
+                buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
                 disabled={false}
                 onClose={() => props.setShouldShowActionButtons(false)}
               />,
               <UnlinkAnnotationButton
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={entityAnnotations[0]}
+                buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
                 disabled={false}
               />,
               <DeleteAnnotationButton
@@ -121,7 +123,7 @@ function CategoryTableEntry(props: {
         paddingLeft: `${theme.spacing * 2}px`,
       },
       categoryTableEntryWithActions: {
-        backgroundColor: '#FF0000',
+        backgroundColor: theme.colors.button.default.hoveredBackground,
         borderRadius: theme.shape.borderRadius,
         paddingLeft: `${theme.spacing * 2}px`,
       },

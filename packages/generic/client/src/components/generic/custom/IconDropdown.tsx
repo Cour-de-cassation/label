@@ -6,6 +6,7 @@ import { IconButton } from './IconButton';
 export { IconDropdown };
 
 function IconDropdown<T extends string>(props: {
+  buttonSize?: number;
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;
@@ -17,7 +18,13 @@ function IconDropdown<T extends string>(props: {
   return (
     <Dropdown
       buildButton={({ onClick }) => (
-        <IconDropdownButton disabled={props.disabled} hint={props.hint} iconName={props.iconName} onClick={onClick} />
+        <IconDropdownButton
+          buttonSize={props.buttonSize}
+          disabled={props.disabled}
+          hint={props.hint}
+          iconName={props.iconName}
+          onClick={onClick}
+        />
       )}
       items={props.items.map((item) => ({ element: item.displayedText, value: item.value }))}
       onChange={props.onChange}
@@ -28,6 +35,7 @@ function IconDropdown<T extends string>(props: {
 }
 
 function IconDropdownButton(props: {
+  buttonSize?: number;
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;
@@ -35,6 +43,7 @@ function IconDropdownButton(props: {
 }) {
   return (
     <IconButton
+      buttonSize={props.buttonSize}
       color="default"
       disabled={props.disabled}
       hint={props.hint}

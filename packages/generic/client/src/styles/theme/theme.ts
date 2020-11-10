@@ -1,13 +1,10 @@
-import { merge } from 'lodash';
-import { createMuiTheme, ThemeOptions } from '@material-ui/core';
-import { ThemeProvider } from './ThemeProvider';
-import { useDisplayMode, displayModeType } from './displayMode';
-import { customColors, colorsType } from './colors';
-import { typography, typographyType } from './typography';
+import { colorsType, customColors } from './colors';
+import { displayModeType, useDisplayMode } from './displayMode';
+import { typography } from './typography';
 
-export { buildMuiTheme, useCustomTheme, ThemeProvider, useDisplayMode };
+export { buildCustomTheme, commonTheme, useCustomTheme };
 
-export type { typographyType, displayModeType, customThemeType };
+export type { customThemeType };
 
 const commonTheme = {
   shape: { borderRadius: 25 },
@@ -17,44 +14,14 @@ const commonTheme = {
 
 type customThemeType = typeof commonTheme & { colors: colorsType };
 
-const useCustomTheme = () => {
+function useCustomTheme() {
   const { displayMode } = useDisplayMode();
-  const colors = customColors[displayMode];
-  return {
-    ...commonTheme,
-    colors,
-  };
-};
 
-function buildTheme(themeOptions: Partial<ThemeOptions>) {
-  return merge(commonTheme, themeOptions);
+  return buildCustomTheme(displayMode);
 }
 
-const buildMuiTheme = (displayMode: displayModeType) => {
+function buildCustomTheme(displayMode: displayModeType) {
   const colors = customColors[displayMode];
 
-  return createMuiTheme(
-    buildTheme({
-      palette: {
-        primary: {
-          main: colors.primary,
-        },
-        secondary: {
-          main: colors.secondary,
-        },
-        text: { primary: colors.text.default, secondary: colors.text.disabled },
-        background: {
-          default: colors.background.default,
-          paper: colors.background.highlight,
-        },
-        action: {
-          disabled: colors.button.disabled.color,
-          disabledBackground: colors.button.disabled.background,
-        },
-        grey: {
-          '300': colors.button.default.background,
-        },
-      },
-    }),
-  );
-};
+  return { ...commonTheme, colors };
+}

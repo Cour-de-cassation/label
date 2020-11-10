@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core';
-import { buildMuiTheme } from './theme';
+import { buildMuiTheme } from './buildMuiTheme';
 import { displayModeType, DisplayModeContext } from './displayMode';
 
 export { ThemeProvider };

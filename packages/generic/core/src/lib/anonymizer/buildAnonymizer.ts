@@ -1,4 +1,4 @@
-import { annotationType, documentType, settingsType } from '../../modules';
+import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '../../modules';
 import { textSplitter } from '../textSplitter';
 
 export { buildAnonymizer };
@@ -7,16 +7,14 @@ export type { anonymizerType };
 
 const ANONYMIZATION_DEFAULT_TEXT = 'XXX';
 
-type annotationNeededFieldsType = Pick<annotationType, 'text' | 'category' | 'start' | 'entityId'>;
-
-type anonymizerType<annotationT extends annotationNeededFieldsType> = {
-  anonymizeDocument: (document: documentType, annotations: annotationT[]) => documentType;
+type anonymizerType<annotationT extends fetchedAnnotationType, documentT extends fetchedDocumentType> = {
+  anonymizeDocument: (document: documentT, annotations: annotationT[]) => documentT;
   anonymize: (annotation: annotationT) => string;
 };
 
-function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
+function buildAnonymizer<annotationT extends fetchedAnnotationType, documentT extends fetchedDocumentType>(
   settings: settingsType,
-): anonymizerType<annotationT> {
+): anonymizerType<annotationT, documentT> {
   const mapper: { [key: string]: string | undefined } = {};
 
   return {
@@ -24,7 +22,7 @@ function buildAnonymizer<annotationT extends annotationNeededFieldsType>(
     anonymize,
   };
 
-  function anonymizeDocument(document: documentType, annotations: annotationT[]): documentType {
+  function anonymizeDocument(document: documentT, annotations: annotationT[]): documentT {
     const splittedText = textSplitter.splitTextAccordingToAnnotations(document.text, annotations);
     const splittedAnonymizedText = splittedText.map((chunk) => {
       switch (chunk.type) {

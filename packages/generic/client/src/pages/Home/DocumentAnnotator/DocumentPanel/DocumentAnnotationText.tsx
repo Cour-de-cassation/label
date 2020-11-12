@@ -1,6 +1,7 @@
 import React, { MouseEvent, ReactElement, useState } from 'react';
-import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
+import { fetchedAnnotationType, settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../../types';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
 import { headerModeType } from './DocumentPanelHeader';
@@ -10,7 +11,7 @@ export { DocumentAnnotationText };
 function DocumentAnnotationText(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
   setHeaderMode: (headerMode: headerModeType) => void;
 }): ReactElement {

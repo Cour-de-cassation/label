@@ -1,8 +1,8 @@
 import React, { CSSProperties } from 'react';
 import { uniq } from 'lodash';
-import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { CategoryTable } from './CategoryTable';
@@ -11,7 +11,7 @@ export { AnnotationsPanel };
 
 function AnnotationsPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);

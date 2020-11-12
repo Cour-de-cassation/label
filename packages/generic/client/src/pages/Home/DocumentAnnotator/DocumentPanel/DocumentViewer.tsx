@@ -1,8 +1,9 @@
 import React, { ReactElement, CSSProperties } from 'react';
-import { annotationChunkType, anonymizerType, fetchedAnnotationType, textChunkType } from '@label/core';
+import { annotationChunkType, fetchedAnnotationType, textChunkType } from '@label/core';
 import { Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
+import { clientAnonymizerType } from '../../../../types';
 import { getSplittedTextByLine } from './lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 import { DocumentText } from './DocumentText';
@@ -12,7 +13,7 @@ export { DocumentViewer };
 
 function DocumentViewer(props: {
   annotatorStateHandler: annotatorStateHandlerType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
   setHeaderMode: (headerMode: headerModeType) => void;
 }): ReactElement {

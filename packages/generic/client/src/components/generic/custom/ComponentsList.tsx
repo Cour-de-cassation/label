@@ -10,10 +10,10 @@ function ComponentsList(props: { components: ReactElement[]; spaceBetweenCompone
       {props.components.reduce(
         (componentList, component, ind) => [
           ...componentList,
-          <div key={ind}>{component}</div>,
-          <div style={style.spaceBetweenComponents} />,
+          <span key={ind}>{component}</span>,
+          <span style={style.spaceBetweenComponents} />,
         ],
-        [<div style={style.spaceBetweenComponents} />],
+        [<span style={style.spaceBetweenComponents} />],
       )}
     </>
   );

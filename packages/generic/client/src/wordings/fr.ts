@@ -7,6 +7,7 @@ const fr = {
   cancel: 'Annuler',
   category: 'Catégorie',
   changeCategory: 'Changer de catégorie',
+  copyToClipboard: 'Copier dans le presse-papier',
   darkMode: 'Mode sombre',
   describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
   delete: 'Supprimer',

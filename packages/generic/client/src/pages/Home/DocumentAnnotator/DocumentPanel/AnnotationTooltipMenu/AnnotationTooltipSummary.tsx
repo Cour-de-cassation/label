@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
-import { anonymizerType, fetchedAnnotationType } from '@label/core';
+import { fetchedAnnotationType } from '@label/core';
 import { LayoutGrid, TooltipMenu } from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../../../types';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 
 export { AnnotationTooltipSummary };
@@ -13,7 +14,7 @@ function AnnotationTooltipSummary(props: {
   anchorAnnotation: Element | undefined;
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
   onClickOnAnchorAnnotation: () => void;
   onClose: () => void;

@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
-import { anonymizerType, annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
+import { annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
 import { CategoryIcon, Header, Text } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 
@@ -10,7 +11,7 @@ export { AnnotationTooltipMenuHeader };
 function AnnotationTooltipMenuHeader(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
 }): ReactElement {
   const theme = useCustomTheme();

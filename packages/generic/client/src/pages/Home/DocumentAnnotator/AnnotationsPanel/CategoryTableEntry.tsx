@@ -1,6 +1,5 @@
 import React from 'react';
 import { uniq } from 'lodash';
-import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import {
   ComponentsList,
   DeleteAnnotationButton,
@@ -11,6 +10,7 @@ import {
 } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
+import { clientAnonymizerType } from '../../../../types';
 
 export { CategoryTableEntry };
 
@@ -18,7 +18,7 @@ const CATEGORY_TABLE_ENTRY_BUTTON_SIZE = 32;
 
 function CategoryTableEntry(props: {
   annotatorStateHandler: annotatorStateHandlerType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   entityId: string;
   setShouldShowActionButtons: (isHovered: boolean) => void;
   shouldShowActionButtons: boolean;

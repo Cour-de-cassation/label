@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
-import { anonymizerType, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { heights } from '../../../styles';
 import { LayoutGrid } from '../../../components';
 import { useAnnotatorState } from '../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { DocumentAnnotatorHeader } from './DocumentAnnotatorHeader';
@@ -12,7 +13,7 @@ export { DocumentAnnotator };
 
 function DocumentAnnotator(props: {
   annotations: fetchedAnnotationType[];
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   settings: settingsType;
   document: fetchedDocumentType;
   fetchNewDocument: () => Promise<void>;

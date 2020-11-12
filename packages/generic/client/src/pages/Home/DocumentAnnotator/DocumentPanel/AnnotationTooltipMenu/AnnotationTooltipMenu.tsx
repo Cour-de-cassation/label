@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { anonymizerType, fetchedAnnotationType } from '@label/core';
+import { fetchedAnnotationType } from '@label/core';
 import {
   Checkbox,
   ComponentsList,
@@ -11,6 +11,7 @@ import {
 } from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
@@ -25,7 +26,7 @@ function AnnotationTooltipMenu(props: {
   anchorAnnotation: Element | undefined;
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
   onClose: () => void;
   setHeaderMode: (headerMode: headerModeType) => void;

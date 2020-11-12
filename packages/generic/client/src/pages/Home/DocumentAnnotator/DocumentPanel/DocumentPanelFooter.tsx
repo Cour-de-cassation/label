@@ -1,19 +1,21 @@
 import React from 'react';
 import { assignationType } from '@label/core';
-import { customThemeType, heights, useCustomTheme } from '../../../../styles';
-import { ButtonWithIcon, LayoutGrid } from '../../../../components';
+import { heights, useCustomTheme } from '../../../../styles';
+import { ButtonWithIcon, ComponentsList, LayoutGrid } from '../../../../components';
 import { useGraphQLMutation } from '../../../../graphQL';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 
 export { DocumentPanelFooter };
 
 function DocumentPanelFooter(props: {
   annotatorStateHandler: annotatorStateHandlerType;
+  anonymizer: clientAnonymizerType;
   fetchNewDocument: () => Promise<void>;
 }) {
   const theme = useCustomTheme();
-  const styles = buildStyles(theme);
+  const styles = buildStyles();
   const annotatorState = props.annotatorStateHandler.get();
 
   const [saveAnnotations] = useGraphQLMutation<'annotations'>('annotations');
@@ -30,28 +32,34 @@ function DocumentPanelFooter(props: {
         />
       </LayoutGrid>
       <LayoutGrid item>
-        <ButtonWithIcon
-          color="default"
-          iconName="save"
-          onClick={saveDraft}
-          style={styles.saveDraftButton}
-          text={wordings.saveDraft}
+        <ComponentsList
+          components={[
+            <ButtonWithIcon
+              color="default"
+              iconName="copy"
+              onClick={copyToClipboard}
+              text={wordings.copyToClipboard}
+            />,
+            <ButtonWithIcon color="default" iconName="save" onClick={saveDraft} text={wordings.saveDraft} />,
+            <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.validate} />,
+          ]}
+          spaceBetweenComponents={theme.spacing * 2}
         />
-        <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.validate} />
       </LayoutGrid>
     </LayoutGrid>
   );
 
-  function buildStyles(theme: customThemeType) {
+  function buildStyles() {
     return {
       footer: {
         height: heights.panelFooter,
-        paddingRight: theme.spacing * 2,
-      },
-      saveDraftButton: {
-        marginRight: theme.spacing * 2,
       },
     };
+  }
+
+  async function copyToClipboard() {
+    const anonymizedDocument = props.anonymizer.anonymizeDocument(annotatorState.document, annotatorState.annotations);
+    await navigator.clipboard.writeText(anonymizedDocument.text);
   }
 
   async function saveDraft() {

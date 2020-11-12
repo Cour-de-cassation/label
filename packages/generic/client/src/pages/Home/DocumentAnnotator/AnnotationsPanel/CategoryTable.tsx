@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { uniq } from 'lodash';
-import { anonymizerType, fetchedAnnotationType, settingsModule } from '@label/core';
+import { fetchedAnnotationType, settingsModule } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../../types';
 import { CategoryTableEntry } from './CategoryTableEntry';
 
 export { CategoryTable };
@@ -12,7 +13,7 @@ const ACCORDION_HEADER_PADDING = 5;
 
 function CategoryTable(props: {
   annotatorStateHandler: annotatorStateHandlerType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   category: string;
 }) {
   const theme = useCustomTheme();

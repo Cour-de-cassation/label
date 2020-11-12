@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { anonymizerType, fetchedAnnotationType } from '@label/core';
 import { LayoutGrid } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { clientAnonymizerType } from '../../../../types';
 import { DocumentPanelFooter } from './DocumentPanelFooter';
 import { DocumentPanelHeader, headerModeType } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';
@@ -12,7 +12,7 @@ const DEFAULT_HEADER_MODE = 'annotation';
 
 function DocumentPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
-  anonymizer: anonymizerType<fetchedAnnotationType>;
+  anonymizer: clientAnonymizerType;
   fetchNewDocument: () => Promise<void>;
 }): ReactElement {
   const [isAnonymizedView, setIsAnonymizedView] = useState(false);
@@ -35,6 +35,7 @@ function DocumentPanel(props: {
       />
       <DocumentPanelFooter
         annotatorStateHandler={props.annotatorStateHandler}
+        anonymizer={props.anonymizer}
         fetchNewDocument={props.fetchNewDocument}
       />
     </LayoutGrid>

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { settingsModule, settingsType } from '@label/core';
-import { DataFetcher } from '../../services/dataFetcher';
 import { useGraphQLQuery } from '../../graphQL';
+import { DataFetcher } from '../DataFetcher';
 
 export { SettingsDataFetcher };
 
@@ -16,10 +16,9 @@ function SettingsDataFetcher(props: { children: (fetched: { settings: settingsTy
 
   return (
     <DataFetcher<[settingsGraphQLType], [settingsType]>
+      buildComponentWithData={([settings]: [settingsType]) => props.children({ settings })}
       fetchInfos={[settingsFetchInfo]}
       dataAdapter={settingsDataAdapter}
-    >
-      {([settings]: [settingsType]) => props.children({ settings })}
-    </DataFetcher>
+    />
   );
 }

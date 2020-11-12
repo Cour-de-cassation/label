@@ -39,7 +39,6 @@ const materialIconMapping = {
   login: ExitToAppRounded,
   logout: MeetingRoom,
   redo: RedoRounded,
-  reportProblem: ReportProblemRounded,
   reset: LoopRounded,
   resize: SettingsEthernetRounded,
   send: SendRounded,
@@ -47,6 +46,7 @@ const materialIconMapping = {
   settings: SettingsRounded,
   undo: UndoRounded,
   unlink: LinkOff,
+  warning: ReportProblemRounded,
 };
 
 const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {

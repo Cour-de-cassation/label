@@ -14,7 +14,7 @@ function ReportProblemButton(props: {
 
   return (
     <div>
-      <ButtonWithIcon color="secondary" iconName="reportProblem" onClick={openToolTip} text={wordings.reportProblem} />
+      <ButtonWithIcon color="secondary" iconName="warning" onClick={openToolTip} text={wordings.reportProblem} />
       <ReportProblemToolTipMenu
         annotatorStateHandler={props.annotatorStateHandler}
         anchorElement={anchorElement}

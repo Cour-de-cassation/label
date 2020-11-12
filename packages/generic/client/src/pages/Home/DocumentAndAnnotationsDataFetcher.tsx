@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { fetchedAnnotationType, fetchedDocumentType, idModule, graphQLReceivedDataType } from '@label/core';
-import { DataFetcher } from '../../services/dataFetcher';
 import { useGraphQLQuery } from '../../graphQL';
+import { DataFetcher } from '../DataFetcher';
 
 export { DocumentAndAnnotationsDataFetcher };
 
@@ -44,11 +44,10 @@ function DocumentAndAnnotationsDataFetcher(props: {
 
   return (
     <DataFetcher<[documentGraphQLType, annotationsGraphQLType], [fetchedDocumentType, fetchedAnnotationType[]]>
+      buildComponentWithData={([document, annotations]) => props.children({ document, annotations, fetchNewDocument })}
       fetchInfos={[documentsFetchInfo, annotationsFetchInfo]}
       dataAdapter={documentAndAnnotationsDataAdapter}
-    >
-      {([document, annotations]) => props.children({ document, annotations, fetchNewDocument })}
-    </DataFetcher>
+    />
   );
 
   async function fetchNewDocument() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, IconButton } from '../../../../../components';
+import { Header, Icon, IconButton, Text } from '../../../../../components';
 import { heights, useCustomTheme } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
 
@@ -11,13 +11,13 @@ function ResizeHeader(props: { resetHeaderMode: () => void }) {
 
   return (
     <Header
-      leftHeaderComponents={[]}
+      leftHeaderComponents={[<Icon iconName="resize"></Icon>, <Text>{wordings.selectResizedText}</Text>]}
       rightHeaderComponents={[
         <IconButton color="default" hint={wordings.cancel} iconName="close" onClick={props.resetHeaderMode} />,
       ]}
       spaceBetweenComponents={theme.spacing * 2}
       style={style.header}
-      variant="classic"
+      variant="mainLeft"
     />
   );
 

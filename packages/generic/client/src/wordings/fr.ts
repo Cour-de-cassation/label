@@ -30,6 +30,7 @@ const fr = {
   reset: 'Réinitialiser',
   resize: 'Redimensionner',
   saveDraft: 'Enregistrer le brouillon',
+  selectResizedText: "Sélectionnez le nouveau texte pour redéfinir les dimensions de l'entité...",
   send: 'Envoyer',
   settings: 'Réglages',
   undo: 'Annuler',

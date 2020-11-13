@@ -15,8 +15,8 @@ function SettingsDataFetcher(props: { children: (fetched: { settings: settingsTy
     [settingsModule.lib.parseFromJson(data.settings.json)] as [settingsType];
 
   return (
-    <DataFetcher<[settingsGraphQLType], [settingsType]>
-      buildComponentWithData={([settings]: [settingsType]) => props.children({ settings })}
+    <DataFetcher
+      buildComponentWithData={([settings]) => props.children({ settings })}
       fetchInfos={[settingsFetchInfo]}
       dataAdapter={settingsDataAdapter}
     />

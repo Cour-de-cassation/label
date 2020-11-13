@@ -43,7 +43,7 @@ function DocumentAndAnnotationsDataFetcher(props: {
   };
 
   return (
-    <DataFetcher<[documentGraphQLType, annotationsGraphQLType], [fetchedDocumentType, fetchedAnnotationType[]]>
+    <DataFetcher
       buildComponentWithData={([document, annotations]) => props.children({ document, annotations, fetchNewDocument })}
       fetchInfos={[documentsFetchInfo, annotationsFetchInfo]}
       dataAdapter={documentAndAnnotationsDataAdapter}

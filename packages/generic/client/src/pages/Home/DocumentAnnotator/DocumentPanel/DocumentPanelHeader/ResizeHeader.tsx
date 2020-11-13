@@ -5,7 +5,7 @@ import { wordings } from '../../../../../wordings';
 
 export { ResizeHeader };
 
-function ResizeHeader(props: { resetHeaderMode: () => void }) {
+function ResizeHeader(props: { resetViewerMode: () => void }) {
   const theme = useCustomTheme();
   const style = buildStyle();
 
@@ -13,7 +13,7 @@ function ResizeHeader(props: { resetHeaderMode: () => void }) {
     <Header
       leftHeaderComponents={[<Icon iconName="resize"></Icon>, <Text>{wordings.selectResizedText}</Text>]}
       rightHeaderComponents={[
-        <IconButton color="default" hint={wordings.cancel} iconName="close" onClick={props.resetHeaderMode} />,
+        <IconButton color="default" hint={wordings.cancel} iconName="close" onClick={props.resetViewerMode} />,
       ]}
       spaceBetweenComponents={theme.spacing * 2}
       style={style.header}

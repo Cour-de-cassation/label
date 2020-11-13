@@ -1,7 +1,9 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
+import { annotationModule, fetchedAnnotationType, idModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useAnchorElementUnderMouse } from '../../../../utils';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
+import { useViewerMode } from './viewerMode';
 
 export { DocumentText };
 
@@ -13,6 +15,7 @@ function DocumentText(props: {
   const { anchorElementUnderMouse, setAnchorElementUnderMouse } = useAnchorElementUnderMouse();
   const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
   const [selectedText, setSelectedText] = useState<string>('');
+  const { viewerMode, resetViewerMode } = useViewerMode();
 
   return (
     <span>
@@ -35,9 +38,16 @@ function DocumentText(props: {
       return;
     }
 
-    setSelectedText(selection.toString());
-    setSelectedTextIndex(Math.min(selection.anchorOffset, selection.focusOffset) + props.index);
-    openTooltipMenu(event);
+    if (viewerMode.kind === 'resize') {
+      setSelectedText('');
+      setSelectedTextIndex(0);
+      resizeAnnotation(selection, viewerMode.annotation);
+      resetViewerMode();
+    } else {
+      setSelectedText(selection.toString());
+      setSelectedTextIndex(computeSelectedTextIndex(selection));
+      openTooltipMenu(event);
+    }
   }
 
   function isValidSelection(selection: Selection) {
@@ -53,5 +63,26 @@ function DocumentText(props: {
 
   function closeTooltipMenu() {
     setAnchorElementUnderMouse(undefined);
+  }
+
+  function computeSelectedTextIndex(selection: Selection) {
+    return Math.min(selection.anchorOffset, selection.focusOffset) + props.index;
+  }
+
+  function resizeAnnotation(selection: Selection, annotation: fetchedAnnotationType) {
+    const selectedText = selection.toString();
+    const selectedTextIndex = computeSelectedTextIndex(selection);
+    const newAnnotation = annotationModule.lib.annotationUpdater.updateText(
+      annotation,
+      selectedText,
+      selectedTextIndex,
+    );
+    const annotatorState = props.annotatorStateHandler.get();
+    const updatedAnnotations = [
+      ...annotatorState.annotations.filter(({ _id }) => !idModule.lib.equalId(annotation._id, _id)),
+      newAnnotation,
+    ];
+    const newAnnotatorState = { ...annotatorState, annotations: updatedAnnotations };
+    props.annotatorStateHandler.set(newAnnotatorState);
   }
 }

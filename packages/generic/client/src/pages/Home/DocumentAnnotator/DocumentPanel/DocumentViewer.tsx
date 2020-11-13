@@ -7,7 +7,6 @@ import { clientAnonymizerType } from '../../../../types';
 import { getSplittedTextByLine } from './lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 import { DocumentText } from './DocumentText';
-import { headerModeType } from './DocumentPanelHeader';
 
 export { DocumentViewer };
 
@@ -15,7 +14,6 @@ function DocumentViewer(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
-  setHeaderMode: (headerMode: headerModeType) => void;
 }): ReactElement {
   const theme = useCustomTheme();
   const styles = buildStyle(theme);
@@ -64,7 +62,6 @@ function DocumentViewer(props: {
             annotation={chunk.annotation}
             anonymizer={props.anonymizer}
             isAnonymizedView={props.isAnonymizedView}
-            setHeaderMode={props.setHeaderMode}
           />
         );
     }

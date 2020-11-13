@@ -2,24 +2,20 @@ import React, { ReactElement } from 'react';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { AnnotationHeader } from './AnnotationHeader';
 import { ResizeHeader } from './ResizeHeader';
+import { useViewerMode } from '../viewerMode';
 
 export { DocumentPanelHeader };
-
-export type { headerModeType };
-
-type headerModeType = 'annotation' | 'resize';
 
 function DocumentPanelHeader(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   isAnonymizedView: boolean;
-  headerMode: headerModeType;
-  resetHeaderMode: () => void;
   switchAnonymizedView: () => void;
 }): ReactElement {
+  const { viewerMode, resetViewerMode } = useViewerMode();
   return renderHeader();
 
   function renderHeader() {
-    switch (props.headerMode) {
+    switch (viewerMode.kind) {
       case 'annotation':
         return (
           <AnnotationHeader
@@ -29,7 +25,7 @@ function DocumentPanelHeader(props: {
           />
         );
       case 'resize':
-        return <ResizeHeader resetHeaderMode={props.resetHeaderMode} />;
+        return <ResizeHeader resetViewerMode={resetViewerMode} />;
     }
   }
 }

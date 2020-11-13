@@ -4,7 +4,7 @@ import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
-import { headerModeType } from './DocumentPanelHeader';
+import { useViewerMode } from './viewerMode';
 
 export { DocumentAnnotationText };
 
@@ -13,11 +13,11 @@ function DocumentAnnotationText(props: {
   annotation: fetchedAnnotationType;
   anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
-  setHeaderMode: (headerMode: headerModeType) => void;
 }): ReactElement {
   const style = buildStyle();
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
   const [summaryAnchorElement, setSummaryAnchorElement] = useState<Element | undefined>(undefined);
+  const { setViewerMode } = useViewerMode();
 
   return (
     <span>
@@ -44,7 +44,7 @@ function DocumentAnnotationText(props: {
         anonymizer={props.anonymizer}
         isAnonymizedView={props.isAnonymizedView}
         onClose={closeTooltipMenu}
-        setHeaderMode={props.setHeaderMode}
+        onResizeAnnotationClick={onResizeAnnotationClick}
       />
     </span>
   );
@@ -78,5 +78,10 @@ function DocumentAnnotationText(props: {
 
   function closeTooltipMenu() {
     setAnchorElement(undefined);
+  }
+
+  function onResizeAnnotationClick() {
+    setViewerMode({ kind: 'resize', annotation: props.annotation });
+    closeTooltipMenu();
   }
 }

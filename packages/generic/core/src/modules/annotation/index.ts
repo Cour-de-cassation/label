@@ -2,6 +2,7 @@ import { annotationGenerator } from './generator';
 import { annotationDataModel, annotationType, fetchedAnnotationType } from './annotationType';
 import {
   annotationLinker,
+  annotationUpdater,
   buildAnnotation,
   buildFetchedAnnotation,
   entityIdHandler,
@@ -17,6 +18,7 @@ const annotationModule = {
   generator: annotationGenerator,
   lib: {
     annotationLinker,
+    annotationUpdater,
     buildAnnotation,
     buildFetchedAnnotation,
     entityIdHandler,

@@ -16,7 +16,6 @@ import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { ResizeAnnotationButton } from './ResizeAnnotationButton';
-import { headerModeType } from '../DocumentPanelHeader';
 
 export { AnnotationTooltipMenu };
 
@@ -29,7 +28,7 @@ function AnnotationTooltipMenu(props: {
   anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
   onClose: () => void;
-  setHeaderMode: (headerMode: headerModeType) => void;
+  onResizeAnnotationClick: () => void;
 }): ReactElement {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
@@ -61,7 +60,7 @@ function AnnotationTooltipMenu(props: {
                 annotation={props.annotation}
                 shouldApplyEverywhere={shouldApplyEverywhere}
               />,
-              <ResizeAnnotationButton onClick={onResizeAnnotationClick} />,
+              <ResizeAnnotationButton onClick={props.onResizeAnnotationClick} disabled={shouldApplyEverywhere} />,
               <LinkAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
@@ -85,11 +84,6 @@ function AnnotationTooltipMenu(props: {
       </LayoutGrid>
     </TooltipMenu>
   );
-
-  function onResizeAnnotationClick() {
-    props.setHeaderMode('resize');
-    props.onClose();
-  }
 
   function buildStyle(theme: customThemeType) {
     return {

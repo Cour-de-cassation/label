@@ -1,4 +1,4 @@
-import { colorsType, customColors } from './colors';
+import { buildCustomColorsTheme, customColorsThemeType } from './buildCustomColorsTheme';
 import { displayModeType, useDisplayMode } from './displayMode';
 import { typography } from './typography';
 
@@ -12,7 +12,7 @@ const commonTheme = {
   typography,
 };
 
-type customThemeType = typeof commonTheme & { colors: colorsType };
+type customThemeType = typeof commonTheme & { colors: customColorsThemeType };
 
 function useCustomTheme() {
   const { displayMode } = useDisplayMode();
@@ -21,7 +21,7 @@ function useCustomTheme() {
 }
 
 function buildCustomTheme(displayMode: displayModeType) {
-  const colors = customColors[displayMode];
+  const customColorsTheme = buildCustomColorsTheme(displayMode);
 
-  return { ...commonTheme, colors };
+  return { ...commonTheme, colors: customColorsTheme };
 }

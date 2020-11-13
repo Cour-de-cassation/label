@@ -41,11 +41,15 @@ function Button(props: {
   }
 
   function buildButtonClasses(theme: customThemeType) {
+    const color = props.color || 'default';
+
     return makeStyles({
       root: {
+        backgroundColor: theme.colors.button[color].background,
         margin: 0,
         '&:hover': {
-          backgroundColor: theme.colors.button.default.hoveredBackground,
+          backgroundColor: theme.colors.button[color].hoveredBackground,
+          color: theme.colors.button[color].hoveredTextColor,
         },
       },
     })();

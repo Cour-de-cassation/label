@@ -72,7 +72,9 @@ function CategoryTableEntry(props: {
       >
         <LayoutGrid item style={styles.textCell} xs={8}>
           {entityAnnotationTexts.map((text) => (
-            <Text variant="body2">{text}</Text>
+            <Text style={styles.textWithAction} variant="body2">
+              {text}
+            </Text>
           ))}
         </LayoutGrid>
         <LayoutGrid item style={styles.actionCell} xs={4}>
@@ -133,6 +135,9 @@ function CategoryTableEntry(props: {
       },
       textCell: {
         padding: `${theme.spacing}px 0`,
+      },
+      textWithAction: {
+        color: theme.colors.button.default.hoveredTextColor,
       },
     } as const;
   }

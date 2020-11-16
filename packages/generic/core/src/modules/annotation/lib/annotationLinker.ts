@@ -8,6 +8,7 @@ const annotationLinker = {
   link,
   getLinkableAnnotations,
   isLinked,
+  isLinkedTo,
   unlink,
 };
 
@@ -30,6 +31,13 @@ function isLinked<annotationT extends fetchedAnnotationType>(
   return annotations.some(
     (otherAnnotation) => otherAnnotation.entityId === annotation.entityId && otherAnnotation.text !== annotation.text,
   );
+}
+
+function isLinkedTo<annotationT extends fetchedAnnotationType>(
+  annotationSource: annotationT,
+  annotationTarget: annotationT,
+) {
+  return annotationSource.entityId === annotationTarget.entityId;
 }
 
 function getLinkableAnnotations<annotationT extends fetchedAnnotationType>(

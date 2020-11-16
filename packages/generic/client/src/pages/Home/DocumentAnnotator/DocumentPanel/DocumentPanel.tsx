@@ -5,7 +5,7 @@ import { clientAnonymizerType } from '../../../../types';
 import { DocumentPanelFooter } from './DocumentPanelFooter';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';
-import { useViewerModeContext, ViewerModeContext } from './viewerMode';
+import { useDocumentViewerModeContext, DocumentViewerModeContext } from './documentViewerMode';
 
 export { DocumentPanel };
 
@@ -14,10 +14,10 @@ function DocumentPanel(props: {
   anonymizer: clientAnonymizerType;
   fetchNewDocument: () => Promise<void>;
 }): ReactElement {
-  const viewerModeContext = useViewerModeContext();
+  const documentViewerModeContext = useDocumentViewerModeContext();
 
   return (
-    <ViewerModeContext.Provider value={viewerModeContext}>
+    <DocumentViewerModeContext.Provider value={documentViewerModeContext}>
       <LayoutGrid container>
         <DocumentPanelHeader annotatorStateHandler={props.annotatorStateHandler} />
         <DocumentViewer annotatorStateHandler={props.annotatorStateHandler} anonymizer={props.anonymizer} />
@@ -27,6 +27,6 @@ function DocumentPanel(props: {
           fetchNewDocument={props.fetchNewDocument}
         />
       </LayoutGrid>
-    </ViewerModeContext.Provider>
+    </DocumentViewerModeContext.Provider>
   );
 }

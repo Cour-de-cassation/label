@@ -3,7 +3,7 @@ import { annotationModule, fetchedAnnotationType } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useAnchorElementUnderMouse } from '../../../../utils';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
-import { useViewerMode } from './viewerMode';
+import { useDocumentViewerMode } from './documentViewerMode';
 
 export { DocumentText };
 
@@ -15,7 +15,7 @@ function DocumentText(props: {
   const { anchorElementUnderMouse, setAnchorElementUnderMouse } = useAnchorElementUnderMouse();
   const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
   const [selectedText, setSelectedText] = useState<string>('');
-  const { viewerModeHandler } = useViewerMode();
+  const { documentViewerModeHandler } = useDocumentViewerMode();
   const annotatorState = props.annotatorStateHandler.get();
 
   return (
@@ -39,11 +39,11 @@ function DocumentText(props: {
       return;
     }
 
-    if (viewerModeHandler.viewerMode.kind === 'resize') {
+    if (documentViewerModeHandler.documentViewerMode.kind === 'resize') {
       setSelectedText('');
       setSelectedTextIndex(0);
-      resizeAnnotation(selection, viewerModeHandler.viewerMode.annotationId);
-      viewerModeHandler.resetViewerMode();
+      resizeAnnotation(selection, documentViewerModeHandler.documentViewerMode.annotationId);
+      documentViewerModeHandler.resetViewerMode();
     } else {
       setSelectedText(selection.toString());
       setSelectedTextIndex(computeSelectedTextIndex(selection));

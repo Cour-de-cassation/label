@@ -4,7 +4,7 @@ import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
-import { useViewerMode } from './viewerMode';
+import { useDocumentViewerMode } from './documentViewerMode';
 
 export { DocumentAnnotationText };
 
@@ -16,7 +16,7 @@ function DocumentAnnotationText(props: {
   const style = buildStyle();
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
   const [summaryAnchorElement, setSummaryAnchorElement] = useState<Element | undefined>(undefined);
-  const { viewerModeHandler } = useViewerMode();
+  const { documentViewerModeHandler } = useDocumentViewerMode();
 
   return (
     <span>
@@ -25,14 +25,16 @@ function DocumentAnnotationText(props: {
         onMouseOver={(event: MouseEvent<Element>) => openTooltipSummary(event.currentTarget)}
         style={style.annotationText}
       >
-        {viewerModeHandler.isAnonymizedView() ? props.anonymizer.anonymize(props.annotation) : props.annotation.text}
+        {documentViewerModeHandler.isAnonymizedView()
+          ? props.anonymizer.anonymize(props.annotation)
+          : props.annotation.text}
       </span>
       <AnnotationTooltipSummary
         anchorAnnotation={summaryAnchorElement}
         annotatorStateHandler={props.annotatorStateHandler}
         annotation={props.annotation}
         anonymizer={props.anonymizer}
-        isAnonymizedView={viewerModeHandler.isAnonymizedView()}
+        isAnonymizedView={documentViewerModeHandler.isAnonymizedView()}
         onClickOnAnchorAnnotation={() => openTooltipMenu(summaryAnchorElement)}
         onClose={closeTooltipSummary}
       />
@@ -41,7 +43,7 @@ function DocumentAnnotationText(props: {
         annotatorStateHandler={props.annotatorStateHandler}
         annotation={props.annotation}
         anonymizer={props.anonymizer}
-        isAnonymizedView={viewerModeHandler.isAnonymizedView()}
+        isAnonymizedView={documentViewerModeHandler.isAnonymizedView()}
         onClose={closeTooltipMenu}
         onResizeAnnotationClick={onResizeAnnotationClick}
       />
@@ -80,7 +82,7 @@ function DocumentAnnotationText(props: {
   }
 
   function onResizeAnnotationClick() {
-    viewerModeHandler.setResizeMode(props.annotation._id);
+    documentViewerModeHandler.setResizeMode(props.annotation._id);
     closeTooltipMenu();
   }
 }

@@ -3,13 +3,13 @@ import { Header, IconButton, SwitchButton, Text } from '../../../../../component
 import { heights, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
-import { useViewerMode } from '../viewerMode';
+import { useDocumentViewerMode } from '../documentViewerMode';
 
 export { AnnotationHeader };
 
 function AnnotationHeader(props: { annotatorStateHandler: annotatorStateHandlerType }) {
   const theme = useCustomTheme();
-  const { viewerModeHandler } = useViewerMode();
+  const { documentViewerModeHandler } = useDocumentViewerMode();
   const style = buildStyle();
 
   return (
@@ -33,9 +33,9 @@ function AnnotationHeader(props: { annotatorStateHandler: annotatorStateHandlerT
       rightHeaderComponents={[
         <Text>{wordings.anonymisedView}</Text>,
         <SwitchButton
-          checked={viewerModeHandler.isAnonymizedView()}
+          checked={documentViewerModeHandler.isAnonymizedView()}
           color="primary"
-          onChange={viewerModeHandler.switchAnonymizedView}
+          onChange={documentViewerModeHandler.switchAnonymizedView}
         />,
       ]}
       spaceBetweenComponents={theme.spacing * 2}

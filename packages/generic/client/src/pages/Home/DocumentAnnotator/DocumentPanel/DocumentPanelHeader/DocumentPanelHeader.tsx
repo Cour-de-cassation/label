@@ -2,20 +2,20 @@ import React, { ReactElement } from 'react';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { AnnotationHeader } from './AnnotationHeader';
 import { ResizeHeader } from './ResizeHeader';
-import { useViewerMode } from '../viewerMode';
+import { useDocumentViewerMode } from '../documentViewerMode';
 
 export { DocumentPanelHeader };
 
 function DocumentPanelHeader(props: { annotatorStateHandler: annotatorStateHandlerType }): ReactElement {
-  const { viewerModeHandler } = useViewerMode();
+  const { documentViewerModeHandler } = useDocumentViewerMode();
   return renderHeader();
 
   function renderHeader() {
-    switch (viewerModeHandler.viewerMode.kind) {
+    switch (documentViewerModeHandler.documentViewerMode.kind) {
       case 'annotation':
         return <AnnotationHeader annotatorStateHandler={props.annotatorStateHandler} />;
       case 'resize':
-        return <ResizeHeader resetViewerMode={viewerModeHandler.resetViewerMode} />;
+        return <ResizeHeader resetViewerMode={documentViewerModeHandler.resetViewerMode} />;
     }
   }
 }

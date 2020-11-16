@@ -6,26 +6,16 @@ import { useViewerMode } from '../viewerMode';
 
 export { DocumentPanelHeader };
 
-function DocumentPanelHeader(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
-  isAnonymizedView: boolean;
-  switchAnonymizedView: () => void;
-}): ReactElement {
-  const { viewerMode, resetViewerMode } = useViewerMode();
+function DocumentPanelHeader(props: { annotatorStateHandler: annotatorStateHandlerType }): ReactElement {
+  const { viewerModeHandler } = useViewerMode();
   return renderHeader();
 
   function renderHeader() {
-    switch (viewerMode.kind) {
+    switch (viewerModeHandler.viewerMode.kind) {
       case 'annotation':
-        return (
-          <AnnotationHeader
-            annotatorStateHandler={props.annotatorStateHandler}
-            switchAnonymizedView={props.switchAnonymizedView}
-            isAnonymizedView={props.isAnonymizedView}
-          />
-        );
+        return <AnnotationHeader annotatorStateHandler={props.annotatorStateHandler} />;
       case 'resize':
-        return <ResizeHeader resetViewerMode={resetViewerMode} />;
+        return <ResizeHeader resetViewerMode={viewerModeHandler.resetViewerMode} />;
     }
   }
 }

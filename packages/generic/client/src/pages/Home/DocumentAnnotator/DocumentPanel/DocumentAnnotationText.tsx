@@ -12,12 +12,11 @@ function DocumentAnnotationText(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   anonymizer: clientAnonymizerType;
-  isAnonymizedView: boolean;
 }): ReactElement {
   const style = buildStyle();
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
   const [summaryAnchorElement, setSummaryAnchorElement] = useState<Element | undefined>(undefined);
-  const { setViewerMode } = useViewerMode();
+  const { viewerModeHandler } = useViewerMode();
 
   return (
     <span>
@@ -26,14 +25,14 @@ function DocumentAnnotationText(props: {
         onMouseOver={(event: MouseEvent<Element>) => openTooltipSummary(event.currentTarget)}
         style={style.annotationText}
       >
-        {props.isAnonymizedView ? props.anonymizer.anonymize(props.annotation) : props.annotation.text}
+        {viewerModeHandler.isAnonymizedView() ? props.anonymizer.anonymize(props.annotation) : props.annotation.text}
       </span>
       <AnnotationTooltipSummary
         anchorAnnotation={summaryAnchorElement}
         annotatorStateHandler={props.annotatorStateHandler}
         annotation={props.annotation}
         anonymizer={props.anonymizer}
-        isAnonymizedView={props.isAnonymizedView}
+        isAnonymizedView={viewerModeHandler.isAnonymizedView()}
         onClickOnAnchorAnnotation={() => openTooltipMenu(summaryAnchorElement)}
         onClose={closeTooltipSummary}
       />
@@ -42,7 +41,7 @@ function DocumentAnnotationText(props: {
         annotatorStateHandler={props.annotatorStateHandler}
         annotation={props.annotation}
         anonymizer={props.anonymizer}
-        isAnonymizedView={props.isAnonymizedView}
+        isAnonymizedView={viewerModeHandler.isAnonymizedView()}
         onClose={closeTooltipMenu}
         onResizeAnnotationClick={onResizeAnnotationClick}
       />
@@ -81,7 +80,7 @@ function DocumentAnnotationText(props: {
   }
 
   function onResizeAnnotationClick() {
-    setViewerMode({ kind: 'resize', annotation: props.annotation });
+    viewerModeHandler.setResizeMode(props.annotation._id);
     closeTooltipMenu();
   }
 }

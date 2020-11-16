@@ -15,7 +15,7 @@ function DocumentText(props: {
   const { anchorElementUnderMouse, setAnchorElementUnderMouse } = useAnchorElementUnderMouse();
   const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
   const [selectedText, setSelectedText] = useState<string>('');
-  const { viewerMode, resetViewerMode } = useViewerMode();
+  const { viewerModeHandler } = useViewerMode();
   const annotatorState = props.annotatorStateHandler.get();
 
   return (
@@ -39,11 +39,11 @@ function DocumentText(props: {
       return;
     }
 
-    if (viewerMode.kind === 'resize') {
+    if (viewerModeHandler.viewerMode.kind === 'resize') {
       setSelectedText('');
       setSelectedTextIndex(0);
-      resizeAnnotation(selection, viewerMode.annotation);
-      resetViewerMode();
+      resizeAnnotation(selection, viewerModeHandler.viewerMode.annotationId);
+      viewerModeHandler.resetViewerMode();
     } else {
       setSelectedText(selection.toString());
       setSelectedTextIndex(computeSelectedTextIndex(selection));
@@ -70,13 +70,13 @@ function DocumentText(props: {
     return Math.min(selection.anchorOffset, selection.focusOffset) + props.index;
   }
 
-  function resizeAnnotation(selection: Selection, annotation: fetchedAnnotationType) {
+  function resizeAnnotation(selection: Selection, annotationId: fetchedAnnotationType['_id']) {
     const selectedText = selection.toString();
     const selectedTextIndex = computeSelectedTextIndex(selection);
 
     const newAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateOneText(
       annotatorState.annotations,
-      annotation._id,
+      annotationId,
       selectedText,
       selectedTextIndex,
     );

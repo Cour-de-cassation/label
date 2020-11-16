@@ -13,7 +13,6 @@ export { DocumentViewer };
 function DocumentViewer(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
-  isAnonymizedView: boolean;
 }): ReactElement {
   const theme = useCustomTheme();
   const styles = buildStyle(theme);
@@ -61,7 +60,6 @@ function DocumentViewer(props: {
             annotatorStateHandler={props.annotatorStateHandler}
             annotation={chunk.annotation}
             anonymizer={props.anonymizer}
-            isAnonymizedView={props.isAnonymizedView}
           />
         );
     }

@@ -11,6 +11,7 @@ import {
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
+import { entityEntryHandlerType } from './useEntityEntryHandler';
 
 export { CategoryTableEntry };
 
@@ -20,8 +21,7 @@ function CategoryTableEntry(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   entityId: string;
-  setShouldShowActionButtons: (isHovered: boolean) => void;
-  shouldShowActionButtons: boolean;
+  entityEntryHandler: entityEntryHandlerType;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -31,7 +31,7 @@ function CategoryTableEntry(props: {
     .annotations.filter((annotation) => annotation.entityId === props.entityId);
   const entityAnnotationTexts = uniq(entityAnnotations.map((annotation) => annotation.text));
 
-  return props.shouldShowActionButtons ? buildEntryWithAction() : buildEntry();
+  return shouldShowActionButtons() ? buildEntryWithAction() : buildEntry();
 
   function buildEntry() {
     return (
@@ -40,7 +40,7 @@ function CategoryTableEntry(props: {
         key={entityAnnotations[0].entityId}
         item
         justifyContent="space-between"
-        onMouseEnter={() => props.setShouldShowActionButtons(true)}
+        onMouseEnter={() => showActionButtons(true)}
         style={styles.categoryTableEntry}
       >
         <LayoutGrid item style={styles.textCell} xs={8}>
@@ -67,7 +67,8 @@ function CategoryTableEntry(props: {
         key={entityAnnotations[0].entityId}
         item
         justifyContent="space-between"
-        onMouseLeave={() => props.setShouldShowActionButtons(false)}
+        onClick={() => props.entityEntryHandler.selectEntity(props.entityId)}
+        onMouseLeave={() => showActionButtons(false)}
         style={styles.categoryTableEntryWithActions}
       >
         <LayoutGrid item style={styles.textCell} xs={8}>
@@ -85,7 +86,7 @@ function CategoryTableEntry(props: {
                 annotation={entityAnnotations[0]}
                 buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
                 disabled={false}
-                onClose={() => props.setShouldShowActionButtons(false)}
+                onClose={() => showActionButtons(false)}
               />,
               <UnlinkAnnotationButton
                 annotatorStateHandler={props.annotatorStateHandler}
@@ -127,6 +128,7 @@ function CategoryTableEntry(props: {
       categoryTableEntryWithActions: {
         backgroundColor: theme.colors.button.default.hoveredBackground,
         borderRadius: theme.shape.borderRadius,
+        cursor: 'pointer',
         paddingLeft: `${theme.spacing * 2}px`,
       },
       occurencesNumber: {
@@ -140,5 +142,13 @@ function CategoryTableEntry(props: {
         color: theme.colors.button.default.hoveredTextColor,
       },
     } as const;
+  }
+
+  function shouldShowActionButtons() {
+    return props.entityEntryHandler.getEntityFocused() === props.entityId;
+  }
+
+  function showActionButtons(isHovered: boolean) {
+    return isHovered ? props.entityEntryHandler.focusEntity(props.entityId) : props.entityEntryHandler.unfocusEntity();
   }
 }

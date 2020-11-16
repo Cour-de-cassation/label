@@ -6,6 +6,7 @@ import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../com
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
 import { CategoryTableEntry } from './CategoryTableEntry';
+import { entityEntryHandlerType } from './useEntityEntryHandler';
 
 export { CategoryTable };
 
@@ -15,12 +16,12 @@ function CategoryTable(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   category: string;
+  entityEntryHandler: entityEntryHandlerType;
 }) {
   const theme = useCustomTheme();
   const iconSize = theme.shape.borderRadius * 2 - ACCORDION_HEADER_PADDING;
   const styles = buildStyles(theme);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [entryFocused, setEntryFocused] = useState<string | undefined>(undefined);
   const annotatorState = props.annotatorStateHandler.get();
 
   const categoryName = settingsModule.lib.getAnnotationCategoryText(props.category, annotatorState.settings);
@@ -56,8 +57,7 @@ function CategoryTable(props: {
               annotatorStateHandler={props.annotatorStateHandler}
               anonymizer={props.anonymizer}
               entityId={entityId}
-              setShouldShowActionButtons={buildSetShouldShowActionButtons(entityId)}
-              shouldShowActionButtons={entryFocused === entityId}
+              entityEntryHandler={props.entityEntryHandler}
             />
           ))}
         </LayoutGrid>
@@ -88,9 +88,5 @@ function CategoryTable(props: {
         annotations.filter((annotation) => annotation.entityId === entityId2).length -
         annotations.filter((annotation) => annotation.entityId === entityId1).length,
     );
-  }
-
-  function buildSetShouldShowActionButtons(entityId: string) {
-    return (isHovered: boolean) => (isHovered ? setEntryFocused(entityId) : setEntryFocused(undefined));
   }
 }

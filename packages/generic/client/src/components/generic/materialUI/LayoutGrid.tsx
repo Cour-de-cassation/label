@@ -10,6 +10,7 @@ function LayoutGrid(props: {
   direction?: GridDirection;
   item?: boolean;
   justifyContent?: GridTypeMap['props']['justify'];
+  onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   style?: CSSProperties;
@@ -22,6 +23,7 @@ function LayoutGrid(props: {
       direction={props.direction}
       item={props.item}
       justify={props.justifyContent}
+      onClick={props.onClick}
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
       style={props.style}

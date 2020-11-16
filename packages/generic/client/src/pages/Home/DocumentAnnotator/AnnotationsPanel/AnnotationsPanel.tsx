@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { uniq } from 'lodash';
 import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
@@ -6,6 +6,8 @@ import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { CategoryTable } from './CategoryTable';
+import { EntityDrawer } from './EntityDrawer';
+import { useEntityEntryHandler } from './useEntityEntryHandler';
 
 export { AnnotationsPanel };
 
@@ -16,9 +18,11 @@ function AnnotationsPanel(props: {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const categories = uniq(props.annotatorStateHandler.get().annotations.map((annotation) => annotation.category));
+  const [isEntityDrawerOpen, setIsEntityDrawerOpen] = useState<boolean>(false);
+  const entityEntryHandler = useEntityEntryHandler(() => setIsEntityDrawerOpen(true));
 
   return (
-    <LayoutGrid style={styles.panel}>
+    <LayoutGrid onMouseLeave={entityEntryHandler.unfocusEntity} style={styles.panel}>
       <LayoutGrid container alignItems="center" style={styles.panelHeader}>
         <LayoutGrid item>
           <Text variant="h2">{wordings.askedAnnotations}</Text>
@@ -31,10 +35,18 @@ function AnnotationsPanel(props: {
               annotatorStateHandler={props.annotatorStateHandler}
               anonymizer={props.anonymizer}
               category={category}
+              entityEntryHandler={entityEntryHandler}
             />
           </LayoutGrid>
         ))}
       </LayoutGrid>
+      <EntityDrawer
+        annotatorStateHandler={props.annotatorStateHandler}
+        anonymizer={props.anonymizer}
+        entityId={entityEntryHandler.getEntitySelected() || ''}
+        isOpen={isEntityDrawerOpen}
+        onClose={() => setIsEntityDrawerOpen(false)}
+      />
     </LayoutGrid>
   );
 

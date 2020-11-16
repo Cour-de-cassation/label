@@ -8,9 +8,10 @@ export { fetchedAnnotationHandler, LABEL_ANNOTATION_SOURCE };
 const fetchedAnnotationHandler = {
   create,
   createAll,
-  updateOneCategory,
-  updateManyCategory,
   getAnnotationIndex,
+  updateManyCategory,
+  updateOneCategory,
+  updateOneText,
 };
 
 const LABEL_ANNOTATION_SOURCE = 'label';
@@ -85,22 +86,32 @@ function updateManyCategory(
   entityId: string,
   category: string,
 ): fetchedAnnotationType[] {
-  return annotations.map((annotation) =>
-    annotation.entityId === entityId ? updateCategory(annotation, category) : annotation,
+  return annotationUpdater.updateAnnotationsCategory(
+    annotations,
+    category,
+    (annotation) => annotation.entityId === entityId,
   );
 }
 
 function updateOneCategory(annotations: fetchedAnnotationType[], annotationId: idType, category: string) {
   return annotations.map((annotation) =>
-    idModule.lib.equalId(annotation._id, annotationId) ? updateCategory(annotation, category) : annotation,
+    idModule.lib.equalId(annotation._id, annotationId)
+      ? annotationUpdater.updateAnnotationCategory(annotation, category)
+      : annotation,
   );
 }
 
-function updateCategory(annotation: fetchedAnnotationType, category: string): fetchedAnnotationType {
-  return {
-    ...annotationUpdater.updateCategory(annotation, category),
-    source: LABEL_ANNOTATION_SOURCE,
-  };
+function updateOneText(
+  annotations: fetchedAnnotationType[],
+  annotationId: idType,
+  text: string,
+  start: number,
+): fetchedAnnotationType[] {
+  return annotations.map((annotation) =>
+    idModule.lib.equalId(annotation._id, annotationId)
+      ? annotationUpdater.updateAnnotationText(annotation, text, start)
+      : annotation,
+  );
 }
 
 function getAnnotationIndex(annotation: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {

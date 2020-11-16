@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
-import { annotationModule, fetchedAnnotationType, idModule } from '@label/core';
+import { annotationModule, fetchedAnnotationType } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useAnchorElementUnderMouse } from '../../../../utils';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
@@ -16,6 +16,7 @@ function DocumentText(props: {
   const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
   const [selectedText, setSelectedText] = useState<string>('');
   const { viewerMode, resetViewerMode } = useViewerMode();
+  const annotatorState = props.annotatorStateHandler.get();
 
   return (
     <span>
@@ -72,17 +73,15 @@ function DocumentText(props: {
   function resizeAnnotation(selection: Selection, annotation: fetchedAnnotationType) {
     const selectedText = selection.toString();
     const selectedTextIndex = computeSelectedTextIndex(selection);
-    const newAnnotation = annotationModule.lib.annotationUpdater.updateText(
-      annotation,
+
+    const newAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateOneText(
+      annotatorState.annotations,
+      annotation._id,
       selectedText,
       selectedTextIndex,
     );
-    const annotatorState = props.annotatorStateHandler.get();
-    const updatedAnnotations = [
-      ...annotatorState.annotations.filter(({ _id }) => !idModule.lib.equalId(annotation._id, _id)),
-      newAnnotation,
-    ];
-    const newAnnotatorState = { ...annotatorState, annotations: updatedAnnotations };
+
+    const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);
   }
 }

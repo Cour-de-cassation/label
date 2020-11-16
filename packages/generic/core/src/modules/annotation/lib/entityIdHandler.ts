@@ -1,13 +1,31 @@
+import { fetchedAnnotationType } from '../annotationType';
+
 export { entityIdHandler };
 
 const entityIdHandler = {
   compute,
   getCategory,
   getText,
+  syncEntityId,
+  syncEntityIdWithCategory,
 };
 
 function compute(category: string, text: string) {
   return `${category}_${text}`;
+}
+
+function syncEntityId<annotationT extends fetchedAnnotationType>(annotation: annotationT): annotationT {
+  return {
+    ...annotation,
+    entityId: compute(annotation.category, annotation.text),
+  };
+}
+
+function syncEntityIdWithCategory<annotationT extends fetchedAnnotationType>(annotation: annotationT): annotationT {
+  return {
+    ...annotation,
+    entityId: compute(annotation.category, getText(annotation.entityId)),
+  };
 }
 
 function getCategory(entityId: string): string {

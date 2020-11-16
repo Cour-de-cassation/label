@@ -12,6 +12,7 @@ const fetchedAnnotationHandler = {
   updateManyCategory,
   updateOneCategory,
   updateOneText,
+  deleteOne,
 };
 
 const LABEL_ANNOTATION_SOURCE = 'label';
@@ -112,6 +113,10 @@ function updateOneText(
       ? annotationUpdater.updateAnnotationText(annotation, text, start)
       : annotation,
   );
+}
+
+function deleteOne(annotations: fetchedAnnotationType[], annotationId: fetchedAnnotationType['_id']) {
+  return annotations.filter((annotation) => !idModule.lib.equalId(annotation._id, annotationId));
 }
 
 function getAnnotationIndex(annotation: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {

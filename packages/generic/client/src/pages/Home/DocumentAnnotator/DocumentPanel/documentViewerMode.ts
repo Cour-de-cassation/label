@@ -7,7 +7,7 @@ export type { viewerModeType };
 
 type viewerModeType =
   | { kind: 'annotation'; isAnonymized: boolean }
-  | { kind: 'resize'; annotationId: fetchedAnnotationType['_id'] };
+  | { kind: 'resize'; annotation: fetchedAnnotationType };
 
 const DEFAULT_VIEWER_MODE: viewerModeType = { kind: 'annotation', isAnonymized: false };
 
@@ -15,7 +15,7 @@ const DocumentViewerModeContext = createContext<{
   documentViewerModeHandler: {
     isAnonymizedView: () => boolean;
     resetViewerMode: () => void;
-    setResizeMode: (annotationId: fetchedAnnotationType['_id']) => void;
+    setResizeMode: (annotation: fetchedAnnotationType) => void;
     setViewerMode: (documentViewerMode: viewerModeType) => void;
     switchAnonymizedView: () => void;
     documentViewerMode: viewerModeType;
@@ -63,9 +63,9 @@ function buildViewerModeContext(
     return documentViewerMode.kind === 'annotation' && documentViewerMode.isAnonymized;
   }
 
-  function setResizeMode(annotationId: fetchedAnnotationType['_id']) {
+  function setResizeMode(annotation: fetchedAnnotationType) {
     if (documentViewerMode.kind === 'annotation' && !documentViewerMode.isAnonymized) {
-      setViewerMode({ kind: 'resize', annotationId });
+      setViewerMode({ kind: 'resize', annotation });
     }
   }
 

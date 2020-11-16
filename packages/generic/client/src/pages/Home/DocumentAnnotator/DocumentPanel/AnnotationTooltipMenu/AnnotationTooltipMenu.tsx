@@ -60,7 +60,12 @@ function AnnotationTooltipMenu(props: {
                 annotation={props.annotation}
                 shouldApplyEverywhere={shouldApplyEverywhere}
               />,
-              <ResizeAnnotationButton onClick={props.onResizeAnnotationClick} disabled={shouldApplyEverywhere} />,
+              <ResizeAnnotationButton
+                annotationId={props.annotation._id}
+                annotatorStateHandler={props.annotatorStateHandler}
+                onClick={props.onResizeAnnotationClick}
+                disabled={shouldApplyEverywhere}
+              />,
               <LinkAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}

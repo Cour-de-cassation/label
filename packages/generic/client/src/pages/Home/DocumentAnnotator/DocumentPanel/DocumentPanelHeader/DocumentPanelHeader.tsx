@@ -15,7 +15,13 @@ function DocumentPanelHeader(props: { annotatorStateHandler: annotatorStateHandl
       case 'annotation':
         return <AnnotationHeader annotatorStateHandler={props.annotatorStateHandler} />;
       case 'resize':
-        return <ResizeHeader resetViewerMode={documentViewerModeHandler.resetViewerMode} />;
+        return (
+          <ResizeHeader
+            annotationToResize={documentViewerModeHandler.documentViewerMode.annotation}
+            annotatorStateHandler={props.annotatorStateHandler}
+            resetViewerMode={documentViewerModeHandler.resetViewerMode}
+          />
+        );
     }
   }
 }

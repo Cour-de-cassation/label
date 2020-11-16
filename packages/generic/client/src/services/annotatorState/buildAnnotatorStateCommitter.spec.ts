@@ -2,6 +2,7 @@ import { range } from 'lodash';
 import { annotationModule, fetchedAnnotationType, documentModule } from '@label/core';
 import { annotatorStateType } from './annotatorStateType';
 import { buildAnnotatorStateCommitter } from './buildAnnotatorStateCommitter';
+import { sortAnnotations } from './utils';
 
 describe('buildAnnotatorStateCommitter', () => {
   const annotations = range(7).map(() => annotationModule.generator.generate());
@@ -26,6 +27,18 @@ describe('buildAnnotatorStateCommitter', () => {
       annotatorStateCommitter.commit(state2, state3);
 
       const state4 = annotatorStateCommitter.revert(annotatorStateCommitter.revert(state3));
+
+      expect(sortAnnotations(state4.annotations)).toEqual(sortAnnotations(state1.annotations));
+    });
+    it('should work with squashed commits', () => {
+      const annotatorStateCommitter = buildAnnotatorStateCommitter();
+      const state1 = buildAnnotatorState([annotations[0], annotations[2], annotations[4]]);
+      const state2 = buildAnnotatorState([annotations[4], annotations[5], annotations[6]]);
+      const state3 = buildAnnotatorState([annotations[4], annotations[6]]);
+      annotatorStateCommitter.commit(state1, state2);
+      annotatorStateCommitter.commitAndSquash(state2, state3);
+
+      const state4 = annotatorStateCommitter.revert(state3);
 
       expect(sortAnnotations(state4.annotations)).toEqual(sortAnnotations(state1.annotations));
     });
@@ -56,14 +69,21 @@ describe('buildAnnotatorStateCommitter', () => {
 
       expect(sortAnnotations(state5.annotations)).toEqual(sortAnnotations(state3.annotations));
     });
+    it('should work with squashed commits', () => {
+      const annotatorStateCommitter = buildAnnotatorStateCommitter();
+      const state1 = buildAnnotatorState([annotations[0], annotations[2], annotations[4]]);
+      const state2 = buildAnnotatorState([annotations[4], annotations[5], annotations[6]]);
+      const state3 = buildAnnotatorState([annotations[4], annotations[6]]);
+      annotatorStateCommitter.commit(state1, state2);
+      annotatorStateCommitter.commitAndSquash(state2, state3);
+      const state4 = annotatorStateCommitter.revert(state3);
+
+      const state5 = annotatorStateCommitter.restore(state4);
+
+      expect(sortAnnotations(state5.annotations)).toEqual(sortAnnotations(state3.annotations));
+    });
   });
 });
-
-function sortAnnotations(annotations: fetchedAnnotationType[]) {
-  return annotations.sort((annotation1, annotation2) =>
-    JSON.stringify(annotation1._id).localeCompare(JSON.stringify(annotation2._id)),
-  );
-}
 
 function buildAnnotatorState(annotations: fetchedAnnotationType[]): annotatorStateType {
   return {

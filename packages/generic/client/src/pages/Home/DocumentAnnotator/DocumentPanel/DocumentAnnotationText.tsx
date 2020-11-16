@@ -82,7 +82,7 @@ function DocumentAnnotationText(props: {
   }
 
   function onResizeAnnotationClick() {
-    documentViewerModeHandler.setResizeMode(props.annotation._id);
+    documentViewerModeHandler.setResizeMode(props.annotation);
     closeTooltipMenu();
   }
 }

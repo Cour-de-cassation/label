@@ -9,6 +9,7 @@ export type { annotatorStateHandlerType };
 type annotatorStateHandlerType = {
   get: () => annotatorStateType;
   set: (nextAnnotatorState: annotatorStateType) => void;
+  setAndOverwrite: (nextAnnotatorState: annotatorStateType) => void;
   revert: () => void;
   restore: () => void;
   canRevert: () => boolean;
@@ -27,6 +28,7 @@ function useAnnotatorState(
     annotatorStateHandler: {
       get: () => annotatorState,
       set: setAnnotatorStateAndCommitChange,
+      setAndOverwrite: setAnnotatorStateAndSquashChange,
       revert: revertAnnotatorState,
       restore: restoreAnnotatorState,
       canRevert: canRevertAnnotatorState,
@@ -37,6 +39,11 @@ function useAnnotatorState(
 
   function setAnnotatorStateAndCommitChange(newAnnotatorState: annotatorStateType) {
     annotatorStateCommitter.commit(annotatorState, newAnnotatorState);
+    setAnnotatorState(newAnnotatorState);
+  }
+
+  function setAnnotatorStateAndSquashChange(newAnnotatorState: annotatorStateType) {
+    annotatorStateCommitter.commitAndSquash(annotatorState, newAnnotatorState);
     setAnnotatorState(newAnnotatorState);
   }
 

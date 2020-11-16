@@ -7,6 +7,7 @@ export type { annotatorStateCommitterType };
 
 type annotatorStateCommitterType = {
   commit: (previousState: annotatorStateType, nextState: annotatorStateType) => void;
+  commitAndSquash: (previousState: annotatorStateType, nextState: annotatorStateType) => void;
   revert: (previousState: annotatorStateType) => annotatorStateType;
   restore: (previousState: annotatorStateType) => annotatorStateType;
   canRevert: () => boolean;
@@ -19,6 +20,7 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
 
   return {
     commit,
+    commitAndSquash,
     revert,
     restore,
     canRevert,
@@ -28,6 +30,17 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
   function commit(previousState: annotatorStateType, nextState: annotatorStateType) {
     const annotationAction = getDiffBetweenAnnotationsStates(previousState.annotations, nextState.annotations);
     annotationActionsToRevert.push(annotationAction);
+  }
+
+  function commitAndSquash(previousState: annotatorStateType, nextState: annotatorStateType) {
+    const annotationAction = getDiffBetweenAnnotationsStates(previousState.annotations, nextState.annotations);
+    const lastActionCommitted = annotationActionsToRevert.pop();
+    if (!lastActionCommitted) {
+      annotationActionsToRevert.push(annotationAction);
+      return;
+    }
+    const squashedAction = squashActions(lastActionCommitted, annotationAction);
+    annotationActionsToRevert.push(squashedAction);
   }
 
   function revert(previousState: annotatorStateType): annotatorStateType {
@@ -72,6 +85,18 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
         (nextStateAnnotation) => !previousAnnotationsState.includes(nextStateAnnotation),
       ),
     };
+  }
+
+  function squashActions(firstAction: annotationActionType, secondAction: annotationActionType) {
+    const before = [
+      ...firstAction.before,
+      ...secondAction.before.filter((annotation) => !firstAction.after.includes(annotation)),
+    ];
+    const after = [
+      ...secondAction.after,
+      ...firstAction.after.filter((annotation) => !secondAction.before.includes(annotation)),
+    ];
+    return { before, after };
   }
 
   function applyAnnotationAction(

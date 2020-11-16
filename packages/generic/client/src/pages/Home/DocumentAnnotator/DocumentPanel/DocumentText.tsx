@@ -42,7 +42,7 @@ function DocumentText(props: {
     if (documentViewerModeHandler.documentViewerMode.kind === 'resize') {
       setSelectedText('');
       setSelectedTextIndex(0);
-      resizeAnnotation(selection, documentViewerModeHandler.documentViewerMode.annotationId);
+      resizeAnnotation(selection, documentViewerModeHandler.documentViewerMode.annotation);
       documentViewerModeHandler.resetViewerMode();
     } else {
       setSelectedText(selection.toString());
@@ -70,18 +70,18 @@ function DocumentText(props: {
     return Math.min(selection.anchorOffset, selection.focusOffset) + props.index;
   }
 
-  function resizeAnnotation(selection: Selection, annotationId: fetchedAnnotationType['_id']) {
+  function resizeAnnotation(selection: Selection, annotation: fetchedAnnotationType) {
     const selectedText = selection.toString();
     const selectedTextIndex = computeSelectedTextIndex(selection);
 
     const newAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateOneText(
-      annotatorState.annotations,
-      annotationId,
+      [...annotatorState.annotations, annotation],
+      annotation._id,
       selectedText,
       selectedTextIndex,
     );
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
-    props.annotatorStateHandler.set(newAnnotatorState);
+    props.annotatorStateHandler.setAndOverwrite(newAnnotatorState);
   }
 }

@@ -6,7 +6,16 @@
     "text": "Adresse"
   },
   "personnemorale": {
-    "anonymizationTexts": ["Los Pollos Hermanos", "Duff", "World Company"],
+    "anonymizationTexts": [
+      "Los Pollos Hermanos",
+      "Duff",
+      "World Company",
+      "Boucherie Sanzot",
+      "Stark Industries",
+      "Capsule Corp",
+      "Buzz Cola",
+      "MomCorp"
+    ],
     "color": "#A997C4",
     "iconName": "building",
     "text": "Personne morale"
@@ -18,19 +27,45 @@
     "text": "Personne physico-morale"
   },
   "personnephysiqueprenom": {
-    "anonymizationTexts": ["Spirou", "Fantasio"],
+    "anonymizationTexts": [
+      "Gaston",
+      "Spirou",
+      "Fantasio",
+      "Bertrand",
+      "Léon",
+      "Yves",
+      "Joseph",
+      "William"
+    ],
     "color": "#E64901",
     "iconName": "person",
     "text": "Prénom"
   },
   "personnephysiquenom": {
-    "anonymizationTexts": ["Lagaffe"],
+    "anonymizationTexts": [
+      "Lagaffe",
+      "Labévue",
+      "Prunelle",
+      "Lebrac",
+      "Longtarin",
+      "De Mesmaeker",
+      "Lapoire"
+    ],
     "color": "#AB0800",
     "iconName": "person",
     "text": "Nom"
   },
   "professionnelnom": {
-    "anonymizationTexts": ["Leon"],
+    "anonymizationTexts": [
+      "Milou",
+      "Idéfix",
+      "Bill",
+      "Snoopy",
+      "Rantanplan",
+      "Cubitus",
+      "Garfield",
+      "Marsupilami"
+    ],
     "color": "#85644B",
     "iconName": "work",
     "text": "Professionnel"

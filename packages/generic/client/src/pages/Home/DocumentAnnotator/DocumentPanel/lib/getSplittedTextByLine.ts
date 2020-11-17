@@ -3,25 +3,29 @@ import { fetchedAnnotationType, textSplitter, textChunkType, annotationChunkType
 
 export { getSplittedTextByLine };
 
-function getSplittedTextByLine(
-  text: string,
-  annotations: fetchedAnnotationType[],
-): Array<Array<textChunkType | annotationChunkType<fetchedAnnotationType>>> {
+export type { splittedTextByLineType };
+
+type splittedTextByLineType = Array<{
+  line: number;
+  content: Array<textChunkType | annotationChunkType<fetchedAnnotationType>>;
+}>;
+
+function getSplittedTextByLine(text: string, annotations: fetchedAnnotationType[]): splittedTextByLineType {
   const numberOfLines = splitTextAccordingToNewLine(text).length;
   const splittedText = textSplitter.splitTextAccordingToAnnotations(text, annotations);
   const splittedTextByLine = computeSplittedTextByLine(splittedText, numberOfLines);
 
-  return splittedTextByLine.map(textSplitter.removeEmptyTextChunks);
+  return splittedTextByLine.map(({ line, content }) => ({
+    line,
+    content: textSplitter.removeEmptyTextChunks(content),
+  }));
 }
 
 function computeSplittedTextByLine(
   splittedText: Array<textChunkType | annotationChunkType<fetchedAnnotationType>>,
   numberOfLines: number,
 ) {
-  const splittedTextByLine: Array<Array<textChunkType | annotationChunkType<fetchedAnnotationType>>> = range(
-    1,
-    numberOfLines + 1,
-  ).map(() => []);
+  const splittedTextByLine: splittedTextByLineType = range(1, numberOfLines + 1).map((line) => ({ line, content: [] }));
 
   let currentLine = 0;
   splittedText.forEach((chunk) => {
@@ -30,7 +34,7 @@ function computeSplittedTextByLine(
         const splittedTextAccordingToNewline = splitTextAccordingToNewLine(chunk.text);
         let currentIndex = chunk.index;
         splittedTextAccordingToNewline.forEach((textLine, ind) => {
-          splittedTextByLine[currentLine + ind].push({
+          splittedTextByLine[currentLine + ind].content.push({
             ...textSplitter.buildTextChunk(textLine, currentIndex),
           });
           currentIndex = currentIndex + textLine.length + 1;
@@ -38,7 +42,7 @@ function computeSplittedTextByLine(
         currentLine = currentLine + splittedTextAccordingToNewline.length - 1;
         break;
       case 'annotation':
-        splittedTextByLine[currentLine].push({
+        splittedTextByLine[currentLine].content.push({
           ...textSplitter.buildAnnotationChunk(chunk.annotation),
         });
         break;

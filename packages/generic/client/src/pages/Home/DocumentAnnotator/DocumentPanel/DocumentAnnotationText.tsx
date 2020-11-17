@@ -2,9 +2,9 @@ import React, { MouseEvent, ReactElement, useState } from 'react';
 import { fetchedAnnotationType, settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
+import { useDocumentViewerModeHandler } from '../hooks';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
-import { useDocumentViewerMode } from './documentViewerMode';
 
 export { DocumentAnnotationText };
 
@@ -16,7 +16,7 @@ function DocumentAnnotationText(props: {
   const style = buildStyle();
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
   const [summaryAnchorElement, setSummaryAnchorElement] = useState<Element | undefined>(undefined);
-  const { documentViewerModeHandler } = useDocumentViewerMode();
+  const documentViewerModeHandler = useDocumentViewerModeHandler();
 
   return (
     <span>

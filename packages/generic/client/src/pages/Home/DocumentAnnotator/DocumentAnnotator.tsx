@@ -7,7 +7,11 @@ import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { DocumentAnnotatorHeader } from './DocumentAnnotatorHeader';
-import { useKeyboardShortcutsHandler } from './hooks';
+import {
+  DocumentViewerModeHandlerContext,
+  useDocumentViewerModeHandlerContext,
+  useKeyboardShortcutsHandler,
+} from './hooks';
 
 export { DocumentAnnotator };
 
@@ -24,32 +28,39 @@ function DocumentAnnotator(props: {
     settings: props.settings,
   });
   const styles = buildStyles();
+  const documentViewerModeHandlerContext = useDocumentViewerModeHandlerContext();
   useKeyboardShortcutsHandler([
     { key: 'z', ctrlKey: true, action: annotatorStateHandler.revert },
     { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
   ]);
 
   return (
-    <LayoutGrid container>
-      <LayoutGrid container item style={styles.annotatorHeader} xs={12}>
-        <DocumentAnnotatorHeader
-          annotatorStateHandler={annotatorStateHandler}
-          fetchNewDocument={props.fetchNewDocument}
-        />
-      </LayoutGrid>
-      <LayoutGrid container item xs={12}>
-        <LayoutGrid container item xs={4}>
-          <AnnotationsPanel annotatorStateHandler={annotatorStateHandler} anonymizer={props.anonymizer} />
-        </LayoutGrid>
-        <LayoutGrid container item xs={8}>
-          <DocumentPanel
+    <DocumentViewerModeHandlerContext.Provider value={documentViewerModeHandlerContext}>
+      <LayoutGrid container>
+        <LayoutGrid container item style={styles.annotatorHeader} xs={12}>
+          <DocumentAnnotatorHeader
             annotatorStateHandler={annotatorStateHandler}
-            anonymizer={props.anonymizer}
             fetchNewDocument={props.fetchNewDocument}
           />
         </LayoutGrid>
+        <LayoutGrid container item xs={12}>
+          <LayoutGrid container item xs={4}>
+            <AnnotationsPanel
+              annotatorStateHandler={annotatorStateHandler}
+              anonymizer={props.anonymizer}
+              onEntitySelection={onEntitySelection}
+            />
+          </LayoutGrid>
+          <LayoutGrid container item xs={8}>
+            <DocumentPanel
+              annotatorStateHandler={annotatorStateHandler}
+              anonymizer={props.anonymizer}
+              fetchNewDocument={props.fetchNewDocument}
+            />
+          </LayoutGrid>
+        </LayoutGrid>
       </LayoutGrid>
-    </LayoutGrid>
+    </DocumentViewerModeHandlerContext.Provider>
   );
 
   function buildStyles() {
@@ -58,5 +69,13 @@ function DocumentAnnotator(props: {
         height: heights.header,
       },
     };
+  }
+
+  function onEntitySelection(entityId: string | undefined) {
+    if (entityId) {
+      documentViewerModeHandlerContext.setOccurrenceMode(entityId);
+    } else {
+      documentViewerModeHandlerContext.resetViewerMode();
+    }
   }
 }

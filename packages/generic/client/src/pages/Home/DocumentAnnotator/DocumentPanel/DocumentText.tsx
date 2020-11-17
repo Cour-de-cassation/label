@@ -2,8 +2,8 @@ import React, { ReactElement, useState, MouseEvent } from 'react';
 import { annotationModule, fetchedAnnotationType } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useAnchorElementUnderMouse } from '../../../../utils';
+import { useDocumentViewerModeHandler } from '../hooks';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
-import { useDocumentViewerMode } from './documentViewerMode';
 
 export { DocumentText };
 
@@ -15,7 +15,7 @@ function DocumentText(props: {
   const { anchorElementUnderMouse, setAnchorElementUnderMouse } = useAnchorElementUnderMouse();
   const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
   const [selectedText, setSelectedText] = useState<string>('');
-  const { documentViewerModeHandler } = useDocumentViewerMode();
+  const documentViewerModeHandler = useDocumentViewerModeHandler();
   const annotatorState = props.annotatorStateHandler.get();
 
   return (

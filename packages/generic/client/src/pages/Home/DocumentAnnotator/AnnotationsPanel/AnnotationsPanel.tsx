@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties } from 'react';
 import { uniq } from 'lodash';
 import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
@@ -6,7 +6,6 @@ import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { CategoryTable } from './CategoryTable';
-import { EntityDrawer } from './EntityDrawer';
 import { useEntityEntryHandler } from './useEntityEntryHandler';
 
 export { AnnotationsPanel };
@@ -14,12 +13,12 @@ export { AnnotationsPanel };
 function AnnotationsPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
+  onEntitySelection: (entityId: string | undefined) => void;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const categories = uniq(props.annotatorStateHandler.get().annotations.map((annotation) => annotation.category));
-  const [isEntityDrawerOpen, setIsEntityDrawerOpen] = useState<boolean>(false);
-  const entityEntryHandler = useEntityEntryHandler(() => setIsEntityDrawerOpen(true));
+  const entityEntryHandler = useEntityEntryHandler(props.onEntitySelection);
 
   return (
     <LayoutGrid onMouseLeave={entityEntryHandler.unfocusEntity} style={styles.panel}>
@@ -40,13 +39,6 @@ function AnnotationsPanel(props: {
           </LayoutGrid>
         ))}
       </LayoutGrid>
-      <EntityDrawer
-        annotatorStateHandler={props.annotatorStateHandler}
-        anonymizer={props.anonymizer}
-        entityId={entityEntryHandler.getEntitySelected() || ''}
-        isOpen={isEntityDrawerOpen}
-        onClose={() => setIsEntityDrawerOpen(false)}
-      />
     </LayoutGrid>
   );
 

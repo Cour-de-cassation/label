@@ -6,7 +6,7 @@ export type { entityEntryHandlerType };
 
 type entityEntryHandlerType = ReturnType<typeof useEntityEntryHandler>;
 
-function useEntityEntryHandler(onClick: () => void) {
+function useEntityEntryHandler(onEntitySelection: (entityId: string | undefined) => void) {
   const [entityFocused, setEntityFocused] = useState<string | undefined>(undefined);
   const [entitySelected, setEntitySelected] = useState<string | undefined>(undefined);
 
@@ -14,12 +14,12 @@ function useEntityEntryHandler(onClick: () => void) {
     focusEntity: (entityId: string) => setEntityFocused(entityId),
     getEntityFocused: () => entityFocused,
     getEntitySelected: () => entitySelected,
-    selectEntity,
+    handleEntitySelection,
     unfocusEntity: () => setEntityFocused(undefined),
   };
 
-  function selectEntity(entityId: string) {
-    onClick();
+  function handleEntitySelection(entityId: string | undefined) {
     setEntitySelected(entityId);
+    onEntitySelection(entityId);
   }
 }

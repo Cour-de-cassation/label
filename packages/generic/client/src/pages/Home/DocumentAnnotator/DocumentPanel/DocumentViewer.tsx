@@ -4,7 +4,8 @@ import { Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
-import { getSplittedTextByLine } from './lib';
+import { useDocumentViewerModeHandler } from '../hooks';
+import { filterLineByEntityId, getSplittedTextByLine } from './lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 import { DocumentText } from './DocumentText';
 
@@ -16,23 +17,24 @@ function DocumentViewer(props: {
 }): ReactElement {
   const theme = useCustomTheme();
   const styles = buildStyle(theme);
+  const documentViewerModeHandler = useDocumentViewerModeHandler();
   const annotatorState = props.annotatorStateHandler.get();
-  const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
+  const documentText = computeDocumentText();
 
   return (
     <div style={styles.container}>
       <table style={styles.table}>
         <tbody>
-          {splittedTextByLine.map((splittedText, lineNumber) => (
-            <tr key={lineNumber}>
+          {documentText.map(({ line, content }) => (
+            <tr key={line}>
               <td style={styles.lineNumberCell}>
                 <Text variant="body2" color="textSecondary">
-                  {lineNumber + 1}
+                  {line}
                 </Text>
               </td>
               <td>
-                <span key={lineNumber}>
-                  <Text variant="body2">{splittedText.map(renderChunk)}</Text>
+                <span key={line}>
+                  <Text variant="body2">{content.map(renderChunk)}</Text>
                 </span>
               </td>
             </tr>
@@ -62,6 +64,17 @@ function DocumentViewer(props: {
             anonymizer={props.anonymizer}
           />
         );
+    }
+  }
+
+  function computeDocumentText() {
+    const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
+
+    switch (documentViewerModeHandler.documentViewerMode.kind) {
+      case 'occurrence':
+        return filterLineByEntityId(documentViewerModeHandler.documentViewerMode.entityId, splittedTextByLine);
+      default:
+        return splittedTextByLine;
     }
   }
 }

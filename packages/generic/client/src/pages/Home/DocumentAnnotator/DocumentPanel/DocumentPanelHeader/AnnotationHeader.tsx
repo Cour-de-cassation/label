@@ -3,13 +3,13 @@ import { Header, IconButton, SwitchButton, Text } from '../../../../../component
 import { heights, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
-import { useDocumentViewerMode } from '../documentViewerMode';
+import { useDocumentViewerModeHandler } from '../../hooks';
 
 export { AnnotationHeader };
 
 function AnnotationHeader(props: { annotatorStateHandler: annotatorStateHandlerType }) {
   const theme = useCustomTheme();
-  const { documentViewerModeHandler } = useDocumentViewerMode();
+  const documentViewerModeHandler = useDocumentViewerModeHandler();
   const style = buildStyle();
 
   return (

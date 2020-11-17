@@ -1,3 +1,4 @@
+import { filterLineByEntityId } from './filterLineByEntityId';
 import { getSplittedTextByLine } from './getSplittedTextByLine';
 
-export { getSplittedTextByLine };
+export { filterLineByEntityId, getSplittedTextByLine };

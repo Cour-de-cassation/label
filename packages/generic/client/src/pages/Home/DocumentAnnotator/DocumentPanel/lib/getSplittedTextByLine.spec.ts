@@ -14,18 +14,27 @@ describe('getSplittedTextByLine', () => {
     const splittedTextByLine = getSplittedTextByLine(text, annotations);
 
     expect(splittedTextByLine).toEqual([
-      [
-        textSplitter.buildAnnotationChunk(annotations[0]),
-        textSplitter.buildTextChunk(' is software engineer. ', 6),
-        textSplitter.buildAnnotationChunk(annotations[1]),
-        textSplitter.buildTextChunk(' is a software engineer.', 36),
-      ],
-      [],
-      [
-        textSplitter.buildTextChunk('And ', 62),
-        textSplitter.buildAnnotationChunk(annotations[2]),
-        textSplitter.buildTextChunk(' is a designer.', 72),
-      ],
+      {
+        line: 1,
+        content: [
+          textSplitter.buildAnnotationChunk(annotations[0]),
+          textSplitter.buildTextChunk(' is software engineer. ', 6),
+          textSplitter.buildAnnotationChunk(annotations[1]),
+          textSplitter.buildTextChunk(' is a software engineer.', 36),
+        ],
+      },
+      {
+        line: 2,
+        content: [],
+      },
+      {
+        line: 3,
+        content: [
+          textSplitter.buildTextChunk('And ', 62),
+          textSplitter.buildAnnotationChunk(annotations[2]),
+          textSplitter.buildTextChunk(' is a designer.', 72),
+        ],
+      },
     ]);
   });
 });

@@ -16,6 +16,7 @@ const fr = {
   enterYourText: 'Saisissez votre texte...',
   errorPage: 'Une erreur est survenue...',
   forgottenPassword: 'Mot de passe oublié ?',
+  identicalOccurrencesSpotted: 'occurence(s) identique(s) détectée(s)',
   lightMode: 'Mode lumineux',
   link: 'Associer à',
   loading: 'Veuillez patienter...',

@@ -4,30 +4,15 @@ import { entityIdHandler } from './entityIdHandler';
 
 describe('fetchedAnnotationHandler', () => {
   describe('createAll', () => {
-    it('should create all the valid annotations for the given text and document', () => {
+    it('should create all the annotations for the given texts and indices', () => {
       const category = 'CATEGORY';
-      const documentText =
-        'engineering: Benoit is a software engineer. Nicolas is a software engineer. They are engineers.';
       const annotationText = 'engineer';
-      const annotations = [
-        generateFetchedAnnotation({
-          category: 'FIRST_NAME',
-          start: 13,
-          text: 'Benoit',
-        }),
-        generateFetchedAnnotation({
-          category: 'FIRST_NAME',
-          start: 44,
-          text: 'Nicolas',
-        }),
+      const annotationTextsAndIndices = [
+        { index: 34, text: annotationText },
+        { index: 66, text: annotationText },
       ];
 
-      const createdAnnotations = fetchedAnnotationHandler.createAll(
-        category,
-        documentText,
-        annotationText,
-        annotations,
-      );
+      const createdAnnotations = fetchedAnnotationHandler.createAll(category, annotationTextsAndIndices);
 
       expect(createdAnnotations).toEqual([
         {
@@ -47,72 +32,6 @@ describe('fetchedAnnotationHandler', () => {
           text: annotationText,
         },
       ]);
-    });
-
-    it('should not create an annotation if it is inside another annotation', () => {
-      const category = 'LAST_NAME';
-      const annotationText = 'Baker';
-      const documentText = 'He lives at 221B, Baker street';
-      const annotations = [
-        generateFetchedAnnotation({
-          category: 'ADRESS',
-          start: 12,
-          text: '221B, Baker street',
-        }),
-      ];
-
-      const createdAnnotations = fetchedAnnotationHandler.createAll(
-        category,
-        documentText,
-        annotationText,
-        annotations,
-      );
-
-      expect(createdAnnotations).toEqual([]);
-    });
-
-    it('should not create an annotation if it overlaps another annotation at its beginning', () => {
-      const category = 'ADRESS';
-      const annotationText = 'Baker Street';
-      const documentText = 'Josephine Baker Street';
-      const annotations = [
-        generateFetchedAnnotation({
-          category: 'FULL_NAME',
-          start: 0,
-          text: 'Josephine Baker',
-        }),
-      ];
-
-      const createdAnnotations = fetchedAnnotationHandler.createAll(
-        category,
-        documentText,
-        annotationText,
-        annotations,
-      );
-
-      expect(createdAnnotations).toEqual([]);
-    });
-
-    it('should not create an annotation if it overlaps another annotation at its end', () => {
-      const category = 'FULL_NAME';
-      const annotationText = 'Josephine Baker';
-      const documentText = 'Josephine Baker Street';
-      const annotations = [
-        generateFetchedAnnotation({
-          category: 'ADRESS',
-          start: 10,
-          text: 'Baker Street',
-        }),
-      ];
-
-      const createdAnnotations = fetchedAnnotationHandler.createAll(
-        category,
-        documentText,
-        annotationText,
-        annotations,
-      );
-
-      expect(createdAnnotations).toEqual([]);
     });
   });
 

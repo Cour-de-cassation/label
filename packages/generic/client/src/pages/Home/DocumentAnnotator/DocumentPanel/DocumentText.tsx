@@ -21,13 +21,15 @@ function DocumentText(props: {
   return (
     <span>
       <span onMouseUp={handleSelection}>{props.text}</span>
-      <AnnotationCreationTooltipMenu
-        anchorText={anchorElementUnderMouse}
-        annotatorStateHandler={props.annotatorStateHandler}
-        annotationText={selectedText}
-        annotationIndex={selectedTextIndex}
-        onClose={closeTooltipMenu}
-      />
+      {!!anchorElementUnderMouse && (
+        <AnnotationCreationTooltipMenu
+          anchorText={anchorElementUnderMouse}
+          annotatorStateHandler={props.annotatorStateHandler}
+          annotationText={selectedText}
+          annotationIndex={selectedTextIndex}
+          onClose={closeTooltipMenu}
+        />
+      )}
     </span>
   );
 

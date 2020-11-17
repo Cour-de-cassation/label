@@ -7,11 +7,8 @@ import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { DocumentAnnotatorHeader } from './DocumentAnnotatorHeader';
-import {
-  DocumentViewerModeHandlerContext,
-  useDocumentViewerModeHandlerContext,
-  useKeyboardShortcutsHandler,
-} from './hooks';
+import { useKeyboardShortcutsHandler } from './hooks';
+import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode/DocumentViewerModeHandlerContextProvider';
 
 export { DocumentAnnotator };
 
@@ -28,14 +25,13 @@ function DocumentAnnotator(props: {
     settings: props.settings,
   });
   const styles = buildStyles();
-  const documentViewerModeHandlerContext = useDocumentViewerModeHandlerContext();
   useKeyboardShortcutsHandler([
     { key: 'z', ctrlKey: true, action: annotatorStateHandler.revert },
     { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
   ]);
 
   return (
-    <DocumentViewerModeHandlerContext.Provider value={documentViewerModeHandlerContext}>
+    <DocumentViewerModeHandlerContextProvider>
       <LayoutGrid container>
         <LayoutGrid container item style={styles.annotatorHeader} xs={12}>
           <DocumentAnnotatorHeader
@@ -45,11 +41,7 @@ function DocumentAnnotator(props: {
         </LayoutGrid>
         <LayoutGrid container item xs={12}>
           <LayoutGrid container item xs={4}>
-            <AnnotationsPanel
-              annotatorStateHandler={annotatorStateHandler}
-              anonymizer={props.anonymizer}
-              onEntitySelection={onEntitySelection}
-            />
+            <AnnotationsPanel annotatorStateHandler={annotatorStateHandler} anonymizer={props.anonymizer} />
           </LayoutGrid>
           <LayoutGrid container item xs={8}>
             <DocumentPanel
@@ -60,7 +52,7 @@ function DocumentAnnotator(props: {
           </LayoutGrid>
         </LayoutGrid>
       </LayoutGrid>
-    </DocumentViewerModeHandlerContext.Provider>
+    </DocumentViewerModeHandlerContextProvider>
   );
 
   function buildStyles() {
@@ -69,13 +61,5 @@ function DocumentAnnotator(props: {
         height: heights.header,
       },
     };
-  }
-
-  function onEntitySelection(entityId: string | undefined) {
-    if (entityId) {
-      documentViewerModeHandlerContext.setOccurrenceMode(entityId);
-    } else {
-      documentViewerModeHandlerContext.resetViewerMode();
-    }
   }
 }

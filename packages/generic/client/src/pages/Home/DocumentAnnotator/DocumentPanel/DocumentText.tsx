@@ -1,8 +1,8 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
 import { annotationModule, fetchedAnnotationType } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { useAnchorElementUnderMouse } from '../../../../utils';
-import { useDocumentViewerModeHandler } from '../hooks';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
 
 export { DocumentText };

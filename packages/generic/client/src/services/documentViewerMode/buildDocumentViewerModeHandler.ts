@@ -1,14 +1,9 @@
-import { createContext, useContext, useState } from 'react';
 import { fetchedAnnotationType } from '@label/core';
+import { viewerModeType } from './viewerMode';
 
-export { DocumentViewerModeHandlerContext, useDocumentViewerModeHandler, useDocumentViewerModeHandlerContext };
+export { buildDocumentViewerModeHandler };
 
-export type { viewerModeType };
-
-type viewerModeType =
-  | { kind: 'annotation'; isAnonymized: boolean }
-  | { kind: 'occurrence'; entityId: fetchedAnnotationType['entityId']; isAnonymized: boolean }
-  | { kind: 'resize'; annotation: fetchedAnnotationType };
+export type { documentViewerModeHandlerType };
 
 type documentViewerModeHandlerType = {
   isAnonymizedView: () => boolean;
@@ -19,27 +14,7 @@ type documentViewerModeHandlerType = {
   documentViewerMode: viewerModeType;
 };
 
-const DEFAULT_VIEWER_MODE: viewerModeType = { kind: 'annotation', isAnonymized: false };
-
-const DocumentViewerModeHandlerContext = createContext<documentViewerModeHandlerType>({
-  isAnonymizedView: () => false,
-  resetViewerMode: () => null,
-  setOccurrenceMode: () => null,
-  setResizeMode: () => null,
-  switchAnonymizedView: () => null,
-  documentViewerMode: DEFAULT_VIEWER_MODE,
-});
-
-function useDocumentViewerModeHandler() {
-  return useContext(DocumentViewerModeHandlerContext);
-}
-
-function useDocumentViewerModeHandlerContext(): documentViewerModeHandlerType {
-  const [documentViewerMode, setViewerMode] = useState<viewerModeType>(DEFAULT_VIEWER_MODE);
-  return buildDocumentViewerModeHandlerContext(documentViewerMode, setViewerMode);
-}
-
-function buildDocumentViewerModeHandlerContext(
+function buildDocumentViewerModeHandler(
   documentViewerMode: viewerModeType,
   setViewerMode: (documentViewerMode: viewerModeType) => void,
 ): documentViewerModeHandlerType {

@@ -3,6 +3,7 @@ import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
+import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { CategoryTable } from './CategoryTable';
 import { groupByCategoryAndEntity } from './lib';
@@ -13,12 +14,12 @@ export { AnnotationsPanel };
 function AnnotationsPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
-  onEntitySelection: (entityId: string | undefined) => void;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
+  const documentViewerModeHandler = useDocumentViewerModeHandler();
   const annotationPerCategoryAndEntity = groupByCategoryAndEntity(props.annotatorStateHandler.get().annotations);
-  const entityEntryHandler = useEntityEntryHandler(props.onEntitySelection);
+  const entityEntryHandler = useEntityEntryHandler(onEntitySelection);
 
   return (
     <LayoutGrid onMouseLeave={entityEntryHandler.unfocusEntity} style={styles.panel}>
@@ -61,5 +62,13 @@ function AnnotationsPanel(props: {
         marginBottom: theme.spacing * 3,
       },
     };
+  }
+
+  function onEntitySelection(entityId: string | undefined) {
+    if (entityId) {
+      documentViewerModeHandler.setOccurrenceMode(entityId);
+    } else {
+      documentViewerModeHandler.resetViewerMode();
+    }
   }
 }

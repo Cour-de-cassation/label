@@ -3,7 +3,7 @@ import { Header, IconButton, SwitchButton, Text } from '../../../../../component
 import { heights, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
-import { useDocumentViewerModeHandler } from '../../hooks';
+import { useDocumentViewerModeHandler } from '../../../../../services/documentViewerMode';
 
 export { AnnotationHeader };
 

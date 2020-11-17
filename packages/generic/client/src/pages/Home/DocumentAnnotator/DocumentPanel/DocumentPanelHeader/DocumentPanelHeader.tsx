@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { useDocumentViewerModeHandler } from '../../hooks';
+import { useDocumentViewerModeHandler } from '../../../../../services/documentViewerMode';
 import { AnnotationHeader } from './AnnotationHeader';
 import { ResizeHeader } from './ResizeHeader';
 

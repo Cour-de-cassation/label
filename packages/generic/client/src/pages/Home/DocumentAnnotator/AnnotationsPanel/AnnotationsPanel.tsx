@@ -5,8 +5,8 @@ import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
+import { annotationPerCategoryAndEntityType } from '../lib';
 import { CategoryTable } from './CategoryTable';
-import { groupByCategoryAndEntity } from './lib';
 import { useEntityEntryHandler } from './useEntityEntryHandler';
 
 export { AnnotationsPanel };
@@ -14,11 +14,11 @@ export { AnnotationsPanel };
 function AnnotationsPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
+  annotationPerCategoryAndEntity: annotationPerCategoryAndEntityType;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const documentViewerModeHandler = useDocumentViewerModeHandler();
-  const annotationPerCategoryAndEntity = groupByCategoryAndEntity(props.annotatorStateHandler.get().annotations);
   const entityEntryHandler = useEntityEntryHandler(onEntitySelection);
 
   return (
@@ -29,7 +29,7 @@ function AnnotationsPanel(props: {
         </LayoutGrid>
       </LayoutGrid>
       <LayoutGrid style={styles.categoriesContainer}>
-        {annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => (
+        {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => (
           <LayoutGrid key={category} style={styles.category}>
             <CategoryTable
               annotatorStateHandler={props.annotatorStateHandler}

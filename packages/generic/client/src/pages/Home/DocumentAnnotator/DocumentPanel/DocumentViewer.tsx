@@ -5,7 +5,7 @@ import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
-import { filterLineByEntityId, getSplittedTextByLine } from './lib';
+import { splittedTextByLineType } from '../lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 import { DocumentText } from './DocumentText';
 
@@ -14,11 +14,11 @@ export { DocumentViewer };
 function DocumentViewer(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
+  splittedTextByLine: splittedTextByLineType;
 }): ReactElement {
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const theme = useCustomTheme();
   const styles = buildStyle(theme, documentViewerModeHandler.documentViewerMode);
-  const annotatorState = props.annotatorStateHandler.get();
   const documentText = computeDocumentText();
 
   return (
@@ -68,13 +68,27 @@ function DocumentViewer(props: {
   }
 
   function computeDocumentText() {
-    const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
-
     switch (documentViewerModeHandler.documentViewerMode.kind) {
       case 'occurrence':
-        return filterLineByEntityId(documentViewerModeHandler.documentViewerMode.entityId, splittedTextByLine);
+        return filterLineByEntityId(documentViewerModeHandler.documentViewerMode.entityId, props.splittedTextByLine);
       default:
-        return splittedTextByLine;
+        return props.splittedTextByLine;
+    }
+
+    function filterLineByEntityId(
+      entityId: string,
+      splittedTextByLine: splittedTextByLineType,
+    ): splittedTextByLineType {
+      return splittedTextByLine.filter(({ content }) =>
+        content.some((chunk) => {
+          switch (chunk.type) {
+            case 'annotation':
+              return chunk.annotation.entityId === entityId;
+            case 'text':
+              return false;
+          }
+        }),
+      );
     }
   }
 

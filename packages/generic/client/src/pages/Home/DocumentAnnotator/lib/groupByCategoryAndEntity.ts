@@ -3,7 +3,20 @@ import { fetchedAnnotationType } from '@label/core';
 
 export { groupByCategoryAndEntity };
 
-function groupByCategoryAndEntity(annotations: fetchedAnnotationType[]) {
+export type { annotationPerCategoryAndEntityType, annotationPerEntityType };
+
+type annotationPerCategoryAndEntityType = Array<{
+  category: string;
+  categorySize: number;
+  categoryAnnotations: annotationPerEntityType;
+}>;
+
+type annotationPerEntityType = Array<{
+  entityId: string;
+  entityAnnotations: fetchedAnnotationType[];
+}>;
+
+function groupByCategoryAndEntity(annotations: fetchedAnnotationType[]): annotationPerCategoryAndEntityType {
   return groupByCategory(annotations).map(({ category, categoryAnnotations }) => ({
     category,
     categorySize: categoryAnnotations.length,
@@ -25,9 +38,7 @@ function groupByCategory(
     );
 }
 
-function groupByEntity(
-  annotations: fetchedAnnotationType[],
-): Array<{ entityId: string; entityAnnotations: fetchedAnnotationType[] }> {
+function groupByEntity(annotations: fetchedAnnotationType[]): annotationPerEntityType {
   return Object.entries(groupBy(annotations, (annotation) => annotation.entityId))
     .map(([entityId, entityAnnotations]) => ({
       entityId,

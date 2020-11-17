@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { fetchedAnnotationType, settingsModule } from '@label/core';
+import { settingsModule } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
+import { annotationPerEntityType } from '../lib';
 import { CategoryTableEntry } from './CategoryTableEntry';
 import { entityEntryHandlerType } from './useEntityEntryHandler';
 
@@ -15,7 +16,7 @@ function CategoryTable(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   category: string;
-  categoryAnnotations: Array<{ entityId: string; entityAnnotations: fetchedAnnotationType[] }>;
+  categoryAnnotations: annotationPerEntityType;
   categorySize: number;
   entityEntryHandler: entityEntryHandlerType;
 }) {

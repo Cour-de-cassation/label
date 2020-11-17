@@ -3,12 +3,13 @@ import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label
 import { heights } from '../../../styles';
 import { LayoutGrid } from '../../../components';
 import { useAnnotatorState } from '../../../services/annotatorState';
+import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
 import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { DocumentAnnotatorHeader } from './DocumentAnnotatorHeader';
 import { useKeyboardShortcutsHandler } from './hooks';
-import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode/DocumentViewerModeHandlerContextProvider';
+import { getSplittedTextByLine, groupByCategoryAndEntity } from './lib';
 
 export { DocumentAnnotator };
 
@@ -30,6 +31,10 @@ function DocumentAnnotator(props: {
     { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
   ]);
 
+  const annotatorState = annotatorStateHandler.get();
+  const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations);
+  const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
+
   return (
     <DocumentViewerModeHandlerContextProvider>
       <LayoutGrid container>
@@ -41,13 +46,18 @@ function DocumentAnnotator(props: {
         </LayoutGrid>
         <LayoutGrid container item xs={12}>
           <LayoutGrid container item xs={4}>
-            <AnnotationsPanel annotatorStateHandler={annotatorStateHandler} anonymizer={props.anonymizer} />
+            <AnnotationsPanel
+              annotatorStateHandler={annotatorStateHandler}
+              anonymizer={props.anonymizer}
+              annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
+            />
           </LayoutGrid>
           <LayoutGrid container item xs={8}>
             <DocumentPanel
               annotatorStateHandler={annotatorStateHandler}
               anonymizer={props.anonymizer}
               fetchNewDocument={props.fetchNewDocument}
+              splittedTextByLine={splittedTextByLine}
             />
           </LayoutGrid>
         </LayoutGrid>

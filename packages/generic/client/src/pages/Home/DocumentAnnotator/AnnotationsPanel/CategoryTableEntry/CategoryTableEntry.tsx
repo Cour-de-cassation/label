@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchedAnnotationType } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../../types';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
@@ -11,6 +12,7 @@ export { CategoryTableEntry };
 function CategoryTableEntry(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
+  entityAnnotations: fetchedAnnotationType[];
   entityId: string;
   entityEntryHandler: entityEntryHandlerType;
 }) {
@@ -18,6 +20,7 @@ function CategoryTableEntry(props: {
     <CategoryTableEntryHovered
       annotatorStateHandler={props.annotatorStateHandler}
       anonymizer={props.anonymizer}
+      entityAnnotations={props.entityAnnotations}
       entityId={props.entityId}
       entityEntryHandler={props.entityEntryHandler}
       hideActionButtons={() => props.entityEntryHandler.unfocusEntity()}
@@ -26,6 +29,7 @@ function CategoryTableEntry(props: {
     <CategoryTableEntrySelected
       annotatorStateHandler={props.annotatorStateHandler}
       anonymizer={props.anonymizer}
+      entityAnnotations={props.entityAnnotations}
       entityId={props.entityId}
       entityEntryHandler={props.entityEntryHandler}
       showActionButtons={() => props.entityEntryHandler.focusEntity(props.entityId)}
@@ -34,6 +38,7 @@ function CategoryTableEntry(props: {
     <CategoryTableEntryDefault
       annotatorStateHandler={props.annotatorStateHandler}
       anonymizer={props.anonymizer}
+      entityAnnotations={props.entityAnnotations}
       entityId={props.entityId}
       showActionButtons={() => props.entityEntryHandler.focusEntity(props.entityId)}
     />

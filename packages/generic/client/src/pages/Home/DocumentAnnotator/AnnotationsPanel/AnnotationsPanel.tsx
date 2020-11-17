@@ -1,11 +1,11 @@
 import React, { CSSProperties } from 'react';
-import { uniq } from 'lodash';
 import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { CategoryTable } from './CategoryTable';
+import { groupByCategoryAndEntity } from './lib';
 import { useEntityEntryHandler } from './useEntityEntryHandler';
 
 export { AnnotationsPanel };
@@ -17,7 +17,7 @@ function AnnotationsPanel(props: {
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const categories = uniq(props.annotatorStateHandler.get().annotations.map((annotation) => annotation.category));
+  const annotationPerCategoryAndEntity = groupByCategoryAndEntity(props.annotatorStateHandler.get().annotations);
   const entityEntryHandler = useEntityEntryHandler(props.onEntitySelection);
 
   return (
@@ -28,12 +28,14 @@ function AnnotationsPanel(props: {
         </LayoutGrid>
       </LayoutGrid>
       <LayoutGrid style={styles.categoriesContainer}>
-        {categories.map((category) => (
+        {annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => (
           <LayoutGrid key={category} style={styles.category}>
             <CategoryTable
               annotatorStateHandler={props.annotatorStateHandler}
               anonymizer={props.anonymizer}
+              categoryAnnotations={categoryAnnotations}
               category={category}
+              categorySize={categorySize}
               entityEntryHandler={entityEntryHandler}
             />
           </LayoutGrid>

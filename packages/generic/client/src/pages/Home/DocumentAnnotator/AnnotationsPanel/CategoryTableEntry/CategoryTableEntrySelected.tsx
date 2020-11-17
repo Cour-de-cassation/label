@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchedAnnotationType } from '@label/core';
 import { settingsModule } from '@label/core';
 import { LayoutGrid, Text } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
@@ -13,6 +14,7 @@ export { CategoryTableEntrySelected };
 function CategoryTableEntrySelected(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
+  entityAnnotations: fetchedAnnotationType[];
   entityId: string;
   entityEntryHandler: entityEntryHandlerType;
   showActionButtons: () => void;
@@ -23,9 +25,8 @@ function CategoryTableEntrySelected(props: {
     entityAnnotationTexts,
     numberOfEntities,
   } = computeCategoryTableEntry({
-    annotatorStateHandler: props.annotatorStateHandler,
     anonymizer: props.anonymizer,
-    entityId: props.entityId,
+    annotations: props.entityAnnotations,
   });
   const theme = useCustomTheme();
   const style = buildStyle(theme, entityAnnotation.category);

@@ -1,27 +1,20 @@
 import { uniq } from 'lodash';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { fetchedAnnotationType } from '@label/core';
 import { clientAnonymizerType } from '../../../../../types';
 
 export { computeCategoryTableEntry };
 
 function computeCategoryTableEntry({
-  annotatorStateHandler,
+  annotations,
   anonymizer,
-  entityId,
 }: {
-  annotatorStateHandler: annotatorStateHandlerType;
+  annotations: fetchedAnnotationType[];
   anonymizer: clientAnonymizerType;
-  entityId: string;
 }) {
-  const entityAnnotations = annotatorStateHandler
-    .get()
-    .annotations.filter((annotation) => annotation.entityId === entityId);
-  const entityAnnotationTexts = uniq(entityAnnotations.map((annotation) => annotation.text));
-
   return {
-    entityAnnotation: entityAnnotations[0],
-    entityAnnotationAnonymizedText: anonymizer.anonymize(entityAnnotations[0]),
-    entityAnnotationTexts,
-    numberOfEntities: entityAnnotations.length,
+    entityAnnotation: annotations[0],
+    entityAnnotationAnonymizedText: anonymizer.anonymize(annotations[0]),
+    entityAnnotationTexts: uniq(annotations.map((annotation) => annotation.text)),
+    numberOfEntities: annotations.length,
   };
 }

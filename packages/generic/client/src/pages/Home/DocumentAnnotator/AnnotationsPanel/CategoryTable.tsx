@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { uniq } from 'lodash';
 import { fetchedAnnotationType, settingsModule } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
@@ -16,6 +15,8 @@ function CategoryTable(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   category: string;
+  categoryAnnotations: Array<{ entityId: string; entityAnnotations: fetchedAnnotationType[] }>;
+  categorySize: number;
   entityEntryHandler: entityEntryHandlerType;
 }) {
   const theme = useCustomTheme();
@@ -25,8 +26,6 @@ function CategoryTable(props: {
   const annotatorState = props.annotatorStateHandler.get();
 
   const categoryName = settingsModule.lib.getAnnotationCategoryText(props.category, annotatorState.settings);
-  const categoryAnnotations = annotatorState.annotations.filter((annotation) => annotation.category === props.category);
-  const categoryAnnotationEntityIds = computeSortedEntityIds(categoryAnnotations);
 
   return (
     <Accordion
@@ -42,7 +41,7 @@ function CategoryTable(props: {
               />
             </LayoutGrid>
             <LayoutGrid item style={styles.categoryContainer}>
-              <Text>{`${categoryName} (${categoryAnnotations.length})`}</Text>
+              <Text>{`${categoryName} (${props.categorySize})`}</Text>
             </LayoutGrid>
           </LayoutGrid>
           <LayoutGrid container item alignItems="center" xs={1}>
@@ -52,10 +51,11 @@ function CategoryTable(props: {
       }
       body={
         <LayoutGrid container>
-          {Object.values(categoryAnnotationEntityIds).map((entityId) => (
+          {props.categoryAnnotations.map(({ entityId, entityAnnotations }) => (
             <CategoryTableEntry
               annotatorStateHandler={props.annotatorStateHandler}
               anonymizer={props.anonymizer}
+              entityAnnotations={entityAnnotations}
               entityId={entityId}
               entityEntryHandler={props.entityEntryHandler}
             />
@@ -80,13 +80,5 @@ function CategoryTable(props: {
         paddingLeft: theme.spacing,
       },
     } as const;
-  }
-
-  function computeSortedEntityIds(annotations: fetchedAnnotationType[]) {
-    return uniq(annotations.map((annotation) => annotation.entityId)).sort(
-      (entityId1, entityId2) =>
-        annotations.filter((annotation) => annotation.entityId === entityId2).length -
-        annotations.filter((annotation) => annotation.entityId === entityId1).length,
-    );
   }
 }

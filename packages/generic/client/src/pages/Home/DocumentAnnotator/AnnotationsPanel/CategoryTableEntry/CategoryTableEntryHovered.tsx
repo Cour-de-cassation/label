@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchedAnnotationType } from '@label/core';
 import {
   ComponentsList,
   DeleteAnnotationButton,
@@ -21,6 +22,7 @@ const CATEGORY_TABLE_ENTRY_BUTTON_SIZE = 32;
 function CategoryTableEntryHovered(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
+  entityAnnotations: fetchedAnnotationType[];
   entityId: string;
   entityEntryHandler: entityEntryHandlerType;
   hideActionButtons: () => void;
@@ -29,9 +31,8 @@ function CategoryTableEntryHovered(props: {
   const style = buildStyle(theme);
 
   const { entityAnnotation, entityAnnotationTexts } = computeCategoryTableEntry({
-    annotatorStateHandler: props.annotatorStateHandler,
     anonymizer: props.anonymizer,
-    entityId: props.entityId,
+    annotations: props.entityAnnotations,
   });
 
   return (

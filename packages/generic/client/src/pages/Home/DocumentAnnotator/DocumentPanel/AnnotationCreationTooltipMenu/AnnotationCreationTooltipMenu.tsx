@@ -4,6 +4,7 @@ import { annotationModule, annotationTextDetector } from '@label/core';
 import { Checkbox, LabelledDropdown, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
+import { customThemeType, useCustomTheme } from '../../../../../styles';
 
 export { AnnotationCreationTooltipMenu };
 
@@ -15,6 +16,8 @@ function AnnotationCreationTooltipMenu(props: {
   onClose: () => void;
 }): ReactElement {
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
   const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
   const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices(
@@ -22,12 +25,13 @@ function AnnotationCreationTooltipMenu(props: {
     props.annotationText,
     annotatorState.annotations,
   );
-
   return (
     <TooltipMenu anchorElement={props.anchorText} onClose={props.onClose}>
       <LayoutGrid container direction="column" alignItems="center">
         <LayoutGrid item>
-          <Text>{props.annotationText}</Text>
+          <Text variant="body2" style={styles.annotationText}>
+            {props.annotationText}
+          </Text>
         </LayoutGrid>
         <LayoutGrid item>
           <Text>
@@ -71,5 +75,15 @@ function AnnotationCreationTooltipMenu(props: {
         annotationModule.lib.fetchedAnnotationHandler.create(category, props.annotationIndex, props.annotationText),
       ];
     }
+  }
+  function buildStyles(theme: customThemeType) {
+    return {
+      annotationText: {
+        backgroundColor: theme.colors.button.default.hoveredBackground,
+        color: theme.colors.button.default.hoveredTextColor,
+        padding: '2px 4px',
+        borderRadius: '3px',
+      },
+    };
   }
 }

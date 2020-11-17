@@ -12,6 +12,7 @@ type annotatorStateHandlerType = {
   setAndOverwrite: (nextAnnotatorState: annotatorStateType) => void;
   revert: () => void;
   restore: () => void;
+  cancelLastChange: () => void;
   canRevert: () => boolean;
   canRestore: () => boolean;
   reinitialize: () => void;
@@ -31,6 +32,7 @@ function useAnnotatorState(
       setAndOverwrite: setAnnotatorStateAndSquashChange,
       revert: revertAnnotatorState,
       restore: restoreAnnotatorState,
+      cancelLastChange: cancelLastChangeInAnnotatorState,
       canRevert: canRevertAnnotatorState,
       canRestore: canRestoreAnnotatorState,
       reinitialize: reinitializeAnnotatorState,
@@ -60,6 +62,11 @@ function useAnnotatorState(
   function reinitializeAnnotatorState() {
     annotatorStateCommitter = buildAnnotatorStateCommitter();
     setAnnotatorState(initialAnnotatorState);
+  }
+
+  function cancelLastChangeInAnnotatorState() {
+    const newAnnotatorState = annotatorStateCommitter.dropLastCommit(annotatorState);
+    setAnnotatorState(newAnnotatorState);
   }
 
   function canRevertAnnotatorState() {

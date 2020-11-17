@@ -8,6 +8,7 @@ export type { annotatorStateCommitterType };
 type annotatorStateCommitterType = {
   commit: (previousState: annotatorStateType, nextState: annotatorStateType) => void;
   commitAndSquash: (previousState: annotatorStateType, nextState: annotatorStateType) => void;
+  dropLastCommit: (previousState: annotatorStateType) => annotatorStateType;
   revert: (previousState: annotatorStateType) => annotatorStateType;
   restore: (previousState: annotatorStateType) => annotatorStateType;
   canRevert: () => boolean;
@@ -21,6 +22,7 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
   return {
     commit,
     commitAndSquash,
+    dropLastCommit,
     revert,
     restore,
     canRevert,
@@ -41,6 +43,12 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
     }
     const squashedAction = squashActions(lastActionCommitted, annotationAction);
     annotationActionsToRevert.push(squashedAction);
+  }
+
+  function dropLastCommit(previousState: annotatorStateType) {
+    const newState = revert(previousState);
+    annotationActionsToRestore.pop();
+    return newState;
   }
 
   function revert(previousState: annotatorStateType): annotatorStateType {

@@ -28,9 +28,7 @@ function ResizeHeader(props: {
   );
 
   function cancelResize() {
-    const annotatorState = props.annotatorStateHandler.get();
-    const newAnnotations = [...annotatorState.annotations, props.annotationToResize];
-    props.annotatorStateHandler.setAndOverwrite({ ...annotatorState, annotations: newAnnotations });
+    props.annotatorStateHandler.cancelLastChange();
     props.resetViewerMode();
   }
 

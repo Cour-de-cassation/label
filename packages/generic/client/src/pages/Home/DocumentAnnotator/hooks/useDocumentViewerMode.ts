@@ -15,7 +15,6 @@ type documentViewerModeHandlerType = {
   resetViewerMode: () => void;
   setResizeMode: (annotation: fetchedAnnotationType) => void;
   setOccurrenceMode: (entityId: fetchedAnnotationType['entityId']) => void;
-  setViewerMode: (documentViewerMode: viewerModeType) => void;
   switchAnonymizedView: () => void;
   documentViewerMode: viewerModeType;
 };
@@ -27,7 +26,6 @@ const DocumentViewerModeHandlerContext = createContext<documentViewerModeHandler
   resetViewerMode: () => null,
   setOccurrenceMode: () => null,
   setResizeMode: () => null,
-  setViewerMode: () => null,
   switchAnonymizedView: () => null,
   documentViewerMode: DEFAULT_VIEWER_MODE,
 });
@@ -50,13 +48,20 @@ function buildDocumentViewerModeHandlerContext(
     setOccurrenceMode,
     setResizeMode,
     switchAnonymizedView,
-    setViewerMode,
     documentViewerMode,
     resetViewerMode,
   };
 
   function resetViewerMode() {
-    setViewerMode(DEFAULT_VIEWER_MODE);
+    switch (documentViewerMode.kind) {
+      case 'annotation':
+      case 'occurrence':
+        setViewerMode({ kind: 'annotation', isAnonymized: documentViewerMode.isAnonymized });
+        break;
+      case 'resize':
+        setViewerMode({ kind: 'annotation', isAnonymized: false });
+        break;
+    }
   }
 
   function isAnonymizedView() {
@@ -74,6 +79,7 @@ function buildDocumentViewerModeHandlerContext(
       case 'annotation':
       case 'occurrence':
         setViewerMode({ kind: 'occurrence', entityId, isAnonymized: documentViewerMode.isAnonymized });
+        break;
     }
   }
 
@@ -82,6 +88,7 @@ function buildDocumentViewerModeHandlerContext(
       case 'annotation':
       case 'occurrence':
         !documentViewerMode.isAnonymized && setViewerMode({ kind: 'resize', annotation });
+        break;
     }
   }
 
@@ -89,7 +96,8 @@ function buildDocumentViewerModeHandlerContext(
     switch (documentViewerMode.kind) {
       case 'annotation':
       case 'occurrence':
-        setViewerMode({ kind: 'annotation', isAnonymized: !documentViewerMode.isAnonymized });
+        setViewerMode({ ...documentViewerMode, isAnonymized: !documentViewerMode.isAnonymized });
+        break;
     }
   }
 }

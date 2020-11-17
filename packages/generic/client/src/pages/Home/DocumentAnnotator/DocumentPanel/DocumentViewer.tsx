@@ -4,7 +4,7 @@ import { Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
-import { useDocumentViewerModeHandler } from '../hooks';
+import { useDocumentViewerModeHandler, viewerModeType } from '../hooks';
 import { filterLineByEntityId, getSplittedTextByLine } from './lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 import { DocumentText } from './DocumentText';
@@ -15,9 +15,9 @@ function DocumentViewer(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
 }): ReactElement {
-  const theme = useCustomTheme();
-  const styles = buildStyle(theme);
   const documentViewerModeHandler = useDocumentViewerModeHandler();
+  const theme = useCustomTheme();
+  const styles = buildStyle(theme, documentViewerModeHandler.documentViewerMode);
   const annotatorState = props.annotatorStateHandler.get();
   const documentText = computeDocumentText();
 
@@ -77,25 +77,28 @@ function DocumentViewer(props: {
         return splittedTextByLine;
     }
   }
-}
 
-function buildStyle(theme: customThemeType): { [cssClass: string]: CSSProperties } {
-  return {
-    container: {
-      overflowY: 'auto',
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: theme.colors.document.background,
-      height: heights.panel,
-      width: '100%',
-    },
-    table: {
-      maxWidth: 900,
-      padding: theme.spacing * 2,
-    },
-    lineNumberCell: {
-      display: 'flex',
-      flexDirection: 'row-reverse',
-      paddingRight: theme.spacing * 2,
-    },
-  };
+  function buildStyle(theme: customThemeType, viewerMode: viewerModeType): { [cssClass: string]: CSSProperties } {
+    const lineVerticalPadding = viewerMode.kind === 'occurrence' ? theme.spacing * 4 : 0;
+
+    return {
+      container: {
+        overflowY: 'auto',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: theme.colors.document.background,
+        height: heights.panel,
+        width: '100%',
+      },
+      table: {
+        borderSpacing: `0 ${lineVerticalPadding}px`,
+        maxWidth: 900,
+        padding: theme.spacing * 2,
+      },
+      lineNumberCell: {
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        paddingRight: theme.spacing * 2,
+      },
+    };
+  }
 }

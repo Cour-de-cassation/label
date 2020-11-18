@@ -4,6 +4,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "lib": ["dom", "dom.iterable"],
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./dist",

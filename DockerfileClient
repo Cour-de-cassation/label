@@ -18,7 +18,7 @@ RUN yarn install --pure-lockfile
 COPY . .
 
 # build the app
-RUN yarn clientBuild
+RUN yarn clientCompile
 
 # start app
 CMD ["yarn", "clientStart"]

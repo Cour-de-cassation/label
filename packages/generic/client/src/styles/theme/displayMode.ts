@@ -1,16 +1,13 @@
 import { createContext, useContext } from 'react';
+import { displayModeType } from '@label/core';
 
 export { useDisplayMode, DisplayModeContext };
-
-export type { displayModeType };
-
-type displayModeType = 'light' | 'dark';
 
 const DisplayModeContext = createContext<{
   displayMode: displayModeType;
   setDisplayMode: (displayMode: displayModeType) => void;
 }>({
-  displayMode: 'dark',
+  displayMode: 'darkMode',
   setDisplayMode: () => null,
 });
 

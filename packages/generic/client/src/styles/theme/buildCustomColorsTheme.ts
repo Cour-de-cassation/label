@@ -1,4 +1,4 @@
-import { displayModeType } from './displayMode';
+import { displayModeType } from '@label/core';
 import { customColors } from './customColors';
 import { getColor, getShadeColor, shadeColorType } from './palette';
 
@@ -46,8 +46,8 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
 
     return {
       background: getShadeColor(shadeColor),
-      hoveredBackground: getShadeColor([tint, displayMode === 'dark' ? 100 : 800]),
-      hoveredTextColor: displayMode === 'dark' ? getColor('black') : getColor('white'),
+      hoveredBackground: getShadeColor([tint, displayMode === 'darkMode' ? 100 : 800]),
+      hoveredTextColor: displayMode === 'darkMode' ? getColor('black') : getColor('white'),
     };
   }
 }

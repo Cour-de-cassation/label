@@ -3,7 +3,7 @@ import { fetchedAnnotationType } from '@label/core';
 import { settingsModule } from '@label/core';
 import { LayoutGrid, Text } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { customThemeType, useCustomTheme } from '../../../../../styles';
+import { customThemeType, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { clientAnonymizerType } from '../../../../../types';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
 import { buildCategoryTableEntryStyle } from './buildCategoryTableEntryStyle';
@@ -29,6 +29,8 @@ function CategoryTableEntrySelected(props: {
     annotations: props.entityAnnotations,
   });
   const theme = useCustomTheme();
+  const { displayMode } = useDisplayMode();
+
   const style = buildStyle(theme, entityAnnotation.category);
 
   return (
@@ -63,6 +65,7 @@ function CategoryTableEntrySelected(props: {
         backgroundColor: settingsModule.lib.getAnnotationCategoryColor(
           category,
           props.annotatorStateHandler.get().settings,
+          displayMode,
         ),
         borderRadius: theme.shape.borderRadius,
         cursor: 'pointer',

@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core';
-import { displayModeType } from './displayMode';
+import { displayModeType } from '@label/core';
 import { buildCustomTheme } from './theme';
 
 export { buildMuiTheme };

@@ -1,7 +1,12 @@
 {
   "adresse": {
-    "anonymizationTexts": ["[...]"],
-    "color": "#1565C0",
+    "anonymizationTexts": [
+      "[...]"
+    ],
+    "color": {
+      "lightMode": "#64B5F6",
+      "darkMode": "#1565C0"
+    },
     "iconName": "location",
     "text": "Adresse"
   },
@@ -16,13 +21,22 @@
       "Buzz Cola",
       "MomCorp"
     ],
-    "color": "#7E57C2",
+    "color": {
+      "lightMode": "#D1C4E9",
+      "darkMode": "#7E57C2"
+    },
     "iconName": "work",
     "text": "Personne morale"
   },
   "personnephysicomorale": {
-    "anonymizationTexts": ["Edition Dupuis", "Krusty Burger"],
-    "color": "#4527A0",
+    "anonymizationTexts": [
+      "Edition Dupuis",
+      "Krusty Burger"
+    ],
+    "color": {
+      "lightMode": "#9575CD",
+      "darkMode": "#4527A0"
+    },
     "iconName": "work",
     "text": "Personne physico-morale"
   },
@@ -37,7 +51,10 @@
       "Joseph",
       "William"
     ],
-    "color": "#FF7043",
+    "color": {
+      "lightMode": "#FFCCBC",
+      "darkMode": "#FF7043"
+    },
     "iconName": "person",
     "text": "Prénom"
   },
@@ -51,7 +68,10 @@
       "De Mesmaeker",
       "Lapoire"
     ],
-    "color": "#D84315",
+    "color": {
+      "lightMode": "#FF8A65",
+      "darkMode": "#D84315"
+    },
     "iconName": "person",
     "text": "Nom de famille"
   },
@@ -66,7 +86,10 @@
       "Cartland",
       "Duval"
     ],
-    "color": "#6D4C41",
+    "color": {
+      "lightMode": "#D7CCC8",
+      "darkMode": "#6D4C41"
+    },
     "iconName": "hammer",
     "text": "Professionnel (nom)"
   },
@@ -81,7 +104,10 @@
       "Jonathan",
       "Marion"
     ],
-    "color": "#4E342E",
+    "color": {
+      "lightMode": "#BCAAA4",
+      "darkMode": "#4E342E"
+    },
     "iconName": "hammer",
     "text": "Professionnel (prénom)"
   },
@@ -96,7 +122,10 @@
       "cadastre 7",
       "cadastre 8"
     ],
-    "color": "#00838F",
+    "color": {
+      "lightMode": "#4DD0E1",
+      "darkMode": "#00838F"
+    },
     "iconName": "map",
     "text": "Cadastre"
   },
@@ -111,7 +140,10 @@
       "date de naissance 7",
       "date de naissance 8"
     ],
-    "color": "#00695C",
+    "color": {
+      "lightMode": "#4DB6AC",
+      "darkMode": "#00695C"
+    },
     "iconName": "stroller",
     "text": "Date de naissance"
   },
@@ -126,7 +158,10 @@
       "date de mariage 7",
       "date de mariage 8"
     ],
-    "color": "#558B2F",
+    "color": {
+      "lightMode": "#81C784",
+      "darkMode": "#558B2F"
+    },
     "iconName": "heart",
     "text": "Date de mariage"
   },
@@ -141,7 +176,10 @@
       "date de décès 7",
       "date de décès 8"
     ],
-    "color": "#827717",
+    "color": {
+      "lightMode": "#DCE775",
+      "darkMode": "#827717"
+    },
     "iconName": "cloud",
     "text": "Date de décès"
   }

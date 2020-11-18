@@ -29,15 +29,15 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
           <LayoutGrid style={styles.radioButton} item>
             <RadioButton
               label={wordings.lightMode}
-              isChecked={displayMode === 'light'}
-              onClick={() => setDisplayMode('light')}
+              isChecked={displayMode === 'lightMode'}
+              onClick={() => setDisplayMode('lightMode')}
             />
           </LayoutGrid>
           <LayoutGrid style={styles.radioButton} item>
             <RadioButton
               label={wordings.darkMode}
-              isChecked={displayMode === 'dark'}
-              onClick={() => setDisplayMode('dark')}
+              isChecked={displayMode === 'darkMode'}
+              onClick={() => setDisplayMode('darkMode')}
             />
           </LayoutGrid>
         </LayoutGrid>

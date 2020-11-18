@@ -2,18 +2,23 @@ import { dataModelType } from '../dataModelType';
 
 export { settingsDataModel };
 
-export type { settingsType, categoryIconNameType };
+export type { settingsType, categoryIconNameType, displayModeType };
 
 type settingsType = {
   [category: string]:
     | {
         anonymizationTexts: string[];
-        color: string;
+        color: {
+          lightMode: string;
+          darkMode: string;
+        };
         iconName: categoryIconNameType;
         text: string;
       }
     | undefined;
 };
+
+type displayModeType = 'lightMode' | 'darkMode';
 
 type categoryIconNameType = 'person' | 'hammer' | 'map' | 'location' | 'work' | 'heart' | 'cloud' | 'stroller';
 

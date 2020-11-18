@@ -2,6 +2,7 @@ import React, { MouseEvent, ReactElement, useState } from 'react';
 import { fetchedAnnotationType, settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
+import { useDisplayMode } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
@@ -13,10 +14,11 @@ function DocumentAnnotationText(props: {
   annotation: fetchedAnnotationType;
   anonymizer: clientAnonymizerType;
 }): ReactElement {
-  const style = buildStyle();
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
   const [summaryAnchorElement, setSummaryAnchorElement] = useState<Element | undefined>(undefined);
   const documentViewerModeHandler = useDocumentViewerModeHandler();
+  const { displayMode } = useDisplayMode();
+  const style = buildStyle();
 
   return (
     <span>
@@ -56,6 +58,7 @@ function DocumentAnnotationText(props: {
         backgroundColor: settingsModule.lib.getAnnotationCategoryColor(
           props.annotation.category,
           props.annotatorStateHandler.get().settings,
+          displayMode,
         ),
         cursor: 'pointer',
         padding: '0px 2px',

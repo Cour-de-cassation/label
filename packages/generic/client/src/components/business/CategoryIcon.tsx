@@ -2,12 +2,13 @@ import React from 'react';
 import { settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../services/annotatorState';
 import { Icon } from '../generic';
-import { useCustomTheme, customThemeType } from '../../styles';
+import { useCustomTheme, customThemeType, useDisplayMode } from '../../styles';
 
 export { CategoryIcon };
 
 function CategoryIcon(props: { annotatorStateHandler: annotatorStateHandlerType; category: string; iconSize: number }) {
   const theme = useCustomTheme();
+  const { displayMode } = useDisplayMode();
   const styles = buildStyles(theme);
 
   return (
@@ -31,6 +32,7 @@ function CategoryIcon(props: { annotatorStateHandler: annotatorStateHandlerType;
         backgroundColor: settingsModule.lib.getAnnotationCategoryColor(
           props.category,
           props.annotatorStateHandler.get().settings,
+          displayMode,
         ),
         display: 'flex',
         alignItems: 'center',

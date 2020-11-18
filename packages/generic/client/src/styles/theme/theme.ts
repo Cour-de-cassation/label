@@ -1,5 +1,6 @@
+import { displayModeType } from '@label/core';
 import { buildCustomColorsTheme, customColorsThemeType } from './buildCustomColorsTheme';
-import { displayModeType, useDisplayMode } from './displayMode';
+import { useDisplayMode } from './displayMode';
 import { typography } from './typography';
 
 export { buildCustomTheme, commonTheme, useCustomTheme };

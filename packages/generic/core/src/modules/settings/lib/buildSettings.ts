@@ -8,7 +8,10 @@ type partialSettingsType = {
   [category: string]:
     | {
         anonymizationTexts?: string[];
-        color?: string;
+        color?: {
+          lightMode: string;
+          darkMode: string;
+        };
         iconName?: categoryIconNameType;
         text?: string;
       }
@@ -22,7 +25,10 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
     (category) =>
       (settings[category] = {
         anonymizationTexts: buildAnonymizationTexts(partialSettings[category]?.anonymizationTexts),
-        color: buildColor(partialSettings[category]?.color),
+        color: {
+          lightMode: buildColor(partialSettings[category]?.color?.lightMode),
+          darkMode: buildColor(partialSettings[category]?.color?.darkMode),
+        },
         iconName: buildIconName(partialSettings[category]?.iconName),
         text: buildText(partialSettings[category]?.text),
       }),
@@ -36,7 +42,7 @@ function buildAnonymizationTexts(anonymizationTexts: string[] | undefined) {
 }
 
 function buildColor(color: string | undefined) {
-  return color ? color : '000000';
+  return color ? color : '#000000';
 }
 
 function buildIconName(iconName: categoryIconNameType | undefined) {

@@ -1,8 +1,8 @@
 {
   "adresse": {
     "anonymizationTexts": ["[...]"],
-    "color": "#0B5AB4",
-    "iconName": "house",
+    "color": "#1565C0",
+    "iconName": "location",
     "text": "Adresse"
   },
   "personnemorale": {
@@ -16,14 +16,14 @@
       "Buzz Cola",
       "MomCorp"
     ],
-    "color": "#A997C4",
-    "iconName": "building",
+    "color": "#7E57C2",
+    "iconName": "work",
     "text": "Personne morale"
   },
   "personnephysicomorale": {
     "anonymizationTexts": ["Edition Dupuis", "Krusty Burger"],
-    "color": "#5A3B96",
-    "iconName": "contact",
+    "color": "#4527A0",
+    "iconName": "work",
     "text": "Personne physico-morale"
   },
   "personnephysiqueprenom": {
@@ -37,7 +37,7 @@
       "Joseph",
       "William"
     ],
-    "color": "#E64901",
+    "color": "#FF7043",
     "iconName": "person",
     "text": "Prénom"
   },
@@ -51,23 +51,98 @@
       "De Mesmaeker",
       "Lapoire"
     ],
-    "color": "#AB0800",
+    "color": "#D84315",
     "iconName": "person",
-    "text": "Nom"
+    "text": "Nom de famille"
   },
   "professionnelnom": {
     "anonymizationTexts": [
-      "Milou",
-      "Idéfix",
-      "Bill",
-      "Snoopy",
-      "Rantanplan",
-      "Cubitus",
-      "Garfield",
-      "Marsupilami"
+      "Talon",
+      "Du Lac",
+      "Ardent",
+      "Blanc-Sec",
+      "Brisefer",
+      "Burma",
+      "Cartland",
+      "Duval"
     ],
-    "color": "#85644B",
-    "iconName": "work",
-    "text": "Professionnel"
+    "color": "#6D4C41",
+    "iconName": "hammer",
+    "text": "Professionnel (nom)"
+  },
+  "professionnelprenom": {
+    "anonymizationTexts": [
+      "Achille",
+      "Angelot",
+      "Chevalier",
+      "Adèle",
+      "Benoît",
+      "Nestor",
+      "Jonathan",
+      "Marion"
+    ],
+    "color": "#4E342E",
+    "iconName": "hammer",
+    "text": "Professionnel (prénom)"
+  },
+  "cadastre": {
+    "anonymizationTexts": [
+      "cadastre 1",
+      "cadastre 2",
+      "cadastre 3",
+      "cadastre 4",
+      "cadastre 5",
+      "cadastre 6",
+      "cadastre 7",
+      "cadastre 8"
+    ],
+    "color": "#00838F",
+    "iconName": "map",
+    "text": "Cadastre"
+  },
+  "datedenaissance": {
+    "anonymizationTexts": [
+      "date de naissance 1",
+      "date de naissance 2",
+      "date de naissance 3",
+      "date de naissance 4",
+      "date de naissance 5",
+      "date de naissance 6",
+      "date de naissance 7",
+      "date de naissance 8"
+    ],
+    "color": "#00695C",
+    "iconName": "stroller",
+    "text": "Date de naissance"
+  },
+  "datedemariage": {
+    "anonymizationTexts": [
+      "date de mariage 1",
+      "date de mariage 2",
+      "date de mariage 3",
+      "date de mariage 4",
+      "date de mariage 5",
+      "date de mariage 6",
+      "date de mariage 7",
+      "date de mariage 8"
+    ],
+    "color": "#558B2F",
+    "iconName": "heart",
+    "text": "Date de mariage"
+  },
+  "datededeces": {
+    "anonymizationTexts": [
+      "date de décès 1",
+      "date de décès 2",
+      "date de décès 3",
+      "date de décès 4",
+      "date de décès 5",
+      "date de décès 6",
+      "date de décès 7",
+      "date de décès 8"
+    ],
+    "color": "#558B2F",
+    "iconName": "cloud",
+    "text": "Date de décès"
   }
 }

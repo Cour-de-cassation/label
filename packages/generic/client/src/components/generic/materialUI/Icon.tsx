@@ -1,28 +1,31 @@
 import React, { CSSProperties } from 'react';
 import {
-  BusinessRounded,
+  BusinessCenterRounded,
+  ChildFriendlyRounded,
   CloseRounded,
-  ContactMailRounded,
+  CloudRounded,
   DeleteOutlineRounded,
   ExitToAppRounded,
   ExpandLessRounded,
   ExpandMoreRounded,
   ExtensionRounded,
+  FavoriteRounded,
   FileCopyRounded,
-  HomeRounded,
+  GavelRounded,
   Link,
   LinkOff,
   LoopRounded,
+  MapRounded,
   MeetingRoom,
   PersonRounded,
   RedoRounded,
   ReportProblemRounded,
+  RoomRounded,
   SaveAltRounded,
   SendRounded,
   SettingsEthernetRounded,
   SettingsRounded,
   UndoRounded,
-  WorkRounded,
 } from '@material-ui/icons';
 import { categoryIconNameType } from '@label/core/src';
 
@@ -52,12 +55,16 @@ const materialIconMapping = {
 };
 
 const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {
+  cloud: CloudRounded,
+  hammer: GavelRounded,
+  heart: FavoriteRounded,
+  location: RoomRounded,
+  map: MapRounded,
   person: PersonRounded,
-  building: BusinessRounded,
-  house: HomeRounded,
-  work: WorkRounded,
-  contact: ContactMailRounded,
+  stroller: ChildFriendlyRounded,
+  work: BusinessCenterRounded,
 };
+
 const iconMapping = {
   ...materialIconMapping,
   ...categoryIconMapping,

@@ -35,7 +35,9 @@ const Login: FunctionComponent = () => {
         </LayoutGrid>
         <LayoutGrid item style={styles.forgottenPasswordContainer}>
           <Link to="/reset-password-request">
-            <Text variant="subtitle1">{wordings.forgottenPassword}</Text>
+            <Text style={styles.forgottenPasswordText} variant="h3">
+              {wordings.forgottenPassword}
+            </Text>
           </Link>
         </LayoutGrid>
         <LayoutGrid item style={styles.loginButtonContainer}>
@@ -81,6 +83,9 @@ const Login: FunctionComponent = () => {
       },
       forgottenPasswordContainer: {
         marginBottom: theme.spacing * 3,
+      },
+      forgottenPasswordText: {
+        textDecoration: 'underline',
       },
       loginButtonContainer: {
         display: 'flex',

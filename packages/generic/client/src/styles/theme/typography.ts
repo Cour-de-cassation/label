@@ -14,7 +14,7 @@ const typography = {
   body2: { fontFamily: 'Courier New', fontSize: fontSizes.medium, lineHeight: '19px' },
   h1: { fontFamily: 'Luciole', fontSize: fontSizes.large },
   h2: { fontFamily: 'Luciole-Bold', fontSize: fontSizes.medium },
-  subtitle1: { fontFamily: 'Luciole', fontSize: fontSizes.small, textDecoration: 'underline' },
+  h3: { fontFamily: 'Luciole', fontSize: fontSizes.small },
 };
 
 type typographyType = keyof typeof typography;

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, CSSProperties } from 'react';
 import { annotationModule, annotationTextDetector, settingsModule } from '@label/core';
 import { Checkbox, LabelledDropdown, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
@@ -27,24 +27,25 @@ function AnnotationCreationTooltipMenu(props: {
   return (
     <TooltipMenu anchorElement={props.anchorText} onClose={props.onClose}>
       <LayoutGrid container direction="column" alignItems="center">
-        <LayoutGrid item>
+        <LayoutGrid item style={styles.annotationTextContainer}>
           <Text variant="body2" style={styles.annotationText}>
             {props.annotationText}
           </Text>
         </LayoutGrid>
-        <LayoutGrid item>
-          <Text>
-            {annotationTextsAndIndices.length} {wordings.identicalOccurrencesSpotted}
+        <LayoutGrid item style={styles.identicalOccurrencesContainer}>
+          <Text variant="h3">
+            <span style={styles.identicalOccurrencesNumber}>{annotationTextsAndIndices.length}</span>{' '}
+            {wordings.identicalOccurrencesSpotted}
           </Text>
         </LayoutGrid>
-        <LayoutGrid item>
+        <LayoutGrid item container>
           <Checkbox
             defaultChecked={shouldApplyEverywhere}
             onChange={(checked: boolean) => setShouldApplyEverywhere(checked)}
             text={wordings.applyEveryWhere}
           ></Checkbox>
         </LayoutGrid>
-        <LayoutGrid item>
+        <LayoutGrid item container>
           <LabelledDropdown
             items={categories.map((category) => ({
               value: category,
@@ -78,13 +79,22 @@ function AnnotationCreationTooltipMenu(props: {
       ];
     }
   }
-  function buildStyles(theme: customThemeType) {
+  function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
     return {
+      annotationTextContainer: {
+        marginBottom: theme.spacing * 2,
+      },
       annotationText: {
         backgroundColor: theme.colors.button.default.hoveredBackground,
         color: theme.colors.button.default.hoveredTextColor,
         padding: '2px 4px',
         borderRadius: '3px',
+      },
+      identicalOccurrencesContainer: {
+        marginBottom: theme.spacing * 4,
+      },
+      identicalOccurrencesNumber: {
+        fontWeight: 'bold',
       },
     };
   }

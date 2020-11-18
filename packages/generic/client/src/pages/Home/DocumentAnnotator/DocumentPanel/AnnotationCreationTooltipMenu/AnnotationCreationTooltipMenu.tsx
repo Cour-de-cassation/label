@@ -46,7 +46,10 @@ function AnnotationCreationTooltipMenu(props: {
         </LayoutGrid>
         <LayoutGrid item>
           <LabelledDropdown
-            items={categories.map((category) => ({ value: category, displayedText: category }))}
+            items={categories.map((category) => ({
+              value: category,
+              displayedText: settingsModule.lib.getAnnotationCategoryText(category, annotatorState.settings),
+            }))}
             label={wordings.category}
             onChange={applyAnnotationCreation}
           />

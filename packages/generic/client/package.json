@@ -83,7 +83,7 @@
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
-    "start": "react-scripts start",
+    "start": "PORT=7506 react-scripts start",
     "test": "RUN_MODE=TEST jest --passWithNoTests"
   },
   "version": "1.0.0"

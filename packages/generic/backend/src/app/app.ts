@@ -9,9 +9,9 @@ import { setup } from './setup';
 import { serverGraphQLSchema } from '../graphQL/serverGraphQLSchema';
 
 const app = express();
-const port = 8080;
+const port = 7505;
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: ['http://localhost:7506', 'http://bkpanonym:7506'] }));
 
 app.use(bodyParser.json());
 

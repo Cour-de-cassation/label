@@ -1,5 +1,5 @@
 const localEnvironment = {
-  API_URL: 'http://localhost:8080',
+  API_URL: 'http://localhost:7505',
 };
 
 export { localEnvironment as environment };

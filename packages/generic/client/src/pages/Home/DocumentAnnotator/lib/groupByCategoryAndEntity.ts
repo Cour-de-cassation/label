@@ -16,8 +16,11 @@ type annotationPerEntityType = Array<{
   entityAnnotations: fetchedAnnotationType[];
 }>;
 
-function groupByCategoryAndEntity(annotations: fetchedAnnotationType[]): annotationPerCategoryAndEntityType {
-  return groupByCategory(annotations).map(({ category, categoryAnnotations }) => ({
+function groupByCategoryAndEntity(
+  annotations: fetchedAnnotationType[],
+  categories: string[],
+): annotationPerCategoryAndEntityType {
+  return groupByCategory(annotations, categories).map(({ category, categoryAnnotations }) => ({
     category,
     categorySize: categoryAnnotations.length,
     categoryAnnotations: groupByEntity(categoryAnnotations),
@@ -26,8 +29,16 @@ function groupByCategoryAndEntity(annotations: fetchedAnnotationType[]): annotat
 
 function groupByCategory(
   annotations: fetchedAnnotationType[],
+  categories: string[],
 ): Array<{ category: string; categoryAnnotations: fetchedAnnotationType[] }> {
-  return Object.entries(groupBy(annotations, (annotation) => annotation.category))
+  const categoriesWithAnnotations = Object.entries(groupBy(annotations, (annotation) => annotation.category));
+  const categoriesWithoutAnnotations: [string, fetchedAnnotationType[]][] = categories
+    .filter(
+      (category) => !categoriesWithAnnotations.some((categoryWithAnnotation) => category === categoryWithAnnotation[0]),
+    )
+    .map((category) => [category, []]);
+  const allCategories = [...categoriesWithAnnotations, ...categoriesWithoutAnnotations];
+  return allCategories
     .map(([category, categoryAnnotations]) => ({
       category,
       categoryAnnotations,

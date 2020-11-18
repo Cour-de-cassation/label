@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
-import { uniq } from 'lodash';
 import { IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
@@ -15,7 +14,7 @@ function ChangeAnnotationCategoryDropdown(props: {
   shouldApplyEverywhere: boolean;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
-  const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
+  const categories = settingsModule.lib.getCategories(annotatorState.settings);
 
   return (
     <IconDropdown

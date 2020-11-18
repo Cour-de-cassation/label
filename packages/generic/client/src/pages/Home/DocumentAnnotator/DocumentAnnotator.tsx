@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { fetchedAnnotationType, fetchedDocumentType, settingsModule, settingsType } from '@label/core';
 import { heights } from '../../../styles';
 import { LayoutGrid } from '../../../components';
 import { useAnnotatorState } from '../../../services/annotatorState';
@@ -30,9 +30,10 @@ function DocumentAnnotator(props: {
     { key: 'z', ctrlKey: true, action: annotatorStateHandler.revert },
     { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
   ]);
+  const categories = settingsModule.lib.getCategories(props.settings);
 
   const annotatorState = annotatorStateHandler.get();
-  const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations);
+  const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories);
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
 
   return (

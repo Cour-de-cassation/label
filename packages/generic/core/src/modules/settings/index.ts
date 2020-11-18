@@ -4,6 +4,7 @@ import {
   getAnnotationCategoryColor,
   getAnnotationCategoryIconName,
   getAnnotationCategoryText,
+  getCategories,
 } from './lib';
 import { settingsDataModel, settingsType, categoryIconNameType } from './settingsType';
 
@@ -19,5 +20,6 @@ const settingsModule = {
     getAnnotationCategoryColor,
     getAnnotationCategoryIconName,
     getAnnotationCategoryText,
+    getCategories,
   },
 };

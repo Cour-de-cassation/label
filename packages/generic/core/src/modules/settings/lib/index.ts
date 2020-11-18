@@ -3,6 +3,7 @@ import { parseFromJson } from './parseFromJson';
 import { getAnnotationCategoryColor } from './getAnnotationCategoryColor';
 import { getAnnotationCategoryIconName } from './getAnnotationCategoryIconName';
 import { getAnnotationCategoryText } from './getAnnotationCategoryText';
+import { getCategories } from './getCategories';
 
 export {
   buildSettings,
@@ -10,4 +11,5 @@ export {
   getAnnotationCategoryColor,
   getAnnotationCategoryIconName,
   getAnnotationCategoryText,
+  getCategories,
 };

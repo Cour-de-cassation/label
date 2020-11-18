@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { uniq } from 'lodash';
-import { annotationModule, annotationTextDetector } from '@label/core';
+import { annotationModule, annotationTextDetector, settingsModule } from '@label/core';
 import { Checkbox, LabelledDropdown, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
@@ -19,7 +18,7 @@ function AnnotationCreationTooltipMenu(props: {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
-  const categories = uniq(annotatorState.annotations.map((annotation) => annotation.category));
+  const categories = settingsModule.lib.getCategories(annotatorState.settings);
   const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices(
     annotatorState.document.text,
     props.annotationText,

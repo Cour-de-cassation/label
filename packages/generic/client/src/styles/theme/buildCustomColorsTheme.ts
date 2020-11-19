@@ -1,6 +1,6 @@
-import { displayModeType } from '@label/core';
+import { displayModeType, shadeColorType } from '@label/core';
 import { customColors } from './customColors';
-import { getColor, getShadeColor, shadeColorType } from './palette';
+import { emphasizeShadeColor, getColor, getShadeColor } from './palette';
 
 export { buildCustomColorsTheme };
 
@@ -42,11 +42,9 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
   };
 
   function buildButtonCustomColorsTheme(shadeColor: shadeColorType) {
-    const [tint] = shadeColor;
-
     return {
       background: getShadeColor(shadeColor),
-      hoveredBackground: getShadeColor([tint, displayMode === 'darkMode' ? 100 : 800]),
+      hoveredBackground: emphasizeShadeColor(shadeColor, displayMode),
       hoveredTextColor: displayMode === 'darkMode' ? getColor('black') : getColor('white'),
     };
   }

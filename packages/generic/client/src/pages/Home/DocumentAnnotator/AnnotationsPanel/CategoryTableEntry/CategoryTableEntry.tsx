@@ -24,6 +24,7 @@ function CategoryTableEntry(props: {
       entityId={props.entityId}
       entityEntryHandler={props.entityEntryHandler}
       hideActionButtons={() => props.entityEntryHandler.unfocusEntity()}
+      selected={isSelected()}
     />
   ) : isSelected() ? (
     <CategoryTableEntrySelected

@@ -1,10 +1,14 @@
 import React, { CSSProperties } from 'react';
 import {
+  AccountBalanceRounded,
+  BookRounded,
   BusinessCenterRounded,
+  ChildCareRounded,
   ChildFriendlyRounded,
   CloseRounded,
   CloudRounded,
   DeleteOutlineRounded,
+  DirectionsCarRounded,
   ExitToAppRounded,
   ExpandLessRounded,
   ExpandMoreRounded,
@@ -18,6 +22,7 @@ import {
   MapRounded,
   MeetingRoom,
   PersonRounded,
+  PhoneRounded,
   RedoRounded,
   ReportProblemRounded,
   RoomRounded,
@@ -55,12 +60,17 @@ const materialIconMapping = {
 };
 
 const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {
+  bank: AccountBalanceRounded,
+  book: BookRounded,
+  car: DirectionsCarRounded,
+  child: ChildCareRounded,
   cloud: CloudRounded,
   hammer: GavelRounded,
   heart: FavoriteRounded,
   location: RoomRounded,
   map: MapRounded,
   person: PersonRounded,
+  phone: PhoneRounded,
   stroller: ChildFriendlyRounded,
   work: BusinessCenterRounded,
 };

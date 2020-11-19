@@ -1,44 +1,66 @@
+import blue from '@material-ui/core/colors/blue';
 import blueGrey from '@material-ui/core/colors/blueGrey';
+import brown from '@material-ui/core/colors/brown';
+import cyan from '@material-ui/core/colors/cyan';
+import deepOrange from '@material-ui/core/colors/deepOrange';
+import deepPurple from '@material-ui/core/colors/deepPurple';
+import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
+import indigo from '@material-ui/core/colors/indigo';
+import lightBlue from '@material-ui/core/colors/lightBlue';
+import lime from '@material-ui/core/colors/lime';
 import orange from '@material-ui/core/colors/orange';
+import pink from '@material-ui/core/colors/pink';
+import red from '@material-ui/core/colors/red';
+import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
+import { colorType, constantColorType, displayModeType, shadeColorType } from '@label/core';
 
-export { getColor, getShadeColor };
+export { emphasizeShadeColor, getColor, getShadeColor };
 
-export type { colorType, constantColorType, shadeColorType };
-
-const COLORS = {
+const COLORS: { [color in constantColorType]: string } = {
   black: '#000000',
   white: '#FFFFFF',
 };
 
-const shadeColors = {
-  blueGrey: {
-    50: blueGrey[50],
-    400: blueGrey[400],
-  } as { [shade: number]: string },
-  grey: {
-    100: grey[100],
-    400: grey[400],
-    500: grey[500],
-    800: grey[800],
-    900: grey[900],
-  } as { [shade: number]: string },
-  orange: {
-    100: orange[100],
-    500: orange[500],
-  } as { [shade: number]: string },
-  yellow: {
-    100: yellow[100],
-    600: yellow[600],
-  } as { [shade: number]: string },
+const shadeColors: { [color in shadeColorType[0]]: { [shade: number]: string } } = {
+  blue,
+  blueGrey,
+  brown,
+  cyan,
+  deepOrange,
+  deepPurple,
+  green,
+  grey,
+  indigo,
+  lightBlue,
+  lime,
+  orange,
+  pink,
+  red,
+  teal,
+  yellow,
 };
 
-type constantColorType = keyof typeof COLORS;
+function emphasizeShadeColor(color: colorType, displayMode: displayModeType): string {
+  if (typeof color === 'string') {
+    switch (color) {
+      case 'black':
+        return 'white';
+      case 'white':
+        return 'black';
+    }
+  } else {
+    const [tint] = color;
 
-type shadeColorType = readonly [keyof typeof shadeColors, number];
-
-type colorType = constantColorType | shadeColorType;
+    switch (displayMode) {
+      case 'darkMode':
+        return getShadeColor([tint, 100]);
+      case 'lightMode':
+        return getShadeColor([tint, 800]);
+    }
+  }
+}
 
 function getColor(color: colorType): string {
   if (typeof color === 'string') {

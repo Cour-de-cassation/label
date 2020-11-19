@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchedAnnotationType } from '@label/core';
+import { displayModeType, fetchedAnnotationType, settingsModule } from '@label/core';
 import {
   ComponentsList,
   DeleteAnnotationButton,
@@ -9,7 +9,7 @@ import {
   UnlinkAnnotationButton,
 } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { customThemeType, useCustomTheme } from '../../../../../styles';
+import { customThemeType, emphasizeShadeColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { clientAnonymizerType } from '../../../../../types';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
 import { buildCategoryTableEntryStyle } from './buildCategoryTableEntryStyle';
@@ -26,14 +26,15 @@ function CategoryTableEntryHovered(props: {
   entityId: string;
   entityEntryHandler: entityEntryHandlerType;
   hideActionButtons: () => void;
+  selected?: boolean;
 }) {
-  const theme = useCustomTheme();
-  const style = buildStyle(theme);
-
   const { entityAnnotation, entityAnnotationTexts } = computeCategoryTableEntry({
     anonymizer: props.anonymizer,
     annotations: props.entityAnnotations,
   });
+  const { displayMode } = useDisplayMode();
+  const theme = useCustomTheme();
+  const style = buildStyle(displayMode, theme, entityAnnotation.category);
 
   return (
     <LayoutGrid
@@ -83,7 +84,7 @@ function CategoryTableEntryHovered(props: {
     </LayoutGrid>
   );
 
-  function buildStyle(theme: customThemeType) {
+  function buildStyle(displayMode: displayModeType, theme: customThemeType, category: string) {
     return {
       ...buildCategoryTableEntryStyle(theme),
       actionCell: {
@@ -93,7 +94,16 @@ function CategoryTableEntryHovered(props: {
         padding: `${theme.spacing / 2}px 0`,
       },
       categoryTableEntryHovered: {
-        backgroundColor: theme.colors.button.default.hoveredBackground,
+        backgroundColor: props.selected
+          ? emphasizeShadeColor(
+              settingsModule.lib.getAnnotationCategoryColor(
+                category,
+                props.annotatorStateHandler.get().settings,
+                displayMode,
+              ),
+              displayMode,
+            )
+          : theme.colors.button.default.hoveredBackground,
         borderRadius: theme.shape.borderRadius,
         cursor: 'pointer',
         paddingLeft: `${theme.spacing * 2}px`,

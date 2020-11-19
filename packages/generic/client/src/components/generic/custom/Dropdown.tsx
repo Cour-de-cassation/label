@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactElement, ReactNode, useState } from 'react';
-import { Menu } from '../materialUI';
+import { DropdownMenu } from '../materialUI';
 
 export { Dropdown };
 
@@ -26,7 +26,7 @@ function Dropdown<T extends string>(props: {
         item: props.items.find((item) => item.value === selectedValue),
         onClick: openDropdown,
       })}
-      <Menu
+      <DropdownMenu
         anchorElement={anchorElement}
         dropdownPosition={dropdownPosition}
         items={props.items}

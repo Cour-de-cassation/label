@@ -1,9 +1,10 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { makeStyles, Menu as MUMenu, MenuItem } from '@material-ui/core';
+import { customThemeType, useCustomTheme } from '../../../styles';
 
-export { Menu };
+export { DropdownMenu };
 
-function Menu<T extends string>(props: {
+function DropdownMenu<T extends string>(props: {
   anchorElement: Element | undefined;
   dropdownPosition: 'bottom' | 'top';
   items: Array<{ value: T; element: ReactNode }>;
@@ -11,7 +12,9 @@ function Menu<T extends string>(props: {
   onClose: () => void;
   width?: number;
 }): ReactElement {
-  const classes = buildMenuClasses();
+  const theme = useCustomTheme();
+  const menuClasses = buildMenuClasses(theme);
+  const menuItemClasses = buildMenuItemClasses(theme);
   const dropdownMenuConfiguration = {
     anchorOrigin: { horizontal: 'left', vertical: props.dropdownPosition },
     transformOrigin: { horizontal: 'left', vertical: oppositePosition(props.dropdownPosition) },
@@ -21,24 +24,39 @@ function Menu<T extends string>(props: {
     <MUMenu
       anchorEl={props.anchorElement}
       anchorOrigin={dropdownMenuConfiguration?.anchorOrigin}
-      classes={{ paper: classes.paper }}
+      classes={menuClasses}
       getContentAnchorEl={null} // To prevent materialUI to log cryptic error
       onClose={props.onClose}
       open={isOpen()}
       transformOrigin={dropdownMenuConfiguration.transformOrigin}
     >
       {props.items.map(({ value, element }, ind) => (
-        <MenuItem key={ind} value={value} onClick={() => handleSelection(value)}>
+        <MenuItem classes={menuItemClasses} key={ind} value={value} onClick={() => handleSelection(value)}>
           {element}
         </MenuItem>
       ))}
     </MUMenu>
   );
 
-  function buildMenuClasses() {
+  function buildMenuClasses(theme: customThemeType) {
     return makeStyles({
       paper: {
+        backgroundColor: theme.colors.button.default.background,
         width: `${props.width}px`,
+      },
+    })();
+  }
+
+  function buildMenuItemClasses(theme: customThemeType) {
+    return makeStyles({
+      root: {
+        borderRadius: theme.shape.borderRadius,
+        margin: theme.spacing,
+        '&:hover': {
+          background: theme.colors.button.default.hoveredBackground,
+          borderRadius: theme.shape.borderRadius,
+          color: theme.colors.button.default.hoveredTextColor,
+        },
       },
     })();
   }

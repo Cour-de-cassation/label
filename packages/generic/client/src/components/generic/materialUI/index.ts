@@ -2,9 +2,9 @@ import { Accordion } from './Accordion';
 import { Button, buttonColorType } from './Button';
 import { Checkbox } from './Checkbox';
 import { Drawer } from './Drawer';
+import { DropdownMenu } from './DropdownMenu';
 import { Icon, iconNameType } from './Icon';
 import { LayoutGrid } from './LayoutGrid';
-import { Menu } from './Menu';
 import { MenuBar } from './MenuBar';
 import { RadioButton } from './RadioButton';
 import { SvgImage } from './SvgImage';
@@ -19,9 +19,9 @@ export {
   Button,
   Checkbox,
   Drawer,
+  DropdownMenu,
   Icon,
   LayoutGrid,
-  Menu,
   MenuBar,
   RadioButton,
   SvgImage,

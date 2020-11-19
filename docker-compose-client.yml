@@ -11,6 +11,6 @@ services:
     #      - ".:/usr/src/app"
     #      - "/app/node_modules"
     ports:
-      - 7506:7506
+      - 8090:8090
     environment:
       - CHOKIDAR_USEPOLLING=true

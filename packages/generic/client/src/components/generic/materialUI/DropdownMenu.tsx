@@ -50,11 +50,11 @@ function DropdownMenu<T extends string>(props: {
   function buildMenuItemClasses(theme: customThemeType) {
     return makeStyles({
       root: {
-        borderRadius: theme.shape.borderRadius,
+        borderRadius: theme.shape.borderRadius.medium,
         margin: theme.spacing,
         '&:hover': {
           background: theme.colors.button.default.hoveredBackground,
-          borderRadius: theme.shape.borderRadius,
+          borderRadius: theme.shape.borderRadius.medium,
           color: theme.colors.button.default.hoveredTextColor,
         },
       },

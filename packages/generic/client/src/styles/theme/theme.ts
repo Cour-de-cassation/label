@@ -8,7 +8,7 @@ export { buildCustomTheme, commonTheme, useCustomTheme };
 export type { customThemeType };
 
 const commonTheme = {
-  shape: { borderRadius: 25 },
+  shape: { borderRadius: { small: 8, medium: 24 } },
   spacing: 8,
   typography,
 };

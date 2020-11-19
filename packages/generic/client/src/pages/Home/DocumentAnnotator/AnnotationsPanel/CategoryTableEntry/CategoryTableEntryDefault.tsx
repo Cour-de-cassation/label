@@ -53,7 +53,7 @@ function CategoryTableEntryDefault(props: {
     return {
       ...buildCategoryTableEntryStyle(theme),
       categoryTableEntryDefault: {
-        borderRadius: theme.shape.borderRadius,
+        borderRadius: theme.shape.borderRadius.medium,
         paddingLeft: `${theme.spacing * 2}px`,
       },
     };

@@ -21,7 +21,7 @@ function CategoryTable(props: {
   entityEntryHandler: entityEntryHandlerType;
 }) {
   const theme = useCustomTheme();
-  const iconSize = theme.shape.borderRadius * 2 - ACCORDION_HEADER_PADDING;
+  const iconSize = theme.shape.borderRadius.medium * 2 - ACCORDION_HEADER_PADDING;
   const styles = buildStyles(theme);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const annotatorState = props.annotatorStateHandler.get();

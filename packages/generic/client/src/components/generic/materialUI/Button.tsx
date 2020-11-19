@@ -49,6 +49,7 @@ function Button(props: {
 
     return makeStyles({
       root: {
+        borderRadius: theme.shape.borderRadius.medium,
         width: props.width,
         backgroundColor: theme.colors.button[color].background,
         margin: 0,

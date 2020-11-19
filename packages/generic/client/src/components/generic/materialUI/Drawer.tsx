@@ -25,7 +25,6 @@ function Drawer(props: { children?: ReactNode; isOpen: boolean; onClose: () => v
 
   function buildClasses() {
     return makeStyles({
-      root: {},
       paper: {
         paddingTop: heights.header,
       },

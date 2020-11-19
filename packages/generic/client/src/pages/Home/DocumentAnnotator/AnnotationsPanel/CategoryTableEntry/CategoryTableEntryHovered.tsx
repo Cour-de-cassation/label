@@ -104,7 +104,7 @@ function CategoryTableEntryHovered(props: {
               displayMode,
             )
           : theme.colors.button.default.hoveredBackground,
-        borderRadius: theme.shape.borderRadius,
+        borderRadius: theme.shape.borderRadius.medium,
         cursor: 'pointer',
         paddingLeft: `${theme.spacing * 2}px`,
       },

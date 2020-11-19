@@ -21,6 +21,7 @@ function TextInput(props: {
       onChange={props.onChange}
       value={props.value}
       type={props.type}
+      variant="outlined"
     />
   );
 }

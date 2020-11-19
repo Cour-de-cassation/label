@@ -111,7 +111,7 @@ const Login: FunctionComponent = () => {
       },
       formContainer: {
         padding: theme.spacing * 6,
-        borderRadius: theme.shape.borderRadius,
+        borderRadius: theme.shape.borderRadius.medium,
         backgroundColor: theme.colors.background.highlight,
       },
       inputContainer: {

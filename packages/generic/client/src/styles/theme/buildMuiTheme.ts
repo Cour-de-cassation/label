@@ -8,7 +8,7 @@ function buildMuiTheme(displayMode: displayModeType) {
   const customTheme = buildCustomTheme(displayMode);
 
   return createMuiTheme({
-    shape: customTheme.shape,
+    shape: { borderRadius: customTheme.shape.borderRadius.small },
     spacing: customTheme.spacing,
     typography: customTheme.typography,
     palette: {

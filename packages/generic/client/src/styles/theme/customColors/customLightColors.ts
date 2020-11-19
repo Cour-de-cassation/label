@@ -21,7 +21,7 @@ const customLightColors: customColorsType = {
     border: 'black',
   },
   icon: 'white',
-  primary: ['yellow', 600],
+  primary: ['cyan', 800],
   secondary: ['orange', 500],
   separator: ['grey', 500],
   text: {

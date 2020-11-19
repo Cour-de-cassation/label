@@ -3,6 +3,7 @@ import { customColorsType } from './customColorsType';
 export { customDarkColors };
 
 const customDarkColors: customColorsType = {
+  alert: ['red', 500],
   background: {
     default: ['grey', 900],
     highlight: ['grey', 800],

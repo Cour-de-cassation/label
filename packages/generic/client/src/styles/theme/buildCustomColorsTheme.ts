@@ -24,6 +24,7 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
       },
       primary: buildButtonCustomColorsTheme(customColorsMode.primary),
       secondary: buildButtonCustomColorsTheme(customColorsMode.secondary),
+      alert: buildButtonCustomColorsTheme(customColorsMode.alert),
     },
     document: {
       background: getColor(customColorsMode.document.background),

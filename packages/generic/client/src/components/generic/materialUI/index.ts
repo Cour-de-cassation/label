@@ -1,5 +1,5 @@
 import { Accordion } from './Accordion';
-import { Button } from './Button';
+import { Button, buttonColorType } from './Button';
 import { Checkbox } from './Checkbox';
 import { Drawer } from './Drawer';
 import { Icon, iconNameType } from './Icon';
@@ -32,4 +32,4 @@ export {
   TooltipMenu,
 };
 
-export type { iconNameType };
+export type { buttonColorType, iconNameType };

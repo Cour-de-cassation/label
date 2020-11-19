@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, CSSProperties, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { ButtonWithIcon, LayoutGrid, Logo, Text, TextInput } from '../../components';
 import { login } from '../../services/api';
@@ -11,6 +11,8 @@ export { Login };
 const Login: FunctionComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isFormValid, setIsFormValid] = useState(true);
+
   const history = useHistory();
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -22,7 +24,14 @@ const Login: FunctionComponent = () => {
       </LayoutGrid>
       <LayoutGrid item style={styles.formContainer}>
         <LayoutGrid item style={styles.inputContainer}>
-          <TextInput name="email" type="email" placeholder={wordings.email} onChange={changeEmail} value={email} />
+          <TextInput
+            name="email"
+            type="email"
+            placeholder={wordings.email}
+            onChange={changeEmail}
+            value={email}
+            error={!isFormValid}
+          />
         </LayoutGrid>
         <LayoutGrid item style={styles.inputContainer}>
           <TextInput
@@ -31,6 +40,7 @@ const Login: FunctionComponent = () => {
             placeholder={wordings.password}
             onChange={changePassword}
             value={password}
+            error={!isFormValid}
           />
         </LayoutGrid>
         <LayoutGrid item style={styles.forgottenPasswordContainer}>
@@ -40,18 +50,43 @@ const Login: FunctionComponent = () => {
             </Text>
           </Link>
         </LayoutGrid>
-        <LayoutGrid item style={styles.loginButtonContainer}>
-          <ButtonWithIcon iconName="login" onClick={handleSubmit} color="primary" text={wordings.login} />
+        <LayoutGrid item direction="column" alignItems="flex-end" style={styles.loginButtonContainer}>
+          <ButtonWithIcon
+            iconName={isFormValid ? 'login' : 'error'}
+            onClick={handleSubmit}
+            color={isFormValid ? 'primary' : 'alert'}
+            text={wordings.login}
+          />
+        </LayoutGrid>
+        <LayoutGrid item direction="column">
+          {!isFormValid && (
+            <LayoutGrid item direction="column">
+              <Text style={styles.formErrorText} variant="h3">
+                {wordings.wrongEmailOrPassword}
+              </Text>
+              <Text style={styles.formErrorText} variant="h3">
+                {wordings.pleaseTryAgain}
+              </Text>
+            </LayoutGrid>
+          )}
         </LayoutGrid>
       </LayoutGrid>
     </LayoutGrid>
   );
 
+  function resetIsFormValid() {
+    if (!isFormValid) {
+      setIsFormValid(true);
+    }
+  }
+
   function changeEmail(event: ChangeEvent<HTMLInputElement>) {
+    resetIsFormValid();
     setEmail(event.target.value);
   }
 
   function changePassword(event: ChangeEvent<HTMLInputElement>) {
+    resetIsFormValid();
     setPassword(event.target.value);
   }
 
@@ -61,11 +96,12 @@ const Login: FunctionComponent = () => {
       setBearerTokenIntoLocalStorage(data);
       history.push('/');
     } catch (error) {
+      setIsFormValid(false);
       console.warn(error);
     }
   }
 
-  function buildStyles(theme: customThemeType) {
+  function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
     return {
       mainContainer: {
         height: '100vh',
@@ -89,7 +125,10 @@ const Login: FunctionComponent = () => {
       },
       loginButtonContainer: {
         display: 'flex',
-        justifyContent: 'flex-end',
+        marginBottom: theme.spacing,
+      },
+      formErrorText: {
+        textAlign: 'right',
       },
     };
   }

@@ -25,6 +25,7 @@ const fr = {
   originalText: 'Texte original',
   password: 'Mot de passe',
   passwordsMustBeIdentical: 'Les deux mots de passe doivent être identiques.',
+  pleaseTryAgain: 'Veuillez réessayer.',
   problemCategory: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
   problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
   problemType: 'Type de problème',
@@ -40,4 +41,5 @@ const fr = {
   undo: 'Annuler',
   unlink: 'Dissocier',
   validate: 'Valider',
+  wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",
 };

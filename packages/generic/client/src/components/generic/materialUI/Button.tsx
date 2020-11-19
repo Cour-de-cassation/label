@@ -5,9 +5,13 @@ import { Text } from './Text';
 
 export { Button };
 
+export type { buttonColorType };
+
+type buttonColorType = 'primary' | 'secondary' | 'alert' | 'default';
+
 function Button(props: {
   children?: ReactNode;
-  color?: 'primary' | 'secondary' | 'default';
+  color?: buttonColorType;
   disabled?: boolean;
   hint?: string;
   onClick: (event: MouseEvent) => void;
@@ -30,7 +34,6 @@ function Button(props: {
     return (
       <MUButton
         classes={{ root: classes.root }}
-        color={props.color}
         disabled={props.disabled}
         onClick={props.onClick}
         style={props.style}

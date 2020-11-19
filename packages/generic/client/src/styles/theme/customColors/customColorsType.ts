@@ -3,6 +3,7 @@ import { colorType, shadeColorType } from '@label/core';
 export type { customColorsType };
 
 type customColorsType = {
+  alert: shadeColorType;
   background: {
     default: colorType;
     highlight: shadeColorType;

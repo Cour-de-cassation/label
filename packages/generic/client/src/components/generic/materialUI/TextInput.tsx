@@ -7,6 +7,7 @@ function TextInput(props: {
   name: string;
   placeholder?: string;
   value: string;
+  error?: boolean;
   errorText?: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   type?: React.InputHTMLAttributes<unknown>['type'];
@@ -14,7 +15,7 @@ function TextInput(props: {
   return (
     <TextField
       id={props.name}
-      error={!!props.errorText}
+      error={!!props.errorText || !!props.error}
       helperText={props.errorText}
       label={props.placeholder}
       onChange={props.onChange}

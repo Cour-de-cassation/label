@@ -1,11 +1,11 @@
 import React, { CSSProperties, ReactElement, MouseEvent } from 'react';
-import { Button, iconNameType, Icon } from '../materialUI';
+import { Button, iconNameType, Icon, buttonColorType } from '../materialUI';
 import { customThemeType, useCustomTheme } from '../../../styles';
 
 export { ButtonWithIcon };
 
 function ButtonWithIcon(props: {
-  color?: 'primary' | 'secondary' | 'default';
+  color?: buttonColorType;
   disabled?: boolean;
   iconName: iconNameType;
   onClick: (event: MouseEvent) => void;

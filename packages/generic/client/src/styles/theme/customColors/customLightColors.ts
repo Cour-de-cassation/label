@@ -3,6 +3,7 @@ import { customColorsType } from './customColorsType';
 export { customLightColors };
 
 const customLightColors: customColorsType = {
+  alert: ['red', 500],
   background: {
     default: 'white',
     highlight: ['blueGrey', 50],

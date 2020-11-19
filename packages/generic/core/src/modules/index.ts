@@ -4,7 +4,15 @@ import { assignationModule, assignationType } from './assignation';
 import { documentModule, documentType, fetchedDocumentType } from './document';
 import { idModule, idType } from './id';
 import { problemReportModule, problemReportType } from './problemReport';
-import { settingsModule, settingsType, categoryIconNameType, displayModeType } from './settings';
+import {
+  colorType,
+  constantColorType,
+  displayModeType,
+  settingsModule,
+  settingsType,
+  shadeColorType,
+  categoryIconNameType,
+} from './settings';
 import { userModule, userType } from './user';
 import {
   dataModelFieldType,
@@ -30,6 +38,9 @@ export type {
   fetchedAnnotationType,
   annotationReportType,
   assignationType,
+  colorType,
+  constantColorType,
+  shadeColorType,
   displayModeType,
   documentType,
   fetchedDocumentType,

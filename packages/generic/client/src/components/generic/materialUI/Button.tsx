@@ -13,6 +13,7 @@ function Button(props: {
   onClick: (event: MouseEvent) => void;
   style?: CSSProperties;
   variant: 'contained' | 'outlined';
+  width?: string;
 }): ReactElement {
   const theme = useCustomTheme();
   const classes = buildButtonClasses(theme);
@@ -45,6 +46,7 @@ function Button(props: {
 
     return makeStyles({
       root: {
+        width: props.width,
         backgroundColor: theme.colors.button[color].background,
         margin: 0,
         '&:hover': {

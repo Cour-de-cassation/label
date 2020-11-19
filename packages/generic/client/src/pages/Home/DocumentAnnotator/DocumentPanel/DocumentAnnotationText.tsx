@@ -2,7 +2,7 @@ import React, { MouseEvent, ReactElement, useState } from 'react';
 import { fetchedAnnotationType, settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
-import { useDisplayMode } from '../../../../styles';
+import { getColor, useDisplayMode } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
@@ -55,10 +55,12 @@ function DocumentAnnotationText(props: {
   function buildStyle() {
     return {
       annotationText: {
-        backgroundColor: settingsModule.lib.getAnnotationCategoryColor(
-          props.annotation.category,
-          props.annotatorStateHandler.get().settings,
-          displayMode,
+        backgroundColor: getColor(
+          settingsModule.lib.getAnnotationCategoryColor(
+            props.annotation.category,
+            props.annotatorStateHandler.get().settings,
+            displayMode,
+          ),
         ),
         cursor: 'pointer',
         padding: '0px 2px',

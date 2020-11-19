@@ -2,7 +2,7 @@ import React from 'react';
 import { settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../services/annotatorState';
 import { Icon } from '../generic';
-import { useCustomTheme, customThemeType, useDisplayMode } from '../../styles';
+import { getColor, useCustomTheme, customThemeType, useDisplayMode } from '../../styles';
 
 export { CategoryIcon };
 
@@ -29,10 +29,12 @@ function CategoryIcon(props: { annotatorStateHandler: annotatorStateHandlerType;
         width: props.iconSize,
         height: props.iconSize,
         borderRadius: props.iconSize / 2,
-        backgroundColor: settingsModule.lib.getAnnotationCategoryColor(
-          props.category,
-          props.annotatorStateHandler.get().settings,
-          displayMode,
+        backgroundColor: getColor(
+          settingsModule.lib.getAnnotationCategoryColor(
+            props.category,
+            props.annotatorStateHandler.get().settings,
+            displayMode,
+          ),
         ),
         display: 'flex',
         alignItems: 'center',

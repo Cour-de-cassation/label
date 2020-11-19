@@ -1,11 +1,9 @@
 {
   "adresse": {
-    "anonymizationTexts": [
-      "[...]"
-    ],
+    "anonymizationTexts": ["[...]"],
     "color": {
-      "lightMode": "#64B5F6",
-      "darkMode": "#1565C0"
+      "lightMode": ["blue", 300],
+      "darkMode": ["blue", 800]
     },
     "iconName": "location",
     "text": "Adresse"
@@ -22,20 +20,17 @@
       "MomCorp"
     ],
     "color": {
-      "lightMode": "#D1C4E9",
-      "darkMode": "#7E57C2"
+      "lightMode": ["deepPurple", 100],
+      "darkMode": ["deepPurple", 400]
     },
     "iconName": "work",
     "text": "Personne morale"
   },
   "personnephysicomorale": {
-    "anonymizationTexts": [
-      "Edition Dupuis",
-      "Krusty Burger"
-    ],
+    "anonymizationTexts": ["Edition Dupuis", "Krusty Burger"],
     "color": {
-      "lightMode": "#9575CD",
-      "darkMode": "#4527A0"
+      "lightMode": ["deepPurple", 300],
+      "darkMode": ["deepPurple", 800]
     },
     "iconName": "work",
     "text": "Personne physico-morale"
@@ -52,8 +47,8 @@
       "William"
     ],
     "color": {
-      "lightMode": "#FFCCBC",
-      "darkMode": "#FF7043"
+      "lightMode": ["deepOrange", 100],
+      "darkMode": ["deepOrange", 400]
     },
     "iconName": "person",
     "text": "Prénom"
@@ -69,8 +64,8 @@
       "Lapoire"
     ],
     "color": {
-      "lightMode": "#FF8A65",
-      "darkMode": "#D84315"
+      "lightMode": ["deepOrange", 300],
+      "darkMode": ["deepOrange", 800]
     },
     "iconName": "person",
     "text": "Nom de famille"
@@ -87,8 +82,8 @@
       "Duval"
     ],
     "color": {
-      "lightMode": "#D7CCC8",
-      "darkMode": "#6D4C41"
+      "lightMode": ["brown", 100],
+      "darkMode": ["brown", 500]
     },
     "iconName": "hammer",
     "text": "Professionnel (nom)"
@@ -105,8 +100,8 @@
       "Marion"
     ],
     "color": {
-      "lightMode": "#BCAAA4",
-      "darkMode": "#4E342E"
+      "lightMode": ["brown", 200],
+      "darkMode": ["brown", 800]
     },
     "iconName": "hammer",
     "text": "Professionnel (prénom)"
@@ -123,8 +118,8 @@
       "cadastre 8"
     ],
     "color": {
-      "lightMode": "#4DD0E1",
-      "darkMode": "#00838F"
+      "lightMode": ["cyan", 300],
+      "darkMode": ["cyan", 600]
     },
     "iconName": "map",
     "text": "Cadastre"
@@ -141,8 +136,8 @@
       "date de naissance 8"
     ],
     "color": {
-      "lightMode": "#4DB6AC",
-      "darkMode": "#00695C"
+      "lightMode": ["teal", 300],
+      "darkMode": ["teal", 800]
     },
     "iconName": "stroller",
     "text": "Date de naissance"
@@ -159,8 +154,8 @@
       "date de mariage 8"
     ],
     "color": {
-      "lightMode": "#81C784",
-      "darkMode": "#558B2F"
+      "lightMode": ["green", 300],
+      "darkMode": ["green", 800]
     },
     "iconName": "heart",
     "text": "Date de mariage"
@@ -177,10 +172,55 @@
       "date de décès 8"
     ],
     "color": {
-      "lightMode": "#DCE775",
-      "darkMode": "#827717"
+      "lightMode": ["lime", 300],
+      "darkMode": ["lime", 900]
     },
     "iconName": "cloud",
     "text": "Date de décès"
+  },
+  "insee": {
+    "anonymizationTexts": ["[...]"],
+    "color": {
+      "lightMode": ["indigo", 300],
+      "darkMode": ["indigo", 800]
+    },
+    "iconName": "book",
+    "text": "N° INSEE"
+  },
+  "telephoneorfaxoremail": {
+    "anonymizationTexts": ["[...]"],
+    "color": {
+      "lightMode": ["lightBlue", 300],
+      "darkMode": ["lightBlue", 800]
+    },
+    "iconName": "phone",
+    "text": "Téléphone/Fax/Email"
+  },
+  "comptebancaire": {
+    "anonymizationTexts": ["[...]"],
+    "color": {
+      "lightMode": ["indigo", 100],
+      "darkMode": ["indigo", 500]
+    },
+    "iconName": "bank",
+    "text": "Compte bancaire"
+  },
+  "plaqueimmatriculation": {
+    "anonymizationTexts": ["[...]"],
+    "color": {
+      "lightMode": ["pink", 300],
+      "darkMode": ["pink", 800]
+    },
+    "iconName": "car",
+    "text": "Plaque d'immatriculation"
+  },
+  "etablissementpourmineure": {
+    "anonymizationTexts": ["[...]"],
+    "color": {
+      "lightMode": ["red", 300],
+      "darkMode": ["red", 700]
+    },
+    "iconName": "child",
+    "text": "Etablissement pour mineur"
   }
 }

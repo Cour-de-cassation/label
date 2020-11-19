@@ -1,4 +1,4 @@
-import { colorType, shadeColorType } from '../palette';
+import { colorType, shadeColorType } from '@label/core';
 
 export type { customColorsType };
 

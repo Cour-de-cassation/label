@@ -1,26 +1,74 @@
 import { dataModelType } from '../dataModelType';
 
-export { settingsDataModel };
+export { categoryIconNames, constantColors, settingsDataModel, shadeColors };
 
-export type { settingsType, categoryIconNameType, displayModeType };
+export type {
+  categoryIconNameType,
+  categorySettingType,
+  colorType,
+  constantColorType,
+  displayModeType,
+  settingsType,
+  shadeColorType,
+};
 
 type settingsType = {
-  [category: string]:
-    | {
-        anonymizationTexts: string[];
-        color: {
-          lightMode: string;
-          darkMode: string;
-        };
-        iconName: categoryIconNameType;
-        text: string;
-      }
-    | undefined;
+  [category: string]: categorySettingType;
+};
+
+type categorySettingType = {
+  anonymizationTexts: string[];
+  color: { [displayMode in displayModeType]: colorType };
+  iconName: categoryIconNameType;
+  text: string;
 };
 
 type displayModeType = 'lightMode' | 'darkMode';
 
-type categoryIconNameType = 'person' | 'hammer' | 'map' | 'location' | 'work' | 'heart' | 'cloud' | 'stroller';
+const categoryIconNames = [
+  'bank',
+  'book',
+  'car',
+  'child',
+  'cloud',
+  'hammer',
+  'heart',
+  'location',
+  'map',
+  'person',
+  'phone',
+  'stroller',
+  'work',
+] as const;
+
+type categoryIconNameType = typeof categoryIconNames[number];
+
+const constantColors = ['black', 'white'] as const;
+
+const shadeColors = [
+  'blue',
+  'blueGrey',
+  'brown',
+  'cyan',
+  'deepOrange',
+  'deepPurple',
+  'green',
+  'grey',
+  'indigo',
+  'lightBlue',
+  'lime',
+  'orange',
+  'pink',
+  'red',
+  'teal',
+  'yellow',
+] as const;
+
+type constantColorType = typeof constantColors[number];
+
+type shadeColorType = [typeof shadeColors[number], number];
+
+type colorType = constantColorType | shadeColorType;
 
 // The settings are passed as a JSON string to parse
 const settingsDataModel = {

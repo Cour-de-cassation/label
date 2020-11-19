@@ -20,7 +20,7 @@ function Dropdown<T extends string>(props: {
   const [dropdownPosition, setdDropdownPosition] = useState<'bottom' | 'top'>('bottom');
 
   return (
-    <div>
+    <>
       {props.buildButton({
         isOpen: isOpen(),
         item: props.items.find((item) => item.value === selectedValue),
@@ -34,7 +34,7 @@ function Dropdown<T extends string>(props: {
         onClose={closeDropdown}
         width={props.width}
       />
-    </div>
+    </>
   );
 
   function isOpen() {

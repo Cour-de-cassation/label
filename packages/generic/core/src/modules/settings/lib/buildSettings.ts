@@ -1,21 +1,21 @@
-import { categoryIconNameType, settingsType } from '../settingsType';
+import {
+  categoryIconNames,
+  categoryIconNameType,
+  categorySettingType,
+  colorType,
+  constantColors,
+  constantColorType,
+  settingsType,
+  shadeColors,
+  shadeColorType,
+} from '../settingsType';
 
 export { buildSettings };
 
 export type { partialSettingsType };
 
 type partialSettingsType = {
-  [category: string]:
-    | {
-        anonymizationTexts?: string[];
-        color?: {
-          lightMode: string;
-          darkMode: string;
-        };
-        iconName?: categoryIconNameType;
-        text?: string;
-      }
-    | undefined;
+  [category: string]: Partial<categorySettingType>;
 };
 
 function buildSettings(partialSettings: partialSettingsType = {}) {
@@ -41,12 +41,44 @@ function buildAnonymizationTexts(anonymizationTexts: string[] | undefined) {
   return anonymizationTexts ? anonymizationTexts : [];
 }
 
-function buildColor(color: string | undefined) {
-  return color ? color : '#000000';
+function buildColor(color: colorType | undefined) {
+  if (!color) {
+    return 'white';
+  }
+
+  if (typeof color === 'string') {
+    return buildConstantColor(color);
+  } else {
+    return buildShadeColor(color);
+  }
+
+  function buildConstantColor(constantColor: constantColorType) {
+    if (constantColors.includes(constantColor)) {
+      return constantColor;
+    } else {
+      throw new Error(`Invalid constant color: ${constantColor}`);
+    }
+  }
+
+  function buildShadeColor(shadeColor: shadeColorType) {
+    if (shadeColors.includes(shadeColor[0]) && shadeColor[1] >= 100 && shadeColor[1] <= 900) {
+      return shadeColor;
+    } else {
+      throw new Error(`Invalid shade color: ${shadeColor}`);
+    }
+  }
 }
 
-function buildIconName(iconName: categoryIconNameType | undefined) {
-  return iconName ? iconName : 'person';
+function buildIconName(iconName: string | undefined): categoryIconNameType {
+  if (!iconName) {
+    return 'person';
+  }
+
+  if (categoryIconNames.includes(iconName as categoryIconNameType)) {
+    return iconName as categoryIconNameType;
+  } else {
+    throw new Error(`Invalid category icon name: ${iconName}`);
+  }
 }
 
 function buildText(text: string | undefined) {

@@ -6,11 +6,19 @@ import {
   getAnnotationCategoryText,
   getCategories,
 } from './lib';
-import { settingsDataModel, settingsType, categoryIconNameType, displayModeType } from './settingsType';
+import {
+  colorType,
+  constantColorType,
+  displayModeType,
+  settingsDataModel,
+  settingsType,
+  shadeColorType,
+  categoryIconNameType,
+} from './settingsType';
 
 export { settingsModule };
 
-export type { settingsType, categoryIconNameType, displayModeType };
+export type { colorType, constantColorType, displayModeType, settingsType, shadeColorType, categoryIconNameType };
 
 const settingsModule = {
   dataModel: settingsDataModel,

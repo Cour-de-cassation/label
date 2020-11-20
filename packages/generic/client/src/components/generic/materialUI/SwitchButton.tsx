@@ -24,12 +24,12 @@ function SwitchButton(props: {
         border: '2px solid',
       },
       switchBase: {
-        color: theme.colors.text.default,
+        color: theme.colors.text,
         position: 'absolute',
         top: '-7px',
         left: '-7px',
         '&$checked': {
-          color: theme.colors.text.default,
+          color: theme.colors.text,
         },
         '&$checked + $track': {
           backgroundColor: theme.colors.primary,
@@ -38,7 +38,9 @@ function SwitchButton(props: {
       },
       thumb: { height: 22, width: 22 },
       checked: {},
-      track: {},
+      track: {
+        backgroundColor: theme.colors.background,
+      },
     })();
   }
 }

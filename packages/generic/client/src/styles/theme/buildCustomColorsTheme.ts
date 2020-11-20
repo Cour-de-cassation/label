@@ -12,37 +12,25 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
   const customColorsMode = customColors[displayMode];
 
   return {
-    background: {
-      default: getColor(customColorsMode.background.default),
-      highlight: getShadeColor(customColorsMode.background.highlight),
+    alert: buildCustomColorsVariations(['red', 500]),
+    background: getColor(customColorsMode.background),
+    default: buildCustomColorsVariations(customColorsMode.default),
+    disabled: {
+      background: getShadeColor(customColorsMode.disabled.background),
+      color: getColor(customColorsMode.disabled.color),
     },
-    button: {
-      default: buildButtonCustomColorsTheme(customColorsMode.button.default),
-      disabled: {
-        background: getShadeColor(customColorsMode.button.disabled.background),
-        color: getColor(customColorsMode.button.disabled.color),
-      },
-      primary: buildButtonCustomColorsTheme(customColorsMode.primary),
-      secondary: buildButtonCustomColorsTheme(customColorsMode.secondary),
-      alert: buildButtonCustomColorsTheme(customColorsMode.alert),
-    },
-    document: {
-      background: getColor(customColorsMode.document.background),
-    },
+    document: getColor(customColorsMode.document),
     dropdown: {
       border: getColor(customColorsMode.dropdown.border),
     },
     icon: getColor(customColorsMode.icon),
-    primary: getShadeColor(customColorsMode.primary),
-    secondary: getShadeColor(customColorsMode.secondary),
-    separator: getShadeColor(customColorsMode.separator),
-    text: {
-      default: getColor(customColorsMode.text.default),
-      disabled: getColor(customColorsMode.text.disabled),
-    },
+    primary: buildCustomColorsVariations(customColorsMode.primary),
+    secondary: buildCustomColorsVariations(customColorsMode.secondary),
+    separator: getShadeColor(['grey', 500]),
+    text: getColor(customColorsMode.text),
   };
 
-  function buildButtonCustomColorsTheme(shadeColor: shadeColorType) {
+  function buildCustomColorsVariations(shadeColor: shadeColorType) {
     return {
       background: getShadeColor(shadeColor),
       hoveredBackground: emphasizeShadeColor(shadeColor, displayMode),

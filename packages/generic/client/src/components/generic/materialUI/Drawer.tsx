@@ -1,13 +1,14 @@
 import React, { ReactNode } from 'react';
 import { Drawer as MuiDrawer, makeStyles } from '@material-ui/core';
 import { zIndices } from './constants';
-import { heights } from '../../../styles';
+import { customThemeType, heights, useCustomTheme } from '../../../styles';
 
 export { Drawer };
 
 function Drawer(props: { children?: ReactNode; isOpen: boolean; onClose: () => void }) {
+  const theme = useCustomTheme();
   const styles = buildStyles();
-  const classes = buildClasses();
+  const classes = buildClasses(theme);
 
   return (
     <MuiDrawer style={styles.drawer} classes={classes} anchor="right" open={props.isOpen} onClose={props.onClose}>
@@ -23,9 +24,10 @@ function Drawer(props: { children?: ReactNode; isOpen: boolean; onClose: () => v
     };
   }
 
-  function buildClasses() {
+  function buildClasses(theme: customThemeType) {
     return makeStyles({
       paper: {
+        boxShadow: theme.boxShadow.level1,
         paddingTop: heights.header,
       },
     })();

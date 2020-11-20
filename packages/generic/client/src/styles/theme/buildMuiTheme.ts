@@ -13,22 +13,22 @@ function buildMuiTheme(displayMode: displayModeType) {
     typography: customTheme.typography,
     palette: {
       primary: {
-        main: customTheme.colors.primary,
+        main: customTheme.colors.primary.background,
       },
       secondary: {
-        main: customTheme.colors.secondary,
+        main: customTheme.colors.secondary.background,
       },
-      text: { primary: customTheme.colors.text.default, secondary: customTheme.colors.text.disabled },
+      text: { primary: customTheme.colors.text, secondary: customTheme.colors.disabled.color },
       background: {
-        default: customTheme.colors.background.default,
-        paper: customTheme.colors.background.highlight,
+        default: customTheme.colors.background,
+        paper: customTheme.colors.background,
       },
       action: {
-        disabled: customTheme.colors.button.disabled.color,
-        disabledBackground: customTheme.colors.button.disabled.background,
+        disabled: customTheme.colors.disabled.color,
+        disabledBackground: customTheme.colors.disabled.background,
       },
       grey: {
-        '300': customTheme.colors.button.default.background,
+        '300': customTheme.colors.default.background,
       },
     },
   });

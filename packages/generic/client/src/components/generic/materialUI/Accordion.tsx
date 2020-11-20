@@ -38,6 +38,7 @@ function Accordion(props: {
 function buildAccordionClasses(theme: customThemeType) {
   return makeStyles({
     rounded: {
+      backgroundColor: theme.colors.default.background,
       borderRadius: theme.shape.borderRadius.medium,
       '&:first-child': {
         borderRadius: theme.shape.borderRadius.medium,

@@ -1,5 +1,6 @@
 import { Menu } from '@material-ui/core';
 import React, { CSSProperties, MouseEvent, ReactElement } from 'react';
+import { customThemeType, useCustomTheme } from '../../../styles';
 
 export { TooltipMenu };
 
@@ -12,7 +13,8 @@ function TooltipMenu(props: {
   style?: CSSProperties;
 }): ReactElement {
   const displayPosition = getDisplayPosition();
-  const style = buildStyle(displayPosition);
+  const theme = useCustomTheme();
+  const style = buildStyle(displayPosition, theme);
   const tooltipMenuConfiguration = buildTooltipMenuConfiguration(displayPosition);
   const anchorElementHandler = buildAnchorElementHandler();
 
@@ -32,9 +34,10 @@ function TooltipMenu(props: {
     </Menu>
   );
 
-  function buildStyle(displayPosition: 'bottom' | 'top') {
+  function buildStyle(displayPosition: 'bottom' | 'top', theme: customThemeType) {
     return {
       tooltipMenu: {
+        boxShadow: theme.boxShadow.level1,
         top: computeTopOffset(),
       },
       tooltipMenuContent: {

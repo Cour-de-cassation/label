@@ -13,6 +13,7 @@ function Button(props: {
   children?: ReactNode;
   color?: buttonColorType;
   disabled?: boolean;
+  disabledHover?: boolean;
   hint?: string;
   onClick: (event: MouseEvent) => void;
   style?: CSSProperties;
@@ -51,12 +52,14 @@ function Button(props: {
       root: {
         borderRadius: theme.shape.borderRadius.medium,
         width: props.width,
-        backgroundColor: theme.colors.button[color].background,
+        backgroundColor: theme.colors[color].background,
         margin: 0,
-        '&:hover': {
-          backgroundColor: theme.colors.button[color].hoveredBackground,
-          color: theme.colors.button[color].hoveredTextColor,
-        },
+        '&:hover': props.disabledHover
+          ? {}
+          : {
+              backgroundColor: theme.colors[color].hoveredBackground,
+              color: theme.colors[color].hoveredTextColor,
+            },
       },
     })();
   }

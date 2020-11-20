@@ -103,13 +103,13 @@ function CategoryTableEntryHovered(props: {
               ),
               displayMode,
             )
-          : theme.colors.button.default.hoveredBackground,
+          : theme.colors.default.hoveredBackground,
         borderRadius: theme.shape.borderRadius.medium,
         cursor: 'pointer',
         paddingLeft: `${theme.spacing * 2}px`,
       },
       textWithAction: {
-        color: theme.colors.button.default.hoveredTextColor,
+        color: theme.colors.default.hoveredTextColor,
       },
     };
   }

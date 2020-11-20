@@ -99,7 +99,7 @@ function DocumentViewer(props: {
       container: {
         overflowY: 'auto',
         borderRadius: theme.shape.borderRadius.medium,
-        backgroundColor: theme.colors.document.background,
+        backgroundColor: theme.colors.document,
         height: heights.panel,
         width: '100%',
       },

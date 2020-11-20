@@ -46,7 +46,14 @@ function LabelledDropdownButton<T extends string>(props: {
   const style = buildStyle(theme);
 
   return (
-    <Button disabled={props.disabled} onClick={props.onClick} style={style.dropdown} variant="outlined" width="100%">
+    <Button
+      disabled={props.disabled}
+      disabledHover
+      onClick={props.onClick}
+      style={style.dropdown}
+      variant="outlined"
+      width="100%"
+    >
       <LayoutGrid container alignItems="center">
         <LayoutGrid item style={style.dropdownText} xs={11}>
           {props.item?.element || props.label}
@@ -61,6 +68,7 @@ function LabelledDropdownButton<T extends string>(props: {
   function buildStyle(theme: customThemeType) {
     return {
       dropdown: {
+        backgroundColor: theme.colors.background,
         border: `${LABELLED_DROPDOWN_BORDER_THICKNESS}px solid ${theme.colors.dropdown.border}`,
         textTransform: 'none',
         width: `${props.width}px`,

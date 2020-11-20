@@ -25,7 +25,7 @@ function LoadingPage() {
         transform: 'translate(-50%, -50%)',
       },
       loadingWheel: {
-        color: theme.colors.text.default,
+        color: theme.colors.text,
       },
     } as const;
   }

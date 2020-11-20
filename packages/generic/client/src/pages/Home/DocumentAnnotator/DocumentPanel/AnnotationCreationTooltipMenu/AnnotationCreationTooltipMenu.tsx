@@ -85,8 +85,8 @@ function AnnotationCreationTooltipMenu(props: {
         marginBottom: theme.spacing * 2,
       },
       annotationText: {
-        backgroundColor: theme.colors.button.default.hoveredBackground,
-        color: theme.colors.button.default.hoveredTextColor,
+        backgroundColor: theme.colors.default.hoveredBackground,
+        color: theme.colors.default.hoveredTextColor,
         padding: '2px 4px',
         borderRadius: '3px',
       },

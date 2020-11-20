@@ -18,7 +18,11 @@ function DocumentViewer(props: {
 }): ReactElement {
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const theme = useCustomTheme();
-  const styles = buildStyle(theme, documentViewerModeHandler.documentViewerMode);
+  const styles = buildStyle(
+    theme,
+    documentViewerModeHandler.documentViewerMode,
+    documentViewerModeHandler.isAnonymizedView(),
+  );
   const documentText = computeDocumentText();
 
   return (
@@ -92,14 +96,23 @@ function DocumentViewer(props: {
     }
   }
 
-  function buildStyle(theme: customThemeType, viewerMode: viewerModeType): { [cssClass: string]: CSSProperties } {
+  function buildStyle(
+    theme: customThemeType,
+    viewerMode: viewerModeType,
+    isAnonymizedView: boolean,
+  ): { [cssClass: string]: CSSProperties } {
     const lineVerticalPadding = viewerMode.kind === 'occurrence' ? theme.spacing * 4 : 0;
+    const backgroundImage = isAnonymizedView
+      ? `repeating-linear-gradient(45deg, transparent, transparent 20px, ${theme.colors.line.level2}30 1px, ${theme.colors.line.level2}30 21px)`
+      : undefined;
 
     return {
       container: {
         overflowY: 'auto',
         borderRadius: theme.shape.borderRadius.medium,
         backgroundColor: theme.colors.document,
+        backgroundImage,
+
         height: heights.panel,
         width: '100%',
       },

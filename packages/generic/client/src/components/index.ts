@@ -16,7 +16,6 @@ import {
   SwitchButton,
   Text,
   TextInput,
-  TextInputLarge,
   TooltipMenu,
 } from './generic';
 
@@ -41,7 +40,6 @@ export {
   SwitchButton,
   Text,
   TextInput,
-  TextInputLarge,
   TooltipMenu,
   UnlinkAnnotationButton,
 };

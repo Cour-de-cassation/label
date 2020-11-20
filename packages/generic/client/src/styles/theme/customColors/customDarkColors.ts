@@ -13,5 +13,5 @@ const customDarkColors: customColorsType = {
   icon: 'white',
   primary: ['cyan', 800],
   secondary: ['orange', 500],
-  text: 'white',
+  line: { level1: 'white', level2: ['grey', 600] },
 };

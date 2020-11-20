@@ -24,12 +24,12 @@ function SwitchButton(props: {
         border: '2px solid',
       },
       switchBase: {
-        color: theme.colors.text,
+        color: theme.colors.line.level1,
         position: 'absolute',
         top: '-7px',
         left: '-7px',
         '&$checked': {
-          color: theme.colors.text,
+          color: theme.colors.line.level1,
         },
         '&$checked + $track': {
           backgroundColor: theme.colors.primary,

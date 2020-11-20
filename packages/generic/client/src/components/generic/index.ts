@@ -11,7 +11,6 @@ import {
   SwitchButton,
   Text,
   TextInput,
-  TextInputLarge,
   TooltipMenu,
 } from './materialUI';
 
@@ -34,6 +33,5 @@ export {
   SwitchButton,
   Text,
   TextInput,
-  TextInputLarge,
   TooltipMenu,
 };

@@ -6,7 +6,7 @@ import {
   LabelledDropdown,
   LayoutGrid,
   Text,
-  TextInputLarge,
+  TextInput,
   TooltipMenu,
 } from '../../../../components';
 import { useGraphQLMutation } from '../../../../graphQL';
@@ -50,11 +50,13 @@ function ReportProblemToolTipMenu(props: {
         </LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
           <Text>{wordings.describeTheProblem}</Text>
-          <TextInputLarge
+          <TextInput
+            name="problemDescription"
             placeholder={wordings.enterYourText}
             size={10}
             onChange={(event) => setProblemDescription(event.target.value)}
             style={style.tooltipElement}
+            value={problemDescription}
           />
         </LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>

@@ -17,7 +17,7 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
     default: buildCustomColorsVariations(customColorsMode.default),
     disabled: {
       background: getShadeColor(customColorsMode.disabled.background),
-      color: getColor(customColorsMode.disabled.color),
+      color: getShadeColor(customColorsMode.line.level2),
     },
     document: getColor(customColorsMode.document),
     dropdown: {
@@ -26,8 +26,11 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
     icon: getColor(customColorsMode.icon),
     primary: buildCustomColorsVariations(customColorsMode.primary),
     secondary: buildCustomColorsVariations(customColorsMode.secondary),
-    separator: getShadeColor(['grey', 500]),
-    text: getColor(customColorsMode.text),
+    separator: getShadeColor(customColorsMode.line.level2),
+    line: {
+      level1: getColor(customColorsMode.line.level1),
+      level2: getShadeColor(customColorsMode.line.level2),
+    },
   };
 
   function buildCustomColorsVariations(shadeColor: shadeColorType) {

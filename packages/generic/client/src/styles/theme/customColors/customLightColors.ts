@@ -13,5 +13,5 @@ const customLightColors: customColorsType = {
   icon: 'white',
   primary: ['cyan', 800],
   secondary: ['orange', 500],
-  text: 'black',
+  line: { level1: 'black', level2: ['grey', 600] },
 };

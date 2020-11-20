@@ -13,5 +13,5 @@ type customColorsType = {
   icon: colorType;
   primary: shadeColorType;
   secondary: shadeColorType;
-  text: colorType;
+  line: { level1: colorType; level2: shadeColorType };
 };

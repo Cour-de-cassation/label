@@ -11,7 +11,6 @@ import { SvgImage } from './SvgImage';
 import { SwitchButton } from './SwitchButton';
 import { Text } from './Text';
 import { TextInput } from './TextInput';
-import { TextInputLarge } from './TextInputLarge';
 import { TooltipMenu } from './TooltipMenu';
 
 export {
@@ -28,7 +27,6 @@ export {
   SwitchButton,
   Text,
   TextInput,
-  TextInputLarge,
   TooltipMenu,
 };
 

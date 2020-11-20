@@ -1,16 +1,16 @@
 import React, { MouseEvent, ReactElement, ReactNode, useState } from 'react';
-import { DropdownMenu } from '../materialUI';
+import { DropdownMenu } from './DropdownMenu';
 
 export { Dropdown };
 
 function Dropdown<T extends string>(props: {
   buildButton: (param: {
     isOpen: boolean;
-    item?: { element: ReactNode; value: T };
+    item?: { iconName?: string; text: string; value: T };
     onClick: (event: MouseEvent) => void;
   }) => ReactNode;
   defaultValue?: T;
-  items: Array<{ element: ReactNode; value: T }>;
+  items: Array<{ icon?: ReactElement; text: string; value: T }>;
   onChange: (value: T) => void;
   onClose?: () => void;
   width?: number;

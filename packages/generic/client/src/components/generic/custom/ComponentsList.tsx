@@ -13,7 +13,7 @@ function ComponentsList(props: { components: ReactElement[]; spaceBetweenCompone
           <span key={ind}>{component}</span>,
           <span style={style.spaceBetweenComponents} />,
         ],
-        [<span style={style.spaceBetweenComponents} />],
+        [] as ReactElement[],
       )}
     </>
   );

@@ -2,9 +2,9 @@ import React, { ReactElement, ReactNode } from 'react';
 import { makeStyles, Menu as MUMenu, MenuItem } from '@material-ui/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 
-export { DropdownMenu };
+export { Menu };
 
-function DropdownMenu<T extends string>(props: {
+function Menu<T extends string>(props: {
   anchorElement: Element | undefined;
   dropdownPosition: 'bottom' | 'top';
   items: Array<{ value: T; element: ReactNode }>;
@@ -42,6 +42,7 @@ function DropdownMenu<T extends string>(props: {
     return makeStyles({
       paper: {
         backgroundColor: theme.colors.default.background,
+        maxHeight: '300px',
         width: `${props.width}px`,
       },
     })();

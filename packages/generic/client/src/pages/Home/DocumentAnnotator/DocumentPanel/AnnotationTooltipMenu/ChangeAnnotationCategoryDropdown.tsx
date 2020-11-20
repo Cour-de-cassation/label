@@ -1,11 +1,12 @@
 import React, { ReactElement } from 'react';
 import { annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
-import { IconDropdown } from '../../../../../components';
+import { CategoryIcon, IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 
 export { ChangeAnnotationCategoryDropdown };
 
+const CATEGORY_ICON_SIZE = 30;
 const CHANGE_ANNOTATION_CATEGORY_MENU_WIDTH = 300;
 
 function ChangeAnnotationCategoryDropdown(props: {
@@ -21,7 +22,14 @@ function ChangeAnnotationCategoryDropdown(props: {
       hint={wordings.changeCategory}
       iconName="changeCategory"
       items={categories.map((category) => ({
-        displayedText: settingsModule.lib.getAnnotationCategoryText(category, annotatorState.settings),
+        icon: (
+          <CategoryIcon
+            annotatorStateHandler={props.annotatorStateHandler}
+            category={category}
+            iconSize={CATEGORY_ICON_SIZE}
+          />
+        ),
+        text: settingsModule.lib.getAnnotationCategoryText(category, annotatorState.settings),
         value: category,
       }))}
       onChange={changeAnnotationCategory}

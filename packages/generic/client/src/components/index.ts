@@ -1,4 +1,11 @@
-import { CategoryIcon, DeleteAnnotationButton, LinkAnnotationDropdown, Logo, UnlinkAnnotationButton } from './business';
+import {
+  ActionIcon,
+  CategoryIcon,
+  DeleteAnnotationButton,
+  LinkAnnotationDropdown,
+  Logo,
+  UnlinkAnnotationButton,
+} from './business';
 import {
   Accordion,
   ButtonWithIcon,
@@ -21,6 +28,7 @@ import {
 
 export {
   Accordion,
+  ActionIcon,
   ButtonWithIcon,
   CategoryIcon,
   Checkbox,

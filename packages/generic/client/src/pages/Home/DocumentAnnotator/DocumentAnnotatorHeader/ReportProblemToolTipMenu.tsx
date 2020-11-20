@@ -40,8 +40,8 @@ function ReportProblemToolTipMenu(props: {
           <LabelledDropdown<problemReportType['type']>
             error={isSentWithoutCategory}
             items={problemCategories.map(([problemCategory, problemCategoryText]) => ({
+              text: problemCategoryText,
               value: problemCategory,
-              displayedText: problemCategoryText,
             }))}
             label={wordings.problemType}
             onChange={(newProblemCategory) => setProblemCategory(newProblemCategory)}

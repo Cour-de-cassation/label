@@ -1,11 +1,21 @@
 import React, { ReactElement, useState, CSSProperties } from 'react';
 import { annotationModule, annotationTextDetector, settingsModule } from '@label/core';
-import { Checkbox, LabelledDropdown, LayoutGrid, Text, TooltipMenu } from '../../../../../components';
+import {
+  ActionIcon,
+  CategoryIcon,
+  Checkbox,
+  LabelledDropdown,
+  LayoutGrid,
+  Text,
+  TooltipMenu,
+} from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 
 export { AnnotationCreationTooltipMenu };
+
+const CATEGORY_ICON_SIZE = 30;
 
 function AnnotationCreationTooltipMenu(props: {
   anchorText: Element;
@@ -48,10 +58,18 @@ function AnnotationCreationTooltipMenu(props: {
         <LayoutGrid item container>
           <LabelledDropdown
             items={categories.map((category) => ({
+              icon: (
+                <CategoryIcon
+                  annotatorStateHandler={props.annotatorStateHandler}
+                  category={category}
+                  iconSize={CATEGORY_ICON_SIZE}
+                />
+              ),
+              text: settingsModule.lib.getAnnotationCategoryText(category, annotatorState.settings),
               value: category,
-              displayedText: settingsModule.lib.getAnnotationCategoryText(category, annotatorState.settings),
             }))}
             label={wordings.category}
+            labelIcon={<ActionIcon iconName="bank" iconSize={CATEGORY_ICON_SIZE} />}
             onChange={applyAnnotationCreation}
           />
         </LayoutGrid>

@@ -10,7 +10,7 @@ function IconDropdown<T extends string>(props: {
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;
-  items: Array<{ displayedText: string; value: T }>;
+  items: Array<{ icon?: ReactElement; text: string; value: T }>;
   onChange: (value: T) => void;
   onClose?: () => void;
   width?: number;
@@ -26,7 +26,7 @@ function IconDropdown<T extends string>(props: {
           onClick={onClick}
         />
       )}
-      items={props.items.map((item) => ({ element: item.displayedText, value: item.value }))}
+      items={props.items}
       onChange={props.onChange}
       onClose={props.onClose}
       width={props.width}

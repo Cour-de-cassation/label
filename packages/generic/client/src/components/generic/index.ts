@@ -4,6 +4,7 @@ import {
   Checkbox,
   Drawer,
   Icon,
+  iconNameType,
   LayoutGrid,
   MenuBar,
   RadioButton,
@@ -35,3 +36,5 @@ export {
   TextInput,
   TooltipMenu,
 };
+
+export type { iconNameType };

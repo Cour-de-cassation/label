@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Header, IconButton, MenuBar, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
-import { heights, useCustomTheme } from '../../../../styles';
+import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
 import { SettingsButton } from './SettingsButton';
@@ -15,7 +15,7 @@ function DocumentAnnotatorHeader(props: {
   fetchNewDocument: () => Promise<void>;
 }) {
   const theme = useCustomTheme();
-  const style = buildStyle();
+  const style = buildStyle(theme);
   const history = useHistory();
 
   return (
@@ -37,10 +37,11 @@ function DocumentAnnotatorHeader(props: {
     </MenuBar>
   );
 
-  function buildStyle() {
+  function buildStyle(theme: customThemeType) {
     return {
       header: {
         height: heights.header,
+        paddingLeft: theme.spacing,
       },
     };
   }

@@ -28,7 +28,7 @@ function LinkAnnotationDropdown(props: {
       hint={wordings.link}
       iconName="link"
       items={linkableAnnotations.map((annotation) => ({
-        displayedText: annotation.text,
+        text: annotation.text,
         value: annotation.text,
       }))}
       onChange={linkToAnnotation}

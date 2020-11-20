@@ -9,7 +9,7 @@ export { buildCustomTheme, commonTheme, useCustomTheme };
 export type { customThemeType };
 
 const commonTheme = {
-  boxShadow: { level1: `0 0 4px ${getColor('black')}`, level2: `0 0 16px ${getColor('black')}` },
+  boxShadow: { minor: `0 0 4px ${getColor('black')}`, major: `0 0 16px ${getColor('black')}` },
   shape: { borderRadius: { small: 8, medium: 24 } },
   spacing: 8,
   typography,

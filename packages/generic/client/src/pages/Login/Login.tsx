@@ -31,6 +31,7 @@ const Login: FunctionComponent = () => {
             onChange={changeEmail}
             value={email}
             error={!isFormValid}
+            style={styles.input}
           />
         </LayoutGrid>
         <LayoutGrid item style={styles.inputContainer}>
@@ -41,6 +42,7 @@ const Login: FunctionComponent = () => {
             onChange={changePassword}
             value={password}
             error={!isFormValid}
+            style={styles.input}
           />
         </LayoutGrid>
         <LayoutGrid item style={styles.forgottenPasswordContainer}>
@@ -58,7 +60,7 @@ const Login: FunctionComponent = () => {
             text={wordings.login}
           />
         </LayoutGrid>
-        <LayoutGrid item direction="column">
+        <LayoutGrid item direction="column" style={styles.errorContainer}>
           {!isFormValid && (
             <LayoutGrid item direction="column">
               <Text style={styles.formErrorText} variant="h3">
@@ -102,6 +104,9 @@ const Login: FunctionComponent = () => {
   }
 
   function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
+    const MIN_WIDTH_FORM = 366;
+    const ERROR_LINE_HEIGHT = 19;
+
     return {
       mainContainer: {
         height: '100vh',
@@ -110,11 +115,17 @@ const Login: FunctionComponent = () => {
         marginBottom: theme.spacing * 2,
       },
       formContainer: {
+        minWidth: MIN_WIDTH_FORM,
         padding: theme.spacing * 6,
+        paddingBottom: theme.spacing * 3,
         borderRadius: theme.shape.borderRadius.medium,
+        boxShadow: theme.boxShadow.major,
       },
       inputContainer: {
         marginBottom: theme.spacing * 3,
+      },
+      input: {
+        display: 'flex',
       },
       forgottenPasswordContainer: {
         marginBottom: theme.spacing * 3,
@@ -127,7 +138,11 @@ const Login: FunctionComponent = () => {
         marginBottom: theme.spacing,
       },
       formErrorText: {
+        lineHeight: `${ERROR_LINE_HEIGHT}px`,
         textAlign: 'right',
+      },
+      errorContainer: {
+        height: `${2 * ERROR_LINE_HEIGHT}px`,
       },
     };
   }

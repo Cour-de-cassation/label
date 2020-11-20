@@ -27,7 +27,7 @@ function Drawer(props: { children?: ReactNode; isOpen: boolean; onClose: () => v
   function buildClasses(theme: customThemeType) {
     return makeStyles({
       paper: {
-        boxShadow: theme.boxShadow.level1,
+        boxShadow: theme.boxShadow.minor,
         paddingTop: heights.header,
       },
     })();

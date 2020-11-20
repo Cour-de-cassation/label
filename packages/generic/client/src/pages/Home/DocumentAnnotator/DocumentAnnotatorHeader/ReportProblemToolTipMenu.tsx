@@ -54,6 +54,7 @@ function ReportProblemToolTipMenu(props: {
             name="problemDescription"
             placeholder={wordings.enterYourText}
             size={10}
+            multiline
             onChange={(event) => setProblemDescription(event.target.value)}
             style={style.tooltipElement}
             value={problemDescription}

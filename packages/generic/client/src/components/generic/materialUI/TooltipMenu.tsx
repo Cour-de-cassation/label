@@ -37,7 +37,7 @@ function TooltipMenu(props: {
   function buildStyle(displayPosition: 'bottom' | 'top', theme: customThemeType) {
     return {
       tooltipMenu: {
-        boxShadow: theme.boxShadow.level1,
+        boxShadow: theme.boxShadow.minor,
         top: computeTopOffset(),
       },
       tooltipMenuContent: {

@@ -6,6 +6,7 @@ export { buildDocumentViewerModeHandler };
 export type { documentViewerModeHandlerType };
 
 type documentViewerModeHandlerType = {
+  checkViewerMode: (annotations: fetchedAnnotationType[]) => void;
   isAnonymizedView: () => boolean;
   resetViewerMode: () => void;
   setResizeMode: (annotation: fetchedAnnotationType) => void;
@@ -19,6 +20,7 @@ function buildDocumentViewerModeHandler(
   setViewerMode: (documentViewerMode: viewerModeType) => void,
 ): documentViewerModeHandlerType {
   return {
+    checkViewerMode,
     isAnonymizedView,
     setOccurrenceMode,
     setResizeMode,
@@ -73,6 +75,15 @@ function buildDocumentViewerModeHandler(
       case 'occurrence':
         setViewerMode({ ...documentViewerMode, isAnonymized: !documentViewerMode.isAnonymized });
         break;
+    }
+  }
+
+  function checkViewerMode(annotations: fetchedAnnotationType[]) {
+    if (documentViewerMode.kind === 'occurrence') {
+      const isEntityEmpty = !annotations.some((annotation) => annotation.entityId === documentViewerMode.entityId);
+      if (isEntityEmpty) {
+        setViewerMode({ kind: 'annotation', isAnonymized: documentViewerMode.isAnonymized });
+      }
     }
   }
 }

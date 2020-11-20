@@ -37,7 +37,7 @@ function DocumentAnnotator(props: {
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
 
   return (
-    <DocumentViewerModeHandlerContextProvider>
+    <DocumentViewerModeHandlerContextProvider annotations={annotatorState.annotations}>
       <LayoutGrid container>
         <LayoutGrid container item style={styles.annotatorHeader} xs={12}>
           <DocumentAnnotatorHeader

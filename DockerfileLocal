@@ -1,0 +1,24 @@
+# Use a node 14 base image
+ARG NODE_VERSION=14
+FROM node:${NODE_VERSION}-alpine
+
+# Create the app directory
+WORKDIR /usr/src/app
+
+# Copy context files
+COPY ./package.json ./
+COPY packages/generic/core/package.json ./packages/generic/core/
+COPY packages/generic/backend/package.json ./packages/generic/backend/
+COPY packages/courDeCassation/jurinetConnector/package.json ./packages/courDeCassation/jurinetConnector/
+COPY packages/courDeCassation/nlpAnnotator/package.json ./packages/courDeCassation/nlpAnnotator/
+COPY yarn.lock ./
+
+# Install dependencies
+RUN yarn install --pure-lockfile
+COPY . .
+
+RUN yarn buildLocal
+RUN chmod +x ./scripts/*
+
+# Start the app
+CMD ["yarn", "startLocal"]

@@ -16,5 +16,3 @@ cd packages/courDeCassation/nlpAnnotator
 echo "Annotate all the documents with the NLP engine"
 RUN_MODE=LOCAL node dist/crons/annotateDocumentsWithoutAnnotationsWithNlp.js
 cd ../../../
-
-yarn backendStart

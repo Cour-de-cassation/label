@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: ./
-      dockerfile: DockerfileBackend
+      dockerfile: DockerfileLocal
     environment:
       - RUN_MODE=LOCAL
       - SENDGRID_API_KEY=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

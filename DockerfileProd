@@ -7,8 +7,9 @@ WORKDIR /usr/src/app
 
 # Copy context files
 COPY ./package.json ./
-COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
+COPY packages/generic/client/package.json ./packages/generic/client/
+COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/courDeCassation/jurinetConnector/package.json ./packages/courDeCassation/jurinetConnector/
 COPY packages/courDeCassation/nlpAnnotator/package.json ./packages/courDeCassation/nlpAnnotator/
 COPY yarn.lock ./
@@ -17,8 +18,8 @@ COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 COPY . .
 
-RUN yarn backendBuild
-RUN chmod +x startBackend.sh
+RUN yarn buildProd
+RUN chmod +x ./scripts/*
 
 # Start the app
-ENTRYPOINT ["./startBackend.sh"]
+CMD ["yarn", "startProd"]

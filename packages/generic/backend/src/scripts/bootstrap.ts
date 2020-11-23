@@ -8,12 +8,16 @@ const bootstrapValues = {
 
 const filesToBootstrap = [
   {
-    template: './docker-compose-backend-template.yml',
-    target: './docker-compose-backend.yml',
+    template: './templates/docker-compose-local-template.yml',
+    target: './templates/docker-compose-local.yml',
   },
   {
-    template: './docker-compose-client-template.yml',
-    target: './docker-compose-client.yml',
+    template: './templates/docker-compose-prod-template.yml',
+    target: './templates/docker-compose-prod.yml',
+  },
+  {
+    template: './templates/docker-compose-client-template.yml',
+    target: './templates/docker-compose-client.yml',
   },
 ];
 

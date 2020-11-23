@@ -36,7 +36,7 @@ function Button(props: {
       <MUButton
         classes={{ root: classes.root }}
         disabled={props.disabled}
-        onClick={props.onClick}
+        onClick={onClick}
         style={props.style}
         variant={props.variant}
       >
@@ -62,5 +62,10 @@ function Button(props: {
             },
       },
     })();
+  }
+
+  function onClick(event: MouseEvent) {
+    event.stopPropagation();
+    props.onClick(event);
   }
 }

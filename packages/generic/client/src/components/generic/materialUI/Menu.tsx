@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { MouseEvent, ReactElement, ReactNode } from 'react';
 import { makeStyles, Menu as MUMenu, MenuItem } from '@material-ui/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 
@@ -9,7 +9,7 @@ function Menu<T extends string>(props: {
   dropdownPosition: 'bottom' | 'top';
   items: Array<{ value: T; element: ReactNode }>;
   onChange: (value: T) => void;
-  onClose: () => void;
+  onClose: (event: MouseEvent) => void;
   width?: number;
 }): ReactElement {
   const theme = useCustomTheme();
@@ -26,12 +26,17 @@ function Menu<T extends string>(props: {
       anchorOrigin={dropdownMenuConfiguration?.anchorOrigin}
       classes={menuClasses}
       getContentAnchorEl={null} // To prevent materialUI to log cryptic error
-      onClose={props.onClose}
+      onClose={onClose}
       open={isOpen()}
       transformOrigin={dropdownMenuConfiguration.transformOrigin}
     >
       {props.items.map(({ value, element }, ind) => (
-        <MenuItem classes={menuItemClasses} key={ind} value={value} onClick={() => handleSelection(value)}>
+        <MenuItem
+          classes={menuItemClasses}
+          key={ind}
+          value={value}
+          onClick={(event: MouseEvent) => handleSelection(event, value)}
+        >
           {element}
         </MenuItem>
       ))}
@@ -66,9 +71,14 @@ function Menu<T extends string>(props: {
     return !!props.anchorElement;
   }
 
-  function handleSelection(value: T) {
+  function handleSelection(event: MouseEvent, value: T) {
     props.onChange(value);
-    props.onClose();
+    onClose(event);
+  }
+
+  function onClose(event: MouseEvent) {
+    event.stopPropagation();
+    props.onClose(event);
   }
 }
 

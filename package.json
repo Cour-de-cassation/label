@@ -22,6 +22,7 @@
     "backendUp": "git pull && yarn && yarn dockerBackendBuild && yarn dockerBackendStart",
     "backendBuild": "lerna run --ignore @label/client build --stream",
     "backendStart": "lerna run --scope @label/backend start --stream",
+    "bootstrap": "lerna run compile && lerna run --scope @label/backend --scope @label/client bootstrap --stream && mv ./packages/generic/backend/docker-compose-backend.yml ./ && mv ./packages/generic/backend/docker-compose-client.yml ./",
     "build": "lerna run build",
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",

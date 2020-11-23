@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  client:
+    container_name: client
+    stdin_open: true
+    build:
+      context: ./
+      dockerfile: DockerfileClient
+    #    volumes:
+    #      - ".:/usr/src/app"
+    #      - "/app/node_modules"
+    ports:
+      - {clientPort}:{clientPort}
+    environment:
+      - CHOKIDAR_USEPOLLING=true

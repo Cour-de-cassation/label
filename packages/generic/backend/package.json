@@ -66,6 +66,7 @@
   "main": "dist/index",
   "name": "@label/backend",
   "scripts": {
+    "bootstrap": "node ./dist/scripts/bootstrap.js",
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",
     "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",

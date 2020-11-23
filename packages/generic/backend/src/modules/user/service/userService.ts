@@ -1,9 +1,7 @@
 import { idModule, userModule } from '@label/core';
 import { userDtoType } from '../types/userDtoType';
 import { buildUserRepository } from '../repository';
-import { hasher } from '../../../lib/hasher';
-import { jwtSigner } from '../../../lib/jwtSigner';
-import { mailer } from '../../../lib/mailer';
+import { hasher, jwtSigner, mailer } from '../../../utils';
 import { wordings } from '../../../wordings';
 
 export { userService };

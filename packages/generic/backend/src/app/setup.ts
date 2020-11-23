@@ -1,6 +1,5 @@
 import { settingsLoader } from '../lib/settingsLoader';
-import { mongo } from '../lib/mongo';
-import { logger } from '../utils';
+import { logger, mongo } from '../utils';
 
 export { setup };
 

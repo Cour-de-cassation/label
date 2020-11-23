@@ -18,10 +18,10 @@ describe('buildConnector', () => {
 
       const connectorDocuments = fakeConnector.getAllDocuments();
       const insertedDocuments = await documentRepository.findAll();
-      connectorDocuments.forEach(connectorDocument =>
+      connectorDocuments.forEach((connectorDocument) =>
         expect(
           insertedDocuments.some(
-            insertedDocument =>
+            (insertedDocument) =>
               insertedDocument.documentId === connectorDocument.documentId,
           ),
         ),

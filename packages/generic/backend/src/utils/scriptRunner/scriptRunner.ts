@@ -1,5 +1,5 @@
-import { mongo } from '../lib/mongo';
-import { logger } from './logger';
+import { mongo } from '../mongo';
+import { logger } from '../logger';
 
 export { scriptRunner };
 

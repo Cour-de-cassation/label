@@ -1,5 +1,4 @@
-import { expressRequestHandlerType } from '../../../lib/express';
-import { logger } from '../../../utils';
+import { expressRequestHandlerType, logger } from '../../../utils';
 import { userService } from '../service';
 
 export { authenticationMiddleware };

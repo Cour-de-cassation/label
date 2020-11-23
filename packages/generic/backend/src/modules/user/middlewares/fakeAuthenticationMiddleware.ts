@@ -1,4 +1,4 @@
-import { expressRequestHandlerType } from '../../../lib/express';
+import { expressRequestHandlerType } from '../../../utils';
 
 export { fakeAuthenticationMiddleware };
 

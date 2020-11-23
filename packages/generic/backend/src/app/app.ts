@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { environment } from '@label/core';
 
-import { buildHandlingErrorController } from '../lib/express';
+import { buildHandlingErrorController } from '../utils';
 import { authenticationMiddleware, userController } from '../modules/user';
 import { setup } from './setup';
 import { serverGraphQLSchema } from '../graphQL/serverGraphQLSchema';

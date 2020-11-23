@@ -1,5 +1,5 @@
 import { idType } from '@label/core';
-import { mongo, mongoCollectionType } from '../lib/mongo';
+import { mongo, mongoCollectionType } from '../utils';
 import { repositoryType } from './repositoryType';
 
 export { buildRepositoryBuilder };

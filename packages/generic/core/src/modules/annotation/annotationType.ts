@@ -1,8 +1,10 @@
 import { dataModelType, graphQLTypeOfDataModel, typeOfDataModel } from '../dataModelType';
 
-export { annotationDataModel };
+export { annotationDataModel, LABEL_ANNOTATION_SOURCE };
 
 export type { annotationType, fetchedAnnotationType };
+
+const LABEL_ANNOTATION_SOURCE = 'label';
 
 const annotationDataModel = {
   category: { type: 'string', graphQL: true },

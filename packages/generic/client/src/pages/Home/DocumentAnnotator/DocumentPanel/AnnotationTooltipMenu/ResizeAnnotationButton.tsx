@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { fetchedAnnotationType, annotationModule } from '@label/core';
+import { fetchedAnnotationType, fetchedAnnotationHandler } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { IconButton } from '../../../../../components';
 import { wordings } from '../../../../../wordings';
@@ -24,10 +24,7 @@ function ResizeAnnotationButton(props: {
 
   function onResizeAnnotationClick() {
     const annotatorState = props.annotatorStateHandler.get();
-    const newAnnotations = annotationModule.lib.fetchedAnnotationHandler.deleteOne(
-      annotatorState.annotations,
-      props.annotationId,
-    );
+    const newAnnotations = fetchedAnnotationHandler.deleteOne(annotatorState.annotations, props.annotationId);
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);
     props.onClick();

@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
-import { annotationModule, fetchedAnnotationType } from '@label/core';
+import { fetchedAnnotationType, fetchedAnnotationHandler } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { useAnchorElementUnderMouse } from '../../../../utils';
@@ -76,7 +76,7 @@ function DocumentText(props: {
     const selectedText = selection.toString();
     const selectedTextIndex = computeSelectedTextIndex(selection);
 
-    const newAnnotations = annotationModule.lib.fetchedAnnotationHandler.updateOneText(
+    const newAnnotations = fetchedAnnotationHandler.updateOneText(
       [...annotatorState.annotations, annotation],
       annotation._id,
       selectedText,

@@ -1,6 +1,5 @@
-import { annotationGenerator } from '../generator';
-import { fetchedAnnotationHandler, LABEL_ANNOTATION_SOURCE } from './fetchedAnnotationHandler';
-import { entityIdHandler } from './entityIdHandler';
+import { annotationModule } from '../../modules';
+import { fetchedAnnotationHandler } from './fetchedAnnotationHandler';
 
 describe('fetchedAnnotationHandler', () => {
   describe('createAll', () => {
@@ -11,26 +10,28 @@ describe('fetchedAnnotationHandler', () => {
         { index: 34, text: annotationText },
         { index: 66, text: annotationText },
       ];
+      const annotations = [{}].map(generateFetchedAnnotation);
 
-      const createdAnnotations = fetchedAnnotationHandler.createAll(category, annotationTextsAndIndices);
+      const newAnnotations = fetchedAnnotationHandler.createAll(category, annotationTextsAndIndices, annotations);
 
-      expect(createdAnnotations).toEqual([
+      expect(newAnnotations).toEqual([
         {
           category,
           start: 34,
-          entityId: entityIdHandler.compute(category, annotationText),
-          _id: createdAnnotations[0] && createdAnnotations[0]._id,
-          source: LABEL_ANNOTATION_SOURCE,
+          entityId: annotationModule.lib.entityIdHandler.compute(category, annotationText),
+          _id: newAnnotations[0] && newAnnotations[0]._id,
+          source: annotationModule.config.LABEL_ANNOTATION_SOURCE,
           text: annotationText,
         },
         {
           category,
           start: 66,
-          entityId: entityIdHandler.compute(category, annotationText),
-          _id: createdAnnotations[1] && createdAnnotations[1]._id,
-          source: LABEL_ANNOTATION_SOURCE,
+          entityId: annotationModule.lib.entityIdHandler.compute(category, annotationText),
+          _id: newAnnotations[1] && newAnnotations[1]._id,
+          source: annotationModule.config.LABEL_ANNOTATION_SOURCE,
           text: annotationText,
         },
+        ...annotations,
       ]);
     });
   });
@@ -83,7 +84,7 @@ describe('fetchedAnnotationHandler', () => {
         newCategory,
       );
 
-      expect(updatedAnnotations[0].entityId).toEqual(entityIdHandler.compute(newCategory, text));
+      expect(updatedAnnotations[0].entityId).toEqual(annotationModule.lib.entityIdHandler.compute(newCategory, text));
     });
   });
 
@@ -105,5 +106,5 @@ describe('fetchedAnnotationHandler', () => {
 });
 
 function generateFetchedAnnotation(fields: { start?: number; category?: string; text?: string }) {
-  return annotationGenerator.generate(fields);
+  return annotationModule.generator.generate(fields);
 }

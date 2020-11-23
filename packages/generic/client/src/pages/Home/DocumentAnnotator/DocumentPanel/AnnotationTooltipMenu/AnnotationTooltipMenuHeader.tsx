@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationModule, fetchedAnnotationType, settingsModule } from '@label/core';
+import { fetchedAnnotationType, fetchedAnnotationHandler, settingsModule } from '@label/core';
 import { CategoryIcon, Header, Text } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../../types';
@@ -17,10 +17,7 @@ function AnnotationTooltipMenuHeader(props: {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const annotatorState = props.annotatorStateHandler.get();
-  const annotationIndex = annotationModule.lib.fetchedAnnotationHandler.getAnnotationIndex(
-    props.annotation,
-    annotatorState.annotations,
-  );
+  const annotationIndex = fetchedAnnotationHandler.getAnnotationIndex(props.annotation, annotatorState.annotations);
 
   return (
     <div>

@@ -1,3 +1,3 @@
-import { autoLink } from './autoLink';
+import { autoLinker } from './autoLinker';
 
-export { autoLink };
+export { autoLinker };

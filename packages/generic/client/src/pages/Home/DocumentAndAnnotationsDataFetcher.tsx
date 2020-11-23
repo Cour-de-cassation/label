@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { autoLink, fetchedAnnotationType, fetchedDocumentType, idModule, graphQLReceivedDataType } from '@label/core';
+import { autoLinker, fetchedAnnotationType, fetchedDocumentType, idModule, graphQLReceivedDataType } from '@label/core';
 import { useGraphQLQuery } from '../../graphQL';
 import { DataFetcher } from '../DataFetcher';
 
@@ -39,7 +39,7 @@ function DocumentAndAnnotationsDataFetcher(props: {
       _id: idModule.lib.buildId(annotation._id),
     }));
 
-    return [document, autoLink(annotations)] as [fetchedDocumentType, fetchedAnnotationType[]];
+    return [document, autoLinker.autoLinkAll(annotations)] as [fetchedDocumentType, fetchedAnnotationType[]];
   };
 
   return (

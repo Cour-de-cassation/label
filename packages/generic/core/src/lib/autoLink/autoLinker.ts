@@ -1,11 +1,23 @@
 import { annotationModule, fetchedAnnotationType } from '../../modules';
 import { computeLevenshteinDistance } from './computeLevenshteinDistance';
 
-export { autoLink };
+export { autoLinker };
 
-function autoLink<annotationT extends fetchedAnnotationType>(annotations: annotationT[]): annotationT[] {
-  return annotations.reduce((linkedAnnotations, annotation, index) => {
-    const annotationsToLinkTo = computeAnnotationsToLinkTo(annotation, linkedAnnotations.slice(index + 1));
+const autoLinker = {
+  autoLink,
+  autoLinkAll,
+};
+
+function autoLinkAll<annotationT extends fetchedAnnotationType>(annotations: annotationT[]): annotationT[] {
+  return autoLink(annotations, annotations);
+}
+
+function autoLink<annotationT extends fetchedAnnotationType>(
+  annotationsToLink: annotationT[],
+  annotations: annotationT[],
+): annotationT[] {
+  return annotationsToLink.reduce((linkedAnnotations, annotation) => {
+    const annotationsToLinkTo = computeAnnotationsToLinkTo(annotation, linkedAnnotations);
     return linkToAnnotations(annotation, annotationsToLinkTo, linkedAnnotations);
   }, annotations);
 }

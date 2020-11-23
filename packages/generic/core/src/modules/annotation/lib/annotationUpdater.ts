@@ -1,7 +1,7 @@
-import { fetchedAnnotationType } from '../annotationType';
+import { LABEL_ANNOTATION_SOURCE, fetchedAnnotationType } from '../annotationType';
 import { entityIdHandler } from './entityIdHandler';
 
-export { annotationUpdater };
+export { annotationUpdater, LABEL_ANNOTATION_SOURCE };
 
 const annotationUpdater = {
   updateAnnotationCategory,
@@ -9,23 +9,29 @@ const annotationUpdater = {
   updateAnnotationText,
 };
 
-const LABEL_ANNOTATION_SOURCE = 'label';
-
 function updateAnnotationsCategory<annotationT extends fetchedAnnotationType>(
   annotations: annotationT[],
   newCategory: string,
   shouldUpdate: (annotation: annotationT) => boolean,
 ) {
-  return annotations.map((annotation) =>
-    shouldUpdate(annotation)
-      ? entityIdHandler.syncEntityIdWithCategory(
+  const updatedAnnotations: annotationT[] = [];
+
+  return {
+    newAnnotations: annotations.map((annotation) => {
+      if (shouldUpdate(annotation)) {
+        updatedAnnotations.push(annotation);
+        return entityIdHandler.syncEntityIdWithCategory(
           updateAnnotationSource({
             ...annotation,
             category: newCategory,
           }),
-        )
-      : annotation,
-  );
+        );
+      } else {
+        return annotation;
+      }
+    }),
+    updatedAnnotations,
+  };
 }
 
 function updateAnnotationCategory<annotationT extends fetchedAnnotationType>(

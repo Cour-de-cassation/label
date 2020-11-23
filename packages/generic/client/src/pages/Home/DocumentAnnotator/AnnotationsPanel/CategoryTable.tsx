@@ -59,6 +59,7 @@ function CategoryTable(props: {
               entityAnnotations={entityAnnotations}
               entityId={entityId}
               entityEntryHandler={props.entityEntryHandler}
+              key={entityId}
             />
           ))}
         </LayoutGrid>

@@ -48,7 +48,7 @@ function CategoryTableEntryHovered(props: {
     >
       <LayoutGrid item style={style.textCell} xs={8}>
         {entityAnnotationTexts.map((text) => (
-          <Text style={style.textWithAction} variant="body2">
+          <Text key={text} style={style.textWithAction} variant="body2">
             {text}
           </Text>
         ))}

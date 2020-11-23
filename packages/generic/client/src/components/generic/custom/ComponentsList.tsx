@@ -10,8 +10,8 @@ function ComponentsList(props: { components: ReactElement[]; spaceBetweenCompone
       {props.components.reduce(
         (componentList, component, ind) => [
           ...componentList,
-          <span key={ind}>{component}</span>,
-          <span style={style.spaceBetweenComponents} />,
+          <span key={2 * ind}>{component}</span>,
+          <span key={2 * ind + 1} style={style.spaceBetweenComponents} />,
         ],
         [] as ReactElement[],
       )}

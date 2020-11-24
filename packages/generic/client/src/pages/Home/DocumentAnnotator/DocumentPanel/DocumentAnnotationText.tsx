@@ -52,20 +52,32 @@ function DocumentAnnotationText(props: {
   );
 
   function buildStyle() {
+    const backgroundAlpha = getBackgroundAlpha();
+    const backgroundColor = getColor(
+      settingsModule.lib.getAnnotationCategoryColor(
+        props.annotation.category,
+        props.annotatorStateHandler.get().settings,
+        displayMode,
+      ),
+    );
     return {
       annotationText: {
-        backgroundColor: getColor(
-          settingsModule.lib.getAnnotationCategoryColor(
-            props.annotation.category,
-            props.annotatorStateHandler.get().settings,
-            displayMode,
-          ),
-        ),
+        backgroundColor: `${backgroundColor}${backgroundAlpha}`,
         cursor: 'pointer',
         padding: '0px 2px',
         borderRadius: '3px',
       },
     };
+
+    function getBackgroundAlpha() {
+      const { documentViewerMode } = documentViewerModeHandler;
+      switch (documentViewerMode.kind) {
+        case 'annotation':
+          return 'ff';
+        case 'occurrence':
+          return documentViewerMode.entityId === props.annotation.entityId ? 'ff' : '50';
+      }
+    }
   }
 
   function openTooltipSummary(element: Element | undefined) {

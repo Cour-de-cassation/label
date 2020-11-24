@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import { fetchedAnnotationType, fetchedDocumentType, settingsModule, settingsType } from '@label/core';
+import { settingsModule } from '@label/core';
 import { heights } from '../../../styles';
 import { LayoutGrid } from '../../../components';
-import { useAnnotatorState } from '../../../services/annotatorState';
+import { annotatorStateType, annotatorStateCommitterType, useAnnotatorState } from '../../../services/annotatorState';
 import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
 import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
@@ -14,23 +14,18 @@ import { getSplittedTextByLine, groupByCategoryAndEntity } from './lib';
 export { DocumentAnnotator };
 
 function DocumentAnnotator(props: {
-  annotations: fetchedAnnotationType[];
+  annotatorState: annotatorStateType;
+  annotatorStateCommitter: annotatorStateCommitterType;
   anonymizer: clientAnonymizerType;
-  settings: settingsType;
-  document: fetchedDocumentType;
   fetchNewDocument: () => Promise<void>;
 }): ReactElement {
-  const { annotatorStateHandler } = useAnnotatorState({
-    annotations: props.annotations,
-    document: props.document,
-    settings: props.settings,
-  });
+  const { annotatorStateHandler } = useAnnotatorState(props.annotatorState, props.annotatorStateCommitter);
   const styles = buildStyles();
   useKeyboardShortcutsHandler([
     { key: 'z', ctrlKey: true, action: annotatorStateHandler.revert },
     { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
   ]);
-  const categories = settingsModule.lib.getCategories(props.settings);
+  const categories = settingsModule.lib.getCategories(props.annotatorState.settings);
 
   const annotatorState = annotatorStateHandler.get();
   const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories);

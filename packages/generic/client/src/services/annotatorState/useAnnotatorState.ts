@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { annotatorStateType } from './annotatorStateType';
-import { buildAnnotatorStateCommitter } from './buildAnnotatorStateCommitter';
+import { annotatorStateCommitterType } from './buildAnnotatorStateCommitter';
 
 export { useAnnotatorState };
 
@@ -16,10 +16,9 @@ type annotatorStateHandlerType = {
   reinitialize: () => void;
 };
 
-let annotatorStateCommitter = buildAnnotatorStateCommitter();
-
 function useAnnotatorState(
   initialAnnotatorState: annotatorStateType,
+  committer: annotatorStateCommitterType,
 ): { annotatorStateHandler: annotatorStateHandlerType } {
   const [annotatorState, setAnnotatorState] = useState(initialAnnotatorState);
 
@@ -36,30 +35,30 @@ function useAnnotatorState(
   };
 
   function setAnnotatorStateAndCommitChange(newAnnotatorState: annotatorStateType) {
-    annotatorStateCommitter.commit(annotatorState, newAnnotatorState);
+    committer.commit(annotatorState, newAnnotatorState);
     setAnnotatorState(newAnnotatorState);
   }
 
   function revertAnnotatorState() {
-    const newAnnotatorState = annotatorStateCommitter.revert(annotatorState);
+    const newAnnotatorState = committer.revert(annotatorState);
     setAnnotatorState(newAnnotatorState);
   }
 
   function restoreAnnotatorState() {
-    const newAnnotatorState = annotatorStateCommitter.restore(annotatorState);
+    const newAnnotatorState = committer.restore(annotatorState);
     setAnnotatorState(newAnnotatorState);
   }
 
   function reinitializeAnnotatorState() {
-    annotatorStateCommitter = buildAnnotatorStateCommitter();
+    committer.clean();
     setAnnotatorState(initialAnnotatorState);
   }
 
   function canRevertAnnotatorState() {
-    return annotatorStateCommitter.canRevert();
+    return committer.canRevert();
   }
 
   function canRestoreAnnotatorState() {
-    return annotatorStateCommitter.canRestore();
+    return committer.canRestore();
   }
 }

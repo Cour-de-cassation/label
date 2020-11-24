@@ -6,6 +6,7 @@ export { buildAnnotatorStateCommitter };
 export type { annotatorStateCommitterType };
 
 type annotatorStateCommitterType = {
+  clean: () => void;
   commit: (previousState: annotatorStateType, nextState: annotatorStateType) => void;
   revert: (previousState: annotatorStateType) => annotatorStateType;
   restore: (previousState: annotatorStateType) => annotatorStateType;
@@ -14,16 +15,22 @@ type annotatorStateCommitterType = {
 };
 
 function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
-  const annotationActionsToRevert: annotationActionType[] = [];
-  const annotationActionsToRestore: annotationActionType[] = [];
+  let annotationActionsToRevert: annotationActionType[] = [];
+  let annotationActionsToRestore: annotationActionType[] = [];
 
   return {
+    clean,
     commit,
     revert,
     restore,
     canRevert,
     canRestore,
   };
+
+  function clean() {
+    annotationActionsToRevert = [];
+    annotationActionsToRestore = [];
+  }
 
   function commit(previousState: annotatorStateType, nextState: annotatorStateType) {
     const annotationAction = getDiffBetweenAnnotationsStates(previousState.annotations, nextState.annotations);

@@ -1,5 +1,7 @@
+import { annotatorStateType } from './annotatorStateType';
+import { annotatorStateCommitterType, buildAnnotatorStateCommitter } from './buildAnnotatorStateCommitter';
 import { useAnnotatorState, annotatorStateHandlerType } from './useAnnotatorState';
 
-export { useAnnotatorState };
+export { buildAnnotatorStateCommitter, useAnnotatorState };
 
-export type { annotatorStateHandlerType };
+export type { annotatorStateType, annotatorStateCommitterType, annotatorStateHandlerType };

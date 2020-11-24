@@ -14,5 +14,11 @@ function buildCategoryTableEntryStyle(theme: customThemeType) {
     textCell: {
       padding: `${theme.spacing}px 0`,
     },
+    annotationText: {
+      lineHeight: '14px',
+    },
+    annotationTextContainer: {
+      marginBottom: 4,
+    },
   } as const;
 }

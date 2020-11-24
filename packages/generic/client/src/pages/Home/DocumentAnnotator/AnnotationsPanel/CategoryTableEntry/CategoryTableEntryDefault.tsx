@@ -35,9 +35,11 @@ function CategoryTableEntryDefault(props: {
     >
       <LayoutGrid item style={style.textCell} xs={8}>
         {entityAnnotationTexts.map((text) => (
-          <Text key={text} variant="body2">
-            {text}
-          </Text>
+          <LayoutGrid item style={style.annotationTextContainer}>
+            <Text variant="body2" style={style.annotationText}>
+              {text}
+            </Text>
+          </LayoutGrid>
         ))}
       </LayoutGrid>
       <LayoutGrid item style={style.textCell} xs={3}>

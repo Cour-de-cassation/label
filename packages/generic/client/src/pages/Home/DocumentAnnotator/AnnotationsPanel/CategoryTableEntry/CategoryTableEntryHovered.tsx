@@ -1,8 +1,8 @@
 import React from 'react';
-import { displayModeType, fetchedAnnotationType, settingsModule } from '@label/core';
+import { displayModeType, fetchedAnnotationType, fetchedAnnotationHandler, settingsModule } from '@label/core';
 import {
   ComponentsList,
-  DeleteAnnotationButton,
+  IconButton,
   LayoutGrid,
   LinkAnnotationDropdown,
   Text,
@@ -11,6 +11,7 @@ import {
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { customThemeType, emphasizeShadeColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { clientAnonymizerType } from '../../../../../types';
+import { wordings } from '../../../../../wordings';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
 import { buildCategoryTableEntryStyle } from './buildCategoryTableEntryStyle';
 import { computeCategoryTableEntry } from './computeCategoryTableEntry';
@@ -35,6 +36,7 @@ function CategoryTableEntryHovered(props: {
   const { displayMode } = useDisplayMode();
   const theme = useCustomTheme();
   const style = buildStyle(displayMode, theme, entityAnnotation.category);
+  const annotatorState = props.annotatorStateHandler.get();
 
   return (
     <LayoutGrid
@@ -69,13 +71,12 @@ function CategoryTableEntryHovered(props: {
               buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
               disabled={false}
             />,
-            <DeleteAnnotationButton
-              annotatorStateHandler={props.annotatorStateHandler}
-              annotation={entityAnnotation}
+            <IconButton
               buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onClick={() => {}}
-              shouldApplyEverywhere={true}
+              color="secondary"
+              hint={wordings.delete}
+              iconName="delete"
+              onClick={deleteAnnotations}
             />,
           ]}
           spaceBetweenComponents={theme.spacing}
@@ -120,5 +121,14 @@ function CategoryTableEntryHovered(props: {
     } else {
       props.entityEntryHandler.handleEntitySelection(props.entityId);
     }
+  }
+
+  function deleteAnnotations() {
+    const newAnnotations = fetchedAnnotationHandler.deleteByEntityId(annotatorState.annotations, props.entityId);
+
+    const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
+    props.annotatorStateHandler.set(newAnnotatorState);
+
+    props.hideActionButtons();
   }
 }

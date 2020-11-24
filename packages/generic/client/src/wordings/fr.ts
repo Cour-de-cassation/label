@@ -11,6 +11,10 @@ const fr = {
   darkMode: 'Mode sombre',
   describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
   delete: 'Supprimer',
+  deletionOption: {
+    one: 'Annotation seule',
+    all: `Supprimer tout`,
+  },
   displayMode: "Type d'affichage",
   email: 'E-mail',
   enterYourText: 'Saisissez votre texte...',

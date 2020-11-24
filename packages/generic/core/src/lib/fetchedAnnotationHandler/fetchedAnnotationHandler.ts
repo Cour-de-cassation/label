@@ -6,11 +6,12 @@ export { fetchedAnnotationHandler };
 const fetchedAnnotationHandler = {
   create,
   createAll,
+  deleteById,
+  deleteByEntityId,
   getAnnotationIndex,
   updateManyCategory,
   updateOneCategory,
   updateOneText,
-  deleteOne,
 };
 
 function create(
@@ -46,6 +47,14 @@ function createAll(
   const newAnnotations = createdAnnotations.concat(annotations);
 
   return autoLinker.autoLink(createdAnnotations, newAnnotations);
+}
+
+function deleteById(annotations: fetchedAnnotationType[], id: fetchedAnnotationType['_id']) {
+  return annotations.filter((annotation) => !idModule.lib.equalId(annotation._id, id));
+}
+
+function deleteByEntityId(annotations: fetchedAnnotationType[], entityId: fetchedAnnotationType['entityId']) {
+  return annotations.filter((annotation) => annotation.entityId !== entityId);
 }
 
 function updateManyCategory(
@@ -93,10 +102,6 @@ function updateOneText(
   });
 
   return updateAnnotation ? autoLinker.autoLink([updateAnnotation], newAnnotations) : newAnnotations;
-}
-
-function deleteOne(annotations: fetchedAnnotationType[], annotationId: fetchedAnnotationType['_id']) {
-  return annotations.filter((annotation) => !idModule.lib.equalId(annotation._id, annotationId));
 }
 
 function getAnnotationIndex(annotation: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {

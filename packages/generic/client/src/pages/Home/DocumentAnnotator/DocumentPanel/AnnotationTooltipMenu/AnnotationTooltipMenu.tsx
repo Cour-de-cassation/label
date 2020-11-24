@@ -3,7 +3,6 @@ import { fetchedAnnotationType } from '@label/core';
 import {
   Checkbox,
   ComponentsList,
-  DeleteAnnotationButton,
   LayoutGrid,
   LinkAnnotationDropdown,
   TooltipMenu,
@@ -15,6 +14,7 @@ import { clientAnonymizerType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
+import { DeleteAnnotationDropdown } from './DeleteAnnotationDropdown';
 
 export { AnnotationTooltipMenu };
 
@@ -67,11 +67,10 @@ function AnnotationTooltipMenu(props: {
                 annotation={props.annotation}
                 disabled={!shouldApplyEverywhere}
               />,
-              <DeleteAnnotationButton
+              <DeleteAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
-                onClick={props.onClose}
-                shouldApplyEverywhere={shouldApplyEverywhere}
+                onClose={props.onClose}
               />,
             ]}
             spaceBetweenComponents={theme.spacing}

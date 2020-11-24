@@ -3,6 +3,7 @@ import { customColorsType } from './customColorsType';
 export { customLightColors };
 
 const customLightColors: customColorsType = {
+  alert: ['red', 500],
   background: 'white',
   default: ['blueGrey', 200],
   disabled: { background: ['blueGrey', 50], color: 'white' },
@@ -10,6 +11,7 @@ const customLightColors: customColorsType = {
   dropdown: {
     border: 'black',
   },
+  error: ['red', 500],
   icon: 'white',
   primary: ['cyan', 800],
   secondary: ['orange', 500],

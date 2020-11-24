@@ -44,7 +44,7 @@ function ReportProblemToolTipMenu(props: {
               value: problemCategory,
             }))}
             label={wordings.problemType}
-            onChange={(newProblemCategory) => setProblemCategory(newProblemCategory)}
+            onChange={changeProblemCategory}
             width={REPORT_PROBLEM_TOOLTIP_MENU_WIDTH}
           />
         </LayoutGrid>
@@ -116,6 +116,11 @@ function ReportProblemToolTipMenu(props: {
     setIsBlocking(false);
 
     props.onClose();
+  }
+
+  function changeProblemCategory(newProblemCategory: problemReportType['type']) {
+    setIsSentWithoutCategory(false);
+    setProblemCategory(newProblemCategory);
   }
 
   async function sendProblemReportAndClose(event: MouseEvent) {

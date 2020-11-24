@@ -22,6 +22,7 @@ function LabelledDropdown<T extends string>(props: {
       buildButton={({ isOpen, item, onClick }) => (
         <LabelledDropdownButton
           disabled={props.disabled}
+          error={props.error}
           isOpen={isOpen}
           item={item}
           label={props.label}
@@ -33,12 +34,13 @@ function LabelledDropdown<T extends string>(props: {
       items={props.items}
       onChange={props.onChange}
       width={props.width}
-    ></Dropdown>
+    />
   );
 }
 
 function LabelledDropdownButton<T extends string>(props: {
   disabled?: boolean;
+  error?: boolean;
   isOpen: boolean;
   item?: { icon?: ReactElement; text: string; value: T };
   label: string;
@@ -83,10 +85,11 @@ function LabelledDropdownButton<T extends string>(props: {
   }
 
   function buildStyle(theme: customThemeType) {
+    const borderColor = props.error ? theme.colors.dropdown.border.error : theme.colors.dropdown.border.default;
     return {
       dropdown: {
         backgroundColor: theme.colors.background,
-        border: `${LABELLED_DROPDOWN_BORDER_THICKNESS}px solid ${theme.colors.dropdown.border}`,
+        border: `${LABELLED_DROPDOWN_BORDER_THICKNESS}px solid ${borderColor}`,
         textTransform: 'none',
         width: `${props.width}px`,
       },

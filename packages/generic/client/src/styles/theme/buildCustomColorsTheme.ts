@@ -12,7 +12,7 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
   const customColorsMode = customColors[displayMode];
 
   return {
-    alert: buildCustomColorsVariations(['red', 500]),
+    alert: buildCustomColorsVariations(customColorsMode.alert),
     background: getColor(customColorsMode.background),
     default: buildCustomColorsVariations(customColorsMode.default),
     disabled: {
@@ -21,7 +21,7 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
     },
     document: getColor(customColorsMode.document),
     dropdown: {
-      border: getColor(customColorsMode.dropdown.border),
+      border: { default: getColor(customColorsMode.dropdown.border), error: getColor(customColorsMode.error) },
     },
     icon: getColor(customColorsMode.icon),
     primary: buildCustomColorsVariations(customColorsMode.primary),

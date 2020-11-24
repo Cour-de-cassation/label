@@ -3,6 +3,7 @@ import { customColorsType } from './customColorsType';
 export { customDarkColors };
 
 const customDarkColors: customColorsType = {
+  alert: ['red', 500],
   background: ['grey', 900],
   default: ['grey', 800],
   disabled: { background: ['grey', 900], color: ['grey', 500] },
@@ -10,6 +11,7 @@ const customDarkColors: customColorsType = {
   dropdown: {
     border: 'white',
   },
+  error: ['red', 500],
   icon: 'white',
   primary: ['cyan', 800],
   secondary: ['orange', 500],

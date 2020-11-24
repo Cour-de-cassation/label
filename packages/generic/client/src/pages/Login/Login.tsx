@@ -1,4 +1,4 @@
-import React, { ChangeEvent, CSSProperties, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, CSSProperties, FormEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { ButtonWithIcon, LayoutGrid, Logo, Text, TextInput } from '../../components';
 import { login } from '../../services/api';
@@ -22,7 +22,7 @@ const Login: FunctionComponent = () => {
       <LayoutGrid item style={styles.logoContainer}>
         <Logo size="medium" />
       </LayoutGrid>
-      <LayoutGrid item style={styles.formContainer}>
+      <form style={styles.formContainer} onSubmit={handleSubmit}>
         <LayoutGrid item style={styles.inputContainer}>
           <TextInput
             name="email"
@@ -58,6 +58,7 @@ const Login: FunctionComponent = () => {
             onClick={handleSubmit}
             color={isFormValid ? 'primary' : 'alert'}
             text={wordings.login}
+            type="submit"
           />
         </LayoutGrid>
         <LayoutGrid item direction="column" style={styles.errorContainer}>
@@ -72,7 +73,7 @@ const Login: FunctionComponent = () => {
             </LayoutGrid>
           )}
         </LayoutGrid>
-      </LayoutGrid>
+      </form>
     </LayoutGrid>
   );
 
@@ -92,7 +93,8 @@ const Login: FunctionComponent = () => {
     setPassword(event.target.value);
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
     try {
       const { data } = await login(email, password);
       setBearerTokenIntoLocalStorage(data);

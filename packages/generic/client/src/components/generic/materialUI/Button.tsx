@@ -15,14 +15,14 @@ function Button(props: {
   disabled?: boolean;
   disabledHover?: boolean;
   hint?: string;
-  onClick: (event: MouseEvent) => void;
+  onClick?: (event: MouseEvent) => void;
   style?: CSSProperties;
+  type?: 'submit';
   variant: 'contained' | 'outlined';
   width?: string;
 }): ReactElement {
   const theme = useCustomTheme();
   const classes = buildButtonClasses(theme);
-
   return props.hint ? (
     <Tooltip arrow title={<Text>{props.hint}</Text>}>
       <div>{buildButton()}</div>
@@ -39,6 +39,7 @@ function Button(props: {
         onClick={onClick}
         style={props.style}
         variant={props.variant}
+        type={props.type}
       >
         {props.children}
       </MUButton>
@@ -66,6 +67,6 @@ function Button(props: {
 
   function onClick(event: MouseEvent) {
     event.stopPropagation();
-    props.onClick(event);
+    props.onClick && props.onClick(event);
   }
 }

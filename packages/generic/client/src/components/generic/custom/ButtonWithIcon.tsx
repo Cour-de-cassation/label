@@ -8,9 +8,10 @@ function ButtonWithIcon(props: {
   color?: buttonColorType;
   disabled?: boolean;
   iconName: iconNameType;
-  onClick: (event: MouseEvent) => void;
+  onClick?: (event: MouseEvent) => void;
   style?: CSSProperties;
   text: string;
+  type?: 'submit';
 }): ReactElement {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
@@ -21,6 +22,7 @@ function ButtonWithIcon(props: {
       disabled={props.disabled}
       onClick={props.onClick}
       style={{ ...style.button, ...props.style }}
+      type={props.type}
       variant="contained"
     >
       <div style={style.iconContainer}>

@@ -1,4 +1,5 @@
 import { MongoClient, Collection } from 'mongodb';
+import { environment } from '@label/core';
 
 export { mongo };
 
@@ -9,9 +10,12 @@ type mongoCollectionType<T> = Collection<T>;
 const mongo = buildMongo();
 
 function buildMongo() {
-  let client = new MongoClient('mongodb://db:27017', {
-    useUnifiedTopology: true,
-  });
+  let client = new MongoClient(
+    `mongodb://${environment.dbName}:${environment.port.db}`,
+    {
+      useUnifiedTopology: true,
+    },
+  );
 
   return {
     close,
@@ -29,6 +33,6 @@ function buildMongo() {
   }
 
   function getDb() {
-    return client.db('db');
+    return client.db(environment.dbName);
   }
 }

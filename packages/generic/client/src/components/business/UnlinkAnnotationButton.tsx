@@ -10,7 +10,6 @@ function UnlinkAnnotationButton(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   buttonSize?: number;
-  disabled: boolean;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
 
@@ -18,17 +17,15 @@ function UnlinkAnnotationButton(props: {
     <IconButton
       buttonSize={props.buttonSize}
       color="default"
-      disabled={isDisabled()}
+      disabled={isNotLinked()}
       hint={wordings.unlink}
       iconName="unlink"
       onClick={unlinkAnnotation}
     />
   );
 
-  function isDisabled() {
-    return (
-      props.disabled || !annotationModule.lib.annotationLinker.isLinked(props.annotation, annotatorState.annotations)
-    );
+  function isNotLinked() {
+    return !annotationModule.lib.annotationLinker.isLinked(props.annotation, annotatorState.annotations);
   }
 
   function unlinkAnnotation() {

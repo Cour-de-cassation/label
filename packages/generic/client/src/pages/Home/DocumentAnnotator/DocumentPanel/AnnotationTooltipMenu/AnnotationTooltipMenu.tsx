@@ -1,7 +1,6 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { fetchedAnnotationType } from '@label/core';
 import {
-  Checkbox,
   ComponentsList,
   LayoutGrid,
   LinkAnnotationDropdown,
@@ -11,7 +10,6 @@ import {
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../../types';
-import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { DeleteAnnotationDropdown } from './DeleteAnnotationDropdown';
@@ -30,7 +28,6 @@ function AnnotationTooltipMenu(props: {
 }): ReactElement {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
-  const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
 
   return (
     <TooltipMenu anchorElement={props.anchorAnnotation} onClose={props.onClose}>
@@ -43,13 +40,6 @@ function AnnotationTooltipMenu(props: {
             isAnonymizedView={props.isAnonymizedView}
           />
         </LayoutGrid>
-        <LayoutGrid style={style.tooltipItem}>
-          <Checkbox
-            defaultChecked={shouldApplyEverywhere}
-            onChange={(checked: boolean) => setShouldApplyEverywhere(checked)}
-            text={wordings.applyEveryWhere}
-          ></Checkbox>
-        </LayoutGrid>
         <LayoutGrid container style={style.tooltipItem}>
           <ComponentsList
             components={[
@@ -60,12 +50,10 @@ function AnnotationTooltipMenu(props: {
               <LinkAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
-                disabled={!shouldApplyEverywhere}
               />,
               <UnlinkAnnotationButton
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
-                disabled={!shouldApplyEverywhere}
               />,
               <DeleteAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}

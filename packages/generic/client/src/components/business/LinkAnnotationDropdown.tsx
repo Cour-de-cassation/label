@@ -12,7 +12,6 @@ function LinkAnnotationDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   buttonSize?: number;
-  disabled: boolean;
   onClose?: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
@@ -24,7 +23,7 @@ function LinkAnnotationDropdown(props: {
   return (
     <IconDropdown
       buttonSize={props.buttonSize}
-      disabled={isDisabled()}
+      disabled={linkableAnnotations.length === 0}
       hint={wordings.link}
       iconName="link"
       items={linkableAnnotations.map((annotation) => ({
@@ -36,10 +35,6 @@ function LinkAnnotationDropdown(props: {
       width={LINK_ANNOTATION_MENU_WIDTH}
     />
   );
-
-  function isDisabled() {
-    return props.disabled || linkableAnnotations.length === 0;
-  }
 
   function linkToAnnotation(text: string) {
     const annotationToLinkTo = linkableAnnotations.find((annotation) => annotation.text === text);

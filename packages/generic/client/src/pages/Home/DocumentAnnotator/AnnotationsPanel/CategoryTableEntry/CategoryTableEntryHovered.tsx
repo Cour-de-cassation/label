@@ -64,14 +64,12 @@ function CategoryTableEntryHovered(props: {
               annotatorStateHandler={props.annotatorStateHandler}
               annotation={entityAnnotation}
               buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
-              disabled={false}
               onClose={props.hideActionButtons}
             />,
             <UnlinkAnnotationButton
               annotatorStateHandler={props.annotatorStateHandler}
               annotation={entityAnnotation}
               buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
-              disabled={false}
             />,
             <IconButton
               buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}

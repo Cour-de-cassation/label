@@ -20,11 +20,14 @@ function groupByCategoryAndEntity(
   annotations: fetchedAnnotationType[],
   categories: string[],
 ): annotationPerCategoryAndEntityType {
-  return groupByCategory(annotations, categories).map(({ category, categoryAnnotations }) => ({
-    category,
-    categorySize: categoryAnnotations.length,
-    categoryAnnotations: groupByEntity(categoryAnnotations),
-  }));
+  return groupByCategory(annotations, categories).map(({ category, categoryAnnotations }) => {
+    const grouppedByEntityAnnotations = groupByEntity(categoryAnnotations);
+    return {
+      category,
+      categorySize: grouppedByEntityAnnotations.length,
+      categoryAnnotations: grouppedByEntityAnnotations,
+    };
+  });
 }
 
 function groupByCategory(

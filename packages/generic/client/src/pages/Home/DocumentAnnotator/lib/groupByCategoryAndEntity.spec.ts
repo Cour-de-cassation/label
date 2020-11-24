@@ -17,7 +17,7 @@ describe('groupByCategoryAndEntity', () => {
     expect(annotationsPerCategoryAndEntity).toEqual([
       {
         category: 'firstName',
-        categorySize: 4,
+        categorySize: 3,
         categoryAnnotations: generateCategoryAnnotations([
           [annotations[0], annotations[3]],
           [annotations[1]],

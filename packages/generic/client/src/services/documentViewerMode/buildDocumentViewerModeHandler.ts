@@ -9,7 +9,6 @@ type documentViewerModeHandlerType = {
   checkViewerMode: (annotations: fetchedAnnotationType[]) => void;
   isAnonymizedView: () => boolean;
   resetViewerMode: () => void;
-  setResizeMode: (annotation: fetchedAnnotationType) => void;
   setOccurrenceMode: (entityId: fetchedAnnotationType['entityId']) => void;
   switchAnonymizedView: () => void;
   documentViewerMode: viewerModeType;
@@ -23,59 +22,25 @@ function buildDocumentViewerModeHandler(
     checkViewerMode,
     isAnonymizedView,
     setOccurrenceMode,
-    setResizeMode,
     switchAnonymizedView,
     documentViewerMode,
     resetViewerMode,
   };
 
   function resetViewerMode() {
-    switch (documentViewerMode.kind) {
-      case 'annotation':
-      case 'occurrence':
-        setViewerMode({ kind: 'annotation', isAnonymized: documentViewerMode.isAnonymized });
-        break;
-      case 'resize':
-        setViewerMode({ kind: 'annotation', isAnonymized: false });
-        break;
-    }
+    setViewerMode({ kind: 'annotation', isAnonymized: documentViewerMode.isAnonymized });
   }
 
   function isAnonymizedView() {
-    switch (documentViewerMode.kind) {
-      case 'annotation':
-      case 'occurrence':
-        return documentViewerMode.isAnonymized;
-      case 'resize':
-        return false;
-    }
+    return documentViewerMode.isAnonymized;
   }
 
   function setOccurrenceMode(entityId: fetchedAnnotationType['entityId']) {
-    switch (documentViewerMode.kind) {
-      case 'annotation':
-      case 'occurrence':
-        setViewerMode({ kind: 'occurrence', entityId, isAnonymized: documentViewerMode.isAnonymized });
-        break;
-    }
-  }
-
-  function setResizeMode(annotation: fetchedAnnotationType) {
-    switch (documentViewerMode.kind) {
-      case 'annotation':
-      case 'occurrence':
-        !documentViewerMode.isAnonymized && setViewerMode({ kind: 'resize', annotation });
-        break;
-    }
+    setViewerMode({ kind: 'occurrence', entityId, isAnonymized: documentViewerMode.isAnonymized });
   }
 
   function switchAnonymizedView() {
-    switch (documentViewerMode.kind) {
-      case 'annotation':
-      case 'occurrence':
-        setViewerMode({ ...documentViewerMode, isAnonymized: !documentViewerMode.isAnonymized });
-        break;
-    }
+    setViewerMode({ ...documentViewerMode, isAnonymized: !documentViewerMode.isAnonymized });
   }
 
   function checkViewerMode(annotations: fetchedAnnotationType[]) {

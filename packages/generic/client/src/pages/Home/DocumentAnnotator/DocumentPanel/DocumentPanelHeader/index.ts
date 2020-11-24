@@ -1,1 +1,0 @@
-export { DocumentPanelHeader } from './DocumentPanelHeader';

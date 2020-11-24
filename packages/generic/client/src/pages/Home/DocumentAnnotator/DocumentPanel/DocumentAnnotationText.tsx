@@ -47,7 +47,6 @@ function DocumentAnnotationText(props: {
         anonymizer={props.anonymizer}
         isAnonymizedView={documentViewerModeHandler.isAnonymizedView()}
         onClose={closeTooltipMenu}
-        onResizeAnnotationClick={onResizeAnnotationClick}
       />
     </span>
   );
@@ -84,10 +83,5 @@ function DocumentAnnotationText(props: {
 
   function closeTooltipMenu() {
     setAnchorElement(undefined);
-  }
-
-  function onResizeAnnotationClick() {
-    documentViewerModeHandler.setResizeMode(props.annotation);
-    closeTooltipMenu();
   }
 }

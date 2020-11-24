@@ -1,13 +1,13 @@
 import React from 'react';
-import { Header, IconButton, SwitchButton, Text } from '../../../../../components';
-import { heights, useCustomTheme } from '../../../../../styles';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { wordings } from '../../../../../wordings';
-import { useDocumentViewerModeHandler } from '../../../../../services/documentViewerMode';
+import { Header, IconButton, SwitchButton, Text } from '../../../../components';
+import { heights, useCustomTheme } from '../../../../styles';
+import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { wordings } from '../../../../wordings';
+import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 
-export { AnnotationHeader };
+export { DocumentPanelHeader };
 
-function AnnotationHeader(props: { annotatorStateHandler: annotatorStateHandlerType }) {
+function DocumentPanelHeader(props: { annotatorStateHandler: annotatorStateHandlerType }) {
   const theme = useCustomTheme();
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const style = buildStyle();

@@ -29,7 +29,6 @@ import {
   RoomRounded,
   SaveAltRounded,
   SendRounded,
-  SettingsEthernetRounded,
   SettingsRounded,
   UndoRounded,
 } from '@material-ui/icons';
@@ -52,7 +51,6 @@ const materialIconMapping = {
   logout: MeetingRoom,
   redo: RedoRounded,
   reset: LoopRounded,
-  resize: SettingsEthernetRounded,
   send: SendRounded,
   save: SaveAltRounded,
   settings: SettingsRounded,

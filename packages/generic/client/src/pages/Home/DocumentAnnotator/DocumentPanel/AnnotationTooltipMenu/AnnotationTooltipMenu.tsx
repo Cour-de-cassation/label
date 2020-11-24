@@ -15,7 +15,6 @@ import { clientAnonymizerType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
-import { ResizeAnnotationButton } from './ResizeAnnotationButton';
 
 export { AnnotationTooltipMenu };
 
@@ -28,7 +27,6 @@ function AnnotationTooltipMenu(props: {
   anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
   onClose: () => void;
-  onResizeAnnotationClick: () => void;
 }): ReactElement {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
@@ -58,12 +56,6 @@ function AnnotationTooltipMenu(props: {
               <ChangeAnnotationCategoryDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
-              />,
-              <ResizeAnnotationButton
-                annotationId={props.annotation._id}
-                annotatorStateHandler={props.annotatorStateHandler}
-                onClick={props.onResizeAnnotationClick}
-                disabled={shouldApplyEverywhere}
               />,
               <LinkAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}

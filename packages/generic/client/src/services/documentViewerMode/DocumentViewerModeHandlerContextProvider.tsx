@@ -10,7 +10,6 @@ const DocumentViewerModeHandlerContext = createContext<documentViewerModeHandler
   isAnonymizedView: () => false,
   resetViewerMode: () => null,
   setOccurrenceMode: () => null,
-  setResizeMode: () => null,
   switchAnonymizedView: () => null,
   documentViewerMode: DEFAULT_VIEWER_MODE,
 });

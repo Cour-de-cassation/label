@@ -58,7 +58,6 @@ function AnnotationTooltipMenu(props: {
               <ChangeAnnotationCategoryDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
-                shouldApplyEverywhere={shouldApplyEverywhere}
               />,
               <ResizeAnnotationButton
                 annotationId={props.annotation._id}

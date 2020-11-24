@@ -12,7 +12,6 @@ const CHANGE_ANNOTATION_CATEGORY_MENU_WIDTH = 300;
 function ChangeAnnotationCategoryDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
-  shouldApplyEverywhere: boolean;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
   const categories = settingsModule.lib.getCategories(annotatorState.settings);
@@ -38,9 +37,11 @@ function ChangeAnnotationCategoryDropdown(props: {
   );
 
   function changeAnnotationCategory(newCategory: string) {
-    const newAnnotations = props.shouldApplyEverywhere
-      ? fetchedAnnotationHandler.updateManyCategory(annotatorState.annotations, props.annotation.entityId, newCategory)
-      : fetchedAnnotationHandler.updateOneCategory(annotatorState.annotations, props.annotation._id, newCategory);
+    const newAnnotations = fetchedAnnotationHandler.updateManyCategory(
+      annotatorState.annotations,
+      props.annotation.entityId,
+      newCategory,
+    );
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);

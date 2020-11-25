@@ -12,7 +12,7 @@ export { DocumentPanel };
 function DocumentPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
-  fetchNewDocument: () => Promise<void>;
+  onStopAnnotatingDocument: () => void;
   splittedTextByLine: splittedTextByLineType;
 }): ReactElement {
   return (
@@ -26,7 +26,7 @@ function DocumentPanel(props: {
       <DocumentPanelFooter
         annotatorStateHandler={props.annotatorStateHandler}
         anonymizer={props.anonymizer}
-        fetchNewDocument={props.fetchNewDocument}
+        onStopAnnotatingDocument={props.onStopAnnotatingDocument}
       />
     </LayoutGrid>
   );

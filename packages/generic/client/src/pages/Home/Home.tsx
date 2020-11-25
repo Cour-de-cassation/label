@@ -1,10 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { buildAnonymizer } from '@label/core';
 import { LayoutGrid } from '../../components';
-import { buildAnnotatorStateCommitter } from '../../services/annotatorState';
-import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
+import { DocumentSwitcher } from './DocumentSwitcher';
 
 const Home: FunctionComponent = () => {
   return (
@@ -14,10 +12,10 @@ const Home: FunctionComponent = () => {
           {({ settings }) => (
             <DocumentAndAnnotationsDataFetcher>
               {({ document, annotations, fetchNewDocument }) => (
-                <DocumentAnnotator
-                  annotatorState={{ annotations, document, settings }}
-                  annotatorStateCommitter={buildAnnotatorStateCommitter()}
-                  anonymizer={buildAnonymizer(settings)}
+                <DocumentSwitcher
+                  annotations={annotations}
+                  document={document}
+                  settings={settings}
                   fetchNewDocument={fetchNewDocument}
                 />
               )}

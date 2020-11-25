@@ -8,7 +8,7 @@ export { ReportProblemButton };
 
 function ReportProblemButton(props: {
   annotatorStateHandler: annotatorStateHandlerType;
-  fetchNewDocument: () => Promise<void>;
+  onStopAnnotatingDocument: () => void;
 }) {
   const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
 
@@ -18,7 +18,7 @@ function ReportProblemButton(props: {
       <ReportProblemToolTipMenu
         annotatorStateHandler={props.annotatorStateHandler}
         anchorElement={anchorElement}
-        fetchNewDocument={props.fetchNewDocument}
+        onStopAnnotatingDocument={props.onStopAnnotatingDocument}
         onClose={closeToolTip}
       />
     </div>

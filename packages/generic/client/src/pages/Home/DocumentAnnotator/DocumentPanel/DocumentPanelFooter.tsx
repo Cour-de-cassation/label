@@ -12,7 +12,7 @@ export { DocumentPanelFooter };
 function DocumentPanelFooter(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
-  fetchNewDocument: () => Promise<void>;
+  onStopAnnotatingDocument: () => void;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles();
@@ -68,7 +68,7 @@ function DocumentPanelFooter(props: {
 
   async function validate() {
     await saveAnnotationsAndUpdateAssignationStatus('done');
-    await props.fetchNewDocument();
+    props.onStopAnnotatingDocument();
   }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: assignationType['status']) {

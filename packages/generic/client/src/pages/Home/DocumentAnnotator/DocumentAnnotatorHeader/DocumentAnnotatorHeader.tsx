@@ -12,7 +12,7 @@ export { DocumentAnnotatorHeader };
 
 function DocumentAnnotatorHeader(props: {
   annotatorStateHandler: annotatorStateHandlerType;
-  fetchNewDocument: () => Promise<void>;
+  onStopAnnotatingDocument: () => void;
 }) {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
@@ -25,7 +25,7 @@ function DocumentAnnotatorHeader(props: {
         rightHeaderComponents={[
           <ReportProblemButton
             annotatorStateHandler={props.annotatorStateHandler}
-            fetchNewDocument={props.fetchNewDocument}
+            onStopAnnotatingDocument={props.onStopAnnotatingDocument}
           />,
           <SettingsButton />,
           <IconButton iconName="logout" hint={wordings.logout} onClick={logout} />,

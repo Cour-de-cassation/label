@@ -17,7 +17,7 @@ function DocumentAnnotator(props: {
   annotatorState: annotatorStateType;
   annotatorStateCommitter: annotatorStateCommitterType;
   anonymizer: clientAnonymizerType;
-  fetchNewDocument: () => Promise<void>;
+  onStopAnnotatingDocument: () => void;
 }): ReactElement {
   const { annotatorStateHandler } = useAnnotatorState(props.annotatorState, props.annotatorStateCommitter);
   const styles = buildStyles();
@@ -37,7 +37,7 @@ function DocumentAnnotator(props: {
         <LayoutGrid container item style={styles.annotatorHeader} xs={12}>
           <DocumentAnnotatorHeader
             annotatorStateHandler={annotatorStateHandler}
-            fetchNewDocument={props.fetchNewDocument}
+            onStopAnnotatingDocument={props.onStopAnnotatingDocument}
           />
         </LayoutGrid>
         <LayoutGrid container item xs={12}>
@@ -52,7 +52,7 @@ function DocumentAnnotator(props: {
             <DocumentPanel
               annotatorStateHandler={annotatorStateHandler}
               anonymizer={props.anonymizer}
-              fetchNewDocument={props.fetchNewDocument}
+              onStopAnnotatingDocument={props.onStopAnnotatingDocument}
               splittedTextByLine={splittedTextByLine}
             />
           </LayoutGrid>

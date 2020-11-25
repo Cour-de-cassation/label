@@ -23,7 +23,7 @@ function Button(props: {
 }): ReactElement {
   const theme = useCustomTheme();
   const classes = buildButtonClasses(theme);
-  return props.hint ? (
+  return props.hint && !props.disabled ? (
     <Tooltip arrow title={<Text>{props.hint}</Text>}>
       <div>{buildButton()}</div>
     </Tooltip>

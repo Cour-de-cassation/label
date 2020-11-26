@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { fetchedAnnotationType, fetchedAnnotationHandler, settingsModule } from '@label/core';
+import { annotationHandler, fetchedAnnotationType, settingsModule } from '@label/core';
 import { CategoryIcon, IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
@@ -37,7 +37,7 @@ function ChangeAnnotationCategoryDropdown(props: {
   );
 
   function changeAnnotationCategory(newCategory: string) {
-    const newAnnotations = fetchedAnnotationHandler.updateManyCategory(
+    const newAnnotations = annotationHandler.updateManyCategory(
       annotatorState.annotations,
       props.annotation.entityId,
       newCategory,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { displayModeType, fetchedAnnotationType, fetchedAnnotationHandler, settingsModule } from '@label/core';
+import { annotationHandler, displayModeType, fetchedAnnotationType, settingsModule } from '@label/core';
 import { ComponentsList, IconButton, LayoutGrid, LinkAnnotationDropdown, Text } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { customThemeType, emphasizeShadeColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
@@ -119,7 +119,7 @@ function CategoryTableEntryHovered(props: {
   }
 
   function deleteAnnotations() {
-    const newAnnotations = fetchedAnnotationHandler.deleteByEntityId(annotatorState.annotations, props.entityId);
+    const newAnnotations = annotationHandler.deleteByEntityId(annotatorState.annotations, props.entityId);
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);

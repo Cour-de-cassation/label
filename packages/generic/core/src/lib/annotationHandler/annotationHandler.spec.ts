@@ -1,7 +1,7 @@
 import { annotationModule } from '../../modules';
-import { fetchedAnnotationHandler } from './fetchedAnnotationHandler';
+import { annotationHandler } from './annotationHandler';
 
-describe('fetchedAnnotationHandler', () => {
+describe('annotationHandler', () => {
   describe('createAll', () => {
     it('should create all the annotations for the given texts and indices', () => {
       const category = 'CATEGORY';
@@ -12,7 +12,12 @@ describe('fetchedAnnotationHandler', () => {
       ];
       const annotations = [{}].map(generateFetchedAnnotation);
 
-      const newAnnotations = fetchedAnnotationHandler.createAll(category, annotationTextsAndIndices, annotations);
+      const newAnnotations = annotationHandler.createAll(
+        annotations,
+        { category },
+        annotationTextsAndIndices,
+        annotationModule.lib.annotationBuilder.buildFetchedAnnotation,
+      );
 
       expect(newAnnotations).toEqual([
         {
@@ -46,7 +51,7 @@ describe('fetchedAnnotationHandler', () => {
         { category: 'CATEGORY1', text },
       ].map(generateFetchedAnnotation);
 
-      const updatedAnnotations = fetchedAnnotationHandler.updateManyCategory(
+      const updatedAnnotations = annotationHandler.updateManyCategory(
         annotations,
         annotations[0].entityId,
         newCategory,
@@ -65,11 +70,7 @@ describe('fetchedAnnotationHandler', () => {
       const newCategory = 'ANOTHER_CATEGORY';
       const annotations = [{ category: 'CATEGORY' }, { category: 'CATEGORY2' }].map(generateFetchedAnnotation);
 
-      const updatedAnnotations = fetchedAnnotationHandler.updateOneCategory(
-        annotations,
-        annotations[0]._id,
-        newCategory,
-      );
+      const updatedAnnotations = annotationHandler.updateOneCategory(annotations, annotations[0]._id, newCategory);
 
       expect(updatedAnnotations[0].category).toEqual(newCategory);
     });
@@ -78,11 +79,7 @@ describe('fetchedAnnotationHandler', () => {
       const text = 'TEXT';
       const annotations = [{ category: 'CATEGORY', text }, { category: 'CATEGORY2' }].map(generateFetchedAnnotation);
 
-      const updatedAnnotations = fetchedAnnotationHandler.updateOneCategory(
-        annotations,
-        annotations[0]._id,
-        newCategory,
-      );
+      const updatedAnnotations = annotationHandler.updateOneCategory(annotations, annotations[0]._id, newCategory);
 
       expect(updatedAnnotations[0].entityId).toEqual(annotationModule.lib.entityIdHandler.compute(newCategory, text));
     });
@@ -98,7 +95,7 @@ describe('fetchedAnnotationHandler', () => {
         { category: 'ANOTHER_CATEGORY', start: 23, text: 'ANOTHER_TEXT' },
       ].map(generateFetchedAnnotation);
 
-      const annotationIndex = fetchedAnnotationHandler.getAnnotationIndex(annotations[0], annotations);
+      const annotationIndex = annotationHandler.getAnnotationIndex(annotations, annotations[0]);
 
       expect(annotationIndex).toEqual({ index: 2, total: 3 });
     });

@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, CSSProperties } from 'react';
-import { annotationTextDetector, fetchedAnnotationHandler, settingsModule } from '@label/core';
+import { annotationHandler, annotationModule, annotationTextDetector, settingsModule } from '@label/core';
 import {
   ActionIcon,
   CategoryIcon,
@@ -79,12 +79,16 @@ function AnnotationCreationTooltipMenu(props: {
 
   function applyAnnotationCreation(category: string) {
     const newAnnotations = shouldApplyEverywhere
-      ? fetchedAnnotationHandler.createAll(category, annotationTextsAndIndices, annotatorState.annotations)
-      : fetchedAnnotationHandler.create(
-          category,
-          props.annotationIndex,
-          props.annotationText,
+      ? annotationHandler.createAll(
           annotatorState.annotations,
+          { category },
+          annotationTextsAndIndices,
+          annotationModule.lib.annotationBuilder.buildFetchedAnnotation,
+        )
+      : annotationHandler.create(
+          annotatorState.annotations,
+          { category, start: props.annotationIndex, text: props.annotationText },
+          annotationModule.lib.annotationBuilder.buildFetchedAnnotation,
         );
 
     props.annotatorStateHandler.set({

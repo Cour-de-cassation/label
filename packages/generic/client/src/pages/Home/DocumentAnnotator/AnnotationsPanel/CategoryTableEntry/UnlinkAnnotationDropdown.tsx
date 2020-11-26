@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationModule, fetchedAnnotationType } from '@label/core';
+import { annotationLinkHandler, fetchedAnnotationType } from '@label/core';
 import { IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
@@ -15,10 +15,7 @@ function UnlinkAnnotationDropdown(props: {
   onClose?: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
-  const linkedAnnotations = annotationModule.lib.annotationLinker.getLinkedAnnotations(
-    props.annotation,
-    annotatorState.annotations,
-  );
+  const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(props.annotation, annotatorState.annotations);
 
   return (
     <IconDropdown
@@ -42,13 +39,13 @@ function UnlinkAnnotationDropdown(props: {
   );
 
   function isNotLinked() {
-    return !annotationModule.lib.annotationLinker.isLinked(props.annotation, annotatorState.annotations);
+    return !annotationLinkHandler.isLinked(props.annotation, annotatorState.annotations);
   }
 
   function unlinkAnnotation(text: string) {
     const newAnnotations =
       text === UNLINK_ALL
-        ? annotationModule.lib.annotationLinker.unlink(props.annotation, annotatorState.annotations)
+        ? annotationLinkHandler.unlink(props.annotation, annotatorState.annotations)
         : unlinkOnAnnotation(text);
 
     if (newAnnotations) {
@@ -69,10 +66,7 @@ function UnlinkAnnotationDropdown(props: {
     );
 
     if (annotationToUnlink) {
-      return annotationModule.lib.annotationLinker.unlinkByCategoryAndText(
-        annotationToUnlink,
-        annotatorState.annotations,
-      );
+      return annotationLinkHandler.unlinkByCategoryAndText(annotationToUnlink, annotatorState.annotations);
     }
   }
 }

@@ -1,9 +1,9 @@
 import { annotationModule, fetchedAnnotationType, idModule, idType } from '../../modules';
 import { autoLinker } from '../autoLink';
 
-export { fetchedAnnotationHandler };
+export { annotationHandler };
 
-const fetchedAnnotationHandler = {
+const annotationHandler = {
   create,
   createAll,
   deleteById,
@@ -14,54 +14,47 @@ const fetchedAnnotationHandler = {
   updateOneText,
 };
 
-function create(
-  category: string,
-  index: number,
-  text: string,
-  annotations: fetchedAnnotationType[],
-): fetchedAnnotationType[] {
-  const createdAnnotation = annotationModule.lib.buildFetchedAnnotation({
-    category,
-    source: annotationModule.config.LABEL_ANNOTATION_SOURCE,
-    start: index,
-    text,
-  });
+function create<annotationT extends fetchedAnnotationType>(
+  annotations: annotationT[],
+  fields: { category: string; documentId?: idType; start: number; text: string },
+  buildAnnotation: (fields: { category: string; documentId?: idType; start: number; text: string }) => annotationT,
+): annotationT[] {
+  const createdAnnotation = buildAnnotation(fields);
   const newAnnotations = [createdAnnotation, ...annotations];
 
   return autoLinker.autoLink([createdAnnotation], newAnnotations);
 }
 
-function createAll(
-  category: string,
+function createAll<annotationT extends fetchedAnnotationType>(
+  annotations: annotationT[],
+  fields: { category: string; documentId?: idType },
   annotationTextsAndIndices: { index: number; text: string }[],
-  annotations: fetchedAnnotationType[],
-): fetchedAnnotationType[] {
-  const createdAnnotations = annotationTextsAndIndices.map(({ text, index }) =>
-    annotationModule.lib.buildFetchedAnnotation({
-      category,
-      source: annotationModule.config.LABEL_ANNOTATION_SOURCE,
-      start: index,
-      text,
-    }),
+  buildAnnotation: (fields: { category: string; documentId?: idType; start: number; text: string }) => annotationT,
+): annotationT[] {
+  const createdAnnotations = annotationTextsAndIndices.map(({ index, text }) =>
+    buildAnnotation({ ...fields, start: index, text }),
   );
   const newAnnotations = createdAnnotations.concat(annotations);
 
   return autoLinker.autoLink(createdAnnotations, newAnnotations);
 }
 
-function deleteById(annotations: fetchedAnnotationType[], id: fetchedAnnotationType['_id']) {
+function deleteById<annotationT extends fetchedAnnotationType>(annotations: annotationT[], id: annotationT['_id']) {
   return annotations.filter((annotation) => !idModule.lib.equalId(annotation._id, id));
 }
 
-function deleteByEntityId(annotations: fetchedAnnotationType[], entityId: fetchedAnnotationType['entityId']) {
+function deleteByEntityId<annotationT extends fetchedAnnotationType>(
+  annotations: annotationT[],
+  entityId: annotationT['entityId'],
+) {
   return annotations.filter((annotation) => annotation.entityId !== entityId);
 }
 
-function updateManyCategory(
-  annotations: fetchedAnnotationType[],
+function updateManyCategory<annotationT extends fetchedAnnotationType>(
+  annotations: annotationT[],
   entityId: string,
   category: string,
-): fetchedAnnotationType[] {
+): annotationT[] {
   const { newAnnotations, updatedAnnotations } = annotationModule.lib.annotationUpdater.updateAnnotationsCategory(
     annotations,
     category,
@@ -71,8 +64,12 @@ function updateManyCategory(
   return autoLinker.autoLink(updatedAnnotations, newAnnotations);
 }
 
-function updateOneCategory(annotations: fetchedAnnotationType[], annotationId: idType, category: string) {
-  let updateAnnotation: fetchedAnnotationType | undefined;
+function updateOneCategory<annotationT extends fetchedAnnotationType>(
+  annotations: annotationT[],
+  annotationId: idType,
+  category: string,
+): annotationT[] {
+  let updateAnnotation: annotationT | undefined;
   const newAnnotations = annotations.map((annotation) => {
     if (idModule.lib.equalId(annotation._id, annotationId)) {
       updateAnnotation = annotation;
@@ -85,13 +82,13 @@ function updateOneCategory(annotations: fetchedAnnotationType[], annotationId: i
   return updateAnnotation ? autoLinker.autoLink([updateAnnotation], newAnnotations) : newAnnotations;
 }
 
-function updateOneText(
-  annotations: fetchedAnnotationType[],
+function updateOneText<annotationT extends fetchedAnnotationType>(
+  annotations: annotationT[],
   annotationId: idType,
   text: string,
   start: number,
-): fetchedAnnotationType[] {
-  let updateAnnotation: fetchedAnnotationType | undefined;
+): annotationT[] {
+  let updateAnnotation: annotationT | undefined;
   const newAnnotations = annotations.map((annotation) => {
     if (idModule.lib.equalId(annotation._id, annotationId)) {
       updateAnnotation = annotation;
@@ -104,7 +101,10 @@ function updateOneText(
   return updateAnnotation ? autoLinker.autoLink([updateAnnotation], newAnnotations) : newAnnotations;
 }
 
-function getAnnotationIndex(annotation: fetchedAnnotationType, annotations: fetchedAnnotationType[]) {
+function getAnnotationIndex<annotationT extends fetchedAnnotationType>(
+  annotations: annotationT[],
+  annotation: annotationT,
+) {
   const sameEntityAnnotations = annotations.filter(
     (anotherAnnotation) => anotherAnnotation.entityId === annotation.entityId,
   );

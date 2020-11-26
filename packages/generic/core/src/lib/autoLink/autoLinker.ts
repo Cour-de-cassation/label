@@ -1,4 +1,5 @@
-import { annotationModule, fetchedAnnotationType } from '../../modules';
+import { fetchedAnnotationType } from '../../modules';
+import { annotationLinkHandler } from '../annotationLinkHandler';
 import { computeLevenshteinDistance } from './computeLevenshteinDistance';
 
 export { autoLinker };
@@ -28,7 +29,7 @@ function linkToAnnotations<annotationT extends fetchedAnnotationType>(
   annotations: annotationT[],
 ) {
   return annotationsToLinkTo.reduce((linkedAnnotations, annotationToLinkTo) => {
-    return annotationModule.lib.annotationLinker.link(annotation, annotationToLinkTo, linkedAnnotations);
+    return annotationLinkHandler.link(annotation, annotationToLinkTo, linkedAnnotations);
   }, annotations);
 }
 
@@ -39,7 +40,7 @@ function computeAnnotationsToLinkTo<annotationT extends fetchedAnnotationType>(
   return annotations.filter(
     (someAnnotation) =>
       annotation.category === someAnnotation.category &&
-      !annotationModule.lib.annotationLinker.isLinkedTo(annotation, someAnnotation) &&
+      !annotationLinkHandler.isLinkedTo(annotation, someAnnotation) &&
       (equalCaseInsensitive(annotation, someAnnotation) ||
         isSubWord(annotation, someAnnotation) ||
         isSubWord(someAnnotation, annotation) ||

@@ -19,7 +19,7 @@ function mapNlpAnnotationsToAnnotations(
   document: documentType,
 ): annotationType[] {
   return nlpAnnotations.entities.map(nlpAnnotation =>
-    annotationModule.lib.buildAnnotation({
+    annotationModule.lib.annotationBuilder.buildAnnotation({
       category: nlpAnnotation.label,
       documentId: document._id,
       source: nlpAnnotation.source,

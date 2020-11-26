@@ -1,11 +1,20 @@
 import { buildAnonymizer, anonymizerType } from './anonymizer';
 import { autoLinker } from './autoLink';
+import { annotationHandler } from './annotationHandler';
+import { annotationLinkHandler } from './annotationLinkHandler';
 import { annotationTextDetector } from './annotationTextDetector';
-import { fetchedAnnotationHandler } from './fetchedAnnotationHandler';
 import { graphQLReceivedDataType } from './graphQL';
 import { httpRequester } from './httpRequester';
 import { annotationChunkType, textChunkType, textSplitter } from './textSplitter';
 
-export { annotationTextDetector, autoLinker, buildAnonymizer, fetchedAnnotationHandler, httpRequester, textSplitter };
+export {
+  annotationHandler,
+  annotationLinkHandler,
+  annotationTextDetector,
+  autoLinker,
+  buildAnonymizer,
+  httpRequester,
+  textSplitter,
+};
 
 export type { anonymizerType, graphQLReceivedDataType, annotationChunkType, textChunkType };

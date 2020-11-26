@@ -1,4 +1,5 @@
 import { annotationModule } from '../../modules';
+import { annotationLinkHandler } from '../annotationLinkHandler';
 import { autoLinker } from './autoLinker';
 
 describe('autoLinker', () => {
@@ -11,9 +12,7 @@ describe('autoLinker', () => {
 
       const linkedAnnotations = autoLinker.autoLink([annotations[0]], annotations);
 
-      expect(linkedAnnotations).toEqual(
-        annotationModule.lib.annotationLinker.link(annotations[0], annotations[1], annotations),
-      );
+      expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
     });
   });
 
@@ -39,9 +38,7 @@ describe('autoLinker', () => {
 
         const linkedAnnotations = autoLinker.autoLinkAll(annotations);
 
-        expect(linkedAnnotations).toEqual(
-          annotationModule.lib.annotationLinker.link(annotations[0], annotations[1], annotations),
-        );
+        expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
     });
 
@@ -54,9 +51,7 @@ describe('autoLinker', () => {
 
         const linkedAnnotations = autoLinker.autoLinkAll(annotations);
 
-        expect(linkedAnnotations).toEqual(
-          annotationModule.lib.annotationLinker.link(annotations[0], annotations[1], annotations),
-        );
+        expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
       it('should link the annotations of a same category which are subword of another (case insensitive)', () => {
         const annotations = [
@@ -66,9 +61,7 @@ describe('autoLinker', () => {
 
         const linkedAnnotations = autoLinker.autoLinkAll(annotations);
 
-        expect(linkedAnnotations).toEqual(
-          annotationModule.lib.annotationLinker.link(annotations[0], annotations[1], annotations),
-        );
+        expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
       it('should not link the annotations of a same category which are only substring of another', () => {
         const annotations = [
@@ -91,9 +84,7 @@ describe('autoLinker', () => {
 
         const linkedAnnotations = autoLinker.autoLinkAll(annotations);
 
-        expect(linkedAnnotations).toEqual(
-          annotationModule.lib.annotationLinker.link(annotations[0], annotations[1], annotations),
-        );
+        expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
       it('should link the annotations of a same category with a Levenshtein distance inferior to 2 (case insensitive)', () => {
         const annotations = [
@@ -103,9 +94,7 @@ describe('autoLinker', () => {
 
         const linkedAnnotations = autoLinker.autoLinkAll(annotations);
 
-        expect(linkedAnnotations).toEqual(
-          annotationModule.lib.annotationLinker.link(annotations[0], annotations[1], annotations),
-        );
+        expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
       it('should not link the annotations of a same category with a Levenshtein distance strictly superior to 2', () => {
         const annotations = [

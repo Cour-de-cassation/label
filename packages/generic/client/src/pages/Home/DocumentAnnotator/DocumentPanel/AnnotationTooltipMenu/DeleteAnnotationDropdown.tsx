@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { fetchedAnnotationType, fetchedAnnotationHandler } from '@label/core';
+import { annotationHandler, fetchedAnnotationType } from '@label/core';
 import { IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
@@ -40,9 +40,9 @@ function DeleteAnnotationDropdown(props: {
     function computeNewAnnotations() {
       switch (deletionOption) {
         case 'one':
-          return fetchedAnnotationHandler.deleteById(annotatorState.annotations, props.annotation._id);
+          return annotationHandler.deleteById(annotatorState.annotations, props.annotation._id);
         case 'all':
-          return fetchedAnnotationHandler.deleteByEntityId(annotatorState.annotations, props.annotation.entityId);
+          return annotationHandler.deleteByEntityId(annotatorState.annotations, props.annotation.entityId);
       }
     }
   }

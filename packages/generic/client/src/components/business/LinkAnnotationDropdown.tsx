@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationModule, fetchedAnnotationType } from '@label/core';
+import { annotationLinkHandler, fetchedAnnotationType } from '@label/core';
 import { annotatorStateHandlerType } from '../../services/annotatorState';
 import { wordings } from '../../wordings';
 import { IconDropdown } from '../generic';
@@ -15,7 +15,7 @@ function LinkAnnotationDropdown(props: {
   onClose?: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
-  const linkableAnnotations = annotationModule.lib.annotationLinker.getLinkableAnnotations(
+  const linkableAnnotations = annotationLinkHandler.getLinkableAnnotations(
     props.annotation,
     annotatorState.annotations,
   );
@@ -42,11 +42,7 @@ function LinkAnnotationDropdown(props: {
     if (annotationToLinkTo) {
       const newAnnotatorState = {
         ...annotatorState,
-        annotations: annotationModule.lib.annotationLinker.link(
-          props.annotation,
-          annotationToLinkTo,
-          annotatorState.annotations,
-        ),
+        annotations: annotationLinkHandler.link(props.annotation, annotationToLinkTo, annotatorState.annotations),
       };
 
       props.annotatorStateHandler.set(newAnnotatorState);

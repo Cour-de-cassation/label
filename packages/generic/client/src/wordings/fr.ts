@@ -22,7 +22,7 @@ const fr = {
   forgottenPassword: 'Mot de passe oublié ?',
   identicalOccurrencesSpotted: 'occurence(s) identique(s) détectée(s)',
   lightMode: 'Mode lumineux',
-  link: 'Associer à',
+  link: 'Créer une liaison',
   loading: 'Veuillez patienter...',
   login: 'Connexion',
   logout: 'Déconnexion',
@@ -43,7 +43,7 @@ const fr = {
   send: 'Envoyer',
   settings: 'Réglages',
   undo: 'Annuler',
-  unlink: 'Dissocier',
+  unlink: 'Supprimer la liaison',
   validate: 'Valider',
   wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",
 };

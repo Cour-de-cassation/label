@@ -5,24 +5,32 @@ services:
     build:
       context: ./
       dockerfile: DockerfileLocal
+    container_name: container-label-local
     environment:
       - RUN_MODE=LOCAL
       - SENDGRID_API_KEY=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
-      - WEBAPP_URL=http://localhost:8091
+      - WEBAPP_URL=http://localhost:55430
+    image: label-local
     ports:
-      - '8091:8091'
+      - '55430:55430'
     depends_on:
       - labelDb
   labelDb:
+    container_name: container-labelDb
     image: mongo:4.4
-    command: mongod --port 27023
+    command: mongod --port 55431
     volumes:
       - mongo-storage:/data/db
     expose:
-      - 27023
+      - 55431
     ports:
-      - 27023:27023
+      - 55431:55431
+
+networks:
+  default:
+    name: label-network  
 
 volumes:
   mongo-storage:
     driver: local
+    name: label-mongo-storage

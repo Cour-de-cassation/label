@@ -7,9 +7,11 @@ export { annotationLinker };
 const annotationLinker = {
   link,
   getLinkableAnnotations,
+  getLinkedAnnotations,
   isLinked,
   isLinkedTo,
   unlink,
+  unlinkByCategoryAndText,
 };
 
 function link<annotationT extends fetchedAnnotationType>(
@@ -40,6 +42,16 @@ function isLinkedTo<annotationT extends fetchedAnnotationType>(
   return annotationSource.entityId === annotationTarget.entityId;
 }
 
+function getLinkedAnnotations<annotationT extends fetchedAnnotationType>(
+  annotation: annotationT,
+  annotations: annotationT[],
+): annotationT[] {
+  return uniqBy(
+    annotations.filter((otherAnnotation) => otherAnnotation.entityId === annotation.entityId),
+    (otherAnnotation) => otherAnnotation.text,
+  ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
+}
+
 function getLinkableAnnotations<annotationT extends fetchedAnnotationType>(
   annotation: annotationT,
   annotations: annotationT[],
@@ -61,5 +73,35 @@ function unlink<annotationT extends fetchedAnnotationType>(
     annotation.entityId === annotationToUnlink.entityId
       ? { ...annotation, entityId: entityIdHandler.compute(annotation.category, annotation.text) }
       : annotation,
+  );
+}
+
+function unlinkByCategoryAndText<annotationT extends fetchedAnnotationType>(
+  annotation: annotationT,
+  annotations: annotationT[],
+) {
+  const linkedAnnotations = getLinkedAnnotations(annotation, annotations);
+
+  if (linkedAnnotations.length === 0) {
+    return annotations;
+  }
+
+  const annotationsWithUpdatedLink = updateMainLinkEntity(linkedAnnotations[0], annotations);
+
+  return annotationsWithUpdatedLink.map((otherAnnotation) =>
+    otherAnnotation.category === annotation.category && otherAnnotation.text === annotation.text
+      ? { ...otherAnnotation, entityId: entityIdHandler.compute(annotation.category, annotation.text) }
+      : otherAnnotation,
+  );
+}
+
+function updateMainLinkEntity<annotationT extends fetchedAnnotationType>(
+  annotation: annotationT,
+  annotations: annotationT[],
+) {
+  return annotations.map((otherAnnotation) =>
+    otherAnnotation.entityId === annotation.entityId
+      ? { ...otherAnnotation, entityId: entityIdHandler.compute(annotation.category, annotation.text) }
+      : otherAnnotation,
   );
 }

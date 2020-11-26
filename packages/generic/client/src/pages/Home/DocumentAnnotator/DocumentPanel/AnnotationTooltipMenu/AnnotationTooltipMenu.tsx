@@ -1,18 +1,13 @@
 import React, { ReactElement } from 'react';
 import { fetchedAnnotationType } from '@label/core';
-import {
-  ComponentsList,
-  LayoutGrid,
-  LinkAnnotationDropdown,
-  TooltipMenu,
-  UnlinkAnnotationButton,
-} from '../../../../../components';
+import { ComponentsList, LayoutGrid, LinkAnnotationDropdown, TooltipMenu } from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../../types';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { DeleteAnnotationDropdown } from './DeleteAnnotationDropdown';
+import { UnlinkAnnotationDropdown } from './UnlinkAnnotationDropdown';
 
 export { AnnotationTooltipMenu };
 
@@ -51,7 +46,7 @@ function AnnotationTooltipMenu(props: {
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
               />,
-              <UnlinkAnnotationButton
+              <UnlinkAnnotationDropdown
                 annotatorStateHandler={props.annotatorStateHandler}
                 annotation={props.annotation}
               />,

@@ -44,6 +44,10 @@ const fr = {
   settings: 'Réglages',
   undo: 'Annuler',
   unlink: 'Supprimer la liaison',
+  unlinkOption: {
+    __one__: 'Cette liaison',
+    __all__: 'Toutes les liaisons',
+  },
   validate: 'Valider',
   wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",
 };

@@ -1,4 +1,4 @@
-import { ActionIcon, CategoryIcon, LinkAnnotationDropdown, Logo, UnlinkAnnotationButton } from './business';
+import { ActionIcon, CategoryIcon, LinkAnnotationDropdown, Logo } from './business';
 import {
   Accordion,
   ButtonWithIcon,
@@ -41,5 +41,4 @@ export {
   Text,
   TextInput,
   TooltipMenu,
-  UnlinkAnnotationButton,
 };

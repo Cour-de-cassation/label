@@ -1,13 +1,6 @@
 import React from 'react';
 import { displayModeType, fetchedAnnotationType, fetchedAnnotationHandler, settingsModule } from '@label/core';
-import {
-  ComponentsList,
-  IconButton,
-  LayoutGrid,
-  LinkAnnotationDropdown,
-  Text,
-  UnlinkAnnotationButton,
-} from '../../../../../components';
+import { ComponentsList, IconButton, LayoutGrid, LinkAnnotationDropdown, Text } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { customThemeType, emphasizeShadeColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { clientAnonymizerType } from '../../../../../types';
@@ -15,6 +8,7 @@ import { wordings } from '../../../../../wordings';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
 import { buildCategoryTableEntryStyle } from './buildCategoryTableEntryStyle';
 import { computeCategoryTableEntry } from './computeCategoryTableEntry';
+import { UnlinkAnnotationDropdown } from './UnlinkAnnotationDropdown';
 
 export { CategoryTableEntryHovered };
 
@@ -66,10 +60,11 @@ function CategoryTableEntryHovered(props: {
               buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
               onClose={props.hideActionButtons}
             />,
-            <UnlinkAnnotationButton
+            <UnlinkAnnotationDropdown
               annotatorStateHandler={props.annotatorStateHandler}
               annotation={entityAnnotation}
               buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
+              onClose={props.hideActionButtons}
             />,
             <IconButton
               buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}

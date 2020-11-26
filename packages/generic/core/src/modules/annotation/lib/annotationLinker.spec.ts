@@ -104,6 +104,28 @@ describe('annotationLinker', () => {
     });
   });
 
+  describe('getLinkedAnnotations', () => {
+    it('should return all the linked annotations to the given annotation', () => {
+      const category = 'CATEGORY';
+      const annotations = [
+        { category: category, text: 'TEXT1' },
+        { category: category, text: 'TEXT2' },
+        { category: category, text: 'TEXT3' },
+        { category: 'ANOTHER_CATEGORY' },
+      ].map(annotationGenerator.generate);
+      const annotationsWithLinks1 = annotationLinker.link(annotations[0], annotations[2], annotations);
+      const annotationsWithLinks2 = annotationLinker.link(
+        annotationsWithLinks1[0],
+        annotationsWithLinks1[1],
+        annotationsWithLinks1,
+      );
+
+      const linkedAnnotations = annotationLinker.getLinkedAnnotations(annotationsWithLinks2[0], annotationsWithLinks2);
+
+      expect(linkedAnnotations).toEqual([annotationsWithLinks2[0], annotationsWithLinks2[1], annotationsWithLinks2[2]]);
+    });
+  });
+
   describe('unlink', () => {
     it('should unlink the given annotation (source of a link)', () => {
       const category = 'CATEGORY';
@@ -136,6 +158,56 @@ describe('annotationLinker', () => {
       const newAnnotations = annotationLinker.unlink(annotationsWithLinks[2], annotationsWithLinks);
 
       expect(newAnnotations).toEqual(annotations);
+    });
+  });
+
+  describe('unlinkByCategoryAndText', () => {
+    it('should unlink only the given annotation (source of a link)', () => {
+      const category = 'CATEGORY';
+      const textSource = 'SOURCE';
+      const textTarget1 = 'TARGET1';
+      const textTarget2 = 'TARGET2';
+      const annotations = [
+        { category: category, text: textSource },
+        { category: category, text: textSource },
+        { category: category, text: textTarget1 },
+        { category: category, text: textTarget2 },
+      ].map(annotationGenerator.generate);
+      const annotationsWithLinks1 = annotationLinker.link(annotations[0], annotations[3], annotations);
+      const annotationsWithLinks2 = annotationLinker.link(
+        annotationsWithLinks1[0],
+        annotationsWithLinks1[2],
+        annotationsWithLinks1,
+      );
+
+      const newAnnotations = annotationLinker.unlinkByCategoryAndText(annotationsWithLinks2[0], annotationsWithLinks2);
+
+      expect(newAnnotations[0]).toEqual(annotations[0]);
+      expect(newAnnotations[1]).toEqual(annotations[1]);
+      expect(annotationLinker.isLinkedTo(newAnnotations[2], newAnnotations[3])).toEqual(true);
+    });
+    it('should unlink the given annotation (target of a link)', () => {
+      const category = 'CATEGORY';
+      const textSource = 'SOURCE';
+      const textTarget1 = 'TARGET1';
+      const textTarget2 = 'TARGET2';
+      const annotations = [
+        { category: category, text: textSource },
+        { category: category, text: textSource },
+        { category: category, text: textTarget1 },
+        { category: category, text: textTarget2 },
+      ].map(annotationGenerator.generate);
+      const annotationsWithLinks1 = annotationLinker.link(annotations[0], annotations[3], annotations);
+      const annotationsWithLinks2 = annotationLinker.link(
+        annotationsWithLinks1[0],
+        annotationsWithLinks1[2],
+        annotationsWithLinks1,
+      );
+
+      const newAnnotations = annotationLinker.unlinkByCategoryAndText(annotationsWithLinks2[3], annotationsWithLinks2);
+
+      expect(newAnnotations[3]).toEqual(annotations[3]);
+      expect(annotationLinker.isLinkedTo(newAnnotations[0], newAnnotations[2])).toEqual(true);
     });
   });
 });

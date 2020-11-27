@@ -21,13 +21,7 @@ function ChangeAnnotationCategoryDropdown(props: {
       hint={wordings.changeCategory}
       iconName="changeCategory"
       items={categories.map((category) => ({
-        icon: (
-          <CategoryIcon
-            annotatorStateHandler={props.annotatorStateHandler}
-            category={category}
-            iconSize={CATEGORY_ICON_SIZE}
-          />
-        ),
+        icon: <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={annotatorState.settings} />,
         text: settingsModule.lib.getAnnotationCategoryText(category, annotatorState.settings),
         value: category,
       }))}

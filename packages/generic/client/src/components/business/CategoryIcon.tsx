@@ -1,12 +1,11 @@
 import React from 'react';
-import { settingsModule } from '@label/core';
-import { annotatorStateHandlerType } from '../../services/annotatorState';
+import { settingsModule, settingsType } from '@label/core';
 import { Icon } from '../generic';
 import { getColor, useCustomTheme, customThemeType, useDisplayMode } from '../../styles';
 
 export { CategoryIcon };
 
-function CategoryIcon(props: { annotatorStateHandler: annotatorStateHandlerType; category: string; iconSize: number }) {
+function CategoryIcon(props: { settings: settingsType; category: string; iconSize: number }) {
   const theme = useCustomTheme();
   const { displayMode } = useDisplayMode();
   const styles = buildStyles(theme);
@@ -14,10 +13,7 @@ function CategoryIcon(props: { annotatorStateHandler: annotatorStateHandlerType;
   return (
     <div style={styles.categoryIcon}>
       <Icon
-        iconName={settingsModule.lib.getAnnotationCategoryIconName(
-          props.category,
-          props.annotatorStateHandler.get().settings,
-        )}
+        iconName={settingsModule.lib.getAnnotationCategoryIconName(props.category, props.settings)}
         style={styles.icon}
       />
     </div>
@@ -30,11 +26,7 @@ function CategoryIcon(props: { annotatorStateHandler: annotatorStateHandlerType;
         height: props.iconSize,
         borderRadius: props.iconSize / 2,
         backgroundColor: getColor(
-          settingsModule.lib.getAnnotationCategoryColor(
-            props.category,
-            props.annotatorStateHandler.get().settings,
-            displayMode,
-          ),
+          settingsModule.lib.getAnnotationCategoryColor(props.category, props.settings, displayMode),
         ),
         display: 'flex',
         alignItems: 'center',

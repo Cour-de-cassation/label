@@ -59,11 +59,7 @@ function AnnotationCreationTooltipMenu(props: {
           <LabelledDropdown
             items={categories.map((category) => ({
               icon: (
-                <CategoryIcon
-                  annotatorStateHandler={props.annotatorStateHandler}
-                  category={category}
-                  iconSize={CATEGORY_ICON_SIZE}
-                />
+                <CategoryIcon settings={annotatorState.settings} category={category} iconSize={CATEGORY_ICON_SIZE} />
               ),
               text: settingsModule.lib.getAnnotationCategoryText(category, annotatorState.settings),
               value: category,

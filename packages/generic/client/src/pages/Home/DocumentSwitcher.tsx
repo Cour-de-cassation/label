@@ -36,9 +36,10 @@ function DocumentSwitcher(props: {
       case 'selecting':
         return (
           <DocumentSelector
-            document={props.document}
             annotations={props.annotations}
+            document={props.document}
             onSelectDocument={onSelectDocument}
+            settings={props.settings}
           />
         );
     }

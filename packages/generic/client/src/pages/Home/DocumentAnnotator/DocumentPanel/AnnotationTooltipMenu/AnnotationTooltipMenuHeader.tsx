@@ -23,11 +23,7 @@ function AnnotationTooltipMenuHeader(props: {
     <div>
       <Header
         leftHeaderComponents={[
-          <CategoryIcon
-            annotatorStateHandler={props.annotatorStateHandler}
-            category={props.annotation.category}
-            iconSize={40}
-          />,
+          <CategoryIcon category={props.annotation.category} iconSize={40} settings={annotatorState.settings} />,
           <Text inline>
             {settingsModule.lib.getAnnotationCategoryText(
               props.annotation.category,

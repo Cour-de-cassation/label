@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { fetchedAnnotationType, fetchedDocumentType } from '@label/core';
+import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { DocumentSelectorCard } from './DocumentSelectorCard';
 
 export { DocumentSelector };
@@ -7,15 +7,17 @@ export { DocumentSelector };
 function DocumentSelector(props: {
   annotations: fetchedAnnotationType[];
   document: fetchedDocumentType;
+  settings: settingsType;
   onSelectDocument: () => void;
 }) {
   const styles = buildStyles();
   return (
     <div style={styles.cardsContainer}>
       <DocumentSelectorCard
-        onSelect={props.onSelectDocument}
-        document={props.document}
         annotations={props.annotations}
+        document={props.document}
+        onSelect={props.onSelectDocument}
+        settings={props.settings}
       />
     </div>
   );

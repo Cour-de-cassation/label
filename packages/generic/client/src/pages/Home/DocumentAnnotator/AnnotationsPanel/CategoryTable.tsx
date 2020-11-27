@@ -35,11 +35,7 @@ function CategoryTable(props: {
         <LayoutGrid container>
           <LayoutGrid container item alignItems="center" xs={11}>
             <LayoutGrid item>
-              <CategoryIcon
-                annotatorStateHandler={props.annotatorStateHandler}
-                category={props.category}
-                iconSize={iconSize}
-              />
+              <CategoryIcon category={props.category} iconSize={iconSize} settings={annotatorState.settings} />
             </LayoutGrid>
             <LayoutGrid item style={styles.categoryContainer}>
               <Text>{`${categoryName} (${props.categorySize})`}</Text>

@@ -33,9 +33,9 @@ const documentService = {
     async function assignateANewDocument() {
       const assignatedDocumentIds = await assignationService.fetchAllAssignatedDocumentIds();
 
-      const document = await documentRepository.findOneExceptIds(
-        assignatedDocumentIds,
-      );
+      const document = await documentRepository.lock({
+        idsToExclude: assignatedDocumentIds,
+      });
 
       await assignationService.createAssignation({
         userId,

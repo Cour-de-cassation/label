@@ -9,6 +9,7 @@ const documentGenerator: generatorType<documentType> = {
     creationDate: creationDate ? creationDate : new Date(),
     documentId: documentId ? documentId : `DOCUMENT_ID_${Math.random()}`,
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
+    locked: false,
     metadata: metadata ? metadata : `METADATA_${Math.random()}`,
     source: source ? source : `SOURCE_${Math.random()}`,
     title: title ? title : `TITLE_${Math.random()}`,

@@ -8,6 +8,7 @@ const documentDataModel = {
   creationDate: { type: 'date', graphQL: false },
   documentId: { type: 'string', graphQL: false },
   _id: { type: 'id', graphQL: true },
+  locked: { type: 'boolean', graphQL: false },
   metadata: { type: 'string', graphQL: false },
   source: { type: 'string', graphQL: false },
   title: { type: 'string', graphQL: true },

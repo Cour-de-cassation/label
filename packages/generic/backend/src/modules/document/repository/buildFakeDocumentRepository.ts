@@ -1,4 +1,4 @@
-import { documentType } from '@label/core';
+import { documentType, idModule } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';
 
@@ -9,15 +9,25 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
   customDocumentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
-    async findOneExceptIds(_ids) {
-      const result = collection.find(
-        (document) => !_ids.includes(document._id),
-      );
+    async lock({ idsToExclude } = {}) {
+      const result = idsToExclude
+        ? collection.find((document) => !idsToExclude.includes(document._id))
+        : collection[0];
+
       if (!result) {
         throw new Error(
-          `No document available that was not in the list ${_ids.join(',')}`,
+          `No document available that was not in the list ${(
+            idsToExclude || []
+          ).join(',')}`,
         );
       }
+
+      collection = collection.map((document) =>
+        idModule.lib.equalId(document._id, result._id)
+          ? { ...document, locked: true }
+          : document,
+      );
+
       return result;
     },
   }),

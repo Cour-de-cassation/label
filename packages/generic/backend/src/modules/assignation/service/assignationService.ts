@@ -4,7 +4,6 @@ import {
   idModule,
   idType,
 } from '@label/core';
-import { groupBy } from 'lodash';
 import { buildAssignationRepository } from '../repository';
 
 export { assignationService };
@@ -47,28 +46,6 @@ const assignationService = {
     const assignations = await assignationRepository.findAll();
 
     return assignations.map((assignation) => assignation.documentId);
-  },
-
-  // UNUSED, SHOULD MAYBE BE DELETED
-  async fetchDocumentIdsAssignatedByUserId(): Promise<{
-    [userId: string]: idType[];
-  }> {
-    const assignationRepository = buildAssignationRepository();
-    const assignations = await assignationRepository.findAll();
-    const assignationsGroupedByUser = groupBy(
-      assignations,
-      (assignation) => assignation.userId,
-    );
-
-    const documentIdsAssignatedByUser: { [userId: string]: idType[] } = {};
-    Object.entries(assignationsGroupedByUser).forEach(
-      ([userId, assignations]) =>
-        (documentIdsAssignatedByUser[userId] = assignations.map(
-          (assignation) => assignation.documentId,
-        )),
-    );
-
-    return documentIdsAssignatedByUser;
   },
 
   async createAssignation({

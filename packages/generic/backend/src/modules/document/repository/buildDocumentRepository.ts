@@ -10,14 +10,33 @@ const buildDocumentRepository = buildRepositoryBuilder<
 >({
   collectionName: 'documents',
   buildCustomRepository: (collection) => ({
-    async findOneExceptIds(_ids) {
-      const result = await collection.findOne({ _id: { $nin: _ids } });
-      if (!result) {
+    async lock({ idsToExclude } = {}) {
+      const document = idsToExclude
+        ? await collection.findOne({
+            _id: { $nin: idsToExclude },
+            locked: false,
+          })
+        : await collection.findOne({
+            locked: false,
+          });
+
+      if (!document) {
         throw new Error(
-          `No document available that was not in the list ${_ids.join(',')}`,
+          `No document unlocked (ids to exclude ${(idsToExclude || []).join(
+            ',',
+          )}`,
         );
       }
-      return result;
+
+      const { modifiedCount } = await collection.updateOne(document, {
+        $set: { locked: true },
+      });
+
+      if (modifiedCount !== 1) {
+        return this.lock({ idsToExclude });
+      }
+
+      return document;
     },
   }),
 });

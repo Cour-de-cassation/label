@@ -23,7 +23,7 @@ describe('jurinetMapper', () => {
         jurinetCourtDecision,
       );
 
-      expect(omit(document, '_id')).toEqual({
+      expect(omit(document, ['_id', 'locked'])).toEqual({
         creationDate: jurinetCourtDecision.date,
         metadata: jurinetCourtDecision.metadata,
         documentId: jurinetCourtDecision.oracleId,

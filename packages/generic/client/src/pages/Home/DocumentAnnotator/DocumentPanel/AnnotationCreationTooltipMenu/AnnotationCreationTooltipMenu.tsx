@@ -65,7 +65,7 @@ function AnnotationCreationTooltipMenu(props: {
               value: category,
             }))}
             label={wordings.category}
-            labelIcon={<ActionIcon iconName="bank" iconSize={CATEGORY_ICON_SIZE} />}
+            labelIcon={<ActionIcon iconName="puzzle" iconSize={CATEGORY_ICON_SIZE} />}
             onChange={applyAnnotationCreation}
           />
         </LayoutGrid>

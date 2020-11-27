@@ -42,7 +42,6 @@ export type { iconNameType };
 const materialIconMapping = {
   arrowExpand: ExpandMoreRounded,
   arrowReduce: ExpandLessRounded,
-  changeCategory: ExtensionRounded,
   clock: AlarmOnRounded,
   close: CloseRounded,
   copy: FileCopyRounded,
@@ -51,6 +50,7 @@ const materialIconMapping = {
   link: Link,
   login: ExitToAppRounded,
   logout: MeetingRoom,
+  puzzle: ExtensionRounded,
   redo: RedoRounded,
   reset: LoopRounded,
   send: SendRounded,

@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import {
   AccountBalanceRounded,
+  AlarmOnRounded,
   BookRounded,
   BusinessCenterRounded,
   ChildCareRounded,
@@ -42,6 +43,7 @@ const materialIconMapping = {
   arrowExpand: ExpandMoreRounded,
   arrowReduce: ExpandLessRounded,
   changeCategory: ExtensionRounded,
+  clock: AlarmOnRounded,
   close: CloseRounded,
   copy: FileCopyRounded,
   delete: DeleteOutlineRounded,

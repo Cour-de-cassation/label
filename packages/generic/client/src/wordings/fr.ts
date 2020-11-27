@@ -42,6 +42,7 @@ const fr = {
   selectResizedText: "Sélectionnez le nouveau texte pour redéfinir les dimensions de l'entité...",
   send: 'Envoyer',
   settings: 'Réglages',
+  start: 'Commencer',
   undo: 'Annuler',
   unlink: 'Supprimer la liaison',
   unlinkOption: {
@@ -49,5 +50,6 @@ const fr = {
     __all__: 'Toutes les liaisons',
   },
   validate: 'Valider',
+  wholeCheck: 'Lecture exhaustive',
   wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",
 };

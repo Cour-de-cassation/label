@@ -7,7 +7,7 @@ import { DocumentSwitcher } from './DocumentSwitcher';
 const Home: FunctionComponent = () => {
   return (
     <LayoutGrid container>
-      <LayoutGrid item>
+      <LayoutGrid container item>
         <SettingsDataFetcher>
           {({ settings }) => (
             <DocumentAndAnnotationsDataFetcher>

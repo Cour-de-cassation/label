@@ -16,6 +16,11 @@ const fr = {
     all: `Supprimer tout`,
   },
   displayMode: "Type d'affichage",
+  documentInfoEntries: {
+    annotations: 'Annotations',
+    entities: 'Entités',
+    linkedEntities: "Liaison d'entités",
+  },
   email: 'E-mail',
   enterYourText: 'Saisissez votre texte...',
   errorPage: 'Une erreur est survenue...',

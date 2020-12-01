@@ -52,30 +52,43 @@ function DocumentAnnotationText(props: {
   );
 
   function buildStyle() {
-    const backgroundAlpha = getBackgroundAlpha();
-    const backgroundColor = getColor(
-      settingsModule.lib.getAnnotationCategoryColor(
-        props.annotation.category,
-        props.annotatorStateHandler.get().settings,
-        displayMode,
-      ),
-    );
+    const viewerModeSpecificStyle = buildViewerModeSpecificStyle();
     return {
       annotationText: {
-        backgroundColor: `${backgroundColor}${backgroundAlpha}`,
         cursor: 'pointer',
         padding: '0px 2px',
         borderRadius: '3px',
+        ...viewerModeSpecificStyle,
       },
     };
 
-    function getBackgroundAlpha() {
+    function buildViewerModeSpecificStyle() {
+      const categoryColor = getColor(
+        settingsModule.lib.getAnnotationCategoryColor(
+          props.annotation.category,
+          props.annotatorStateHandler.get().settings,
+          displayMode,
+        ),
+      );
       const { documentViewerMode } = documentViewerModeHandler;
       switch (documentViewerMode.kind) {
         case 'annotation':
-          return 'ff';
+          return {
+            backgroundColor: categoryColor,
+          };
         case 'occurrence':
-          return documentViewerMode.entityId === props.annotation.entityId ? 'ff' : '50';
+          const isSelectedEntity = documentViewerMode.entityId === props.annotation.entityId;
+          const OUTLINE_WIDTH = 2;
+          if (isSelectedEntity) {
+            return {
+              backgroundColor: categoryColor,
+            };
+          } else {
+            return {
+              outline: `${OUTLINE_WIDTH}px solid ${categoryColor}`,
+              outlineOffset: `-${OUTLINE_WIDTH}px`,
+            };
+          }
       }
     }
   }

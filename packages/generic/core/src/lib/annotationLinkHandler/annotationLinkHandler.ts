@@ -1,5 +1,5 @@
 import { uniqBy } from 'lodash';
-import { annotationModule, fetchedAnnotationType } from '../../modules';
+import { annotationModule, fetchedAnnotationType, idModule } from '../../modules';
 
 export { annotationLinkHandler };
 
@@ -20,7 +20,7 @@ function link<annotationT extends fetchedAnnotationType>(
 ): annotationT[] {
   return annotations.map((annotation) =>
     annotation.entityId === annotationSource.entityId
-      ? { ...annotation, entityId: annotationTarget.entityId }
+      ? annotationModule.lib.annotationLinker.link(annotation, annotationTarget)
       : annotation,
   );
 }
@@ -70,7 +70,7 @@ function unlink<annotationT extends fetchedAnnotationType>(
 ): annotationT[] {
   return annotations.map((annotation) =>
     annotation.entityId === annotationToUnlink.entityId
-      ? { ...annotation, entityId: annotationModule.lib.entityIdHandler.compute(annotation.category, annotation.text) }
+      ? annotationModule.lib.annotationLinker.unlink(annotation)
       : annotation,
   );
 }
@@ -79,7 +79,9 @@ function unlinkByCategoryAndText<annotationT extends fetchedAnnotationType>(
   annotation: annotationT,
   annotations: annotationT[],
 ) {
-  const linkedAnnotations = getLinkedAnnotations(annotation, annotations);
+  const linkedAnnotations = getLinkedAnnotations(annotation, annotations).filter(
+    (linkedAnnotation) => !idModule.lib.equalId(linkedAnnotation._id, annotation._id),
+  );
 
   if (linkedAnnotations.length === 0) {
     return annotations;
@@ -89,10 +91,7 @@ function unlinkByCategoryAndText<annotationT extends fetchedAnnotationType>(
 
   return annotationsWithUpdatedLink.map((otherAnnotation) =>
     otherAnnotation.category === annotation.category && otherAnnotation.text === annotation.text
-      ? {
-          ...otherAnnotation,
-          entityId: annotationModule.lib.entityIdHandler.compute(annotation.category, annotation.text),
-        }
+      ? annotationModule.lib.annotationLinker.unlink(otherAnnotation)
       : otherAnnotation,
   );
 }

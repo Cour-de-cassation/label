@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { annotationLinkHandler, fetchedAnnotationType } from '@label/core';
-import { IconDropdown } from '../../../../../components';
+import { IconButton, IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 
@@ -17,26 +17,46 @@ function UnlinkAnnotationDropdown(props: {
   const annotatorState = props.annotatorStateHandler.get();
   const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(props.annotation, annotatorState.annotations);
 
-  return (
-    <IconDropdown
-      buttonSize={props.buttonSize}
-      disabled={isNotLinked()}
-      hint={wordings.unlink}
-      iconName="unlink"
-      items={[
-        {
-          text: wordings.unlinkOption[UNLINK_ALL],
-          value: UNLINK_ALL,
-        },
-        ...linkedAnnotations.map((annotation) => ({
-          text: annotation.text,
-          value: annotation.text,
-        })),
-      ]}
-      onChange={unlinkAnnotation}
-      onClose={props.onClose}
-    />
-  );
+  if (linkedAnnotations.length > 2) {
+    return renderIconDropdown();
+  } else {
+    return renderIconButton();
+  }
+
+  function renderIconDropdown() {
+    return (
+      <IconDropdown
+        buttonSize={props.buttonSize}
+        disabled={isNotLinked()}
+        hint={wordings.unlink}
+        iconName="unlink"
+        items={[
+          {
+            text: wordings.unlinkOption[UNLINK_ALL],
+            value: UNLINK_ALL,
+          },
+          ...linkedAnnotations.map((annotation) => ({
+            text: annotation.text,
+            value: annotation.text,
+          })),
+        ]}
+        onChange={unlinkAnnotation}
+        onClose={props.onClose}
+      />
+    );
+  }
+
+  function renderIconButton() {
+    return (
+      <IconButton
+        buttonSize={props.buttonSize}
+        disabled={isNotLinked()}
+        hint={wordings.unlink}
+        iconName="unlink"
+        onClick={() => unlinkAnnotation(props.annotation.text)}
+      />
+    );
+  }
 
   function isNotLinked() {
     return !annotationLinkHandler.isLinked(props.annotation, annotatorState.annotations);

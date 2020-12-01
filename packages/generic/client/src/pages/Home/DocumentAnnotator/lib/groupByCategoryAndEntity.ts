@@ -34,22 +34,21 @@ function groupByCategory(
   annotations: fetchedAnnotationType[],
   categories: string[],
 ): Array<{ category: string; categoryAnnotations: fetchedAnnotationType[] }> {
-  const categoriesWithAnnotations = Object.entries(groupBy(annotations, (annotation) => annotation.category));
-  const categoriesWithoutAnnotations: [string, fetchedAnnotationType[]][] = categories
-    .filter(
-      (category) => !categoriesWithAnnotations.some((categoryWithAnnotation) => category === categoryWithAnnotation[0]),
-    )
-    .map((category) => [category, []]);
-  const allCategories = [...categoriesWithAnnotations, ...categoriesWithoutAnnotations];
-  return allCategories
-    .map(([category, categoryAnnotations]) => ({
-      category,
-      categoryAnnotations,
-    }))
-    .sort(
-      ({ categoryAnnotations: categoryAnnotations1 }, { categoryAnnotations: categoryAnnotations2 }) =>
-        categoryAnnotations2.length - categoryAnnotations1.length,
-    );
+  const grouppedByCategoryAnnotations = groupBy(annotations, (annotation) => annotation.category);
+  return categories.map((category) => {
+    const categoryAnnotations = grouppedByCategoryAnnotations[category];
+    if (!!categoryAnnotations) {
+      return {
+        category,
+        categoryAnnotations,
+      };
+    } else {
+      return {
+        category,
+        categoryAnnotations: [],
+      };
+    }
+  });
 }
 
 function groupByEntity(annotations: fetchedAnnotationType[]): annotationPerEntityType {

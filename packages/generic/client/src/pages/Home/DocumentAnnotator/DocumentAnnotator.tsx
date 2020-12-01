@@ -20,13 +20,13 @@ function DocumentAnnotator(props: {
   onStopAnnotatingDocument: () => void;
 }): ReactElement {
   const { annotatorStateHandler } = useAnnotatorState(props.annotatorState, props.annotatorStateCommitter);
-  const styles = buildStyles();
   useKeyboardShortcutsHandler([
     { key: 'z', ctrlKey: true, action: annotatorStateHandler.revert },
     { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
   ]);
-  const categories = settingsModule.lib.getCategories(props.annotatorState.settings);
 
+  const styles = buildStyles();
+  const categories = settingsModule.lib.getCategories(props.annotatorState.settings);
   const annotatorState = annotatorStateHandler.get();
   const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories);
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);

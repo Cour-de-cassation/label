@@ -6,6 +6,7 @@
       "darkMode": ["blue", 800]
     },
     "iconName": "location",
+    "order": 3,
     "text": "Adresse"
   },
   "personnemorale": {
@@ -55,6 +56,7 @@
       "darkMode": ["deepPurple", 400]
     },
     "iconName": "work",
+    "order": 4,
     "text": "Personne morale"
   },
   "personnephysicomorale": {
@@ -64,6 +66,7 @@
       "darkMode": ["deepPurple", 800]
     },
     "iconName": "work",
+    "order": 5,
     "text": "Personne physico-morale"
   },
   "personnephysiqueprenom": {
@@ -100,6 +103,7 @@
       "darkMode": ["deepOrange", 400]
     },
     "iconName": "person",
+    "order": 2,
     "text": "Prénom"
   },
   "personnephysiquenom": {
@@ -134,6 +138,7 @@
       "darkMode": ["deepOrange", 800]
     },
     "iconName": "person",
+    "order": 1,
     "text": "Nom de famille"
   },
   "professionnelnom": {
@@ -155,6 +160,7 @@
       "darkMode": ["brown", 500]
     },
     "iconName": "hammer",
+    "order": 6,
     "text": "Professionnel (nom)"
   },
   "professionnelprenom": {
@@ -173,6 +179,7 @@
       "darkMode": ["brown", 800]
     },
     "iconName": "hammer",
+    "order": 7,
     "text": "Professionnel (prénom)"
   },
   "cadastre": {
@@ -191,6 +198,7 @@
       "darkMode": ["cyan", 600]
     },
     "iconName": "map",
+    "order": 11,
     "text": "Cadastre"
   },
   "datedenaissance": {
@@ -209,6 +217,7 @@
       "darkMode": ["teal", 800]
     },
     "iconName": "stroller",
+    "order": 8,
     "text": "Date de naissance"
   },
   "datedemariage": {
@@ -227,6 +236,7 @@
       "darkMode": ["green", 800]
     },
     "iconName": "heart",
+    "order": 9,
     "text": "Date de mariage"
   },
   "datededeces": {
@@ -245,6 +255,7 @@
       "darkMode": ["lime", 900]
     },
     "iconName": "cloud",
+    "order": 10,
     "text": "Date de décès"
   },
   "insee": {
@@ -254,6 +265,7 @@
       "darkMode": ["indigo", 800]
     },
     "iconName": "book",
+    "order": 13,
     "text": "N° INSEE"
   },
   "telephoneorfaxoremail": {
@@ -263,6 +275,7 @@
       "darkMode": ["lightBlue", 800]
     },
     "iconName": "phone",
+    "order": 14,
     "text": "Téléphone/Fax/Email"
   },
   "comptebancaire": {
@@ -272,6 +285,7 @@
       "darkMode": ["indigo", 500]
     },
     "iconName": "bank",
+    "order": 15,
     "text": "Compte bancaire"
   },
   "plaqueimmatriculation": {
@@ -281,6 +295,7 @@
       "darkMode": ["pink", 800]
     },
     "iconName": "car",
+    "order": 16,
     "text": "Plaque d'immatriculation"
   },
   "etablissementpourmineure": {
@@ -290,6 +305,7 @@
       "darkMode": ["red", 700]
     },
     "iconName": "child",
+    "order": 17,
     "text": "Etablissement pour mineur"
   }
 }

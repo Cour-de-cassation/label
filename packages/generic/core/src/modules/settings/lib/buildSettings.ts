@@ -30,6 +30,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
           darkMode: buildColor(partialSettings[category]?.color?.darkMode),
         },
         iconName: buildIconName(partialSettings[category]?.iconName),
+        order: partialSettings[category]?.order,
         text: buildText(partialSettings[category]?.text),
       }),
   );

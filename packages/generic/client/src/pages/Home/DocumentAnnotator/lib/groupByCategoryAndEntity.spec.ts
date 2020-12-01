@@ -10,11 +10,16 @@ describe('groupByCategoryAndEntity', () => {
     { category: 'lastName', text: 'Dupond', start: 40 },
     { category: 'lastName', text: 'Blanc-Sec', start: 50 },
   ].map(annotationModule.generator.generate);
-  const categories = ['firstName', 'lastName', 'birthDate'];
+  const categories = ['lastName', 'firstName', 'birthDate'];
 
   it('should group annotations by categories', () => {
     const annotationsPerCategoryAndEntity = groupByCategoryAndEntity(annotations, categories);
     expect(annotationsPerCategoryAndEntity).toEqual([
+      {
+        category: 'lastName',
+        categorySize: 2,
+        categoryAnnotations: generateCategoryAnnotations([[annotations[4]], [annotations[5]]]),
+      },
       {
         category: 'firstName',
         categorySize: 3,
@@ -23,11 +28,6 @@ describe('groupByCategoryAndEntity', () => {
           [annotations[1]],
           [annotations[2]],
         ]),
-      },
-      {
-        category: 'lastName',
-        categorySize: 2,
-        categoryAnnotations: generateCategoryAnnotations([[annotations[4]], [annotations[5]]]),
       },
       { category: 'birthDate', categorySize: 0, categoryAnnotations: [] },
     ]);

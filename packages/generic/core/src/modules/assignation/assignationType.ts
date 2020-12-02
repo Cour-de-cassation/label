@@ -7,7 +7,6 @@ export type { assignationType };
 const assignationDataModel = {
   documentId: { type: 'id', graphQL: true },
   _id: { type: 'id', graphQL: true },
-  status: { type: ['rejected', 'pending', 'saved', 'done'], graphQL: true },
   userId: { type: 'id', graphQL: true },
 } as const;
 

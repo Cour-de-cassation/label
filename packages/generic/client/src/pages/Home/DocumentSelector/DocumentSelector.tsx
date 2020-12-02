@@ -5,20 +5,16 @@ import { DocumentSelectorCard } from './DocumentSelectorCard';
 export { DocumentSelector };
 
 function DocumentSelector(props: {
-  annotations: fetchedAnnotationType[];
-  document: fetchedDocumentType;
+  choices: Array<{ annotations: fetchedAnnotationType[]; document: fetchedDocumentType }>;
   settings: settingsType;
-  onSelectDocument: () => void;
+  onSelectDocument: (choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => void;
 }) {
   const styles = buildStyles();
   return (
     <div style={styles.cardsContainer}>
-      <DocumentSelectorCard
-        annotations={props.annotations}
-        document={props.document}
-        onSelect={props.onSelectDocument}
-        settings={props.settings}
-      />
+      {props.choices.map((choice) => (
+        <DocumentSelectorCard choice={choice} onSelect={props.onSelectDocument} settings={props.settings} />
+      ))}
     </div>
   );
 }

@@ -9,26 +9,37 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
   customDocumentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
-    async lock({ idsToExclude } = {}) {
-      const result = idsToExclude
-        ? collection.find((document) => !idsToExclude.includes(document._id))
-        : collection[0];
+    async assign() {
+      const result = collection[0];
 
       if (!result) {
-        throw new Error(
-          `No document available that was not in the list ${(
-            idsToExclude || []
-          ).join(',')}`,
-        );
+        throw new Error(`No free document`);
       }
 
       collection = collection.map((document) =>
         idModule.lib.equalId(document._id, result._id)
-          ? { ...document, locked: true }
+          ? { ...document, status: 'free' }
           : document,
       );
 
       return result;
+    },
+
+    async findAllByIds(ids) {
+      return collection.filter((document) =>
+        ids.some((id) => idModule.lib.equalId(id, document._id)),
+      );
+    },
+
+    async updateStatus(id, status) {
+      collection = collection.map((document) =>
+        idModule.lib.equalId(id, document._id)
+          ? {
+              ...document,
+              status,
+            }
+          : document,
+      );
     },
   }),
 });

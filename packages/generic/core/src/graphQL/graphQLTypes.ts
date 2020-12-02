@@ -39,6 +39,11 @@ type typeOfGraphQLType<graphQLT> = graphQLT extends graphQLTypePrimitiveType
       type: graphQLTypeCustomType;
     }
   ? Array<typeOfGraphQLCustomType<graphQLT['type']['type']>>
+  : graphQLT extends {
+      kind: 'list';
+      type: graphQLTypePrimitiveType;
+    }
+  ? Array<typeOfDataModelFieldType<graphQLT['type']['type']>>
   : graphQLT extends graphQLTypeCustomType
   ? typeOfGraphQLCustomType<graphQLT['type']>
   : never;

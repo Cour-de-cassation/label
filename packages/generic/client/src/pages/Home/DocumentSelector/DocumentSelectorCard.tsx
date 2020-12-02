@@ -13,22 +13,22 @@ const CATEGORY_ICON_SIZE = 32;
 const MAX_CATEGORIES_SHOWN = 8;
 
 function DocumentSelectorCard(props: {
-  annotations: fetchedAnnotationType[];
-  document: fetchedDocumentType;
-  onSelect: () => void;
+  choice: { annotations: fetchedAnnotationType[]; document: fetchedDocumentType };
+  onSelect: (choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => void;
   settings: settingsType;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const documentInfoEntries = computeDocumentInfoEntries(props.annotations);
-  const categoryIconsByAnnotation = computeCategoryIconNamesByAnnotationCount(props.annotations);
+  const documentInfoEntries = computeDocumentInfoEntries(props.choice.annotations);
+  const categoryIconsByAnnotation = computeCategoryIconNamesByAnnotationCount(props.choice.annotations);
+
   return (
     <div style={styles.card}>
       <Text style={styles.title} variant="h1">
         {wordings.wholeCheck}
       </Text>
       <Text style={styles.subtitle} variant="h2">
-        {props.document.title}
+        {props.choice.document.title}
       </Text>
       <div style={styles.documentInfoEntryTable}>
         {DOCUMENT_INFO_ENTRIES.map((documentInfoEntry) => (
@@ -55,7 +55,12 @@ function DocumentSelectorCard(props: {
           spaceBetweenComponents={theme.spacing * 3}
         />
       </div>
-      <ButtonWithIcon iconName="clock" color="primary" onClick={props.onSelect} text={wordings.start} />
+      <ButtonWithIcon
+        iconName="clock"
+        color="primary"
+        onClick={() => props.onSelect(props.choice)}
+        text={wordings.start}
+      />
     </div>
   );
 

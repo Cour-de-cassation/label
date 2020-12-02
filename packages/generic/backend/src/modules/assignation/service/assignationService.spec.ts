@@ -13,7 +13,6 @@ describe('assignationService', () => {
       const assignation = assignationModule.generator.generate({
         userId,
         documentId,
-        status: 'pending',
       });
       await assignationRepository.insert(assignation);
 
@@ -34,51 +33,40 @@ describe('assignationService', () => {
     });
   });
 
-  describe('fetchDocumentIdAssignatedToUserId', () => {
+  describe('fetchDocumentIdsAssignatedToUserId', () => {
     const assignationRepository = buildAssignationRepository();
 
     const userId1 = idModule.lib.buildId();
     const userId2 = idModule.lib.buildId();
 
-    it('should fetch a document id assignated to the given userId', async () => {
+    it('should fetch all the document id assignated to the given userId', async () => {
       const assignements = ([
-        { userId: userId1, status: 'pending' },
-        { userId: userId1, status: 'done' },
-        { userId: userId2, status: 'pending' },
+        { userId: userId1 },
+        { userId: userId1 },
+        { userId: userId2 },
       ] as const).map(assignationModule.generator.generate);
       await Promise.all(assignements.map(assignationRepository.insert));
 
-      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdAssignatedToUserId(
+      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdsAssignatedToUserId(
         userId1,
       );
 
-      expect(documentIdAssignatedToUserId).toEqual(assignements[0].documentId);
+      expect(documentIdAssignatedToUserId).toEqual([
+        assignements[0].documentId,
+        assignements[1].documentId,
+      ]);
     });
-    it('should fetch a document id assignated to the given userId with the biggest priority', async () => {
-      const assignements = ([
-        { userId: userId1, status: 'pending' },
-        { userId: userId1, status: 'saved' },
-        { userId: userId2, status: 'pending' },
-      ] as const).map(assignationModule.generator.generate);
-      await Promise.all(assignements.map(assignationRepository.insert));
-
-      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdAssignatedToUserId(
-        userId1,
+    it('should return an empty array if there is no document id assignated to the given userId', async () => {
+      const assignements = ([{ userId: userId1 }] as const).map(
+        assignationModule.generator.generate,
       );
-
-      expect(documentIdAssignatedToUserId).toEqual(assignements[1].documentId);
-    });
-    it('should return undefined if there is no document id assignated to the given userId', async () => {
-      const assignements = ([
-        { userId: userId1, status: 'pending' },
-      ] as const).map(assignationModule.generator.generate);
       await Promise.all(assignements.map(assignationRepository.insert));
 
-      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdAssignatedToUserId(
+      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdsAssignatedToUserId(
         userId2,
       );
 
-      expect(documentIdAssignatedToUserId).toEqual(undefined);
+      expect(documentIdAssignatedToUserId).toEqual([]);
     });
   });
 
@@ -100,27 +88,6 @@ describe('assignationService', () => {
       expect(assignatedDocumentIds).toEqual(
         assignations.map((assignation) => assignation.documentId),
       );
-    });
-  });
-
-  describe('updateStatus', () => {
-    const assignationRepository = buildAssignationRepository();
-
-    it('should fetch all the document ids indexed by userId', async () => {
-      const userId = idModule.lib.buildId();
-      const documentId = idModule.lib.buildId();
-      const assignement = assignationModule.generator.generate({
-        userId,
-        documentId,
-      });
-      await assignationRepository.insert(assignement);
-
-      await assignationService.updateStatus(userId, documentId, 'done');
-
-      const assignementAfterCall = await assignationRepository.findById(
-        assignement._id,
-      );
-      expect(assignementAfterCall.status).toEqual('done');
     });
   });
 });

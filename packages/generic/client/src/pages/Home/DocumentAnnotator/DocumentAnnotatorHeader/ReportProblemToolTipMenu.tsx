@@ -30,7 +30,7 @@ function ReportProblemToolTipMenu(props: {
   const [isBlocking, setIsBlocking] = useState<boolean>(false);
   const [isSentWithoutCategory, setIsSentWithoutCategory] = useState<boolean>(false);
   const [sendProblemReport] = useGraphQLMutation<'problemReport'>('problemReport');
-  const [updateAssignationStatus] = useGraphQLMutation<'updateAssignationStatus'>('updateAssignationStatus');
+  const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
   const annotatorState = props.annotatorStateHandler.get();
 
   return (
@@ -136,7 +136,7 @@ function ReportProblemToolTipMenu(props: {
       });
 
       if (isBlocking) {
-        await updateAssignationStatus({ variables: { documentId: annotatorState.document._id, status: 'rejected' } });
+        await updateDocumentStatus({ variables: { documentId: annotatorState.document._id, status: 'rejected' } });
         props.onStopAnnotatingDocument();
       }
 

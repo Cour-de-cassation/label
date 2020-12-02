@@ -1,7 +1,7 @@
 import { GraphQLFieldResolver } from 'graphql';
 import { graphQLMutation, idModule } from '@label/core';
 import { annotationService } from '../modules/annotation';
-import { assignationService } from '../modules/assignation';
+import { documentService } from '../modules/document';
 import { problemReportService } from '../modules/problemReport';
 import { userService } from '../modules/user';
 import { buildAuthenticatedResolver } from './buildAuthenticatedResolver';
@@ -43,15 +43,13 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
     },
   ),
 
-  updateAssignationStatus: buildAuthenticatedResolver(
-    async (userId, { documentId, status }) => {
+  updateDocumentStatus: buildAuthenticatedResolver(
+    async (_, { documentId, status }) => {
       try {
-        await assignationService.updateStatus(
-          userId,
+        await documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
           status,
         );
-
         return { success: true };
       } catch (e) {
         return { success: false };

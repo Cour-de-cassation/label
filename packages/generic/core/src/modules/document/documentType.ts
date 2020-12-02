@@ -8,9 +8,9 @@ const documentDataModel = {
   creationDate: { type: 'date', graphQL: false },
   documentId: { type: 'string', graphQL: false },
   _id: { type: 'id', graphQL: true },
-  locked: { type: 'boolean', graphQL: false },
   metadata: { type: 'string', graphQL: false },
   source: { type: 'string', graphQL: false },
+  status: { type: ['done', 'free', 'pending', 'rejected', 'saved'], graphQL: true },
   title: { type: 'string', graphQL: true },
   text: { type: 'string', graphQL: true },
 } as const;

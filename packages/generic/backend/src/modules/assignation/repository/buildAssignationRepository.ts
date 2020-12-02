@@ -13,8 +13,5 @@ const buildAssignationRepository = buildRepositoryBuilder<
     async findAllByUserId(userId) {
       return collection.find({ userId }).toArray();
     },
-    async updateStatus(userId, documentId, status) {
-      await collection.update({ userId, documentId }, { $set: { status } });
-    },
   }),
 });

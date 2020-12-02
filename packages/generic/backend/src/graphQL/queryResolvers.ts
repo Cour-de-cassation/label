@@ -1,5 +1,5 @@
 import { GraphQLFieldResolver } from 'graphql';
-import { graphQLQuery } from '@label/core';
+import { graphQLQuery, idModule } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { annotationService } from '../modules/annotation';
 import { documentService } from '../modules/document';
@@ -12,8 +12,12 @@ const queryResolvers: resolversType<typeof graphQLQuery> = {
   annotations: async (_, { documentId }) =>
     annotationService.fetchAnnotationsOfDocument(documentId),
 
-  document: buildAuthenticatedResolver(async (userId) =>
-    documentService.fetchDocumentForUser(userId),
+  document: buildAuthenticatedResolver(
+    async (userId, { documentIdsToExclude }) =>
+      documentService.fetchDocumentForUser(
+        userId,
+        documentIdsToExclude.map(idModule.lib.buildId),
+      ),
   ),
 
   settings: async () => ({

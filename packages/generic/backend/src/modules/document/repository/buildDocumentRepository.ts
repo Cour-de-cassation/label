@@ -10,33 +10,32 @@ const buildDocumentRepository = buildRepositoryBuilder<
 >({
   collectionName: 'documents',
   buildCustomRepository: (collection) => ({
-    async lock({ idsToExclude } = {}) {
-      const document = idsToExclude
-        ? await collection.findOne({
-            _id: { $nin: idsToExclude },
-            locked: false,
-          })
-        : await collection.findOne({
-            locked: false,
-          });
+    async assign() {
+      const document = await collection.findOne({
+        status: 'free',
+      });
 
       if (!document) {
-        throw new Error(
-          `No document unlocked (ids to exclude ${(idsToExclude || []).join(
-            ',',
-          )}`,
-        );
+        throw new Error(`No free document`);
       }
 
       const { modifiedCount } = await collection.updateOne(document, {
-        $set: { locked: true },
+        $set: { status: 'pending' },
       });
 
       if (modifiedCount !== 1) {
-        return this.lock({ idsToExclude });
+        return this.assign();
       }
 
       return document;
+    },
+
+    async findAllByIds(ids) {
+      return collection.find({ _id: { $in: ids } }).toArray();
+    },
+
+    async updateStatus(id, status) {
+      await collection.update({ _id: id }, { $set: { status } });
     },
   }),
 });

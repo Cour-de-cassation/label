@@ -1,4 +1,4 @@
-import { assignationModule, problemReportModule } from '../modules';
+import { documentModule, problemReportModule } from '../modules';
 import { graphQLMutationType } from './graphQLTypes';
 
 export { graphQLMutation };
@@ -43,7 +43,7 @@ const graphQLMutation = {
       },
     },
   },
-  updateAssignationStatus: {
+  updateDocumentStatus: {
     type: {
       kind: 'custom',
       type: 'success',
@@ -55,7 +55,7 @@ const graphQLMutation = {
       },
       status: {
         kind: 'primitive',
-        type: assignationModule.dataModel.status.type,
+        type: documentModule.dataModel.status.type,
       },
     },
   },

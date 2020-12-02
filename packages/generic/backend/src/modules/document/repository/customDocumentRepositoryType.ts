@@ -3,5 +3,7 @@ import { documentType, idType } from '@label/core';
 export type { customDocumentRepositoryType };
 
 type customDocumentRepositoryType = {
-  lock: (param?: { idsToExclude?: idType[] }) => Promise<documentType>;
+  assign: () => Promise<documentType>;
+  findAllByIds: (ids: idType[]) => Promise<documentType[]>;
+  updateStatus: (id: idType, status: documentType['status']) => Promise<void>;
 };

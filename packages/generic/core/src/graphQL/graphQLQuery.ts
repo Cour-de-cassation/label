@@ -23,6 +23,15 @@ const graphQLQuery = {
       kind: 'custom',
       type: 'document',
     },
+    args: {
+      documentIdsToExclude: {
+        kind: 'list',
+        type: {
+          kind: 'primitive',
+          type: 'id',
+        },
+      },
+    },
   },
   settings: {
     type: {

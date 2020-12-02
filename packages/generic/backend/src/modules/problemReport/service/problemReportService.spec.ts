@@ -15,7 +15,6 @@ describe('problemReportService', () => {
     const assignation = assignationModule.lib.buildAssignation({
       userId,
       documentId,
-      status: 'pending',
     });
 
     it('should create a problem report', async () => {

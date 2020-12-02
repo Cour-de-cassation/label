@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { buildAnonymizer, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { useGraphQLMutation } from '../../graphQL';
 import { buildAnnotatorStateCommitter } from '../../services/annotatorState';
 import { DocumentAnnotator } from './DocumentAnnotator';
+import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
 import { DocumentSelector } from './DocumentSelector';
 
 export { DocumentSwitcher };
 
-type documentStateType = 'annotating' | 'selecting';
+type documentStateType =
+  | { kind: 'annotating'; choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] } }
+  | { kind: 'selecting' };
 
 function DocumentSwitcher(props: {
   annotations: fetchedAnnotationType[];
@@ -14,18 +18,24 @@ function DocumentSwitcher(props: {
   settings: settingsType;
   fetchNewDocument: () => Promise<void>;
 }) {
-  const [documentState, setDocumentState] = useState<documentStateType>('selecting');
+  const [documentState, setDocumentState] = useState<documentStateType>(
+    props.document.status === 'saved'
+      ? { kind: 'annotating', choice: { document: props.document, annotations: props.annotations } }
+      : { kind: 'selecting' },
+  );
+  const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
 
+  console.log(props.document);
   return renderPage();
 
   function renderPage() {
-    switch (documentState) {
+    switch (documentState.kind) {
       case 'annotating':
         return (
           <DocumentAnnotator
             annotatorState={{
-              annotations: props.annotations,
-              document: props.document,
+              annotations: documentState.choice.annotations,
+              document: documentState.choice.document,
               settings: props.settings,
             }}
             annotatorStateCommitter={buildAnnotatorStateCommitter()}
@@ -35,22 +45,34 @@ function DocumentSwitcher(props: {
         );
       case 'selecting':
         return (
-          <DocumentSelector
-            annotations={props.annotations}
-            document={props.document}
-            onSelectDocument={onSelectDocument}
-            settings={props.settings}
-          />
+          <DocumentAndAnnotationsDataFetcher documentIdsToExclude={[props.document._id]}>
+            {({ document: documentChoice2, annotations: annotationsChoice2 }) => (
+              <DocumentAndAnnotationsDataFetcher documentIdsToExclude={[props.document._id, documentChoice2._id]}>
+                {({ document: documentChoice3, annotations: annotationsChoice3 }) => (
+                  <DocumentSelector
+                    choices={[
+                      { document: props.document, annotations: props.annotations },
+                      { document: documentChoice2, annotations: annotationsChoice2 },
+                      { document: documentChoice3, annotations: annotationsChoice3 },
+                    ]}
+                    onSelectDocument={onSelectDocument}
+                    settings={props.settings}
+                  />
+                )}
+              </DocumentAndAnnotationsDataFetcher>
+            )}
+          </DocumentAndAnnotationsDataFetcher>
         );
     }
   }
 
   async function onStopAnnotatingDocument() {
     await props.fetchNewDocument();
-    setDocumentState('selecting');
+    setDocumentState({ kind: 'selecting' });
   }
 
-  function onSelectDocument() {
-    setDocumentState('annotating');
+  async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) {
+    await updateDocumentStatus({ variables: { documentId: choice.document._id, status: 'saved' } });
+    setDocumentState({ kind: 'annotating', choice });
   }
 }

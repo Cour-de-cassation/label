@@ -1,5 +1,5 @@
 import React from 'react';
-import { assignationType } from '@label/core';
+import { documentType } from '@label/core';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { useGraphQLMutation } from '../../../graphQL';
@@ -19,7 +19,7 @@ function DocumentAnnotatorFooter(props: {
   const annotatorState = props.annotatorStateHandler.get();
 
   const [saveAnnotations] = useGraphQLMutation<'annotations'>('annotations');
-  const [updateAssignationStatus] = useGraphQLMutation<'updateAssignationStatus'>('updateAssignationStatus');
+  const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
 
   return (
     <div style={styles.footer}>
@@ -60,14 +60,14 @@ function DocumentAnnotatorFooter(props: {
     props.onStopAnnotatingDocument();
   }
 
-  async function saveAnnotationsAndUpdateAssignationStatus(status: assignationType['status']) {
+  async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
     await saveAnnotations({
       variables: {
         documentId: annotatorState.document._id,
         fetchedGraphQLAnnotations: annotatorState.annotations,
       },
     });
-    await updateAssignationStatus({
+    await updateDocumentStatus({
       variables: { documentId: annotatorState.document._id, status },
     });
   }

@@ -4,7 +4,6 @@ import {
   assignationModule,
   documentModule,
   idModule,
-  idType,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../annotationReport';
 import { buildAssignationRepository } from '../../assignation';
@@ -12,10 +11,11 @@ import { buildDocumentRepository } from '../repository';
 import { documentService } from './documentService';
 
 describe('documentService', () => {
-  describe('fetchDocumentsWithoutAnnotations', () => {
-    const annotationReportRepository = buildAnnotationReportRepository();
-    const documentRepository = buildDocumentRepository();
+  const assignationRepository = buildAssignationRepository();
+  const annotationReportRepository = buildAnnotationReportRepository();
+  const documentRepository = buildDocumentRepository();
 
+  describe('fetchDocumentsWithoutAnnotations', () => {
     it('should fetch all the documents without annotation report', async () => {
       const documentsWithAnnotationReport = range(5).map(() =>
         documentModule.generator.generate(),
@@ -47,9 +47,17 @@ describe('documentService', () => {
   describe('fetchDocumentForUser', () => {
     it('should fetch a document already assignated if it exists', async () => {
       const userId = idModule.lib.buildId();
-      const document = await generateDocumentInDb({
-        userIdToAssignate: userId,
+      const document = documentModule.generator.generate({
+        status: 'pending',
+        text: 'lili',
       });
+      await documentRepository.insert(document);
+      await assignationRepository.insert(
+        assignationModule.generator.generate({
+          userId,
+          documentId: document._id,
+        }),
+      );
 
       const documentForUser = await documentService.fetchDocumentForUser(
         userId,
@@ -61,38 +69,28 @@ describe('documentService', () => {
     it('should fetch a document assignated to nobody if there are no assignation for this user', async () => {
       const userId1 = idModule.lib.buildId();
       const userId2 = idModule.lib.buildId();
-      const document = await generateDocumentInDb({});
-      await generateDocumentInDb({
-        userIdToAssignate: userId2,
+      const documentofUser1 = documentModule.generator.generate({
+        text: 'lolo',
+        status: 'free',
       });
+      await documentRepository.insert(documentofUser1);
+      const documentOfUser2 = documentModule.generator.generate({
+        text: 'lala',
+        status: 'pending',
+      });
+      await documentRepository.insert(documentOfUser2);
+      await assignationRepository.insert(
+        assignationModule.generator.generate({
+          userId: userId2,
+          documentId: documentOfUser2._id,
+        }),
+      );
 
       const documentForUser = await documentService.fetchDocumentForUser(
         userId1,
       );
 
-      expect(documentForUser).toEqual(document);
+      expect(documentForUser).toEqual(documentofUser1);
     });
   });
 });
-
-async function generateDocumentInDb({
-  userIdToAssignate,
-}: {
-  userIdToAssignate?: idType;
-}) {
-  const assignationRepository = buildAssignationRepository();
-  const documentRepository = buildDocumentRepository();
-
-  const document = documentModule.generator.generate();
-  await documentRepository.insert(document);
-
-  if (userIdToAssignate) {
-    const assignation = assignationModule.generator.generate({
-      userId: userIdToAssignate,
-      documentId: document._id,
-    });
-    assignationRepository.insert(assignation);
-  }
-
-  return document;
-}

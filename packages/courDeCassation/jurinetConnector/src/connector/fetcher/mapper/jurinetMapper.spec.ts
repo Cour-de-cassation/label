@@ -28,6 +28,7 @@ describe('jurinetMapper', () => {
         metadata: jurinetCourtDecision.metadata,
         documentId: jurinetCourtDecision.oracleId,
         source: jurinetCourtDecision.source,
+        status: 'free',
         title:
           'Décision n°12345 · Cour de cassation · Chambre civile · 17/04/1995',
         text: 'COURT DECISION TEXT',

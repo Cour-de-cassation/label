@@ -1,5 +1,12 @@
 import React, { ReactElement } from 'react';
-import { autoLinker, fetchedAnnotationType, fetchedDocumentType, idModule, graphQLReceivedDataType } from '@label/core';
+import {
+  autoLinker,
+  fetchedAnnotationType,
+  fetchedDocumentType,
+  idModule,
+  idType,
+  graphQLReceivedDataType,
+} from '@label/core';
 import { useGraphQLQuery } from '../../graphQL';
 import { DataFetcher } from '../DataFetcher';
 
@@ -19,8 +26,11 @@ function DocumentAndAnnotationsDataFetcher(props: {
     annotations: fetchedAnnotationType[];
     fetchNewDocument: () => Promise<void>;
   }) => ReactElement;
+  documentIdsToExclude?: idType[];
 }) {
-  const documentsFetchInfo = useGraphQLQuery<'document'>('document');
+  const documentsFetchInfo = useGraphQLQuery<'document'>('document', {
+    args: { documentIdsToExclude: props.documentIdsToExclude || [] },
+  });
   const annotationsFetchInfo = useGraphQLQuery<'annotations'>('annotations', {
     args: { documentId: documentsFetchInfo.data?.document._id },
     skip: !documentsFetchInfo.data?.document,

@@ -6,7 +6,7 @@ function ComponentsList(props: { components: ReactElement[]; spaceBetweenCompone
   const style = buildStyle();
 
   return (
-    <>
+    <div style={style.container}>
       {props.components.reduce(
         (componentList, component, ind) => [
           ...componentList,
@@ -15,11 +15,12 @@ function ComponentsList(props: { components: ReactElement[]; spaceBetweenCompone
         ],
         [] as ReactElement[],
       )}
-    </>
+    </div>
   );
 
   function buildStyle() {
     return {
+      container: { display: 'flex' },
       spaceBetweenComponents: {
         paddingRight: props.spaceBetweenComponents,
       },

@@ -36,6 +36,25 @@ function DocumentAnnotatorFooter(props: {
       <div style={styles.rightContainer}>
         <ComponentsList
           components={[
+            <IconButton
+              color="default"
+              disabled={!canRevertLastAction()}
+              hint={wordings.undo}
+              iconName="undo"
+              onClick={revertLastAction}
+            />,
+            <IconButton
+              color="default"
+              disabled={!canRestoreLastAction()}
+              hint={wordings.redo}
+              iconName="redo"
+              onClick={restoreLastAction}
+            />,
+          ]}
+          spaceBetweenComponents={theme.spacing * 2}
+        />
+        <ComponentsList
+          components={[
             <IconButton color="default" iconName="copy" onClick={copyToClipboard} hint={wordings.copyToClipboard} />,
             <IconButton color="default" iconName="save" onClick={saveDraft} hint={wordings.saveDraft} />,
             <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.validate} />,
@@ -45,6 +64,22 @@ function DocumentAnnotatorFooter(props: {
       </div>
     </div>
   );
+
+  function revertLastAction() {
+    props.annotatorStateHandler.revert();
+  }
+
+  function restoreLastAction() {
+    props.annotatorStateHandler.restore();
+  }
+
+  function canRevertLastAction() {
+    return props.annotatorStateHandler.canRevert();
+  }
+
+  function canRestoreLastAction() {
+    return props.annotatorStateHandler.canRestore();
+  }
 
   async function copyToClipboard() {
     const anonymizedDocument = props.anonymizer.anonymizeDocument(annotatorState.document, annotatorState.annotations);
@@ -88,7 +123,7 @@ function buildStyles(theme: customThemeType) {
     },
     rightContainer: {
       display: 'flex',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
       width: widths.documentPanel,
     },
     resetButtonContainer: {

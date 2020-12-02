@@ -35,6 +35,7 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
   function commit(previousState: annotatorStateType, nextState: annotatorStateType) {
     const annotationAction = getDiffBetweenAnnotationsStates(previousState.annotations, nextState.annotations);
     annotationActionsToRevert.push(annotationAction);
+    annotationActionsToRestore = [];
   }
 
   function revert(previousState: annotatorStateType): annotatorStateType {

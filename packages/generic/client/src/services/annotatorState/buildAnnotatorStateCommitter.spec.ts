@@ -7,6 +7,21 @@ import { sortAnnotations } from './utils';
 describe('buildAnnotatorStateCommitter', () => {
   const annotations = range(7).map(() => annotationModule.generator.generate());
 
+  describe('commit', () => {
+    it('should be nothing to redo after a commit', () => {
+      const annotatorStateCommitter = buildAnnotatorStateCommitter();
+      const state1 = buildAnnotatorState([annotations[0], annotations[1], annotations[2]]);
+      const state2 = buildAnnotatorState([annotations[2], annotations[3], annotations[4]]);
+      const state3 = buildAnnotatorState([annotations[2], annotations[3], annotations[5]]);
+      annotatorStateCommitter.commit(state1, state2);
+      const state4 = annotatorStateCommitter.revert(state2);
+
+      annotatorStateCommitter.commit(state4, state3);
+
+      expect(annotatorStateCommitter.canRestore()).toEqual(false);
+    });
+  });
+
   describe('revert', () => {
     it('should revert an action', () => {
       const annotatorStateCommitter = buildAnnotatorStateCommitter();

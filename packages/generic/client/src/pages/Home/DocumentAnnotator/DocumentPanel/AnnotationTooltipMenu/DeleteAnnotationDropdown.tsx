@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { annotationHandler, fetchedAnnotationType } from '@label/core';
-import { IconDropdown } from '../../../../../components';
+import { annotationHandler, annotationLinkHandler, fetchedAnnotationType } from '@label/core';
+import { IconButton, IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 
@@ -15,21 +15,42 @@ function DeleteAnnotationDropdown(props: {
   onClose: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
+  const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(props.annotation, annotatorState.annotations);
 
-  return (
-    <IconDropdown
-      buttonSize={props.buttonSize}
-      color="secondary"
-      hint={wordings.delete}
-      iconName="delete"
-      items={DELETION_OPTIONS.map((deletionOption) => ({
-        text: wordings.deletionOption[deletionOption],
-        value: deletionOption,
-      }))}
-      onChange={deleteAnnotation}
-      onClose={props.onClose}
-    />
-  );
+  if (linkedAnnotations.length <= 1) {
+    return renderIconButton();
+  } else {
+    return renderIconDropdown();
+  }
+
+  function renderIconDropdown() {
+    return (
+      <IconDropdown
+        buttonSize={props.buttonSize}
+        color="secondary"
+        hint={wordings.delete}
+        iconName="delete"
+        items={DELETION_OPTIONS.map((deletionOption) => ({
+          text: wordings.deletionOption[deletionOption],
+          value: deletionOption,
+        }))}
+        onChange={deleteAnnotation}
+        onClose={props.onClose}
+      />
+    );
+  }
+
+  function renderIconButton() {
+    return (
+      <IconButton
+        buttonSize={props.buttonSize}
+        color="secondary"
+        hint={wordings.delete}
+        iconName="delete"
+        onClick={() => deleteAnnotation('one')}
+      />
+    );
+  }
 
   function deleteAnnotation(deletionOption: typeof DELETION_OPTIONS[number]) {
     const newAnnotatorState = { ...annotatorState, annotations: computeNewAnnotations() };

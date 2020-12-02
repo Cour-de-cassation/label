@@ -17,10 +17,10 @@ function UnlinkAnnotationDropdown(props: {
   const annotatorState = props.annotatorStateHandler.get();
   const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(props.annotation, annotatorState.annotations);
 
-  if (linkedAnnotations.length > 2) {
-    return renderIconDropdown();
-  } else {
+  if (linkedAnnotations.length <= 2) {
     return renderIconButton();
+  } else {
+    return renderIconDropdown();
   }
 
   function renderIconDropdown() {

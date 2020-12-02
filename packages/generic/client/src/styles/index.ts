@@ -1,4 +1,5 @@
 import { heights } from './heights';
+import { widths } from './widths';
 import {
   emphasizeShadeColor,
   getColor,
@@ -9,6 +10,6 @@ import {
   ThemeProvider,
 } from './theme';
 
-export { emphasizeShadeColor, getColor, heights, ThemeProvider, useDisplayMode, useCustomTheme };
+export { emphasizeShadeColor, getColor, heights, widths, ThemeProvider, useDisplayMode, useCustomTheme };
 
 export type { typographyType, customThemeType };

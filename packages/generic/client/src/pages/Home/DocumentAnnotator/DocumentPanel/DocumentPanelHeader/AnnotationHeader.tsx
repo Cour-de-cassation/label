@@ -1,12 +1,12 @@
 import React from 'react';
-import { Header, SwitchButton, Text } from '../../../../components';
-import { heights, useCustomTheme } from '../../../../styles';
-import { wordings } from '../../../../wordings';
-import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
+import { Header, SwitchButton, Text } from '../../../../../components';
+import { heights, useCustomTheme } from '../../../../../styles';
+import { wordings } from '../../../../../wordings';
+import { useDocumentViewerModeHandler } from '../../../../../services/documentViewerMode';
 
-export { DocumentPanelHeader };
+export { AnnotationHeader };
 
-function DocumentPanelHeader() {
+function AnnotationHeader() {
   const theme = useCustomTheme();
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const style = buildStyle();

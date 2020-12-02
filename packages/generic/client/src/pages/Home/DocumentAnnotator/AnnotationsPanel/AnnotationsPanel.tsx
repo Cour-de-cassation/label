@@ -3,7 +3,6 @@ import { LayoutGrid, Text } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
-import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { annotationPerCategoryAndEntityType } from '../lib';
 import { CategoryTable } from './CategoryTable';
@@ -18,8 +17,7 @@ function AnnotationsPanel(props: {
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const documentViewerModeHandler = useDocumentViewerModeHandler();
-  const entityEntryHandler = useEntityEntryHandler(onEntitySelection);
+  const entityEntryHandler = useEntityEntryHandler();
 
   return (
     <LayoutGrid onMouseLeave={entityEntryHandler.unfocusEntity} style={styles.panel}>
@@ -62,13 +60,5 @@ function AnnotationsPanel(props: {
         marginBottom: theme.spacing * 3,
       },
     };
-  }
-
-  function onEntitySelection(entityId: string | undefined) {
-    if (entityId) {
-      documentViewerModeHandler.setOccurrenceMode(entityId);
-    } else {
-      documentViewerModeHandler.resetViewerMode();
-    }
   }
 }

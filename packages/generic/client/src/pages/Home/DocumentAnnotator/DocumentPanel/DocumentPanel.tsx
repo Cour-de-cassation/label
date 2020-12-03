@@ -15,7 +15,7 @@ function DocumentPanel(props: {
 }): ReactElement {
   return (
     <LayoutGrid container>
-      <DocumentPanelHeader />
+      <DocumentPanelHeader annotatorStateHandler={props.annotatorStateHandler} />
       <DocumentViewer
         annotatorStateHandler={props.annotatorStateHandler}
         anonymizer={props.anonymizer}

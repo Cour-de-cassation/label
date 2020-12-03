@@ -25,7 +25,6 @@ function DocumentSwitcher(props: {
   );
   const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
 
-  console.log(props.document);
   return renderPage();
 
   function renderPage() {

@@ -42,11 +42,11 @@ function isLinkedTo<annotationT extends fetchedAnnotationType>(
 }
 
 function getLinkedAnnotations<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
+  entityId: annotationT['entityId'],
   annotations: annotationT[],
 ): annotationT[] {
   return uniqBy(
-    annotations.filter((otherAnnotation) => otherAnnotation.entityId === annotation.entityId),
+    annotations.filter((otherAnnotation) => otherAnnotation.entityId === entityId),
     (otherAnnotation) => otherAnnotation.text,
   ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
 }
@@ -79,7 +79,7 @@ function unlinkByCategoryAndText<annotationT extends fetchedAnnotationType>(
   annotation: annotationT,
   annotations: annotationT[],
 ) {
-  const linkedAnnotations = getLinkedAnnotations(annotation, annotations).filter(
+  const linkedAnnotations = getLinkedAnnotations(annotation.entityId, annotations).filter(
     (linkedAnnotation) => !idModule.lib.equalId(linkedAnnotation._id, annotation._id),
   );
 

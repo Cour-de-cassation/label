@@ -121,7 +121,7 @@ describe('annotationLinker', () => {
       );
 
       const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(
-        annotationsWithLinks2[0],
+        annotationsWithLinks2[0].entityId,
         annotationsWithLinks2,
       );
 

@@ -15,7 +15,10 @@ function UnlinkAnnotationDropdown(props: {
   onClose?: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
-  const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(props.annotation, annotatorState.annotations);
+  const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(
+    props.annotation.entityId,
+    annotatorState.annotations,
+  );
 
   if (linkedAnnotations.length <= 2) {
     return renderIconButton();

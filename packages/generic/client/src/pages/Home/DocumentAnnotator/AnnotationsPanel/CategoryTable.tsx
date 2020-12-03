@@ -4,7 +4,7 @@ import { customThemeType, useCustomTheme } from '../../../../styles';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
-import { annotationPerEntityType } from '../lib';
+import { annotationPerEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTableEntry } from './CategoryTableEntry';
 import { entityEntryHandlerType } from './useEntityEntryHandler';
 
@@ -19,6 +19,7 @@ function CategoryTable(props: {
   categoryAnnotations: annotationPerEntityType;
   categorySize: number;
   entityEntryHandler: entityEntryHandlerType;
+  splittedTextByLine: splittedTextByLineType;
 }) {
   const theme = useCustomTheme();
   const iconSize = theme.shape.borderRadius.medium * 2 - ACCORDION_HEADER_PADDING;
@@ -56,6 +57,7 @@ function CategoryTable(props: {
               entityId={entityId}
               entityEntryHandler={props.entityEntryHandler}
               key={entityId}
+              splittedTextByLine={props.splittedTextByLine}
             />
           ))}
         </LayoutGrid>

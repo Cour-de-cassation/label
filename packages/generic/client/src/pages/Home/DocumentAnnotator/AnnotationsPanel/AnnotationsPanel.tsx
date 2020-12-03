@@ -4,7 +4,7 @@ import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
-import { annotationPerCategoryAndEntityType } from '../lib';
+import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTable } from './CategoryTable';
 import { useEntityEntryHandler } from './useEntityEntryHandler';
 
@@ -14,6 +14,7 @@ function AnnotationsPanel(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   annotationPerCategoryAndEntity: annotationPerCategoryAndEntityType;
+  splittedTextByLine: splittedTextByLineType;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -36,6 +37,7 @@ function AnnotationsPanel(props: {
               category={category}
               categorySize={categorySize}
               entityEntryHandler={entityEntryHandler}
+              splittedTextByLine={props.splittedTextByLine}
             />
           </LayoutGrid>
         ))}

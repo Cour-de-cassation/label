@@ -6,10 +6,9 @@ export { buildDocumentViewerModeHandler };
 export type { documentViewerModeHandlerType };
 
 type documentViewerModeHandlerType = {
-  checkViewerMode: (annotations: fetchedAnnotationType[]) => void;
   isAnonymizedView: () => boolean;
   resetViewerMode: () => void;
-  setOccurrenceMode: (entityId: fetchedAnnotationType['entityId']) => void;
+  setOccurrenceMode: (entityId: fetchedAnnotationType['entityId'], entityLineNumbers: number[]) => void;
   switchAnonymizedView: () => void;
   documentViewerMode: viewerModeType;
 };
@@ -19,7 +18,6 @@ function buildDocumentViewerModeHandler(
   setViewerMode: (documentViewerMode: viewerModeType) => void,
 ): documentViewerModeHandlerType {
   return {
-    checkViewerMode,
     isAnonymizedView,
     setOccurrenceMode,
     switchAnonymizedView,
@@ -35,20 +33,11 @@ function buildDocumentViewerModeHandler(
     return documentViewerMode.isAnonymized;
   }
 
-  function setOccurrenceMode(entityId: fetchedAnnotationType['entityId']) {
-    setViewerMode({ kind: 'occurrence', entityId, isAnonymized: documentViewerMode.isAnonymized });
+  function setOccurrenceMode(entityId: fetchedAnnotationType['entityId'], entityLineNumbers: number[]) {
+    setViewerMode({ kind: 'occurrence', entityId, entityLineNumbers, isAnonymized: documentViewerMode.isAnonymized });
   }
 
   function switchAnonymizedView() {
     setViewerMode({ ...documentViewerMode, isAnonymized: !documentViewerMode.isAnonymized });
-  }
-
-  function checkViewerMode(annotations: fetchedAnnotationType[]) {
-    if (documentViewerMode.kind === 'occurrence') {
-      const isEntityEmpty = !annotations.some((annotation) => annotation.entityId === documentViewerMode.entityId);
-      if (isEntityEmpty) {
-        setViewerMode({ kind: 'annotation', isAnonymized: documentViewerMode.isAnonymized });
-      }
-    }
   }
 }

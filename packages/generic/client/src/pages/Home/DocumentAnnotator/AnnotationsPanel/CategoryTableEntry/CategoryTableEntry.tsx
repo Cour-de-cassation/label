@@ -6,6 +6,7 @@ import { entityEntryHandlerType } from '../useEntityEntryHandler';
 import { CategoryTableEntryDefault } from './CategoryTableEntryDefault';
 import { CategoryTableEntryHovered } from './CategoryTableEntryHovered';
 import { CategoryTableEntrySelected } from './CategoryTableEntrySelected';
+import { splittedTextByLineType } from '../../lib';
 
 export { CategoryTableEntry };
 
@@ -15,6 +16,7 @@ function CategoryTableEntry(props: {
   entityAnnotations: fetchedAnnotationType[];
   entityId: string;
   entityEntryHandler: entityEntryHandlerType;
+  splittedTextByLine: splittedTextByLineType;
 }) {
   return isHovered() ? (
     <CategoryTableEntryHovered
@@ -25,6 +27,7 @@ function CategoryTableEntry(props: {
       entityEntryHandler={props.entityEntryHandler}
       hideActionButtons={() => props.entityEntryHandler.unfocusEntity()}
       selected={isSelected()}
+      splittedTextByLine={props.splittedTextByLine}
     />
   ) : isSelected() ? (
     <CategoryTableEntrySelected

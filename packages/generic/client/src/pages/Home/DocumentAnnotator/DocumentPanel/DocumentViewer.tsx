@@ -38,7 +38,9 @@ function DocumentViewer(props: {
               </td>
               <td>
                 <span key={line}>
-                  <Text variant="body2">{content.map(renderChunk)}</Text>
+                  <Text variant="body2" color={isLineHighlighted(line) ? 'textPrimary' : 'textSecondary'}>
+                    {content.map(renderChunk)}
+                  </Text>
                 </span>
               </td>
             </tr>
@@ -47,6 +49,22 @@ function DocumentViewer(props: {
       </table>
     </div>
   );
+
+  function isLineHighlighted(lineNumber: number) {
+    if (documentViewerModeHandler.documentViewerMode.kind !== 'occurrence') {
+      return true;
+    }
+
+    const selectedLine = props.splittedTextByLine.find(({ line }) => line === lineNumber);
+    if (!selectedLine) {
+      return false;
+    }
+    const { entityId } = documentViewerModeHandler.documentViewerMode;
+    const areAnnotationsLeft = selectedLine.content.some(
+      (chunk) => chunk.type === 'annotation' && chunk.annotation.entityId === entityId,
+    );
+    return areAnnotationsLeft;
+  }
 
   function renderChunk(chunk: textChunkType | annotationChunkType<fetchedAnnotationType>) {
     switch (chunk.type) {
@@ -74,25 +92,10 @@ function DocumentViewer(props: {
   function computeDocumentText() {
     switch (documentViewerModeHandler.documentViewerMode.kind) {
       case 'occurrence':
-        return filterLineByEntityId(documentViewerModeHandler.documentViewerMode.entityId, props.splittedTextByLine);
+        const { entityLineNumbers } = documentViewerModeHandler.documentViewerMode;
+        return props.splittedTextByLine.filter(({ line }) => entityLineNumbers.includes(line));
       default:
         return props.splittedTextByLine;
-    }
-
-    function filterLineByEntityId(
-      entityId: string,
-      splittedTextByLine: splittedTextByLineType,
-    ): splittedTextByLineType {
-      return splittedTextByLine.filter(({ content }) =>
-        content.some((chunk) => {
-          switch (chunk.type) {
-            case 'annotation':
-              return chunk.annotation.entityId === entityId;
-            case 'text':
-              return false;
-          }
-        }),
-      );
     }
   }
 

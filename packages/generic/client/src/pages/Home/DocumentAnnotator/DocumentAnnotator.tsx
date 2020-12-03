@@ -47,6 +47,7 @@ function DocumentAnnotator(props: {
               annotatorStateHandler={annotatorStateHandler}
               anonymizer={props.anonymizer}
               annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
+              splittedTextByLine={splittedTextByLine}
             />
           </div>
           <div style={styles.rightContainer}>

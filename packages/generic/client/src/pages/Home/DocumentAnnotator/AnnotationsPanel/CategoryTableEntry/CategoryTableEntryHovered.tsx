@@ -6,6 +6,7 @@ import { customThemeType, emphasizeShadeColor, useCustomTheme, useDisplayMode } 
 import { clientAnonymizerType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
+import { splittedTextByLineType } from '../../lib';
 import { buildCategoryTableEntryStyle } from './buildCategoryTableEntryStyle';
 import { computeCategoryTableEntry } from './computeCategoryTableEntry';
 import { UnlinkAnnotationDropdown } from './UnlinkAnnotationDropdown';
@@ -22,6 +23,7 @@ function CategoryTableEntryHovered(props: {
   entityEntryHandler: entityEntryHandlerType;
   hideActionButtons: () => void;
   selected?: boolean;
+  splittedTextByLine: splittedTextByLineType;
 }) {
   const { entityAnnotation, entityAnnotationTexts } = computeCategoryTableEntry({
     anonymizer: props.anonymizer,
@@ -114,8 +116,22 @@ function CategoryTableEntryHovered(props: {
     if (props.entityEntryHandler.getEntitySelected() === props.entityId) {
       props.entityEntryHandler.handleEntitySelection(undefined);
     } else {
-      props.entityEntryHandler.handleEntitySelection(props.entityId);
+      const entityLines = filterLineByEntityId(props.entityId, props.splittedTextByLine).map(({ line }) => line);
+      props.entityEntryHandler.handleEntitySelection({ id: props.entityId, lineNumbers: entityLines });
     }
+  }
+
+  function filterLineByEntityId(entityId: string, splittedTextByLine: splittedTextByLineType): splittedTextByLineType {
+    return splittedTextByLine.filter(({ content }) =>
+      content.some((chunk) => {
+        switch (chunk.type) {
+          case 'annotation':
+            return chunk.annotation.entityId === entityId;
+          case 'text':
+            return false;
+        }
+      }),
+    );
   }
 
   function deleteAnnotations() {

@@ -19,9 +19,9 @@ function useEntityEntryHandler() {
     unfocusEntity: () => setEntityFocused(undefined),
   };
 
-  function handleEntitySelection(entityId: string | undefined) {
-    if (entityId) {
-      documentViewerModeHandler.setOccurrenceMode(entityId);
+  function handleEntitySelection(entity: { id: string; lineNumbers: number[] } | undefined) {
+    if (entity) {
+      documentViewerModeHandler.setOccurrenceMode(entity.id, entity.lineNumbers);
     } else {
       documentViewerModeHandler.resetViewerMode();
     }

@@ -6,7 +6,6 @@ import { DEFAULT_VIEWER_MODE, viewerModeType } from './viewerMode';
 export { DocumentViewerModeHandlerContext, DocumentViewerModeHandlerContextProvider };
 
 const DocumentViewerModeHandlerContext = createContext<documentViewerModeHandlerType>({
-  checkViewerMode: () => null,
   isAnonymizedView: () => false,
   resetViewerMode: () => null,
   setOccurrenceMode: () => null,
@@ -20,7 +19,6 @@ function DocumentViewerModeHandlerContextProvider(props: {
 }): ReactElement {
   const [documentViewerMode, setViewerMode] = useState<viewerModeType>(DEFAULT_VIEWER_MODE);
   const documentViewerModeHandler = buildDocumentViewerModeHandler(documentViewerMode, setViewerMode);
-  documentViewerModeHandler.checkViewerMode(props.annotations);
 
   return (
     <DocumentViewerModeHandlerContext.Provider value={documentViewerModeHandler}>

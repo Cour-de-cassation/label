@@ -128,8 +128,9 @@ function buildStyledComponents() {
         ${
           styleProps.entityEntryHandler.isFocused(styleProps.entityId)
             ? `
-        display: inherit;
-        `
+            display: flex;
+            align-items: center;
+          `
             : ''
         }
       `;

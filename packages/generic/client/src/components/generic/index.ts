@@ -1,4 +1,13 @@
-import { ButtonWithIcon, ComponentsList, Dropdown, Header, IconButton, IconDropdown, LabelledDropdown } from './custom';
+import {
+  ButtonWithIcon,
+  ComponentsList,
+  Dropdown,
+  Header,
+  IconButton,
+  IconDropdown,
+  LabelledDropdown,
+  SText,
+} from './custom';
 import {
   Accordion,
   Checkbox,
@@ -30,6 +39,7 @@ export {
   LayoutGrid,
   MenuBar,
   RadioButton,
+  SText,
   SvgImage,
   SwitchButton,
   Text,

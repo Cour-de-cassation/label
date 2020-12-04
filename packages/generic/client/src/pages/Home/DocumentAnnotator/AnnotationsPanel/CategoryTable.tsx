@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { settingsModule } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
@@ -11,6 +12,8 @@ import { entityEntryHandlerType } from './useEntityEntryHandler';
 export { CategoryTable };
 
 const ACCORDION_HEADER_PADDING = 5;
+
+const { Div_Body } = buildStyledComponents();
 
 function CategoryTable(props: {
   annotatorStateHandler: annotatorStateHandlerType;
@@ -48,11 +51,10 @@ function CategoryTable(props: {
         </LayoutGrid>
       }
       body={
-        <LayoutGrid container>
+        <Div_Body>
           {props.categoryAnnotations.map(({ entityId, entityAnnotations }) => (
             <CategoryTableEntry
               annotatorStateHandler={props.annotatorStateHandler}
-              anonymizer={props.anonymizer}
               entityAnnotations={entityAnnotations}
               entityId={entityId}
               entityEntryHandler={props.entityEntryHandler}
@@ -60,7 +62,7 @@ function CategoryTable(props: {
               splittedTextByLine={props.splittedTextByLine}
             />
           ))}
-        </LayoutGrid>
+        </Div_Body>
       }
       onChange={setIsExpanded}
     />
@@ -81,4 +83,14 @@ function CategoryTable(props: {
       },
     } as const;
   }
+}
+
+function buildStyledComponents() {
+  const Div_Body = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  `;
+
+  return { Div_Body };
 }

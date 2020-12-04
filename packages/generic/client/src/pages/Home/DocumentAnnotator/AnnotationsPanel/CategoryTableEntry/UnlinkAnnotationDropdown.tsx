@@ -12,6 +12,7 @@ function UnlinkAnnotationDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   buttonSize?: number;
+  onClick?: () => void;
   onClose?: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
@@ -44,6 +45,7 @@ function UnlinkAnnotationDropdown(props: {
           })),
         ]}
         onChange={unlinkAnnotation}
+        onClick={props.onClick}
         onClose={props.onClose}
       />
     );

@@ -18,10 +18,10 @@ function AnnotationsPanel(props: {
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const entityEntryHandler = useEntityEntryHandler();
+  const entityEntryHandler = useEntityEntryHandler(props.splittedTextByLine);
 
   return (
-    <LayoutGrid onMouseLeave={entityEntryHandler.unfocusEntity} style={styles.panel}>
+    <LayoutGrid style={styles.panel}>
       <LayoutGrid container alignItems="center" style={styles.panelHeader}>
         <LayoutGrid item>
           <Text variant="h2">{wordings.askedAnnotations}</Text>

@@ -13,6 +13,7 @@ function IconDropdown<T extends string>(props: {
   iconName: iconNameType;
   items: Array<{ icon?: ReactElement; text: string; value: T }>;
   onChange: (value: T) => void;
+  onClick?: () => void;
   onClose?: () => void;
   width?: number;
 }): ReactElement {
@@ -25,7 +26,10 @@ function IconDropdown<T extends string>(props: {
           disabled={props.disabled}
           hint={props.hint}
           iconName={props.iconName}
-          onClick={onClick}
+          onClick={(event) => {
+            onClick(event);
+            props.onClick && props.onClick();
+          }}
         />
       )}
       items={props.items}

@@ -12,6 +12,7 @@ function LinkAnnotationDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   buttonSize?: number;
+  onClick?: () => void;
   onClose?: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
@@ -31,6 +32,7 @@ function LinkAnnotationDropdown(props: {
         value: annotation.text,
       }))}
       onChange={linkToAnnotation}
+      onClick={props.onClick}
       onClose={props.onClose}
       width={LINK_ANNOTATION_MENU_WIDTH}
     />

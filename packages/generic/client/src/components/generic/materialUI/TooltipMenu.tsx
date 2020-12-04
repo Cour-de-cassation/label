@@ -1,5 +1,5 @@
 import { Menu } from '@material-ui/core';
-import React, { CSSProperties, MouseEvent, ReactElement } from 'react';
+import React, { MouseEvent, ReactElement } from 'react';
 import { customThemeType, useCustomTheme } from '../../../styles';
 
 export { TooltipMenu };
@@ -10,7 +10,6 @@ function TooltipMenu(props: {
   hover?: boolean;
   onClickOnAnchorElement?: () => void;
   onClose: () => void;
-  style?: CSSProperties;
 }): ReactElement {
   const displayPosition = getDisplayPosition();
   const theme = useCustomTheme();

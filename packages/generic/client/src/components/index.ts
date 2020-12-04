@@ -18,6 +18,7 @@ import {
   Text,
   TextInput,
   TooltipMenu,
+  FloatingTooltipMenu,
 } from './generic';
 
 export {
@@ -43,4 +44,5 @@ export {
   Text,
   TextInput,
   TooltipMenu,
+  FloatingTooltipMenu,
 };

@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react';
 import { fetchedAnnotationType } from '@label/core';
-import { LayoutGrid, TooltipMenu } from '../../../../../components';
+import { LayoutGrid, FloatingTooltipMenu } from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../../../types';
+import { mousePositionType } from '../../../../../utils';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 
 export { AnnotationTooltipSummary };
@@ -11,25 +12,18 @@ export { AnnotationTooltipSummary };
 const ANNOTATION_TOOLTIP_SUMMARY_WIDTH = 300;
 
 function AnnotationTooltipSummary(props: {
-  anchorAnnotation: Element | undefined;
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
-  onClickOnAnchorAnnotation: () => void;
-  onClose: () => void;
+  isOpen: boolean;
+  mousePosition: mousePositionType;
 }): ReactElement {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
 
   return (
-    <TooltipMenu
-      anchorElement={props.anchorAnnotation}
-      hover
-      onClickOnAnchorElement={props.onClickOnAnchorAnnotation}
-      onClose={props.onClose}
-      style={style.tooltip}
-    >
+    <FloatingTooltipMenu isOpen={props.isOpen} mousePosition={props.mousePosition}>
       <LayoutGrid container alignItems="center" style={style.tooltipItem}>
         <AnnotationTooltipMenuHeader
           annotatorStateHandler={props.annotatorStateHandler}
@@ -38,14 +32,11 @@ function AnnotationTooltipSummary(props: {
           isAnonymizedView={props.isAnonymizedView}
         />
       </LayoutGrid>
-    </TooltipMenu>
+    </FloatingTooltipMenu>
   );
 
   function buildStyle(theme: customThemeType) {
     return {
-      tooltip: {
-        zIndex: 1,
-      },
       tooltipItem: {
         maxWidth: ANNOTATION_TOOLTIP_SUMMARY_WIDTH,
         padding: `${theme.spacing}px 0px`,

@@ -1,3 +1,3 @@
-import { clientAnonymizerType } from './types';
+import { clientAnonymizerType, positionType } from './types';
 
-export type { clientAnonymizerType };
+export type { clientAnonymizerType, positionType };

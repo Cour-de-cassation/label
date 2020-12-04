@@ -1,12 +1,11 @@
-import React, { ReactElement, useState } from 'react';
+import React, { MouseEvent, ReactElement, useState } from 'react';
 import { fetchedAnnotationType, settingsModule } from '@label/core';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { getColor, useDisplayMode } from '../../../../styles';
-import { clientAnonymizerType } from '../../../../types';
+import { clientAnonymizerType, positionType } from '../../../../types';
 import { MouseMoveListener, useMousePosition } from '../../../../utils';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
-import { AnnotationTooltipSummary } from './AnnotationTooltipMenu/AnnotationTooltipSummary';
 
 export { DocumentAnnotationText };
 
@@ -15,19 +14,20 @@ function DocumentAnnotationText(props: {
   annotation: fetchedAnnotationType;
   anonymizer: clientAnonymizerType;
 }): ReactElement {
-  const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
-  const [isSummaryTooltipOpen, setIsSummaryTooltipOpen] = useState(false);
+  const [isTooltipMenuVisible, setIsTooltipMenuVisible] = useState(false);
+  const [isTooltipMenuExpanded, setIsTooltipMenuExpanded] = useState(false);
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const { displayMode } = useDisplayMode();
   const mouseMoveHandler = useMousePosition();
+  const [tooltipMenuFixedPosition, setTooltipMenuFixedPosition] = useState<positionType | undefined>(undefined);
   const style = buildStyle();
 
   return (
     <span>
       <MouseMoveListener
-        onClick={(event) => openTooltipMenu(event.currentTarget)}
-        onMouseEnter={openTooltipSummary}
-        onMouseLeave={closeTooltipSummary}
+        onClick={onAnnotationClick}
+        onMouseEnter={openTooltipMenu}
+        onMouseLeave={onAnnotationMouseLeave}
         mouseMoveHandler={mouseMoveHandler}
       >
         <span style={style.annotationText}>
@@ -37,24 +37,31 @@ function DocumentAnnotationText(props: {
         </span>
       </MouseMoveListener>
 
-      <AnnotationTooltipSummary
-        annotatorStateHandler={props.annotatorStateHandler}
-        annotation={props.annotation}
-        anonymizer={props.anonymizer}
-        isAnonymizedView={documentViewerModeHandler.isAnonymizedView()}
-        isOpen={isSummaryTooltipOpen}
-        mousePosition={mouseMoveHandler.mousePosition}
-      />
-      <AnnotationTooltipMenu
-        anchorAnnotation={anchorElement}
-        annotatorStateHandler={props.annotatorStateHandler}
-        annotation={props.annotation}
-        anonymizer={props.anonymizer}
-        isAnonymizedView={documentViewerModeHandler.isAnonymizedView()}
-        onClose={closeTooltipMenu}
-      />
+      {isTooltipMenuVisible && (
+        <AnnotationTooltipMenu
+          annotatorStateHandler={props.annotatorStateHandler}
+          annotation={props.annotation}
+          anonymizer={props.anonymizer}
+          closesOnBackdropClick={!!tooltipMenuFixedPosition}
+          originPosition={tooltipMenuFixedPosition || mouseMoveHandler.mousePosition}
+          isAnonymizedView={documentViewerModeHandler.isAnonymizedView()}
+          onClose={closeTooltipMenu}
+          isExpanded={isTooltipMenuExpanded}
+        />
+      )}
     </span>
   );
+
+  function onAnnotationClick(event: MouseEvent) {
+    setIsTooltipMenuExpanded(true);
+    setTooltipMenuFixedPosition({ x: event.clientX, y: event.clientY });
+  }
+
+  function onAnnotationMouseLeave() {
+    if (!tooltipMenuFixedPosition) {
+      closeTooltipMenu();
+    }
+  }
 
   function buildStyle() {
     const viewerModeSpecificStyle = buildViewerModeSpecificStyle();
@@ -98,20 +105,13 @@ function DocumentAnnotationText(props: {
     }
   }
 
-  function openTooltipSummary() {
-    setIsSummaryTooltipOpen(true);
-  }
-
-  function closeTooltipSummary() {
-    setIsSummaryTooltipOpen(false);
-  }
-
-  function openTooltipMenu(element: Element | undefined) {
-    setAnchorElement(element);
-    closeTooltipSummary();
+  function openTooltipMenu() {
+    setIsTooltipMenuVisible(true);
   }
 
   function closeTooltipMenu() {
-    setAnchorElement(undefined);
+    setIsTooltipMenuVisible(false);
+    setIsTooltipMenuExpanded(false);
+    setTooltipMenuFixedPosition(undefined);
   }
 }

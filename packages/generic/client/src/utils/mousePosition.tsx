@@ -1,21 +1,15 @@
 import React, { MouseEvent, ReactElement, useState } from 'react';
+import { positionType } from '../types';
 
 export { useMousePosition, MouseMoveListener };
 
-export type { mousePositionType };
-
-type mousePositionType = {
-  x: number;
-  y: number;
-};
-
 type mouseMoveHandlerType = {
-  mousePosition: mousePositionType;
-  setMousePosition: (mousePosition: mousePositionType) => void;
+  mousePosition: positionType;
+  setMousePosition: (mousePosition: positionType) => void;
 };
 
 function useMousePosition(): mouseMoveHandlerType {
-  const [mousePosition, setMousePosition] = useState<mousePositionType>({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState<positionType>({ x: 0, y: 0 });
   return { mousePosition, setMousePosition };
 }
 

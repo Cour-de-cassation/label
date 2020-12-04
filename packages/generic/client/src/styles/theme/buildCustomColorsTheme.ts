@@ -24,6 +24,7 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
       border: { default: getColor(customColorsMode.dropdown.border), error: getColor(customColorsMode.error) },
     },
     icon: getColor(customColorsMode.icon),
+    overlay: 'black',
     primary: buildCustomColorsVariations(customColorsMode.primary),
     secondary: buildCustomColorsVariations(customColorsMode.secondary),
     separator: getShadeColor(customColorsMode.line.level2),

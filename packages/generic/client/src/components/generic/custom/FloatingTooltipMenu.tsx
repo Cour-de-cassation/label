@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactElement } from 'react';
 import { customThemeType, useCustomTheme } from '../../../styles';
-import { mousePositionType } from '../../../utils';
+import { positionType } from '../../../types';
 
 export { FloatingTooltipMenu };
 
@@ -9,29 +9,38 @@ const MOUSE_OFFSET = 20;
 type displayPositionType = { vertical: 'top' | 'bottom'; horizontal: 'left' | 'right' };
 
 function FloatingTooltipMenu(props: {
-  isOpen: boolean;
   children: ReactElement;
-  mousePosition: mousePositionType;
+  isExpanded: boolean;
+  originPosition: positionType;
+  onClose: () => void;
 }): ReactElement {
   const theme = useCustomTheme();
+  const style = buildStyle(theme, props.originPosition);
 
-  const style = buildStyle(theme, props.mousePosition);
-  if (!props.isOpen) {
-    return <span />;
-  }
   return (
-    <div style={style.tooltipMenu}>
-      <div style={style.tooltipMenuContent}>{props.children}</div>
-    </div>
+    <>
+      {props.isExpanded && <div onClick={props.onClose} style={style.overlay} />}
+      <div style={style.tooltipMenu}>
+        <div style={style.tooltipMenuContent}>{props.children}</div>
+      </div>
+    </>
   );
 }
 
-function buildStyle(theme: customThemeType, mousePosition: mousePositionType): { [cssClass: string]: CSSProperties } {
-  const displayPosition = getDisplayPosition(mousePosition);
-  const tooltipMenuOrigin = getTooltipMenuOrigin(displayPosition, mousePosition);
+function buildStyle(theme: customThemeType, originPosition: positionType): { [cssClass: string]: CSSProperties } {
+  const displayPosition = getDisplayPosition(originPosition);
+  const tooltipMenuOrigin = getTooltipMenuOrigin(displayPosition, originPosition);
   return {
+    overlay: {
+      backgroundColor: theme.colors.overlay,
+      opacity: 0.2,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    },
     tooltipMenu: {
-      zIndex: 10,
       boxShadow: theme.boxShadow.minor,
       backgroundColor: theme.colors.default.background,
       borderRadius: theme.shape.borderRadius.small,
@@ -44,12 +53,12 @@ function buildStyle(theme: customThemeType, mousePosition: mousePositionType): {
   };
 }
 
-function getDisplayPosition(mousePosition: mousePositionType): displayPositionType {
+function getDisplayPosition(originPosition: positionType): displayPositionType {
   const windowSize = getWindowSize();
-  const mouseVerticalWindowPercentagePosition = (100 * mousePosition.y) / windowSize.height;
-  const mouseHorizontalWindowPercentagePosition = (100 * mousePosition.x) / windowSize.width;
-  const vertical = mouseVerticalWindowPercentagePosition < 75 ? 'bottom' : 'top';
-  const horizontal = mouseHorizontalWindowPercentagePosition < 75 ? 'left' : 'right';
+  const mouseVerticalWindowPercentagePosition = (100 * originPosition.y) / windowSize.height;
+  const mouseHorizontalWindowPercentagePosition = (100 * originPosition.x) / windowSize.width;
+  const vertical = mouseVerticalWindowPercentagePosition < 65 ? 'bottom' : 'top';
+  const horizontal = mouseHorizontalWindowPercentagePosition < 65 ? 'left' : 'right';
   return {
     vertical,
     horizontal,
@@ -63,27 +72,27 @@ function getWindowSize() {
   return { width, height };
 }
 
-function getTooltipMenuOrigin(displayPosition: displayPositionType, mousePosition: mousePositionType) {
+function getTooltipMenuOrigin(displayPosition: displayPositionType, originPosition: positionType) {
   const windowSize = getWindowSize();
   return {
-    ...getVerticalOrigin(displayPosition.vertical, windowSize.height, mousePosition),
-    ...getHorizontalOrigin(displayPosition.horizontal, windowSize.width, mousePosition),
+    ...getVerticalOrigin(displayPosition.vertical, windowSize.height, originPosition),
+    ...getHorizontalOrigin(displayPosition.horizontal, windowSize.width, originPosition),
   };
 }
 
 function getVerticalOrigin(
   vertical: displayPositionType['vertical'],
   windowHeight: number,
-  mousePosition: mousePositionType,
+  originPosition: positionType,
 ) {
   switch (vertical) {
     case 'bottom':
       return {
-        top: `${mousePosition.y + MOUSE_OFFSET}px`,
+        top: `${originPosition.y + MOUSE_OFFSET}px`,
       };
     case 'top':
       return {
-        bottom: `${windowHeight - mousePosition.y + MOUSE_OFFSET}px`,
+        bottom: `${windowHeight - originPosition.y + MOUSE_OFFSET}px`,
       };
   }
 }
@@ -91,16 +100,16 @@ function getVerticalOrigin(
 function getHorizontalOrigin(
   horizontal: displayPositionType['horizontal'],
   windowWidth: number,
-  mousePosition: mousePositionType,
+  originPosition: positionType,
 ) {
   switch (horizontal) {
     case 'left':
       return {
-        left: `${mousePosition.x + MOUSE_OFFSET}px`,
+        left: `${originPosition.x + MOUSE_OFFSET}px`,
       };
     case 'right':
       return {
-        right: `${windowWidth - mousePosition.x + MOUSE_OFFSET}px`,
+        right: `${windowWidth - originPosition.x + MOUSE_OFFSET}px`,
       };
   }
 }

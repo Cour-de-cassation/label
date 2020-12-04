@@ -10,7 +10,9 @@ function ComponentsList(props: { components: ReactElement[]; spaceBetweenCompone
       {props.components.reduce(
         (componentList, component, ind) => [
           ...componentList,
-          <span key={2 * ind}>{component}</span>,
+          <span key={2 * ind} style={style.componentContainer}>
+            {component}
+          </span>,
           <span key={2 * ind + 1} style={style.spaceBetweenComponents} />,
         ],
         [] as ReactElement[],
@@ -21,6 +23,7 @@ function ComponentsList(props: { components: ReactElement[]; spaceBetweenCompone
   function buildStyle() {
     return {
       container: { display: 'flex' },
+      componentContainer: { display: 'flex', alignItems: 'center' },
       spaceBetweenComponents: {
         paddingRight: props.spaceBetweenComponents,
       },

@@ -20,7 +20,7 @@ function AnnotationTooltipMenuHeader(props: {
   const annotationIndex = annotationHandler.getAnnotationIndex(annotatorState.annotations, props.annotation);
 
   return (
-    <div>
+    <>
       <Header
         leftHeaderComponents={[
           <CategoryIcon category={props.annotation.category} iconSize={40} settings={annotatorState.settings} />,
@@ -42,13 +42,13 @@ function AnnotationTooltipMenuHeader(props: {
           {props.isAnonymizedView ? props.annotation.text : props.anonymizer.anonymize(props.annotation)}
         </Text>
       </Text>
-    </div>
+    </>
   );
 
   function buildStyle(theme: customThemeType) {
     return {
       header: {
-        padding: `${theme.spacing}px 0px`,
+        paddingBottom: `${theme.spacing * 2}px`,
       },
     };
   }

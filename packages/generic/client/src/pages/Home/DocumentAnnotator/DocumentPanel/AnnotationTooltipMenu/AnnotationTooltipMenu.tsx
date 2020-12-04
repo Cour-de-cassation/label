@@ -28,8 +28,8 @@ function AnnotationTooltipMenu(props: {
 
   return (
     <FloatingTooltipMenu onClose={props.onClose} isExpanded={props.isExpanded} originPosition={props.originPosition}>
-      <div>
-        <LayoutGrid container alignItems="center" style={style.tooltipItem}>
+      <>
+        <LayoutGrid container style={style.tooltipMenuContent}>
           <AnnotationTooltipMenuHeader
             annotatorStateHandler={props.annotatorStateHandler}
             annotation={props.annotation}
@@ -38,7 +38,7 @@ function AnnotationTooltipMenu(props: {
           />
         </LayoutGrid>
         {renderAnnotationButtons()}
-      </div>
+      </>
     </FloatingTooltipMenu>
   );
 
@@ -48,7 +48,7 @@ function AnnotationTooltipMenu(props: {
     }
 
     return (
-      <LayoutGrid container style={style.tooltipItem}>
+      <LayoutGrid container style={style.annotationButtonsContainer}>
         <ComponentsList
           components={[
             <ChangeAnnotationCategoryDropdown
@@ -69,7 +69,7 @@ function AnnotationTooltipMenu(props: {
               onClose={props.onClose}
             />,
           ]}
-          spaceBetweenComponents={theme.spacing}
+          spaceBetweenComponents={theme.spacing * 2}
         />
       </LayoutGrid>
     );
@@ -77,9 +77,11 @@ function AnnotationTooltipMenu(props: {
 
   function buildStyle(theme: customThemeType) {
     return {
-      tooltipItem: {
+      annotationButtonsContainer: {
+        paddingTop: `${theme.spacing * 3}px`,
+      },
+      tooltipMenuContent: {
         maxWidth: ANNOTATION_TOOLTIP_SUMMARY_WIDTH,
-        padding: `${theme.spacing}px 0px`,
       },
     };
   }

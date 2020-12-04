@@ -48,7 +48,10 @@ function buildStyle(theme: customThemeType, originPosition: positionType): { [cs
       ...tooltipMenuOrigin,
     },
     tooltipMenuContent: {
-      padding: `${theme.spacing * 2}px ${theme.spacing * 3}px`,
+      paddingTop: `${theme.spacing * 2}px`,
+      paddingLeft: `${theme.spacing * 2}px`,
+      paddingRight: `${theme.spacing * 3}px`,
+      paddingBottom: `${theme.spacing * 3}px`,
     },
   };
 }

@@ -4,25 +4,26 @@ import {
   ActionIcon,
   CategoryIcon,
   Checkbox,
+  FloatingTooltipMenu,
   LabelledDropdown,
   LayoutGrid,
   Text,
-  TooltipMenu,
 } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { wordings } from '../../../../../wordings';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
+import { positionType } from '../../../../../types';
+import { wordings } from '../../../../../wordings';
 
 export { AnnotationCreationTooltipMenu };
 
 const CATEGORY_ICON_SIZE = 30;
 
 function AnnotationCreationTooltipMenu(props: {
-  anchorText: Element;
   annotatorStateHandler: annotatorStateHandlerType;
   annotationText: string;
   annotationIndex: number;
   onClose: () => void;
+  originPosition: positionType;
 }): ReactElement {
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const theme = useCustomTheme();
@@ -35,7 +36,7 @@ function AnnotationCreationTooltipMenu(props: {
     annotatorState.annotations,
   );
   return (
-    <TooltipMenu anchorElement={props.anchorText} onClose={props.onClose}>
+    <FloatingTooltipMenu shouldCloseWhenClickedAway originPosition={props.originPosition} onClose={props.onClose}>
       <LayoutGrid container direction="column" alignItems="center">
         <LayoutGrid item style={styles.annotationTextContainer}>
           <Text variant="body2" style={styles.annotationText}>
@@ -70,7 +71,7 @@ function AnnotationCreationTooltipMenu(props: {
           />
         </LayoutGrid>
       </LayoutGrid>
-    </TooltipMenu>
+    </FloatingTooltipMenu>
   );
 
   function applyAnnotationCreation(category: string) {

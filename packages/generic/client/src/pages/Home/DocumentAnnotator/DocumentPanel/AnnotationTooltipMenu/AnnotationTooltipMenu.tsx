@@ -27,7 +27,11 @@ function AnnotationTooltipMenu(props: {
   const style = buildStyle(theme);
 
   return (
-    <FloatingTooltipMenu onClose={props.onClose} isExpanded={props.isExpanded} originPosition={props.originPosition}>
+    <FloatingTooltipMenu
+      onClose={props.onClose}
+      shouldCloseWhenClickedAway={props.isExpanded}
+      originPosition={props.originPosition}
+    >
       <>
         <LayoutGrid container style={style.tooltipMenuContent}>
           <AnnotationTooltipMenuHeader

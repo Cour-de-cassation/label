@@ -10,7 +10,7 @@ type displayPositionType = { vertical: 'top' | 'bottom'; horizontal: 'left' | 'r
 
 function FloatingTooltipMenu(props: {
   children: ReactElement;
-  isExpanded: boolean;
+  shouldCloseWhenClickedAway: boolean;
   originPosition: positionType;
   onClose: () => void;
 }): ReactElement {
@@ -19,7 +19,7 @@ function FloatingTooltipMenu(props: {
 
   return (
     <>
-      {props.isExpanded && <div onClick={props.onClose} style={style.overlay} />}
+      {props.shouldCloseWhenClickedAway && <div onClick={props.onClose} style={style.overlay} />}
       <div style={style.tooltipMenu}>
         <div style={style.tooltipMenuContent}>{props.children}</div>
       </div>

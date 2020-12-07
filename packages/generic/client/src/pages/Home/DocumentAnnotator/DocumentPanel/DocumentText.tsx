@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { useAnchorElementUnderMouse } from '../../../../utils';
+import { positionType } from '../../../../types';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
 
 export { DocumentText };
@@ -10,20 +10,19 @@ function DocumentText(props: {
   index: number;
   text: string;
 }): ReactElement {
-  const { anchorElementUnderMouse, setAnchorElementUnderMouse } = useAnchorElementUnderMouse();
   const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
   const [selectedText, setSelectedText] = useState<string>('');
-
+  const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>();
   return (
     <span>
       <span onMouseUp={handleSelection}>{props.text}</span>
-      {!!anchorElementUnderMouse && (
+      {tooltipMenuOriginPosition && (
         <AnnotationCreationTooltipMenu
-          anchorText={anchorElementUnderMouse}
           annotatorStateHandler={props.annotatorStateHandler}
           annotationText={selectedText}
           annotationIndex={selectedTextIndex}
           onClose={closeTooltipMenu}
+          originPosition={tooltipMenuOriginPosition}
         />
       )}
     </span>
@@ -50,11 +49,11 @@ function DocumentText(props: {
   }
 
   function openTooltipMenu(event: MouseEvent<Element>) {
-    setAnchorElementUnderMouse(event);
+    setTooltipMenuOriginPosition({ x: event.clientX, y: event.clientY });
   }
 
   function closeTooltipMenu() {
-    setAnchorElementUnderMouse(undefined);
+    setTooltipMenuOriginPosition(undefined);
   }
 
   function computeSelectedTextIndex(selection: Selection) {

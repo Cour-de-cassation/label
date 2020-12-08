@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { TextInput } from '../../components';
-import { resetPasswordRequest } from '../../services/api';
+import { labelApi } from '../../services/labelApi';
 
 export { ResetPasswordRequest };
 
@@ -20,7 +20,7 @@ const ResetPasswordRequest: FunctionComponent = () => {
 
   async function handleSubmit() {
     try {
-      await resetPasswordRequest(email);
+      await labelApi.resetPasswordRequest(email);
     } catch (error) {
       console.warn(error);
     }

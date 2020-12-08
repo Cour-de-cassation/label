@@ -2,7 +2,7 @@ import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { TextInput } from '../../components';
 import { wordings } from '../../wordings';
-import { resetPassword } from '../../services/api';
+import { labelApi } from '../../services/labelApi';
 
 export { ResetPassword };
 
@@ -42,7 +42,7 @@ const ResetPassword: FunctionComponent = () => {
 
   async function handleSubmit() {
     try {
-      await resetPassword(password, params.resetPasswordToken);
+      await labelApi.resetPassword(password, params.resetPasswordToken);
     } catch (error) {
       console.warn(error);
     }

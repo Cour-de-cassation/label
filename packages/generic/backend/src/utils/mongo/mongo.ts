@@ -11,7 +11,7 @@ const mongo = buildMongo();
 
 function buildMongo() {
   let client = new MongoClient(
-    `mongodb://${environment.dbName}:${environment.port.db}`,
+    `mongodb://${environment.ip.db}:${environment.port.db}`,
     {
       useUnifiedTopology: true,
     },

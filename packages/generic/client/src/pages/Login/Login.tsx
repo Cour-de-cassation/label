@@ -1,7 +1,7 @@
 import React, { ChangeEvent, CSSProperties, FormEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { ButtonWithIcon, LayoutGrid, Logo, Text, TextInput } from '../../components';
-import { labelApi } from '../../services/labelApi';
+import { login } from '../../services/api';
 import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
 import { customThemeType, useCustomTheme } from '../../styles';
@@ -96,7 +96,7 @@ const Login: FunctionComponent = () => {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     try {
-      const { data } = await labelApi.login(email, password);
+      const { data } = await login(email, password);
       setBearerTokenIntoLocalStorage(data);
       history.push('/');
     } catch (error) {

@@ -1,12 +1,12 @@
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { labelApi } from '../labelApi';
+import { environment } from '../../config/environment';
 import { getBearerTokenFromLocalStorage } from '../localStorage';
 
 export { client };
 
 const httpLink = createHttpLink({
-  uri: `${labelApi.getLabelUrl()}/graphql`,
+  uri: `${environment.API_URL}/graphql`,
 });
 
 const authenticationLink = setContext((_, { headers }: { headers: Record<string, string> }) => {

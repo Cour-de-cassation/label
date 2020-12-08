@@ -1,5 +1,5 @@
 import { httpRequester } from '@label/core';
-import { getLabelUrl } from './getLabelUrl';
+import { environment } from '../../config/environment';
 
 export { login };
 
@@ -8,7 +8,7 @@ type loginResponseDataType = string;
 
 const login = (email: string, password: string) =>
   httpRequester.request<loginRequestDataType, loginResponseDataType>({
-    url: `${getLabelUrl()}/login`,
+    url: `${environment.API_URL}/login`,
     headers: null,
     method: 'post',
     data: { email, password },

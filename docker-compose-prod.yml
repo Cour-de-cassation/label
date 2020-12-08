@@ -2,41 +2,31 @@ version: '3.7'
 
 services:
   labelDb:
-    command: mongod --port 55431
-    expose:
-      - 55431
     image: mongo:4.4
-    networks:
-      label-network:
-        ipv4_address: 10.5.0.5
-    ports:
-      - 55431:55431
+    command: mongod --port 55431
     volumes:
       - mongo-storage:/data/db
+    expose:
+      - 55431
+    ports:
+      - 55431:55431
   backend:
     build:
       context: ./
       dockerfile: DockerfileProd
-    depends_on:
-      - labelDb
     environment:
       - RUN_MODE=LOCAL
       - SENDGRID_API_KEY=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
       - WEBAPP_URL=http://localhost:55430
     image: label-prod
-    networks:
-      label-network:
-        ipv4_address: 10.5.0.6  
     ports:
       - '55430:55430'
+    depends_on:
+      - labelDb
 
 networks:
-  label-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16
-          gateway: 10.5.0.1
+  default:
+    name: label-network
 
 volumes:
   mongo-storage:

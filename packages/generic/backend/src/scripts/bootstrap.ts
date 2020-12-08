@@ -2,10 +2,8 @@ import { bootstrap, environment } from '@label/core';
 
 const bootstrapValues = {
   clientPort: environment.port.client,
-  dbIp: environment.ip.db,
   dbName: environment.dbName,
   dbPort: environment.port.db,
-  serverIp: environment.ip.server,
   serverPort: environment.port.server,
 };
 

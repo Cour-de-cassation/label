@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { useCustomTheme } from '../../../styles';
 import { Menu, Text } from '../materialUI';
 import { ComponentsList } from './ComponentsList';
@@ -21,12 +21,9 @@ function DropdownMenu<T extends string>(props: {
       dropdownPosition={props.dropdownPosition}
       items={props.items.map(({ icon, text, value }) => ({
         element: icon ? (
-          <ComponentsList
-            components={[icon, <Text style={{ color: 'inherit' }}>{text}</Text>]}
-            spaceBetweenComponents={theme.spacing}
-          />
+          <ComponentsList components={[icon, <ItemText>{text}</ItemText>]} spaceBetweenComponents={theme.spacing} />
         ) : (
-          text
+          <ItemText>{text}</ItemText>
         ),
         value,
       }))}
@@ -35,4 +32,21 @@ function DropdownMenu<T extends string>(props: {
       width={props.width}
     />
   );
+}
+
+function ItemText(props: { children: ReactNode }) {
+  const styles = buildStyles();
+  return (
+    <Text variant="h3" style={styles.itemText}>
+      {props.children}
+    </Text>
+  );
+}
+
+function buildStyles() {
+  return {
+    itemText: {
+      color: 'inherit',
+    },
+  };
 }

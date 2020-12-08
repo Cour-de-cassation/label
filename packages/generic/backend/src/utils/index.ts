@@ -9,11 +9,12 @@ import { hasher } from './hasher';
 import { jwtSigner } from './jwtSigner';
 import { logger } from './logger';
 import { mailer } from './mailer';
-import { mongo, mongoCollectionType } from './mongo';
+import { buildMongo, mongo, mongoCollectionType } from './mongo';
 import { scriptRunner } from './scriptRunner';
 
 export {
   buildHandlingErrorController,
+  buildMongo,
   decoder,
   dependencyManager,
   fileSystem,

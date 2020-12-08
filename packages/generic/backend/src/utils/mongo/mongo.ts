@@ -1,21 +1,21 @@
 import { MongoClient, Collection } from 'mongodb';
 import { environment } from '@label/core';
 
-export { mongo };
+export { buildMongo, mongo };
 
 export type { mongoCollectionType };
 
 type mongoCollectionType<T> = Collection<T>;
 
-const mongo = buildMongo();
+const mongo = buildMongo({
+  dbName: environment.dbName,
+  url: `mongodb://${environment.dbName}:${environment.port.db}`,
+});
 
-function buildMongo() {
-  let client = new MongoClient(
-    `mongodb://${environment.dbName}:${environment.port.db}`,
-    {
-      useUnifiedTopology: true,
-    },
-  );
+function buildMongo({ dbName, url }: { dbName: string; url: string }) {
+  let client = new MongoClient(url, {
+    useUnifiedTopology: true,
+  });
 
   return {
     close,
@@ -33,6 +33,6 @@ function buildMongo() {
   }
 
   function getDb() {
-    return client.db(environment.dbName);
+    return client.db(dbName);
   }
 }

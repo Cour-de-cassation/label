@@ -1,10 +1,16 @@
 import { buildAnnotator, annotatorConfigType } from './lib/annotator';
 import { buildConnector, connectorConfigType } from './lib/connector';
-import { dependencyManager, fileSystem, scriptRunner } from './utils';
+import {
+  buildMongo,
+  dependencyManager,
+  fileSystem,
+  scriptRunner,
+} from './utils';
 
 export {
   buildAnnotator,
   buildConnector,
+  buildMongo,
   dependencyManager,
   fileSystem,
   scriptRunner,

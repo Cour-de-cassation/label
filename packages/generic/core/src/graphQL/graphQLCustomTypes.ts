@@ -1,4 +1,10 @@
-import { annotationModule, documentModule, settingsModule, dataModelFieldType } from '../modules';
+import {
+  annotationModule,
+  documentModule,
+  monitoringEntryModule,
+  settingsModule,
+  dataModelFieldType,
+} from '../modules';
 import { buildGraphQLCustomTypeFields } from './buildGraphQLCustomTypeFields';
 
 export { graphQLCustomTypes };
@@ -18,6 +24,10 @@ const graphQLCustomTypes = {
   document: {
     name: 'document',
     fields: buildGraphQLCustomTypeFields<typeof documentModule.dataModel>(documentModule.dataModel),
+  },
+  monitoringEntry: {
+    name: 'monitoringEntry',
+    fields: buildGraphQLCustomTypeFields<typeof monitoringEntryModule.dataModel>(monitoringEntryModule.dataModel),
   },
   settings: {
     name: 'settings',

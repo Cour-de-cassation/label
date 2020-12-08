@@ -3,6 +3,7 @@ import { annotationReportModule, annotationReportType } from './annotationReport
 import { assignationModule, assignationType } from './assignation';
 import { documentModule, documentType, fetchedDocumentType } from './document';
 import { idModule, idType } from './id';
+import { fetchedMonitoringEntryType, monitoringEntryModule, monitoringEntryType } from './monitoringEntry';
 import { problemReportModule, problemReportType } from './problemReport';
 import {
   colorType,
@@ -28,6 +29,7 @@ export {
   assignationModule,
   documentModule,
   idModule,
+  monitoringEntryModule,
   problemReportModule,
   settingsModule,
   userModule,
@@ -45,6 +47,8 @@ export type {
   documentType,
   fetchedDocumentType,
   idType,
+  fetchedMonitoringEntryType,
+  monitoringEntryType,
   problemReportType,
   settingsType,
   categoryIconNameType,

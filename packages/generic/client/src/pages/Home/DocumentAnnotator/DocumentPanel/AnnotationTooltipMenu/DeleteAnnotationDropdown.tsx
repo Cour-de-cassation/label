@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { annotationHandler, annotationLinkHandler, fetchedAnnotationType } from '@label/core';
 import { IconButton, IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useMonitoring } from '../../../../../services/monitoring';
 import { wordings } from '../../../../../wordings';
 
 export { DeleteAnnotationDropdown };
@@ -14,6 +15,7 @@ function DeleteAnnotationDropdown(props: {
   buttonSize?: number;
   onClose: () => void;
 }): ReactElement {
+  const { addMonitoringEntry } = useMonitoring(props.annotatorStateHandler);
   const annotatorState = props.annotatorStateHandler.get();
   const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(
     props.annotation.entityId,
@@ -64,8 +66,10 @@ function DeleteAnnotationDropdown(props: {
     function computeNewAnnotations() {
       switch (deletionOption) {
         case 'one':
+          addMonitoringEntry({ description: 'delete_button_tooltip_one', type: 'button' });
           return annotationHandler.deleteById(annotatorState.annotations, props.annotation._id);
         case 'all':
+          addMonitoringEntry({ description: 'delete_button_tooltip_all', type: 'button' });
           return annotationHandler.deleteByEntityId(annotatorState.annotations, props.annotation.entityId);
       }
     }

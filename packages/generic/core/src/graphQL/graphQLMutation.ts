@@ -23,6 +23,18 @@ const graphQLMutation = {
       },
     },
   },
+  monitoringEntry: {
+    type: {
+      kind: 'custom',
+      type: 'success',
+    },
+    args: {
+      newMonitoringEntry: {
+        kind: 'custom',
+        type: 'monitoringEntry',
+      },
+    },
+  },
   problemReport: {
     type: {
       kind: 'custom',

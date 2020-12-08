@@ -37,7 +37,7 @@ function AnnotationCreationTooltipMenu(props: {
   );
   return (
     <FloatingTooltipMenu shouldCloseWhenClickedAway originPosition={props.originPosition} onClose={props.onClose}>
-      <LayoutGrid container direction="column" alignItems="center">
+      <div style={styles.tooltipMenuContent}>
         <LayoutGrid item style={styles.annotationTextContainer}>
           <Text variant="body2" style={styles.annotationText}>
             {props.annotationText}
@@ -70,7 +70,7 @@ function AnnotationCreationTooltipMenu(props: {
             onChange={applyAnnotationCreation}
           />
         </LayoutGrid>
-      </LayoutGrid>
+      </div>
     </FloatingTooltipMenu>
   );
 
@@ -97,11 +97,25 @@ function AnnotationCreationTooltipMenu(props: {
   }
 
   function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
+    const TOOLTIP_MENU_MAX_WIDTH = 300;
+    const MAX_DISPLAYED_LINES = 3;
+    const ANNOTATION_TEXT_LINE_HEIGHT = 15;
     return {
+      tooltipMenuContent: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        flex: 1,
+        maxWidth: `${TOOLTIP_MENU_MAX_WIDTH}px`,
+      },
       annotationTextContainer: {
         marginBottom: theme.spacing * 2,
       },
       annotationText: {
+        maxHeight: `${MAX_DISPLAYED_LINES * ANNOTATION_TEXT_LINE_HEIGHT}px`,
+        WebkitLineClamp: MAX_DISPLAYED_LINES,
+        lineHeight: `${ANNOTATION_TEXT_LINE_HEIGHT}px`,
+        overflow: 'hidden',
         backgroundColor: theme.colors.default.hoveredBackground,
         color: theme.colors.default.hoveredTextColor,
         padding: '2px 4px',

@@ -17,7 +17,6 @@ import {
   SwitchButton,
   Text,
   TextInput,
-  TooltipMenu,
   FloatingTooltipMenu,
 } from './generic';
 
@@ -43,6 +42,5 @@ export {
   SwitchButton,
   Text,
   TextInput,
-  TooltipMenu,
   FloatingTooltipMenu,
 };

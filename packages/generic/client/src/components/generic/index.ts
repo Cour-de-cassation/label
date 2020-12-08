@@ -22,7 +22,6 @@ import {
   SwitchButton,
   Text,
   TextInput,
-  TooltipMenu,
 } from './materialUI';
 
 export {
@@ -46,7 +45,6 @@ export {
   SwitchButton,
   Text,
   TextInput,
-  TooltipMenu,
 };
 
 export type { iconNameType };

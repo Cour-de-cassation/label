@@ -11,7 +11,6 @@ import { SvgImage } from './SvgImage';
 import { SwitchButton } from './SwitchButton';
 import { Text } from './Text';
 import { TextInput } from './TextInput';
-import { TooltipMenu } from './TooltipMenu';
 
 export {
   Accordion,
@@ -27,7 +26,6 @@ export {
   SwitchButton,
   Text,
   TextInput,
-  TooltipMenu,
 };
 
 export type { buttonColorType, iconNameType };

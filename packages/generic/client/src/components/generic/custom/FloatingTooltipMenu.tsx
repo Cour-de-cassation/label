@@ -4,7 +4,7 @@ import { positionType } from '../../../types';
 
 export { FloatingTooltipMenu };
 
-const MOUSE_OFFSET = 20;
+const POSITION_OFFSET = 20;
 
 type displayPositionType = { vertical: 'top' | 'bottom'; horizontal: 'left' | 'right' };
 
@@ -37,8 +37,8 @@ function buildStyle(theme: customThemeType, originPosition: positionType): { [cs
       position: 'absolute',
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
+      width: '100vw',
+      height: '100vh',
     },
     tooltipMenu: {
       boxShadow: theme.boxShadow.minor,
@@ -91,11 +91,11 @@ function getVerticalOrigin(
   switch (vertical) {
     case 'bottom':
       return {
-        top: `${originPosition.y + MOUSE_OFFSET}px`,
+        top: `${originPosition.y + POSITION_OFFSET}px`,
       };
     case 'top':
       return {
-        bottom: `${windowHeight - originPosition.y + MOUSE_OFFSET}px`,
+        bottom: `${windowHeight - originPosition.y + POSITION_OFFSET}px`,
       };
   }
 }
@@ -108,11 +108,11 @@ function getHorizontalOrigin(
   switch (horizontal) {
     case 'left':
       return {
-        left: `${originPosition.x + MOUSE_OFFSET}px`,
+        left: `${originPosition.x + POSITION_OFFSET}px`,
       };
     case 'right':
       return {
-        right: `${windowWidth - originPosition.x + MOUSE_OFFSET}px`,
+        right: `${windowWidth - originPosition.x + POSITION_OFFSET}px`,
       };
   }
 }

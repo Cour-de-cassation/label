@@ -1,16 +1,17 @@
-import React, { MouseEvent, ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { problemReportType } from '@label/core';
 import {
   ButtonWithIcon,
   Checkbox,
+  FloatingTooltipMenu,
   LabelledDropdown,
   LayoutGrid,
   Text,
   TextInput,
-  TooltipMenu,
 } from '../../../../components';
 import { useGraphQLMutation } from '../../../../graphQL';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { positionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 
 export { ReportProblemToolTipMenu };
@@ -19,9 +20,9 @@ const REPORT_PROBLEM_TOOLTIP_MENU_WIDTH = 350;
 
 function ReportProblemToolTipMenu(props: {
   annotatorStateHandler: annotatorStateHandlerType;
-  anchorElement: Element | undefined;
   onClose: () => void;
   onStopAnnotatingDocument: () => void;
+  originPosition: positionType;
 }): ReactElement {
   const style = buildStyle();
   const problemCategories = buildProblemCategories();
@@ -34,7 +35,7 @@ function ReportProblemToolTipMenu(props: {
   const annotatorState = props.annotatorStateHandler.get();
 
   return (
-    <TooltipMenu anchorElement={props.anchorElement} onClose={props.onClose}>
+    <FloatingTooltipMenu originPosition={props.originPosition} shouldCloseWhenClickedAway onClose={props.onClose}>
       <LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
           <LabelledDropdown<problemReportType['type']>
@@ -84,7 +85,7 @@ function ReportProblemToolTipMenu(props: {
           </LayoutGrid>
         </LayoutGrid>
       </LayoutGrid>
-    </TooltipMenu>
+    </FloatingTooltipMenu>
   );
 
   function buildStyle() {
@@ -109,8 +110,7 @@ function ReportProblemToolTipMenu(props: {
     ];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function closeTooltipMenu(_event: MouseEvent) {
+  function closeTooltipMenu() {
     setProblemCategory(undefined);
     setProblemDescription('');
     setIsBlocking(false);
@@ -123,7 +123,7 @@ function ReportProblemToolTipMenu(props: {
     setProblemCategory(newProblemCategory);
   }
 
-  async function sendProblemReportAndClose(event: MouseEvent) {
+  async function sendProblemReportAndClose() {
     if (problemCategory) {
       setIsSentWithoutCategory(false);
 
@@ -140,7 +140,7 @@ function ReportProblemToolTipMenu(props: {
         props.onStopAnnotatingDocument();
       }
 
-      closeTooltipMenu(event);
+      closeTooltipMenu();
     } else {
       setIsSentWithoutCategory(true);
     }

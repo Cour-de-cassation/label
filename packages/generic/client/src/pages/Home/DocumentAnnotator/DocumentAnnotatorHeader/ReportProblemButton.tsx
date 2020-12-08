@@ -1,3 +1,4 @@
+import { positionType } from 'packages/generic/client/src/types';
 import React, { MouseEvent, useState } from 'react';
 import { ButtonWithIcon } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
@@ -10,25 +11,28 @@ function ReportProblemButton(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   onStopAnnotatingDocument: () => void;
 }) {
-  const [anchorElement, setAnchorElement] = useState<Element | undefined>(undefined);
-
+  const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>(undefined);
   return (
     <div>
       <ButtonWithIcon color="secondary" iconName="warning" onClick={openToolTip} text={wordings.reportProblem} />
-      <ReportProblemToolTipMenu
-        annotatorStateHandler={props.annotatorStateHandler}
-        anchorElement={anchorElement}
-        onStopAnnotatingDocument={props.onStopAnnotatingDocument}
-        onClose={closeToolTip}
-      />
+      {!!tooltipMenuOriginPosition && (
+        <ReportProblemToolTipMenu
+          annotatorStateHandler={props.annotatorStateHandler}
+          onClose={closeToolTip}
+          onStopAnnotatingDocument={props.onStopAnnotatingDocument}
+          originPosition={tooltipMenuOriginPosition}
+        />
+      )}
     </div>
   );
 
   function openToolTip(event: MouseEvent<Element>) {
-    setAnchorElement(event.currentTarget);
+    const buttonRect = event.currentTarget.getBoundingClientRect();
+    const originPosition = { x: buttonRect.x + buttonRect.width / 2, y: buttonRect.height };
+    setTooltipMenuOriginPosition(originPosition);
   }
 
   function closeToolTip() {
-    setAnchorElement(undefined);
+    setTooltipMenuOriginPosition(undefined);
   }
 }

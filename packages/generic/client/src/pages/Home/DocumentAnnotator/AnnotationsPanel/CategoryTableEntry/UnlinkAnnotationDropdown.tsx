@@ -16,12 +16,12 @@ function UnlinkAnnotationDropdown(props: {
   onClose?: () => void;
 }): ReactElement {
   const annotatorState = props.annotatorStateHandler.get();
-  const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(
+  const linkedAnnotationRepresentatives = annotationLinkHandler.getLinkedAnnotationRepresentatives(
     props.annotation.entityId,
     annotatorState.annotations,
   );
 
-  if (linkedAnnotations.length <= 2) {
+  if (linkedAnnotationRepresentatives.length <= 2) {
     return renderIconButton();
   } else {
     return renderIconDropdown();
@@ -39,7 +39,7 @@ function UnlinkAnnotationDropdown(props: {
             text: wordings.unlinkOption[UNLINK_ALL],
             value: UNLINK_ALL,
           },
-          ...linkedAnnotations.map((annotation) => ({
+          ...linkedAnnotationRepresentatives.map((annotation) => ({
             text: annotation.text,
             value: annotation.text,
           })),

@@ -7,6 +7,7 @@ const annotationLinkHandler = {
   link,
   getLinkableAnnotations,
   getLinkedAnnotations,
+  getLinkedAnnotationRepresentatives,
   isLinked,
   isLinkedTo,
   unlink,
@@ -41,14 +42,21 @@ function isLinkedTo<annotationT extends fetchedAnnotationType>(
   return annotationSource.entityId === annotationTarget.entityId;
 }
 
-function getLinkedAnnotations<annotationT extends fetchedAnnotationType>(
+function getLinkedAnnotationRepresentatives<annotationT extends fetchedAnnotationType>(
   entityId: annotationT['entityId'],
   annotations: annotationT[],
 ): annotationT[] {
   return uniqBy(
-    annotations.filter((otherAnnotation) => otherAnnotation.entityId === entityId),
+    getLinkedAnnotations(entityId, annotations),
     (otherAnnotation) => otherAnnotation.text,
   ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
+}
+
+function getLinkedAnnotations<annotationT extends fetchedAnnotationType>(
+  entityId: annotationT['entityId'],
+  annotations: annotationT[],
+): annotationT[] {
+  return annotations.filter((otherAnnotation) => otherAnnotation.entityId === entityId);
 }
 
 function getLinkableAnnotations<annotationT extends fetchedAnnotationType>(
@@ -79,7 +87,7 @@ function unlinkByCategoryAndText<annotationT extends fetchedAnnotationType>(
   annotation: annotationT,
   annotations: annotationT[],
 ) {
-  const linkedAnnotations = getLinkedAnnotations(annotation.entityId, annotations).filter(
+  const linkedAnnotations = getLinkedAnnotationRepresentatives(annotation.entityId, annotations).filter(
     (linkedAnnotation) => !idModule.lib.equalId(linkedAnnotation._id, annotation._id),
   );
 

@@ -20,7 +20,9 @@ function OccurrenceHeader(props: { annotatorStateHandler: annotatorStateHandlerT
   const category = annotationModule.lib.entityIdHandler.getCategory(props.entityId);
   const categoryName = settingsModule.lib.getAnnotationCategoryText(category, settings);
   const annotationTexts = uniq(
-    annotationLinkHandler.getLinkedAnnotations(props.entityId, annotations).map((annotation) => annotation.text),
+    annotationLinkHandler
+      .getLinkedAnnotationRepresentatives(props.entityId, annotations)
+      .map((annotation) => annotation.text),
   );
   return (
     <Header

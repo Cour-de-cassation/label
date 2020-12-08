@@ -20,7 +20,7 @@ function DocumentSelectorCard(props: {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const documentInfoEntries = computeDocumentInfoEntries(props.choice.annotations);
-  const categoryIconsByAnnotation = computeCategoryIconNamesByAnnotationCount(props.choice.annotations);
+  const categoryIconsByAnnotation = computeCategoryIconNamesByEntitiesCount(props.choice.annotations);
 
   return (
     <div style={styles.card}>
@@ -44,12 +44,14 @@ function DocumentSelectorCard(props: {
       </div>
       <div style={styles.categoryIconsContainer}>
         <ComponentsList
-          components={categoryIconsByAnnotation.map(({ category, annotationsCount }) => (
+          components={categoryIconsByAnnotation.map(({ category, entitiesCount }) => (
             <div style={styles.categoryContainer}>
               <div style={styles.categoryIconContainer}>
                 <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={props.settings} />
               </div>
-              <Text>{annotationsCount}</Text>
+              <div>
+                <Text>{entitiesCount} </Text>
+              </div>
             </div>
           ))}
           spaceBetweenComponents={theme.spacing * 3}
@@ -64,15 +66,15 @@ function DocumentSelectorCard(props: {
     </div>
   );
 
-  function computeCategoryIconNamesByAnnotationCount(annotations: fetchedAnnotationType[]) {
+  function computeCategoryIconNamesByEntitiesCount(annotations: fetchedAnnotationType[]) {
     return orderBy(
       Object.entries(groupBy(annotations, (annotation) => annotation.category)).map(
         ([category, grouppedAnnotations]) => ({
-          annotationsCount: grouppedAnnotations.length,
+          entitiesCount: Object.keys(groupBy(grouppedAnnotations, (annotation) => annotation.entityId)).length,
           category,
         }),
       ),
-      'annotationsCount',
+      'entitiesCount',
       'desc',
     ).slice(0, MAX_CATEGORIES_SHOWN);
   }

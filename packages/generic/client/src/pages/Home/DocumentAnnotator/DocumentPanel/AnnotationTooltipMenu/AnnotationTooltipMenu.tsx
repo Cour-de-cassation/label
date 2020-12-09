@@ -31,9 +31,10 @@ function AnnotationTooltipMenu(props: {
       onClose={props.onClose}
       shouldCloseWhenClickedAway={props.isExpanded}
       originPosition={props.originPosition}
+      width={ANNOTATION_TOOLTIP_SUMMARY_WIDTH}
     >
       <>
-        <LayoutGrid container style={style.tooltipMenuContent}>
+        <LayoutGrid container>
           <AnnotationTooltipMenuHeader
             annotatorStateHandler={props.annotatorStateHandler}
             annotation={props.annotation}
@@ -83,9 +84,6 @@ function AnnotationTooltipMenu(props: {
     return {
       annotationButtonsContainer: {
         paddingTop: `${theme.spacing * 3}px`,
-      },
-      tooltipMenuContent: {
-        maxWidth: ANNOTATION_TOOLTIP_SUMMARY_WIDTH,
       },
     };
   }

@@ -16,7 +16,8 @@ import { wordings } from '../../../../wordings';
 
 export { ReportProblemToolTipMenu };
 
-const REPORT_PROBLEM_TOOLTIP_MENU_WIDTH = 350;
+const REPORT_PROBLEM_TOOLTIP_MENU_WIDTH = 400;
+const REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH = 350;
 
 function ReportProblemToolTipMenu(props: {
   annotatorStateHandler: annotatorStateHandlerType;
@@ -35,7 +36,12 @@ function ReportProblemToolTipMenu(props: {
   const annotatorState = props.annotatorStateHandler.get();
 
   return (
-    <FloatingTooltipMenu originPosition={props.originPosition} shouldCloseWhenClickedAway onClose={props.onClose}>
+    <FloatingTooltipMenu
+      originPosition={props.originPosition}
+      shouldCloseWhenClickedAway
+      onClose={props.onClose}
+      width={REPORT_PROBLEM_TOOLTIP_MENU_WIDTH}
+    >
       <LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
           <LabelledDropdown<problemReportType['type']>
@@ -46,7 +52,7 @@ function ReportProblemToolTipMenu(props: {
             }))}
             label={wordings.problemType}
             onChange={changeProblemCategory}
-            width={REPORT_PROBLEM_TOOLTIP_MENU_WIDTH}
+            width={REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}
           />
         </LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
@@ -91,7 +97,7 @@ function ReportProblemToolTipMenu(props: {
   function buildStyle() {
     return {
       tooltipElement: {
-        width: `${REPORT_PROBLEM_TOOLTIP_MENU_WIDTH}px`,
+        width: `${REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}px`,
       },
       tooltipItem: {
         padding: '12px 0px',

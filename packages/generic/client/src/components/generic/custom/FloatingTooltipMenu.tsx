@@ -4,18 +4,20 @@ import { positionType } from '../../../types';
 
 export { FloatingTooltipMenu };
 
-const POSITION_OFFSET = 20;
+const VERTICAL_POSITION_OFFSET = 20;
+const EDGE_OFFSET = 10;
 
-type displayPositionType = { vertical: 'top' | 'bottom'; horizontal: 'left' | 'right' };
+type displayPositionType = { vertical: 'top' | 'bottom'; horizontal: 'left' | 'middle' | 'right' };
 
 function FloatingTooltipMenu(props: {
   children: ReactElement;
   shouldCloseWhenClickedAway: boolean;
   originPosition: positionType;
   onClose: () => void;
+  width: number;
 }): ReactElement {
   const theme = useCustomTheme();
-  const style = buildStyle(theme, props.originPosition);
+  const style = buildStyle(theme, props.originPosition, props.width);
 
   return (
     <>
@@ -27,9 +29,13 @@ function FloatingTooltipMenu(props: {
   );
 }
 
-function buildStyle(theme: customThemeType, originPosition: positionType): { [cssClass: string]: CSSProperties } {
-  const displayPosition = getDisplayPosition(originPosition);
-  const tooltipMenuOrigin = getTooltipMenuOrigin(displayPosition, originPosition);
+function buildStyle(
+  theme: customThemeType,
+  originPosition: positionType,
+  width: number,
+): { [cssClass: string]: CSSProperties } {
+  const displayPosition = getDisplayPosition(originPosition, width);
+  const tooltipMenuOrigin = getTooltipMenuOrigin(displayPosition, originPosition, width);
   return {
     overlay: {
       backgroundColor: theme.colors.overlay,
@@ -45,6 +51,7 @@ function buildStyle(theme: customThemeType, originPosition: positionType): { [cs
       backgroundColor: theme.colors.background,
       borderRadius: theme.shape.borderRadius.small,
       position: 'absolute',
+      width,
       ...tooltipMenuOrigin,
     },
     tooltipMenuContent: {
@@ -56,12 +63,16 @@ function buildStyle(theme: customThemeType, originPosition: positionType): { [cs
   };
 }
 
-function getDisplayPosition(originPosition: positionType): displayPositionType {
+function getDisplayPosition(originPosition: positionType, width: number): displayPositionType {
   const windowSize = getWindowSize();
   const mouseVerticalWindowPercentagePosition = (100 * originPosition.y) / windowSize.height;
-  const mouseHorizontalWindowPercentagePosition = (100 * originPosition.x) / windowSize.width;
   const vertical = mouseVerticalWindowPercentagePosition < 65 ? 'bottom' : 'top';
-  const horizontal = mouseHorizontalWindowPercentagePosition < 65 ? 'left' : 'right';
+  const horizontal =
+    originPosition.x - width / 2 < EDGE_OFFSET
+      ? 'left'
+      : originPosition.x + width / 2 > windowSize.width - EDGE_OFFSET
+      ? 'right'
+      : 'middle';
   return {
     vertical,
     horizontal,
@@ -75,11 +86,11 @@ function getWindowSize() {
   return { width, height };
 }
 
-function getTooltipMenuOrigin(displayPosition: displayPositionType, originPosition: positionType) {
+function getTooltipMenuOrigin(displayPosition: displayPositionType, originPosition: positionType, width: number) {
   const windowSize = getWindowSize();
   return {
     ...getVerticalOrigin(displayPosition.vertical, windowSize.height, originPosition),
-    ...getHorizontalOrigin(displayPosition.horizontal, windowSize.width, originPosition),
+    ...getHorizontalOrigin(displayPosition.horizontal, windowSize.width, originPosition, width),
   };
 }
 
@@ -91,11 +102,11 @@ function getVerticalOrigin(
   switch (vertical) {
     case 'bottom':
       return {
-        top: `${originPosition.y + POSITION_OFFSET}px`,
+        top: `${originPosition.y + VERTICAL_POSITION_OFFSET}px`,
       };
     case 'top':
       return {
-        bottom: `${windowHeight - originPosition.y + POSITION_OFFSET}px`,
+        bottom: `${windowHeight - originPosition.y + VERTICAL_POSITION_OFFSET}px`,
       };
   }
 }
@@ -104,15 +115,18 @@ function getHorizontalOrigin(
   horizontal: displayPositionType['horizontal'],
   windowWidth: number,
   originPosition: positionType,
+  width: number,
 ) {
   switch (horizontal) {
     case 'left':
       return {
-        left: `${originPosition.x + POSITION_OFFSET}px`,
+        left: `${EDGE_OFFSET}px`,
       };
     case 'right':
       return {
-        right: `${windowWidth - originPosition.x + POSITION_OFFSET}px`,
+        right: `${EDGE_OFFSET}px`,
       };
+    case 'middle':
+      return { left: `${originPosition.x - width / 2}px` };
   }
 }

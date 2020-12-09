@@ -16,6 +16,7 @@ import { wordings } from '../../../../../wordings';
 
 export { AnnotationCreationTooltipMenu };
 
+const TOOLTIP_MENU_MAX_WIDTH = 300;
 const CATEGORY_ICON_SIZE = 30;
 
 function AnnotationCreationTooltipMenu(props: {
@@ -36,7 +37,12 @@ function AnnotationCreationTooltipMenu(props: {
     annotatorState.annotations,
   );
   return (
-    <FloatingTooltipMenu shouldCloseWhenClickedAway originPosition={props.originPosition} onClose={props.onClose}>
+    <FloatingTooltipMenu
+      shouldCloseWhenClickedAway
+      originPosition={props.originPosition}
+      onClose={props.onClose}
+      width={TOOLTIP_MENU_MAX_WIDTH}
+    >
       <div style={styles.tooltipMenuContent}>
         <LayoutGrid item style={styles.annotationTextContainer}>
           <Text variant="body2" style={styles.annotationText}>
@@ -97,7 +103,6 @@ function AnnotationCreationTooltipMenu(props: {
   }
 
   function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
-    const TOOLTIP_MENU_MAX_WIDTH = 300;
     const MAX_DISPLAYED_LINES = 3;
     const ANNOTATION_TEXT_LINE_HEIGHT = 15;
     return {
@@ -106,7 +111,6 @@ function AnnotationCreationTooltipMenu(props: {
         flexDirection: 'column',
         alignItems: 'center',
         flex: 1,
-        maxWidth: `${TOOLTIP_MENU_MAX_WIDTH}px`,
       },
       annotationTextContainer: {
         marginBottom: theme.spacing * 2,

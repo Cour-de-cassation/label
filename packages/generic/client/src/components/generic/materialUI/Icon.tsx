@@ -33,7 +33,7 @@ import {
   SettingsRounded,
   UndoRounded,
 } from '@material-ui/icons';
-import { categoryIconNameType } from '@label/core/src';
+import { categoryIconNameType } from '@label/core';
 
 export { Icon };
 

@@ -15,9 +15,6 @@ function buildMuiTheme(displayMode: displayModeType) {
       primary: {
         main: customTheme.colors.primary.background,
       },
-      secondary: {
-        main: customTheme.colors.secondary.background,
-      },
       text: { primary: customTheme.colors.line.level1, secondary: customTheme.colors.disabled.color },
       background: {
         default: customTheme.colors.background,

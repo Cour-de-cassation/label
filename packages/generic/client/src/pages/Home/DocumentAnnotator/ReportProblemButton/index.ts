@@ -1,1 +1,1 @@
-export {ReportProblemButton} from './ReportProblemButton'
+export { ReportProblemButton } from './ReportProblemButton';

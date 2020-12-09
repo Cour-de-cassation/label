@@ -48,6 +48,7 @@ function AnnotationsPanel(props: {
   function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
     return {
       panel: {
+        width: '100%',
         paddingLeft: theme.spacing * 2,
         paddingRight: theme.spacing * 4,
       },
@@ -57,6 +58,7 @@ function AnnotationsPanel(props: {
       categoriesContainer: {
         overflowY: 'auto',
         height: heights.panel,
+        paddingRight: theme.spacing * 2,
       },
       category: {
         marginBottom: theme.spacing * 3,

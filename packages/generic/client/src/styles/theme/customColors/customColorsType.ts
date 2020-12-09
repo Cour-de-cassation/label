@@ -14,6 +14,6 @@ type customColorsType = {
   error: shadeColorType;
   icon: colorType;
   primary: shadeColorType;
-  secondary: shadeColorType;
   line: { level1: colorType; level2: shadeColorType };
+  warning: shadeColorType;
 };

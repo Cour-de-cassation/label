@@ -1,6 +1,6 @@
 import { positionType } from 'packages/generic/client/src/types';
 import React, { MouseEvent, useState } from 'react';
-import { ButtonWithIcon } from '../../../../components';
+import { IconButton } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { wordings } from '../../../../wordings';
 import { ReportProblemToolTipMenu } from './ReportProblemToolTipMenu';
@@ -14,7 +14,7 @@ function ReportProblemButton(props: {
   const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>(undefined);
   return (
     <div>
-      <ButtonWithIcon color="secondary" iconName="warning" onClick={openToolTip} text={wordings.reportProblem} />
+      <IconButton color="warning" iconName="warning" onClick={openToolTip} hint={wordings.reportProblem} />
       {!!tooltipMenuOriginPosition && (
         <ReportProblemToolTipMenu
           annotatorStateHandler={props.annotatorStateHandler}

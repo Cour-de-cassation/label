@@ -115,7 +115,6 @@ function DocumentViewer(props: {
         borderRadius: theme.shape.borderRadius.medium,
         backgroundColor: theme.colors.document,
         backgroundImage,
-
         height: heights.panel,
         width: '100%',
       },

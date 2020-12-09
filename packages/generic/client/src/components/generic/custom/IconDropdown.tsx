@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactElement } from 'react';
-import { iconNameType } from '../materialUI';
+import { buttonColorType, iconNameType } from '../materialUI';
 import { Dropdown } from './Dropdown';
 import { IconButton } from './IconButton';
 
@@ -7,7 +7,7 @@ export { IconDropdown };
 
 function IconDropdown<T extends string>(props: {
   buttonSize?: number;
-  color?: 'primary' | 'secondary' | 'default';
+  color?: buttonColorType;
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;
@@ -42,7 +42,7 @@ function IconDropdown<T extends string>(props: {
 
 function IconDropdownButton(props: {
   buttonSize?: number;
-  color?: 'primary' | 'secondary' | 'default';
+  color?: buttonColorType;
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;

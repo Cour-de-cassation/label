@@ -26,12 +26,12 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
     icon: getColor(customColorsMode.icon),
     overlay: 'black',
     primary: buildCustomColorsVariations(customColorsMode.primary),
-    secondary: buildCustomColorsVariations(customColorsMode.secondary),
     separator: getShadeColor(customColorsMode.line.level2),
     line: {
       level1: getColor(customColorsMode.line.level1),
       level2: getShadeColor(customColorsMode.line.level2),
     },
+    warning: buildCustomColorsVariations(customColorsMode.warning),
   };
 
   function buildCustomColorsVariations(shadeColor: shadeColorType) {

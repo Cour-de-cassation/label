@@ -88,7 +88,7 @@ function LabelledDropdownButton<T extends string>(props: {
     const borderColor = props.error ? theme.colors.dropdown.border.error : theme.colors.dropdown.border.default;
     return {
       dropdown: {
-        backgroundColor: theme.colors.background,
+        backgroundColor: 'transparent',
         border: `${LABELLED_DROPDOWN_BORDER_THICKNESS}px solid ${borderColor}`,
         textTransform: 'none',
         width: `${props.width}px`,

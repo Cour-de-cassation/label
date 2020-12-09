@@ -1,5 +1,5 @@
 import React, { ReactElement, MouseEvent } from 'react';
-import { Button, iconNameType, Icon } from '../materialUI';
+import { Button, iconNameType, Icon, buttonColorType } from '../materialUI';
 
 export { IconButton };
 
@@ -7,7 +7,7 @@ const ICON_BUTTON_SIZE = 40;
 
 function IconButton(props: {
   buttonSize?: number;
-  color?: 'primary' | 'secondary' | 'default';
+  color?: buttonColorType;
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;

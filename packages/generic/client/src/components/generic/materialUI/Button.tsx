@@ -7,7 +7,7 @@ export { Button };
 
 export type { buttonColorType };
 
-type buttonColorType = 'primary' | 'secondary' | 'alert' | 'default';
+type buttonColorType = 'primary' | 'warning' | 'alert' | 'default';
 
 function Button(props: {
   children?: ReactNode;
@@ -22,9 +22,10 @@ function Button(props: {
   width?: string;
 }): ReactElement {
   const theme = useCustomTheme();
-  const classes = buildButtonClasses(theme);
+  const buttonClasses = buildButtonClasses(theme);
+  const tooltipClasses = buildTooltipClasses(theme);
   return props.hint && !props.disabled ? (
-    <Tooltip arrow title={<Text>{props.hint}</Text>}>
+    <Tooltip classes={tooltipClasses} arrow title={<Text>{props.hint}</Text>}>
       <div>{buildButton()}</div>
     </Tooltip>
   ) : (
@@ -34,7 +35,7 @@ function Button(props: {
   function buildButton() {
     return (
       <MUButton
-        classes={{ root: classes.root }}
+        classes={{ root: buttonClasses.root }}
         disabled={props.disabled}
         onClick={onClick}
         style={props.style}
@@ -61,6 +62,17 @@ function Button(props: {
               backgroundColor: theme.colors[color].hoveredBackground,
               color: theme.colors[color].hoveredTextColor,
             },
+      },
+    })();
+  }
+
+  function buildTooltipClasses(theme: customThemeType) {
+    return makeStyles({
+      tooltip: {
+        background: theme.colors.default.background,
+      },
+      arrow: {
+        color: theme.colors.default.background,
       },
     })();
   }

@@ -46,7 +46,7 @@ function Menu<T extends string>(props: {
   function buildMenuClasses(theme: customThemeType) {
     return makeStyles({
       paper: {
-        backgroundColor: theme.colors.default.background,
+        backgroundColor: theme.colors.background,
         maxHeight: '300px',
         width: `${props.width}px`,
       },

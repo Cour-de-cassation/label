@@ -42,7 +42,7 @@ function buildStyle(theme: customThemeType, originPosition: positionType): { [cs
     },
     tooltipMenu: {
       boxShadow: theme.boxShadow.minor,
-      backgroundColor: theme.colors.default.background,
+      backgroundColor: theme.colors.background,
       borderRadius: theme.shape.borderRadius.small,
       position: 'absolute',
       ...tooltipMenuOrigin,

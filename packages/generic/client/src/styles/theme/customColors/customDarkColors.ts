@@ -14,6 +14,6 @@ const customDarkColors: customColorsType = {
   error: ['red', 500],
   icon: 'white',
   primary: ['cyan', 800],
-  secondary: ['orange', 500],
   line: { level1: 'white', level2: ['grey', 600] },
+  warning: ['orange', 500],
 };

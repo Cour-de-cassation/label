@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { LayoutGrid } from '../../../../components';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { customThemeType, useCustomTheme } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
 import { splittedTextByLineType } from '../lib';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
@@ -13,14 +13,25 @@ function DocumentPanel(props: {
   anonymizer: clientAnonymizerType;
   splittedTextByLine: splittedTextByLineType;
 }): ReactElement {
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
   return (
-    <LayoutGrid container>
+    <div style={styles.panel}>
       <DocumentPanelHeader annotatorStateHandler={props.annotatorStateHandler} />
       <DocumentViewer
         annotatorStateHandler={props.annotatorStateHandler}
         anonymizer={props.anonymizer}
         splittedTextByLine={props.splittedTextByLine}
       />
-    </LayoutGrid>
+    </div>
   );
+}
+
+function buildStyles(theme: customThemeType) {
+  return {
+    panel: {
+      width: '100%',
+      paddingRight: theme.spacing * 2,
+    },
+  };
 }

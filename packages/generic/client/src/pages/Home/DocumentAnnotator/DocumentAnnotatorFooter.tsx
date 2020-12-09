@@ -6,6 +6,7 @@ import { useGraphQLMutation } from '../../../graphQL';
 import { annotatorStateHandlerType } from '../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../types';
 import { wordings } from '../../../wordings';
+import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorFooter };
 
@@ -55,6 +56,10 @@ function DocumentAnnotatorFooter(props: {
         />
         <ComponentsList
           components={[
+            <ReportProblemButton
+              annotatorStateHandler={props.annotatorStateHandler}
+              onStopAnnotatingDocument={props.onStopAnnotatingDocument}
+            />,
             <IconButton color="default" iconName="copy" onClick={copyToClipboard} hint={wordings.copyToClipboard} />,
             <IconButton color="default" iconName="save" onClick={saveDraft} hint={wordings.saveDraft} />,
             <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.validate} />,

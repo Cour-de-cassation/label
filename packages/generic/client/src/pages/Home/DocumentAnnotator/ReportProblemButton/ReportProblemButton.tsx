@@ -28,7 +28,7 @@ function ReportProblemButton(props: {
 
   function openToolTip(event: MouseEvent<Element>) {
     const buttonRect = event.currentTarget.getBoundingClientRect();
-    const originPosition = { x: buttonRect.x + buttonRect.width / 2, y: buttonRect.height };
+    const originPosition = { x: buttonRect.x + buttonRect.width / 2, y: buttonRect.y };
     setTooltipMenuOriginPosition(originPosition);
   }
 

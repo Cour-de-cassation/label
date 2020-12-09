@@ -5,15 +5,11 @@ import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
-import { ReportProblemButton } from './ReportProblemButton';
 import { SettingsButton } from './SettingsButton';
 
 export { DocumentAnnotatorHeader };
 
-function DocumentAnnotatorHeader(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
-  onStopAnnotatingDocument: () => void;
-}) {
+function DocumentAnnotatorHeader(props: { annotatorStateHandler: annotatorStateHandlerType }) {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const history = useHistory();
@@ -23,10 +19,6 @@ function DocumentAnnotatorHeader(props: {
       <Header
         leftHeaderComponents={[<Text>{props.annotatorStateHandler.get().document.title}</Text>]}
         rightHeaderComponents={[
-          <ReportProblemButton
-            annotatorStateHandler={props.annotatorStateHandler}
-            onStopAnnotatingDocument={props.onStopAnnotatingDocument}
-          />,
           <SettingsButton />,
           <IconButton iconName="logout" hint={wordings.logout} onClick={logout} />,
         ]}

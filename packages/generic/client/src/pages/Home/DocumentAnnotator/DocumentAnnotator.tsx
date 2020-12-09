@@ -36,10 +36,7 @@ function DocumentAnnotator(props: {
     <DocumentViewerModeHandlerContextProvider annotations={annotatorState.annotations}>
       <LayoutGrid container>
         <LayoutGrid container item style={styles.annotatorHeader} xs={12}>
-          <DocumentAnnotatorHeader
-            annotatorStateHandler={annotatorStateHandler}
-            onStopAnnotatingDocument={props.onStopAnnotatingDocument}
-          />
+          <DocumentAnnotatorHeader annotatorStateHandler={annotatorStateHandler} />
         </LayoutGrid>
         <div style={styles.annotatorBody}>
           <div style={styles.leftContainer}>

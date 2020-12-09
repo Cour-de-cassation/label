@@ -1,5 +1,5 @@
 import { idType } from '@label/core';
-import { userService } from '../modules/user';
+import { userService } from '../../modules/user';
 
 export { buildAuthenticatedResolver };
 

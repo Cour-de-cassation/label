@@ -11,21 +11,23 @@ import { resolversType } from './resolversType';
 export { _typeCheck as mutationResolvers };
 
 const mutationResolvers: resolversType<typeof graphQLMutation> = {
-  annotations: async (_, { documentId, fetchedGraphQLAnnotations }) => {
-    try {
-      await annotationService.updateAnnotations(
-        idModule.lib.buildId(documentId),
-        fetchedGraphQLAnnotations.map((fetchedGraphQLAnnotation) => ({
-          ...fetchedGraphQLAnnotation,
-          _id: idModule.lib.buildId(fetchedGraphQLAnnotation._id),
-        })),
-      );
+  annotations: buildAuthenticatedResolver(
+    async (_, { documentId, fetchedGraphQLAnnotations }) => {
+      try {
+        await annotationService.updateAnnotations(
+          idModule.lib.buildId(documentId),
+          fetchedGraphQLAnnotations.map((fetchedGraphQLAnnotation) => ({
+            ...fetchedGraphQLAnnotation,
+            _id: idModule.lib.buildId(fetchedGraphQLAnnotation._id),
+          })),
+        );
 
-      return { success: true };
-    } catch (e) {
-      return { success: false };
-    }
-  },
+        return { success: true };
+      } catch (e) {
+        return { success: false };
+      }
+    },
+  ),
 
   monitoringEntry: buildAuthenticatedResolver(
     async (userId, { newMonitoringEntry }) => {

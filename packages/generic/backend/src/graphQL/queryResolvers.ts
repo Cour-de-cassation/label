@@ -10,8 +10,9 @@ import { resolversType } from './resolversType';
 export { _typeCheck as queryResolvers };
 
 const queryResolvers: resolversType<typeof graphQLQuery> = {
-  annotations: async (_, { documentId }) =>
+  annotations: buildAuthenticatedResolver(async (_, { documentId }) =>
     annotationService.fetchAnnotationsOfDocument(documentId),
+  ),
 
   document: buildAuthenticatedResolver(
     async (userId, { documentIdsToExclude }) =>
@@ -24,9 +25,9 @@ const queryResolvers: resolversType<typeof graphQLQuery> = {
   problemReports: buildAuthenticatedResolver(async () =>
     problemReportService.fetchProblemReports(),
   ),
-  settings: async () => ({
+  settings: buildAuthenticatedResolver(async () => ({
     json: JSON.stringify(settingsLoader.getSettings()),
-  }),
+  })),
 };
 
 const _typeCheck: {

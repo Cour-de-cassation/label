@@ -5,7 +5,7 @@ import cors from 'cors';
 import { environment } from '@label/core';
 
 import { buildHandlingErrorController, dependencyManager } from '../utils';
-import { authenticationMiddleware, userController } from '../modules/user';
+import { userController } from '../modules/user';
 import { setup } from './setup';
 import { serverGraphQLSchema } from '../graphQL/serverGraphQLSchema';
 
@@ -42,8 +42,6 @@ app.post(
   '/reset-password',
   buildHandlingErrorController(userController.resetPassword),
 );
-
-app.use(authenticationMiddleware);
 
 app.use(
   '/graphql',

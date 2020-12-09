@@ -33,6 +33,15 @@ const graphQLQuery = {
       },
     },
   },
+  problemReports: {
+    type: {
+      kind: 'list',
+      type: {
+        kind: 'custom',
+        type: 'problemReport',
+      },
+    },
+  },
   settings: {
     type: {
       kind: 'custom',

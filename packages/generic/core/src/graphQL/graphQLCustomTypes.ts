@@ -4,6 +4,7 @@ import {
   monitoringEntryModule,
   settingsModule,
   dataModelFieldType,
+  problemReportModule,
 } from '../modules';
 import { buildGraphQLCustomTypeFields } from './buildGraphQLCustomTypeFields';
 
@@ -28,6 +29,10 @@ const graphQLCustomTypes = {
   monitoringEntry: {
     name: 'monitoringEntry',
     fields: buildGraphQLCustomTypeFields<typeof monitoringEntryModule.dataModel>(monitoringEntryModule.dataModel),
+  },
+  problemReport: {
+    name: 'problemReport',
+    fields: buildGraphQLCustomTypeFields<typeof problemReportModule.dataModel>(problemReportModule.dataModel),
   },
   settings: {
     name: 'settings',

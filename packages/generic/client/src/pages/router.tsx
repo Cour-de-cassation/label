@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom';
 import { getBearerTokenFromLocalStorage } from '../services/localStorage';
+import { Admin } from './Admin';
 import { Home } from './Home';
 import { Login } from './Login';
 import { ResetPassword } from './ResetPassword';
@@ -20,6 +21,9 @@ const Router: FunctionComponent = () => (
       <Route path="/login">
         <Login />
       </Route>
+      <AuthenticatedRoute path="/admin">
+        <Admin />
+      </AuthenticatedRoute>
       <AuthenticatedRoute path="/">
         <Home />
       </AuthenticatedRoute>

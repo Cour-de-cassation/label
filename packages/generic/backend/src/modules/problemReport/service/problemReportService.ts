@@ -36,4 +36,10 @@ const problemReportService = {
       }),
     );
   },
+
+  async fetchProblemReports() {
+    const problemReportRepository = buildProblemReportRepository();
+    const problemReports = await problemReportRepository.findAll();
+    return problemReports;
+  },
 };

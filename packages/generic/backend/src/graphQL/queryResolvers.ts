@@ -3,6 +3,7 @@ import { graphQLQuery, idModule } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { annotationService } from '../modules/annotation';
 import { documentService } from '../modules/document';
+import { problemReportService } from '../modules/problemReport';
 import { buildAuthenticatedResolver } from './buildAuthenticatedResolver';
 import { resolversType } from './resolversType';
 
@@ -20,6 +21,9 @@ const queryResolvers: resolversType<typeof graphQLQuery> = {
       ),
   ),
 
+  problemReports: buildAuthenticatedResolver(async () =>
+    problemReportService.fetchProblemReports(),
+  ),
   settings: async () => ({
     json: JSON.stringify(settingsLoader.getSettings()),
   }),

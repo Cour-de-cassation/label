@@ -10,24 +10,31 @@ import { resolversType } from './resolversType';
 export { _typeCheck as queryResolvers };
 
 const queryResolvers: resolversType<typeof graphQLQuery> = {
-  annotations: buildAuthenticatedResolver(async (_, { documentId }) =>
-    annotationService.fetchAnnotationsOfDocument(documentId),
-  ),
+  annotations: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async (_, { documentId }) =>
+      annotationService.fetchAnnotationsOfDocument(documentId),
+  }),
 
-  document: buildAuthenticatedResolver(
-    async (userId, { documentIdsToExclude }) =>
+  document: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async (user, { documentIdsToExclude }) =>
       documentService.fetchDocumentForUser(
-        userId,
+        user._id,
         documentIdsToExclude.map(idModule.lib.buildId),
       ),
-  ),
+  }),
 
-  problemReports: buildAuthenticatedResolver(async () =>
-    problemReportService.fetchProblemReports(),
-  ),
-  settings: buildAuthenticatedResolver(async () => ({
-    json: JSON.stringify(settingsLoader.getSettings()),
-  })),
+  problemReports: buildAuthenticatedResolver({
+    permissions: ['admin'],
+    resolver: async () => problemReportService.fetchProblemReports(),
+  }),
+  settings: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async () => ({
+      json: JSON.stringify(settingsLoader.getSettings()),
+    }),
+  }),
 };
 
 const _typeCheck: {

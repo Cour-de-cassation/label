@@ -11,8 +11,9 @@ import { resolversType } from './resolversType';
 export { _typeCheck as mutationResolvers };
 
 const mutationResolvers: resolversType<typeof graphQLMutation> = {
-  annotations: buildAuthenticatedResolver(
-    async (_, { documentId, fetchedGraphQLAnnotations }) => {
+  annotations: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async (_, { documentId, fetchedGraphQLAnnotations }) => {
       try {
         await annotationService.updateAnnotations(
           idModule.lib.buildId(documentId),
@@ -27,16 +28,17 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
         return { success: false };
       }
     },
-  ),
+  }),
 
-  monitoringEntry: buildAuthenticatedResolver(
-    async (userId, { newMonitoringEntry }) => {
+  monitoringEntry: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async (user, { newMonitoringEntry }) => {
       try {
         await monitoringEntryService.create({
           ...newMonitoringEntry,
           documentId: idModule.lib.buildId(newMonitoringEntry.documentId),
           _id: idModule.lib.buildId(newMonitoringEntry._id),
-          userId,
+          userId: user._id,
         });
 
         return { success: true };
@@ -44,13 +46,14 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
         return { success: false };
       }
     },
-  ),
+  }),
 
-  problemReport: buildAuthenticatedResolver(
-    async (userId, { documentId, problemText, problemType }) => {
+  problemReport: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async (user, { documentId, problemText, problemType }) => {
       try {
         await problemReportService.createProblemReport({
-          userId,
+          userId: user._id,
           documentId: idModule.lib.buildId(documentId),
           problemText,
           problemType,
@@ -61,10 +64,11 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
         return { success: false };
       }
     },
-  ),
+  }),
 
-  updateDocumentStatus: buildAuthenticatedResolver(
-    async (_, { documentId, status }) => {
+  updateDocumentStatus: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async (_, { documentId, status }) => {
       try {
         await documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
@@ -75,7 +79,7 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
         return { success: false };
       }
     },
-  ),
+  }),
 
   async signUpUser(_root, { email, password }) {
     try {

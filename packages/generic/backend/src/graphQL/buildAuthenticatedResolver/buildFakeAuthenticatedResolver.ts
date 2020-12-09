@@ -1,27 +1,25 @@
-import { idModule, idType } from '@label/core';
-import { userService } from '../../modules/user';
+import { userModule, userType } from '@label/core';
+import { buildAuthenticatedResolver } from './buildAuthenticatedResolver';
 
 export { buildFakeAuthenticatedResolver };
 
-type contextType = {
-  headers: {
-    authorization: string;
-  };
-};
+function buildFakeAuthenticatedResolver<argT, T>({
+  permissions,
+  resolver,
+}: {
+  permissions: Array<userType['role']>;
+  resolver: (user: userType, args: argT) => Promise<T>;
+}): (_root: unknown, args: argT, context: unknown) => Promise<T> {
+  const authenticatedResolver = buildAuthenticatedResolver({
+    permissions,
+    resolver,
+  });
 
-function buildFakeAuthenticatedResolver<argT, T>(
-  resolver: (userId: idType, args: argT) => T,
-): (_root: unknown, args: argT, context: unknown) => T {
-  return (_root: unknown, args: argT, context) => {
-    let userId;
+  return async (_root: unknown, args: argT, context) => {
     try {
-      userId = userService.extractUserIdFromAuthorizationHeader(
-        (context as contextType).headers.authorization,
-      );
+      return await authenticatedResolver(_root, args, context);
     } catch (_error) {
-      userId = idModule.lib.buildId();
+      return resolver(userModule.generator.generate(), args);
     }
-
-    return resolver(userId, args);
   };
 }

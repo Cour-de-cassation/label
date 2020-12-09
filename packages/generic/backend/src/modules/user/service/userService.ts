@@ -1,4 +1,4 @@
-import { idModule, userModule } from '@label/core';
+import { errorHandlers, idModule, userModule } from '@label/core';
 import { userDtoType } from '../types/userDtoType';
 import { buildUserRepository } from '../repository';
 import { hasher, jwtSigner, mailer } from '../../../utils';
@@ -42,6 +42,7 @@ const userService = {
     const newUser = userModule.lib.buildUser({
       email: user.email,
       password: hashedPassword,
+      role: 'annotator',
     });
     return userRepository.insert(newUser);
   },
@@ -60,5 +61,25 @@ const userService = {
     const token = authorization.split(' ')[1];
     const userId = jwtSigner.verifyToken(token);
     return idModule.lib.buildId(userId);
+  },
+  async fetchAuthenticatedUserFromAuthorizationHeader(authorization?: string) {
+    const userRepository = buildUserRepository();
+
+    if (authorization) {
+      const token = authorization.split(' ')[1];
+      const userId = jwtSigner.verifyToken(token);
+
+      try {
+        return await userRepository.findById(idModule.lib.buildId(userId));
+      } catch (_error) {
+        throw errorHandlers.authenticationErrorHandler.build(
+          `No user for ${userId}`,
+        );
+      }
+    } else {
+      throw errorHandlers.authenticationErrorHandler.build(
+        'No authorization value provided',
+      );
+    }
   },
 };

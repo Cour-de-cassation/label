@@ -1,7 +1,4 @@
+import { assertPermissions } from './assertPermissions';
 import { buildUser } from './buildUser';
 
-export { userLib };
-
-const userLib = {
-  buildUser,
-};
+export { assertPermissions, buildUser };

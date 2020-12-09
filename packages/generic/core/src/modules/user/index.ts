@@ -1,12 +1,13 @@
 import { userGenerator } from './generator';
-import { userLib } from './lib';
-import { userType } from './userType';
+import { assertPermissions, buildUser } from './lib';
+import { userDataModel, userType } from './userType';
 
 export { userModule };
 
 export type { userType };
 
 const userModule = {
+  dataModel: userDataModel,
   generator: userGenerator,
-  lib: userLib,
+  lib: { assertPermissions, buildUser },
 };

@@ -7,4 +7,8 @@ const localLogger: loggerType = {
     // eslint-disable-next-line no-console
     console.log(new Date().toISOString(), JSON.stringify(value, null, 2));
   },
+  error(err) {
+    // eslint-disable-next-line no-console
+    console.error(new Date().toISOString(), err);
+  },
 };

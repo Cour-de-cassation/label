@@ -35,7 +35,7 @@ const buildDocumentRepository = buildRepositoryBuilder<
     },
 
     async updateStatus(id, status) {
-      await collection.update({ _id: id }, { $set: { status } });
+      await collection.updateOne({ _id: id }, { $set: { status } });
     },
   }),
 });

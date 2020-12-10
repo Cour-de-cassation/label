@@ -6,4 +6,7 @@ const testLogger: loggerType = {
   log() {
     return;
   },
+  error() {
+    return;
+  },
 };

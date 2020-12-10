@@ -5,6 +5,7 @@ import { documentService } from '../modules/document';
 import { monitoringEntryService } from '../modules/monitoringEntry';
 import { problemReportService } from '../modules/problemReport';
 import { userService } from '../modules/user';
+import { logger } from '../utils';
 import { buildAuthenticatedResolver } from './buildAuthenticatedResolver';
 import { resolversType } from './resolversType';
 
@@ -25,6 +26,7 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
 
         return { success: true };
       } catch (e) {
+        logger.error(e);
         return { success: false };
       }
     },
@@ -43,6 +45,7 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
 
         return { success: true };
       } catch (e) {
+        logger.error(e);
         return { success: false };
       }
     },
@@ -61,6 +64,7 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
 
         return { success: true };
       } catch (e) {
+        logger.error(e);
         return { success: false };
       }
     },
@@ -76,6 +80,7 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
         );
         return { success: true };
       } catch (e) {
+        logger.error(e);
         return { success: false };
       }
     },
@@ -87,6 +92,7 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
 
       return { success: true };
     } catch (e) {
+      logger.error(e);
       return { success: false };
     }
   },

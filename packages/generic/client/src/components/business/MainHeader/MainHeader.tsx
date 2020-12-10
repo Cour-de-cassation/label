@@ -1,23 +1,23 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Header, IconButton, MenuBar, Text } from '../../../../components';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
-import { deleteBearerTokenInLocalStorage } from '../../../../services/localStorage';
-import { customThemeType, heights, useCustomTheme } from '../../../../styles';
-import { wordings } from '../../../../wordings';
+import { Header, IconButton, MenuBar, Text } from '../..';
+import { deleteBearerTokenInLocalStorage } from '../../../services/localStorage';
+import { customThemeType, heights, useCustomTheme } from '../../../styles';
+import { wordings } from '../../../wordings';
 import { SettingsButton } from './SettingsButton';
 
-export { DocumentAnnotatorHeader };
+export { MainHeader };
 
-function DocumentAnnotatorHeader(props: { annotatorStateHandler: annotatorStateHandlerType }) {
+function MainHeader(props: { title?: string }) {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const history = useHistory();
+  const leftHeaderComponents = props.title ? [<Text>{props.title}</Text>] : [];
 
   return (
-    <MenuBar color="inherit">
+    <MenuBar color="inherit" isElevated={!!props.title}>
       <Header
-        leftHeaderComponents={[<Text>{props.annotatorStateHandler.get().document.title}</Text>]}
+        leftHeaderComponents={leftHeaderComponents}
         rightHeaderComponents={[
           <SettingsButton />,
           <IconButton iconName="logout" hint={wordings.logout} onClick={logout} />,

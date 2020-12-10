@@ -1,7 +1,7 @@
 import React from 'react';
-import { Drawer, IconButton, LayoutGrid, RadioButton, Text } from '../../../../components';
-import { wordings } from '../../../../wordings';
-import { useCustomTheme, customThemeType, useDisplayMode } from '../../../../styles';
+import { Drawer, IconButton, LayoutGrid, RadioButton, Text } from '../..';
+import { wordings } from '../../../wordings';
+import { useCustomTheme, customThemeType, useDisplayMode } from '../../../styles';
 
 export { SettingsDrawer };
 

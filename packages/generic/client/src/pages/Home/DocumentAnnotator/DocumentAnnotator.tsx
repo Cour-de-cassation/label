@@ -7,7 +7,6 @@ import { DocumentViewerModeHandlerContextProvider } from '../../../services/docu
 import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
-import { DocumentAnnotatorHeader } from './DocumentAnnotatorHeader';
 import { useKeyboardShortcutsHandler } from './hooks';
 import { getSplittedTextByLine, groupByCategoryAndEntity } from './lib';
 import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
@@ -35,9 +34,6 @@ function DocumentAnnotator(props: {
   return (
     <DocumentViewerModeHandlerContextProvider annotations={annotatorState.annotations}>
       <LayoutGrid container>
-        <LayoutGrid container item style={styles.annotatorHeader} xs={12}>
-          <DocumentAnnotatorHeader annotatorStateHandler={annotatorStateHandler} />
-        </LayoutGrid>
         <div style={styles.annotatorBody}>
           <div style={styles.leftContainer}>
             <AnnotationsPanel

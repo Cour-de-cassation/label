@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ButtonWithIcon } from '../../../../components';
-import { wordings } from '../../../../wordings';
+import { ButtonWithIcon } from '../..';
+import { wordings } from '../../../wordings';
 import { SettingsDrawer } from './SettingsDrawer';
 
 export { SettingsButton };

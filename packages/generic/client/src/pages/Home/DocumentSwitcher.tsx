@@ -5,6 +5,7 @@ import { buildAnnotatorStateCommitter } from '../../services/annotatorState';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
 import { DocumentSelector } from './DocumentSelector';
+import { MainHeader } from '../../components/business/MainHeader';
 
 export { DocumentSwitcher };
 
@@ -24,23 +25,27 @@ function DocumentSwitcher(props: {
       : { kind: 'selecting' },
   );
   const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
+  const styles = buildStyles();
 
-  return renderPage();
+  return <div style={styles.documentSwitcher}>{renderPage()}</div>;
 
   function renderPage() {
     switch (documentState.kind) {
       case 'annotating':
         return (
-          <DocumentAnnotator
-            annotatorState={{
-              annotations: documentState.choice.annotations,
-              document: documentState.choice.document,
-              settings: props.settings,
-            }}
-            annotatorStateCommitter={buildAnnotatorStateCommitter()}
-            anonymizer={buildAnonymizer(props.settings)}
-            onStopAnnotatingDocument={onStopAnnotatingDocument}
-          />
+          <>
+            <MainHeader title={documentState.choice.document.title} />
+            <DocumentAnnotator
+              annotatorState={{
+                annotations: documentState.choice.annotations,
+                document: documentState.choice.document,
+                settings: props.settings,
+              }}
+              annotatorStateCommitter={buildAnnotatorStateCommitter()}
+              anonymizer={buildAnonymizer(props.settings)}
+              onStopAnnotatingDocument={onStopAnnotatingDocument}
+            />
+          </>
         );
       case 'selecting':
         return (
@@ -48,21 +53,35 @@ function DocumentSwitcher(props: {
             {({ document: documentChoice2, annotations: annotationsChoice2 }) => (
               <DocumentAndAnnotationsDataFetcher documentIdsToExclude={[props.document._id, documentChoice2._id]}>
                 {({ document: documentChoice3, annotations: annotationsChoice3 }) => (
-                  <DocumentSelector
-                    choices={[
-                      { document: props.document, annotations: props.annotations },
-                      { document: documentChoice2, annotations: annotationsChoice2 },
-                      { document: documentChoice3, annotations: annotationsChoice3 },
-                    ]}
-                    onSelectDocument={onSelectDocument}
-                    settings={props.settings}
-                  />
+                  <>
+                    <MainHeader />
+                    <DocumentSelector
+                      choices={[
+                        { document: props.document, annotations: props.annotations },
+                        { document: documentChoice2, annotations: annotationsChoice2 },
+                        { document: documentChoice3, annotations: annotationsChoice3 },
+                      ]}
+                      onSelectDocument={onSelectDocument}
+                      settings={props.settings}
+                    />
+                  </>
                 )}
               </DocumentAndAnnotationsDataFetcher>
             )}
           </DocumentAndAnnotationsDataFetcher>
         );
     }
+  }
+
+  function buildStyles() {
+    return {
+      documentSwitcher: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh',
+        width: '100vw',
+      } as const,
+    };
   }
 
   async function onStopAnnotatingDocument() {

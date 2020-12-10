@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon, Text } from '../../components';
+import { MainHeader } from '../../components/business/MainHeader';
 import { wordings } from '../../wordings';
 
 export { ErrorPage };
@@ -8,10 +9,13 @@ function ErrorPage() {
   const style = buildStyle();
 
   return (
-    <span style={style.errorPage}>
-      <Icon iconName="warning" style={style.errorIcon} />
-      <Text>{wordings.errorPage}</Text>
-    </span>
+    <>
+      <MainHeader />
+      <span style={style.errorPage}>
+        <Icon iconName="warning" style={style.errorIcon} />
+        <Text>{wordings.errorPage}</Text>
+      </span>
+    </>
   );
 
   function buildStyle() {

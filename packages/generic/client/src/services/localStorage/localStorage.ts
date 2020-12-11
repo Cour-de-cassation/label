@@ -1,13 +1,9 @@
-const BEARER_TOKEN_STORAGE_KEY = 'BEARER_TOKEN';
+import { bearerTokenHandler } from './bearerTokenHandler';
+import { displayModeHandler } from './displayModeHandler';
 
-export { getBearerTokenFromLocalStorage, setBearerTokenIntoLocalStorage, deleteBearerTokenInLocalStorage };
+export { localStorage };
 
-const setBearerTokenIntoLocalStorage = (bearerToken: string) => {
-  localStorage.setItem(BEARER_TOKEN_STORAGE_KEY, bearerToken);
+const localStorage = {
+  bearerTokenHandler,
+  displayModeHandler,
 };
-
-const deleteBearerTokenInLocalStorage = () => {
-  localStorage.removeItem(BEARER_TOKEN_STORAGE_KEY);
-};
-
-const getBearerTokenFromLocalStorage = () => localStorage.getItem(BEARER_TOKEN_STORAGE_KEY);

@@ -2,7 +2,7 @@ import React, { ChangeEvent, CSSProperties, FormEvent, FunctionComponent, useSta
 import { Link, useHistory } from 'react-router-dom';
 import { ButtonWithIcon, LayoutGrid, Logo, Text, TextInput } from '../../components';
 import { login } from '../../services/api';
-import { setBearerTokenIntoLocalStorage } from '../../services/localStorage';
+import { localStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
 import { customThemeType, useCustomTheme } from '../../styles';
 
@@ -97,7 +97,7 @@ const Login: FunctionComponent = () => {
     event.preventDefault();
     try {
       const { data } = await login(email, password);
-      setBearerTokenIntoLocalStorage(data);
+      localStorage.bearerTokenHandler.set(data);
       history.push('/');
     } catch (error) {
       setIsFormValid(false);

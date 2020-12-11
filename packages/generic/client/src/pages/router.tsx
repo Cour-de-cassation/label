@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom';
-import { getBearerTokenFromLocalStorage } from '../services/localStorage';
+import { localStorage } from '../services/localStorage';
 import { Admin } from './Admin';
 import { Home } from './Home';
 import { Login } from './Login';
@@ -35,7 +35,7 @@ const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }
   <Route
     {...rest}
     render={({ location }) =>
-      !!getBearerTokenFromLocalStorage() ? (
+      !!localStorage.bearerTokenHandler.get() ? (
         children
       ) : (
         <Redirect

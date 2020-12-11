@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Header, IconButton, MenuBar, Text } from '../..';
-import { deleteBearerTokenInLocalStorage } from '../../../services/localStorage';
+import { localStorage } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { SettingsButton } from './SettingsButton';
@@ -39,7 +39,7 @@ function MainHeader(props: { title?: string }) {
   }
 
   function logout() {
-    deleteBearerTokenInLocalStorage();
+    localStorage.bearerTokenHandler.remove();
     history.push('/login');
   }
 }

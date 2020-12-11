@@ -1,5 +1,1 @@
-export {
-  getBearerTokenFromLocalStorage,
-  setBearerTokenIntoLocalStorage,
-  deleteBearerTokenInLocalStorage,
-} from './localStorage';
+export { localStorage } from './localStorage';

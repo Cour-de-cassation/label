@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { environment } from '../../config/environment';
-import { getBearerTokenFromLocalStorage } from '../localStorage';
+import { localStorage } from '../localStorage';
 
 export { client };
 
@@ -10,7 +10,7 @@ const httpLink = createHttpLink({
 });
 
 const authenticationLink = setContext((_, { headers }: { headers: Record<string, string> }) => {
-  const bearerToken = getBearerTokenFromLocalStorage();
+  const bearerToken = localStorage.bearerTokenHandler.get();
   if (!bearerToken) {
     return {
       headers,

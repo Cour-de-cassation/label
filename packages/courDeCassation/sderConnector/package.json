@@ -39,7 +39,7 @@
     "testEnvironment": "node"
   },
   "main": "dist/index",
-  "name": "@label/cour-de-cassation-jurinet-connector",
+  "name": "@label/cour-de-cassation-sder-connector",
   "scripts": {
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",

@@ -7,9 +7,9 @@ echo "Insert user for testing purpose"
 RUN_MODE=LOCAL node dist/scripts/insertTestUsers.js
 cd ../../../
 
-cd packages/courDeCassation/jurinetConnector
-echo "Import the documents from Jurinet"
-RUN_MODE=LOCAL node dist/crons/importAllDocumentsFromJurinet.js
+cd packages/courDeCassation/sderConnector
+echo "Import the documents from SDER database"
+RUN_MODE=LOCAL node dist/legacy/crons/importAllDocumentsFromJurinet.js
 cd ../../../
 
 cd packages/courDeCassation/nlpAnnotator

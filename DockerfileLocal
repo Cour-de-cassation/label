@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
-COPY packages/courDeCassation/jurinetConnector/package.json ./packages/courDeCassation/jurinetConnector/
+COPY packages/courDeCassation/sderConnector/package.json ./packages/courDeCassation/sderConnector/
 COPY packages/courDeCassation/nlpAnnotator/package.json ./packages/courDeCassation/nlpAnnotator/
 COPY yarn.lock ./
 

@@ -28,7 +28,7 @@
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",
     "compile": "lerna run compile",
-    "compileClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation-jurinet-connector --ignore @label/cour-de-cassation-nlp-annotator compile ",
+    "compileClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation-sder-connector --ignore @label/cour-de-cassation-nlp-annotator compile ",
     "lint": "lerna run lint",
     "startLocal": "scripts/startLocal.sh",
     "startLocalClient": "yarn compileClient && cd packages/generic/client && yarn start",

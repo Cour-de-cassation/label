@@ -1,4 +1,5 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
+import { Redirect, Route } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
 import { buildFetchComponent } from '../services/buildFetchComponent';
 import { ErrorPage } from './ErrorPage';
@@ -17,5 +18,17 @@ function DataFetcher<fetchedType, dataType>(props: {
     errorPage: ErrorPage(),
     fetchInfos: props.fetchInfos,
     loadingPage: LoadingPage(),
+    loginRedirect: (
+      <Route
+        render={({ location }) => (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location },
+            }}
+          />
+        )}
+      />
+    ),
   });
 }

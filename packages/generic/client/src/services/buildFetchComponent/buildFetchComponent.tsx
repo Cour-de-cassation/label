@@ -9,21 +9,28 @@ function buildFetchComponent<fetchedType, dataType>({
   errorPage,
   fetchInfos,
   loadingPage,
+  loginRedirect,
 }: {
   buildComponentWithData: (returnedData: dataType) => ReactElement;
   dataAdapter: (fetchedData: fetchedType) => dataType;
   errorPage: ReactElement;
   fetchInfos: Array<{ loading: boolean; error?: ApolloError; data: unknown }>;
   loadingPage: ReactElement;
+  loginRedirect: ReactElement;
 }) {
-  const { loading, failure, fetchedData } = computeFetchStatus();
+  const { loading, errorCode, fetchedData } = computeFetchStatus();
 
   if (loading) {
     return loadingPage;
   }
 
-  if (failure) {
-    return errorPage;
+  if (errorCode) {
+    switch (errorCode) {
+      case 'AUTHENTICATION_ERROR':
+        return loginRedirect;
+      default:
+        return errorPage;
+    }
   }
 
   const data = dataAdapter(fetchedData);
@@ -31,28 +38,32 @@ function buildFetchComponent<fetchedType, dataType>({
   return buildComponentWithData(data);
 
   function computeFetchStatus() {
-    const loading = isLoading();
-    const error = isError();
-    const { fetchedData, dataMissing } = computeData();
+    const loading = fetchInfos.some((fetchInfo) => fetchInfo.loading);
 
-    return { loading, failure: error || dataMissing, fetchedData };
-  }
-
-  function isLoading(): boolean {
-    return fetchInfos.reduce((loading: boolean, fetchInfo) => loading || fetchInfo.loading, false);
-  }
-
-  function isError(): boolean {
-    return fetchInfos.reduce((error: boolean, fetchInfo) => error || !!fetchInfo.error, false);
-  }
-
-  function computeData(): { fetchedData: fetchedType; dataMissing: boolean } {
     const fetchedData = fetchInfos.reduce(
       (fetchedData, fetchInfo) => (fetchInfo.data !== undefined ? [...fetchedData, fetchInfo.data] : fetchedData),
       [] as unknown[],
     );
-    const dataMissing = fetchedData.length !== fetchInfos.length;
+    if (loading) {
+      return { loading, fetchedData: (fetchedData as unknown) as fetchedType, errorCode: undefined };
+    }
 
-    return { fetchedData: (fetchedData as unknown) as fetchedType, dataMissing };
+    const errorCode = getErrorCode(fetchedData);
+
+    return { loading, errorCode, fetchedData: (fetchedData as unknown) as fetchedType };
+  }
+
+  function getErrorCode(fetchedData: unknown[]): string | undefined {
+    for (const fetchInfo of fetchInfos) {
+      if (fetchInfo.error?.message === 'AUTHENTICATION_ERROR' || fetchInfo.error?.message === 'PERMISSION_ERROR') {
+        return fetchInfo.error?.message;
+      }
+    }
+
+    if (fetchedData.length !== fetchInfos.length) {
+      return 'MISSING_DATA';
+    }
+
+    return undefined;
   }
 }

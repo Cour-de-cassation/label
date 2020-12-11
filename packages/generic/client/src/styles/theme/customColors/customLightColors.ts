@@ -12,7 +12,7 @@ const customLightColors: customColorsType = {
     border: 'black',
   },
   error: ['red', 500],
-  icon: 'white',
+  icon: 'black',
   primary: ['cyan', 800],
   line: { level1: 'black', level2: ['grey', 600] },
   warning: ['orange', 500],

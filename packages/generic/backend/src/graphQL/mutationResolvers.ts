@@ -4,6 +4,7 @@ import { annotationService } from '../modules/annotation';
 import { documentService } from '../modules/document';
 import { monitoringEntryService } from '../modules/monitoringEntry';
 import { problemReportService } from '../modules/problemReport';
+import { treatmentService } from '../modules/treatment';
 import { userService } from '../modules/user';
 import { logger } from '../utils';
 import { buildAuthenticatedResolver } from './buildAuthenticatedResolver';
@@ -96,6 +97,35 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
       return { success: false };
     }
   },
+
+  treatment: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async (
+      user,
+      { documentId, fetchedGraphQLAnnotations, duration },
+    ) => {
+      try {
+        await treatmentService.createTreatment({
+          userId: user._id,
+          documentId: idModule.lib.buildId(documentId),
+          duration,
+        });
+
+        await annotationService.updateAnnotations(
+          idModule.lib.buildId(documentId),
+          fetchedGraphQLAnnotations.map((fetchedGraphQLAnnotation) => ({
+            ...fetchedGraphQLAnnotation,
+            _id: idModule.lib.buildId(fetchedGraphQLAnnotation._id),
+          })),
+        );
+
+        return { success: true };
+      } catch (e) {
+        logger.error(e);
+        return { success: false };
+      }
+    },
+  }),
 };
 
 const _typeCheck: {

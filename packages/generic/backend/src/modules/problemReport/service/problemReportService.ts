@@ -28,7 +28,7 @@ const problemReportService = {
       );
     }
 
-    problemReportRepository.insert(
+    await problemReportRepository.insert(
       problemReportModule.lib.buildProblemReport({
         assignationId,
         text: problemText,

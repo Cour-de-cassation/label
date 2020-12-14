@@ -87,6 +87,29 @@ const graphQLMutation = {
       },
     },
   },
+  treatment: {
+    type: {
+      kind: 'custom',
+      type: 'success',
+    },
+    args: {
+      documentId: {
+        kind: 'primitive',
+        type: 'id',
+      },
+      fetchedGraphQLAnnotations: {
+        kind: 'list',
+        type: {
+          kind: 'custom',
+          type: 'annotation',
+        },
+      },
+      duration: {
+        kind: 'primitive',
+        type: 'number',
+      },
+    },
+  },
 } as const;
 
 // We need this line for type checking

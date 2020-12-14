@@ -44,6 +44,20 @@ const queryResolvers: resolversType<typeof graphQLQuery> = {
     },
   }),
 
+  documents: buildAuthenticatedResolver({
+    permissions: ['admin', 'annotator'],
+    resolver: async () => {
+      try {
+        const documents = await documentService.fetchDocuments();
+
+        return documents;
+      } catch (error) {
+        logger.error(error);
+        throw new Error(error);
+      }
+    },
+  }),
+
   problemReports: buildAuthenticatedResolver({
     permissions: ['admin'],
     resolver: async () => {
@@ -56,6 +70,7 @@ const queryResolvers: resolversType<typeof graphQLQuery> = {
       }
     },
   }),
+
   settings: buildAuthenticatedResolver({
     permissions: ['admin', 'annotator'],
     resolver: async () => {

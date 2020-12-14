@@ -1,18 +1,22 @@
 import React from 'react';
-import { problemReportType } from '@label/core';
+import { ProblemReportsDataFetcher } from './ProblemReportsDataFetcher';
 
 export { ProblemReports };
 
-function ProblemReports(props: { problemReports: problemReportType[] }) {
+function ProblemReports() {
   return (
-    <table>
-      {props.problemReports.map((problemReport) => (
-        <tr>
-          <td>{problemReport._id}</td>
-          <td>{problemReport.type}</td>
-          <td>{problemReport.text}</td>
-        </tr>
-      ))}
-    </table>
+    <ProblemReportsDataFetcher>
+      {({ problemReports }) => (
+        <table>
+          {problemReports.map((problemReport) => (
+            <tr>
+              <td>{problemReport._id}</td>
+              <td>{problemReport.type}</td>
+              <td>{problemReport.text}</td>
+            </tr>
+          ))}
+        </table>
+      )}
+    </ProblemReportsDataFetcher>
   );
 }

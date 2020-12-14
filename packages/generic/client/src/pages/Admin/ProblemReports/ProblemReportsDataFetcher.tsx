@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { problemReportType } from '@label/core';
-import { useGraphQLQuery } from '../../graphQL';
-import { DataFetcher } from '../DataFetcher';
+import { useGraphQLQuery } from '../../../graphQL';
+import { DataFetcher } from '../../DataFetcher';
 
 export { ProblemReportsDataFetcher };
 

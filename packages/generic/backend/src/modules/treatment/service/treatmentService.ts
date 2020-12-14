@@ -1,0 +1,3 @@
+export { treatmentService };
+
+const treatmentService = {};

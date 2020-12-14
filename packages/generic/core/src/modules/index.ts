@@ -14,6 +14,7 @@ import {
   shadeColorType,
   categoryIconNameType,
 } from './settings';
+import { fetchedTreatmentType, treatmentType, treatmentModule } from './treatment';
 import { userModule, userType } from './user';
 import {
   dataModelFieldType,
@@ -32,6 +33,7 @@ export {
   monitoringEntryModule,
   problemReportModule,
   settingsModule,
+  treatmentModule,
   userModule,
 };
 
@@ -53,6 +55,8 @@ export type {
   settingsType,
   categoryIconNameType,
   userType,
+  fetchedTreatmentType,
+  treatmentType,
   dataModelFieldType,
   dataModelType,
   graphQLTypeOfDataModel,

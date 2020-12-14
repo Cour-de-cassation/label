@@ -5,6 +5,7 @@ import {
   settingsModule,
   dataModelFieldType,
   problemReportModule,
+  treatmentModule,
 } from '../modules';
 import { buildGraphQLCustomTypeFields } from './buildGraphQLCustomTypeFields';
 
@@ -43,6 +44,10 @@ const graphQLCustomTypes = {
     fields: {
       success: 'boolean',
     },
+  },
+  treatment: {
+    name: 'treatment',
+    fields: buildGraphQLCustomTypeFields<typeof treatmentModule.dataModel>(treatmentModule.dataModel),
   },
 } as const;
 

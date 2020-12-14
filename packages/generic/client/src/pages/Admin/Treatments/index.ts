@@ -1,0 +1,1 @@
+export { Treatments } from './Treatments';

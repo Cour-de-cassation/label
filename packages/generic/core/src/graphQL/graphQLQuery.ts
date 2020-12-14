@@ -33,15 +33,6 @@ const graphQLQuery = {
       },
     },
   },
-  documents: {
-    type: {
-      kind: 'list',
-      type: {
-        kind: 'custom',
-        type: 'document',
-      },
-    },
-  },
   problemReports: {
     type: {
       kind: 'list',
@@ -55,6 +46,15 @@ const graphQLQuery = {
     type: {
       kind: 'custom',
       type: 'settings',
+    },
+  },
+  treatments: {
+    type: {
+      kind: 'list',
+      type: {
+        kind: 'custom',
+        type: 'treatment',
+      },
     },
   },
 } as const;

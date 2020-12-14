@@ -4,6 +4,7 @@ import { settingsLoader } from '../lib/settingsLoader';
 import { annotationService } from '../modules/annotation';
 import { documentService } from '../modules/document';
 import { problemReportService } from '../modules/problemReport';
+import { treatmentService } from '../modules/treatment';
 import { logger } from '../utils';
 import { buildAuthenticatedResolver } from './buildAuthenticatedResolver';
 import { resolversType } from './resolversType';
@@ -44,20 +45,6 @@ const queryResolvers: resolversType<typeof graphQLQuery> = {
     },
   }),
 
-  documents: buildAuthenticatedResolver({
-    permissions: ['admin'],
-    resolver: async () => {
-      try {
-        const documents = await documentService.fetchDocuments();
-
-        return documents;
-      } catch (error) {
-        logger.error(error);
-        throw new Error(error);
-      }
-    },
-  }),
-
   problemReports: buildAuthenticatedResolver({
     permissions: ['admin'],
     resolver: async () => {
@@ -79,6 +66,20 @@ const queryResolvers: resolversType<typeof graphQLQuery> = {
           json: JSON.stringify(settingsLoader.getSettings()),
         };
         return settings;
+      } catch (error) {
+        logger.error(error);
+        throw new Error(error);
+      }
+    },
+  }),
+
+  treatments: buildAuthenticatedResolver({
+    permissions: ['admin'],
+    resolver: async () => {
+      try {
+        const treatments = await treatmentService.fetchTreatments();
+
+        return treatments;
       } catch (error) {
         logger.error(error);
         throw new Error(error);

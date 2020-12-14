@@ -18,12 +18,6 @@ const documentService = {
         !reports.some((report) => report.documentId === document._id),
     );
   },
-  async fetchDocuments(): Promise<documentType[]> {
-    const documentRepository = buildDocumentRepository();
-
-    const documents = await documentRepository.findAll();
-    return documents.filter((document) => document.status === 'done');
-  },
   async fetchDocumentForUser(
     userId: idType,
     documentIdsToExclude: idType[] = [],

@@ -1,9 +1,10 @@
+import { fileSystem } from '../fileSystem';
 import { loggerType } from './loggerType';
-import { getFormattedDate } from './utils';
+import { getFormattedDate, getFormattedError } from './utils';
 
-export { localLogger };
+export { prodLogger };
 
-const localLogger: loggerType = {
+const prodLogger: loggerType = {
   log(value) {
     // eslint-disable-next-line no-console
     console.log(getFormattedDate(), JSON.stringify(value, null, 2));
@@ -11,5 +12,6 @@ const localLogger: loggerType = {
   error(errorText) {
     // eslint-disable-next-line no-console
     console.error(getFormattedDate(), errorText);
+    fileSystem.appendToFile('./errors.log', getFormattedError(errorText));
   },
 };

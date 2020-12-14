@@ -2,7 +2,16 @@ import { promises as fs } from 'fs';
 
 export { fileSystem };
 
-const fileSystem = { listFilesOfDirectory, readFiles };
+const fileSystem = { appendToFile, listFilesOfDirectory, readFiles };
+
+async function appendToFile(filePath: string, text: string) {
+  try {
+    await fs.appendFile(filePath, text);
+    return;
+  } catch (error) {
+    throw new Error(`Could not write in file ${filePath}`);
+  }
+}
 
 async function listFilesOfDirectory(directoryPath: string) {
   const directory = await fs.opendir(directoryPath);

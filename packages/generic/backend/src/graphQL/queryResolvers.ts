@@ -4,6 +4,7 @@ import { settingsLoader } from '../lib/settingsLoader';
 import { annotationService } from '../modules/annotation';
 import { documentService } from '../modules/document';
 import { problemReportService } from '../modules/problemReport';
+import { logger } from '../utils';
 import { buildAuthenticatedResolver } from './buildAuthenticatedResolver';
 import { resolversType } from './resolversType';
 
@@ -12,28 +13,62 @@ export { _typeCheck as queryResolvers };
 const queryResolvers: resolversType<typeof graphQLQuery> = {
   annotations: buildAuthenticatedResolver({
     permissions: ['admin', 'annotator'],
-    resolver: async (_, { documentId }) =>
-      annotationService.fetchAnnotationsOfDocument(documentId),
+    resolver: async (_, { documentId }) => {
+      try {
+        const annotations = await annotationService.fetchAnnotationsOfDocument(
+          documentId,
+        );
+
+        return annotations;
+      } catch (error) {
+        logger.error(error);
+        throw new Error(error);
+      }
+    },
   }),
 
   document: buildAuthenticatedResolver({
     permissions: ['admin', 'annotator'],
-    resolver: async (user, { documentIdsToExclude }) =>
-      documentService.fetchDocumentForUser(
-        user._id,
-        documentIdsToExclude.map(idModule.lib.buildId),
-      ),
+    resolver: async (user, { documentIdsToExclude }) => {
+      try {
+        const document = await documentService.fetchDocumentForUser(
+          user._id,
+          documentIdsToExclude.map(idModule.lib.buildId),
+        );
+
+        return document;
+      } catch (error) {
+        logger.error(error);
+        throw new Error(error);
+      }
+    },
   }),
 
   problemReports: buildAuthenticatedResolver({
     permissions: ['admin'],
-    resolver: async () => problemReportService.fetchProblemReports(),
+    resolver: async () => {
+      try {
+        const problemReports = await problemReportService.fetchProblemReports();
+        return problemReports;
+      } catch (error) {
+        logger.error(error);
+        throw new Error(error);
+      }
+    },
   }),
   settings: buildAuthenticatedResolver({
     permissions: ['admin', 'annotator'],
-    resolver: async () => ({
-      json: JSON.stringify(settingsLoader.getSettings()),
-    }),
+    resolver: async () => {
+      try {
+        const settings = {
+          json: JSON.stringify(settingsLoader.getSettings()),
+        };
+        return settings;
+      } catch (error) {
+        logger.error(error);
+        throw new Error(error);
+      }
+    },
   }),
 };
 

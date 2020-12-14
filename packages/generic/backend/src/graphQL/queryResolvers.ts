@@ -45,7 +45,7 @@ const queryResolvers: resolversType<typeof graphQLQuery> = {
   }),
 
   documents: buildAuthenticatedResolver({
-    permissions: ['admin', 'annotator'],
+    permissions: ['admin'],
     resolver: async () => {
       try {
         const documents = await documentService.fetchDocuments();

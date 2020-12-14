@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom';
 import { localStorage } from '../services/localStorage';
 import { Admin } from './Admin';
+import { DocumentsDone } from './Admin/DocumentsDone';
 import { ProblemReports } from './Admin/ProblemReports';
 import { Home } from './Home';
 import { Login } from './Login';
@@ -24,6 +25,9 @@ const Router: FunctionComponent = () => (
       </Route>
       <AuthenticatedRoute path="/admin/problem-reports">
         <ProblemReports />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute path="/admin/documents-done">
+        <DocumentsDone />
       </AuthenticatedRoute>
       <AuthenticatedRoute path="/admin">
         <Admin />

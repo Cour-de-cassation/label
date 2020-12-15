@@ -4,25 +4,6 @@ import { graphQLMutationType } from './graphQLTypes';
 export { graphQLMutation };
 
 const graphQLMutation = {
-  annotations: {
-    type: {
-      kind: 'custom',
-      type: 'success',
-    },
-    args: {
-      documentId: {
-        kind: 'primitive',
-        type: 'id',
-      },
-      fetchedGraphQLAnnotations: {
-        kind: 'list',
-        type: {
-          kind: 'custom',
-          type: 'annotation',
-        },
-      },
-    },
-  },
   monitoringEntry: {
     type: {
       kind: 'custom',
@@ -87,7 +68,7 @@ const graphQLMutation = {
       },
     },
   },
-  treatment: {
+  createTreatment: {
     type: {
       kind: 'custom',
       type: 'success',

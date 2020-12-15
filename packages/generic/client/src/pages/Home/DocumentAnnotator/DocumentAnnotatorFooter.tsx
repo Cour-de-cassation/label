@@ -19,7 +19,7 @@ function DocumentAnnotatorFooter(props: {
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
 
-  const [saveAnnotations] = useGraphQLMutation<'annotations'>('annotations');
+  const [createTreatment] = useGraphQLMutation<'createTreatment'>('createTreatment');
   const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
 
   return (
@@ -101,10 +101,11 @@ function DocumentAnnotatorFooter(props: {
   }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
-    await saveAnnotations({
+    await createTreatment({
       variables: {
         documentId: annotatorState.document._id,
         fetchedGraphQLAnnotations: annotatorState.annotations,
+        duration: 0,
       },
     });
     await updateDocumentStatus({

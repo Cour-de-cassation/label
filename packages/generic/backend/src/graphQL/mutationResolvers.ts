@@ -13,26 +13,6 @@ import { resolversType } from './resolversType';
 export { _typeCheck as mutationResolvers };
 
 const mutationResolvers: resolversType<typeof graphQLMutation> = {
-  annotations: buildAuthenticatedResolver({
-    permissions: ['admin', 'annotator'],
-    resolver: async (_, { documentId, fetchedGraphQLAnnotations }) => {
-      try {
-        await annotationService.updateAnnotations(
-          idModule.lib.buildId(documentId),
-          fetchedGraphQLAnnotations.map((fetchedGraphQLAnnotation) => ({
-            ...fetchedGraphQLAnnotation,
-            _id: idModule.lib.buildId(fetchedGraphQLAnnotation._id),
-          })),
-        );
-
-        return { success: true };
-      } catch (e) {
-        logger.error(e);
-        return { success: false };
-      }
-    },
-  }),
-
   monitoringEntry: buildAuthenticatedResolver({
     permissions: ['admin', 'annotator'],
     resolver: async (user, { newMonitoringEntry }) => {
@@ -98,7 +78,7 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
     }
   },
 
-  treatment: buildAuthenticatedResolver({
+  createTreatment: buildAuthenticatedResolver({
     permissions: ['admin', 'annotator'],
     resolver: async (
       user,

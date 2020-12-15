@@ -1,13 +1,13 @@
 import { buildMutationString, buildQueryString } from './graphQLClientBuilder';
 
 describe('graphQLClientBuilder', () => {
-  describe('buildMutationString', () => {
+  describe('buildCreateTreatmentString', () => {
     it('should build a valid mutation', async () => {
-      const mutation = buildMutationString('annotations');
+      const mutation = buildMutationString('createTreatment');
 
       expect(mutation)
-        .toEqual(`mutation annotations($documentId: String, $fetchedGraphQLAnnotations: [annotationInputType]) {
-annotations(documentId: $documentId, fetchedGraphQLAnnotations: $fetchedGraphQLAnnotations) {
+        .toEqual(`mutation createTreatment($documentId: String, $fetchedGraphQLAnnotations: [annotationInputType], $duration: Int) {
+createTreatment(documentId: $documentId, fetchedGraphQLAnnotations: $fetchedGraphQLAnnotations, duration: $duration) {
 success
 }
 }`);

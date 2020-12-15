@@ -1,4 +1,4 @@
-import { treatmentType } from '@label/core';
+import { idModule, treatmentType } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customTreatmentRepositoryType } from './customTreatmentRepositoryType';
 
@@ -8,5 +8,15 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
   treatmentType,
   customTreatmentRepositoryType
 >({
-  buildCustomFakeRepository: () => ({}),
+  buildCustomFakeRepository: (collection) => ({
+    async findLastOneByDocumentId(documentId) {
+      const result = collection.filter((treatment) =>
+        idModule.lib.equalId(treatment.documentId, documentId),
+      );
+
+      return result.sort(
+        (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
+      )[0];
+    },
+  }),
 });

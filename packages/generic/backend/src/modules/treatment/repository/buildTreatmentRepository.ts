@@ -9,5 +9,13 @@ const buildTreatmentRepository = buildRepositoryBuilder<
   customTreatmentRepositoryType
 >({
   collectionName: 'treatments',
-  buildCustomRepository: () => ({}),
+  buildCustomRepository: (collection) => ({
+    async findLastOneByDocumentId(documentId) {
+      const result = await collection.find({ documentId }).toArray();
+
+      return result.sort(
+        (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
+      )[0];
+    },
+  }),
 });

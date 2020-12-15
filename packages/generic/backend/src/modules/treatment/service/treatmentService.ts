@@ -22,12 +22,17 @@ const treatmentService = {
   }) {
     const treatmentRepository = buildTreatmentRepository();
 
+    const lastTreatment = await treatmentRepository.findLastOneByDocumentId(
+      documentId,
+    );
+    const order = lastTreatment ? lastTreatment.order + 1 : 0;
+
     await treatmentRepository.insert(
       treatmentModule.lib.buildTreatment({
         userId,
         documentId,
         duration,
-        order: 0,
+        order,
         annotationIds,
       }),
     );

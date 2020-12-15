@@ -1,4 +1,9 @@
+import { documentType, treatmentType } from '@label/core';
+
 export type { customTreatmentRepositoryType };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type customTreatmentRepositoryType = {};
+type customTreatmentRepositoryType = {
+  findLastOneByDocumentId: (
+    documentId: documentType['_id'],
+  ) => Promise<treatmentType> | undefined;
+};

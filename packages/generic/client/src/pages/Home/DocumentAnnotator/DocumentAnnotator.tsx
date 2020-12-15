@@ -14,6 +14,7 @@ import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
 export { DocumentAnnotator };
 
 function DocumentAnnotator(props: {
+  annotationStartTimestamp: number;
   annotatorState: annotatorStateType;
   annotatorStateCommitter: annotatorStateCommitterType;
   anonymizer: clientAnonymizerType;
@@ -53,6 +54,7 @@ function DocumentAnnotator(props: {
         </div>
         <LayoutGrid container>
           <DocumentAnnotatorFooter
+            annotationStartTimestamp={props.annotationStartTimestamp}
             annotatorStateHandler={annotatorStateHandler}
             anonymizer={props.anonymizer}
             onStopAnnotatingDocument={props.onStopAnnotatingDocument}

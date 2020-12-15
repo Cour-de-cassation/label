@@ -24,6 +24,7 @@ function DocumentSwitcher(props: {
       ? { kind: 'annotating', choice: { document: props.document, annotations: props.annotations } }
       : { kind: 'selecting' },
   );
+  const [annotationStartTimestamp, setAnnotationStartTimestamp] = useState(0);
   const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
   const styles = buildStyles();
 
@@ -41,6 +42,7 @@ function DocumentSwitcher(props: {
                 document: documentState.choice.document,
                 settings: props.settings,
               }}
+              annotationStartTimestamp={annotationStartTimestamp}
               annotatorStateCommitter={buildAnnotatorStateCommitter()}
               anonymizer={buildAnonymizer(props.settings)}
               onStopAnnotatingDocument={onStopAnnotatingDocument}
@@ -90,6 +92,7 @@ function DocumentSwitcher(props: {
   }
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) {
+    setAnnotationStartTimestamp(new Date().getTime());
     await updateDocumentStatus({ variables: { documentId: choice.document._id, status: 'saved' } });
     setDocumentState({ kind: 'annotating', choice });
   }

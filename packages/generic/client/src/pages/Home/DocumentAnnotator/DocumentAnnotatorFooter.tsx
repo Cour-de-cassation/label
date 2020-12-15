@@ -11,6 +11,7 @@ import { ReportProblemButton } from './ReportProblemButton';
 export { DocumentAnnotatorFooter };
 
 function DocumentAnnotatorFooter(props: {
+  annotationStartTimestamp: number;
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   onStopAnnotatingDocument: () => void;
@@ -101,11 +102,13 @@ function DocumentAnnotatorFooter(props: {
   }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
+    const currentTimestamp = new Date().getTime();
+    const duration = currentTimestamp - props.annotationStartTimestamp;
     await createTreatment({
       variables: {
         documentId: annotatorState.document._id,
         fetchedGraphQLAnnotations: annotatorState.annotations,
-        duration: 0,
+        duration,
       },
     });
     await updateDocumentStatus({

@@ -1,10 +1,14 @@
+import { groupBy } from 'lodash';
 import {
   annotationType,
   annotationReportType,
   documentType,
+  treatmentModule,
+  idModule,
 } from '@label/core';
 import { buildAnnotationRepository } from '../../modules/annotation';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
+import { buildTreatmentRepository } from '../../modules/treatment';
 import { documentService } from '../../modules/document';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
@@ -39,6 +43,7 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
       `Insertion of ${annotations.length} annotations into the database...`,
     );
     await insertAnnotations(annotations);
+    await insertTreatments(annotations);
     logger.log(`Insertion done!`);
 
     logger.log(`Insertion of ${reports.length} reports into the database...`);
@@ -52,6 +57,30 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
     for await (const annotation of annotations) {
       await annotationRepository.insert(annotation);
     }
+  }
+
+  async function insertTreatments(annotations: annotationType[]) {
+    const treatmentRepository = buildTreatmentRepository();
+
+    const grouppedAnnotations = groupBy(annotations, (annotation) =>
+      idModule.lib.convertToString(annotation.documentId),
+    );
+    return Promise.all(
+      Object.entries(grouppedAnnotations).map((grouppedAnnotationEntry) => {
+        const documentId = idModule.lib.buildId(grouppedAnnotationEntry[0]);
+
+        // TO DO : handle non user treatment
+        const userId = idModule.lib.buildId();
+
+        const treatment = treatmentModule.lib.buildTreatment({
+          documentId,
+          userId,
+          duration: 0,
+          order: 0,
+        });
+        return treatmentRepository.insert(treatment);
+      }),
+    );
   }
 
   async function insertReports(reports: annotationReportType[]) {

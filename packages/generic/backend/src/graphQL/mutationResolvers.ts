@@ -89,6 +89,9 @@ const mutationResolvers: resolversType<typeof graphQLMutation> = {
           userId: user._id,
           documentId: idModule.lib.buildId(documentId),
           duration,
+          annotationIds: fetchedGraphQLAnnotations.map(({ _id }) =>
+            idModule.lib.buildId(_id),
+          ),
         });
 
         await annotationService.updateAnnotations(

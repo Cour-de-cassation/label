@@ -13,10 +13,12 @@ const treatmentService = {
     userId,
     documentId,
     duration,
+    annotationIds,
   }: {
     userId: idType;
     documentId: idType;
     duration: number;
+    annotationIds: idType[];
   }) {
     const treatmentRepository = buildTreatmentRepository();
 
@@ -26,6 +28,7 @@ const treatmentService = {
         documentId,
         duration,
         order: 0,
+        annotationIds,
       }),
     );
   },

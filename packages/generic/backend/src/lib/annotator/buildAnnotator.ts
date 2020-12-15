@@ -68,11 +68,12 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
     return Promise.all(
       Object.entries(grouppedAnnotations).map((grouppedAnnotationEntry) => {
         const documentId = idModule.lib.buildId(grouppedAnnotationEntry[0]);
-
+        const annotationIds = grouppedAnnotationEntry[1].map(({ _id }) => _id);
         // TO DO : handle non user treatment
         const userId = idModule.lib.buildId();
 
         const treatment = treatmentModule.lib.buildTreatment({
+          annotationIds,
           documentId,
           userId,
           duration: 0,

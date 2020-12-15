@@ -10,6 +10,7 @@ const treatmentDataModel = {
   duration: { type: 'number', graphQL: true },
   order: { type: 'number', graphQL: true },
   userId: { type: 'id', graphQL: true },
+  annotationIds: { type: 'ids', graphQL: true },
 } as const;
 
 // We need this line for type checking

@@ -124,7 +124,7 @@ function buildStyles(theme: customThemeType) {
       flex: 1,
       justifyContent: 'space-between',
       alignItems: 'center',
-      height: heights.panelFooter,
+      height: heights.annotatorPanelFooter,
     },
     leftContainer: {
       display: 'flex',

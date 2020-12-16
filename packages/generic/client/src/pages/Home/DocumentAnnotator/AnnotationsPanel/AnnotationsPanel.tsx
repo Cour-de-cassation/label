@@ -53,11 +53,11 @@ function AnnotationsPanel(props: {
         paddingRight: theme.spacing * 4,
       },
       panelHeader: {
-        height: heights.panelHeader,
+        height: heights.annotatorPanelHeader,
       },
       categoriesContainer: {
         overflowY: 'auto',
-        height: heights.panel,
+        height: heights.annotatorPanel,
         paddingRight: theme.spacing * 2,
       },
       category: {

@@ -50,7 +50,7 @@ const fr = {
   start: 'Commencer',
   treatmentsPage: {
     title: 'Administration',
-    subtitle: 'Décisions traitées'
+    subtitle: 'Décisions traitées',
   },
   undo: 'Annuler',
   unlink: 'Supprimer la liaison',

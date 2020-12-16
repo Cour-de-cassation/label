@@ -31,7 +31,7 @@ function AnnotationHeader() {
   function buildStyle() {
     return {
       header: {
-        height: heights.panelHeader,
+        height: heights.annotatorPanelHeader,
       },
     };
   }

@@ -49,7 +49,7 @@ function buildStyles(theme: customThemeType): { [cssClass: string]: CSSPropertie
   return {
     header: {
       paddingRight: theme.spacing * 2,
-      height: heights.panelHeader,
+      height: heights.annotatorPanelHeader,
     },
     leftHeader: {
       display: 'flex',

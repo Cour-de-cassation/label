@@ -8,11 +8,11 @@ import { SettingsButton } from './SettingsButton';
 
 export { MainHeader };
 
-function MainHeader(props: { title?: string }) {
+function MainHeader(props: { subtitle?: string; title?: string }) {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const history = useHistory();
-  const leftHeaderComponents = props.title ? [<Text>{props.title}</Text>] : [];
+  const leftHeaderComponents = buildLeftHeaders();
 
   return (
     <MenuBar color="inherit" isElevated={!!props.title}>
@@ -36,6 +36,21 @@ function MainHeader(props: { title?: string }) {
         paddingLeft: theme.spacing,
       },
     };
+  }
+
+  function buildLeftHeaders() {
+    if (!props.title) {
+      return [];
+    }
+    if (props.subtitle) {
+      return [
+        <div>
+          <Text variant="h3">{props.title}</Text>
+          <Text>{props.subtitle}</Text>
+        </div>,
+      ];
+    }
+    return [<Text>{props.title}</Text>];
   }
 
   function logout() {

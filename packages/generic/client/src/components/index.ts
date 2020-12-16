@@ -1,4 +1,4 @@
-import { ActionIcon, CategoryIcon, LinkAnnotationDropdown, Logo } from './business';
+import { ActionIcon, CategoryIcon, LinkAnnotationDropdown, Logo, MainHeader } from './business';
 import {
   Accordion,
   ButtonWithIcon,
@@ -36,6 +36,7 @@ export {
   LayoutGrid,
   LinkAnnotationDropdown,
   Logo,
+  MainHeader,
   MenuBar,
   RadioButton,
   SText,

@@ -48,6 +48,10 @@ const fr = {
   send: 'Envoyer',
   settings: 'Réglages',
   start: 'Commencer',
+  treatmentsPage: {
+    title: 'Administration',
+    subtitle: 'Décisions traitées'
+  },
   undo: 'Annuler',
   unlink: 'Supprimer la liaison',
   unlinkOption: {

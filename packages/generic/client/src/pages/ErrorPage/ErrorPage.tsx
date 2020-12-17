@@ -1,16 +1,16 @@
 import React from 'react';
-import { Icon, Text } from '../../components';
-import { MainHeader } from '../../components/business/MainHeader';
+import { Icon, MainHeader, Text } from '../../components';
 import { wordings } from '../../wordings';
 
 export { ErrorPage };
 
-function ErrorPage() {
+function ErrorPage(props: { displayHeader?: boolean }) {
   const style = buildStyle();
 
   return (
     <>
-      <MainHeader />
+      {props.displayHeader && <MainHeader />}
+
       <span style={style.errorPage}>
         <Icon iconName="warning" style={style.errorIcon} />
         <Text>{wordings.errorPage}</Text>

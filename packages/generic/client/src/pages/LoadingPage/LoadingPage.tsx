@@ -1,18 +1,17 @@
 import React from 'react';
-import { Text } from '../../components';
-import { MainHeader } from '../../components/business/MainHeader';
+import { MainHeader, Text } from '../../components';
 import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
 
 export { LoadingPage };
 
-function LoadingPage() {
+function LoadingPage(props: { displayHeader?: boolean }) {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
 
   return (
     <>
-      <MainHeader />
+      {props.displayHeader && <MainHeader />}
       <span style={style.loadingPage}>
         <div className="loading-wheel" style={style.loadingWheel} />
         <Text>{wordings.loading}</Text>

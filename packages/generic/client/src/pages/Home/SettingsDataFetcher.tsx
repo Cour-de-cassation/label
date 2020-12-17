@@ -9,13 +9,17 @@ type settingsGraphQLType = {
   settings: { json: string };
 };
 
-function SettingsDataFetcher(props: { children: (fetched: { settings: settingsType }) => ReactElement }) {
+function SettingsDataFetcher(props: {
+  alwaysDisplayHeader?: boolean;
+  children: (fetched: { settings: settingsType }) => ReactElement;
+}) {
   const settingsFetchInfo = useGraphQLQuery<'settings'>('settings');
   const settingsDataAdapter = ([data]: [settingsGraphQLType]) =>
     [settingsModule.lib.parseFromJson(data.settings.json)] as [settingsType];
 
   return (
     <DataFetcher
+      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={([settings]) => props.children({ settings })}
       fetchInfos={[settingsFetchInfo]}
       dataAdapter={settingsDataAdapter}

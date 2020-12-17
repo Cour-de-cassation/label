@@ -9,12 +9,16 @@ type treatmentsGraphQLType = {
   treatments: treatmentType[];
 };
 
-function TreatmentsDataFetcher(props: { children: (fetched: { treatments: treatmentType[] }) => ReactElement }) {
+function TreatmentsDataFetcher(props: {
+  alwaysDisplayHeader?: boolean;
+  children: (fetched: { treatments: treatmentType[] }) => ReactElement;
+}) {
   const treatmentsFetchInfo = useGraphQLQuery<'treatments'>('treatments');
   const treatmentsDataAdapter = ([data]: [treatmentsGraphQLType]) => [data.treatments];
 
   return (
     <DataFetcher
+      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={([treatments]) => props.children({ treatments })}
       fetchInfos={[treatmentsFetchInfo]}
       dataAdapter={treatmentsDataAdapter}

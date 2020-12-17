@@ -10,6 +10,7 @@ type problemReportsGraphQLType = {
 };
 
 function ProblemReportsDataFetcher(props: {
+  alwaysDisplayHeader?: boolean;
   children: (fetched: { problemReports: problemReportType[] }) => ReactElement;
 }) {
   const problemReportsFetchInfo = useGraphQLQuery<'problemReports'>('problemReports');
@@ -17,6 +18,7 @@ function ProblemReportsDataFetcher(props: {
 
   return (
     <DataFetcher
+      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={([problemReports]) => props.children({ problemReports })}
       fetchInfos={[problemReportsFetchInfo]}
       dataAdapter={problemReportsDataAdapter}

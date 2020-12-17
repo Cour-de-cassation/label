@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { buildAnonymizer, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { MainHeader } from '../../components';
 import { useGraphQLMutation } from '../../graphQL';
 import { buildAnnotatorStateCommitter } from '../../services/annotatorState';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
 import { DocumentSelector } from './DocumentSelector';
-import { MainHeader } from '../../components/business/MainHeader';
 
 export { DocumentSwitcher };
 
@@ -51,9 +51,12 @@ function DocumentSwitcher(props: {
         );
       case 'selecting':
         return (
-          <DocumentAndAnnotationsDataFetcher documentIdsToExclude={[props.document._id]}>
+          <DocumentAndAnnotationsDataFetcher documentIdsToExclude={[props.document._id]} alwaysDisplayHeader>
             {({ document: documentChoice2, annotations: annotationsChoice2 }) => (
-              <DocumentAndAnnotationsDataFetcher documentIdsToExclude={[props.document._id, documentChoice2._id]}>
+              <DocumentAndAnnotationsDataFetcher
+                documentIdsToExclude={[props.document._id, documentChoice2._id]}
+                alwaysDisplayHeader
+              >
                 {({ document: documentChoice3, annotations: annotationsChoice3 }) => (
                   <>
                     <MainHeader />

@@ -8,6 +8,7 @@ import { LoadingPage } from './LoadingPage';
 export { DataFetcher };
 
 function DataFetcher<fetchedType, dataType>(props: {
+  alwaysDisplayHeader?: boolean;
   buildComponentWithData: (returnedData: dataType) => ReactElement;
   dataAdapter: (fetchedData: fetchedType) => dataType;
   fetchInfos: Array<{ loading: boolean; error?: ApolloError; data: unknown }>;
@@ -15,9 +16,9 @@ function DataFetcher<fetchedType, dataType>(props: {
   return buildFetchComponent({
     buildComponentWithData: props.buildComponentWithData,
     dataAdapter: props.dataAdapter,
-    errorPage: ErrorPage(),
+    errorPage: <ErrorPage displayHeader={props.alwaysDisplayHeader} />,
     fetchInfos: props.fetchInfos,
-    loadingPage: LoadingPage(),
+    loadingPage: <LoadingPage displayHeader={props.alwaysDisplayHeader} />,
     loginRedirect: (
       <Route
         render={({ location }) => (

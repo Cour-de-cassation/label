@@ -8,9 +8,9 @@ const Home: FunctionComponent = () => {
   return (
     <LayoutGrid container>
       <LayoutGrid container item>
-        <SettingsDataFetcher>
+        <SettingsDataFetcher alwaysDisplayHeader>
           {({ settings }) => (
-            <DocumentAndAnnotationsDataFetcher>
+            <DocumentAndAnnotationsDataFetcher alwaysDisplayHeader>
               {({ document, annotations, fetchNewDocument }) => (
                 <DocumentSwitcher
                   annotations={annotations}

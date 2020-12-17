@@ -21,6 +21,7 @@ type documentGraphQLType = {
 };
 
 function DocumentAndAnnotationsDataFetcher(props: {
+  alwaysDisplayHeader?: boolean;
   children: (fetched: {
     document: fetchedDocumentType;
     annotations: fetchedAnnotationType[];
@@ -54,6 +55,7 @@ function DocumentAndAnnotationsDataFetcher(props: {
 
   return (
     <DataFetcher
+      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={([document, annotations]) => props.children({ document, annotations, fetchNewDocument })}
       fetchInfos={[documentsFetchInfo, annotationsFetchInfo]}
       dataAdapter={documentAndAnnotationsDataAdapter}

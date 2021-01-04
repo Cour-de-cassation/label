@@ -3,6 +3,7 @@ import { MainHeader } from '../../../components';
 import { heights } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
+import { TreatmentTable } from './TreatmentTable';
 
 export { Treatments };
 
@@ -14,20 +15,7 @@ function Treatments() {
         <MainHeader title={wordings.treatmentsPage.title} subtitle={wordings.treatmentsPage.subtitle} />
       </div>
       <div style={styles.panel}>
-        <TreatmentsDataFetcher>
-          {({ treatments }) => (
-            <table>
-              {treatments.map((treatment) => (
-                <tr>
-                  <td>{treatment._id}</td>
-                  <td>{treatment.documentId}</td>
-                  <td>{treatment.duration}</td>
-                  <td>{treatment.order}</td>
-                </tr>
-              ))}
-            </table>
-          )}
-        </TreatmentsDataFetcher>
+        <TreatmentsDataFetcher>{({ treatments }) => <TreatmentTable treatments={treatments} />}</TreatmentsDataFetcher>
       </div>
     </>
   );

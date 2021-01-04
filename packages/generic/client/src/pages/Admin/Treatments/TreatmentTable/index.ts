@@ -1,0 +1,1 @@
+export { TreatmentTable } from './TreatmentTable';

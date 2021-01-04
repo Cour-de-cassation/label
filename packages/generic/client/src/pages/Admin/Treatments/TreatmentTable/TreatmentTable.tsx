@@ -1,5 +1,6 @@
 import React from 'react';
 import { treatmentType } from '@label/core';
+import { heights } from '../../../../styles';
 
 export { TreatmentTable };
 

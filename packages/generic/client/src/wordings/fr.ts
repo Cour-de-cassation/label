@@ -51,6 +51,12 @@ const fr = {
   treatmentsPage: {
     title: 'Administration',
     subtitle: 'Décisions traitées',
+    table: {
+      columnTitles: {
+        duration: 'Temps',
+        number: 'N° décision'
+      }
+    }
   },
   undo: 'Annuler',
   unlink: 'Supprimer la liaison',

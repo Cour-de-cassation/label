@@ -12,10 +12,10 @@ function TreatmentTable(props: { treatments: treatmentType[] }) {
       <TableHead>
         <TableRow>
           <TableCell>
-            <Text>{wordings.treatmentsPage.table.columnTitles.number}</Text>
+            <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.number}</Text>
           </TableCell>
           <TableCell>
-            <Text>{wordings.treatmentsPage.table.columnTitles.duration}</Text>
+            <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.duration}</Text>
           </TableCell>
         </TableRow>
       </TableHead>
@@ -23,10 +23,10 @@ function TreatmentTable(props: { treatments: treatmentType[] }) {
         {props.treatments.map((treatment) => (
           <TableRow>
             <TableCell>
-              <Text>{treatment._id}</Text>
+              <Text variant="h3">{treatment._id}</Text>
             </TableCell>
             <TableCell>
-              <Text>{convertMillisecondsToReadableTime(treatment.duration)}</Text>
+              <Text variant="h3">{convertMillisecondsToReadableTime(treatment.duration)}</Text>
             </TableCell>
           </TableRow>
         ))}

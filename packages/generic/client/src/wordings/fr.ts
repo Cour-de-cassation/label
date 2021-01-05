@@ -52,11 +52,14 @@ const fr = {
     title: 'Administration',
     subtitle: 'Décisions traitées',
     table: {
+      filter: {
+        title: 'Filtrer',
+      },
       columnTitles: {
         duration: 'Temps',
-        number: 'N° décision'
-      }
-    }
+        number: 'N° décision',
+      },
+    },
   },
   undo: 'Annuler',
   unlink: 'Supprimer la liaison',

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MainHeader } from '../../../components';
-import { heights } from '../../../styles';
+import { MainHeader, Text } from '../../../components';
+import { customThemeType, heights, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
@@ -8,7 +8,8 @@ import { TreatmentTable } from './TreatmentTable';
 export { Treatments };
 
 function Treatments() {
-  const styles = buildStyles();
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
   return (
     <>
       <div style={styles.header}>
@@ -17,27 +18,34 @@ function Treatments() {
       <TreatmentsDataFetcher>
         {({ treatments }) => (
           <div style={styles.table}>
-            <div style={styles.tableHeader}></div>
+            <div style={styles.tableHeaderContainer}>
+              <div style={styles.tableHeader}>
+                <Text>{wordings.treatmentsPage.table.filter.title}</Text>
+              </div>
+            </div>
 
             <div style={styles.tableBody}>
               <TreatmentTable treatments={treatments} />
             </div>
-            <div style={styles.tableFooter}></div>
+            <div style={styles.tableFooterContainer}></div>
           </div>
         )}
       </TreatmentsDataFetcher>
     </>
   );
 
-  function buildStyles() {
+  function buildStyles(theme: customThemeType) {
     return {
       header: {
         height: heights.header,
       },
-      tableHeader: {
+      tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
       },
-      tableFooter: {
+      tableHeader: {
+        paddingTop: theme.spacing * 3,
+      },
+      tableFooterContainer: {
         height: heights.adminTreatmentsTableFooter,
       },
       tableBody: {
@@ -46,6 +54,8 @@ function Treatments() {
       },
       table: {
         height: heights.adminPanel,
+        paddingLeft: theme.spacing * 3,
+        paddingRight: theme.spacing * 2,
       },
     } as const;
   }

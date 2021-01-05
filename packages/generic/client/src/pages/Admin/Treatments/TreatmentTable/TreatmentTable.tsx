@@ -1,13 +1,13 @@
 import React from 'react';
 import { treatmentType } from '@label/core';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '../../../../components';
 import { wordings } from '../../../../wordings';
 
 export { TreatmentTable };
 
 function TreatmentTable(props: { treatments: treatmentType[] }) {
   return (
-    <Table stickyHeader>
+    <Table isHeaderSticky>
       <TableHead>
         <TableRow>
           <TableCell>{wordings.treatmentsPage.table.columnTitles.number}</TableCell>

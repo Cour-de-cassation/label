@@ -20,6 +20,11 @@ import {
   RadioButton,
   SvgImage,
   SwitchButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Text,
   TextInput,
 } from './materialUI';
@@ -43,6 +48,11 @@ export {
   SText,
   SvgImage,
   SwitchButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Text,
   TextInput,
 };

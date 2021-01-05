@@ -9,6 +9,11 @@ import { MenuBar } from './MenuBar';
 import { RadioButton } from './RadioButton';
 import { SvgImage } from './SvgImage';
 import { SwitchButton } from './SwitchButton';
+import { Table } from './Table';
+import { TableBody } from './TableBody';
+import { TableCell } from './TableCell';
+import { TableHead } from './TableHead';
+import { TableRow } from './TableRow';
 import { Text } from './Text';
 import { TextInput } from './TextInput';
 
@@ -24,6 +29,11 @@ export {
   RadioButton,
   SvgImage,
   SwitchButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Text,
   TextInput,
 };

@@ -24,10 +24,9 @@ function Treatments() {
               </div>
             </div>
 
-            <div style={styles.tableBody}>
+            <div style={styles.tableContentContainer}>
               <TreatmentTable treatments={treatments} />
             </div>
-            <div style={styles.tableFooterContainer}></div>
           </div>
         )}
       </TreatmentsDataFetcher>
@@ -45,10 +44,7 @@ function Treatments() {
       tableHeader: {
         paddingTop: theme.spacing * 3,
       },
-      tableFooterContainer: {
-        height: heights.adminTreatmentsTableFooter,
-      },
-      tableBody: {
+      tableContentContainer: {
         height: heights.adminTreatmentsTable,
         overflowY: 'auto',
       },

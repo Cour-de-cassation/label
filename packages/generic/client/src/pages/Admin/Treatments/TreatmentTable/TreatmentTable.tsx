@@ -1,12 +1,14 @@
 import React from 'react';
 import { treatmentType } from '@label/core';
-import { Table, TableBody, TableCell, TableHead, TableRow, Text } from '../../../../components';
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableRow, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
-import { convertMillisecondsToReadableTime } from '../../../../utils';
+import { timeOperator } from './utils';
 
 export { TreatmentTable };
 
 function TreatmentTable(props: { treatments: treatmentType[] }) {
+  const durations = props.treatments.map(({ duration }) => duration);
+
   return (
     <Table isHeaderSticky>
       <TableHead>
@@ -26,11 +28,27 @@ function TreatmentTable(props: { treatments: treatmentType[] }) {
               <Text variant="h3">{treatment._id}</Text>
             </TableCell>
             <TableCell>
-              <Text variant="h3">{convertMillisecondsToReadableTime(treatment.duration)}</Text>
+              <Text variant="h3">{timeOperator.convertDurationToReadableDuration(treatment.duration)}</Text>
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
+      <TableFooter isSticky>
+        <TableRow>
+          <TableCell>
+            <Text variant="h3" color="textSecondary">
+              {wordings.treatmentsPage.table.footer.total}
+            </Text>
+            <Text variant="h3">{wordings.treatmentsPage.table.footer.average}</Text>
+          </TableCell>
+          <TableCell>
+            <Text variant="h3" color="textSecondary">
+              {timeOperator.getReadableTotalDuration(durations)}
+            </Text>
+            <Text variant="h3">{timeOperator.getReadableAverageDuration(durations)}</Text>
+          </TableCell>
+        </TableRow>
+      </TableFooter>
     </Table>
   );
 }

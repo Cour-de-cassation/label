@@ -59,6 +59,10 @@ const fr = {
         duration: 'Temps',
         number: 'N° décision',
       },
+      footer: {
+        total: 'TOTAL',
+        average: 'Moyenne',
+      },
     },
   },
   undo: 'Annuler',

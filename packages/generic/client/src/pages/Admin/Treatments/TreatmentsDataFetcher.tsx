@@ -1,17 +1,17 @@
 import React, { ReactElement } from 'react';
-import { treatmentType } from '@label/core';
+import { fetchedTreatmentType } from '@label/core';
 import { useGraphQLQuery } from '../../../graphQL';
 import { DataFetcher } from '../../DataFetcher';
 
 export { TreatmentsDataFetcher };
 
 type treatmentsGraphQLType = {
-  treatments: treatmentType[];
+  treatments: fetchedTreatmentType[];
 };
 
 function TreatmentsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
-  children: (fetched: { treatments: treatmentType[] }) => ReactElement;
+  children: (fetched: { treatments: fetchedTreatmentType[] }) => ReactElement;
 }) {
   const treatmentsFetchInfo = useGraphQLQuery<'treatments'>('treatments');
   const treatmentsDataAdapter = ([data]: [treatmentsGraphQLType]) => [data.treatments];

@@ -15,6 +15,7 @@ import { TableCell } from './TableCell';
 import { TableHead } from './TableHead';
 import { TableFooter } from './TableFooter';
 import { TableRow } from './TableRow';
+import { TableSortLabel } from './TableSortLabel';
 import { Text } from './Text';
 import { TextInput } from './TextInput';
 
@@ -35,6 +36,7 @@ export {
   TableCell,
   TableFooter,
   TableHead,
+  TableSortLabel,
   TableRow,
   Text,
   TextInput,

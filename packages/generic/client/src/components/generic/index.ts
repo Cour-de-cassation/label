@@ -26,6 +26,7 @@ import {
   TableFooter,
   TableHead,
   TableRow,
+  TableSortLabel,
   Text,
   TextInput,
 } from './materialUI';
@@ -55,6 +56,7 @@ export {
   TableFooter,
   TableHead,
   TableRow,
+  TableSortLabel,
   Text,
   TextInput,
 };

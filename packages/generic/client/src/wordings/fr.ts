@@ -54,6 +54,7 @@ const fr = {
     table: {
       filter: {
         title: 'Filtrer',
+        exportButton: 'Exporter',
       },
       columnTitles: {
         duration: 'Temps',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainHeader, Text } from '../../../components';
+import { ButtonWithIcon, MainHeader, Text } from '../../../components';
 import { customThemeType, heights, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
@@ -20,7 +20,10 @@ function Treatments() {
           <div style={styles.table}>
             <div style={styles.tableHeaderContainer}>
               <div style={styles.tableHeader}>
-                <Text>{wordings.treatmentsPage.table.filter.title}</Text>
+                <div style={styles.filterContainer}>
+                  <Text>{wordings.treatmentsPage.table.filter.title}</Text>
+                </div>
+                <ButtonWithIcon iconName="export" text={wordings.treatmentsPage.table.filter.exportButton} />
               </div>
             </div>
 
@@ -38,11 +41,17 @@ function Treatments() {
       header: {
         height: heights.header,
       },
+      filterContainer: {
+        paddingTop: theme.spacing,
+      },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
       },
       tableHeader: {
-        paddingTop: theme.spacing * 3,
+        paddingTop: theme.spacing * 2,
+        paddingRight: theme.spacing,
+        display: 'flex',
+        justifyContent: 'space-between',
       },
       tableContentContainer: {
         height: heights.adminTreatmentsTable,

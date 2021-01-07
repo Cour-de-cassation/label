@@ -10,7 +10,17 @@ type dataModelType = {
   };
 };
 
-type dataModelFieldType = 'boolean' | 'date' | 'id' | 'ids' | 'string' | 'number' | readonly string[];
+type dataModelFieldType =
+  | 'boolean'
+  | 'date'
+  | 'id'
+  | 'string'
+  | 'number'
+  | readonly string[]
+  | {
+      kind: 'list';
+      type: dataModelFieldType | { [key in string]: dataModelFieldType };
+    };
 
 type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
   filterType<dataModelT, { graphQL: true }>
@@ -22,14 +32,25 @@ type typeOfDataModel<dataModelT extends dataModelType> = writeableType<
   }
 >;
 
-type typeOfDataModelFieldType<dataModelFieldT> = dataModelFieldT extends 'boolean'
+type typeOfDataModelFieldType<dataModelFieldT> = dataModelFieldT extends {
+  kind: 'list';
+  type: any;
+}
+  ? dataModelFieldT['type'] extends dataModelFieldType
+    ? Array<typeOfDataModelFieldType<dataModelFieldT['type']>>
+    : dataModelFieldT['type'] extends { [key in string]: dataModelFieldType }
+    ? Array<
+        {
+          [field in keyof dataModelFieldT['type']]: typeOfDataModelFieldType<dataModelFieldT['type'][field]>;
+        }
+      >
+    : never
+  : dataModelFieldT extends 'boolean'
   ? boolean
   : dataModelFieldT extends 'date'
   ? Date
   : dataModelFieldT extends 'id'
   ? idType
-  : dataModelFieldT extends 'ids'
-  ? idType[]
   : dataModelFieldT extends 'string'
   ? string
   : dataModelFieldT extends 'number'

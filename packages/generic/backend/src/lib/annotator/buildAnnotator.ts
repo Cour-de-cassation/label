@@ -76,6 +76,8 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
           userId,
           duration: 0,
           order: 0,
+          before: [], // TODO insert annotation in it
+          after: [],
         });
         return treatmentRepository.insert(treatment);
       }),

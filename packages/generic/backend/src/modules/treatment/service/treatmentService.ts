@@ -31,6 +31,8 @@ const treatmentService = {
         documentId,
         duration,
         order,
+        before: [],
+        after: [], // TODO insert annotation in it
       }),
     );
   },

@@ -4,12 +4,33 @@ export { treatmentDataModel };
 
 export type { treatmentType, fetchedTreatmentType };
 
+const annotationDataModelField = {
+  category: 'string',
+  entityId: 'string',
+  start: 'number',
+  text: 'string',
+} as const;
+
 const treatmentDataModel = {
   _id: { type: 'id', graphQL: true },
   documentId: { type: 'id', graphQL: true },
   duration: { type: 'number', graphQL: true },
   order: { type: 'number', graphQL: true },
   userId: { type: 'id', graphQL: true },
+  before: {
+    type: {
+      kind: 'list',
+      type: annotationDataModelField,
+    },
+    graphQL: true,
+  },
+  after: {
+    type: {
+      kind: 'list',
+      type: annotationDataModelField,
+    },
+    graphQL: true,
+  },
 } as const;
 
 // We need this line for type checking

@@ -7,6 +7,7 @@ import { IconButton } from './IconButton';
 import { IconDropdown } from './IconDropdown';
 import { LabelledDropdown } from './LabelledDropdown';
 import { SText } from './SText';
+import { Table } from './Table';
 
 export {
   ButtonWithIcon,
@@ -18,4 +19,5 @@ export {
   IconDropdown,
   LabelledDropdown,
   SText,
+  Table,
 };

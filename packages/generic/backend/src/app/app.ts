@@ -4,23 +4,13 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { environment } from '@label/core';
 
-import { buildHandlingErrorController, dependencyManager } from '../utils';
+import { buildHandlingErrorController } from '../utils';
 import { userController } from '../modules/user';
 import { setup } from './setup';
 import { serverGraphQLSchema } from '../graphQL/serverGraphQLSchema';
 
 const app = express();
 const port = environment.port.server;
-
-dependencyManager.exec({
-  execProd: () => {
-    app.use(express.static('./build'));
-
-    app.get('/', function (req, res) {
-      res.sendFile('./build/index.html');
-    });
-  },
-});
 
 app.use(
   cors({

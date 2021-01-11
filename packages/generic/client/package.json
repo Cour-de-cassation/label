@@ -22,6 +22,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "serve": "^11.3.2",
     "string-template": "^1.0.0",
     "styled-components": "4.0.3"
   },
@@ -88,6 +89,7 @@
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
+    "serve": "serve -s build -l 55432",
     "start": "PORT=55432 react-scripts start",
     "test": "RUN_MODE=TEST jest --passWithNoTests"
   },

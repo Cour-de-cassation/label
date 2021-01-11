@@ -4,4 +4,5 @@ DIR=`dirname "$0"`
 
 $DIR/initializeTestDb.sh
 
-lerna run --scope @label/backend startProd --stream
+
+lerna run --scope @label/client serve & lerna run --scope @label/backend startProd --stream

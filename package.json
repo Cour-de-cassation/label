@@ -19,7 +19,7 @@
     "**/@typescript-eslint/parser": "^4.4.1"
   },
   "scripts": {
-    "bootstrap": "lerna run compile && lerna run --scope @label/backend --scope @label/client bootstrap --stream && mv ./packages/generic/backend/templates/docker-compose-local.yml ./ && mv ./packages/generic/backend/templates/docker-compose-prod.yml ./ && mv ./packages/generic/backend/templates/docker-compose-client.yml ./",
+    "bootstrap": "lerna run compile && lerna run --scope @label/backend --scope @label/client bootstrap --stream && mv ./packages/generic/backend/templates/docker-compose-local.yml ./ && mv ./packages/generic/backend/templates/docker-compose-prod.yml ./ && mv ./packages/generic/backend/templates/docker-compose-client.yml ./ && mv ./packages/generic/backend/templates/startProd.sh ./scripts",
     "build": "lerna run build --stream ",
     "buildLocal": "lerna run --ignore @label/client build --stream",
     "buildLocalDocker": "docker-compose -f docker-compose-local.yml build",

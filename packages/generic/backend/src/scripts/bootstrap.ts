@@ -20,6 +20,10 @@ const filesToBootstrap = [
     template: './templates/docker-compose-client-template.yml',
     target: './templates/docker-compose-client.yml',
   },
+  {
+    template: './templates/startProd-template.sh',
+    target: './templates/startProd.sh',
+  },
 ];
 
 bootstrap(filesToBootstrap, bootstrapValues);

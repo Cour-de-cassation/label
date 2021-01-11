@@ -1,10 +1,12 @@
 import { errorHandlers, idModule, userModule } from '@label/core';
-import { userDtoType } from '../types/userDtoType';
+import { userDtoType } from '../types';
 import { buildUserRepository } from '../repository';
 import { hasher, jwtSigner, mailer } from '../../../utils';
 import { wordings } from '../../../wordings';
 
 export { userService };
+
+const DEFAULT_ROLE = 'annotator';
 
 const userService = {
   async login(user: userDtoType) {
@@ -37,12 +39,13 @@ const userService = {
     });
   },
   async signUpUser(user: userDtoType) {
+    const role = user.role || DEFAULT_ROLE;
     const hashedPassword = await hasher.hash(user.password);
     const userRepository = buildUserRepository();
     const newUser = userModule.lib.buildUser({
       email: user.email,
       password: hashedPassword,
-      role: 'annotator',
+      role,
     });
     return userRepository.insert(newUser);
   },

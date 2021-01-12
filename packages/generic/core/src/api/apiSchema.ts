@@ -48,9 +48,12 @@ const apiSchema = {
     },
   },
   post: {
-    monitoringEntry: {
+    monitoringEntries: {
       in: {
-        newMonitoringEntry: fetchedDataModelEntries.monitoringEntry,
+        newMonitoringEntries: buildDataModelEntry({
+          kind: 'list',
+          content: fetchedDataModelEntries.monitoringEntry,
+        }),
       },
       out: fetchedDataModelEntries.success,
     },

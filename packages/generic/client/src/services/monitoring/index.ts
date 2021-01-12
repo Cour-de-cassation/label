@@ -1,3 +1,4 @@
 import { useMonitoring } from './useMonitoring';
+import { MonitoringEntriesHandlerContextProvider } from './MonitoringEntriesHandlerContext';
 
-export { useMonitoring };
+export { useMonitoring, MonitoringEntriesHandlerContextProvider };

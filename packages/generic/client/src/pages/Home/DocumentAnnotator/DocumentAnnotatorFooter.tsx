@@ -4,6 +4,7 @@ import { customThemeType, heights, useCustomTheme, widths } from '../../../style
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { apiCaller } from '../../../api';
 import { annotatorStateHandlerType } from '../../../services/annotatorState';
+import { useMonitoring } from '../../../services/monitoring';
 import { clientAnonymizerType } from '../../../types';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
@@ -17,6 +18,8 @@ function DocumentAnnotatorFooter(props: {
   onStopAnnotatingDocument: () => void;
 }) {
   const theme = useCustomTheme();
+  const { sendMonitoringEntries } = useMonitoring();
+
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
 
@@ -95,6 +98,7 @@ function DocumentAnnotatorFooter(props: {
 
   async function validate() {
     await saveAnnotationsAndUpdateAssignationStatus('done');
+    await sendMonitoringEntries();
     props.onStopAnnotatingDocument();
   }
 

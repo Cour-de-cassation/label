@@ -91,17 +91,20 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   },
 
   post: {
-    monitoringEntry: buildAuthenticatedController({
+    monitoringEntries: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
-      controllerWithUser: async (user, { args: { newMonitoringEntry } }) => {
+      controllerWithUser: async (user, { args: { newMonitoringEntries } }) => {
         try {
-          await monitoringEntryService.create({
-            ...newMonitoringEntry,
-            documentId: idModule.lib.buildId(newMonitoringEntry.documentId),
-            _id: idModule.lib.buildId(newMonitoringEntry._id),
-            userId: user._id,
-          });
-
+          Promise.all(
+            newMonitoringEntries.map((newMonitoringEntry) =>
+              monitoringEntryService.create({
+                ...newMonitoringEntry,
+                documentId: idModule.lib.buildId(newMonitoringEntry.documentId),
+                _id: idModule.lib.buildId(newMonitoringEntry._id),
+                userId: user._id,
+              }),
+            ),
+          );
           return { success: true };
         } catch (e) {
           logger.error(e);

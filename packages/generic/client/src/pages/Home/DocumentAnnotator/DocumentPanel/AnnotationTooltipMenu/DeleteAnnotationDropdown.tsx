@@ -15,8 +15,8 @@ function DeleteAnnotationDropdown(props: {
   buttonSize?: number;
   onClose: () => void;
 }): ReactElement {
-  const { addMonitoringEntry } = useMonitoring(props.annotatorStateHandler);
   const annotatorState = props.annotatorStateHandler.get();
+  const { addMonitoringEntry } = useMonitoring();
   const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(
     props.annotation.entityId,
     annotatorState.annotations,

@@ -1,26 +1,42 @@
 import { filterType, writeableType } from '../types/utilityTypes';
 import { idType } from './id';
 
-export type { dataModelFieldType, dataModelType, graphQLTypeOfDataModel, typeOfDataModel, typeOfDataModelFieldType };
+export { buildDataModelEntry };
+
+export type { dataModelEntryType, dataModelType, graphQLTypeOfDataModel, typeOfDataModel, typeOfDataModelEntryType };
 
 type dataModelType = {
   [key in string]: {
-    type: dataModelFieldType;
+    type: dataModelEntryType;
     graphQL: boolean;
   };
 };
 
-type dataModelFieldType =
-  | 'boolean'
-  | 'date'
-  | 'id'
-  | 'string'
-  | 'number'
-  | readonly string[]
+function buildDataModelEntry<dataModelEntryT extends dataModelEntryType>(dataModelEntry: dataModelEntryT) {
+  return dataModelEntry;
+}
+
+type dataModelEntryType =
+  | {
+      kind: 'primitive';
+      content: dataModelEntryPrimitiveType;
+    }
+  | {
+      kind: 'constant';
+      content: dataModelEntryConstantType;
+    }
+  | {
+      kind: 'object';
+      content: { [key in string]: dataModelEntryType };
+    }
   | {
       kind: 'list';
-      type: dataModelFieldType | { [key in string]: dataModelFieldType };
+      content: dataModelEntryType;
     };
+
+type dataModelEntryPrimitiveType = 'boolean' | 'date' | 'id' | 'string' | 'number';
+
+type dataModelEntryConstantType = readonly string[];
 
 type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
   filterType<dataModelT, { graphQL: true }>
@@ -28,33 +44,48 @@ type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
 
 type typeOfDataModel<dataModelT extends dataModelType> = writeableType<
   {
-    [field in keyof dataModelT]: typeOfDataModelFieldType<dataModelT[field]['type']>;
+    [field in keyof dataModelT]: typeOfDataModelEntryType<dataModelT[field]['type']>;
   }
 >;
 
-type typeOfDataModelFieldType<dataModelFieldT> = dataModelFieldT extends {
-  kind: 'list';
-  type: any;
+type typeOfDataModelEntryType<dataModelEntryT extends dataModelEntryType> = dataModelEntryT extends {
+  kind: 'primitive';
+  content: dataModelEntryPrimitiveType;
 }
-  ? dataModelFieldT['type'] extends dataModelFieldType
-    ? Array<typeOfDataModelFieldType<dataModelFieldT['type']>>
-    : dataModelFieldT['type'] extends { [key in string]: dataModelFieldType }
-    ? Array<
-        {
-          [field in keyof dataModelFieldT['type']]: typeOfDataModelFieldType<dataModelFieldT['type'][field]>;
-        }
-      >
-    : never
-  : dataModelFieldT extends 'boolean'
-  ? boolean
-  : dataModelFieldT extends 'date'
-  ? Date
-  : dataModelFieldT extends 'id'
-  ? idType
-  : dataModelFieldT extends 'string'
-  ? string
-  : dataModelFieldT extends 'number'
-  ? number
-  : dataModelFieldT extends readonly any[]
-  ? dataModelFieldT[number]
+  ? typeOfDataModelEntryPrimitiveType<dataModelEntryT['content']>
+  : dataModelEntryT extends {
+      kind: 'constant';
+      content: dataModelEntryConstantType;
+    }
+  ? typeOfDataModelEntryConstantType<dataModelEntryT['content']>
+  : dataModelEntryT extends {
+      kind: 'object';
+      content: { [key in string]: dataModelEntryType };
+    }
+  ? {
+      [key in keyof dataModelEntryT['content']]: typeOfDataModelEntryType<dataModelEntryT['content'][key]>;
+    }
+  : dataModelEntryT extends {
+      kind: 'list';
+      content: dataModelEntryType;
+    }
+  ? Array<typeOfDataModelEntryType<dataModelEntryT['content']>>
   : never;
+
+type typeOfDataModelEntryPrimitiveType<
+  dataModelEntryPrimitiveT extends dataModelEntryPrimitiveType
+> = dataModelEntryPrimitiveT extends 'boolean'
+  ? boolean
+  : dataModelEntryPrimitiveT extends 'date'
+  ? Date
+  : dataModelEntryPrimitiveT extends 'id'
+  ? idType
+  : dataModelEntryPrimitiveT extends 'string'
+  ? string
+  : dataModelEntryPrimitiveT extends 'number'
+  ? number
+  : never;
+
+type typeOfDataModelEntryConstantType<
+  dataModelEntryConstantT extends dataModelEntryConstantType
+> = dataModelEntryConstantT[number];

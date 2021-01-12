@@ -2,7 +2,7 @@ import React from 'react';
 import { documentType } from '@label/core';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
-import { useGraphQLMutation } from '../../../graphQL';
+import { apiCaller } from '../../../api';
 import { annotatorStateHandlerType } from '../../../services/annotatorState';
 import { clientAnonymizerType } from '../../../types';
 import { wordings } from '../../../wordings';
@@ -19,9 +19,6 @@ function DocumentAnnotatorFooter(props: {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
-
-  const [createTreatment] = useGraphQLMutation<'createTreatment'>('createTreatment');
-  const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
 
   return (
     <div style={styles.footer}>
@@ -104,15 +101,15 @@ function DocumentAnnotatorFooter(props: {
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
     const currentTimestamp = new Date().getTime();
     const duration = currentTimestamp - props.annotationStartTimestamp;
-    await createTreatment({
-      variables: {
-        documentId: annotatorState.document._id,
-        fetchedGraphQLAnnotations: annotatorState.annotations,
-        duration,
-      },
+
+    await apiCaller.post<'createTreatment'>('createTreatment', {
+      documentId: annotatorState.document._id,
+      fetchedGraphQLAnnotations: annotatorState.annotations,
+      duration,
     });
-    await updateDocumentStatus({
-      variables: { documentId: annotatorState.document._id, status },
+    await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+      documentId: annotatorState.document._id,
+      status,
     });
   }
 }

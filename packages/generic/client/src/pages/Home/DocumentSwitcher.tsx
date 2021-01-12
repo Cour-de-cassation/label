@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { buildAnonymizer, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { MainHeader } from '../../components';
-import { useGraphQLMutation } from '../../graphQL';
+import { apiCaller } from '../../api';
 import { buildAnnotatorStateCommitter } from '../../services/annotatorState';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
@@ -25,7 +25,6 @@ function DocumentSwitcher(props: {
       : { kind: 'selecting' },
   );
   const [annotationStartTimestamp, setAnnotationStartTimestamp] = useState(0);
-  const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
   const styles = buildStyles();
 
   return <div style={styles.documentSwitcher}>{renderPage()}</div>;
@@ -96,7 +95,10 @@ function DocumentSwitcher(props: {
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) {
     setAnnotationStartTimestamp(new Date().getTime());
-    await updateDocumentStatus({ variables: { documentId: choice.document._id, status: 'saved' } });
+    await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+      documentId: choice.document._id,
+      status: 'saved',
+    });
     setDocumentState({ kind: 'annotating', choice });
   }
 }

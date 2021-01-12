@@ -9,7 +9,7 @@ import {
   Text,
   TextInput,
 } from '../../../../components';
-import { useGraphQLMutation } from '../../../../graphQL';
+import { apiCaller } from '../../../../api';
 import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { positionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
@@ -31,8 +31,6 @@ function ReportProblemToolTipMenu(props: {
   const [problemDescription, setProblemDescription] = useState<string>('');
   const [isBlocking, setIsBlocking] = useState<boolean>(false);
   const [isSentWithoutCategory, setIsSentWithoutCategory] = useState<boolean>(false);
-  const [sendProblemReport] = useGraphQLMutation<'problemReport'>('problemReport');
-  const [updateDocumentStatus] = useGraphQLMutation<'updateDocumentStatus'>('updateDocumentStatus');
   const annotatorState = props.annotatorStateHandler.get();
 
   return (
@@ -133,16 +131,17 @@ function ReportProblemToolTipMenu(props: {
     if (problemCategory) {
       setIsSentWithoutCategory(false);
 
-      await sendProblemReport({
-        variables: {
-          documentId: annotatorState.document._id,
-          problemType: problemCategory,
-          problemText: problemDescription,
-        },
+      await apiCaller.post<'problemReport'>('problemReport', {
+        documentId: annotatorState.document._id,
+        problemType: problemCategory,
+        problemText: problemDescription,
       });
 
       if (isBlocking) {
-        await updateDocumentStatus({ variables: { documentId: annotatorState.document._id, status: 'rejected' } });
+        await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+          documentId: annotatorState.document._id,
+          status: 'rejected',
+        });
         props.onStopAnnotatingDocument();
       }
 

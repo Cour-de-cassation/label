@@ -17,11 +17,12 @@ import {
 import { fetchedTreatmentType, treatmentType, treatmentModule } from './treatment';
 import { userModule, userType } from './user';
 import {
-  dataModelFieldType,
+  buildDataModelEntry,
+  dataModelEntryType,
   dataModelType,
   graphQLTypeOfDataModel,
   typeOfDataModel,
-  typeOfDataModelFieldType,
+  typeOfDataModelEntryType,
 } from './dataModelType';
 
 export {
@@ -35,6 +36,7 @@ export {
   settingsModule,
   treatmentModule,
   userModule,
+  buildDataModelEntry,
 };
 
 export type {
@@ -57,9 +59,9 @@ export type {
   userType,
   fetchedTreatmentType,
   treatmentType,
-  dataModelFieldType,
+  dataModelEntryType,
   dataModelType,
   graphQLTypeOfDataModel,
   typeOfDataModel,
-  typeOfDataModelFieldType,
+  typeOfDataModelEntryType,
 };

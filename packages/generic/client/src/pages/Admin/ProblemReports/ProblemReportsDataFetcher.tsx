@@ -1,27 +1,28 @@
 import React, { ReactElement } from 'react';
-import { problemReportType } from '@label/core';
-import { useGraphQLQuery } from '../../../graphQL';
+import { idModule, problemReportType } from '@label/core';
+import { apiCaller, useApi } from '../../../api';
 import { DataFetcher } from '../../DataFetcher';
 
 export { ProblemReportsDataFetcher };
-
-type problemReportsGraphQLType = {
-  problemReports: problemReportType[];
-};
 
 function ProblemReportsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
   children: (fetched: { problemReports: problemReportType[] }) => ReactElement;
 }) {
-  const problemReportsFetchInfo = useGraphQLQuery<'problemReports'>('problemReports');
-  const problemReportsDataAdapter = ([data]: [problemReportsGraphQLType]) => [data.problemReports];
+  const problemReportsFetchInfo = useApi(() => apiCaller.get<'problemReports'>('problemReports'));
 
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
-      buildComponentWithData={([problemReports]) => props.children({ problemReports })}
-      fetchInfos={[problemReportsFetchInfo]}
-      dataAdapter={problemReportsDataAdapter}
+      buildComponentWithData={(problemReports: problemReportType[]) => props.children({ problemReports })}
+      fetchInfo={problemReportsFetchInfo}
+      dataAdapter={(problemReports) =>
+        problemReports.map((problemReport) => ({
+          ...problemReport,
+          _id: idModule.lib.buildId(problemReport._id),
+          assignationId: idModule.lib.buildId(problemReport.assignationId),
+        }))
+      }
     />
   );
 }

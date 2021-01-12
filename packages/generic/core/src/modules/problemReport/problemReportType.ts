@@ -1,18 +1,17 @@
-import { dataModelType, typeOfDataModel } from '../dataModelType';
+import { buildDataModelEntry, typeOfDataModel } from '../dataModelType';
 
 export { problemReportDataModel };
 
 export type { problemReportType };
 
 const problemReportDataModel = {
-  assignationId: { type: 'id', graphQL: true },
-  _id: { type: 'id', graphQL: true },
-  text: { type: 'string', graphQL: true },
-  type: { type: ['bug', 'annotationProblem', 'suggestion'], graphQL: true },
+  assignationId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
+  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
+  text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), graphQL: true },
+  type: {
+    type: buildDataModelEntry({ kind: 'constant', content: ['bug', 'annotationProblem', 'suggestion'] as const }),
+    graphQL: true,
+  },
 } as const;
-
-// We need this line for type checking
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _typeCheck: dataModelType = problemReportDataModel;
 
 type problemReportType = typeOfDataModel<typeof problemReportDataModel>;

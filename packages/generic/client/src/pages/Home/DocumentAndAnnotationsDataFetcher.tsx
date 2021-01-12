@@ -1,24 +1,9 @@
 import React, { ReactElement } from 'react';
-import {
-  autoLinker,
-  fetchedAnnotationType,
-  fetchedDocumentType,
-  idModule,
-  idType,
-  graphQLReceivedDataType,
-} from '@label/core';
-import { useGraphQLQuery } from '../../graphQL';
+import { autoLinker, fetchedAnnotationType, fetchedDocumentType, idModule, idType } from '@label/core';
+import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
 
 export { DocumentAndAnnotationsDataFetcher };
-
-type annotationsGraphQLType = {
-  annotations: Array<graphQLReceivedDataType<fetchedAnnotationType>>;
-};
-
-type documentGraphQLType = {
-  document: graphQLReceivedDataType<fetchedDocumentType>;
-};
 
 function DocumentAndAnnotationsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
@@ -29,41 +14,47 @@ function DocumentAndAnnotationsDataFetcher(props: {
   }) => ReactElement;
   documentIdsToExclude?: idType[];
 }) {
-  const documentsFetchInfo = useGraphQLQuery<'document'>('document', {
-    args: { documentIdsToExclude: props.documentIdsToExclude || [] },
-  });
-  const annotationsFetchInfo = useGraphQLQuery<'annotations'>('annotations', {
-    args: { documentId: documentsFetchInfo.data?.document._id },
-    skip: !documentsFetchInfo.data?.document,
-  });
+  const documentAndAnnotationsFetchInfo = useApi(async () => {
+    const { data: document, statusCode: statusCodeDocument } = await apiCaller.get<'document'>('document', {
+      documentIdsToExclude: props.documentIdsToExclude || [],
+    });
+    const { data: annotations, statusCode: statusCodeAnnotations } = await apiCaller.get<'annotations'>('annotations', {
+      documentId: document._id,
+    });
 
-  const documentAndAnnotationsDataAdapter = ([{ document: fetchedDocument }, { annotations: fetchedAnnotations }]: [
-    documentGraphQLType,
-    annotationsGraphQLType,
-  ]) => {
-    const document = {
-      ...fetchedDocument,
-      _id: idModule.lib.buildId(fetchedDocument._id),
-    };
-    const annotations = fetchedAnnotations.map((annotation) => ({
-      ...annotation,
-      _id: idModule.lib.buildId(annotation._id),
-    }));
-
-    return [document, autoLinker.autoLinkAll(annotations)] as [fetchedDocumentType, fetchedAnnotationType[]];
-  };
+    // TODO: Add better status code handling
+    return { data: { document, annotations }, statusCode: Math.max(statusCodeDocument, statusCodeAnnotations) };
+  });
 
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
-      buildComponentWithData={([document, annotations]) => props.children({ document, annotations, fetchNewDocument })}
-      fetchInfos={[documentsFetchInfo, annotationsFetchInfo]}
-      dataAdapter={documentAndAnnotationsDataAdapter}
+      buildComponentWithData={({
+        document,
+        annotations,
+      }: {
+        document: fetchedDocumentType;
+        annotations: fetchedAnnotationType[];
+      }) => props.children({ document, annotations, fetchNewDocument })}
+      fetchInfo={documentAndAnnotationsFetchInfo}
+      dataAdapter={({ document: fetchedDocument, annotations: fetchedAnnotations }) => {
+        const document = {
+          ...fetchedDocument,
+          _id: idModule.lib.buildId(fetchedDocument._id),
+        };
+        const annotations = fetchedAnnotations.map((annotation) => ({
+          ...annotation,
+          _id: idModule.lib.buildId(annotation._id),
+        }));
+
+        return { document, annotations: autoLinker.autoLinkAll(annotations) } as {
+          document: fetchedDocumentType;
+          annotations: fetchedAnnotationType[];
+        };
+      }}
     />
   );
 
-  async function fetchNewDocument() {
-    await documentsFetchInfo.refetch();
-    await annotationsFetchInfo.refetch();
-  }
+  /* eslint-disable @typescript-eslint/no-empty-function */
+  async function fetchNewDocument() {}
 }

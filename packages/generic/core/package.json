@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^0.20.0",
     "lodash": "^4.17.20",
     "mongodb": "^3.6.1",
     "string-template": "^1.0.0"

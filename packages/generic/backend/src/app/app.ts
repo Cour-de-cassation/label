@@ -1,13 +1,12 @@
 import express from 'express';
-import { graphqlHTTP } from 'express-graphql';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { environment } from '@label/core';
 
+import { buildApi } from '../api';
 import { buildHandlingErrorController } from '../utils';
 import { userController } from '../modules/user';
 import { setup } from './setup';
-import { serverGraphQLSchema } from '../graphQL/serverGraphQLSchema';
 
 const app = express();
 const port = environment.port.server;
@@ -33,13 +32,7 @@ app.post(
   buildHandlingErrorController(userController.resetPassword),
 );
 
-app.use(
-  '/graphql',
-  graphqlHTTP({
-    schema: serverGraphQLSchema,
-    graphiql: true,
-  }),
-);
+buildApi(app);
 
 app.listen(port, async () => {
   await setup(port);

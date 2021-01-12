@@ -1,4 +1,4 @@
-import { dataModelType } from '../dataModelType';
+import { buildDataModelEntry } from '../dataModelType';
 
 export { categoryIconNames, constantColors, settingsDataModel, shadeColors };
 
@@ -73,9 +73,5 @@ type colorType = constantColorType | shadeColorType;
 
 // The settings are passed as a JSON string to parse
 const settingsDataModel = {
-  json: { type: 'string', graphQL: true },
+  json: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), graphQL: true },
 } as const;
-
-// We need this line for type checking
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _typeCheck: dataModelType = settingsDataModel;

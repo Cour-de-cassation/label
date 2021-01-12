@@ -1,6 +1,4 @@
 import React, { ReactElement } from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { ApolloError } from '@apollo/client';
 import { buildFetchComponent } from '../services/buildFetchComponent';
 import { ErrorPage } from './ErrorPage';
 import { LoadingPage } from './LoadingPage';
@@ -9,17 +7,17 @@ export { DataFetcher };
 
 function DataFetcher<fetchedType, dataType>(props: {
   alwaysDisplayHeader?: boolean;
-  buildComponentWithData: (returnedData: dataType) => ReactElement;
   dataAdapter: (fetchedData: fetchedType) => dataType;
-  fetchInfos: Array<{ loading: boolean; error?: ApolloError; data: unknown }>;
+  buildComponentWithData: (returnedData: dataType) => ReactElement;
+  fetchInfo: { isLoaded: boolean; statusCode?: number; data?: fetchedType };
 }) {
   return buildFetchComponent({
     buildComponentWithData: props.buildComponentWithData,
     dataAdapter: props.dataAdapter,
     errorPage: <ErrorPage displayHeader={props.alwaysDisplayHeader} />,
-    fetchInfos: props.fetchInfos,
+    fetchInfo: props.fetchInfo,
     loadingPage: <LoadingPage displayHeader={props.alwaysDisplayHeader} />,
-    loginRedirect: (
+    /*loginRedirect: (
       <Route
         render={({ location }) => (
           <Redirect
@@ -30,6 +28,6 @@ function DataFetcher<fetchedType, dataType>(props: {
           />
         )}
       />
-    ),
+    ),*/
   });
 }

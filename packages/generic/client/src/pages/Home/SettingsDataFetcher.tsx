@@ -1,28 +1,22 @@
 import React, { ReactElement } from 'react';
 import { settingsModule, settingsType } from '@label/core';
-import { useGraphQLQuery } from '../../graphQL';
+import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
 
 export { SettingsDataFetcher };
-
-type settingsGraphQLType = {
-  settings: { json: string };
-};
 
 function SettingsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
   children: (fetched: { settings: settingsType }) => ReactElement;
 }) {
-  const settingsFetchInfo = useGraphQLQuery<'settings'>('settings');
-  const settingsDataAdapter = ([data]: [settingsGraphQLType]) =>
-    [settingsModule.lib.parseFromJson(data.settings.json)] as [settingsType];
+  const settingsFetchInfo = useApi(() => apiCaller.get<'settings'>('settings'));
 
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
-      buildComponentWithData={([settings]) => props.children({ settings })}
-      fetchInfos={[settingsFetchInfo]}
-      dataAdapter={settingsDataAdapter}
+      buildComponentWithData={(settings: settingsType) => props.children({ settings })}
+      fetchInfo={settingsFetchInfo}
+      dataAdapter={(settings) => settingsModule.lib.parseFromJson(settings.json) as settingsType}
     />
   );
 }

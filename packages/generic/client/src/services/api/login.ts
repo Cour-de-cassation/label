@@ -1,15 +1,18 @@
-import { httpRequester } from '@label/core';
 import { environment } from '../../config/environment';
 
 export { login };
 
-type loginRequestDataType = { email: string; password: string };
-type loginResponseDataType = string;
-
-const login = (email: string, password: string) =>
-  httpRequester.request<loginRequestDataType, loginResponseDataType>({
-    url: `${environment.API_URL}/login`,
-    headers: null,
+async function login(email: string, password: string) {
+  const response = await fetch(`${environment.API_URL}/login`, {
+    body: JSON.stringify({ email, password }),
+    cache: 'default',
+    headers: { 'Content-Type': 'application/json' },
     method: 'post',
-    data: { email, password },
+    mode: 'cors',
   });
+
+  return {
+    data: (await response.text()) as string,
+    statusCode: response.status,
+  };
+}

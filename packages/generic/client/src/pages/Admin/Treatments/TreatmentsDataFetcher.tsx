@@ -1,27 +1,29 @@
 import React, { ReactElement } from 'react';
-import { fetchedTreatmentType } from '@label/core';
-import { useGraphQLQuery } from '../../../graphQL';
+import { fetchedTreatmentType, idModule } from '@label/core';
+import { apiCaller, useApi } from '../../../api';
 import { DataFetcher } from '../../DataFetcher';
 
 export { TreatmentsDataFetcher };
-
-type treatmentsGraphQLType = {
-  treatments: fetchedTreatmentType[];
-};
 
 function TreatmentsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
   children: (fetched: { treatments: fetchedTreatmentType[] }) => ReactElement;
 }) {
-  const treatmentsFetchInfo = useGraphQLQuery<'treatments'>('treatments');
-  const treatmentsDataAdapter = ([data]: [treatmentsGraphQLType]) => [data.treatments];
+  const treatmentsFetchInfo = useApi(() => apiCaller.get<'treatments'>('treatments'));
 
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
-      buildComponentWithData={([treatments]) => props.children({ treatments })}
-      fetchInfos={[treatmentsFetchInfo]}
-      dataAdapter={treatmentsDataAdapter}
+      buildComponentWithData={(treatments: fetchedTreatmentType[]) => props.children({ treatments })}
+      fetchInfo={treatmentsFetchInfo}
+      dataAdapter={(treatments) =>
+        treatments.map((treatment) => ({
+          ...treatment,
+          documentId: idModule.lib.buildId(treatment.documentId),
+          _id: idModule.lib.buildId(treatment._id),
+          userId: idModule.lib.buildId(treatment.userId),
+        }))
+      }
     />
   );
 }

@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { LayoutGrid } from '../../components';
-import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
+import { DocumentsDataFetcher } from './DocumentsDataFetcher';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { DocumentSwitcher } from './DocumentSwitcher';
+
+const NUMBER_OF_CHOICES = 3;
 
 const Home: FunctionComponent = () => {
   return (
@@ -10,16 +12,15 @@ const Home: FunctionComponent = () => {
       <LayoutGrid container item>
         <SettingsDataFetcher alwaysDisplayHeader>
           {({ settings }) => (
-            <DocumentAndAnnotationsDataFetcher alwaysDisplayHeader>
-              {({ document, annotations, fetchNewDocument }) => (
+            <DocumentsDataFetcher alwaysDisplayHeader numberOfDocuments={NUMBER_OF_CHOICES}>
+              {({ documentsToBeTreated, fetchNewDocumentsToBeTreated }) => (
                 <DocumentSwitcher
-                  annotations={annotations}
-                  document={document}
+                  choices={documentsToBeTreated}
+                  fetchNewDocumentsToBeTreated={fetchNewDocumentsToBeTreated}
                   settings={settings}
-                  fetchNewDocument={fetchNewDocument}
                 />
               )}
-            </DocumentAndAnnotationsDataFetcher>
+            </DocumentsDataFetcher>
           )}
         </SettingsDataFetcher>
       </LayoutGrid>

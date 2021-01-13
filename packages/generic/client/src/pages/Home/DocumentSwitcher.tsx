@@ -5,7 +5,6 @@ import { apiCaller } from '../../api';
 import { buildAnnotatorStateCommitter } from '../../services/annotatorState';
 import { useMonitoring, MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
 import { DocumentAnnotator } from './DocumentAnnotator';
-import { DocumentAndAnnotationsDataFetcher } from './DocumentAndAnnotationsDataFetcher';
 import { DocumentSelector } from './DocumentSelector';
 
 export { DocumentSwitcher };
@@ -15,16 +14,11 @@ type documentStateType =
   | { kind: 'selecting' };
 
 function DocumentSwitcher(props: {
-  annotations: fetchedAnnotationType[];
-  document: fetchedDocumentType;
+  choices: Array<{ document: fetchedDocumentType; annotations: fetchedAnnotationType[] }>;
+  fetchNewDocumentsToBeTreated: () => void;
   settings: settingsType;
-  fetchNewDocument: () => Promise<void>;
 }) {
-  const [documentState, setDocumentState] = useState<documentStateType>(
-    props.document.status === 'saved'
-      ? { kind: 'annotating', choice: { document: props.document, annotations: props.annotations } }
-      : { kind: 'selecting' },
-  );
+  const [documentState, setDocumentState] = useState<documentStateType>(computeInitialDocumentState());
   const { resetMonitoringEntries } = useMonitoring();
   const [annotationStartTimestamp, setAnnotationStartTimestamp] = useState(0);
   const styles = buildStyles();
@@ -52,29 +46,10 @@ function DocumentSwitcher(props: {
         );
       case 'selecting':
         return (
-          <DocumentAndAnnotationsDataFetcher documentIdsToExclude={[props.document._id]} alwaysDisplayHeader>
-            {({ document: documentChoice2, annotations: annotationsChoice2 }) => (
-              <DocumentAndAnnotationsDataFetcher
-                documentIdsToExclude={[props.document._id, documentChoice2._id]}
-                alwaysDisplayHeader
-              >
-                {({ document: documentChoice3, annotations: annotationsChoice3 }) => (
-                  <>
-                    <MainHeader />
-                    <DocumentSelector
-                      choices={[
-                        { document: props.document, annotations: props.annotations },
-                        { document: documentChoice2, annotations: annotationsChoice2 },
-                        { document: documentChoice3, annotations: annotationsChoice3 },
-                      ]}
-                      onSelectDocument={onSelectDocument}
-                      settings={props.settings}
-                    />
-                  </>
-                )}
-              </DocumentAndAnnotationsDataFetcher>
-            )}
-          </DocumentAndAnnotationsDataFetcher>
+          <>
+            <MainHeader />
+            <DocumentSelector choices={props.choices} onSelectDocument={onSelectDocument} settings={props.settings} />
+          </>
         );
     }
   }
@@ -90,10 +65,19 @@ function DocumentSwitcher(props: {
     };
   }
 
+  function computeInitialDocumentState(): documentStateType {
+    const savedDocumentToBeTreated = props.choices.find(({ document }) => document.status === 'saved');
+
+    if (savedDocumentToBeTreated) {
+      return { kind: 'annotating', choice: savedDocumentToBeTreated };
+    } else {
+      return { kind: 'selecting' };
+    }
+  }
+
   async function onStopAnnotatingDocument() {
     resetMonitoringEntries();
-    await props.fetchNewDocument();
-    setDocumentState({ kind: 'selecting' });
+    await props.fetchNewDocumentsToBeTreated();
   }
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) {

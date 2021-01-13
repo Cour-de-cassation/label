@@ -4,7 +4,7 @@ import {
   apiSchema,
   apiSchemaMethodNameType,
   CustomError,
-  ERROR_CODE,
+  httpStatusCodeHandler,
 } from '@label/core';
 import { logger } from '../utils';
 import { controllers } from './controllers';
@@ -77,7 +77,7 @@ function buildController(
       if (error instanceof CustomError) {
         res.status(error.statusCode);
       } else {
-        res.status(ERROR_CODE.SERVER_ERROR);
+        res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
       }
 
       next(error);
@@ -97,12 +97,12 @@ function buildController(
               headers: req.headers,
               args: sanitizedQuery,
             }),
-            statusCode: 200,
+            statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.OK,
           };
         case 'post':
           return {
             data: await controller({ headers: req.headers, args: req.body }),
-            statusCode: 201,
+            statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.CREATED,
           };
       }
     }

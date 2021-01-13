@@ -1,5 +1,5 @@
-import { CustomError, errorHandlers, ERROR_CODE, errorCodeType } from './errorHandlers';
+import { CustomError, errorHandlers, errorCodeType } from './errorHandlers';
 
-export { CustomError, errorHandlers, ERROR_CODE };
+export { CustomError, errorHandlers };
 
 export type { errorCodeType };

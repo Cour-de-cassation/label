@@ -1,19 +1,15 @@
-export { CustomError, errorHandlers, ERROR_CODE };
+import { httpStatusCodeHandler } from '../utils';
+
+export { CustomError, errorHandlers };
 
 export type { errorCodeType };
 
-type errorCodeType = typeof ERROR_CODE[keyof typeof ERROR_CODE];
-
-const ERROR_CODE = {
-  AUTHENTICATION_ERROR: 401,
-  PERMISSION_ERROR: 403,
-  SERVER_ERROR: 500,
-} as const;
+type errorCodeType = typeof httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR[keyof typeof httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR];
 
 const errorHandlers = {
-  authenticationErrorHandler: buildErrorHandler(ERROR_CODE.AUTHENTICATION_ERROR),
-  permissionErrorHandler: buildErrorHandler(ERROR_CODE.PERMISSION_ERROR),
-  serverErrorHandler: buildErrorHandler(ERROR_CODE.SERVER_ERROR),
+  authenticationErrorHandler: buildErrorHandler(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR),
+  permissionErrorHandler: buildErrorHandler(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.PERMISSION_ERROR),
+  serverErrorHandler: buildErrorHandler(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR),
 };
 
 class CustomError extends Error {

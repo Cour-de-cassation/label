@@ -1,3 +1,4 @@
 import { bootstrap } from './bootstrap';
+import { httpStatusCodeHandler } from './httpStatusCodeHandler';
 
-export { bootstrap };
+export { bootstrap, httpStatusCodeHandler };

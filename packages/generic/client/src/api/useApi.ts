@@ -6,22 +6,9 @@ function useApi<T>(callApi: () => Promise<{ data: T; statusCode: number }>) {
   const [data, setData] = useState<T | undefined>(undefined);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [statusCode, setStatusCode] = useState<number | undefined>(undefined);
+  const [refetchFlag, setRefetchFlag] = useState<boolean>(false);
 
   useEffect(() => {
-    applyCallApi();
-  }, []);
-
-  return { data, isLoaded, refetch, statusCode };
-
-  function refetch() {
-    setData(undefined);
-    setIsLoaded(false);
-    setStatusCode(undefined);
-
-    applyCallApi();
-  }
-
-  function applyCallApi() {
     callApi().then(
       ({ data, statusCode }) => {
         setData(data);
@@ -33,5 +20,14 @@ function useApi<T>(callApi: () => Promise<{ data: T; statusCode: number }>) {
         setStatusCode(500);
       },
     );
+  }, [refetchFlag]);
+
+  return { data, isLoaded, refetch, statusCode };
+
+  function refetch() {
+    setData(undefined);
+    setIsLoaded(false);
+    setStatusCode(undefined);
+    setRefetchFlag(!refetchFlag);
   }
 }

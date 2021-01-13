@@ -34,7 +34,7 @@ type dataModelEntryType =
       content: dataModelEntryType;
     };
 
-type dataModelEntryPrimitiveType = 'boolean' | 'date' | 'id' | 'string' | 'number';
+type dataModelEntryPrimitiveType = 'boolean' | 'date' | 'id' | 'string' | 'number' | 'void';
 
 type dataModelEntryConstantType = readonly string[];
 
@@ -84,6 +84,8 @@ type typeOfDataModelEntryPrimitiveType<
   ? string
   : dataModelEntryPrimitiveT extends 'number'
   ? number
+  : dataModelEntryPrimitiveT extends 'void'
+  ? void
   : never;
 
 type typeOfDataModelEntryConstantType<

@@ -1,6 +1,12 @@
 import { Express } from 'express';
 import { mapValues } from 'lodash';
-import { apiSchema, apiSchemaMethodNameType } from '@label/core';
+import {
+  apiSchema,
+  apiSchemaMethodNameType,
+  CustomError,
+  ERROR_CODE,
+} from '@label/core';
+import { logger } from '../utils';
 import { controllers } from './controllers';
 
 export { buildApi };
@@ -52,29 +58,52 @@ function buildPostRoutes(app: Express) {
   });
 }
 
-function buildController(method: apiSchemaMethodNameType, controller: any) {
+function buildController(
+  method: apiSchemaMethodNameType,
+  controller: (param: { headers: any; args: any }) => Promise<any>,
+) {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   /* eslint-disable @typescript-eslint/no-unsafe-member-access */
   /* eslint-disable @typescript-eslint/no-unsafe-call */
   /* eslint-disable @typescript-eslint/no-unsafe-return */
   return async (req: any, res: any, next: any) => {
     try {
-      const response = await executeController();
-      res.send(response);
+      const { data, statusCode } = await executeController();
+      res.status(statusCode);
+      res.send(data);
     } catch (error) {
-      res.status(500);
+      logger.error(error);
+
+      if (error instanceof CustomError) {
+        res.status(error.statusCode);
+      } else {
+        res.status(ERROR_CODE.SERVER_ERROR);
+      }
+
       next(error);
     }
 
-    async function executeController() {
+    async function executeController(): Promise<{
+      data: any;
+      statusCode: number;
+    }> {
       switch (method) {
         case 'get':
           const sanitizedQuery = mapValues(req.query, (queryValue) =>
             JSON.parse(queryValue),
           );
-          return controller({ headers: req.headers, args: sanitizedQuery });
+          return {
+            data: await controller({
+              headers: req.headers,
+              args: sanitizedQuery,
+            }),
+            statusCode: 200,
+          };
         case 'post':
-          return controller({ headers: req.headers, args: req.body });
+          return {
+            data: await controller({ headers: req.headers, args: req.body }),
+            statusCode: 201,
+          };
       }
     }
   };

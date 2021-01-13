@@ -55,7 +55,10 @@ const apiSchema = {
           content: fetchedDataModelEntries.monitoringEntry,
         }),
       },
-      out: fetchedDataModelEntries.success,
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
     },
     problemReport: {
       in: {
@@ -69,7 +72,10 @@ const apiSchema = {
           content: 'string',
         }),
       },
-      out: fetchedDataModelEntries.success,
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
     },
     updateDocumentStatus: {
       in: {
@@ -79,7 +85,10 @@ const apiSchema = {
         }),
         status: documentModule.dataModel.status.type,
       },
-      out: fetchedDataModelEntries.success,
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
     },
     signUpUser: {
       in: {
@@ -92,7 +101,10 @@ const apiSchema = {
           content: 'string',
         }),
       },
-      out: fetchedDataModelEntries.success,
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
     },
     createTreatment: {
       in: {
@@ -109,7 +121,10 @@ const apiSchema = {
           content: 'number',
         }),
       },
-      out: fetchedDataModelEntries.success,
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
     },
   },
 } as const;

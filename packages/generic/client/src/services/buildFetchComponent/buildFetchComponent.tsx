@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { errorHandlers } from '@label/core';
 
 export { buildFetchComponent };
 
@@ -8,25 +9,34 @@ function buildFetchComponent<fetchedType, dataType>({
   errorPage,
   fetchInfo: { data, isLoaded, statusCode },
   loadingPage,
-}: //  loginRedirect,
-{
+  loginRedirect,
+}: {
   buildComponentWithData: (returnedData: dataType) => ReactElement;
   dataAdapter: (fetchedData: fetchedType) => dataType;
   errorPage: ReactElement;
   fetchInfo: { data?: fetchedType; isLoaded: boolean; statusCode?: number };
   loadingPage: ReactElement;
-  //  loginRedirect: ReactElement;
+  loginRedirect: ReactElement;
 }) {
+  console.log('fetchInfo', { data, isLoaded, statusCode });
   if (!isLoaded) {
     return loadingPage;
-  } else if (statusCode && statusCode > 200) {
-    return errorPage;
-    // TODO repair login redirection
-    //    return loginRedirect;
-  } else if (data) {
-    const adaptedData = dataAdapter(data);
-    return buildComponentWithData(adaptedData);
-  } else {
-    return errorPage;
   }
+
+  if (statusCode) {
+    if (isSuccessStatus(statusCode) && data) {
+      const adaptedData = dataAdapter(data);
+      return buildComponentWithData(adaptedData);
+    } else if (errorHandlers.authenticationErrorHandler.check(statusCode)) {
+      return loginRedirect;
+    } else {
+      return errorPage;
+    }
+  }
+
+  return errorPage;
+}
+
+function isSuccessStatus(statusCode: number) {
+  return statusCode === 200 || statusCode === 201;
 }

@@ -3,7 +3,6 @@ import {
   documentModule,
   monitoringEntryModule,
   settingsModule,
-  buildDataModelEntry,
   dataModelEntryType,
   problemReportModule,
   treatmentModule,
@@ -33,12 +32,6 @@ const fetchedDataModelEntries = {
   settings: {
     kind: 'object',
     content: buildFetchedDataModelEntry<typeof settingsModule.dataModel>(settingsModule.dataModel),
-  },
-  success: {
-    kind: 'object',
-    content: {
-      success: buildDataModelEntry({ kind: 'primitive', content: 'boolean' }),
-    },
   },
   treatment: {
     kind: 'object',

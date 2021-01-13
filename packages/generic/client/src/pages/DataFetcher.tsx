@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 import { buildFetchComponent } from '../services/buildFetchComponent';
 import { ErrorPage } from './ErrorPage';
 import { LoadingPage } from './LoadingPage';
@@ -17,7 +18,7 @@ function DataFetcher<fetchedType, dataType>(props: {
     errorPage: <ErrorPage displayHeader={props.alwaysDisplayHeader} />,
     fetchInfo: props.fetchInfo,
     loadingPage: <LoadingPage displayHeader={props.alwaysDisplayHeader} />,
-    /*loginRedirect: (
+    loginRedirect: (
       <Route
         render={({ location }) => (
           <Redirect
@@ -28,6 +29,6 @@ function DataFetcher<fetchedType, dataType>(props: {
           />
         )}
       />
-    ),*/
+    ),
   });
 }

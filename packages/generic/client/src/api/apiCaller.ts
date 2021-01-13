@@ -25,7 +25,7 @@ const apiCaller = {
     });
 
     return {
-      data: (await response.json()) as apiResultType<'get', routeNameT>,
+      data: (await computeDataFromResponse(response)) as apiResultType<'get', routeNameT>,
       statusCode: response.status,
     };
   },
@@ -48,7 +48,7 @@ const apiCaller = {
     });
 
     return {
-      data: (await response.json()) as apiResultType<'post', routeNameT>,
+      data: (await computeDataFromResponse(response)) as apiResultType<'post', routeNameT>,
       statusCode: response.status,
     };
   },
@@ -62,5 +62,16 @@ function buildUrlWithParams(url: string, params?: { [key: string]: any }) {
     return `${url}?${urlParameters.toString()}`;
   } else {
     return url;
+  }
+}
+
+async function computeDataFromResponse(response: Response): Promise<any> {
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+  /* eslint-disable @typescript-eslint/no-unsafe-return */
+  try {
+    const data: any = await response.json();
+    return data;
+  } catch (_) {
+    return undefined;
   }
 }

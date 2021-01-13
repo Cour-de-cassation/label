@@ -1,4 +1,4 @@
-import { buildDataModelEntry, graphQLTypeOfDataModel, typeOfDataModel } from '../dataModelType';
+import { buildDataModelEntry, networkTypeOfDataModel, typeOfDataModel } from '../dataModelType';
 
 export { treatmentDataModel };
 
@@ -15,27 +15,27 @@ const annotationDataModelField = buildDataModelEntry({
 } as const);
 
 const treatmentDataModel = {
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
-  duration: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), graphQL: true },
-  order: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), graphQL: true },
-  userId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
+  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  duration: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
+  order: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
+  userId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
   before: {
     type: buildDataModelEntry({
       kind: 'list',
       content: annotationDataModelField,
     }),
-    graphQL: true,
+    network: true,
   },
   after: {
     type: {
       kind: 'list',
       content: annotationDataModelField,
     },
-    graphQL: true,
+    network: true,
   },
 } as const;
 
 type treatmentType = typeOfDataModel<typeof treatmentDataModel>;
 
-type fetchedTreatmentType = graphQLTypeOfDataModel<typeof treatmentDataModel>;
+type fetchedTreatmentType = networkTypeOfDataModel<typeof treatmentDataModel>;

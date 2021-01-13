@@ -3,12 +3,12 @@ import { idType } from './id';
 
 export { buildDataModelEntry };
 
-export type { dataModelEntryType, dataModelType, graphQLTypeOfDataModel, typeOfDataModel, typeOfDataModelEntryType };
+export type { dataModelEntryType, dataModelType, networkTypeOfDataModel, typeOfDataModel, typeOfDataModelEntryType };
 
 type dataModelType = {
   [key in string]: {
     type: dataModelEntryType;
-    graphQL: boolean;
+    network: boolean;
   };
 };
 
@@ -38,8 +38,8 @@ type dataModelEntryPrimitiveType = 'boolean' | 'date' | 'id' | 'string' | 'numbe
 
 type dataModelEntryConstantType = readonly string[];
 
-type graphQLTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
-  filterType<dataModelT, { graphQL: true }>
+type networkTypeOfDataModel<dataModelT extends dataModelType> = typeOfDataModel<
+  filterType<dataModelT, { network: true }>
 >;
 
 type typeOfDataModel<dataModelT extends dataModelType> = writeableType<

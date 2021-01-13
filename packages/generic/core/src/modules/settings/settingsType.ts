@@ -73,5 +73,5 @@ type colorType = constantColorType | shadeColorType;
 
 // The settings are passed as a JSON string to parse
 const settingsDataModel = {
-  json: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), graphQL: true },
+  json: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
 } as const;

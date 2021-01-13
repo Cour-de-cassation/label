@@ -5,12 +5,12 @@ export { problemReportDataModel };
 export type { problemReportType };
 
 const problemReportDataModel = {
-  assignationId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
-  text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), graphQL: true },
+  assignationId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
   type: {
     type: buildDataModelEntry({ kind: 'constant', content: ['bug', 'annotationProblem', 'suggestion'] as const }),
-    graphQL: true,
+    network: true,
   },
 } as const;
 

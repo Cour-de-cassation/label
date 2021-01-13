@@ -1,5 +1,5 @@
-import { filterGraphQLKeysType } from './filterGraphQLKeysType';
+import { filterNetworkKeysType } from './filterNetworkKeysType';
 import { generatorType } from './generatorType';
 import { filterKeysType, filterType, writeableType } from './utilityTypes';
 
-export type { filterGraphQLKeysType, generatorType, filterKeysType, filterType, writeableType };
+export type { filterNetworkKeysType, generatorType, filterKeysType, filterType, writeableType };

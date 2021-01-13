@@ -5,9 +5,9 @@ export { assignationDataModel };
 export type { assignationType };
 
 const assignationDataModel = {
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
-  userId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
+  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  userId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
 } as const;
 
 type assignationType = typeOfDataModel<typeof assignationDataModel>;

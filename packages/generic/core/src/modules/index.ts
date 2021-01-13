@@ -20,7 +20,7 @@ import {
   buildDataModelEntry,
   dataModelEntryType,
   dataModelType,
-  graphQLTypeOfDataModel,
+  networkTypeOfDataModel,
   typeOfDataModel,
   typeOfDataModelEntryType,
 } from './dataModelType';
@@ -61,7 +61,7 @@ export type {
   treatmentType,
   dataModelEntryType,
   dataModelType,
-  graphQLTypeOfDataModel,
+  networkTypeOfDataModel,
   typeOfDataModel,
   typeOfDataModelEntryType,
 };

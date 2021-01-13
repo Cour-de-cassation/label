@@ -12,12 +12,10 @@
     ]
   },
   "dependencies": {
-    "@apollo/client": "^3.1.4",
     "@label/core": "*",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "axios": "^0.20.0",
-    "graphql": "^15.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

@@ -3,9 +3,9 @@ import { logger, mongo } from '../utils';
 
 export { setup };
 
-async function setup(port: number) {
+async function setup() {
   await setupSettings();
-  await setupMongo(port);
+  await setupMongo();
 }
 
 async function setupSettings() {
@@ -14,9 +14,8 @@ async function setupSettings() {
   logger.log(`Settings ready!`);
 }
 
-async function setupMongo(port: number) {
+async function setupMongo() {
   logger.log(`Loading the Mongo database...`);
   await mongo.initialize();
   logger.log(`MongoDB ready!`);
-  logger.log(`GraphQL available on http://localhost:${port}`);
 }

@@ -1,4 +1,4 @@
-import { buildDataModelEntry, graphQLTypeOfDataModel, typeOfDataModel } from '../dataModelType';
+import { buildDataModelEntry, networkTypeOfDataModel, typeOfDataModel } from '../dataModelType';
 
 export { annotationDataModel, LABEL_ANNOTATION_SOURCE };
 
@@ -7,15 +7,15 @@ export type { annotationType, fetchedAnnotationType };
 const LABEL_ANNOTATION_SOURCE = 'label';
 
 const annotationDataModel = {
-  category: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), graphQL: true },
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: false },
-  entityId: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), graphQL: true },
-  source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), graphQL: true },
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), graphQL: true },
-  start: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), graphQL: true },
-  text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), graphQL: true },
+  category: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
+  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: false },
+  entityId: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
+  source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
+  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  start: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
+  text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
 } as const;
 
 type annotationType = typeOfDataModel<typeof annotationDataModel>;
 
-type fetchedAnnotationType = graphQLTypeOfDataModel<typeof annotationDataModel>;
+type fetchedAnnotationType = networkTypeOfDataModel<typeof annotationDataModel>;

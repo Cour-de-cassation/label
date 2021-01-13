@@ -35,5 +35,5 @@ app.post(
 buildApi(app);
 
 app.listen(port, async () => {
-  await setup(port);
+  await setup();
 });

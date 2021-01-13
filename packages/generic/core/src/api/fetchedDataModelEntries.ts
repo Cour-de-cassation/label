@@ -8,7 +8,7 @@ import {
   treatmentModule,
 } from '../modules';
 
-import { filterGraphQLKeysType } from '../types';
+import { filterNetworkKeysType } from '../types';
 
 export { fetchedDataModelEntries };
 
@@ -41,19 +41,19 @@ const fetchedDataModelEntries = {
 
 function buildFetchedDataModelEntry<
   dataModelT extends {
-    [field: string]: { graphQL: boolean; type: dataModelEntryType };
+    [field: string]: { network: boolean; type: dataModelEntryType };
   }
 >(
   dataModel: dataModelT,
 ): {
-  [k in keyof Pick<dataModelT, filterGraphQLKeysType<dataModelT>>]: dataModelT[k]['type'];
+  [k in keyof Pick<dataModelT, filterNetworkKeysType<dataModelT>>]: dataModelT[k]['type'];
 } {
   const fetchedDataModelEntry = {} as {
     [field in keyof dataModelT]: dataModelEntryType;
   };
 
   for (const key in dataModel) {
-    if (dataModel[key].graphQL) {
+    if (dataModel[key].network) {
       fetchedDataModelEntry[key] = dataModel[key].type;
     }
   }

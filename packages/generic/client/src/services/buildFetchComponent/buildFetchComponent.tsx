@@ -18,7 +18,6 @@ function buildFetchComponent<fetchedType, dataType>({
   loadingPage: ReactElement;
   loginRedirect: ReactElement;
 }) {
-  console.log('fetchInfo', { data, isLoaded, statusCode });
   if (!isLoaded) {
     return loadingPage;
   }

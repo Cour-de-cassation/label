@@ -48,6 +48,22 @@ const apiSchema = {
     },
   },
   post: {
+    login: {
+      in: {
+        email: {
+          kind: 'primitive',
+          content: 'string',
+        },
+        password: {
+          kind: 'primitive',
+          content: 'string',
+        },
+      },
+      out: {
+        kind: 'primitive',
+        content: 'string',
+      },
+    },
     monitoringEntries: {
       in: {
         newMonitoringEntries: buildDataModelEntry({

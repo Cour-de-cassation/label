@@ -1,7 +1,7 @@
 import React, { ChangeEvent, CSSProperties, FormEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { apiCaller } from '../../api';
 import { ButtonWithIcon, LayoutGrid, Logo, Text, TextInput } from '../../components';
-import { login } from '../../services/api';
 import { localStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
 import { customThemeType, useCustomTheme } from '../../styles';
@@ -96,8 +96,8 @@ const Login: FunctionComponent = () => {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     try {
-      const { data } = await login(email, password);
-      localStorage.bearerTokenHandler.set(data);
+      const { data: token } = await apiCaller.post<'login'>('login', { email, password });
+      localStorage.bearerTokenHandler.set(token);
       history.push('/');
     } catch (error) {
       setIsFormValid(false);

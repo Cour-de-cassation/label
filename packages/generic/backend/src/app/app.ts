@@ -22,7 +22,6 @@ app.use(
 
 app.use(bodyParser.json());
 
-app.post('/login', buildHandlingErrorController(userController.login));
 app.post(
   '/reset-password-request',
   buildHandlingErrorController(userController.resetPasswordRequest),

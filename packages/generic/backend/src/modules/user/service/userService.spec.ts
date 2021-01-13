@@ -10,7 +10,7 @@ describe('userService', () => {
           password: 'PASSWORD',
         });
 
-        const { token } = await userService.login(user);
+        const token = await userService.login(user);
 
         expect(token).toBeDefined;
       });

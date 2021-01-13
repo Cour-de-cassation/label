@@ -48,6 +48,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   },
 
   post: {
+    async login({ args: { email, password } }) {
+      return userService.login({ email, password });
+    },
+
     monitoringEntries: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { newMonitoringEntries } }) => {

@@ -69,8 +69,13 @@ async function computeDataFromResponse(response: Response): Promise<any> {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   /* eslint-disable @typescript-eslint/no-unsafe-return */
   try {
-    const data: any = await response.json();
-    return data;
+    const textData = await response.text();
+    try {
+      const data: any = JSON.parse(textData);
+      return data;
+    } catch (_) {
+      return textData;
+    }
   } catch (_) {
     return undefined;
   }

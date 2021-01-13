@@ -21,10 +21,8 @@ const userService = {
         `The received password does not match the stored one for ${user.email}`,
       );
     }
-    const token = jwtSigner.sign(storedUser._id);
-    return {
-      token,
-    };
+
+    return jwtSigner.sign(storedUser._id);
   },
   async resetPasswordRequest(email: string) {
     const userRepository = buildUserRepository();

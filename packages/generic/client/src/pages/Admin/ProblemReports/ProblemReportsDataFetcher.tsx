@@ -9,20 +9,28 @@ function ProblemReportsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
   children: (fetched: { problemReports: problemReportType[] }) => ReactElement;
 }) {
-  const problemReportsFetchInfo = useApi(() => apiCaller.get<'problemReports'>('problemReports'));
+  const problemReportsFetchInfo = useApi(buildFetchProblemReports());
 
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={(problemReports: problemReportType[]) => props.children({ problemReports })}
       fetchInfo={problemReportsFetchInfo}
-      dataAdapter={(problemReports) =>
-        problemReports.map((problemReport) => ({
-          ...problemReport,
-          _id: idModule.lib.buildId(problemReport._id),
-          assignationId: idModule.lib.buildId(problemReport.assignationId),
-        }))
-      }
     />
   );
+}
+
+function buildFetchProblemReports() {
+  return async () => {
+    const { data: problemReports, statusCode } = await apiCaller.get<'problemReports'>('problemReports');
+
+    return {
+      data: problemReports.map((problemReport) => ({
+        ...problemReport,
+        _id: idModule.lib.buildId(problemReport._id),
+        assignationId: idModule.lib.buildId(problemReport.assignationId),
+      })),
+      statusCode,
+    };
+  };
 }

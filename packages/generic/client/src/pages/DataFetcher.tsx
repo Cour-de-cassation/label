@@ -1,24 +1,42 @@
 import React, { ReactElement } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { buildFetchComponent } from '../services/buildFetchComponent';
+import { errorHandlers, httpStatusCodeHandler } from '@label/core';
 import { ErrorPage } from './ErrorPage';
 import { LoadingPage } from './LoadingPage';
 
 export { DataFetcher };
 
-function DataFetcher<fetchedType, dataType>(props: {
+function DataFetcher<dataT>(props: {
   alwaysDisplayHeader?: boolean;
-  dataAdapter: (fetchedData: fetchedType) => dataType;
-  buildComponentWithData: (returnedData: dataType) => ReactElement;
-  fetchInfo: { isLoaded: boolean; statusCode?: number; data?: fetchedType };
+  buildComponentWithData: (returnedData: dataT) => ReactElement;
+  fetchInfo: { isLoaded: boolean; statusCode?: number; data?: dataT };
 }) {
-  return buildFetchComponent({
-    buildComponentWithData: props.buildComponentWithData,
-    dataAdapter: props.dataAdapter,
-    errorPage: <ErrorPage displayHeader={props.alwaysDisplayHeader} />,
-    fetchInfo: props.fetchInfo,
-    loadingPage: <LoadingPage displayHeader={props.alwaysDisplayHeader} />,
-    loginRedirect: (
+  if (!props.fetchInfo.isLoaded) {
+    return buildLoadingPage();
+  }
+
+  if (props.fetchInfo.statusCode) {
+    if (httpStatusCodeHandler.isSuccess(props.fetchInfo.statusCode) && props.fetchInfo.data) {
+      return props.buildComponentWithData(props.fetchInfo.data);
+    } else if (errorHandlers.authenticationErrorHandler.check(props.fetchInfo.statusCode)) {
+      return buildLoginRedirectionPage();
+    } else {
+      return buildErrorPage();
+    }
+  }
+
+  return buildErrorPage();
+
+  function buildErrorPage() {
+    return <ErrorPage displayHeader={props.alwaysDisplayHeader} />;
+  }
+
+  function buildLoadingPage() {
+    return <LoadingPage displayHeader={props.alwaysDisplayHeader} />;
+  }
+
+  function buildLoginRedirectionPage() {
+    return (
       <Route
         render={({ location }) => (
           <Redirect
@@ -29,6 +47,6 @@ function DataFetcher<fetchedType, dataType>(props: {
           />
         )}
       />
-    ),
-  });
+    );
+  }
 }

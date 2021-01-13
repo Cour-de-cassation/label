@@ -9,14 +9,24 @@ function SettingsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
   children: (fetched: { settings: settingsType }) => ReactElement;
 }) {
-  const settingsFetchInfo = useApi(() => apiCaller.get<'settings'>('settings'));
+  const settingsFetchInfo = useApi(buildFetchSettings());
 
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={(settings: settingsType) => props.children({ settings })}
       fetchInfo={settingsFetchInfo}
-      dataAdapter={(settings) => settingsModule.lib.parseFromJson(settings.json) as settingsType}
     />
   );
+}
+
+function buildFetchSettings() {
+  return async () => {
+    const {
+      data: { json },
+      statusCode,
+    } = await apiCaller.get<'settings'>('settings');
+
+    return { data: settingsModule.lib.parseFromJson(json) as settingsType, statusCode };
+  };
 }

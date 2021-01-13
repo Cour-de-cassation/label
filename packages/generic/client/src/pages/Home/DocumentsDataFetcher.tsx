@@ -28,33 +28,15 @@ function DocumentsDataFetcher(props: {
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
-      buildComponentWithData={({
-        documentsToBeTreated,
-      }: {
+      buildComponentWithData={(
         documentsToBeTreated: {
           document: fetchedDocumentType;
           annotations: fetchedAnnotationType[];
-        }[];
-      }) =>
+        }[],
+      ) =>
         props.children({ documentsToBeTreated, fetchNewDocumentsToBeTreated: documentsToBeTreatedFetchInfo.refetch })
       }
       fetchInfo={documentsToBeTreatedFetchInfo}
-      dataAdapter={(documentsToBeTreated) => {
-        return {
-          documentsToBeTreated: documentsToBeTreated.map(({ document, annotations }) => ({
-            document: {
-              ...document,
-              _id: idModule.lib.buildId(document._id),
-            },
-            annotations: autoLinker.autoLinkAll(
-              annotations.map((annotation) => ({
-                ...annotation,
-                _id: idModule.lib.buildId(annotation._id),
-              })),
-            ),
-          })),
-        };
-      }}
     />
   );
 }
@@ -85,7 +67,18 @@ async function fetchDocumentToBeTreated(documentIdsToExclude: idType[]) {
   });
 
   return {
-    documentToBeTreated: { document, annotations },
+    documentToBeTreated: {
+      document: {
+        ...document,
+        _id: idModule.lib.buildId(document._id),
+      },
+      annotations: autoLinker.autoLinkAll(
+        annotations.map((annotation) => ({
+          ...annotation,
+          _id: idModule.lib.buildId(annotation._id),
+        })),
+      ),
+    },
     statusCode: httpStatusCodeHandler.merge([statusCodeDocument, statusCodeAnnotations]),
   };
 }

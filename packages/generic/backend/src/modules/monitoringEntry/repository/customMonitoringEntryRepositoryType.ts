@@ -1,4 +1,7 @@
+import { monitoringEntryType } from '@label/core';
+
 export type { customMonitoringEntryRepositoryType };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type customMonitoringEntryRepositoryType = {};
+type customMonitoringEntryRepositoryType = {
+  insertMany: (monitoringEntries: monitoringEntryType[]) => Promise<void>;
+};

@@ -14,7 +14,6 @@ import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
 export { DocumentAnnotator };
 
 function DocumentAnnotator(props: {
-  annotationStartTimestamp: number;
   annotatorState: annotatorStateType;
   annotatorStateCommitter: annotatorStateCommitterType;
   anonymizer: clientAnonymizerType;
@@ -33,7 +32,7 @@ function DocumentAnnotator(props: {
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
 
   return (
-    <DocumentViewerModeHandlerContextProvider annotations={annotatorState.annotations}>
+    <DocumentViewerModeHandlerContextProvider>
       <LayoutGrid container>
         <div style={styles.annotatorBody}>
           <div style={styles.leftContainer}>
@@ -54,7 +53,6 @@ function DocumentAnnotator(props: {
         </div>
         <LayoutGrid container>
           <DocumentAnnotatorFooter
-            annotationStartTimestamp={props.annotationStartTimestamp}
             annotatorStateHandler={annotatorStateHandler}
             anonymizer={props.anonymizer}
             onStopAnnotatingDocument={props.onStopAnnotatingDocument}

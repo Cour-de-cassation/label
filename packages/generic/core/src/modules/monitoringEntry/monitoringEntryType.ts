@@ -5,6 +5,7 @@ export { monitoringEntryDataModel };
 export type { fetchedMonitoringEntryType, monitoringEntryType };
 
 const monitoringEntryDataModel = {
+  creationDate: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
   description: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
   documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
   _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },

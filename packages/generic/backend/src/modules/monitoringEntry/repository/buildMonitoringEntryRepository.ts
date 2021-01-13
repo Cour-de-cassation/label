@@ -9,5 +9,9 @@ const buildMonitoringEntryRepository = buildRepositoryBuilder<
   customMonitoringEntryRepositoryType
 >({
   collectionName: 'monitoringEntries',
-  buildCustomRepository: () => ({}),
+  buildCustomRepository: (collection) => ({
+    async insertMany(monitoringEntries) {
+      await collection.insertMany(monitoringEntries);
+    },
+  }),
 });

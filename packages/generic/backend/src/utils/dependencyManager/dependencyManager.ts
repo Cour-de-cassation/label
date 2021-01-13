@@ -2,11 +2,8 @@ export { dependencyManager };
 
 const dependencyManager = {
   exec({
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     execLocal = () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     execProd = () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     execTest = () => {},
   }: {
     execLocal?: () => void;

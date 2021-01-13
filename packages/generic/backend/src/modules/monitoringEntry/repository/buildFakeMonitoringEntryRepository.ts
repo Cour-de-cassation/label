@@ -8,5 +8,9 @@ const buildFakeMonitoringEntryRepository = buildFakeRepositoryBuilder<
   monitoringEntryType,
   customMonitoringEntryRepositoryType
 >({
-  buildCustomFakeRepository: () => ({}),
+  buildCustomFakeRepository: (collection) => ({
+    async insertMany(monitoringEntries) {
+      collection.push(...monitoringEntries);
+    },
+  }),
 });

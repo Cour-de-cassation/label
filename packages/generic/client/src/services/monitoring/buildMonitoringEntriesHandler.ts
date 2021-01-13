@@ -5,9 +5,10 @@ export { buildMonitoringEntriesHandler };
 export type { monitoringEntriesHandlerType };
 
 type monitoringEntriesHandlerType = {
-  sendMonitoringEntries: () => void;
   addMonitoringEntry: (monitoringyEntryFields: { description: string; type: string }) => void;
+  getTotalDuration: () => number;
   resetMonitoringEntries: () => void;
+  sendMonitoringEntries: () => Promise<void>;
 };
 
 function buildMonitoringEntriesHandler(
@@ -17,14 +18,11 @@ function buildMonitoringEntriesHandler(
   uploadMonitoringEntries: (newMonitoringEntries: fetchedMonitoringEntryType[]) => Promise<void>,
 ): monitoringEntriesHandlerType {
   return {
-    sendMonitoringEntries,
     addMonitoringEntry,
+    getTotalDuration,
     resetMonitoringEntries,
+    sendMonitoringEntries,
   };
-
-  async function sendMonitoringEntries() {
-    await uploadMonitoringEntries(monitoringEntries);
-  }
 
   function addMonitoringEntry(monitoringyEntryFields: { description: string; type: string }) {
     const newMonitoringEntry = monitoringEntryModule.lib.monitoringEntryBuilder.buildFetchedMonitoringEntry({
@@ -34,7 +32,28 @@ function buildMonitoringEntriesHandler(
     setMonitoringEntries([...monitoringEntries, newMonitoringEntry]);
   }
 
+  function getTotalDuration() {
+    const DURATION_THRESHOLD_BETWEEN_TIMESTAMPS = 5 * 60 * 1000;
+    const timestamps = monitoringEntries.map((monitoringEntry) => monitoringEntry.creationDate);
+    let duration = 0;
+    for (let index = 0, numberOfTimestamps = timestamps.length; index < numberOfTimestamps; index++) {
+      if (index === 0) {
+        continue;
+      }
+      const durationBetweenTimestamps = timestamps[index] - timestamps[index - 1];
+      if (durationBetweenTimestamps > DURATION_THRESHOLD_BETWEEN_TIMESTAMPS) {
+        continue;
+      }
+      duration += durationBetweenTimestamps;
+    }
+    return duration;
+  }
+
   function resetMonitoringEntries() {
     setMonitoringEntries([]);
+  }
+
+  async function sendMonitoringEntries() {
+    await uploadMonitoringEntries(monitoringEntries);
   }
 }

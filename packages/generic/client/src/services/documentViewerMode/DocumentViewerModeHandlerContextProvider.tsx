@@ -1,5 +1,4 @@
 import React, { createContext, ReactElement, useState } from 'react';
-import { fetchedAnnotationType } from '@label/core';
 import { buildDocumentViewerModeHandler, documentViewerModeHandlerType } from './buildDocumentViewerModeHandler';
 import { DEFAULT_VIEWER_MODE, viewerModeType } from './viewerMode';
 
@@ -13,10 +12,7 @@ const DocumentViewerModeHandlerContext = createContext<documentViewerModeHandler
   documentViewerMode: DEFAULT_VIEWER_MODE,
 });
 
-function DocumentViewerModeHandlerContextProvider(props: {
-  annotations: fetchedAnnotationType[];
-  children: ReactElement;
-}): ReactElement {
+function DocumentViewerModeHandlerContextProvider(props: { children: ReactElement }): ReactElement {
   const [documentViewerMode, setViewerMode] = useState<viewerModeType>(DEFAULT_VIEWER_MODE);
   const documentViewerModeHandler = buildDocumentViewerModeHandler(documentViewerMode, setViewerMode);
 

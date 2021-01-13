@@ -4,9 +4,8 @@ import { buildMonitoringEntryRepository } from '../repository';
 export { monitoringEntryService };
 
 const monitoringEntryService = {
-  async create(monitoringEntry: monitoringEntryType) {
+  async createMany(monitoringEntries: monitoringEntryType[]) {
     const monitoringEntryRepository = buildMonitoringEntryRepository();
-
-    await monitoringEntryRepository.insert(monitoringEntry);
+    return monitoringEntryRepository.insertMany(monitoringEntries);
   },
 };

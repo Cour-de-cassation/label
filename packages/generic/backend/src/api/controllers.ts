@@ -51,16 +51,15 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     monitoringEntries: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { newMonitoringEntries } }) => {
-        await Promise.all(
-          newMonitoringEntries.map((newMonitoringEntry) =>
-            monitoringEntryService.create({
-              ...newMonitoringEntry,
-              documentId: idModule.lib.buildId(newMonitoringEntry.documentId),
-              _id: idModule.lib.buildId(newMonitoringEntry._id),
-              userId: user._id,
-            }),
-          ),
+        const monitoringEntries = newMonitoringEntries.map(
+          (newMonitoringEntry) => ({
+            ...newMonitoringEntry,
+            documentId: idModule.lib.buildId(newMonitoringEntry.documentId),
+            _id: idModule.lib.buildId(newMonitoringEntry._id),
+            userId: user._id,
+          }),
         );
+        await monitoringEntryService.createMany(monitoringEntries);
       },
     }),
 

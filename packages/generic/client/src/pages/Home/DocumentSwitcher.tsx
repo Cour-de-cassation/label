@@ -20,7 +20,6 @@ function DocumentSwitcher(props: {
 }) {
   const [documentState, setDocumentState] = useState<documentStateType>(computeInitialDocumentState());
   const { resetMonitoringEntries } = useMonitoring();
-  const [annotationStartTimestamp, setAnnotationStartTimestamp] = useState(0);
   const styles = buildStyles();
 
   return <div style={styles.documentSwitcher}>{renderPage()}</div>;
@@ -37,7 +36,6 @@ function DocumentSwitcher(props: {
                 document: documentState.choice.document,
                 settings: props.settings,
               }}
-              annotationStartTimestamp={annotationStartTimestamp}
               annotatorStateCommitter={buildAnnotatorStateCommitter()}
               anonymizer={buildAnonymizer(props.settings)}
               onStopAnnotatingDocument={onStopAnnotatingDocument}
@@ -81,7 +79,6 @@ function DocumentSwitcher(props: {
   }
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) {
-    setAnnotationStartTimestamp(new Date().getTime());
     await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
       documentId: choice.document._id,
       status: 'saved',

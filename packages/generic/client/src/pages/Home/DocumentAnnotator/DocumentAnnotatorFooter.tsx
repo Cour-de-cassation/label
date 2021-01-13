@@ -12,13 +12,12 @@ import { ReportProblemButton } from './ReportProblemButton';
 export { DocumentAnnotatorFooter };
 
 function DocumentAnnotatorFooter(props: {
-  annotationStartTimestamp: number;
   annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   onStopAnnotatingDocument: () => void;
 }) {
   const theme = useCustomTheme();
-  const { sendMonitoringEntries } = useMonitoring();
+  const { getTotalDuration, sendMonitoringEntries } = useMonitoring();
 
   const styles = buildStyles(theme);
   const annotatorState = props.annotatorStateHandler.get();
@@ -103,8 +102,7 @@ function DocumentAnnotatorFooter(props: {
   }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
-    const currentTimestamp = new Date().getTime();
-    const duration = currentTimestamp - props.annotationStartTimestamp;
+    const duration = getTotalDuration();
 
     await apiCaller.post<'createTreatment'>('createTreatment', {
       documentId: annotatorState.document._id,

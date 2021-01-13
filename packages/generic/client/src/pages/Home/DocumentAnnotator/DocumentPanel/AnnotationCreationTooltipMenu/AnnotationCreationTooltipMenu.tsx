@@ -10,6 +10,7 @@ import {
   Text,
 } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useMonitoring } from '../../../../../services/monitoring';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { positionType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
@@ -26,6 +27,7 @@ function AnnotationCreationTooltipMenu(props: {
   onClose: () => void;
   originPosition: positionType;
 }): ReactElement {
+  const { addMonitoringEntry } = useMonitoring();
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -81,6 +83,10 @@ function AnnotationCreationTooltipMenu(props: {
   );
 
   function applyAnnotationCreation(category: string) {
+    addMonitoringEntry({
+      description: `tooltip_create_${shouldApplyEverywhere ? 'all' : 'one'}_${category}`,
+      type: 'button',
+    });
     const newAnnotations = shouldApplyEverywhere
       ? annotationHandler.createAll(
           annotatorState.annotations,

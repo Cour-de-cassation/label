@@ -1,12 +1,17 @@
 import React, { ReactElement } from 'react';
 import { fetchedAnnotationType } from '@label/core';
-import { LayoutGrid, FloatingTooltipMenu, ComponentsList, LinkAnnotationDropdown } from '../../../../../components';
+import {
+  LayoutGrid,
+  FloatingTooltipMenu,
+  ComponentsList,
+  LinkAnnotationDropdown,
+  UnlinkAnnotationDropdown,
+} from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { clientAnonymizerType, positionType } from '../../../../../types';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
-import { UnlinkAnnotationDropdown } from '../../AnnotationsPanel/CategoryTableEntry/UnlinkAnnotationDropdown';
 import { DeleteAnnotationDropdown } from './DeleteAnnotationDropdown';
 
 export { AnnotationTooltipMenu };
@@ -61,12 +66,14 @@ function AnnotationTooltipMenu(props: {
               annotation={props.annotation}
             />,
             <LinkAnnotationDropdown
+              context="tooltip_update"
               annotatorStateHandler={props.annotatorStateHandler}
               annotation={props.annotation}
             />,
             <UnlinkAnnotationDropdown
               annotatorStateHandler={props.annotatorStateHandler}
               annotation={props.annotation}
+              context="tooltip_update"
             />,
             <DeleteAnnotationDropdown
               annotatorStateHandler={props.annotatorStateHandler}

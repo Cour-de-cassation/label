@@ -1,11 +1,16 @@
 import React from 'react';
 import { annotationHandler, fetchedAnnotationType } from '@label/core';
-import { ComponentsList, IconButton, LinkAnnotationDropdown } from '../../../../../components';
+import {
+  ComponentsList,
+  IconButton,
+  LinkAnnotationDropdown,
+  UnlinkAnnotationDropdown,
+} from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useMonitoring } from '../../../../../services/monitoring';
 import { useCustomTheme } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
-import { UnlinkAnnotationDropdown } from './UnlinkAnnotationDropdown';
 
 export { CategoryTableEntryActionButtons };
 
@@ -16,6 +21,7 @@ function CategoryTableEntryActionButtons(props: {
   entityAnnotation: fetchedAnnotationType;
   entityEntryHandler: entityEntryHandlerType;
 }) {
+  const { addMonitoringEntry } = useMonitoring();
   const theme = useCustomTheme();
   const annotatorState = props.annotatorStateHandler.get();
 
@@ -26,6 +32,7 @@ function CategoryTableEntryActionButtons(props: {
           annotatorStateHandler={props.annotatorStateHandler}
           annotation={props.entityAnnotation}
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
+          context="panel"
           onClick={() => props.entityEntryHandler.setFocus(props.entityAnnotation.entityId)}
           onClose={() => props.entityEntryHandler.setFocus(undefined)}
         />,
@@ -33,6 +40,7 @@ function CategoryTableEntryActionButtons(props: {
           annotatorStateHandler={props.annotatorStateHandler}
           annotation={props.entityAnnotation}
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
+          context="panel"
           onClick={() => props.entityEntryHandler.setFocus(props.entityAnnotation.entityId)}
           onClose={() => props.entityEntryHandler.setFocus(undefined)}
         />,
@@ -56,5 +64,9 @@ function CategoryTableEntryActionButtons(props: {
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);
+    addMonitoringEntry({
+      description: `panel_delete_all`,
+      type: 'button',
+    });
   }
 }

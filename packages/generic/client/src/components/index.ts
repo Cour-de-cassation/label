@@ -1,4 +1,11 @@
-import { ActionIcon, CategoryIcon, LinkAnnotationDropdown, Logo, MainHeader } from './business';
+import {
+  ActionIcon,
+  CategoryIcon,
+  LinkAnnotationDropdown,
+  Logo,
+  MainHeader,
+  UnlinkAnnotationDropdown,
+} from './business';
 import {
   Accordion,
   ButtonWithIcon,
@@ -30,6 +37,7 @@ export {
   Checkbox,
   ComponentsList,
   Drawer,
+  FloatingTooltipMenu,
   Header,
   Icon,
   IconButton,
@@ -47,5 +55,5 @@ export {
   TableSortLabel,
   Text,
   TextInput,
-  FloatingTooltipMenu,
+  UnlinkAnnotationDropdown,
 };

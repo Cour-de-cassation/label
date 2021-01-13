@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { annotationHandler, fetchedAnnotationType, settingsModule } from '@label/core';
 import { CategoryIcon, IconDropdown } from '../../../../../components';
 import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useMonitoring } from '../../../../../services/monitoring';
 import { wordings } from '../../../../../wordings';
 
 export { ChangeAnnotationCategoryDropdown };
@@ -13,6 +14,7 @@ function ChangeAnnotationCategoryDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
 }): ReactElement {
+  const { addMonitoringEntry } = useMonitoring();
   const annotatorState = props.annotatorStateHandler.get();
   const categories = settingsModule.lib.getCategories(annotatorState.settings);
 
@@ -39,5 +41,9 @@ function ChangeAnnotationCategoryDropdown(props: {
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     props.annotatorStateHandler.set(newAnnotatorState);
+    addMonitoringEntry({
+      description: `tooltip_change_category_from_${props.annotation.category}_to_${newCategory}`,
+      type: 'button',
+    });
   }
 }

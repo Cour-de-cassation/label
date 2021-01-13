@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { annotationLinkHandler, fetchedAnnotationType } from '@label/core';
 import { annotatorStateHandlerType } from '../../services/annotatorState';
+import { useMonitoring } from '../../services/monitoring';
 import { wordings } from '../../wordings';
 import { IconDropdown } from '../generic';
 
@@ -11,10 +12,12 @@ const LINK_ANNOTATION_MENU_WIDTH = 300;
 function LinkAnnotationDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
+  context: 'tooltip_update' | 'panel';
   buttonSize?: number;
   onClick?: () => void;
   onClose?: () => void;
 }): ReactElement {
+  const { addMonitoringEntry } = useMonitoring();
   const annotatorState = props.annotatorStateHandler.get();
   const linkableAnnotations = annotationLinkHandler.getLinkableAnnotations(
     props.annotation,
@@ -48,6 +51,10 @@ function LinkAnnotationDropdown(props: {
       };
 
       props.annotatorStateHandler.set(newAnnotatorState);
+      addMonitoringEntry({
+        description: `${props.context}_link`,
+        type: 'button',
+      });
     }
   }
 }

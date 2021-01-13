@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import { annotationLinkHandler, fetchedAnnotationType } from '@label/core';
-import { IconButton, IconDropdown } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
-import { wordings } from '../../../../../wordings';
+import { IconButton, IconDropdown } from '..';
+import { annotatorStateHandlerType } from '../../services/annotatorState';
+import { useMonitoring } from '../../services/monitoring';
+import { wordings } from '../../wordings';
 
 export { UnlinkAnnotationDropdown };
 
@@ -12,9 +13,11 @@ function UnlinkAnnotationDropdown(props: {
   annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   buttonSize?: number;
+  context: 'tooltip_update' | 'panel';
   onClick?: () => void;
   onClose?: () => void;
 }): ReactElement {
+  const { addMonitoringEntry } = useMonitoring();
   const annotatorState = props.annotatorStateHandler.get();
   const linkedAnnotationRepresentatives = annotationLinkHandler.getLinkedAnnotationRepresentatives(
     props.annotation.entityId,
@@ -68,6 +71,11 @@ function UnlinkAnnotationDropdown(props: {
   }
 
   function unlinkAnnotation(text: string) {
+    addMonitoringEntry({
+      description: `${props.context}_unlink_${text === UNLINK_ALL ? 'all' : 'one'}`,
+      type: 'button',
+    });
+
     const newAnnotations =
       text === UNLINK_ALL
         ? annotationLinkHandler.unlink(props.annotation, annotatorState.annotations)

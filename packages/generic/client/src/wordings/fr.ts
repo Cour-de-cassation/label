@@ -8,6 +8,7 @@ const fr = {
   category: 'Catégorie',
   changeCategory: 'Changer de catégorie',
   copyToClipboard: 'Copier dans le presse-papier',
+  close: 'Fermer',
   darkMode: 'Mode sombre',
   describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
   delete: 'Supprimer',

@@ -36,7 +36,7 @@ function OccurrenceHeader(props: { annotatorStateHandler: annotatorStateHandlerT
         </div>,
       ]}
       rightHeaderComponents={[
-        <IconButton iconName="close" hint={wordings.cancel} onClick={documentViewerModeHandler.resetViewerMode} />,
+        <IconButton iconName="close" hint={wordings.close} onClick={documentViewerModeHandler.resetViewerMode} />,
       ]}
       spaceBetweenComponents={0}
       variant="mainLeft"

@@ -38,12 +38,22 @@ const fr = {
   pleaseTryAgain: 'Veuillez réessayer.',
   problemCategory: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
   problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
+  problemReportsPage: {
+    title: 'Administration',
+    subtitle: 'Alertes',
+    table: {
+      columnTitles: {
+        number: 'N° décision',
+        text: 'Message',
+        type: 'Type',
+      },
+    },
+  },
   problemType: 'Type de problème',
   pseudonymisation: 'Pseudonymisation',
   redo: 'Rétablir',
   reportProblem: 'Signaler un problème',
   reset: 'Réinitialiser',
-  resize: 'Redimensionner',
   saveDraft: 'Enregistrer le brouillon',
   selectResizedText: "Sélectionnez le nouveau texte pour redéfinir les dimensions de l'entité...",
   send: 'Envoyer',

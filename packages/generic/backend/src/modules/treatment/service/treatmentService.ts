@@ -1,4 +1,4 @@
-import { idType, treatmentModule } from '@label/core';
+import { annotationsDiffModule, idType, treatmentModule } from '@label/core';
 import { buildTreatmentRepository } from '../repository';
 
 export { treatmentService };
@@ -31,8 +31,7 @@ const treatmentService = {
         documentId,
         duration,
         order,
-        before: [],
-        after: [], // TODO insert annotation in it
+        annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff([], []), // TODO insert annotation in it
       }),
     );
   },

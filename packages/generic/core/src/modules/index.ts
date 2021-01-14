@@ -1,5 +1,6 @@
 import { annotationModule, annotationType, fetchedAnnotationType } from './annotation';
 import { annotationReportModule, annotationReportType } from './annotationReport';
+import { annotationsDiffModule, annotationsDiffType } from './annotationsDiff';
 import { assignationModule, assignationType } from './assignation';
 import { documentModule, documentType, fetchedDocumentType } from './document';
 import { idModule, idType } from './id';
@@ -28,6 +29,7 @@ import {
 export {
   annotationModule,
   annotationReportModule,
+  annotationsDiffModule,
   assignationModule,
   documentModule,
   idModule,
@@ -43,6 +45,7 @@ export type {
   annotationType,
   fetchedAnnotationType,
   annotationReportType,
+  annotationsDiffType,
   assignationType,
   colorType,
   constantColorType,

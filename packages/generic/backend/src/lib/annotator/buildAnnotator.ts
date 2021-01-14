@@ -2,6 +2,7 @@ import { groupBy } from 'lodash';
 import {
   annotationType,
   annotationReportType,
+  annotationsDiffModule,
   documentType,
   treatmentModule,
   idModule,
@@ -76,8 +77,10 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
           userId,
           duration: 0,
           order: 0,
-          before: [], // TODO insert annotation in it
-          after: [],
+          annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff(
+            [], // TODO insert annotation in it
+            [],
+          ),
         });
         return treatmentRepository.insert(treatment);
       }),

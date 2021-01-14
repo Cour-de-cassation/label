@@ -1,5 +1,6 @@
 import { annotationsDiffDataModelField, annotationsDiffType } from './annotationsDiffType';
-import { squash } from './lib';
+import { annotationsDiffGenerator } from './generator';
+import { buildAnnotationsDiff, squash } from './lib';
 
 export { annotationsDiffModule };
 
@@ -7,5 +8,9 @@ export type { annotationsDiffType };
 
 const annotationsDiffModule = {
   dataModelField: annotationsDiffDataModelField,
-  lib: { squash },
+  generator: annotationsDiffGenerator,
+  lib: {
+    buildAnnotationsDiff,
+    squash,
+  },
 };

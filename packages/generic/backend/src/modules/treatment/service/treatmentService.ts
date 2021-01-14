@@ -10,11 +10,9 @@ const treatmentService = {
     return treatments;
   },
   async createTreatment({
-    userId,
     documentId,
     duration,
   }: {
-    userId: idType;
     documentId: idType;
     duration: number;
   }) {
@@ -27,7 +25,6 @@ const treatmentService = {
 
     await treatmentRepository.insert(
       treatmentModule.lib.buildTreatment({
-        userId,
         documentId,
         duration,
         order,

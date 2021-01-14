@@ -11,7 +11,6 @@ const treatmentDataModel = {
   documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
   duration: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
   order: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  userId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
 } as const;
 
 type treatmentType = typeOfDataModel<typeof treatmentDataModel>;

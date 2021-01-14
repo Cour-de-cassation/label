@@ -99,11 +99,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     createTreatment: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (
-        user,
+        _,
         { args: { documentId, fetchedGraphQLAnnotations, duration } },
       ) => {
         await treatmentService.createTreatment({
-          userId: user._id,
           documentId: idModule.lib.buildId(documentId),
           duration,
         });

@@ -67,23 +67,28 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
       idModule.lib.convertToString(annotation.documentId),
     );
     return Promise.all(
-      Object.entries(grouppedAnnotations).map((grouppedAnnotationEntry) => {
-        const documentId = idModule.lib.buildId(grouppedAnnotationEntry[0]);
-        // TO DO : handle non user treatment
-        const userId = idModule.lib.buildId();
+      Object.entries(grouppedAnnotations).map(
+        ([stringDocumentId, annotationsOfDocument]) => {
+          const documentId = idModule.lib.buildId(stringDocumentId);
 
-        const treatment = treatmentModule.lib.buildTreatment({
-          documentId,
-          userId,
-          duration: 0,
-          order: 0,
-          annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff(
-            [], // TODO insert annotation in it
-            [],
-          ),
-        });
-        return treatmentRepository.insert(treatment);
-      }),
+          const treatment = treatmentModule.lib.buildTreatment({
+            documentId,
+            duration: 0,
+            order: 0,
+            annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff(
+              [],
+              annotationsOfDocument.map((annotation) => ({
+                category: annotation.category,
+                entityId: annotation.entityId,
+                start: annotation.start,
+                text: annotation.text,
+              })),
+            ),
+          });
+
+          return treatmentRepository.insert(treatment);
+        },
+      ),
     );
   }
 

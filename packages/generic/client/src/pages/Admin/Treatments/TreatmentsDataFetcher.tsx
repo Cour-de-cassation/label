@@ -29,7 +29,6 @@ function buildFetchTreatments() {
         ...treatment,
         documentId: idModule.lib.buildId(treatment.documentId),
         _id: idModule.lib.buildId(treatment._id),
-        userId: idModule.lib.buildId(treatment.userId),
       })),
       statusCode,
     };

@@ -14,7 +14,7 @@ function LoadingPage(props: { displayHeader?: boolean }) {
       {props.displayHeader && <MainHeader />}
       <span style={style.loadingPage}>
         <div className="loading-wheel" style={style.loadingWheel} />
-        <Text>{wordings.loading}</Text>
+        <Text>{wordings.loadingPage}</Text>
       </span>
     </>
   );

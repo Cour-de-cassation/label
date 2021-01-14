@@ -15,7 +15,7 @@ function AnnotationHeader() {
     <Header
       leftHeaderComponents={[]}
       rightHeaderComponents={[
-        <Text>{wordings.anonymisedView}</Text>,
+        <Text>{wordings.homePage.anonymisedView}</Text>,
         <SwitchButton
           checked={documentViewerModeHandler.isAnonymizedView()}
           color="primary"

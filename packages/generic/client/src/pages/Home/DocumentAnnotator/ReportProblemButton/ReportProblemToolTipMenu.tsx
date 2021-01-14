@@ -48,16 +48,16 @@ function ReportProblemToolTipMenu(props: {
               text: problemCategoryText,
               value: problemCategory,
             }))}
-            label={wordings.problemType}
+            label={wordings.homePage.problemType}
             onChange={changeProblemCategory}
             width={REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}
           />
         </LayoutGrid>
         <LayoutGrid style={style.tooltipItem}>
-          <Text>{wordings.describeTheProblem}</Text>
+          <Text>{wordings.homePage.describeTheProblem}</Text>
           <TextInput
             name="problemDescription"
-            placeholder={wordings.enterYourText}
+            placeholder={wordings.homePage.enterYourText}
             size={10}
             multiline
             onChange={(event) => setProblemDescription(event.target.value)}
@@ -69,21 +69,26 @@ function ReportProblemToolTipMenu(props: {
           <Checkbox
             defaultChecked={false}
             onChange={(checked) => setIsBlocking(checked)}
-            text={wordings.problemIsBlocking}
+            text={wordings.homePage.problemIsBlocking}
             style={style.tooltipElement}
           ></Checkbox>
         </LayoutGrid>
         <LayoutGrid container style={style.tooltipItem} direction="row-reverse">
           <LayoutGrid item>
             <span style={style.tooltipButton}>
-              <ButtonWithIcon color="default" iconName="close" onClick={closeTooltipMenu} text={wordings.cancel} />
+              <ButtonWithIcon
+                color="default"
+                iconName="close"
+                onClick={closeTooltipMenu}
+                text={wordings.homePage.cancel}
+              />
             </span>
             <span style={style.tooltipButton}>
               <ButtonWithIcon
                 color="primary"
                 iconName="send"
                 onClick={sendProblemReportAndClose}
-                text={wordings.send}
+                text={wordings.homePage.send}
               />
             </span>
           </LayoutGrid>
@@ -108,9 +113,9 @@ function ReportProblemToolTipMenu(props: {
 
   function buildProblemCategories(): Array<[problemReportType['type'], string]> {
     return [
-      ['bug', wordings.problemCategory.bug],
-      ['annotationProblem', wordings.problemCategory.annotationProblem],
-      ['suggestion', wordings.problemCategory.suggestion],
+      ['bug', wordings.homePage.problemCategory.bug],
+      ['annotationProblem', wordings.homePage.problemCategory.annotationProblem],
+      ['suggestion', wordings.homePage.problemCategory.suggestion],
     ];
   }
 

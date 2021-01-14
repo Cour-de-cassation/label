@@ -45,7 +45,7 @@ function CategoryTableEntryActionButtons(props: {
         <IconButton
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
           color="alert"
-          hint={wordings.delete}
+          hint={wordings.homePage.delete}
           iconName="delete"
           onClick={deleteAnnotations}
         />,

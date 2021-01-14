@@ -54,14 +54,14 @@ function AnnotationCreationTooltipMenu(props: {
         <LayoutGrid item style={styles.identicalOccurrencesContainer}>
           <Text variant="h3">
             <span style={styles.identicalOccurrencesNumber}>{annotationTextsAndIndices.length}</span>{' '}
-            {wordings.identicalOccurrencesSpotted}
+            {wordings.homePage.identicalOccurrencesSpotted}
           </Text>
         </LayoutGrid>
         <LayoutGrid item container>
           <Checkbox
             defaultChecked={shouldApplyEverywhere}
             onChange={(checked: boolean) => setShouldApplyEverywhere(checked)}
-            text={wordings.applyEveryWhere}
+            text={wordings.homePage.applyEveryWhere}
           ></Checkbox>
         </LayoutGrid>
         <LayoutGrid item container>
@@ -73,7 +73,7 @@ function AnnotationCreationTooltipMenu(props: {
               text: settingsModule.lib.getAnnotationCategoryText(category, annotatorState.settings),
               value: category,
             }))}
-            label={wordings.category}
+            label={wordings.homePage.category}
             labelIcon={<ActionIcon iconName="puzzle" iconSize={CATEGORY_ICON_SIZE} />}
             onChange={applyAnnotationCreation}
           />

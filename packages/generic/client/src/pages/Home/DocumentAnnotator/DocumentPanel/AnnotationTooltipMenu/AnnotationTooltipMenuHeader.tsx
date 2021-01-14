@@ -37,7 +37,7 @@ function AnnotationTooltipMenuHeader(props: {
         variant="mainLeft"
       />
       <Text variant="body1">
-        {`${props.isAnonymizedView ? wordings.originalText : wordings.pseudonymisation} : `}
+        {`${props.isAnonymizedView ? wordings.homePage.originalText : wordings.homePage.pseudonymisation} : `}
         <Text inline variant="body2">
           {props.isAnonymizedView ? props.annotation.text : props.anonymizer.anonymize(props.annotation)}
         </Text>

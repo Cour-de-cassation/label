@@ -22,7 +22,7 @@ function AnnotationsPanel(props: {
     <LayoutGrid style={styles.panel}>
       <LayoutGrid container alignItems="center" style={styles.panelHeader}>
         <LayoutGrid item>
-          <Text variant="h2">{wordings.askedAnnotations}</Text>
+          <Text variant="h2">{wordings.homePage.askedAnnotations}</Text>
         </LayoutGrid>
       </LayoutGrid>
       <LayoutGrid style={styles.categoriesContainer}>

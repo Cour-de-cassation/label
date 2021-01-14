@@ -25,7 +25,7 @@ function DocumentSelectorCard(props: {
   return (
     <div style={styles.card}>
       <Text style={styles.title} variant="h1">
-        {wordings.wholeCheck}
+        {wordings.homePage.wholeCheck}
       </Text>
       <Text style={styles.subtitle} variant="h2">
         {props.choice.document.title}
@@ -34,7 +34,7 @@ function DocumentSelectorCard(props: {
         {DOCUMENT_INFO_ENTRIES.map((documentInfoEntry) => (
           <div key={documentInfoEntry} style={styles.documentInfoEntryRow}>
             <div style={styles.documentLabelContainer}>
-              <Text style={styles.documentLabelText}>{wordings.documentInfoEntries[documentInfoEntry]}</Text>
+              <Text style={styles.documentLabelText}>{wordings.homePage.documentInfoEntries[documentInfoEntry]}</Text>
             </div>
             <div style={styles.documentValueContainer}>
               <Text variant="h2">{documentInfoEntries[documentInfoEntry]}</Text>
@@ -61,7 +61,7 @@ function DocumentSelectorCard(props: {
         iconName="clock"
         color="primary"
         onClick={() => props.onSelect(props.choice)}
-        text={wordings.start}
+        text={wordings.homePage.start}
       />
     </div>
   );

@@ -20,7 +20,7 @@ function MainHeader(props: { subtitle?: string; title?: string }) {
         leftHeaderComponents={leftHeaderComponents}
         rightHeaderComponents={[
           <SettingsButton />,
-          <IconButton iconName="logout" hint={wordings.logout} onClick={logout} />,
+          <IconButton iconName="logout" hint={wordings.shared.logout} onClick={logout} />,
         ]}
         spaceBetweenComponents={theme.spacing * 2}
         style={style.header}

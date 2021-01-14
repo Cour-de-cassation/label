@@ -18,7 +18,7 @@ function ChangeAnnotationCategoryDropdown(props: { annotation: fetchedAnnotation
 
   return (
     <IconDropdown
-      hint={wordings.changeCategory}
+      hint={wordings.homePage.changeCategory}
       iconName="puzzle"
       items={categories.map((category) => ({
         icon: <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={annotatorState.settings} />,

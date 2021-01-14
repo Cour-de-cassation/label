@@ -27,7 +27,7 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
             color="default"
             iconName="reset"
             onClick={annotatorStateHandler.reinitialize}
-            text={wordings.reset}
+            text={wordings.homePage.reset}
           />
         </div>
       </div>
@@ -37,14 +37,14 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
             <IconButton
               color="default"
               disabled={!canRevertLastAction()}
-              hint={wordings.undo}
+              hint={wordings.homePage.undo}
               iconName="undo"
               onClick={revertLastAction}
             />,
             <IconButton
               color="default"
               disabled={!canRestoreLastAction()}
-              hint={wordings.redo}
+              hint={wordings.homePage.redo}
               iconName="redo"
               onClick={restoreLastAction}
             />,
@@ -54,9 +54,14 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
         <ComponentsList
           components={[
             <ReportProblemButton onStopAnnotatingDocument={props.onStopAnnotatingDocument} />,
-            <IconButton color="default" iconName="copy" onClick={copyToClipboard} hint={wordings.copyToClipboard} />,
-            <IconButton color="default" iconName="save" onClick={saveDraft} hint={wordings.saveDraft} />,
-            <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.validate} />,
+            <IconButton
+              color="default"
+              iconName="copy"
+              onClick={copyToClipboard}
+              hint={wordings.homePage.copyToClipboard}
+            />,
+            <IconButton color="default" iconName="save" onClick={saveDraft} hint={wordings.homePage.saveDraft} />,
+            <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.homePage.validate} />,
           ]}
           spaceBetweenComponents={theme.spacing * 2}
         />

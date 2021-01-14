@@ -35,11 +35,11 @@ function UnlinkAnnotationDropdown(props: {
       <IconDropdown
         buttonSize={props.buttonSize}
         disabled={isNotLinked()}
-        hint={wordings.unlink}
+        hint={wordings.homePage.unlink}
         iconName="unlink"
         items={[
           {
-            text: wordings.unlinkOption[UNLINK_ALL],
+            text: wordings.homePage.unlinkOption[UNLINK_ALL],
             value: UNLINK_ALL,
           },
           ...linkedAnnotationRepresentatives.map((annotation) => ({
@@ -59,7 +59,7 @@ function UnlinkAnnotationDropdown(props: {
       <IconButton
         buttonSize={props.buttonSize}
         disabled={isNotLinked()}
-        hint={wordings.unlink}
+        hint={wordings.homePage.unlink}
         iconName="unlink"
         onClick={() => unlinkAnnotation(props.annotation.text)}
       />

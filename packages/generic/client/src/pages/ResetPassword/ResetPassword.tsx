@@ -23,10 +23,10 @@ const ResetPassword: FunctionComponent = () => {
         placeholder="confirmationPassword"
         onChange={changeConfirmationPassword}
         value={confirmationPassword}
-        errorText={isConfirmationPasswordValid ? '' : wordings.passwordsMustBeIdentical}
+        errorText={isConfirmationPasswordValid ? '' : wordings.resetPasswordPage.passwordsMustBeIdentical}
         type="password"
       />
-      <button onClick={handleSubmit}>Réinitialiser le mot de passe</button>
+      <button onClick={handleSubmit}>{wordings.resetPasswordPage.resetPassword}</button>
     </div>
   );
 

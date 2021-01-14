@@ -16,26 +16,26 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
       <LayoutGrid container style={styles.drawer}>
         <LayoutGrid container item alignItems="center" justifyContent="space-between" style={styles.header}>
           <LayoutGrid item>
-            <Text variant="h1">{wordings.settings}</Text>
+            <Text variant="h1">{wordings.homePage.settings}</Text>
           </LayoutGrid>
           <LayoutGrid item>
-            <IconButton hint={wordings.cancel} onClick={props.close} iconName="close" />
+            <IconButton hint={wordings.homePage.cancel} onClick={props.close} iconName="close" />
           </LayoutGrid>
         </LayoutGrid>
         <LayoutGrid container direction="column" style={styles.displayModeContainer}>
           <LayoutGrid style={styles.displayModeTitle} item>
-            <Text variant="h2"> {wordings.displayMode}</Text>
+            <Text variant="h2"> {wordings.homePage.displayMode}</Text>
           </LayoutGrid>
           <LayoutGrid style={styles.radioButton} item>
             <RadioButton
-              label={wordings.lightMode}
+              label={wordings.homePage.lightMode}
               isChecked={displayMode === 'lightMode'}
               onClick={() => setDisplayMode('lightMode')}
             />
           </LayoutGrid>
           <LayoutGrid style={styles.radioButton} item>
             <RadioButton
-              label={wordings.darkMode}
+              label={wordings.homePage.darkMode}
               isChecked={displayMode === 'darkMode'}
               onClick={() => setDisplayMode('darkMode')}
             />

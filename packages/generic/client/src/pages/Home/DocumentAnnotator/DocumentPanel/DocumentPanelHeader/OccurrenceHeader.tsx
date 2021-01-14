@@ -37,7 +37,11 @@ function OccurrenceHeader(props: { entityId: string }) {
         </div>,
       ]}
       rightHeaderComponents={[
-        <IconButton iconName="close" hint={wordings.close} onClick={documentViewerModeHandler.resetViewerMode} />,
+        <IconButton
+          iconName="close"
+          hint={wordings.homePage.close}
+          onClick={documentViewerModeHandler.resetViewerMode}
+        />,
       ]}
       spaceBetweenComponents={0}
       variant="mainLeft"

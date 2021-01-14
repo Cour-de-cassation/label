@@ -28,7 +28,7 @@ function LinkAnnotationDropdown(props: {
     <IconDropdown
       buttonSize={props.buttonSize}
       disabled={linkableAnnotations.length === 0}
-      hint={wordings.link}
+      hint={wordings.homePage.link}
       iconName="link"
       items={linkableAnnotations.map((annotation) => ({
         text: annotation.text,

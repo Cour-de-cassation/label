@@ -27,7 +27,7 @@ const Login: FunctionComponent = () => {
           <TextInput
             name="email"
             type="email"
-            placeholder={wordings.email}
+            placeholder={wordings.loginPage.email}
             onChange={changeEmail}
             value={email}
             error={!isFormValid}
@@ -38,7 +38,7 @@ const Login: FunctionComponent = () => {
           <TextInput
             name="password"
             type="password"
-            placeholder={wordings.password}
+            placeholder={wordings.loginPage.password}
             onChange={changePassword}
             value={password}
             error={!isFormValid}
@@ -48,7 +48,7 @@ const Login: FunctionComponent = () => {
         <LayoutGrid item style={styles.forgottenPasswordContainer}>
           <Link to="/reset-password-request">
             <Text style={styles.forgottenPasswordText} variant="h3">
-              {wordings.forgottenPassword}
+              {wordings.loginPage.forgottenPassword}
             </Text>
           </Link>
         </LayoutGrid>
@@ -57,7 +57,7 @@ const Login: FunctionComponent = () => {
             iconName={isFormValid ? 'login' : 'error'}
             onClick={handleSubmit}
             color={isFormValid ? 'primary' : 'alert'}
-            text={wordings.login}
+            text={wordings.loginPage.login}
             type="submit"
           />
         </LayoutGrid>
@@ -65,10 +65,10 @@ const Login: FunctionComponent = () => {
           {!isFormValid && (
             <LayoutGrid item direction="column">
               <Text style={styles.formErrorText} variant="h3">
-                {wordings.wrongEmailOrPassword}
+                {wordings.loginPage.wrongEmailOrPassword}
               </Text>
               <Text style={styles.formErrorText} variant="h3">
-                {wordings.pleaseTryAgain}
+                {wordings.loginPage.pleaseTryAgain}
               </Text>
             </LayoutGrid>
           )}

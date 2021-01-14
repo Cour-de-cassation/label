@@ -1,22 +1,23 @@
 import React, { CSSProperties } from 'react';
 import { uniq } from 'lodash';
 import { annotationLinkHandler, annotationModule, settingsModule } from '@label/core';
-import { customThemeType, heights, useCustomTheme } from '../../../../../styles';
 import { CategoryIcon, Header, IconButton, Text } from '../../../../../components';
-import { wordings } from '../../../../../wordings';
+import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../../services/documentViewerMode';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { customThemeType, heights, useCustomTheme } from '../../../../../styles';
+import { wordings } from '../../../../../wordings';
 
 export { OccurrenceHeader };
 
 const CATEGORY_ICON_SIZE = 40;
 
-function OccurrenceHeader(props: { annotatorStateHandler: annotatorStateHandlerType; entityId: string }) {
+function OccurrenceHeader(props: { entityId: string }) {
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const theme = useCustomTheme();
+  const annotatorStateHandler = useAnnotatorStateHandler();
 
   const styles = buildStyles(theme);
-  const { annotations, settings } = props.annotatorStateHandler.get();
+  const { annotations, settings } = annotatorStateHandler.get();
   const category = annotationModule.lib.entityIdHandler.getCategory(props.entityId);
   const categoryName = settingsModule.lib.getAnnotationCategoryText(category, settings);
   const annotationTexts = uniq(

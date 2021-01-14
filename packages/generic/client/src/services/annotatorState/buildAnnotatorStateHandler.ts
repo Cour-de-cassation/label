@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { annotatorStateType } from './annotatorStateType';
 import { annotatorStateCommitterType } from './buildAnnotatorStateCommitter';
 
-export { useAnnotatorState };
+export { buildAnnotatorStateHandler };
 
 export type { annotatorStateHandlerType };
 
@@ -16,12 +15,12 @@ type annotatorStateHandlerType = {
   reinitialize: () => void;
 };
 
-function useAnnotatorState(
-  initialAnnotatorState: annotatorStateType,
+function buildAnnotatorStateHandler(
+  annotatorState: annotatorStateType,
+  setAnnotatorState: (annotatortState: annotatorStateType) => void,
+  resetAnnotatorState: () => void,
   committer: annotatorStateCommitterType,
 ): { annotatorStateHandler: annotatorStateHandlerType } {
-  const [annotatorState, setAnnotatorState] = useState(initialAnnotatorState);
-
   return {
     annotatorStateHandler: {
       get: () => annotatorState,
@@ -51,7 +50,7 @@ function useAnnotatorState(
 
   function reinitializeAnnotatorState() {
     committer.clean();
-    setAnnotatorState(initialAnnotatorState);
+    resetAnnotatorState();
   }
 
   function canRevertAnnotatorState() {

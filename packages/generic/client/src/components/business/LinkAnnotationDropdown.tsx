@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { annotationLinkHandler, fetchedAnnotationType } from '@label/core';
-import { annotatorStateHandlerType } from '../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../services/annotatorState';
 import { useMonitoring } from '../../services/monitoring';
 import { wordings } from '../../wordings';
 import { IconDropdown } from '../generic';
@@ -10,15 +10,15 @@ export { LinkAnnotationDropdown };
 const LINK_ANNOTATION_MENU_WIDTH = 300;
 
 function LinkAnnotationDropdown(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   context: 'tooltip_update' | 'panel';
   buttonSize?: number;
   onClick?: () => void;
   onClose?: () => void;
 }): ReactElement {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorState = annotatorStateHandler.get();
   const linkableAnnotations = annotationLinkHandler.getLinkableAnnotations(
     props.annotation,
     annotatorState.annotations,
@@ -50,7 +50,7 @@ function LinkAnnotationDropdown(props: {
         annotations: annotationLinkHandler.link(props.annotation, annotationToLinkTo, annotatorState.annotations),
       };
 
-      props.annotatorStateHandler.set(newAnnotatorState);
+      annotatorStateHandler.set(newAnnotatorState);
       addMonitoringEntry({
         description: `${props.context}_link`,
         type: 'button',

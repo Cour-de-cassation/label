@@ -10,7 +10,7 @@ import {
   TextInput,
 } from '../../../../components';
 import { apiCaller } from '../../../../api';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { positionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 
@@ -20,18 +20,18 @@ const REPORT_PROBLEM_TOOLTIP_MENU_WIDTH = 400;
 const REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH = 350;
 
 function ReportProblemToolTipMenu(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   onClose: () => void;
   onStopAnnotatingDocument: () => void;
   originPosition: positionType;
 }): ReactElement {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const style = buildStyle();
   const problemCategories = buildProblemCategories();
   const [problemCategory, setProblemCategory] = useState<problemReportType['type'] | undefined>(undefined);
   const [problemDescription, setProblemDescription] = useState<string>('');
   const [isBlocking, setIsBlocking] = useState<boolean>(false);
   const [isSentWithoutCategory, setIsSentWithoutCategory] = useState<boolean>(false);
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorState = annotatorStateHandler.get();
 
   return (
     <FloatingTooltipMenu

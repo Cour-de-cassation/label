@@ -3,7 +3,7 @@ import { documentType } from '@label/core';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { apiCaller } from '../../../api';
-import { annotatorStateHandlerType } from '../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { useMonitoring } from '../../../services/monitoring';
 import { clientAnonymizerType } from '../../../types';
 import { wordings } from '../../../wordings';
@@ -11,16 +11,13 @@ import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorFooter };
 
-function DocumentAnnotatorFooter(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
-  anonymizer: clientAnonymizerType;
-  onStopAnnotatingDocument: () => void;
-}) {
+function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onStopAnnotatingDocument: () => void }) {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const { getTotalDuration, sendMonitoringEntries } = useMonitoring();
 
   const styles = buildStyles(theme);
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorState = annotatorStateHandler.get();
 
   return (
     <div style={styles.footer}>
@@ -29,7 +26,7 @@ function DocumentAnnotatorFooter(props: {
           <ButtonWithIcon
             color="default"
             iconName="reset"
-            onClick={props.annotatorStateHandler.reinitialize}
+            onClick={annotatorStateHandler.reinitialize}
             text={wordings.reset}
           />
         </div>
@@ -56,10 +53,7 @@ function DocumentAnnotatorFooter(props: {
         />
         <ComponentsList
           components={[
-            <ReportProblemButton
-              annotatorStateHandler={props.annotatorStateHandler}
-              onStopAnnotatingDocument={props.onStopAnnotatingDocument}
-            />,
+            <ReportProblemButton onStopAnnotatingDocument={props.onStopAnnotatingDocument} />,
             <IconButton color="default" iconName="copy" onClick={copyToClipboard} hint={wordings.copyToClipboard} />,
             <IconButton color="default" iconName="save" onClick={saveDraft} hint={wordings.saveDraft} />,
             <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.validate} />,
@@ -71,19 +65,19 @@ function DocumentAnnotatorFooter(props: {
   );
 
   function revertLastAction() {
-    props.annotatorStateHandler.revert();
+    annotatorStateHandler.revert();
   }
 
   function restoreLastAction() {
-    props.annotatorStateHandler.restore();
+    annotatorStateHandler.restore();
   }
 
   function canRevertLastAction() {
-    return props.annotatorStateHandler.canRevert();
+    return annotatorStateHandler.canRevert();
   }
 
   function canRestoreLastAction() {
-    return props.annotatorStateHandler.canRestore();
+    return annotatorStateHandler.canRestore();
   }
 
   async function copyToClipboard() {

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { annotationHandler, fetchedAnnotationType, settingsModule } from '@label/core';
 import { CategoryIcon, IconDropdown } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useMonitoring } from '../../../../../services/monitoring';
 import { wordings } from '../../../../../wordings';
 
@@ -10,12 +10,10 @@ export { ChangeAnnotationCategoryDropdown };
 const CATEGORY_ICON_SIZE = 30;
 const CHANGE_ANNOTATION_CATEGORY_MENU_WIDTH = 300;
 
-function ChangeAnnotationCategoryDropdown(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
-  annotation: fetchedAnnotationType;
-}): ReactElement {
+function ChangeAnnotationCategoryDropdown(props: { annotation: fetchedAnnotationType }): ReactElement {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorState = annotatorStateHandler.get();
   const categories = settingsModule.lib.getCategories(annotatorState.settings);
 
   return (
@@ -40,7 +38,7 @@ function ChangeAnnotationCategoryDropdown(props: {
     );
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
-    props.annotatorStateHandler.set(newAnnotatorState);
+    annotatorStateHandler.set(newAnnotatorState);
     addMonitoringEntry({
       description: `tooltip_change_category_from_${props.annotation.category}_to_${newCategory}`,
       type: 'button',

@@ -9,7 +9,7 @@ import {
   LayoutGrid,
   Text,
 } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useMonitoring } from '../../../../../services/monitoring';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { positionType } from '../../../../../types';
@@ -21,17 +21,17 @@ const TOOLTIP_MENU_MAX_WIDTH = 300;
 const CATEGORY_ICON_SIZE = 30;
 
 function AnnotationCreationTooltipMenu(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   annotationText: string;
   annotationIndex: number;
   onClose: () => void;
   originPosition: positionType;
 }): ReactElement {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorState = annotatorStateHandler.get();
   const categories = settingsModule.lib.getCategories(annotatorState.settings);
   const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices(
     annotatorState.document.text,
@@ -100,7 +100,7 @@ function AnnotationCreationTooltipMenu(props: {
           annotationModule.lib.annotationBuilder.buildFetchedAnnotation,
         );
 
-    props.annotatorStateHandler.set({
+    annotatorStateHandler.set({
       ...annotatorState,
       annotations: newAnnotations,
     });

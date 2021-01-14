@@ -6,7 +6,7 @@ import {
   LinkAnnotationDropdown,
   UnlinkAnnotationDropdown,
 } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useMonitoring } from '../../../../../services/monitoring';
 import { useCustomTheme } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
@@ -17,19 +17,18 @@ export { CategoryTableEntryActionButtons };
 const CATEGORY_TABLE_ENTRY_BUTTON_SIZE = 32;
 
 function CategoryTableEntryActionButtons(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   entityAnnotation: fetchedAnnotationType;
   entityEntryHandler: entityEntryHandlerType;
 }) {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
   const theme = useCustomTheme();
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorState = annotatorStateHandler.get();
 
   return (
     <ComponentsList
       components={[
         <LinkAnnotationDropdown
-          annotatorStateHandler={props.annotatorStateHandler}
           annotation={props.entityAnnotation}
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
           context="panel"
@@ -37,7 +36,6 @@ function CategoryTableEntryActionButtons(props: {
           onClose={() => props.entityEntryHandler.setFocus(undefined)}
         />,
         <UnlinkAnnotationDropdown
-          annotatorStateHandler={props.annotatorStateHandler}
           annotation={props.entityAnnotation}
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
           context="panel"
@@ -63,7 +61,7 @@ function CategoryTableEntryActionButtons(props: {
     );
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
-    props.annotatorStateHandler.set(newAnnotatorState);
+    annotatorStateHandler.set(newAnnotatorState);
     addMonitoringEntry({
       description: `panel_delete_all`,
       type: 'button',

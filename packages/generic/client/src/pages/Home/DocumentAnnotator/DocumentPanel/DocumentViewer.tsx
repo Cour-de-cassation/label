@@ -1,7 +1,6 @@
 import React, { ReactElement, CSSProperties } from 'react';
 import { annotationChunkType, fetchedAnnotationType, textChunkType } from '@label/core';
 import { Text } from '../../../../components';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
@@ -12,7 +11,6 @@ import { DocumentText } from './DocumentText';
 export { DocumentViewer };
 
 function DocumentViewer(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   splittedTextByLine: splittedTextByLineType;
 }): ReactElement {
@@ -69,23 +67,9 @@ function DocumentViewer(props: {
   function renderChunk(chunk: textChunkType | annotationChunkType<fetchedAnnotationType>) {
     switch (chunk.type) {
       case 'text':
-        return (
-          <DocumentText
-            key={chunk.index}
-            annotatorStateHandler={props.annotatorStateHandler}
-            index={chunk.index}
-            text={chunk.text}
-          />
-        );
+        return <DocumentText key={chunk.index} index={chunk.index} text={chunk.text} />;
       case 'annotation':
-        return (
-          <DocumentAnnotationText
-            key={chunk.index}
-            annotatorStateHandler={props.annotatorStateHandler}
-            annotation={chunk.annotation}
-            anonymizer={props.anonymizer}
-          />
-        );
+        return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} anonymizer={props.anonymizer} />;
     }
   }
 

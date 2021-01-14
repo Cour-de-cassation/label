@@ -1,15 +1,10 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { positionType } from '../../../../types';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
 
 export { DocumentText };
 
-function DocumentText(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
-  index: number;
-  text: string;
-}): ReactElement {
+function DocumentText(props: { index: number; text: string }): ReactElement {
   const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
   const [selectedText, setSelectedText] = useState<string>('');
   const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>();
@@ -18,7 +13,6 @@ function DocumentText(props: {
       <span onMouseUp={handleSelection}>{props.text}</span>
       {tooltipMenuOriginPosition && (
         <AnnotationCreationTooltipMenu
-          annotatorStateHandler={props.annotatorStateHandler}
           annotationText={selectedText}
           annotationIndex={selectedTextIndex}
           onClose={closeTooltipMenu}

@@ -8,7 +8,6 @@ import {
   UnlinkAnnotationDropdown,
 } from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
 import { clientAnonymizerType, positionType } from '../../../../../types';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
@@ -19,7 +18,6 @@ export { AnnotationTooltipMenu };
 const ANNOTATION_TOOLTIP_SUMMARY_WIDTH = 300;
 
 function AnnotationTooltipMenu(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   anonymizer: clientAnonymizerType;
   closesOnBackdropClick: boolean;
@@ -41,7 +39,6 @@ function AnnotationTooltipMenu(props: {
       <>
         <LayoutGrid container>
           <AnnotationTooltipMenuHeader
-            annotatorStateHandler={props.annotatorStateHandler}
             annotation={props.annotation}
             anonymizer={props.anonymizer}
             isAnonymizedView={props.isAnonymizedView}
@@ -61,25 +58,10 @@ function AnnotationTooltipMenu(props: {
       <LayoutGrid container style={style.annotationButtonsContainer}>
         <ComponentsList
           components={[
-            <ChangeAnnotationCategoryDropdown
-              annotatorStateHandler={props.annotatorStateHandler}
-              annotation={props.annotation}
-            />,
-            <LinkAnnotationDropdown
-              context="tooltip_update"
-              annotatorStateHandler={props.annotatorStateHandler}
-              annotation={props.annotation}
-            />,
-            <UnlinkAnnotationDropdown
-              annotatorStateHandler={props.annotatorStateHandler}
-              annotation={props.annotation}
-              context="tooltip_update"
-            />,
-            <DeleteAnnotationDropdown
-              annotatorStateHandler={props.annotatorStateHandler}
-              annotation={props.annotation}
-              onClose={props.onClose}
-            />,
+            <ChangeAnnotationCategoryDropdown annotation={props.annotation} />,
+            <LinkAnnotationDropdown context="tooltip_update" annotation={props.annotation} />,
+            <UnlinkAnnotationDropdown annotation={props.annotation} context="tooltip_update" />,
+            <DeleteAnnotationDropdown annotation={props.annotation} onClose={props.onClose} />,
           ]}
           spaceBetweenComponents={theme.spacing * 2}
         />

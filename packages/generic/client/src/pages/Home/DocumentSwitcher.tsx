@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { buildAnonymizer, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
-import { buildAnnotatorStateCommitter } from '../../services/annotatorState';
+import { AnnotatorStateHandlerContextProvider, buildAnnotatorStateCommitter } from '../../services/annotatorState';
 import { useMonitoring, MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentSelector } from './DocumentSelector';
@@ -29,17 +29,20 @@ function DocumentSwitcher(props: {
       case 'annotating':
         return (
           <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
-            <MainHeader title={documentState.choice.document.title} />
-            <DocumentAnnotator
-              annotatorState={{
+            <AnnotatorStateHandlerContextProvider
+              initialAnnotatorState={{
                 annotations: documentState.choice.annotations,
                 document: documentState.choice.document,
                 settings: props.settings,
               }}
-              annotatorStateCommitter={buildAnnotatorStateCommitter()}
-              anonymizer={buildAnonymizer(props.settings)}
-              onStopAnnotatingDocument={onStopAnnotatingDocument}
-            />
+              committer={buildAnnotatorStateCommitter()}
+            >
+              <MainHeader title={documentState.choice.document.title} />
+              <DocumentAnnotator
+                anonymizer={buildAnonymizer(props.settings)}
+                onStopAnnotatingDocument={onStopAnnotatingDocument}
+              />
+            </AnnotatorStateHandlerContextProvider>
           </MonitoringEntriesHandlerContextProvider>
         );
       case 'selecting':

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { uniq } from 'lodash';
 import { displayModeType, fetchedAnnotationType, settingsModule } from '@label/core';
 import { SText } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { annotatorStateHandlerType, useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { customThemeType, emphasizeShadeColor, getColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { splittedTextByLineType } from '../../lib';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
@@ -20,12 +20,12 @@ const {
 } = buildStyledComponents();
 
 function CategoryTableEntry(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   entityAnnotations: fetchedAnnotationType[];
   entityEntryHandler: entityEntryHandlerType;
   entityId: string;
   splittedTextByLine: splittedTextByLineType;
 }) {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const { displayMode } = useDisplayMode();
   const entityAnnotation = props.entityAnnotations[0];
@@ -33,7 +33,7 @@ function CategoryTableEntry(props: {
   const numberOfEntities = props.entityAnnotations.length;
 
   const styleProps = {
-    annotatorStateHandler: props.annotatorStateHandler,
+    annotatorStateHandler,
     category: entityAnnotation.category,
     displayMode: displayMode,
     entityEntryHandler: props.entityEntryHandler,
@@ -55,7 +55,6 @@ function CategoryTableEntry(props: {
       </Div_Occurences>
       <Div_ActionButtons styleProps={styleProps}>
         <CategoryTableEntryActionButtons
-          annotatorStateHandler={props.annotatorStateHandler}
           entityAnnotation={entityAnnotation}
           entityEntryHandler={props.entityEntryHandler}
         />

@@ -1,22 +1,22 @@
 import React, { ReactElement } from 'react';
 import { annotationHandler, fetchedAnnotationType, settingsModule } from '@label/core';
 import { CategoryIcon, Header, Text } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
+import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { clientAnonymizerType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
-import { customThemeType, useCustomTheme } from '../../../../../styles';
 
 export { AnnotationTooltipMenuHeader };
 
 function AnnotationTooltipMenuHeader(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
 }): ReactElement {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const style = buildStyle(theme);
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorState = annotatorStateHandler.get();
   const annotationIndex = annotationHandler.getAnnotationIndex(annotatorState.annotations, props.annotation);
 
   return (
@@ -27,7 +27,7 @@ function AnnotationTooltipMenuHeader(props: {
           <Text inline>
             {settingsModule.lib.getAnnotationCategoryText(
               props.annotation.category,
-              props.annotatorStateHandler.get().settings,
+              annotatorStateHandler.get().settings,
             )}
           </Text>,
         ]}

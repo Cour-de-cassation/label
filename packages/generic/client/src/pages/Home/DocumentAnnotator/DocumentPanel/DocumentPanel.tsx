@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
 import { splittedTextByLineType } from '../lib';
@@ -9,7 +8,6 @@ import { DocumentViewer } from './DocumentViewer';
 export { DocumentPanel };
 
 function DocumentPanel(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   splittedTextByLine: splittedTextByLineType;
 }): ReactElement {
@@ -17,12 +15,8 @@ function DocumentPanel(props: {
   const styles = buildStyles(theme);
   return (
     <div style={styles.panel}>
-      <DocumentPanelHeader annotatorStateHandler={props.annotatorStateHandler} />
-      <DocumentViewer
-        annotatorStateHandler={props.annotatorStateHandler}
-        anonymizer={props.anonymizer}
-        splittedTextByLine={props.splittedTextByLine}
-      />
+      <DocumentPanelHeader />
+      <DocumentViewer anonymizer={props.anonymizer} splittedTextByLine={props.splittedTextByLine} />
     </div>
   );
 }

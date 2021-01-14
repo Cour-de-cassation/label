@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { annotationHandler, annotationLinkHandler, fetchedAnnotationType } from '@label/core';
 import { IconButton, IconDropdown } from '../../../../../components';
-import { annotatorStateHandlerType } from '../../../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useMonitoring } from '../../../../../services/monitoring';
 import { wordings } from '../../../../../wordings';
 
@@ -10,12 +10,13 @@ export { DeleteAnnotationDropdown };
 const DELETION_OPTIONS = ['one', 'all'] as const;
 
 function DeleteAnnotationDropdown(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   buttonSize?: number;
   onClose: () => void;
 }): ReactElement {
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorStateHandler = useAnnotatorStateHandler();
+
+  const annotatorState = annotatorStateHandler.get();
   const { addMonitoringEntry } = useMonitoring();
   const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(
     props.annotation.entityId,
@@ -59,7 +60,7 @@ function DeleteAnnotationDropdown(props: {
 
   function deleteAnnotation(deletionOption: typeof DELETION_OPTIONS[number]) {
     const newAnnotatorState = { ...annotatorState, annotations: computeNewAnnotations() };
-    props.annotatorStateHandler.set(newAnnotatorState);
+    annotatorStateHandler.set(newAnnotatorState);
 
     props.onClose();
 

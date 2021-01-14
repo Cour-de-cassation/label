@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { settingsModule } from '@label/core';
-import { customThemeType, useCustomTheme } from '../../../../styles';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
+import { customThemeType, useCustomTheme } from '../../../../styles';
 import { clientAnonymizerType } from '../../../../types';
 import { annotationPerEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTableEntry } from './CategoryTableEntry';
@@ -16,7 +16,6 @@ const ACCORDION_HEADER_PADDING = 5;
 const { Div_Body } = buildStyledComponents();
 
 function CategoryTable(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   anonymizer: clientAnonymizerType;
   category: string;
   categoryAnnotations: annotationPerEntityType;
@@ -24,11 +23,12 @@ function CategoryTable(props: {
   entityEntryHandler: entityEntryHandlerType;
   splittedTextByLine: splittedTextByLineType;
 }) {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const iconSize = theme.shape.borderRadius.medium * 2 - ACCORDION_HEADER_PADDING;
   const styles = buildStyles(theme);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const annotatorState = props.annotatorStateHandler.get();
+  const annotatorState = annotatorStateHandler.get();
 
   const categoryName = settingsModule.lib.getAnnotationCategoryText(props.category, annotatorState.settings);
 
@@ -54,7 +54,6 @@ function CategoryTable(props: {
         <Div_Body>
           {props.categoryAnnotations.map(({ entityId, entityAnnotations }) => (
             <CategoryTableEntry
-              annotatorStateHandler={props.annotatorStateHandler}
               entityAnnotations={entityAnnotations}
               entityId={entityId}
               entityEntryHandler={props.entityEntryHandler}

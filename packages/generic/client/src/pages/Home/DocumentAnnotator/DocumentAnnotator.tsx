@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { settingsModule } from '@label/core';
 import { heights, widths } from '../../../styles';
 import { LayoutGrid } from '../../../components';
-import { annotatorStateType, annotatorStateCommitterType, useAnnotatorState } from '../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
 import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
@@ -14,20 +14,18 @@ import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
 export { DocumentAnnotator };
 
 function DocumentAnnotator(props: {
-  annotatorState: annotatorStateType;
-  annotatorStateCommitter: annotatorStateCommitterType;
   anonymizer: clientAnonymizerType;
   onStopAnnotatingDocument: () => void;
 }): ReactElement {
-  const { annotatorStateHandler } = useAnnotatorState(props.annotatorState, props.annotatorStateCommitter);
+  const annotatorStateHandler = useAnnotatorStateHandler();
   useKeyboardShortcutsHandler([
     { key: 'z', ctrlKey: true, action: annotatorStateHandler.revert },
     { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
   ]);
+  const annotatorState = annotatorStateHandler.get();
 
   const styles = buildStyles();
-  const categories = settingsModule.lib.getCategories(props.annotatorState.settings);
-  const annotatorState = annotatorStateHandler.get();
+  const categories = settingsModule.lib.getCategories(annotatorState.settings);
   const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories);
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
 
@@ -37,23 +35,17 @@ function DocumentAnnotator(props: {
         <div style={styles.annotatorBody}>
           <div style={styles.leftContainer}>
             <AnnotationsPanel
-              annotatorStateHandler={annotatorStateHandler}
               anonymizer={props.anonymizer}
               annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
               splittedTextByLine={splittedTextByLine}
             />
           </div>
           <div style={styles.rightContainer}>
-            <DocumentPanel
-              annotatorStateHandler={annotatorStateHandler}
-              anonymizer={props.anonymizer}
-              splittedTextByLine={splittedTextByLine}
-            />
+            <DocumentPanel anonymizer={props.anonymizer} splittedTextByLine={splittedTextByLine} />
           </div>
         </div>
         <LayoutGrid container>
           <DocumentAnnotatorFooter
-            annotatorStateHandler={annotatorStateHandler}
             anonymizer={props.anonymizer}
             onStopAnnotatingDocument={props.onStopAnnotatingDocument}
           />

@@ -1,6 +1,6 @@
 import React, { MouseEvent, ReactElement, useState } from 'react';
 import { fetchedAnnotationType, settingsModule } from '@label/core';
-import { annotatorStateHandlerType } from '../../../../services/annotatorState';
+import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { getColor, useDisplayMode } from '../../../../styles';
 import { clientAnonymizerType, positionType } from '../../../../types';
@@ -10,10 +10,10 @@ import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 export { DocumentAnnotationText };
 
 function DocumentAnnotationText(props: {
-  annotatorStateHandler: annotatorStateHandlerType;
   annotation: fetchedAnnotationType;
   anonymizer: clientAnonymizerType;
 }): ReactElement {
+  const annotatorStateHandler = useAnnotatorStateHandler();
   const [isTooltipMenuVisible, setIsTooltipMenuVisible] = useState(false);
   const [isTooltipMenuExpanded, setIsTooltipMenuExpanded] = useState(false);
   const documentViewerModeHandler = useDocumentViewerModeHandler();
@@ -39,7 +39,6 @@ function DocumentAnnotationText(props: {
 
       {isTooltipMenuVisible && (
         <AnnotationTooltipMenu
-          annotatorStateHandler={props.annotatorStateHandler}
           annotation={props.annotation}
           anonymizer={props.anonymizer}
           closesOnBackdropClick={!!tooltipMenuFixedPosition}
@@ -78,7 +77,7 @@ function DocumentAnnotationText(props: {
       const categoryColor = getColor(
         settingsModule.lib.getAnnotationCategoryColor(
           props.annotation.category,
-          props.annotatorStateHandler.get().settings,
+          annotatorStateHandler.get().settings,
           displayMode,
         ),
       );

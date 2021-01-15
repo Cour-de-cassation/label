@@ -1,4 +1,4 @@
-import { dependencyManager } from '../../../utils';
+import { dependencyManager } from '@label/core';
 import { buildFakeProblemReportRepository } from './buildFakeProblemReportRepository';
 import { buildProblemReportRepository } from './buildProblemReportRepository';
 

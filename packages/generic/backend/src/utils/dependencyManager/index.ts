@@ -1,1 +1,0 @@
-export { dependencyManager } from './dependencyManager';

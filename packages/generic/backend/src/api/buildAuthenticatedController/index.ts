@@ -1,10 +1,10 @@
-import { dependencyManager } from '../../utils';
+import { dependencyManager } from '@label/core';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { buildFakeAuthenticatedController } from './buildFakeAuthenticatedController';
 
-export { buildResolver as buildAuthenticatedController };
+export { buildController as buildAuthenticatedController };
 
-const buildResolver = dependencyManager.inject({
+const buildController = dependencyManager.inject({
   forLocal: buildFakeAuthenticatedController,
   forProd: buildAuthenticatedController,
   forTest: buildFakeAuthenticatedController,

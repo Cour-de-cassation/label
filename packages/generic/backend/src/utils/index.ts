@@ -1,5 +1,4 @@
 import { decoder } from './decoder';
-import { dependencyManager } from './dependencyManager';
 import {
   buildHandlingErrorController,
   expressRequestHandlerType,
@@ -16,7 +15,6 @@ export {
   buildHandlingErrorController,
   buildMongo,
   decoder,
-  dependencyManager,
   fileSystem,
   hasher,
   jwtSigner,

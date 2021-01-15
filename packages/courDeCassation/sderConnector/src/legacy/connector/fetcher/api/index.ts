@@ -1,4 +1,4 @@
-import { dependencyManager } from '@label/backend';
+import { dependencyManager } from '@label/core';
 import { jurinetApi } from './jurinetApi';
 import { jurinetCourtDecisionType } from './jurinetApiType';
 import { jurinetFakeApi } from './jurinetFakeApi';

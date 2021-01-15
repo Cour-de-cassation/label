@@ -1,4 +1,4 @@
-import { dependencyManager } from '../../../utils';
+import { dependencyManager } from '@label/core';
 import { buildAssignationRepository } from './buildAssignationRepository';
 import { buildFakeAssignationRepository } from './buildFakeAssignationRepository';
 

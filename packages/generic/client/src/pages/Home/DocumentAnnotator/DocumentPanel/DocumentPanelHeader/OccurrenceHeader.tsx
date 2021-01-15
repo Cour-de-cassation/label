@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { uniq } from 'lodash';
 import { annotationLinkHandler, annotationModule, settingsModule } from '@label/core';
 import { CategoryIcon, Header, IconButton, Text } from '../../../../../components';
@@ -29,10 +29,14 @@ function OccurrenceHeader(props: { entityId: string }) {
     <Header
       leftHeaderComponents={[
         <div style={styles.leftHeader}>
-          <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={settings} />
+          <div style={styles.categoryIconContainer}>
+            <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={settings} />
+          </div>
           <div style={styles.categoryInfosContainer}>
             <Text>{categoryName}</Text>
-            <Text variant="body2">{annotationTexts.join(' — ')}</Text>
+            <Text variant="body2" style={styles.annotationRepresentatives}>
+              {annotationTexts.join(' — ')}
+            </Text>
           </div>
         </div>,
       ]}
@@ -50,7 +54,7 @@ function OccurrenceHeader(props: { entityId: string }) {
   );
 }
 
-function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
+function buildStyles(theme: customThemeType) {
   return {
     header: {
       paddingRight: theme.spacing * 2,
@@ -59,10 +63,17 @@ function buildStyles(theme: customThemeType): { [cssClass: string]: CSSPropertie
     leftHeader: {
       display: 'flex',
     },
+    categoryIconContainer: {
+      width: CATEGORY_ICON_SIZE,
+    },
     categoryInfosContainer: {
       display: 'flex',
       flexDirection: 'column',
       paddingLeft: theme.spacing,
+      overflow: 'hidden',
     },
-  };
+    annotationRepresentatives: {
+      height: theme.typography.body2.lineHeight,
+    },
+  } as const;
 }

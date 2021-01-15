@@ -1,19 +1,18 @@
+import { annotationDataModelField, annotationType } from './annotationType';
 import { annotationGenerator } from './generator';
-import { annotationDataModel, annotationType, LABEL_ANNOTATION_SOURCE, fetchedAnnotationType } from './annotationType';
-import { annotationBuilder, annotationLinker, annotationUpdater, entityIdHandler } from './lib';
+import { annotationLinker, annotationUpdater, buildAnnotation, entityIdHandler } from './lib';
 
 export { annotationModule };
 
-export type { annotationType, fetchedAnnotationType };
+export type { annotationType };
 
 const annotationModule = {
-  config: { LABEL_ANNOTATION_SOURCE },
-  dataModel: annotationDataModel,
+  dataModelField: annotationDataModelField,
   generator: annotationGenerator,
   lib: {
-    annotationBuilder,
     annotationLinker,
     annotationUpdater,
+    buildAnnotation,
     entityIdHandler,
   },
 };

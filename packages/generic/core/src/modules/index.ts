@@ -1,5 +1,4 @@
-import { fetchedAnnotationType } from './annotation';
-import { annotationModule, annotationType } from './newAnnotationModule';
+import { annotationModule, annotationType } from './annotation';
 import { annotationReportModule, annotationReportType } from './annotationReport';
 import { annotationsDiffModule, annotationsDiffType } from './annotationsDiff';
 import { assignationModule, assignationType } from './assignation';
@@ -44,7 +43,6 @@ export {
 
 export type {
   annotationType,
-  fetchedAnnotationType,
   annotationReportType,
   annotationsDiffType,
   assignationType,

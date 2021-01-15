@@ -1,4 +1,4 @@
-import { fetchedAnnotationType } from '../annotationType';
+import { annotationType } from '../annotationType';
 
 export { entityIdHandler };
 
@@ -14,14 +14,14 @@ function compute(category: string, text: string) {
   return `${category}_${text}`;
 }
 
-function syncEntityId<annotationT extends fetchedAnnotationType>(annotation: annotationT): annotationT {
+function syncEntityId(annotation: annotationType): annotationType {
   return {
     ...annotation,
     entityId: compute(annotation.category, annotation.text),
   };
 }
 
-function syncEntityIdWithCategory<annotationT extends fetchedAnnotationType>(annotation: annotationT): annotationT {
+function syncEntityIdWithCategory(annotation: annotationType): annotationType {
   return {
     ...annotation,
     entityId: compute(annotation.category, getText(annotation.entityId)),

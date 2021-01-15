@@ -1,4 +1,4 @@
-import { annotationType } from '../../newAnnotationModule';
+import { annotationType } from '../../annotation';
 import { annotationsDiffModule } from '../../annotationsDiff';
 import { idModule } from '../../id';
 import { treatmentType } from '../treatmentType';

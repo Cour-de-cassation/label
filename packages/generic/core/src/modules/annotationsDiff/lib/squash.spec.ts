@@ -1,4 +1,4 @@
-import { annotationModule } from '../../newAnnotationModule';
+import { annotationModule } from '../../annotation';
 import { annotationsDiffGenerator } from '../generator';
 import { buildAnnotationsDiff } from './buildAnnotationsDiff';
 import { squash } from './squash';

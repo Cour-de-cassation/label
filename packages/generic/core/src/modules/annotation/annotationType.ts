@@ -1,21 +1,17 @@
-import { buildDataModelEntry, networkTypeOfDataModel, typeOfDataModel } from '../dataModelType';
+import { buildDataModelEntry, typeOfDataModelEntryType } from '../dataModelType';
 
-export { annotationDataModel, LABEL_ANNOTATION_SOURCE };
+export { annotationDataModelField };
 
-export type { annotationType, fetchedAnnotationType };
+export type { annotationType };
 
-const LABEL_ANNOTATION_SOURCE = 'label';
+const annotationDataModelField = buildDataModelEntry({
+  kind: 'object',
+  content: {
+    category: buildDataModelEntry({ kind: 'primitive', content: 'string' }),
+    entityId: buildDataModelEntry({ kind: 'primitive', content: 'string' }),
+    start: buildDataModelEntry({ kind: 'primitive', content: 'number' }),
+    text: buildDataModelEntry({ kind: 'primitive', content: 'string' }),
+  },
+} as const);
 
-const annotationDataModel = {
-  category: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: false },
-  entityId: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-  source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  start: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-} as const;
-
-type annotationType = typeOfDataModel<typeof annotationDataModel>;
-
-type fetchedAnnotationType = networkTypeOfDataModel<typeof annotationDataModel>;
+type annotationType = typeOfDataModelEntryType<typeof annotationDataModelField>;

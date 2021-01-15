@@ -8,16 +8,11 @@ const annotationLinker = {
   unlink,
 };
 
-function link<annotationT extends Pick<annotationType, 'entityId'>>(
-  annotationSource: annotationT,
-  annotationTarget: annotationT,
-): annotationT {
+function link(annotationSource: annotationType, annotationTarget: annotationType): annotationType {
   return { ...annotationSource, entityId: annotationTarget.entityId };
 }
 
-function unlink<annotationT extends Pick<annotationType, 'category' | 'entityId' | 'text'>>(
-  annotation: annotationT,
-): annotationT {
+function unlink(annotation: annotationType): annotationType {
   return {
     ...annotation,
     entityId: entityIdHandler.compute(annotation.category, annotation.text),

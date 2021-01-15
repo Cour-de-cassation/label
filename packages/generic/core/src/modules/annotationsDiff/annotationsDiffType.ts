@@ -1,5 +1,5 @@
 import { buildDataModelEntry, typeOfDataModelEntryType } from '../dataModelType';
-import { annotationModule } from '../newAnnotationModule';
+import { annotationModule } from '../annotation';
 
 export { annotationsDiffDataModelField };
 

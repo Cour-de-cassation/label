@@ -1,7 +1,7 @@
-import { LABEL_ANNOTATION_SOURCE, fetchedAnnotationType } from '../annotationType';
+import { annotationType } from '../annotationType';
 import { entityIdHandler } from './entityIdHandler';
 
-export { annotationUpdater, LABEL_ANNOTATION_SOURCE };
+export { annotationUpdater };
 
 const annotationUpdater = {
   updateAnnotationCategory,
@@ -9,23 +9,21 @@ const annotationUpdater = {
   updateAnnotationText,
 };
 
-function updateAnnotationsCategory<annotationT extends fetchedAnnotationType>(
-  annotations: annotationT[],
+function updateAnnotationsCategory(
+  annotations: annotationType[],
   newCategory: string,
-  shouldUpdate: (annotation: annotationT) => boolean,
+  shouldUpdate: (annotation: annotationType) => boolean,
 ) {
-  const updatedAnnotations: annotationT[] = [];
+  const updatedAnnotations: annotationType[] = [];
 
   return {
     newAnnotations: annotations.map((annotation) => {
       if (shouldUpdate(annotation)) {
         updatedAnnotations.push(annotation);
-        return entityIdHandler.syncEntityIdWithCategory(
-          updateAnnotationSource({
-            ...annotation,
-            category: newCategory,
-          }),
-        );
+        return entityIdHandler.syncEntityIdWithCategory({
+          ...annotation,
+          category: newCategory,
+        });
       } else {
         return annotation;
       }
@@ -34,35 +32,17 @@ function updateAnnotationsCategory<annotationT extends fetchedAnnotationType>(
   };
 }
 
-function updateAnnotationCategory<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
-  newCategory: string,
-) {
-  return entityIdHandler.syncEntityId(
-    updateAnnotationSource({
-      ...annotation,
-      category: newCategory,
-    }),
-  );
-}
-
-function updateAnnotationText<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
-  newText: string,
-  newStart: number,
-): annotationT {
-  return entityIdHandler.syncEntityId(
-    updateAnnotationSource({
-      ...annotation,
-      start: newStart,
-      text: newText,
-    }),
-  );
-}
-
-function updateAnnotationSource<annotationT extends fetchedAnnotationType>(annotation: annotationT): annotationT {
-  return {
+function updateAnnotationCategory(annotation: annotationType, newCategory: string): annotationType {
+  return entityIdHandler.syncEntityId({
     ...annotation,
-    source: LABEL_ANNOTATION_SOURCE,
-  };
+    category: newCategory,
+  });
+}
+
+function updateAnnotationText(annotation: annotationType, newText: string, newStart: number): annotationType {
+  return entityIdHandler.syncEntityId({
+    ...annotation,
+    start: newStart,
+    text: newText,
+  });
 }

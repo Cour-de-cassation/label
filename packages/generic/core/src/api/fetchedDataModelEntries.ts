@@ -6,17 +6,12 @@ import {
   problemReportModule,
   treatmentModule,
 } from '../modules';
-import { annotationModule } from '../modules/annotation';
 
 import { filterNetworkKeysType } from '../types';
 
 export { fetchedDataModelEntries };
 
 const fetchedDataModelEntries = {
-  annotation: {
-    kind: 'object',
-    content: buildFetchedDataModelEntry<typeof annotationModule.dataModel>(annotationModule.dataModel),
-  },
   document: {
     kind: 'object',
     content: buildFetchedDataModelEntry<typeof documentModule.dataModel>(documentModule.dataModel),

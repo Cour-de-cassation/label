@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { problemReportType } from '@label/core';
+import { apiCaller } from '../../../../api';
 import {
   ButtonWithIcon,
   Checkbox,
@@ -9,7 +10,6 @@ import {
   Text,
   TextInput,
 } from '../../../../components';
-import { apiCaller } from '../../../../api';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { positionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
@@ -44,8 +44,8 @@ function ReportProblemToolTipMenu(props: {
         <LayoutGrid style={style.tooltipItem}>
           <LabelledDropdown<problemReportType['type']>
             error={isSentWithoutCategory}
-            items={problemCategories.map(([problemCategory, problemCategoryText]) => ({
-              text: problemCategoryText,
+            items={problemCategories.map((problemCategory) => ({
+              text: wordings.shared.problemReportType[problemCategory],
               value: problemCategory,
             }))}
             label={wordings.homePage.problemType}
@@ -111,12 +111,8 @@ function ReportProblemToolTipMenu(props: {
     };
   }
 
-  function buildProblemCategories(): Array<[problemReportType['type'], string]> {
-    return [
-      ['bug', wordings.homePage.problemCategory.bug],
-      ['annotationProblem', wordings.homePage.problemCategory.annotationProblem],
-      ['suggestion', wordings.homePage.problemCategory.suggestion],
-    ];
+  function buildProblemCategories(): Array<problemReportType['type']> {
+    return ['bug', 'annotationProblem', 'suggestion'];
   }
 
   function closeTooltipMenu() {

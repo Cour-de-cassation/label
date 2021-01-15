@@ -24,13 +24,14 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
       border: { default: getColor(customColorsMode.dropdown.border), error: getColor(customColorsMode.error) },
     },
     icon: getColor(customColorsMode.icon),
-    overlay: 'black',
-    primary: buildCustomColorsVariations(customColorsMode.primary),
-    separator: getShadeColor(customColorsMode.line.level2),
     line: {
       level1: getColor(customColorsMode.line.level1),
       level2: getShadeColor(customColorsMode.line.level2),
     },
+    overlay: 'black',
+    primary: buildCustomColorsVariations(customColorsMode.primary),
+    separator: getShadeColor(customColorsMode.line.level2),
+    success: buildCustomColorsVariations(customColorsMode.success),
     warning: buildCustomColorsVariations(customColorsMode.warning),
   };
 

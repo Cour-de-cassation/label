@@ -1,15 +1,16 @@
 import {
-  ActionIcon,
   CategoryIcon,
   LinkAnnotationDropdown,
   Logo,
   MainHeader,
+  ProblemReportIcon,
   UnlinkAnnotationDropdown,
 } from './business';
 import {
   Accordion,
   ButtonWithIcon,
   Checkbox,
+  CircleIcon,
   ComponentsList,
   Drawer,
   Header,
@@ -31,10 +32,10 @@ import {
 
 export {
   Accordion,
-  ActionIcon,
   ButtonWithIcon,
   CategoryIcon,
   Checkbox,
+  CircleIcon,
   ComponentsList,
   Drawer,
   FloatingTooltipMenu,
@@ -48,6 +49,7 @@ export {
   Logo,
   MainHeader,
   MenuBar,
+  ProblemReportIcon,
   RadioButton,
   SText,
   SwitchButton,

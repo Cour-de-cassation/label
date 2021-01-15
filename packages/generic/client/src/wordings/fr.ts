@@ -28,7 +28,6 @@ const fr = {
     lightMode: 'Mode lumineux',
     link: 'Créer une liaison',
     originalText: 'Texte original',
-    problemCategory: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
     problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
     problemType: 'Type de problème',
     pseudonymisation: 'Pseudonymisation',
@@ -58,6 +57,7 @@ const fr = {
   },
   errorPage: 'Une erreur est survenue...',
   shared: {
+    problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
     logout: 'Déconnexion',
   },
   loadingPage: 'Veuillez patienter...',

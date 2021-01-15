@@ -1,9 +1,9 @@
 import React, { ReactElement, useState, CSSProperties } from 'react';
 import { annotationHandler, annotationTextDetector, settingsModule } from '@label/core';
 import {
-  ActionIcon,
   CategoryIcon,
   Checkbox,
+  CircleIcon,
   FloatingTooltipMenu,
   LabelledDropdown,
   LayoutGrid,
@@ -74,7 +74,13 @@ function AnnotationCreationTooltipMenu(props: {
               value: category,
             }))}
             label={wordings.homePage.category}
-            labelIcon={<ActionIcon iconName="puzzle" iconSize={CATEGORY_ICON_SIZE} />}
+            labelIcon={
+              <CircleIcon
+                iconName="puzzle"
+                iconSize={CATEGORY_ICON_SIZE}
+                backgroundColor={theme.colors.disabled.color}
+              />
+            }
             onChange={applyAnnotationCreation}
           />
         </LayoutGrid>

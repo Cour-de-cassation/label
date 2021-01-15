@@ -1,4 +1,5 @@
 import { ButtonWithIcon } from './ButtonWithIcon';
+import { CircleIcon } from './CircleIcon';
 import { ComponentsList } from './ComponentsList';
 import { Dropdown } from './Dropdown';
 import { FloatingTooltipMenu } from './FloatingTooltipMenu';
@@ -11,6 +12,7 @@ import { Table } from './Table';
 
 export {
   ButtonWithIcon,
+  CircleIcon,
   ComponentsList,
   Dropdown,
   FloatingTooltipMenu,

@@ -57,6 +57,7 @@ const shadeColors = [
   'grey',
   'indigo',
   'lightBlue',
+  'lightGreen',
   'lime',
   'orange',
   'pink',

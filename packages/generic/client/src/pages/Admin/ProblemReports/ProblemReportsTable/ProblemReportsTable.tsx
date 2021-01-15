@@ -1,16 +1,18 @@
-import React from 'react';
-import { problemReportWithDetailsType } from '../ProblemReportsDataFetcher';
-import { Table, Text } from '../../../../components';
+import React, { ReactElement } from 'react';
+import { ProblemReportIcon, Table, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
+import { problemReportWithDetailsType } from '../ProblemReportsDataFetcher';
 
 export { ProblemReportsTable };
 
 type formattedProblemReportType = {
   _id: string;
   email: string;
-  type: string;
+  type: ReactElement;
   text: string;
 };
+
+const PROBLEM_REPORT_ICON_SIZE = 30;
 
 function ProblemReportsTable(props: { problemReportsWithDetails: problemReportWithDetailsType[] }) {
   const formattedProblemReports = formatProblemReportsWithDetails(props.problemReportsWithDetails);
@@ -50,7 +52,7 @@ function formatProblemReportsWithDetails(
   return problemReportsWithDetails.map(({ problemReport, email }) => ({
     _id: `${problemReport._id}`,
     email,
-    type: problemReport.type,
+    type: <ProblemReportIcon type={problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />,
     text: problemReport.text,
   }));
 }

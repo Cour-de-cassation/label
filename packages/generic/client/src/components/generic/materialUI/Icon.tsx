@@ -3,6 +3,7 @@ import {
   AccountBalanceRounded,
   AlarmOnRounded,
   BookRounded,
+  BugReportRounded,
   BusinessCenterRounded,
   ChildCareRounded,
   ChildFriendlyRounded,
@@ -10,6 +11,7 @@ import {
   CloudRounded,
   DeleteOutlineRounded,
   DirectionsCarRounded,
+  EmojiObjectsRounded,
   ErrorRounded,
   ExitToAppRounded,
   ExpandLessRounded,
@@ -26,6 +28,7 @@ import {
   MeetingRoom,
   PersonRounded,
   PhoneRounded,
+  QuestionAnswerRounded,
   RedoRounded,
   ReportProblemRounded,
   RoomRounded,
@@ -34,6 +37,7 @@ import {
   SettingsRounded,
   UndoRounded,
 } from '@material-ui/icons';
+import { Tooltip } from '@material-ui/core';
 import { categoryIconNameType } from '@label/core';
 
 export { Icon };
@@ -43,12 +47,15 @@ export type { iconNameType };
 const materialIconMapping = {
   arrowExpand: ExpandMoreRounded,
   arrowReduce: ExpandLessRounded,
+  bug: BugReportRounded,
   clock: AlarmOnRounded,
   close: CloseRounded,
   copy: FileCopyRounded,
   delete: DeleteOutlineRounded,
+  discussion: QuestionAnswerRounded,
   error: ErrorRounded,
   export: GetAppRounded,
+  lightBulb: EmojiObjectsRounded,
   link: Link,
   login: ExitToAppRounded,
   logout: MeetingRoom,
@@ -86,7 +93,14 @@ const iconMapping = {
 
 type iconNameType = keyof typeof materialIconMapping | keyof typeof categoryIconMapping;
 
-function Icon(props: { iconName: iconNameType; style?: CSSProperties }) {
+function Icon(props: { iconName: iconNameType; hint?: string; style?: CSSProperties }) {
   const IconComponent = iconMapping[props.iconName];
+  if (props.hint) {
+    return (
+      <Tooltip title={props.hint}>
+        <IconComponent style={props.style} />
+      </Tooltip>
+    );
+  }
   return <IconComponent style={props.style} />;
 }

@@ -1,5 +1,6 @@
 import {
   ButtonWithIcon,
+  CircleIcon,
   ComponentsList,
   Dropdown,
   FloatingTooltipMenu,
@@ -30,6 +31,7 @@ export {
   Accordion,
   ButtonWithIcon,
   Checkbox,
+  CircleIcon,
   ComponentsList,
   Drawer,
   Dropdown,

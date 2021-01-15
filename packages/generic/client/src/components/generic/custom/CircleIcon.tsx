@@ -1,26 +1,26 @@
 import React from 'react';
-import { useCustomTheme, customThemeType } from '../../styles';
-import { Icon, iconNameType } from '../generic';
+import { Icon, iconNameType } from '../materialUI';
+import { customThemeType, useCustomTheme } from '../../../styles';
 
-export { ActionIcon };
+export { CircleIcon };
 
-function ActionIcon(props: { iconName: iconNameType; iconSize: number }) {
+function CircleIcon(props: { backgroundColor: string; iconSize: number; iconName: iconNameType; hint?: string }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
   return (
-    <div style={styles.actionIcon}>
-      <Icon iconName={props.iconName} style={styles.icon} />
+    <div style={styles.iconContainer}>
+      <Icon hint={props.hint} iconName={props.iconName} style={styles.icon} />
     </div>
   );
 
   function buildStyles(theme: customThemeType) {
     return {
-      actionIcon: {
+      iconContainer: {
         width: props.iconSize,
         height: props.iconSize,
         borderRadius: props.iconSize / 2,
-        backgroundColor: theme.colors.disabled.color,
+        backgroundColor: props.backgroundColor,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

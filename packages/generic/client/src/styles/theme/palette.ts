@@ -8,6 +8,7 @@ import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
 import indigo from '@material-ui/core/colors/indigo';
 import lightBlue from '@material-ui/core/colors/lightBlue';
+import lightGreen from '@material-ui/core/colors/lightGreen';
 import lime from '@material-ui/core/colors/lime';
 import orange from '@material-ui/core/colors/orange';
 import pink from '@material-ui/core/colors/pink';
@@ -34,6 +35,7 @@ const shadeColors: { [color in shadeColorType[0]]: { [shade: number]: string } }
   grey,
   indigo,
   lightBlue,
+  lightGreen,
   lime,
   orange,
   pink,

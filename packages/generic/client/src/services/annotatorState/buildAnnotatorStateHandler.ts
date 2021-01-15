@@ -1,3 +1,4 @@
+import { annotationsDiffType } from '@label/core';
 import { annotatorStateType } from './annotatorStateType';
 import { annotatorStateCommitterType } from './buildAnnotatorStateCommitter';
 
@@ -13,6 +14,7 @@ type annotatorStateHandlerType = {
   canRevert: () => boolean;
   canRestore: () => boolean;
   reinitialize: () => void;
+  getGlobalAnnotationsDiff: () => annotationsDiffType;
 };
 
 function buildAnnotatorStateHandler(
@@ -30,6 +32,7 @@ function buildAnnotatorStateHandler(
       canRevert: canRevertAnnotatorState,
       canRestore: canRestoreAnnotatorState,
       reinitialize: reinitializeAnnotatorState,
+      getGlobalAnnotationsDiff,
     },
   };
 
@@ -59,5 +62,9 @@ function buildAnnotatorStateHandler(
 
   function canRestoreAnnotatorState() {
     return committer.canRestore();
+  }
+
+  function getGlobalAnnotationsDiff() {
+    return committer.squash();
   }
 }

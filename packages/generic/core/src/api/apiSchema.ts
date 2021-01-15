@@ -1,4 +1,11 @@
-import { buildDataModelEntry, dataModelEntryType, documentModule, problemReportModule } from '../modules';
+import {
+  annotationModule,
+  annotationsDiffModule,
+  buildDataModelEntry,
+  dataModelEntryType,
+  documentModule,
+  problemReportModule,
+} from '../modules';
 import { fetchedDataModelEntries } from './fetchedDataModelEntries';
 
 export { apiSchema };
@@ -16,7 +23,7 @@ const apiSchema = {
       },
       out: buildDataModelEntry({
         kind: 'list',
-        content: fetchedDataModelEntries.annotation,
+        content: annotationModule.dataModelField,
       }),
     },
     document: {
@@ -48,6 +55,23 @@ const apiSchema = {
     },
   },
   post: {
+    createTreatment: {
+      in: {
+        annotationsDiff: annotationsDiffModule.dataModelField,
+        documentId: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'id',
+        }),
+        duration: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'number',
+        }),
+      },
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
+    },
     login: {
       in: {
         email: {
@@ -115,26 +139,6 @@ const apiSchema = {
         password: buildDataModelEntry({
           kind: 'primitive',
           content: 'string',
-        }),
-      },
-      out: {
-        kind: 'primitive',
-        content: 'void',
-      },
-    },
-    createTreatment: {
-      in: {
-        documentId: buildDataModelEntry({
-          kind: 'primitive',
-          content: 'id',
-        }),
-        fetchedGraphQLAnnotations: buildDataModelEntry({
-          kind: 'list',
-          content: fetchedDataModelEntries.annotation,
-        }),
-        duration: buildDataModelEntry({
-          kind: 'primitive',
-          content: 'number',
         }),
       },
       out: {

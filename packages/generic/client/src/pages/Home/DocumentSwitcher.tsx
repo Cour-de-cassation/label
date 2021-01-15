@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { buildAnonymizer, fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { buildAnonymizer, annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
 import { AnnotatorStateHandlerContextProvider, buildAnnotatorStateCommitter } from '../../services/annotatorState';
@@ -10,11 +10,11 @@ import { DocumentSelector } from './DocumentSelector';
 export { DocumentSwitcher };
 
 type documentStateType =
-  | { kind: 'annotating'; choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] } }
+  | { kind: 'annotating'; choice: { document: fetchedDocumentType; annotations: annotationType[] } }
   | { kind: 'selecting' };
 
 function DocumentSwitcher(props: {
-  choices: Array<{ document: fetchedDocumentType; annotations: fetchedAnnotationType[] }>;
+  choices: Array<{ document: fetchedDocumentType; annotations: annotationType[] }>;
   fetchNewDocumentsToBeTreated: () => void;
   settings: settingsType;
 }) {
@@ -81,7 +81,7 @@ function DocumentSwitcher(props: {
     await props.fetchNewDocumentsToBeTreated();
   }
 
-  async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) {
+  async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: annotationType[] }) {
     await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
       documentId: choice.document._id,
       status: 'saved',

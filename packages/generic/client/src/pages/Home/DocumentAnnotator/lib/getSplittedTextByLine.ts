@@ -1,5 +1,5 @@
 import { range } from 'lodash';
-import { fetchedAnnotationType, textSplitter, textChunkType, annotationChunkType } from '@label/core';
+import { annotationType, textSplitter, textChunkType, annotationChunkType } from '@label/core';
 
 export { getSplittedTextByLine };
 
@@ -7,10 +7,10 @@ export type { splittedTextByLineType };
 
 type splittedTextByLineType = Array<{
   line: number;
-  content: Array<textChunkType | annotationChunkType<fetchedAnnotationType>>;
+  content: Array<textChunkType | annotationChunkType>;
 }>;
 
-function getSplittedTextByLine(text: string, annotations: fetchedAnnotationType[]): splittedTextByLineType {
+function getSplittedTextByLine(text: string, annotations: annotationType[]): splittedTextByLineType {
   const numberOfLines = splitTextAccordingToNewLine(text).length;
   const splittedText = textSplitter.splitTextAccordingToAnnotations(text, annotations);
   const splittedTextByLine = computeSplittedTextByLine(splittedText, numberOfLines);
@@ -21,10 +21,7 @@ function getSplittedTextByLine(text: string, annotations: fetchedAnnotationType[
   }));
 }
 
-function computeSplittedTextByLine(
-  splittedText: Array<textChunkType | annotationChunkType<fetchedAnnotationType>>,
-  numberOfLines: number,
-) {
+function computeSplittedTextByLine(splittedText: Array<textChunkType | annotationChunkType>, numberOfLines: number) {
   const splittedTextByLine: splittedTextByLineType = range(1, numberOfLines + 1).map((line) => ({ line, content: [] }));
 
   let currentLine = 0;

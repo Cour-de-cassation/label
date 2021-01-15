@@ -1,9 +1,9 @@
 import { uniq, groupBy } from 'lodash';
-import { fetchedAnnotationType } from '@label/core';
+import { annotationType } from '@label/core';
 
 export { computeDocumentInfoEntries };
 
-function computeDocumentInfoEntries(annotations: fetchedAnnotationType[]) {
+function computeDocumentInfoEntries(annotations: annotationType[]) {
   return {
     annotations: annotations.length,
     linkedEntities: Object.values(groupBy(annotations, (annotation) => annotation.entityId)).filter(

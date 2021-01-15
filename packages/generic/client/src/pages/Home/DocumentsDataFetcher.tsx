@@ -1,12 +1,5 @@
 import React, { ReactElement } from 'react';
-import {
-  autoLinker,
-  fetchedAnnotationType,
-  fetchedDocumentType,
-  httpStatusCodeHandler,
-  idModule,
-  idType,
-} from '@label/core';
+import { autoLinker, annotationType, fetchedDocumentType, httpStatusCodeHandler, idModule, idType } from '@label/core';
 import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
 
@@ -17,7 +10,7 @@ function DocumentsDataFetcher(props: {
   children: (fetched: {
     documentsToBeTreated: {
       document: fetchedDocumentType;
-      annotations: fetchedAnnotationType[];
+      annotations: annotationType[];
     }[];
     fetchNewDocumentsToBeTreated: () => void;
   }) => ReactElement;
@@ -31,7 +24,7 @@ function DocumentsDataFetcher(props: {
       buildComponentWithData={(
         documentsToBeTreated: {
           document: fetchedDocumentType;
-          annotations: fetchedAnnotationType[];
+          annotations: annotationType[];
         }[],
       ) =>
         props.children({ documentsToBeTreated, fetchNewDocumentsToBeTreated: documentsToBeTreatedFetchInfo.refetch })
@@ -72,12 +65,7 @@ async function fetchDocumentToBeTreated(documentIdsToExclude: idType[]) {
         ...document,
         _id: idModule.lib.buildId(document._id),
       },
-      annotations: autoLinker.autoLinkAll(
-        annotations.map((annotation) => ({
-          ...annotation,
-          _id: idModule.lib.buildId(annotation._id),
-        })),
-      ),
+      annotations: autoLinker.autoLinkAll(annotations),
     },
     statusCode: httpStatusCodeHandler.merge([statusCodeDocument, statusCodeAnnotations]),
   };

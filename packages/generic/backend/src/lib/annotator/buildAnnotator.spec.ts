@@ -2,6 +2,7 @@ import {
   annotationModule,
   annotationReportModule,
   documentModule,
+  idModule,
 } from '@label/core';
 import {
   documentService,
@@ -41,13 +42,13 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
     name: 'FAKE_ANNOTATOR',
     async fetchAnnotationOfDocument(document) {
       const annotations = [...Array(5).keys()].map(() =>
-        annotationModule.generator.generate({ documentId: document._id }),
+        annotationModule.generator.generate(),
       );
       const report = annotationReportModule.generator.generate({
         documentId: document._id,
       });
 
-      return { annotations, report };
+      return { annotations, documentId: idModule.lib.buildId(), report };
     },
   };
 }

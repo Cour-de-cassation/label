@@ -1,5 +1,5 @@
 import React, { ReactElement, CSSProperties } from 'react';
-import { annotationChunkType, fetchedAnnotationType, textChunkType } from '@label/core';
+import { annotationChunkType, textChunkType } from '@label/core';
 import { Text } from '../../../../components';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
@@ -64,7 +64,7 @@ function DocumentViewer(props: {
     return areAnnotationsLeft;
   }
 
-  function renderChunk(chunk: textChunkType | annotationChunkType<fetchedAnnotationType>) {
+  function renderChunk(chunk: textChunkType | annotationChunkType) {
     switch (chunk.type) {
       case 'text':
         return <DocumentText key={chunk.index} index={chunk.index} text={chunk.text} />;

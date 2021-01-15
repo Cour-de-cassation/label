@@ -1,4 +1,4 @@
-import { annotationModule, fetchedAnnotationType } from '@label/core';
+import { annotationModule, annotationType } from '@label/core';
 import { groupByCategoryAndEntity } from './groupByCategoryAndEntity';
 
 describe('groupByCategoryAndEntity', () => {
@@ -34,7 +34,7 @@ describe('groupByCategoryAndEntity', () => {
   });
 });
 
-function generateCategoryAnnotations(annotationsGroups: fetchedAnnotationType[][]) {
+function generateCategoryAnnotations(annotationsGroups: annotationType[][]) {
   return annotationsGroups
     .filter((annotations) => annotations.length)
     .map((annotations) => ({ entityId: annotations[0].entityId, entityAnnotations: annotations }));

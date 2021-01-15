@@ -1,13 +1,13 @@
 import React, { CSSProperties } from 'react';
-import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { DocumentSelectorCard } from './DocumentSelectorCard';
 
 export { DocumentSelector };
 
 function DocumentSelector(props: {
-  choices: Array<{ annotations: fetchedAnnotationType[]; document: fetchedDocumentType }>;
+  choices: Array<{ annotations: annotationType[]; document: fetchedDocumentType }>;
   settings: settingsType;
-  onSelectDocument: (choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => void;
+  onSelectDocument: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => void;
 }) {
   const styles = buildStyles();
   return (

@@ -1,4 +1,4 @@
-import { annotationModule, fetchedAnnotationType, idModule, idType } from '../../modules';
+import { annotationModule, annotationType } from '../../modules';
 import { autoLinker } from '../autoLink';
 
 export { annotationHandler };
@@ -6,7 +6,7 @@ export { annotationHandler };
 const annotationHandler = {
   create,
   createAll,
-  deleteById,
+  deleteByTextAndStart,
   deleteByEntityId,
   getAnnotationIndex,
   updateManyCategory,
@@ -14,47 +14,42 @@ const annotationHandler = {
   updateOneText,
 };
 
-function create<annotationT extends fetchedAnnotationType>(
-  annotations: annotationT[],
-  fields: { category: string; documentId?: idType; start: number; text: string },
-  buildAnnotation: (fields: { category: string; documentId?: idType; start: number; text: string }) => annotationT,
-): annotationT[] {
-  const createdAnnotation = buildAnnotation(fields);
+function create(
+  annotations: annotationType[],
+  fields: { category: string; start: number; text: string },
+): annotationType[] {
+  const createdAnnotation = annotationModule.lib.buildAnnotation(fields);
   const newAnnotations = [createdAnnotation, ...annotations];
 
   return autoLinker.autoLink([createdAnnotation], newAnnotations);
 }
 
-function createAll<annotationT extends fetchedAnnotationType>(
-  annotations: annotationT[],
-  fields: { category: string; documentId?: idType },
+function createAll(
+  annotations: annotationType[],
+  category: string,
   annotationTextsAndIndices: { index: number; text: string }[],
-  buildAnnotation: (fields: { category: string; documentId?: idType; start: number; text: string }) => annotationT,
-): annotationT[] {
+): annotationType[] {
   const createdAnnotations = annotationTextsAndIndices.map(({ index, text }) =>
-    buildAnnotation({ ...fields, start: index, text }),
+    annotationModule.lib.buildAnnotation({ category, start: index, text }),
   );
   const newAnnotations = createdAnnotations.concat(annotations);
 
   return autoLinker.autoLink(createdAnnotations, newAnnotations);
 }
 
-function deleteById<annotationT extends fetchedAnnotationType>(annotations: annotationT[], id: annotationT['_id']) {
-  return annotations.filter((annotation) => !idModule.lib.equalId(annotation._id, id));
+function deleteByTextAndStart(
+  annotations: annotationType[],
+  text: annotationType['text'],
+  start: annotationType['start'],
+) {
+  return annotations.filter((annotation) => annotation.text !== text || annotation.start !== start);
 }
 
-function deleteByEntityId<annotationT extends fetchedAnnotationType>(
-  annotations: annotationT[],
-  entityId: annotationT['entityId'],
-) {
+function deleteByEntityId(annotations: annotationType[], entityId: annotationType['entityId']) {
   return annotations.filter((annotation) => annotation.entityId !== entityId);
 }
 
-function updateManyCategory<annotationT extends fetchedAnnotationType>(
-  annotations: annotationT[],
-  entityId: string,
-  category: string,
-): annotationT[] {
+function updateManyCategory(annotations: annotationType[], entityId: string, category: string): annotationType[] {
   const { newAnnotations, updatedAnnotations } = annotationModule.lib.annotationUpdater.updateAnnotationsCategory(
     annotations,
     category,
@@ -64,14 +59,15 @@ function updateManyCategory<annotationT extends fetchedAnnotationType>(
   return autoLinker.autoLink(updatedAnnotations, newAnnotations);
 }
 
-function updateOneCategory<annotationT extends fetchedAnnotationType>(
-  annotations: annotationT[],
-  annotationId: idType,
+function updateOneCategory(
+  annotations: annotationType[],
+  text: string,
+  start: number,
   category: string,
-): annotationT[] {
-  let updateAnnotation: annotationT | undefined;
+): annotationType[] {
+  let updateAnnotation: annotationType | undefined;
   const newAnnotations = annotations.map((annotation) => {
-    if (idModule.lib.equalId(annotation._id, annotationId)) {
+    if (annotation.text === text && annotation.start === start) {
       updateAnnotation = annotation;
       return annotationModule.lib.annotationUpdater.updateAnnotationCategory(annotation, category);
     } else {
@@ -82,17 +78,17 @@ function updateOneCategory<annotationT extends fetchedAnnotationType>(
   return updateAnnotation ? autoLinker.autoLink([updateAnnotation], newAnnotations) : newAnnotations;
 }
 
-function updateOneText<annotationT extends fetchedAnnotationType>(
-  annotations: annotationT[],
-  annotationId: idType,
-  text: string,
+function updateOneText(
+  annotations: annotationType[],
+  oldText: string,
   start: number,
-): annotationT[] {
-  let updateAnnotation: annotationT | undefined;
+  newText: string,
+): annotationType[] {
+  let updateAnnotation: annotationType | undefined;
   const newAnnotations = annotations.map((annotation) => {
-    if (idModule.lib.equalId(annotation._id, annotationId)) {
+    if (annotation.text === oldText && annotation.start === start) {
       updateAnnotation = annotation;
-      return annotationModule.lib.annotationUpdater.updateAnnotationText(annotation, text, start);
+      return annotationModule.lib.annotationUpdater.updateAnnotationText(annotation, newText, start);
     } else {
       return annotation;
     }
@@ -101,10 +97,7 @@ function updateOneText<annotationT extends fetchedAnnotationType>(
   return updateAnnotation ? autoLinker.autoLink([updateAnnotation], newAnnotations) : newAnnotations;
 }
 
-function getAnnotationIndex<annotationT extends fetchedAnnotationType>(
-  annotations: annotationT[],
-  annotation: annotationT,
-) {
+function getAnnotationIndex(annotations: annotationType[], annotation: annotationType) {
   const sameEntityAnnotations = annotations.filter(
     (anotherAnnotation) => anotherAnnotation.entityId === annotation.entityId,
   );

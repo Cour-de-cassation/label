@@ -40,14 +40,12 @@ describe('nlpFetcher', () => {
         ).toEqual(true);
       });
     });
-    it('should fetch the annotations linked to the given document', async () => {
-      const { annotations } = await nlpFetcher.fetchAnnotationOfDocument(
+    it('should return the document id', async () => {
+      const { documentId } = await nlpFetcher.fetchAnnotationOfDocument(
         document,
       );
 
-      annotations.forEach(annotation =>
-        expect(annotation.documentId).toEqual(document._id),
-      );
+      expect(documentId).toEqual(document._id);
     });
   });
 });

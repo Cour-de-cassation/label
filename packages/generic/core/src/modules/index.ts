@@ -1,4 +1,5 @@
-import { annotationModule, annotationType, fetchedAnnotationType } from './annotation';
+import { fetchedAnnotationType } from './annotation';
+import { annotationModule, annotationType } from './newAnnotationModule';
 import { annotationReportModule, annotationReportType } from './annotationReport';
 import { annotationsDiffModule, annotationsDiffType } from './annotationsDiff';
 import { assignationModule, assignationType } from './assignation';

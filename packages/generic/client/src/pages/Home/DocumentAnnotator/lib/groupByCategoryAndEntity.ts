@@ -1,5 +1,5 @@
 import { groupBy } from 'lodash';
-import { fetchedAnnotationType } from '@label/core';
+import { annotationType } from '@label/core';
 
 export { groupByCategoryAndEntity };
 
@@ -13,11 +13,11 @@ type annotationPerCategoryAndEntityType = Array<{
 
 type annotationPerEntityType = Array<{
   entityId: string;
-  entityAnnotations: fetchedAnnotationType[];
+  entityAnnotations: annotationType[];
 }>;
 
 function groupByCategoryAndEntity(
-  annotations: fetchedAnnotationType[],
+  annotations: annotationType[],
   categories: string[],
 ): annotationPerCategoryAndEntityType {
   return groupByCategory(annotations, categories).map(({ category, categoryAnnotations }) => {
@@ -31,9 +31,9 @@ function groupByCategoryAndEntity(
 }
 
 function groupByCategory(
-  annotations: fetchedAnnotationType[],
+  annotations: annotationType[],
   categories: string[],
-): Array<{ category: string; categoryAnnotations: fetchedAnnotationType[] }> {
+): Array<{ category: string; categoryAnnotations: annotationType[] }> {
   const grouppedByCategoryAnnotations = groupBy(annotations, (annotation) => annotation.category);
   return categories.map((category) => {
     const categoryAnnotations = grouppedByCategoryAnnotations[category];
@@ -51,7 +51,7 @@ function groupByCategory(
   });
 }
 
-function groupByEntity(annotations: fetchedAnnotationType[]): annotationPerEntityType {
+function groupByEntity(annotations: annotationType[]): annotationPerEntityType {
   return Object.entries(groupBy(annotations, (annotation) => annotation.entityId))
     .map(([entityId, entityAnnotations]) => ({
       entityId,

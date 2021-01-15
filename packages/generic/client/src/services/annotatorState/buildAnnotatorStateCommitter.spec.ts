@@ -1,5 +1,5 @@
 import { range } from 'lodash';
-import { annotationModule, fetchedAnnotationType, documentModule } from '@label/core';
+import { annotationModule, annotationType, documentModule } from '@label/core';
 import { annotatorStateType } from './annotatorStateType';
 import { buildAnnotatorStateCommitter } from './buildAnnotatorStateCommitter';
 import { sortAnnotations } from './utils';
@@ -75,7 +75,7 @@ describe('buildAnnotatorStateCommitter', () => {
   });
 });
 
-function buildAnnotatorState(annotations: fetchedAnnotationType[]): annotatorStateType {
+function buildAnnotatorState(annotations: annotationType[]): annotatorStateType {
   return {
     annotations,
     document: documentModule.generator.generate(),

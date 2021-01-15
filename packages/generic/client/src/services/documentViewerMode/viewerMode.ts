@@ -1,4 +1,4 @@
-import { fetchedAnnotationType } from '@label/core';
+import { annotationType } from '@label/core';
 
 export { DEFAULT_VIEWER_MODE };
 
@@ -8,7 +8,7 @@ type viewerModeType =
   | { kind: 'annotation'; isAnonymized: boolean }
   | {
       kind: 'occurrence';
-      entityId: fetchedAnnotationType['entityId'];
+      entityId: annotationType['entityId'];
       entityLineNumbers: number[];
       isAnonymized: boolean;
     };

@@ -10,6 +10,9 @@ const buildTreatmentRepository = buildRepositoryBuilder<
 >({
   collectionName: 'treatments',
   buildCustomRepository: (collection) => ({
+    async findAllByDocumentId(documentId) {
+      return collection.find({ documentId }).toArray();
+    },
     async findLastOneByDocumentId(documentId) {
       const result = await collection.find({ documentId }).toArray();
 

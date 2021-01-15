@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationHandler, fetchedAnnotationType, settingsModule } from '@label/core';
+import { annotationHandler, annotationType, settingsModule } from '@label/core';
 import { CategoryIcon, IconDropdown } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useMonitoring } from '../../../../../services/monitoring';
@@ -10,7 +10,7 @@ export { ChangeAnnotationCategoryDropdown };
 const CATEGORY_ICON_SIZE = 30;
 const CHANGE_ANNOTATION_CATEGORY_MENU_WIDTH = 300;
 
-function ChangeAnnotationCategoryDropdown(props: { annotation: fetchedAnnotationType }): ReactElement {
+function ChangeAnnotationCategoryDropdown(props: { annotation: annotationType }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
   const annotatorState = annotatorStateHandler.get();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { annotationHandler, fetchedAnnotationType } from '@label/core';
+import { annotationHandler, annotationType } from '@label/core';
 import {
   ComponentsList,
   IconButton,
@@ -17,7 +17,7 @@ export { CategoryTableEntryActionButtons };
 const CATEGORY_TABLE_ENTRY_BUTTON_SIZE = 32;
 
 function CategoryTableEntryActionButtons(props: {
-  entityAnnotation: fetchedAnnotationType;
+  entityAnnotation: annotationType;
   entityEntryHandler: entityEntryHandlerType;
 }) {
   const annotatorStateHandler = useAnnotatorStateHandler();

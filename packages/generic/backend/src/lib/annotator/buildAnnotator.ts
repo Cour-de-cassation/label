@@ -1,13 +1,11 @@
-import { groupBy } from 'lodash';
 import {
   annotationType,
   annotationReportType,
   annotationsDiffModule,
   documentType,
   treatmentModule,
-  idModule,
+  idType,
 } from '@label/core';
-import { buildAnnotationRepository } from '../../modules/annotation';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { documentService } from '../../modules/document';
@@ -28,75 +26,62 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
     logger.log(
       `Fetching annotation with ${annotatorConfig.name} for ${documents.length} documents...`,
     );
-    const annotationsAndReport = await Promise.all(
+    const fetchedAnnotatingInformations = await Promise.all(
       documents.map(annotatorConfig.fetchAnnotationOfDocument),
     );
     logger.log(`Annotations fetched!`);
 
-    const annotations = annotationsAndReport
-      .map((annotationsAndReport) => annotationsAndReport.annotations)
-      .flat();
-    const reports = annotationsAndReport.map(
-      (annotationsAndReport) => annotationsAndReport.report,
+    const annotationsAndDocumentIds = fetchedAnnotatingInformations.map(
+      (fetchedAnnotatingInformation) => ({
+        annotations: fetchedAnnotatingInformation.annotations,
+        documentId: fetchedAnnotatingInformation.documentId,
+      }),
+    );
+    const reports = fetchedAnnotatingInformations.map(
+      (fetchedAnnotatingInformation) => fetchedAnnotatingInformation.report,
     );
 
     logger.log(
-      `Insertion of ${annotations.length} annotations into the database...`,
+      `Insertion of ${annotationsAndDocumentIds.length} treatments into the database...`,
     );
-    await insertAnnotations(annotations);
-    await insertTreatments(annotations);
+    await insertTreatments(annotationsAndDocumentIds);
     logger.log(`Insertion done!`);
 
     logger.log(`Insertion of ${reports.length} reports into the database...`);
     await insertReports(reports);
     logger.log(`Insertion done!`);
   }
+}
 
-  async function insertAnnotations(annotations: annotationType[]) {
-    const annotationRepository = buildAnnotationRepository();
+async function insertTreatments(
+  annotationsAndDocumentIds: {
+    annotations: annotationType[];
+    documentId: idType;
+  }[],
+) {
+  const treatmentRepository = buildTreatmentRepository();
 
-    for await (const annotation of annotations) {
-      await annotationRepository.insert(annotation);
-    }
-  }
+  return Promise.all(
+    annotationsAndDocumentIds.map(({ annotations, documentId }) => {
+      return treatmentRepository.insert(
+        treatmentModule.lib.buildTreatment({
+          documentId,
+          duration: 0,
+          order: 0,
+          annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff(
+            [],
+            annotations,
+          ),
+        }),
+      );
+    }),
+  );
+}
 
-  async function insertTreatments(annotations: annotationType[]) {
-    const treatmentRepository = buildTreatmentRepository();
+async function insertReports(reports: annotationReportType[]) {
+  const annotationReportRepository = buildAnnotationReportRepository();
 
-    const grouppedAnnotations = groupBy(annotations, (annotation) =>
-      idModule.lib.convertToString(annotation.documentId),
-    );
-    return Promise.all(
-      Object.entries(grouppedAnnotations).map(
-        ([stringDocumentId, annotationsOfDocument]) => {
-          const documentId = idModule.lib.buildId(stringDocumentId);
-
-          const treatment = treatmentModule.lib.buildTreatment({
-            documentId,
-            duration: 0,
-            order: 0,
-            annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff(
-              [],
-              annotationsOfDocument.map((annotation) => ({
-                category: annotation.category,
-                entityId: annotation.entityId,
-                start: annotation.start,
-                text: annotation.text,
-              })),
-            ),
-          });
-
-          return treatmentRepository.insert(treatment);
-        },
-      ),
-    );
-  }
-
-  async function insertReports(reports: annotationReportType[]) {
-    const annotationReportRepository = buildAnnotationReportRepository();
-
-    for await (const report of reports) {
-      await annotationReportRepository.insert(report);
-    }
+  for await (const report of reports) {
+    await annotationReportRepository.insert(report);
   }
 }

@@ -1,5 +1,4 @@
 import {
-  annotationModule,
   documentModule,
   monitoringEntryModule,
   settingsModule,
@@ -7,6 +6,7 @@ import {
   problemReportModule,
   treatmentModule,
 } from '../modules';
+import { annotationModule } from '../modules/annotation';
 
 import { filterNetworkKeysType } from '../types';
 

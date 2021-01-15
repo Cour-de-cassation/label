@@ -9,6 +9,11 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
   customTreatmentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
+    async findAllByDocumentId(documentId) {
+      return collection.filter((treatment) =>
+        idModule.lib.equalId(treatment.documentId, documentId),
+      );
+    },
     async findLastOneByDocumentId(documentId) {
       const result = collection.filter((treatment) =>
         idModule.lib.equalId(treatment.documentId, documentId),

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationHandler, fetchedAnnotationType, settingsModule } from '@label/core';
+import { annotationHandler, annotationType, settingsModule } from '@label/core';
 import { CategoryIcon, Header, Text } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
@@ -9,7 +9,7 @@ import { wordings } from '../../../../../wordings';
 export { AnnotationTooltipMenuHeader };
 
 function AnnotationTooltipMenuHeader(props: {
-  annotation: fetchedAnnotationType;
+  annotation: annotationType;
   anonymizer: clientAnonymizerType;
   isAnonymizedView: boolean;
 }): ReactElement {

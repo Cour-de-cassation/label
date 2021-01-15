@@ -16,13 +16,10 @@ const nlpMapper = {
 
 function mapNlpAnnotationsToAnnotations(
   nlpAnnotations: nlpAnnotationsType,
-  document: documentType,
 ): annotationType[] {
   return nlpAnnotations.entities.map(nlpAnnotation =>
-    annotationModule.lib.annotationBuilder.buildAnnotation({
+    annotationModule.lib.buildAnnotation({
       category: nlpAnnotation.label,
-      documentId: document._id,
-      source: nlpAnnotation.source,
       start: nlpAnnotation.start,
       text: nlpAnnotation.text,
     }),

@@ -11,23 +11,21 @@ const textSplitter = {
   removeEmptyTextChunks,
 };
 
-type annotationChunkType<annotationT extends annotationNeededFieldsType> = {
+type annotationChunkType = {
   type: 'annotation';
   index: number;
-  annotation: annotationT;
+  annotation: annotationType;
 };
 
 type textChunkType = { type: 'text'; index: number; text: string };
 
-type annotationNeededFieldsType = Pick<annotationType, 'text' | 'category' | 'start'>;
-
-function splitTextAccordingToAnnotations<annotationT extends annotationNeededFieldsType>(
+function splitTextAccordingToAnnotations(
   text: string,
-  annotations: annotationT[],
-): Array<annotationChunkType<annotationT> | textChunkType> {
+  annotations: annotationType[],
+): Array<annotationChunkType | textChunkType> {
   const sortedAnnotations = [...annotations].sort((annotation1, annotation2) => annotation1.start - annotation2.start);
 
-  const splittedText: Array<annotationChunkType<annotationT> | textChunkType> = [];
+  const splittedText: Array<annotationChunkType | textChunkType> = [];
 
   let currentIndex = 0;
   sortedAnnotations.forEach((annotation) => {
@@ -48,9 +46,7 @@ function buildTextChunk(text: string, index: number): textChunkType {
   } as const;
 }
 
-function buildAnnotationChunk<annotationT extends annotationNeededFieldsType>(
-  annotation: annotationT,
-): annotationChunkType<annotationT> {
+function buildAnnotationChunk(annotation: annotationType): annotationChunkType {
   return {
     type: 'annotation',
     index: annotation.start,
@@ -58,8 +54,8 @@ function buildAnnotationChunk<annotationT extends annotationNeededFieldsType>(
   } as const;
 }
 
-function removeEmptyTextChunks<annotationT extends annotationNeededFieldsType>(
-  chunks: Array<textChunkType | annotationChunkType<annotationT>>,
-): Array<textChunkType | annotationChunkType<annotationT>> {
+function removeEmptyTextChunks(
+  chunks: Array<textChunkType | annotationChunkType>,
+): Array<textChunkType | annotationChunkType> {
   return chunks.filter((chunk) => chunk.type !== 'text' || chunk.text !== '');
 }

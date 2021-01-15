@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationLinkHandler, fetchedAnnotationType } from '@label/core';
+import { annotationLinkHandler, annotationType } from '@label/core';
 import { IconButton, IconDropdown } from '../generic';
 import { useAnnotatorStateHandler } from '../../services/annotatorState';
 import { useMonitoring } from '../../services/monitoring';
@@ -10,7 +10,7 @@ export { UnlinkAnnotationDropdown };
 const UNLINK_ALL = '__all__';
 
 function UnlinkAnnotationDropdown(props: {
-  annotation: fetchedAnnotationType;
+  annotation: annotationType;
   buttonSize?: number;
   context: 'tooltip_update' | 'panel';
   onClick?: () => void;

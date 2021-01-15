@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { fetchedAnnotationType } from '@label/core';
+import { annotationType } from '@label/core';
 import {
   LayoutGrid,
   FloatingTooltipMenu,
@@ -18,7 +18,7 @@ export { AnnotationTooltipMenu };
 const ANNOTATION_TOOLTIP_SUMMARY_WIDTH = 300;
 
 function AnnotationTooltipMenu(props: {
-  annotation: fetchedAnnotationType;
+  annotation: annotationType;
   anonymizer: clientAnonymizerType;
   closesOnBackdropClick: boolean;
   isAnonymizedView: boolean;

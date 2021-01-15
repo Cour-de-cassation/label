@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationLinkHandler, fetchedAnnotationType } from '@label/core';
+import { annotationLinkHandler, annotationType } from '@label/core';
 import { useAnnotatorStateHandler } from '../../services/annotatorState';
 import { useMonitoring } from '../../services/monitoring';
 import { wordings } from '../../wordings';
@@ -10,7 +10,7 @@ export { LinkAnnotationDropdown };
 const LINK_ANNOTATION_MENU_WIDTH = 300;
 
 function LinkAnnotationDropdown(props: {
-  annotation: fetchedAnnotationType;
+  annotation: annotationType;
   context: 'tooltip_update' | 'panel';
   buttonSize?: number;
   onClick?: () => void;

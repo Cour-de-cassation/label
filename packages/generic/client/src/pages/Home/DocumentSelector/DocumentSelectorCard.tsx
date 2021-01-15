@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
 import { groupBy, orderBy } from 'lodash';
-import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { ButtonWithIcon, CategoryIcon, ComponentsList, Text } from '../../../components';
 import { wordings } from '../../../wordings';
@@ -13,8 +13,8 @@ const CATEGORY_ICON_SIZE = 32;
 const MAX_CATEGORIES_SHOWN = 8;
 
 function DocumentSelectorCard(props: {
-  choice: { annotations: fetchedAnnotationType[]; document: fetchedDocumentType };
-  onSelect: (choice: { document: fetchedDocumentType; annotations: fetchedAnnotationType[] }) => void;
+  choice: { annotations: annotationType[]; document: fetchedDocumentType };
+  onSelect: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => void;
   settings: settingsType;
 }) {
   const theme = useCustomTheme();
@@ -66,7 +66,7 @@ function DocumentSelectorCard(props: {
     </div>
   );
 
-  function computeCategoryIconNamesByEntitiesCount(annotations: fetchedAnnotationType[]) {
+  function computeCategoryIconNamesByEntitiesCount(annotations: annotationType[]) {
     return orderBy(
       Object.entries(groupBy(annotations, (annotation) => annotation.category)).map(
         ([category, grouppedAnnotations]) => ({

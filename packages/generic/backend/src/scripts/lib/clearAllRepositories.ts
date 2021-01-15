@@ -1,4 +1,3 @@
-import { buildAnnotationRepository } from '../../modules/annotation';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
@@ -11,7 +10,6 @@ export { clearAllRepositories };
 
 async function clearAllRepositories() {
   const repositories = [
-    buildAnnotationRepository,
     buildAnnotationReportRepository,
     buildAssignationRepository,
     buildDocumentRepository,

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { uniq } from 'lodash';
-import { displayModeType, fetchedAnnotationType, settingsModule } from '@label/core';
+import { displayModeType, annotationType, settingsModule } from '@label/core';
 import { SText } from '../../../../../components';
 import { annotatorStateHandlerType, useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { customThemeType, emphasizeShadeColor, getColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
@@ -20,7 +20,7 @@ const {
 } = buildStyledComponents();
 
 function CategoryTableEntry(props: {
-  entityAnnotations: fetchedAnnotationType[];
+  entityAnnotations: annotationType[];
   entityEntryHandler: entityEntryHandlerType;
   entityId: string;
   splittedTextByLine: splittedTextByLineType;

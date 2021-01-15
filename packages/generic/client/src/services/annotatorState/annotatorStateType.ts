@@ -1,14 +1,9 @@
-import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 
-export type { annotatorStateType, annotationActionType };
+export type { annotatorStateType };
 
 type annotatorStateType = {
-  annotations: fetchedAnnotationType[];
+  annotations: annotationType[];
   document: fetchedDocumentType;
   settings: settingsType;
-};
-
-type annotationActionType = {
-  before: fetchedAnnotationType[];
-  after: fetchedAnnotationType[];
 };

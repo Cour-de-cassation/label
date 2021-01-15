@@ -1,6 +1,5 @@
 import { apiSchema, idModule } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
-import { annotationService } from '../modules/annotation';
 import { documentService } from '../modules/document';
 import { monitoringEntryService } from '../modules/monitoringEntry';
 import { problemReportService } from '../modules/problemReport';
@@ -16,7 +15,9 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     annotations: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
-        annotationService.fetchAnnotationsOfDocument(documentId),
+        treatmentService.fetchAnnotationsOfDocument(
+          idModule.lib.buildId(documentId),
+        ),
     }),
 
     document: buildAuthenticatedController({
@@ -48,6 +49,28 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   },
 
   post: {
+    createTreatment: buildAuthenticatedController({
+      permissions: ['admin', 'annotator'],
+      controllerWithUser: async (
+        _,
+        { args: { annotationsDiff, documentId, duration } },
+      ) => {
+        await treatmentService.createTreatment({
+          annotationsDiff,
+          documentId: idModule.lib.buildId(documentId),
+          duration,
+        });
+
+        /*await annotationService.updateAnnotations(
+          idModule.lib.buildId(documentId),
+          fetchedGraphQLAnnotations.map((fetchedGraphQLAnnotation) => ({
+            ...fetchedGraphQLAnnotation,
+            _id: idModule.lib.buildId(fetchedGraphQLAnnotation._id),
+          })),
+        );*/
+      },
+    }),
+
     async login({ args: { email, password } }) {
       return userService.login({ email, password });
     },
@@ -95,26 +118,5 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     async signUpUser({ args: { email, password } }) {
       await userService.signUpUser({ email, password });
     },
-
-    createTreatment: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
-      controllerWithUser: async (
-        _,
-        { args: { documentId, fetchedGraphQLAnnotations, duration } },
-      ) => {
-        await treatmentService.createTreatment({
-          documentId: idModule.lib.buildId(documentId),
-          duration,
-        });
-
-        await annotationService.updateAnnotations(
-          idModule.lib.buildId(documentId),
-          fetchedGraphQLAnnotations.map((fetchedGraphQLAnnotation) => ({
-            ...fetchedGraphQLAnnotation,
-            _id: idModule.lib.buildId(fetchedGraphQLAnnotation._id),
-          })),
-        );
-      },
-    }),
   },
 };

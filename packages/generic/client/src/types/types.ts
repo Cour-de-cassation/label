@@ -1,8 +1,8 @@
-import { anonymizerType, fetchedAnnotationType, fetchedDocumentType } from '@label/core';
+import { anonymizerType, fetchedDocumentType } from '@label/core';
 
 export type { clientAnonymizerType, positionType };
 
-type clientAnonymizerType = anonymizerType<fetchedAnnotationType, fetchedDocumentType>;
+type clientAnonymizerType = anonymizerType<fetchedDocumentType>;
 
 type positionType = {
   x: number;

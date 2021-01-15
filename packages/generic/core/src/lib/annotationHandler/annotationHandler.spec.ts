@@ -12,28 +12,19 @@ describe('annotationHandler', () => {
       ];
       const annotations = [{}].map(generateFetchedAnnotation);
 
-      const newAnnotations = annotationHandler.createAll(
-        annotations,
-        { category },
-        annotationTextsAndIndices,
-        annotationModule.lib.annotationBuilder.buildFetchedAnnotation,
-      );
+      const newAnnotations = annotationHandler.createAll(annotations, category, annotationTextsAndIndices);
 
       expect(newAnnotations).toEqual([
         {
           category,
           start: 34,
           entityId: annotationModule.lib.entityIdHandler.compute(category, annotationText),
-          _id: newAnnotations[0] && newAnnotations[0]._id,
-          source: annotationModule.config.LABEL_ANNOTATION_SOURCE,
           text: annotationText,
         },
         {
           category,
           start: 66,
           entityId: annotationModule.lib.entityIdHandler.compute(category, annotationText),
-          _id: newAnnotations[1] && newAnnotations[1]._id,
-          source: annotationModule.config.LABEL_ANNOTATION_SOURCE,
           text: annotationText,
         },
         ...annotations,
@@ -70,7 +61,12 @@ describe('annotationHandler', () => {
       const newCategory = 'ANOTHER_CATEGORY';
       const annotations = [{ category: 'CATEGORY' }, { category: 'CATEGORY2' }].map(generateFetchedAnnotation);
 
-      const updatedAnnotations = annotationHandler.updateOneCategory(annotations, annotations[0]._id, newCategory);
+      const updatedAnnotations = annotationHandler.updateOneCategory(
+        annotations,
+        annotations[0].text,
+        annotations[0].start,
+        newCategory,
+      );
 
       expect(updatedAnnotations[0].category).toEqual(newCategory);
     });
@@ -79,7 +75,12 @@ describe('annotationHandler', () => {
       const text = 'TEXT';
       const annotations = [{ category: 'CATEGORY', text }, { category: 'CATEGORY2' }].map(generateFetchedAnnotation);
 
-      const updatedAnnotations = annotationHandler.updateOneCategory(annotations, annotations[0]._id, newCategory);
+      const updatedAnnotations = annotationHandler.updateOneCategory(
+        annotations,
+        annotations[0].text,
+        annotations[0].start,
+        newCategory,
+      );
 
       expect(updatedAnnotations[0].entityId).toEqual(annotationModule.lib.entityIdHandler.compute(newCategory, text));
     });

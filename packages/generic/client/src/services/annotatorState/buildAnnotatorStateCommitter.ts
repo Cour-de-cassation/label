@@ -1,5 +1,5 @@
-import { fetchedAnnotationType } from '@label/core';
-import { annotatorStateType, annotationActionType } from './annotatorStateType';
+import { annotationType, annotationsDiffModule, annotationsDiffType } from '@label/core';
+import { annotatorStateType } from './annotatorStateType';
 
 export { buildAnnotatorStateCommitter };
 
@@ -12,11 +12,12 @@ type annotatorStateCommitterType = {
   restore: (previousState: annotatorStateType) => annotatorStateType;
   canRevert: () => boolean;
   canRestore: () => boolean;
+  squash: () => annotationsDiffType;
 };
 
 function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
-  let annotationActionsToRevert: annotationActionType[] = [];
-  let annotationActionsToRestore: annotationActionType[] = [];
+  let annotationActionsToRevert: annotationsDiffType[] = [];
+  let annotationActionsToRestore: annotationsDiffType[] = [];
 
   return {
     clean,
@@ -25,6 +26,7 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
     restore,
     canRevert,
     canRestore,
+    squash,
   };
 
   function clean() {
@@ -69,8 +71,8 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
   }
 
   function getDiffBetweenAnnotationsStates(
-    previousAnnotationsState: fetchedAnnotationType[],
-    nextAnnotationsState: fetchedAnnotationType[],
+    previousAnnotationsState: annotationType[],
+    nextAnnotationsState: annotationType[],
   ) {
     return {
       before: previousAnnotationsState.filter(
@@ -83,9 +85,9 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
   }
 
   function applyAnnotationAction(
-    previousAnnotationsState: fetchedAnnotationType[],
-    previousAnnotationActions: annotationActionType[],
-    nextAnnotationActions: annotationActionType[],
+    previousAnnotationsState: annotationType[],
+    previousAnnotationActions: annotationsDiffType[],
+    nextAnnotationActions: annotationsDiffType[],
   ) {
     const previousAnnotationAction = previousAnnotationActions.pop();
 
@@ -102,10 +104,14 @@ function buildAnnotatorStateCommitter(): annotatorStateCommitterType {
     return nextAnnotationsState;
   }
 
-  function inverseAnnotationAction(annotationAction: annotationActionType) {
+  function inverseAnnotationAction(annotationAction: annotationsDiffType) {
     return {
       before: annotationAction.after,
       after: annotationAction.before,
     };
+  }
+
+  function squash() {
+    return annotationsDiffModule.lib.squash(annotationActionsToRevert);
   }
 }

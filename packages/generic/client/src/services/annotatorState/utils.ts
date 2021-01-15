@@ -1,9 +1,10 @@
-import { fetchedAnnotationType } from '@label/core';
+import { annotationType } from '@label/core';
 
 export { sortAnnotations };
 
-function sortAnnotations(annotations: fetchedAnnotationType[]) {
-  return annotations.sort((annotation1, annotation2) =>
-    JSON.stringify(annotation1._id).localeCompare(JSON.stringify(annotation2._id)),
+function sortAnnotations(annotations: annotationType[]) {
+  return annotations.sort(
+    (annotation1, annotation2) =>
+      annotation1.start - annotation2.start || annotation1.text.localeCompare(annotation2.text),
   );
 }

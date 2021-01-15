@@ -1,4 +1,4 @@
-import { annotationsDiffModule, idType, treatmentModule } from '@label/core';
+import { annotationsDiffType, idType, treatmentModule } from '@label/core';
 import { buildTreatmentRepository } from '../repository';
 
 export { treatmentService };
@@ -9,10 +9,20 @@ const treatmentService = {
     const treatments = await treatmentRepository.findAll();
     return treatments;
   },
+  async fetchAnnotationsOfDocument(documentId: idType) {
+    const treatmentRepository = buildTreatmentRepository();
+    const treatments = await treatmentRepository.findAllByDocumentId(
+      documentId,
+    );
+
+    return treatmentModule.lib.computeAnnotations(treatments);
+  },
   async createTreatment({
+    annotationsDiff,
     documentId,
     duration,
   }: {
+    annotationsDiff: annotationsDiffType;
     documentId: idType;
     duration: number;
   }) {
@@ -28,7 +38,7 @@ const treatmentService = {
         documentId,
         duration,
         order,
-        annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff([], []), // TODO insert annotation in it
+        annotationsDiff,
       }),
     );
   },

@@ -1,4 +1,4 @@
-import { fetchedAnnotationType } from '../../modules/annotation/annotationType';
+import { annotationType } from '../../modules';
 
 export { annotationTextDetector };
 
@@ -6,11 +6,7 @@ const annotationTextDetector = {
   detectAnnotationTextsAndIndices,
 };
 
-function detectAnnotationTextsAndIndices(
-  documentText: string,
-  annotationText: string,
-  annotations: fetchedAnnotationType[],
-) {
+function detectAnnotationTextsAndIndices(documentText: string, annotationText: string, annotations: annotationType[]) {
   let currentIndex = -1;
   const textsAndIndices: { text: string; index: number }[] = [];
   do {

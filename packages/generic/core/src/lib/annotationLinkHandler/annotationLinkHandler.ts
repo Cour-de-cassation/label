@@ -1,5 +1,5 @@
 import { uniqBy } from 'lodash';
-import { annotationModule, fetchedAnnotationType, idModule } from '../../modules';
+import { annotationModule, annotationType } from '../../modules';
 
 export { annotationLinkHandler };
 
@@ -14,11 +14,11 @@ const annotationLinkHandler = {
   unlinkByCategoryAndText,
 };
 
-function link<annotationT extends fetchedAnnotationType>(
-  annotationSource: annotationT,
-  annotationTarget: annotationT,
-  annotations: annotationT[],
-): annotationT[] {
+function link(
+  annotationSource: annotationType,
+  annotationTarget: annotationType,
+  annotations: annotationType[],
+): annotationType[] {
   return annotations.map((annotation) =>
     annotation.entityId === annotationSource.entityId
       ? annotationModule.lib.annotationLinker.link(annotation, annotationTarget)
@@ -26,43 +26,31 @@ function link<annotationT extends fetchedAnnotationType>(
   );
 }
 
-function isLinked<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
-  annotations: annotationT[],
-): boolean {
+function isLinked(annotation: annotationType, annotations: annotationType[]): boolean {
   return annotations.some(
     (otherAnnotation) => otherAnnotation.entityId === annotation.entityId && otherAnnotation.text !== annotation.text,
   );
 }
 
-function isLinkedTo<annotationT extends fetchedAnnotationType>(
-  annotationSource: annotationT,
-  annotationTarget: annotationT,
-) {
+function isLinkedTo(annotationSource: annotationType, annotationTarget: annotationType) {
   return annotationSource.entityId === annotationTarget.entityId;
 }
 
-function getLinkedAnnotationRepresentatives<annotationT extends fetchedAnnotationType>(
-  entityId: annotationT['entityId'],
-  annotations: annotationT[],
-): annotationT[] {
+function getLinkedAnnotationRepresentatives(
+  entityId: annotationType['entityId'],
+  annotations: annotationType[],
+): annotationType[] {
   return uniqBy(
     getLinkedAnnotations(entityId, annotations),
     (otherAnnotation) => otherAnnotation.text,
   ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
 }
 
-function getLinkedAnnotations<annotationT extends fetchedAnnotationType>(
-  entityId: annotationT['entityId'],
-  annotations: annotationT[],
-): annotationT[] {
+function getLinkedAnnotations(entityId: annotationType['entityId'], annotations: annotationType[]): annotationType[] {
   return annotations.filter((otherAnnotation) => otherAnnotation.entityId === entityId);
 }
 
-function getLinkableAnnotations<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
-  annotations: annotationT[],
-): annotationT[] {
+function getLinkableAnnotations(annotation: annotationType, annotations: annotationType[]): annotationType[] {
   return uniqBy(
     annotations.filter(
       (otherAnnotation) =>
@@ -72,10 +60,7 @@ function getLinkableAnnotations<annotationT extends fetchedAnnotationType>(
   ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
 }
 
-function unlink<annotationT extends fetchedAnnotationType>(
-  annotationToUnlink: annotationT,
-  annotations: annotationT[],
-): annotationT[] {
+function unlink(annotationToUnlink: annotationType, annotations: annotationType[]): annotationType[] {
   return annotations.map((annotation) =>
     annotation.entityId === annotationToUnlink.entityId
       ? annotationModule.lib.annotationLinker.unlink(annotation)
@@ -83,12 +68,9 @@ function unlink<annotationT extends fetchedAnnotationType>(
   );
 }
 
-function unlinkByCategoryAndText<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
-  annotations: annotationT[],
-) {
+function unlinkByCategoryAndText(annotation: annotationType, annotations: annotationType[]) {
   const linkedAnnotations = getLinkedAnnotationRepresentatives(annotation.entityId, annotations).filter(
-    (linkedAnnotation) => !idModule.lib.equalId(linkedAnnotation._id, annotation._id),
+    (linkedAnnotation) => linkedAnnotation.start !== annotation.start || linkedAnnotation.text !== annotation.text,
   );
 
   if (linkedAnnotations.length === 0) {
@@ -104,10 +86,7 @@ function unlinkByCategoryAndText<annotationT extends fetchedAnnotationType>(
   );
 }
 
-function updateMainLinkEntity<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
-  annotations: annotationT[],
-) {
+function updateMainLinkEntity(annotation: annotationType, annotations: annotationType[]) {
   return annotations.map((otherAnnotation) =>
     otherAnnotation.entityId === annotation.entityId
       ? {

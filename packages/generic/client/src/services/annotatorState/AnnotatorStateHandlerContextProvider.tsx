@@ -1,5 +1,5 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
-import { documentModule } from '@label/core';
+import { annotationsDiffModule, documentModule } from '@label/core';
 import { annotatorStateCommitterType } from './buildAnnotatorStateCommitter';
 import { annotatorStateType } from './annotatorStateType';
 import { annotatorStateHandlerType, buildAnnotatorStateHandler } from './buildAnnotatorStateHandler';
@@ -18,6 +18,7 @@ const AnnotatorStateHandlerContext = createContext<annotatorStateHandlerType>({
   restore: () => null,
   revert: () => null,
   set: () => null,
+  getGlobalAnnotationsDiff: () => annotationsDiffModule.lib.buildAnnotationsDiff([], []),
 });
 
 function AnnotatorStateHandlerContextProvider(props: {

@@ -30,24 +30,17 @@ describe('nlpMapper', () => {
     it('should convert the nlp annotations into our annotations', () => {
       const annotations = nlpMapper.mapNlpAnnotationsToAnnotations(
         nlpAnnotations,
-        document,
       );
 
       expect(annotations[0]).toEqual({
         category: 'LABEL1',
-        documentId: document._id,
         entityId: 'LABEL1_ANNOTATION1',
-        source: 'NLP',
-        _id: annotations[0]._id,
         start: 0,
         text: 'ANNOTATION1',
       });
       expect(annotations[1]).toEqual({
         category: 'LABEL2',
-        documentId: document._id,
         entityId: 'LABEL2_ANNOTATION2',
-        source: 'NLP',
-        _id: annotations[1]._id,
         start: 6,
         text: 'ANNOTATION2',
       });

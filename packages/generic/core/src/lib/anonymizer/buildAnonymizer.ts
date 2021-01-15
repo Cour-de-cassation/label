@@ -1,4 +1,4 @@
-import { fetchedAnnotationType, fetchedDocumentType, settingsType } from '../../modules';
+import { annotationType, fetchedDocumentType, settingsType } from '../../modules';
 import { textSplitter } from '../textSplitter';
 
 export { buildAnonymizer };
@@ -7,14 +7,12 @@ export type { anonymizerType };
 
 const ANONYMIZATION_DEFAULT_TEXT = 'XXX';
 
-type anonymizerType<annotationT extends fetchedAnnotationType, documentT extends fetchedDocumentType> = {
-  anonymizeDocument: (document: documentT, annotations: annotationT[]) => documentT;
-  anonymize: (annotation: annotationT) => string;
+type anonymizerType<documentT extends fetchedDocumentType> = {
+  anonymizeDocument: (document: documentT, annotations: annotationType[]) => documentT;
+  anonymize: (annotation: annotationType) => string;
 };
 
-function buildAnonymizer<annotationT extends fetchedAnnotationType, documentT extends fetchedDocumentType>(
-  settings: settingsType,
-): anonymizerType<annotationT, documentT> {
+function buildAnonymizer<documentT extends fetchedDocumentType>(settings: settingsType): anonymizerType<documentT> {
   const mapper: { [key: string]: string | undefined } = {};
 
   return {
@@ -22,7 +20,7 @@ function buildAnonymizer<annotationT extends fetchedAnnotationType, documentT ex
     anonymize,
   };
 
-  function anonymizeDocument(document: documentT, annotations: annotationT[]): documentT {
+  function anonymizeDocument(document: documentT, annotations: annotationType[]): documentT {
     const splittedText = textSplitter.splitTextAccordingToAnnotations(document.text, annotations);
     const splittedAnonymizedText = splittedText.map((chunk) => {
       switch (chunk.type) {
@@ -39,7 +37,7 @@ function buildAnonymizer<annotationT extends fetchedAnnotationType, documentT ex
     };
   }
 
-  function anonymize(annotation: annotationT): string {
+  function anonymize(annotation: annotationType): string {
     const anonymizedText = mapAnnotationToAnonymizedText(annotation);
 
     if (anonymizedText !== undefined) {
@@ -50,7 +48,7 @@ function buildAnonymizer<annotationT extends fetchedAnnotationType, documentT ex
     }
   }
 
-  function addNewMapping(annotation: annotationT) {
+  function addNewMapping(annotation: annotationType) {
     const anonymizationTexts = settings[annotation.category]?.anonymizationTexts || [];
     const anonymizedText = anonymizationTexts.shift() || ANONYMIZATION_DEFAULT_TEXT;
     anonymizationTexts.push(anonymizedText);
@@ -58,11 +56,11 @@ function buildAnonymizer<annotationT extends fetchedAnnotationType, documentT ex
     addAnnotationToAnonymizedTextMapping(annotation, anonymizedText);
   }
 
-  function mapAnnotationToAnonymizedText(annotation: annotationT) {
+  function mapAnnotationToAnonymizedText(annotation: annotationType) {
     return mapper[annotation.entityId];
   }
 
-  function addAnnotationToAnonymizedTextMapping(annotation: annotationT, anonymizedText: string) {
+  function addAnnotationToAnonymizedTextMapping(annotation: annotationType, anonymizedText: string) {
     mapper[annotation.entityId] = anonymizedText;
   }
 }

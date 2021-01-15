@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactElement, useState } from 'react';
-import { fetchedAnnotationType, settingsModule } from '@label/core';
+import { annotationType, settingsModule } from '@label/core';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { getColor, useDisplayMode } from '../../../../styles';
@@ -9,10 +9,7 @@ import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 
 export { DocumentAnnotationText };
 
-function DocumentAnnotationText(props: {
-  annotation: fetchedAnnotationType;
-  anonymizer: clientAnonymizerType;
-}): ReactElement {
+function DocumentAnnotationText(props: { annotation: annotationType; anonymizer: clientAnonymizerType }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const [isTooltipMenuVisible, setIsTooltipMenuVisible] = useState(false);
   const [isTooltipMenuExpanded, setIsTooltipMenuExpanded] = useState(false);

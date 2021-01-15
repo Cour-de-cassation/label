@@ -1,4 +1,4 @@
-import { fetchedAnnotationType } from '@label/core';
+import { annotationType } from '@label/core';
 import { viewerModeType } from './viewerMode';
 
 export { buildDocumentViewerModeHandler };
@@ -8,7 +8,7 @@ export type { documentViewerModeHandlerType };
 type documentViewerModeHandlerType = {
   isAnonymizedView: () => boolean;
   resetViewerMode: () => void;
-  setOccurrenceMode: (entityId: fetchedAnnotationType['entityId'], entityLineNumbers: number[]) => void;
+  setOccurrenceMode: (entityId: annotationType['entityId'], entityLineNumbers: number[]) => void;
   switchAnonymizedView: () => void;
   documentViewerMode: viewerModeType;
 };
@@ -33,7 +33,7 @@ function buildDocumentViewerModeHandler(
     return documentViewerMode.isAnonymized;
   }
 
-  function setOccurrenceMode(entityId: fetchedAnnotationType['entityId'], entityLineNumbers: number[]) {
+  function setOccurrenceMode(entityId: annotationType['entityId'], entityLineNumbers: number[]) {
     setViewerMode({ kind: 'occurrence', entityId, entityLineNumbers, isAnonymized: documentViewerMode.isAnonymized });
   }
 

@@ -1,4 +1,4 @@
-import { fetchedAnnotationType } from '../../modules';
+import { annotationType } from '../../modules';
 import { annotationLinkHandler } from '../annotationLinkHandler';
 import { computeLevenshteinDistance } from './computeLevenshteinDistance';
 
@@ -9,34 +9,28 @@ const autoLinker = {
   autoLinkAll,
 };
 
-function autoLinkAll<annotationT extends fetchedAnnotationType>(annotations: annotationT[]): annotationT[] {
+function autoLinkAll(annotations: annotationType[]): annotationType[] {
   return autoLink(annotations, annotations);
 }
 
-function autoLink<annotationT extends fetchedAnnotationType>(
-  annotationsToLink: annotationT[],
-  annotations: annotationT[],
-): annotationT[] {
+function autoLink(annotationsToLink: annotationType[], annotations: annotationType[]): annotationType[] {
   return annotationsToLink.reduce((linkedAnnotations, annotation) => {
     const annotationsToLinkTo = computeAnnotationsToLinkTo(annotation, linkedAnnotations);
     return linkToAnnotations(annotation, annotationsToLinkTo, linkedAnnotations);
   }, annotations);
 }
 
-function linkToAnnotations<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
-  annotationsToLinkTo: annotationT[],
-  annotations: annotationT[],
+function linkToAnnotations(
+  annotation: annotationType,
+  annotationsToLinkTo: annotationType[],
+  annotations: annotationType[],
 ) {
   return annotationsToLinkTo.reduce((linkedAnnotations, annotationToLinkTo) => {
     return annotationLinkHandler.link(annotation, annotationToLinkTo, linkedAnnotations);
   }, annotations);
 }
 
-function computeAnnotationsToLinkTo<annotationT extends fetchedAnnotationType>(
-  annotation: annotationT,
-  annotations: annotationT[],
-) {
+function computeAnnotationsToLinkTo(annotation: annotationType, annotations: annotationType[]) {
   return annotations.filter(
     (someAnnotation) =>
       annotation.category === someAnnotation.category &&
@@ -48,27 +42,18 @@ function computeAnnotationsToLinkTo<annotationT extends fetchedAnnotationType>(
   );
 }
 
-function equalCaseInsensitive<annotationT extends fetchedAnnotationType>(
-  annotation1: annotationT,
-  annotation2: annotationT,
-): boolean {
+function equalCaseInsensitive(annotation1: annotationType, annotation2: annotationType): boolean {
   return annotation1.text.toUpperCase() === annotation2.text.toUpperCase();
 }
 
-function isSubWord<annotationT extends fetchedAnnotationType>(
-  annotation1: annotationT,
-  annotation2: annotationT,
-): boolean {
+function isSubWord(annotation1: annotationType, annotation2: annotationType): boolean {
   return (
     normalizeString(annotation2.text).includes(`${normalizeString(annotation1.text)} `) ||
     normalizeString(annotation2.text).includes(` ${normalizeString(annotation1.text)}`)
   );
 }
 
-function areSimilarWords<annotationT extends fetchedAnnotationType>(
-  annotation1: annotationT,
-  annotation2: annotationT,
-): boolean {
+function areSimilarWords(annotation1: annotationType, annotation2: annotationType): boolean {
   return computeLevenshteinDistance(normalizeString(annotation1.text), normalizeString(annotation2.text)) <= 2;
 }
 

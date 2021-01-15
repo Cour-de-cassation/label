@@ -14,6 +14,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   return () => ({
     clear,
     findAll,
+    findAllByIds,
     findById,
     insert,
     ...customRepository,
@@ -27,6 +28,12 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
 
   async function findAll() {
     return collection;
+  }
+
+  async function findAllByIds(ids: idType[]) {
+    return collection.filter((document) =>
+      ids.some((id) => idModule.lib.equalId(id, document._id)),
+    );
   }
 
   async function findById(id: idType) {

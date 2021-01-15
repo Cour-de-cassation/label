@@ -22,10 +22,12 @@ function ProblemReportsDataFetcher(props: {
 
 function buildFetchProblemReports() {
   return async () => {
-    const { data: problemReports, statusCode } = await apiCaller.get<'problemReports'>('problemReports');
+    const { data: problemReports, statusCode } = await apiCaller.get<'problemReportsWithDetails'>(
+      'problemReportsWithDetails',
+    );
 
     return {
-      data: problemReports.map((problemReport) => ({
+      data: problemReports.map(({ problemReport }) => ({
         ...problemReport,
         _id: idModule.lib.buildId(problemReport._id),
         assignationId: idModule.lib.buildId(problemReport.assignationId),

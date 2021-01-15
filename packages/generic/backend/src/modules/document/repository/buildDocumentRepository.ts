@@ -30,10 +30,6 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document;
     },
 
-    async findAllByIds(ids) {
-      return collection.find({ _id: { $in: ids } }).toArray();
-    },
-
     async updateStatus(id, status) {
       await collection.updateOne({ _id: id }, { $set: { status } });
     },

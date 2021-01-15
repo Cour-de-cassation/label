@@ -38,10 +38,19 @@ const apiSchema = {
       },
       out: fetchedDataModelEntries.document,
     },
-    problemReports: {
+    problemReportsWithDetails: {
       out: buildDataModelEntry({
         kind: 'list',
-        content: fetchedDataModelEntries.problemReport,
+        content: {
+          kind: 'object',
+          content: {
+            problemReport: fetchedDataModelEntries.problemReport,
+            email: {
+              kind: 'primitive',
+              content: 'string',
+            },
+          },
+        },
       }),
     },
     settings: {

@@ -19,6 +19,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     return {
       clear,
       findAll,
+      findAllByIds,
       findById,
       insert,
       ...customRepository,
@@ -30,6 +31,10 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
 
     async function findAll() {
       return collection.find().toArray();
+    }
+
+    async function findAllByIds(ids: idType[]) {
+      return collection.find({ _id: { $in: ids } } as any).toArray();
     }
 
     async function findById(id: idType) {

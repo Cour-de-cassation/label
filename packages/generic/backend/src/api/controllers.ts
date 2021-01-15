@@ -29,10 +29,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         ),
     }),
 
-    problemReports: buildAuthenticatedController({
+    problemReportsWithDetails: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async () =>
-        problemReportService.fetchProblemReports(),
+        problemReportService.fetchProblemReportsWithDetails(),
     }),
 
     settings: buildAuthenticatedController({

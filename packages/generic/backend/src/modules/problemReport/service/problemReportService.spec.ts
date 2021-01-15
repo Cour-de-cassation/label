@@ -1,4 +1,10 @@
-import { assignationModule, idModule, problemReportModule } from '@label/core';
+import {
+  assignationModule,
+  idModule,
+  problemReportModule,
+  userModule,
+} from '@label/core';
+import { buildUserRepository } from '../../user';
 import { buildAssignationRepository } from '../../assignation';
 import { buildProblemReportRepository } from '../repository';
 import { problemReportService } from './problemReportService';
@@ -53,23 +59,52 @@ describe('problemReportService', () => {
 
   describe('fetchProblemReports', () => {
     const problemReportRepository = buildProblemReportRepository();
+    const assignationRepository = buildAssignationRepository();
+    const userRepository = buildUserRepository();
 
-    const assignationId = idModule.lib.buildId();
-    const problemText = 'PROBLEM_TEXT';
+    const documentId1 = idModule.lib.buildId();
+    const documentId2 = idModule.lib.buildId();
+    const email1 = 'example1@example.com';
+    const email2 = 'example2@example.com';
+    const user1 = userModule.generator.generate({ email: email1 });
+    const user2 = userModule.generator.generate({ email: email2 });
+    const assignation1 = assignationModule.generator.generate({
+      documentId: documentId1,
+      userId: user1._id,
+    });
+    const assignation2 = assignationModule.generator.generate({
+      documentId: documentId2,
+      userId: user2._id,
+    });
+    const problemText1 = 'PROBLEM_TEXT1';
+    const problemText2 = 'PROBLEM_TEXT2';
     const problemType = 'bug';
-    const problemReport = problemReportModule.lib.buildProblemReport({
-      assignationId,
-      text: problemText,
+    const problemReport1 = problemReportModule.lib.buildProblemReport({
+      assignationId: assignation1._id,
+      text: problemText1,
+      type: problemType,
+    });
+    const problemReport2 = problemReportModule.lib.buildProblemReport({
+      assignationId: assignation2._id,
+      text: problemText2,
       type: problemType,
     });
 
     it('should fetch all the problem reports', async () => {
-      await problemReportRepository.insert(problemReport);
+      await userRepository.insert(user1);
+      await userRepository.insert(user2);
+      await assignationRepository.insert(assignation1);
+      await assignationRepository.insert(assignation2);
+      await problemReportRepository.insert(problemReport1);
+      await problemReportRepository.insert(problemReport2);
 
-      const problemReports = await problemReportService.fetchProblemReports();
+      const problemReports = await problemReportService.fetchProblemReportsWithDetails();
 
-      expect(problemReports.length).toBe(1);
-      expect(problemReports[0].text).toBe(problemText);
+      expect(problemReports.length).toBe(2);
+      expect(problemReports[0].problemReport.text).toBe(problemText1);
+      expect(problemReports[0].email).toBe(email1);
+      expect(problemReports[1].problemReport.text).toBe(problemText2);
+      expect(problemReports[1].email).toBe(email2);
     });
   });
 });

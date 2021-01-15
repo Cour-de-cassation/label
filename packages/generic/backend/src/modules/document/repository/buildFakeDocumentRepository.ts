@@ -24,13 +24,6 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
 
       return result;
     },
-
-    async findAllByIds(ids) {
-      return collection.filter((document) =>
-        ids.some((id) => idModule.lib.equalId(id, document._id)),
-      );
-    },
-
     async updateStatus(id, status) {
       collection = collection.map((document) =>
         idModule.lib.equalId(id, document._id)

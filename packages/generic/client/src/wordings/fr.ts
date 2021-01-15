@@ -67,6 +67,7 @@ const fr = {
     table: {
       columnTitles: {
         number: 'N° décision',
+        agent: 'Agent',
         text: 'Message',
         type: 'Type',
       },

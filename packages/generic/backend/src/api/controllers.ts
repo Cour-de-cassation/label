@@ -60,14 +60,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           documentId: idModule.lib.buildId(documentId),
           duration,
         });
-
-        /*await annotationService.updateAnnotations(
-          idModule.lib.buildId(documentId),
-          fetchedGraphQLAnnotations.map((fetchedGraphQLAnnotation) => ({
-            ...fetchedGraphQLAnnotation,
-            _id: idModule.lib.buildId(fetchedGraphQLAnnotation._id),
-          })),
-        );*/
       },
     }),
 

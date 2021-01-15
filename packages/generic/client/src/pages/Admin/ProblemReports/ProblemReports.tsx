@@ -10,13 +10,13 @@ function ProblemReports() {
   const styles = buildStyles(theme);
   return (
     <ProblemReportsDataFetcher>
-      {({ problemReports }) => (
+      {({ problemReportsWithDetails }) => (
         <div style={styles.table}>
           <div style={styles.tableHeaderContainer}>
             <div style={styles.tableHeader}></div>
           </div>
           <div style={styles.tableContentContainer}>
-            <ProblemReportsTable problemReports={problemReports} />
+            <ProblemReportsTable problemReportsWithDetails={problemReportsWithDetails} />
           </div>
         </div>
       )}

@@ -10,7 +10,6 @@ function SettingsDataFetcher(props: {
   children: (fetched: { settings: settingsType }) => ReactElement;
 }) {
   const settingsFetchInfo = useApi(buildFetchSettings());
-
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
@@ -27,6 +26,11 @@ function buildFetchSettings() {
       statusCode,
     } = await apiCaller.get<'settings'>('settings');
 
-    return { data: settingsModule.lib.parseFromJson(json) as settingsType, statusCode };
+    try {
+      const data = settingsModule.lib.parseFromJson(json) as settingsType;
+      return { data, statusCode };
+    } catch (_) {
+      return { data: undefined, statusCode };
+    }
   };
 }

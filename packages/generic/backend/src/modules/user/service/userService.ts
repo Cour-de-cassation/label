@@ -55,14 +55,6 @@ const userService = {
     const hashedPassword = await hasher.hash(password);
     return await userRepository.updatePassword(user, hashedPassword);
   },
-  extractUserIdFromAuthorizationHeader(authorization?: string) {
-    if (!authorization) {
-      throw new Error('No authorization value provided');
-    }
-    const token = authorization.split(' ')[1];
-    const userId = jwtSigner.verifyToken(token);
-    return idModule.lib.buildId(userId);
-  },
   async fetchAuthenticatedUserFromAuthorizationHeader(authorization?: string) {
     const userRepository = buildUserRepository();
 

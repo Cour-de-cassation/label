@@ -19,12 +19,14 @@
     "**/@typescript-eslint/parser": "^4.4.1"
   },
   "scripts": {
-    "bootstrap": "lerna run compile && lerna run --scope @label/backend --scope @label/client bootstrap --stream && mv ./packages/generic/backend/templates/docker-compose-local.yml ./ && mv ./packages/generic/backend/templates/docker-compose-prod.yml ./ && mv ./packages/generic/backend/templates/docker-compose-client.yml ./ && mv ./packages/generic/backend/templates/startProd.sh ./scripts",
+    "bootstrap": "lerna run compile && lerna run --scope @label/backend --scope @label/client bootstrap --stream && mv ./packages/generic/backend/templates/docker-compose-local.yml ./ && mv ./packages/generic/backend/templates/docker-compose-local-rpvj.yml ./ && mv ./packages/generic/backend/templates/docker-compose-prod.yml ./ && mv ./packages/generic/backend/templates/docker-compose-prod-rpvj.yml ./ && mv ./packages/generic/backend/templates/docker-compose-client.yml ./ && mv ./packages/generic/backend/templates/startProd.sh ./scripts",
     "build": "lerna run build --stream ",
     "buildLocal": "lerna run --ignore @label/client build --stream",
     "buildLocalDocker": "docker-compose -f docker-compose-local.yml build",
+    "buildLocalDockerRpvj": "docker-compose -f docker-compose-local-rpvj.yml build",
     "buildProd": "yarn build && cp -r packages/generic/client/build/ packages/generic/backend/",
     "buildProdDocker": "docker-compose -f docker-compose-prod.yml build",
+    "buildProdDockerRpvj": "docker-compose -f docker-compose-prod-rpvj.yml build",
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",
     "compile": "lerna run compile",
@@ -33,8 +35,10 @@
     "startLocal": "scripts/startLocal.sh",
     "startLocalClient": "yarn compileClient && cd packages/generic/client && yarn start",
     "startLocalDocker": "docker-compose -f docker-compose-local.yml up",
+    "startLocalDockerRpvj": "docker-compose -f docker-compose-local-rpvj.yml up",
     "startProd": "scripts/startProd.sh",
     "startProdDocker": "docker-compose -f docker-compose-prod.yml up",
+    "startProdDockerRpvj": "docker-compose -f docker-compose-prod-rpvj.yml up",
     "test": "lerna run test",
     "type": "lerna run type",
     "up": "git pull && yarn && yarn bootstrap && yarn buildProdDocker && yarn startProdDocker"

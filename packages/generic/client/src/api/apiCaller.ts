@@ -1,5 +1,4 @@
-import { apiSchema } from '@label/core';
-import { environment } from '../config/environment';
+import { apiSchema, environment } from '@label/core';
 import { localStorage } from '../services/localStorage';
 import { apiArgsType, apiResultType } from './apiArgsType';
 
@@ -17,7 +16,7 @@ const apiCaller = {
   }> {
     const bearerToken = localStorage.bearerTokenHandler.get();
 
-    const response = await fetch(buildUrlWithParams(`${environment.API_URL}/api/${routeName}`, args), {
+    const response = await fetch(buildUrlWithParams(`${environment.url.server}/api/${routeName}`, args), {
       cache: 'default',
       headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,
       method: 'get',
@@ -39,7 +38,7 @@ const apiCaller = {
   }> {
     const bearerToken = localStorage.bearerTokenHandler.get();
 
-    const response = await fetch(`${environment.API_URL}/api/${routeName}`, {
+    const response = await fetch(`${environment.url.server}/api/${routeName}`, {
       body: JSON.stringify(args),
       cache: 'default',
       headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,

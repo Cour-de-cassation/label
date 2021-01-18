@@ -9,14 +9,10 @@ import { userController } from '../modules/user';
 import { setup } from './setup';
 
 const app = express();
-const port = environment.port.server;
 
 app.use(
   cors({
-    origin: [
-      `http://localhost:${environment.port.client}`,
-      `http://bkpanonym:${environment.port.client}`,
-    ],
+    origin: [environment.url.client],
   }),
 );
 
@@ -33,6 +29,6 @@ app.post(
 
 buildApi(app);
 
-app.listen(port, async () => {
+app.listen(environment.port.server, async () => {
   await setup();
 });

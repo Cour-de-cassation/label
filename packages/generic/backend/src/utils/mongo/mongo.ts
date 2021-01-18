@@ -9,7 +9,7 @@ type mongoCollectionType<T> = Collection<T>;
 
 const mongo = buildMongo({
   dbName: environment.dbName,
-  url: `mongodb://${environment.dbName}:${environment.port.db}`,
+  url: environment.url.db,
 });
 
 function buildMongo({ dbName, url }: { dbName: string; url: string }) {

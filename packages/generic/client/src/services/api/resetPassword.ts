@@ -1,5 +1,4 @@
-import { httpRequester } from '@label/core';
-import { environment } from '../../config/environment';
+import { environment, httpRequester } from '@label/core';
 
 export { resetPassword };
 
@@ -7,7 +6,7 @@ type resetPasswordRequestDataType = { password: string; resetPasswordToken: stri
 
 const resetPassword = (password: string, resetPasswordToken: string) =>
   httpRequester.request<resetPasswordRequestDataType>({
-    url: `${environment.API_URL}/reset-password`,
+    url: `${environment.url.server}/reset-password`,
     headers: null,
     method: 'post',
     data: { password, resetPasswordToken },

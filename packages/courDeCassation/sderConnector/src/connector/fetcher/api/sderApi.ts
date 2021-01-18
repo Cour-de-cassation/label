@@ -17,6 +17,17 @@ const sderApi: sderApiType = {
     await mongo.initialize();
     const collection = mongo.getDb().collection('decision');
 
-    return collection.find().toArray();
+    return collection
+      .find({
+        dateCreation: { $gte: computeOneMonthAgoDate() },
+      })
+      .toArray();
   },
 };
+
+function computeOneMonthAgoDate() {
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+  return oneMonthAgo.toISOString();
+}

@@ -23,65 +23,51 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
   };
 
   async function annotateDocuments(documents: documentType[]) {
-    logger.log(
-      `Fetching annotation with ${annotatorConfig.name} for ${documents.length} documents...`,
-    );
-    const fetchedAnnotatingInformations = await Promise.all(
-      documents.map(annotatorConfig.fetchAnnotationOfDocument),
-    );
-    logger.log(`Annotations fetched!`);
+    for (let ind = 0; ind < documents.length; ind++) {
+      logger.log(
+        `Annotating  with ${annotatorConfig.name} document ${ind + 1}/${
+          documents.length
+        }`,
+      );
+      await annotateDocument(documents[ind]);
+    }
+  }
 
-    const annotationsAndDocumentIds = fetchedAnnotatingInformations.map(
-      (fetchedAnnotatingInformation) => ({
-        annotations: fetchedAnnotatingInformation.annotations,
-        documentId: fetchedAnnotatingInformation.documentId,
-      }),
-    );
-    const reports = fetchedAnnotatingInformations.map(
-      (fetchedAnnotatingInformation) => fetchedAnnotatingInformation.report,
-    );
+  async function annotateDocument(document: documentType) {
+    const {
+      annotations,
+      documentId,
+      report,
+    } = await annotatorConfig.fetchAnnotationOfDocument(document);
 
-    logger.log(
-      `Insertion of ${annotationsAndDocumentIds.length} treatments into the database...`,
-    );
-    await insertTreatments(annotationsAndDocumentIds);
-    logger.log(`Insertion done!`);
-
-    logger.log(`Insertion of ${reports.length} reports into the database...`);
-    await insertReports(reports);
-    logger.log(`Insertion done!`);
+    await insertTreatment({ annotations, documentId });
+    await insertReport(report);
   }
 }
 
-async function insertTreatments(
-  annotationsAndDocumentIds: {
-    annotations: annotationType[];
-    documentId: idType;
-  }[],
-) {
+async function insertTreatment({
+  annotations,
+  documentId,
+}: {
+  annotations: annotationType[];
+  documentId: idType;
+}) {
   const treatmentRepository = buildTreatmentRepository();
 
-  return Promise.all(
-    annotationsAndDocumentIds.map(({ annotations, documentId }) => {
-      return treatmentRepository.insert(
-        treatmentModule.lib.buildTreatment({
-          documentId,
-          duration: 0,
-          order: 0,
-          annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff(
-            [],
-            annotations,
-          ),
-        }),
-      );
+  return treatmentRepository.insert(
+    treatmentModule.lib.buildTreatment({
+      documentId,
+      duration: 0,
+      order: 0,
+      annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff(
+        [],
+        annotations,
+      ),
     }),
   );
 }
 
-async function insertReports(reports: annotationReportType[]) {
+async function insertReport(report: annotationReportType) {
   const annotationReportRepository = buildAnnotationReportRepository();
-
-  for await (const report of reports) {
-    await annotationReportRepository.insert(report);
-  }
+  await annotationReportRepository.insert(report);
 }

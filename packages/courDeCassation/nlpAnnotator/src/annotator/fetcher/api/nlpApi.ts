@@ -1,9 +1,12 @@
-import { httpRequester } from '@label/core';
+import { dependencyManager, httpRequester } from '@label/core';
 import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
 
 export { nlpApi };
 
-const NLP_API_BASE_URL = 'http://bkpanonym:8080';
+const NLP_API_BASE_URL = dependencyManager.inject({
+  forPreProd: 'http://bkpanonym:8080',
+  forProd: 'http://srpanonym:8080',
+});
 
 const nlpApi: nlpApiType = {
   async fetchNlpAnnotations(document) {

@@ -1,5 +1,7 @@
 import React from 'react';
+import { MainHeader } from '../../../components';
 import { customThemeType, heights, useCustomTheme } from '../../../styles';
+import { wordings } from '../../../wordings';
 import { ProblemReportsDataFetcher } from './ProblemReportsDataFetcher';
 import { ProblemReportsTable } from './ProblemReportsTable';
 
@@ -9,16 +11,19 @@ function ProblemReports() {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   return (
-    <ProblemReportsDataFetcher>
+    <ProblemReportsDataFetcher alwaysDisplayHeader>
       {({ problemReportsWithDetails }) => (
-        <div style={styles.table}>
-          <div style={styles.tableHeaderContainer}>
-            <div style={styles.tableHeader}></div>
+        <>
+          <MainHeader title={wordings.problemReportsPage.title} subtitle={wordings.problemReportsPage.subtitle} />
+          <div style={styles.table}>
+            <div style={styles.tableHeaderContainer}>
+              <div style={styles.tableHeader}></div>
+            </div>
+            <div style={styles.tableContentContainer}>
+              <ProblemReportsTable problemReportsWithDetails={problemReportsWithDetails} />
+            </div>
           </div>
-          <div style={styles.tableContentContainer}>
-            <ProblemReportsTable problemReportsWithDetails={problemReportsWithDetails} />
-          </div>
-        </div>
+        </>
       )}
     </ProblemReportsDataFetcher>
   );

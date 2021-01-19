@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { CustomError } from '@label/core';
 
 export { useApi };
 
@@ -15,9 +16,13 @@ function useApi<T>(callApi: () => Promise<{ data: T; statusCode: number }>) {
         setIsLoaded(true);
         setStatusCode(statusCode);
       },
-      () => {
+      (error) => {
         setIsLoaded(true);
-        setStatusCode(500);
+        if (error instanceof CustomError) {
+          setStatusCode(error.statusCode);
+        } else {
+          setStatusCode(500);
+        }
       },
     );
   }, [refetchFlag]);

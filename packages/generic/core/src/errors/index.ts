@@ -1,5 +1,5 @@
-import { CustomError, errorHandlers, errorCodeType } from './errorHandlers';
+import { CustomError, errorHandlers, errorCodeType, throwFromStatusCode } from './errorHandlers';
 
-export { CustomError, errorHandlers };
+export { CustomError, errorHandlers, throwFromStatusCode };
 
 export type { errorCodeType };

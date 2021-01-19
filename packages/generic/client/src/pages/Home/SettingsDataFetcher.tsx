@@ -21,16 +21,7 @@ function SettingsDataFetcher(props: {
 
 function buildFetchSettings() {
   return async () => {
-    const {
-      data: { json },
-      statusCode,
-    } = await apiCaller.get<'settings'>('settings');
-
-    try {
-      const data = settingsModule.lib.parseFromJson(json) as settingsType;
-      return { data, statusCode };
-    } catch (_) {
-      return { data: undefined, statusCode };
-    }
+    const { data, statusCode } = await apiCaller.get<'settings'>('settings');
+    return { data: settingsModule.lib.parseFromJson(data.json) as settingsType, statusCode };
   };
 }

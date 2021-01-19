@@ -1,6 +1,6 @@
 import { httpStatusCodeHandler } from '../utils';
 
-export { CustomError, errorHandlers };
+export { CustomError, errorHandlers, throwFromStatusCode };
 
 export type { errorCodeType };
 
@@ -18,6 +18,8 @@ class CustomError extends Error {
   constructor({ description, statusCode }: { description: string; statusCode: errorCodeType }) {
     super(description);
     this.statusCode = statusCode;
+
+    Object.setPrototypeOf(this, CustomError.prototype);
   }
 }
 
@@ -30,5 +32,14 @@ function buildErrorHandler(statusCode: errorCodeType) {
 
   function check(anotherStatusCode: number) {
     return anotherStatusCode === statusCode;
+  }
+}
+
+function throwFromStatusCode(statusCode: number) {
+  const errorDescription = 'A custom error has been thrown';
+  if (httpStatusCodeHandler.isError(statusCode)) {
+    throw buildErrorHandler(statusCode as errorCodeType).build(errorDescription);
+  } else {
+    throw errorHandlers.serverErrorHandler.build(errorDescription);
   }
 }

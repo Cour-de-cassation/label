@@ -1,4 +1,12 @@
-import { apiSchema, apiRouteInType, apiRouteOutType, environment, networkType } from '@label/core';
+import {
+  apiSchema,
+  httpStatusCodeHandler,
+  apiRouteInType,
+  apiRouteOutType,
+  environment,
+  networkType,
+  throwFromStatusCode,
+} from '@label/core';
 import { localStorage } from '../services/localStorage';
 
 export { apiCaller };
@@ -22,8 +30,10 @@ const apiCaller = {
       mode: 'cors',
     });
 
+    const data = (await computeDataFromResponse(response)) as networkType<apiRouteOutType<'get', routeNameT>>;
+
     return {
-      data: (await computeDataFromResponse(response)) as networkType<apiRouteOutType<'get', routeNameT>>,
+      data,
       statusCode: response.status,
     };
   },
@@ -45,8 +55,10 @@ const apiCaller = {
       mode: 'cors',
     });
 
+    const data = (await computeDataFromResponse(response)) as networkType<apiRouteOutType<'post', routeNameT>>;
+
     return {
-      data: (await computeDataFromResponse(response)) as networkType<apiRouteOutType<'post', routeNameT>>,
+      data,
       statusCode: response.status,
     };
   },
@@ -66,6 +78,9 @@ function buildUrlWithParams(url: string, params?: { [key: string]: any }) {
 async function computeDataFromResponse(response: Response): Promise<any> {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   /* eslint-disable @typescript-eslint/no-unsafe-return */
+  if (!httpStatusCodeHandler.isSuccess(response.status)) {
+    throwFromStatusCode(response.status);
+  }
   try {
     const textData = await response.text();
     try {
@@ -74,7 +89,7 @@ async function computeDataFromResponse(response: Response): Promise<any> {
     } catch (_) {
       return textData;
     }
-  } catch (_) {
-    return undefined;
+  } catch (error) {
+    throwFromStatusCode(response.status);
   }
 }

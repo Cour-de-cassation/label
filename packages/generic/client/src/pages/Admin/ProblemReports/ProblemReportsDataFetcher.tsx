@@ -29,7 +29,6 @@ function buildFetchProblemReports() {
     const { data: problemReportsWithDetails, statusCode } = await apiCaller.get<'problemReportsWithDetails'>(
       'problemReportsWithDetails',
     );
-
     return {
       data: problemReportsWithDetails.map(({ problemReport, email }) => ({
         problemReport: {

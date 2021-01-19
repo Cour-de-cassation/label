@@ -10,34 +10,24 @@ services:
       - 55431
     ports:
       - 55431:55431
-    networks:
-      label-network:
-        ipv4_address: 10.5.0.5
   backend:
     build:
       context: ./
       dockerfile: DockerfileProd
     environment:
-      - RUN_MODE=PROD
+      - RUN_MODE=PREPROD
       - SENDGRID_API_KEY=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
       - WEBAPP_URL=http://localhost:55432
     image: label-prod
     ports:
       - 55430:55430
       - 55432:55432
-    networks:
-      label-network:
-        ipv4_address: 10.5.0.6  
     depends_on:
       - labelDb
 
 networks:
-  label-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16
-          gateway: 10.5.0.1
+  default:
+    name: label-network
 
 volumes:
   mongo-storage:

@@ -1,6 +1,7 @@
 import { bootstrap, environments } from '@label/core';
 
 const bootstrapLocalValues = buildBootstrapValue('local');
+const bootstrapPreProdValues = buildBootstrapValue('preProd');
 const bootstrapProdValues = buildBootstrapValue('prod');
 
 const filesToBootstrapForLocal = [
@@ -15,6 +16,17 @@ const filesToBootstrapForLocal = [
   {
     template: './templates/docker-compose-client-template.yml',
     target: './templates/docker-compose-client.yml',
+  },
+];
+
+const filesToBootstrapForPreProd = [
+  {
+    template: './templates/docker-compose-pre-prod-template.yml',
+    target: './templates/docker-compose-pre-prod.yml',
+  },
+  {
+    template: './templates/docker-compose-pre-prod-rpvj-template.yml',
+    target: './templates/docker-compose-pre-prod-rpvj.yml',
   },
 ];
 
@@ -34,9 +46,10 @@ const filesToBootstrapForProd = [
 ];
 
 bootstrap(filesToBootstrapForLocal, bootstrapLocalValues);
+bootstrap(filesToBootstrapForPreProd, bootstrapPreProdValues);
 bootstrap(filesToBootstrapForProd, bootstrapProdValues);
 
-function buildBootstrapValue(target: 'local' | 'prod') {
+function buildBootstrapValue(target: 'local' | 'preProd' | 'prod') {
   return {
     clientPort: environments[target].port.client,
     dbIp: environments[target].ip.db,

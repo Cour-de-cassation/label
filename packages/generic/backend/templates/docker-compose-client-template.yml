@@ -13,4 +13,5 @@ services:
     ports:
       - {clientPort}:{clientPort}
     environment:
+      - RUN_MODE=LOCAL
       - CHOKIDAR_USEPOLLING=true

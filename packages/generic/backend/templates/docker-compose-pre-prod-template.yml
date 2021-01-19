@@ -10,34 +10,24 @@ services:
       - {dbPort}
     ports:
       - {dbPort}:{dbPort}
-    networks:
-      label-network:
-        ipv4_address: {dbIp}
   backend:
     build:
       context: ./
       dockerfile: DockerfileProd
     environment:
-      - RUN_MODE=PROD
+      - RUN_MODE=PREPROD
       - SENDGRID_API_KEY=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
       - WEBAPP_URL=http://localhost:{clientPort}
     image: label-prod
     ports:
       - {serverPort}:{serverPort}
       - {clientPort}:{clientPort}
-    networks:
-      label-network:
-        ipv4_address: {serverIp}  
     depends_on:
       - {dbName}
 
 networks:
-  label-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16
-          gateway: 10.5.0.1
+  default:
+    name: label-network
 
 volumes:
   mongo-storage:

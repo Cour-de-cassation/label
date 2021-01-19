@@ -13,4 +13,5 @@ services:
     ports:
       - 55432:55432
     environment:
+      - RUN_MODE=LOCAL
       - CHOKIDAR_USEPOLLING=true

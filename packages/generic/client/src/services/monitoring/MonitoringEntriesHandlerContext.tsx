@@ -32,9 +32,13 @@ function MonitoringEntriesHandlerContextProvider(props: {
     </MonitoringEntriesHandlerContext.Provider>
   );
 
-  function uploadMonitoringEntries(newMonitoringEntries: fetchedMonitoringEntryType[]) {
-    return apiCaller.post<'monitoringEntries'>('monitoringEntries', {
-      newMonitoringEntries,
-    });
+  async function uploadMonitoringEntries(newMonitoringEntries: fetchedMonitoringEntryType[]) {
+    try {
+      await apiCaller.post<'monitoringEntries'>('monitoringEntries', {
+        newMonitoringEntries,
+      });
+    } catch (error) {
+      console.warn(error);
+    }
   }
 }

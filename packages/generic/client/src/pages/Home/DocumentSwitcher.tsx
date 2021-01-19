@@ -78,14 +78,18 @@ function DocumentSwitcher(props: {
 
   async function onStopAnnotatingDocument() {
     resetMonitoringEntries();
-    await props.fetchNewDocumentsToBeTreated();
+    props.fetchNewDocumentsToBeTreated();
   }
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: annotationType[] }) {
-    await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-      documentId: choice.document._id,
-      status: 'saved',
-    });
-    setDocumentState({ kind: 'annotating', choice });
+    try {
+      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        documentId: choice.document._id,
+        status: 'saved',
+      });
+      setDocumentState({ kind: 'annotating', choice });
+    } catch (error) {
+      console.warn(error);
+    }
   }
 }

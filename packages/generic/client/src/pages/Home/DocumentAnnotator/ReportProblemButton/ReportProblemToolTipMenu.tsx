@@ -131,22 +131,25 @@ function ReportProblemToolTipMenu(props: {
   async function sendProblemReportAndClose() {
     if (problemCategory) {
       setIsSentWithoutCategory(false);
-
-      await apiCaller.post<'problemReport'>('problemReport', {
-        documentId: annotatorState.document._id,
-        problemType: problemCategory,
-        problemText: problemDescription,
-      });
-
-      if (isBlocking) {
-        await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+      try {
+        await apiCaller.post<'problemReport'>('problemReport', {
           documentId: annotatorState.document._id,
-          status: 'rejected',
+          problemType: problemCategory,
+          problemText: problemDescription,
         });
-        props.onStopAnnotatingDocument();
-      }
 
-      closeTooltipMenu();
+        if (isBlocking) {
+          await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+            documentId: annotatorState.document._id,
+            status: 'rejected',
+          });
+          props.onStopAnnotatingDocument();
+        }
+
+        closeTooltipMenu();
+      } catch (error) {
+        console.warn(error);
+      }
     } else {
       setIsSentWithoutCategory(true);
     }

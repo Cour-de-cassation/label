@@ -1,10 +1,10 @@
 import React from 'react';
 import { documentType } from '@label/core';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
-import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { apiCaller } from '../../../api';
-import { useAnnotatorStateHandler } from '../../../services/annotatorState';
+import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { useMonitoring } from '../../../services/monitoring';
+import { useAnnotatorStateHandler } from '../../../services/annotatorState';
+import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { clientAnonymizerType } from '../../../types';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
@@ -103,15 +103,19 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
     const duration = getTotalDuration();
 
-    await apiCaller.post<'createTreatment'>('createTreatment', {
-      annotationsDiff: annotatorStateHandler.getGlobalAnnotationsDiff(),
-      documentId: annotatorState.document._id,
-      duration,
-    });
-    await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-      documentId: annotatorState.document._id,
-      status,
-    });
+    try {
+      await apiCaller.post<'createTreatment'>('createTreatment', {
+        annotationsDiff: annotatorStateHandler.getGlobalAnnotationsDiff(),
+        documentId: annotatorState.document._id,
+        duration,
+      });
+      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        documentId: annotatorState.document._id,
+        status,
+      });
+    } catch (error) {
+      console.warn(error);
+    }
   }
 }
 

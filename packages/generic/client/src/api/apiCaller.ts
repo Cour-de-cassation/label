@@ -7,12 +7,11 @@ import {
   throwFromStatusCode,
 } from '@label/core';
 import { localStorage } from '../services/localStorage';
+import { urlHandler } from '../utils';
 
 export { apiCaller };
 
 const DEFAULT_HEADER = { 'Content-Type': 'application/json' };
-
-const SERVER_URL = 'http://localhost:55430';
 
 const apiCaller = {
   async get<routeNameT extends keyof typeof apiSchema.get>(
@@ -24,7 +23,7 @@ const apiCaller = {
   }> {
     const bearerToken = localStorage.bearerTokenHandler.get();
 
-    const response = await fetch(buildUrlWithParams(`${SERVER_URL}/api/${routeName}`, args), {
+    const response = await fetch(buildUrlWithParams(`${urlHandler.getApiUrl()}/api/${routeName}`, args), {
       cache: 'default',
       headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,
       method: 'get',
@@ -48,7 +47,7 @@ const apiCaller = {
   }> {
     const bearerToken = localStorage.bearerTokenHandler.get();
 
-    const response = await fetch(`${SERVER_URL}/api/${routeName}`, {
+    const response = await fetch(`${urlHandler.getApiUrl()}/api/${routeName}`, {
       body: JSON.stringify(args),
       cache: 'default',
       headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,

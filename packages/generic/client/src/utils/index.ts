@@ -1,2 +1,4 @@
 import { useMousePosition, MouseMoveListener } from './mousePosition';
-export { useMousePosition, MouseMoveListener };
+import { urlHandler } from './urlHandler';
+
+export { urlHandler, useMousePosition, MouseMoveListener };

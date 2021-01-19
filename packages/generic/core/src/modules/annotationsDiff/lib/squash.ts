@@ -4,7 +4,7 @@ import { buildAnnotationsDiff } from './buildAnnotationsDiff';
 export { squash };
 
 function squash(annotationsDiffs: annotationsDiffType[]): annotationsDiffType {
-  return annotationsDiffs.reduce(squashDiff);
+  return annotationsDiffs.reduce(squashDiff, { before: [], after: [] });
 }
 
 function squashDiff(

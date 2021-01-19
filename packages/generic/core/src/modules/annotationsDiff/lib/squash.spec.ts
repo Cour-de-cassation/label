@@ -18,4 +18,12 @@ describe('squash', () => {
 
     expect(annotationsDiff).toEqual(buildAnnotationsDiff([], [annotations[2], annotations[3], annotations[4]]));
   });
+
+  it('should work with no annotationDiff', () => {
+    const annotationsDiffs = [].map(annotationsDiffGenerator.generate);
+
+    const annotationsDiff = squash(annotationsDiffs);
+
+    expect(annotationsDiff).toEqual({ before: [], after: [] });
+  });
 });

@@ -1,6 +1,10 @@
 export { fr };
 
 const fr = {
+  agentsPage: {
+    title: 'Administration',
+    subtitle: 'Gestion des agents',
+  },
   homePage: {
     anonymisedView: 'Vue anonymisée',
     applyEveryWhere: 'Appliquer à tous',

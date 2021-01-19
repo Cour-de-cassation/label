@@ -1,8 +1,9 @@
-import { apiSchema, apiSchemaMethodNameType, networkType, typeOfDataModelEntryType } from '@label/core';
+import { idType, typeOfDataModelEntryType } from '../modules';
+import { apiSchema, apiSchemaMethodNameType } from './apiSchema';
 
-export type { apiArgsType, apiResultType };
+export type { apiRouteInType, apiRouteOutType, networkType };
 
-type apiArgsType<
+type apiRouteInType<
   methodNameT extends apiSchemaMethodNameType,
   routeNameT extends keyof typeof apiSchema[methodNameT]
 > = Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT] extends { in: { [argName: string]: any } }
@@ -11,11 +12,21 @@ type apiArgsType<
         Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['in'][argName]
       >;
     }
-  : never;
+  : undefined;
 
-type apiResultType<
+type apiRouteOutType<
   methodNameT extends apiSchemaMethodNameType,
   routeNameT extends keyof typeof apiSchema[methodNameT]
 > = Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT] extends { out: any }
-  ? networkType<typeOfDataModelEntryType<Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['out']>>
+  ? typeOfDataModelEntryType<Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['out']>
   : never;
+
+type networkType<T> = T extends { [key: string]: unknown }
+  ? { [key in keyof T]: networkType<T[key]> }
+  : T extends Array<unknown>
+  ? Array<networkType<T[0]>>
+  : T extends idType
+  ? string
+  : T extends Date
+  ? string
+  : T;

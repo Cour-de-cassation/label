@@ -1,27 +1,22 @@
 import React, { ReactElement } from 'react';
-import { idModule, problemReportType } from '@label/core';
+import { apiRouteOutType, idModule } from '@label/core';
 import { apiCaller, useApi } from '../../../api';
 import { DataFetcher } from '../../DataFetcher';
 
 export { ProblemReportsDataFetcher };
 
-export type { problemReportWithDetailsType };
-
-type problemReportWithDetailsType = {
-  problemReport: problemReportType;
-  email: string;
-};
-
 function ProblemReportsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
-  children: (fetched: { problemReportsWithDetails: problemReportWithDetailsType[] }) => ReactElement;
+  children: (fetched: {
+    problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
+  }) => ReactElement;
 }) {
   const problemReportsFetchInfo = useApi(buildFetchProblemReports());
 
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
-      buildComponentWithData={(problemReportsWithDetails: problemReportWithDetailsType[]) =>
+      buildComponentWithData={(problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>) =>
         props.children({ problemReportsWithDetails })
       }
       fetchInfo={problemReportsFetchInfo}

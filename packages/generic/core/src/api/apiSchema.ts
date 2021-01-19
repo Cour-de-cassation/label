@@ -159,7 +159,8 @@ const apiSchema = {
 } as const;
 
 type apiSchemaType = {
-  [methodName in apiSchemaMethodNameType]: apiSchemaMethodType;
+  get: apiSchemaMethodType;
+  post: apiSchemaMethodType;
 };
 
 type apiSchemaMethodNameType = 'get' | 'post';

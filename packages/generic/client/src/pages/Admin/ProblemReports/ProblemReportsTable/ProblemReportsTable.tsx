@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
+import { apiRouteOutType } from '@label/core';
 import { ProblemReportIcon, Table, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
-import { problemReportWithDetailsType } from '../ProblemReportsDataFetcher';
 
 export { ProblemReportsTable };
 
@@ -14,7 +14,9 @@ type formattedProblemReportType = {
 
 const PROBLEM_REPORT_ICON_SIZE = 30;
 
-function ProblemReportsTable(props: { problemReportsWithDetails: problemReportWithDetailsType[] }) {
+function ProblemReportsTable(props: {
+  problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
+}) {
   const formattedProblemReports = formatProblemReportsWithDetails(props.problemReportsWithDetails);
   return (
     <Table
@@ -47,7 +49,7 @@ function ProblemReportsTable(props: { problemReportsWithDetails: problemReportWi
 }
 
 function formatProblemReportsWithDetails(
-  problemReportsWithDetails: problemReportWithDetailsType[],
+  problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>,
 ): formattedProblemReportType[] {
   return problemReportsWithDetails.map(({ problemReport, email }) => ({
     _id: `${problemReport._id}`,

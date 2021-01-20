@@ -2,6 +2,8 @@
   "dependencies": {
     "@label/backend": "*",
     "@label/core": "*",
+    "axios": "0.21.1",
+    "fast-xml-parser": "^3.17.4",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
@@ -38,7 +40,7 @@
     "testEnvironment": "node"
   },
   "main": "dist/index",
-  "name": "@label/cour-de-cassation-nlp-annotator",
+  "name": "@label/cour-de-cassation",
   "scripts": {
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",

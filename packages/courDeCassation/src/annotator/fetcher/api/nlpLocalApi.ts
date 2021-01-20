@@ -3,7 +3,7 @@ import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
 
 export { nlpLocalApi };
 
-const pathToNlpAnnotations = './storage/';
+const pathToNlpAnnotations = './storage/annotations/';
 
 const nlpLocalApi: nlpApiType = {
   async fetchNlpAnnotations(document) {

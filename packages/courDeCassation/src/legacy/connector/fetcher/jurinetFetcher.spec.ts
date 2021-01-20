@@ -14,7 +14,8 @@ describe('jurinetFetcher', () => {
       jurinetCourtDecisions.forEach(jurinetCourtDecision =>
         expect(
           documents.some(
-            document => document.documentId === jurinetCourtDecision.oracleId,
+            document =>
+              document.documentId === parseInt(jurinetCourtDecision.oracleId),
           ),
         ),
       );

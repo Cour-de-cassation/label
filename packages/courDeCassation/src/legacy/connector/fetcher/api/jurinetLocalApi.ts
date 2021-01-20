@@ -3,7 +3,7 @@ import { jurinetApiType } from './jurinetApiType';
 
 export { jurinetLocalApi };
 
-const pathToJurinetCourtDecisions = './storage/';
+const pathToJurinetCourtDecisions = './storage/documents/';
 
 const jurinetLocalApi: jurinetApiType = {
   async fetchJurinetCourtDecisions() {

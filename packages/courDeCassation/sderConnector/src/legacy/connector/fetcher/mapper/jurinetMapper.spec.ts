@@ -5,7 +5,7 @@ import { jurinetMapper } from './jurinetMapper';
 const jurinetCourtDecision: jurinetCourtDecisionType = {
   date: new Date(),
   metadata: 'METADATA',
-  oracleId: 'ORACLE_ID',
+  oracleId: '0',
   source: 'jurinet',
   xmlCourtDecision: `<DOCUMENT>
 <NUM_DECISION>12345</NUM_DECISION>
@@ -26,7 +26,7 @@ describe('jurinetMapper', () => {
       expect(omit(document, ['_id', 'locked'])).toEqual({
         creationDate: jurinetCourtDecision.date,
         metadata: jurinetCourtDecision.metadata,
-        documentId: jurinetCourtDecision.oracleId,
+        documentId: parseInt(jurinetCourtDecision.oracleId),
         source: jurinetCourtDecision.source,
         status: 'free',
         title:

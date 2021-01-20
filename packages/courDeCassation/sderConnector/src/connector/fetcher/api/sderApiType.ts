@@ -14,6 +14,6 @@ type sderCourtDecisionType = {
   jurisdictionName: string;
   originalText: string;
   registerNumber: string;
-  sourceId: string;
+  sourceId: number;
   sourceName: string;
 };

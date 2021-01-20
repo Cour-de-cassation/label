@@ -22,7 +22,7 @@ function mapJurinetCourtDecisionToDocument(
 
   return documentModule.lib.buildDocument({
     creationDate: jurinetCourtDecision.date,
-    documentId: jurinetCourtDecision.oracleId,
+    documentId: parseInt(jurinetCourtDecision.oracleId),
     metadata: jurinetCourtDecision.metadata,
     source: jurinetCourtDecision.source,
     title,

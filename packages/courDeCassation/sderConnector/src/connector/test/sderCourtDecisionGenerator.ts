@@ -34,7 +34,7 @@ const sderCourtDecisionGenerator: generatorType<sderCourtDecisionType> = {
     registerNumber: registerNumber
       ? registerNumber
       : `REGISTER_NUMBER_${Math.random()}`,
-    sourceId: sourceId ? sourceId : `SOURCE_ID_${Math.random()}`,
+    sourceId: sourceId ? sourceId : 0,
     sourceName: sourceName ? sourceName : `SOURCE_NAME_${Math.random()}`,
   }),
 };

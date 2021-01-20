@@ -5,8 +5,8 @@ import { sderApiType } from './sderApiType';
 export { sderApi };
 
 const SDER_BDD_URL = dependencyManager.inject({
-  forPreProd: 'http://bkpanonym:27017',
-  forProd: 'http://srpanonym:27017',
+  forPreProd: 'mongodb://bkpanonym:27017',
+  forProd: 'mongodb://srpanonym:27017',
 });
 const SDER_BDD_NAME = 'SDER';
 
@@ -15,7 +15,7 @@ const mongo = buildMongo({ dbName: SDER_BDD_NAME, url: SDER_BDD_URL });
 const sderApi: sderApiType = {
   async fetchCourtDecisions() {
     await mongo.initialize();
-    const collection = mongo.getDb().collection('decision');
+    const collection = mongo.getDb().collection('decisions');
 
     return collection
       .find({

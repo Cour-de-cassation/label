@@ -12,7 +12,7 @@ type formattedProblemReportType = {
   text: string;
 };
 
-const PROBLEM_REPORT_ICON_SIZE = 30;
+const PROBLEM_REPORT_ICON_SIZE = 24;
 
 function ProblemReportsTable(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;

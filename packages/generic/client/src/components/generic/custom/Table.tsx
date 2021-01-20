@@ -1,11 +1,14 @@
 import React, { ReactElement, useState } from 'react';
 import { get } from 'lodash';
+import styled from 'styled-components';
+import { customThemeType, useCustomTheme } from '../../../styles';
 import { TableSortLabel, Text } from '../materialUI';
-import { useCustomTheme } from '../../../styles';
 
 export { Table };
 
 const DEFAULT_ORDER_DIRECTION = 'asc';
+
+const ROW_DEFAULT_HEIGHT = 40;
 
 type orderByPropertyType<T> = keyof T;
 
@@ -32,7 +35,7 @@ function Table<T>(props: {
   return (
     <table style={tableStyle}>
       {renderHeader()}
-      {renderBody()}
+      {renderBody(theme)}
       {renderFooter()}
     </table>
   );
@@ -67,18 +70,25 @@ function Table<T>(props: {
     );
   }
 
-  function renderBody() {
+  function renderBody(theme: customThemeType) {
     const sortedData = sortData(props.data);
+    const style = buildRowStyle();
+    const styleProps = {
+      theme,
+    };
+    const { Div_Row } = buildStyledComponents();
     return (
       <tbody>
         {sortedData.map((row) => (
-          <tr>
-            {Object.values(row).map((value) => (
-              <td>
-                <Text variant="h3">{value}</Text>
-              </td>
-            ))}
-          </tr>
+          <Div_Row styleProps={styleProps}>
+            <tr style={style}>
+              {Object.values(row).map((value) => (
+                <td>
+                  <Text variant="h3">{value}</Text>
+                </td>
+              ))}
+            </tr>
+          </Div_Row>
         ))}
       </tbody>
     );
@@ -140,11 +150,40 @@ function Table<T>(props: {
     } as const;
   }
 
+  function buildStyledComponents() {
+    type stylePropsType = {
+      styleProps: {
+        theme: customThemeType;
+      };
+    };
+
+    const Div_Row = styled.div<stylePropsType>`
+      ${({ styleProps }) => {
+        return `
+          border-radius: ${styleProps.theme.shape.borderRadius.medium}px;
+
+          &:hover {
+            background-color: ${styleProps.theme.colors.default.background};
+            cursor: pointer;
+          }
+      `;
+      }}
+    `;
+    return {
+      Div_Row,
+    };
+  }
+
+  function buildRowStyle() {
+    return {
+      height: `${ROW_DEFAULT_HEIGHT}px`,
+    };
+  }
+
   function buildHeaderStickyStyle() {
     return {
       backgroundColor: theme.colors.background,
       top: 0,
-
       position: 'sticky',
     } as const;
   }

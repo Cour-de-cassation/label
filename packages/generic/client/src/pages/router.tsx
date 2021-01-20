@@ -15,15 +15,15 @@ export { Router };
 const Router: FunctionComponent = () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/reset-password-request">
+      <UnauthenticatedRoute path="/reset-password-request">
         <ResetPasswordRequest />
-      </Route>
-      <Route path="/reset-password/:resetPasswordToken">
+      </UnauthenticatedRoute>
+      <UnauthenticatedRoute path="/reset-password/:resetPasswordToken">
         <ResetPassword />
-      </Route>
-      <Route path="/login">
+      </UnauthenticatedRoute>
+      <UnauthenticatedRoute path="/login">
         <Login />
-      </Route>
+      </UnauthenticatedRoute>
       <AuthenticatedRoute path="/admin/problem-reports">
         <ProblemReports />
       </AuthenticatedRoute>
@@ -47,7 +47,7 @@ const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }
   <Route
     {...rest}
     render={({ location }) =>
-      !!localStorage.bearerTokenHandler.get() ? (
+      isAuthenticated() ? (
         children
       ) : (
         <Redirect
@@ -60,3 +60,25 @@ const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }
     }
   />
 );
+
+const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
+  <Route
+    {...rest}
+    render={({ location }) =>
+      !isAuthenticated() ? (
+        children
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/',
+            state: { from: location },
+          }}
+        />
+      )
+    }
+  />
+);
+
+function isAuthenticated() {
+  return !!localStorage.bearerTokenHandler.get();
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { settingsModule } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../../styles';
-import { LayoutGrid, Text, CategoryIcon } from '../../../../components';
+import { Text, CategoryIcon } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 
 export { EmptyCategory };
@@ -16,17 +16,22 @@ function EmptyCategory(props: { category: string }) {
   const categoryName = settingsModule.lib.getAnnotationCategoryText(props.category, annotatorState.settings);
 
   return (
-    <LayoutGrid container item alignItems="center" xs={11}>
-      <LayoutGrid item style={styles.categoryIconContainer}>
+    <div style={styles.container}>
+      <div style={styles.categoryIconContainer}>
         <CategoryIcon category={props.category} iconSize={iconSize} settings={annotatorState.settings} />
-      </LayoutGrid>
-      <LayoutGrid item style={styles.categoryTextContainer}>
+      </div>
+      <div style={styles.categoryTextContainer}>
         <Text style={styles.text}>{`${categoryName} (0)`}</Text>
-      </LayoutGrid>
-    </LayoutGrid>
+      </div>
+    </div>
   );
   function buildStyles(theme: customThemeType) {
     return {
+      container: {
+        display: 'flex',
+        flex: 1,
+        alignItems: 'center',
+      },
       categoryIconContainer: {
         paddingLeft: theme.spacing,
       },

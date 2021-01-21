@@ -5,6 +5,7 @@ import { wordings } from '../../../../wordings';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTable } from './CategoryTable';
+import { EmptyCategory } from './EmptyCategory';
 import { useEntityEntryHandler } from './useEntityEntryHandler';
 
 export { AnnotationsPanel };
@@ -28,14 +29,18 @@ function AnnotationsPanel(props: {
       <LayoutGrid style={styles.categoriesContainer}>
         {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => (
           <LayoutGrid key={category} style={styles.category}>
-            <CategoryTable
-              anonymizer={props.anonymizer}
-              categoryAnnotations={categoryAnnotations}
-              category={category}
-              categorySize={categorySize}
-              entityEntryHandler={entityEntryHandler}
-              splittedTextByLine={props.splittedTextByLine}
-            />
+            {categorySize > 0 ? (
+              <CategoryTable
+                anonymizer={props.anonymizer}
+                categoryAnnotations={categoryAnnotations}
+                category={category}
+                categorySize={categorySize}
+                entityEntryHandler={entityEntryHandler}
+                splittedTextByLine={props.splittedTextByLine}
+              />
+            ) : (
+              <EmptyCategory category={category} />
+            )}
           </LayoutGrid>
         ))}
       </LayoutGrid>
@@ -58,7 +63,7 @@ function AnnotationsPanel(props: {
         paddingRight: theme.spacing * 2,
       },
       category: {
-        marginBottom: theme.spacing * 3,
+        marginBottom: theme.spacing * 2,
       },
     };
   }

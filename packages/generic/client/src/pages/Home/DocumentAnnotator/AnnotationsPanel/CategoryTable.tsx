@@ -8,6 +8,7 @@ import { clientAnonymizerType } from '../../../../types';
 import { annotationPerEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTableEntry } from './CategoryTableEntry';
 import { entityEntryHandlerType } from './useEntityEntryHandler';
+import { EmptyCategory } from './EmptyCategory';
 
 export { CategoryTable };
 
@@ -31,7 +32,6 @@ function CategoryTable(props: {
   const annotatorState = annotatorStateHandler.get();
 
   const categoryName = settingsModule.lib.getAnnotationCategoryText(props.category, annotatorState.settings);
-
   return (
     <Accordion
       headerStyle={styles.accordionHeader}

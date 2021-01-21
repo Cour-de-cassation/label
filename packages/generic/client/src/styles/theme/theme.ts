@@ -10,7 +10,7 @@ export type { customThemeType };
 
 const commonTheme = {
   boxShadow: { minor: `0 0 4px ${getColor('black')}`, major: `0 0 16px ${getColor('black')}` },
-  shape: { borderRadius: { small: 8, medium: 24 } },
+  shape: { borderRadius: { small: 8, medium: 24, large: 36 } },
   spacing: 8,
   typography,
 };

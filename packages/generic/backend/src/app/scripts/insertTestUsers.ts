@@ -15,4 +15,52 @@ async function insertTestUsers() {
     password: 'BS',
     role: 'admin',
   });
+  await userService.signUpUser({
+    email: 'harald.achille@justice.fr',
+    name: 'Harald Achille',
+    password: 'HA',
+    role: 'annotator',
+  });
+  await userService.signUpUser({
+    email: 'franka.hochet@justice.fr',
+    name: 'Franka Hochet',
+    password: 'FH',
+    role: 'annotator',
+  });
+  await userService.signUpUser({
+    email: 'luka.krampon@justice.fr',
+    name: 'Luka Krampon',
+    password: 'LK',
+    role: 'annotator',
+  });
+  await userService.signUpUser({
+    email: 'calvin.talon@justice.fr',
+    name: 'Calvin Talon',
+    password: 'CT',
+    role: 'annotator',
+  });
+  await userService.signUpUser({
+    email: 'natacha.blake@justice.fr',
+    name: 'Natacha Blake',
+    password: 'NB',
+    role: 'annotator',
+  });
+  await userService.signUpUser({
+    email: 'felicia.dubois@justice.fr',
+    name: 'Félicia Dubois',
+    password: 'FD',
+    role: 'annotator',
+  });
+  await userService.signUpUser({
+    email: 'corinne.dedou@justice.fr',
+    name: 'Corinne Dédou',
+    password: 'CD',
+    role: 'annotator',
+  });
+  await userService.signUpUser({
+    email: 'cedric.spring@justice.fr',
+    name: 'Cédric Spring',
+    password: 'CS',
+    role: 'annotator',
+  });
 }

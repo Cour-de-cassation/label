@@ -30,13 +30,13 @@ function buildFetchProblemReports() {
       'problemReportsWithDetails',
     );
     return {
-      data: problemReportsWithDetails.map(({ problemReport, email }) => ({
+      data: problemReportsWithDetails.map(({ problemReport, name }) => ({
         problemReport: {
           ...problemReport,
           _id: idModule.lib.buildId(problemReport._id),
           assignationId: idModule.lib.buildId(problemReport.assignationId),
         },
-        email,
+        name,
       })),
       statusCode,
     };

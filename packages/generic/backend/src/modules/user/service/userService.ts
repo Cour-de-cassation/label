@@ -1,5 +1,4 @@
-import { errorHandlers, idModule, userModule } from '@label/core';
-import { userDtoType } from '../types';
+import { errorHandlers, idModule, userModule, userType } from '@label/core';
 import { buildUserRepository } from '../repository';
 import { hasher, jwtSigner, mailer } from '../../../utils';
 import { wordings } from '../../../wordings';
@@ -9,7 +8,10 @@ export { userService };
 const DEFAULT_ROLE = 'annotator';
 
 const userService = {
-  async login(user: userDtoType) {
+  async login(user: {
+    email: userType['email'];
+    password: userType['password'];
+  }) {
     const userRepository = buildUserRepository();
     const storedUser = await userRepository.findByEmail(user.email);
     const isPasswordValid = await hasher.compare(
@@ -36,12 +38,18 @@ const userService = {
       text: text,
     });
   },
-  async signUpUser(user: userDtoType) {
+  async signUpUser(user: {
+    email: userType['email'];
+    name: userType['name'];
+    password: userType['password'];
+    role?: userType['role'];
+  }) {
     const role = user.role || DEFAULT_ROLE;
     const hashedPassword = await hasher.hash(user.password);
     const userRepository = buildUserRepository();
     const newUser = userModule.lib.buildUser({
       email: user.email,
+      name: user.name,
       password: hashedPassword,
       role,
     });

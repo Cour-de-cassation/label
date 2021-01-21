@@ -8,7 +8,6 @@ import { clientAnonymizerType } from '../../../../types';
 import { annotationPerEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTableEntry } from './CategoryTableEntry';
 import { entityEntryHandlerType } from './useEntityEntryHandler';
-import { EmptyCategory } from './EmptyCategory';
 
 export { CategoryTable };
 

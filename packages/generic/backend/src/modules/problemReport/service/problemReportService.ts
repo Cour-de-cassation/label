@@ -59,7 +59,7 @@ const problemReportService = {
     );
     const userIds = assignations.map((assignation) => assignation.userId);
     const users = await userRepository.findAllByIds(userIds);
-    const emailsByAssignationId = assignationIds.reduce(
+    const namesByAssignationId = assignationIds.reduce(
       (accumulator, assignationId) => {
         const assignationIdString = idModule.lib.convertToString(assignationId);
         if (accumulator[assignationIdString]) {
@@ -79,17 +79,17 @@ const problemReportService = {
         }
         return {
           ...accumulator,
-          [assignationIdString]: user.email,
+          [assignationIdString]: user.name,
         };
       },
       {} as Record<string, string>,
     );
     return problemReports.map((problemReport) => {
-      const email =
-        emailsByAssignationId[
+      const name =
+        namesByAssignationId[
           idModule.lib.convertToString(problemReport.assignationId)
         ];
-      return { problemReport, email };
+      return { problemReport, name };
     });
   },
 };

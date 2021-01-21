@@ -45,7 +45,7 @@ const apiSchema = {
           kind: 'object',
           content: {
             problemReport: fetchedDataModelEntries.problemReport,
-            email: {
+            name: {
               kind: 'primitive',
               content: 'string',
             },
@@ -142,6 +142,10 @@ const apiSchema = {
     signUpUser: {
       in: {
         email: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'string',
+        }),
+        name: buildDataModelEntry({
           kind: 'primitive',
           content: 'string',
         }),

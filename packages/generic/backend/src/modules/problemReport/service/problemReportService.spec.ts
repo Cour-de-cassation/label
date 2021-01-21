@@ -64,10 +64,10 @@ describe('problemReportService', () => {
 
     const documentId1 = idModule.lib.buildId();
     const documentId2 = idModule.lib.buildId();
-    const email1 = 'example1@example.com';
-    const email2 = 'example2@example.com';
-    const user1 = userModule.generator.generate({ email: email1 });
-    const user2 = userModule.generator.generate({ email: email2 });
+    const name1 = 'NAME 1';
+    const name2 = 'NAME 2';
+    const user1 = userModule.generator.generate({ name: name1 });
+    const user2 = userModule.generator.generate({ name: name2 });
     const assignation1 = assignationModule.generator.generate({
       documentId: documentId1,
       userId: user1._id,
@@ -102,9 +102,9 @@ describe('problemReportService', () => {
 
       expect(problemReports.length).toBe(2);
       expect(problemReports[0].problemReport.text).toBe(problemText1);
-      expect(problemReports[0].email).toBe(email1);
+      expect(problemReports[0].name).toBe(name1);
       expect(problemReports[1].problemReport.text).toBe(problemText2);
-      expect(problemReports[1].email).toBe(email2);
+      expect(problemReports[1].name).toBe(name2);
     });
   });
 });

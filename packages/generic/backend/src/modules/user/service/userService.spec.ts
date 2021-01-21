@@ -4,9 +4,14 @@ describe('userService', () => {
   describe('login/signUpUser', () => {
     describe('success', () => {
       it('should login and return a token', async () => {
-        const user = { email: 'MAIL@MAIL.MAIL', password: 'PASSWORD' };
+        const user = {
+          email: 'MAIL@MAIL.MAIL',
+          name: 'NAME',
+          password: 'PASSWORD',
+        };
         await userService.signUpUser({
           email: 'MAIL@MAIL.MAIL',
+          name: 'NAME',
           password: 'PASSWORD',
         });
 
@@ -17,7 +22,11 @@ describe('userService', () => {
     });
     describe('failure', () => {
       it('should fail when no user has been signed up', async () => {
-        const user = { email: 'MAIL@MAIL.MAIL', password: 'PASSWORD' };
+        const user = {
+          email: 'MAIL@MAIL.MAIL',
+          name: 'NAME',
+          password: 'PASSWORD',
+        };
 
         const promise = () => userService.login(user);
 
@@ -26,9 +35,14 @@ describe('userService', () => {
         );
       });
       it('should fail when only another user has been signed up', async () => {
-        const user = { email: 'MAIL@MAIL.MAIL', password: 'PASSWORD' };
+        const user = {
+          email: 'MAIL@MAIL.MAIL',
+          name: 'NAME',
+          password: 'PASSWORD',
+        };
         await userService.signUpUser({
           email: 'ANOTHER_MAIL@ANOTHER_MAIL.ANOTHER_MAIL',
+          name: 'NAME',
           password: 'ANOTHER_PASSWORD',
         });
 
@@ -39,9 +53,14 @@ describe('userService', () => {
         );
       });
       it('should fail when the user has been signed up but the password is not the right one', async () => {
-        const user = { email: 'MAIL@MAIL.MAIL', password: 'PASSWORD' };
+        const user = {
+          email: 'MAIL@MAIL.MAIL',
+          name: 'NAME',
+          password: 'PASSWORD',
+        };
         await userService.signUpUser({
           email: 'MAIL@MAIL.MAIL',
+          name: 'NAME',
           password: 'PASSWORD',
         });
 

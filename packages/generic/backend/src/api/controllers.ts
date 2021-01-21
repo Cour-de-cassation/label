@@ -108,8 +108,8 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    async signUpUser({ args: { email, password } }) {
-      await userService.signUpUser({ email, password });
+    async signUpUser({ args: { email, password, name } }) {
+      await userService.signUpUser({ email, password, name });
     },
   },
 };

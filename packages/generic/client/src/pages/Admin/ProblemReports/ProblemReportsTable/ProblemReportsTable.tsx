@@ -7,7 +7,7 @@ export { ProblemReportsTable };
 
 type formattedProblemReportType = {
   _id: string;
-  email: string;
+  name: string;
   type: ReactElement;
   text: string;
 };
@@ -29,7 +29,7 @@ function ProblemReportsTable(props: {
           canBeSorted: true,
         },
         {
-          id: 'email',
+          id: 'name',
           content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.agent}</Text>,
           canBeSorted: true,
         },
@@ -51,9 +51,9 @@ function ProblemReportsTable(props: {
 function formatProblemReportsWithDetails(
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>,
 ): formattedProblemReportType[] {
-  return problemReportsWithDetails.map(({ problemReport, email }) => ({
+  return problemReportsWithDetails.map(({ problemReport, name }) => ({
     _id: `${problemReport._id}`,
-    email,
+    name,
     type: <ProblemReportIcon type={problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />,
     text: problemReport.text,
   }));

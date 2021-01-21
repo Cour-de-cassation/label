@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { errorHandlers, httpStatusCodeHandler } from '@label/core';
+import { localStorage } from '../services/localStorage';
 import { ErrorPage } from './ErrorPage';
 import { LoadingPage } from './LoadingPage';
 
@@ -19,6 +20,7 @@ function DataFetcher<dataT>(props: {
     if (httpStatusCodeHandler.isSuccess(props.fetchInfo.statusCode) && props.fetchInfo.data) {
       return props.buildComponentWithData(props.fetchInfo.data);
     } else if (errorHandlers.authenticationErrorHandler.check(props.fetchInfo.statusCode)) {
+      localStorage.bearerTokenHandler.remove();
       return buildLoginRedirectionPage();
     } else {
       return buildErrorPage();

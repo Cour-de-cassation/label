@@ -1,5 +1,4 @@
 import { MongoClient, Collection } from 'mongodb';
-import { environment } from '@label/core';
 
 export { buildMongo, mongo };
 
@@ -7,15 +6,11 @@ export type { mongoCollectionType };
 
 type mongoCollectionType<T> = Collection<T>;
 
-const mongo = buildMongo({
-  dbName: environment.dbName,
-  url: environment.url.db,
-});
+const mongo = buildMongo();
 
-function buildMongo({ dbName, url }: { dbName: string; url: string }) {
-  let client = new MongoClient(url, {
-    useUnifiedTopology: true,
-  });
+function buildMongo() {
+  let client = new MongoClient('');
+  let dbName = '';
 
   return {
     close,
@@ -27,8 +22,19 @@ function buildMongo({ dbName, url }: { dbName: string; url: string }) {
     await client.close();
   }
 
-  async function initialize() {
-    client = await client.connect();
+  async function initialize({
+    dbName: newDbName,
+    url,
+  }: {
+    dbName: string;
+    url: string;
+  }) {
+    dbName = newDbName;
+
+    client = await new MongoClient(url, {
+      useUnifiedTopology: true,
+    }).connect();
+
     return client;
   }
 

@@ -1,7 +1,13 @@
-import { scriptRunner } from '@label/backend';
+import { buildBackend } from '@label/backend';
 import { sderFetcher } from '../connector/fetcher';
+import { parametersHandler } from '../lib/parametersHandler';
 
-scriptRunner.run(fetchTest, { shouldLoadDb: false });
+(async () => {
+  const { environment, settings } = await parametersHandler.getParameters();
+  const backend = buildBackend(environment, settings);
+
+  backend.runScript(fetchTest, { shouldLoadDb: false });
+})();
 
 async function fetchTest() {
   const documents = await sderFetcher.fetchAllDocuments();

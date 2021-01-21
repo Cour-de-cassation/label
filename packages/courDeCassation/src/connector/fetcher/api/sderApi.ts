@@ -1,5 +1,5 @@
+import { MongoClient } from 'mongodb';
 import { dependencyManager } from '@label/core';
-import { buildMongo } from '@label/backend';
 import { sderApiType } from './sderApiType';
 
 export { sderApi };
@@ -10,12 +10,13 @@ const SDER_BDD_URL = dependencyManager.inject({
 });
 const SDER_BDD_NAME = 'SDER';
 
-const mongo = buildMongo({ dbName: SDER_BDD_NAME, url: SDER_BDD_URL });
-
 const sderApi: sderApiType = {
   async fetchCourtDecisions() {
-    await mongo.initialize();
-    const collection = mongo.getDb().collection('decisions');
+    const mongo = await new MongoClient(SDER_BDD_URL, {
+      useUnifiedTopology: true,
+    }).connect();
+
+    const collection = mongo.db(SDER_BDD_NAME).collection('decisions');
 
     return collection
       .find({

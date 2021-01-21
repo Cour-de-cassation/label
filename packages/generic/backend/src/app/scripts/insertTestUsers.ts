@@ -1,7 +1,6 @@
-import { userService } from '../modules/user';
-import { scriptRunner } from '../utils';
+import { userService } from '../../modules/user';
 
-scriptRunner.run(insertTestUsers, { shouldLoadDb: true });
+export { insertTestUsers };
 
 async function insertTestUsers() {
   await userService.signUpUser({

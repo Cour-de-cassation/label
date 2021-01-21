@@ -9,7 +9,6 @@ import { jwtSigner } from './jwtSigner';
 import { logger } from './logger';
 import { mailer } from './mailer';
 import { buildMongo, mongo, mongoCollectionType } from './mongo';
-import { scriptRunner } from './scriptRunner';
 
 export {
   buildHandlingErrorController,
@@ -21,7 +20,6 @@ export {
   logger,
   mailer,
   mongo,
-  scriptRunner,
 };
 
 export type { expressRequestHandlerType, mongoCollectionType };

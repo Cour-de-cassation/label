@@ -1,0 +1,15 @@
+{
+  "dbName": "labelDb",
+  "ip": {
+    "server": "10.5.0.6",
+    "db": "10.5.0.5"
+  },
+  "pathName": {
+    "server": "http://bkpanonym",
+    "db": "mongodb://10.5.0.5"
+  },
+  "port": {
+    "server": 55430,
+    "db": 55431
+  }
+}

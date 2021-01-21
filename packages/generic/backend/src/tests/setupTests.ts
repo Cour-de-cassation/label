@@ -1,6 +1,6 @@
 import '@babel/polyfill';
-import { clearAllRepositories } from '../scripts/lib';
+import { clearDb } from '../app/scripts';
 
 global.beforeEach(async () => {
-  await clearAllRepositories();
+  await clearDb();
 });

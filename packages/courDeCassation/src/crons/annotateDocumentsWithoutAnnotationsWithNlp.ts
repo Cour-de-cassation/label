@@ -1,9 +1,15 @@
-import { scriptRunner } from '@label/backend';
+import { buildBackend } from '@label/backend';
 import { nlpAnnotator } from '../annotator';
+import { parametersHandler } from '../lib/parametersHandler';
 
-scriptRunner.run(annotateDocumentsWithoutAnnotationsWithNlp, {
-  shouldLoadDb: true,
-});
+(async () => {
+  const { environment, settings } = await parametersHandler.getParameters();
+  const backend = buildBackend(environment, settings);
+
+  backend.runScript(annotateDocumentsWithoutAnnotationsWithNlp, {
+    shouldLoadDb: true,
+  });
+})();
 
 async function annotateDocumentsWithoutAnnotationsWithNlp() {
   await nlpAnnotator.annotateDocumentsWithoutAnnotations();

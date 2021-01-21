@@ -1,0 +1,11 @@
+{
+  "dbName": "labelDb",
+  "pathName": {
+    "server": "http://localhost",
+    "db": "mongodb://labelDb"
+  },
+  "port": {
+    "server": 55430,
+    "db": 55431
+  }
+}

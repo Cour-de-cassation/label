@@ -1,7 +1,13 @@
-import { scriptRunner } from '@label/backend';
+import { buildBackend } from '@label/backend';
 import { jurinetConnector } from '../connector';
+import { parametersHandler } from '../../lib/parametersHandler';
 
-scriptRunner.run(importAllDocumentsFromJurinet, { shouldLoadDb: true });
+(async () => {
+  const { environment, settings } = await parametersHandler.getParameters();
+  const backend = buildBackend(environment, settings);
+
+  backend.runScript(importAllDocumentsFromJurinet, { shouldLoadDb: true });
+})();
 
 async function importAllDocumentsFromJurinet() {
   await jurinetConnector.importAllDocuments();

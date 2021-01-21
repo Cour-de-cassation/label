@@ -6,9 +6,9 @@ import { buildProblemReportRepository } from '../../modules/problemReport';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildUserRepository } from '../../modules/user';
 
-export { clearAllRepositories };
+export { clearDb };
 
-async function clearAllRepositories() {
+async function clearDb() {
   const repositories = [
     buildAnnotationReportRepository,
     buildAssignationRepository,

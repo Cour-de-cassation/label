@@ -1,14 +1,10 @@
 import { buildBackend } from '@label/backend';
-import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
   const backend = buildBackend(environment, settings);
 
-  backend.runScript(importAllDocumentsFromSder, { shouldLoadDb: true });
+  await backend.scripts.clearDb();
+  await backend.scripts.insertTestUsers();
 })();
-
-async function importAllDocumentsFromSder() {
-  await sderConnector.importAllDocuments();
-}

@@ -46,7 +46,8 @@ function ItemText(props: { children: ReactNode }) {
 function buildStyles() {
   return {
     itemText: {
+      whiteSpace: 'normal',
       color: 'inherit',
-    },
+    } as const,
   };
 }

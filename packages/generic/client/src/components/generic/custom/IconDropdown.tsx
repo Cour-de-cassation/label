@@ -36,7 +36,7 @@ function IconDropdown<T extends string>(props: {
       onChange={props.onChange}
       onClose={props.onClose}
       width={props.width}
-    ></Dropdown>
+    />
   );
 }
 

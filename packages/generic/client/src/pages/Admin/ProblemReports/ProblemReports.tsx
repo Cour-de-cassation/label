@@ -49,8 +49,6 @@ function buildStyles(theme: customThemeType) {
     },
     table: {
       height: heights.adminPanel,
-      paddingLeft: theme.spacing * 3,
-      paddingRight: theme.spacing * 2,
     },
   } as const;
 }

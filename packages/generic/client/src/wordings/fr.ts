@@ -61,8 +61,9 @@ const fr = {
   },
   errorPage: 'Une erreur est survenue...',
   shared: {
-    problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
     logout: 'Déconnexion',
+    moreOptions: "Plus d'options",
+    problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
   },
   loadingPage: 'Veuillez patienter...',
   problemReportsPage: {

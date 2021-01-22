@@ -1,8 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import { get } from 'lodash';
 import styled from 'styled-components';
-import { customThemeType, useCustomTheme } from '../../../styles';
-import { TableSortLabel, Text } from '../materialUI';
+import { customThemeType, useCustomTheme } from '../../../../styles';
+import { TableSortLabel, Text } from '../../materialUI';
+import { OptionButton } from './OptionButton';
 
 export { Table };
 
@@ -29,6 +30,7 @@ function Table<T>(props: {
   data: T[];
 }) {
   const theme = useCustomTheme();
+  const [rowFocused, setRowFocused] = useState<T | undefined>();
   const [orderByProperty, setOrderByProperty] = useState<orderByPropertyType<T> | undefined>();
   const [orderDirection, setOrderDirection] = useState<orderDirectionType>(DEFAULT_ORDER_DIRECTION);
   const tableStyle = buildTableStyle();
@@ -72,23 +74,29 @@ function Table<T>(props: {
 
   function renderBody(theme: customThemeType) {
     const sortedData = sortData(props.data);
-    const style = buildRowStyle();
     const styleProps = {
       theme,
     };
-    const { Div_Row } = buildStyledComponents();
+    const { Div_OptionButtonContainer, Tr } = buildStyledComponents();
     return (
       <tbody>
         {sortedData.map((row) => (
-          <Div_Row styleProps={styleProps}>
-            <tr style={style}>
+          <>
+            <Div_OptionButtonContainer isFocused={rowFocused === row} styleProps={styleProps}>
+              <OptionButton onClick={() => {}} />
+            </Div_OptionButtonContainer>
+            <Tr
+              onMouseOut={() => setRowFocused(undefined)}
+              onMouseOver={() => setRowFocused(row)}
+              styleProps={styleProps}
+            >
               {Object.values(row).map((value) => (
                 <td>
                   <Text variant="h3">{value}</Text>
                 </td>
               ))}
-            </tr>
-          </Div_Row>
+            </Tr>
+          </>
         ))}
       </tbody>
     );
@@ -157,11 +165,11 @@ function Table<T>(props: {
       };
     };
 
-    const Div_Row = styled.div<stylePropsType>`
+    const Tr = styled.tr<stylePropsType>`
       ${({ styleProps }) => {
         return `
-          border-radius: ${styleProps.theme.shape.borderRadius.medium}px;
-
+          height: ${ROW_DEFAULT_HEIGHT}px;
+          position: relative;
           &:hover {
             background-color: ${styleProps.theme.colors.default.background};
             cursor: pointer;
@@ -169,14 +177,21 @@ function Table<T>(props: {
       `;
       }}
     `;
-    return {
-      Div_Row,
-    };
-  }
 
-  function buildRowStyle() {
+    const Div_OptionButtonContainer = styled.div<stylePropsType & { isFocused: boolean }>`
+      ${({ isFocused }) => {
+        return `
+        right: 0;
+        z-index: 10;
+        position: absolute;
+        ${!isFocused && 'display: none;'}
+
+    `;
+      }}
+    `;
     return {
-      height: `${ROW_DEFAULT_HEIGHT}px`,
+      Div_OptionButtonContainer,
+      Tr,
     };
   }
 

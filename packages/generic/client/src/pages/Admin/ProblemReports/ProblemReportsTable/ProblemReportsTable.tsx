@@ -18,6 +18,8 @@ function ProblemReportsTable(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
   const formattedProblemReports = formatProblemReportsWithDetails(props.problemReportsWithDetails);
+  const optionItems = buildOptionItems();
+
   return (
     <Table
       isHeaderSticky
@@ -44,8 +46,18 @@ function ProblemReportsTable(props: {
           canBeSorted: true,
         },
       ]}
+      optionItems={optionItems}
     />
   );
+}
+
+function buildOptionItems() {
+  return [
+    {
+      text: wordings.problemReportsPage.table.optionItems.reinjectIntoStream,
+      onClick: () => null,
+    },
+  ];
 }
 
 function formatProblemReportsWithDetails(

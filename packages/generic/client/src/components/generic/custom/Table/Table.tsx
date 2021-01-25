@@ -11,27 +11,30 @@ const DEFAULT_ORDER_DIRECTION = 'asc';
 
 const ROW_DEFAULT_HEIGHT = 40;
 
-type orderByPropertyType<T> = keyof T;
+type orderByPropertyType<DataT> = keyof DataT;
 
 type orderDirectionType = 'asc' | 'desc';
 
-function Table<T>(props: {
+function Table<DataT, OptionT extends string>(props: {
   footer?: Array<{
     id: string;
     content: ReactElement;
   }>;
   header?: Array<{
-    id: keyof T;
+    id: keyof DataT;
     content: ReactElement;
     canBeSorted?: boolean;
   }>;
   isFooterSticky?: boolean;
   isHeaderSticky?: boolean;
-  data: T[];
+  data: DataT[];
+  optionItems?: Array<{
+    text: OptionT;
+    onClick: () => void;
+  }>;
 }) {
   const theme = useCustomTheme();
-  const [rowFocused, setRowFocused] = useState<T | undefined>();
-  const [orderByProperty, setOrderByProperty] = useState<orderByPropertyType<T> | undefined>();
+  const [orderByProperty, setOrderByProperty] = useState<orderByPropertyType<DataT> | undefined>();
   const [orderDirection, setOrderDirection] = useState<orderDirectionType>(DEFAULT_ORDER_DIRECTION);
   const tableStyle = buildTableStyle();
   return (
@@ -78,28 +81,47 @@ function Table<T>(props: {
       theme,
     };
     const { Div_OptionButtonContainer, Tr } = buildStyledComponents();
-    return (
-      <tbody>
-        {sortedData.map((row) => (
-          <>
-            <Div_OptionButtonContainer isFocused={rowFocused === row} styleProps={styleProps}>
-              <OptionButton onClick={() => {}} />
-            </Div_OptionButtonContainer>
-            <Tr
-              onMouseOut={() => setRowFocused(undefined)}
-              onMouseOver={() => setRowFocused(row)}
-              styleProps={styleProps}
-            >
-              {Object.values(row).map((value) => (
-                <td>
-                  <Text variant="h3">{value}</Text>
-                </td>
-              ))}
-            </Tr>
-          </>
-        ))}
-      </tbody>
-    );
+
+    return <tbody>{sortedData.map((row) => renderRow(row))}</tbody>;
+
+    function renderRow(row: DataT) {
+      const { optionItems } = props;
+      if (!optionItems) {
+        return (
+          <Tr styleProps={styleProps}>
+            {Object.values(row).map((value) => (
+              <td>
+                <Text variant="h3">{value}</Text>
+              </td>
+            ))}
+          </Tr>
+        );
+      }
+
+      const items = optionItems.map((optionItem) => ({
+        text: optionItem.text,
+        value: optionItem.text,
+      }));
+      const onSelect = (optionItemText: OptionT) => {
+        const optionItem = optionItems.find(({ text }) => text === optionItemText);
+        optionItem && optionItem.onClick();
+      };
+
+      return (
+        <>
+          <Div_OptionButtonContainer styleProps={styleProps}>
+            <OptionButton items={items} onSelect={onSelect} />
+          </Div_OptionButtonContainer>
+          <Tr styleProps={styleProps}>
+            {Object.values(row).map((value) => (
+              <td>
+                <Text variant="h3">{value}</Text>
+              </td>
+            ))}
+          </Tr>
+        </>
+      );
+    }
   }
 
   function renderFooter() {
@@ -120,7 +142,7 @@ function Table<T>(props: {
     );
   }
 
-  function sortData(data: T[]): T[] {
+  function sortData(data: DataT[]): DataT[] {
     if (!orderByProperty) {
       return data;
     }
@@ -139,7 +161,7 @@ function Table<T>(props: {
     });
   }
 
-  function onOrderByPropertyClickBuilder(newOrderByProperty: orderByPropertyType<T>) {
+  function onOrderByPropertyClickBuilder(newOrderByProperty: orderByPropertyType<DataT>) {
     const onOrderByPropertyClick = () => {
       if (newOrderByProperty === orderByProperty) {
         setOrderDirection(orderDirection === 'asc' ? 'desc' : 'asc');
@@ -172,23 +194,17 @@ function Table<T>(props: {
           position: relative;
           &:hover {
             background-color: ${styleProps.theme.colors.default.background};
-            cursor: pointer;
           }
       `;
       }}
     `;
 
-    const Div_OptionButtonContainer = styled.div<stylePropsType & { isFocused: boolean }>`
-      ${({ isFocused }) => {
-        return `
-        right: 0;
-        z-index: 10;
-        position: absolute;
-        ${!isFocused && 'display: none;'}
+    const Div_OptionButtonContainer = styled.div<stylePropsType>`
+      right: 0;
+      z-index: 10;
+      position: absolute;
+    `;
 
-    `;
-      }}
-    `;
     return {
       Div_OptionButtonContainer,
       Tr,

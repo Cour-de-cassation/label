@@ -76,6 +76,9 @@ const fr = {
         text: 'Message',
         type: 'Type',
       },
+      optionItems: {
+        reinjectIntoStream: 'Réinjecter dans le flux',
+      },
     },
   },
   resetPasswordPage: {

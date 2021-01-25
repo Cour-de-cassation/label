@@ -64,23 +64,6 @@ const apiSchema = {
     },
   },
   post: {
-    createTreatment: {
-      in: {
-        annotationsDiff: annotationsDiffModule.dataModelField,
-        documentId: buildDataModelEntry({
-          kind: 'primitive',
-          content: 'id',
-        }),
-        duration: buildDataModelEntry({
-          kind: 'primitive',
-          content: 'number',
-        }),
-      },
-      out: {
-        kind: 'primitive',
-        content: 'void',
-      },
-    },
     login: {
       in: {
         email: {
@@ -139,6 +122,23 @@ const apiSchema = {
         content: 'void',
       },
     },
+    updateTreatment: {
+      in: {
+        annotationsDiff: annotationsDiffModule.dataModelField,
+        documentId: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'id',
+        }),
+        duration: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'number',
+        }),
+      },
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
+    },
     signUpUser: {
       in: {
         email: buildDataModelEntry({
@@ -167,7 +167,7 @@ type apiSchemaType = {
   post: apiSchemaMethodType;
 };
 
-type apiSchemaMethodNameType = 'get' | 'post';
+type apiSchemaMethodNameType = keyof apiSchemaType;
 
 type apiSchemaMethodType = { [key: string]: apiSchemaEntryType };
 

@@ -20,5 +20,11 @@ const buildTreatmentRepository = buildRepositoryBuilder<
         (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
       )[0];
     },
+    async updateOne(treatmentId, { annotationsDiff, duration }) {
+      await collection.updateOne(
+        { _id: treatmentId },
+        { $set: { annotationsDiff, duration } },
+      );
+    },
   }),
 });

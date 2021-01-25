@@ -9,6 +9,7 @@ type errorCodeType = typeof httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR[keyof t
 const errorHandlers = {
   authenticationErrorHandler: buildErrorHandler(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR),
   permissionErrorHandler: buildErrorHandler(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.PERMISSION_ERROR),
+  notFoundErrorHandler: buildErrorHandler(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.NOT_FOUND_ERROR),
   serverErrorHandler: buildErrorHandler(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR),
 };
 

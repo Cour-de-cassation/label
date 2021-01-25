@@ -49,20 +49,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   },
 
   post: {
-    createTreatment: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
-      controllerWithUser: async (
-        _,
-        { args: { annotationsDiff, documentId, duration } },
-      ) => {
-        await treatmentService.createTreatment({
-          annotationsDiff,
-          documentId: idModule.lib.buildId(documentId),
-          duration,
-        });
-      },
-    }),
-
     async login({ args: { email, password } }) {
       const token = await userService.login({ email, password });
       return token;
@@ -105,6 +91,21 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(documentId),
           status,
         );
+      },
+    }),
+
+    updateTreatment: buildAuthenticatedController({
+      permissions: ['admin', 'annotator'],
+      controllerWithUser: async (
+        user,
+        { args: { annotationsDiff, documentId, duration } },
+      ) => {
+        await treatmentService.updateTreatment({
+          annotationsDiff,
+          documentId: idModule.lib.buildId(documentId),
+          duration,
+          userId: user._id,
+        });
       },
     }),
 

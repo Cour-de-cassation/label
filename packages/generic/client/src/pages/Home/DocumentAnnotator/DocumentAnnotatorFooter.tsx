@@ -104,7 +104,7 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
     const duration = getTotalDuration();
 
     try {
-      await apiCaller.post<'createTreatment'>('createTreatment', {
+      await apiCaller.post<'updateTreatment'>('updateTreatment', {
         annotationsDiff: annotatorStateHandler.getGlobalAnnotationsDiff(),
         documentId: annotatorState.document._id,
         duration,
@@ -113,6 +113,7 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
         documentId: annotatorState.document._id,
         status,
       });
+      return;
     } catch (error) {
       console.warn(error);
     }

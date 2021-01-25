@@ -1,4 +1,5 @@
 import { assignationModule, idModule, idType } from '@label/core';
+import { treatmentService } from '../../treatment';
 import { buildAssignationRepository } from '../repository';
 
 export { assignationService };
@@ -42,9 +43,12 @@ const assignationService = {
     documentId: idType;
   }) {
     const assignationRepository = buildAssignationRepository();
+    const treatmentId = await treatmentService.createEmptyTreatment(documentId);
+
     const assignation = assignationModule.lib.buildAssignation({
       userId,
       documentId,
+      treatmentId,
     });
     return assignationRepository.insert(assignation);
   },

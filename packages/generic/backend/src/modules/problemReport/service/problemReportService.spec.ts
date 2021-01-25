@@ -18,7 +18,7 @@ describe('problemReportService', () => {
     const documentId = idModule.lib.buildId();
     const problemText = 'PROBLEM_TEXT';
     const problemType = 'bug';
-    const assignation = assignationModule.lib.buildAssignation({
+    const assignation = assignationModule.generator.generate({
       userId,
       documentId,
     });

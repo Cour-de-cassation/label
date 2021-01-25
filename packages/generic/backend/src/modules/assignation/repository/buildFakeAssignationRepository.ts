@@ -14,5 +14,13 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
         idModule.lib.equalId(assignation.userId, userId),
       );
     },
+    async findByDocumentIdAndUserId({ documentId, userId }) {
+      const result = collection.find(
+        (assignation) =>
+          idModule.lib.equalId(assignation.documentId, documentId) &&
+          idModule.lib.equalId(assignation.userId, userId),
+      );
+      return result;
+    },
   }),
 });

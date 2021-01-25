@@ -109,6 +109,19 @@ const apiSchema = {
         content: 'void',
       },
     },
+    updateAssignationDocumentStatus: {
+      in: {
+        assignationId: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'id',
+        }),
+        status: documentModule.dataModel.status.type,
+      },
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
+    },
     updateDocumentStatus: {
       in: {
         documentId: buildDataModelEntry({

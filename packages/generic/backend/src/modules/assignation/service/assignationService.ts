@@ -1,4 +1,11 @@
-import { assignationModule, idModule, idType } from '@label/core';
+import {
+  assignationModule,
+  assignationType,
+  documentType,
+  idModule,
+  idType,
+} from '@label/core';
+import { documentService } from '../../document';
 import { treatmentService } from '../../treatment';
 import { buildAssignationRepository } from '../repository';
 
@@ -35,6 +42,14 @@ const assignationService = {
     return assignations.map((assignation) => assignation.documentId);
   },
 
+  async updateAssignationDocumentStatus(
+    assignationId: assignationType['_id'],
+    status: documentType['status'],
+  ) {
+    const assignationRepository = buildAssignationRepository();
+    const assignation = await assignationRepository.findById(assignationId);
+    await documentService.updateDocumentStatus(assignation.documentId, status);
+  },
   async createAssignation({
     userId,
     documentId,

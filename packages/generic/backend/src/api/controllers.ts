@@ -1,5 +1,6 @@
 import { apiSchema, idModule } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
+import { assignationService } from '../modules/assignation';
 import { documentService } from '../modules/document';
 import { monitoringEntryService } from '../modules/monitoringEntry';
 import { problemReportService } from '../modules/problemReport';
@@ -81,6 +82,16 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           problemText,
           problemType,
         });
+      },
+    }),
+
+    updateAssignationDocumentStatus: buildAuthenticatedController({
+      permissions: ['admin', 'annotator'],
+      controllerWithUser: async (_, { args: { assignationId, status } }) => {
+        await assignationService.updateAssignationDocumentStatus(
+          idModule.lib.buildId(assignationId),
+          status,
+        );
       },
     }),
 

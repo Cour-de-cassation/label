@@ -15,7 +15,7 @@ type orderByPropertyType<DataT> = keyof DataT;
 
 type orderDirectionType = 'asc' | 'desc';
 
-function Table<DataT, OptionT extends string>(props: {
+function Table<DataT extends { _id: string }, OptionT extends string>(props: {
   footer?: Array<{
     id: string;
     content: ReactElement;
@@ -30,7 +30,7 @@ function Table<DataT, OptionT extends string>(props: {
   data: DataT[];
   optionItems?: Array<{
     text: OptionT;
-    onClick: () => void;
+    onClick: (_id: DataT['_id']) => void;
   }>;
 }) {
   const theme = useCustomTheme();
@@ -104,7 +104,7 @@ function Table<DataT, OptionT extends string>(props: {
       }));
       const onSelect = (optionItemText: OptionT) => {
         const optionItem = optionItems.find(({ text }) => text === optionItemText);
-        optionItem && optionItem.onClick();
+        optionItem && optionItem.onClick(row._id);
       };
 
       return (

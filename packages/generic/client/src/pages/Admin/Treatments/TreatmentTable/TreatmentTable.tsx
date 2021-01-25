@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchedTreatmentType } from '@label/core';
+import { fetchedTreatmentType, idModule } from '@label/core';
 import { Table, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
 import { timeOperator } from './utils';
@@ -61,7 +61,7 @@ function TreatmentTable(props: { treatments: fetchedTreatmentType[] }) {
 
 function formatTreatments(treatments: fetchedTreatmentType[]): formattedTreatmentType[] {
   return treatments.map((treatment) => ({
-    _id: `${treatment._id}`,
+    _id: idModule.lib.convertToString(treatment._id),
     duration: timeOperator.convertDurationToReadableDuration(treatment.duration),
   }));
 }

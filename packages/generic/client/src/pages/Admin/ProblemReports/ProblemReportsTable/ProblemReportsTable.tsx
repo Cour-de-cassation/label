@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
-import { apiRouteOutType } from '@label/core';
+import { apiRouteOutType, idModule } from '@label/core';
+import { apiCaller } from '../../../../api';
 import { ProblemReportIcon, Table, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
 
@@ -18,7 +19,7 @@ function ProblemReportsTable(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
   const formattedProblemReports = formatProblemReportsWithDetails(props.problemReportsWithDetails);
-  const optionItems = buildOptionItems();
+  const optionItems = buildOptionItems(props.problemReportsWithDetails);
 
   return (
     <Table
@@ -51,11 +52,22 @@ function ProblemReportsTable(props: {
   );
 }
 
-function buildOptionItems() {
+function buildOptionItems(problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>) {
   return [
     {
       text: wordings.problemReportsPage.table.optionItems.reinjectIntoStream,
-      onClick: () => null,
+      onClick: (problemReportId: string) => {
+        const problemReportWithDetails = problemReportsWithDetails.find(({ problemReport }) =>
+          idModule.lib.equalId(problemReport._id, idModule.lib.buildId(problemReportId)),
+        );
+        if (!problemReportWithDetails) {
+          return;
+        }
+        apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+          assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
+          status: 'free',
+        });
+      },
     },
   ];
 }
@@ -64,7 +76,7 @@ function formatProblemReportsWithDetails(
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>,
 ): formattedProblemReportType[] {
   return problemReportsWithDetails.map(({ problemReport, name }) => ({
-    _id: `${problemReport._id}`,
+    _id: idModule.lib.convertToString(problemReport._id),
     name,
     type: <ProblemReportIcon type={problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />,
     text: problemReport.text,

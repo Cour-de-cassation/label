@@ -8,7 +8,6 @@ WORKDIR /usr/src/app
 COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
-COPY packages/generic/client/package.json ./packages/generic/client/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 COPY yarn.lock ./
 
@@ -16,8 +15,8 @@ COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 COPY . .
 
-RUN yarn build
+RUN yarn buildDev
 RUN chmod +x ./scripts/*
 
 # Start the app
-CMD ["yarn", "startLocal"]
+CMD ["yarn", "startLocalDev"]

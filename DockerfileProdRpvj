@@ -1,10 +1,6 @@
 # Use a node 14 base image
 FROM node:14-alpine
 
-# Set proxy of the RPVJ network
-ENV HTTP_PROXY="http://rie-proxy.justice.gouv.fr:8080/"
-ENV HTTPS_PROXY="http://rie-proxy.justice.gouv.fr:8080/"
-
 # Create the app directory
 WORKDIR /usr/src/app
 
@@ -17,10 +13,15 @@ COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 COPY yarn.lock ./
 
 # Install dependencies
-RUN yarn install --pure-lockfile
+RUN export HTTP_PROXY="http://rie-proxy.justice.gouv.fr:8080/" \
+  && export HTTPS_PROXY="http://rie-proxy.justice.gouv.fr:8080/" \
+  && yarn install --pure-lockfile \
+  && unset HTTP_PROXY \
+  && unset HTTPS_PROXY
+
 COPY . .
 
-RUN yarn buildProd
+RUN yarn build
 RUN chmod +x ./scripts/*
 
 # Start the app

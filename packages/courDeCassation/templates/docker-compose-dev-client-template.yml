@@ -6,12 +6,12 @@ services:
     stdin_open: true
     build:
       context: ./
-      dockerfile: DockerfileClient
+      dockerfile: DockerfileClientDev
     #    volumes:
     #      - ".:/usr/src/app"
     #      - "/app/node_modules"
     ports:
-      - 55432:55432
+      - {clientPort}:{clientPort}
     environment:
-      - RUN_MODE=LOCAL
+      - RUN_MODE={RUN_MODE}
       - CHOKIDAR_USEPOLLING=true

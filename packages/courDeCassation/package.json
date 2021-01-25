@@ -5,6 +5,7 @@
     "axios": "0.21.1",
     "fast-xml-parser": "^3.17.4",
     "lodash": "^4.17.20",
+    "string-template": "^1.0.0",
     "yargs": "16.2.0"
   },
   "devDependencies": {
@@ -44,6 +45,7 @@
   "main": "dist/index",
   "name": "@label/cour-de-cassation",
   "scripts": {
+    "bootstrap": "node ./dist/scripts/bootstrap.js",
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",
     "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",

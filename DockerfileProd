@@ -16,7 +16,7 @@ COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 COPY . .
 
-RUN yarn buildProd
+RUN yarn build
 RUN chmod +x ./scripts/*
 
 # Start the app

@@ -10,33 +10,22 @@ services:
       - 55431
     ports:
       - 55431:55431
-    networks:
-      label-network:
-        ipv4_address: 10.5.0.5  
   backend:
     build:
       context: ./
-      dockerfile: DockerfileLocal
+      dockerfile: DockerfileLocalDev
     environment:
       - RUN_MODE=LOCAL
       - SENDGRID_API_KEY=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
-      - WEBAPP_URL=http://localhost:55430
-    image: label-local
+#    image: label-image
     ports:
       - '55430:55430'
-    networks:
-      label-network:
-        ipv4_address: 10.5.0.6  
     depends_on:
       - labelDb
 
 networks:
-  label-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16
-          gateway: 10.5.0.1
+  default:
+    name: label-network  
 
 volumes:
   mongo-storage:

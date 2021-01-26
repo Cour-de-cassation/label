@@ -22,7 +22,7 @@ function detectAnnotationTextsAndIndices(documentText: string, annotationText: s
   return textsAndIndices;
 
   function isAnnotationTextInsideLargerWord(index: number) {
-    const nonBoundaryCharacterRegex = /^[a-zA-Z0-9-_ÈÉÊÎÏÔÖÙÚÛÜèéêîïôöùû]/;
+    const nonBoundaryCharacterRegex = /^[a-zA-Z0-9ÈÉÊÎÏÔÖÙÚÛÜèéêîïôöùû]/;
     const isWordBeginningOnBoundary = index === 0 || !documentText[index - 1].match(nonBoundaryCharacterRegex);
     const isWordEndingOnBoundary =
       index + annotationText.length === documentText.length ||

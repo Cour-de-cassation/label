@@ -11,11 +11,8 @@ const nlpApi: nlpApiType = {
       idDocument: document.documentId,
       text: document.text,
       source: document.source,
-      meta: document.metadata,
+      meta: document.metadata !== '' ? document.metadata : undefined,
     };
-
-    console.log('NLP_API_BASE_URL', NLP_API_BASE_URL);
-    console.log('nlpRequestParameters', nlpRequestParameters);
 
     const response = await axios({
       data: nlpRequestParameters,
@@ -23,8 +20,6 @@ const nlpApi: nlpApiType = {
       method: 'post',
       url: `${NLP_API_BASE_URL}/ner`,
     });
-
-    console.log('response', response);
 
     return response.data as nlpAnnotationsType;
   },

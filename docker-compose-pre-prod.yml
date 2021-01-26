@@ -1,15 +1,15 @@
 version: '3.7'
 
 services:
-  labelDb:
+  preProdLabel:
     image: mongo:4.4
-    command: mongod --port 55431
+    command: mongod --port 27017
     volumes:
       - mongo-storage:/data/db
     expose:
-      - 55431
+      - 27017
     ports:
-      - 55431:55431
+      - 27017:27017
   backend:
     build:
       context: ./
@@ -22,7 +22,7 @@ services:
       - 55430:55430
       - 55432:55432
     depends_on:
-      - labelDb
+      - preProdLabel
 
 networks:
   default:

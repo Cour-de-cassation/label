@@ -17,6 +17,8 @@ function buildRunScript(
       await script();
     }
 
+    process.exit(0);
+
     async function runScriptWithDb() {
       await setupMongo(environment);
 

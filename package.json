@@ -32,6 +32,7 @@
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",
     "compile": "lerna run compile",
     "compileClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation compile ",
+    "deployPreProd": "git pull && yarn && yarn bootstrap && yarn build && yarn startPreProd",
     "lint": "lerna run lint",
     "startLocalDev": "scripts/startLocalDev.sh",
     "startLocalClientDev": "yarn compileClient && cd packages/generic/client && yarn start",

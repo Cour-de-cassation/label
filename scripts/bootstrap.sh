@@ -13,3 +13,6 @@ mv ./packages/courDeCassation/templates/docker-compose-rpvj-prod.yml ./
 mv ./packages/courDeCassation/templates/startLocal.sh ./scripts
 mv ./packages/courDeCassation/templates/startPreProd.sh ./scripts
 mv ./packages/courDeCassation/templates/startProd.sh ./scripts
+chmod +x ./scripts/startLocal.sh
+chmod +x ./scripts/startPreProd.sh
+chmod +x ./scripts/startProd.sh

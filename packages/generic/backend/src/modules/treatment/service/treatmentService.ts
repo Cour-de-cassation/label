@@ -6,15 +6,19 @@ import {
   treatmentModule,
   treatmentType,
 } from '@label/core';
-import { buildAssignationRepository } from '../../../modules/assignation';
+import {
+  assignationService,
+  buildAssignationRepository,
+} from '../../../modules/assignation';
 import { buildTreatmentRepository } from '../repository';
 
 export { treatmentService };
 
 const treatmentService = {
-  async fetchTreatments() {
+  async fetchAssignatedTreatments() {
     const treatmentRepository = buildTreatmentRepository();
-    const treatments = await treatmentRepository.findAll();
+    const treatmentIds = await assignationService.fetchAssignatedTreatmentIds();
+    const treatments = await treatmentRepository.findAllByIds(treatmentIds);
     return treatments;
   },
   async fetchAnnotationsOfDocument(documentId: idType) {

@@ -45,7 +45,8 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
     treatments: buildAuthenticatedController({
       permissions: ['admin'],
-      controllerWithUser: async () => treatmentService.fetchTreatments(),
+      controllerWithUser: async () =>
+        treatmentService.fetchAssignatedTreatments(),
     }),
   },
 

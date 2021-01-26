@@ -72,4 +72,9 @@ const assignationService = {
     });
     return assignationRepository.insert(assignation);
   },
+
+  async deleteAssignationsByDocumentId(documentId: documentType['_id']) {
+    const assignationRepository = buildAssignationRepository();
+    await assignationRepository.deleteAllByDocumentId(documentId);
+  },
 };

@@ -10,19 +10,21 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
 >({
   buildCustomFakeRepository: (collection) => ({
     async assign() {
-      const result = collection[0];
+      const freeDocument = collection.find(
+        (document) => document.status === 'free',
+      );
 
-      if (!result) {
+      if (!freeDocument) {
         throw new Error(`No free document`);
       }
 
       collection = collection.map((document) =>
-        idModule.lib.equalId(document._id, result._id)
-          ? { ...document, status: 'free' }
+        idModule.lib.equalId(document._id, freeDocument._id)
+          ? { ...document, status: 'pending' }
           : document,
       );
 
-      return result;
+      return freeDocument;
     },
     async updateStatus(id, status) {
       collection = collection.map((document) =>

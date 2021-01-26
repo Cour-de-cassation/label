@@ -93,4 +93,16 @@ describe('documentService', () => {
       expect(documentForUser).toEqual(documentofUser1);
     });
   });
+
+  describe('updateDocumentStatus', () => {
+    it('should update document status', async () => {
+      const document = documentModule.generator.generate({ status: 'free' });
+      await documentRepository.insert(document);
+
+      await documentService.updateDocumentStatus(document._id, 'pending');
+
+      const updatedDocument = await documentRepository.findById(document._id);
+      expect(updatedDocument.status).toEqual('free');
+    });
+  });
 });

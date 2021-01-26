@@ -11,4 +11,5 @@ type customAssignationRepositoryType = {
     documentId: documentType['_id'];
     userId: userType['_id'];
   }) => Promise<assignationType | undefined>;
+  deleteAllByDocumentId: (documentId: idType) => Promise<void>;
 };

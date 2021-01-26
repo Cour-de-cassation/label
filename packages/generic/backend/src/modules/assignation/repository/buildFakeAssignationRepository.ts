@@ -22,5 +22,11 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
       );
       return result;
     },
+    async deleteAllByDocumentId(documentId) {
+      collection = collection.filter(
+        (assignation) =>
+          !idModule.lib.equalId(assignation.documentId, documentId),
+      );
+    },
   }),
 });

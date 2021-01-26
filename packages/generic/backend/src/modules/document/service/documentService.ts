@@ -1,7 +1,7 @@
 import { documentType, idType, idModule } from '@label/core';
 import { buildAnnotationReportRepository } from '../../annotationReport';
-import { buildDocumentRepository } from '../repository';
 import { assignationService } from '../../assignation';
+import { buildDocumentRepository } from '../repository';
 
 export { documentService };
 
@@ -72,10 +72,14 @@ const documentService = {
   },
 
   async updateDocumentStatus(
-    documentId: idType,
+    documentId: documentType['_id'],
     status: documentType['status'],
   ) {
     const documentRepository = buildDocumentRepository();
     await documentRepository.updateStatus(documentId, status);
+
+    if (status === 'free') {
+      await assignationService.deleteAssignationsByDocumentId(documentId);
+    }
   },
 };

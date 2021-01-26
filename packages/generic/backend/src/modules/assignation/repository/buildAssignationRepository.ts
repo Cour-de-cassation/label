@@ -20,5 +20,8 @@ const buildAssignationRepository = buildRepositoryBuilder<
       }
       return result[0];
     },
+    async deleteAllByDocumentId(documentId) {
+      await collection.deleteMany({ documentId });
+    },
   }),
 });

@@ -69,6 +69,21 @@ function buildOptionItems(problemReportsWithDetails: apiRouteOutType<'get', 'pro
         });
       },
     },
+    {
+      text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
+      onClick: (problemReportId: string) => {
+        const problemReportWithDetails = problemReportsWithDetails.find(({ problemReport }) =>
+          idModule.lib.equalId(problemReport._id, idModule.lib.buildId(problemReportId)),
+        );
+        if (!problemReportWithDetails) {
+          return;
+        }
+        apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+          assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
+          status: 'pending',
+        });
+      },
+    },
   ];
 }
 

@@ -17,6 +17,11 @@ const assignationService = {
     const assignations = await assignationRepository.findAll();
     return assignations.map((assignation) => assignation.treatmentId);
   },
+  async fetchAssignations() {
+    const assignationRepository = buildAssignationRepository();
+    const assignations = await assignationRepository.findAll();
+    return assignations;
+  },
   async fetchAssignationId({
     userId,
     documentId,
@@ -33,16 +38,14 @@ const assignationService = {
     return assignation?._id;
   },
 
+  async fetchAllAssignationsById(assignationIds?: assignationType['_id'][]) {
+    const assignationRepository = buildAssignationRepository();
+    return assignationRepository.findAllByIds(assignationIds);
+  },
+
   async fetchDocumentIdsAssignatedToUserId(userId: idType) {
     const assignationRepository = buildAssignationRepository();
     const assignations = await assignationRepository.findAllByUserId(userId);
-
-    return assignations.map((assignation) => assignation.documentId);
-  },
-
-  async fetchAllAssignatedDocumentIds() {
-    const assignationRepository = buildAssignationRepository();
-    const assignations = await assignationRepository.findAll();
 
     return assignations.map((assignation) => assignation.documentId);
   },

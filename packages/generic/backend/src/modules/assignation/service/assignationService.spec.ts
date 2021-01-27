@@ -69,25 +69,4 @@ describe('assignationService', () => {
       expect(documentIdAssignatedToUserId).toEqual([]);
     });
   });
-
-  describe('fetchAllAssignatedDocumentIds', () => {
-    const assignationRepository = buildAssignationRepository();
-
-    it('should fetch all the assignated document id which are pending or saved', async () => {
-      const userId1 = idModule.lib.buildId();
-      const userId2 = idModule.lib.buildId();
-      const assignations = ([
-        { userId: userId1, status: 'pending' },
-        { userId: userId1, status: 'done' },
-        { userId: userId2, status: 'pending' },
-      ] as const).map(assignationModule.generator.generate);
-      await Promise.all(assignations.map(assignationRepository.insert));
-
-      const assignatedDocumentIds = await assignationService.fetchAllAssignatedDocumentIds();
-
-      expect(assignatedDocumentIds).toEqual(
-        assignations.map((assignation) => assignation.documentId),
-      );
-    });
-  });
 });

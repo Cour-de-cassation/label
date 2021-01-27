@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchedTreatmentType, idModule } from '@label/core';
+import { apiRouteOutType, idModule } from '@label/core';
 import { Table, Text } from '../../../../components';
 import { wordings } from '../../../../wordings';
 import { timeOperator } from './utils';
@@ -8,12 +8,13 @@ export { TreatmentTable };
 
 type formattedTreatmentType = {
   _id: string;
+  userName: string;
   duration: string;
 };
 
-function TreatmentTable(props: { treatments: fetchedTreatmentType[] }) {
-  const formattedTreatments = formatTreatments(props.treatments);
-  const durations = props.treatments.map(({ duration }) => duration);
+function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'> }) {
+  const formattedTreatments = formatTreatments(props.treatmentsWithDetails);
+  const durations = props.treatmentsWithDetails.map(({ treatment }) => treatment.duration);
   return (
     <Table
       isHeaderSticky
@@ -23,6 +24,11 @@ function TreatmentTable(props: { treatments: fetchedTreatmentType[] }) {
         {
           id: '_id',
           content: <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.number}</Text>,
+          canBeSorted: true,
+        },
+        {
+          id: 'userName',
+          content: <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.agent}</Text>,
           canBeSorted: true,
         },
         {
@@ -59,9 +65,12 @@ function TreatmentTable(props: { treatments: fetchedTreatmentType[] }) {
   );
 }
 
-function formatTreatments(treatments: fetchedTreatmentType[]): formattedTreatmentType[] {
-  return treatments.map((treatment) => ({
-    _id: idModule.lib.convertToString(treatment._id),
-    duration: timeOperator.convertDurationToReadableDuration(treatment.duration),
+function formatTreatments(
+  treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>,
+): formattedTreatmentType[] {
+  return treatmentsWithDetails.map((treatmentWithDetails) => ({
+    _id: idModule.lib.convertToString(treatmentWithDetails.treatment._id),
+    userName: treatmentWithDetails.userName,
+    duration: timeOperator.convertDurationToReadableDuration(treatmentWithDetails.treatment.duration),
   }));
 }

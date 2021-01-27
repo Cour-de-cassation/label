@@ -4,11 +4,8 @@ import {
   problemReportModule,
   problemReportType,
 } from '@label/core';
-import {
-  assignationService,
-  buildAssignationRepository,
-} from '../../assignation';
-import { buildUserRepository } from '../../user';
+import { userService } from '../../user';
+import { assignationService } from '../../assignation';
 import { buildProblemReportRepository } from '../repository';
 
 export { problemReportService };
@@ -48,48 +45,24 @@ const problemReportService = {
 
   async fetchProblemReportsWithDetails() {
     const problemReportRepository = buildProblemReportRepository();
-    const assignationRepository = buildAssignationRepository();
-    const userRepository = buildUserRepository();
     const problemReports = await problemReportRepository.findAll();
     const assignationIds = problemReports.map(
       (problemReport) => problemReport.assignationId,
     );
-    const assignations = await assignationRepository.findAllByIds(
+    const assignationsById = await assignationService.fetchAllAssignationsById(
       assignationIds,
     );
-    const userIds = assignations.map((assignation) => assignation.userId);
-    const users = await userRepository.findAllByIds(userIds);
-    const namesByAssignationId = assignationIds.reduce(
-      (accumulator, assignationId) => {
-        const assignationIdString = idModule.lib.convertToString(assignationId);
-        if (accumulator[assignationIdString]) {
-          return accumulator;
-        }
-        const assignation = assignations.find((assignation) =>
-          idModule.lib.equalId(assignation._id, assignationId),
-        );
-        if (!assignation) {
-          return accumulator;
-        }
-        const user = users.find((user) =>
-          idModule.lib.equalId(user._id, assignation.userId),
-        );
-        if (!user) {
-          return accumulator;
-        }
-        return {
-          ...accumulator,
-          [assignationIdString]: user.name,
-        };
-      },
-      {} as Record<string, string>,
+
+    const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
+      assignationsById,
     );
+
     return problemReports.map((problemReport) => {
-      const name =
-        namesByAssignationId[
+      const userName =
+        userNamesByAssignationId[
           idModule.lib.convertToString(problemReport.assignationId)
         ];
-      return { problemReport, name };
+      return { problemReport, userName };
     });
   },
 };

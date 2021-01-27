@@ -1,10 +1,10 @@
 import { treatmentGenerator } from './generator';
-import { treatmentDataModel, treatmentType, fetchedTreatmentType } from './treatmentType';
+import { treatmentDataModel, treatmentType } from './treatmentType';
 import { buildTreatment, computeAnnotations } from './lib';
 
 export { treatmentModule };
 
-export type { treatmentType, fetchedTreatmentType };
+export type { treatmentType };
 
 const treatmentModule = {
   dataModel: treatmentDataModel,

@@ -30,10 +30,31 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     return collection;
   }
 
-  async function findAllByIds(ids: idType[]) {
-    return collection.filter((document) =>
-      ids.some((id) => idModule.lib.equalId(id, document._id)),
-    );
+  async function findAllByIds(idsToSearchIn?: idType[]) {
+    let items = [] as T[];
+    if (idsToSearchIn) {
+      items = collection.filter((item) =>
+        idsToSearchIn.some((id) => idModule.lib.equalId(id, item._id)),
+      );
+    } else {
+      items = collection;
+    }
+    return items.reduce((accumulator, currentItem) => {
+      const idString = idModule.lib.convertToString(currentItem._id);
+      if (!!accumulator[idString]) {
+        return accumulator;
+      }
+      const item = collection.find(({ _id }) =>
+        idModule.lib.equalId(_id, currentItem._id),
+      );
+      if (!item) {
+        return accumulator;
+      }
+      return {
+        ...accumulator,
+        [idString]: item,
+      };
+    }, {} as Record<string, T>);
   }
 
   async function findById(id: idType) {

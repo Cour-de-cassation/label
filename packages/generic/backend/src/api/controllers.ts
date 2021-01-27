@@ -43,10 +43,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       }),
     }),
 
-    treatments: buildAuthenticatedController({
+    treatmentsWithDetails: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async () =>
-        treatmentService.fetchAssignatedTreatments(),
+        treatmentService.fetchAssignatedTreatmentsWithDetails(),
     }),
   },
 

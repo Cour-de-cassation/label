@@ -1,9 +1,9 @@
-import { buildDataModelEntry, networkTypeOfDataModel, typeOfDataModel } from '../dataModelType';
+import { buildDataModelEntry, typeOfDataModel } from '../dataModelType';
 import { annotationsDiffModule } from '../annotationsDiff';
 
 export { treatmentDataModel };
 
-export type { treatmentType, fetchedTreatmentType };
+export type { treatmentType };
 
 const treatmentDataModel = {
   _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
@@ -14,5 +14,3 @@ const treatmentDataModel = {
 } as const;
 
 type treatmentType = typeOfDataModel<typeof treatmentDataModel>;
-
-type fetchedTreatmentType = networkTypeOfDataModel<typeof treatmentDataModel>;

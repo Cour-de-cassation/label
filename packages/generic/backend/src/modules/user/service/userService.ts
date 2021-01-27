@@ -1,4 +1,10 @@
-import { errorHandlers, idModule, userModule, userType } from '@label/core';
+import {
+  assignationType,
+  errorHandlers,
+  idModule,
+  userModule,
+  userType,
+} from '@label/core';
 import { buildUserRepository } from '../repository';
 import { hasher, jwtSigner, mailer } from '../../../utils';
 import { wordings } from '../../../wordings';
@@ -8,6 +14,30 @@ export { userService };
 const DEFAULT_ROLE = 'annotator';
 
 const userService = {
+  async fetchUserNamesByAssignationId(
+    assignationsById: Record<string, assignationType>,
+  ) {
+    const userRepository = buildUserRepository();
+    const userIds = Object.values(assignationsById).map(
+      (assignation) => assignation.userId,
+    );
+    const usersById = await userRepository.findAllByIds(userIds);
+    const userNamesByAssignationId = Object.entries(assignationsById).reduce(
+      (accumulator, [assignationId, assignation]) => {
+        const user =
+          usersById[idModule.lib.convertToString(assignation.userId)];
+
+        return {
+          ...accumulator,
+          [assignationId]: user.name,
+        };
+      },
+      {} as Record<string, string>,
+    );
+
+    return userNamesByAssignationId;
+  },
+
   async login(user: {
     email: userType['email'];
     password: userType['password'];

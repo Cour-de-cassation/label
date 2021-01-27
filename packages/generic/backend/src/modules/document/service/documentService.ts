@@ -37,16 +37,15 @@ const documentService = {
     }
 
     async function fetchAlreadyAssignatedDocuments() {
-      return (
-        await documentRepository.findAllByIds(
-          documentIdsAssignated.filter(
-            (documentId) =>
-              !documentIdsToExclude.some((anotherDocumentId) =>
-                idModule.lib.equalId(documentId, anotherDocumentId),
-              ),
-          ),
-        )
-      )
+      const documentsById = await documentRepository.findAllByIds(
+        documentIdsAssignated.filter(
+          (documentId) =>
+            !documentIdsToExclude.some((anotherDocumentId) =>
+              idModule.lib.equalId(documentId, anotherDocumentId),
+            ),
+        ),
+      );
+      return Object.values(documentsById)
         .filter(
           (document) =>
             document.status === 'pending' || document.status === 'saved',

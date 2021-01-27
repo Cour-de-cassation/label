@@ -5,7 +5,7 @@ export type { repositoryType };
 type repositoryType<T extends { _id: idType }> = {
   clear: () => Promise<void>;
   findAll: () => Promise<T[]>;
-  findAllByIds: (ids: idType[]) => Promise<T[]>;
+  findAllByIds: (idsToSearchIn?: idType[]) => Promise<Record<string, T>>;
   findById: (id: idType) => Promise<T>;
   insert: (newObject: T) => Promise<{ success: boolean }>;
 };

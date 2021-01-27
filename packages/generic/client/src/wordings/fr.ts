@@ -96,6 +96,7 @@ const fr = {
       },
       columnTitles: {
         duration: 'Temps',
+        agent: 'Agent',
         number: 'N° décision',
       },
       footer: {

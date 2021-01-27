@@ -8,7 +8,7 @@ export { ProblemReportsTable };
 
 type formattedProblemReportType = {
   _id: string;
-  name: string;
+  userName: string;
   type: ReactElement;
   text: string;
 };
@@ -32,7 +32,7 @@ function ProblemReportsTable(props: {
           canBeSorted: true,
         },
         {
-          id: 'name',
+          id: 'userName',
           content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.agent}</Text>,
           canBeSorted: true,
         },
@@ -90,9 +90,9 @@ function buildOptionItems(problemReportsWithDetails: apiRouteOutType<'get', 'pro
 function formatProblemReportsWithDetails(
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>,
 ): formattedProblemReportType[] {
-  return problemReportsWithDetails.map(({ problemReport, name }) => ({
+  return problemReportsWithDetails.map(({ problemReport, userName }) => ({
     _id: idModule.lib.convertToString(problemReport._id),
-    name,
+    userName,
     type: <ProblemReportIcon type={problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />,
     text: problemReport.text,
   }));

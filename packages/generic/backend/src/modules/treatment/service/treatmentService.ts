@@ -1,6 +1,7 @@
 import { uniqWith } from 'lodash';
 import {
   annotationsDiffType,
+  assignationType,
   documentType,
   errorHandlers,
   idModule,
@@ -12,6 +13,7 @@ import {
   assignationService,
   buildAssignationRepository,
 } from '../../../modules/assignation';
+import { userService } from '../../user';
 import { buildTreatmentRepository } from '../repository';
 
 export { treatmentService };
@@ -91,5 +93,44 @@ const treatmentService = {
       annotationsDiff,
       duration,
     });
+  },
+
+  async fetchAssignatedTreatmentsWithDetails() {
+    const assignationsById = await assignationService.fetchAllAssignationsById();
+
+    const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
+      assignationsById,
+    );
+    const treatmentsByAssignationId = await treatmentService.fetchTreatmentsByAssignationId(
+      assignationsById,
+    );
+    return Object.keys(assignationsById).map((assignationId) => ({
+      treatment: treatmentsByAssignationId[assignationId],
+      userName: userNamesByAssignationId[assignationId],
+    }));
+  },
+
+  async fetchTreatmentsByAssignationId(
+    assignationsById: Record<string, assignationType>,
+  ) {
+    const treatmentRepository = buildTreatmentRepository();
+
+    const treatmentIds = Object.values(assignationsById).map(
+      (assignation) => assignation.treatmentId,
+    );
+    const treatmentsById = await treatmentRepository.findAllByIds(treatmentIds);
+    const treatmentsByAssignationId = Object.entries(assignationsById).reduce(
+      (accumulator, [assignationId, assignation]) => {
+        const treatment =
+          treatmentsById[idModule.lib.convertToString(assignation.treatmentId)];
+
+        return {
+          ...accumulator,
+          [assignationId]: treatment,
+        };
+      },
+      {} as Record<string, treatmentType>,
+    );
+    return treatmentsByAssignationId;
   },
 };

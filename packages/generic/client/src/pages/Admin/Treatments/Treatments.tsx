@@ -16,7 +16,7 @@ function Treatments() {
         <MainHeader title={wordings.treatmentsPage.title} subtitle={wordings.treatmentsPage.subtitle} />
       </div>
       <TreatmentsDataFetcher>
-        {({ treatments }) => (
+        {({ treatmentsWithDetails }) => (
           <div style={styles.table}>
             <div style={styles.tableHeaderContainer}>
               <div style={styles.tableHeader}>
@@ -28,7 +28,7 @@ function Treatments() {
             </div>
 
             <div style={styles.tableContentContainer}>
-              <TreatmentTable treatments={treatments} />
+              <TreatmentTable treatmentsWithDetails={treatmentsWithDetails} />
             </div>
           </div>
         )}

@@ -1,9 +1,15 @@
+import { range } from 'lodash';
 import {
   annotationModule,
   annotationsDiffModule,
+  assignationModule,
   idModule,
   treatmentModule,
 } from '@label/core';
+import {
+  assignationService,
+  buildAssignationRepository,
+} from '../../assignation';
 import { buildTreatmentRepository } from '../repository';
 import { treatmentService } from './treatmentService';
 
@@ -82,6 +88,45 @@ describe('treatmentService', () => {
       expect(treatedDocumentIds.sort()).toEqual(
         [documentId1, documentId2].sort(),
       );
+    });
+  });
+
+  describe('fetchTreatmentsByAssignationId', () => {
+    it('should return treatments mapped by assignationId', async () => {
+      const assignationRepository = buildAssignationRepository();
+      const treatmentRepository = buildTreatmentRepository();
+      const [treatment1, treatment2] = range(2).map(() =>
+        treatmentModule.generator.generate(),
+      );
+      const [assignation1, assignation2] = [
+        treatment1,
+        treatment2,
+      ].map((treatment) =>
+        assignationModule.generator.generate({ treatmentId: treatment._id }),
+      );
+      await assignationRepository.insert(assignation1);
+      await assignationRepository.insert(assignation2);
+      await treatmentRepository.insert(treatment1);
+      await treatmentRepository.insert(treatment2);
+      const assignationsById = await assignationService.fetchAllAssignationsById();
+
+      const treatmentsByAssignationId = await treatmentService.fetchTreatmentsByAssignationId(
+        assignationsById,
+      );
+      expect(
+        idModule.lib.convertToString(
+          treatmentsByAssignationId[
+            idModule.lib.convertToString(assignation1._id)
+          ]._id,
+        ),
+      ).toEqual(idModule.lib.convertToString(treatment1._id));
+      expect(
+        idModule.lib.convertToString(
+          treatmentsByAssignationId[
+            idModule.lib.convertToString(assignation2._id)
+          ]._id,
+        ),
+      ).toEqual(idModule.lib.convertToString(treatment2._id));
     });
   });
 });

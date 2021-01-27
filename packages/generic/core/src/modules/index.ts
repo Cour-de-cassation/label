@@ -15,7 +15,7 @@ import {
   shadeColorType,
   categoryIconNameType,
 } from './settings';
-import { fetchedTreatmentType, treatmentType, treatmentModule } from './treatment';
+import { treatmentType, treatmentModule } from './treatment';
 import { userModule, userType } from './user';
 import {
   buildDataModelEntry,
@@ -59,7 +59,6 @@ export type {
   settingsType,
   categoryIconNameType,
   userType,
-  fetchedTreatmentType,
   treatmentType,
   dataModelEntryType,
   dataModelType,

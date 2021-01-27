@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { fetchedTreatmentType, idModule } from '@label/core';
+import { apiRouteOutType, idModule } from '@label/core';
 import { apiCaller, useApi } from '../../../api';
 import { DataFetcher } from '../../DataFetcher';
 
@@ -7,28 +7,35 @@ export { TreatmentsDataFetcher };
 
 function TreatmentsDataFetcher(props: {
   alwaysDisplayHeader?: boolean;
-  children: (fetched: { treatments: fetchedTreatmentType[] }) => ReactElement;
+  children: (fetched: { treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'> }) => ReactElement;
 }) {
-  const treatmentsFetchInfo = useApi(buildFetchTreatments());
+  const treatmentsWithDetailsFetchInfo = useApi(buildFetchTreatments());
 
   return (
     <DataFetcher
       alwaysDisplayHeader={props.alwaysDisplayHeader}
-      buildComponentWithData={(treatments: fetchedTreatmentType[]) => props.children({ treatments })}
-      fetchInfo={treatmentsFetchInfo}
+      buildComponentWithData={(treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>) =>
+        props.children({ treatmentsWithDetails })
+      }
+      fetchInfo={treatmentsWithDetailsFetchInfo}
     />
   );
 }
 
 function buildFetchTreatments() {
   return async () => {
-    const { data: treatments, statusCode } = await apiCaller.get<'treatments'>('treatments');
+    const { data: treatmentsWithDetails, statusCode } = await apiCaller.get<'treatmentsWithDetails'>(
+      'treatmentsWithDetails',
+    );
 
     return {
-      data: treatments.map((treatment) => ({
-        ...treatment,
-        documentId: idModule.lib.buildId(treatment.documentId),
-        _id: idModule.lib.buildId(treatment._id),
+      data: treatmentsWithDetails.map((treatmentWithDetails) => ({
+        ...treatmentWithDetails,
+        treatment: {
+          ...treatmentWithDetails.treatment,
+          documentId: idModule.lib.buildId(treatmentWithDetails.treatment.documentId),
+          _id: idModule.lib.buildId(treatmentWithDetails.treatment._id),
+        },
       })),
       statusCode,
     };

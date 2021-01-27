@@ -45,7 +45,7 @@ const apiSchema = {
           kind: 'object',
           content: {
             problemReport: fetchedDataModelEntries.problemReport,
-            name: {
+            userName: {
               kind: 'primitive',
               content: 'string',
             },
@@ -56,10 +56,19 @@ const apiSchema = {
     settings: {
       out: fetchedDataModelEntries.settings,
     },
-    treatments: {
+    treatmentsWithDetails: {
       out: buildDataModelEntry({
         kind: 'list',
-        content: fetchedDataModelEntries.treatment,
+        content: {
+          kind: 'object',
+          content: {
+            treatment: fetchedDataModelEntries.treatment,
+            userName: {
+              kind: 'primitive',
+              content: 'string',
+            },
+          },
+        },
       }),
     },
   },

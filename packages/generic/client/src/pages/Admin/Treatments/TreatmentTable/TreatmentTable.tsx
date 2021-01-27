@@ -8,8 +8,9 @@ export { TreatmentTable };
 
 type formattedTreatmentType = {
   _id: string;
-  userName: string;
+  date: string;
   duration: string;
+  userName: string;
 };
 
 function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'> }) {
@@ -29,6 +30,11 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
         {
           id: 'userName',
           content: <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.agent}</Text>,
+          canBeSorted: true,
+        },
+        {
+          id: 'date',
+          content: <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.date}</Text>,
           canBeSorted: true,
         },
         {
@@ -71,6 +77,7 @@ function formatTreatments(
   return treatmentsWithDetails.map((treatmentWithDetails) => ({
     _id: idModule.lib.convertToString(treatmentWithDetails.treatment._id),
     userName: treatmentWithDetails.userName,
+    date: timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.date),
     duration: timeOperator.convertDurationToReadableDuration(treatmentWithDetails.treatment.duration),
   }));
 }

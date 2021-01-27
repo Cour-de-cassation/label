@@ -59,6 +59,7 @@ const treatmentService = {
       documentId,
       duration: 0,
       order,
+      date: new Date().getTime(),
     });
 
     await treatmentRepository.insert(treatment);

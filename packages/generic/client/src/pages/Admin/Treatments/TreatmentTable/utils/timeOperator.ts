@@ -2,9 +2,21 @@ export { timeOperator };
 
 const timeOperator = {
   convertDurationToReadableDuration,
+  convertTimestampToReadableDate,
   getReadableAverageDuration,
   getReadableTotalDuration,
 };
+
+function convertTimestampToReadableDate(timestamp: number) {
+  const date = new Date(timestamp);
+  const readableDay = date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;
+  const readableMonth = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
+  const readableYear = date.getFullYear();
+  const readableHours = date.getHours() < 10 ? `0${date.getHours()}` : `${date.getHours()}`;
+  const readableMinutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : `${date.getMinutes()}`;
+
+  return `${readableDay}/${readableMonth}/${readableYear} ${readableHours}:${readableMinutes}`;
+}
 
 function convertDurationToReadableDuration(duration: number) {
   const totalSeconds = Math.floor(duration / 1000);

@@ -18,4 +18,14 @@ describe('timeOperator', () => {
       expect(timeOperator.convertDurationToReadableDuration(7600000)).toBe(`2h6m40s`);
     });
   });
+
+  describe('convertTimestampToReadableDate', () => {
+    it('should return 12/12/2021 12:34', () => {
+      expect(timeOperator.convertTimestampToReadableDate(1639308840000)).toBe('12/12/2021 12:34');
+    });
+
+    it('should return 02/01/2021 00:01', () => {
+      expect(timeOperator.convertTimestampToReadableDate(1609542060000)).toBe('02/01/2021 00:01');
+    });
+  });
 });

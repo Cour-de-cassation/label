@@ -96,6 +96,7 @@ const fr = {
       },
       columnTitles: {
         duration: 'Temps',
+        date: 'Date de traitement',
         agent: 'Agent',
         number: 'N° décision',
       },

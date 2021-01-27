@@ -8,9 +8,9 @@ import { buildTreatmentRepository } from '../repository';
 import { treatmentService } from './treatmentService';
 
 describe('treatmentService', () => {
-  describe('fetchAnnotationsOfDocument', () => {
-    const treatmentRepository = buildTreatmentRepository();
+  const treatmentRepository = buildTreatmentRepository();
 
+  describe('fetchAnnotationsOfDocument', () => {
     it('should fetch the annotations from the treatments of the given document id', async () => {
       const annotations = [
         { text: '0' },
@@ -57,6 +57,30 @@ describe('treatmentService', () => {
           [],
           [annotations[2], annotations[3], annotations[4]],
         ).after,
+      );
+    });
+  });
+  describe('fetchTreatedDocumentIds', () => {
+    it('should fetch the annotations from the treatments of the given document id', async () => {
+      const documentId1 = idModule.lib.buildId();
+      const documentId2 = idModule.lib.buildId();
+      const treatments = [
+        {
+          documentId: documentId1,
+        },
+        {
+          documentId: documentId1,
+        },
+        {
+          documentId: documentId2,
+        },
+      ].map(treatmentModule.generator.generate);
+      await Promise.all(treatments.map(treatmentRepository.insert));
+
+      const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
+
+      expect(treatedDocumentIds.sort()).toEqual(
+        [documentId1, documentId2].sort(),
       );
     });
   });

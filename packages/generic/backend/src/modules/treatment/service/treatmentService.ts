@@ -1,7 +1,9 @@
+import { uniqWith } from 'lodash';
 import {
   annotationsDiffType,
   documentType,
   errorHandlers,
+  idModule,
   idType,
   treatmentModule,
   treatmentType,
@@ -21,6 +23,7 @@ const treatmentService = {
     const treatments = await treatmentRepository.findAllByIds(treatmentIds);
     return treatments;
   },
+
   async fetchAnnotationsOfDocument(documentId: idType) {
     const treatmentRepository = buildTreatmentRepository();
     const treatments = await treatmentRepository.findAllByDocumentId(
@@ -28,6 +31,17 @@ const treatmentService = {
     );
 
     return treatmentModule.lib.computeAnnotations(treatments);
+  },
+
+  async fetchTreatedDocumentIds() {
+    const treatmentRepository = buildTreatmentRepository();
+    const treatments = await treatmentRepository.findAll();
+    const treatedDocumentIds = uniqWith(
+      treatments.map((treatment) => treatment.documentId),
+      idModule.lib.equalId,
+    );
+
+    return treatedDocumentIds;
   },
 
   async createEmptyTreatment(

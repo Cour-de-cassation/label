@@ -1,21 +1,22 @@
 import { documentType, idType, idModule } from '@label/core';
-import { buildAnnotationReportRepository } from '../../annotationReport';
 import { assignationService } from '../../assignation';
+import { treatmentService } from '../../treatment';
 import { buildDocumentRepository } from '../repository';
 
 export { documentService };
 
 const documentService = {
   async fetchDocumentsWithoutAnnotations(): Promise<documentType[]> {
-    const annotationReportRepository = buildAnnotationReportRepository();
     const documentRepository = buildDocumentRepository();
 
-    const reports = await annotationReportRepository.findAll();
+    const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
     const documents = await documentRepository.findAll();
 
     return documents.filter(
       (document) =>
-        !reports.some((report) => report.documentId === document._id),
+        !treatedDocumentIds.some((documentId) =>
+          idModule.lib.equalId(documentId, document._id),
+        ),
     );
   },
   async fetchDocumentForUser(

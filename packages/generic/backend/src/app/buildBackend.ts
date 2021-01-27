@@ -17,8 +17,10 @@ function buildBackend(environmentJson: string, settingsJson: string) {
     runServer,
     runScript,
     scripts: {
-      clearDb: () => runScript(clearDb, { shouldLoadDb: true }),
-      insertTestUsers: () => runScript(insertTestUsers, { shouldLoadDb: true }),
+      clearDb: () =>
+        runScript(clearDb, { shouldLoadDb: true, shouldExit: false }),
+      insertTestUsers: () =>
+        runScript(insertTestUsers, { shouldLoadDb: true, shouldExit: false }),
     },
   };
 }

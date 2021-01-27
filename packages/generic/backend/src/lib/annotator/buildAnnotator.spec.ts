@@ -2,7 +2,6 @@ import {
   annotationModule,
   annotationReportModule,
   documentModule,
-  idModule,
 } from '@label/core';
 import {
   documentService,
@@ -48,7 +47,7 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
         documentId: document._id,
       });
 
-      return { annotations, documentId: idModule.lib.buildId(), report };
+      return { annotations, documentId: document._id, report };
     },
   };
 }

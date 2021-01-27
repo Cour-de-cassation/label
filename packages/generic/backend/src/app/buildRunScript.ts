@@ -8,16 +8,18 @@ function buildRunScript(
   environment: environmentType,
 ): (
   script: () => Promise<void>,
-  { shouldLoadDb }: { shouldLoadDb: boolean },
+  { shouldLoadDb }: { shouldLoadDb: boolean; shouldExit?: boolean },
 ) => Promise<void> {
-  return async (script, { shouldLoadDb }) => {
+  return async (script, { shouldLoadDb, shouldExit = true }) => {
     if (shouldLoadDb) {
       await runScriptWithDb();
     } else {
       await script();
     }
 
-    process.exit(0);
+    if (shouldExit) {
+      process.exit(0);
+    }
 
     async function runScriptWithDb() {
       await setupMongo(environment);

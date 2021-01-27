@@ -1,45 +1,42 @@
 import { range } from 'lodash';
 import {
-  annotationReportModule,
   assignationModule,
   documentModule,
+  treatmentModule,
   idModule,
 } from '@label/core';
-import { buildAnnotationReportRepository } from '../../annotationReport';
 import { buildAssignationRepository } from '../../assignation';
+import { buildTreatmentRepository } from '../../treatment';
 import { buildDocumentRepository } from '../repository';
 import { documentService } from './documentService';
 
 describe('documentService', () => {
   const assignationRepository = buildAssignationRepository();
-  const annotationReportRepository = buildAnnotationReportRepository();
+  const treatmentRepository = buildTreatmentRepository();
   const documentRepository = buildDocumentRepository();
 
   describe('fetchDocumentsWithoutAnnotations', () => {
     it('should fetch all the documents without annotation report', async () => {
-      const documentsWithAnnotationReport = range(5).map(() =>
+      const documentsWithTreatments = range(5).map(() =>
         documentModule.generator.generate(),
       );
-      const documentsWithoutAnnotationReport = range(3).map(() =>
+      const documentsWithoutTreatments = range(3).map(() =>
         documentModule.generator.generate(),
       );
-      const annotationReports = documentsWithAnnotationReport.map((document) =>
-        annotationReportModule.generator.generate({ documentId: document._id }),
+      const treatments = documentsWithTreatments.map((document) =>
+        treatmentModule.generator.generate({ documentId: document._id }),
       );
       await Promise.all(
-        [
-          ...documentsWithAnnotationReport,
-          ...documentsWithoutAnnotationReport,
-        ].map(documentRepository.insert),
+        [...documentsWithTreatments, ...documentsWithoutTreatments].map(
+          documentRepository.insert,
+        ),
       );
-      await Promise.all(
-        annotationReports.map(annotationReportRepository.insert),
-      );
+      await Promise.all(treatments.map(treatmentRepository.insert));
 
       const fetchedDocumentsWithoutAnnotations = await documentService.fetchDocumentsWithoutAnnotations();
 
       expect(fetchedDocumentsWithoutAnnotations.sort()).toEqual(
-        documentsWithoutAnnotationReport.sort(),
+        documentsWithoutTreatments.sort(),
       );
     });
   });

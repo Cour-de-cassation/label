@@ -9,7 +9,7 @@
     "order": 3,
     "text": "Adresse"
   },
-  "personnemorale": {
+  "personneMorale": {
     "anonymizationTexts": [
       "Los Pollos Hermanos",
       "Duff",
@@ -59,7 +59,7 @@
     "order": 4,
     "text": "Personne morale"
   },
-  "personnephysicomorale": {
+  "personnePhysicoMorale": {
     "anonymizationTexts": ["Edition Dupuis", "Krusty Burger"],
     "color": {
       "lightMode": ["deepPurple", 300],
@@ -69,7 +69,7 @@
     "order": 5,
     "text": "Personne physico-morale"
   },
-  "personnephysiqueprenom": {
+  "personnePhysiquePrenom": {
     "anonymizationTexts": [
       "Gaston",
       "Spirou",
@@ -106,7 +106,7 @@
     "order": 2,
     "text": "Prénom"
   },
-  "personnephysiquenom": {
+  "personnePhysiqueNom": {
     "anonymizationTexts": [
       "Lagaffe",
       "Labévue",
@@ -141,7 +141,7 @@
     "order": 1,
     "text": "Nom de famille"
   },
-  "professionnelnom": {
+  "professionnelNom": {
     "anonymizationTexts": [
       "Talon",
       "Du Lac",
@@ -163,7 +163,7 @@
     "order": 6,
     "text": "Professionnel (nom)"
   },
-  "professionnelprenom": {
+  "professionnelPrenom": {
     "anonymizationTexts": [
       "Achille",
       "Angelot",
@@ -201,7 +201,7 @@
     "order": 11,
     "text": "Cadastre"
   },
-  "datedenaissance": {
+  "dateNaissance": {
     "anonymizationTexts": [
       "date de naissance 1",
       "date de naissance 2",
@@ -220,7 +220,7 @@
     "order": 8,
     "text": "Date de naissance"
   },
-  "datedemariage": {
+  "dateMariage": {
     "anonymizationTexts": [
       "date de mariage 1",
       "date de mariage 2",
@@ -239,7 +239,7 @@
     "order": 9,
     "text": "Date de mariage"
   },
-  "datededeces": {
+  "dateDeces": {
     "anonymizationTexts": [
       "date de décès 1",
       "date de décès 2",
@@ -268,7 +268,7 @@
     "order": 13,
     "text": "N° INSEE"
   },
-  "telephoneorfaxoremail": {
+  "telephoneFaxEmail": {
     "anonymizationTexts": ["[...]"],
     "color": {
       "lightMode": ["lightBlue", 300],
@@ -278,7 +278,7 @@
     "order": 14,
     "text": "Téléphone/Fax/Email"
   },
-  "comptebancaire": {
+  "compteBancaire": {
     "anonymizationTexts": ["[...]"],
     "color": {
       "lightMode": ["indigo", 100],
@@ -288,7 +288,7 @@
     "order": 15,
     "text": "Compte bancaire"
   },
-  "plaqueimmatriculation": {
+  "plaqueImmatriculation": {
     "anonymizationTexts": ["[...]"],
     "color": {
       "lightMode": ["pink", 300],
@@ -298,7 +298,7 @@
     "order": 16,
     "text": "Plaque d'immatriculation"
   },
-  "etablissementpourmineure": {
+  "etablissementMineur": {
     "anonymizationTexts": ["[...]"],
     "color": {
       "lightMode": ["red", 300],

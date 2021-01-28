@@ -1,4 +1,4 @@
-import { annotationModule } from '../../modules';
+import { annotationModule, annotationType } from '../../modules';
 import { annotationTextDetector } from './annotationTextDetector';
 
 describe('annotationTextDetector', () => {
@@ -6,6 +6,7 @@ describe('annotationTextDetector', () => {
     it('should return all the annotation text and indices for the given text and document', () => {
       const documentText =
         'engineering: Benoit is a software engineer. Nicolas is a software engineer. They are engineers.';
+      const annotationIndex = 34;
       const annotationText = 'engineer';
       const annotations = [
         generateFetchedAnnotation({
@@ -20,11 +21,12 @@ describe('annotationTextDetector', () => {
         }),
       ];
 
-      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices(
+      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
         documentText,
+        annotationIndex,
         annotationText,
         annotations,
-      );
+      });
 
       expect(annotationTextsAndIndices).toEqual([
         {
@@ -39,6 +41,7 @@ describe('annotationTextDetector', () => {
     });
 
     it('should not return any text and index if it is inside another annotation', () => {
+      const annotationIndex = 18;
       const annotationText = 'Baker';
       const documentText = 'He lives at 221B, Baker street';
       const annotations = [
@@ -49,16 +52,18 @@ describe('annotationTextDetector', () => {
         }),
       ];
 
-      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices(
+      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
         documentText,
+        annotationIndex,
         annotationText,
         annotations,
-      );
+      });
 
       expect(annotationTextsAndIndices).toEqual([]);
     });
 
     it('should not return any text and index if it overlaps another annotation at its beginning', () => {
+      const annotationIndex = 10;
       const annotationText = 'Baker Street';
       const documentText = 'Josephine Baker Street';
       const annotations = [
@@ -69,16 +74,18 @@ describe('annotationTextDetector', () => {
         }),
       ];
 
-      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices(
+      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
         documentText,
+        annotationIndex,
         annotationText,
         annotations,
-      );
+      });
 
       expect(annotationTextsAndIndices).toEqual([]);
     });
 
-    it('should not create an annotationreturn any text and index if it overlaps another annotation at its end', () => {
+    it('should not return any text and index if it overlaps another annotation at its end', () => {
+      const annotationIndex = 0;
       const annotationText = 'Josephine Baker';
       const documentText = 'Josephine Baker Street';
       const annotations = [
@@ -89,13 +96,35 @@ describe('annotationTextDetector', () => {
         }),
       ];
 
-      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices(
+      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
         documentText,
+        annotationIndex,
         annotationText,
         annotations,
-      );
+      });
 
       expect(annotationTextsAndIndices).toEqual([]);
+    });
+
+    it('should not return text and indices of occurences inside another word', () => {
+      const documentText = 'engineering. engineering is difficult';
+      const annotationIndex = 0;
+      const annotationText = 'engineer';
+      const annotations = [] as annotationType[];
+
+      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
+        documentText,
+        annotationIndex,
+        annotationText,
+        annotations,
+      });
+
+      expect(annotationTextsAndIndices).toEqual([
+        {
+          index: annotationIndex,
+          text: annotationText,
+        },
+      ]);
     });
   });
 });

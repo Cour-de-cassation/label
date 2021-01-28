@@ -6,15 +6,25 @@ const annotationTextDetector = {
   detectAnnotationTextsAndIndices,
 };
 
-function detectAnnotationTextsAndIndices(documentText: string, annotationText: string, annotations: annotationType[]) {
+function detectAnnotationTextsAndIndices({
+  documentText,
+  annotationIndex,
+  annotationText,
+  annotations,
+}: {
+  documentText: string;
+  annotationIndex: number;
+  annotationText: string;
+  annotations: annotationType[];
+}) {
   let currentIndex = -1;
   const textsAndIndices: { text: string; index: number }[] = [];
   do {
     currentIndex = documentText.indexOf(annotationText, currentIndex + 1);
     if (
       currentIndex !== -1 &&
-      !isAnnotationTextInsideLargerWord(currentIndex) &&
-      !isAnnotationTextOverlappedWithAnyAnnotations(currentIndex)
+      !isAnnotationTextOverlappedWithAnyAnnotations(currentIndex) &&
+      (!isAnnotationTextInsideLargerWord(currentIndex) || currentIndex === annotationIndex)
     ) {
       textsAndIndices.push({ index: currentIndex, text: annotationText });
     }

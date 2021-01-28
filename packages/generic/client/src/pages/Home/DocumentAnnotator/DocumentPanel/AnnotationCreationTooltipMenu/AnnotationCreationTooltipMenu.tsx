@@ -33,11 +33,13 @@ function AnnotationCreationTooltipMenu(props: {
   const styles = buildStyles(theme);
   const annotatorState = annotatorStateHandler.get();
   const categories = settingsModule.lib.getCategories(annotatorState.settings);
-  const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices(
-    annotatorState.document.text,
-    props.annotationText,
-    annotatorState.annotations,
-  );
+  const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
+    documentText: annotatorState.document.text,
+    annotationIndex: props.annotationIndex,
+    annotationText: props.annotationText,
+    annotations: annotatorState.annotations,
+  });
+
   return (
     <FloatingTooltipMenu
       shouldCloseWhenClickedAway

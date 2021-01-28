@@ -36,6 +36,7 @@ describe('problemReportService', () => {
       const problemReport = (await problemReportRepository.findAll())[0];
       expect(problemReport).toEqual({
         assignationId: assignation._id,
+        date: problemReport.date,
         _id: problemReport._id,
         text: problemText,
         type: problemType,

@@ -6,6 +6,7 @@ export type { problemReportType };
 
 const problemReportDataModel = {
   assignationId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  date: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
   _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
   text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
   type: {

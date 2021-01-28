@@ -2,15 +2,17 @@ import React, { ReactElement } from 'react';
 import { apiRouteOutType, idModule } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { ProblemReportIcon, Table, Text } from '../../../../components';
+import { timeOperator } from '../../../../services/timeOperator';
 import { wordings } from '../../../../wordings';
 
 export { ProblemReportsTable };
 
 type formattedProblemReportType = {
+  date: string;
   _id: string;
-  userName: string;
-  type: ReactElement;
   text: string;
+  type: ReactElement;
+  userName: string;
 };
 
 const PROBLEM_REPORT_ICON_SIZE = 24;
@@ -39,6 +41,11 @@ function ProblemReportsTable(props: {
         {
           id: 'type',
           content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.type}</Text>,
+          canBeSorted: true,
+        },
+        {
+          id: 'date',
+          content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.date}</Text>,
           canBeSorted: true,
         },
         {
@@ -94,6 +101,7 @@ function formatProblemReportsWithDetails(
     _id: idModule.lib.convertToString(problemReport._id),
     userName,
     type: <ProblemReportIcon type={problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />,
+    date: timeOperator.convertTimestampToReadableDate(problemReport.date),
     text: problemReport.text,
   }));
 }

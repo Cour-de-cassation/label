@@ -79,12 +79,12 @@ describe('problemReportService', () => {
     const problemText1 = 'PROBLEM_TEXT1';
     const problemText2 = 'PROBLEM_TEXT2';
     const problemType = 'bug';
-    const problemReport1 = problemReportModule.lib.buildProblemReport({
+    const problemReport1 = problemReportModule.generator.generate({
       assignationId: assignation1._id,
       text: problemText1,
       type: problemType,
     });
-    const problemReport2 = problemReportModule.lib.buildProblemReport({
+    const problemReport2 = problemReportModule.generator.generate({
       assignationId: assignation2._id,
       text: problemText2,
       type: problemType,

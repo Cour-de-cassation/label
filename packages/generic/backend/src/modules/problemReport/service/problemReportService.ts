@@ -37,6 +37,7 @@ const problemReportService = {
     await problemReportRepository.insert(
       problemReportModule.lib.buildProblemReport({
         assignationId,
+        date: new Date().getTime(),
         text: problemText,
         type: problemType,
       }),

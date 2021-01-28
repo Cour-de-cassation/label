@@ -71,8 +71,9 @@ const fr = {
     subtitle: 'Alertes',
     table: {
       columnTitles: {
-        number: 'N° décision',
         agent: 'Agent',
+        date: 'Date',
+        number: 'N° décision',
         text: 'Message',
         type: 'Type',
       },
@@ -95,9 +96,9 @@ const fr = {
         exportButton: 'Exporter',
       },
       columnTitles: {
+        agent: 'Agent',
         duration: 'Temps',
         date: 'Date de traitement',
-        agent: 'Agent',
         number: 'N° décision',
       },
       footer: {

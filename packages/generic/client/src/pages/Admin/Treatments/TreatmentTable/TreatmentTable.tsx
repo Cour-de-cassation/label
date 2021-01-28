@@ -1,8 +1,8 @@
 import React from 'react';
 import { apiRouteOutType, idModule } from '@label/core';
 import { Table, Text } from '../../../../components';
+import { timeOperator } from '../../../../services/timeOperator';
 import { wordings } from '../../../../wordings';
-import { timeOperator } from './utils';
 
 export { TreatmentTable };
 

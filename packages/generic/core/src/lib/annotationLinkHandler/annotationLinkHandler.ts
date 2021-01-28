@@ -1,4 +1,4 @@
-import { uniqBy } from 'lodash';
+import { groupBy, uniqBy } from 'lodash';
 import { annotationModule, annotationType } from '../../modules';
 
 export { annotationLinkHandler };
@@ -51,13 +51,19 @@ function getLinkedAnnotations(entityId: annotationType['entityId'], annotations:
 }
 
 function getLinkableAnnotations(annotation: annotationType, annotations: annotationType[]): annotationType[] {
-  return uniqBy(
-    annotations.filter(
-      (otherAnnotation) =>
-        otherAnnotation.category === annotation.category && otherAnnotation.entityId !== annotation.entityId,
-    ),
-    (otherAnnotation) => otherAnnotation.entityId,
-  ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
+  const annotationsWithOtherEntityId = annotations.filter(
+    (otherAnnotation) =>
+      otherAnnotation.category === annotation.category && otherAnnotation.entityId !== annotation.entityId,
+  );
+  const annotationsWithOtherEntityIdByEntityId = groupBy(
+    annotationsWithOtherEntityId,
+    (annotation) => annotation.entityId,
+  );
+  const linkeableAnnotations = Object.values(annotationsWithOtherEntityIdByEntityId)
+    .sort((annotations1, annotations2) => annotations2.length - annotations1.length)
+    .map((annotations) => annotations[0]);
+
+  return linkeableAnnotations;
 }
 
 function unlink(annotationToUnlink: annotationType, annotations: annotationType[]): annotationType[] {

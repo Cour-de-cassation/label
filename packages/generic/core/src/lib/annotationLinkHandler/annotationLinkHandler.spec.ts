@@ -95,6 +95,7 @@ describe('annotationLinker', () => {
         { category: category },
         { category: category, text: 'Z' },
         { category: category, text: 'A' },
+        { category: category, text: 'A' },
         { category: 'ANOTHER_CATEGORY' },
       ].map(annotationModule.generator.generate);
 

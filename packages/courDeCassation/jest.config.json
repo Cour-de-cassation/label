@@ -1,0 +1,7 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "src",
+  "setupFilesAfterEnv": ["./test/setupTests.ts"],
+  "testRegex": ".spec.ts$",
+  "testEnvironment": "node"
+}

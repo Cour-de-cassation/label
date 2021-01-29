@@ -40,6 +40,7 @@
     "startProdDocker": "docker-compose -f docker-compose-prod.yml up",
     "startProdDockerRpvj": "docker-compose -f docker-compose-rpvj-prod.yml up",
     "test": "lerna run test",
+    "testE2E": "lerna run testE2E",
     "type": "lerna run type",
     "upLocal": "git pull && yarn && yarn bootstrap && yarn buildLocalDocker && yarn startLocalDocker",
     "upPreProd": "git pull && yarn && yarn bootstrap && yarn buildPreProdDocker && yarn startPreProdDocker",

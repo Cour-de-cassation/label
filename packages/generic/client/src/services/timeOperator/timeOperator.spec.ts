@@ -20,12 +20,12 @@ describe('timeOperator', () => {
   });
 
   describe('convertTimestampToReadableDate', () => {
-    it('should return 12/12/2021 12:34', () => {
-      expect(timeOperator.convertTimestampToReadableDate(1639308840000)).toBe('12/12/2021 12:34');
-    });
+    it('should return a date with the appropriate format', () => {
+      const regex = new RegExp('[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}');
 
-    it('should return 02/01/2021 00:01', () => {
-      expect(timeOperator.convertTimestampToReadableDate(1609542060000)).toBe('02/01/2021 00:01');
+      const dateString = timeOperator.convertTimestampToReadableDate(1639308840000);
+
+      expect(regex.test(dateString)).toBe(true);
     });
   });
 });

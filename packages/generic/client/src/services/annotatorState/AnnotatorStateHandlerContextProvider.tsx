@@ -1,6 +1,6 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
 import { annotationsDiffModule, documentModule } from '@label/core';
-import { annotatorStateCommitterType } from './buildAnnotatorStateCommitter';
+import { annotationsCommitterType } from './buildAnnotationsCommitter';
 import { annotatorStateType } from './annotatorStateType';
 import { annotatorStateHandlerType, buildAnnotatorStateHandler } from './buildAnnotatorStateHandler';
 
@@ -24,7 +24,7 @@ const AnnotatorStateHandlerContext = createContext<annotatorStateHandlerType>({
 function AnnotatorStateHandlerContextProvider(props: {
   children: ReactNode;
   initialAnnotatorState: annotatorStateType;
-  committer: annotatorStateCommitterType;
+  committer: annotationsCommitterType;
 }): ReactElement {
   const [annotatorState, setAnnotatorState] = useState(props.initialAnnotatorState);
   const { annotatorStateHandler } = buildAnnotatorStateHandler(

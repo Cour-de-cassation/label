@@ -1,6 +1,6 @@
 import { annotationDataModelField, annotationType } from './annotationType';
 import { annotationGenerator } from './generator';
-import { annotationLinker, annotationUpdater, buildAnnotation, entityIdHandler } from './lib';
+import { annotationLinker, annotationUpdater, buildAnnotation, entityIdHandler, sortAnnotations } from './lib';
 
 export { annotationModule };
 
@@ -14,5 +14,6 @@ const annotationModule = {
     annotationUpdater,
     buildAnnotation,
     entityIdHandler,
+    sortAnnotations,
   },
 };

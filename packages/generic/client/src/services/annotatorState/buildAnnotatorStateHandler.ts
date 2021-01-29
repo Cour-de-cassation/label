@@ -1,6 +1,6 @@
 import { annotationsDiffType } from '@label/core';
 import { annotatorStateType } from './annotatorStateType';
-import { annotatorStateCommitterType } from './buildAnnotatorStateCommitter';
+import { annotationsCommitterType } from './buildAnnotationsCommitter';
 
 export { buildAnnotatorStateHandler };
 
@@ -21,7 +21,7 @@ function buildAnnotatorStateHandler(
   annotatorState: annotatorStateType,
   setAnnotatorState: (annotatortState: annotatorStateType) => void,
   resetAnnotatorState: () => void,
-  committer: annotatorStateCommitterType,
+  committer: annotationsCommitterType,
 ): { annotatorStateHandler: annotatorStateHandlerType } {
   return {
     annotatorStateHandler: {
@@ -37,18 +37,24 @@ function buildAnnotatorStateHandler(
   };
 
   function setAnnotatorStateAndCommitChange(newAnnotatorState: annotatorStateType) {
-    committer.commit(annotatorState, newAnnotatorState);
+    committer.commit(annotatorState.annotations, newAnnotatorState.annotations);
     setAnnotatorState(newAnnotatorState);
   }
 
   function revertAnnotatorState() {
-    const newAnnotatorState = committer.revert(annotatorState);
-    setAnnotatorState(newAnnotatorState);
+    const newAnnotations = committer.revert(annotatorState.annotations);
+    setAnnotatorState({
+      ...annotatorState,
+      annotations: newAnnotations,
+    });
   }
 
   function restoreAnnotatorState() {
-    const newAnnotatorState = committer.restore(annotatorState);
-    setAnnotatorState(newAnnotatorState);
+    const newAnnotations = committer.restore(annotatorState.annotations);
+    setAnnotatorState({
+      ...annotatorState,
+      annotations: newAnnotations,
+    });
   }
 
   function reinitializeAnnotatorState() {

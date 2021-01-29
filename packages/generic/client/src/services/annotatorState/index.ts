@@ -1,9 +1,9 @@
 import { annotatorStateType } from './annotatorStateType';
 import { annotatorStateHandlerType } from './buildAnnotatorStateHandler';
-import { annotatorStateCommitterType, buildAnnotatorStateCommitter } from './buildAnnotatorStateCommitter';
+import { annotationsCommitterType, buildAnnotationsCommitter } from './buildAnnotationsCommitter';
 import { useAnnotatorStateHandler } from './useAnnotatorStateHandler';
 import { AnnotatorStateHandlerContextProvider } from './AnnotatorStateHandlerContextProvider';
 
-export { buildAnnotatorStateCommitter, AnnotatorStateHandlerContextProvider, useAnnotatorStateHandler };
+export { buildAnnotationsCommitter, AnnotatorStateHandlerContextProvider, useAnnotatorStateHandler };
 
-export type { annotatorStateType, annotatorStateHandlerType, annotatorStateCommitterType };
+export type { annotatorStateType, annotatorStateHandlerType, annotationsCommitterType };

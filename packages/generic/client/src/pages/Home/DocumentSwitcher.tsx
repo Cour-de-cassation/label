@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { buildAnonymizer, annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
-import { AnnotatorStateHandlerContextProvider, buildAnnotatorStateCommitter } from '../../services/annotatorState';
+import { AnnotatorStateHandlerContextProvider, buildAnnotationsCommitter } from '../../services/annotatorState';
 import { useMonitoring, MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentSelector } from './DocumentSelector';
@@ -35,7 +35,7 @@ function DocumentSwitcher(props: {
                 document: documentState.choice.document,
                 settings: props.settings,
               }}
-              committer={buildAnnotatorStateCommitter()}
+              committer={buildAnnotationsCommitter()}
             >
               <MainHeader title={documentState.choice.document.title} />
               <DocumentAnnotator

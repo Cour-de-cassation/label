@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { settingsModule, settingsType } from '@label/core';
-import { apiCaller, useApi } from '../../api';
-import { DataFetcher } from '../DataFetcher';
+import { apiCaller, useApi } from '../api';
+import { DataFetcher } from './DataFetcher';
 
 export { SettingsDataFetcher };
 

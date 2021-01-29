@@ -2,7 +2,7 @@ import { range } from 'lodash';
 import { annotationModule } from '@label/core';
 import { buildAnnotationsCommitter } from './buildAnnotationsCommitter';
 
-describe('buildAnnotatorStateCommitter', () => {
+describe('buildAnnotationsCommitter', () => {
   const annotations = range(7).map(() => annotationModule.generator.generate());
 
   describe('commit', () => {

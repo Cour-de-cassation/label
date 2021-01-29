@@ -1,31 +1,27 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { LayoutGrid } from '../../components';
 import { DocumentsDataFetcher } from './DocumentsDataFetcher';
-import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { DocumentSwitcher } from './DocumentSwitcher';
+import { settingsType } from '@label/core/src';
 
 const NUMBER_OF_CHOICES = 3;
 
-const Home: FunctionComponent = () => {
+function Home(props: { settings: settingsType }) {
   return (
     <LayoutGrid container>
       <LayoutGrid container item>
-        <SettingsDataFetcher alwaysDisplayHeader>
-          {({ settings }) => (
-            <DocumentsDataFetcher alwaysDisplayHeader numberOfDocuments={NUMBER_OF_CHOICES}>
-              {({ documentsToBeTreated, fetchNewDocumentsToBeTreated }) => (
-                <DocumentSwitcher
-                  choices={documentsToBeTreated}
-                  fetchNewDocumentsToBeTreated={fetchNewDocumentsToBeTreated}
-                  settings={settings}
-                />
-              )}
-            </DocumentsDataFetcher>
+        <DocumentsDataFetcher alwaysDisplayHeader numberOfDocuments={NUMBER_OF_CHOICES}>
+          {({ documentsToBeTreated, fetchNewDocumentsToBeTreated }) => (
+            <DocumentSwitcher
+              choices={documentsToBeTreated}
+              fetchNewDocumentsToBeTreated={fetchNewDocumentsToBeTreated}
+              settings={props.settings}
+            />
           )}
-        </SettingsDataFetcher>
+        </DocumentsDataFetcher>
       </LayoutGrid>
     </LayoutGrid>
   );
-};
+}
 
 export { Home };

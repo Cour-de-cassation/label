@@ -15,7 +15,7 @@ export { DocumentAnnotator };
 
 function DocumentAnnotator(props: {
   anonymizer: clientAnonymizerType;
-  onStopAnnotatingDocument: () => void;
+  onStopAnnotatingDocument?: () => void;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   useKeyboardShortcutsHandler([
@@ -44,12 +44,14 @@ function DocumentAnnotator(props: {
             <DocumentPanel anonymizer={props.anonymizer} splittedTextByLine={splittedTextByLine} />
           </div>
         </div>
-        <LayoutGrid container>
-          <DocumentAnnotatorFooter
-            anonymizer={props.anonymizer}
-            onStopAnnotatingDocument={props.onStopAnnotatingDocument}
-          />
-        </LayoutGrid>
+        {!!props.onStopAnnotatingDocument && (
+          <LayoutGrid container>
+            <DocumentAnnotatorFooter
+              anonymizer={props.anonymizer}
+              onStopAnnotatingDocument={props.onStopAnnotatingDocument}
+            />
+          </LayoutGrid>
+        )}
       </LayoutGrid>
     </DocumentViewerModeHandlerContextProvider>
   );

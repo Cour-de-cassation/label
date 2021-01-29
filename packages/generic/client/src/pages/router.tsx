@@ -10,42 +10,45 @@ import { Home } from './Home';
 import { Login } from './Login';
 import { ResetPassword } from './ResetPassword';
 import { ResetPasswordRequest } from './ResetPasswordRequest';
+import { SettingsDataFetcher } from './SettingsDataFetcher';
 
 export { Router };
 
-const Router: FunctionComponent = () => (
-  <BrowserRouter>
-    <Switch>
-      <UnauthenticatedRoute path="/reset-password-request">
-        <ResetPasswordRequest />
-      </UnauthenticatedRoute>
-      <UnauthenticatedRoute path="/reset-password/:resetPasswordToken">
-        <ResetPassword />
-      </UnauthenticatedRoute>
-      <UnauthenticatedRoute path="/login">
-        <Login />
-      </UnauthenticatedRoute>
-      <AuthenticatedRoute path="/admin/problem-reports">
-        <ProblemReports />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute path="/admin/treatments">
-        <Treatments />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute path="/admin/agents">
-        <Agents />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute path="/admin/document/:documentId">
-        <DocumentInspector />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute path="/admin">
-        <Admin />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute path="/">
-        <Home />
-      </AuthenticatedRoute>
-    </Switch>
-  </BrowserRouter>
-);
+function Router() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <UnauthenticatedRoute path="/reset-password-request">
+          <ResetPasswordRequest />
+        </UnauthenticatedRoute>
+        <UnauthenticatedRoute path="/reset-password/:resetPasswordToken">
+          <ResetPassword />
+        </UnauthenticatedRoute>
+        <UnauthenticatedRoute path="/login">
+          <Login />
+        </UnauthenticatedRoute>
+        <AuthenticatedRoute path="/admin/problem-reports">
+          <ProblemReports />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/admin/treatments">
+          <Treatments />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/admin/agents">
+          <Agents />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/admin/document/:documentId">
+          <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/admin">
+          <Admin />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/">
+          <SettingsDataFetcher>{({ settings }) => <Home settings={settings} />}</SettingsDataFetcher>
+        </AuthenticatedRoute>
+      </Switch>
+    </BrowserRouter>
+  );
+}
 
 const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
   <Route

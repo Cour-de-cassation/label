@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { apiRouteOutType, idModule } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { ProblemReportIcon, Table, Text } from '../../../../components';
@@ -7,26 +7,17 @@ import { wordings } from '../../../../wordings';
 
 export { ProblemReportsTable };
 
-type formattedProblemReportType = {
-  date: string;
-  _id: string;
-  text: string;
-  type: ReactElement;
-  userName: string;
-};
-
 const PROBLEM_REPORT_ICON_SIZE = 24;
 
 function ProblemReportsTable(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
-  const formattedProblemReports = formatProblemReportsWithDetails(props.problemReportsWithDetails);
-  const optionItems = buildOptionItems(props.problemReportsWithDetails);
-
+  const optionItems = buildOptionItems();
   return (
     <Table
       isHeaderSticky
-      data={formattedProblemReports}
+      data={props.problemReportsWithDetails}
+      dataFormatter={problemReportFormatter}
       header={[
         {
           id: '_id',
@@ -59,17 +50,11 @@ function ProblemReportsTable(props: {
   );
 }
 
-function buildOptionItems(problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>) {
+function buildOptionItems() {
   return [
     {
       text: wordings.problemReportsPage.table.optionItems.reinjectIntoStream,
-      onClick: (problemReportId: string) => {
-        const problemReportWithDetails = problemReportsWithDetails.find(({ problemReport }) =>
-          idModule.lib.equalId(problemReport._id, idModule.lib.buildId(problemReportId)),
-        );
-        if (!problemReportWithDetails) {
-          return;
-        }
+      onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
         apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
           assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
           status: 'free',
@@ -78,13 +63,7 @@ function buildOptionItems(problemReportsWithDetails: apiRouteOutType<'get', 'pro
     },
     {
       text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
-      onClick: (problemReportId: string) => {
-        const problemReportWithDetails = problemReportsWithDetails.find(({ problemReport }) =>
-          idModule.lib.equalId(problemReport._id, idModule.lib.buildId(problemReportId)),
-        );
-        if (!problemReportWithDetails) {
-          return;
-        }
+      onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
         apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
           assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
           status: 'pending',
@@ -94,14 +73,12 @@ function buildOptionItems(problemReportsWithDetails: apiRouteOutType<'get', 'pro
   ];
 }
 
-function formatProblemReportsWithDetails(
-  problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>,
-): formattedProblemReportType[] {
-  return problemReportsWithDetails.map(({ problemReport, userName }) => ({
-    _id: idModule.lib.convertToString(problemReport._id),
-    userName,
-    type: <ProblemReportIcon type={problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />,
-    date: timeOperator.convertTimestampToReadableDate(problemReport.date),
-    text: problemReport.text,
-  }));
+function problemReportFormatter(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
+  return {
+    _id: idModule.lib.convertToString(problemReportWithDetails.problemReport._id),
+    userName: problemReportWithDetails.userName,
+    type: <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />,
+    date: timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date),
+    text: problemReportWithDetails.problemReport.text,
+  };
 }

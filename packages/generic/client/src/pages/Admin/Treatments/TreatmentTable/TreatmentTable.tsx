@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { apiRouteOutType, idModule } from '@label/core';
 import { Table, Text } from '../../../../components';
 import { timeOperator } from '../../../../services/timeOperator';
@@ -6,21 +7,17 @@ import { wordings } from '../../../../wordings';
 
 export { TreatmentTable };
 
-type formattedTreatmentType = {
-  _id: string;
-  date: string;
-  duration: string;
-  userName: string;
-};
-
 function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'> }) {
-  const formattedTreatments = formatTreatments(props.treatmentsWithDetails);
+  const history = useHistory();
+
   const durations = props.treatmentsWithDetails.map(({ treatment }) => treatment.duration);
+  const optionItems = buildOptionItems();
   return (
     <Table
       isHeaderSticky
       isFooterSticky
-      data={formattedTreatments}
+      dataFormatter={treatmentFormatter}
+      data={props.treatmentsWithDetails}
       header={[
         {
           id: '_id',
@@ -67,17 +64,27 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
           ),
         },
       ]}
+      optionItems={optionItems}
     />
   );
+  function buildOptionItems() {
+    return [
+      {
+        text: wordings.treatmentsPage.table.optionItems.openDocument,
+        onClick: (treatmentWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>[number]) => {
+          history.push(`/admin/document/${treatmentWithDetails.treatment.documentId}`);
+          return;
+        },
+      },
+    ];
+  }
 }
 
-function formatTreatments(
-  treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>,
-): formattedTreatmentType[] {
-  return treatmentsWithDetails.map((treatmentWithDetails) => ({
+function treatmentFormatter(treatmentWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>[0]) {
+  return {
     _id: idModule.lib.convertToString(treatmentWithDetails.treatment._id),
     userName: treatmentWithDetails.userName,
     date: timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.date),
     duration: timeOperator.convertDurationToReadableDuration(treatmentWithDetails.treatment.duration),
-  }));
+  };
 }

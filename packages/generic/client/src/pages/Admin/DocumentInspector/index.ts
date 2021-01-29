@@ -1,0 +1,1 @@
+export { DocumentInspector } from './DocumentInspector';

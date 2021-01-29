@@ -52,9 +52,12 @@ function buildFetchDocumentsToBeTreated(numberOfDocuments: number) {
 }
 
 async function fetchDocumentToBeTreated(documentIdsToExclude: idType[]) {
-  const { data: document, statusCode: statusCodeDocument } = await apiCaller.get<'document'>('document', {
-    documentIdsToExclude: documentIdsToExclude || [],
-  });
+  const { data: document, statusCode: statusCodeDocument } = await apiCaller.get<'documentToBeTreated'>(
+    'documentToBeTreated',
+    {
+      documentIdsToExclude: documentIdsToExclude || [],
+    },
+  );
   const { data: annotations, statusCode: statusCodeAnnotations } = await apiCaller.get<'annotations'>('annotations', {
     documentId: document._id,
   });

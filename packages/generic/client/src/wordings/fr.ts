@@ -105,6 +105,9 @@ const fr = {
         total: 'TOTAL',
         average: 'Moyenne',
       },
+      optionItems: {
+        openDocument: 'Ouvrir la décision...',
+      },
     },
   },
 };

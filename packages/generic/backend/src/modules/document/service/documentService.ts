@@ -19,6 +19,12 @@ const documentService = {
         ),
     );
   },
+
+  async fetchDocument(documentId: documentType['_id']) {
+    const documentRepository = buildDocumentRepository();
+
+    return documentRepository.findById(documentId);
+  },
   async fetchDocumentForUser(
     userId: idType,
     documentIdsToExclude: idType[] = [],

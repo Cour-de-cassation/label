@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router
 import { localStorage } from '../services/localStorage';
 import { Admin } from './Admin';
 import { Agents } from './Admin/Agents';
+import { DocumentInspector } from './Admin/DocumentInspector';
 import { Treatments } from './Admin/Treatments';
 import { ProblemReports } from './Admin/ProblemReports';
 import { Home } from './Home';
@@ -32,6 +33,9 @@ const Router: FunctionComponent = () => (
       </AuthenticatedRoute>
       <AuthenticatedRoute path="/admin/agents">
         <Agents />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute path="/admin/document/:documentId">
+        <DocumentInspector />
       </AuthenticatedRoute>
       <AuthenticatedRoute path="/admin">
         <Admin />

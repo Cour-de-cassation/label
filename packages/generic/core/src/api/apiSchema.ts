@@ -28,6 +28,15 @@ const apiSchema = {
     },
     document: {
       in: {
+        documentId: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'string',
+        }),
+      },
+      out: fetchedDataModelEntries.document,
+    },
+    documentToBeTreated: {
+      in: {
         documentIdsToExclude: buildDataModelEntry({
           kind: 'list',
           content: {

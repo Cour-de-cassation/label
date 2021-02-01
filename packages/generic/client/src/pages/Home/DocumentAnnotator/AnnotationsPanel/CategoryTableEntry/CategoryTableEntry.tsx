@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { uniq } from 'lodash';
+import { CategoryTableEntryBracketLink } from './CategoryTableEntryBracketLink';
 import { displayModeType, annotationType, settingsModule } from '@label/core';
 import { SText } from '../../../../../components';
 import { annotatorStateHandlerType, useAnnotatorStateHandler } from '../../../../../services/annotatorState';
@@ -17,6 +18,7 @@ const {
   Div_Occurences,
   Div_ActionButtons,
   Div_AnnotationText,
+  Div_AnnotationTextMargin,
 } = buildStyledComponents();
 
 function CategoryTableEntry(props: {
@@ -31,6 +33,13 @@ function CategoryTableEntry(props: {
   const entityAnnotation = props.entityAnnotations[0];
   const entityAnnotationTexts = uniq(props.entityAnnotations.map((annotation) => annotation.text));
   const numberOfEntities = props.entityAnnotations.length;
+  const categoryColor = getColor(
+    settingsModule.lib.getAnnotationCategoryColor(
+      entityAnnotation.category,
+      annotatorStateHandler.get().settings,
+      displayMode,
+    ),
+  );
 
   const styleProps = {
     annotatorStateHandler,
@@ -40,14 +49,21 @@ function CategoryTableEntry(props: {
     entityId: props.entityId,
     theme: theme,
   };
-
   return (
     <Div_CategoryTableEntry key={props.entityId} onClick={selectEntity} styleProps={styleProps}>
       <Div_EntityText styleProps={styleProps}>
-        {entityAnnotationTexts.map((text) => (
-          <Div_AnnotationText styleProps={styleProps}>
-            <SText variant="body2">{text}</SText>
-          </Div_AnnotationText>
+        {entityAnnotationTexts.map((text, index) => (
+          <div>
+            <Div_AnnotationText styleProps={styleProps}>
+              <CategoryTableEntryBracketLink
+                color={categoryColor}
+                variant={computeBracketPosition(entityAnnotationTexts, index)}
+              />
+              <Div_AnnotationTextMargin>
+                <SText variant="body2">{text}</SText>
+              </Div_AnnotationTextMargin>
+            </Div_AnnotationText>
+          </div>
         ))}
       </Div_EntityText>
       <Div_Occurences styleProps={styleProps}>
@@ -62,6 +78,19 @@ function CategoryTableEntry(props: {
     </Div_CategoryTableEntry>
   );
 
+  function computeBracketPosition(entityAnnotationTexts: string[], index: number) {
+    if (entityAnnotationTexts.length > 1) {
+      if (index === 0) {
+        return 'first';
+      } else if (index === entityAnnotationTexts.length - 1) {
+        return 'last';
+      } else {
+        return 'middle';
+      }
+    } else {
+      return 'empty';
+    }
+  }
   function selectEntity() {
     props.entityEntryHandler.setSelected(
       props.entityEntryHandler.isSelected(props.entityId) ? undefined : props.entityId,
@@ -80,10 +109,12 @@ function buildStyledComponents() {
       theme: customThemeType;
     };
   };
-
+  const Div_AnnotationTextMargin = styled.div`
+    margin-bottom: 5px;
+  `;
   const Div_AnnotationText = styled.div<stylePropsType>`
     line-height: 14px;
-    margin-bottom: ${({ styleProps }) => styleProps.theme.spacing / 2}px;
+    display: flex;
   `;
   const Div_EntityText = styled.div<stylePropsType>`
     ${({ styleProps }) => `
@@ -112,7 +143,6 @@ function buildStyledComponents() {
   const Div_ActionButtons = styled.div<stylePropsType>`
     ${({ styleProps }) => {
       const { hoveredBackgroundColor } = computeBackgroundColors(styleProps);
-
       return `
         display: none;
         border-radius: ${styleProps.theme.shape.borderRadius.medium}px;
@@ -153,7 +183,6 @@ function buildStyledComponents() {
         `
             : ''
         }
-
         &:hover {
           background-color: ${hoveredBackgroundColor};
           cursor: pointer;
@@ -180,6 +209,7 @@ function buildStyledComponents() {
     Div_Occurences,
     Div_ActionButtons,
     Div_AnnotationText,
+    Div_AnnotationTextMargin,
   };
 
   function computeBackgroundColors(props: {

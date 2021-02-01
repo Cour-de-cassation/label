@@ -9,6 +9,7 @@ import { computeDocumentInfoEntries } from './computeDocumentInfoEntries';
 export { DocumentSelectorCard };
 
 const DOCUMENT_INFO_ENTRIES = ['annotations', 'linkedEntities', 'entities'] as const;
+const MAX_WIDTH = 400;
 const CATEGORY_ICON_SIZE = 32;
 const MAX_CATEGORIES_SHOWN = 8;
 
@@ -89,6 +90,7 @@ function buildStyles(theme: customThemeType): { [cssClass: string]: CSSPropertie
       flexDirection: 'column',
       alignItems: 'center',
       boxShadow: theme.boxShadow.major,
+      maxWidth: `${MAX_WIDTH}px`,
     },
     categoryIconsContainer: {
       display: 'flex',

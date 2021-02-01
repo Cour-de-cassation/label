@@ -1,5 +1,7 @@
+import { mapValues } from 'lodash';
 import { annotationType, fetchedDocumentType, settingsType } from '../../modules';
 import { textSplitter } from '../textSplitter';
+import { buildAnonymizedStringGenerator } from './anonymizedStringGenerator';
 
 export { buildAnonymizer };
 
@@ -13,6 +15,9 @@ type anonymizerType<documentT extends fetchedDocumentType> = {
 };
 
 function buildAnonymizer<documentT extends fetchedDocumentType>(settings: settingsType): anonymizerType<documentT> {
+  const anonymizedStringGenerators = mapValues(settings, (categorySetting) =>
+    buildAnonymizedStringGenerator(categorySetting.anonymization),
+  );
   const mapper: { [key: string]: string | undefined } = {};
 
   return {
@@ -49,18 +54,12 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(settings: settin
   }
 
   function addNewMapping(annotation: annotationType) {
-    const anonymizationTexts = settings[annotation.category]?.anonymizationTexts || [];
-    const anonymizedText = anonymizationTexts.shift() || ANONYMIZATION_DEFAULT_TEXT;
-    anonymizationTexts.push(anonymizedText);
+    const anonymizedText = anonymizedStringGenerators[annotation.category]?.generate() || ANONYMIZATION_DEFAULT_TEXT;
 
-    addAnnotationToAnonymizedTextMapping(annotation, anonymizedText);
+    mapper[annotation.entityId] = anonymizedText;
   }
 
   function mapAnnotationToAnonymizedText(annotation: annotationType) {
     return mapper[annotation.entityId];
-  }
-
-  function addAnnotationToAnonymizedTextMapping(annotation: annotationType, anonymizedText: string) {
-    mapper[annotation.entityId] = anonymizedText;
   }
 }

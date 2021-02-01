@@ -24,7 +24,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
   Object.keys(partialSettings).forEach(
     (category) =>
       (settings[category] = {
-        anonymizationTexts: buildAnonymizationTexts(partialSettings[category]?.anonymizationTexts),
+        anonymization: partialSettings[category]?.anonymization || `ANONYMIZATION_${Math.random()} %d`,
         color: {
           lightMode: buildColor(partialSettings[category]?.color?.lightMode),
           darkMode: buildColor(partialSettings[category]?.color?.darkMode),
@@ -36,10 +36,6 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
   );
 
   return settings;
-}
-
-function buildAnonymizationTexts(anonymizationTexts: string[] | undefined) {
-  return anonymizationTexts ? anonymizationTexts : [];
 }
 
 function buildColor(color: colorType | undefined) {

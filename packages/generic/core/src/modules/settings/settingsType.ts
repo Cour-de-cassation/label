@@ -17,7 +17,7 @@ type settingsType = {
 };
 
 type categorySettingType = {
-  anonymizationTexts: string[];
+  anonymization: string;
   color: { [displayMode in displayModeType]: colorType };
   iconName: categoryIconNameType;
   order: number | undefined;

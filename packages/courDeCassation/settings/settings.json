@@ -1,138 +1,6 @@
 {
-  "adresse": {
-    "anonymizationTexts": ["[...]"],
-    "color": {
-      "lightMode": ["blue", 300],
-      "darkMode": ["blue", 800]
-    },
-    "iconName": "location",
-    "order": 3,
-    "text": "Adresse"
-  },
-  "personneMorale": {
-    "anonymizationTexts": [
-      "Los Pollos Hermanos",
-      "Duff",
-      "World Company",
-      "Boucherie Sanzot",
-      "Stark Industries",
-      "Capsule Corp",
-      "Buzz Cola",
-      "MomCorp",
-      "Bloom Theory",
-      "Tousla",
-      "Marcidas",
-      "Mike",
-      "Udidos",
-      "Pouma",
-      "Courrefar",
-      "MonoPro",
-      "Franprou",
-      "Chenal",
-      "Christo Diar",
-      "Air Franche",
-      "Mac Danold",
-      "Burger Queen",
-      "Happypotamas",
-      "Ikao",
-      "Lancâme",
-      "Décalton",
-      "Zera",
-      "Unoqli",
-      "Fnoc",
-      "Dartou",
-      "Amanaz",
-      "Mocrisaft",
-      "HAL",
-      "NVidio",
-      "Opple",
-      "La Radote",
-      "Yamahou",
-      "SamSam",
-      "Suzuka"
-    ],
-    "color": {
-      "lightMode": ["deepPurple", 100],
-      "darkMode": ["deepPurple", 400]
-    },
-    "iconName": "work",
-    "order": 4,
-    "text": "Personne morale"
-  },
-  "personnePhysicoMorale": {
-    "anonymizationTexts": ["Edition Dupuis", "Krusty Burger"],
-    "color": {
-      "lightMode": ["deepPurple", 300],
-      "darkMode": ["deepPurple", 800]
-    },
-    "iconName": "work",
-    "order": 5,
-    "text": "Personne physico-morale"
-  },
-  "personnePhysiquePrenom": {
-    "anonymizationTexts": [
-      "Gaston",
-      "Spirou",
-      "Fantasio",
-      "Bertrand",
-      "Léon",
-      "Yves",
-      "Joseph",
-      "William",
-      "Marie",
-      "Melody",
-      "Alex",
-      "Ange",
-      "Camille",
-      "Charlie",
-      "Claude",
-      "Dany",
-      "Dominique",
-      "Jackie",
-      "Leslie",
-      "Lou",
-      "Maxime",
-      "Maxence",
-      "Morgan",
-      "Sam",
-      "Sacha",
-      "Yannick"
-    ],
-    "color": {
-      "lightMode": ["deepOrange", 100],
-      "darkMode": ["deepOrange", 400]
-    },
-    "iconName": "person",
-    "order": 2,
-    "text": "Prénom"
-  },
   "personnePhysiqueNom": {
-    "anonymizationTexts": [
-      "Lagaffe",
-      "Labévue",
-      "Prunelle",
-      "Lebrac",
-      "Longtarin",
-      "De Mesmaeker",
-      "Lapoire",
-      "Glé",
-      "Serrano",
-      "Assouad",
-      "Girardin",
-      "Duchatel",
-      "Durand",
-      "Dupond",
-      "Poitou",
-      "Legrand",
-      "de Logonesse",
-      "Le Roy",
-      "Laporte",
-      "Girard",
-      "Sanchez",
-      "Barthez",
-      "Lloris",
-      "Papin"
-    ],
+    "anonymization": "[%c]",
     "color": {
       "lightMode": ["deepOrange", 300],
       "darkMode": ["deepOrange", 800]
@@ -141,171 +9,174 @@
     "order": 1,
     "text": "Nom de famille"
   },
+  "personnePhysiquePrenom": {
+    "anonymization": "[%c]",
+    "color": {
+      "lightMode": ["deepOrange", 100],
+      "darkMode": ["deepOrange", 400]
+    },
+    "iconName": "person",
+    "order": 2,
+    "text": "Prénom"
+  },
+  "adresse": {
+    "anonymization": "[Adresse %d]",
+    "color": {
+      "lightMode": ["blue", 300],
+      "darkMode": ["blue", 800]
+    },
+    "iconName": "location",
+    "order": 3,
+    "text": "Adresse"
+  },
+  "localite": {
+    "anonymization": "[Localité %d]",
+    "color": {
+      "lightMode": ["blue", 300],
+      "darkMode": ["blue", 800]
+    },
+    "iconName": "location",
+    "order": 4,
+    "text": "Localité"
+  },
+  "personneMorale": {
+    "anonymization": "[Personne morale %d]",
+    "color": {
+      "lightMode": ["deepPurple", 100],
+      "darkMode": ["deepPurple", 400]
+    },
+    "iconName": "work",
+    "order": 5,
+    "text": "Personne morale"
+  },
+  "personnePhysicoMorale": {
+    "anonymization": "[Personne physico-morale %d]",
+    "color": {
+      "lightMode": ["deepPurple", 300],
+      "darkMode": ["deepPurple", 800]
+    },
+    "iconName": "work",
+    "order": 6,
+    "text": "Personne physico-morale"
+  },
+  "personneGeoMorale": {
+    "anonymization": "[Personne géo-morale %d]",
+    "color": {
+      "lightMode": ["deepPurple", 300],
+      "darkMode": ["deepPurple", 800]
+    },
+    "iconName": "work",
+    "order": 7,
+    "text": "Personne géo-morale"
+  },
   "professionnelNom": {
-    "anonymizationTexts": [
-      "Talon",
-      "Du Lac",
-      "Ardent",
-      "Blanc-Sec",
-      "Brisefer",
-      "Burma",
-      "Cartland",
-      "Duval",
-      "Givaudan",
-      "Idoine",
-      "Isidore"
-    ],
+    "anonymization": "[...]",
     "color": {
       "lightMode": ["brown", 100],
       "darkMode": ["brown", 500]
     },
     "iconName": "hammer",
-    "order": 6,
+    "order": 8,
     "text": "Professionnel (nom)"
   },
   "professionnelPrenom": {
-    "anonymizationTexts": [
-      "Achille",
-      "Angelot",
-      "Chevalier",
-      "Adèle",
-      "Benoît",
-      "Nestor",
-      "Jonathan",
-      "Marion"
-    ],
+    "anonymization": "[...]",
     "color": {
       "lightMode": ["brown", 200],
       "darkMode": ["brown", 800]
     },
     "iconName": "hammer",
-    "order": 7,
+    "order": 9,
     "text": "Professionnel (prénom)"
   },
-  "cadastre": {
-    "anonymizationTexts": [
-      "cadastre 1",
-      "cadastre 2",
-      "cadastre 3",
-      "cadastre 4",
-      "cadastre 5",
-      "cadastre 6",
-      "cadastre 7",
-      "cadastre 8"
-    ],
-    "color": {
-      "lightMode": ["cyan", 300],
-      "darkMode": ["cyan", 600]
-    },
-    "iconName": "map",
-    "order": 11,
-    "text": "Cadastre"
-  },
   "dateNaissance": {
-    "anonymizationTexts": [
-      "date de naissance 1",
-      "date de naissance 2",
-      "date de naissance 3",
-      "date de naissance 4",
-      "date de naissance 5",
-      "date de naissance 6",
-      "date de naissance 7",
-      "date de naissance 8"
-    ],
+    "anonymization": "[XX/XX/XXXX]",
     "color": {
       "lightMode": ["teal", 300],
       "darkMode": ["teal", 800]
     },
     "iconName": "stroller",
-    "order": 8,
+    "order": 10,
     "text": "Date de naissance"
   },
   "dateMariage": {
-    "anonymizationTexts": [
-      "date de mariage 1",
-      "date de mariage 2",
-      "date de mariage 3",
-      "date de mariage 4",
-      "date de mariage 5",
-      "date de mariage 6",
-      "date de mariage 7",
-      "date de mariage 8"
-    ],
+    "anonymization": "[XX/XX/XXXX]",
     "color": {
       "lightMode": ["green", 300],
       "darkMode": ["green", 800]
     },
     "iconName": "heart",
-    "order": 9,
+    "order": 11,
     "text": "Date de mariage"
   },
   "dateDeces": {
-    "anonymizationTexts": [
-      "date de décès 1",
-      "date de décès 2",
-      "date de décès 3",
-      "date de décès 4",
-      "date de décès 5",
-      "date de décès 6",
-      "date de décès 7",
-      "date de décès 8"
-    ],
+    "anonymization": "[XX/XX/XXXX]",
     "color": {
       "lightMode": ["lime", 300],
       "darkMode": ["lime", 900]
     },
     "iconName": "cloud",
-    "order": 10,
+    "order": 12,
     "text": "Date de décès"
   },
+  "cadastre": {
+    "anonymization": "[Cadastre %d]",
+    "color": {
+      "lightMode": ["cyan", 300],
+      "darkMode": ["cyan", 600]
+    },
+    "iconName": "map",
+    "order": 13,
+    "text": "Cadastre"
+  },
   "insee": {
-    "anonymizationTexts": ["[...]"],
+    "anonymization": "XXXXXXXXXXXXX",
     "color": {
       "lightMode": ["indigo", 300],
       "darkMode": ["indigo", 800]
     },
     "iconName": "book",
-    "order": 13,
+    "order": 14,
     "text": "N° INSEE"
   },
-  "telephoneFaxEmail": {
-    "anonymizationTexts": ["[...]"],
+  "telephoneFax": {
+    "anonymization": "XXXXXXXXXX",
     "color": {
       "lightMode": ["lightBlue", 300],
       "darkMode": ["lightBlue", 800]
     },
     "iconName": "phone",
-    "order": 14,
-    "text": "Téléphone/Fax/Email"
+    "order": 15,
+    "text": "Téléphone/Fax"
+  },
+  "email": {
+    "anonymization": "[Courriel %d]",
+    "color": {
+      "lightMode": ["lightBlue", 300],
+      "darkMode": ["lightBlue", 800]
+    },
+    "iconName": "phone",
+    "order": 16,
+    "text": "Email"
   },
   "compteBancaire": {
-    "anonymizationTexts": ["[...]"],
+    "anonymization": "[Compte bancaire %d]",
     "color": {
       "lightMode": ["indigo", 100],
       "darkMode": ["indigo", 500]
     },
     "iconName": "bank",
-    "order": 15,
+    "order": 17,
     "text": "Compte bancaire"
   },
   "plaqueImmatriculation": {
-    "anonymizationTexts": ["[...]"],
+    "anonymization": "[Immatriculation %d]",
     "color": {
       "lightMode": ["pink", 300],
       "darkMode": ["pink", 800]
     },
     "iconName": "car",
-    "order": 16,
+    "order": 18,
     "text": "Plaque d'immatriculation"
-  },
-  "etablissementMineur": {
-    "anonymizationTexts": ["[...]"],
-    "color": {
-      "lightMode": ["red", 300],
-      "darkMode": ["red", 700]
-    },
-    "iconName": "child",
-    "order": 17,
-    "text": "Etablissement pour mineur"
   }
 }

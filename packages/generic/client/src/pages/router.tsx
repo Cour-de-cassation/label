@@ -37,13 +37,17 @@ function Router() {
           <Agents />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/admin/document/:documentId">
-          <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
+          <SettingsDataFetcher alwaysDisplayHeader>
+            {({ settings }) => <DocumentInspector settings={settings} />}
+          </SettingsDataFetcher>
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/admin">
           <Admin />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/">
-          <SettingsDataFetcher>{({ settings }) => <Home settings={settings} />}</SettingsDataFetcher>
+          <SettingsDataFetcher alwaysDisplayHeader>
+            {({ settings }) => <Home settings={settings} />}
+          </SettingsDataFetcher>
         </AuthenticatedRoute>
       </Switch>
     </BrowserRouter>

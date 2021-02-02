@@ -18,7 +18,7 @@ function DocumentInspector(props: { settings: settingsType }) {
   const params = useParams<DocumentInspectorParamsType>();
 
   return (
-    <DocumentDataFetcher documentId={params.documentId} alwaysDisplayHeader>
+    <DocumentDataFetcher documentId={params.documentId}>
       {({ document }) => (
         <AnnotationsDataFetcher documentId={params.documentId}>
           {({ annotations }) => (

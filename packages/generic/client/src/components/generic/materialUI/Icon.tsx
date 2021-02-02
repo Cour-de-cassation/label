@@ -36,6 +36,7 @@ import {
   SaveAltRounded,
   SendRounded,
   SettingsRounded,
+  StoreRounded,
   UndoRounded,
 } from '@material-ui/icons';
 import { Tooltip } from '@material-ui/core';
@@ -84,6 +85,7 @@ const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {
   map: MapRounded,
   person: PersonRounded,
   phone: PhoneRounded,
+  store: StoreRounded,
   stroller: ChildFriendlyRounded,
   work: BusinessCenterRounded,
 };

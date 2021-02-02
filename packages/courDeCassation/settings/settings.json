@@ -22,7 +22,7 @@
   "adresse": {
     "anonymization": "[Adresse %d]",
     "color": {
-      "lightMode": ["blue", 300],
+      "lightMode": ["blue", 100],
       "darkMode": ["blue", 800]
     },
     "iconName": "location",
@@ -33,7 +33,7 @@
     "anonymization": "[Localité %d]",
     "color": {
       "lightMode": ["blue", 300],
-      "darkMode": ["blue", 800]
+      "darkMode": ["blue", 900]
     },
     "iconName": "location",
     "order": 4,
@@ -62,12 +62,22 @@
   "personneGeoMorale": {
     "anonymization": "[Personne géo-morale %d]",
     "color": {
-      "lightMode": ["deepPurple", 300],
-      "darkMode": ["deepPurple", 800]
+      "lightMode": ["deepPurple", 200],
+      "darkMode": ["deepPurple", 600]
     },
     "iconName": "work",
     "order": 7,
     "text": "Personne géo-morale"
+  },
+  "etablissement": {
+    "anonymization": "[Établissement %d]",
+    "color": {
+      "lightMode": ["purple", 200],
+      "darkMode": ["purple", 600]
+    },
+    "iconName": "store",
+    "order": 8,
+    "text": "Établissement"
   },
   "professionnelNom": {
     "anonymization": "[...]",
@@ -76,7 +86,7 @@
       "darkMode": ["brown", 500]
     },
     "iconName": "hammer",
-    "order": 8,
+    "order": 9,
     "text": "Professionnel (nom)"
   },
   "professionnelPrenom": {
@@ -86,7 +96,7 @@
       "darkMode": ["brown", 800]
     },
     "iconName": "hammer",
-    "order": 9,
+    "order": 10,
     "text": "Professionnel (prénom)"
   },
   "dateNaissance": {
@@ -96,7 +106,7 @@
       "darkMode": ["teal", 800]
     },
     "iconName": "stroller",
-    "order": 10,
+    "order": 11,
     "text": "Date de naissance"
   },
   "dateMariage": {
@@ -106,7 +116,7 @@
       "darkMode": ["green", 800]
     },
     "iconName": "heart",
-    "order": 11,
+    "order": 12,
     "text": "Date de mariage"
   },
   "dateDeces": {
@@ -116,7 +126,7 @@
       "darkMode": ["lime", 900]
     },
     "iconName": "cloud",
-    "order": 12,
+    "order": 13,
     "text": "Date de décès"
   },
   "cadastre": {
@@ -126,7 +136,7 @@
       "darkMode": ["cyan", 600]
     },
     "iconName": "map",
-    "order": 13,
+    "order": 14,
     "text": "Cadastre"
   },
   "insee": {
@@ -136,37 +146,37 @@
       "darkMode": ["indigo", 800]
     },
     "iconName": "book",
-    "order": 14,
+    "order": 15,
     "text": "N° INSEE"
   },
   "telephoneFax": {
     "anonymization": "XXXXXXXXXX",
     "color": {
       "lightMode": ["lightBlue", 300],
-      "darkMode": ["lightBlue", 800]
+      "darkMode": ["lightBlue", 900]
     },
     "iconName": "phone",
-    "order": 15,
+    "order": 16,
     "text": "Téléphone/Fax"
   },
   "email": {
     "anonymization": "[Courriel %d]",
     "color": {
-      "lightMode": ["lightBlue", 300],
+      "lightMode": ["lightBlue", 100],
       "darkMode": ["lightBlue", 800]
     },
     "iconName": "phone",
-    "order": 16,
+    "order": 17,
     "text": "Email"
   },
   "compteBancaire": {
     "anonymization": "[Compte bancaire %d]",
     "color": {
-      "lightMode": ["indigo", 100],
-      "darkMode": ["indigo", 500]
+      "lightMode": ["pink", 100],
+      "darkMode": ["pink", 600]
     },
     "iconName": "bank",
-    "order": 17,
+    "order": 18,
     "text": "Compte bancaire"
   },
   "plaqueImmatriculation": {
@@ -176,7 +186,7 @@
       "darkMode": ["pink", 800]
     },
     "iconName": "car",
-    "order": 18,
+    "order": 19,
     "text": "Plaque d'immatriculation"
   }
 }

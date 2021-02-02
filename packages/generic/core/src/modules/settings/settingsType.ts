@@ -38,6 +38,7 @@ const categoryIconNames = [
   'map',
   'person',
   'phone',
+  'store',
   'stroller',
   'work',
 ] as const;
@@ -61,6 +62,7 @@ const shadeColors = [
   'lime',
   'orange',
   'pink',
+  'purple',
   'red',
   'teal',
   'yellow',

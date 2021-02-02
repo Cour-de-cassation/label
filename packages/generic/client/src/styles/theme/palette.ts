@@ -12,6 +12,7 @@ import lightGreen from '@material-ui/core/colors/lightGreen';
 import lime from '@material-ui/core/colors/lime';
 import orange from '@material-ui/core/colors/orange';
 import pink from '@material-ui/core/colors/pink';
+import purple from '@material-ui/core/colors/purple';
 import red from '@material-ui/core/colors/red';
 import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
@@ -39,6 +40,7 @@ const shadeColors: { [color in shadeColorType[0]]: { [shade: number]: string } }
   lime,
   orange,
   pink,
+  purple,
   red,
   teal,
   yellow,

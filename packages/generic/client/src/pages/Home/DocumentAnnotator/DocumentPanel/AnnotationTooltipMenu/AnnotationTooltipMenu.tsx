@@ -58,8 +58,8 @@ function AnnotationTooltipMenu(props: {
       <LayoutGrid container style={style.annotationButtonsContainer}>
         <ComponentsList
           components={[
-            <ChangeAnnotationCategoryDropdown annotation={props.annotation} />,
-            <LinkAnnotationDropdown context="tooltip_update" annotation={props.annotation} />,
+            <ChangeAnnotationCategoryDropdown annotation={props.annotation} context="tooltip_update" />,
+            <LinkAnnotationDropdown annotation={props.annotation} context="tooltip_update" />,
             <UnlinkAnnotationDropdown annotation={props.annotation} context="tooltip_update" />,
             <DeleteAnnotationDropdown annotation={props.annotation} onClose={props.onClose} />,
           ]}

@@ -10,6 +10,7 @@ import { useAnnotatorStateHandler } from '../../../../../services/annotatorState
 import { useMonitoring } from '../../../../../services/monitoring';
 import { useCustomTheme } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
+import { ChangeAnnotationCategoryDropdown } from '../../DocumentPanel/AnnotationTooltipMenu/ChangeAnnotationCategoryDropdown';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
 
 export { CategoryTableEntryActionButtons };
@@ -28,6 +29,11 @@ function CategoryTableEntryActionButtons(props: {
   return (
     <ComponentsList
       components={[
+        <ChangeAnnotationCategoryDropdown
+          annotation={props.entityAnnotation}
+          buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
+          context="panel"
+        />,
         <LinkAnnotationDropdown
           annotation={props.entityAnnotation}
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}

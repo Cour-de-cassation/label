@@ -10,6 +10,7 @@ type documentViewerModeHandlerType = {
   resetViewerMode: () => void;
   setOccurrenceMode: (entityId: annotationType['entityId'], entityLineNumbers: number[]) => void;
   switchAnonymizedView: () => void;
+  setHasScrolled: () => void;
   documentViewerMode: viewerModeType;
 };
 
@@ -22,19 +23,36 @@ function buildDocumentViewerModeHandler(
     setOccurrenceMode,
     switchAnonymizedView,
     documentViewerMode,
+    setHasScrolled,
     resetViewerMode,
   };
 
   function resetViewerMode() {
-    setViewerMode({ kind: 'annotation', isAnonymized: documentViewerMode.isAnonymized });
+    setViewerMode({
+      kind: 'annotation',
+      isAnonymized: documentViewerMode.isAnonymized,
+      hasScrolled: false,
+    });
   }
 
   function isAnonymizedView() {
     return documentViewerMode.isAnonymized;
   }
 
+  function setHasScrolled() {
+    if (!documentViewerMode.hasScrolled) {
+      setViewerMode({ ...documentViewerMode, hasScrolled: true });
+    }
+  }
+
   function setOccurrenceMode(entityId: annotationType['entityId'], entityLineNumbers: number[]) {
-    setViewerMode({ kind: 'occurrence', entityId, entityLineNumbers, isAnonymized: documentViewerMode.isAnonymized });
+    setViewerMode({
+      kind: 'occurrence',
+      entityId,
+      entityLineNumbers,
+      isAnonymized: documentViewerMode.isAnonymized,
+      hasScrolled: false,
+    });
   }
 
   function switchAnonymizedView() {

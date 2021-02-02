@@ -28,7 +28,7 @@ function DocumentViewer(props: {
       <table style={styles.table}>
         <tbody>
           {documentText.map(({ line, content }) => (
-            <tr key={line}>
+            <tr key={line} id={`line${line}`}>
               <td style={styles.lineNumberCell}>
                 <Text variant="body2" color="textSecondary">
                   {line}

@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { settingsModule } from '@label/core';
 import { heights, widths } from '../../../styles';
-import { LayoutGrid } from '../../../components';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
 import { clientAnonymizerType } from '../../../types';
@@ -31,7 +30,7 @@ function DocumentAnnotator(props: {
 
   return (
     <DocumentViewerModeHandlerContextProvider>
-      <LayoutGrid container>
+      <div>
         <div style={styles.annotatorBody}>
           <div style={styles.leftContainer}>
             <AnnotationsPanel
@@ -45,14 +44,14 @@ function DocumentAnnotator(props: {
           </div>
         </div>
         {!!props.onStopAnnotatingDocument && (
-          <LayoutGrid container>
+          <div>
             <DocumentAnnotatorFooter
               anonymizer={props.anonymizer}
               onStopAnnotatingDocument={props.onStopAnnotatingDocument}
             />
-          </LayoutGrid>
+          </div>
         )}
-      </LayoutGrid>
+      </div>
     </DocumentViewerModeHandlerContextProvider>
   );
 

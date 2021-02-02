@@ -10,7 +10,8 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
 >({
   buildCustomFakeRepository: (collection) => ({
     async findByEmail(email) {
-      const result = collection.find((user) => user.email === email);
+      const formattedEmail = email.trim().toLowerCase();
+      const result = collection.find((user) => user.email === formattedEmail);
       if (!result) {
         throw new Error(`No matching user for email ${email}`);
       }

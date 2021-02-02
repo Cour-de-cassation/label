@@ -11,7 +11,8 @@ const buildUserRepository = buildRepositoryBuilder<
   collectionName: 'users',
   buildCustomRepository: (collection) => ({
     async findByEmail(email) {
-      const result = await collection.findOne({ email });
+      const formattedEmail = email.trim().toLowerCase();
+      const result = await collection.findOne({ email: formattedEmail });
       if (!result) {
         throw new Error(`No matching user for email ${email}`);
       }

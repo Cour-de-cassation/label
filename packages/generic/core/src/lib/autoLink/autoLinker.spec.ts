@@ -75,8 +75,38 @@ describe('autoLinker', () => {
       });
     });
 
-    describe('Levenshtein distance', () => {
-      it('should link the annotations of a same category with a Levenshtein distance inferior to 2', () => {
+    describe('similar word', () => {
+      it('should link the annotations of a same category with a Levenshtein distance inferior to 1 for words less long than 4', () => {
+        const annotations = [
+          { category: 'CATEGORY', text: 'Pont' },
+          { category: 'CATEGORY', text: 'Pond' },
+        ].map(annotationModule.generator.generate);
+
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+
+        expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
+      });
+      it('should link the annotations of a same category with a Levenshtein distance inferior to 1 for words less long than 4 (case insensitive)', () => {
+        const annotations = [
+          { category: 'CATEGORY', text: 'Pont' },
+          { category: 'CATEGORY', text: 'POND' },
+        ].map(annotationModule.generator.generate);
+
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+
+        expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
+      });
+      it('should not link the annotations of a same category with a Levenshtein distance strictly superior to 1 for words less long than 4', () => {
+        const annotations = [
+          { category: 'CATEGORY', text: 'Pont' },
+          { category: 'CATEGORY', text: 'Pomd' },
+        ].map(annotationModule.generator.generate);
+
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+
+        expect(linkedAnnotations).toEqual(annotations);
+      });
+      it('should link the annotations of a same category with a Levenshtein distance inferior to 2 for words longer than 4', () => {
         const annotations = [
           { category: 'CATEGORY', text: 'Dupont' },
           { category: 'CATEGORY', text: 'Dupond' },
@@ -86,7 +116,7 @@ describe('autoLinker', () => {
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
-      it('should link the annotations of a same category with a Levenshtein distance inferior to 2 (case insensitive)', () => {
+      it('should link the annotations of a same category with a Levenshtein distance inferior to 2 for words longer than 4 (case insensitive)', () => {
         const annotations = [
           { category: 'CATEGORY', text: 'Dupont' },
           { category: 'CATEGORY', text: 'DUPOND' },
@@ -96,7 +126,7 @@ describe('autoLinker', () => {
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
-      it('should not link the annotations of a same category with a Levenshtein distance strictly superior to 2', () => {
+      it('should not link the annotations of a same category with a Levenshtein distance strictly superior to 2 for words longer than 4', () => {
         const annotations = [
           { category: 'CATEGORY', text: 'Dupont' },
           { category: 'CATEGORY', text: 'Dubomb' },

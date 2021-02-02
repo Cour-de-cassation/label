@@ -54,7 +54,16 @@ function isSubWord(annotation1: annotationType, annotation2: annotationType): bo
 }
 
 function areSimilarWords(annotation1: annotationType, annotation2: annotationType): boolean {
-  return computeLevenshteinDistance(normalizeString(annotation1.text), normalizeString(annotation2.text)) <= 2;
+  const levenshteinDistance = computeLevenshteinDistance(
+    normalizeString(annotation1.text),
+    normalizeString(annotation2.text),
+  );
+
+  if (Math.min(annotation1.text.length, annotation2.text.length) <= 4) {
+    return levenshteinDistance <= 1;
+  } else {
+    return levenshteinDistance <= 2;
+  }
 }
 
 function normalizeString(str: string): string {

@@ -35,7 +35,7 @@
       "lightMode": ["blue", 300],
       "darkMode": ["blue", 900]
     },
-    "iconName": "location",
+    "iconName": "city",
     "order": 4,
     "text": "Localité"
   },
@@ -105,7 +105,7 @@
       "lightMode": ["teal", 300],
       "darkMode": ["teal", 800]
     },
-    "iconName": "stroller",
+    "iconName": "cake",
     "order": 11,
     "text": "Date de naissance"
   },
@@ -165,7 +165,7 @@
       "lightMode": ["lightBlue", 100],
       "darkMode": ["lightBlue", 800]
     },
-    "iconName": "phone",
+    "iconName": "email",
     "order": 17,
     "text": "Email"
   },
@@ -188,5 +188,15 @@
     "iconName": "car",
     "order": 19,
     "text": "Plaque d'immatriculation"
+  },
+  "custom": {
+    "anonymization": "[Occultation supplémentaire %d]",
+    "color": {
+      "lightMode": ["red", 300],
+      "darkMode": ["red", 700]
+    },
+    "iconName": "pencil",
+    "order": 20,
+    "text": "Occultation supplémentaire"
   }
 }

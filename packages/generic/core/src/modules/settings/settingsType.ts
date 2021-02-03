@@ -29,17 +29,20 @@ type displayModeType = 'lightMode' | 'darkMode';
 const categoryIconNames = [
   'bank',
   'book',
+  'cake',
   'car',
   'child',
+  'city',
   'cloud',
+  'email',
   'hammer',
   'heart',
   'location',
   'map',
+  'pencil',
   'person',
   'phone',
   'store',
-  'stroller',
   'work',
 ] as const;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { documentType } from '@label/core';
+import { documentType, idModule } from '@label/core';
 import { apiCaller } from '../../../api';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { useMonitoring } from '../../../services/monitoring';
@@ -14,7 +14,7 @@ export { DocumentAnnotatorFooter };
 function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onStopAnnotatingDocument: () => void }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
-  const { getTotalDuration, sendMonitoringEntries } = useMonitoring();
+  const { addMonitoringEntry, getTotalDuration, sendMonitoringEntries } = useMonitoring();
 
   const styles = buildStyles(theme);
   const annotatorState = annotatorStateHandler.get();
@@ -70,10 +70,18 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
   );
 
   function revertLastAction() {
+    addMonitoringEntry({
+      type: 'button',
+      description: `footer_revert`,
+    });
     annotatorStateHandler.revert();
   }
 
   function restoreLastAction() {
+    addMonitoringEntry({
+      type: 'button',
+      description: `footer_restore`,
+    });
     annotatorStateHandler.restore();
   }
 
@@ -95,6 +103,10 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
   }
 
   async function validate() {
+    addMonitoringEntry({
+      type: 'button',
+      description: `footer_validate_document_${idModule.lib.convertToString(annotatorState.document._id)}`,
+    });
     await saveAnnotationsAndUpdateAssignationStatus('done');
     await sendMonitoringEntries();
     props.onStopAnnotatingDocument();

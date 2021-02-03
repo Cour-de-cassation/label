@@ -3,6 +3,7 @@ import { settingsModule } from '@label/core';
 import { heights, widths } from '../../../styles';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
+import { useMonitoring } from '../../../services/monitoring';
 import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
@@ -17,9 +18,10 @@ function DocumentAnnotator(props: {
   onStopAnnotatingDocument?: () => void;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
+  const { addMonitoringEntry } = useMonitoring();
   useKeyboardShortcutsHandler([
-    { key: 'z', ctrlKey: true, action: annotatorStateHandler.revert },
-    { key: 'Z', ctrlKey: true, shiftKey: true, action: annotatorStateHandler.restore },
+    { key: 'z', ctrlKey: true, action: onRevertState },
+    { key: 'Z', ctrlKey: true, shiftKey: true, action: onRestoreState },
   ]);
   const annotatorState = annotatorStateHandler.get();
 
@@ -54,6 +56,16 @@ function DocumentAnnotator(props: {
       </div>
     </DocumentViewerModeHandlerContextProvider>
   );
+
+  function onRevertState() {
+    addMonitoringEntry({ type: 'shortcut', description: 'revert' });
+    annotatorStateHandler.revert();
+  }
+
+  function onRestoreState() {
+    addMonitoringEntry({ type: 'shortcut', description: 'restore' });
+    annotatorStateHandler.restore();
+  }
 
   function buildStyles() {
     return {

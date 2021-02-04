@@ -13,6 +13,7 @@ import {
   assignationService,
   buildAssignationRepository,
 } from '../../../modules/assignation';
+import { documentService } from '../../../modules/document';
 import { userService } from '../../user';
 import { buildTreatmentRepository } from '../repository';
 
@@ -105,7 +106,28 @@ const treatmentService = {
     const treatmentsByAssignationId = await treatmentService.fetchTreatmentsByAssignationId(
       assignationsById,
     );
-    return Object.keys(assignationsById).map((assignationId) => ({
+    const documentIds = Object.values(treatmentsByAssignationId).map(
+      (treatment) => treatment.documentId,
+    );
+    const documentsById = await documentService.fetchAllDocumentsByIds(
+      documentIds,
+    );
+
+    const assignationIdsOfTreatedDocuments = Object.entries(
+      treatmentsByAssignationId,
+    )
+      /* eslint-disable @typescript-eslint/no-unused-vars */
+      .filter(([_assignationId, treatment]) => {
+        const { documentId } = treatment;
+        const document =
+          documentsById[idModule.lib.convertToString(documentId)];
+        const isDocumentTreated =
+          document.status === 'done' || document.status === 'rejected';
+        return isDocumentTreated;
+      })
+      .map(([assignationId]) => assignationId);
+
+    return assignationIdsOfTreatedDocuments.map((assignationId) => ({
       treatment: treatmentsByAssignationId[assignationId],
       userName: userNamesByAssignationId[assignationId],
     }));

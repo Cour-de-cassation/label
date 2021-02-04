@@ -3,13 +3,19 @@ import {
   annotationModule,
   annotationsDiffModule,
   assignationModule,
+  documentModule,
+  documentType,
   idModule,
   treatmentModule,
+  treatmentType,
+  userModule,
 } from '@label/core';
 import {
   assignationService,
   buildAssignationRepository,
 } from '../../assignation';
+import { buildDocumentRepository } from '../../document/repository';
+import { buildUserRepository } from '../../user/repository';
 import { buildTreatmentRepository } from '../repository';
 import { treatmentService } from './treatmentService';
 
@@ -91,6 +97,93 @@ describe('treatmentService', () => {
     });
   });
 
+  describe('fetchAssignatedTreatmentsWithDetails', () => {
+    it('should return treatments with details', async () => {
+      const assignationRepository = buildAssignationRepository();
+      const treatmentRepository = buildTreatmentRepository();
+      const documentRepository = buildDocumentRepository();
+      const userRepository = buildUserRepository();
+      const userName = 'USER';
+      const user = userModule.generator.generate({ name: userName });
+      const [
+        documentDone,
+        documentSaved,
+        documentRejected,
+        documentPending,
+      ] = ([
+        'done',
+        'saved',
+        'rejected',
+        'pending',
+      ] as documentType['status'][]).map((status) =>
+        documentModule.generator.generate({ status }),
+      );
+      const [
+        treatmentDone,
+        treatmentSaved,
+        treatmentRejected,
+        treatmentPending,
+      ] = [
+        documentDone,
+        documentSaved,
+        documentRejected,
+        documentPending,
+      ].map((document) =>
+        treatmentModule.generator.generate({ documentId: document._id }),
+      );
+      const [
+        assignationDocumentDone,
+        assignationDocumentSaved,
+        assignationDocumentRejected,
+        assignationDocumentPending,
+      ] = [
+        treatmentDone,
+        treatmentSaved,
+        treatmentRejected,
+        treatmentPending,
+      ].map((treatment) =>
+        assignationModule.generator.generate({
+          treatmentId: treatment._id,
+          userId: user._id,
+        }),
+      );
+      await userRepository.insert(user);
+      await Promise.all(
+        [
+          documentDone,
+          documentSaved,
+          documentRejected,
+          documentPending,
+        ].map((document) => documentRepository.insert(document)),
+      );
+      await Promise.all(
+        [
+          treatmentDone,
+          treatmentSaved,
+          treatmentRejected,
+          treatmentPending,
+        ].map((treatment) => treatmentRepository.insert(treatment)),
+      );
+      await Promise.all(
+        [
+          assignationDocumentDone,
+          assignationDocumentSaved,
+          assignationDocumentRejected,
+          assignationDocumentPending,
+        ].map((assignation) => assignationRepository.insert(assignation)),
+      );
+
+      const treatmentsWithDetails = await treatmentService.fetchAssignatedTreatmentsWithDetails();
+
+      expect(sortTreatmentsWithDetails(treatmentsWithDetails)).toEqual(
+        sortTreatmentsWithDetails([
+          { userName, treatment: treatmentDone },
+          { userName, treatment: treatmentRejected },
+        ]),
+      );
+    });
+  });
+
   describe('fetchTreatmentsByAssignationId', () => {
     it('should return treatments mapped by assignationId', async () => {
       const assignationRepository = buildAssignationRepository();
@@ -130,3 +223,15 @@ describe('treatmentService', () => {
     });
   });
 });
+
+function sortTreatmentsWithDetails(
+  treatmentsWithDetails: { userName: string; treatment: treatmentType }[],
+) {
+  return treatmentsWithDetails.sort(
+    (treatmentWithDetailsA, treatmentWithDetailsB) =>
+      idModule.lib.convertToString(treatmentWithDetailsA.treatment._id) <
+      idModule.lib.convertToString(treatmentWithDetailsB.treatment._id)
+        ? 1
+        : -1,
+  );
+}

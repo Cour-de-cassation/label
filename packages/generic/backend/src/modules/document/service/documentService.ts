@@ -6,6 +6,10 @@ import { buildDocumentRepository } from '../repository';
 export { documentService };
 
 const documentService = {
+  async fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
+    const documentRepository = buildDocumentRepository();
+    return documentRepository.findAllByIds(documentIds);
+  },
   async fetchDocumentsWithoutAnnotations(): Promise<documentType[]> {
     const documentRepository = buildDocumentRepository();
 

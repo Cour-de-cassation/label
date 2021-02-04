@@ -7,7 +7,6 @@ export { MonitoringEntriesHandlerContext, MonitoringEntriesHandlerContextProvide
 
 const MonitoringEntriesHandlerContext = createContext<monitoringEntriesHandlerType>({
   addMonitoringEntry: () => null,
-  getTotalDuration: () => 0,
   resetMonitoringEntries: () => null,
   sendMonitoringEntries: async () => {},
 });

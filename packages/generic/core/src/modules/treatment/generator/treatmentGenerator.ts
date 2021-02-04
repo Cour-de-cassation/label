@@ -6,12 +6,12 @@ import { treatmentType } from '../treatmentType';
 export { treatmentGenerator };
 
 const treatmentGenerator: generatorType<treatmentType> = {
-  generate: ({ _id, date, documentId, duration, order, annotationsDiff } = {}) => ({
+  generate: ({ _id, annotationsDiff, documentId, duration, lastUpdateDate, order } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     annotationsDiff: annotationsDiff ? annotationsDiff : annotationsDiffModule.generator.generate(),
-    date: date ? date : new Date().getTime(),
     documentId: documentId ? idModule.lib.buildId(documentId) : idModule.lib.buildId(),
     duration: duration ? duration : 0,
+    lastUpdateDate: lastUpdateDate ? lastUpdateDate : new Date().getTime(),
     order: order ? order : 0,
   }),
 };

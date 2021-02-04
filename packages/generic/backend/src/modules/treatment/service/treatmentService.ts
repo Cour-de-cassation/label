@@ -1,5 +1,6 @@
 import { uniqWith } from 'lodash';
 import {
+  annotationsDiffModule,
   annotationsDiffType,
   assignationType,
   documentType,
@@ -60,7 +61,7 @@ const treatmentService = {
       documentId,
       duration: 0,
       order,
-      date: new Date().getTime(),
+      lastUpdateDate: new Date().getTime(),
     });
 
     await treatmentRepository.insert(treatment);
@@ -70,12 +71,10 @@ const treatmentService = {
   async updateTreatment({
     annotationsDiff,
     documentId,
-    duration,
     userId,
   }: {
     annotationsDiff: annotationsDiffType;
     documentId: idType;
-    duration: number;
     userId: idType;
   }) {
     const treatmentRepository = buildTreatmentRepository();
@@ -91,9 +90,25 @@ const treatmentService = {
       );
     }
 
-    await treatmentRepository.updateOne(assignation.treatmentId, {
+    const treatment = await treatmentRepository.findById(
+      assignation.treatmentId,
+    );
+    const squashedAnnotationsDiff = annotationsDiffModule.lib.squash([
+      treatment.annotationsDiff,
       annotationsDiff,
-      duration,
+    ]);
+    const currentDate = new Date().getTime();
+    const DURATION_THRESHOLD_BETWEEN_TIMESTAMPS = 10 * 60 * 1000;
+    const updatedDuration =
+      currentDate - treatment.lastUpdateDate <
+      DURATION_THRESHOLD_BETWEEN_TIMESTAMPS
+        ? currentDate - treatment.lastUpdateDate + treatment.duration
+        : treatment.duration;
+
+    await treatmentRepository.updateOne(assignation.treatmentId, {
+      annotationsDiff: squashedAnnotationsDiff,
+      duration: updatedDuration,
+      lastUpdateDate: currentDate,
     });
   },
 

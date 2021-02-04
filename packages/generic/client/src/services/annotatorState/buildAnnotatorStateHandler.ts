@@ -19,7 +19,7 @@ type annotatorStateHandlerType = {
 
 function buildAnnotatorStateHandler(
   annotatorState: annotatorStateType,
-  setAnnotatorState: (annotatortState: annotatorStateType) => void,
+  setAnnotatorState: (annotatorState: annotatorStateType) => void,
   resetAnnotatorState: () => void,
   committer: annotationsCommitterType,
 ): { annotatorStateHandler: annotatorStateHandlerType } {

@@ -20,10 +20,13 @@ const buildTreatmentRepository = buildRepositoryBuilder<
         (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
       )[0];
     },
-    async updateOne(treatmentId, { annotationsDiff, duration }) {
+    async updateOne(
+      treatmentId,
+      { annotationsDiff, duration, lastUpdateDate },
+    ) {
       await collection.updateOne(
         { _id: treatmentId },
-        { $set: { annotationsDiff, duration } },
+        { $set: { annotationsDiff, duration, lastUpdateDate } },
       );
     },
   }),

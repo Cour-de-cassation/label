@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { buildAnonymizer, annotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { buildAnonymizer, annotationType, fetchedDocumentType, settingsType, annotationsDiffType } from '@label/core';
 import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
-import { AnnotatorStateHandlerContextProvider, buildAnnotationsCommitter } from '../../services/annotatorState';
+import {
+  AnnotatorStateHandlerContextProvider,
+  annotatorStateType,
+  buildAnnotationsCommitter,
+} from '../../services/annotatorState';
 import { useMonitoring, MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentSelector } from './DocumentSelector';
@@ -36,6 +40,7 @@ function DocumentSwitcher(props: {
                 settings: props.settings,
               }}
               committer={buildAnnotationsCommitter()}
+              onAnnotatorStateChange={onAnnotatorStateChange}
             >
               <MainHeader title={documentState.choice.document.title} />
               <DocumentAnnotator
@@ -79,6 +84,24 @@ function DocumentSwitcher(props: {
   async function onStopAnnotatingDocument() {
     resetMonitoringEntries();
     props.fetchNewDocumentsToBeTreated();
+  }
+
+  async function onAnnotatorStateChange(
+    annotatorState: annotatorStateType,
+    getGlobalAnnotationsDiff: () => annotationsDiffType,
+  ) {
+    try {
+      await apiCaller.post<'updateTreatment'>('updateTreatment', {
+        annotationsDiff: getGlobalAnnotationsDiff(),
+        documentId: annotatorState.document._id,
+      });
+      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        documentId: annotatorState.document._id,
+        status: 'saved',
+      });
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: annotationType[] }) {

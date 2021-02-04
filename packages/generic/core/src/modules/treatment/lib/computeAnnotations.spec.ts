@@ -40,8 +40,8 @@ describe('computeAnnotations', () => {
 
     const annotationsFromTreatments = computeAnnotations(treatments);
 
-    expect(annotationsFromTreatments).toEqual(
-      annotationsDiffModule.lib.buildAnnotationsDiff([], [annotations[2], annotations[3], annotations[4]]).after,
+    expect(annotationModule.lib.sortAnnotations(annotationsFromTreatments)).toEqual(
+      annotationModule.lib.sortAnnotations([annotations[2], annotations[3], annotations[4]]),
     );
   });
 

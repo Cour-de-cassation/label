@@ -56,7 +56,7 @@ async function insertTreatment({
 
   return treatmentRepository.insert(
     treatmentModule.lib.buildTreatment({
-      date: new Date().getTime(),
+      lastUpdateDate: new Date().getTime(),
       documentId,
       duration: 0,
       order: 0,

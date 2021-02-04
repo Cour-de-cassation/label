@@ -84,7 +84,7 @@ function treatmentFormatter(treatmentWithDetails: apiRouteOutType<'get', 'treatm
   return {
     _id: idModule.lib.convertToString(treatmentWithDetails.treatment._id),
     userName: treatmentWithDetails.userName,
-    date: timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.date),
+    date: timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.lastUpdateDate),
     duration: timeOperator.convertDurationToReadableDuration(treatmentWithDetails.treatment.duration),
   };
 }

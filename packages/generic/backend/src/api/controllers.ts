@@ -116,12 +116,11 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (
         user,
-        { args: { annotationsDiff, documentId, duration } },
+        { args: { annotationsDiff, documentId } },
       ) => {
         await treatmentService.updateTreatment({
           annotationsDiff,
           documentId: idModule.lib.buildId(documentId),
-          duration,
           userId: user._id,
         });
       },

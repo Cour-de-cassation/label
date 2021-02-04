@@ -160,10 +160,6 @@ const apiSchema = {
           kind: 'primitive',
           content: 'id',
         }),
-        duration: buildDataModelEntry({
-          kind: 'primitive',
-          content: 'number',
-        }),
       },
       out: {
         kind: 'primitive',

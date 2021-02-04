@@ -11,6 +11,9 @@ type customTreatmentRepositoryType = {
   ) => Promise<treatmentType> | undefined;
   updateOne: (
     documentId: documentType['_id'],
-    treatmentFields: Pick<treatmentType, 'annotationsDiff' | 'duration'>,
+    treatmentFields: Pick<
+      treatmentType,
+      'annotationsDiff' | 'duration' | 'lastUpdateDate'
+    >,
   ) => Promise<void>;
 };

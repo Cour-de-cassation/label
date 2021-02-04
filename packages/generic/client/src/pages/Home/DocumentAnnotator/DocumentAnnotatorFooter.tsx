@@ -14,7 +14,7 @@ export { DocumentAnnotatorFooter };
 function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onStopAnnotatingDocument: () => void }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
-  const { addMonitoringEntry, getTotalDuration, sendMonitoringEntries } = useMonitoring();
+  const { addMonitoringEntry, sendMonitoringEntries } = useMonitoring();
 
   const styles = buildStyles(theme);
   const annotatorState = annotatorStateHandler.get();
@@ -113,13 +113,10 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
   }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
-    const duration = getTotalDuration();
-
     try {
       await apiCaller.post<'updateTreatment'>('updateTreatment', {
         annotationsDiff: annotatorStateHandler.getGlobalAnnotationsDiff(),
         documentId: annotatorState.document._id,
-        duration,
       });
       await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
         documentId: annotatorState.document._id,

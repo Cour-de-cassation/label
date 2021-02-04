@@ -64,10 +64,14 @@ describe('treatmentService', () => {
         documentId,
       );
 
-      expect(fetchedAnnotations).toEqual(
+      expect(annotationModule.lib.sortAnnotations(fetchedAnnotations)).toEqual(
         annotationsDiffModule.lib.buildAnnotationsDiff(
           [],
-          [annotations[2], annotations[3], annotations[4]],
+          annotationModule.lib.sortAnnotations([
+            annotations[2],
+            annotations[3],
+            annotations[4],
+          ]),
         ).after,
       );
     });

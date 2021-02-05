@@ -1,4 +1,5 @@
 import { annotationModule, annotationType } from '../../modules';
+import { annotationLinkHandler } from '../annotationLinkHandler';
 import { autoLinker } from '../autoLink';
 
 export { annotationHandler };
@@ -37,12 +38,21 @@ function createAll(
   return autoLinker.autoLink(createdAnnotations, newAnnotations);
 }
 
-function deleteByTextAndStart(
-  annotations: annotationType[],
-  text: annotationType['text'],
-  start: annotationType['start'],
-) {
-  return annotations.filter((annotation) => annotation.text !== text || annotation.start !== start);
+function deleteByTextAndStart(annotations: annotationType[], annotation: annotationType) {
+  const newAnnotations = annotations.filter(
+    (anotherAnnotation) => anotherAnnotation.text !== annotation.text || anotherAnnotation.start !== annotation.start,
+  );
+
+  const annotationsLinkedToDeletedAnnotation = annotationLinkHandler.getLinkedAnnotationRepresentatives(
+    annotation.entityId,
+    newAnnotations,
+  );
+
+  if (annotationsLinkedToDeletedAnnotation.length === 0) {
+    return newAnnotations;
+  } else {
+    return annotationLinkHandler.updateMainLinkEntity(annotationsLinkedToDeletedAnnotation[0], newAnnotations);
+  }
 }
 
 function deleteByEntityId(annotations: annotationType[], entityId: annotationType['entityId']) {

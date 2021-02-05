@@ -86,13 +86,10 @@ function DocumentSwitcher(props: {
     props.fetchNewDocumentsToBeTreated();
   }
 
-  async function onAnnotatorStateChange(
-    annotatorState: annotatorStateType,
-    getGlobalAnnotationsDiff: () => annotationsDiffType,
-  ) {
+  async function onAnnotatorStateChange(annotatorState: annotatorStateType, annotationsDiff: annotationsDiffType) {
     try {
       await apiCaller.post<'updateTreatment'>('updateTreatment', {
-        annotationsDiff: getGlobalAnnotationsDiff(),
+        annotationsDiff,
         documentId: annotatorState.document._id,
       });
       await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {

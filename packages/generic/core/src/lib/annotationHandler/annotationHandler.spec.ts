@@ -32,6 +32,34 @@ describe('annotationHandler', () => {
     });
   });
 
+  describe('deleteByTextAndStart', () => {
+    it('should delete an annotation according to its text and start position', () => {
+      const annotation1 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'FIRST_TEXT' });
+      const annotation2 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'SECOND_TEXT' });
+      const annotations = [annotation1, annotation2];
+
+      const newAnnotations = annotationHandler.deleteByTextAndStart(annotations, annotation2);
+
+      expect(newAnnotations).toEqual([annotation1]);
+    });
+
+    it('should not conserve a link of a deleted annotation', () => {
+      const annotation1 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'FIRST_TEXT' });
+      const annotation2 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'SECOND_TEXT' });
+      const annotation1Linked = annotationModule.lib.annotationLinker.link(annotation1, annotation2);
+      const annotations = [annotation1Linked, annotation2];
+
+      const newAnnotations = annotationHandler.create(
+        annotationHandler.deleteByTextAndStart(annotations, annotation2),
+        annotation2,
+      );
+
+      expect(annotationModule.lib.sortAnnotations(newAnnotations)).toEqual(
+        annotationModule.lib.sortAnnotations([annotation1, annotation2]),
+      );
+    });
+  });
+
   describe('updateManyCategory', () => {
     it('should update the category of all the given annotations of the given entityId', () => {
       const newCategory = 'ANOTHER_CATEGORY';

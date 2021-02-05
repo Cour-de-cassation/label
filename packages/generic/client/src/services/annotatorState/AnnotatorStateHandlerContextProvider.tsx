@@ -25,10 +25,7 @@ function AnnotatorStateHandlerContextProvider(props: {
   children: ReactNode;
   initialAnnotatorState: annotatorStateType;
   committer: annotationsCommitterType;
-  onAnnotatorStateChange?: (
-    annotatorState: annotatorStateType,
-    getGlobalAnnotationsDiff: () => annotationsDiffType,
-  ) => void;
+  onAnnotatorStateChange?: (annotatorState: annotatorStateType, annotationsDiff: annotationsDiffType) => void;
 }): ReactElement {
   const [annotatorState, setAnnotatorState] = useState(props.initialAnnotatorState);
   const { annotatorStateHandler } = buildAnnotatorStateHandler(
@@ -36,7 +33,8 @@ function AnnotatorStateHandlerContextProvider(props: {
     (annotatorState: annotatorStateType) => {
       setAnnotatorState(annotatorState);
       if (props.onAnnotatorStateChange) {
-        props.onAnnotatorStateChange(annotatorState, props.committer.squash);
+        const annotationsDiff = props.committer.squash();
+        props.onAnnotatorStateChange(annotatorState, annotationsDiff);
       }
     },
     () => setAnnotatorState(props.initialAnnotatorState),

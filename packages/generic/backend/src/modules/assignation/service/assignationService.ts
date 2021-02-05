@@ -66,7 +66,11 @@ const assignationService = {
     documentId: idType;
   }) {
     const assignationRepository = buildAssignationRepository();
-    const treatmentId = await treatmentService.createEmptyTreatment(documentId);
+    const treatmentId = await treatmentService.createTreatment({
+      documentId,
+      previousAnnotations: [],
+      nextAnnotations: [],
+    });
 
     const assignation = assignationModule.lib.buildAssignation({
       userId,

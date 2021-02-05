@@ -12,6 +12,7 @@ const annotationLinkHandler = {
   isLinkedTo,
   unlink,
   unlinkByCategoryAndText,
+  updateMainLinkEntity,
 };
 
 function link(

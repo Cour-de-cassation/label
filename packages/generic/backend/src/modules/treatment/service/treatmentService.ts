@@ -1,5 +1,6 @@
 import { uniqWith } from 'lodash';
 import {
+  annotationType,
   annotationsDiffModule,
   annotationsDiffType,
   assignationType,
@@ -48,16 +49,25 @@ const treatmentService = {
     return treatedDocumentIds;
   },
 
-  async createEmptyTreatment(
-    documentId: documentType['_id'],
-  ): Promise<treatmentType['_id']> {
+  async createTreatment({
+    documentId,
+    previousAnnotations,
+    nextAnnotations,
+  }: {
+    documentId: documentType['_id'];
+    previousAnnotations: annotationType[];
+    nextAnnotations: annotationType[];
+  }): Promise<treatmentType['_id']> {
     const treatmentRepository = buildTreatmentRepository();
     const lastTreatment = await treatmentRepository.findLastOneByDocumentId(
       documentId,
     );
     const order = lastTreatment ? lastTreatment.order + 1 : 0;
     const treatment = treatmentModule.lib.buildTreatment({
-      annotationsDiff: { before: [], after: [] },
+      annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
+        previousAnnotations,
+        nextAnnotations,
+      ),
       documentId,
       duration: 0,
       order,

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { autoLinker, annotationType, fetchedDocumentType, httpStatusCodeHandler, idModule, idType } from '@label/core';
+import { annotationType, fetchedDocumentType, httpStatusCodeHandler, idModule, idType } from '@label/core';
 import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
 
@@ -68,7 +68,7 @@ async function fetchDocumentToBeTreated(documentIdsToExclude: idType[]) {
         ...document,
         _id: idModule.lib.buildId(document._id),
       },
-      annotations: autoLinker.autoLinkAll(annotations),
+      annotations: annotations,
     },
     statusCode: httpStatusCodeHandler.merge([statusCodeDocument, statusCodeAnnotations]),
   };

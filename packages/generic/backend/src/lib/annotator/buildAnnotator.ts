@@ -1,13 +1,12 @@
 import {
   annotationType,
   annotationReportType,
-  annotationsDiffModule,
+  autoLinker,
   documentType,
-  treatmentModule,
   idType,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
-import { buildTreatmentRepository } from '../../modules/treatment';
+import { treatmentService } from '../../modules/treatment';
 import { documentService } from '../../modules/document';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
@@ -40,35 +39,42 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
       report,
     } = await annotatorConfig.fetchAnnotationOfDocument(document);
 
-    await insertTreatment({ annotations, documentId });
-    await insertReport(report);
+    await createAnnotatorTreatment({ annotations, documentId });
+    await createAutoTreatment({ annotations, documentId });
+    await createReport(report);
   }
 }
 
-async function insertTreatment({
+async function createAnnotatorTreatment({
   annotations,
   documentId,
 }: {
   annotations: annotationType[];
   documentId: idType;
 }) {
-  const treatmentRepository = buildTreatmentRepository();
-
-  return treatmentRepository.insert(
-    treatmentModule.lib.buildTreatment({
-      lastUpdateDate: new Date().getTime(),
-      documentId,
-      duration: 0,
-      order: 0,
-      annotationsDiff: annotationsDiffModule.lib.buildAnnotationsDiff(
-        [],
-        annotations,
-      ),
-    }),
-  );
+  await treatmentService.createTreatment({
+    documentId,
+    previousAnnotations: [],
+    nextAnnotations: annotations,
+  });
 }
 
-async function insertReport(report: annotationReportType) {
+async function createAutoTreatment({
+  annotations,
+  documentId,
+}: {
+  annotations: annotationType[];
+  documentId: idType;
+}) {
+  const autoTreatedAnnotations = autoLinker.autoLinkAll(annotations);
+  await treatmentService.createTreatment({
+    documentId,
+    previousAnnotations: annotations,
+    nextAnnotations: autoTreatedAnnotations,
+  });
+}
+
+async function createReport(report: annotationReportType) {
   const annotationReportRepository = buildAnnotationReportRepository();
   await annotationReportRepository.insert(report);
 }

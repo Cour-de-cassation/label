@@ -12,7 +12,7 @@ describe('buildAnnotationsCommitter', () => {
       const annotations2 = [annotations[2], annotations[3], annotations[4]];
       const annotations3 = [annotations[2], annotations[3], annotations[5]];
       annotationsCommitter.commit(annotations1, annotations2);
-      const annotations4 = annotationsCommitter.revert(annotations2);
+      const { annotations: annotations4 } = annotationsCommitter.revert(annotations2);
 
       annotationsCommitter.commit(annotations4, annotations3);
 
@@ -27,7 +27,7 @@ describe('buildAnnotationsCommitter', () => {
       const annotations2 = [annotations[2], annotations[3], annotations[4]];
       annotationsCommitter.commit(annotations1, annotations2);
 
-      const annotations3 = annotationsCommitter.revert(annotations2);
+      const { annotations: annotations3 } = annotationsCommitter.revert(annotations2);
 
       expect(annotationModule.lib.sortAnnotations(annotations3)).toEqual(
         annotationModule.lib.sortAnnotations(annotations3),
@@ -41,7 +41,9 @@ describe('buildAnnotationsCommitter', () => {
       annotationsCommitter.commit(annotations1, annotations2);
       annotationsCommitter.commit(annotations2, annotations3);
 
-      const annotations4 = annotationsCommitter.revert(annotationsCommitter.revert(annotations3));
+      const { annotations: annotations4 } = annotationsCommitter.revert(
+        annotationsCommitter.revert(annotations3).annotations,
+      );
 
       expect(annotationModule.lib.sortAnnotations(annotations4)).toEqual(
         annotationModule.lib.sortAnnotations(annotations1),
@@ -55,9 +57,9 @@ describe('buildAnnotationsCommitter', () => {
       const annotations1 = [annotations[0], annotations[1], annotations[2]];
       const annotations2 = [annotations[2], annotations[3], annotations[4]];
       annotationsCommitter.commit(annotations1, annotations2);
-      const annotations3 = annotationsCommitter.revert(annotations2);
+      const { annotations: annotations3 } = annotationsCommitter.revert(annotations2);
 
-      const annotations4 = annotationsCommitter.restore(annotations3);
+      const { annotations: annotations4 } = annotationsCommitter.restore(annotations3);
 
       expect(annotationModule.lib.sortAnnotations(annotations4)).toEqual(
         annotationModule.lib.sortAnnotations(annotations2),
@@ -70,9 +72,13 @@ describe('buildAnnotationsCommitter', () => {
       const annotations3 = [annotations[4], annotations[5], annotations[6]];
       annotationsCommitter.commit(annotations1, annotations2);
       annotationsCommitter.commit(annotations2, annotations3);
-      const annotations4 = annotationsCommitter.revert(annotationsCommitter.revert(annotations3));
+      const { annotations: annotations4 } = annotationsCommitter.revert(
+        annotationsCommitter.revert(annotations3).annotations,
+      );
 
-      const annotations5 = annotationsCommitter.restore(annotationsCommitter.restore(annotations4));
+      const { annotations: annotations5 } = annotationsCommitter.restore(
+        annotationsCommitter.restore(annotations4).annotations,
+      );
 
       expect(annotationModule.lib.sortAnnotations(annotations5)).toEqual(
         annotationModule.lib.sortAnnotations(annotations3),

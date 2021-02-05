@@ -1,8 +1,9 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
-import { annotationsDiffModule, annotationsDiffType, documentModule } from '@label/core';
+import { annotationsDiffModule, documentModule } from '@label/core';
 import { annotationsCommitterType } from './buildAnnotationsCommitter';
 import { annotatorStateType } from './annotatorStateType';
 import { annotatorStateHandlerType, buildAnnotatorStateHandler } from './buildAnnotatorStateHandler';
+import { autoSaverType } from './buildAutoSaver';
 
 export { AnnotatorStateHandlerContext, AnnotatorStateHandlerContextProvider };
 
@@ -22,24 +23,19 @@ const AnnotatorStateHandlerContext = createContext<annotatorStateHandlerType>({
 });
 
 function AnnotatorStateHandlerContextProvider(props: {
+  autoSaver: autoSaverType;
   children: ReactNode;
-  initialAnnotatorState: annotatorStateType;
   committer: annotationsCommitterType;
-  onAnnotatorStateChange?: (annotatorState: annotatorStateType, annotationsDiff: annotationsDiffType) => void;
+  initialAnnotatorState: annotatorStateType;
 }): ReactElement {
   const [annotatorState, setAnnotatorState] = useState(props.initialAnnotatorState);
-  const { annotatorStateHandler } = buildAnnotatorStateHandler(
+  const { annotatorStateHandler } = buildAnnotatorStateHandler({
     annotatorState,
-    (annotatorState: annotatorStateType) => {
-      setAnnotatorState(annotatorState);
-      if (props.onAnnotatorStateChange) {
-        const annotationsDiff = props.committer.squash();
-        props.onAnnotatorStateChange(annotatorState, annotationsDiff);
-      }
-    },
-    () => setAnnotatorState(props.initialAnnotatorState),
-    props.committer,
-  );
+    autoSaver: props.autoSaver,
+    committer: props.committer,
+    setAnnotatorState,
+    resetAnnotatorState: () => setAnnotatorState(props.initialAnnotatorState),
+  });
   return (
     <AnnotatorStateHandlerContext.Provider value={annotatorStateHandler}>
       {props.children}

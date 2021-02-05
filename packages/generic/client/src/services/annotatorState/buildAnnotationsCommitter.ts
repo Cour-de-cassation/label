@@ -6,9 +6,9 @@ export type { annotationsCommitterType };
 
 type annotationsCommitterType = {
   clean: () => void;
-  commit: (previousAnnotations: annotationType[], nextAnnotations: annotationType[]) => void;
-  revert: (previousAnnotations: annotationType[]) => annotationType[];
-  restore: (previousAnnotations: annotationType[]) => annotationType[];
+  commit: (previousAnnotations: annotationType[], nextAnnotations: annotationType[]) => annotationsDiffType;
+  revert: (previousAnnotations: annotationType[]) => { annotations: annotationType[]; commit: annotationsDiffType };
+  restore: (previousAnnotations: annotationType[]) => { annotations: annotationType[]; commit: annotationsDiffType };
   canRevert: () => boolean;
   canRestore: () => boolean;
   squash: () => annotationsDiffType;
@@ -37,13 +37,15 @@ function buildAnnotationsCommitter(): annotationsCommitterType {
     const annotationsDiff = annotationsDiffModule.lib.computeAnnotationsDiff(previousAnnotations, nextAnnotations);
     annotationCommitsToRevert.push(annotationsDiff);
     annotationCommitsToRestore = [];
+
+    return annotationsDiff;
   }
 
-  function revert(previousAnnotations: annotationType[]): annotationType[] {
+  function revert(previousAnnotations: annotationType[]) {
     return revertCommit(previousAnnotations, annotationCommitsToRevert, annotationCommitsToRestore);
   }
 
-  function restore(previousAnnotations: annotationType[]): annotationType[] {
+  function restore(previousAnnotations: annotationType[]) {
     return revertCommit(previousAnnotations, annotationCommitsToRestore, annotationCommitsToRevert);
   }
 
@@ -59,17 +61,20 @@ function buildAnnotationsCommitter(): annotationsCommitterType {
     annotations: annotationType[],
     previousCommits: annotationsDiffType[],
     nextCommits: annotationsDiffType[],
-  ) {
+  ): { annotations: annotationType[]; commit: annotationsDiffType } {
     const previousCommit = previousCommits.pop();
     if (!previousCommit) {
-      return annotations;
+      throw new Error('No commit to revert');
     }
 
     const revertedPreviousCommit = annotationsDiffModule.lib.inverse(previousCommit);
 
     nextCommits.push(revertedPreviousCommit);
 
-    return annotationsDiffModule.lib.applyToAnnotations(annotations, revertedPreviousCommit);
+    return {
+      annotations: annotationsDiffModule.lib.applyToAnnotations(annotations, revertedPreviousCommit),
+      commit: revertedPreviousCommit,
+    };
   }
 
   function squash() {

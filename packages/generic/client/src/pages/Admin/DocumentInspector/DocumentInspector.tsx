@@ -2,7 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { buildAnonymizer, idModule, settingsType } from '@label/core';
 import { MainHeader } from '../../../components';
-import { AnnotatorStateHandlerContextProvider, buildAnnotationsCommitter } from '../../../services/annotatorState';
+import {
+  AnnotatorStateHandlerContextProvider,
+  buildAnnotationsCommitter,
+  buildAutoSaver,
+} from '../../../services/annotatorState';
 import { MonitoringEntriesHandlerContextProvider } from '../../../services/monitoring';
 import { DocumentAnnotator } from '../../Home/DocumentAnnotator';
 import { AnnotationsDataFetcher } from './AnnotationsDataFetcher';
@@ -24,12 +28,13 @@ function DocumentInspector(props: { settings: settingsType }) {
           {({ annotations }) => (
             <MonitoringEntriesHandlerContextProvider documentId={idModule.lib.buildId(params.documentId)}>
               <AnnotatorStateHandlerContextProvider
+                autoSaver={buildAutoSaver({ documentId: document._id })}
+                committer={buildAnnotationsCommitter()}
                 initialAnnotatorState={{
                   annotations: annotations,
                   document: document,
                   settings: props.settings,
                 }}
-                committer={buildAnnotationsCommitter()}
               >
                 <MainHeader title={document.title} />
                 <DocumentAnnotator anonymizer={buildAnonymizer(props.settings)} />

@@ -1,6 +1,7 @@
 import { annotationsDiffType } from '@label/core';
 import { annotatorStateType } from './annotatorStateType';
 import { annotationsCommitterType } from './buildAnnotationsCommitter';
+import { autoSaverType } from './buildAutoSaver';
 
 export { buildAnnotatorStateHandler };
 
@@ -17,12 +18,19 @@ type annotatorStateHandlerType = {
   getGlobalAnnotationsDiff: () => annotationsDiffType;
 };
 
-function buildAnnotatorStateHandler(
-  annotatorState: annotatorStateType,
-  setAnnotatorState: (annotatorState: annotatorStateType) => void,
-  resetAnnotatorState: () => void,
-  committer: annotationsCommitterType,
-): { annotatorStateHandler: annotatorStateHandlerType } {
+function buildAnnotatorStateHandler({
+  annotatorState,
+  autoSaver,
+  committer,
+  resetAnnotatorState,
+  setAnnotatorState,
+}: {
+  annotatorState: annotatorStateType;
+  autoSaver: autoSaverType;
+  committer: annotationsCommitterType;
+  resetAnnotatorState: () => void;
+  setAnnotatorState: (annotatorState: annotatorStateType) => void;
+}): { annotatorStateHandler: annotatorStateHandlerType } {
   return {
     annotatorStateHandler: {
       get: () => annotatorState,
@@ -37,24 +45,27 @@ function buildAnnotatorStateHandler(
   };
 
   function setAnnotatorStateAndCommitChange(newAnnotatorState: annotatorStateType) {
-    committer.commit(annotatorState.annotations, newAnnotatorState.annotations);
+    const commit = committer.commit(annotatorState.annotations, newAnnotatorState.annotations);
     setAnnotatorState(newAnnotatorState);
+    autoSaver.saveCommit(commit);
   }
 
   function revertAnnotatorState() {
-    const newAnnotations = committer.revert(annotatorState.annotations);
+    const { annotations: newAnnotations, commit } = committer.revert(annotatorState.annotations);
     setAnnotatorState({
       ...annotatorState,
       annotations: newAnnotations,
     });
+    autoSaver.saveCommit(commit);
   }
 
   function restoreAnnotatorState() {
-    const newAnnotations = committer.restore(annotatorState.annotations);
+    const { annotations: newAnnotations, commit } = committer.restore(annotatorState.annotations);
     setAnnotatorState({
       ...annotatorState,
       annotations: newAnnotations,
     });
+    autoSaver.saveCommit(commit);
   }
 
   function reinitializeAnnotatorState() {

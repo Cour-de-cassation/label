@@ -4,8 +4,8 @@ import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
 import {
   AnnotatorStateHandlerContextProvider,
-  annotatorStateType,
   buildAnnotationsCommitter,
+  buildAutoSaver,
 } from '../../services/annotatorState';
 import { useMonitoring, MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
 import { DocumentAnnotator } from './DocumentAnnotator';
@@ -34,13 +34,13 @@ function DocumentSwitcher(props: {
         return (
           <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
             <AnnotatorStateHandlerContextProvider
+              autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: documentState.choice.document._id })}
+              committer={buildAnnotationsCommitter()}
               initialAnnotatorState={{
                 annotations: documentState.choice.annotations,
                 document: documentState.choice.document,
                 settings: props.settings,
               }}
-              committer={buildAnnotationsCommitter()}
-              onAnnotatorStateChange={onAnnotatorStateChange}
             >
               <MainHeader title={documentState.choice.document.title} />
               <DocumentAnnotator
@@ -86,15 +86,11 @@ function DocumentSwitcher(props: {
     props.fetchNewDocumentsToBeTreated();
   }
 
-  async function onAnnotatorStateChange(annotatorState: annotatorStateType, annotationsDiff: annotationsDiffType) {
+  async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {
     try {
       await apiCaller.post<'updateTreatment'>('updateTreatment', {
         annotationsDiff,
-        documentId: annotatorState.document._id,
-      });
-      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-        documentId: annotatorState.document._id,
-        status: 'saved',
+        documentId,
       });
     } catch (error) {
       console.warn(error);

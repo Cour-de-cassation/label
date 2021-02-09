@@ -1,5 +1,6 @@
 import React, { ReactElement, MouseEvent } from 'react';
-import { Button, iconNameType, Icon, buttonColorType } from '../materialUI';
+import { iconNameType, Icon } from '../materialUI';
+import { Button, buttonColorType } from './Button';
 
 export { IconButton };
 
@@ -22,7 +23,6 @@ function IconButton(props: {
       hint={props.hint}
       onClick={props.onClick}
       style={style.button}
-      variant="contained"
     >
       <div style={style.iconContainer}>
         <Icon iconName={props.iconName} />

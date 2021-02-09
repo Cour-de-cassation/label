@@ -1,5 +1,6 @@
 import React, { MouseEvent, ReactElement } from 'react';
-import { buttonColorType, iconNameType } from '../materialUI';
+import { iconNameType } from '../materialUI';
+import { buttonColorType } from './Button';
 import { Dropdown } from './Dropdown';
 import { IconButton } from './IconButton';
 

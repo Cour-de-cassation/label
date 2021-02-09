@@ -1,5 +1,4 @@
 import { Accordion } from './Accordion';
-import { Button, buttonColorType } from './Button';
 import { Checkbox } from './Checkbox';
 import { Drawer } from './Drawer';
 import { Icon, iconNameType } from './Icon';
@@ -15,7 +14,6 @@ import { TextInput } from './TextInput';
 
 export {
   Accordion,
-  Button,
   Checkbox,
   Drawer,
   Icon,
@@ -30,4 +28,4 @@ export {
   TextInput,
 };
 
-export type { buttonColorType, iconNameType };
+export type { iconNameType };

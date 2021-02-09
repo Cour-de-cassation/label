@@ -1,3 +1,4 @@
+import { Button, buttonColorType } from './Button';
 import { ButtonWithIcon } from './ButtonWithIcon';
 import { CircleIcon } from './CircleIcon';
 import { ComponentsList } from './ComponentsList';
@@ -11,6 +12,7 @@ import { SText } from './SText';
 import { Table } from './Table';
 
 export {
+  Button,
   ButtonWithIcon,
   CircleIcon,
   ComponentsList,
@@ -23,3 +25,5 @@ export {
   SText,
   Table,
 };
+
+export type { buttonColorType };

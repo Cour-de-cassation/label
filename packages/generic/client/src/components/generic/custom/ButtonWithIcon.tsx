@@ -1,6 +1,7 @@
 import React, { CSSProperties, ReactElement, MouseEvent } from 'react';
-import { Button, iconNameType, Icon, buttonColorType } from '../materialUI';
+import { iconNameType, Icon, Text } from '../materialUI';
 import { customThemeType, useCustomTheme } from '../../../styles';
+import { Button, buttonColorType } from './Button';
 
 export { ButtonWithIcon };
 
@@ -23,12 +24,11 @@ function ButtonWithIcon(props: {
       onClick={props.onClick}
       style={{ ...style.button, ...props.style }}
       type={props.type}
-      variant="contained"
     >
       <div style={style.iconContainer}>
         <Icon iconName={props.iconName} />
       </div>
-      <div style={style.buttonText}>{props.text}</div>
+      <Text style={style.buttonText}>{props.text}</Text>
     </Button>
   );
 
@@ -37,6 +37,7 @@ function ButtonWithIcon(props: {
       button: {
         justifyContent: 'start',
         textTransform: 'none',
+        padding: theme.spacing,
       },
       iconContainer: {
         display: 'flex',

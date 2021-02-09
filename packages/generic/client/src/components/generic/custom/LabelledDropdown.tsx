@@ -1,6 +1,7 @@
 import React, { MouseEvent, ReactElement } from 'react';
 import { useCustomTheme, customThemeType } from '../../../styles';
-import { Button, Icon, LayoutGrid, Text } from '../materialUI';
+import { Icon, LayoutGrid, Text } from '../materialUI';
+import { Button } from './Button';
 import { ComponentsList } from './ComponentsList';
 import { Dropdown } from './Dropdown';
 
@@ -9,7 +10,6 @@ export { LabelledDropdown };
 const LABELLED_DROPDOWN_BORDER_THICKNESS = 2;
 
 function LabelledDropdown<T extends string>(props: {
-  disabled?: boolean;
   error?: boolean;
   items: Array<{ icon?: ReactElement; text: string; value: T }>;
   label: string;
@@ -21,7 +21,6 @@ function LabelledDropdown<T extends string>(props: {
     <Dropdown
       buildButton={({ isOpen, item, onClick }) => (
         <LabelledDropdownButton
-          disabled={props.disabled}
           error={props.error}
           isOpen={isOpen}
           item={item}
@@ -39,7 +38,6 @@ function LabelledDropdown<T extends string>(props: {
 }
 
 function LabelledDropdownButton<T extends string>(props: {
-  disabled?: boolean;
   error?: boolean;
   isOpen: boolean;
   item?: { icon?: ReactElement; text: string; value: T };
@@ -52,14 +50,7 @@ function LabelledDropdownButton<T extends string>(props: {
   const style = buildStyle(theme);
 
   return (
-    <Button
-      disabled={props.disabled}
-      disabledHover
-      onClick={props.onClick}
-      style={style.dropdown}
-      variant="outlined"
-      width="100%"
-    >
+    <Button disabledHover onClick={props.onClick} style={style.dropdown}>
       <LayoutGrid container alignItems="center">
         <LayoutGrid item style={style.dropdownText} xs={11}>
           {props.item
@@ -80,7 +71,7 @@ function LabelledDropdownButton<T extends string>(props: {
         spaceBetweenComponents={theme.spacing}
       />
     ) : (
-      text
+      <Text style={{ color: 'inherit' }}>{text}</Text>
     );
   }
 
@@ -91,7 +82,8 @@ function LabelledDropdownButton<T extends string>(props: {
         backgroundColor: 'transparent',
         border: `${LABELLED_DROPDOWN_BORDER_THICKNESS}px solid ${borderColor}`,
         textTransform: 'none',
-        width: `${props.width}px`,
+        width: props.width ? `${props.width - theme.spacing * 2}px` : undefined,
+        padding: theme.spacing,
       },
       dropdownText: {
         display: 'flex',

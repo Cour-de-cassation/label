@@ -1,5 +1,6 @@
 import {
   CategoryIcon,
+  ChangeAnnotationCategoryDropdown,
   LinkAnnotationDropdown,
   Logo,
   MainHeader,
@@ -34,6 +35,7 @@ export {
   Accordion,
   ButtonWithIcon,
   CategoryIcon,
+  ChangeAnnotationCategoryDropdown,
   Checkbox,
   CircleIcon,
   ComponentsList,

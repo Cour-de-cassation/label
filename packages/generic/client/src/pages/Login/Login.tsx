@@ -47,7 +47,7 @@ const Login: FunctionComponent = () => {
         </LayoutGrid>
         <LayoutGrid item style={styles.forgottenPasswordContainer}>
           <Link to="/reset-password-request">
-            <Text style={styles.forgottenPasswordText} variant="h3">
+            <Text style={styles.forgottenPasswordText} variant="h3" color="textPrimary">
               {wordings.loginPage.forgottenPassword}
             </Text>
           </Link>

@@ -1,6 +1,6 @@
 import React, { MouseEvent, ReactElement } from 'react';
 import { useCustomTheme, customThemeType } from '../../../styles';
-import { Icon, LayoutGrid, Text } from '../materialUI';
+import { Icon, Text } from '../materialUI';
 import { Button } from './Button';
 import { ComponentsList } from './ComponentsList';
 import { Dropdown } from './Dropdown';
@@ -51,16 +51,16 @@ function LabelledDropdownButton<T extends string>(props: {
 
   return (
     <Button disabledHover onClick={props.onClick} style={style.dropdown}>
-      <LayoutGrid container alignItems="center">
-        <LayoutGrid item style={style.dropdownText} xs={11}>
+      <div style={style.dropdownContent}>
+        <div style={style.dropdownText}>
           {props.item
             ? buildDropdownLabel(props.item.text, props.item.icon)
             : buildDropdownLabel(props.label, props.labelIcon)}
-        </LayoutGrid>
-        <LayoutGrid item style={style.dropdownArrow} xs={1}>
+        </div>
+        <div style={style.dropdownArrow}>
           <Icon iconName={props.isOpen ? 'arrowReduce' : 'arrowExpand'} />
-        </LayoutGrid>
-      </LayoutGrid>
+        </div>
+      </div>
     </Button>
   );
 
@@ -82,8 +82,14 @@ function LabelledDropdownButton<T extends string>(props: {
         backgroundColor: 'transparent',
         border: `${LABELLED_DROPDOWN_BORDER_THICKNESS}px solid ${borderColor}`,
         textTransform: 'none',
-        width: props.width ? `${props.width - theme.spacing * 2}px` : undefined,
+        width: props.width ? `${props.width - theme.spacing * 2}px` : '100%',
         padding: theme.spacing,
+      },
+      dropdownContent: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flex: 1,
       },
       dropdownText: {
         display: 'flex',

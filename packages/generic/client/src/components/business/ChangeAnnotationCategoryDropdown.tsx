@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react';
 import { annotationHandler, annotationType, settingsModule } from '@label/core';
-import { CategoryIcon, IconDropdown } from '../../../../../components';
-import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
-import { useMonitoring } from '../../../../../services/monitoring';
-import { wordings } from '../../../../../wordings';
+import { IconDropdown } from '../generic';
+import { useAnnotatorStateHandler } from '../../services/annotatorState';
+import { useMonitoring } from '../../services/monitoring';
+import { wordings } from '../../wordings';
+import { CategoryIcon } from './CategoryIcon';
 
 export { ChangeAnnotationCategoryDropdown };
 

@@ -61,7 +61,7 @@ function emphasizeShadeColor(color: colorType, displayMode: displayModeType): st
       case 'darkMode':
         return getShadeColor([tint, 100]);
       case 'lightMode':
-        return getShadeColor([tint, 800]);
+        return getShadeColor([tint, 900]);
     }
   }
 }

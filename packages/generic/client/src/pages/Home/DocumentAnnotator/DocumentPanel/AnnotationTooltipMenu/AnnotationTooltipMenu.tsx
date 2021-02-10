@@ -4,13 +4,13 @@ import {
   LayoutGrid,
   FloatingTooltipMenu,
   ComponentsList,
+  ChangeAnnotationCategoryDropdown,
   LinkAnnotationDropdown,
   UnlinkAnnotationDropdown,
 } from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { positionType } from '../../../../../types';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
-import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { DeleteAnnotationDropdown } from './DeleteAnnotationDropdown';
 
 export { AnnotationTooltipMenu };

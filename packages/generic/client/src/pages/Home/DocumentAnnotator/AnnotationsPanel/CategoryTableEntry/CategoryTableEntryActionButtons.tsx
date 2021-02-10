@@ -1,6 +1,7 @@
 import React from 'react';
 import { annotationHandler, annotationType } from '@label/core';
 import {
+  ChangeAnnotationCategoryDropdown,
   ComponentsList,
   IconButton,
   LinkAnnotationDropdown,
@@ -10,7 +11,6 @@ import { useAnnotatorStateHandler } from '../../../../../services/annotatorState
 import { useMonitoring } from '../../../../../services/monitoring';
 import { useCustomTheme } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
-import { ChangeAnnotationCategoryDropdown } from '../../DocumentPanel/AnnotationTooltipMenu/ChangeAnnotationCategoryDropdown';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
 
 export { CategoryTableEntryActionButtons };

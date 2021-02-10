@@ -13,7 +13,7 @@ function Text(props: {
 }): ReactElement {
   return (
     <Typography
-      color={props.color || 'textPrimary'}
+      color={props.color}
       display={props.inline ? 'inline' : 'initial'}
       style={props.style}
       variant={props.variant}

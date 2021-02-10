@@ -32,12 +32,12 @@ function ButtonWithIcon(props: {
     </Button>
   );
 
-  function buildStyle(theme: customThemeType): { [cssClass: string]: CSSProperties } {
+  function buildStyle(theme: customThemeType) {
     return {
       button: {
         justifyContent: 'start',
         textTransform: 'none',
-        padding: theme.spacing,
+        padding: `${theme.spacing}px ${theme.spacing * 2}px`,
       },
       iconContainer: {
         display: 'flex',
@@ -45,6 +45,6 @@ function ButtonWithIcon(props: {
       buttonText: {
         paddingLeft: theme.spacing,
       },
-    };
+    } as const;
   }
 }

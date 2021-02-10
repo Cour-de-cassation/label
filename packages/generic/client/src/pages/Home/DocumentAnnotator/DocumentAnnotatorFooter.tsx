@@ -5,19 +5,19 @@ import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components'
 import { useMonitoring } from '../../../services/monitoring';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
-import { clientAnonymizerType } from '../../../types';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorFooter };
 
-function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onStopAnnotatingDocument: () => void }) {
+function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const { addMonitoringEntry, sendMonitoringEntries } = useMonitoring();
 
   const styles = buildStyles(theme);
   const annotatorState = annotatorStateHandler.get();
+  const anonymizer = annotatorStateHandler.getAnonymizer();
 
   return (
     <div style={styles.footer}>
@@ -94,7 +94,7 @@ function DocumentAnnotatorFooter(props: { anonymizer: clientAnonymizerType; onSt
   }
 
   async function copyToClipboard() {
-    const anonymizedDocument = props.anonymizer.anonymizeDocument(annotatorState.document, annotatorState.annotations);
+    const anonymizedDocument = anonymizer.anonymizeDocument(annotatorState.document, annotatorState.annotations);
     await navigator.clipboard.writeText(anonymizedDocument.text);
   }
 

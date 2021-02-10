@@ -3,17 +3,13 @@ import { annotationHandler, annotationType, settingsModule } from '@label/core';
 import { CategoryIcon, Header, Text } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
-import { clientAnonymizerType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
 
 export { AnnotationTooltipMenuHeader };
 
-function AnnotationTooltipMenuHeader(props: {
-  annotation: annotationType;
-  anonymizer: clientAnonymizerType;
-  isAnonymizedView: boolean;
-}): ReactElement {
+function AnnotationTooltipMenuHeader(props: { annotation: annotationType; isAnonymizedView: boolean }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
+  const anonymizer = annotatorStateHandler.getAnonymizer();
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const annotatorState = annotatorStateHandler.get();
@@ -39,7 +35,7 @@ function AnnotationTooltipMenuHeader(props: {
       <Text variant="body1">
         {`${props.isAnonymizedView ? wordings.homePage.originalText : wordings.homePage.pseudonymisation} : `}
         <Text inline variant="body2">
-          {props.isAnonymizedView ? props.annotation.text : props.anonymizer.anonymize(props.annotation)}
+          {props.isAnonymizedView ? props.annotation.text : anonymizer.anonymize(props.annotation)}
         </Text>
       </Text>
     </>

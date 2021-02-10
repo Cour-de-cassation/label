@@ -1,6 +1,5 @@
 import React, { CSSProperties } from 'react';
 import { LayoutGrid, Text } from '../../../../components';
-import { clientAnonymizerType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../lib';
@@ -11,7 +10,6 @@ import { useEntityEntryHandler } from './useEntityEntryHandler';
 export { AnnotationsPanel };
 
 function AnnotationsPanel(props: {
-  anonymizer: clientAnonymizerType;
   annotationPerCategoryAndEntity: annotationPerCategoryAndEntityType;
   splittedTextByLine: splittedTextByLineType;
 }) {
@@ -31,7 +29,6 @@ function AnnotationsPanel(props: {
           <LayoutGrid key={category} style={styles.category}>
             {categorySize > 0 ? (
               <CategoryTable
-                anonymizer={props.anonymizer}
                 categoryAnnotations={categoryAnnotations}
                 category={category}
                 categorySize={categorySize}

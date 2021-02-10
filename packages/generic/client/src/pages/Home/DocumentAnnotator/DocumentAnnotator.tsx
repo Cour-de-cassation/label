@@ -4,7 +4,6 @@ import { heights, widths } from '../../../styles';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
 import { useMonitoring } from '../../../services/monitoring';
-import { clientAnonymizerType } from '../../../types';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { useKeyboardShortcutsHandler } from './hooks';
@@ -13,10 +12,7 @@ import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
 
 export { DocumentAnnotator };
 
-function DocumentAnnotator(props: {
-  anonymizer: clientAnonymizerType;
-  onStopAnnotatingDocument?: () => void;
-}): ReactElement {
+function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => void }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
   useKeyboardShortcutsHandler([
@@ -36,21 +32,17 @@ function DocumentAnnotator(props: {
         <div style={styles.annotatorBody}>
           <div style={styles.leftContainer}>
             <AnnotationsPanel
-              anonymizer={props.anonymizer}
               annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
               splittedTextByLine={splittedTextByLine}
             />
           </div>
           <div style={styles.rightContainer}>
-            <DocumentPanel anonymizer={props.anonymizer} splittedTextByLine={splittedTextByLine} />
+            <DocumentPanel splittedTextByLine={splittedTextByLine} />
           </div>
         </div>
         {!!props.onStopAnnotatingDocument && (
           <div>
-            <DocumentAnnotatorFooter
-              anonymizer={props.anonymizer}
-              onStopAnnotatingDocument={props.onStopAnnotatingDocument}
-            />
+            <DocumentAnnotatorFooter onStopAnnotatingDocument={props.onStopAnnotatingDocument} />
           </div>
         )}
       </div>

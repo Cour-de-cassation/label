@@ -8,7 +8,7 @@ import {
   UnlinkAnnotationDropdown,
 } from '../../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
-import { clientAnonymizerType, positionType } from '../../../../../types';
+import { positionType } from '../../../../../types';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { DeleteAnnotationDropdown } from './DeleteAnnotationDropdown';
@@ -19,7 +19,6 @@ const ANNOTATION_TOOLTIP_SUMMARY_WIDTH = 300;
 
 function AnnotationTooltipMenu(props: {
   annotation: annotationType;
-  anonymizer: clientAnonymizerType;
   closesOnBackdropClick: boolean;
   isAnonymizedView: boolean;
   isExpanded: boolean;
@@ -38,11 +37,7 @@ function AnnotationTooltipMenu(props: {
     >
       <>
         <LayoutGrid container>
-          <AnnotationTooltipMenuHeader
-            annotation={props.annotation}
-            anonymizer={props.anonymizer}
-            isAnonymizedView={props.isAnonymizedView}
-          />
+          <AnnotationTooltipMenuHeader annotation={props.annotation} isAnonymizedView={props.isAnonymizedView} />
         </LayoutGrid>
         {renderAnnotationButtons()}
       </>

@@ -3,14 +3,15 @@ import { annotationType, settingsModule } from '@label/core';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { getColor, useDisplayMode } from '../../../../styles';
-import { clientAnonymizerType, positionType } from '../../../../types';
+import { positionType } from '../../../../types';
 import { MouseMoveListener, useMousePosition } from '../../../../utils';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 
 export { DocumentAnnotationText };
 
-function DocumentAnnotationText(props: { annotation: annotationType; anonymizer: clientAnonymizerType }): ReactElement {
+function DocumentAnnotationText(props: { annotation: annotationType }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
+  const anonymizer = annotatorStateHandler.getAnonymizer();
   const [isTooltipMenuVisible, setIsTooltipMenuVisible] = useState(false);
   const [isTooltipMenuExpanded, setIsTooltipMenuExpanded] = useState(false);
   const documentViewerModeHandler = useDocumentViewerModeHandler();
@@ -29,7 +30,7 @@ function DocumentAnnotationText(props: { annotation: annotationType; anonymizer:
       >
         <span style={style.annotationText}>
           {documentViewerModeHandler.isAnonymizedView()
-            ? props.anonymizer.anonymize(props.annotation)
+            ? anonymizer.anonymize(props.annotation)
             : props.annotation.text}
         </span>
       </MouseMoveListener>
@@ -37,7 +38,6 @@ function DocumentAnnotationText(props: { annotation: annotationType; anonymizer:
       {isTooltipMenuVisible && (
         <AnnotationTooltipMenu
           annotation={props.annotation}
-          anonymizer={props.anonymizer}
           closesOnBackdropClick={!!tooltipMenuFixedPosition}
           originPosition={tooltipMenuFixedPosition || mouseMoveHandler.mousePosition}
           isAnonymizedView={documentViewerModeHandler.isAnonymizedView()}

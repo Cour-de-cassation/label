@@ -1,24 +1,20 @@
 import React, { ReactElement } from 'react';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { customThemeType, useCustomTheme } from '../../../../styles';
-import { clientAnonymizerType } from '../../../../types';
 import { splittedTextByLineType } from '../lib';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';
 
 export { DocumentPanel };
 
-function DocumentPanel(props: {
-  anonymizer: clientAnonymizerType;
-  splittedTextByLine: splittedTextByLineType;
-}): ReactElement {
+function DocumentPanel(props: { splittedTextByLine: splittedTextByLineType }): ReactElement {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const { setHasScrolled } = useDocumentViewerModeHandler();
   return (
     <div style={styles.panel} onScroll={onScroll}>
       <DocumentPanelHeader />
-      <DocumentViewer anonymizer={props.anonymizer} splittedTextByLine={props.splittedTextByLine} />
+      <DocumentViewer splittedTextByLine={props.splittedTextByLine} />
     </div>
   );
 

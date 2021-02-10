@@ -4,7 +4,6 @@ import { settingsModule } from '@label/core';
 import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
-import { clientAnonymizerType } from '../../../../types';
 import { annotationPerEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTableEntry } from './CategoryTableEntry';
 import { entityEntryHandlerType } from './useEntityEntryHandler';
@@ -16,7 +15,6 @@ const ACCORDION_HEADER_PADDING = 5;
 const { Div_Body } = buildStyledComponents();
 
 function CategoryTable(props: {
-  anonymizer: clientAnonymizerType;
   category: string;
   categoryAnnotations: annotationPerEntityType;
   categorySize: number;

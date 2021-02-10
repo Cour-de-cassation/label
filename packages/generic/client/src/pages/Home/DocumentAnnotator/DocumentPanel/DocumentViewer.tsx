@@ -3,17 +3,13 @@ import { annotationChunkType, textChunkType } from '@label/core';
 import { Text } from '../../../../components';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
-import { clientAnonymizerType } from '../../../../types';
 import { splittedTextByLineType } from '../lib';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 import { DocumentText } from './DocumentText';
 
 export { DocumentViewer };
 
-function DocumentViewer(props: {
-  anonymizer: clientAnonymizerType;
-  splittedTextByLine: splittedTextByLineType;
-}): ReactElement {
+function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): ReactElement {
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const theme = useCustomTheme();
   const styles = buildStyle(
@@ -69,7 +65,7 @@ function DocumentViewer(props: {
       case 'text':
         return <DocumentText key={chunk.index} index={chunk.index} text={chunk.text} />;
       case 'annotation':
-        return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} anonymizer={props.anonymizer} />;
+        return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} />;
     }
   }
 

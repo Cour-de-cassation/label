@@ -29,6 +29,7 @@ function DocumentInspector(props: { settings: settingsType }) {
             <MonitoringEntriesHandlerContextProvider documentId={idModule.lib.buildId(params.documentId)}>
               <AnnotatorStateHandlerContextProvider
                 autoSaver={buildAutoSaver({ documentId: document._id })}
+                buildAnonymizer={() => buildAnonymizer(props.settings)}
                 committer={buildAnnotationsCommitter()}
                 initialAnnotatorState={{
                   annotations: annotations,
@@ -37,7 +38,7 @@ function DocumentInspector(props: { settings: settingsType }) {
                 }}
               >
                 <MainHeader title={document.title} />
-                <DocumentAnnotator anonymizer={buildAnonymizer(props.settings)} />
+                <DocumentAnnotator />
               </AnnotatorStateHandlerContextProvider>
             </MonitoringEntriesHandlerContextProvider>
           )}

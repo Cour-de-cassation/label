@@ -1,5 +1,5 @@
-import { annotationChunkType, textChunkType, textSplitter } from './textSplitter';
+import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
 
 export { textSplitter };
 
-export type { annotationChunkType, textChunkType };
+export type { annotationChunkType, textChunkType, textChunkContentType };

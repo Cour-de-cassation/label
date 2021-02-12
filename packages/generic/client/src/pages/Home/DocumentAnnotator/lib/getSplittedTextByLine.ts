@@ -28,25 +28,60 @@ function computeSplittedTextByLine(splittedText: Array<textChunkType | annotatio
   splittedText.forEach((chunk) => {
     switch (chunk.type) {
       case 'text':
-        const splittedTextAccordingToNewline = splitTextAccordingToNewLine(chunk.text);
-        let currentIndex = chunk.index;
-        splittedTextAccordingToNewline.forEach((textLine, ind) => {
-          splittedTextByLine[currentLine + ind].content.push({
-            ...textSplitter.buildTextChunk(textLine, currentIndex),
-          });
+        const splittedTextAccordingToNewline = splitTextAccordingToNewLine(chunk.content.text);
+        let currentIndex = chunk.content.index;
+        splittedTextAccordingToNewline.forEach((textLine, lineIndex) => {
+          const after = computeAfterNeighbours(splittedTextAccordingToNewline, chunk.content.index, lineIndex);
+          const before = computeBeforeNeighbours(splittedTextAccordingToNewline, chunk.content.index, lineIndex);
+          splittedTextByLine[currentLine + lineIndex].content.push(
+            textSplitter.buildTextChunk(textLine, currentIndex, before, after),
+          );
           currentIndex = currentIndex + textLine.length + 1;
         });
         currentLine = currentLine + splittedTextAccordingToNewline.length - 1;
         break;
       case 'annotation':
-        splittedTextByLine[currentLine].content.push({
-          ...textSplitter.buildAnnotationChunk(chunk.annotation),
-        });
+        splittedTextByLine[currentLine].content.push(textSplitter.buildAnnotationChunk(chunk.annotation));
         break;
     }
   });
 
   return splittedTextByLine;
+}
+
+function computeBeforeNeighbours(
+  splittedTextAccordingToNewline: string[],
+  chunkContentIndex: number,
+  lineIndex: number,
+) {
+  const before = [];
+  let currentIndex = chunkContentIndex;
+  for (let i = 0, length = lineIndex; i < length; i++) {
+    const textLine = splittedTextAccordingToNewline[i];
+    before.push({ text: textLine, index: currentIndex });
+    currentIndex += textLine.length + 1;
+  }
+  return before;
+}
+
+function computeAfterNeighbours(
+  splittedTextAccordingToNewline: string[],
+  chunkContentIndex: number,
+  lineIndex: number,
+) {
+  const after = [];
+  let currentIndex = chunkContentIndex;
+  for (let i = 0, length = lineIndex + 1; i < length; i++) {
+    const textLine = splittedTextAccordingToNewline[i];
+    currentIndex += textLine.length + 1;
+  }
+
+  for (let i = lineIndex + 1, length = splittedTextAccordingToNewline.length; i < length; i++) {
+    const textLine = splittedTextAccordingToNewline[i];
+    after.push({ text: textLine, index: currentIndex });
+    currentIndex += textLine.length + 1;
+  }
+  return after;
 }
 
 function splitTextAccordingToNewLine(text: string): string[] {

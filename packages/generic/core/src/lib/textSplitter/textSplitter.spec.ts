@@ -20,19 +20,19 @@ describe('textSplitter', () => {
           index: annotations[0].start,
           annotation: annotations[0],
         },
-        { type: 'text', index: 6, text: ' is software engineer. ' },
+        { type: 'text', content: { index: 6, text: ' is software engineer. ' }, before: [], after: [] },
         {
           type: 'annotation',
           index: annotations[1].start,
           annotation: annotations[1],
         },
-        { type: 'text', index: 36, text: ' is a software engineer. ' },
+        { type: 'text', content: { index: 36, text: ' is a software engineer. ' }, before: [], after: [] },
         {
           type: 'annotation',
           index: annotations[2].start,
           annotation: annotations[2],
         },
-        { type: 'text', index: 67, text: ' is a designer.' },
+        { type: 'text', content: { index: 67, text: ' is a designer.' }, before: [], after: [] },
       ]);
     });
   });

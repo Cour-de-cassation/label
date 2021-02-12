@@ -2,7 +2,7 @@ import { annotationType } from '../../modules';
 
 export { textSplitter };
 
-export type { annotationChunkType, textChunkType };
+export type { annotationChunkType, textChunkType, textChunkContentType };
 
 const textSplitter = {
   splitTextAccordingToAnnotations,
@@ -17,7 +17,14 @@ type annotationChunkType = {
   annotation: annotationType;
 };
 
-type textChunkType = { type: 'text'; index: number; text: string };
+type textChunkType = {
+  type: 'text';
+  content: textChunkContentType;
+  before: textChunkContentType[];
+  after: textChunkContentType[];
+};
+
+type textChunkContentType = { index: number; text: string };
 
 function splitTextAccordingToAnnotations(
   text: string,
@@ -38,11 +45,20 @@ function splitTextAccordingToAnnotations(
   return removeEmptyTextChunks(splittedText);
 }
 
-function buildTextChunk(text: string, index: number): textChunkType {
+function buildTextChunk(
+  text: string,
+  index: number,
+  before?: textChunkContentType[],
+  after?: textChunkContentType[],
+): textChunkType {
   return {
     type: 'text',
-    index,
-    text,
+    content: {
+      index,
+      text,
+    },
+    before: before || [],
+    after: after || [],
   } as const;
 }
 
@@ -57,5 +73,5 @@ function buildAnnotationChunk(annotation: annotationType): annotationChunkType {
 function removeEmptyTextChunks(
   chunks: Array<textChunkType | annotationChunkType>,
 ): Array<textChunkType | annotationChunkType> {
-  return chunks.filter((chunk) => chunk.type !== 'text' || chunk.text !== '');
+  return chunks.filter((chunk) => chunk.type !== 'text' || chunk.content.text !== '');
 }

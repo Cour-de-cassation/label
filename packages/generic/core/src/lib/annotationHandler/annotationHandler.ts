@@ -6,6 +6,7 @@ export { annotationHandler };
 
 const annotationHandler = {
   create,
+  createMany,
   createAll,
   deleteByTextAndStart,
   deleteByEntityId,
@@ -23,6 +24,16 @@ function create(
   const newAnnotations = [createdAnnotation, ...annotations];
 
   return autoLinker.autoLink([createdAnnotation], newAnnotations);
+}
+
+function createMany(
+  annotations: annotationType[],
+  fieldsArray: Array<{ category: string; start: number; text: string }>,
+): annotationType[] {
+  const createdAnnotations = fieldsArray.map((fields) => annotationModule.lib.buildAnnotation(fields));
+  const newAnnotations = [...annotations, ...createdAnnotations];
+
+  return newAnnotations;
 }
 
 function createAll(

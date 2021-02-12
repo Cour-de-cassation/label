@@ -1,45 +1,64 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
 import { positionType } from '../../../../types';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
+import { computeMultilineSelection, textNeighboursType } from '../lib';
 
 export { DocumentText };
 
-function DocumentText(props: { index: number; text: string }): ReactElement {
-  const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
-  const [selectedText, setSelectedText] = useState<string>('');
+export type { textSelectionType };
+
+type textSelectionType = Array<{
+  index: number;
+  text: string;
+}>;
+
+function DocumentText(props: { neighbours: textNeighboursType }): ReactElement {
+  const [textSelection, setTextSelection] = useState<textSelectionType>([]);
   const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>();
   return (
     <span>
-      <span onMouseUp={handleSelection}>{props.text}</span>
-      {tooltipMenuOriginPosition && (
+      <span onMouseUp={handleSelection}>{props.neighbours.current.text}</span>
+      {tooltipMenuOriginPosition && textSelection.length > 0 && (
         <AnnotationCreationTooltipMenu
-          annotationText={selectedText}
-          annotationIndex={selectedTextIndex}
           onClose={closeTooltipMenu}
           originPosition={tooltipMenuOriginPosition}
+          textSelection={textSelection}
         />
       )}
     </span>
   );
 
   function handleSelection(event: MouseEvent<Element>) {
-    const selection = window.getSelection();
-
-    if (!selection || !isValidSelection(selection)) {
-      closeTooltipMenu();
+    const validSelection = getValidSelection(window.getSelection());
+    if (!validSelection.length) {
       return;
     }
 
-    setSelectedText(selection.toString());
-    setSelectedTextIndex(computeSelectedTextIndex(selection));
+    setTextSelection(validSelection);
     openTooltipMenu(event);
   }
 
-  function isValidSelection(selection: Selection) {
-    return (
-      selection.anchorOffset !== selection.focusOffset &&
-      selection.anchorNode?.nodeValue === selection.focusNode?.nodeValue
+  function getValidSelection(selection: Selection | null) {
+    if (!selection) {
+      return [];
+    }
+    const anchorNodeValue = selection.anchorNode?.nodeValue;
+    const focusNodeValue = selection.focusNode?.nodeValue;
+    const selectionText = selection.toString();
+    if (!anchorNodeValue || !focusNodeValue || !selectionText || selection.anchorOffset === selection.focusOffset) {
+      return [];
+    }
+    if (anchorNodeValue === focusNodeValue) {
+      return [{ text: selectionText, index: computeSelectedTextIndex(selection) }];
+    }
+
+    const multilineSelection = computeMultilineSelection(
+      selectionText,
+      props.neighbours,
+      anchorNodeValue,
+      focusNodeValue,
     );
+    return multilineSelection;
   }
 
   function openTooltipMenu(event: MouseEvent<Element>) {
@@ -51,6 +70,6 @@ function DocumentText(props: { index: number; text: string }): ReactElement {
   }
 
   function computeSelectedTextIndex(selection: Selection) {
-    return Math.min(selection.anchorOffset, selection.focusOffset) + props.index;
+    return Math.min(selection.anchorOffset, selection.focusOffset) + props.neighbours.current.index;
   }
 }

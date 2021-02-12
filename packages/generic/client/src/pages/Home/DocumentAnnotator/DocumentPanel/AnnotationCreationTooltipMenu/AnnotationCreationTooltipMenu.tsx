@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, CSSProperties } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { annotationHandler, annotationTextDetector, settingsModule } from '@label/core';
 import {
   CategoryIcon,
@@ -14,6 +14,7 @@ import { useMonitoring } from '../../../../../services/monitoring';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { positionType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
+import { textSelectionType } from '../DocumentText';
 
 export { AnnotationCreationTooltipMenu };
 
@@ -21,25 +22,19 @@ const TOOLTIP_MENU_MAX_WIDTH = 300;
 const CATEGORY_ICON_SIZE = 30;
 
 function AnnotationCreationTooltipMenu(props: {
-  annotationText: string;
-  annotationIndex: number;
+  textSelection: textSelectionType;
   onClose: () => void;
   originPosition: positionType;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
+  const annotatorState = annotatorStateHandler.get();
   const { addMonitoringEntry } = useMonitoring();
-  const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(true);
+  const annotationTextsAndIndices = getAnnotationTextsAndIndices();
+  const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(annotationTextsAndIndices.length > 1);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const annotatorState = annotatorStateHandler.get();
   const categories = settingsModule.lib.getCategories(annotatorState.settings);
-  const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
-    documentText: annotatorState.document.text,
-    annotationIndex: props.annotationIndex,
-    annotationText: props.annotationText,
-    annotations: annotatorState.annotations,
-  });
-
+  const annotationText = computeAnnotationText();
   return (
     <FloatingTooltipMenu
       shouldCloseWhenClickedAway
@@ -48,24 +43,28 @@ function AnnotationCreationTooltipMenu(props: {
       width={TOOLTIP_MENU_MAX_WIDTH}
     >
       <div style={styles.tooltipMenuContent}>
-        <LayoutGrid item style={styles.annotationTextContainer}>
+        <div style={styles.annotationTextContainer}>
           <Text variant="body2" style={styles.annotationText}>
-            {props.annotationText}
+            {annotationText}
           </Text>
-        </LayoutGrid>
-        <LayoutGrid item style={styles.identicalOccurrencesContainer}>
-          <Text variant="h3">
-            <span style={styles.identicalOccurrencesNumber}>{annotationTextsAndIndices.length}</span>{' '}
-            {wordings.homePage.identicalOccurrencesSpotted}
-          </Text>
-        </LayoutGrid>
-        <LayoutGrid item container>
-          <Checkbox
-            defaultChecked={shouldApplyEverywhere}
-            onChange={(checked: boolean) => setShouldApplyEverywhere(checked)}
-            text={wordings.homePage.applyEveryWhere}
-          ></Checkbox>
-        </LayoutGrid>
+        </div>
+        {annotationTextsAndIndices.length > 1 && (
+          <>
+            <div style={styles.identicalOccurrencesContainer}>
+              <Text variant="h3">
+                <span style={styles.identicalOccurrencesNumber}>{annotationTextsAndIndices.length - 1}</span>{' '}
+                {wordings.homePage.identicalOccurrencesSpotted}
+              </Text>
+            </div>
+            <div style={styles.checkboxContainer}>
+              <Checkbox
+                defaultChecked={shouldApplyEverywhere}
+                onChange={(checked: boolean) => setShouldApplyEverywhere(checked)}
+                text={wordings.homePage.applyEveryWhere}
+              ></Checkbox>
+            </div>
+          </>
+        )}
         <LayoutGrid item container>
           <LabelledDropdown
             items={categories.map((category) => ({
@@ -95,13 +94,7 @@ function AnnotationCreationTooltipMenu(props: {
       description: `tooltip_create_${shouldApplyEverywhere ? 'all' : 'one'}_${category}`,
       type: 'button',
     });
-    const newAnnotations = shouldApplyEverywhere
-      ? annotationHandler.createAll(annotatorState.annotations, category, annotationTextsAndIndices)
-      : annotationHandler.create(annotatorState.annotations, {
-          category,
-          start: props.annotationIndex,
-          text: props.annotationText,
-        });
+    const newAnnotations = computeNewAnnotations(category);
 
     annotatorStateHandler.set({
       ...annotatorState,
@@ -111,7 +104,45 @@ function AnnotationCreationTooltipMenu(props: {
     props.onClose();
   }
 
-  function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
+  function computeNewAnnotations(category: string) {
+    if (shouldApplyEverywhere) {
+      return annotationHandler.createAll(annotatorState.annotations, category, annotationTextsAndIndices);
+    }
+
+    if (props.textSelection.length === 1) {
+      return annotationHandler.create(annotatorState.annotations, {
+        category,
+        start: props.textSelection[0].index,
+        text: props.textSelection[0].text,
+      });
+    }
+
+    return annotationHandler.createMany(
+      annotatorState.annotations,
+      props.textSelection.map(({ text, index }) => ({ category, text, start: index })),
+    );
+  }
+
+  function computeAnnotationText() {
+    if (props.textSelection.length === 1) {
+      return props.textSelection[0].text;
+    }
+    return props.textSelection.map(({ text }) => text).join(' ');
+  }
+
+  function getAnnotationTextsAndIndices() {
+    if (props.textSelection.length === 1) {
+      return annotationTextDetector.detectAnnotationTextsAndIndices({
+        documentText: annotatorState.document.text,
+        annotationIndex: props.textSelection[0].index,
+        annotationText: props.textSelection[0].text,
+        annotations: annotatorState.annotations,
+      });
+    }
+    return [];
+  }
+
+  function buildStyles(theme: customThemeType) {
     const MAX_DISPLAYED_LINES = 3;
     const ANNOTATION_TEXT_LINE_HEIGHT = 15;
     return {
@@ -134,12 +165,15 @@ function AnnotationCreationTooltipMenu(props: {
         padding: '2px 4px',
         borderRadius: '3px',
       },
+      checkboxContainer: {
+        alignSelf: 'flex-start',
+      },
       identicalOccurrencesContainer: {
         marginBottom: theme.spacing * 4,
       },
       identicalOccurrencesNumber: {
         fontWeight: 'bold',
       },
-    };
+    } as const;
   }
 }

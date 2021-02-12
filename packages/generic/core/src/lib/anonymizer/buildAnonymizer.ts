@@ -30,7 +30,7 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(settings: settin
     const splittedAnonymizedText = splittedText.map((chunk) => {
       switch (chunk.type) {
         case 'text':
-          return chunk.text;
+          return chunk.content.text;
         case 'annotation':
           return anonymize(chunk.annotation);
       }

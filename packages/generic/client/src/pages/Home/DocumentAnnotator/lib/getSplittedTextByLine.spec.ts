@@ -20,7 +20,15 @@ describe('getSplittedTextByLine', () => {
           textSplitter.buildAnnotationChunk(annotations[0]),
           textSplitter.buildTextChunk(' is software engineer. ', 6),
           textSplitter.buildAnnotationChunk(annotations[1]),
-          textSplitter.buildTextChunk(' is a software engineer.', 36),
+          textSplitter.buildTextChunk(
+            ' is a software engineer.',
+            36,
+            [],
+            [
+              { text: '', index: 61 },
+              { text: 'And ', index: 62 },
+            ],
+          ),
         ],
       },
       {
@@ -30,7 +38,10 @@ describe('getSplittedTextByLine', () => {
       {
         line: 3,
         content: [
-          textSplitter.buildTextChunk('And ', 62),
+          textSplitter.buildTextChunk('And ', 62, [
+            { text: ' is a software engineer.', index: 36 },
+            { text: '', index: 61 },
+          ]),
           textSplitter.buildAnnotationChunk(annotations[2]),
           textSplitter.buildTextChunk(' is a designer.', 72),
         ],

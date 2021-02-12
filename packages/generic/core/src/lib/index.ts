@@ -4,7 +4,7 @@ import { annotationHandler } from './annotationHandler';
 import { annotationLinkHandler } from './annotationLinkHandler';
 import { annotationTextDetector } from './annotationTextDetector';
 import { httpRequester } from './httpRequester';
-import { annotationChunkType, textChunkType, textSplitter } from './textSplitter';
+import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
 
 export {
   annotationHandler,
@@ -16,4 +16,4 @@ export {
   textSplitter,
 };
 
-export type { anonymizerType, annotationChunkType, textChunkType };
+export type { anonymizerType, annotationChunkType, textChunkType, textChunkContentType };

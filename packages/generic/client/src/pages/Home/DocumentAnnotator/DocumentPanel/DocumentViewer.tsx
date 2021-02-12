@@ -63,7 +63,8 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   function renderChunk(chunk: textChunkType | annotationChunkType) {
     switch (chunk.type) {
       case 'text':
-        return <DocumentText key={chunk.index} index={chunk.index} text={chunk.text} />;
+        const { before, after } = chunk;
+        return <DocumentText key={chunk.content.index} neighbours={{ before, after, current: chunk.content }} />;
       case 'annotation':
         return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} />;
     }

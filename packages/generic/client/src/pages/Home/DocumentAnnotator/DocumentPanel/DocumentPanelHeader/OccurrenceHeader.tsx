@@ -12,7 +12,7 @@ export { OccurrenceHeader };
 const CATEGORY_ICON_SIZE = 40;
 
 function OccurrenceHeader(props: { entityId: string }) {
-  const documentViewerModeHandler = useDocumentViewerModeHandler();
+  const { resetViewerMode } = useDocumentViewerModeHandler();
   const theme = useCustomTheme();
   const annotatorStateHandler = useAnnotatorStateHandler();
 
@@ -40,23 +40,12 @@ function OccurrenceHeader(props: { entityId: string }) {
           </div>
         </div>,
       ]}
-      rightHeaderComponents={[
-        <IconButton iconName="close" hint={wordings.homePage.close} onClick={onCloseOccurrenceHeader} />,
-      ]}
+      rightHeaderComponents={[<IconButton iconName="close" hint={wordings.homePage.close} onClick={resetViewerMode} />]}
       spaceBetweenComponents={0}
       variant="mainLeft"
       style={styles.header}
     />
   );
-
-  function onCloseOccurrenceHeader() {
-    const { resetViewerMode, documentViewerMode } = documentViewerModeHandler;
-    const firstLineNumber = (documentViewerMode.kind === 'occurrence' && documentViewerMode.entityLineNumbers[0]) || '';
-    resetViewerMode();
-    const { origin, pathname } = window.location;
-    const hash = documentViewerMode.hasScrolled || !firstLineNumber ? '' : `#line${firstLineNumber}`;
-    window.location.replace(`${origin}${pathname}${hash}`);
-  }
 }
 
 function buildStyles(theme: customThemeType) {

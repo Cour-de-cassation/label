@@ -9,7 +9,6 @@ const DocumentViewerModeHandlerContext = createContext<documentViewerModeHandler
   resetViewerMode: () => null,
   setOccurrenceMode: () => null,
   switchAnonymizedView: () => null,
-  setHasScrolled: () => null,
   documentViewerMode: DEFAULT_VIEWER_MODE,
 });
 

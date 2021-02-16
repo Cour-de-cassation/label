@@ -8,6 +8,7 @@ const annotationHandler = {
   create,
   createMany,
   createAll,
+  deleteByTextAndCategory,
   deleteByTextAndStart,
   deleteByEntityId,
   getAnnotationIndex,
@@ -47,6 +48,24 @@ function createAll(
   const newAnnotations = createdAnnotations.concat(annotations);
 
   return autoLinker.autoLink(createdAnnotations, newAnnotations);
+}
+
+function deleteByTextAndCategory(annotations: annotationType[], annotation: annotationType) {
+  const newAnnotations = annotations.filter(
+    (anotherAnnotation) =>
+      anotherAnnotation.category !== annotation.category || anotherAnnotation.text !== annotation.text,
+  );
+
+  const annotationsLinkedToDeletedAnnotation = annotationLinkHandler.getLinkedAnnotationRepresentatives(
+    annotation.entityId,
+    newAnnotations,
+  );
+
+  if (annotationsLinkedToDeletedAnnotation.length === 0) {
+    return newAnnotations;
+  } else {
+    return annotationLinkHandler.updateMainLinkEntity(annotationsLinkedToDeletedAnnotation[0], newAnnotations);
+  }
 }
 
 function deleteByTextAndStart(annotations: annotationType[], annotation: annotationType) {

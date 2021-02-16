@@ -1,4 +1,5 @@
 import { annotationModule } from '../../modules';
+import { annotationLinkHandler } from '../annotationLinkHandler';
 import { annotationHandler } from './annotationHandler';
 
 describe('annotationHandler', () => {
@@ -29,6 +30,50 @@ describe('annotationHandler', () => {
         },
         ...annotations,
       ]);
+    });
+  });
+
+  describe('deleteByTextAndCategory', () => {
+    it('should delete an annotation according to its text and category', () => {
+      const annotation1 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'FIRST_TEXT' });
+      const annotation2 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'SECOND_TEXT' });
+      const annotation3 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'THIRD_TEXT' });
+
+      const annotations = [annotation1, annotation2, annotation3];
+
+      const newAnnotations = annotationHandler.deleteByTextAndCategory(annotations, annotation1);
+
+      expect(newAnnotations).toEqual([annotation2, annotation3]);
+    });
+
+    it('should not conserve a link of a deleted annotation', () => {
+      const annotation1 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'FIRST_TEXT' });
+      const annotation2 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'SECOND_TEXT' });
+      const annotation1Linked = annotationModule.lib.annotationLinker.link(annotation1, annotation2);
+      const annotations = [annotation1Linked, annotation2];
+
+      const newAnnotations = annotationHandler.create(
+        annotationHandler.deleteByTextAndCategory(annotations, annotation2),
+        annotation2,
+      );
+
+      expect(annotationModule.lib.sortAnnotations(newAnnotations)).toEqual(
+        annotationModule.lib.sortAnnotations([annotation1, annotation2]),
+      );
+    });
+
+    it('should conserve a link even when the naming entity is deleted', () => {
+      const annotation1 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'FIRST_TEXT' });
+      const annotation2 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'SECOND_TEXT' });
+      const annotation3 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'THIRD_TEXT' });
+      const annotation1Linked = annotationModule.lib.annotationLinker.link(annotation1, annotation3);
+      const annotation2Linked = annotationModule.lib.annotationLinker.link(annotation2, annotation3);
+      const annotations = [annotation1Linked, annotation2Linked, annotation3];
+
+      const newAnnotations = annotationHandler.deleteByTextAndCategory(annotations, annotation3);
+
+      expect(newAnnotations.length).toBe(2);
+      expect(annotationLinkHandler.isLinkedTo(newAnnotations[0], newAnnotations[1])).toBeTruthy();
     });
   });
 

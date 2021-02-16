@@ -60,7 +60,6 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
               onClick={copyToClipboard}
               hint={wordings.homePage.copyToClipboard}
             />,
-            <IconButton color="default" iconName="save" onClick={saveDraft} hint={wordings.homePage.saveDraft} />,
             <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.homePage.validate} />,
           ]}
           spaceBetweenComponents={theme.spacing * 2}
@@ -96,10 +95,6 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
   async function copyToClipboard() {
     const anonymizedDocument = anonymizer.anonymizeDocument(annotatorState.document, annotatorState.annotations);
     await navigator.clipboard.writeText(anonymizedDocument.text);
-  }
-
-  async function saveDraft() {
-    await saveAnnotationsAndUpdateAssignationStatus('saved');
   }
 
   async function validate() {

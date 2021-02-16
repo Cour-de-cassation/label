@@ -38,7 +38,6 @@ const fr = {
     redo: 'Rétablir',
     reportProblem: 'Signaler un problème',
     reset: 'Réinitialiser',
-    saveDraft: 'Enregistrer le brouillon',
     send: 'Envoyer',
     settings: 'Réglages',
     start: 'Commencer',

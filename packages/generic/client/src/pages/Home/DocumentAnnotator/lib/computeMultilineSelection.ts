@@ -27,7 +27,7 @@ function computeMultilineSelection(
     const cleanedText = selectionText
       .split('\t')
       .map((lineText) => {
-        const match = lineText.replaceAll(/\n[0-9]+\n/g, '').replaceAll(/\n/g, '');
+        const match = lineText.replace(/\n[0-9]+\n/g, '').replace(/\n/g, '');
         return match.trim();
       })
       .filter(Boolean);

@@ -12,7 +12,7 @@ const UNLINK_ALL = '__all__';
 function UnlinkAnnotationDropdown(props: {
   annotation: annotationType;
   buttonSize?: number;
-  context: 'tooltip_update' | 'panel';
+  origin: 'document' | 'panel';
   onClick?: () => void;
   onClose?: () => void;
 }): ReactElement {
@@ -72,8 +72,8 @@ function UnlinkAnnotationDropdown(props: {
 
   function unlinkAnnotation(text: string) {
     addMonitoringEntry({
-      description: `${props.context}_unlink_${text === UNLINK_ALL ? 'all' : 'one'}`,
-      type: 'button',
+      origin: props.origin,
+      action: `unlink_${text === UNLINK_ALL ? 'all' : 'one'}`,
     });
 
     const newAnnotations =

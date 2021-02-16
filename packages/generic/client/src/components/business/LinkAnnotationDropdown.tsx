@@ -11,7 +11,7 @@ const LINK_ANNOTATION_MENU_WIDTH = 300;
 
 function LinkAnnotationDropdown(props: {
   annotation: annotationType;
-  context: 'tooltip_update' | 'panel';
+  origin: 'document' | 'panel';
   buttonSize?: number;
   onClick?: () => void;
   onClose?: () => void;
@@ -52,8 +52,8 @@ function LinkAnnotationDropdown(props: {
 
       annotatorStateHandler.set(newAnnotatorState);
       addMonitoringEntry({
-        description: `${props.context}_link`,
-        type: 'button',
+        action: 'link',
+        origin: props.origin,
       });
     }
   }

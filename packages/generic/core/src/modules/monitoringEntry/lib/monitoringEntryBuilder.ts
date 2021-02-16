@@ -1,4 +1,4 @@
-import { idModule, idType } from '../../id';
+import { idModule } from '../../id';
 import { fetchedMonitoringEntryType } from '../monitoringEntryType';
 
 export { monitoringEntryBuilder };
@@ -8,19 +8,15 @@ const monitoringEntryBuilder = {
 };
 
 function buildFetchedMonitoringEntry({
-  description,
+  action,
   documentId,
-  type,
-}: {
-  description: string;
-  documentId: idType;
-  type: string;
-}): fetchedMonitoringEntryType {
+  origin,
+}: Pick<fetchedMonitoringEntryType, 'action' | 'documentId' | 'origin'>): fetchedMonitoringEntryType {
   return {
-    creationDate: new Date().getTime(),
-    description,
-    documentId,
     _id: idModule.lib.buildId(),
-    type,
+    action,
+    creationDate: new Date().getTime(),
+    documentId,
+    origin,
   };
 }

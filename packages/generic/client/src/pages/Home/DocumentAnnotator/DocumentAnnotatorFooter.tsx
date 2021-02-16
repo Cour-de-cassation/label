@@ -1,5 +1,5 @@
 import React from 'react';
-import { documentType, idModule } from '@label/core';
+import { documentType } from '@label/core';
 import { apiCaller } from '../../../api';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { useMonitoring } from '../../../services/monitoring';
@@ -70,16 +70,16 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
 
   function revertLastAction() {
     addMonitoringEntry({
-      type: 'button',
-      description: `footer_revert`,
+      action: `revert`,
+      origin: 'footer',
     });
     annotatorStateHandler.revert();
   }
 
   function restoreLastAction() {
     addMonitoringEntry({
-      type: 'button',
-      description: `footer_restore`,
+      action: `restore`,
+      origin: 'footer',
     });
     annotatorStateHandler.restore();
   }
@@ -99,8 +99,8 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
 
   async function validate() {
     addMonitoringEntry({
-      type: 'button',
-      description: `footer_validate_document_${idModule.lib.convertToString(annotatorState.document._id)}`,
+      origin: 'footer',
+      action: 'validate_document',
     });
     await saveAnnotationsAndUpdateAssignationStatus('done');
     await sendMonitoringEntries();

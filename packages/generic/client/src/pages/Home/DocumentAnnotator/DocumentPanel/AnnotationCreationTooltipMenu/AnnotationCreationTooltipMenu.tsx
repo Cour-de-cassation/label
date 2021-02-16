@@ -91,8 +91,8 @@ function AnnotationCreationTooltipMenu(props: {
 
   function applyAnnotationCreation(category: string) {
     addMonitoringEntry({
-      description: `tooltip_create_${shouldApplyEverywhere ? 'all' : 'one'}_${category}`,
-      type: 'button',
+      origin: 'document',
+      action: `create_${shouldApplyEverywhere ? 'all' : 'one'}_${category}`,
     });
     const newAnnotations = computeNewAnnotations(category);
 

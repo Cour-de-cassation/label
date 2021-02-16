@@ -5,7 +5,7 @@ export { buildMonitoringEntriesHandler };
 export type { monitoringEntriesHandlerType };
 
 type monitoringEntriesHandlerType = {
-  addMonitoringEntry: (monitoringyEntryFields: { description: string; type: string }) => void;
+  addMonitoringEntry: (monitoringyEntryFields: Pick<fetchedMonitoringEntryType, 'action' | 'origin'>) => void;
   resetMonitoringEntries: () => void;
   sendMonitoringEntries: () => Promise<void>;
 };
@@ -22,7 +22,7 @@ function buildMonitoringEntriesHandler(
     sendMonitoringEntries,
   };
 
-  function addMonitoringEntry(monitoringyEntryFields: { description: string; type: string }) {
+  function addMonitoringEntry(monitoringyEntryFields: Pick<fetchedMonitoringEntryType, 'action' | 'origin'>) {
     const newMonitoringEntry = monitoringEntryModule.lib.monitoringEntryBuilder.buildFetchedMonitoringEntry({
       ...monitoringyEntryFields,
       documentId,

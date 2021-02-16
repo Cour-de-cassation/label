@@ -26,19 +26,19 @@ function CategoryTableEntryActionButtons(props: {
         <ChangeAnnotationCategoryDropdown
           annotation={props.entityAnnotation}
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
-          context="panel"
+          origin="panel"
         />,
         <LinkAnnotationDropdown
           annotation={props.entityAnnotation}
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
-          context="panel"
+          origin="panel"
           onClick={() => props.entityEntryHandler.setFocus(props.entityAnnotation.entityId)}
           onClose={() => props.entityEntryHandler.setFocus(undefined)}
         />,
         <UnlinkAnnotationDropdown
           annotation={props.entityAnnotation}
           buttonSize={CATEGORY_TABLE_ENTRY_BUTTON_SIZE}
-          context="panel"
+          origin="panel"
           onClick={() => props.entityEntryHandler.setFocus(props.entityAnnotation.entityId)}
           onClose={() => props.entityEntryHandler.setFocus(undefined)}
         />,

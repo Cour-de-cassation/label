@@ -53,9 +53,9 @@ function AnnotationTooltipMenu(props: {
       <LayoutGrid container style={style.annotationButtonsContainer}>
         <ComponentsList
           components={[
-            <ChangeAnnotationCategoryDropdown annotation={props.annotation} context="tooltip_update" />,
-            <LinkAnnotationDropdown annotation={props.annotation} context="tooltip_update" />,
-            <UnlinkAnnotationDropdown annotation={props.annotation} context="tooltip_update" />,
+            <ChangeAnnotationCategoryDropdown annotation={props.annotation} origin="document" />,
+            <LinkAnnotationDropdown annotation={props.annotation} origin="document" />,
+            <UnlinkAnnotationDropdown annotation={props.annotation} origin="document" />,
             <DeleteAnnotationDropdown annotation={props.annotation} onClose={props.onClose} />,
           ]}
           spaceBetweenComponents={theme.spacing * 2}

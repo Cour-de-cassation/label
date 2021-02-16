@@ -50,12 +50,12 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => void }): Re
   );
 
   function onRevertState() {
-    addMonitoringEntry({ type: 'shortcut', description: 'revert' });
+    addMonitoringEntry({ origin: 'shortcut', action: 'revert' });
     annotatorStateHandler.revert();
   }
 
   function onRestoreState() {
-    addMonitoringEntry({ type: 'shortcut', description: 'restore' });
+    addMonitoringEntry({ origin: 'shortcut', action: 'restore' });
     annotatorStateHandler.restore();
   }
 

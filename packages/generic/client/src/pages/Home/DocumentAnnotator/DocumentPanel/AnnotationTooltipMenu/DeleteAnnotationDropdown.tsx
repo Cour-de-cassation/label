@@ -67,10 +67,10 @@ function DeleteAnnotationDropdown(props: {
     function computeNewAnnotations() {
       switch (deletionOption) {
         case 'one':
-          addMonitoringEntry({ description: 'tooltip_delete_annotation_one', type: 'button' });
+          addMonitoringEntry({ origin: 'document', action: 'delete_annotation_one' });
           return annotationHandler.deleteByTextAndStart(annotatorState.annotations, props.annotation);
         case 'all':
-          addMonitoringEntry({ description: 'tooltip_delete_annotation_all', type: 'button' });
+          addMonitoringEntry({ origin: 'document', action: 'delete_annotation_all' });
           return annotationHandler.deleteByEntityId(annotatorState.annotations, props.annotation.entityId);
       }
     }

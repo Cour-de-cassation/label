@@ -14,7 +14,7 @@ const CHANGE_ANNOTATION_CATEGORY_MENU_WIDTH = 300;
 function ChangeAnnotationCategoryDropdown(props: {
   annotation: annotationType;
   buttonSize?: number;
-  context: 'tooltip_update' | 'panel';
+  origin: 'document' | 'panel';
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
@@ -46,8 +46,8 @@ function ChangeAnnotationCategoryDropdown(props: {
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     annotatorStateHandler.set(newAnnotatorState);
     addMonitoringEntry({
-      description: `${props.context}_change_category_from_${props.annotation.category}_to_${newCategory}`,
-      type: 'button',
+      action: `change_category_from_${props.annotation.category}_to_${newCategory}`,
+      origin: props.origin,
     });
   }
 }

@@ -66,8 +66,8 @@ function CategoryTableEntryDeleteAnnotationDropdown(props: { buttonSize: number;
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     annotatorStateHandler.set(newAnnotatorState);
     addMonitoringEntry({
-      description: `panel_delete_${text}`,
-      type: 'button',
+      origin: 'panel',
+      action: text === DELETE_ALL ? 'delete_all' : 'delete_one',
     });
   }
 }

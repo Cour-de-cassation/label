@@ -8,4 +8,9 @@ const monitoringEntryService = {
     const monitoringEntryRepository = buildMonitoringEntryRepository();
     return monitoringEntryRepository.insertMany(monitoringEntries);
   },
+
+  async fetchAllMonitoringEntries() {
+    const monitoringEntryRepository = buildMonitoringEntryRepository();
+    return monitoringEntryRepository.findAll();
+  },
 };

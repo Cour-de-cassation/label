@@ -1,4 +1,11 @@
-import { buildFakeRepositoryBuilder } from './buildFakeRepositoryBuilder';
+import {
+  buildFakeRepositoryBuilder,
+  updateFakeCollection,
+} from './buildFakeRepositoryBuilder';
 import { buildRepositoryBuilder } from './buildRepositoryBuilder';
 
-export { buildFakeRepositoryBuilder, buildRepositoryBuilder };
+export {
+  buildFakeRepositoryBuilder,
+  buildRepositoryBuilder,
+  updateFakeCollection,
+};

@@ -1,7 +1,7 @@
 import { idModule, idType } from '@label/core';
 import { repositoryType } from './repositoryType';
 
-export { buildFakeRepositoryBuilder };
+export { buildFakeRepositoryBuilder, updateFakeCollection };
 
 function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   buildCustomFakeRepository,
@@ -72,5 +72,15 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   async function insert(newObject: T) {
     collection.push(newObject);
     return { success: true };
+  }
+}
+
+function updateFakeCollection<T>(collection: T[], newCollection: T[]) {
+  while (collection.length) {
+    collection.pop();
+  }
+
+  for (let index = 0; index < newCollection.length; index++) {
+    collection.push(newCollection[index]);
   }
 }

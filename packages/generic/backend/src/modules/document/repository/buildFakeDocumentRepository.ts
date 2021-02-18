@@ -1,5 +1,8 @@
 import { documentType, idModule } from '@label/core';
-import { buildFakeRepositoryBuilder } from '../../../repository';
+import {
+  buildFakeRepositoryBuilder,
+  updateFakeCollection,
+} from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';
 
 export { buildFakeDocumentRepository };
@@ -18,10 +21,13 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         throw new Error(`No free document`);
       }
 
-      collection = collection.map((document) =>
-        idModule.lib.equalId(document._id, freeDocument._id)
-          ? { ...document, status: 'pending' }
-          : document,
+      updateFakeCollection(
+        collection,
+        collection.map((document) =>
+          idModule.lib.equalId(document._id, freeDocument._id)
+            ? { ...document, status: 'pending' }
+            : document,
+        ),
       );
 
       return freeDocument;
@@ -32,14 +38,17 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
     },
 
     async updateStatusById(id, status) {
-      collection = collection.map((document) =>
-        idModule.lib.equalId(id, document._id)
-          ? {
-              ...document,
-              status,
-              updateDate: new Date().getTime(),
-            }
-          : document,
+      updateFakeCollection(
+        collection,
+        collection.map((document) =>
+          idModule.lib.equalId(id, document._id)
+            ? {
+                ...document,
+                status,
+                updateDate: new Date().getTime(),
+              }
+            : document,
+        ),
       );
     },
   }),

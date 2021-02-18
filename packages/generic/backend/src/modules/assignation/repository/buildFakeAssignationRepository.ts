@@ -1,5 +1,8 @@
 import { assignationType, idModule } from '@label/core';
-import { buildFakeRepositoryBuilder } from '../../../repository';
+import {
+  buildFakeRepositoryBuilder,
+  updateFakeCollection,
+} from '../../../repository';
 import { customAssignationRepositoryType } from './customAssignationRepositoryType';
 
 export { buildFakeAssignationRepository };
@@ -23,9 +26,12 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
       return result;
     },
     async deleteAllByDocumentId(documentId) {
-      collection = collection.filter(
-        (assignation) =>
-          !idModule.lib.equalId(assignation.documentId, documentId),
+      updateFakeCollection(
+        collection,
+        collection.filter(
+          (assignation) =>
+            !idModule.lib.equalId(assignation.documentId, documentId),
+        ),
       );
     },
   }),

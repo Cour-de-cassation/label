@@ -118,7 +118,7 @@ describe('documentService', () => {
       await documentService.updateDocumentStatus(document._id, 'pending');
 
       const updatedDocument = await documentRepository.findById(document._id);
-      expect(updatedDocument.status).toEqual('free');
+      expect(updatedDocument.status).toEqual('pending');
     });
   });
 });

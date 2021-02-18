@@ -1,5 +1,8 @@
 import { idModule, treatmentType } from '@label/core';
-import { buildFakeRepositoryBuilder } from '../../../repository';
+import {
+  buildFakeRepositoryBuilder,
+  updateFakeCollection,
+} from '../../../repository';
 import { customTreatmentRepositoryType } from './customTreatmentRepositoryType';
 
 export { buildFakeTreatmentRepository };
@@ -24,14 +27,17 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
       )[0];
     },
     async updateOne(treatmentId, { annotationsDiff, duration }) {
-      collection = collection.map((treatment) =>
-        idModule.lib.equalId(treatmentId, treatment._id)
-          ? {
-              ...treatment,
-              duration,
-              annotationsDiff,
-            }
-          : treatment,
+      updateFakeCollection(
+        collection,
+        collection.map((treatment) =>
+          idModule.lib.equalId(treatmentId, treatment._id)
+            ? {
+                ...treatment,
+                duration,
+                annotationsDiff,
+              }
+            : treatment,
+        ),
       );
     },
   }),

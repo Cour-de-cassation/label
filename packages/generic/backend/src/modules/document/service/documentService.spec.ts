@@ -120,5 +120,20 @@ describe('documentService', () => {
       const updatedDocument = await documentRepository.findById(document._id);
       expect(updatedDocument.status).toEqual('pending');
     });
+
+    it('should update document status and set documents free', async () => {
+      const assignationRepository = buildAssignationRepository();
+      const document = documentModule.generator.generate({ status: 'pending' });
+      const assignation = assignationModule.generator.generate({
+        documentId: document._id,
+      });
+      await documentRepository.insert(document);
+      await assignationRepository.insert(assignation);
+
+      await documentService.updateDocumentStatus(document._id, 'free');
+
+      const assignations = await assignationRepository.findAll();
+      expect(assignations).toEqual([]);
+    });
   });
 });

@@ -15,7 +15,6 @@ function buildExporter(
   settings: settingsType,
   exporterConfig: exporterConfigType,
 ) {
-  const anonymizer = buildAnonymizer(settings);
   return {
     async exportTreatedDocuments() {
       logger.log(`Exportation to ${exporterConfig.name}`);
@@ -32,6 +31,7 @@ function buildExporter(
           }`,
         );
         const document = documentsReadyToExport[index];
+        const anonymizer = buildAnonymizer(settings);
 
         const treatments = await treatmentService.fetchDocumentTreatments(
           document._id,

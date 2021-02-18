@@ -4,5 +4,9 @@ export type { customDocumentRepositoryType };
 
 type customDocumentRepositoryType = {
   assign: () => Promise<documentType>;
-  updateStatus: (id: idType, status: documentType['status']) => Promise<void>;
+  findAllByStatus: (status: documentType['status']) => Promise<documentType[]>;
+  updateStatusById: (
+    id: idType,
+    status: documentType['status'],
+  ) => Promise<void>;
 };

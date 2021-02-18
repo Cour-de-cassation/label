@@ -1,3 +1,4 @@
+import { dateBuilder } from './dateBuilder';
 import { decoder } from './decoder';
 import {
   buildHandlingErrorController,
@@ -13,6 +14,7 @@ import { buildMongo, mongo, mongoCollectionType } from './mongo';
 export {
   buildHandlingErrorController,
   buildMongo,
+  dateBuilder,
   decoder,
   fileSystem,
   hasher,

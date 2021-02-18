@@ -1,5 +1,5 @@
 import { documentType, documentModule } from '@label/core';
-import { sderCourtDecisionType } from '../api';
+import { sderCourtDecisionType } from '../../../sderApi';
 
 export { sderMapper };
 

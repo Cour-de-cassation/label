@@ -76,6 +76,34 @@ describe('treatmentService', () => {
       );
     });
   });
+
+  describe('fetchDocumentTreatments', () => {
+    it('should fetch the treatments for the given document id', async () => {
+      const documentId1 = idModule.lib.buildId();
+      const documentId2 = idModule.lib.buildId();
+      const treatments = [
+        {
+          documentId: documentId1,
+        },
+        {
+          documentId: documentId1,
+        },
+        {
+          documentId: documentId2,
+        },
+      ].map(treatmentModule.generator.generate);
+      await Promise.all(treatments.map(treatmentRepository.insert));
+
+      const documentTreatments = await treatmentService.fetchDocumentTreatments(
+        documentId1,
+      );
+
+      expect(documentTreatments.sort()).toEqual(
+        [treatments[0], treatments[1]].sort(),
+      );
+    });
+  });
+
   describe('fetchTreatedDocumentIds', () => {
     it('should fetch the annotations from the treatments of the given document id', async () => {
       const documentId1 = idModule.lib.buildId();

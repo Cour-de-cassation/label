@@ -5,7 +5,7 @@ import { documentType } from '../documentType';
 export { documentGenerator };
 
 const documentGenerator: generatorType<documentType> = {
-  generate: ({ creationDate, documentId, _id, metadata, source, status, title, text } = {}) => ({
+  generate: ({ creationDate, documentId, _id, metadata, source, status, title, text, updateDate } = {}) => ({
     creationDate: creationDate ? creationDate : new Date(),
     documentId: documentId ? documentId : 0,
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
@@ -14,5 +14,6 @@ const documentGenerator: generatorType<documentType> = {
     status: status ? status : 'free',
     title: title ? title : `TITLE_${Math.random()}`,
     text: text ? text : `TEXT_${Math.random()}`,
+    updateDate: updateDate ? updateDate : new Date().getTime(),
   }),
 };

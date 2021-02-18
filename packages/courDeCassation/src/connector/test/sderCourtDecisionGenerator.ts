@@ -1,5 +1,5 @@
 import { generatorType } from '@label/core';
-import { sderCourtDecisionType } from '../fetcher/api';
+import { sderCourtDecisionType } from '../../sderApi';
 
 export { sderCourtDecisionGenerator };
 

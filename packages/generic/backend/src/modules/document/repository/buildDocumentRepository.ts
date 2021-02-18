@@ -30,8 +30,15 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document;
     },
 
-    async updateStatus(id, status) {
-      await collection.updateOne({ _id: id }, { $set: { status } });
+    async findAllByStatus(status) {
+      return collection.find({ status }).toArray();
+    },
+
+    async updateStatusById(id, status) {
+      await collection.updateOne(
+        { _id: id },
+        { $set: { status, updateDate: new Date().getTime() } },
+      );
     },
   }),
 });

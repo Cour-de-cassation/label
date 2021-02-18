@@ -1,15 +1,34 @@
 import { documentType, idType, idModule } from '@label/core';
+import { dateBuilder } from '../../../utils';
 import { assignationService } from '../../assignation';
 import { treatmentService } from '../../treatment';
 import { buildDocumentRepository } from '../repository';
 
 export { documentService };
 
+const DAYS_BEFORE_EXPORT = 10;
+
 const documentService = {
   async fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByIds(documentIds);
   },
+
+  async fetchDocumentsReadyToExport(): Promise<documentType[]> {
+    const documentRepository = buildDocumentRepository();
+
+    const documentsCompletelyTreated = await documentRepository.findAllByStatus(
+      'done',
+    );
+
+    const documentsReadyToExport = documentsCompletelyTreated.filter(
+      (document) =>
+        document.updateDate < dateBuilder.daysAgo(DAYS_BEFORE_EXPORT),
+    );
+
+    return documentsReadyToExport;
+  },
+
   async fetchDocumentsWithoutAnnotations(): Promise<documentType[]> {
     const documentRepository = buildDocumentRepository();
 
@@ -82,14 +101,14 @@ const documentService = {
   },
 
   async updateDocumentStatus(
-    documentId: documentType['_id'],
+    id: documentType['_id'],
     status: documentType['status'],
   ) {
     const documentRepository = buildDocumentRepository();
-    await documentRepository.updateStatus(documentId, status);
+    await documentRepository.updateStatusById(id, status);
 
     if (status === 'free') {
-      await assignationService.deleteAssignationsByDocumentId(documentId);
+      await assignationService.deleteAssignationsByDocumentId(id);
     }
   },
 };

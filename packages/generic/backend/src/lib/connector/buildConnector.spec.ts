@@ -40,6 +40,7 @@ function buildFakeConnectorWithNDocuments(n: number) {
     async fetchAllDocuments() {
       return documents;
     },
+    async updateDocumentsLoadedStatus() {},
     getAllDocuments() {
       return documents;
     },

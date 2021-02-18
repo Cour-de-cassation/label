@@ -1,4 +1,4 @@
-import { sderApi } from './api';
+import { sderApi } from '../../sderApi';
 import { sderMapper } from './mapper';
 
 export { sderFetcher };

@@ -38,6 +38,15 @@ const treatmentService = {
     return treatmentModule.lib.computeAnnotations(treatments);
   },
 
+  async fetchDocumentTreatments(documentId: idType) {
+    const treatmentRepository = buildTreatmentRepository();
+    const treatments = await treatmentRepository.findAllByDocumentId(
+      documentId,
+    );
+
+    return treatments;
+  },
+
   async fetchTreatedDocumentIds() {
     const treatmentRepository = buildTreatmentRepository();
     const treatments = await treatmentRepository.findAll();

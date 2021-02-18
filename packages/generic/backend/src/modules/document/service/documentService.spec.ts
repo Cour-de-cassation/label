@@ -5,6 +5,7 @@ import {
   treatmentModule,
   idModule,
 } from '@label/core';
+import { dateBuilder } from '../../../utils';
 import { buildAssignationRepository } from '../../assignation';
 import { buildTreatmentRepository } from '../../treatment';
 import { buildDocumentRepository } from '../repository';
@@ -14,6 +15,24 @@ describe('documentService', () => {
   const assignationRepository = buildAssignationRepository();
   const treatmentRepository = buildTreatmentRepository();
   const documentRepository = buildDocumentRepository();
+
+  describe('fetchDocumentsReadyToExport', () => {
+    it('should fetch all the documents done more than 10 days ago', async () => {
+      const documents = ([
+        { status: 'done', updateDate: dateBuilder.daysAgo(13) },
+        { status: 'pending' },
+        { status: 'done', updateDate: dateBuilder.daysAgo(20) },
+        { status: 'done', updateDate: dateBuilder.daysAgo(8) },
+      ] as const).map(documentModule.generator.generate);
+      await Promise.all(documents.map(documentRepository.insert));
+
+      const documentsReadyToExport = await documentService.fetchDocumentsReadyToExport();
+
+      expect(documentsReadyToExport.sort()).toEqual(
+        [documents[0], documents[2]].sort(),
+      );
+    });
+  });
 
   describe('fetchDocumentsWithoutAnnotations', () => {
     it('should fetch all the documents without annotation report', async () => {

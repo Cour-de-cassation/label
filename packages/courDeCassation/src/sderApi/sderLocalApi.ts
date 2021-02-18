@@ -21,4 +21,8 @@ const sderLocalApi: sderApiType = {
       ({ content }) => JSON.parse(content) as sderCourtDecisionType,
     );
   },
+
+  async setCourtDecisionsLoaded() {},
+
+  async updateDecisionPseudonymisation() {},
 };

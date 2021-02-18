@@ -11,11 +11,15 @@ const documentDataModel = {
   metadata: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: false },
   source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: false },
   status: {
-    type: buildDataModelEntry({ kind: 'constant', content: ['done', 'free', 'pending', 'rejected', 'saved'] as const }),
+    type: buildDataModelEntry({
+      kind: 'constant',
+      content: ['done', 'exported', 'free', 'pending', 'rejected', 'saved'] as const,
+    }),
     network: true,
   },
   title: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
   text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
+  updateDate: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: false },
 } as const;
 
 type documentType = typeOfDataModel<typeof documentDataModel>;

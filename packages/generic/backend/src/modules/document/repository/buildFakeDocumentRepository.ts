@@ -26,12 +26,18 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
 
       return freeDocument;
     },
-    async updateStatus(id, status) {
+
+    async findAllByStatus(status) {
+      return collection.filter((document) => document.status === status);
+    },
+
+    async updateStatusById(id, status) {
       collection = collection.map((document) =>
         idModule.lib.equalId(id, document._id)
           ? {
               ...document,
               status,
+              updateDate: new Date().getTime(),
             }
           : document,
       );

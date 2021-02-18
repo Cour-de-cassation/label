@@ -17,6 +17,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       logger.log(`Insertion into the database...`);
       await insertDocuments(documents);
       logger.log(`Insertion done!`);
+
+      logger.log(`Send documents have been loaded...`);
+      await connectorConfig.updateDocumentsLoadedStatus(documents);
+      logger.log(`DONE`);
     },
   };
 }

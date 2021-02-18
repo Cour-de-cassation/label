@@ -1,7 +1,6 @@
 import { displayModeType } from '@label/core';
 import { buildCustomColorsTheme, customColorsThemeType } from './buildCustomColorsTheme';
 import { useDisplayMode } from './displayMode';
-import { getColor } from './palette';
 import { typography } from './typography';
 
 export { buildCustomTheme, commonTheme, useCustomTheme };
@@ -9,7 +8,10 @@ export { buildCustomTheme, commonTheme, useCustomTheme };
 export type { customThemeType };
 
 const commonTheme = {
-  boxShadow: { minor: `0 0 4px ${getColor('black')}`, major: `0 0 16px ${getColor('black')}` },
+  boxShadow: {
+    minor: `0px 0px 11px rgba(0, 0, 0, 0.24), 2px 2px 4px rgba(0, 0, 0, 0.22), 0px 0px 2px rgba(0, 0, 0, 0.4)`,
+    major: `0px 16px 24px rgba(0, 0, 0, 0.14), 0px 6px 30px rgba(0, 0, 0, 0.12), 0px 0px 10px rgba(0, 0, 0, 0.42)`,
+  },
   shape: { borderRadius: { small: 8, medium: 24, large: 36 } },
   spacing: 8,
   typography,

@@ -9,7 +9,7 @@ import { IconButton } from './IconButton';
 import { IconDropdown } from './IconDropdown';
 import { LabelledDropdown } from './LabelledDropdown';
 import { SText } from './SText';
-import { Table } from './Table';
+import { Table, tableRowFieldType } from './Table';
 
 export {
   Button,
@@ -26,4 +26,4 @@ export {
   Table,
 };
 
-export type { buttonColorType };
+export type { buttonColorType, tableRowFieldType };

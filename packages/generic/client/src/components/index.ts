@@ -14,6 +14,7 @@ import {
   CircleIcon,
   ComponentsList,
   Drawer,
+  FloatingTooltipMenu,
   Header,
   Icon,
   IconButton,
@@ -28,7 +29,7 @@ import {
   TableSortLabel,
   Text,
   TextInput,
-  FloatingTooltipMenu,
+  tableRowFieldType,
 } from './generic';
 
 export {
@@ -61,3 +62,5 @@ export {
   TextInput,
   UnlinkAnnotationDropdown,
 };
+
+export type { tableRowFieldType };

@@ -10,6 +10,7 @@ import {
   LabelledDropdown,
   SText,
   Table,
+  tableRowFieldType,
 } from './custom';
 import {
   Accordion,
@@ -53,4 +54,4 @@ export {
   TextInput,
 };
 
-export type { iconNameType };
+export type { iconNameType, tableRowFieldType };

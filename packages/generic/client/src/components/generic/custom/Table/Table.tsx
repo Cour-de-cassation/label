@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from 'react';
-import { get } from 'lodash';
 import styled from 'styled-components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { TableSortLabel, Text } from '../../materialUI';
@@ -7,35 +6,42 @@ import { OptionButton } from './OptionButton';
 
 export { Table };
 
+export type { tableRowFieldType };
+
 const DEFAULT_ORDER_DIRECTION = 'asc';
 
 const ROW_DEFAULT_HEIGHT = 40;
 
-type orderByPropertyType<FormattedDataT> = keyof FormattedDataT;
-
 type orderDirectionType = 'asc' | 'desc';
 
-function Table<DataT, FormattedDataT extends { _id: string }>(props: {
+type tableRowFieldType<DataT> = {
+  id: string;
+  title: string;
+  canBeSorted: boolean;
+  extractor: (data: DataT) => string | JSX.Element;
+};
+
+function Table<DataT>(props: {
   footer?: Array<{
     id: string;
     content: ReactElement;
   }>;
   header?: Array<{
-    id: keyof FormattedDataT;
+    id: string;
     content: ReactElement;
     canBeSorted?: boolean;
   }>;
   isFooterSticky?: boolean;
   isHeaderSticky?: boolean;
   data: DataT[];
-  dataFormatter: (data: DataT) => FormattedDataT;
   optionItems?: Array<{
     text: string;
     onClick: (data: DataT) => void;
   }>;
+  fields: Array<tableRowFieldType<DataT>>;
 }) {
   const theme = useCustomTheme();
-  const [orderByProperty, setOrderByProperty] = useState<orderByPropertyType<FormattedDataT> | undefined>();
+  const [orderByProperty, setOrderByProperty] = useState<string | undefined>();
   const [orderDirection, setOrderDirection] = useState<orderDirectionType>(DEFAULT_ORDER_DIRECTION);
   const tableStyle = buildTableStyle();
   return (
@@ -83,15 +89,16 @@ function Table<DataT, FormattedDataT extends { _id: string }>(props: {
     };
     const { Div_OptionButtonContainer, Tr } = buildStyledComponents();
 
-    return <tbody>{sortedData.map((row) => renderRow(row))}</tbody>;
+    return <tbody>{sortedData.map(renderRow)}</tbody>;
 
     function renderRow(row: DataT) {
-      const formattedRow = props.dataFormatter(row);
+      const formattedRow = props.fields.map((field) => field.extractor(row));
       const { optionItems } = props;
+
       if (!optionItems) {
         return (
           <Tr styleProps={styleProps}>
-            {Object.values(formattedRow).map((value) => (
+            {formattedRow.map((value) => (
               <td>
                 <Text variant="h3">{value}</Text>
               </td>
@@ -145,16 +152,13 @@ function Table<DataT, FormattedDataT extends { _id: string }>(props: {
   }
 
   function sortData(data: DataT[]): DataT[] {
-    if (!orderByProperty) {
+    const orderByField = props.fields.find((field) => field.id === orderByProperty);
+    if (!orderByField) {
       return data;
     }
     return data.sort((dataA, dataB) => {
-      const formattedDataA = props.dataFormatter(dataA);
-      const formattedDataB = props.dataFormatter(dataB);
-      /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
-      const propertyA = get(formattedDataA, orderByProperty);
-      /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
-      const propertyB = get(formattedDataB, orderByProperty);
+      const propertyA = orderByField.extractor(dataA);
+      const propertyB = orderByField.extractor(dataB);
       if (propertyA === propertyB) {
         return 0;
       } else if (propertyA < propertyB) {
@@ -165,7 +169,7 @@ function Table<DataT, FormattedDataT extends { _id: string }>(props: {
     });
   }
 
-  function onOrderByPropertyClickBuilder(newOrderByProperty: orderByPropertyType<FormattedDataT>) {
+  function onOrderByPropertyClickBuilder(newOrderByProperty: string) {
     const onOrderByPropertyClick = () => {
       if (newOrderByProperty === orderByProperty) {
         setOrderDirection(orderDirection === 'asc' ? 'desc' : 'asc');

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiRouteOutType, idModule } from '@label/core';
-import { Table, Text } from '../../../../components';
+import { Table, tableRowFieldType, Text } from '../../../../components';
 import { timeOperator } from '../../../../services/timeOperator';
 import { wordings } from '../../../../wordings';
 
@@ -16,30 +16,13 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
     <Table
       isHeaderSticky
       isFooterSticky
-      dataFormatter={treatmentFormatter}
+      fields={treatmentsFields}
       data={props.treatmentsWithDetails}
-      header={[
-        {
-          id: '_id',
-          content: <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.number}</Text>,
-          canBeSorted: true,
-        },
-        {
-          id: 'userName',
-          content: <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.agent}</Text>,
-          canBeSorted: true,
-        },
-        {
-          id: 'date',
-          content: <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.date}</Text>,
-          canBeSorted: true,
-        },
-        {
-          id: 'duration',
-          content: <Text variant="h3">{wordings.treatmentsPage.table.columnTitles.duration}</Text>,
-          canBeSorted: true,
-        },
-      ]}
+      header={treatmentsFields.map(({ id, title, canBeSorted }) => ({
+        id,
+        canBeSorted,
+        content: <Text variant="h3">{title}</Text>,
+      }))}
       footer={[
         {
           id: 'title',
@@ -80,11 +63,31 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
   }
 }
 
-function treatmentFormatter(treatmentWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>[0]) {
-  return {
-    _id: idModule.lib.convertToString(treatmentWithDetails.treatment._id),
-    userName: treatmentWithDetails.userName,
-    date: timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.lastUpdateDate),
-    duration: timeOperator.convertDurationToReadableDuration(treatmentWithDetails.treatment.duration),
-  };
-}
+const treatmentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatmentsWithDetails'>[number]>> = [
+  {
+    id: '_id',
+    title: wordings.treatmentsPage.table.columnTitles.number,
+    canBeSorted: true,
+    extractor: (treatmentWithDetails) => idModule.lib.convertToString(treatmentWithDetails.treatment._id),
+  },
+  {
+    id: 'userName',
+    title: wordings.treatmentsPage.table.columnTitles.agent,
+    canBeSorted: true,
+    extractor: (treatmentWithDetails) => treatmentWithDetails.userName,
+  },
+  {
+    id: 'date',
+    title: wordings.treatmentsPage.table.columnTitles.date,
+    canBeSorted: true,
+    extractor: (treatmentWithDetails) =>
+      timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.lastUpdateDate),
+  },
+  {
+    id: 'duration',
+    canBeSorted: true,
+    title: wordings.treatmentsPage.table.columnTitles.duration,
+    extractor: (treatmentWithDetails) =>
+      timeOperator.convertDurationToReadableDuration(treatmentWithDetails.treatment.duration),
+  },
+];

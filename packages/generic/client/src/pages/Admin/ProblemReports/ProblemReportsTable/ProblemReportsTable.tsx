@@ -1,7 +1,7 @@
 import React from 'react';
 import { apiRouteOutType, idModule } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { ProblemReportIcon, Table, Text } from '../../../../components';
+import { ProblemReportIcon, Table, tableRowFieldType, Text } from '../../../../components';
 import { timeOperator } from '../../../../services/timeOperator';
 import { wordings } from '../../../../wordings';
 
@@ -17,34 +17,12 @@ function ProblemReportsTable(props: {
     <Table
       isHeaderSticky
       data={props.problemReportsWithDetails}
-      dataFormatter={problemReportFormatter}
-      header={[
-        {
-          id: '_id',
-          content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.number}</Text>,
-          canBeSorted: true,
-        },
-        {
-          id: 'userName',
-          content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.agent}</Text>,
-          canBeSorted: true,
-        },
-        {
-          id: 'type',
-          content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.type}</Text>,
-          canBeSorted: true,
-        },
-        {
-          id: 'date',
-          content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.date}</Text>,
-          canBeSorted: true,
-        },
-        {
-          id: 'text',
-          content: <Text variant="h3">{wordings.problemReportsPage.table.columnTitles.text}</Text>,
-          canBeSorted: true,
-        },
-      ]}
+      fields={problemReportsFields}
+      header={problemReportsFields.map(({ id, title, canBeSorted }) => ({
+        id,
+        canBeSorted,
+        content: <Text variant="h3">{title}</Text>,
+      }))}
       optionItems={optionItems}
     />
   );
@@ -73,12 +51,38 @@ function buildOptionItems() {
   ];
 }
 
-function problemReportFormatter(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
-  return {
-    _id: idModule.lib.convertToString(problemReportWithDetails.problemReport._id),
-    userName: problemReportWithDetails.userName,
-    type: <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />,
-    date: timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date),
-    text: problemReportWithDetails.problemReport.text,
-  };
-}
+const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'problemReportsWithDetails'>[number]>> = [
+  {
+    id: '_id',
+    title: wordings.problemReportsPage.table.columnTitles.number,
+    canBeSorted: true,
+    extractor: (problemReportWithDetails) => idModule.lib.convertToString(problemReportWithDetails.problemReport._id),
+  },
+  {
+    id: 'userName',
+    title: wordings.problemReportsPage.table.columnTitles.agent,
+    canBeSorted: true,
+    extractor: (problemReportWithDetails) => problemReportWithDetails.userName,
+  },
+  {
+    id: 'type',
+    canBeSorted: true,
+    title: wordings.problemReportsPage.table.columnTitles.type,
+    extractor: (problemReportWithDetails) => (
+      <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />
+    ),
+  },
+  {
+    id: 'date',
+    title: wordings.problemReportsPage.table.columnTitles.date,
+    canBeSorted: true,
+    extractor: (problemReportWithDetails) =>
+      timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date),
+  },
+  {
+    id: 'text',
+    canBeSorted: true,
+    title: wordings.problemReportsPage.table.columnTitles.text,
+    extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.text,
+  },
+];

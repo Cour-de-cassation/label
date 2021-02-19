@@ -33,7 +33,7 @@ function DeleteAnnotationDropdown(props: {
     return (
       <IconDropdown
         buttonSize={props.buttonSize}
-        color="alert"
+        backgroundColor="alert"
         hint={wordings.homePage.delete}
         iconName="delete"
         items={DELETION_OPTIONS.map((deletionOption) => ({
@@ -50,7 +50,7 @@ function DeleteAnnotationDropdown(props: {
     return (
       <IconButton
         buttonSize={props.buttonSize}
-        color="alert"
+        backgroundColor="alert"
         hint={wordings.homePage.delete}
         iconName="delete"
         onClick={() => deleteAnnotation('one')}

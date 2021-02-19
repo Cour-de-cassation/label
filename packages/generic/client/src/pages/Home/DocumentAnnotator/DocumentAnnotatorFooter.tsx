@@ -35,14 +35,12 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
         <ComponentsList
           components={[
             <IconButton
-              color="default"
               disabled={!canRevertLastAction()}
               hint={wordings.homePage.undo}
               iconName="undo"
               onClick={revertLastAction}
             />,
             <IconButton
-              color="default"
               disabled={!canRestoreLastAction()}
               hint={wordings.homePage.redo}
               iconName="redo"
@@ -54,12 +52,7 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
         <ComponentsList
           components={[
             <ReportProblemButton onStopAnnotatingDocument={props.onStopAnnotatingDocument} />,
-            <IconButton
-              color="default"
-              iconName="copy"
-              onClick={copyToClipboard}
-              hint={wordings.homePage.copyToClipboard}
-            />,
+            <IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.homePage.copyToClipboard} />,
             <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.homePage.validate} />,
           ]}
           spaceBetweenComponents={theme.spacing * 2}

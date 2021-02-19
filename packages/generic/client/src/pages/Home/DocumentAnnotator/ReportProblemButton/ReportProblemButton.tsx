@@ -10,7 +10,7 @@ function ReportProblemButton(props: { onStopAnnotatingDocument: () => void }) {
   const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>(undefined);
   return (
     <div>
-      <IconButton color="warning" iconName="warning" onClick={openToolTip} hint={wordings.homePage.reportProblem} />
+      <IconButton iconName="warning" onClick={openToolTip} hint={wordings.homePage.reportProblem} color="warning" />
       {!!tooltipMenuOriginPosition && (
         <ReportProblemToolTipMenu
           onClose={closeToolTip}

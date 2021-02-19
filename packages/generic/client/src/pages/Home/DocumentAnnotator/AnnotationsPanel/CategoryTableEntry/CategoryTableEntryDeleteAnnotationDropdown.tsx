@@ -28,7 +28,7 @@ function CategoryTableEntryDeleteAnnotationDropdown(props: { buttonSize: number;
     return (
       <IconDropdown
         buttonSize={props.buttonSize}
-        color="alert"
+        backgroundColor="alert"
         hint={wordings.homePage.delete}
         iconName="delete"
         items={[
@@ -50,7 +50,7 @@ function CategoryTableEntryDeleteAnnotationDropdown(props: { buttonSize: number;
     return (
       <IconButton
         buttonSize={props.buttonSize}
-        color="alert"
+        backgroundColor="alert"
         hint={wordings.homePage.delete}
         iconName="delete"
         onClick={() => deleteAnnotations(DELETE_ALL)}

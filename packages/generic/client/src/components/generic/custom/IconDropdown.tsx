@@ -8,7 +8,7 @@ export { IconDropdown };
 
 function IconDropdown<T extends string>(props: {
   buttonSize?: number;
-  color?: buttonColorType;
+  backgroundColor?: buttonColorType;
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;
@@ -23,7 +23,7 @@ function IconDropdown<T extends string>(props: {
       buildButton={({ onClick }) => (
         <IconDropdownButton
           buttonSize={props.buttonSize}
-          color={props.color}
+          backgroundColor={props.backgroundColor}
           disabled={props.disabled}
           hint={props.hint}
           iconName={props.iconName}
@@ -43,7 +43,7 @@ function IconDropdown<T extends string>(props: {
 
 function IconDropdownButton(props: {
   buttonSize?: number;
-  color?: buttonColorType;
+  backgroundColor?: buttonColorType;
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;
@@ -52,7 +52,7 @@ function IconDropdownButton(props: {
   return (
     <IconButton
       buttonSize={props.buttonSize}
-      color={props.color}
+      backgroundColor={props.backgroundColor}
       disabled={props.disabled}
       hint={props.hint}
       iconName={props.iconName}

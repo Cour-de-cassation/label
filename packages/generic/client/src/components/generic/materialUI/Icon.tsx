@@ -2,6 +2,7 @@ import React, { CSSProperties } from 'react';
 import {
   AccountBalanceRounded,
   AlarmOnRounded,
+  BlockRounded,
   BookRounded,
   BugReportRounded,
   BusinessCenterRounded,
@@ -83,6 +84,7 @@ const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {
   child: ChildCareRounded,
   cloud: CloudRounded,
   email: EmailRounded,
+  forbidden: BlockRounded,
   hammer: GavelRounded,
   heart: FavoriteRounded,
   location: RoomRounded,

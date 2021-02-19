@@ -68,7 +68,7 @@ function buildColor(color: colorType | undefined) {
 
 function buildIconName(iconName: string | undefined): categoryIconNameType {
   if (!iconName) {
-    return 'person';
+    return 'forbidden';
   }
 
   if (categoryIconNames.includes(iconName as categoryIconNameType)) {

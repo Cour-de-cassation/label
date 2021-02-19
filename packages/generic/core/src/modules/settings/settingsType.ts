@@ -35,6 +35,7 @@ const categoryIconNames = [
   'city',
   'cloud',
   'email',
+  'forbidden',
   'hammer',
   'heart',
   'location',

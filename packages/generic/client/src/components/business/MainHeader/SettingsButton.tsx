@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ButtonWithIcon } from '../..';
 import { wordings } from '../../../wordings';
+import { IconButton } from '../../generic';
 import { SettingsDrawer } from './SettingsDrawer';
 
 export { SettingsButton };
@@ -10,7 +10,7 @@ function SettingsButton() {
 
   return (
     <>
-      <ButtonWithIcon iconName="settings" onClick={toggleDrawer} text={wordings.homePage.settings} />
+      <IconButton iconName="settings" onClick={toggleDrawer} hint={wordings.homePage.settings} />
       <SettingsDrawer isOpen={isSettingsDrawerOpen} close={closeDrawer} />
     </>
   );

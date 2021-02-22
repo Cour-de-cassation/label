@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { buildAnonymizer, idModule, settingsType } from '@label/core';
 import { MainHeader } from '../../../components';
 import {
@@ -20,7 +20,7 @@ type DocumentInspectorParamsType = {
 
 function DocumentInspector(props: { settings: settingsType }) {
   const params = useParams<DocumentInspectorParamsType>();
-
+  const history = useHistory();
   return (
     <DocumentDataFetcher documentId={params.documentId}>
       {({ document }) => (
@@ -37,7 +37,7 @@ function DocumentInspector(props: { settings: settingsType }) {
                   settings: props.settings,
                 }}
               >
-                <MainHeader title={document.title} />
+                <MainHeader title={document.title} onBackButtonPress={onBackButtonPress} />
                 <DocumentAnnotator />
               </AnnotatorStateHandlerContextProvider>
             </MonitoringEntriesHandlerContextProvider>
@@ -46,4 +46,8 @@ function DocumentInspector(props: { settings: settingsType }) {
       )}
     </DocumentDataFetcher>
   );
+
+  function onBackButtonPress() {
+    history.push('/admin/treatments');
+  }
 }

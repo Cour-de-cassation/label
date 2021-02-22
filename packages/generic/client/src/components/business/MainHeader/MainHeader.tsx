@@ -8,7 +8,7 @@ import { SettingsButton } from './SettingsButton';
 
 export { MainHeader };
 
-function MainHeader(props: { subtitle?: string; title?: string }) {
+function MainHeader(props: { subtitle?: string; title?: string; onBackButtonPress?: () => void }) {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const history = useHistory();
@@ -39,18 +39,25 @@ function MainHeader(props: { subtitle?: string; title?: string }) {
   }
 
   function buildLeftHeaders() {
-    if (!props.title) {
+    if (!props.title && !props.onBackButtonPress) {
       return [];
     }
-    if (props.subtitle) {
-      return [
-        <div>
-          <Text variant="h3">{props.title}</Text>
-          <Text>{props.subtitle}</Text>
-        </div>,
-      ];
+    const textComponent = props.subtitle ? (
+      <div>
+        <Text variant="h3">{props.title}</Text>
+        <Text>{props.subtitle}</Text>
+      </div>
+    ) : (
+      <Text>{props.title}</Text>
+    );
+    if (props.onBackButtonPress) {
+      const backButton = (
+        <IconButton hint={wordings.shared.back} iconName="arrowLeft" onClick={props.onBackButtonPress} />
+      );
+      return [backButton, textComponent];
+    } else {
+      return [textComponent];
     }
-    return [<Text>{props.title}</Text>];
   }
 
   function logout() {

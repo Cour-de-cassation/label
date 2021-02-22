@@ -1,6 +1,5 @@
 import React, { ReactElement, CSSProperties } from 'react';
 import { ComponentsList } from '../../../components';
-import { LayoutGrid } from '../materialUI';
 
 export { Header };
 
@@ -11,37 +10,52 @@ function Header(props: {
   style?: CSSProperties;
   variant: 'classic' | 'mainLeft' | 'mainRight';
 }): ReactElement {
-  const { left, right } = buildHeaderSized();
-
+  const styles = buildStyles();
   return (
-    <LayoutGrid container style={props.style}>
-      <LayoutGrid container item xs={left}>
-        <LayoutGrid container item alignItems="center">
-          <ComponentsList
-            components={props.leftHeaderComponents}
-            spaceBetweenComponents={props.spaceBetweenComponents}
-          />
-        </LayoutGrid>
-      </LayoutGrid>
-      <LayoutGrid container item xs={right}>
-        <LayoutGrid container item justifyContent="flex-end" alignItems="center">
-          <ComponentsList
-            components={props.rightHeaderComponents}
-            spaceBetweenComponents={props.spaceBetweenComponents}
-          />
-        </LayoutGrid>
-      </LayoutGrid>
-    </LayoutGrid>
+    <div style={{ ...styles.mainContainer, ...props.style }}>
+      <div style={styles.leftContainer}>
+        <ComponentsList components={props.leftHeaderComponents} spaceBetweenComponents={props.spaceBetweenComponents} />
+      </div>
+      <div style={styles.rightContainer}>
+        <ComponentsList
+          components={props.rightHeaderComponents}
+          spaceBetweenComponents={props.spaceBetweenComponents}
+        />
+      </div>
+    </div>
   );
+
+  function buildStyles() {
+    const { left, right } = buildHeaderSized();
+
+    return {
+      mainContainer: {
+        display: 'flex',
+      },
+      leftContainer: {
+        display: 'flex',
+        flex: 1,
+        alignItems: 'center',
+        width: `${left}%`,
+      },
+      rightContainer: {
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        width: `${right}%`,
+      },
+    };
+  }
 
   function buildHeaderSized() {
     switch (props.variant) {
       case 'classic':
-        return { left: 6, right: 6 } as const;
+        return { left: 50, right: 50 } as const;
       case 'mainLeft':
-        return { left: 11, right: 1 } as const;
+        return { left: 92, right: 8 } as const;
       case 'mainRight':
-        return { left: 1, right: 11 } as const;
+        return { left: 8, right: 92 } as const;
     }
   }
 }

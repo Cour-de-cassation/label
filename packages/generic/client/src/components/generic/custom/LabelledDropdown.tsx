@@ -58,7 +58,7 @@ function LabelledDropdownButton<T extends string>(props: {
             : buildDropdownLabel(props.label, props.labelIcon)}
         </div>
         <div style={style.dropdownArrow}>
-          <Icon iconName={props.isOpen ? 'arrowReduce' : 'arrowExpand'} />
+          <Icon iconName={props.isOpen ? 'arrowUp' : 'arrowDown'} />
         </div>
       </div>
     </Button>

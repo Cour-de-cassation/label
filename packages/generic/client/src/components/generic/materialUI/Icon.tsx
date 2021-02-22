@@ -7,6 +7,7 @@ import {
   BugReportRounded,
   BusinessCenterRounded,
   CakeRounded,
+  ChevronLeftRounded,
   ChildCareRounded,
   CloseRounded,
   CloudRounded,
@@ -50,8 +51,9 @@ export { Icon };
 export type { iconNameType };
 
 const materialIconMapping = {
-  arrowExpand: ExpandMoreRounded,
-  arrowReduce: ExpandLessRounded,
+  arrowDown: ExpandMoreRounded,
+  arrowLeft: ChevronLeftRounded,
+  arrowUp: ExpandLessRounded,
   bug: BugReportRounded,
   clock: AlarmOnRounded,
   close: CloseRounded,

@@ -43,7 +43,7 @@ function CategoryTable(props: {
             </LayoutGrid>
           </LayoutGrid>
           <LayoutGrid container item alignItems="center" xs={1}>
-            <Icon iconName={isExpanded ? 'arrowReduce' : 'arrowExpand'} />
+            <Icon iconName={isExpanded ? 'arrowUp' : 'arrowDown'} />
           </LayoutGrid>
         </LayoutGrid>
       }

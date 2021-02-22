@@ -60,6 +60,7 @@ const fr = {
   },
   errorPage: 'Une erreur est survenue...',
   shared: {
+    back: 'Précédent',
     logout: 'Déconnexion',
     moreOptions: "Plus d'options",
     problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },

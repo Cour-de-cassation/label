@@ -1,0 +1,1 @@
+export { annotationOverlapDetector } from './annotationOverlapDetector';

@@ -1,4 +1,5 @@
 import { annotationType } from '../../modules';
+import { annotationOverlapDetector } from '../annotationOverlapDetector';
 
 export { annotationTextDetector };
 
@@ -23,7 +24,11 @@ function detectAnnotationTextsAndIndices({
     currentIndex = documentText.indexOf(annotationText, currentIndex + 1);
     if (
       currentIndex !== -1 &&
-      !isAnnotationTextOverlappedWithAnyAnnotations(currentIndex) &&
+      !annotationOverlapDetector.isAnnotationTextOverlappedWithAnyAnnotations(
+        annotations,
+        currentIndex,
+        annotationText,
+      ) &&
       (!isAnnotationTextInsideLargerWord(currentIndex) || currentIndex === annotationIndex)
     ) {
       textsAndIndices.push({ index: currentIndex, text: annotationText });
@@ -38,20 +43,5 @@ function detectAnnotationTextsAndIndices({
       index + annotationText.length === documentText.length ||
       !documentText[index + annotationText.length].match(nonBoundaryCharacterRegex);
     return !isWordBeginningOnBoundary || !isWordEndingOnBoundary;
-  }
-
-  function isAnnotationTextOverlappedWithAnyAnnotations(index: number) {
-    return annotations.some((annotation) =>
-      areOverlapping(annotation.start, annotation.start + annotation.text.length, index, index + annotationText.length),
-    );
-  }
-
-  function areOverlapping(startA: number, endA: number, startB: number, endB: number) {
-    return (
-      (startA < startB && endA > startB) ||
-      (startA <= startB && endA >= endB) ||
-      (startB < startA && endB > startA) ||
-      (startB <= startA && endB >= endA)
-    );
   }
 }

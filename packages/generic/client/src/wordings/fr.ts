@@ -99,6 +99,9 @@ const fr = {
         agent: 'Agent',
         duration: 'Temps',
         date: 'Date de traitement',
+        surAnnotation: 'Sur',
+        subAnnotation: 'Ss.',
+        changeAnnotation: 'Mod.',
         number: 'N° décision',
       },
       footer: {

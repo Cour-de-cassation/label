@@ -1,4 +1,5 @@
 import { buildTreatment } from './buildTreatment';
 import { computeAnnotations } from './computeAnnotations';
+import { computeTreatmentsInfo } from './computeTreatmentsInfo';
 
-export { buildTreatment, computeAnnotations };
+export { buildTreatment, computeAnnotations, computeTreatmentsInfo };

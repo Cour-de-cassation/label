@@ -18,7 +18,7 @@ type tableRowFieldType<DataT> = {
   id: string;
   title: string;
   canBeSorted: boolean;
-  extractor: (data: DataT) => string | JSX.Element;
+  extractor: (data: DataT) => string | number | JSX.Element;
 };
 
 function Table<DataT>(props: {

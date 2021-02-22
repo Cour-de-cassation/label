@@ -73,7 +73,7 @@ function UnlinkAnnotationDropdown(props: {
   function unlinkAnnotation(text: string) {
     addMonitoringEntry({
       origin: props.origin,
-      action: `unlink_${text === UNLINK_ALL ? 'all' : 'one'}`,
+      action: `unlink_${text === UNLINK_ALL ? 'all' : 'one'}_category_${props.annotation.category}`,
     });
 
     const newAnnotations =

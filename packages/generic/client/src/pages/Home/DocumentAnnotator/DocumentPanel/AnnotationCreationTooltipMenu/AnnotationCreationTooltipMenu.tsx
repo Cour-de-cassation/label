@@ -92,7 +92,7 @@ function AnnotationCreationTooltipMenu(props: {
   function applyAnnotationCreation(category: string) {
     addMonitoringEntry({
       origin: 'document',
-      action: `create_${shouldApplyEverywhere ? 'all' : 'one'}_${category}`,
+      action: `create_${shouldApplyEverywhere ? 'all' : 'one'}_category_${category}`,
     });
     const newAnnotations = computeNewAnnotations(category);
 

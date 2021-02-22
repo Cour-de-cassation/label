@@ -52,7 +52,7 @@ function LinkAnnotationDropdown(props: {
 
       annotatorStateHandler.set(newAnnotatorState);
       addMonitoringEntry({
-        action: 'link',
+        action: `link_category_${props.annotation.category}`,
         origin: props.origin,
       });
     }

@@ -102,10 +102,6 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
     try {
-      await apiCaller.post<'updateTreatment'>('updateTreatment', {
-        annotationsDiff: annotatorStateHandler.getGlobalAnnotationsDiff(),
-        documentId: annotatorState.document._id,
-      });
       await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
         documentId: annotatorState.document._id,
         status,

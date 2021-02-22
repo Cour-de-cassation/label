@@ -33,6 +33,22 @@ describe('annotationHandler', () => {
     });
   });
 
+  describe('createManyLinked', () => {
+    it('should create 3 annotations and link them together', () => {
+      const category = 'CATEGORY';
+      const annotationFieldsToCreate = [
+        { category, start: 0, text: 'TextA' },
+        { category, start: 10, text: 'TextB' },
+        { category, start: 20, text: 'TextC' },
+      ];
+      const newAnnotations = annotationHandler.createManyLinked([], annotationFieldsToCreate);
+
+      expect(newAnnotations.length).toEqual(3);
+      expect(annotationLinkHandler.isLinkedTo(newAnnotations[0], newAnnotations[1])).toBeTruthy();
+      expect(annotationLinkHandler.isLinkedTo(newAnnotations[0], newAnnotations[2])).toBeTruthy();
+    });
+  });
+
   describe('deleteByTextAndCategory', () => {
     it('should delete an annotation according to its text and category', () => {
       const annotation1 = annotationModule.generator.generate({ category: 'CATEGORY', text: 'FIRST_TEXT' });

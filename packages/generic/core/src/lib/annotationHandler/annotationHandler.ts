@@ -6,7 +6,7 @@ export { annotationHandler };
 
 const annotationHandler = {
   create,
-  createMany,
+  createManyLinked,
   createAll,
   deleteByTextAndCategory,
   deleteByTextAndStart,
@@ -27,12 +27,18 @@ function create(
   return autoLinker.autoLink([createdAnnotation], newAnnotations);
 }
 
-function createMany(
+function createManyLinked(
   annotations: annotationType[],
   fieldsArray: Array<{ category: string; start: number; text: string }>,
 ): annotationType[] {
   const createdAnnotations = fieldsArray.map((fields) => annotationModule.lib.buildAnnotation(fields));
-  const newAnnotations = [...annotations, ...createdAnnotations];
+  const linkedAnnotations = createdAnnotations.map((annotation, index) => {
+    if (index === 0) {
+      return annotation;
+    }
+    return annotationModule.lib.annotationLinker.link(annotation, createdAnnotations[0]);
+  });
+  const newAnnotations = [...annotations, ...linkedAnnotations];
 
   return newAnnotations;
 }

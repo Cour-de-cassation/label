@@ -117,7 +117,7 @@ function AnnotationCreationTooltipMenu(props: {
       });
     }
 
-    return annotationHandler.createMany(
+    return annotationHandler.createManyLinked(
       annotatorState.annotations,
       props.textSelection.map(({ text, index }) => ({ category, text, start: index })),
     );

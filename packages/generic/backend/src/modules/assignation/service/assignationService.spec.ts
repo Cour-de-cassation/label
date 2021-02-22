@@ -1,4 +1,5 @@
-import { assignationModule, idModule } from '@label/core';
+import { assignationModule, idModule, treatmentModule } from '@label/core';
+import { buildTreatmentRepository } from '../../../modules/treatment/repository';
 import { buildAssignationRepository } from '../repository';
 import { assignationService } from './assignationService';
 
@@ -67,6 +68,27 @@ describe('assignationService', () => {
       );
 
       expect(documentIdAssignatedToUserId).toEqual([]);
+    });
+  });
+  describe('deleteAssignationsByDocumentId', () => {
+    it('should delete treatments and assignations', async () => {
+      const assignationRepository = buildAssignationRepository();
+      const treatmentRepository = buildTreatmentRepository();
+      const documentId = idModule.lib.buildId();
+      const treatment = treatmentModule.generator.generate();
+      const assignation = assignationModule.generator.generate({
+        treatmentId: treatment._id,
+        documentId,
+      });
+      await assignationRepository.insert(assignation);
+      await treatmentRepository.insert(treatment);
+
+      await assignationService.deleteAssignationsByDocumentId(documentId);
+
+      const assignations = await assignationRepository.findAll();
+      const treatments = await treatmentRepository.findAll();
+      expect(assignations).toEqual([]);
+      expect(treatments).toEqual([]);
     });
   });
 });

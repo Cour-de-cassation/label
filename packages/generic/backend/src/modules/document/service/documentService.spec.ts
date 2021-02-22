@@ -124,16 +124,21 @@ describe('documentService', () => {
     it('should update document status and set documents free', async () => {
       const assignationRepository = buildAssignationRepository();
       const document = documentModule.generator.generate({ status: 'pending' });
+      const treatment = treatmentModule.generator.generate();
       const assignation = assignationModule.generator.generate({
         documentId: document._id,
+        treatmentId: treatment._id,
       });
       await documentRepository.insert(document);
       await assignationRepository.insert(assignation);
+      await treatmentRepository.insert(treatment);
 
       await documentService.updateDocumentStatus(document._id, 'free');
 
       const assignations = await assignationRepository.findAll();
+      const treatments = await treatmentRepository.findAll();
       expect(assignations).toEqual([]);
+      expect(treatments).toEqual([]);
     });
   });
 });

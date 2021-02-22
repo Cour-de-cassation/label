@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { buildAnonymizer, annotationType, fetchedDocumentType, settingsType, annotationsDiffType } from '@label/core';
+import {
+  buildAnonymizer,
+  annotationType,
+  fetchedDocumentType,
+  settingsType,
+  annotationsDiffType,
+  idModule,
+} from '@label/core';
 import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
 import {
@@ -97,10 +104,20 @@ function DocumentSwitcher(props: {
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: annotationType[] }) {
     try {
-      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-        documentId: choice.document._id,
-        status: 'saved',
-      });
+      await Promise.all(
+        props.choices.map((currentChoice) => {
+          if (idModule.lib.equalId(currentChoice.document._id, choice.document._id)) {
+            return apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+              documentId: choice.document._id,
+              status: 'saved',
+            });
+          }
+          return apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+            documentId: currentChoice.document._id,
+            status: 'free',
+          });
+        }),
+      );
       setDocumentState({ kind: 'annotating', choice });
     } catch (error) {
       console.warn(error);

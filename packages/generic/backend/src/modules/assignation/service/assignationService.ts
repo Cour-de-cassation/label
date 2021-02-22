@@ -5,6 +5,7 @@ import {
   idModule,
   idType,
 } from '@label/core';
+import { buildTreatmentRepository } from '../../treatment/repository';
 import { documentService } from '../../document';
 import { treatmentService } from '../../treatment';
 import { buildAssignationRepository } from '../repository';
@@ -82,6 +83,15 @@ const assignationService = {
 
   async deleteAssignationsByDocumentId(documentId: documentType['_id']) {
     const assignationRepository = buildAssignationRepository();
-    await assignationRepository.deleteAllByDocumentId(documentId);
+    const treatmentRepository = buildTreatmentRepository();
+    const assignationsToDelete = await assignationRepository.findAllByDocumentId(
+      documentId,
+    );
+    await assignationRepository.deleteManyByIds(
+      assignationsToDelete.map(({ _id }) => _id),
+    );
+    await treatmentRepository.deleteManyByIds(
+      assignationsToDelete.map(({ treatmentId }) => treatmentId),
+    );
   },
 };

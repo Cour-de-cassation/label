@@ -1,9 +1,12 @@
-import { assignationType, documentType, idType, userType } from '@label/core';
+import { assignationType, documentType, userType } from '@label/core';
 
 export type { customAssignationRepositoryType };
 
 type customAssignationRepositoryType = {
-  findAllByUserId: (userId: idType) => Promise<assignationType[]>;
+  findAllByUserId: (userId: userType['_id']) => Promise<assignationType[]>;
+  findAllByDocumentId: (
+    documentId: documentType['_id'],
+  ) => Promise<assignationType[]>;
   findByDocumentIdAndUserId: ({
     documentId,
     userId,
@@ -11,5 +14,4 @@ type customAssignationRepositoryType = {
     documentId: documentType['_id'];
     userId: userType['_id'];
   }) => Promise<assignationType | undefined>;
-  deleteAllByDocumentId: (documentId: idType) => Promise<void>;
 };

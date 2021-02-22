@@ -13,6 +13,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
 
   return () => ({
     clear,
+    deleteManyByIds,
     findAll,
     findAllByIds,
     findById,
@@ -58,8 +59,8 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   }
 
   async function findById(id: idType) {
-    const result = collection.find((document) =>
-      idModule.lib.equalId(document._id, id),
+    const result = collection.find((item) =>
+      idModule.lib.equalId(item._id, id),
     );
 
     if (!result) {
@@ -72,6 +73,15 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   async function insert(newObject: T) {
     collection.push(newObject);
     return { success: true };
+  }
+
+  async function deleteManyByIds(ids: idType[]) {
+    updateFakeCollection(
+      collection,
+      collection.filter(
+        (item) => !ids.some((id) => idModule.lib.equalId(id, item._id)),
+      ),
+    );
   }
 }
 

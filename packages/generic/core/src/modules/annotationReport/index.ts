@@ -1,5 +1,5 @@
 import { annotationReportGenerator } from './generator';
-import { annotationReportType } from './annotationReportType';
+import { annotationReportDataModel, annotationReportType } from './annotationReportType';
 import { buildAnnotationReport } from './lib';
 
 export { annotationReportModule };
@@ -7,6 +7,7 @@ export { annotationReportModule };
 export type { annotationReportType };
 
 const annotationReportModule = {
+  dataModel: annotationReportDataModel,
   generator: annotationReportGenerator,
   lib: { buildAnnotationReport },
 };

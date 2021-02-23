@@ -14,6 +14,15 @@ export type { apiSchemaType, apiSchemaMethodNameType, apiSchemaMethodType, apiSc
 
 const apiSchema = {
   get: {
+    annotationReport: {
+      in: {
+        documentId: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'string',
+        }),
+      },
+      out: fetchedDataModelEntries.annotationReport,
+    },
     annotations: {
       in: {
         documentId: buildDataModelEntry({

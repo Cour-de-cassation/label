@@ -1,5 +1,6 @@
 import { apiSchema, idModule } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
+import { annotationReportService } from '../modules/annotationReport';
 import { assignationService } from '../modules/assignation';
 import { documentService } from '../modules/document';
 import { monitoringEntryService } from '../modules/monitoringEntry';
@@ -13,6 +14,14 @@ export { controllers };
 
 const controllers: controllersFromSchemaType<typeof apiSchema> = {
   get: {
+    annotationReport: buildAuthenticatedController({
+      permissions: ['admin', 'annotator'],
+      controllerWithUser: async (_, { args: { documentId } }) =>
+        annotationReportService.fetchAnnotationReportOfDocument(
+          idModule.lib.buildId(documentId),
+        ),
+    }),
+
     annotations: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (_, { args: { documentId } }) =>

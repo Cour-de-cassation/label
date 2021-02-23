@@ -62,6 +62,14 @@ async function fetchDocumentToBeTreated(documentIdsToExclude: idType[]) {
     documentId: document._id,
   });
 
+  const { data: annotationReport } = await apiCaller.get<'annotationReport'>('annotationReport', {
+    documentId: document._id,
+  });
+
+  console.log('document', document);
+  console.log('annotations', annotations);
+  console.log('annotationReport', annotationReport);
+
   return {
     documentToBeTreated: {
       document: {

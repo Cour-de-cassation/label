@@ -1,3 +1,4 @@
 import { buildAnnotationReportRepository } from './repository';
+import { annotationReportService } from './service';
 
-export { buildAnnotationReportRepository };
+export { annotationReportService, buildAnnotationReportRepository };

@@ -1,4 +1,5 @@
 import {
+  annotationReportModule,
   documentModule,
   monitoringEntryModule,
   settingsModule,
@@ -12,6 +13,10 @@ import { filterNetworkKeysType } from '../types';
 export { fetchedDataModelEntries };
 
 const fetchedDataModelEntries = {
+  annotationReport: {
+    kind: 'object',
+    content: buildFetchedDataModelEntry<typeof annotationReportModule.dataModel>(annotationReportModule.dataModel),
+  },
   document: {
     kind: 'object',
     content: buildFetchedDataModelEntry<typeof documentModule.dataModel>(documentModule.dataModel),

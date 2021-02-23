@@ -9,6 +9,10 @@ const documentDataModel = {
   documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: false },
   _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
   metadata: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: false },
+  priority: {
+    type: buildDataModelEntry({ kind: 'constant', content: ['low', 'medium', 'high'] as const }),
+    network: false,
+  },
   source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: false },
   status: {
     type: buildDataModelEntry({

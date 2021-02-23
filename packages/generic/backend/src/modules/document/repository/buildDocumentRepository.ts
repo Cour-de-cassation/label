@@ -10,13 +10,14 @@ const buildDocumentRepository = buildRepositoryBuilder<
 >({
   collectionName: 'documents',
   buildCustomRepository: (collection) => ({
-    async assign() {
+    async assign(priority) {
       const document = await collection.findOne({
+        priority,
         status: 'free',
       });
 
       if (!document) {
-        throw new Error(`No free document`);
+        throw new Error(`No free document of ${priority} priority`);
       }
 
       const { modifiedCount } = await collection.updateOne(document, {
@@ -24,7 +25,7 @@ const buildDocumentRepository = buildRepositoryBuilder<
       });
 
       if (modifiedCount !== 1) {
-        return this.assign();
+        return this.assign(priority);
       }
 
       return document;

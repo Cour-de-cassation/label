@@ -15,10 +15,13 @@ function mapCourtDecisionToDocument(
     date: sderCourtDecision.dateDecision,
   });
 
+  const priority = computePriority(sderCourtDecision.sourceName);
+
   return documentModule.lib.buildDocument({
     creationDate: new Date(),
     documentId: sderCourtDecision.sourceId,
     metadata: '',
+    priority,
     source: sderCourtDecision.sourceName,
     title,
     text: sderCourtDecision.originalText,
@@ -54,4 +57,13 @@ function convertChamberIntoReadableChamber(chamber: string | undefined) {
     return 'Chambre sociale';
   }
   return '';
+}
+
+function computePriority(source: string): documentType['priority'] {
+  switch (source) {
+    case 'jurinet':
+      return 'medium';
+    default:
+      return 'low';
+  }
 }

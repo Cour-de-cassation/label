@@ -108,6 +108,40 @@ describe('documentService', () => {
 
       expect(documentForUser).toEqual(documentofUser1);
     });
+
+    it('should fetch a document with the highest priority assignated to nobody if there are no assignation for this user', async () => {
+      const userId1 = idModule.lib.buildId();
+      const userId2 = idModule.lib.buildId();
+      const documents = ([
+        {
+          text: 'lolo',
+          priority: 'low',
+          status: 'free',
+        },
+        {
+          text: 'lala',
+          priority: 'medium',
+          status: 'free',
+        },
+        {
+          text: 'lala',
+          status: 'pending',
+        },
+      ] as const).map(documentModule.generator.generate);
+      await Promise.all(documents.map(documentRepository.insert));
+      await assignationRepository.insert(
+        assignationModule.generator.generate({
+          userId: userId2,
+          documentId: documents[2]._id,
+        }),
+      );
+
+      const documentForUser = await documentService.fetchDocumentForUser(
+        userId1,
+      );
+
+      expect(documentForUser).toEqual(documents[1]);
+    });
   });
 
   describe('updateDocumentStatus', () => {

@@ -12,13 +12,14 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
   customDocumentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
-    async assign() {
+    async assign(priority) {
       const freeDocument = collection.find(
-        (document) => document.status === 'free',
+        (document) =>
+          document.priority === priority && document.status === 'free',
       );
 
       if (!freeDocument) {
-        throw new Error(`No free document`);
+        throw new Error(`No free document of ${priority} priority`);
       }
 
       updateFakeCollection(

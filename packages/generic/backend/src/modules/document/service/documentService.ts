@@ -89,7 +89,17 @@ const documentService = {
     }
 
     async function assignNewDocument() {
-      const document = await documentRepository.assign();
+      let document: documentType;
+
+      try {
+        document = await documentRepository.assign('high');
+      } catch {
+        try {
+          document = await documentRepository.assign('medium');
+        } catch {
+          document = await documentRepository.assign('low');
+        }
+      }
 
       await assignationService.createAssignation({
         userId,

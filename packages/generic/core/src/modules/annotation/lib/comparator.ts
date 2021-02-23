@@ -11,4 +11,19 @@ const comparator = {
       annotation1.entityId === annotation2.entityId
     );
   },
+  compareByText(annotation1: annotationType, annotation2: annotationType) {
+    if (annotation2.text.toLowerCase() > annotation1.text.toLowerCase()) {
+      return -1;
+    }
+    if (annotation2.text.toLowerCase() < annotation1.text.toLowerCase()) {
+      return 1;
+    }
+    if (annotation2.text > annotation1.text) {
+      return -1;
+    }
+    if (annotation2.text < annotation1.text) {
+      return 1;
+    }
+    return annotation1.start - annotation2.start;
+  },
 };

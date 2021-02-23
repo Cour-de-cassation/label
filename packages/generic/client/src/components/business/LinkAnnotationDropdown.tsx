@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationLinkHandler, annotationType } from '@label/core';
+import { annotationLinkHandler, annotationModule, annotationType } from '@label/core';
 import { useAnnotatorStateHandler } from '../../services/annotatorState';
 import { useMonitoring } from '../../services/monitoring';
 import { wordings } from '../../wordings';
@@ -30,7 +30,7 @@ function LinkAnnotationDropdown(props: {
       disabled={linkableAnnotations.length === 0}
       hint={wordings.homePage.link}
       iconName="link"
-      items={linkableAnnotations.map((annotation) => ({
+      items={linkableAnnotations.sort(annotationModule.lib.comparator.compareByText).map((annotation) => ({
         text: annotation.text,
         value: annotation.text,
       }))}

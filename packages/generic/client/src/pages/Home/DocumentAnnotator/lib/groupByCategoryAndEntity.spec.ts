@@ -18,7 +18,7 @@ describe('groupByCategoryAndEntity', () => {
       {
         category: 'lastName',
         categorySize: 2,
-        categoryAnnotations: generateCategoryAnnotations([[annotations[4]], [annotations[5]]]),
+        categoryAnnotations: generateCategoryAnnotations([[annotations[5]], [annotations[4]]]),
       },
       {
         category: 'firstName',

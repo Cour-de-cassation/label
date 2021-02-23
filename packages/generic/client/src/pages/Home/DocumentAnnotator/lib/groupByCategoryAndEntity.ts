@@ -1,5 +1,5 @@
 import { groupBy } from 'lodash';
-import { annotationType } from '@label/core';
+import { annotationModule, annotationType } from '@label/core';
 
 export { groupByCategoryAndEntity };
 
@@ -55,10 +55,9 @@ function groupByEntity(annotations: annotationType[]): annotationPerEntityType {
   return Object.entries(groupBy(annotations, (annotation) => annotation.entityId))
     .map(([entityId, entityAnnotations]) => ({
       entityId,
-      entityAnnotations,
+      entityAnnotations: entityAnnotations.sort(annotationModule.lib.comparator.compareByText),
     }))
-    .sort(
-      ({ entityAnnotations: entityAnnotations1 }, { entityAnnotations: entityAnnotations2 }) =>
-        entityAnnotations2.length - entityAnnotations1.length,
+    .sort(({ entityAnnotations: entityAnnotations1 }, { entityAnnotations: entityAnnotations2 }) =>
+      annotationModule.lib.comparator.compareByText(entityAnnotations1[0], entityAnnotations2[0]),
     );
 }

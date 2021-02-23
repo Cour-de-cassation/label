@@ -52,5 +52,20 @@ describe('buildAnonymizer', () => {
 
       expect(anonymizedText).toEqual('XXX');
     });
+    it('should not anonymize a text if the category is set to not anonymized in the setting', () => {
+      const anonymizerWithNoAnomization = buildAnonymizer(
+        settingsModule.lib.buildSettings({
+          professional: { isAnonymized: false },
+        }),
+      );
+      const annotation = annotationModule.generator.generate({
+        category: 'professional',
+        text: 'Leon',
+      });
+
+      const anonymizedText = anonymizerWithNoAnomization.anonymize(annotation);
+
+      expect(anonymizedText).toEqual('Leon');
+    });
   });
 });

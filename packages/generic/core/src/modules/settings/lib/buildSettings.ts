@@ -30,6 +30,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
           darkMode: buildColor(partialSettings[category]?.color?.darkMode),
         },
         iconName: buildIconName(partialSettings[category]?.iconName),
+        isAnonymized: buildIsAnonymized(partialSettings[category]?.isAnonymized),
         order: partialSettings[category]?.order,
         text: buildText(partialSettings[category]?.text),
       }),
@@ -75,6 +76,14 @@ function buildIconName(iconName: string | undefined): categoryIconNameType {
     return iconName as categoryIconNameType;
   } else {
     throw new Error(`Invalid category icon name: ${iconName}`);
+  }
+}
+
+function buildIsAnonymized(isAnonymized: boolean | undefined) {
+  if (isAnonymized === undefined) {
+    return true;
+  } else {
+    return isAnonymized;
   }
 }
 

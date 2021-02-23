@@ -43,6 +43,10 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(settings: settin
   }
 
   function anonymize(annotation: annotationType): string {
+    if (settings[annotation.category]?.isAnonymized === false) {
+      return annotation.text;
+    }
+
     const anonymizedText = mapAnnotationToAnonymizedText(annotation);
 
     if (anonymizedText !== undefined) {

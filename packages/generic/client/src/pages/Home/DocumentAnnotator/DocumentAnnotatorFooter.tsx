@@ -10,7 +10,7 @@ import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorFooter };
 
-function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }) {
+function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => void }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const { addMonitoringEntry, sendMonitoringEntries } = useMonitoring();
@@ -49,21 +49,15 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
           ]}
           spaceBetweenComponents={theme.spacing * 2}
         />
-        <ComponentsList
-          components={[
-            <ReportProblemButton onStopAnnotatingDocument={props.onStopAnnotatingDocument} />,
-            <IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.homePage.copyToClipboard} />,
-            <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.homePage.validate} />,
-          ]}
-          spaceBetweenComponents={theme.spacing * 2}
-        />
+
+        <ComponentsList components={buildRightComponents()} spaceBetweenComponents={theme.spacing * 2} />
       </div>
     </div>
   );
 
   function revertLastAction() {
     addMonitoringEntry({
-      action: `revert`,
+      action: 'revert',
       origin: 'footer',
     });
     annotatorStateHandler.revert();
@@ -71,7 +65,7 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
 
   function restoreLastAction() {
     addMonitoringEntry({
-      action: `restore`,
+      action: 'restore',
       origin: 'footer',
     });
     annotatorStateHandler.restore();
@@ -83,6 +77,17 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
 
   function canRestoreLastAction() {
     return annotatorStateHandler.canRestore();
+  }
+
+  function buildRightComponents() {
+    if (props.onStopAnnotatingDocument) {
+      return [
+        <ReportProblemButton onStopAnnotatingDocument={props.onStopAnnotatingDocument} />,
+        <IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.homePage.copyToClipboard} />,
+        <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.homePage.validate} />,
+      ];
+    }
+    return [<IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.homePage.copyToClipboard} />];
   }
 
   async function copyToClipboard() {
@@ -97,7 +102,7 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument: () => void }
     });
     await saveAnnotationsAndUpdateAssignationStatus('done');
     await sendMonitoringEntries();
-    props.onStopAnnotatingDocument();
+    props.onStopAnnotatingDocument && props.onStopAnnotatingDocument();
   }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {

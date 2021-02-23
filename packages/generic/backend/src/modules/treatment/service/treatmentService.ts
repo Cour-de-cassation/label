@@ -5,16 +5,12 @@ import {
   annotationsDiffType,
   assignationType,
   documentType,
-  errorHandlers,
   idModule,
   idType,
   treatmentModule,
   treatmentType,
 } from '@label/core';
-import {
-  assignationService,
-  buildAssignationRepository,
-} from '../../../modules/assignation';
+import { assignationService } from '../../../modules/assignation';
 import { documentService } from '../../../modules/document';
 import { userService } from '../../user';
 import { buildTreatmentRepository } from '../repository';
@@ -97,18 +93,9 @@ const treatmentService = {
     userId: idType;
   }) {
     const treatmentRepository = buildTreatmentRepository();
-    const assignationRepository = buildAssignationRepository();
-
-    const assignation = await assignationRepository.findByDocumentIdAndUserId({
-      documentId,
-      userId,
-    });
-    if (!assignation) {
-      throw errorHandlers.notFoundErrorHandler.build(
-        `No assignation found for documentId ${documentId} and userId ${userId}`,
-      );
-    }
-
+    const assignation = await assignationService.findOrCreateByDocumentIdAndUserId(
+      { documentId, userId },
+    );
     const treatment = await treatmentRepository.findById(
       assignation.treatmentId,
     );

@@ -28,7 +28,7 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => void }): Re
 
   return (
     <DocumentViewerModeHandlerContextProvider>
-      <div>
+      <>
         <div style={styles.annotatorBody}>
           <div style={styles.leftContainer}>
             <AnnotationsPanel
@@ -40,12 +40,8 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => void }): Re
             <DocumentPanel splittedTextByLine={splittedTextByLine} />
           </div>
         </div>
-        {!!props.onStopAnnotatingDocument && (
-          <div>
-            <DocumentAnnotatorFooter onStopAnnotatingDocument={props.onStopAnnotatingDocument} />
-          </div>
-        )}
-      </div>
+        <DocumentAnnotatorFooter onStopAnnotatingDocument={props.onStopAnnotatingDocument} />
+      </>
     </DocumentViewerModeHandlerContextProvider>
   );
 

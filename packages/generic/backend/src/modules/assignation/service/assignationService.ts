@@ -4,6 +4,7 @@ import {
   documentType,
   idModule,
   idType,
+  userType,
 } from '@label/core';
 import { buildTreatmentRepository } from '../../treatment/repository';
 import { documentService } from '../../document';
@@ -51,6 +52,24 @@ const assignationService = {
     return assignations.map((assignation) => assignation.documentId);
   },
 
+  async findOrCreateByDocumentIdAndUserId({
+    documentId,
+    userId,
+  }: {
+    documentId: documentType['_id'];
+    userId: userType['_id'];
+  }) {
+    const assignationRepository = buildAssignationRepository();
+    const assignation = await assignationRepository.findByDocumentIdAndUserId({
+      documentId,
+      userId,
+    });
+    if (assignation) {
+      return assignation;
+    }
+    return this.createAssignation({ documentId, userId });
+  },
+
   async updateAssignationDocumentStatus(
     assignationId: assignationType['_id'],
     status: documentType['status'],
@@ -78,7 +97,8 @@ const assignationService = {
       documentId,
       treatmentId,
     });
-    return assignationRepository.insert(assignation);
+    await assignationRepository.insert(assignation);
+    return assignation;
   },
 
   async deleteAssignationsByDocumentId(documentId: documentType['_id']) {

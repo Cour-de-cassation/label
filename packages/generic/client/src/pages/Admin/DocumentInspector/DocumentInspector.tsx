@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { buildAnonymizer, idModule, settingsType } from '@label/core';
+import { annotationsDiffType, buildAnonymizer, fetchedDocumentType, idModule, settingsType } from '@label/core';
+import { apiCaller } from '../../../api';
 import { MainHeader } from '../../../components';
 import {
   AnnotatorStateHandlerContextProvider,
@@ -28,7 +29,7 @@ function DocumentInspector(props: { settings: settingsType }) {
           {({ annotations }) => (
             <MonitoringEntriesHandlerContextProvider documentId={idModule.lib.buildId(params.documentId)}>
               <AnnotatorStateHandlerContextProvider
-                autoSaver={buildAutoSaver({ documentId: document._id })}
+                autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: document._id })}
                 buildAnonymizer={() => buildAnonymizer(props.settings)}
                 committer={buildAnnotationsCommitter()}
                 initialAnnotatorState={{
@@ -37,7 +38,7 @@ function DocumentInspector(props: { settings: settingsType }) {
                   settings: props.settings,
                 }}
               >
-                <MainHeader title={document.title} onBackButtonPress={onBackButtonPress} />
+                <MainHeader title={document.title} onBackButtonPress={navigateToTreatments} />
                 <DocumentAnnotator />
               </AnnotatorStateHandlerContextProvider>
             </MonitoringEntriesHandlerContextProvider>
@@ -47,7 +48,18 @@ function DocumentInspector(props: { settings: settingsType }) {
     </DocumentDataFetcher>
   );
 
-  function onBackButtonPress() {
+  async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {
+    try {
+      await apiCaller.post<'updateTreatment'>('updateTreatment', {
+        annotationsDiff,
+        documentId,
+      });
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  function navigateToTreatments() {
     history.push('/admin/treatments');
   }
 }

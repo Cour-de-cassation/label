@@ -33,13 +33,6 @@ function CategoryTableEntry(props: {
   const entityAnnotation = props.entityAnnotations[0];
   const entityAnnotationTexts = uniq(props.entityAnnotations.map((annotation) => annotation.text));
   const numberOfEntities = props.entityAnnotations.length;
-  const categoryColor = getColor(
-    settingsModule.lib.getAnnotationCategoryColor(
-      entityAnnotation.category,
-      annotatorStateHandler.get().settings,
-      displayMode,
-    ),
-  );
 
   const styleProps = {
     annotatorStateHandler,
@@ -56,7 +49,7 @@ function CategoryTableEntry(props: {
           <div>
             <Div_AnnotationText styleProps={styleProps}>
               <CategoryTableEntryBracketLink
-                color={categoryColor}
+                color={computeBracketLinkColor(entityAnnotation.category)}
                 variant={computeBracketPosition(entityAnnotationTexts, index)}
               />
               <Div_AnnotationTextMargin>
@@ -91,6 +84,17 @@ function CategoryTableEntry(props: {
       return 'empty';
     }
   }
+
+  function computeBracketLinkColor(category: string) {
+    if (props.entityEntryHandler.isSelected(props.entityId)) {
+      return theme.colors.line.level1;
+    } else {
+      return getColor(
+        settingsModule.lib.getAnnotationCategoryColor(category, annotatorStateHandler.get().settings, displayMode),
+      );
+    }
+  }
+
   function selectEntity() {
     props.entityEntryHandler.setSelected(
       props.entityEntryHandler.isSelected(props.entityId) ? undefined : props.entityId,

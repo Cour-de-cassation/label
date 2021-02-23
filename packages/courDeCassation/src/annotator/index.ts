@@ -1,3 +1,3 @@
-import { nlpAnnotator } from './nlpAnnotator';
+import { buildNlpAnnotator } from './buildNlpAnnotator';
 
-export { nlpAnnotator };
+export { buildNlpAnnotator };

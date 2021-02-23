@@ -3,6 +3,7 @@ import {
   annotationReportType,
   documentType,
   idType,
+  settingsType,
 } from '@label/core';
 
 export type { annotatorConfigType };
@@ -10,6 +11,7 @@ export type { annotatorConfigType };
 type annotatorConfigType = {
   name: string;
   fetchAnnotationOfDocument(
+    settings: settingsType,
     document: documentType,
   ): Promise<{
     annotations: annotationType[];

@@ -1,9 +1,10 @@
-import { documentType } from '@label/core';
+import { documentType, settingsType } from '@label/core';
 
 export type { nlpApiType, nlpAnnotationsType };
 
 type nlpApiType = {
   fetchNlpAnnotations: (
+    settings: settingsType,
     document: documentType,
   ) => Promise<nlpAnnotationsType>;
 };

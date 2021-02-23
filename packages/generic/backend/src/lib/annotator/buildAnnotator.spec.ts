@@ -15,7 +15,7 @@ describe('buildAnnotator', () => {
     it('should annotate all the documents without annotations', async () => {
       await insertNDocumentsWithoutAnnotationsInDb(5);
       const fakeAnnotator = buildFakeAnnotatorConfig();
-      const annotator = buildAnnotator(fakeAnnotator);
+      const annotator = buildAnnotator('{}', fakeAnnotator);
 
       await annotator.annotateDocumentsWithoutAnnotations();
 
@@ -39,7 +39,7 @@ async function insertNDocumentsWithoutAnnotationsInDb(n: number) {
 function buildFakeAnnotatorConfig(): annotatorConfigType {
   return {
     name: 'FAKE_ANNOTATOR',
-    async fetchAnnotationOfDocument(document) {
+    async fetchAnnotationOfDocument(settings, document) {
       const annotations = [...Array(5).keys()].map(() =>
         annotationModule.generator.generate(),
       );

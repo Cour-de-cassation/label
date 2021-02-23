@@ -4,6 +4,7 @@ import {
   autoLinker,
   documentType,
   idType,
+  settingsModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { treatmentService } from '../../modules/treatment';
@@ -13,7 +14,12 @@ import { annotatorConfigType } from './annotatorConfigType';
 
 export { buildAnnotator };
 
-function buildAnnotator(annotatorConfig: annotatorConfigType) {
+function buildAnnotator(
+  settingsJson: string,
+  annotatorConfig: annotatorConfigType,
+) {
+  const settings = settingsModule.lib.parseFromJson(settingsJson);
+
   return {
     async annotateDocumentsWithoutAnnotations() {
       const documentsToAnnotate = await documentService.fetchDocumentsWithoutAnnotations();
@@ -37,7 +43,7 @@ function buildAnnotator(annotatorConfig: annotatorConfigType) {
       annotations,
       documentId,
       report,
-    } = await annotatorConfig.fetchAnnotationOfDocument(document);
+    } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
 
     await createAnnotatorTreatment({ annotations, documentId });
     await createAutoTreatment({ annotations, documentId });

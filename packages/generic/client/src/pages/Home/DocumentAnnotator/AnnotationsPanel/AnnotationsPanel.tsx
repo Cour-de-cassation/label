@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
-import { LayoutGrid, Text } from '../../../../components';
-import { wordings } from '../../../../wordings';
+import { Text } from '../../../../components';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
+import { wordings } from '../../../../wordings';
 import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTable } from './CategoryTable';
 import { EmptyCategory } from './EmptyCategory';
@@ -18,15 +18,13 @@ function AnnotationsPanel(props: {
   const entityEntryHandler = useEntityEntryHandler(props.splittedTextByLine);
 
   return (
-    <LayoutGrid style={styles.panel}>
-      <LayoutGrid container alignItems="center" style={styles.panelHeader}>
-        <LayoutGrid item>
-          <Text variant="h2">{wordings.homePage.askedAnnotations}</Text>
-        </LayoutGrid>
-      </LayoutGrid>
-      <LayoutGrid style={styles.categoriesContainer}>
+    <div style={styles.panel}>
+      <div style={styles.panelHeader}>
+        <Text variant="h2">{wordings.homePage.askedAnnotations}</Text>
+      </div>
+      <div style={styles.categoriesContainer}>
         {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => (
-          <LayoutGrid key={category} style={styles.category}>
+          <div key={category} style={styles.category}>
             {categorySize > 0 ? (
               <CategoryTable
                 categoryAnnotations={categoryAnnotations}
@@ -38,10 +36,10 @@ function AnnotationsPanel(props: {
             ) : (
               <EmptyCategory category={category} />
             )}
-          </LayoutGrid>
+          </div>
         ))}
-      </LayoutGrid>
-    </LayoutGrid>
+      </div>
+    </div>
   );
 
   function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
@@ -53,6 +51,8 @@ function AnnotationsPanel(props: {
       },
       panelHeader: {
         height: heights.annotatorPanelHeader,
+        display: 'flex',
+        alignItems: 'center',
       },
       categoriesContainer: {
         overflowY: 'auto',

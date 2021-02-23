@@ -35,20 +35,22 @@ function groupByCategory(
   categories: string[],
 ): Array<{ category: string; categoryAnnotations: annotationType[] }> {
   const grouppedByCategoryAnnotations = groupBy(annotations, (annotation) => annotation.category);
-  return categories.map((category) => {
-    const categoryAnnotations = grouppedByCategoryAnnotations[category];
-    if (!!categoryAnnotations) {
-      return {
-        category,
-        categoryAnnotations,
-      };
-    } else {
-      return {
-        category,
-        categoryAnnotations: [],
-      };
-    }
-  });
+  return categories
+    .sort((category1, category2) => {
+      const category1Annotations = grouppedByCategoryAnnotations[category1];
+      const category2Annotations = grouppedByCategoryAnnotations[category2];
+      if (category1Annotations && !category2Annotations) {
+        return -1;
+      }
+      if (!category1Annotations && category2Annotations) {
+        return 1;
+      }
+      return 0;
+    })
+    .map((category) => ({
+      category,
+      categoryAnnotations: grouppedByCategoryAnnotations[category] || [],
+    }));
 }
 
 function groupByEntity(annotations: annotationType[]): annotationPerEntityType {

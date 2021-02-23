@@ -162,6 +162,12 @@ const treatmentService = {
       .map(([assignationId]) => assignationId);
 
     return assignationIdsOfTreatedDocuments.map((assignationId) => ({
+      documentId:
+        documentsById[
+          idModule.lib.convertToString(
+            treatmentsByAssignationId[assignationId].documentId,
+          )
+        ].documentId,
       treatment: treatmentsByAssignationId[assignationId],
       userName: userNamesByAssignationId[assignationId],
     }));

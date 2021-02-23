@@ -209,8 +209,16 @@ describe('treatmentService', () => {
 
       expect(sortTreatmentsWithDetails(treatmentsWithDetails)).toEqual(
         sortTreatmentsWithDetails([
-          { userName, treatment: treatmentDone },
-          { userName, treatment: treatmentRejected },
+          {
+            documentId: documentDone.documentId,
+            userName,
+            treatment: treatmentDone,
+          },
+          {
+            documentId: documentRejected.documentId,
+            userName,
+            treatment: treatmentRejected,
+          },
         ]),
       );
     });
@@ -257,7 +265,11 @@ describe('treatmentService', () => {
 });
 
 function sortTreatmentsWithDetails(
-  treatmentsWithDetails: { userName: string; treatment: treatmentType }[],
+  treatmentsWithDetails: {
+    documentId: number;
+    userName: string;
+    treatment: treatmentType;
+  }[],
 ) {
   return treatmentsWithDetails.sort(
     (treatmentWithDetailsA, treatmentWithDetailsB) =>

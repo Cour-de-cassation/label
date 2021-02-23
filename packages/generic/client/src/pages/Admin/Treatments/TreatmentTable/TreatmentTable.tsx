@@ -59,10 +59,10 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
 
     const treatmentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatmentsWithDetails'>[number]>> = [
       {
-        id: '_id',
+        id: 'documentId',
         title: wordings.treatmentsPage.table.columnTitles.number,
         canBeSorted: true,
-        extractor: (treatmentWithDetails) => idModule.lib.convertToString(treatmentWithDetails.treatment._id),
+        extractor: (treatmentWithDetails) => JSON.stringify(treatmentWithDetails.documentId),
       },
       {
         id: 'userName',

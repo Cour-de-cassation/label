@@ -71,6 +71,7 @@ const apiSchema = {
         content: {
           kind: 'object',
           content: {
+            documentId: { kind: 'primitive', content: 'number' },
             treatment: fetchedDataModelEntries.treatment,
             userName: {
               kind: 'primitive',

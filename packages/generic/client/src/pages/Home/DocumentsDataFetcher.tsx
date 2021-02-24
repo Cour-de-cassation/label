@@ -66,9 +66,9 @@ async function fetchDocumentToBeTreated(documentIdsToExclude: idType[]) {
     documentId: document._id,
   });
 
-  console.log('document', document);
-  console.log('annotations', annotations);
-  console.log('annotationReport', annotationReport);
+  console.log(document.title);
+  annotationReport.checkList.map((item) => console.log(item));
+  console.log('———————————————————————————————————');
 
   return {
     documentToBeTreated: {

@@ -56,11 +56,11 @@ function Menu<T extends string>(props: {
   function buildMenuItemClasses(theme: customThemeType) {
     return makeStyles({
       root: {
-        borderRadius: theme.shape.borderRadius.medium,
+        borderRadius: theme.shape.borderRadius.m,
         margin: theme.spacing,
         '&:hover': {
           background: theme.colors.default.hoveredBackground,
-          borderRadius: theme.shape.borderRadius.medium,
+          borderRadius: theme.shape.borderRadius.m,
           color: theme.colors.default.hoveredTextColor,
         },
       },

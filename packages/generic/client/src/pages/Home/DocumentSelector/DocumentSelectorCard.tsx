@@ -84,7 +84,7 @@ function DocumentSelectorCard(props: {
 function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
   return {
     card: {
-      borderRadius: theme.shape.borderRadius.medium,
+      borderRadius: theme.shape.borderRadius.m,
       padding: theme.spacing * 4,
       display: 'flex',
       flexDirection: 'column',

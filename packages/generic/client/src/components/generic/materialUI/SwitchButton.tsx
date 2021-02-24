@@ -20,7 +20,7 @@ function SwitchButton(props: {
         width: 50,
         height: 30,
         padding: 0,
-        borderRadius: theme.shape.borderRadius.medium,
+        borderRadius: theme.shape.borderRadius.m,
         border: '2px solid',
       },
       switchBase: {

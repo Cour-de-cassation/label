@@ -39,12 +39,12 @@ function buildAccordionClasses(theme: customThemeType) {
   return makeStyles({
     rounded: {
       backgroundColor: theme.colors.default.background,
-      borderRadius: theme.shape.borderRadius.medium,
+      borderRadius: theme.shape.borderRadius.m,
       '&:first-child': {
-        borderRadius: theme.shape.borderRadius.medium,
+        borderRadius: theme.shape.borderRadius.m,
       },
       '&:last-child': {
-        borderRadius: theme.shape.borderRadius.medium,
+        borderRadius: theme.shape.borderRadius.m,
       },
     },
   })();

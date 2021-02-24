@@ -9,7 +9,7 @@ export { EmptyCategory };
 function EmptyCategory(props: { category: string }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
-  const iconSize = theme.shape.borderRadius.large;
+  const iconSize = theme.shape.borderRadius.l;
   const styles = buildStyles(theme);
   const annotatorState = annotatorStateHandler.get();
 
@@ -36,7 +36,7 @@ function EmptyCategory(props: { category: string }) {
         paddingLeft: theme.spacing,
       },
       categoryTextContainer: {
-        paddingLeft: theme.spacing * 1.5,
+        paddingLeft: theme.spacing,
       },
       text: {
         color: theme.colors.disabled.color,

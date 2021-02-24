@@ -60,7 +60,7 @@ function AnnotationsPanel(props: {
         paddingRight: theme.spacing * 2,
       },
       category: {
-        marginBottom: theme.spacing * 2,
+        marginBottom: theme.spacing,
       },
     };
   }

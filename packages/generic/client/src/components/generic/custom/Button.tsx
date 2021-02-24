@@ -61,7 +61,7 @@ function Button(props: {
       ? { backgroundColor: theme.colors[color].hoveredBackground, color: theme.colors[color].hoveredTextColor }
       : undefined;
     return {
-      borderRadius: theme.shape.borderRadius.medium,
+      borderRadius: theme.shape.borderRadius.m,
       backgroundColor: theme.colors[color].background,
       margin: 0,
       cursor,

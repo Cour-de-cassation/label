@@ -114,7 +114,7 @@ function buildStyledComponents() {
     };
   };
   const Div_AnnotationTextMargin = styled.div`
-    margin-bottom: 5px;
+    margin-bottom: 4px;
   `;
   const Div_AnnotationText = styled.div<stylePropsType>`
     line-height: 14px;
@@ -134,7 +134,7 @@ function buildStyledComponents() {
   `;
   const Div_Occurences = styled.div<stylePropsType>`
     ${({ styleProps }) => `
-      padding: ${styleProps.theme.spacing}px ${styleProps.theme.spacing * 3}px;
+      padding: 0 ${styleProps.theme.spacing * 3}px;
       ${
         styleProps.entityEntryHandler.isFocused(styleProps.entityId)
           ? `
@@ -149,7 +149,7 @@ function buildStyledComponents() {
       const { hoveredBackgroundColor } = computeBackgroundColors(styleProps);
       return `
         display: none;
-        border-radius: ${styleProps.theme.shape.borderRadius.medium}px;
+        border-radius: ${styleProps.theme.shape.borderRadius.m}px;
         background: linear-gradient(to left, ${hoveredBackgroundColor}, 75%,transparent);
         padding-left: 50%;
         height: 100%;
@@ -175,7 +175,7 @@ function buildStyledComponents() {
 
       return `
         background-color: ${backgroundColor};
-        border-radius: ${styleProps.theme.shape.borderRadius.medium}px;
+        border-radius: ${styleProps.theme.shape.borderRadius.m}px;
         position: relative;
         display: flex;
         justify-content: space-between;

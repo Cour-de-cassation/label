@@ -10,7 +10,7 @@ import { entityEntryHandlerType } from './useEntityEntryHandler';
 
 export { CategoryTable };
 
-const ACCORDION_HEADER_PADDING = 5;
+const ACCORDION_HEADER_PADDING = 8;
 
 const { Div_Body } = buildStyledComponents();
 
@@ -23,7 +23,7 @@ function CategoryTable(props: {
 }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
-  const iconSize = theme.shape.borderRadius.medium * 2 - ACCORDION_HEADER_PADDING;
+  const iconSize = theme.shape.borderRadius.l;
   const styles = buildStyles(theme);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const annotatorState = annotatorStateHandler.get();

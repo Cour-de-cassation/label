@@ -49,7 +49,7 @@ function buildStyle(
     tooltipMenu: {
       boxShadow: theme.boxShadow.minor,
       backgroundColor: theme.colors.background,
-      borderRadius: theme.shape.borderRadius.small,
+      borderRadius: theme.shape.borderRadius.xs,
       position: 'absolute',
       width,
       ...tooltipMenuOrigin,

@@ -120,7 +120,7 @@ const Login: FunctionComponent = () => {
         minWidth: MIN_WIDTH_FORM,
         padding: theme.spacing * 6,
         paddingBottom: theme.spacing * 3,
-        borderRadius: theme.shape.borderRadius.medium,
+        borderRadius: theme.shape.borderRadius.m,
         boxShadow: theme.boxShadow.major,
       },
       inputContainer: {

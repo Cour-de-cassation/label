@@ -93,7 +93,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     return {
       container: {
         overflowY: 'auto',
-        borderRadius: theme.shape.borderRadius.medium,
+        borderRadius: theme.shape.borderRadius.m,
         backgroundColor: theme.colors.document,
         backgroundImage,
         height: heights.annotatorPanel,

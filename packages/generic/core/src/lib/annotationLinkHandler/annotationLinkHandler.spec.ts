@@ -88,6 +88,23 @@ describe('annotationLinker', () => {
     });
   });
 
+  describe('getRepresentatives', () => {
+    it('should return all the representatives of the given annotations', () => {
+      const category = 'CATEGORY';
+      const annotations = [
+        { category: category, text: 'B' },
+        { category: category, text: 'Z' },
+        { category: category, text: 'A' },
+        { category: category, text: 'A' },
+        { category: 'ANOTHER_CATEGORY', text: 'A' },
+      ].map(annotationModule.generator.generate);
+
+      const representatives = annotationLinkHandler.getRepresentatives(annotations);
+
+      expect(representatives).toEqual([annotations[2], annotations[4], annotations[0], annotations[1]]);
+    });
+  });
+
   describe('getLinkableAnnotations', () => {
     it('should return all the linkable annotations to the given annotation', () => {
       const category = 'CATEGORY';

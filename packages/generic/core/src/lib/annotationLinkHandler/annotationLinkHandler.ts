@@ -5,6 +5,7 @@ export { annotationLinkHandler };
 
 const annotationLinkHandler = {
   link,
+  getRepresentatives,
   getLinkableAnnotations,
   getLinkedAnnotations,
   getLinkedAnnotationRepresentatives,
@@ -35,6 +36,12 @@ function isLinked(annotation: annotationType, annotations: annotationType[]): bo
 
 function isLinkedTo(annotationSource: annotationType, annotationTarget: annotationType) {
   return annotationSource.entityId === annotationTarget.entityId;
+}
+
+function getRepresentatives(annotations: annotationType[]) {
+  return uniqBy(annotations, (otherAnnotation) =>
+    annotationModule.lib.entityIdHandler.compute(otherAnnotation.category, otherAnnotation.text),
+  ).sort(annotationModule.lib.comparator.compareByText);
 }
 
 function getLinkedAnnotationRepresentatives(

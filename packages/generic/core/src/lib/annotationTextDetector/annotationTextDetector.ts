@@ -21,17 +21,15 @@ function detectAnnotationTextsAndIndices({
   let currentIndex = -1;
   const textsAndIndices: { text: string; index: number }[] = [];
   do {
-    currentIndex = documentText.indexOf(annotationText, currentIndex + 1);
+    const annotationDetection = computeAnnotationDetection(annotationText, currentIndex);
+    currentIndex = annotationDetection.index;
+    const { text } = annotationDetection;
     if (
       currentIndex !== -1 &&
-      !annotationOverlapDetector.isAnnotationTextOverlappedWithAnyAnnotations(
-        annotations,
-        currentIndex,
-        annotationText,
-      ) &&
+      !annotationOverlapDetector.isAnnotationTextOverlappedWithAnyAnnotations(annotations, currentIndex, text) &&
       (!isAnnotationTextInsideLargerWord(currentIndex) || currentIndex === annotationIndex)
     ) {
-      textsAndIndices.push({ index: currentIndex, text: annotationText });
+      textsAndIndices.push({ index: currentIndex, text });
     }
   } while (currentIndex !== -1);
   return textsAndIndices;
@@ -44,4 +42,30 @@ function detectAnnotationTextsAndIndices({
       !documentText[index + annotationText.length].match(nonBoundaryCharacterRegex);
     return !isWordBeginningOnBoundary || !isWordEndingOnBoundary;
   }
+
+  function computeAnnotationDetection(annotationText: string, currentIndex: number) {
+    const text = replaceAccents(annotationText);
+    const index = replaceAccents(documentText).indexOf(text, currentIndex + 1);
+    if (index !== -1) {
+      return {
+        index,
+        text: documentText.substr(index, text.length),
+      };
+    }
+    return {
+      text: annotationText,
+      index: -1,
+    };
+  }
+}
+
+function replaceAccents(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[àâ]/g, 'a')
+    .replace(/[éèêë]/g, 'e')
+    .replace(/[ïî]/g, 'i')
+    .replace(/[ô]/g, 'o')
+    .replace(/[ûùü]/g, 'u')
+    .replace(/[ÿ]/g, 'y');
 }

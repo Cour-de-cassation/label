@@ -40,6 +40,34 @@ describe('annotationTextDetector', () => {
       ]);
     });
 
+    it('should return all the annotation text and indices for the given text and document, including different cases and accents', () => {
+      const documentText = 'M. ELEVES, Mrs Élevès and Sir elevès';
+      const annotationIndex = 3;
+      const annotationText = 'ELEVES';
+
+      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
+        documentText,
+        annotationIndex,
+        annotationText,
+        annotations: [],
+      });
+
+      expect(annotationTextsAndIndices).toEqual([
+        {
+          index: 3,
+          text: 'ELEVES',
+        },
+        {
+          index: 15,
+          text: 'Élevès',
+        },
+        {
+          index: 30,
+          text: 'elevès',
+        },
+      ]);
+    });
+
     it('should not return any text and index if it is inside another annotation', () => {
       const annotationIndex = 18;
       const annotationText = 'Baker';

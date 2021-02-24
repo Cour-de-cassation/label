@@ -18,8 +18,9 @@ const fr = {
     describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
     delete: 'Supprimer',
     deletionOption: {
-      one: 'Annotation seule',
-      all: `Supprimer tout`,
+      annotation: 'Annotation seule',
+      representative: 'Représentant seul ({count} annot.)',
+      entity: "Supprimer toute l'entité",
     },
     displayMode: "Type d'affichage",
     documentInfoEntries: {

@@ -33,7 +33,7 @@ function CategoryTableEntryDeleteAnnotationDropdown(props: { buttonSize: number;
         iconName="delete"
         items={[
           {
-            text: wordings.homePage.deletionOption.all,
+            text: wordings.homePage.deletionOption.entity,
             value: DELETE_ALL,
           },
           ...linkedAnnotationRepresentatives.map((annotation) => ({

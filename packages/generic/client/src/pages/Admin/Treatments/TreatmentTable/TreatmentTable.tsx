@@ -63,12 +63,14 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
         title: wordings.treatmentsPage.table.columnTitles.number,
         canBeSorted: true,
         extractor: (treatmentWithDetails) => JSON.stringify(treatmentWithDetails.documentId),
+        width: 10,
       },
       {
         id: 'userName',
         title: wordings.treatmentsPage.table.columnTitles.agent,
         canBeSorted: true,
         extractor: (treatmentWithDetails) => treatmentWithDetails.userName,
+        width: 10,
       },
       {
         id: 'date',
@@ -76,6 +78,7 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
         canBeSorted: true,
         extractor: (treatmentWithDetails) =>
           timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.lastUpdateDate),
+        width: 10,
       },
       {
         id: 'deletions',
@@ -83,6 +86,7 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
         canBeSorted: true,
         extractor: (treatmentWithDetails) =>
           treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].deletionsCount,
+        width: 3,
       },
       {
         id: 'additions',
@@ -90,6 +94,7 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
         canBeSorted: true,
         extractor: (treatmentWithDetails) =>
           treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].additionsCount,
+        width: 3,
       },
       {
         id: 'modifications',
@@ -97,6 +102,7 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
         canBeSorted: true,
         extractor: (treatmentWithDetails) =>
           treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].modificationsCount,
+        width: 3,
       },
       {
         id: 'duration',
@@ -104,6 +110,7 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
         title: wordings.treatmentsPage.table.columnTitles.duration,
         extractor: (treatmentWithDetails) =>
           timeOperator.convertDurationToReadableDuration(treatmentWithDetails.treatment.duration),
+        width: 3,
       },
     ];
     return treatmentsFields;

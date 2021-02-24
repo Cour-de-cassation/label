@@ -1,0 +1,131 @@
+import React, { CSSProperties } from 'react';
+import styled from 'styled-components';
+import { customThemeType, useCustomTheme } from '../../../../styles';
+import { Text } from '../../materialUI';
+import { OptionButton } from './OptionButton';
+import { orderDirectionType } from './TableHeader';
+
+export { TableBody };
+
+export type { tableRowFieldType };
+
+type tableRowFieldType<DataT> = {
+  id: string;
+  title: string;
+  canBeSorted: boolean;
+  extractor: (data: DataT) => string | number | JSX.Element;
+  width: number;
+};
+
+const ROW_DEFAULT_HEIGHT = 50;
+
+function TableBody<DataT>(props: {
+  data: DataT[];
+  fields: Array<tableRowFieldType<DataT>>;
+  optionCellStyle?: CSSProperties;
+  optionItems?: Array<{
+    text: string;
+    onClick: (data: DataT) => void;
+  }>;
+  orderByProperty: string | undefined;
+  orderDirection: orderDirectionType;
+}) {
+  const theme = useCustomTheme();
+  const sortedData = sortData(props.data);
+  const styleProps = {
+    theme,
+  };
+  const { Tr } = buildStyledComponents();
+
+  return <tbody>{sortedData.map(renderRow)}</tbody>;
+
+  function renderRow(row: DataT) {
+    const formattedRow = props.fields.map((field) => field.extractor(row));
+    const { optionItems } = props;
+
+    if (!optionItems) {
+      return (
+        <Tr styleProps={styleProps}>
+          {formattedRow.map((value) => (
+            <td>
+              <Text variant="h3">{value}</Text>
+            </td>
+          ))}
+          <td style={props.optionCellStyle} />
+        </Tr>
+      );
+    }
+
+    const items = optionItems.map((optionItem) => ({
+      text: optionItem.text,
+      value: optionItem.text,
+    }));
+    const onSelect = (optionItemText: string) => {
+      const optionItem = optionItems.find(({ text }) => text === optionItemText);
+      optionItem && optionItem.onClick(row);
+    };
+    return (
+      <>
+        <Tr styleProps={styleProps}>
+          {Object.values(formattedRow).map((value) => (
+            <td>
+              <Text variant="h3">{value}</Text>
+            </td>
+          ))}
+          <td className="optionItemCell" style={props.optionCellStyle}>
+            <div>
+              <OptionButton items={items} onSelect={onSelect} />
+            </div>
+          </td>
+        </Tr>
+      </>
+    );
+  }
+
+  function sortData(data: DataT[]): DataT[] {
+    const orderByField = props.fields.find((field) => field.id === props.orderByProperty);
+    if (!orderByField) {
+      return data;
+    }
+    return data.sort((dataA, dataB) => {
+      const propertyA = orderByField.extractor(dataA);
+      const propertyB = orderByField.extractor(dataB);
+      if (propertyA === propertyB) {
+        return 0;
+      } else if (propertyA < propertyB) {
+        return props.orderDirection === 'asc' ? 1 : -1;
+      } else {
+        return props.orderDirection === 'asc' ? -1 : 1;
+      }
+    });
+  }
+
+  function buildStyledComponents() {
+    type stylePropsType = {
+      styleProps: {
+        theme: customThemeType;
+      };
+    };
+
+    const Tr = styled.tr<stylePropsType>`
+      ${({ styleProps }) => {
+        return `
+          height: ${ROW_DEFAULT_HEIGHT}px;
+          &:hover {
+            background-color: ${styleProps.theme.colors.default.background};
+          }
+          td.optionItemCell > div  {
+            display: none;
+          }
+          &:hover > td.optionItemCell > div  {
+            display: block;
+          }
+      `;
+      }}
+    `;
+
+    return {
+      Tr,
+    };
+  }
+}

@@ -57,12 +57,14 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
     title: wordings.problemReportsPage.table.columnTitles.number,
     canBeSorted: true,
     extractor: (problemReportWithDetails) => idModule.lib.convertToString(problemReportWithDetails.problemReport._id),
+    width: 4,
   },
   {
     id: 'userName',
     title: wordings.problemReportsPage.table.columnTitles.agent,
     canBeSorted: true,
     extractor: (problemReportWithDetails) => problemReportWithDetails.userName,
+    width: 6,
   },
   {
     id: 'type',
@@ -71,6 +73,7 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
     extractor: (problemReportWithDetails) => (
       <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />
     ),
+    width: 1,
   },
   {
     id: 'date',
@@ -78,11 +81,13 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
     canBeSorted: true,
     extractor: (problemReportWithDetails) =>
       timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date),
+    width: 5,
   },
   {
     id: 'text',
     canBeSorted: true,
     title: wordings.problemReportsPage.table.columnTitles.text,
     extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.text,
+    width: 10,
   },
 ];

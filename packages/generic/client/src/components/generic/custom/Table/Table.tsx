@@ -1,36 +1,20 @@
-import React, { ReactElement, useState } from 'react';
-import styled from 'styled-components';
-import { customThemeType, useCustomTheme } from '../../../../styles';
-import { TableSortLabel, Text } from '../../materialUI';
-import { OptionButton } from './OptionButton';
+import React, { useState } from 'react';
+import { sumBy } from 'lodash';
+import { DEFAULT_ORDER_DIRECTION, headerCellType, TableHeader } from './TableHeader';
+import { TableBody, tableRowFieldType } from './TableBody';
+import { footerCellType, TableFooter } from './TableFooter';
 
 export { Table };
 
 export type { tableRowFieldType };
 
-const DEFAULT_ORDER_DIRECTION = 'asc';
-
-const ROW_DEFAULT_HEIGHT = 40;
+const OPTION_CELL_WIDTH = 40;
 
 type orderDirectionType = 'asc' | 'desc';
 
-type tableRowFieldType<DataT> = {
-  id: string;
-  title: string;
-  canBeSorted: boolean;
-  extractor: (data: DataT) => string | number | JSX.Element;
-};
-
 function Table<DataT>(props: {
-  footer?: Array<{
-    id: string;
-    content: ReactElement;
-  }>;
-  header?: Array<{
-    id: string;
-    content: ReactElement;
-    canBeSorted?: boolean;
-  }>;
+  footer?: Array<footerCellType>;
+  header?: Array<headerCellType>;
   isFooterSticky?: boolean;
   isHeaderSticky?: boolean;
   data: DataT[];
@@ -40,14 +24,15 @@ function Table<DataT>(props: {
   }>;
   fields: Array<tableRowFieldType<DataT>>;
 }) {
-  const theme = useCustomTheme();
   const [orderByProperty, setOrderByProperty] = useState<string | undefined>();
   const [orderDirection, setOrderDirection] = useState<orderDirectionType>(DEFAULT_ORDER_DIRECTION);
   const tableStyle = buildTableStyle();
+  const fieldCellStyles = buildFieldCellStyles();
+  const optionCellStyle = props.optionItems ? buildOptionCellStyle() : undefined;
   return (
     <table style={tableStyle}>
       {renderHeader()}
-      {renderBody(theme)}
+      {renderBody()}
       {renderFooter()}
     </table>
   );
@@ -56,129 +41,51 @@ function Table<DataT>(props: {
     if (!props.header) {
       return;
     }
-    const headerStyles = props.isHeaderSticky
-      ? { ...buildHeaderStyles(), ...buildHeaderStickyStyle() }
-      : buildHeaderStyles();
     return (
-      <thead>
-        <tr style={headerStyles}>
-          {props.header.map((cell) => (
-            <td>
-              {cell.canBeSorted ? (
-                <TableSortLabel
-                  direction={orderDirection}
-                  active={orderByProperty === cell.id}
-                  onClick={onOrderByPropertyClickBuilder(cell.id)}
-                >
-                  {cell.content}
-                </TableSortLabel>
-              ) : (
-                cell.content
-              )}
-            </td>
-          ))}
-        </tr>
-      </thead>
+      <TableHeader
+        cells={props.header}
+        fieldCellStyles={fieldCellStyles}
+        isSticky={props.isHeaderSticky}
+        optionCellStyle={optionCellStyle}
+        orderByProperty={orderByProperty}
+        orderDirection={orderDirection}
+        setOrderByProperty={setOrderByProperty}
+        setOrderDirection={setOrderDirection}
+      />
     );
   }
 
-  function renderBody(theme: customThemeType) {
-    const sortedData = sortData(props.data);
-    const styleProps = {
-      theme,
-    };
-    const { Div_OptionButtonContainer, Tr } = buildStyledComponents();
-
-    return <tbody>{sortedData.map(renderRow)}</tbody>;
-
-    function renderRow(row: DataT) {
-      const formattedRow = props.fields.map((field) => field.extractor(row));
-      const { optionItems } = props;
-
-      if (!optionItems) {
-        return (
-          <Tr styleProps={styleProps}>
-            {formattedRow.map((value) => (
-              <td>
-                <Text variant="h3">{value}</Text>
-              </td>
-            ))}
-          </Tr>
-        );
-      }
-
-      const items = optionItems.map((optionItem) => ({
-        text: optionItem.text,
-        value: optionItem.text,
-      }));
-      const onSelect = (optionItemText: string) => {
-        const optionItem = optionItems.find(({ text }) => text === optionItemText);
-        optionItem && optionItem.onClick(row);
-      };
-
-      return (
-        <>
-          <Div_OptionButtonContainer styleProps={styleProps}>
-            <OptionButton items={items} onSelect={onSelect} />
-          </Div_OptionButtonContainer>
-          <Tr styleProps={styleProps}>
-            {Object.values(formattedRow).map((value) => (
-              <td>
-                <Text variant="h3">{value}</Text>
-              </td>
-            ))}
-          </Tr>
-        </>
-      );
-    }
+  function renderBody() {
+    return (
+      <TableBody
+        data={props.data}
+        fields={props.fields}
+        orderByProperty={orderByProperty}
+        orderDirection={orderDirection}
+        optionItems={props.optionItems}
+        optionCellStyle={optionCellStyle}
+      />
+    );
   }
 
   function renderFooter() {
     if (!props.footer) {
       return;
     }
-    const footerStyles = props.isFooterSticky
-      ? { ...buildFooterStyles(), ...buildFooterStickyStyle() }
-      : buildFooterStyles();
-    return (
-      <tfoot>
-        <tr style={footerStyles}>
-          {props.footer.map((cell) => (
-            <td key={cell.id}>{cell.content}</td>
-          ))}
-        </tr>
-      </tfoot>
-    );
+    return <TableFooter cells={props.footer} isSticky={props.isFooterSticky} />;
   }
 
-  function sortData(data: DataT[]): DataT[] {
-    const orderByField = props.fields.find((field) => field.id === orderByProperty);
-    if (!orderByField) {
-      return data;
-    }
-    return data.sort((dataA, dataB) => {
-      const propertyA = orderByField.extractor(dataA);
-      const propertyB = orderByField.extractor(dataB);
-      if (propertyA === propertyB) {
-        return 0;
-      } else if (propertyA < propertyB) {
-        return orderDirection === 'asc' ? 1 : -1;
-      } else {
-        return orderDirection === 'asc' ? -1 : 1;
-      }
-    });
-  }
-
-  function onOrderByPropertyClickBuilder(newOrderByProperty: string) {
-    const onOrderByPropertyClick = () => {
-      if (newOrderByProperty === orderByProperty) {
-        setOrderDirection(orderDirection === 'asc' ? 'desc' : 'asc');
-      } else {
-        setOrderDirection(DEFAULT_ORDER_DIRECTION);
-        setOrderByProperty(newOrderByProperty);
-      }
-    };
-    return onOrderByPropertyClick;
+  function buildFieldCellStyles() {
+    const totalWidths = sumBy(props.fields, (field) => field.width);
+    const styles = props.fields.reduce((accumulator, field) => {
+      return {
+        ...accumulator,
+        [field.id]: {
+          width: `${(field.width / totalWidths) * 100}%`,
+        },
+      };
+    }, {} as Record<string, { width: string }>);
+    return styles;
   }
 
   function buildTableStyle() {
@@ -188,62 +95,10 @@ function Table<DataT>(props: {
     } as const;
   }
 
-  function buildStyledComponents() {
-    type stylePropsType = {
-      styleProps: {
-        theme: customThemeType;
-      };
-    };
-
-    const Tr = styled.tr<stylePropsType>`
-      ${({ styleProps }) => {
-        return `
-          height: ${ROW_DEFAULT_HEIGHT}px;
-          position: relative;
-          &:hover {
-            background-color: ${styleProps.theme.colors.default.background};
-          }
-      `;
-      }}
-    `;
-
-    const Div_OptionButtonContainer = styled.div<stylePropsType>`
-      right: 0;
-      z-index: 10;
-      position: absolute;
-    `;
-
+  function buildOptionCellStyle() {
     return {
-      Div_OptionButtonContainer,
-      Tr,
-    };
-  }
-
-  function buildHeaderStickyStyle() {
-    return {
-      backgroundColor: theme.colors.background,
-      top: 0,
-      position: 'sticky',
+      display: 'block',
+      width: OPTION_CELL_WIDTH,
     } as const;
-  }
-
-  function buildHeaderStyles() {
-    return {
-      borderBottom: `1px solid ${theme.colors.line.level2}`,
-    };
-  }
-
-  function buildFooterStickyStyle() {
-    return {
-      backgroundColor: theme.colors.background,
-      bottom: 0,
-      position: 'sticky',
-    } as const;
-  }
-
-  function buildFooterStyles() {
-    return {
-      borderTop: `1px solid ${theme.colors.line.level2}`,
-    };
   }
 }

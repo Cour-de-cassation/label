@@ -42,14 +42,15 @@ function Button(props: {
     }
 
     return (
-      <div
+      <button
         onClick={onClick}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         style={style}
+        type={props.type}
       >
         {props.children}
-      </div>
+      </button>
     );
   }
 
@@ -69,6 +70,8 @@ function Button(props: {
       justifyContent: 'center',
       alignItems: 'center',
       opacity,
+      border: 'none',
+      color: 'inherit',
       ...hoveredStyles,
     };
   }

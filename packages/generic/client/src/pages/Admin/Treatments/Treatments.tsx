@@ -1,7 +1,10 @@
 import React from 'react';
-import { AdminMenu, ButtonWithIcon, MainHeader, Text } from '../../../components';
+import { AdminMenu, MainHeader, tableRowFieldType, Text } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { apiRouteOutType, idModule, treatmentModule } from '@label/core';
+import { timeOperator } from '../../../services/timeOperator';
 import { wordings } from '../../../wordings';
+import { ExportCSVButton } from './ExportCSVButton';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
 
@@ -18,26 +21,97 @@ function Treatments() {
       <div style={styles.contentContainer}>
         <AdminMenu />
         <TreatmentsDataFetcher>
-          {({ treatmentsWithDetails }) => (
-            <div style={styles.table}>
-              <div style={styles.tableHeaderContainer}>
-                <div style={styles.tableHeader}>
-                  <div style={styles.filterContainer}>
-                    <Text>{wordings.treatmentsPage.table.filter.title}</Text>
+          {({ treatmentsWithDetails }) => {
+            const treatmentFields = buildTreatmentFields(treatmentsWithDetails);
+
+            return (
+              <div style={styles.table}>
+                <div style={styles.tableHeaderContainer}>
+                  <div style={styles.tableHeader}>
+                    <div style={styles.filterContainer}>
+                      <Text>{wordings.treatmentsPage.table.filter.title}</Text>
+                    </div>
+                    <ExportCSVButton data={treatmentsWithDetails} fields={treatmentFields} />
                   </div>
-                  <ButtonWithIcon iconName="export" text={wordings.treatmentsPage.table.filter.exportButton} />
+                </div>
+
+                <div style={styles.tableContentContainer}>
+                  <TreatmentTable treatmentsWithDetails={treatmentsWithDetails} fields={treatmentFields} />
                 </div>
               </div>
-
-              <div style={styles.tableContentContainer}>
-                <TreatmentTable treatmentsWithDetails={treatmentsWithDetails} />
-              </div>
-            </div>
-          )}
+            );
+          }}
         </TreatmentsDataFetcher>
       </div>
     </>
   );
+
+  function buildTreatmentFields(treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>) {
+    const treatmentsInfo = treatmentModule.lib.computeTreatmentsInfo(
+      treatmentsWithDetails.map(({ treatment }) => treatment),
+    );
+
+    const treatmentsFields: Array<tableRowFieldType<
+      apiRouteOutType<'get', 'treatmentsWithDetails'>[number],
+      string | number
+    >> = [
+      {
+        id: 'documentId',
+        title: wordings.treatmentsPage.table.columnTitles.number,
+        canBeSorted: true,
+        extractor: (treatmentWithDetails) => JSON.stringify(treatmentWithDetails.documentId),
+        width: 10,
+      },
+      {
+        id: 'userName',
+        title: wordings.treatmentsPage.table.columnTitles.agent,
+        canBeSorted: true,
+        extractor: (treatmentWithDetails) => treatmentWithDetails.userName,
+        width: 10,
+      },
+      {
+        id: 'date',
+        title: wordings.treatmentsPage.table.columnTitles.date,
+        canBeSorted: true,
+        extractor: (treatmentWithDetails) =>
+          timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.lastUpdateDate),
+        width: 10,
+      },
+      {
+        id: 'deletions',
+        title: wordings.treatmentsPage.table.columnTitles.surAnnotation,
+        canBeSorted: true,
+        extractor: (treatmentWithDetails) =>
+          treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].deletionsCount,
+        width: 3,
+      },
+      {
+        id: 'additions',
+        title: wordings.treatmentsPage.table.columnTitles.subAnnotation,
+        canBeSorted: true,
+        extractor: (treatmentWithDetails) =>
+          treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].additionsCount,
+        width: 3,
+      },
+      {
+        id: 'modifications',
+        title: wordings.treatmentsPage.table.columnTitles.changeAnnotation,
+        canBeSorted: true,
+        extractor: (treatmentWithDetails) =>
+          treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].modificationsCount,
+        width: 3,
+      },
+      {
+        id: 'duration',
+        canBeSorted: true,
+        title: wordings.treatmentsPage.table.columnTitles.duration,
+        extractor: (treatmentWithDetails) =>
+          timeOperator.convertDurationToReadableDuration(treatmentWithDetails.treatment.duration),
+        width: 3,
+      },
+    ];
+    return treatmentsFields;
+  }
 
   function buildStyles(theme: customThemeType) {
     return {

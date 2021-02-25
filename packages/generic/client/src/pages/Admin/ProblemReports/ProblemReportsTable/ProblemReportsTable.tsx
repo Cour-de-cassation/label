@@ -51,7 +51,10 @@ function buildOptionItems() {
   ];
 }
 
-const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'problemReportsWithDetails'>[number]>> = [
+const problemReportsFields: Array<tableRowFieldType<
+  apiRouteOutType<'get', 'problemReportsWithDetails'>[number],
+  string | number | JSX.Element
+>> = [
   {
     id: '_id',
     title: wordings.problemReportsPage.table.columnTitles.number,

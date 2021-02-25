@@ -1,4 +1,4 @@
-import { idModule, monitoringEntryType } from '@label/core';
+import { csvExtractor, idModule, monitoringEntryType } from '@label/core';
 import { promises as fs } from 'fs';
 import { monitoringEntryService } from '../../modules/monitoringEntry';
 import { logger } from '../../utils';
@@ -42,14 +42,5 @@ function convertMonitoringEntriesToCsvContent(
       extractor: ({ creationDate }) => `${creationDate}`,
     },
   ];
-  const csvHeadline = CSV_FIELDS.map(({ title }) => title).join(',');
-  const csvContent = [
-    csvHeadline,
-    ...monitoringEntries.map((monitoringEntry) => {
-      return CSV_FIELDS.map(({ extractor }) => extractor(monitoringEntry)).join(
-        ',',
-      );
-    }),
-  ].join('\n');
-  return csvContent;
+  return csvExtractor.convertDataToCsv(monitoringEntries, CSV_FIELDS);
 }

@@ -9,23 +9,23 @@ export { TableBody };
 
 export type { tableRowFieldType };
 
-type tableRowFieldType<DataT> = {
+type tableRowFieldType<InputT, OutputT> = {
   id: string;
   title: string;
   canBeSorted: boolean;
-  extractor: (data: DataT) => string | number | JSX.Element;
+  extractor: (data: InputT) => OutputT;
   width: number;
 };
 
 const ROW_DEFAULT_HEIGHT = 50;
 
-function TableBody<DataT>(props: {
-  data: DataT[];
-  fields: Array<tableRowFieldType<DataT>>;
+function TableBody<InputT, OutputT>(props: {
+  data: InputT[];
+  fields: Array<tableRowFieldType<InputT, OutputT>>;
   optionCellStyle?: CSSProperties;
   optionItems?: Array<{
     text: string;
-    onClick: (data: DataT) => void;
+    onClick: (data: InputT) => void;
   }>;
   orderByProperty: string | undefined;
   orderDirection: orderDirectionType;
@@ -39,7 +39,7 @@ function TableBody<DataT>(props: {
 
   return <tbody>{sortedData.map(renderRow)}</tbody>;
 
-  function renderRow(row: DataT) {
+  function renderRow(row: InputT) {
     const formattedRow = props.fields.map((field) => field.extractor(row));
     const { optionItems } = props;
 
@@ -82,7 +82,7 @@ function TableBody<DataT>(props: {
     );
   }
 
-  function sortData(data: DataT[]): DataT[] {
+  function sortData(data: InputT[]): InputT[] {
     const orderByField = props.fields.find((field) => field.id === props.orderByProperty);
     if (!orderByField) {
       return data;

@@ -12,19 +12,19 @@ const OPTION_CELL_WIDTH = 40;
 
 type orderDirectionType = 'asc' | 'desc';
 
-function Table<DataT>(props: {
+function Table<InputT, OutputT>(props: {
   defaultOrderByProperty?: string;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
   header?: Array<headerCellType>;
   isFooterSticky?: boolean;
   isHeaderSticky?: boolean;
-  data: DataT[];
+  data: InputT[];
   optionItems?: Array<{
     text: string;
-    onClick: (data: DataT) => void;
+    onClick: (data: InputT) => void;
   }>;
-  fields: Array<tableRowFieldType<DataT>>;
+  fields: Array<tableRowFieldType<InputT, OutputT>>;
 }) {
   const [orderByProperty, setOrderByProperty] = useState<string | undefined>(props.defaultOrderByProperty);
   const [orderDirection, setOrderDirection] = useState<orderDirectionType>(

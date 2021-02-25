@@ -67,7 +67,7 @@ function MenuIcon(props: { iconName: iconNameType; pathname: string }) {
       bottomCorner: {
         height: CORNER_HEIGHT,
         width: CORNER_HEIGHT,
-        borderTopRightRadius: `${CORNER_HEIGHT}px`,
+        borderTopRightRadius: `${CORNER_HEIGHT / 2}px`,
         backgroundColor: theme.colors.default.background,
       },
     } as const;

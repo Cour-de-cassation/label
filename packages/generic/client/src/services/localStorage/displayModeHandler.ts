@@ -14,5 +14,5 @@ function set(displayMode: displayModeType) {
 }
 
 function get() {
-  return localStorage.getItem(DISPLAY_MODE_STORAGE_KEY) as displayModeType | undefined;
+  return localStorage.getItem(DISPLAY_MODE_STORAGE_KEY) as displayModeType | null;
 }

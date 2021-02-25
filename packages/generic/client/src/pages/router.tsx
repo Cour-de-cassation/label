@@ -40,10 +40,13 @@ function Router() {
             {({ settings }) => <DocumentInspector settings={settings} />}
           </SettingsDataFetcher>
         </AuthenticatedRoute>
-        <AuthenticatedRoute path="/">
+        <AuthenticatedRoute path="/annotation">
           <SettingsDataFetcher alwaysDisplayHeader>
             {({ settings }) => <Home settings={settings} />}
           </SettingsDataFetcher>
+        </AuthenticatedRoute>
+        <AuthenticatedRoute>
+          <HomeRoute path="/" />
         </AuthenticatedRoute>
       </Switch>
     </BrowserRouter>
@@ -67,6 +70,32 @@ const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }
     }
   />
 );
+
+const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => (
+  <Route
+    {...props}
+    render={({ location }) => (
+      <Redirect
+        to={{
+          pathname: getRedirectionRoute(),
+          state: { from: location },
+        }}
+      />
+    )}
+  />
+);
+
+function getRedirectionRoute() {
+  const userRole = localStorage.userRoleHandler.get();
+  switch (userRole) {
+    case 'admin':
+      return '/admin/treatments';
+    case 'annotator':
+      return '/annotation';
+    default:
+      return '/annotation';
+  }
+}
 
 const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
   <Route

@@ -96,8 +96,11 @@ const Login: FunctionComponent = () => {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     try {
-      const { data: token } = await apiCaller.post<'login'>('login', { email, password });
+      const {
+        data: { token, role },
+      } = await apiCaller.post<'login'>('login', { email, password });
       localStorage.bearerTokenHandler.set(token);
+      localStorage.userRoleHandler.set(role);
       history.push('/');
     } catch (error) {
       setIsFormValid(false);

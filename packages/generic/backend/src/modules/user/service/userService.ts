@@ -54,7 +54,11 @@ const userService = {
       );
     }
 
-    return jwtSigner.sign(storedUser._id);
+    const token = jwtSigner.sign(storedUser._id);
+    return {
+      token,
+      role: storedUser.role,
+    };
   },
   async resetPasswordRequest(email: string) {
     const userRepository = buildUserRepository();

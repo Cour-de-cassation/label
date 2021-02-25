@@ -104,8 +104,17 @@ const apiSchema = {
         },
       },
       out: {
-        kind: 'primitive',
-        content: 'string',
+        kind: 'object',
+        content: {
+          token: {
+            kind: 'primitive',
+            content: 'string',
+          },
+          role: {
+            kind: 'constant',
+            content: ['admin', 'annotator'] as const,
+          },
+        },
       },
     },
     monitoringEntries: {

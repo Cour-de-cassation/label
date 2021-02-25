@@ -1,3 +1,4 @@
+import { AdminMenu } from './AdminMenu';
 import { CategoryIcon } from './CategoryIcon';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { LinkAnnotationDropdown } from './LinkAnnotationDropdown';
@@ -7,6 +8,7 @@ import { ProblemReportIcon } from './ProblemReportIcon';
 import { UnlinkAnnotationDropdown } from './UnlinkAnnotationDropdown';
 
 export {
+  AdminMenu,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
   LinkAnnotationDropdown,

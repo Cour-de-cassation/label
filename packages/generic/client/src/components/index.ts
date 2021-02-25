@@ -1,4 +1,5 @@
 import {
+  AdminMenu,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
   LinkAnnotationDropdown,
@@ -34,6 +35,7 @@ import {
 
 export {
   Accordion,
+  AdminMenu,
   ButtonWithIcon,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,

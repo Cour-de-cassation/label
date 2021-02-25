@@ -1,6 +1,6 @@
 import React from 'react';
-import { MainHeader } from '../../../components';
-import { customThemeType, heights, useCustomTheme } from '../../../styles';
+import { AdminMenu, MainHeader } from '../../../components';
+import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ProblemReportsDataFetcher } from './ProblemReportsDataFetcher';
 import { ProblemReportsTable } from './ProblemReportsTable';
@@ -11,21 +11,26 @@ function ProblemReports() {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   return (
-    <ProblemReportsDataFetcher alwaysDisplayHeader>
-      {({ problemReportsWithDetails }) => (
-        <>
-          <MainHeader title={wordings.problemReportsPage.title} subtitle={wordings.problemReportsPage.subtitle} />
-          <div style={styles.table}>
-            <div style={styles.tableHeaderContainer}>
-              <div style={styles.tableHeader}></div>
+    <>
+      <div style={styles.header}>
+        <MainHeader title={wordings.problemReportsPage.title} subtitle={wordings.problemReportsPage.subtitle} />
+      </div>
+      <div style={styles.contentContainer}>
+        <AdminMenu />
+        <ProblemReportsDataFetcher>
+          {({ problemReportsWithDetails }) => (
+            <div style={styles.table}>
+              <div style={styles.tableHeaderContainer}>
+                <div style={styles.tableHeader}></div>
+              </div>
+              <div style={styles.tableContentContainer}>
+                <ProblemReportsTable problemReportsWithDetails={problemReportsWithDetails} />
+              </div>
             </div>
-            <div style={styles.tableContentContainer}>
-              <ProblemReportsTable problemReportsWithDetails={problemReportsWithDetails} />
-            </div>
-          </div>
-        </>
-      )}
-    </ProblemReportsDataFetcher>
+          )}
+        </ProblemReportsDataFetcher>
+      </div>
+    </>
   );
 }
 
@@ -36,6 +41,10 @@ function buildStyles(theme: customThemeType) {
     },
     tableHeaderContainer: {
       height: heights.adminTreatmentsTableHeader,
+    },
+    contentContainer: {
+      width: '100vw',
+      display: 'flex',
     },
     tableHeader: {
       paddingTop: theme.spacing * 2,
@@ -49,6 +58,9 @@ function buildStyles(theme: customThemeType) {
     },
     table: {
       height: heights.adminPanel,
+      width: widths.adminContent,
+      paddingLeft: theme.spacing * 3,
+      paddingRight: theme.spacing * 2,
     },
   } as const;
 }

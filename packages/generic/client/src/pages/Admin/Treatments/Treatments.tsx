@@ -1,6 +1,6 @@
 import React from 'react';
-import { ButtonWithIcon, MainHeader, Text } from '../../../components';
-import { customThemeType, heights, useCustomTheme } from '../../../styles';
+import { AdminMenu, ButtonWithIcon, MainHeader, Text } from '../../../components';
+import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
@@ -15,24 +15,27 @@ function Treatments() {
       <div style={styles.header}>
         <MainHeader title={wordings.treatmentsPage.title} subtitle={wordings.treatmentsPage.subtitle} />
       </div>
-      <TreatmentsDataFetcher>
-        {({ treatmentsWithDetails }) => (
-          <div style={styles.table}>
-            <div style={styles.tableHeaderContainer}>
-              <div style={styles.tableHeader}>
-                <div style={styles.filterContainer}>
-                  <Text>{wordings.treatmentsPage.table.filter.title}</Text>
+      <div style={styles.contentContainer}>
+        <AdminMenu />
+        <TreatmentsDataFetcher>
+          {({ treatmentsWithDetails }) => (
+            <div style={styles.table}>
+              <div style={styles.tableHeaderContainer}>
+                <div style={styles.tableHeader}>
+                  <div style={styles.filterContainer}>
+                    <Text>{wordings.treatmentsPage.table.filter.title}</Text>
+                  </div>
+                  <ButtonWithIcon iconName="export" text={wordings.treatmentsPage.table.filter.exportButton} />
                 </div>
-                <ButtonWithIcon iconName="export" text={wordings.treatmentsPage.table.filter.exportButton} />
+              </div>
+
+              <div style={styles.tableContentContainer}>
+                <TreatmentTable treatmentsWithDetails={treatmentsWithDetails} />
               </div>
             </div>
-
-            <div style={styles.tableContentContainer}>
-              <TreatmentTable treatmentsWithDetails={treatmentsWithDetails} />
-            </div>
-          </div>
-        )}
-      </TreatmentsDataFetcher>
+          )}
+        </TreatmentsDataFetcher>
+      </div>
     </>
   );
 
@@ -40,6 +43,10 @@ function Treatments() {
     return {
       header: {
         height: heights.header,
+      },
+      contentContainer: {
+        width: '100vw',
+        display: 'flex',
       },
       filterContainer: {
         paddingTop: theme.spacing,
@@ -59,6 +66,7 @@ function Treatments() {
       },
       table: {
         height: heights.adminPanel,
+        width: widths.adminContent,
         paddingLeft: theme.spacing * 3,
         paddingRight: theme.spacing * 2,
       },

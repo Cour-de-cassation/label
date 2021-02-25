@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom';
 import { localStorage } from '../services/localStorage';
-import { Admin } from './Admin';
 import { Agents } from './Admin/Agents';
 import { DocumentInspector } from './Admin/DocumentInspector';
 import { Treatments } from './Admin/Treatments';
@@ -40,9 +39,6 @@ function Router() {
           <SettingsDataFetcher alwaysDisplayHeader>
             {({ settings }) => <DocumentInspector settings={settings} />}
           </SettingsDataFetcher>
-        </AuthenticatedRoute>
-        <AuthenticatedRoute path="/admin">
-          <Admin />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/">
           <SettingsDataFetcher alwaysDisplayHeader>

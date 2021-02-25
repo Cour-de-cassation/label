@@ -13,6 +13,8 @@ const OPTION_CELL_WIDTH = 40;
 type orderDirectionType = 'asc' | 'desc';
 
 function Table<DataT>(props: {
+  defaultOrderByProperty?: string;
+  defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
   header?: Array<headerCellType>;
   isFooterSticky?: boolean;
@@ -24,8 +26,10 @@ function Table<DataT>(props: {
   }>;
   fields: Array<tableRowFieldType<DataT>>;
 }) {
-  const [orderByProperty, setOrderByProperty] = useState<string | undefined>();
-  const [orderDirection, setOrderDirection] = useState<orderDirectionType>(DEFAULT_ORDER_DIRECTION);
+  const [orderByProperty, setOrderByProperty] = useState<string | undefined>(props.defaultOrderByProperty);
+  const [orderDirection, setOrderDirection] = useState<orderDirectionType>(
+    props.defaultOrderDirection || DEFAULT_ORDER_DIRECTION,
+  );
   const tableStyle = buildTableStyle();
   const fieldCellStyles = buildFieldCellStyles();
   const optionCellStyle = props.optionItems ? buildOptionCellStyle() : undefined;

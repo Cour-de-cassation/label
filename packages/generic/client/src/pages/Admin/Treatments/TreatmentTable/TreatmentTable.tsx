@@ -17,6 +17,8 @@ function TreatmentTable(props: { treatmentsWithDetails: apiRouteOutType<'get', '
     <Table
       isHeaderSticky
       isFooterSticky
+      defaultOrderByProperty="date"
+      defaultOrderDirection="desc"
       fields={treatmentsFields}
       data={props.treatmentsWithDetails}
       header={treatmentsFields.map(({ id, title, canBeSorted }) => ({

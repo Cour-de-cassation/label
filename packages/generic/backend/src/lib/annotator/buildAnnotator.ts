@@ -2,6 +2,7 @@ import {
   annotationType,
   annotationReportType,
   autoLinker,
+  documentModule,
   documentType,
   idType,
   settingsModule,
@@ -28,13 +29,16 @@ function buildAnnotator(
   };
 
   async function annotateDocuments(documents: documentType[]) {
-    for (let ind = 0; ind < documents.length; ind++) {
+    const sortedDocuments = documents.sort(
+      documentModule.lib.comparator.compareByPriority,
+    );
+    for (let ind = 0; ind < sortedDocuments.length; ind++) {
       logger.log(
         `Annotating  with ${annotatorConfig.name} document ${ind + 1}/${
-          documents.length
+          sortedDocuments.length
         }`,
       );
-      await annotateDocument(documents[ind]);
+      await annotateDocument(sortedDocuments[ind]);
     }
   }
 

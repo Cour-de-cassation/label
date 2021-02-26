@@ -1,7 +1,7 @@
 import React from 'react';
 import { apiRouteOutType, idModule } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { ProblemReportIcon, Table, tableRowFieldType, Text } from '../../../../components';
+import { ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
 import { timeOperator } from '../../../../services/timeOperator';
 import { wordings } from '../../../../wordings';
 
@@ -21,7 +21,7 @@ function ProblemReportsTable(props: {
       header={problemReportsFields.map(({ id, title, canBeSorted }) => ({
         id,
         canBeSorted,
-        content: <Text variant="h3">{title}</Text>,
+        text: title,
       }))}
       optionItems={optionItems}
     />

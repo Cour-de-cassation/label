@@ -26,7 +26,7 @@ function TreatmentTable(props: {
       header={props.fields.map(({ id, title, canBeSorted }) => ({
         id,
         canBeSorted,
-        content: <Text variant="h3">{title}</Text>,
+        text: title,
       }))}
       footer={[
         {

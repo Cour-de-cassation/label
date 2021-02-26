@@ -1,8 +1,6 @@
 import React, { CSSProperties, ReactElement, ReactNode, MouseEvent, useState } from 'react';
-import { Tooltip } from '@material-ui/core';
-
+import { Tooltip } from '../materialUI';
 import { customThemeType, useCustomTheme } from '../../../styles';
-import { Text } from '../materialUI/Text';
 
 export { Button };
 
@@ -25,7 +23,7 @@ function Button(props: {
   const buttonStyles = buildButtonStyles(theme);
   const style = { ...buttonStyles, ...props.style };
   return props.hint && !props.disabled ? (
-    <Tooltip arrow title={<Text>{props.hint}</Text>}>
+    <Tooltip arrow title={props.hint}>
       {buildButton()}
     </Tooltip>
   ) : (

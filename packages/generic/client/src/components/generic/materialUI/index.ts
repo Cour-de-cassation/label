@@ -11,6 +11,7 @@ import { SwitchButton } from './SwitchButton';
 import { TableSortLabel } from './TableSortLabel';
 import { Text } from './Text';
 import { TextInput } from './TextInput';
+import { Tooltip } from './Tooltip';
 
 export {
   Accordion,
@@ -26,6 +27,7 @@ export {
   TableSortLabel,
   Text,
   TextInput,
+  Tooltip,
 };
 
 export type { iconNameType };

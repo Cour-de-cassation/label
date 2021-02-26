@@ -26,6 +26,7 @@ import {
   TableSortLabel,
   Text,
   TextInput,
+  Tooltip,
 } from './materialUI';
 
 export {
@@ -52,6 +53,7 @@ export {
   TableSortLabel,
   Text,
   TextInput,
+  Tooltip,
 };
 
 export type { iconNameType, tableRowFieldType };

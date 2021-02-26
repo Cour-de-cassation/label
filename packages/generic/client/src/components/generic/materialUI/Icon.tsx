@@ -44,8 +44,8 @@ import {
   StoreRounded,
   UndoRounded,
 } from '@material-ui/icons';
-import { Tooltip } from '@material-ui/core';
 import { categoryIconNameType } from '@label/core';
+import { Tooltip } from './Tooltip';
 
 export { Icon };
 

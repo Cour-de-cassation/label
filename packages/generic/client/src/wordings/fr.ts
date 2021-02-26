@@ -98,8 +98,8 @@ const fr = {
       },
       columnTitles: {
         agent: 'Agent',
-        duration: 'Temps',
-        date: 'Date de traitement',
+        duration: 'Tps',
+        date: 'Traité le',
         surAnnotation: 'Sur',
         subAnnotation: 'Ss.',
         changeAnnotation: 'Mod.',

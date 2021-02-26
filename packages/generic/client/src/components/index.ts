@@ -31,6 +31,7 @@ import {
   Text,
   TextInput,
   tableRowFieldType,
+  Tooltip,
 } from './generic';
 
 export {
@@ -62,6 +63,7 @@ export {
   TableSortLabel,
   Text,
   TextInput,
+  Tooltip,
   UnlinkAnnotationDropdown,
 };
 

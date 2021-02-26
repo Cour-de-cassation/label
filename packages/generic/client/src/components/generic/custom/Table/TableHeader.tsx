@@ -1,6 +1,6 @@
-import React, { CSSProperties, ReactElement } from 'react';
+import React, { CSSProperties } from 'react';
+import { TableSortLabel, Text } from '../../materialUI';
 import { customThemeType, useCustomTheme } from '../../../../styles';
-import { TableSortLabel } from '../../materialUI';
 
 export { TableHeader, DEFAULT_ORDER_DIRECTION };
 
@@ -8,7 +8,7 @@ export type { headerCellType, orderDirectionType };
 
 type headerCellType = {
   id: string;
-  content: ReactElement;
+  text: string;
   canBeSorted?: boolean;
 };
 
@@ -41,10 +41,10 @@ function TableHeader(props: {
                 active={props.orderByProperty === cell.id}
                 onClick={onOrderByPropertyClickBuilder(cell.id)}
               >
-                {cell.content}
+                <Text variant="h3">{cell.text}</Text>
               </TableSortLabel>
             ) : (
-              cell.content
+              <Text variant="h3">{cell.text}</Text>
             )}
           </td>
         ))}

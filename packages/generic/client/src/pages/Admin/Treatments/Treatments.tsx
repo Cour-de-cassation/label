@@ -1,17 +1,21 @@
-import React from 'react';
-import { AdminMenu, MainHeader, tableRowFieldType, Text } from '../../../components';
+import React, { useState } from 'react';
+import { AdminMenu, ButtonWithIcon, MainHeader, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { apiRouteOutType, idModule, treatmentModule } from '@label/core';
 import { timeOperator } from '../../../services/timeOperator';
 import { wordings } from '../../../wordings';
+import { Chip } from './Chip';
 import { ExportCSVButton } from './ExportCSVButton';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
 
 export { Treatments };
 
+const FILTER_TEXT = 'Du 22/01/2021 au 22/01/2021';
+
 function Treatments() {
   const theme = useCustomTheme();
+  const [filters, setFilters] = useState<string[]>([]);
   const styles = buildStyles(theme);
   return (
     <>
@@ -28,8 +32,17 @@ function Treatments() {
               <div style={styles.table}>
                 <div style={styles.tableHeaderContainer}>
                   <div style={styles.tableHeader}>
-                    <div style={styles.filterContainer}>
-                      <Text>{wordings.treatmentsPage.table.filter.title}</Text>
+                    <div>
+                      <ButtonWithIcon
+                        onClick={() => setFilters([FILTER_TEXT])}
+                        iconName="filter"
+                        text={wordings.treatmentsPage.table.filter.title}
+                      />
+                      <div style={styles.chipsContainer}>
+                        {filters.map((filter) => (
+                          <Chip filterText={filter} onClose={buildRemoveFilter(FILTER_TEXT)} />
+                        ))}
+                      </div>
                     </div>
                     <ExportCSVButton data={treatmentsWithDetails} fields={treatmentFields} />
                   </div>
@@ -45,6 +58,10 @@ function Treatments() {
       </div>
     </>
   );
+
+  function buildRemoveFilter(filterToRemove: string) {
+    return () => setFilters(filters.filter((filter) => filter != filterToRemove));
+  }
 
   function buildTreatmentFields(treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>) {
     const treatmentsInfo = treatmentModule.lib.computeTreatmentsInfo(
@@ -122,14 +139,15 @@ function Treatments() {
         width: '100vw',
         display: 'flex',
       },
-      filterContainer: {
+      chipsContainer: {
         paddingTop: theme.spacing,
+        paddingBottom: theme.spacing,
       },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
       },
       tableHeader: {
-        paddingTop: theme.spacing * 2,
+        paddingTop: theme.spacing,
         paddingRight: theme.spacing,
         display: 'flex',
         justifyContent: 'space-between',

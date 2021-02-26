@@ -21,21 +21,21 @@ describe('nlpApi', () => {
         start: 0,
         end: 8,
         label: 'personnePhysiquePrenom',
-        source: 'jurinet',
+        source: 'NER model',
       },
       {
         text: 'Dubois',
         start: 9,
         end: 15,
         label: 'personnePhysiqueNom',
-        source: 'jurinet',
+        source: 'NER model',
       },
       {
         text: 'avenue des champs Élysée',
         start: 40,
         end: 64,
         label: 'adresse',
-        source: 'jurinet',
+        source: 'NER model',
       },
     ]);
   });
@@ -57,7 +57,7 @@ describe('nlpApi', () => {
         start: 40,
         end: 64,
         label: 'adresse',
-        source: 'jurinet',
+        source: 'NER model',
       },
     ]);
   });

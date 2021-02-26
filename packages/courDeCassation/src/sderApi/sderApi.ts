@@ -14,7 +14,7 @@ const sderApi: sderApiType = {
     const response = await axios({
       headers: { 'Content-Type': 'application/json' },
       method: 'get',
-      url: `${SDER_API_BASE_URL}/label/decisions-to-pseudonymise?date="${computeOneMonthAgoDate()}"`,
+      url: `${SDER_API_BASE_URL}/decisions-to-pseudonymise?date="${computeOneMonthAgoDate()}"`,
     });
 
     return response.data as sderCourtDecisionType[];
@@ -24,10 +24,11 @@ const sderApi: sderApiType = {
     await axios({
       data: {
         decisionIds: documents.map(document => document.documentId),
+        labelStatus: 'loaded',
       },
       headers: { 'Content-Type': 'application/json' },
       method: 'patch',
-      url: `${SDER_API_BASE_URL}/label/update-loaded-label-status`,
+      url: `${SDER_API_BASE_URL}/update-label-status`,
     });
   },
 
@@ -44,7 +45,7 @@ const sderApi: sderApiType = {
       },
       headers: { 'Content-Type': 'application/json' },
       method: 'patch',
-      url: `${SDER_API_BASE_URL}/label/update-decision-pseudonymisation`,
+      url: `${SDER_API_BASE_URL}/update-decision-pseudonymisation`,
     });
   },
 };

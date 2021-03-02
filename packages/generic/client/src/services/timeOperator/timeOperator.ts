@@ -3,8 +3,6 @@ export { timeOperator };
 const timeOperator = {
   convertDurationToReadableDuration,
   convertTimestampToReadableDate,
-  getReadableAverageDuration,
-  getReadableTotalDuration,
 };
 
 function convertTimestampToReadableDate(timestamp: number) {
@@ -30,18 +28,4 @@ function convertDurationToReadableDuration(duration: number) {
     return `${remainingMinutes}m${remainingSeconds}s`;
   }
   return `${remainingSeconds}s`;
-}
-
-function getReadableAverageDuration(durations: number[]) {
-  if (!durations.length) {
-    return convertDurationToReadableDuration(0);
-  }
-  const totalDuration = durations.reduce((total, duration) => total + duration, 0);
-  const averageDuration = Math.floor(totalDuration / durations.length);
-  return convertDurationToReadableDuration(averageDuration);
-}
-
-function getReadableTotalDuration(durations: number[]) {
-  const totalDuration = durations.reduce((total, duration) => total + duration, 0);
-  return convertDurationToReadableDuration(totalDuration);
 }

@@ -27,7 +27,7 @@ function MenuBar(props: { children: ReactNode; color?: PropTypes.Color; isElevat
 function buildClasses(theme: customThemeType, isElevated: boolean) {
   return makeStyles({
     root: {
-      boxShadow: isElevated ? theme.boxShadow.major : 'none',
+      boxShadow: isElevated ? theme.boxShadow.major.out : 'none',
     },
   })();
 }

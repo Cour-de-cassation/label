@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { AdminMenu, ButtonWithIcon, MainHeader, tableRowFieldType } from '../../../components';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { apiRouteOutType, idModule, treatmentModule } from '@label/core';
+import { AdminMenu, ButtonWithIcon, MainHeader, tableRowFieldType } from '../../../components';
 import { timeOperator } from '../../../services/timeOperator';
+import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { Chip } from './Chip';
 import { ExportCSVButton } from './ExportCSVButton';
+import { StatisticsBox } from './StatisticsBox';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
 
@@ -32,7 +33,7 @@ function Treatments() {
               <div style={styles.table}>
                 <div style={styles.tableHeaderContainer}>
                   <div style={styles.tableHeader}>
-                    <div>
+                    <div style={styles.filterContainer}>
                       <ButtonWithIcon
                         onClick={() => setFilters([FILTER_TEXT])}
                         iconName="filter"
@@ -44,12 +45,14 @@ function Treatments() {
                         ))}
                       </div>
                     </div>
-                    <ExportCSVButton data={treatmentsWithDetails} fields={treatmentFields} />
+                    <StatisticsBox treatmentsWithDetails={treatmentsWithDetails} />
                   </div>
                 </div>
-
                 <div style={styles.tableContentContainer}>
                   <TreatmentTable treatmentsWithDetails={treatmentsWithDetails} fields={treatmentFields} />
+                </div>
+                <div style={styles.csvButtonContainer}>
+                  <ExportCSVButton data={treatmentsWithDetails} fields={treatmentFields} />
                 </div>
               </div>
             );
@@ -60,7 +63,7 @@ function Treatments() {
   );
 
   function buildRemoveFilter(filterToRemove: string) {
-    return () => setFilters(filters.filter((filter) => filter != filterToRemove));
+    return () => setFilters(filters.filter((filter) => filter !== filterToRemove));
   }
 
   function buildTreatmentFields(treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>) {
@@ -135,6 +138,11 @@ function Treatments() {
       header: {
         height: heights.header,
       },
+      csvButtonContainer: {
+        position: 'fixed',
+        bottom: theme.spacing,
+        right: theme.spacing * 2,
+      },
       contentContainer: {
         width: '100vw',
         display: 'flex',
@@ -143,12 +151,14 @@ function Treatments() {
         paddingTop: theme.spacing,
         paddingBottom: theme.spacing,
       },
+      filterContainer: {
+        flex: 1,
+      },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
       },
       tableHeader: {
-        paddingTop: theme.spacing,
-        paddingRight: theme.spacing,
+        paddingTop: theme.spacing * 4,
         display: 'flex',
         justifyContent: 'space-between',
       },

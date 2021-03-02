@@ -124,7 +124,7 @@ const Login: FunctionComponent = () => {
         padding: theme.spacing * 6,
         paddingBottom: theme.spacing * 3,
         borderRadius: theme.shape.borderRadius.m,
-        boxShadow: theme.boxShadow.major,
+        boxShadow: theme.boxShadow.major.out,
       },
       inputContainer: {
         marginBottom: theme.spacing * 3,

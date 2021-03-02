@@ -47,7 +47,7 @@ function buildStyle(
       height: '100vh',
     },
     tooltipMenu: {
-      boxShadow: theme.boxShadow.minor,
+      boxShadow: theme.boxShadow.minor.out,
       backgroundColor: theme.colors.background,
       borderRadius: theme.shape.borderRadius.xs,
       position: 'absolute',

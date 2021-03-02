@@ -89,7 +89,7 @@ function buildStyles(theme: customThemeType): { [cssClass: string]: CSSPropertie
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      boxShadow: theme.boxShadow.major,
+      boxShadow: theme.boxShadow.major.out,
       maxWidth: `${MAX_WIDTH}px`,
     },
     categoryIconsContainer: {

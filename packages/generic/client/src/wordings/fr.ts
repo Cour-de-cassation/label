@@ -105,9 +105,14 @@ const fr = {
         changeAnnotation: 'Mod.',
         number: 'N° décision',
       },
-      footer: {
-        total: 'TOTAL',
-        average: 'Moyenne',
+      statistics: {
+        computation: {
+          total: 'Total',
+          average: 'Moyenne',
+        },
+        fields: {
+          duration: 'Tps',
+        },
       },
       optionItems: {
         openDocument: 'Ouvrir la décision...',

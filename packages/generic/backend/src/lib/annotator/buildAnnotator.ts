@@ -1,7 +1,7 @@
 import {
   annotationType,
   annotationReportType,
-  autoLinker,
+  buildAutoAnnotator,
   documentModule,
   documentType,
   idType,
@@ -53,38 +53,39 @@ function buildAnnotator(
     await createAutoTreatment({ annotations, documentId });
     await createReport(report);
   }
-}
 
-async function createAnnotatorTreatment({
-  annotations,
-  documentId,
-}: {
-  annotations: annotationType[];
-  documentId: idType;
-}) {
-  await treatmentService.createTreatment({
+  async function createAnnotatorTreatment({
+    annotations,
     documentId,
-    previousAnnotations: [],
-    nextAnnotations: annotations,
-  });
-}
+  }: {
+    annotations: annotationType[];
+    documentId: idType;
+  }) {
+    await treatmentService.createTreatment({
+      documentId,
+      previousAnnotations: [],
+      nextAnnotations: annotations,
+    });
+  }
 
-async function createAutoTreatment({
-  annotations,
-  documentId,
-}: {
-  annotations: annotationType[];
-  documentId: idType;
-}) {
-  const autoTreatedAnnotations = autoLinker.autoLinkAll(annotations);
-  await treatmentService.createTreatment({
+  async function createAutoTreatment({
+    annotations,
     documentId,
-    previousAnnotations: annotations,
-    nextAnnotations: autoTreatedAnnotations,
-  });
-}
+  }: {
+    annotations: annotationType[];
+    documentId: idType;
+  }) {
+    const autoAnnotator = buildAutoAnnotator(settings);
+    const autoTreatedAnnotations = autoAnnotator.annotate(annotations);
+    await treatmentService.createTreatment({
+      documentId,
+      previousAnnotations: annotations,
+      nextAnnotations: autoTreatedAnnotations,
+    });
+  }
 
-async function createReport(report: annotationReportType) {
-  const annotationReportRepository = buildAnnotationReportRepository();
-  await annotationReportRepository.insert(report);
+  async function createReport(report: annotationReportType) {
+    const annotationReportRepository = buildAnnotationReportRepository();
+    await annotationReportRepository.insert(report);
+  }
 }

@@ -85,6 +85,7 @@
       "lightMode": ["brown", 100],
       "darkMode": ["brown", 500]
     },
+    "couldBe": "personnePhysiqueNom",
     "iconName": "hammer",
     "isAnonymized": false,
     "order": 9,
@@ -96,6 +97,7 @@
       "lightMode": ["brown", 200],
       "darkMode": ["brown", 800]
     },
+    "couldBe": "personnePhysiquePrenom",
     "iconName": "hammer",
     "isAnonymized": false,
     "order": 10,

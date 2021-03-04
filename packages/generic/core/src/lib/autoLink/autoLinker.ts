@@ -1,6 +1,6 @@
 import { annotationType } from '../../modules';
 import { annotationLinkHandler } from '../annotationLinkHandler';
-import { computeLevenshteinDistance } from './computeLevenshteinDistance';
+import { stringComparator } from '../stringComparator';
 
 export { autoLinker };
 
@@ -35,37 +35,20 @@ function computeAnnotationsToLinkTo(annotation: annotationType, annotations: ann
     (someAnnotation) =>
       annotation.category === someAnnotation.category &&
       !annotationLinkHandler.isLinkedTo(annotation, someAnnotation) &&
-      (equalCaseInsensitive(annotation, someAnnotation) ||
+      (stringComparator.insensitiveEqual(annotation.text, someAnnotation.text) ||
         isSubWord(annotation, someAnnotation) ||
         isSubWord(someAnnotation, annotation) ||
-        areSimilarWords(someAnnotation, annotation)),
+        stringComparator.similar(someAnnotation.text, annotation.text)),
   );
-}
-
-function equalCaseInsensitive(annotation1: annotationType, annotation2: annotationType): boolean {
-  return annotation1.text.toUpperCase() === annotation2.text.toUpperCase();
 }
 
 function isSubWord(annotation1: annotationType, annotation2: annotationType): boolean {
   return (
-    normalizeString(annotation2.text).includes(`${normalizeString(annotation1.text)} `) ||
-    normalizeString(annotation2.text).includes(` ${normalizeString(annotation1.text)}`)
+    stringComparator
+      .normalizeString(annotation2.text)
+      .includes(`${stringComparator.normalizeString(annotation1.text)} `) ||
+    stringComparator
+      .normalizeString(annotation2.text)
+      .includes(` ${stringComparator.normalizeString(annotation1.text)}`)
   );
-}
-
-function areSimilarWords(annotation1: annotationType, annotation2: annotationType): boolean {
-  const levenshteinDistance = computeLevenshteinDistance(
-    normalizeString(annotation1.text),
-    normalizeString(annotation2.text),
-  );
-
-  if (Math.min(annotation1.text.length, annotation2.text.length) <= 4) {
-    return levenshteinDistance <= 1;
-  } else {
-    return levenshteinDistance <= 2;
-  }
-}
-
-function normalizeString(str: string): string {
-  return str.toUpperCase();
 }

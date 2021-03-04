@@ -29,6 +29,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
           lightMode: buildColor(partialSettings[category]?.color?.lightMode),
           darkMode: buildColor(partialSettings[category]?.color?.darkMode),
         },
+        couldBe: partialSettings[category]?.couldBe,
         iconName: buildIconName(partialSettings[category]?.iconName),
         isAnonymized: buildIsAnonymized(partialSettings[category]?.isAnonymized),
         order: partialSettings[category]?.order,

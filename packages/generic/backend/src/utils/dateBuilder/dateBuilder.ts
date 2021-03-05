@@ -1,12 +1,26 @@
-export { dateBuilder };
+export { buildDateBuilder, dateBuilder };
 
-const dateBuilder = {
-  daysAgo(days: number): number {
-    const dateInSeveralDaysInThePast = new Date();
-    dateInSeveralDaysInThePast.setDate(
-      dateInSeveralDaysInThePast.getDate() - days,
-    );
+const dateBuilder = buildDateBuilder(() => new Date());
 
-    return dateInSeveralDaysInThePast.getTime();
-  },
-};
+function buildDateBuilder(now: () => Date) {
+  return {
+    daysAgo(days: number): number {
+      const dateInSeveralDaysInThePast = now();
+      dateInSeveralDaysInThePast.setDate(
+        dateInSeveralDaysInThePast.getDate() - days,
+      );
+
+      return dateInSeveralDaysInThePast.getTime();
+    },
+
+    minutesAgo(minutes: number): number {
+      const dateInSeveralMinutesInThePast = now();
+
+      dateInSeveralMinutesInThePast.setMinutes(
+        dateInSeveralMinutesInThePast.getMinutes() - minutes,
+      );
+
+      return dateInSeveralMinutesInThePast.getTime();
+    },
+  };
+}

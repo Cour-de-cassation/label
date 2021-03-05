@@ -26,7 +26,11 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection,
         collection.map((document) =>
           idModule.lib.equalId(document._id, freeDocument._id)
-            ? { ...document, status: 'pending' }
+            ? {
+                ...document,
+                status: 'pending',
+                updateDate: new Date().getTime(),
+              }
             : document,
         ),
       );

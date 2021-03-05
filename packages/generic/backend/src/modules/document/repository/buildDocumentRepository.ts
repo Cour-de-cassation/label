@@ -21,7 +21,7 @@ const buildDocumentRepository = buildRepositoryBuilder<
       }
 
       const { modifiedCount } = await collection.updateOne(document, {
-        $set: { status: 'pending' },
+        $set: buildUpdateStatusQuery('pending'),
       });
 
       if (modifiedCount !== 1) {
@@ -38,8 +38,12 @@ const buildDocumentRepository = buildRepositoryBuilder<
     async updateStatusById(id, status) {
       await collection.updateOne(
         { _id: id },
-        { $set: { status, updateDate: new Date().getTime() } },
+        { $set: buildUpdateStatusQuery(status) },
       );
     },
   }),
 });
+
+function buildUpdateStatusQuery(status: documentType['status']) {
+  return { status, updateDate: new Date().getTime() };
+}

@@ -5,6 +5,7 @@ import { buildRunServer } from './buildRunServer';
 import {
   clearDb,
   extractMonitoringEntriesIntoCsv,
+  freePendingDocuments,
   insertTestUsers,
   insertUser,
 } from './scripts';
@@ -28,6 +29,10 @@ function buildBackend(environmentJson: string, settingsJson: string) {
       },
       extractMonitoringEntriesIntoCsv: {
         run: extractMonitoringEntriesIntoCsv,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      freePendingDocuments: {
+        run: freePendingDocuments,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       insertTestUsers: {

@@ -10,6 +10,7 @@ import { IconDropdown } from './IconDropdown';
 import { LabelledDropdown } from './LabelledDropdown';
 import { SText } from './SText';
 import { Table, tableRowFieldType } from './Table';
+import { PaginatedTable } from './PaginatedTable';
 
 export {
   Button,
@@ -22,6 +23,7 @@ export {
   IconButton,
   IconDropdown,
   LabelledDropdown,
+  PaginatedTable,
   SText,
   Table,
 };

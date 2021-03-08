@@ -29,9 +29,10 @@ function TableBody<InputT, OutputT>(props: {
   }>;
   orderByProperty: string | undefined;
   orderDirection: orderDirectionType;
+  pagination?: { start: number; end: number };
 }) {
   const theme = useCustomTheme();
-  const sortedData = sortData(props.data);
+  const sortedData = paginateData(sortData(props.data));
   const styleProps = {
     theme,
   };
@@ -80,6 +81,14 @@ function TableBody<InputT, OutputT>(props: {
         </Tr>
       </>
     );
+  }
+
+  function paginateData(data: InputT[]): InputT[] {
+    if (!props.pagination) {
+      return data;
+    }
+
+    return data.slice(props.pagination.start, props.pagination.end);
   }
 
   function sortData(data: InputT[]): InputT[] {

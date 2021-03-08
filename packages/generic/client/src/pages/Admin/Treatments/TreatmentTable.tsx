@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiRouteOutType } from '@label/core';
-import { Table, tableRowFieldType } from '../../../../components';
-import { wordings } from '../../../../wordings';
+import { PaginatedTable, tableRowFieldType } from '../../../components';
+import { wordings } from '../../../wordings';
 
 export { TreatmentTable };
 
@@ -11,24 +11,34 @@ function TreatmentTable(props: {
   treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>;
 }) {
   const history = useHistory();
+  const styles = buildStyles();
 
   const optionItems = buildOptionItems();
   return (
-    <Table
-      isHeaderSticky
-      isFooterSticky
-      defaultOrderByProperty="date"
-      defaultOrderDirection="desc"
-      fields={props.fields}
-      data={props.treatmentsWithDetails}
-      header={props.fields.map(({ id, title, canBeSorted }) => ({
-        id,
-        canBeSorted,
-        text: title,
-      }))}
-      optionItems={optionItems}
-    />
+    <div style={styles.container}>
+      <PaginatedTable
+        isHeaderSticky
+        defaultOrderByProperty="date"
+        defaultOrderDirection="desc"
+        fields={props.fields}
+        data={props.treatmentsWithDetails}
+        header={props.fields.map(({ id, title, canBeSorted }) => ({
+          id,
+          canBeSorted,
+          text: title,
+        }))}
+        optionItems={optionItems}
+      />
+    </div>
   );
+
+  function buildStyles() {
+    return {
+      container: {
+        height: '100%',
+      },
+    };
+  }
 
   function buildOptionItems() {
     return [

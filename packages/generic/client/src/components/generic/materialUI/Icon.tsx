@@ -8,6 +8,7 @@ import {
   BusinessCenterRounded,
   CakeRounded,
   ChevronLeftRounded,
+  ChevronRightRounded,
   ChildCareRounded,
   CloseRounded,
   CloudRounded,
@@ -55,6 +56,7 @@ export type { iconNameType };
 const materialIconMapping = {
   arrowDown: ExpandMoreRounded,
   arrowLeft: ChevronLeftRounded,
+  arrowRight: ChevronRightRounded,
   arrowUp: ExpandLessRounded,
   bug: BugReportRounded,
   clock: AlarmOnRounded,

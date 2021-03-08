@@ -24,6 +24,7 @@ function Table<InputT, OutputT>(props: {
     text: string;
     onClick: (data: InputT) => void;
   }>;
+  pagination?: { start: number; end: number };
   fields: Array<tableRowFieldType<InputT, OutputT>>;
 }) {
   const [orderByProperty, setOrderByProperty] = useState<string | undefined>(props.defaultOrderByProperty);
@@ -68,6 +69,7 @@ function Table<InputT, OutputT>(props: {
         orderDirection={orderDirection}
         optionItems={props.optionItems}
         optionCellStyle={optionCellStyle}
+        pagination={props.pagination}
       />
     );
   }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, tableRowFieldType } from '../Table';
 import { footerCellType } from '../Table/TableFooter';
-import { headerCellType, orderDirectionType } from '../Table/TableHeader';
+import { orderDirectionType } from '../Table/TableHeader';
 import { computeNumberOfPages, computePagination } from './lib';
 import { PaginationFooter } from './PaginationFooter';
 
@@ -13,7 +13,6 @@ function PaginatedTable<InputT, OutputT>(props: {
   defaultOrderByProperty?: string;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
-  header?: Array<headerCellType>;
   isFooterSticky?: boolean;
   isHeaderSticky?: boolean;
   data: InputT[];
@@ -36,11 +35,6 @@ function PaginatedTable<InputT, OutputT>(props: {
         fields={props.fields}
         pagination={pagination}
         data={props.data}
-        header={props.fields.map(({ id, title, canBeSorted }) => ({
-          id,
-          canBeSorted,
-          text: title,
-        }))}
         optionItems={props.optionItems}
       />
       <PaginationFooter numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />

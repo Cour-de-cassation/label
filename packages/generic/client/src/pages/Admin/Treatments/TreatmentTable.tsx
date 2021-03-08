@@ -22,11 +22,6 @@ function TreatmentTable(props: {
         defaultOrderDirection="desc"
         fields={props.fields}
         data={props.treatmentsWithDetails}
-        header={props.fields.map(({ id, title, canBeSorted }) => ({
-          id,
-          canBeSorted,
-          text: title,
-        }))}
         optionItems={optionItems}
       />
     </div>

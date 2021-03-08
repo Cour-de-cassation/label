@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { sumBy } from 'lodash';
-import { DEFAULT_ORDER_DIRECTION, headerCellType, TableHeader } from './TableHeader';
+import { DEFAULT_ORDER_DIRECTION, TableHeader } from './TableHeader';
 import { TableBody, tableRowFieldType } from './TableBody';
 import { footerCellType, TableFooter } from './TableFooter';
 
@@ -16,7 +16,6 @@ function Table<InputT, OutputT>(props: {
   defaultOrderByProperty?: string;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
-  header?: Array<headerCellType>;
   isFooterSticky?: boolean;
   isHeaderSticky?: boolean;
   data: InputT[];
@@ -43,12 +42,13 @@ function Table<InputT, OutputT>(props: {
   );
 
   function renderHeader() {
-    if (!props.header) {
-      return;
-    }
     return (
       <TableHeader
-        cells={props.header}
+        cells={props.fields.map(({ id, title, canBeSorted }) => ({
+          id,
+          canBeSorted,
+          text: title,
+        }))}
         fieldCellStyles={fieldCellStyles}
         isSticky={props.isHeaderSticky}
         optionCellStyle={optionCellStyle}

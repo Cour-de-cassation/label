@@ -4,20 +4,18 @@ import { customThemeType, useCustomTheme } from '../../../../styles';
 
 export { TableHeader, DEFAULT_ORDER_DIRECTION };
 
-export type { headerCellType, orderDirectionType };
-
-type headerCellType = {
-  id: string;
-  text: string;
-  canBeSorted?: boolean;
-};
+export type { orderDirectionType };
 
 type orderDirectionType = 'asc' | 'desc';
 
 const DEFAULT_ORDER_DIRECTION = 'asc';
 
 function TableHeader(props: {
-  cells: Array<headerCellType>;
+  cells: Array<{
+    id: string;
+    text: string;
+    canBeSorted?: boolean;
+  }>;
   isSticky?: boolean;
   fieldCellStyles: Record<string, CSSProperties>;
   optionCellStyle?: CSSProperties;

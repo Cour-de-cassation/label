@@ -18,11 +18,6 @@ function ProblemReportsTable(props: {
       isHeaderSticky
       data={props.problemReportsWithDetails}
       fields={problemReportsFields}
-      header={problemReportsFields.map(({ id, title, canBeSorted }) => ({
-        id,
-        canBeSorted,
-        text: title,
-      }))}
       optionItems={optionItems}
     />
   );

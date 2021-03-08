@@ -5,6 +5,9 @@ const fr = {
     title: 'Administration',
     subtitle: 'Gestion des agents',
   },
+  business: {
+    account: 'Compte',
+  },
   homePage: {
     anonymisedView: 'Vue anonymisée',
     applyEveryWhere: 'Appliquer à tous',
@@ -62,7 +65,7 @@ const fr = {
   errorPage: 'Une erreur est survenue...',
   shared: {
     back: 'Précédent',
-    logout: 'Déconnexion',
+    logout: 'Se déconnecter',
     moreOptions: "Plus d'options",
     problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
   },

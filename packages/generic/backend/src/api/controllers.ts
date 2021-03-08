@@ -67,8 +67,11 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
   post: {
     async login({ args: { email, password } }) {
-      const { token, role } = await userService.login({ email, password });
-      return { token, role };
+      const { email: userEmail, name, role, token } = await userService.login({
+        email,
+        password,
+      });
+      return { email: userEmail, name, role, token };
     },
 
     monitoringEntries: buildAuthenticatedController({

@@ -10,19 +10,19 @@ describe('userService', () => {
   describe('login/signUpUser', () => {
     describe('success', () => {
       it('should login and return a token', async () => {
-        const user = {
+        const user = userModule.generator.generate({
           email: 'MAIL@MAIL.MAIL',
           name: 'NAME',
           password: 'PASSWORD',
-        };
-        await userService.signUpUser({
-          email: 'MAIL@MAIL.MAIL',
-          name: 'NAME',
-          password: 'PASSWORD',
+          role: 'admin',
         });
+        await userService.signUpUser(user);
 
-        const token = await userService.login(user);
+        const { email, name, role, token } = await userService.login(user);
 
+        expect(email).toEqual('mail@mail.mail');
+        expect(name).toEqual(user.name);
+        expect(role).toEqual(user.role);
         expect(token).toBeDefined;
       });
     });

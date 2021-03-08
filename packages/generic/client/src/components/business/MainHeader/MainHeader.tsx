@@ -1,7 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { Header, IconButton, MenuBar, Text } from '../..';
-import { localStorage } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { SettingsButton } from './SettingsButton';
@@ -11,17 +9,13 @@ export { MainHeader };
 function MainHeader(props: { subtitle?: string; title?: string; onBackButtonPress?: () => void }) {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
-  const history = useHistory();
   const leftHeaderComponents = buildLeftHeaders();
 
   return (
     <MenuBar color="inherit" isElevated={!!props.title}>
       <Header
         leftHeaderComponents={leftHeaderComponents}
-        rightHeaderComponents={[
-          <SettingsButton />,
-          <IconButton iconName="logout" hint={wordings.shared.logout} onClick={logout} />,
-        ]}
+        rightHeaderComponents={[<SettingsButton />]}
         spaceBetweenComponents={theme.spacing * 2}
         style={style.header}
         variant="classic"
@@ -58,10 +52,5 @@ function MainHeader(props: { subtitle?: string; title?: string; onBackButtonPres
     } else {
       return [textComponent];
     }
-  }
-
-  function logout() {
-    localStorage.bearerTokenHandler.remove();
-    history.push('/login');
   }
 }

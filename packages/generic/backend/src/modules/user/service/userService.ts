@@ -48,6 +48,7 @@ const userService = {
       user.password,
       storedUser.password,
     );
+
     if (!isPasswordValid) {
       throw new Error(
         `The received password does not match the stored one for ${user.email}`,
@@ -55,9 +56,12 @@ const userService = {
     }
 
     const token = jwtSigner.sign(storedUser._id);
+
     return {
-      token,
+      email: storedUser.email,
+      name: storedUser.name,
       role: storedUser.role,
+      token,
     };
   },
   async resetPasswordRequest(email: string) {

@@ -86,7 +86,8 @@ const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => (
 );
 
 function getRedirectionRoute() {
-  const userRole = localStorage.userRoleHandler.get();
+  const userRole = localStorage.userHandler.getRole();
+
   switch (userRole) {
     case 'admin':
       return '/admin/treatments';

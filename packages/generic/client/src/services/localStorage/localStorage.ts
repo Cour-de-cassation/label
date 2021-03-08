@@ -1,11 +1,11 @@
 import { bearerTokenHandler } from './bearerTokenHandler';
 import { displayModeHandler } from './displayModeHandler';
-import { userRoleHandler } from './userRoleHandler';
+import { userHandler } from './userHandler';
 
 export { localStorage };
 
 const localStorage = {
   bearerTokenHandler,
   displayModeHandler,
-  userRoleHandler,
+  userHandler,
 };

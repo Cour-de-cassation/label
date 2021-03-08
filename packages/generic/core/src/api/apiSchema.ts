@@ -106,14 +106,10 @@ const apiSchema = {
       out: {
         kind: 'object',
         content: {
-          token: {
-            kind: 'primitive',
-            content: 'string',
-          },
-          role: {
-            kind: 'constant',
-            content: ['admin', 'annotator'] as const,
-          },
+          email: { kind: 'primitive', content: 'string' },
+          name: { kind: 'primitive', content: 'string' },
+          role: { kind: 'constant', content: ['admin', 'annotator'] as const },
+          token: { kind: 'primitive', content: 'string' },
         },
       },
     },

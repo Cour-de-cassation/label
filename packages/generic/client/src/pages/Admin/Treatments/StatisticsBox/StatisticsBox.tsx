@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { sumBy } from 'lodash';
-import { apiRouteOutType } from '@label/core';
+import { apiRouteOutType, treatmentModule } from '@label/core';
 import { Text } from '../../../../components';
 import { timeOperator } from '../../../../services/timeOperator';
 import { customThemeType, useCustomTheme } from '../../../../styles';
@@ -23,14 +23,18 @@ function StatisticsBox(props: { treatmentsWithDetails: apiRouteOutType<'get', 't
         <thead>
           <tr>
             {statisticsCells.map(({ title }) => (
-              <Text variant="h3">{title}</Text>
+              <td style={styles.cell}>
+                <Text variant="h3">{title}</Text>
+              </td>
             ))}
           </tr>
         </thead>
         <tbody>
           <tr>
             {statisticsCells.map(({ value }) => (
-              <Text>{value}</Text>
+              <td style={styles.cell}>
+                <Text>{value}</Text>
+              </td>
             ))}
           </tr>
         </tbody>
@@ -39,7 +43,23 @@ function StatisticsBox(props: { treatmentsWithDetails: apiRouteOutType<'get', 't
   );
 
   function buildStatisticsCells() {
+    const annotationStatistics = Object.values(
+      treatmentModule.lib.computeTreatmentsInfo(props.treatmentsWithDetails.map(({ treatment }) => treatment)),
+    );
+
     return [
+      {
+        title: wordings.treatmentsPage.table.statistics.fields.surAnnotation,
+        value: getComputationValue(sumBy(annotationStatistics, ({ deletionsCount }) => deletionsCount)),
+      },
+      {
+        title: wordings.treatmentsPage.table.statistics.fields.subAnnotation,
+        value: getComputationValue(sumBy(annotationStatistics, ({ additionsCount }) => additionsCount)),
+      },
+      {
+        title: wordings.treatmentsPage.table.statistics.fields.changeAnnotation,
+        value: getComputationValue(sumBy(annotationStatistics, ({ modificationsCount }) => modificationsCount)),
+      },
       {
         title: wordings.treatmentsPage.table.statistics.fields.duration,
         value: getReadableDuration(),
@@ -73,6 +93,10 @@ function StatisticsBox(props: { treatmentsWithDetails: apiRouteOutType<'get', 't
         alignItems: 'center',
         boxShadow: theme.boxShadow.minor.out,
         flex: 1,
+      },
+      cell: {
+        paddingRight: theme.spacing * 2,
+        paddingLeft: theme.spacing * 2,
       },
     };
   }

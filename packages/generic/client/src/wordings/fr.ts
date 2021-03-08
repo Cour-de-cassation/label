@@ -114,7 +114,10 @@ const fr = {
           average: 'Moyenne',
         },
         fields: {
+          changeAnnotation: 'Mod.',
           duration: 'Tps',
+          surAnnotation: 'Sur',
+          subAnnotation: 'Ss.',
         },
       },
       optionItems: {

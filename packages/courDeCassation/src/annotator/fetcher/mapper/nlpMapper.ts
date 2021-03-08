@@ -32,7 +32,6 @@ function mapNlpAnnotationstoReport(
 ): annotationReportType {
   return annotationReportModule.lib.buildAnnotationReport({
     checkList: nlpAnnotations.checklist,
-    checkNeeded: nlpAnnotations.check_needed,
     documentId: document._id,
   });
 }

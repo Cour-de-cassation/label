@@ -23,7 +23,6 @@ describe('nlpFetcher', () => {
       );
 
       const nlpAnnotations = nlpFakeServer.getNlpAnnotations();
-      expect(report.checkNeeded).toEqual(nlpAnnotations.check_needed);
       expect(report.checkList).toEqual(nlpAnnotations.checklist);
       expect(report.documentId).toEqual(document._id);
     });

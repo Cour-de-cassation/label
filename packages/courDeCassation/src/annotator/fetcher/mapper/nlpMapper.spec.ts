@@ -19,7 +19,6 @@ const nlpAnnotations: nlpAnnotationsType = {
       source: 'NLP',
     },
   ],
-  check_needed: true,
   checklist: ['CHECK 1', 'CHECK 2'],
 };
 
@@ -55,7 +54,6 @@ describe('nlpMapper', () => {
 
       expect(annotationReport).toEqual({
         checkList: ['CHECK 1', 'CHECK 2'],
-        checkNeeded: true,
         documentId: document._id,
         _id: annotationReport._id,
       });

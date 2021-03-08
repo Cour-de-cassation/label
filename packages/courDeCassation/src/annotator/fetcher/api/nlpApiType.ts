@@ -11,7 +11,6 @@ type nlpApiType = {
 
 type nlpAnnotationsType = {
   entities: nlpAnnotationType[];
-  check_needed: boolean;
   checklist: string[];
 };
 

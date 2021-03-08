@@ -9,7 +9,6 @@ const annotationReportDataModel = {
     type: buildDataModelEntry({ kind: 'list', content: { kind: 'primitive', content: 'string' } }),
     network: true,
   },
-  checkNeeded: { type: buildDataModelEntry({ kind: 'primitive', content: 'boolean' }), network: true },
   documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
   _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
 } as const;

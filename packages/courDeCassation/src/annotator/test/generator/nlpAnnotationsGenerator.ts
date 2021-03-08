@@ -5,13 +5,8 @@ import { nlpAnnotationsType } from '../../fetcher/api';
 export { nlpAnnotationsGenerator };
 
 const nlpAnnotationsGenerator: generatorType<nlpAnnotationsType> = {
-  generate: ({ entities, check_needed, checklist } = {}) => ({
+  generate: ({ entities, checklist } = {}) => ({
     entities: entities ? entities : generateRandomNlpAnnotations(),
-    check_needed: check_needed
-      ? check_needed
-      : checklist
-      ? !!checklist.length
-      : false,
     checklist: checklist ? checklist : [],
   }),
 };

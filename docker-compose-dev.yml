@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   labelDb:
@@ -16,16 +16,15 @@ services:
       dockerfile: DockerfileLocalDev
     environment:
       - RUN_MODE=LOCAL
-      - SENDGRID_API_KEY=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
-#    image: label-image
+    #    image: label-image
     ports:
-      - '55430:55430'
+      - "55430:55430"
     depends_on:
       - labelDb
 
 networks:
   default:
-    name: label-network  
+    name: label-network
 
 volumes:
   mongo-storage:

@@ -1,1 +1,0 @@
-export { ResetPasswordRequest } from './ResetPasswordRequest';

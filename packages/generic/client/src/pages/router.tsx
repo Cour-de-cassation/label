@@ -7,8 +7,6 @@ import { Treatments } from './Admin/Treatments';
 import { ProblemReports } from './Admin/ProblemReports';
 import { Home } from './Home';
 import { Login } from './Login';
-import { ResetPassword } from './ResetPassword';
-import { ResetPasswordRequest } from './ResetPasswordRequest';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 
 export { Router };
@@ -17,12 +15,6 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <UnauthenticatedRoute path="/reset-password-request">
-          <ResetPasswordRequest />
-        </UnauthenticatedRoute>
-        <UnauthenticatedRoute path="/reset-password/:resetPasswordToken">
-          <ResetPassword />
-        </UnauthenticatedRoute>
         <UnauthenticatedRoute path="/login">
           <Login />
         </UnauthenticatedRoute>

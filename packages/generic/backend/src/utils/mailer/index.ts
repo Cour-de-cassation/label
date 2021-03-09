@@ -1,1 +1,0 @@
-export { mailer } from './mailer';

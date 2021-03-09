@@ -7,8 +7,7 @@ import {
   userType,
 } from '@label/core';
 import { buildUserRepository } from '../repository';
-import { jwtSigner, mailer } from '../../../utils';
-import { wordings } from '../../../wordings';
+import { jwtSigner } from '../../../utils';
 
 export { userService };
 
@@ -107,18 +106,7 @@ const userService = {
       token,
     };
   },
-  async resetPasswordRequest(email: string) {
-    const userRepository = buildUserRepository();
-    const storedUser = await userRepository.findByEmail(email);
-    const resetPasswordRequestToken = jwtSigner.sign(storedUser._id);
-    const resetPasswordLink = `${process.env.WEBAPP_URL}/reset-password/${resetPasswordRequestToken}`;
-    const text = `${wordings.resetPasswordMailText}${resetPasswordLink}`;
-    await mailer.sendMail({
-      to: email,
-      subject: wordings.resetPasswordMailSubject,
-      text: text,
-    });
-  },
+
   async signUpUser({
     email,
     name,
@@ -139,14 +127,6 @@ const userService = {
     });
 
     return userRepository.insert(newUser);
-  },
-  async resetPassword(password: string, resetPasswordToken: string) {
-    const userStrId = jwtSigner.verifyToken(resetPasswordToken);
-    const userRepository = buildUserRepository();
-    const userId = idModule.lib.buildId(userStrId);
-    const user = await userRepository.findById(userId);
-    const hashedPassword = await hasher.hash(password);
-    return await userRepository.updateHashedPassword(user, hashedPassword);
   },
   async fetchAuthenticatedUserFromAuthorizationHeader(authorization?: string) {
     const userRepository = buildUserRepository();

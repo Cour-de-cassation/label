@@ -106,10 +106,6 @@ const fr = {
       },
     },
   },
-  resetPasswordPage: {
-    passwordsMustBeIdentical: 'Les deux mots de passe doivent être identiques.',
-    resetPassword: 'Réinitialiser le mot de passe',
-  },
   treatmentsPage: {
     title: 'Administration',
     subtitle: 'Décisions traitées',

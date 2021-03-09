@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   preProdLabel:
@@ -19,14 +19,13 @@ services:
       dockerfile: DockerfilePreProdRpvj
     environment:
       - RUN_MODE=PREPROD
-      - SENDGRID_API_KEY=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
-#    image: label-image
+    #    image: label-image
     ports:
       - 55430:55430
       - 55432:55432
     networks:
       label-network:
-        ipv4_address: 10.5.0.6  
+        ipv4_address: 10.5.0.6
     depends_on:
       - preProdLabel
 

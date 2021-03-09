@@ -7,7 +7,6 @@ import {
 import { fileSystem } from './fileSystem';
 import { jwtSigner } from './jwtSigner';
 import { logger } from './logger';
-import { mailer } from './mailer';
 import { buildMongo, mongo, mongoCollectionType } from './mongo';
 
 export {
@@ -18,7 +17,6 @@ export {
   fileSystem,
   jwtSigner,
   logger,
-  mailer,
   mongo,
 };
 

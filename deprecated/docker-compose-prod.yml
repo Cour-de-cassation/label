@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   labelDb:
@@ -16,8 +16,7 @@ services:
       dockerfile: DockerfileProd
     environment:
       - RUN_MODE=PROD
-      - SENDGRID_API_KEY=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
-#    image: label-image
+    #    image: label-image
     ports:
       - 55430:55430
       - 55432:55432

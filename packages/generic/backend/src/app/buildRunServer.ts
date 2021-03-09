@@ -5,8 +5,6 @@ import { environmentHandler, settingsType } from '@label/core';
 
 import { buildApi } from '../api';
 import { environmentType } from '../lib/environment';
-import { userController } from '../modules/user';
-import { buildHandlingErrorController } from '../utils';
 import { setup } from './setup';
 
 export { buildRunServer };
@@ -28,15 +26,6 @@ function buildRunServer(environment: environmentType, settings: settingsType) {
     );
 
     app.use(bodyParser.json());
-
-    app.post(
-      '/reset-password-request',
-      buildHandlingErrorController(userController.resetPasswordRequest),
-    );
-    app.post(
-      '/reset-password',
-      buildHandlingErrorController(userController.resetPassword),
-    );
 
     buildApi(app);
 

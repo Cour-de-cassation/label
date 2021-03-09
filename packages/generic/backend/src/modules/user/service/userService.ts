@@ -38,6 +38,19 @@ const userService = {
     return userNamesByAssignationId;
   },
 
+  async fetchUsersWithDetails() {
+    const userRepository = buildUserRepository();
+    const users = await userRepository.findAll();
+    return users.map(({ _id, email, name, role }) => ({
+      user: {
+        _id,
+        email,
+        name,
+        role,
+      },
+    }));
+  },
+
   async login(user: {
     email: userType['email'];
     password: userType['password'];

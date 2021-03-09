@@ -44,6 +44,7 @@ import {
   SendRounded,
   SettingsRounded,
   StoreRounded,
+  SupervisorAccountRounded,
   UndoRounded,
 } from '@material-ui/icons';
 import { categoryIconNameType } from '@label/core';
@@ -54,6 +55,7 @@ export { Icon };
 export type { iconNameType };
 
 const materialIconMapping = {
+  admin: SupervisorAccountRounded,
   arrowDown: ExpandMoreRounded,
   arrowLeft: ChevronLeftRounded,
   arrowRight: ChevronRightRounded,

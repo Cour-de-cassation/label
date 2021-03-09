@@ -6,6 +6,7 @@ import {
   dataModelEntryType,
   problemReportModule,
   treatmentModule,
+  userModule,
 } from '../modules';
 
 import { filterNetworkKeysType } from '../types';
@@ -36,6 +37,10 @@ const fetchedDataModelEntries = {
   treatment: {
     kind: 'object',
     content: buildFetchedDataModelEntry<typeof treatmentModule.dataModel>(treatmentModule.dataModel),
+  },
+  user: {
+    kind: 'object',
+    content: buildFetchedDataModelEntry<typeof userModule.dataModel>(userModule.dataModel),
   },
 } as const;
 

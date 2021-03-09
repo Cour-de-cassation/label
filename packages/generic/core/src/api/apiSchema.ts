@@ -90,6 +90,25 @@ const apiSchema = {
         },
       }),
     },
+    usersWithDetails: {
+      out: buildDataModelEntry({
+        kind: 'list',
+        content: {
+          kind: 'object',
+          content: {
+            user: {
+              kind: 'object',
+              content: {
+                _id: fetchedDataModelEntries.user.content._id,
+                email: fetchedDataModelEntries.user.content.email,
+                name: fetchedDataModelEntries.user.content.name,
+                role: fetchedDataModelEntries.user.content.role,
+              },
+            },
+          },
+        },
+      }),
+    },
   },
   post: {
     login: {

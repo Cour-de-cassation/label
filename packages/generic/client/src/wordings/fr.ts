@@ -4,6 +4,17 @@ const fr = {
   agentsPage: {
     title: 'Administration',
     subtitle: 'Gestion des agents',
+    table: {
+      columnTitles: {
+        name: 'Nom',
+        email: 'E-mail',
+        role: 'Habilitation',
+      },
+      roles: {
+        admin: 'Administrateur',
+        annotator: 'Annotateur',
+      },
+    },
   },
   business: {
     account: 'Compte',

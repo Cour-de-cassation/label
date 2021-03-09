@@ -63,6 +63,11 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       controllerWithUser: async () =>
         treatmentService.fetchAssignatedTreatmentsWithDetails(),
     }),
+
+    usersWithDetails: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async () => userService.fetchUsersWithDetails(),
+    }),
   },
 
   post: {

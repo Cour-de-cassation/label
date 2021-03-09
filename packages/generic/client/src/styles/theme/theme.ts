@@ -10,7 +10,7 @@ export type { customThemeType };
 
 const commonTheme = {
   boxShadow,
-  shape: { borderRadius: { xxs: 4, xs: 8, s: 16, m: 24, l: 32 } },
+  shape: { borderRadius: { xxs: 8, xs: 12, s: 16, m: 24, l: 32 } },
   spacing: 8,
   typography,
 };

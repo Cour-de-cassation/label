@@ -1,5 +1,4 @@
 import {
-  Button,
   ButtonWithIcon,
   CircleIcon,
   ComponentsList,
@@ -34,7 +33,6 @@ import {
 
 export {
   Accordion,
-  Button,
   ButtonWithIcon,
   Checkbox,
   CircleIcon,

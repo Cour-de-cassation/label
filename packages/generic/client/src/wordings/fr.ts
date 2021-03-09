@@ -112,8 +112,10 @@ const fr = {
     table: {
       filter: {
         title: 'Filtrer',
-        apply: 'Appliquer les filtres',
         exportButton: 'Exporter',
+        fields: {
+          agents: 'Agents',
+        },
       },
       columnTitles: {
         agent: 'Agent',

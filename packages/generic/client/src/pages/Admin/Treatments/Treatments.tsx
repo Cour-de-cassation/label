@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { uniq } from 'lodash';
 import { apiRouteOutType, idModule, treatmentModule } from '@label/core';
 import { AdminMenu, MainHeader, tableRowFieldType } from '../../../components';
 import { timeOperator } from '../../../services/timeOperator';
@@ -10,14 +11,13 @@ import { FilterButton } from './FilterButton';
 import { StatisticsBox } from './StatisticsBox';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
+import { DEFAULT_TREATMENT_FILTER, treatmentFilterType } from './FilterButton';
 
 export { Treatments };
 
-const FILTER_TEXT = 'Du 22/01/2021 au 22/01/2021';
-
 function Treatments() {
   const theme = useCustomTheme();
-  const [filters, setFilters] = useState<string[]>([]);
+  const [filters, setFilters] = useState<treatmentFilterType>(DEFAULT_TREATMENT_FILTER);
   const styles = buildStyles(theme);
   return (
     <>
@@ -29,24 +29,29 @@ function Treatments() {
         <TreatmentsDataFetcher>
           {({ treatmentsWithDetails }) => {
             const treatmentFields = buildTreatmentFields(treatmentsWithDetails);
+            const filterInfo = extractFilterInfoFromTreatments(treatmentsWithDetails);
+            const filteredTreatmentsWithDetails = getFilteredTreatmentsWithDetails(treatmentsWithDetails, filters);
 
             return (
               <div style={styles.table}>
                 <div style={styles.tableHeaderContainer}>
                   <div style={styles.tableHeader}>
-                    <div style={styles.filterContainer}>
-                      <FilterButton />
-                      <div style={styles.chipsContainer}>
-                        {filters.map((filter) => (
-                          <Chip filterText={filter} onClose={buildRemoveFilter(FILTER_TEXT)} />
-                        ))}
+                    <div style={styles.leftHeaderContent}>
+                      <div style={styles.filterContainer}>
+                        <FilterButton filters={filters} setFilters={setFilters} filterInfo={filterInfo} />
+                        <div style={styles.chipsContainer}>
+                          {Object.entries(filters).map(
+                            ([filterKey, filterValue]) =>
+                              !!filterValue && <Chip filterText={filterValue} onClose={buildRemoveFilter(filterKey)} />,
+                          )}
+                        </div>
                       </div>
                     </div>
                     <StatisticsBox treatmentsWithDetails={treatmentsWithDetails} />
                   </div>
                 </div>
                 <div style={styles.tableContentContainer}>
-                  <TreatmentTable treatmentsWithDetails={treatmentsWithDetails} fields={treatmentFields} />
+                  <TreatmentTable treatmentsWithDetails={filteredTreatmentsWithDetails} fields={treatmentFields} />
                 </div>
                 <div style={styles.csvButtonContainer}>
                   <ExportCSVButton data={treatmentsWithDetails} fields={treatmentFields} />
@@ -59,8 +64,25 @@ function Treatments() {
     </>
   );
 
-  function buildRemoveFilter(filterToRemove: string) {
-    return () => setFilters(filters.filter((filter) => filter !== filterToRemove));
+  function getFilteredTreatmentsWithDetails(
+    treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>,
+    filters: treatmentFilterType,
+  ) {
+    return treatmentsWithDetails.filter((treatmentWithDetails) => {
+      if (!!filters.userName) {
+        return treatmentWithDetails.userName === filters.userName;
+      }
+      return true;
+    });
+  }
+
+  function buildRemoveFilter(filterKeyToRemove: string) {
+    return () => setFilters({ ...filters, [filterKeyToRemove]: undefined });
+  }
+
+  function extractFilterInfoFromTreatments(treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>) {
+    const userNames = uniq(treatmentsWithDetails.map((treatmentWithDetails) => treatmentWithDetails.userName));
+    return { userNames };
   }
 
   function buildTreatmentFields(treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>) {
@@ -147,9 +169,13 @@ function Treatments() {
       chipsContainer: {
         paddingTop: theme.spacing,
         paddingBottom: theme.spacing,
+        paddingLeft: theme.spacing,
+      },
+      leftHeaderContent: {
+        flex: 1,
       },
       filterContainer: {
-        flex: 1,
+        display: 'flex',
       },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,

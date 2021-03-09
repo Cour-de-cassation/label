@@ -4,7 +4,7 @@ import { customThemeType, useCustomTheme } from '../../../styles';
 
 export { Chip };
 
-const ICON_SIZE = 16;
+const ICON_SIZE = 24;
 
 function Chip(props: { filterText: string; onClose: () => void }) {
   const theme = useCustomTheme();
@@ -27,8 +27,9 @@ function buildStyles(theme: customThemeType) {
       display: 'flex',
       alignItems: 'center',
       backgroundColor: theme.colors.primary.background,
-      padding: theme.spacing,
-      borderRadius: theme.shape.borderRadius.xxs,
+      paddingLeft: theme.spacing * 2,
+      paddingRight: theme.spacing,
+      borderRadius: theme.shape.borderRadius.xs,
     },
     textContainer: {
       paddingRight: theme.spacing,

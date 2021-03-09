@@ -3,18 +3,40 @@ import { ButtonWithIcon } from '../../../../components';
 import { useCustomTheme } from '../../../../styles';
 import { rectPositionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
-import { FilterTooltipMenu } from './FilterTooltipMenu';
+import { treatmentFilterInfoType, treatmentFilterType, FilterTooltipMenu } from './FilterTooltipMenu';
 
 export { FilterButton };
 
-function FilterButton() {
+const BUTTON_HEIGHT = 40;
+
+function FilterButton(props: {
+  filters: treatmentFilterType;
+  setFilters: (filters: treatmentFilterType) => void;
+  filterInfo: treatmentFilterInfoType;
+}) {
   const theme = useCustomTheme();
+  const styles = buildStyles();
   const [tooltipMenuRectPosition, setTooltipMenuRectPosition] = useState<rectPositionType | undefined>(undefined);
+  const filtersCount = Object.values(props.filters).filter(Boolean).length;
+  const buttonText = wordings.treatmentsPage.table.filter.title + (filtersCount ? ` (${filtersCount})` : '');
 
   return (
     <>
-      {!!tooltipMenuRectPosition && <FilterTooltipMenu onClose={closeToolTip} rectPosition={tooltipMenuRectPosition} />}
-      <ButtonWithIcon onClick={openToolTip} iconName="filter" text={wordings.treatmentsPage.table.filter.title} />
+      {!!tooltipMenuRectPosition && (
+        <FilterTooltipMenu
+          filters={props.filters}
+          setFilters={props.setFilters}
+          filterInfo={props.filterInfo}
+          onClose={closeToolTip}
+          rectPosition={tooltipMenuRectPosition}
+        />
+      )}
+      <ButtonWithIcon
+        style={styles.button}
+        onClick={openToolTip}
+        iconName={!!tooltipMenuRectPosition ? 'minus' : 'plus'}
+        text={buttonText}
+      />
     </>
   );
 
@@ -26,5 +48,13 @@ function FilterButton() {
 
   function closeToolTip() {
     setTooltipMenuRectPosition(undefined);
+  }
+
+  function buildStyles() {
+    return {
+      button: {
+        height: BUTTON_HEIGHT,
+      },
+    };
   }
 }

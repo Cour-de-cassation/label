@@ -10,7 +10,6 @@ import {
 } from './business';
 import {
   Accordion,
-  Button,
   ButtonWithIcon,
   Checkbox,
   CircleIcon,
@@ -40,7 +39,6 @@ import {
 export {
   Accordion,
   AdminMenu,
-  Button,
   ButtonWithIcon,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,

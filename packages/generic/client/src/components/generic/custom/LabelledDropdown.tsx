@@ -95,6 +95,7 @@ function LabelledDropdownButton<T extends string>(props: {
         display: 'flex',
         alignItems: 'center',
         textAlign: 'left',
+        paddingLeft: theme.spacing,
       },
       dropdownArrow: {
         display: 'flex',

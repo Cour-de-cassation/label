@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { apiRouteOutType, idModule, treatmentModule } from '@label/core';
-import { AdminMenu, ButtonWithIcon, MainHeader, tableRowFieldType } from '../../../components';
+import { AdminMenu, MainHeader, tableRowFieldType } from '../../../components';
 import { timeOperator } from '../../../services/timeOperator';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { Chip } from './Chip';
 import { ExportCSVButton } from './ExportCSVButton';
+import { FilterButton } from './FilterButton';
 import { StatisticsBox } from './StatisticsBox';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
@@ -34,11 +35,7 @@ function Treatments() {
                 <div style={styles.tableHeaderContainer}>
                   <div style={styles.tableHeader}>
                     <div style={styles.filterContainer}>
-                      <ButtonWithIcon
-                        onClick={() => setFilters([FILTER_TEXT])}
-                        iconName="filter"
-                        text={wordings.treatmentsPage.table.filter.title}
-                      />
+                      <FilterButton />
                       <div style={styles.chipsContainer}>
                         {filters.map((filter) => (
                           <Chip filterText={filter} onClose={buildRemoveFilter(FILTER_TEXT)} />

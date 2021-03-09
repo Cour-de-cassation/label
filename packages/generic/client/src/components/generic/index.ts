@@ -1,4 +1,5 @@
 import {
+  Button,
   ButtonWithIcon,
   CircleIcon,
   ComponentsList,
@@ -12,6 +13,7 @@ import {
   SText,
   Table,
   tableRowFieldType,
+  TooltipMenu,
 } from './custom';
 import {
   Accordion,
@@ -32,6 +34,7 @@ import {
 
 export {
   Accordion,
+  Button,
   ButtonWithIcon,
   Checkbox,
   CircleIcon,
@@ -56,6 +59,7 @@ export {
   Text,
   TextInput,
   Tooltip,
+  TooltipMenu,
 };
 
 export type { iconNameType, tableRowFieldType };

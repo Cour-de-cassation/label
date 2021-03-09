@@ -97,6 +97,7 @@ const fr = {
     table: {
       filter: {
         title: 'Filtrer',
+        apply: 'Appliquer les filtres',
         exportButton: 'Exporter',
       },
       columnTitles: {

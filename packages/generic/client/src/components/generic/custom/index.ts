@@ -10,6 +10,7 @@ import { IconDropdown } from './IconDropdown';
 import { LabelledDropdown } from './LabelledDropdown';
 import { SText } from './SText';
 import { Table, tableRowFieldType } from './Table';
+import { TooltipMenu } from './TooltipMenu';
 import { PaginatedTable } from './PaginatedTable';
 
 export {
@@ -26,6 +27,7 @@ export {
   PaginatedTable,
   SText,
   Table,
+  TooltipMenu,
 };
 
 export type { buttonColorType, tableRowFieldType };

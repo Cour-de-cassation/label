@@ -10,6 +10,7 @@ import {
 } from './business';
 import {
   Accordion,
+  Button,
   ButtonWithIcon,
   Checkbox,
   CircleIcon,
@@ -33,11 +34,13 @@ import {
   TextInput,
   tableRowFieldType,
   Tooltip,
+  TooltipMenu,
 } from './generic';
 
 export {
   Accordion,
   AdminMenu,
+  Button,
   ButtonWithIcon,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
@@ -66,6 +69,7 @@ export {
   Text,
   TextInput,
   Tooltip,
+  TooltipMenu,
   UnlinkAnnotationDropdown,
 };
 

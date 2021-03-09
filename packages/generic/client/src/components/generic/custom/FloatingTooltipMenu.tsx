@@ -1,6 +1,6 @@
-import React, { CSSProperties, ReactElement } from 'react';
-import { customThemeType, useCustomTheme } from '../../../styles';
+import React, { ReactElement } from 'react';
 import { positionType } from '../../../types';
+import { TooltipMenu } from './TooltipMenu';
 
 export { FloatingTooltipMenu };
 
@@ -16,51 +16,18 @@ function FloatingTooltipMenu(props: {
   onClose: () => void;
   width: number;
 }): ReactElement {
-  const theme = useCustomTheme();
-  const style = buildStyle(theme, props.originPosition, props.width);
-
+  const displayPosition = getDisplayPosition(props.originPosition, props.width);
+  const tooltipMenuRectPosition = getTooltipMenuRectPosition(displayPosition, props.originPosition, props.width);
   return (
-    <>
-      {props.shouldCloseWhenClickedAway && <div onClick={props.onClose} style={style.overlay} />}
-      <div style={style.tooltipMenu}>
-        <div style={style.tooltipMenuContent}>{props.children}</div>
-      </div>
-    </>
+    <TooltipMenu
+      rectPosition={tooltipMenuRectPosition}
+      onClose={props.onClose}
+      shouldCloseWhenClickedAway={props.shouldCloseWhenClickedAway}
+      width={props.width}
+    >
+      {props.children}
+    </TooltipMenu>
   );
-}
-
-function buildStyle(
-  theme: customThemeType,
-  originPosition: positionType,
-  width: number,
-): { [cssClass: string]: CSSProperties } {
-  const displayPosition = getDisplayPosition(originPosition, width);
-  const tooltipMenuOrigin = getTooltipMenuOrigin(displayPosition, originPosition, width);
-  return {
-    overlay: {
-      backgroundColor: theme.colors.overlay,
-      opacity: 0.2,
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-    },
-    tooltipMenu: {
-      boxShadow: theme.boxShadow.minor.out,
-      backgroundColor: theme.colors.background,
-      borderRadius: theme.shape.borderRadius.xs,
-      position: 'absolute',
-      width,
-      ...tooltipMenuOrigin,
-    },
-    tooltipMenuContent: {
-      paddingTop: `${theme.spacing * 2}px`,
-      paddingLeft: `${theme.spacing * 2}px`,
-      paddingRight: `${theme.spacing * 3}px`,
-      paddingBottom: `${theme.spacing * 3}px`,
-    },
-  };
 }
 
 function getDisplayPosition(originPosition: positionType, width: number): displayPositionType {
@@ -86,11 +53,11 @@ function getWindowSize() {
   return { width, height };
 }
 
-function getTooltipMenuOrigin(displayPosition: displayPositionType, originPosition: positionType, width: number) {
+function getTooltipMenuRectPosition(displayPosition: displayPositionType, originPosition: positionType, width: number) {
   const windowSize = getWindowSize();
   return {
     ...getVerticalOrigin(displayPosition.vertical, windowSize.height, originPosition),
-    ...getHorizontalOrigin(displayPosition.horizontal, windowSize.width, originPosition, width),
+    ...getHorizontalOrigin(displayPosition.horizontal, originPosition, width),
   };
 }
 
@@ -113,7 +80,6 @@ function getVerticalOrigin(
 
 function getHorizontalOrigin(
   horizontal: displayPositionType['horizontal'],
-  windowWidth: number,
   originPosition: positionType,
   width: number,
 ) {

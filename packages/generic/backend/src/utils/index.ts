@@ -5,7 +5,6 @@ import {
   expressRequestHandlerType,
 } from './express';
 import { fileSystem } from './fileSystem';
-import { hasher } from './hasher';
 import { jwtSigner } from './jwtSigner';
 import { logger } from './logger';
 import { mailer } from './mailer';
@@ -17,7 +16,6 @@ export {
   dateBuilder,
   decoder,
   fileSystem,
-  hasher,
   jwtSigner,
   logger,
   mailer,

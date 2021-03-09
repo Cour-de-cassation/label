@@ -1,4 +1,4 @@
-import { userType } from '@label/core';
+import { userModule, userType } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customUserRepositoryType } from './customUserRepositoryType';
 
@@ -10,21 +10,21 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
 >({
   buildCustomFakeRepository: (collection) => ({
     async findByEmail(email) {
-      const formattedEmail = email.trim().toLowerCase();
+      const formattedEmail = userModule.lib.formatEmail(email);
       const result = collection.find((user) => user.email === formattedEmail);
       if (!result) {
         throw new Error(`No matching user for email ${email}`);
       }
       return result;
     },
-    async updatePassword(user, password) {
+    async updateHashedPassword(user, hashedPassword) {
       const storedUserIndex = collection.findIndex(
         ({ _id }) => _id === user._id,
       );
       if (storedUserIndex === -1) {
         return { success: false };
       }
-      collection[storedUserIndex] = { ...user, password };
+      collection[storedUserIndex] = { ...user, hashedPassword };
       return { success: true };
     },
   }),

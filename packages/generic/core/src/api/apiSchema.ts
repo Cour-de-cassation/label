@@ -111,6 +111,13 @@ const apiSchema = {
     },
   },
   post: {
+    changePassword: {
+      in: {
+        previousPassword: { kind: 'primitive', content: 'string' },
+        newPassword: { kind: 'primitive', content: 'string' },
+      },
+      out: { kind: 'constant', content: ['notValidNewPassword', 'passwordUpdated', 'wrongPassword'] as const },
+    },
     login: {
       in: {
         email: {

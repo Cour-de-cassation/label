@@ -1,1 +1,0 @@
-export { hasher } from './hasher';

@@ -4,7 +4,7 @@ export type { customUserRepositoryType };
 
 type customUserRepositoryType = {
   findByEmail: (email: userType['email']) => Promise<userType>;
-  updatePassword: (
+  updateHashedPassword: (
     user: userType,
     password: string,
   ) => Promise<{ success: boolean }>;

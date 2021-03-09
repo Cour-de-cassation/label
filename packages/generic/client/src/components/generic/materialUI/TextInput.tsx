@@ -10,6 +10,7 @@ function TextInput(props: {
   value: string;
   error?: boolean;
   errorText?: string;
+  helperText?: string;
   multiline?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   size?: number;
@@ -22,8 +23,8 @@ function TextInput(props: {
     <TextField
       id={props.name}
       InputProps={{ classes: inputClasses }}
-      error={!!props.errorText || !!props.error}
-      helperText={props.errorText}
+      error={props.error}
+      helperText={props.error ? props.errorText : props.helperText}
       label={props.placeholder}
       multiline={props.multiline}
       onChange={props.onChange}

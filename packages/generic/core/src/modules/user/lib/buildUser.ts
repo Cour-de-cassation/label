@@ -1,12 +1,28 @@
-import { idModule, omitIdType } from '../../id';
+import { idModule } from '../../id';
 import { userType } from '../userType';
+import { computeHashedPassword } from './computeHashedPassword';
+import { formatEmail } from './formatEmail';
 
 export { buildUser };
 
-function buildUser(userFields: omitIdType<userType>): userType {
+async function buildUser({
+  email,
+  name,
+  password,
+  role,
+}: {
+  email: string;
+  name: string;
+  password: string;
+  role: userType['role'];
+}): Promise<userType> {
+  const hashedPassword = await computeHashedPassword(password);
+
   return {
-    ...userFields,
-    email: userFields.email.trim().toLowerCase(),
+    email: formatEmail(email),
+    hashedPassword,
     _id: idModule.lib.buildId(),
+    name,
+    role,
   };
 }

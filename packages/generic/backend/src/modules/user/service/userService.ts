@@ -1,12 +1,13 @@
 import {
   assignationType,
   errorHandlers,
+  hasher,
   idModule,
   userModule,
   userType,
 } from '@label/core';
 import { buildUserRepository } from '../repository';
-import { hasher, jwtSigner, mailer } from '../../../utils';
+import { jwtSigner, mailer } from '../../../utils';
 import { wordings } from '../../../wordings';
 
 export { userService };
@@ -14,6 +15,36 @@ export { userService };
 const DEFAULT_ROLE = 'annotator';
 
 const userService = {
+  async changePassword({
+    user,
+    previousPassword,
+    newPassword,
+  }: {
+    user: userType;
+    previousPassword: string;
+    newPassword: string;
+  }) {
+    const userRepository = buildUserRepository();
+
+    const isPreviousPasswordValid = await hasher.compare(
+      previousPassword,
+      user.hashedPassword,
+    );
+
+    if (!isPreviousPasswordValid) {
+      return 'wrongPassword';
+    } else if (!userModule.lib.isPasswordValid(newPassword)) {
+      return 'notValidNewPassword';
+    } else {
+      await userRepository.updateHashedPassword(
+        user,
+        await userModule.lib.computeHashedPassword(newPassword),
+      );
+
+      return 'passwordUpdated';
+    }
+  },
+
   async fetchUserNamesByAssignationId(
     assignationsById: Record<string, assignationType>,
   ) {
@@ -51,29 +82,28 @@ const userService = {
     }));
   },
 
-  async login(user: {
+  async login({
+    email,
+    password,
+  }: {
     email: userType['email'];
-    password: userType['password'];
+    password: string;
   }) {
     const userRepository = buildUserRepository();
-    const storedUser = await userRepository.findByEmail(user.email);
-    const isPasswordValid = await hasher.compare(
-      user.password,
-      storedUser.password,
-    );
+    const user = await userRepository.findByEmail(email);
 
-    if (!isPasswordValid) {
+    if (!(await userModule.lib.isUserPassword(user, password))) {
       throw new Error(
         `The received password does not match the stored one for ${user.email}`,
       );
     }
 
-    const token = jwtSigner.sign(storedUser._id);
+    const token = jwtSigner.sign(user._id);
 
     return {
-      email: storedUser.email,
-      name: storedUser.name,
-      role: storedUser.role,
+      email: user.email,
+      name: user.name,
+      role: user.role,
       token,
     };
   },
@@ -89,21 +119,25 @@ const userService = {
       text: text,
     });
   },
-  async signUpUser(user: {
-    email: userType['email'];
-    name: userType['name'];
-    password: userType['password'];
+  async signUpUser({
+    email,
+    name,
+    password,
+    role = DEFAULT_ROLE,
+  }: {
+    email: string;
+    name: string;
+    password: string;
     role?: userType['role'];
   }) {
-    const role = user.role || DEFAULT_ROLE;
-    const hashedPassword = await hasher.hash(user.password);
     const userRepository = buildUserRepository();
-    const newUser = userModule.lib.buildUser({
-      email: user.email,
-      name: user.name,
-      password: hashedPassword,
+    const newUser = await userModule.lib.buildUser({
+      email,
+      name,
+      password,
       role,
     });
+
     return userRepository.insert(newUser);
   },
   async resetPassword(password: string, resetPasswordToken: string) {
@@ -112,7 +146,7 @@ const userService = {
     const userId = idModule.lib.buildId(userStrId);
     const user = await userRepository.findById(userId);
     const hashedPassword = await hasher.hash(password);
-    return await userRepository.updatePassword(user, hashedPassword);
+    return await userRepository.updateHashedPassword(user, hashedPassword);
   },
   async fetchAuthenticatedUserFromAuthorizationHeader(authorization?: string) {
     const userRepository = buildUserRepository();

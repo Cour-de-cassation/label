@@ -18,6 +18,14 @@ const fr = {
   },
   business: {
     account: 'Compte',
+    changePassword: 'Modifier le mot de passe',
+    confirmPassword: 'Confirmer le nouveau mot de passe',
+    newPassword: 'Nouveau mot de passe',
+    newPasswordsDontMatch: 'Les nouveaux mots de passe ne correspondent pas',
+    newPasswordInstructions: 'Le mot de passe doit contenir au moins 8 caractères',
+    previousPassword: 'Ancien mot de passe',
+    update: 'Mettre à jour',
+    wrongPassword: 'Le mot de passe est erroné',
   },
   homePage: {
     anonymisedView: 'Vue anonymisée',

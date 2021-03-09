@@ -71,6 +71,14 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   },
 
   post: {
+    changePassword: buildAuthenticatedController({
+      permissions: ['admin', 'annotator'],
+      controllerWithUser: async (
+        user,
+        { args: { previousPassword, newPassword } },
+      ) => userService.changePassword({ user, previousPassword, newPassword }),
+    }),
+
     async login({ args: { email, password } }) {
       const { email: userEmail, name, role, token } = await userService.login({
         email,

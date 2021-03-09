@@ -5,14 +5,10 @@ import { DataFetcher } from './DataFetcher';
 
 export { SettingsDataFetcher };
 
-function SettingsDataFetcher(props: {
-  alwaysDisplayHeader?: boolean;
-  children: (fetched: { settings: settingsType }) => ReactElement;
-}) {
+function SettingsDataFetcher(props: { children: (fetched: { settings: settingsType }) => ReactElement }) {
   const settingsFetchInfo = useApi(buildFetchSettings());
   return (
     <DataFetcher
-      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={(settings: settingsType) => props.children({ settings })}
       fetchInfo={settingsFetchInfo}
     />

@@ -6,7 +6,6 @@ import { DataFetcher } from '../../DataFetcher';
 export { DocumentDataFetcher };
 
 function DocumentDataFetcher(props: {
-  alwaysDisplayHeader?: boolean;
   children: (fetched: { document: apiRouteOutType<'get', 'document'> }) => ReactElement;
   documentId: string;
 }) {
@@ -14,7 +13,6 @@ function DocumentDataFetcher(props: {
 
   return (
     <DataFetcher
-      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={(document: apiRouteOutType<'get', 'document'>) => props.children({ document })}
       fetchInfo={documentFetchInfo}
     />

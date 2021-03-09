@@ -6,7 +6,6 @@ import { DataFetcher } from '../../DataFetcher';
 export { AnnotationsDataFetcher };
 
 function AnnotationsDataFetcher(props: {
-  alwaysDisplayHeader?: boolean;
   children: (fetched: { annotations: apiRouteOutType<'get', 'annotations'> }) => ReactElement;
   documentId: string;
 }) {
@@ -14,7 +13,6 @@ function AnnotationsDataFetcher(props: {
 
   return (
     <DataFetcher
-      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={(annotations: apiRouteOutType<'get', 'annotations'>) => props.children({ annotations })}
       fetchInfo={annotationsFetchInfo}
     />

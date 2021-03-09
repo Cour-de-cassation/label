@@ -8,7 +8,6 @@ import { LoadingPage } from './LoadingPage';
 export { DataFetcher };
 
 function DataFetcher<dataT>(props: {
-  alwaysDisplayHeader?: boolean;
   buildComponentWithData: (returnedData: dataT) => ReactElement;
   fetchInfo: { isLoaded: boolean; statusCode?: number; data?: dataT };
 }) {
@@ -30,11 +29,11 @@ function DataFetcher<dataT>(props: {
   return buildErrorPage();
 
   function buildErrorPage() {
-    return <ErrorPage displayHeader={props.alwaysDisplayHeader} />;
+    return <ErrorPage />;
   }
 
   function buildLoadingPage() {
-    return <LoadingPage displayHeader={props.alwaysDisplayHeader} />;
+    return <LoadingPage />;
   }
 
   function buildLoginRedirectionPage() {

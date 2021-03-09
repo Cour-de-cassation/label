@@ -6,7 +6,6 @@ import { DataFetcher } from '../DataFetcher';
 export { DocumentsDataFetcher };
 
 function DocumentsDataFetcher(props: {
-  alwaysDisplayHeader?: boolean;
   children: (fetched: {
     documentsToBeTreated: {
       document: fetchedDocumentType;
@@ -20,7 +19,6 @@ function DocumentsDataFetcher(props: {
 
   return (
     <DataFetcher
-      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={(
         documentsToBeTreated: {
           document: fetchedDocumentType;

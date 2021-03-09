@@ -5,13 +5,14 @@ import { wordings } from '../../wordings';
 
 export { LoadingPage };
 
-function LoadingPage(props: { displayHeader?: boolean }) {
+function LoadingPage() {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
 
   return (
     <>
-      {props.displayHeader && <MainHeader />}
+      <MainHeader />
+
       <span style={style.loadingPage}>
         <div className="loading-wheel" style={style.loadingWheel} />
         <Text>{wordings.loadingPage}</Text>

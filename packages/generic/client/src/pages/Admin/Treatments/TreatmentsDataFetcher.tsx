@@ -6,14 +6,12 @@ import { DataFetcher } from '../../DataFetcher';
 export { TreatmentsDataFetcher };
 
 function TreatmentsDataFetcher(props: {
-  alwaysDisplayHeader?: boolean;
   children: (fetched: { treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'> }) => ReactElement;
 }) {
   const treatmentsWithDetailsFetchInfo = useApi(buildFetchTreatments());
 
   return (
     <DataFetcher
-      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={(treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>) =>
         props.children({ treatmentsWithDetails })
       }

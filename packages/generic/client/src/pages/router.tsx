@@ -28,14 +28,10 @@ function Router() {
           <Agents />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/admin/document/:documentId">
-          <SettingsDataFetcher alwaysDisplayHeader>
-            {({ settings }) => <DocumentInspector settings={settings} />}
-          </SettingsDataFetcher>
+          <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/annotation">
-          <SettingsDataFetcher alwaysDisplayHeader>
-            {({ settings }) => <Home settings={settings} />}
-          </SettingsDataFetcher>
+          <SettingsDataFetcher>{({ settings }) => <Home settings={settings} />}</SettingsDataFetcher>
         </AuthenticatedRoute>
         <AuthenticatedRoute>
           <HomeRoute path="/" />

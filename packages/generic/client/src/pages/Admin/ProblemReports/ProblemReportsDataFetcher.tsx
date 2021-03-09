@@ -6,7 +6,6 @@ import { DataFetcher } from '../../DataFetcher';
 export { ProblemReportsDataFetcher };
 
 function ProblemReportsDataFetcher(props: {
-  alwaysDisplayHeader?: boolean;
   children: (fetched: {
     problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
   }) => ReactElement;
@@ -15,7 +14,6 @@ function ProblemReportsDataFetcher(props: {
 
   return (
     <DataFetcher
-      alwaysDisplayHeader={props.alwaysDisplayHeader}
       buildComponentWithData={(problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>) =>
         props.children({ problemReportsWithDetails })
       }

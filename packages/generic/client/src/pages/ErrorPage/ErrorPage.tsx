@@ -4,12 +4,12 @@ import { wordings } from '../../wordings';
 
 export { ErrorPage };
 
-function ErrorPage(props: { displayHeader?: boolean }) {
+function ErrorPage() {
   const style = buildStyle();
 
   return (
     <>
-      {props.displayHeader && <MainHeader />}
+      <MainHeader />
 
       <span style={style.errorPage}>
         <Icon iconName="warning" style={style.errorIcon} />

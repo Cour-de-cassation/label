@@ -5,6 +5,8 @@ import { treatmentType } from '../treatmentType';
 
 export { computeTreatmentsInfo, computeTreatmentInfo };
 
+export type { treatmentInfoType };
+
 type treatmentInfoType = {
   additionsCount: number;
   deletionsCount: number;

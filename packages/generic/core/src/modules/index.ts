@@ -15,7 +15,7 @@ import {
   shadeColorType,
   categoryIconNameType,
 } from './settings';
-import { treatmentType, treatmentModule } from './treatment';
+import { treatmentType, treatmentModule, treatmentInfoType } from './treatment';
 import { userModule, userType } from './user';
 import {
   buildDataModelEntry,
@@ -60,6 +60,7 @@ export type {
   categoryIconNameType,
   userType,
   treatmentType,
+  treatmentInfoType,
   dataModelEntryType,
   dataModelType,
   networkTypeOfDataModel,

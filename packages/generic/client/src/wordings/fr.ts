@@ -113,8 +113,12 @@ const fr = {
       filter: {
         title: 'Filtrer',
         exportButton: 'Exporter',
+        chips: {
+          mustHaveSurAnnotations: 'Avec sur annotation',
+        },
         fields: {
           agents: 'Agents',
+          mustHaveSurAnnotations: 'Avec sur annotation',
         },
       },
       columnTitles: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TooltipMenu, LabelledDropdown } from '../../../../components';
+import { TooltipMenu, LabelledDropdown, SwitchButton, Text } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { rectPositionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
@@ -18,10 +18,12 @@ type treatmentFilterInfoType = {
 
 type treatmentFilterType = {
   userName: string | undefined;
+  mustHaveSurAnnotations: boolean;
 };
 
 const DEFAULT_TREATMENT_FILTER = {
   userName: undefined,
+  mustHaveSurAnnotations: false,
 };
 
 function FilterTooltipMenu(props: {
@@ -48,12 +50,27 @@ function FilterTooltipMenu(props: {
           onChange={updateUserNameFilter}
           width={DROPDOWN_WIDTH}
         />
+        <div style={styles.switchFilter}>
+          <Text>{wordings.treatmentsPage.table.filter.fields.mustHaveSurAnnotations}</Text>
+          <SwitchButton
+            onChange={updateMustHaveSurAnnotationsFilter}
+            checked={!!props.filters.mustHaveSurAnnotations}
+            color="primary"
+          />
+        </div>
       </div>
     </TooltipMenu>
   );
 
   function updateUserNameFilter(userName: string) {
     props.setFilters({ ...props.filters, userName });
+  }
+
+  function updateMustHaveSurAnnotationsFilter() {
+    props.setFilters({
+      ...props.filters,
+      mustHaveSurAnnotations: !props.filters.mustHaveSurAnnotations,
+    });
   }
 
   function buildStyles(theme: customThemeType) {
@@ -65,6 +82,12 @@ function FilterTooltipMenu(props: {
       button: {
         alignSelf: 'flex-end',
         padding: `${theme.spacing}px ${theme.spacing * 2}px`,
+      },
+      switchFilter: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: theme.spacing * 2,
       },
     } as const;
   }

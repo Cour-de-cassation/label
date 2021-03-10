@@ -8,6 +8,7 @@ import {
   freePendingDocuments,
   insertTestUsers,
   insertUser,
+  runDeploymentScripts,
 } from './scripts';
 
 export { buildBackend };
@@ -42,6 +43,10 @@ function buildBackend(environmentJson: string, settingsJson: string) {
       insertUser: {
         run: insertUser,
         option: { shouldLoadDb: true, shouldExit: false },
+      },
+      runDeploymentScripts: {
+        run: runDeploymentScripts,
+        option: { shouldLoadDb: true, shouldExit: true },
       },
     },
   };

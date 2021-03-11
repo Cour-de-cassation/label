@@ -1,5 +1,6 @@
 import { range } from 'lodash';
 import { annotationType, textSplitter, textChunkType, annotationChunkType } from '@label/core';
+import { splitTextAccordingToNewLine } from './splitTextAccordingToNewLine';
 
 export { getSplittedTextByLine };
 
@@ -82,8 +83,4 @@ function computeAfterNeighbours(
     currentIndex += textLine.length + 1;
   }
   return after;
-}
-
-function splitTextAccordingToNewLine(text: string): string[] {
-  return text.split('\r');
 }

@@ -16,5 +16,7 @@ const exporterConfig: exporterConfigType = {
       pseudonymizationText,
       labelTreatments,
     });
+
+    await sderApi.setCourtDecisionDone(documentId);
   },
 };

@@ -32,6 +32,18 @@ const sderApi: sderApiType = {
     });
   },
 
+  async setCourtDecisionDone(documentId) {
+    await axios({
+      data: {
+        decisionIds: [documentId],
+        labelStatus: 'done',
+      },
+      headers: { 'Content-Type': 'application/json' },
+      method: 'patch',
+      url: `${SDER_API_BASE_URL}/update-label-status`,
+    });
+  },
+
   async updateDecisionPseudonymisation({
     documentId,
     pseudonymizationText,

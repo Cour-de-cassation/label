@@ -28,13 +28,14 @@
     "startLocalDevDocker": "docker-compose -f docker-compose-dev.yml up",
     "startLocal": "scripts/startLocal.sh",
     "startLocalDocker": "docker-compose -f docker-compose.yml up",
-    "startPreProd": "scripts/startPreProd.sh",
-    "startProd": "scripts/startProd.sh",
+    "startPreProd": "scripts/preProd/start.sh",
+    "startProd": "scripts/prod/start.sh",
     "test": "lerna run test",
     "testE2E": "lerna run testE2E",
     "type": "lerna run type",
     "up": "git pull && yarn && yarn bootstrap && yarn buildLocalDocker && yarn startLocalDocker",
-    "updatePreProd": "git checkout pre-prod && git pull && yarn && yarn bootstrap && yarn build"
+    "updatePreProd": "git checkout pre-prod && git pull && yarn && yarn bootstrap && yarn build",
+    "updateProd": "git checkout prod && git pull && yarn && yarn bootstrap && yarn build"
   },
   "workspaces": [
     "packages/generic/*",

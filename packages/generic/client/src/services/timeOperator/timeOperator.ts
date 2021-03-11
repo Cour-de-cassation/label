@@ -5,11 +5,15 @@ const timeOperator = {
   convertTimestampToReadableDate,
 };
 
-function convertTimestampToReadableDate(timestamp: number) {
+function convertTimestampToReadableDate(timestamp: number, displayTime?: boolean) {
   const date = new Date(timestamp);
   const readableDay = date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;
   const readableMonth = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
   const readableYear = date.getFullYear();
+  if (!displayTime) {
+    return `${readableDay}/${readableMonth}/${readableYear}`;
+  }
+
   const readableHours = date.getHours() < 10 ? `0${date.getHours()}` : `${date.getHours()}`;
   const readableMinutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : `${date.getMinutes()}`;
 

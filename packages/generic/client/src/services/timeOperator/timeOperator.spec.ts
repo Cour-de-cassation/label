@@ -23,7 +23,7 @@ describe('timeOperator', () => {
     it('should return a date with the appropriate format', () => {
       const regex = new RegExp('[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}');
 
-      const dateString = timeOperator.convertTimestampToReadableDate(1639308840000);
+      const dateString = timeOperator.convertTimestampToReadableDate(1639308840000, true);
 
       expect(regex.test(dateString)).toBe(true);
     });

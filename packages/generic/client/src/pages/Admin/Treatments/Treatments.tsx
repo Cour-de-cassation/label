@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { uniq } from 'lodash';
+import format from 'string-template';
 import { apiRouteOutType, idModule, keysOf, treatmentInfoType, treatmentModule } from '@label/core';
 import { AdminMenu, MainHeader, tableRowFieldType } from '../../../components';
 import { timeOperator } from '../../../services/timeOperator';
@@ -58,7 +59,7 @@ function Treatments() {
                   <TreatmentTable treatmentsWithDetails={filteredTreatmentsWithDetails} fields={treatmentFields} />
                 </div>
                 <div style={styles.csvButtonContainer}>
-                  <ExportCSVButton data={treatmentsWithDetails} fields={treatmentFields} />
+                  <ExportCSVButton data={filteredTreatmentsWithDetails} fields={treatmentFields} />
                 </div>
               </div>
             );
@@ -70,8 +71,12 @@ function Treatments() {
 
   function renderFilterChip(filterKey: keyof treatmentFilterType, filters: treatmentFilterType) {
     switch (filterKey) {
+      case 'mustHaveSubAnnotations':
+        return renderMustHaveSubAnnotationsChip(filters.mustHaveSubAnnotations);
       case 'mustHaveSurAnnotations':
         return renderMustHaveSurAnnotationsChip(filters.mustHaveSurAnnotations);
+      case 'startDate':
+        return renderStartDateChip(filters.startDate);
       case 'userName':
         return renderUserNameChip(filters.userName);
     }
@@ -84,6 +89,35 @@ function Treatments() {
               filterText={wordings.treatmentsPage.table.filter.chips.mustHaveSurAnnotations}
               onClose={buildRemoveFilter(filterKey)}
             />
+          </div>
+        )
+      );
+    }
+
+    function renderMustHaveSubAnnotationsChip(filterValue: boolean) {
+      return (
+        !!filterValue && (
+          <div style={styles.chipContainer}>
+            <Chip
+              filterText={wordings.treatmentsPage.table.filter.chips.mustHaveSubAnnotations}
+              onClose={buildRemoveFilter(filterKey)}
+            />
+          </div>
+        )
+      );
+    }
+
+    function renderStartDateChip(filterValue: Date | undefined) {
+      if (!filterValue) {
+        return null;
+      }
+      const filterText = format(wordings.treatmentsPage.table.filter.chips.startDate, {
+        startDate: timeOperator.convertTimestampToReadableDate(filterValue.getTime(), false),
+      });
+      return (
+        !!filterValue && (
+          <div style={styles.chipContainer}>
+            <Chip filterText={filterText} onClose={buildRemoveFilter(filterKey)} />
           </div>
         )
       );
@@ -106,13 +140,20 @@ function Treatments() {
     filters: treatmentFilterType,
   ) {
     return treatmentsWithDetails.filter((treatmentWithDetails) => {
-      return Object.entries(filters).reduce((accumulator, [currentFilterKey, currentFilterValue]) => {
-        if (currentFilterKey === 'userName' && !!currentFilterValue) {
-          return accumulator && treatmentWithDetails.userName === filters.userName;
-        }
-        if (currentFilterKey === 'mustHaveSurAnnotations' && !!currentFilterValue) {
+      return keysOf(filters).reduce((accumulator, currentFilterKey) => {
+        if (currentFilterKey === 'mustHaveSurAnnotations' && !!filters[currentFilterKey]) {
           const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)];
           return accumulator && treatmentInfo.deletionsCount > 0;
+        }
+        if (currentFilterKey === 'mustHaveSubAnnotations' && !!filters[currentFilterKey]) {
+          const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)];
+          return accumulator && treatmentInfo.additionsCount > 0;
+        }
+        if (currentFilterKey === 'startDate' && !!filters.startDate) {
+          return accumulator && treatmentWithDetails.treatment.lastUpdateDate >= filters.startDate.getTime();
+        }
+        if (currentFilterKey === 'userName' && !!filters[currentFilterKey]) {
+          return accumulator && treatmentWithDetails.userName === filters.userName;
         }
         return accumulator;
       }, true as boolean);
@@ -152,7 +193,7 @@ function Treatments() {
         title: wordings.treatmentsPage.table.columnTitles.date,
         canBeSorted: true,
         extractor: (treatmentWithDetails) =>
-          timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.lastUpdateDate),
+          timeOperator.convertTimestampToReadableDate(treatmentWithDetails.treatment.lastUpdateDate, true),
         width: 10,
       },
       {

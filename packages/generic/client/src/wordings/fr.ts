@@ -115,10 +115,14 @@ const fr = {
         exportButton: 'Exporter',
         chips: {
           mustHaveSurAnnotations: 'Avec sur annotation',
+          mustHaveSubAnnotations: 'Avec sous annotation',
+          startDate: '> {startDate}',
         },
         fields: {
           agents: 'Agents',
           mustHaveSurAnnotations: 'Avec sur annotation',
+          mustHaveSubAnnotations: 'Avec sous annotation',
+          startDate: 'Date début',
         },
       },
       columnTitles: {

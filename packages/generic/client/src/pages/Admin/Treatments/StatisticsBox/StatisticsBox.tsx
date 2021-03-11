@@ -75,7 +75,7 @@ function StatisticsBox(props: { treatmentsWithDetails: apiRouteOutType<'get', 't
   function getComputationValue(total: number) {
     switch (computation) {
       case 'average':
-        return Math.floor(total / props.treatmentsWithDetails.length);
+        return props.treatmentsWithDetails.length ? Math.floor(total / props.treatmentsWithDetails.length) : 0;
       case 'total':
         return total;
     }

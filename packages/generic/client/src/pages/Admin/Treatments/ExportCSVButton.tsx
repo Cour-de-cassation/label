@@ -29,7 +29,7 @@ function ExportCSVButton<InputT>(props: {
   }
 
   function buildFileName() {
-    const readableDate = timeOperator.convertTimestampToReadableDate(new Date().getTime());
+    const readableDate = timeOperator.convertTimestampToReadableDate(new Date().getTime(), true);
     return `statistics_${readableDate}.csv`;
   }
 

@@ -78,7 +78,7 @@ const problemReportsFields: Array<tableRowFieldType<
     title: wordings.problemReportsPage.table.columnTitles.date,
     canBeSorted: true,
     extractor: (problemReportWithDetails) =>
-      timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date),
+      timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date, true),
     width: 5,
   },
   {

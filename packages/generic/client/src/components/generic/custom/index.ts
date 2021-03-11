@@ -2,7 +2,9 @@ import { Button, buttonColorType } from './Button';
 import { ButtonWithIcon } from './ButtonWithIcon';
 import { CircleIcon } from './CircleIcon';
 import { ComponentsList } from './ComponentsList';
+import { DatePicker } from './DatePicker';
 import { Dropdown } from './Dropdown';
+import { DropdownButton } from './DropdownButton';
 import { FloatingTooltipMenu } from './FloatingTooltipMenu';
 import { Header } from './Header';
 import { IconButton } from './IconButton';
@@ -18,7 +20,9 @@ export {
   ButtonWithIcon,
   CircleIcon,
   ComponentsList,
+  DatePicker,
   Dropdown,
+  DropdownButton,
   FloatingTooltipMenu,
   Header,
   IconButton,

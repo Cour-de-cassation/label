@@ -27,7 +27,7 @@ function TooltipMenu(props: {
       overlay: {
         backgroundColor: theme.colors.overlay,
         opacity: 0.2,
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         left: 0,
         width: '100vw',

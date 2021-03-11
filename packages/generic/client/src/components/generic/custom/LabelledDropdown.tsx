@@ -6,6 +6,7 @@ export { LabelledDropdown };
 
 function LabelledDropdown<T extends string>(props: {
   error?: boolean;
+  defaultValue?: T;
   items: Array<{ icon?: ReactElement; text: string; value: T }>;
   label: string;
   labelIcon?: ReactElement;
@@ -25,6 +26,7 @@ function LabelledDropdown<T extends string>(props: {
           width={props.width}
         />
       )}
+      defaultValue={props.defaultValue}
       items={props.items}
       onChange={props.onChange}
       width={props.width}

@@ -60,6 +60,7 @@ function FilterTooltipMenu(props: {
         </div>
         <div style={styles.filterContainer}>
           <LabelledDropdown<treatmentFilterInfoType['userNames'][number]>
+            defaultValue={props.filters.userName}
             items={props.filterInfo.userNames.map((userName) => ({ text: userName, value: userName }))}
             label={wordings.treatmentsPage.table.filter.fields.agents}
             onChange={updateUserNameFilter}

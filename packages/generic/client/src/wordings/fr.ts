@@ -101,6 +101,7 @@ const fr = {
         type: 'Type',
       },
       optionItems: {
+        openDocument: 'Ouvrir la décision...',
         reinjectIntoStream: 'Réinjecter dans le flux',
         reassignToAgent: "Renvoyer à l'agent",
       },

@@ -28,13 +28,14 @@ function buildFetchProblemReports() {
       'problemReportsWithDetails',
     );
     return {
-      data: problemReportsWithDetails.map(({ problemReport, userName }) => ({
+      data: problemReportsWithDetails.map(({ problemReport, userName, documentId }) => ({
         problemReport: {
           ...problemReport,
           _id: idModule.lib.buildId(problemReport._id),
           assignationId: idModule.lib.buildId(problemReport.assignationId),
         },
         userName,
+        documentId: idModule.lib.buildId(documentId),
       })),
       statusCode,
     };

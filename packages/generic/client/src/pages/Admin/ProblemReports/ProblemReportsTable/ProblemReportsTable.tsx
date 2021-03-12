@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { apiRouteOutType, idModule } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
@@ -12,6 +13,7 @@ const PROBLEM_REPORT_ICON_SIZE = 24;
 function ProblemReportsTable(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
+  const history = useHistory();
   const optionItems = buildOptionItems();
   return (
     <Table
@@ -21,29 +23,36 @@ function ProblemReportsTable(props: {
       optionItems={optionItems}
     />
   );
-}
 
-function buildOptionItems() {
-  return [
-    {
-      text: wordings.problemReportsPage.table.optionItems.reinjectIntoStream,
-      onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-        apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-          assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
-          status: 'free',
-        });
+  function buildOptionItems() {
+    return [
+      {
+        text: wordings.problemReportsPage.table.optionItems.openDocument,
+        onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
+          history.push(`/admin/document/${problemReportWithDetails.documentId}`);
+          return;
+        },
       },
-    },
-    {
-      text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
-      onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-        apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-          assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
-          status: 'pending',
-        });
+      {
+        text: wordings.problemReportsPage.table.optionItems.reinjectIntoStream,
+        onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
+          apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+            assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
+            status: 'free',
+          });
+        },
       },
-    },
-  ];
+      {
+        text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
+        onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
+          apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+            assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
+            status: 'pending',
+          });
+        },
+      },
+    ];
+  }
 }
 
 const problemReportsFields: Array<tableRowFieldType<

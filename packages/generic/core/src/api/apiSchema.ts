@@ -63,6 +63,7 @@ const apiSchema = {
           kind: 'object',
           content: {
             problemReport: fetchedDataModelEntries.problemReport,
+            documentId: { kind: 'primitive', content: 'id' },
             userName: {
               kind: 'primitive',
               content: 'string',

@@ -59,11 +59,12 @@ const problemReportService = {
     );
 
     return problemReports.map((problemReport) => {
-      const userName =
-        userNamesByAssignationId[
-          idModule.lib.convertToString(problemReport.assignationId)
-        ];
-      return { problemReport, userName };
+      const assignationIdString = idModule.lib.convertToString(
+        problemReport.assignationId,
+      );
+      const userName = userNamesByAssignationId[assignationIdString];
+      const assignation = assignationsById[assignationIdString];
+      return { problemReport, userName, documentId: assignation.documentId };
     });
   },
 };

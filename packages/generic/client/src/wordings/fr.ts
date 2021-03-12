@@ -113,6 +113,7 @@ const fr = {
       filter: {
         title: 'Filtrer',
         exportButton: 'Exporter',
+        resultsCount: '{count} décisions affichées',
         chips: {
           mustHaveSurAnnotations: 'Avec sur annotation',
           mustHaveSubAnnotations: 'Avec sous annotation',

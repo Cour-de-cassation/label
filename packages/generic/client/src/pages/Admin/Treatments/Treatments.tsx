@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { uniq } from 'lodash';
-import format from 'string-template';
 import { apiRouteOutType, idModule, keysOf, treatmentInfoType, treatmentModule } from '@label/core';
 import { AdminMenu, MainHeader, tableRowFieldType } from '../../../components';
 import { timeOperator } from '../../../services/timeOperator';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { Chip } from './Chip';
 import { ExportCSVButton } from './ExportCSVButton';
-import { FilterButton } from './FilterButton';
+import { Filters } from './Filters';
 import { StatisticsBox } from './StatisticsBox';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
@@ -45,12 +43,12 @@ function Treatments() {
                 <div style={styles.tableHeaderContainer}>
                   <div style={styles.tableHeader}>
                     <div style={styles.leftHeaderContent}>
-                      <div style={styles.filterContainer}>
-                        <FilterButton filters={filters} setFilters={setFilters} filterInfo={filterInfo} />
-                        <div style={styles.chipsContainer}>
-                          {keysOf(filters).map((filterKey) => renderFilterChip(filterKey, filters))}
-                        </div>
-                      </div>
+                      <Filters
+                        filterInfo={filterInfo}
+                        filters={filters}
+                        setFilters={setFilters}
+                        resultsCount={filteredTreatmentsWithDetails.length}
+                      />
                     </div>
                     <StatisticsBox treatmentsWithDetails={filteredTreatmentsWithDetails} />
                   </div>
@@ -68,71 +66,6 @@ function Treatments() {
       </div>
     </>
   );
-
-  function renderFilterChip(filterKey: keyof treatmentFilterType, filters: treatmentFilterType) {
-    switch (filterKey) {
-      case 'mustHaveSubAnnotations':
-        return renderMustHaveSubAnnotationsChip(filters.mustHaveSubAnnotations);
-      case 'mustHaveSurAnnotations':
-        return renderMustHaveSurAnnotationsChip(filters.mustHaveSurAnnotations);
-      case 'startDate':
-        return renderStartDateChip(filters.startDate);
-      case 'userName':
-        return renderUserNameChip(filters.userName);
-    }
-
-    function renderMustHaveSurAnnotationsChip(filterValue: boolean) {
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip
-              filterText={wordings.treatmentsPage.table.filter.chips.mustHaveSurAnnotations}
-              onClose={buildRemoveFilter(filterKey)}
-            />
-          </div>
-        )
-      );
-    }
-
-    function renderMustHaveSubAnnotationsChip(filterValue: boolean) {
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip
-              filterText={wordings.treatmentsPage.table.filter.chips.mustHaveSubAnnotations}
-              onClose={buildRemoveFilter(filterKey)}
-            />
-          </div>
-        )
-      );
-    }
-
-    function renderStartDateChip(filterValue: Date | undefined) {
-      if (!filterValue) {
-        return null;
-      }
-      const filterText = format(wordings.treatmentsPage.table.filter.chips.startDate, {
-        startDate: timeOperator.convertTimestampToReadableDate(filterValue.getTime(), false),
-      });
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip filterText={filterText} onClose={buildRemoveFilter(filterKey)} />
-          </div>
-        )
-      );
-    }
-
-    function renderUserNameChip(filterValue: string | undefined) {
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip filterText={filterValue} onClose={buildRemoveFilter(filterKey)} />
-          </div>
-        )
-      );
-    }
-  }
 
   function getFilteredTreatmentsWithDetails(
     treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>,
@@ -158,10 +91,6 @@ function Treatments() {
         return accumulator;
       }, true as boolean);
     });
-  }
-
-  function buildRemoveFilter(filterKeyToRemove: string) {
-    return () => setFilters({ ...filters, [filterKeyToRemove]: undefined });
   }
 
   function extractFilterInfoFromTreatments(treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>) {
@@ -246,21 +175,8 @@ function Treatments() {
         width: '100vw',
         display: 'flex',
       },
-      chipsContainer: {
-        paddingTop: theme.spacing,
-        paddingBottom: theme.spacing,
-        paddingLeft: theme.spacing,
-        display: 'flex',
-        flex: 1,
-      },
-      chipContainer: {
-        marginRight: theme.spacing,
-      },
       leftHeaderContent: {
         flex: 1,
-      },
-      filterContainer: {
-        display: 'flex',
       },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,

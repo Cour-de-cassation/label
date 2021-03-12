@@ -1,5 +1,5 @@
 import React from 'react';
-import { TooltipMenu, LabelledDropdown, SwitchButton, Text, DatePicker } from '../../../../components';
+import { TooltipMenu, LabelledDropdown, SwitchButton, Text, DatePicker, Icon } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { rectPositionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
@@ -20,6 +20,7 @@ type treatmentFilterInfoType = {
 
 type treatmentFilterType = {
   startDate: Date | undefined;
+  endDate: Date | undefined;
   userName: string | undefined;
   mustHaveSurAnnotations: boolean;
   mustHaveSubAnnotations: boolean;
@@ -27,6 +28,7 @@ type treatmentFilterType = {
 
 const DEFAULT_TREATMENT_FILTER = {
   startDate: undefined,
+  endDate: undefined,
   userName: undefined,
   mustHaveSurAnnotations: false,
   mustHaveSubAnnotations: false,
@@ -56,6 +58,15 @@ function FilterTooltipMenu(props: {
             value={props.filters.startDate}
             width={DATE_DROPDOWN_WIDTH}
             label={wordings.treatmentsPage.table.filter.fields.startDate}
+            parentRectPosition={props.rectPosition}
+          />
+          <Icon iconName="doubleArrow" />
+          <DatePicker
+            onChange={updateEndDateFilter}
+            value={props.filters.endDate}
+            width={DATE_DROPDOWN_WIDTH}
+            label={wordings.treatmentsPage.table.filter.fields.endDate}
+            parentRectPosition={props.rectPosition}
           />
         </div>
         <div style={styles.filterContainer}>
@@ -102,6 +113,13 @@ function FilterTooltipMenu(props: {
     });
   }
 
+  function updateEndDateFilter(endDate: Date) {
+    props.setFilters({
+      ...props.filters,
+      endDate,
+    });
+  }
+
   function updateMustHaveSubAnnotationsFilter() {
     props.setFilters({
       ...props.filters,
@@ -127,10 +145,15 @@ function FilterTooltipMenu(props: {
         padding: `${theme.spacing}px ${theme.spacing * 2}px`,
       },
       filterContainer: {
+        display: 'flex',
+        flex: 1,
+        alignItems: 'center',
         marginTop: theme.spacing * 2,
+        justifyContent: 'space-between',
       },
       switchFilter: {
         display: 'flex',
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'space-between',
       },

@@ -118,12 +118,14 @@ const fr = {
           mustHaveSurAnnotations: 'Avec sur annotation',
           mustHaveSubAnnotations: 'Avec sous annotation',
           startDate: '> {startDate}',
+          endDate: '< {endDate}',
         },
         fields: {
           agents: 'Agents',
           mustHaveSurAnnotations: 'Avec sur annotation',
           mustHaveSubAnnotations: 'Avec sous annotation',
           startDate: 'Date début',
+          endDate: 'Date fin',
         },
       },
       columnTitles: {

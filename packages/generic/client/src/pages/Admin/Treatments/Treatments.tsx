@@ -50,7 +50,9 @@ function Treatments() {
                         resultsCount={filteredTreatmentsWithDetails.length}
                       />
                     </div>
-                    <StatisticsBox treatmentsWithDetails={filteredTreatmentsWithDetails} />
+                    <div style={styles.statisticsBoxContainer}>
+                      <StatisticsBox treatmentsWithDetails={filteredTreatmentsWithDetails} />
+                    </div>
                   </div>
                 </div>
                 <div style={styles.tableContentContainer}>
@@ -84,6 +86,9 @@ function Treatments() {
         }
         if (currentFilterKey === 'startDate' && !!filters.startDate) {
           return accumulator && treatmentWithDetails.treatment.lastUpdateDate >= filters.startDate.getTime();
+        }
+        if (currentFilterKey === 'endDate' && !!filters.endDate) {
+          return accumulator && treatmentWithDetails.treatment.lastUpdateDate <= filters.endDate.getTime();
         }
         if (currentFilterKey === 'userName' && !!filters[currentFilterKey]) {
           return accumulator && treatmentWithDetails.userName === filters.userName;
@@ -181,8 +186,11 @@ function Treatments() {
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
       },
+      statisticsBoxContainer: {
+        marginTop: theme.spacing * 2,
+      },
       tableHeader: {
-        paddingTop: theme.spacing * 4,
+        paddingTop: theme.spacing * 2,
         display: 'flex',
         justifyContent: 'space-between',
       },

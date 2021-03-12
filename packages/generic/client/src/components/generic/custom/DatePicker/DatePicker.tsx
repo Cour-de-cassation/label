@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { timeOperator } from '../../../../services/timeOperator';
 import { rectPositionType } from '../../../../types';
 import { DropdownButton } from '../DropdownButton';
@@ -6,7 +6,13 @@ import { DatePickerTooltip } from './DatePickerTooltip';
 
 export { DatePicker };
 
-function DatePicker(props: { onChange: (date: Date) => void; value: Date | undefined; label: string; width?: number }) {
+function DatePicker(props: {
+  onChange: (date: Date) => void;
+  value: Date | undefined;
+  label: string;
+  width?: number;
+  parentRectPosition?: rectPositionType;
+}) {
   const [tooltipMenuRectPosition, setTooltipMenuRectPosition] = useState<rectPositionType | undefined>();
   const isDatePickerOpen = !!tooltipMenuRectPosition;
   const item = props.value
@@ -36,8 +42,20 @@ function DatePicker(props: { onChange: (date: Date) => void; value: Date | undef
     </>
   );
 
-  function openToolTip() {
-    setTooltipMenuRectPosition({});
+  function openToolTip(event: MouseEvent<Element>) {
+    const buttonRect = event.currentTarget.getBoundingClientRect();
+    const left =
+      props.parentRectPosition && props.parentRectPosition.left
+        ? `calc(${buttonRect.left}px - ${props.parentRectPosition.left}`
+        : `${buttonRect.left}px`;
+    const top =
+      props.parentRectPosition && props.parentRectPosition.top
+        ? `calc(${buttonRect.top}px - ${props.parentRectPosition.top} + ${buttonRect.height}px)`
+        : `${buttonRect.top + buttonRect.height}px`;
+    setTooltipMenuRectPosition({
+      left,
+      top,
+    });
   }
 
   function closeToolTip() {

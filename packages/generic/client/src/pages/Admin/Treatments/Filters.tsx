@@ -43,6 +43,8 @@ function Filters(props: {
         return renderMustHaveSurAnnotationsChip(filters.mustHaveSurAnnotations);
       case 'startDate':
         return renderStartDateChip(filters.startDate);
+      case 'endDate':
+        return renderEndDateChip(filters.endDate);
       case 'userName':
         return renderUserNameChip(filters.userName);
     }
@@ -89,6 +91,22 @@ function Filters(props: {
       );
     }
 
+    function renderEndDateChip(filterValue: Date | undefined) {
+      if (!filterValue) {
+        return null;
+      }
+      const filterText = format(wordings.treatmentsPage.table.filter.chips.endDate, {
+        endDate: timeOperator.convertTimestampToReadableDate(filterValue.getTime(), false),
+      });
+      return (
+        !!filterValue && (
+          <div style={styles.chipContainer}>
+            <Chip filterText={filterText} onClose={buildRemoveFilter(filterKey)} />
+          </div>
+        )
+      );
+    }
+
     function renderUserNameChip(filterValue: string | undefined) {
       return (
         !!filterValue && (
@@ -109,10 +127,12 @@ function buildStyles(theme: customThemeType) {
   return {
     chipsContainer: {
       paddingTop: theme.spacing,
-      paddingBottom: theme.spacing,
+      paddingBottom: theme.spacing * 3,
       paddingLeft: theme.spacing,
       display: 'flex',
       flex: 1,
+      flexWrap: 'wrap',
+      alignItems: 'center',
     },
     chipContainer: {
       marginRight: theme.spacing,
@@ -123,6 +143,7 @@ function buildStyles(theme: customThemeType) {
     filterButtonContainer: {
       display: 'flex',
       flexDirection: 'column',
+      paddingTop: theme.spacing * 2,
     },
     resultsCountContainer: {
       paddingTop: theme.spacing,

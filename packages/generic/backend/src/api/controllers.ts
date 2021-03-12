@@ -71,6 +71,16 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   },
 
   post: {
+    createUser: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: (_, { args: { name, email, role } }) => {
+        return userService.createUser({
+          name,
+          email,
+          role,
+        });
+      },
+    }),
     changePassword: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (
@@ -150,9 +160,5 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         });
       },
     }),
-
-    async signUpUser({ args: { email, password, name } }) {
-      await userService.signUpUser({ email, password, name });
-    },
   },
 };

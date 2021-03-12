@@ -119,6 +119,23 @@ const apiSchema = {
       },
       out: { kind: 'constant', content: ['notValidNewPassword', 'passwordUpdated', 'wrongPassword'] as const },
     },
+    createUser: {
+      in: {
+        name: {
+          kind: 'primitive',
+          content: 'string',
+        },
+        email: {
+          kind: 'primitive',
+          content: 'string',
+        },
+        role: {
+          kind: 'constant',
+          content: ['admin', 'annotator'] as const,
+        },
+      },
+      out: { kind: 'primitive', content: 'string' },
+    },
     login: {
       in: {
         email: {
@@ -201,26 +218,6 @@ const apiSchema = {
         documentId: buildDataModelEntry({
           kind: 'primitive',
           content: 'id',
-        }),
-      },
-      out: {
-        kind: 'primitive',
-        content: 'void',
-      },
-    },
-    signUpUser: {
-      in: {
-        email: buildDataModelEntry({
-          kind: 'primitive',
-          content: 'string',
-        }),
-        name: buildDataModelEntry({
-          kind: 'primitive',
-          content: 'string',
-        }),
-        password: buildDataModelEntry({
-          kind: 'primitive',
-          content: 'string',
         }),
       },
       out: {

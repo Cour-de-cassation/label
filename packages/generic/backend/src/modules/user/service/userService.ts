@@ -6,14 +6,27 @@ import {
   userModule,
   userType,
 } from '@label/core';
-import { buildUserRepository } from '../repository';
 import { jwtSigner } from '../../../utils';
+import { buildUserRepository } from '../repository';
 
 export { userService };
 
 const DEFAULT_ROLE = 'annotator';
 
 const userService = {
+  async createUser({
+    name,
+    email,
+    role,
+  }: {
+    name: string;
+    email: string;
+    role: userType['role'];
+  }) {
+    const password = userModule.lib.generatePassword();
+    await this.signUpUser({ name, email, role, password });
+    return password;
+  },
   async changePassword({
     user,
     previousPassword,

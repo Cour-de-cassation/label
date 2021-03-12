@@ -4,6 +4,7 @@ import {
   buildUser,
   computeHashedPassword,
   formatEmail,
+  generatePassword,
   isPasswordValid,
   isUserPassword,
 } from './lib';
@@ -16,5 +17,13 @@ export type { userType };
 const userModule = {
   dataModel: userDataModel,
   generator: userGenerator,
-  lib: { assertPermissions, buildUser, computeHashedPassword, formatEmail, isPasswordValid, isUserPassword },
+  lib: {
+    assertPermissions,
+    buildUser,
+    computeHashedPassword,
+    formatEmail,
+    generatePassword,
+    isPasswordValid,
+    isUserPassword,
+  },
 };

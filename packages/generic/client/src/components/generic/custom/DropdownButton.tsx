@@ -25,7 +25,7 @@ function DropdownButton<T extends string>(props: {
       <div style={style.dropdownContent}>
         <div style={style.dropdownText}>
           {props.item
-            ? buildDropdownLabel(props.item.text, props.item.icon)
+            ? buildDropdownLabel(props.item.text, props.item.icon, true)
             : buildDropdownLabel(props.label, props.labelIcon)}
         </div>
         <div style={style.dropdownArrow}>
@@ -35,14 +35,15 @@ function DropdownButton<T extends string>(props: {
     </Button>
   );
 
-  function buildDropdownLabel(text: string, icon?: ReactElement) {
+  function buildDropdownLabel(text: string, icon?: ReactElement, isItemSelected?: boolean) {
+    const textStyle = isItemSelected ? { color: theme.colors.line.level1 } : { color: theme.colors.line.level2 };
     return icon ? (
       <ComponentsList
-        components={[icon, <Text style={{ color: 'inherit' }}>{text}</Text>]}
+        components={[icon, <Text style={textStyle}>{text}</Text>]}
         spaceBetweenComponents={theme.spacing}
       />
     ) : (
-      <Text style={{ color: 'inherit' }}>{text}</Text>
+      <Text style={textStyle}>{text}</Text>
     );
   }
 

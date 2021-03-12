@@ -81,8 +81,6 @@ function getRedirectionRoute() {
       return '/admin/treatments';
     case 'annotator':
       return '/annotation';
-    default:
-      return '/annotation';
   }
 }
 

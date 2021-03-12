@@ -4,6 +4,16 @@ const fr = {
   agentsPage: {
     title: 'Administration',
     subtitle: 'Gestion des agents',
+    createAgentDrawer: {
+      title: 'Créer un agent',
+      fields: {
+        firstName: 'Prénom',
+        lastName: 'Nom',
+        email: 'Email',
+        role: 'Sélectionnez un rôle',
+      },
+      submit: "Créer l'agent",
+    },
     table: {
       columnTitles: {
         name: 'Nom',

@@ -9,7 +9,7 @@ const customDarkColors: customColorsType = {
   disabled: { background: ['grey', 900], color: ['grey', 500] },
   document: 'black',
   dropdown: {
-    border: 'white',
+    border: ['grey', 600],
   },
   error: ['red', 500],
   icon: 'white',

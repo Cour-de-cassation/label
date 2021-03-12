@@ -9,7 +9,7 @@ const customLightColors: customColorsType = {
   disabled: { background: ['blueGrey', 50], color: 'white' },
   document: ['blueGrey', 50],
   dropdown: {
-    border: 'black',
+    border: ['grey', 600],
   },
   error: ['red', 500],
   icon: 'black',

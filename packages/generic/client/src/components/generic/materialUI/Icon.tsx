@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react';
 import {
+  AccessibilityNewRounded,
   AccountBalanceRounded,
   AddCircleRounded,
   AlarmOnRounded,
@@ -33,6 +34,7 @@ import {
   LoopRounded,
   MapRounded,
   MoreVertRounded,
+  PersonAddRounded,
   PersonRounded,
   PhoneRounded,
   PlaylistPlayRounded,
@@ -57,6 +59,7 @@ export { Icon };
 export type { iconNameType };
 
 const materialIconMapping = {
+  addPerson: PersonAddRounded,
   admin: SupervisorAccountRounded,
   arrowDown: ExpandMoreRounded,
   arrowLeft: ChevronLeftRounded,
@@ -71,6 +74,7 @@ const materialIconMapping = {
   doubleArrow: SettingsEthernetRounded,
   error: ErrorRounded,
   export: GetAppRounded,
+  human: AccessibilityNewRounded,
   lightBulb: EmojiObjectsRounded,
   link: Link,
   login: ExitToAppRounded,

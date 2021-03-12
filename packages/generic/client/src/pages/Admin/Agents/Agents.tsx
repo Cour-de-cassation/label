@@ -5,6 +5,7 @@ import { customThemeType, heights, useCustomTheme, widths } from '../../../style
 import { wordings } from '../../../wordings';
 import { AgentsDataFetcher } from './AgentsDataFetcher';
 import { AgentsTable } from './AgentsTable';
+import { AddAgentButton } from './AddAgentDrawer/AddAgentButton';
 
 export { Agents };
 
@@ -24,7 +25,9 @@ function Agents() {
             return (
               <div style={styles.table}>
                 <div style={styles.tableHeaderContainer}>
-                  <div style={styles.tableHeader}></div>
+                  <div style={styles.tableHeader}>
+                    <AddAgentButton />
+                  </div>
                 </div>
                 <div style={styles.tableContentContainer}>
                   <AgentsTable usersWithDetails={usersWithDetails} fields={userFields} />
@@ -79,7 +82,7 @@ function Agents() {
       tableHeader: {
         paddingTop: theme.spacing * 4,
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
       },
       tableContentContainer: {
         height: heights.adminTreatmentsTable,

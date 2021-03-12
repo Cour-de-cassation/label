@@ -83,6 +83,15 @@ const fr = {
   },
   errorPage: 'Une erreur est survenue...',
   shared: {
+    daysOfWeek: {
+      monday: 'L',
+      tuesday: 'M',
+      wednesday: 'M',
+      thursday: 'J',
+      friday: 'V',
+      saturday: 'S',
+      sunday: 'D',
+    },
     back: 'Précédent',
     logout: 'Se déconnecter',
     moreOptions: "Plus d'options",

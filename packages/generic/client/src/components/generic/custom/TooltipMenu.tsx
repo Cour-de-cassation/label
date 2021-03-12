@@ -34,10 +34,7 @@ function TooltipMenu(props: {
         height: '100vh',
       },
       tooltipMenuContent: {
-        paddingTop: `${theme.spacing * 2}px`,
-        paddingLeft: `${theme.spacing * 2}px`,
-        paddingRight: `${theme.spacing * 3}px`,
-        paddingBottom: `${theme.spacing * 3}px`,
+        padding: `${theme.spacing * 2}px`,
       },
       tooltipMenu: {
         boxShadow: theme.boxShadow.minor.out,

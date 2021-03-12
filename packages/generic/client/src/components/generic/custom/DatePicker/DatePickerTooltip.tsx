@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { range } from 'lodash';
 import { rectPositionType } from '../../../../types';
+import { wordings } from '../../../../wordings';
 import { Icon, Text } from '../../materialUI';
 import { TooltipMenu } from '../TooltipMenu';
 import { getMonthFromDate, getNextMonthDate, getPreviousMonthDate } from './lib';
@@ -10,7 +11,7 @@ export { DatePickerTooltip };
 
 const TOOLTIP_WIDTH = 300;
 
-const dayOfTheWeekMapping = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+const dayOfTheWeekKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 
 function DatePickerTooltip(props: {
   value: Date | undefined;
@@ -47,7 +48,7 @@ function DatePickerTooltip(props: {
           <tr>
             {range(7).map((day) => (
               <td key={day}>
-                <Text>{dayOfTheWeekMapping[day]}</Text>
+                <Text>{wordings.shared.daysOfWeek[dayOfTheWeekKeys[day]]}</Text>
               </td>
             ))}
           </tr>

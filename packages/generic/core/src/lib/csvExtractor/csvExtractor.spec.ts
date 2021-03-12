@@ -19,6 +19,6 @@ describe('csvExtractor', () => {
 
     const CSV = csvExtractor.convertDataToCsv(data, fields);
 
-    expect(CSV).toBe('name,birthDate\nNicolas,25/04/2001\nBenoit,17/01/2002');
+    expect(CSV).toBe('name\tbirthDate\nNicolas\t25/04/2001\nBenoit\t17/01/2002');
   });
 });

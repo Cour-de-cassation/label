@@ -5,7 +5,7 @@ import { orderDirectionType } from '../Table/TableHeader';
 import { computeNumberOfPages, computePagination } from './lib';
 import { PaginationFooter } from './PaginationFooter';
 
-const ROWS_PER_PAGE = 10;
+const ROWS_PER_PAGE = 20;
 
 export { PaginatedTable };
 

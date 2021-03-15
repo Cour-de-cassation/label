@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useCustomTheme } from '../../../styles';
 import { rectPositionType } from '../../../types';
+import { zIndices } from '../materialUI/constants';
 
 export { TooltipMenu };
 
@@ -42,7 +43,7 @@ function TooltipMenu(props: {
         borderRadius: theme.shape.borderRadius.xxs,
         position: 'absolute',
         width: props.width,
-        zIndex: 1,
+        zIndex: zIndices.tooltipMenu,
         ...props.rectPosition,
       },
     } as const;

@@ -10,10 +10,11 @@ import { Header } from './Header';
 import { IconButton } from './IconButton';
 import { IconDropdown } from './IconDropdown';
 import { LabelledDropdown } from './LabelledDropdown';
+import { PaginatedTable } from './PaginatedTable';
+import { PopUp } from './PopUp';
 import { SText } from './SText';
 import { Table, tableRowFieldType } from './Table';
 import { TooltipMenu } from './TooltipMenu';
-import { PaginatedTable } from './PaginatedTable';
 
 export {
   Button,
@@ -29,6 +30,7 @@ export {
   IconDropdown,
   LabelledDropdown,
   PaginatedTable,
+  PopUp,
   SText,
   Table,
   TooltipMenu,

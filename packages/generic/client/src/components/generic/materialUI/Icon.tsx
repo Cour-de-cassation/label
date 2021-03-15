@@ -72,6 +72,7 @@ const materialIconMapping = {
   delete: DeleteOutlineRounded,
   discussion: QuestionAnswerRounded,
   doubleArrow: SettingsEthernetRounded,
+  edit: EditRounded,
   error: ErrorRounded,
   export: GetAppRounded,
   human: AccessibilityNewRounded,

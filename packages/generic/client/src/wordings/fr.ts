@@ -13,6 +13,12 @@ const fr = {
         role: 'Sélectionnez un rôle',
       },
       submit: "Créer l'agent",
+      createdAgentPopup: {
+        createdAgentConfirmation: "L'agent a bien été créé.",
+        passwordIndication:
+          'Veuillez noter et lui transmettre le mot de passe temporaire suivant. Ce mot de passe doit être changé dès la première connexion afin d’assurer la sécurité du système.',
+        button: "C'est noté",
+      },
     },
     table: {
       columnTitles: {

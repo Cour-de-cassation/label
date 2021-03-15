@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { userModule, userType } from '@label/core';
+import { apiCaller } from '../../../../api';
 import { ButtonWithIcon, Drawer, IconButton, LabelledDropdown, Text, TextInput } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -10,11 +11,28 @@ const FIELD_WIDTH = 400;
 
 const DRAWER_WIDTH = 600;
 
+type formErrorType = {
+  firstName?: boolean;
+  lastName?: boolean;
+  email?: boolean;
+  role?: boolean;
+};
+
+type formValuesType = {
+  firstName: string | undefined;
+  lastName: string | undefined;
+  email: string | undefined;
+  role: userType['role'] | undefined;
+};
+
 function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState<userType['role'] | undefined>();
+  const [formValues, setFormValues] = useState<formValuesType>({
+    firstName: undefined,
+    lastName: undefined,
+    email: undefined,
+    role: undefined,
+  });
+  const [formErrors, setFormErrors] = useState<formErrorType>({});
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -33,8 +51,9 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
           <div style={styles.fieldContainer}>
             <TextInput
               name="firstName"
-              value={firstName}
-              onChange={(event) => setFirstName(event.target.value)}
+              error={!!formErrors.firstName}
+              value={formValues.firstName || ''}
+              onChange={(event) => updateField('firstName', event.target.value)}
               placeholder={wordings.agentsPage.createAgentDrawer.fields.firstName}
               style={styles.field}
             />
@@ -42,8 +61,9 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
           <div style={styles.fieldContainer}>
             <TextInput
               name="lastName"
-              value={lastName}
-              onChange={(event) => setLastName(event.target.value)}
+              error={!!formErrors.lastName}
+              value={formValues.lastName || ''}
+              onChange={(event) => updateField('lastName', event.target.value)}
               placeholder={wordings.agentsPage.createAgentDrawer.fields.lastName}
               style={styles.field}
             />
@@ -51,8 +71,9 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
           <div style={styles.fieldContainer}>
             <TextInput
               name="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              error={!!formErrors.email}
+              value={formValues.email || ''}
+              onChange={(event) => updateField('email', event.target.value)}
               placeholder={wordings.agentsPage.createAgentDrawer.fields.email}
               style={styles.field}
             />
@@ -60,29 +81,51 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
           <div style={styles.fieldContainer}>
             <LabelledDropdown<userType['role']>
               label={wordings.agentsPage.createAgentDrawer.fields.role}
+              error={!!formErrors.role}
               items={userModule.dataModel.role.type.content.map((role) => ({
                 text: wordings.agentsPage.table.roles[role],
                 value: role,
               }))}
-              onChange={setRole}
+              onChange={(role: userType['role']) => updateField('role', role)}
               width={FIELD_WIDTH}
             />
           </div>
           <div style={styles.submitButtonContainer}>
-            <ButtonWithIcon
-              onClick={() => addAgent(firstName, lastName, email, role)}
-              iconName="human"
-              text={wordings.agentsPage.createAgentDrawer.submit}
-            />
+            <ButtonWithIcon onClick={addAgent} iconName="human" text={wordings.agentsPage.createAgentDrawer.submit} />
           </div>
         </div>
       </div>
     </Drawer>
   );
-}
 
-function addAgent(firstName: string, lastName: string, email: string, role: userType['role'] | undefined) {
-  console.log(firstName, lastName, email, role);
+  function updateField<T extends keyof formValuesType>(field: T, value: formValuesType[T]) {
+    setFormValues({ ...formValues, [field]: value });
+    if (formErrors[field]) {
+      setFormErrors({ ...formErrors, [field]: undefined });
+    }
+  }
+
+  async function addAgent() {
+    const { firstName, lastName, email, role } = formValues;
+    if (!firstName || !lastName || !email || !role) {
+      updateFormErrors();
+      return;
+    }
+    await apiCaller.post<'createUser'>('createUser', {
+      email,
+      name: `${firstName} ${lastName}`,
+      role,
+    });
+  }
+
+  function updateFormErrors() {
+    setFormErrors({
+      firstName: !formValues.firstName,
+      lastName: !formValues.lastName,
+      email: !formValues.email,
+      role: !formValues.role,
+    });
+  }
 }
 
 function buildStyles(theme: customThemeType) {

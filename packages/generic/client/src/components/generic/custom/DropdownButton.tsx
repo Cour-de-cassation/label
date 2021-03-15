@@ -36,7 +36,11 @@ function DropdownButton<T extends string>(props: {
   );
 
   function buildDropdownLabel(text: string, icon?: ReactElement, isItemSelected?: boolean) {
-    const textStyle = isItemSelected ? { color: theme.colors.line.level1 } : { color: theme.colors.line.level2 };
+    const textStyle = isItemSelected
+      ? { color: theme.colors.line.level1 }
+      : props.error
+      ? { color: theme.colors.dropdown.border.error }
+      : { color: theme.colors.line.level2 };
     return icon ? (
       <ComponentsList
         components={[icon, <Text style={textStyle}>{text}</Text>]}

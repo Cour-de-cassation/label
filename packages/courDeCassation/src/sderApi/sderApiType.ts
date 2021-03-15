@@ -4,7 +4,7 @@ import { labelTreatmentsType } from '@label/backend';
 export type { sderApiType, sderCourtDecisionType };
 
 type sderApiType = {
-  fetchCourtDecisions: () => Promise<Array<sderCourtDecisionType>>;
+  fetchCourtDecisions: (days: number) => Promise<Array<sderCourtDecisionType>>;
   setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
   setCourtDecisionDone: (documentId: documentType['documentId']) => Promise<void>;
   updateDecisionPseudonymisation: (param: { documentId: documentType['documentId']; pseudonymizationText: string; labelTreatments: labelTreatmentsType }) => Promise<void>

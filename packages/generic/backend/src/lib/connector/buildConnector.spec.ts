@@ -9,12 +9,12 @@ describe('buildConnector', () => {
     documentRepository = buildDocumentRepository();
   });
 
-  describe('importAllDocuments', () => {
+  describe('importAllDocumentsSince', () => {
     it('should import all the document fetched by the connector', async () => {
       const fakeConnector = buildFakeConnectorWithNDocuments(5);
       const connector = buildConnector(fakeConnector);
 
-      await connector.importAllDocuments();
+      await connector.importAllDocumentsSince(10);
 
       const connectorDocuments = fakeConnector.getAllDocuments();
       const insertedDocuments = await documentRepository.findAll();
@@ -37,7 +37,7 @@ function buildFakeConnectorWithNDocuments(n: number) {
 
   return {
     name: 'FAKE_CONNECTOR',
-    async fetchAllDocuments() {
+    async fetchAllDocumentsSince() {
       return documents;
     },
     async updateDocumentsLoadedStatus() {},

@@ -4,8 +4,8 @@ import { sderMapper } from './mapper';
 export { sderFetcher };
 
 const sderFetcher = {
-  async fetchAllDocuments() {
-    const courtDecisions = await sderApi.fetchCourtDecisions();
+  async fetchAllDocumentsSince(days: number) {
+    const courtDecisions = await sderApi.fetchCourtDecisions(days);
 
     return courtDecisions.map(sderMapper.mapCourtDecisionToDocument);
   },

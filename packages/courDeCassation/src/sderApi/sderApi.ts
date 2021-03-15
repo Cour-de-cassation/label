@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { dependencyManager, documentType } from '@label/core';
+import { dateBuilder } from '@label/backend';
 import { sderApiType, sderCourtDecisionType } from './sderApiType';
 
 export { sderApi };
@@ -10,11 +11,12 @@ const SDER_API_BASE_URL = dependencyManager.inject({
 });
 
 const sderApi: sderApiType = {
-  async fetchCourtDecisions() {
+  async fetchCourtDecisions(days) {
+    const dateDaysAgo = new Date(dateBuilder.daysAgo(days)).toISOString();
     const response = await axios({
       headers: { 'Content-Type': 'application/json' },
       method: 'get',
-      url: `${SDER_API_BASE_URL}/decisions-to-pseudonymise?date="${computeOneMonthAgoDate()}"`,
+      url: `${SDER_API_BASE_URL}/decisions-to-pseudonymise?date="${dateDaysAgo}"`,
     });
 
     return response.data as sderCourtDecisionType[];
@@ -61,10 +63,3 @@ const sderApi: sderApiType = {
     });
   },
 };
-
-function computeOneMonthAgoDate() {
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-  return oneMonthAgo.toISOString();
-}

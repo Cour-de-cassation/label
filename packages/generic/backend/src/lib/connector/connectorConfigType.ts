@@ -4,6 +4,6 @@ export type { connectorConfigType };
 
 type connectorConfigType = {
   name: string;
-  fetchAllDocuments(): Promise<documentType[]>;
+  fetchAllDocumentsSince(days: number): Promise<documentType[]>;
   updateDocumentsLoadedStatus: (documents: documentType[]) => Promise<void>;
 };

@@ -30,6 +30,7 @@ function Treatments() {
             const treatmentsInfo = treatmentModule.lib.computeTreatmentsInfo(
               treatmentsWithDetails.map(({ treatment }) => treatment),
             );
+            console.log(treatmentsInfo);
             const treatmentFields = buildTreatmentFields(treatmentsInfo);
             const filterInfo = extractFilterInfoFromTreatments(treatmentsWithDetails);
             const filteredTreatmentsWithDetails = getFilteredTreatmentsWithDetails(
@@ -139,11 +140,27 @@ function Treatments() {
         width: 3,
       },
       {
+        id: 'resizeSmaller',
+        title: wordings.treatmentsPage.table.columnTitles.resizeAnnotationSmaller,
+        canBeSorted: true,
+        extractor: (treatmentWithDetails) =>
+          treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].resizedSmallerCount,
+        width: 3,
+      },
+      {
         id: 'additions',
         title: wordings.treatmentsPage.table.columnTitles.subAnnotation,
         canBeSorted: true,
         extractor: (treatmentWithDetails) =>
           treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].additionsCount,
+        width: 3,
+      },
+      {
+        id: 'resizeBigger',
+        title: wordings.treatmentsPage.table.columnTitles.resizeAnnotationBigger,
+        canBeSorted: true,
+        extractor: (treatmentWithDetails) =>
+          treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)].resizedBiggerCount,
         width: 3,
       },
       {

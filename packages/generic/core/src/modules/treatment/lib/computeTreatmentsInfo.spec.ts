@@ -22,7 +22,9 @@ describe('computeTreatmentInfo', () => {
     expect(treatmentInfo).toEqual({
       additionsCount: 1,
       deletionsCount: 1,
-      modificationsCount: 1,
+      modificationsCount: 0,
+      resizedSmallerCount: 0,
+      resizedBiggerCount: 1,
     });
   });
 });

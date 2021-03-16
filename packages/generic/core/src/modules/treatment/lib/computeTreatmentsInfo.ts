@@ -10,6 +10,8 @@ type treatmentInfoType = {
   additionsCount: number;
   deletionsCount: number;
   modificationsCount: number;
+  resizedSmallerCount: number;
+  resizedBiggerCount: number;
 };
 
 function computeTreatmentsInfo(treatments: treatmentType[]) {
@@ -34,7 +36,8 @@ function computeTreatmentInfo(treatment: treatmentType) {
   return {
     additionsCount: addedAnnotations.length,
     deletionsCount: deletedAnnotations.length,
-    modificationsCount:
-      strictlyModifiedAnnotations.length + resizedBiggerAnnotations.length + resizedSmallerAnnotations.length,
+    modificationsCount: strictlyModifiedAnnotations.length,
+    resizedSmallerCount: resizedSmallerAnnotations.length,
+    resizedBiggerCount: resizedBiggerAnnotations.length,
   };
 }

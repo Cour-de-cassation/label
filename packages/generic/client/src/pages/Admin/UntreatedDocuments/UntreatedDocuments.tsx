@@ -46,7 +46,7 @@ function UntreatedDocuments() {
         id: 'documentId',
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
-        extractor: (untreatedDocument) => idModule.lib.convertToString(untreatedDocument._id),
+        extractor: (untreatedDocument) => untreatedDocument.documentId,
         width: 10,
       },
     ];

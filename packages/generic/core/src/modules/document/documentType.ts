@@ -6,7 +6,7 @@ export type { documentType, fetchedDocumentType };
 
 const documentDataModel = {
   creationDate: { type: buildDataModelEntry({ kind: 'primitive', content: 'date' }), network: false },
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: false },
+  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
   _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
   metadata: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: false },
   priority: {

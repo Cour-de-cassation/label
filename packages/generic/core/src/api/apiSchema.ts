@@ -44,7 +44,7 @@ const apiSchema = {
       },
       out: fetchedDataModelEntries.document,
     },
-    documentToBeTreated: {
+    documentForUser: {
       in: {
         documentIdsToExclude: buildDataModelEntry({
           kind: 'list',
@@ -89,6 +89,12 @@ const apiSchema = {
             },
           },
         },
+      }),
+    },
+    untreatedDocuments: {
+      out: buildDataModelEntry({
+        kind: 'list',
+        content: fetchedDataModelEntries.document,
       }),
     },
     usersWithDetails: {

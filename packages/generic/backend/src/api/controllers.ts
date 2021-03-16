@@ -36,7 +36,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         documentService.fetchDocument(idModule.lib.buildId(documentId)),
     }),
 
-    documentToBeTreated: buildAuthenticatedController({
+    documentForUser: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { documentIdsToExclude } }) =>
         documentService.fetchDocumentForUser(
@@ -62,6 +62,11 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       permissions: ['admin'],
       controllerWithUser: async () =>
         treatmentService.fetchAssignatedTreatmentsWithDetails(),
+    }),
+
+    untreatedDocuments: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async () => documentService.fetchUntreatedDocuments(),
     }),
 
     usersWithDetails: buildAuthenticatedController({

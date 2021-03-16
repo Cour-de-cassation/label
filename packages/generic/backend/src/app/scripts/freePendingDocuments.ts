@@ -9,7 +9,9 @@ async function freePendingDocuments() {
   const documentRepository = buildDocumentRepository();
 
   logger.log('Fetching pending documents');
-  const pendingDocuments = await documentRepository.findAllByStatus('pending');
+  const pendingDocuments = await documentRepository.findAllByStatus([
+    'pending',
+  ]);
   logger.log(`${pendingDocuments.length} documents fetched`);
   const pendingDocumentsToFree = pendingDocuments.filter(
     (document) =>

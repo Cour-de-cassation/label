@@ -8,6 +8,7 @@ import { ProblemReports } from './Admin/ProblemReports';
 import { Home } from './Home';
 import { Login } from './Login';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
+import { UntreatedDocuments } from './Admin/UntreatedDocuments';
 
 export { Router };
 
@@ -23,6 +24,9 @@ function Router() {
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/admin/treatments">
           <Treatments />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/admin/untreated-documents">
+          <UntreatedDocuments />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/admin/agents">
           <Agents />

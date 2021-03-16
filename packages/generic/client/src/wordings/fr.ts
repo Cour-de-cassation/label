@@ -182,4 +182,13 @@ const fr = {
       },
     },
   },
+  untreatedDocumentsPage: {
+    title: 'Administration',
+    subtitle: 'Flux de décisions',
+    table: {
+      columnTitles: {
+        number: 'N° décision',
+      },
+    },
+  },
 };

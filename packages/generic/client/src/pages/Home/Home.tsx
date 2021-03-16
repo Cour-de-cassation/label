@@ -11,10 +11,10 @@ function Home(props: { settings: settingsType }) {
     <LayoutGrid container>
       <LayoutGrid container item>
         <DocumentsDataFetcher numberOfDocuments={NUMBER_OF_CHOICES}>
-          {({ documentsToBeTreated, fetchNewDocumentsToBeTreated }) => (
+          {({ documentsForUser, fetchNewDocumentsForUser }) => (
             <DocumentSwitcher
-              choices={documentsToBeTreated}
-              fetchNewDocumentsToBeTreated={fetchNewDocumentsToBeTreated}
+              choices={documentsForUser}
+              fetchNewDocumentsForUser={fetchNewDocumentsForUser}
               settings={props.settings}
             />
           )}

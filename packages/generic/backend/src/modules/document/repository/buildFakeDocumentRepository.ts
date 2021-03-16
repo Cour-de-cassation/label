@@ -39,7 +39,7 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
     },
 
     async findAllByStatus(status) {
-      return collection.filter((document) => document.status === status);
+      return collection.filter((document) => status.includes(document.status));
     },
 
     async updateStatusById(id, status) {

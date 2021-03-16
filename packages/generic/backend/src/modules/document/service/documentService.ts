@@ -14,11 +14,16 @@ const documentService = {
     return documentRepository.findAllByIds(documentIds);
   },
 
+  async fetchUntreatedDocuments() {
+    const documentRepository = buildDocumentRepository();
+    return documentRepository.findAllByStatus(['free', 'pending', 'saved']);
+  },
+
   async fetchDocumentsReadyToExport(): Promise<documentType[]> {
     const documentRepository = buildDocumentRepository();
 
     const documentsCompletelyTreated = await documentRepository.findAllByStatus(
-      'done',
+      ['done'],
     );
 
     const documentsReadyToExport = documentsCompletelyTreated.filter(

@@ -7,55 +7,50 @@ export { DocumentsDataFetcher };
 
 function DocumentsDataFetcher(props: {
   children: (fetched: {
-    documentsToBeTreated: {
+    documentsForUser: {
       document: fetchedDocumentType;
       annotations: annotationType[];
     }[];
-    fetchNewDocumentsToBeTreated: () => void;
+    fetchNewDocumentsForUser: () => void;
   }) => ReactElement;
   numberOfDocuments: number;
 }) {
-  const documentsToBeTreatedFetchInfo = useApi(buildFetchDocumentsToBeTreated(props.numberOfDocuments));
+  const documentsForUserFetchInfo = useApi(buildFetchDocumentsForUser(props.numberOfDocuments));
 
   return (
     <DataFetcher
       buildComponentWithData={(
-        documentsToBeTreated: {
+        documentsForUser: {
           document: fetchedDocumentType;
           annotations: annotationType[];
         }[],
-      ) =>
-        props.children({ documentsToBeTreated, fetchNewDocumentsToBeTreated: documentsToBeTreatedFetchInfo.refetch })
-      }
-      fetchInfo={documentsToBeTreatedFetchInfo}
+      ) => props.children({ documentsForUser, fetchNewDocumentsForUser: documentsForUserFetchInfo.refetch })}
+      fetchInfo={documentsForUserFetchInfo}
     />
   );
 }
 
-function buildFetchDocumentsToBeTreated(numberOfDocuments: number) {
+function buildFetchDocumentsForUser(numberOfDocuments: number) {
   return async () => {
-    const documentsToBeTreated = [];
+    const documentsForUser = [];
     const documentIdsToExclude = [] as idType[];
     const statusCodes = [];
 
     for (let i = 0; i < numberOfDocuments; i++) {
-      const { documentToBeTreated, statusCode } = await fetchDocumentToBeTreated(documentIdsToExclude);
-      documentsToBeTreated.push(documentToBeTreated);
-      documentIdsToExclude.push(idModule.lib.buildId(documentToBeTreated.document._id));
+      const { documentForUser, statusCode } = await fetchDocumentForUser(documentIdsToExclude);
+      documentsForUser.push(documentForUser);
+      documentIdsToExclude.push(idModule.lib.buildId(documentForUser.document._id));
       statusCodes.push(statusCode);
     }
 
-    return { data: documentsToBeTreated, statusCode: httpStatusCodeHandler.merge(statusCodes) };
+    return { data: documentsForUser, statusCode: httpStatusCodeHandler.merge(statusCodes) };
   };
 }
 
-async function fetchDocumentToBeTreated(documentIdsToExclude: idType[]) {
-  const { data: document, statusCode: statusCodeDocument } = await apiCaller.get<'documentToBeTreated'>(
-    'documentToBeTreated',
-    {
-      documentIdsToExclude: documentIdsToExclude || [],
-    },
-  );
+async function fetchDocumentForUser(documentIdsToExclude: idType[]) {
+  const { data: document, statusCode: statusCodeDocument } = await apiCaller.get<'documentForUser'>('documentForUser', {
+    documentIdsToExclude: documentIdsToExclude || [],
+  });
   const { data: annotations, statusCode: statusCodeAnnotations } = await apiCaller.get<'annotations'>('annotations', {
     documentId: document._id,
   });
@@ -64,12 +59,15 @@ async function fetchDocumentToBeTreated(documentIdsToExclude: idType[]) {
     documentId: document._id,
   });
 
+  /* eslint-disable no-console */
   console.log(document.title);
+  /* eslint-disable no-console */
   annotationReport.checkList.map((item) => console.log(item));
+  /* eslint-disable no-console */
   console.log('———————————————————————————————————');
 
   return {
-    documentToBeTreated: {
+    documentForUser: {
       document: {
         ...document,
         _id: idModule.lib.buildId(document._id),

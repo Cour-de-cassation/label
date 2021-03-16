@@ -32,7 +32,7 @@ const buildDocumentRepository = buildRepositoryBuilder<
     },
 
     async findAllByStatus(status) {
-      return collection.find({ status }).toArray();
+      return collection.find({ status: { $in: status } }).toArray();
     },
 
     async updateStatusById(id, status) {

@@ -26,7 +26,7 @@ type documentStateType =
 
 function DocumentSwitcher(props: {
   choices: Array<{ document: fetchedDocumentType; annotations: annotationType[] }>;
-  fetchNewDocumentsToBeTreated: () => void;
+  fetchNewDocumentsForUser: () => void;
   settings: settingsType;
 }) {
   const [documentState, setDocumentState] = useState<documentStateType>(computeInitialDocumentState());
@@ -77,10 +77,10 @@ function DocumentSwitcher(props: {
   }
 
   function computeInitialDocumentState(): documentStateType {
-    const savedDocumentToBeTreated = props.choices.find(({ document }) => document.status === 'saved');
+    const savedDocumentForUser = props.choices.find(({ document }) => document.status === 'saved');
 
-    if (savedDocumentToBeTreated) {
-      return { kind: 'annotating', choice: savedDocumentToBeTreated };
+    if (savedDocumentForUser) {
+      return { kind: 'annotating', choice: savedDocumentForUser };
     } else {
       return { kind: 'selecting' };
     }
@@ -88,7 +88,7 @@ function DocumentSwitcher(props: {
 
   async function onStopAnnotatingDocument() {
     resetMonitoringEntries();
-    props.fetchNewDocumentsToBeTreated();
+    props.fetchNewDocumentsForUser();
   }
 
   async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {

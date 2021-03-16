@@ -30,7 +30,6 @@ function Treatments() {
             const treatmentsInfo = treatmentModule.lib.computeTreatmentsInfo(
               treatmentsWithDetails.map(({ treatment }) => treatment),
             );
-            console.log(treatmentsInfo);
             const treatmentFields = buildTreatmentFields(treatmentsInfo);
             const filterInfo = extractFilterInfoFromTreatments(treatmentsWithDetails);
             const filteredTreatmentsWithDetails = getFilteredTreatmentsWithDetails(

@@ -3,6 +3,7 @@ import { annotationGenerator } from './generator';
 import {
   annotationLinker,
   annotationUpdater,
+  areOverlapping,
   buildAnnotation,
   comparator,
   entityIdHandler,
@@ -19,6 +20,7 @@ const annotationModule = {
   lib: {
     annotationLinker,
     annotationUpdater,
+    areOverlapping,
     buildAnnotation,
     comparator,
     entityIdHandler,

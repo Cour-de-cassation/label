@@ -1,6 +1,13 @@
 import { annotationsDiffDataModelField, annotationsDiffType } from './annotationsDiffType';
 import { annotationsDiffGenerator } from './generator';
-import { applyToAnnotations, buildAnnotationsDiff, computeAnnotationsDiff, inverse, squash } from './lib';
+import {
+  applyToAnnotations,
+  buildAnnotationsDiff,
+  computeAnnotationsDiff,
+  computeDetailsFromAnnotationsDiff,
+  inverse,
+  squash,
+} from './lib';
 
 export { annotationsDiffModule };
 
@@ -13,6 +20,7 @@ const annotationsDiffModule = {
     applyToAnnotations,
     buildAnnotationsDiff,
     computeAnnotationsDiff,
+    computeDetailsFromAnnotationsDiff,
     inverse,
     squash,
   },

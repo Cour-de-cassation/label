@@ -1,4 +1,4 @@
-import { annotationType } from '../../modules';
+import { annotationModule, annotationType } from '../../modules';
 
 export { annotationOverlapDetector };
 
@@ -13,31 +13,26 @@ function isAnnotationTextOverlappedWithAnyAnnotations(
   annotationText: string,
 ) {
   return annotations.some((otherAnnotation) =>
-    areOverlapping(
-      otherAnnotation.start,
-      otherAnnotation.start + otherAnnotation.text.length,
-      annotationStart,
-      annotationStart + annotationText.length,
+    annotationModule.lib.areOverlapping(
+      annotationModule.lib.buildAnnotation({
+        category: otherAnnotation.category,
+        start: annotationStart,
+        text: annotationText,
+      }),
+      otherAnnotation,
     ),
   );
 }
 
 function findOverlappingAnnotation(annotations: annotationType[], annotationStart: number, annotationText: string) {
   return annotations.find((otherAnnotation) =>
-    areOverlapping(
-      otherAnnotation.start,
-      otherAnnotation.start + otherAnnotation.text.length,
-      annotationStart,
-      annotationStart + annotationText.length,
+    annotationModule.lib.areOverlapping(
+      annotationModule.lib.buildAnnotation({
+        category: otherAnnotation.category,
+        start: annotationStart,
+        text: annotationText,
+      }),
+      otherAnnotation,
     ),
-  );
-}
-
-function areOverlapping(startA: number, endA: number, startB: number, endB: number) {
-  return (
-    (startA < startB && endA > startB) ||
-    (startA <= startB && endA >= endB) ||
-    (startB < startA && endB > startA) ||
-    (startB <= startA && endB >= endA)
   );
 }

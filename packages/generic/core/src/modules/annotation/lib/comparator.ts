@@ -11,6 +11,11 @@ const comparator = {
       annotation1.entityId === annotation2.entityId
     );
   },
+
+  equalModuloCategory(annotation1: annotationType, annotation2: annotationType) {
+    return annotation1.text === annotation2.text && annotation1.start === annotation2.start;
+  },
+
   compareByText(annotation1: annotationType, annotation2: annotationType) {
     if (annotation2.text.toLowerCase() > annotation1.text.toLowerCase()) {
       return -1;

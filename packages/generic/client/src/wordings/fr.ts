@@ -36,6 +36,13 @@ const fr = {
     account: 'Compte',
     changePassword: 'Modifier le mot de passe',
     confirmPassword: 'Confirmer le nouveau mot de passe',
+    filters: {
+      button: 'Filtrer',
+      intervalDate: {
+        start: 'Date début',
+        end: 'Date fin',
+      },
+    },
     newPassword: 'Nouveau mot de passe',
     newPasswordsDontMatch: 'Les nouveaux mots de passe ne correspondent pas',
     newPasswordInstructions: 'Le mot de passe doit contenir au moins 8 caractères',
@@ -137,7 +144,6 @@ const fr = {
     subtitle: 'Décisions traitées',
     table: {
       filter: {
-        title: 'Filtrer',
         exportButton: 'Exporter',
         resultsCount: '{count} décisions affichées',
         chips: {

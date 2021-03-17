@@ -4,18 +4,80 @@ import { keysOf } from '@label/core';
 import { timeOperator } from '../../../services/timeOperator';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { FilterButton, treatmentFilterType, treatmentFilterInfoType } from './FilterButton';
+import { FilterButton, filterType } from '../../../components';
 import { Chip } from './Chip';
 import { Text } from '../../../components';
 
 export { Filters };
 
+export type { treatmentFilterInfoType, treatmentFilterType };
+
+type treatmentFilterInfoType = {
+  userNames: string[];
+};
+
+type treatmentFilterType = {
+  startDate: Date | undefined;
+  endDate: Date | undefined;
+  userName: string | undefined;
+  mustHaveSurAnnotations: boolean;
+  mustHaveSubAnnotations: boolean;
+};
+
 function Filters(props: {
-  filters: treatmentFilterType;
-  setFilters: (filters: treatmentFilterType) => void;
+  filterValues: treatmentFilterType;
+  setFilterValues: (filterValues: treatmentFilterType) => void;
   filterInfo: treatmentFilterInfoType;
   resultsCount: number;
 }) {
+  const filters: filterType<'userName' | 'mustHaveSurAnnotations' | 'mustHaveSubAnnotations' | 'dateInterval'>[] = [
+    {
+      kind: 'dateInterval',
+      name: 'dateInterval',
+      value: { startDate: props.filterValues.startDate, endDate: props.filterValues.endDate },
+      onChangeStartDate: (startDate: Date) =>
+        props.setFilterValues({
+          ...props.filterValues,
+          startDate,
+        }),
+      onChangeEndDate: (endDate: Date) =>
+        props.setFilterValues({
+          ...props.filterValues,
+          endDate,
+        }),
+    },
+    {
+      kind: 'dropdown',
+      name: 'userName',
+      label: wordings.treatmentsPage.table.filter.fields.agents,
+      possibleValues: props.filterInfo.userNames,
+      value: props.filterValues.userName,
+      onChange: (userName: string) => props.setFilterValues({ ...props.filterValues, userName }),
+    },
+    {
+      kind: 'boolean',
+      name: 'mustHaveSubAnnotations',
+      label: wordings.treatmentsPage.table.filter.fields.mustHaveSubAnnotations,
+      checked: props.filterValues.mustHaveSubAnnotations,
+      onToggle: () =>
+        props.setFilterValues({
+          ...props.filterValues,
+          mustHaveSubAnnotations: !props.filterValues.mustHaveSubAnnotations,
+        }),
+    },
+    {
+      kind: 'boolean',
+      name: 'mustHaveSurAnnotations',
+      label: wordings.treatmentsPage.table.filter.fields.mustHaveSurAnnotations,
+      checked: props.filterValues.mustHaveSurAnnotations,
+      onToggle: () =>
+        props.setFilterValues({
+          ...props.filterValues,
+          mustHaveSurAnnotations: !props.filterValues.mustHaveSurAnnotations,
+        }),
+    },
+  ];
+
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -23,30 +85,30 @@ function Filters(props: {
     <div style={styles.filterContainer}>
       <div style={styles.filterButtonContainer}>
         <div>
-          <FilterButton filters={props.filters} setFilters={props.setFilters} filterInfo={props.filterInfo} />
+          <FilterButton filters={filters} />
         </div>
         <div style={styles.resultsCountContainer}>
           <Text>{format(wordings.treatmentsPage.table.filter.resultsCount, { count: props.resultsCount })}</Text>
         </div>
       </div>
       <div style={styles.chipsContainer}>
-        {keysOf(props.filters).map((filterKey) => renderFilterChip(filterKey, props.filters))}
+        {keysOf(props.filterValues).map((filterKey) => renderFilterChip(filterKey, props.filterValues))}
       </div>
     </div>
   );
 
-  function renderFilterChip(filterKey: keyof treatmentFilterType, filters: treatmentFilterType) {
+  function renderFilterChip(filterKey: keyof treatmentFilterType, filterValues: treatmentFilterType) {
     switch (filterKey) {
       case 'mustHaveSubAnnotations':
-        return renderMustHaveSubAnnotationsChip(filters.mustHaveSubAnnotations);
+        return renderMustHaveSubAnnotationsChip(filterValues.mustHaveSubAnnotations);
       case 'mustHaveSurAnnotations':
-        return renderMustHaveSurAnnotationsChip(filters.mustHaveSurAnnotations);
+        return renderMustHaveSurAnnotationsChip(filterValues.mustHaveSurAnnotations);
       case 'startDate':
-        return renderStartDateChip(filters.startDate);
+        return renderStartDateChip(filterValues.startDate);
       case 'endDate':
-        return renderEndDateChip(filters.endDate);
+        return renderEndDateChip(filterValues.endDate);
       case 'userName':
-        return renderUserNameChip(filters.userName);
+        return renderUserNameChip(filterValues.userName);
     }
 
     function renderMustHaveSurAnnotationsChip(filterValue: boolean) {
@@ -119,7 +181,7 @@ function Filters(props: {
   }
 
   function buildRemoveFilter(filterKeyToRemove: string) {
-    return () => props.setFilters({ ...props.filters, [filterKeyToRemove]: undefined });
+    return () => props.setFilterValues({ ...props.filterValues, [filterKeyToRemove]: undefined });
   }
 }
 

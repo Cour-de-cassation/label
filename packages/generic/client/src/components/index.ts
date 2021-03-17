@@ -2,6 +2,8 @@ import {
   AdminMenu,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
+  FilterButton,
+  filterType,
   LinkAnnotationDropdown,
   Logo,
   MainHeader,
@@ -50,6 +52,7 @@ export {
   ComponentsList,
   DatePicker,
   Drawer,
+  FilterButton,
   FloatingTooltipMenu,
   Header,
   Icon,
@@ -77,4 +80,4 @@ export {
   UnlinkAnnotationDropdown,
 };
 
-export type { tableRowFieldType };
+export type { filterType, tableRowFieldType };

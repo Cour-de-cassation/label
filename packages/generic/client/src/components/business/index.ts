@@ -1,6 +1,7 @@
 import { AdminMenu } from './AdminMenu';
 import { CategoryIcon } from './CategoryIcon';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
+import { FilterButton, filterType } from './FilterButton';
 import { LinkAnnotationDropdown } from './LinkAnnotationDropdown';
 import { Logo } from './Logo';
 import { MainHeader } from './MainHeader';
@@ -12,6 +13,7 @@ export {
   AdminMenu,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
+  FilterButton,
   LinkAnnotationDropdown,
   Logo,
   MainHeader,
@@ -19,3 +21,5 @@ export {
   PublicationCategoryBadge,
   UnlinkAnnotationDropdown,
 };
+
+export type { filterType };

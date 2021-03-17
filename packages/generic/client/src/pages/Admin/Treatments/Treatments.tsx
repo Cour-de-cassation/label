@@ -6,17 +6,24 @@ import { timeOperator } from '../../../services/timeOperator';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ExportCSVButton } from './ExportCSVButton';
-import { Filters } from './Filters';
+import { Filters, treatmentFilterType } from './Filters';
 import { StatisticsBox } from './StatisticsBox';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
-import { DEFAULT_TREATMENT_FILTER, treatmentFilterType } from './FilterButton';
 
 export { Treatments };
 
+const DEFAULT_TREATMENT_FILTER = {
+  startDate: undefined,
+  endDate: undefined,
+  userName: undefined,
+  mustHaveSurAnnotations: false,
+  mustHaveSubAnnotations: false,
+};
+
 function Treatments() {
   const theme = useCustomTheme();
-  const [filters, setFilters] = useState<treatmentFilterType>(DEFAULT_TREATMENT_FILTER);
+  const [filterValues, setFilterValues] = useState<treatmentFilterType>(DEFAULT_TREATMENT_FILTER);
   const styles = buildStyles(theme);
   return (
     <>
@@ -35,7 +42,7 @@ function Treatments() {
             const filteredTreatmentsWithDetails = getFilteredTreatmentsWithDetails(
               treatmentsWithDetails,
               treatmentsInfo,
-              filters,
+              filterValues,
             );
 
             return (
@@ -45,8 +52,8 @@ function Treatments() {
                     <div style={styles.leftHeaderContent}>
                       <Filters
                         filterInfo={filterInfo}
-                        filters={filters}
-                        setFilters={setFilters}
+                        filterValues={filterValues}
+                        setFilterValues={setFilterValues}
                         resultsCount={filteredTreatmentsWithDetails.length}
                       />
                     </div>
@@ -72,26 +79,26 @@ function Treatments() {
   function getFilteredTreatmentsWithDetails(
     treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>,
     treatmentsInfo: Record<string, treatmentInfoType>,
-    filters: treatmentFilterType,
+    filterValues: treatmentFilterType,
   ) {
     return treatmentsWithDetails.filter((treatmentWithDetails) => {
-      return keysOf(filters).reduce((accumulator, currentFilterKey) => {
-        if (currentFilterKey === 'mustHaveSurAnnotations' && !!filters[currentFilterKey]) {
+      return keysOf(filterValues).reduce((accumulator, currentFilterKey) => {
+        if (currentFilterKey === 'mustHaveSurAnnotations' && !!filterValues[currentFilterKey]) {
           const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)];
           return accumulator && treatmentInfo.deletionsCount > 0;
         }
-        if (currentFilterKey === 'mustHaveSubAnnotations' && !!filters[currentFilterKey]) {
+        if (currentFilterKey === 'mustHaveSubAnnotations' && !!filterValues[currentFilterKey]) {
           const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatmentWithDetails.treatment._id)];
           return accumulator && treatmentInfo.additionsCount > 0;
         }
-        if (currentFilterKey === 'startDate' && !!filters.startDate) {
-          return accumulator && treatmentWithDetails.treatment.lastUpdateDate >= filters.startDate.getTime();
+        if (currentFilterKey === 'startDate' && !!filterValues.startDate) {
+          return accumulator && treatmentWithDetails.treatment.lastUpdateDate >= filterValues.startDate.getTime();
         }
-        if (currentFilterKey === 'endDate' && !!filters.endDate) {
-          return accumulator && treatmentWithDetails.treatment.lastUpdateDate <= filters.endDate.getTime();
+        if (currentFilterKey === 'endDate' && !!filterValues.endDate) {
+          return accumulator && treatmentWithDetails.treatment.lastUpdateDate <= filterValues.endDate.getTime();
         }
-        if (currentFilterKey === 'userName' && !!filters[currentFilterKey]) {
-          return accumulator && treatmentWithDetails.userName === filters.userName;
+        if (currentFilterKey === 'userName' && !!filterValues[currentFilterKey]) {
+          return accumulator && treatmentWithDetails.userName === filterValues.userName;
         }
         return accumulator;
       }, true as boolean);

@@ -14,6 +14,12 @@ function buildCustomColorsTheme(displayMode: displayModeType) {
   return {
     alert: buildCustomColorsVariations(customColorsMode.alert),
     background: getColor(customColorsMode.background),
+    badge: {
+      type1: {
+        backgroundColor: getColor(customColorsMode.badge.type1.backgroundColor),
+        color: getColor(customColorsMode.badge.type1.color),
+      },
+    },
     default: buildCustomColorsVariations(customColorsMode.default),
     disabled: {
       background: getShadeColor(customColorsMode.disabled.background),

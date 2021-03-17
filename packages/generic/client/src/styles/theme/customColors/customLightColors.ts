@@ -5,6 +5,9 @@ export { customLightColors };
 const customLightColors: customColorsType = {
   alert: ['red', 500],
   background: 'white',
+  badge: {
+    type1: { backgroundColor: 'black', color: ['grey', 100] },
+  },
   default: ['blueGrey', 200],
   disabled: { background: ['blueGrey', 50], color: 'white' },
   document: ['blueGrey', 50],

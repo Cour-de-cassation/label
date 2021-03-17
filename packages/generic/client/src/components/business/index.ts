@@ -5,6 +5,7 @@ import { LinkAnnotationDropdown } from './LinkAnnotationDropdown';
 import { Logo } from './Logo';
 import { MainHeader } from './MainHeader';
 import { ProblemReportIcon } from './ProblemReportIcon';
+import { PublicationCategoryBadge } from './PublicationCategoryBadge';
 import { UnlinkAnnotationDropdown } from './UnlinkAnnotationDropdown';
 
 export {
@@ -15,5 +16,6 @@ export {
   Logo,
   MainHeader,
   ProblemReportIcon,
+  PublicationCategoryBadge,
   UnlinkAnnotationDropdown,
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { apiRouteOutType } from '@label/core';
-import { AdminMenu, MainHeader, tableRowFieldType } from '../../../components';
+import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { UntreatedDocumentsDataFetcher } from './UntreatedDocumentsDataFetcher';
@@ -40,13 +40,28 @@ function UntreatedDocuments() {
   function buildUntreatedDocumentsFields() {
     const untreatedDocumentsFields: Array<tableRowFieldType<
       apiRouteOutType<'get', 'untreatedDocuments'>[number],
-      string | number
+      string | number | JSX.Element
     >> = [
       {
         id: 'documentId',
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
         extractor: (untreatedDocument) => untreatedDocument.documentId,
+        width: 10,
+      },
+      {
+        id: 'publicationCategory',
+        title: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory,
+        canBeSorted: true,
+        extractor: (untreatedDocument) => (
+          <div style={styles.publicationCategoryBadgesContainer}>
+            {untreatedDocument.publicationCategory.map((publicationCategoryLetter) => (
+              <div style={styles.publicationCategoryBadgeContainer}>
+                <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
+              </div>
+            ))}
+          </div>
+        ),
         width: 10,
       },
     ];
@@ -79,6 +94,12 @@ function UntreatedDocuments() {
         width: widths.adminContent,
         paddingLeft: theme.spacing * 3,
         paddingRight: theme.spacing * 2,
+      },
+      publicationCategoryBadgesContainer: {
+        display: 'flex',
+      },
+      publicationCategoryBadgeContainer: {
+        marginRight: theme.spacing,
       },
     } as const;
   }

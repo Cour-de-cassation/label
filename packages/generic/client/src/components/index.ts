@@ -6,6 +6,7 @@ import {
   Logo,
   MainHeader,
   ProblemReportIcon,
+  PublicationCategoryBadge,
   UnlinkAnnotationDropdown,
 } from './business';
 import {
@@ -63,6 +64,7 @@ export {
   PaginatedTable,
   PopUp,
   ProblemReportIcon,
+  PublicationCategoryBadge,
   RadioButton,
   SText,
   SwitchButton,

@@ -1,5 +1,5 @@
-import { apiRouteOutType, idModule } from '@label/core';
 import React from 'react';
+import { apiRouteOutType } from '@label/core';
 import { AdminMenu, MainHeader, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -46,7 +46,7 @@ function UntreatedDocuments() {
         id: 'documentId',
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
-        extractor: (untreatedDocument) => idModule.lib.convertToString(untreatedDocument._id),
+        extractor: (untreatedDocument) => untreatedDocument.documentId,
         width: 10,
       },
     ];

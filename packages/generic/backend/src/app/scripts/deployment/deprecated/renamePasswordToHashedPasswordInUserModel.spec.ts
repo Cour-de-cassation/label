@@ -1,9 +1,9 @@
 import { userModule, userType } from '@label/core';
-import { buildUserRepository } from '../../../modules/user';
-import { updateUserModel } from './updateUserModel';
+import { buildUserRepository } from '../../../../modules/user';
+import { renamePasswordToHashedPasswordInUserModel } from './renamePasswordToHashedPasswordInUserModel';
 
-describe('freePendingDocuments', () => {
-  it('should update the user model in the database', async () => {
+describe('renamePasswordToHashedPasswordInUserModel', () => {
+  it('should rename password to hashedPassword in user model in the database', async () => {
     const userRepository = buildUserRepository();
     const users = [
       userModule.generator.generate(),
@@ -21,7 +21,7 @@ describe('freePendingDocuments', () => {
       ((usersWithOldModel as any) as userType[]).map(userRepository.insert),
     );
 
-    await updateUserModel();
+    await renamePasswordToHashedPasswordInUserModel();
 
     const usersAfterUpdateModel = await userRepository.findAll();
     expect(usersAfterUpdateModel.sort()).toEqual(users.sort());

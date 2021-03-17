@@ -22,6 +22,7 @@ function mapCourtDecisionToDocument(
     documentId: sderCourtDecision.sourceId,
     metadata: '',
     priority,
+    publicationCategory: sderCourtDecision.zoning.introduction_subzonage.publication,
     source: sderCourtDecision.sourceName,
     title,
     text: sderCourtDecision.originalText,

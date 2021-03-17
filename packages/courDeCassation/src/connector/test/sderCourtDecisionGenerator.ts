@@ -16,6 +16,7 @@ const sderCourtDecisionGenerator: generatorType<sderCourtDecisionType> = {
     registerNumber,
     sourceId,
     sourceName,
+    zoning,
   } = {}) => ({
     chamberId: chamberId ? chamberId : `CHAMBER_ID_${Math.random()}`,
     chamberName: chamberName ? chamberName : `CHAMBER_NAME_${Math.random()}`,
@@ -36,5 +37,6 @@ const sderCourtDecisionGenerator: generatorType<sderCourtDecisionType> = {
       : `REGISTER_NUMBER_${Math.random()}`,
     sourceId: sourceId ? sourceId : 0,
     sourceName: sourceName ? sourceName : `SOURCE_NAME_${Math.random()}`,
+    zoning: zoning ? zoning : {introduction_subzonage: { publication: []}}
   }),
 };

@@ -22,4 +22,9 @@ type sderCourtDecisionType = {
   registerNumber: string;
   sourceId: number;
   sourceName: string;
+  zoning: {
+    introduction_subzonage: {
+      publication: string[]
+    }
+  }
 };

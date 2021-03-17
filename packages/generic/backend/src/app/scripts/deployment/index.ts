@@ -1,9 +1,9 @@
 import { logger } from '../../../utils';
-import { updateUserModel } from './updateUserModel';
+import { addPublicationCategoryInDocumentModel } from './addPublicationCategoryInDocumentModel';
 
 export { runDeploymentScripts };
 
 async function runDeploymentScripts() {
-  logger.log('Update User Model');
-  await updateUserModel();
+  logger.log('Add publication category in Document model');
+  await addPublicationCategoryInDocumentModel();
 }

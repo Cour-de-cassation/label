@@ -1,10 +1,10 @@
-import { buildUserRepository } from '../../../modules/user';
+import { buildUserRepository } from '../../../../modules/user';
 
-export { updateUserModel };
+export { renamePasswordToHashedPasswordInUserModel };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-async function updateUserModel() {
+async function renamePasswordToHashedPasswordInUserModel() {
   const userRepository = buildUserRepository();
 
   const users = await userRepository.findAll();

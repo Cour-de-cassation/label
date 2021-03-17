@@ -13,6 +13,10 @@ const documentDataModel = {
     type: buildDataModelEntry({ kind: 'constant', content: ['low', 'medium', 'high'] as const }),
     network: false,
   },
+  publicationCategory: {
+    type: buildDataModelEntry({ kind: 'list', content: { kind: 'primitive', content: 'string' } }),
+    network: true,
+  },
   source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: false },
   status: {
     type: buildDataModelEntry({

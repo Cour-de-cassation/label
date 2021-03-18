@@ -43,7 +43,10 @@ function UntreatedDocuments() {
                   </div>
                 </div>
                 <div style={styles.tableContentContainer}>
-                  <UntreatedDocumentsTable fields={untreatedDocumentsFields} untreatedDocuments={untreatedDocuments} />
+                  <UntreatedDocumentsTable
+                    fields={untreatedDocumentsFields}
+                    untreatedDocuments={filteredUntreatedDocuments}
+                  />
                 </div>
               </div>
             );

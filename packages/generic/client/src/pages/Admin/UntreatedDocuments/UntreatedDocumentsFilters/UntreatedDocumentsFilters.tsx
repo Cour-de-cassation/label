@@ -63,10 +63,16 @@ function UntreatedDocumentsFilters(props: {
     filterKey: keyof untreatedDocumentFilterType,
     filterValue: string | undefined,
   ) {
+    if (!filterValue) {
+      return null;
+    }
+    const filterText = format(wordings.untreatedDocumentsPage.table.filter.chips.publicationCategoryLetter, {
+      publicationCategoryLetter: filterValue,
+    });
     return (
       !!filterValue && (
         <div style={styles.chipContainer}>
-          <Chip label={filterValue} onClose={buildRemoveFilter(filterKey)} />
+          <Chip label={filterText} onClose={buildRemoveFilter(filterKey)} />
         </div>
       )
     );

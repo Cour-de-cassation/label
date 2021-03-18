@@ -17,6 +17,7 @@ const DEFAULT_FILTERS = {
   startDate: undefined,
   endDate: undefined,
   userName: undefined,
+  publicationCategoryLetter: undefined,
   mustHaveSurAnnotations: false,
   mustHaveSubAnnotations: false,
 };
@@ -163,6 +164,11 @@ function TreatedDocuments() {
         if (currentFilterKey === 'userName' && !!filterValues[currentFilterKey]) {
           return accumulator && treatedDocument.userName === filterValues.userName;
         }
+        if (currentFilterKey === 'publicationCategoryLetter' && !!filterValues.publicationCategoryLetter) {
+          return (
+            accumulator && treatedDocument.document.publicationCategory.includes(filterValues.publicationCategoryLetter)
+          );
+        }
         return accumulator;
       }, true as boolean);
     });
@@ -170,7 +176,10 @@ function TreatedDocuments() {
 
   function extractFilterInfoFromTreatedDocuments(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
     const userNames = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.userName));
-    return { userNames };
+    const publicationCategoryLetters = uniq(
+      flatten(treatedDocuments.map((treatedDocument) => treatedDocument.document.publicationCategory)),
+    );
+    return { publicationCategoryLetters, userNames };
   }
 
   function buildTreatedDocumentsFields(treatmentsInfo: Record<string, treatmentInfoType>) {

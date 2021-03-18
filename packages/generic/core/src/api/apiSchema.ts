@@ -86,6 +86,7 @@ const apiSchema = {
               content: {
                 _id: fetchedDataModelEntries.document.content._id,
                 documentId: fetchedDataModelEntries.document.content.documentId,
+                publicationCategory: fetchedDataModelEntries.document.content.publicationCategory,
               },
             },
             treatments: {

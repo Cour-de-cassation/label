@@ -47,6 +47,7 @@ const documentService = {
         document: {
           _id: document._id,
           documentId: document.documentId,
+          publicationCategory: document.publicationCategory,
         },
         treatments,
         userName,

@@ -158,6 +158,7 @@ const fr = {
           mustHaveSubAnnotations: 'Avec sous annotation',
           startDate: 'Date début',
           endDate: 'Date fin',
+          publicationCategoryLetter: 'Diffusion',
         },
       },
       columnTitles: {

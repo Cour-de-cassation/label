@@ -53,9 +53,8 @@ function UntreatedDocumentsFilters(props: {
 
   function renderFilterChip(filterKey: keyof untreatedDocumentFilterType, filterValues: untreatedDocumentFilterType) {
     switch (filterKey) {
-      case 'publicationCategoryLetter': {
+      case 'publicationCategoryLetter':
         return renderPublicationCategoryLetterChip('publicationCategoryLetter', filterValues.publicationCategoryLetter);
-      }
     }
   }
 

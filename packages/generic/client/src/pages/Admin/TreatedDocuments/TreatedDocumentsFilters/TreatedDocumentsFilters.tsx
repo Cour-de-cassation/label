@@ -64,6 +64,15 @@ function TreatedDocumentsFilters(props: {
         onChange: (userName: string) => props.setFilterValues({ ...props.filterValues, userName }),
       },
       {
+        kind: 'dropdown',
+        name: 'publicationCategoryLetter',
+        label: wordings.treatedDocumentsPage.table.filter.fields.publicationCategoryLetter,
+        possibleValues: props.filterInfo.publicationCategoryLetters,
+        value: props.filterValues.publicationCategoryLetter,
+        onChange: (publicationCategoryLetter: string) =>
+          props.setFilterValues({ ...props.filterValues, publicationCategoryLetter }),
+      },
+      {
         kind: 'boolean',
         name: 'mustHaveSubAnnotations',
         label: wordings.treatedDocumentsPage.table.filter.fields.mustHaveSubAnnotations,
@@ -100,6 +109,8 @@ function TreatedDocumentsFilters(props: {
         return renderEndDateChip(filterValues.endDate);
       case 'userName':
         return renderUserNameChip(filterValues.userName);
+      case 'publicationCategoryLetter':
+        return renderPublicationCategoryLetterChip(filterValues.publicationCategoryLetter);
     }
 
     function renderMustHaveSurAnnotationsChip(filterValue: boolean) {
@@ -165,6 +176,22 @@ function TreatedDocumentsFilters(props: {
         !!filterValue && (
           <div style={styles.chipContainer}>
             <Chip label={filterValue} onClose={buildRemoveFilter(filterKey)} />
+          </div>
+        )
+      );
+    }
+
+    function renderPublicationCategoryLetterChip(filterValue: string | undefined) {
+      if (!filterValue) {
+        return null;
+      }
+      const filterText = format(wordings.untreatedDocumentsPage.table.filter.chips.publicationCategoryLetter, {
+        publicationCategoryLetter: filterValue,
+      });
+      return (
+        !!filterValue && (
+          <div style={styles.chipContainer}>
+            <Chip label={filterText} onClose={buildRemoveFilter(filterKey)} />
           </div>
         )
       );

@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { groupBy, orderBy } from 'lodash';
 import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
@@ -22,50 +22,65 @@ function DocumentSelectorCard(props: {
   const styles = buildStyles(theme);
   const documentInfoEntries = computeDocumentInfoEntries(props.choice.annotations);
   const categoryIconsByAnnotation = computeCategoryIconNamesByEntitiesCount(props.choice.annotations);
+  const isDocumentPublished = props.choice.document.publicationCategory.length > 0;
+  return isDocumentPublished ? (
+    <div style={styles.publishedDocumentCardContainer}>
+      <Text variant="h2" style={styles.publishedDocumentTitle}>
+        {wordings.homePage.documentSelector.publishedDocumentTitle}
+      </Text>
+      {renderCard()}
+    </div>
+  ) : (
+    renderCard()
+  );
 
-  return (
-    <div style={styles.card}>
-      <Text style={styles.title} variant="h1">
-        {wordings.homePage.wholeCheck}
-      </Text>
-      <Text style={styles.subtitle} variant="h2">
-        {props.choice.document.title}
-      </Text>
-      <div style={styles.documentInfoEntryTable}>
-        {DOCUMENT_INFO_ENTRIES.map((documentInfoEntry) => (
-          <div key={documentInfoEntry} style={styles.documentInfoEntryRow}>
-            <div style={styles.documentLabelContainer}>
-              <Text style={styles.documentLabelText}>{wordings.homePage.documentInfoEntries[documentInfoEntry]}</Text>
-            </div>
-            <div style={styles.documentValueContainer}>
-              <Text variant="h2">{documentInfoEntries[documentInfoEntry]}</Text>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div style={styles.categoryIconsContainer}>
-        <ComponentsList
-          components={categoryIconsByAnnotation.map(({ category, entitiesCount }) => (
-            <div style={styles.categoryContainer}>
-              <div style={styles.categoryIconContainer}>
-                <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={props.settings} />
+  function renderCard() {
+    return (
+      <div style={styles.card}>
+        <Text style={styles.title} variant="h1">
+          {wordings.homePage.documentSelector.wholeCheck}
+        </Text>
+        <Text style={styles.subtitle} variant="h2">
+          {props.choice.document.title}
+        </Text>
+        <div style={styles.documentInfoEntryTable}>
+          {DOCUMENT_INFO_ENTRIES.map((documentInfoEntry) => (
+            <div key={documentInfoEntry} style={styles.documentInfoEntryRow}>
+              <div style={styles.documentLabelContainer}>
+                <Text style={styles.documentLabelText}>
+                  {wordings.homePage.documentSelector.documentInfoEntries[documentInfoEntry]}
+                </Text>
               </div>
-              <div>
-                <Text>{entitiesCount} </Text>
+              <div style={styles.documentValueContainer}>
+                <Text variant="h2">{documentInfoEntries[documentInfoEntry]}</Text>
               </div>
             </div>
           ))}
-          spaceBetweenComponents={theme.spacing * 3}
+        </div>
+        <div style={styles.categoryIconsContainer}>
+          <ComponentsList
+            components={categoryIconsByAnnotation.map(({ category, entitiesCount }) => (
+              <div style={styles.categoryContainer}>
+                <div style={styles.categoryIconContainer}>
+                  <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={props.settings} />
+                </div>
+                <div>
+                  <Text>{entitiesCount} </Text>
+                </div>
+              </div>
+            ))}
+            spaceBetweenComponents={theme.spacing * 3}
+          />
+        </div>
+        <ButtonWithIcon
+          iconName="clock"
+          color="primary"
+          onClick={() => props.onSelect(props.choice)}
+          text={wordings.homePage.documentSelector.start}
         />
       </div>
-      <ButtonWithIcon
-        iconName="clock"
-        color="primary"
-        onClick={() => props.onSelect(props.choice)}
-        text={wordings.homePage.start}
-      />
-    </div>
-  );
+    );
+  }
 
   function computeCategoryIconNamesByEntitiesCount(annotations: annotationType[]) {
     return orderBy(
@@ -81,8 +96,20 @@ function DocumentSelectorCard(props: {
   }
 }
 
-function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
+function buildStyles(theme: customThemeType) {
   return {
+    publishedDocumentCardContainer: {
+      backgroundColor: theme.colors.primary.background,
+      borderRadius: theme.shape.borderRadius.m,
+      display: 'flex',
+      flexDirection: 'column',
+      padding: theme.spacing,
+    },
+    publishedDocumentTitle: {
+      paddingLeft: theme.spacing * 2,
+      paddingBottom: theme.spacing * 2,
+      paddingTop: theme.spacing,
+    },
     card: {
       borderRadius: theme.shape.borderRadius.m,
       padding: theme.spacing * 4,
@@ -91,6 +118,7 @@ function buildStyles(theme: customThemeType): { [cssClass: string]: CSSPropertie
       alignItems: 'center',
       boxShadow: theme.boxShadow.major.out,
       maxWidth: `${MAX_WIDTH}px`,
+      backgroundColor: theme.colors.background,
     },
     categoryIconsContainer: {
       display: 'flex',
@@ -133,5 +161,5 @@ function buildStyles(theme: customThemeType): { [cssClass: string]: CSSPropertie
     documentLabelText: {
       textAlign: 'right',
     },
-  };
+  } as const;
 }

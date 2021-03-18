@@ -68,10 +68,15 @@ const fr = {
       entity: "Supprimer toute l'entité",
     },
     displayMode: "Type d'affichage",
-    documentInfoEntries: {
-      annotations: 'Annotations',
-      entities: 'Entités',
-      linkedEntities: "Liaison d'entités",
+    documentSelector: {
+      publishedDocumentTitle: 'Cette décision sera publiée',
+      documentInfoEntries: {
+        annotations: 'Annotations',
+        entities: 'Entités',
+        linkedEntities: "Liaison d'entités",
+      },
+      start: 'Commencer',
+      wholeCheck: 'Lecture exhaustive',
     },
     enterYourText: 'Saisissez votre texte...',
     identicalOccurrencesSpotted: 'occurence(s) identique(s) détectée(s)',
@@ -86,7 +91,6 @@ const fr = {
     reset: 'Réinitialiser',
     send: 'Envoyer',
     settings: 'Réglages',
-    start: 'Commencer',
     undo: 'Annuler',
     unlink: 'Supprimer la liaison',
     unlinkOption: {
@@ -94,7 +98,6 @@ const fr = {
       __all__: 'Toutes les liaisons',
     },
     validate: 'Valider',
-    wholeCheck: 'Lecture exhaustive',
   },
   loginPage: {
     login: 'Connexion',

@@ -179,6 +179,8 @@ const fr = {
         fields: {
           changeAnnotation: 'Mod.',
           duration: 'Tps',
+          resizeAnnotationBigger: 'R.+',
+          resizeAnnotationSmaller: 'R.-',
           surAnnotation: 'Sur',
           subAnnotation: 'Ss.',
         },

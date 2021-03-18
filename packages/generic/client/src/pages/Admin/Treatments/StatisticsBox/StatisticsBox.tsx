@@ -53,8 +53,16 @@ function StatisticsBox(props: { treatmentsWithDetails: apiRouteOutType<'get', 't
         value: getComputationValue(sumBy(annotationStatistics, ({ deletionsCount }) => deletionsCount)),
       },
       {
+        title: wordings.treatmentsPage.table.statistics.fields.resizeAnnotationSmaller,
+        value: getComputationValue(sumBy(annotationStatistics, ({ resizedSmallerCount }) => resizedSmallerCount)),
+      },
+      {
         title: wordings.treatmentsPage.table.statistics.fields.subAnnotation,
         value: getComputationValue(sumBy(annotationStatistics, ({ additionsCount }) => additionsCount)),
+      },
+      {
+        title: wordings.treatmentsPage.table.statistics.fields.resizeAnnotationBigger,
+        value: getComputationValue(sumBy(annotationStatistics, ({ resizedBiggerCount }) => resizedBiggerCount)),
       },
       {
         title: wordings.treatmentsPage.table.statistics.fields.changeAnnotation,

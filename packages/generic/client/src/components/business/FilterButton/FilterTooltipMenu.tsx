@@ -13,11 +13,7 @@ const DROPDOWN_WIDTH = 280;
 
 const DATE_DROPDOWN_WIDTH = 150;
 
-function FilterTooltipMenu<filterNameT extends string>(props: {
-  filters: filterType<filterNameT>[];
-  onClose: () => void;
-  rectPosition: rectPositionType;
-}) {
+function FilterTooltipMenu(props: { filters: filterType[]; onClose: () => void; rectPosition: rectPositionType }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -36,7 +32,7 @@ function FilterTooltipMenu<filterNameT extends string>(props: {
     </TooltipMenu>
   );
 
-  function renderFilter(filter: filterType<filterNameT>) {
+  function renderFilter(filter: filterType) {
     switch (filter.kind) {
       case 'dropdown':
         return (

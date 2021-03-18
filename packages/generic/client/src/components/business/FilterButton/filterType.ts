@@ -1,9 +1,9 @@
 export type { filterType };
 
-type filterType<filterNameT extends string> =
+type filterType =
   | {
       kind: 'dropdown';
-      name: filterNameT;
+      name: string;
       label: string;
       possibleValues: string[];
       value: string | undefined;
@@ -11,14 +11,14 @@ type filterType<filterNameT extends string> =
     }
   | {
       kind: 'boolean';
-      name: filterNameT;
+      name: string;
       label: string;
       checked: boolean;
       onToggle: () => void;
     }
   | {
       kind: 'dateInterval';
-      name: filterNameT;
+      name: string;
       value: { startDate: Date | undefined; endDate: Date | undefined };
       onChangeStartDate: (startDate: Date) => void;
       onChangeEndDate: (endDate: Date) => void;

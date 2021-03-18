@@ -10,7 +10,7 @@ export { FilterButton };
 
 const BUTTON_HEIGHT = 40;
 
-function FilterButton<filterNameT extends string>(props: { filters: filterType<filterNameT>[] }) {
+function FilterButton(props: { filters: filterType[] }) {
   const theme = useCustomTheme();
   const styles = buildStyles();
   const [tooltipMenuRectPosition, setTooltipMenuRectPosition] = useState<rectPositionType | undefined>(undefined);

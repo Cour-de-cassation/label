@@ -48,7 +48,7 @@ function UntreatedDocumentsFilters(props: {
         onChange: (publicationCategoryLetter: string) =>
           props.setFilterValues({ ...props.filterValues, publicationCategoryLetter }),
       },
-    ] as filterType<keyof untreatedDocumentFilterType>[];
+    ] as filterType[];
   }
 
   function renderFilterChip(filterKey: keyof untreatedDocumentFilterType, filterValues: untreatedDocumentFilterType) {

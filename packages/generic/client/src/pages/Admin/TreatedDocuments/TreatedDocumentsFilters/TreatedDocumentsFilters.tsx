@@ -94,7 +94,7 @@ function TreatedDocumentsFilters(props: {
             mustHaveSurAnnotations: !props.filterValues.mustHaveSurAnnotations,
           }),
       },
-    ] as filterType<keyof treatedDocumentFilterType>[];
+    ] as filterType[];
   }
 
   function renderFilterChip(filterKey: keyof treatedDocumentFilterType, filterValues: treatedDocumentFilterType) {

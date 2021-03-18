@@ -198,6 +198,15 @@ const fr = {
         number: 'N° décision',
         publicationCategory: 'Dif.',
       },
+      filter: {
+        resultsCount: '{count} décisions affichées',
+        chips: {
+          publicationCategoryLetter: 'Arrêts {publicationCategoryLetter}',
+        },
+        fields: {
+          publicationCategoryLetter: 'Diffusion',
+        },
+      },
     },
   },
 };

@@ -1,5 +1,9 @@
 export type { untreatedDocumentFilterType, untreatedDocumentFilterInfoType };
 
-type untreatedDocumentFilterType = Record<string, unknown>;
+type untreatedDocumentFilterType = {
+  publicationCategoryLetter: string | undefined;
+};
 
-type untreatedDocumentFilterInfoType = Record<string, unknown>;
+type untreatedDocumentFilterInfoType = {
+  publicationCategoryLetters: string[];
+};

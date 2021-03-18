@@ -85,7 +85,7 @@ function TreatmentsFilters(props: {
             mustHaveSurAnnotations: !props.filterValues.mustHaveSurAnnotations,
           }),
       },
-    ] as filterType<'userName' | 'mustHaveSurAnnotations' | 'mustHaveSubAnnotations' | 'dateInterval'>[];
+    ] as filterType<keyof treatmentFilterType>[];
   }
 
   function renderFilterChip(filterKey: keyof treatmentFilterType, filterValues: treatmentFilterType) {

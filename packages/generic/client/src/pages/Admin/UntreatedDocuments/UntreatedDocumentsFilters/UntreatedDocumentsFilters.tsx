@@ -1,7 +1,7 @@
 import React from 'react';
 import format from 'string-template';
 import { keysOf } from '@label/core';
-import { FilterButton, Text } from '../../../../components';
+import { Chip, FilterButton, filterType, Text } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { untreatedDocumentFilterInfoType, untreatedDocumentFilterType } from './untreatedDocumentFilterTypes';
@@ -26,19 +26,54 @@ function UntreatedDocumentsFilters(props: {
           <FilterButton filters={filters} />
         </div>
         <div style={styles.resultsCountContainer}>
-          <Text>{format(wordings.treatmentsPage.table.filter.resultsCount, { count: props.resultsCount })}</Text>
+          <Text>
+            {format(wordings.untreatedDocumentsPage.table.filter.resultsCount, { count: props.resultsCount })}
+          </Text>
         </div>
       </div>
-      <div style={styles.chipsContainer}>{keysOf(props.filterValues).map(() => renderFilterChip())}</div>
+      <div style={styles.chipsContainer}>
+        {keysOf(props.filterValues).map((filterKey) => renderFilterChip(filterKey, props.filterValues))}
+      </div>
     </div>
   );
 
   function buildFilters() {
-    return [];
+    return [
+      {
+        kind: 'dropdown',
+        name: 'publicationCategoryLetter',
+        label: wordings.untreatedDocumentsPage.table.filter.fields.publicationCategoryLetter,
+        possibleValues: props.filterInfo.publicationCategoryLetters,
+        value: props.filterValues.publicationCategoryLetter,
+        onChange: (publicationCategoryLetter: string) =>
+          props.setFilterValues({ ...props.filterValues, publicationCategoryLetter }),
+      },
+    ] as filterType<keyof untreatedDocumentFilterType>[];
   }
 
-  function renderFilterChip() {
-    return null;
+  function renderFilterChip(filterKey: keyof untreatedDocumentFilterType, filterValues: untreatedDocumentFilterType) {
+    switch (filterKey) {
+      case 'publicationCategoryLetter': {
+        return renderPublicationCategoryLetterChip('publicationCategoryLetter', filterValues.publicationCategoryLetter);
+      }
+    }
+  }
+
+  function renderPublicationCategoryLetterChip(
+    filterKey: keyof untreatedDocumentFilterType,
+    filterValue: string | undefined,
+  ) {
+    return (
+      !!filterValue && (
+        <div style={styles.chipContainer}>
+          <Chip label={filterValue} onClose={buildRemoveFilter(filterKey)} />
+        </div>
+      )
+    );
+  }
+
+  function buildRemoveFilter(filterKeyToRemove: string) {
+    return () => props.setFilterValues({ ...props.filterValues, [filterKeyToRemove]: undefined });
   }
 }
 

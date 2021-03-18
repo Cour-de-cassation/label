@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf } from '@label/core';
 import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
@@ -9,7 +10,9 @@ import { untreatedDocumentFilterType, UntreatedDocumentsFilters } from './Untrea
 
 export { UntreatedDocuments };
 
-const DEFAULT_FILTERS = {};
+const DEFAULT_FILTERS = {
+  publicationCategoryLetter: undefined,
+};
 
 function UntreatedDocuments() {
   const [filterValues, setFilterValues] = useState<untreatedDocumentFilterType>(DEFAULT_FILTERS);
@@ -18,14 +21,14 @@ function UntreatedDocuments() {
   return (
     <>
       <div style={styles.header}>
-        <MainHeader title={wordings.untreatedDocumentsPage.title} subtitle={wordings.treatmentsPage.subtitle} />
+        <MainHeader title={wordings.untreatedDocumentsPage.title} subtitle={wordings.untreatedDocumentsPage.subtitle} />
       </div>
       <div style={styles.contentContainer}>
         <AdminMenu />
         <UntreatedDocumentsDataFetcher>
           {({ untreatedDocuments }) => {
             const untreatedDocumentsFields = buildUntreatedDocumentsFields();
-            const filterInfo = extractFilterInfoFromDocuments();
+            const filterInfo = extractFilterInfoFromDocuments(untreatedDocuments);
             const filteredUntreatedDocuments = getFilteredUntreatedDocuments(untreatedDocuments, filterValues);
             return (
               <div style={styles.table}>
@@ -54,15 +57,21 @@ function UntreatedDocuments() {
     untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>,
     filterValues: untreatedDocumentFilterType,
   ) {
-    return untreatedDocuments.filter(() => {
-      return keysOf(filterValues).reduce((accumulator) => {
+    return untreatedDocuments.filter((untreatedDocument) => {
+      return keysOf(filterValues).reduce((accumulator, currentFilterKey) => {
+        if (currentFilterKey === 'publicationCategoryLetter' && !!filterValues.publicationCategoryLetter) {
+          return accumulator && untreatedDocument.publicationCategory.includes(filterValues.publicationCategoryLetter);
+        }
         return accumulator;
       }, true as boolean);
     });
   }
 
-  function extractFilterInfoFromDocuments() {
-    return {};
+  function extractFilterInfoFromDocuments(untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>) {
+    const publicationCategoryLetters = uniq(
+      flatten(untreatedDocuments.map((untreatedDocuments) => untreatedDocuments.publicationCategory)),
+    );
+    return { publicationCategoryLetters };
   }
 
   function buildUntreatedDocumentsFields() {

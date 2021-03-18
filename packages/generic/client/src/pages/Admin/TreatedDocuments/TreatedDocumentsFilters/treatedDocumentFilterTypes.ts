@@ -1,6 +1,6 @@
-export type { treatmentFilterType, treatmentFilterInfoType };
+export type { treatedDocumentFilterType, treatedDocumentFilterInfoType };
 
-type treatmentFilterType = {
+type treatedDocumentFilterType = {
   startDate: Date | undefined;
   endDate: Date | undefined;
   userName: string | undefined;
@@ -8,6 +8,6 @@ type treatmentFilterType = {
   mustHaveSubAnnotations: boolean;
 };
 
-type treatmentFilterInfoType = {
+type treatedDocumentFilterInfoType = {
   userNames: string[];
 };

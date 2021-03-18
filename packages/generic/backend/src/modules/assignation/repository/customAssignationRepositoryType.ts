@@ -7,6 +7,9 @@ type customAssignationRepositoryType = {
   findAllByDocumentId: (
     documentId: documentType['_id'],
   ) => Promise<assignationType[]>;
+  findAllByDocumentIds: (
+    documentIdsToSearchIn: documentType['_id'][],
+  ) => Promise<Record<string, assignationType>>;
   findByDocumentIdAndUserId: ({
     documentId,
     userId,

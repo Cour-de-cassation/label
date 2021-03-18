@@ -5,16 +5,16 @@ import { Chip, FilterButton, filterType, Text } from '../../../../components';
 import { timeOperator } from '../../../../services/timeOperator';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
-import { treatmentFilterInfoType, treatmentFilterType } from './treatmentFilterTypes';
+import { treatedDocumentFilterInfoType, treatedDocumentFilterType } from './treatedDocumentFilterTypes';
 
-export { TreatmentsFilters };
+export { TreatedDocumentsFilters };
 
-export type { treatmentFilterInfoType, treatmentFilterType };
+export type { treatedDocumentFilterInfoType, treatedDocumentFilterType };
 
-function TreatmentsFilters(props: {
-  filterValues: treatmentFilterType;
-  setFilterValues: (filterValues: treatmentFilterType) => void;
-  filterInfo: treatmentFilterInfoType;
+function TreatedDocumentsFilters(props: {
+  filterValues: treatedDocumentFilterType;
+  setFilterValues: (filterValues: treatedDocumentFilterType) => void;
+  filterInfo: treatedDocumentFilterInfoType;
   resultsCount: number;
 }) {
   const theme = useCustomTheme();
@@ -29,7 +29,7 @@ function TreatmentsFilters(props: {
           <FilterButton filters={filters} />
         </div>
         <div style={styles.resultsCountContainer}>
-          <Text>{format(wordings.treatmentsPage.table.filter.resultsCount, { count: props.resultsCount })}</Text>
+          <Text>{format(wordings.treatedDocumentsPage.table.filter.resultsCount, { count: props.resultsCount })}</Text>
         </div>
       </div>
       <div style={styles.chipsContainer}>
@@ -58,7 +58,7 @@ function TreatmentsFilters(props: {
       {
         kind: 'dropdown',
         name: 'userName',
-        label: wordings.treatmentsPage.table.filter.fields.agents,
+        label: wordings.treatedDocumentsPage.table.filter.fields.agents,
         possibleValues: props.filterInfo.userNames,
         value: props.filterValues.userName,
         onChange: (userName: string) => props.setFilterValues({ ...props.filterValues, userName }),
@@ -66,7 +66,7 @@ function TreatmentsFilters(props: {
       {
         kind: 'boolean',
         name: 'mustHaveSubAnnotations',
-        label: wordings.treatmentsPage.table.filter.fields.mustHaveSubAnnotations,
+        label: wordings.treatedDocumentsPage.table.filter.fields.mustHaveSubAnnotations,
         checked: props.filterValues.mustHaveSubAnnotations,
         onToggle: () =>
           props.setFilterValues({
@@ -77,7 +77,7 @@ function TreatmentsFilters(props: {
       {
         kind: 'boolean',
         name: 'mustHaveSurAnnotations',
-        label: wordings.treatmentsPage.table.filter.fields.mustHaveSurAnnotations,
+        label: wordings.treatedDocumentsPage.table.filter.fields.mustHaveSurAnnotations,
         checked: props.filterValues.mustHaveSurAnnotations,
         onToggle: () =>
           props.setFilterValues({
@@ -85,10 +85,10 @@ function TreatmentsFilters(props: {
             mustHaveSurAnnotations: !props.filterValues.mustHaveSurAnnotations,
           }),
       },
-    ] as filterType<keyof treatmentFilterType>[];
+    ] as filterType<keyof treatedDocumentFilterType>[];
   }
 
-  function renderFilterChip(filterKey: keyof treatmentFilterType, filterValues: treatmentFilterType) {
+  function renderFilterChip(filterKey: keyof treatedDocumentFilterType, filterValues: treatedDocumentFilterType) {
     switch (filterKey) {
       case 'mustHaveSubAnnotations':
         return renderMustHaveSubAnnotationsChip(filterValues.mustHaveSubAnnotations);
@@ -107,7 +107,7 @@ function TreatmentsFilters(props: {
         !!filterValue && (
           <div style={styles.chipContainer}>
             <Chip
-              label={wordings.treatmentsPage.table.filter.chips.mustHaveSurAnnotations}
+              label={wordings.treatedDocumentsPage.table.filter.chips.mustHaveSurAnnotations}
               onClose={buildRemoveFilter(filterKey)}
             />
           </div>
@@ -120,7 +120,7 @@ function TreatmentsFilters(props: {
         !!filterValue && (
           <div style={styles.chipContainer}>
             <Chip
-              label={wordings.treatmentsPage.table.filter.chips.mustHaveSubAnnotations}
+              label={wordings.treatedDocumentsPage.table.filter.chips.mustHaveSubAnnotations}
               onClose={buildRemoveFilter(filterKey)}
             />
           </div>
@@ -132,7 +132,7 @@ function TreatmentsFilters(props: {
       if (!filterValue) {
         return null;
       }
-      const filterText = format(wordings.treatmentsPage.table.filter.chips.startDate, {
+      const filterText = format(wordings.treatedDocumentsPage.table.filter.chips.startDate, {
         startDate: timeOperator.convertTimestampToReadableDate(filterValue.getTime(), false),
       });
       return (
@@ -148,7 +148,7 @@ function TreatmentsFilters(props: {
       if (!filterValue) {
         return null;
       }
-      const filterText = format(wordings.treatmentsPage.table.filter.chips.endDate, {
+      const filterText = format(wordings.treatedDocumentsPage.table.filter.chips.endDate, {
         endDate: timeOperator.convertTimestampToReadableDate(filterValue.getTime(), false),
       });
       return (

@@ -58,10 +58,9 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       }),
     }),
 
-    treatmentsWithDetails: buildAuthenticatedController({
+    treatedDocuments: buildAuthenticatedController({
       permissions: ['admin'],
-      controllerWithUser: async () =>
-        treatmentService.fetchAssignatedTreatmentsWithDetails(),
+      controllerWithUser: async () => documentService.fetchTreatedDocuments(),
     }),
 
     untreatedDocuments: buildAuthenticatedController({

@@ -14,6 +14,19 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
         idModule.lib.equalId(assignation.userId, userId),
       );
     },
+    async findAllByDocumentIds(documentIdsToSearchIn) {
+      const assignations = collection.filter((assignation) =>
+        documentIdsToSearchIn.some((documentId) =>
+          idModule.lib.equalId(documentId, assignation.documentId),
+        ),
+      );
+      return assignations.reduce((accumulator, assignation) => {
+        return {
+          ...accumulator,
+          [idModule.lib.convertToString(assignation.documentId)]: assignation,
+        };
+      }, {} as Record<string, assignationType>);
+    },
     async findByDocumentIdAndUserId({ documentId, userId }) {
       const result = collection.find(
         (assignation) =>

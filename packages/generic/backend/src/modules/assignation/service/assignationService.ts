@@ -45,6 +45,11 @@ const assignationService = {
     return assignationRepository.findAllByIds(assignationIds);
   },
 
+  async fetchAssignationsByDocumentIds(documentIdsToSearchIn: idType[]) {
+    const assignationRepository = buildAssignationRepository();
+    return assignationRepository.findAllByDocumentIds(documentIdsToSearchIn);
+  },
+
   async fetchDocumentIdsAssignatedToUserId(userId: idType) {
     const assignationRepository = buildAssignationRepository();
     const assignations = await assignationRepository.findAllByUserId(userId);

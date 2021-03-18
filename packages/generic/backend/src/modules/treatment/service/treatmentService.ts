@@ -3,7 +3,6 @@ import {
   annotationType,
   annotationsDiffModule,
   annotationsDiffType,
-  assignationType,
   documentType,
   idModule,
   idType,
@@ -11,20 +10,11 @@ import {
   treatmentType,
 } from '@label/core';
 import { assignationService } from '../../../modules/assignation';
-import { documentService } from '../../../modules/document';
-import { userService } from '../../user';
 import { buildTreatmentRepository } from '../repository';
 
 export { treatmentService };
 
 const treatmentService = {
-  async fetchAssignatedTreatments() {
-    const treatmentRepository = buildTreatmentRepository();
-    const treatmentIds = await assignationService.fetchAssignatedTreatmentIds();
-    const treatments = await treatmentRepository.findAllByIds(treatmentIds);
-    return treatments;
-  },
-
   async fetchAnnotationsOfDocument(documentId: idType) {
     const treatmentRepository = buildTreatmentRepository();
     const treatments = await treatmentRepository.findAllByDocumentId(
@@ -34,7 +24,16 @@ const treatmentService = {
     return treatmentModule.lib.computeAnnotations(treatments);
   },
 
-  async fetchDocumentTreatments(documentId: idType) {
+  async fetchTreatmentsByDocumentIds(documentIds: idType[]) {
+    const treatmentRepository = buildTreatmentRepository();
+    const treatmentsByDocumentIds = await treatmentRepository.findAllByDocumentIds(
+      documentIds,
+    );
+
+    return treatmentsByDocumentIds;
+  },
+
+  async fetchTreatmentsByDocumentId(documentId: idType) {
     const treatmentRepository = buildTreatmentRepository();
     const treatments = await treatmentRepository.findAllByDocumentId(
       documentId,
@@ -116,71 +115,5 @@ const treatmentService = {
       duration: updatedDuration,
       lastUpdateDate: currentDate,
     });
-  },
-
-  async fetchAssignatedTreatmentsWithDetails() {
-    const assignationsById = await assignationService.fetchAllAssignationsById();
-
-    const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
-      assignationsById,
-    );
-    const treatmentsByAssignationId = await treatmentService.fetchTreatmentsByAssignationId(
-      assignationsById,
-    );
-    const documentIds = Object.values(treatmentsByAssignationId).map(
-      (treatment) => treatment.documentId,
-    );
-    const documentsById = await documentService.fetchAllDocumentsByIds(
-      documentIds,
-    );
-
-    const assignationIdsOfTreatedDocuments = Object.entries(
-      treatmentsByAssignationId,
-    )
-      /* eslint-disable @typescript-eslint/no-unused-vars */
-      .filter(([_assignationId, treatment]) => {
-        const { documentId } = treatment;
-        const document =
-          documentsById[idModule.lib.convertToString(documentId)];
-        const isDocumentTreated =
-          document.status === 'done' || document.status === 'rejected';
-        return isDocumentTreated;
-      })
-      .map(([assignationId]) => assignationId);
-
-    return assignationIdsOfTreatedDocuments.map((assignationId) => ({
-      documentId:
-        documentsById[
-          idModule.lib.convertToString(
-            treatmentsByAssignationId[assignationId].documentId,
-          )
-        ].documentId,
-      treatment: treatmentsByAssignationId[assignationId],
-      userName: userNamesByAssignationId[assignationId],
-    }));
-  },
-
-  async fetchTreatmentsByAssignationId(
-    assignationsById: Record<string, assignationType>,
-  ) {
-    const treatmentRepository = buildTreatmentRepository();
-
-    const treatmentIds = Object.values(assignationsById).map(
-      (assignation) => assignation.treatmentId,
-    );
-    const treatmentsById = await treatmentRepository.findAllByIds(treatmentIds);
-    const treatmentsByAssignationId = Object.entries(assignationsById).reduce(
-      (accumulator, [assignationId, assignation]) => {
-        const treatment =
-          treatmentsById[idModule.lib.convertToString(assignation.treatmentId)];
-
-        return {
-          ...accumulator,
-          [assignationId]: treatment,
-        };
-      },
-      {} as Record<string, treatmentType>,
-    );
-    return treatmentsByAssignationId;
   },
 };

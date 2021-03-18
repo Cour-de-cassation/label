@@ -4,11 +4,11 @@ import { apiRouteOutType } from '@label/core';
 import { PaginatedTable, tableRowFieldType } from '../../../components';
 import { wordings } from '../../../wordings';
 
-export { TreatmentTable };
+export { TreatedDocumentsTable };
 
-function TreatmentTable(props: {
-  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatmentsWithDetails'>[number], string | number>>;
-  treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>;
+function TreatedDocumentsTable(props: {
+  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatedDocuments'>[number], string | number>>;
+  treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
 }) {
   const history = useHistory();
   const styles = buildStyles();
@@ -21,7 +21,7 @@ function TreatmentTable(props: {
         defaultOrderByProperty="date"
         defaultOrderDirection="desc"
         fields={props.fields}
-        data={props.treatmentsWithDetails}
+        data={props.treatedDocuments}
         optionItems={optionItems}
       />
     </div>
@@ -38,9 +38,9 @@ function TreatmentTable(props: {
   function buildOptionItems() {
     return [
       {
-        text: wordings.treatmentsPage.table.optionItems.openDocument,
-        onClick: (treatmentWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'>[number]) => {
-          history.push(`/admin/document/${treatmentWithDetails.treatment.documentId}`);
+        text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
+        onClick: (treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) => {
+          history.push(`/admin/document/${treatmentWithDetails.document._id}`);
           return;
         },
       },

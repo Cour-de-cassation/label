@@ -33,7 +33,7 @@ function buildExporter(
         const document = documentsReadyToExport[index];
         const anonymizer = buildAnonymizer(settings);
 
-        const treatments = await treatmentService.fetchDocumentTreatments(
+        const treatments = await treatmentService.fetchTreatmentsByDocumentId(
           document._id,
         );
 

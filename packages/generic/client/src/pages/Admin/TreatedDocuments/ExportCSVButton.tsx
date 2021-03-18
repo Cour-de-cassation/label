@@ -16,7 +16,7 @@ function ExportCSVButton<InputT>(props: {
   return (
     <>
       <a download={fileName} href={fileDownloadUrl} style={styles.downloadLink}>
-        <ButtonWithIcon iconName="export" text={wordings.treatmentsPage.table.filter.exportButton} />
+        <ButtonWithIcon iconName="export" text={wordings.treatedDocumentsPage.table.filter.exportButton} />
       </a>
     </>
   );

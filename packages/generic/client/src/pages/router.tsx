@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router
 import { localStorage } from '../services/localStorage';
 import { Agents } from './Admin/Agents';
 import { DocumentInspector } from './Admin/DocumentInspector';
-import { Treatments } from './Admin/Treatments';
+import { TreatedDocuments } from './Admin/TreatedDocuments';
 import { ProblemReports } from './Admin/ProblemReports';
 import { Home } from './Home';
 import { Login } from './Login';
@@ -22,8 +22,8 @@ function Router() {
         <AuthenticatedRoute path="/admin/problem-reports">
           <ProblemReports />
         </AuthenticatedRoute>
-        <AuthenticatedRoute path="/admin/treatments">
-          <Treatments />
+        <AuthenticatedRoute path="/admin/treated-documents">
+          <TreatedDocuments />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/admin/untreated-documents">
           <UntreatedDocuments />
@@ -82,7 +82,7 @@ function getRedirectionRoute() {
 
   switch (userRole) {
     case 'admin':
-      return '/admin/treatments';
+      return '/admin/treated-documents';
     case 'annotator':
       return '/annotation';
   }

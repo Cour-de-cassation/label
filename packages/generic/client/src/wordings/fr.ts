@@ -139,7 +139,7 @@ const fr = {
       },
     },
   },
-  treatmentsPage: {
+  treatedDocumentsPage: {
     title: 'Administration',
     subtitle: 'Décisions traitées',
     table: {

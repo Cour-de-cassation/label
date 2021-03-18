@@ -75,14 +75,23 @@ const apiSchema = {
     settings: {
       out: fetchedDataModelEntries.settings,
     },
-    treatmentsWithDetails: {
+    treatedDocuments: {
       out: buildDataModelEntry({
         kind: 'list',
         content: {
           kind: 'object',
           content: {
-            documentId: { kind: 'primitive', content: 'number' },
-            treatment: fetchedDataModelEntries.treatment,
+            document: {
+              kind: 'object',
+              content: {
+                _id: fetchedDataModelEntries.document.content._id,
+                documentId: fetchedDataModelEntries.document.content.documentId,
+              },
+            },
+            treatments: {
+              kind: 'list',
+              content: fetchedDataModelEntries.treatment,
+            },
             userName: {
               kind: 'primitive',
               content: 'string',

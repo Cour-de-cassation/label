@@ -60,6 +60,6 @@ function DocumentInspector(props: { settings: settingsType }) {
   }
 
   function navigateToTreatments() {
-    history.push('/admin/treatments');
+    history.push('/admin/treated-documents');
   }
 }

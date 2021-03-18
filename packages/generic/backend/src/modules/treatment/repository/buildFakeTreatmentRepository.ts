@@ -17,6 +17,30 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
         idModule.lib.equalId(treatment.documentId, documentId),
       );
     },
+    async findAllByDocumentIds(documentIds) {
+      return collection
+        .filter((treatment) =>
+          documentIds.some((documentId) =>
+            idModule.lib.equalId(documentId, treatment.documentId),
+          ),
+        )
+        .reduce((accumulator, treatment) => {
+          const documentIdString = idModule.lib.convertToString(
+            treatment.documentId,
+          );
+
+          if (!!accumulator[documentIdString]) {
+            return {
+              ...accumulator,
+              [documentIdString]: [...accumulator[documentIdString], treatment],
+            };
+          }
+          return {
+            ...accumulator,
+            [documentIdString]: [treatment],
+          };
+        }, {} as Record<string, treatmentType[]>);
+    },
     async findLastOneByDocumentId(documentId) {
       const result = collection.filter((treatment) =>
         idModule.lib.equalId(treatment.documentId, documentId),

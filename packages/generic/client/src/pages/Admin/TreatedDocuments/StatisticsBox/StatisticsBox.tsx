@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { sumBy } from 'lodash';
-import { apiRouteOutType, treatmentModule } from '@label/core';
+import { treatmentInfoType } from '@label/core';
 import { Text } from '../../../../components';
 import { timeOperator } from '../../../../services/timeOperator';
 import { customThemeType, useCustomTheme } from '../../../../styles';
@@ -11,7 +11,11 @@ export { StatisticsBox };
 
 const HEIGHT = 75;
 
-function StatisticsBox(props: { treatmentsWithDetails: apiRouteOutType<'get', 'treatmentsWithDetails'> }) {
+function StatisticsBox(props: {
+  treatmentsInfo: Record<string, treatmentInfoType>;
+  totalDuration: number;
+  treatedDocumentsCount: number;
+}) {
   const [computation, setComputation] = useState<computationType>('average');
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -43,47 +47,44 @@ function StatisticsBox(props: { treatmentsWithDetails: apiRouteOutType<'get', 't
   );
 
   function buildStatisticsCells() {
-    const annotationStatistics = Object.values(
-      treatmentModule.lib.computeTreatmentsInfo(props.treatmentsWithDetails.map(({ treatment }) => treatment)),
-    );
+    const annotationStatistics = Object.values(props.treatmentsInfo);
 
     return [
       {
-        title: wordings.treatmentsPage.table.statistics.fields.surAnnotation,
+        title: wordings.treatedDocumentsPage.table.statistics.fields.surAnnotation,
         value: getComputationValue(sumBy(annotationStatistics, ({ deletionsCount }) => deletionsCount)),
       },
       {
-        title: wordings.treatmentsPage.table.statistics.fields.resizeAnnotationSmaller,
+        title: wordings.treatedDocumentsPage.table.statistics.fields.resizeAnnotationSmaller,
         value: getComputationValue(sumBy(annotationStatistics, ({ resizedSmallerCount }) => resizedSmallerCount)),
       },
       {
-        title: wordings.treatmentsPage.table.statistics.fields.subAnnotation,
+        title: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotation,
         value: getComputationValue(sumBy(annotationStatistics, ({ additionsCount }) => additionsCount)),
       },
       {
-        title: wordings.treatmentsPage.table.statistics.fields.resizeAnnotationBigger,
+        title: wordings.treatedDocumentsPage.table.statistics.fields.resizeAnnotationBigger,
         value: getComputationValue(sumBy(annotationStatistics, ({ resizedBiggerCount }) => resizedBiggerCount)),
       },
       {
-        title: wordings.treatmentsPage.table.statistics.fields.changeAnnotation,
+        title: wordings.treatedDocumentsPage.table.statistics.fields.changeAnnotation,
         value: getComputationValue(sumBy(annotationStatistics, ({ modificationsCount }) => modificationsCount)),
       },
       {
-        title: wordings.treatmentsPage.table.statistics.fields.duration,
+        title: wordings.treatedDocumentsPage.table.statistics.fields.duration,
         value: getReadableDuration(),
       },
     ];
   }
 
   function getReadableDuration() {
-    const totalDuration = sumBy(props.treatmentsWithDetails, ({ treatment }) => treatment.duration);
-    return timeOperator.convertDurationToReadableDuration(getComputationValue(totalDuration));
+    return timeOperator.convertDurationToReadableDuration(getComputationValue(props.totalDuration));
   }
 
   function getComputationValue(total: number) {
     switch (computation) {
       case 'average':
-        return props.treatmentsWithDetails.length ? Math.floor(total / props.treatmentsWithDetails.length) : 0;
+        return props.treatedDocumentsCount ? Math.floor(total / props.treatedDocumentsCount) : 0;
       case 'total':
         return total;
     }

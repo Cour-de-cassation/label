@@ -1,7 +1,8 @@
-import { documentType, idType, idModule } from '@label/core';
+import { documentType, idType, idModule, assignationType } from '@label/core';
 import { dateBuilder } from '../../../utils';
 import { assignationService } from '../../assignation';
 import { treatmentService } from '../../treatment';
+import { userService } from '../../user';
 import { buildDocumentRepository } from '../repository';
 
 export { documentService };
@@ -12,6 +13,45 @@ const documentService = {
   async fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByIds(documentIds);
+  },
+
+  async fetchTreatedDocuments() {
+    const documentRepository = buildDocumentRepository();
+
+    const documents = await documentRepository.findAllByStatus(['done']);
+    const documentIds = documents.map(({ _id }) => _id);
+    const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
+      documentIds,
+    );
+    const assignationsById = Object.values(assignationsByDocumentId).reduce(
+      (accumulator, assignation) => ({
+        ...accumulator,
+        [idModule.lib.convertToString(assignation._id)]: assignation,
+      }),
+      {} as Record<string, assignationType>,
+    );
+    const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
+      assignationsById,
+    );
+    const treatmentsByDocumentId = await treatmentService.fetchTreatmentsByDocumentIds(
+      documentIds,
+    );
+
+    return documents.map((document) => {
+      const documentIdString = idModule.lib.convertToString(document._id);
+      const assignation = assignationsByDocumentId[documentIdString];
+      const assignationIdString = idModule.lib.convertToString(assignation._id);
+      const userName = userNamesByAssignationId[assignationIdString];
+      const treatments = treatmentsByDocumentId[documentIdString];
+      return {
+        document: {
+          _id: document._id,
+          documentId: document.documentId,
+        },
+        treatments,
+        userName,
+      };
+    });
   },
 
   async fetchUntreatedDocuments() {

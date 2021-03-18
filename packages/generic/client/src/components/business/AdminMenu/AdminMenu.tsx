@@ -13,7 +13,7 @@ function AdminMenu() {
     <div style={styles.container}>
       <div style={styles.iconContainer}>
         <MenuIcon pathname="/admin/untreated-documents" iconName="playlistPlay" />
-        <MenuIcon pathname="/admin/treatments" iconName="playlistCheck" />
+        <MenuIcon pathname="/admin/treated-documents" iconName="playlistCheck" />
         <MenuIcon pathname="/admin/problem-reports" iconName="warning" />
         <MenuIcon pathname="/admin/agents" iconName="admin" />
       </div>

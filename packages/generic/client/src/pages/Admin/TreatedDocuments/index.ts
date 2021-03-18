@@ -1,0 +1,1 @@
+export { TreatedDocuments } from './TreatedDocuments';

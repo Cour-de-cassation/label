@@ -24,22 +24,24 @@ const buildTreatmentRepository = buildRepositoryBuilder<
       const treatments = await collection
         .find({ documentId: { $in: documentIds } })
         .toArray();
-      return treatments.reduce((accumulator, treatment) => {
-        const documentIdString = idModule.lib.convertToString(
-          treatment.documentId,
-        );
+      return treatments
+        .sort((treatmentA, treatmentB) => treatmentB.order - treatmentA.order)
+        .reduce((accumulator, treatment) => {
+          const documentIdString = idModule.lib.convertToString(
+            treatment.documentId,
+          );
 
-        if (!!accumulator[documentIdString]) {
+          if (!!accumulator[documentIdString]) {
+            return {
+              ...accumulator,
+              [documentIdString]: [...accumulator[documentIdString], treatment],
+            };
+          }
           return {
             ...accumulator,
-            [documentIdString]: [...accumulator[documentIdString], treatment],
+            [documentIdString]: [treatment],
           };
-        }
-        return {
-          ...accumulator,
-          [documentIdString]: [treatment],
-        };
-      }, {} as Record<string, treatmentType[]>);
+        }, {} as Record<string, treatmentType[]>);
     },
     async updateOne(
       treatmentId,

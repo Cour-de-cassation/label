@@ -12,7 +12,7 @@ const OPTION_CELL_WIDTH = 40;
 
 type orderDirectionType = 'asc' | 'desc';
 
-function Table<InputT, OutputT>(props: {
+function Table<InputT>(props: {
   defaultOrderByProperty?: string;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
@@ -24,7 +24,7 @@ function Table<InputT, OutputT>(props: {
     onClick: (data: InputT) => void;
   }>;
   pagination?: { start: number; end: number };
-  fields: Array<tableRowFieldType<InputT, OutputT>>;
+  fields: Array<tableRowFieldType<InputT>>;
 }) {
   const [orderByProperty, setOrderByProperty] = useState<string | undefined>(props.defaultOrderByProperty);
   const [orderDirection, setOrderDirection] = useState<orderDirectionType>(

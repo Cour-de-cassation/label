@@ -78,10 +78,7 @@ function UntreatedDocuments() {
   }
 
   function buildUntreatedDocumentsFields() {
-    const untreatedDocumentsFields: Array<tableRowFieldType<
-      apiRouteOutType<'get', 'untreatedDocuments'>[number],
-      string | number | JSX.Element
-    >> = [
+    const untreatedDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'untreatedDocuments'>[number]>> = [
       {
         id: 'documentId',
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,
@@ -93,7 +90,8 @@ function UntreatedDocuments() {
         id: 'publicationCategory',
         title: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory,
         canBeSorted: true,
-        extractor: (untreatedDocument) => (
+        extractor: (untreatedDocument) => untreatedDocument.publicationCategory.join(','),
+        render: (untreatedDocument) => (
           <div style={styles.publicationCategoryBadgesContainer}>
             {untreatedDocument.publicationCategory.map((publicationCategoryLetter) => (
               <div style={styles.publicationCategoryBadgeContainer}>

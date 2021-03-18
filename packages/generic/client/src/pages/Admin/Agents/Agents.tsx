@@ -41,7 +41,7 @@ function Agents() {
   );
 
   function buildUserFields() {
-    const usersFields: Array<tableRowFieldType<apiRouteOutType<'get', 'usersWithDetails'>[number], string | number>> = [
+    const usersFields: Array<tableRowFieldType<apiRouteOutType<'get', 'usersWithDetails'>[number]>> = [
       {
         id: 'name',
         title: wordings.agentsPage.table.columnTitles.name,

@@ -55,10 +55,7 @@ function ProblemReportsTable(props: {
   }
 }
 
-const problemReportsFields: Array<tableRowFieldType<
-  apiRouteOutType<'get', 'problemReportsWithDetails'>[number],
-  string | number | JSX.Element
->> = [
+const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'problemReportsWithDetails'>[number]>> = [
   {
     id: '_id',
     title: wordings.problemReportsPage.table.columnTitles.number,
@@ -77,7 +74,8 @@ const problemReportsFields: Array<tableRowFieldType<
     id: 'type',
     canBeSorted: true,
     title: wordings.problemReportsPage.table.columnTitles.type,
-    extractor: (problemReportWithDetails) => (
+    extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.type,
+    render: (problemReportWithDetails) => (
       <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />
     ),
     width: 1,

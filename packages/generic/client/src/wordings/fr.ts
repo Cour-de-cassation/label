@@ -164,6 +164,7 @@ const fr = {
       columnTitles: {
         agent: 'Agent',
         duration: 'Tps',
+        publicationCategory: 'Dif.',
         date: 'Traité le',
         surAnnotation: 'Sur',
         resizeAnnotationSmaller: 'R.-',

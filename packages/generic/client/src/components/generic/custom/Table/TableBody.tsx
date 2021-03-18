@@ -9,19 +9,20 @@ export { TableBody };
 
 export type { tableRowFieldType };
 
-type tableRowFieldType<InputT, OutputT> = {
+type tableRowFieldType<InputT> = {
   id: string;
   title: string;
   canBeSorted: boolean;
-  extractor: (data: InputT) => OutputT;
+  extractor: (data: InputT) => string | number;
+  render?: (data: InputT) => JSX.Element;
   width: number;
 };
 
 const ROW_DEFAULT_HEIGHT = 50;
 
-function TableBody<InputT, OutputT>(props: {
+function TableBody<InputT>(props: {
   data: InputT[];
-  fields: Array<tableRowFieldType<InputT, OutputT>>;
+  fields: Array<tableRowFieldType<InputT>>;
   optionCellStyle?: CSSProperties;
   optionItems?: Array<{
     text: string;
@@ -41,15 +42,17 @@ function TableBody<InputT, OutputT>(props: {
   return <tbody>{sortedData.map(renderRow)}</tbody>;
 
   function renderRow(row: InputT) {
-    const formattedRow = props.fields.map((field) => field.extractor(row));
+    const formattedRow = props.fields.map((field) =>
+      field.render ? field.render(row) : <Text variant="h3">{field.extractor(row)}</Text>,
+    );
     const { optionItems } = props;
 
     if (!optionItems) {
       return (
         <Tr styleProps={styleProps}>
-          {formattedRow.map((value) => (
+          {formattedRow.map((cellContent) => (
             <td>
-              <Text variant="h3">{value}</Text>
+              <Text variant="h3">{cellContent}</Text>
             </td>
           ))}
           <td style={props.optionCellStyle} />

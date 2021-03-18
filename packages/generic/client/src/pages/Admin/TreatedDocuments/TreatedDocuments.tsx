@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
 import { apiRouteOutType, idModule, keysOf, treatmentInfoType, treatmentModule } from '@label/core';
-import { AdminMenu, MainHeader, tableRowFieldType } from '../../../components';
+import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { timeOperator } from '../../../services/timeOperator';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -183,15 +183,28 @@ function TreatedDocuments() {
   }
 
   function buildTreatedDocumentsFields(treatmentsInfo: Record<string, treatmentInfoType>) {
-    const treatedDocumentsFields: Array<tableRowFieldType<
-      apiRouteOutType<'get', 'treatedDocuments'>[number],
-      string | number
-    >> = [
+    const treatedDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatedDocuments'>[number]>> = [
       {
         id: 'documentId',
         title: wordings.treatedDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
         extractor: (treatedDocument) => JSON.stringify(treatedDocument.document.documentId),
+        width: 10,
+      },
+      {
+        id: 'publicationCategory',
+        title: wordings.treatedDocumentsPage.table.columnTitles.publicationCategory,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.publicationCategory.join(','),
+        render: (treatedDocument) => (
+          <div style={styles.publicationCategoryBadgesContainer}>
+            {treatedDocument.document.publicationCategory.map((publicationCategoryLetter) => (
+              <div style={styles.publicationCategoryBadgeContainer}>
+                <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
+              </div>
+            ))}
+          </div>
+        ),
         width: 10,
       },
       {
@@ -285,6 +298,12 @@ function TreatedDocuments() {
       },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
+      },
+      publicationCategoryBadgesContainer: {
+        display: 'flex',
+      },
+      publicationCategoryBadgeContainer: {
+        marginRight: theme.spacing,
       },
       statisticsBoxContainer: {
         marginTop: theme.spacing * 2,

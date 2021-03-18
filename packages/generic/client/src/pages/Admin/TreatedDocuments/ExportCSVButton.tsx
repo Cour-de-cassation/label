@@ -6,10 +6,7 @@ import { wordings } from '../../../wordings';
 
 export { ExportCSVButton };
 
-function ExportCSVButton<InputT>(props: {
-  data: Array<InputT>;
-  fields: Array<tableRowFieldType<InputT, string | number>>;
-}) {
+function ExportCSVButton<InputT>(props: { data: Array<InputT>; fields: Array<tableRowFieldType<InputT>> }) {
   const fileDownloadUrl = createCSVFile();
   const fileName = buildFileName();
   const styles = buildStyles();

@@ -5,7 +5,7 @@ import { PaginatedTable, tableRowFieldType } from '../../../components';
 export { UntreatedDocumentsTable };
 
 function UntreatedDocumentsTable(props: {
-  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'untreatedDocuments'>[number], string | number | JSX.Element>>;
+  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'untreatedDocuments'>[number]>>;
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
 }) {
   const styles = buildStyles();

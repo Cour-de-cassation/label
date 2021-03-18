@@ -9,7 +9,7 @@ const ROWS_PER_PAGE = 20;
 
 export { PaginatedTable };
 
-function PaginatedTable<InputT, OutputT>(props: {
+function PaginatedTable<InputT>(props: {
   defaultOrderByProperty?: string;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
@@ -20,7 +20,7 @@ function PaginatedTable<InputT, OutputT>(props: {
     text: string;
     onClick: (data: InputT) => void;
   }>;
-  fields: Array<tableRowFieldType<InputT, OutputT>>;
+  fields: Array<tableRowFieldType<InputT>>;
 }) {
   const [currentPage, setCurrentPage] = useState(0);
   const numberOfPages = computeNumberOfPages(props.data.length, ROWS_PER_PAGE);

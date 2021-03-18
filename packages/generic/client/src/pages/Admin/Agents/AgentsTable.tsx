@@ -5,7 +5,7 @@ import { Table, tableRowFieldType } from '../../../components';
 export { AgentsTable };
 
 function AgentsTable(props: {
-  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'usersWithDetails'>[number], string | number>>;
+  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'usersWithDetails'>[number]>>;
   usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'>;
 }) {
   const styles = buildStyles();

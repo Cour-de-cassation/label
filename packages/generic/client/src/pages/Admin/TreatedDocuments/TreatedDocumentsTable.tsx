@@ -7,7 +7,7 @@ import { wordings } from '../../../wordings';
 export { TreatedDocumentsTable };
 
 function TreatedDocumentsTable(props: {
-  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatedDocuments'>[number], string | number>>;
+  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatedDocuments'>[number]>>;
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
 }) {
   const history = useHistory();

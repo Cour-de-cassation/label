@@ -1,85 +1,26 @@
 import React from 'react';
 import format from 'string-template';
 import { keysOf } from '@label/core';
-import { timeOperator } from '../../../services/timeOperator';
-import { customThemeType, useCustomTheme } from '../../../styles';
-import { wordings } from '../../../wordings';
-import { FilterButton, filterType } from '../../../components';
-import { Chip } from './Chip';
-import { Text } from '../../../components';
+import { Chip, FilterButton, filterType, Text } from '../../../../components';
+import { timeOperator } from '../../../../services/timeOperator';
+import { customThemeType, useCustomTheme } from '../../../../styles';
+import { wordings } from '../../../../wordings';
+import { treatmentFilterInfoType, treatmentFilterType } from './treatmentFilterTypes';
 
-export { Filters };
+export { TreatmentsFilters };
 
 export type { treatmentFilterInfoType, treatmentFilterType };
 
-type treatmentFilterInfoType = {
-  userNames: string[];
-};
-
-type treatmentFilterType = {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
-  userName: string | undefined;
-  mustHaveSurAnnotations: boolean;
-  mustHaveSubAnnotations: boolean;
-};
-
-function Filters(props: {
+function TreatmentsFilters(props: {
   filterValues: treatmentFilterType;
   setFilterValues: (filterValues: treatmentFilterType) => void;
   filterInfo: treatmentFilterInfoType;
   resultsCount: number;
 }) {
-  const filters: filterType<'userName' | 'mustHaveSurAnnotations' | 'mustHaveSubAnnotations' | 'dateInterval'>[] = [
-    {
-      kind: 'dateInterval',
-      name: 'dateInterval',
-      value: { startDate: props.filterValues.startDate, endDate: props.filterValues.endDate },
-      onChangeStartDate: (startDate: Date) =>
-        props.setFilterValues({
-          ...props.filterValues,
-          startDate,
-        }),
-      onChangeEndDate: (endDate: Date) =>
-        props.setFilterValues({
-          ...props.filterValues,
-          endDate,
-        }),
-    },
-    {
-      kind: 'dropdown',
-      name: 'userName',
-      label: wordings.treatmentsPage.table.filter.fields.agents,
-      possibleValues: props.filterInfo.userNames,
-      value: props.filterValues.userName,
-      onChange: (userName: string) => props.setFilterValues({ ...props.filterValues, userName }),
-    },
-    {
-      kind: 'boolean',
-      name: 'mustHaveSubAnnotations',
-      label: wordings.treatmentsPage.table.filter.fields.mustHaveSubAnnotations,
-      checked: props.filterValues.mustHaveSubAnnotations,
-      onToggle: () =>
-        props.setFilterValues({
-          ...props.filterValues,
-          mustHaveSubAnnotations: !props.filterValues.mustHaveSubAnnotations,
-        }),
-    },
-    {
-      kind: 'boolean',
-      name: 'mustHaveSurAnnotations',
-      label: wordings.treatmentsPage.table.filter.fields.mustHaveSurAnnotations,
-      checked: props.filterValues.mustHaveSurAnnotations,
-      onToggle: () =>
-        props.setFilterValues({
-          ...props.filterValues,
-          mustHaveSurAnnotations: !props.filterValues.mustHaveSurAnnotations,
-        }),
-    },
-  ];
-
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
+
+  const filters = buildFilters();
 
   return (
     <div style={styles.filterContainer}>
@@ -96,6 +37,56 @@ function Filters(props: {
       </div>
     </div>
   );
+
+  function buildFilters() {
+    return [
+      {
+        kind: 'dateInterval',
+        name: 'dateInterval',
+        value: { startDate: props.filterValues.startDate, endDate: props.filterValues.endDate },
+        onChangeStartDate: (startDate: Date) =>
+          props.setFilterValues({
+            ...props.filterValues,
+            startDate,
+          }),
+        onChangeEndDate: (endDate: Date) =>
+          props.setFilterValues({
+            ...props.filterValues,
+            endDate,
+          }),
+      },
+      {
+        kind: 'dropdown',
+        name: 'userName',
+        label: wordings.treatmentsPage.table.filter.fields.agents,
+        possibleValues: props.filterInfo.userNames,
+        value: props.filterValues.userName,
+        onChange: (userName: string) => props.setFilterValues({ ...props.filterValues, userName }),
+      },
+      {
+        kind: 'boolean',
+        name: 'mustHaveSubAnnotations',
+        label: wordings.treatmentsPage.table.filter.fields.mustHaveSubAnnotations,
+        checked: props.filterValues.mustHaveSubAnnotations,
+        onToggle: () =>
+          props.setFilterValues({
+            ...props.filterValues,
+            mustHaveSubAnnotations: !props.filterValues.mustHaveSubAnnotations,
+          }),
+      },
+      {
+        kind: 'boolean',
+        name: 'mustHaveSurAnnotations',
+        label: wordings.treatmentsPage.table.filter.fields.mustHaveSurAnnotations,
+        checked: props.filterValues.mustHaveSurAnnotations,
+        onToggle: () =>
+          props.setFilterValues({
+            ...props.filterValues,
+            mustHaveSurAnnotations: !props.filterValues.mustHaveSurAnnotations,
+          }),
+      },
+    ] as filterType<'userName' | 'mustHaveSurAnnotations' | 'mustHaveSubAnnotations' | 'dateInterval'>[];
+  }
 
   function renderFilterChip(filterKey: keyof treatmentFilterType, filterValues: treatmentFilterType) {
     switch (filterKey) {
@@ -116,7 +107,7 @@ function Filters(props: {
         !!filterValue && (
           <div style={styles.chipContainer}>
             <Chip
-              filterText={wordings.treatmentsPage.table.filter.chips.mustHaveSurAnnotations}
+              label={wordings.treatmentsPage.table.filter.chips.mustHaveSurAnnotations}
               onClose={buildRemoveFilter(filterKey)}
             />
           </div>
@@ -129,7 +120,7 @@ function Filters(props: {
         !!filterValue && (
           <div style={styles.chipContainer}>
             <Chip
-              filterText={wordings.treatmentsPage.table.filter.chips.mustHaveSubAnnotations}
+              label={wordings.treatmentsPage.table.filter.chips.mustHaveSubAnnotations}
               onClose={buildRemoveFilter(filterKey)}
             />
           </div>
@@ -147,7 +138,7 @@ function Filters(props: {
       return (
         !!filterValue && (
           <div style={styles.chipContainer}>
-            <Chip filterText={filterText} onClose={buildRemoveFilter(filterKey)} />
+            <Chip label={filterText} onClose={buildRemoveFilter(filterKey)} />
           </div>
         )
       );
@@ -163,7 +154,7 @@ function Filters(props: {
       return (
         !!filterValue && (
           <div style={styles.chipContainer}>
-            <Chip filterText={filterText} onClose={buildRemoveFilter(filterKey)} />
+            <Chip label={filterText} onClose={buildRemoveFilter(filterKey)} />
           </div>
         )
       );
@@ -173,7 +164,7 @@ function Filters(props: {
       return (
         !!filterValue && (
           <div style={styles.chipContainer}>
-            <Chip filterText={filterValue} onClose={buildRemoveFilter(filterKey)} />
+            <Chip label={filterValue} onClose={buildRemoveFilter(filterKey)} />
           </div>
         )
       );

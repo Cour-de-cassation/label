@@ -1,18 +1,18 @@
 import React from 'react';
-import { Icon, Text } from '../../../components';
 import { customThemeType, useCustomTheme } from '../../../styles';
+import { Icon, Text } from '../materialUI';
 
 export { Chip };
 
 const ICON_SIZE = 24;
 
-function Chip(props: { filterText: string; onClose: () => void }) {
+function Chip(props: { label: string; onClose: () => void }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   return (
     <div style={styles.container}>
       <div style={styles.textContainer}>
-        <Text variant="h3">{props.filterText}</Text>
+        <Text variant="h3">{props.label}</Text>
       </div>
       <div style={styles.iconContainer} onClick={props.onClose}>
         <Icon iconName="close" style={styles.icon} />

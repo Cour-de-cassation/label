@@ -1,5 +1,6 @@
 import {
   ButtonWithIcon,
+  Chip,
   CircleIcon,
   ComponentsList,
   DatePicker,
@@ -37,6 +38,7 @@ export {
   Accordion,
   ButtonWithIcon,
   Checkbox,
+  Chip,
   CircleIcon,
   ComponentsList,
   DatePicker,

@@ -1,5 +1,6 @@
 import { Button, buttonColorType } from './Button';
 import { ButtonWithIcon } from './ButtonWithIcon';
+import { Chip } from './Chip';
 import { CircleIcon } from './CircleIcon';
 import { ComponentsList } from './ComponentsList';
 import { DatePicker } from './DatePicker';
@@ -19,6 +20,7 @@ import { TooltipMenu } from './TooltipMenu';
 export {
   Button,
   ButtonWithIcon,
+  Chip,
   CircleIcon,
   ComponentsList,
   DatePicker,

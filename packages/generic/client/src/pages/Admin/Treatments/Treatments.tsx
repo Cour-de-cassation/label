@@ -6,14 +6,14 @@ import { timeOperator } from '../../../services/timeOperator';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ExportCSVButton } from './ExportCSVButton';
-import { Filters, treatmentFilterType } from './Filters';
+import { TreatmentsFilters, treatmentFilterType } from './TreatmentsFilters';
 import { StatisticsBox } from './StatisticsBox';
 import { TreatmentsDataFetcher } from './TreatmentsDataFetcher';
 import { TreatmentTable } from './TreatmentTable';
 
 export { Treatments };
 
-const DEFAULT_TREATMENT_FILTER = {
+const DEFAULT_FILTERS = {
   startDate: undefined,
   endDate: undefined,
   userName: undefined,
@@ -23,7 +23,7 @@ const DEFAULT_TREATMENT_FILTER = {
 
 function Treatments() {
   const theme = useCustomTheme();
-  const [filterValues, setFilterValues] = useState<treatmentFilterType>(DEFAULT_TREATMENT_FILTER);
+  const [filterValues, setFilterValues] = useState<treatmentFilterType>(DEFAULT_FILTERS);
   const styles = buildStyles(theme);
   return (
     <>
@@ -50,7 +50,7 @@ function Treatments() {
                 <div style={styles.tableHeaderContainer}>
                   <div style={styles.tableHeader}>
                     <div style={styles.leftHeaderContent}>
-                      <Filters
+                      <TreatmentsFilters
                         filterInfo={filterInfo}
                         filterValues={filterValues}
                         setFilterValues={setFilterValues}

@@ -43,8 +43,9 @@ function buildStyles(theme: customThemeType) {
       height: heights.adminTreatmentsTableHeader,
     },
     contentContainer: {
-      width: '100vw',
       display: 'flex',
+      width: '100vw',
+      height: heights.adminPanel,
     },
     tableHeader: {
       paddingTop: theme.spacing * 2,
@@ -57,7 +58,6 @@ function buildStyles(theme: customThemeType) {
       overflowY: 'auto',
     },
     table: {
-      height: heights.adminPanel,
       width: widths.adminContent,
       paddingLeft: theme.spacing * 3,
       paddingRight: theme.spacing * 2,

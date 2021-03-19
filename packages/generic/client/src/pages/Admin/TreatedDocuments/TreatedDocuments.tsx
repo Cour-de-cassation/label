@@ -290,8 +290,9 @@ function TreatedDocuments() {
         right: theme.spacing * 2,
       },
       contentContainer: {
-        width: '100vw',
         display: 'flex',
+        width: '100vw',
+        height: heights.adminPanel,
       },
       leftHeaderContent: {
         flex: 1,
@@ -318,7 +319,6 @@ function TreatedDocuments() {
         overflowY: 'auto',
       },
       table: {
-        height: heights.adminPanel,
         width: widths.adminContent,
         paddingLeft: theme.spacing * 3,
         paddingRight: theme.spacing * 2,

@@ -1,37 +1,53 @@
 import React from 'react';
-import { Icon, MainHeader, Text } from '../../components';
+import { useHistory } from 'react-router';
+import { ButtonWithIcon, Icon, Text } from '../../components';
+import { localStorage } from '../../services/localStorage';
+import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
 
 export { ErrorPage };
 
 function ErrorPage() {
-  const style = buildStyle();
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
+  const history = useHistory();
 
   return (
-    <>
-      <MainHeader />
-
-      <span style={style.errorPage}>
-        <Icon iconName="warning" style={style.errorIcon} />
-        <Text>{wordings.errorPage}</Text>
-      </span>
-    </>
+    <div style={styles.container}>
+      <div style={styles.errorPage}>
+        <Icon iconName="warning" style={styles.errorIcon} />
+        <Text style={styles.errorText}>{wordings.errorPage}</Text>
+        <ButtonWithIcon iconName="logout" color="default" onClick={logout} text={wordings.shared.logout} />
+      </div>
+    </div>
   );
 
-  function buildStyle() {
+  function logout() {
+    localStorage.bearerTokenHandler.remove();
+    history.push('/login');
+  }
+
+  function buildStyles(theme: customThemeType) {
     return {
+      container: {
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
       errorPage: {
         display: 'flex',
         flexDirection: 'column',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
       },
       errorIcon: {
         alignSelf: 'center',
         fontSize: '100px',
-        padding: '24px',
+        padding: theme.spacing * 3,
+      },
+      errorText: {
+        marginBottom: theme.spacing,
       },
     } as const;
   }

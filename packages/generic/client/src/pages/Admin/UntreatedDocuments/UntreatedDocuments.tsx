@@ -112,8 +112,9 @@ function UntreatedDocuments() {
         height: heights.header,
       },
       contentContainer: {
-        width: '100vw',
         display: 'flex',
+        width: '100vw',
+        height: heights.adminPanel,
       },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
@@ -128,7 +129,6 @@ function UntreatedDocuments() {
         overflowY: 'auto',
       },
       table: {
-        height: heights.adminPanel,
         width: widths.adminContent,
         paddingLeft: theme.spacing * 3,
         paddingRight: theme.spacing * 2,

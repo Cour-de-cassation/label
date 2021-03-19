@@ -73,8 +73,9 @@ function Agents() {
         height: heights.header,
       },
       contentContainer: {
-        width: '100vw',
         display: 'flex',
+        width: '100vw',
+        height: heights.adminPanel,
       },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
@@ -89,7 +90,6 @@ function Agents() {
         overflowY: 'auto',
       },
       table: {
-        height: heights.adminPanel,
         width: widths.adminContent,
         paddingLeft: theme.spacing * 3,
         paddingRight: theme.spacing * 2,

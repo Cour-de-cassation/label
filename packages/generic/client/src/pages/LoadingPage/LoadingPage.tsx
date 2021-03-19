@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainHeader, Text } from '../../components';
+import { Text } from '../../components';
 import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
 
@@ -7,26 +7,30 @@ export { LoadingPage };
 
 function LoadingPage() {
   const theme = useCustomTheme();
-  const style = buildStyle(theme);
+  const styles = buildStyles(theme);
 
   return (
-    <>
-      <MainHeader />
-
-      <span style={style.loadingPage}>
-        <div className="loading-wheel" style={style.loadingWheel} />
+    <div style={styles.container}>
+      <div style={styles.loadingPage}>
+        <div className="loading-wheel" style={styles.loadingWheel} />
         <Text>{wordings.loadingPage}</Text>
-      </span>
-    </>
+      </div>
+    </div>
   );
 
-  function buildStyle(theme: customThemeType) {
+  function buildStyles(theme: customThemeType) {
     return {
+      container: {
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
       loadingPage: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        display: 'flex',
+        flexDirection: 'column',
       },
       loadingWheel: {
         color: theme.colors.line.level1,

@@ -11,6 +11,8 @@ const sderFetcher = {
 
     return courtDecisions
       .map(sderMapper.mapCourtDecisionToDocument)
-      .filter(document => document.text.length <= MAX_DOCUMENT_SIZE);
+      .filter(
+        document => document.text && document.text.length <= MAX_DOCUMENT_SIZE,
+      );
   },
 };

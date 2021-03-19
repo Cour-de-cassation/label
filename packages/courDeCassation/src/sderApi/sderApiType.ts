@@ -24,7 +24,7 @@ type sderCourtDecisionType = {
   sourceName: string;
   zoning: {
     introduction_subzonage: {
-      publication: string[]
-    }
-  }
+      publication: string[] | null
+    } | null
+  } | null
 };

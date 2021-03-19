@@ -100,14 +100,15 @@ function TreatedDocuments() {
   );
 
   function computeSummedTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
-    // TO DO filter par est-ce que ça a été fait par un humain
-    const treatments = flatten(treatedDocuments.map((treatedDocument) => treatedDocument.treatments));
+    const treatments = flatten(treatedDocuments.map((treatedDocument) => treatedDocument.treatments)).filter(
+      (treatment) => treatment.source === 'annotator',
+    );
     const treatmentsInfo = treatmentModule.lib.computeTreatmentsInfo(treatments);
     const summedTreatmentsInfo = treatedDocuments.reduce((documentAccumulator, treatedDocument) => {
       const documentIdString = idModule.lib.convertToString(treatedDocument.document._id);
-      const documentTreatmentsInfo = treatedDocument.treatments.map(
-        (treatment) => treatmentsInfo[idModule.lib.convertToString(treatment._id)],
-      );
+      const documentTreatmentsInfo = treatedDocument.treatments
+        .filter((treatment) => treatment.source === 'annotator')
+        .map((treatment) => treatmentsInfo[idModule.lib.convertToString(treatment._id)]);
       return {
         ...documentAccumulator,
         [documentIdString]: documentTreatmentsInfo.reduce(

@@ -65,6 +65,7 @@ function buildAnnotator(
       documentId,
       previousAnnotations: [],
       nextAnnotations: annotations,
+      source: 'NLP',
     });
   }
 
@@ -81,6 +82,7 @@ function buildAnnotator(
       documentId,
       previousAnnotations: annotations,
       nextAnnotations: autoTreatedAnnotations,
+      source: 'postProcess',
     });
   }
 

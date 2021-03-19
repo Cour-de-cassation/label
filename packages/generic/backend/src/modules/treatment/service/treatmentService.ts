@@ -57,10 +57,12 @@ const treatmentService = {
     documentId,
     previousAnnotations,
     nextAnnotations,
+    source,
   }: {
     documentId: documentType['_id'];
     previousAnnotations: annotationType[];
     nextAnnotations: annotationType[];
+    source: treatmentType['source'];
   }): Promise<treatmentType['_id']> {
     const treatmentRepository = buildTreatmentRepository();
     const lastTreatment = await treatmentRepository.findLastOneByDocumentId(
@@ -74,8 +76,9 @@ const treatmentService = {
       ),
       documentId,
       duration: 0,
-      order,
       lastUpdateDate: new Date().getTime(),
+      order,
+      source,
     });
 
     await treatmentRepository.insert(treatment);

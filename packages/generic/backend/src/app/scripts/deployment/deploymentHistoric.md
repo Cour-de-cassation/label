@@ -5,7 +5,8 @@ This document sums up the scripts run in pre-production and production
 ## Pre-production
 
 - [x] renamePasswordToHashedPasswordInUserModel
-- [ ] addPublicationCategoryInDocumentModel
+- [x] addPublicationCategoryInDocumentModel
+- [ ] addSourceInTreatmentModel
 
 ## Production
 

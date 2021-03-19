@@ -12,6 +12,10 @@ const treatmentDataModel = {
   duration: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
   lastUpdateDate: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
   order: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
+  source: {
+    type: buildDataModelEntry({ kind: 'constant', content: ['annotator', 'admin', 'NLP', 'postProcess'] as const }),
+    network: true,
+  },
 } as const;
 
 type treatmentType = typeOfDataModel<typeof treatmentDataModel>;

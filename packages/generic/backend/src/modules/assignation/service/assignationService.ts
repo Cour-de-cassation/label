@@ -95,6 +95,7 @@ const assignationService = {
       documentId,
       previousAnnotations: [],
       nextAnnotations: [],
+      source: 'annotator',
     });
 
     const assignation = assignationModule.lib.buildAssignation({

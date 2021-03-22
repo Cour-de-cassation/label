@@ -125,18 +125,23 @@ function DocumentSwitcher(props: {
     try {
       await Promise.all(
         props.choices.map((currentChoice) => {
-          if (idModule.lib.equalId(currentChoice.document._id, choice.document._id)) {
+          if (!idModule.lib.equalId(currentChoice.document._id, choice.document._id)) {
             return apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-              documentId: choice.document._id,
-              status: 'saved',
+              documentId: currentChoice.document._id,
+              status: 'free',
             });
           }
-          return apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-            documentId: currentChoice.document._id,
-            status: 'free',
-          });
         }),
       );
+      try {
+        await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+          documentId: choice.document._id,
+          status: 'saved',
+        });
+      } catch (error) {
+        console.warn(error);
+        return window.location.reload();
+      }
       setDocumentState({ kind: 'annotating', choice });
     } catch (error) {
       console.warn(error);

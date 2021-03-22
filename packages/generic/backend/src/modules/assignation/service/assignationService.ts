@@ -2,6 +2,7 @@ import {
   assignationModule,
   assignationType,
   documentType,
+  errorHandlers,
   idModule,
   idType,
   userType,
@@ -14,6 +15,24 @@ import { buildAssignationRepository } from '../repository';
 export { assignationService };
 
 const assignationService = {
+  async assertDocumentIsAssignatedToUser({
+    documentId,
+    userId,
+  }: {
+    documentId: documentType['_id'];
+    userId: userType['_id'];
+  }) {
+    const assignationRepository = buildAssignationRepository();
+    const assignation = await assignationRepository.findByDocumentIdAndUserId({
+      documentId,
+      userId,
+    });
+    if (!assignation) {
+      throw errorHandlers.notFoundErrorHandler.build(
+        `No assignation found for userId ${userId} and documentId ${documentId}`,
+      );
+    }
+  },
   async fetchAssignatedTreatmentIds() {
     const assignationRepository = buildAssignationRepository();
     const assignations = await assignationRepository.findAll();

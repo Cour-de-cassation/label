@@ -4,6 +4,32 @@ import { buildAssignationRepository } from '../repository';
 import { assignationService } from './assignationService';
 
 describe('assignationService', () => {
+  describe('assertDocumentIsAssignatedToUser', () => {
+    it('should throw one error', async () => {
+      const assignationRepository = buildAssignationRepository();
+      const userId = idModule.lib.buildId();
+      const documentId = idModule.lib.buildId();
+      const otherDocumentId = idModule.lib.buildId();
+      const assignation = assignationModule.generator.generate({
+        userId,
+        documentId,
+      });
+      await assignationRepository.insert(assignation);
+
+      const failingAssertion = () =>
+        assignationService.assertDocumentIsAssignatedToUser({
+          documentId: otherDocumentId,
+          userId,
+        });
+
+      await assignationService.assertDocumentIsAssignatedToUser({
+        documentId,
+        userId,
+      });
+      expect(failingAssertion()).rejects.toThrowError();
+    });
+  });
+
   describe('fetchAssignationId', () => {
     const assignationRepository = buildAssignationRepository();
 

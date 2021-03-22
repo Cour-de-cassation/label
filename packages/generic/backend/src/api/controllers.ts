@@ -137,9 +137,9 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     updateAssignationDocumentStatus: buildAuthenticatedController({
-      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
+      permissions: ['admin'],
       controllerWithUser: async (_, { args: { assignationId, status } }) => {
-        await assignationService.updateAssignationDocumentStatus(
+        return assignationService.updateAssignationDocumentStatus(
           idModule.lib.buildId(assignationId),
           status,
         );
@@ -148,8 +148,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
     updateDocumentStatus: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
-      controllerWithUser: async (_, { args: { documentId, status } }) => {
-        await documentService.updateDocumentStatus(
+      controllerWithUser: async (user, { args: { documentId, status } }) => {
+        await assignationService.assertDocumentIsAssignatedToUser({
+          documentId,
+          userId: user._id,
+        });
+        return documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
           status,
         );
@@ -162,7 +166,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         user,
         { args: { annotationsDiff, documentId } },
       ) => {
-        await treatmentService.updateTreatment({
+        return treatmentService.updateTreatment({
           annotationsDiff,
           documentId: idModule.lib.buildId(documentId),
           userId: user._id,

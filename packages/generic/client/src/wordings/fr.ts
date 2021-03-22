@@ -146,6 +146,11 @@ const fr = {
   },
   specialDocumentsPage: {
     title: 'Arrêts P',
+    table: {
+      columnTitles: {
+        number: 'N° décision',
+      },
+    },
   },
   treatedDocumentsPage: {
     title: 'Administration',

@@ -34,8 +34,8 @@
     "testE2E": "lerna run testE2E",
     "type": "lerna run type",
     "up": "git pull && yarn && yarn bootstrap && yarn buildLocalDocker && yarn startLocalDocker",
-    "updatePreProd": "git checkout pre-prod && git pull && yarn && yarn bootstrap && yarn build",
-    "updateProd": "git checkout prod && git pull && yarn && yarn bootstrap && yarn build"
+    "updatePreProd": "scripts/preProd/update.sh",
+    "updateProd": "scripts/prod/update.sh"
   },
   "workspaces": [
     "packages/generic/*",

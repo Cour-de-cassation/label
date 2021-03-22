@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
 import { apiRouteOutType, idModule, keysOf, treatmentInfoType, treatmentModule } from '@label/core';
-import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
+import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType, Text } from '../../../components';
 import { timeOperator } from '../../../services/timeOperator';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -29,7 +29,10 @@ function TreatedDocuments() {
   return (
     <>
       <div style={styles.header}>
-        <MainHeader title={wordings.treatedDocumentsPage.title} subtitle={wordings.treatedDocumentsPage.subtitle} />
+        <MainHeader
+          title={wordings.treatedDocumentsPage.title}
+          subtitle={<Text>{wordings.treatedDocumentsPage.subtitle}</Text>}
+        />
       </div>
       <div style={styles.contentContainer}>
         <AdminMenu />

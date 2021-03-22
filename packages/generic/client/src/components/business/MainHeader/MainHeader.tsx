@@ -6,7 +6,7 @@ import { SettingsButton } from './SettingsButton';
 
 export { MainHeader };
 
-function MainHeader(props: { subtitle?: string; title?: string; onBackButtonPress?: () => void }) {
+function MainHeader(props: { subtitle?: JSX.Element; title?: string; onBackButtonPress?: () => void }) {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const leftHeaderComponents = buildLeftHeaders();
@@ -39,7 +39,7 @@ function MainHeader(props: { subtitle?: string; title?: string; onBackButtonPres
     const textComponent = props.subtitle ? (
       <div>
         <Text variant="h3">{props.title}</Text>
-        <Text>{props.subtitle}</Text>
+        {props.subtitle}
       </div>
     ) : (
       <Text>{props.title}</Text>

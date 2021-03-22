@@ -1,6 +1,6 @@
 import React from 'react';
 import { apiRouteOutType } from '@label/core';
-import { AdminMenu, MainHeader, tableRowFieldType } from '../../../components';
+import { AdminMenu, MainHeader, tableRowFieldType, Text } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { AgentsDataFetcher } from './AgentsDataFetcher';
@@ -16,7 +16,7 @@ function Agents() {
   return (
     <>
       <div style={styles.header}>
-        <MainHeader title={wordings.agentsPage.title} subtitle={wordings.agentsPage.subtitle} />
+        <MainHeader title={wordings.agentsPage.title} subtitle={<Text>{wordings.agentsPage.subtitle}</Text>} />
       </div>
       <div style={styles.contentContainer}>
         <AdminMenu />

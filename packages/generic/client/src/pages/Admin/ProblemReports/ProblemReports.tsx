@@ -1,5 +1,5 @@
 import React from 'react';
-import { AdminMenu, MainHeader } from '../../../components';
+import { AdminMenu, MainHeader, Text } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ProblemReportsDataFetcher } from './ProblemReportsDataFetcher';
@@ -13,7 +13,10 @@ function ProblemReports() {
   return (
     <>
       <div style={styles.header}>
-        <MainHeader title={wordings.problemReportsPage.title} subtitle={wordings.problemReportsPage.subtitle} />
+        <MainHeader
+          title={wordings.problemReportsPage.title}
+          subtitle={<Text>{wordings.problemReportsPage.subtitle}</Text>}
+        />
       </div>
       <div style={styles.contentContainer}>
         <AdminMenu />

@@ -7,7 +7,7 @@ import {
   annotationsDiffType,
   idModule,
 } from '@label/core';
-import { MainHeader } from '../../components';
+import { MainHeader, PublicationCategoryBadge, Text } from '../../components';
 import { apiCaller } from '../../api';
 import {
   AnnotatorStateHandlerContextProvider,
@@ -15,6 +15,8 @@ import {
   buildAutoSaver,
 } from '../../services/annotatorState';
 import { useMonitoring, MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
+import { customThemeType, useCustomTheme } from '../../styles';
+import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentSelector } from './DocumentSelector';
 
@@ -31,13 +33,24 @@ function DocumentSwitcher(props: {
 }) {
   const [documentState, setDocumentState] = useState<documentStateType>(computeInitialDocumentState());
   const { resetMonitoringEntries } = useMonitoring();
-  const styles = buildStyles();
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
 
   return <div style={styles.documentSwitcher}>{renderPage()}</div>;
 
   function renderPage() {
     switch (documentState.kind) {
       case 'annotating':
+        const subtitle = documentState.choice.document.publicationCategory.length ? (
+          <div style={styles.documentHeaderSubtitle}>
+            <div style={styles.publicationCategoryBadgeContainer}>
+              <PublicationCategoryBadge
+                publicationCategoryLetter={documentState.choice.document.publicationCategory[0]}
+              />
+            </div>
+            <Text>{wordings.homePage.publishedDocument}</Text>
+          </div>
+        ) : undefined;
         return (
           <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
             <AnnotatorStateHandlerContextProvider
@@ -50,7 +63,7 @@ function DocumentSwitcher(props: {
                 settings: props.settings,
               }}
             >
-              <MainHeader title={documentState.choice.document.title} />
+              <MainHeader title={documentState.choice.document.title} subtitle={subtitle} />
               <DocumentAnnotator onStopAnnotatingDocument={onStopAnnotatingDocument} />
             </AnnotatorStateHandlerContextProvider>
           </MonitoringEntriesHandlerContextProvider>
@@ -65,15 +78,21 @@ function DocumentSwitcher(props: {
     }
   }
 
-  function buildStyles() {
+  function buildStyles(theme: customThemeType) {
     return {
       documentSwitcher: {
         display: 'flex',
         flexDirection: 'column',
         height: '100vh',
         width: '100vw',
-      } as const,
-    };
+      },
+      documentHeaderSubtitle: {
+        display: 'flex',
+      },
+      publicationCategoryBadgeContainer: {
+        marginRight: theme.spacing,
+      },
+    } as const;
   }
 
   function computeInitialDocumentState(): documentStateType {

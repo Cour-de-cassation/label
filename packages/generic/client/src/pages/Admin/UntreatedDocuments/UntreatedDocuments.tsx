@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf } from '@label/core';
-import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
+import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType, Text } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { UntreatedDocumentsDataFetcher } from './UntreatedDocumentsDataFetcher';
@@ -21,7 +21,10 @@ function UntreatedDocuments() {
   return (
     <>
       <div style={styles.header}>
-        <MainHeader title={wordings.untreatedDocumentsPage.title} subtitle={wordings.untreatedDocumentsPage.subtitle} />
+        <MainHeader
+          title={wordings.untreatedDocumentsPage.title}
+          subtitle={<Text>{wordings.untreatedDocumentsPage.subtitle}</Text>}
+        />
       </div>
       <div style={styles.contentContainer}>
         <AdminMenu />

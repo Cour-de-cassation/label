@@ -29,6 +29,7 @@ const fr = {
       roles: {
         admin: 'Administrateur',
         annotator: 'Annotateur',
+        specialDocumentAnnotator: 'Annotateur arrêt P',
       },
     },
   },
@@ -142,6 +143,9 @@ const fr = {
         reassignToAgent: "Renvoyer à l'agent",
       },
     },
+  },
+  specialDocumentsPage: {
+    title: 'Arrêts P',
   },
   treatedDocumentsPage: {
     title: 'Administration',

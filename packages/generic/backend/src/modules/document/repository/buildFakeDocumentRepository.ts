@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import { documentType, idModule } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
@@ -36,6 +37,17 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       );
 
       return freeDocument;
+    },
+
+    async findAllByPublicationCategoryAndStatus({
+      publicationCategory,
+      status,
+    }) {
+      return collection.filter(
+        (document) =>
+          isEqual(document.publicationCategory, publicationCategory) &&
+          document.status === status,
+      );
     },
 
     async findAllByStatus(status) {

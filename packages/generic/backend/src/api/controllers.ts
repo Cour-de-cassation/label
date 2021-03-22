@@ -15,7 +15,7 @@ export { controllers };
 const controllers: controllersFromSchemaType<typeof apiSchema> = {
   get: {
     annotationReport: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
         annotationReportService.fetchAnnotationReportOfDocument(
           idModule.lib.buildId(documentId),
@@ -23,7 +23,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     annotations: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
         treatmentService.fetchAnnotationsOfDocument(
           idModule.lib.buildId(documentId),
@@ -37,7 +37,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     documentForUser: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (user, { args: { documentIdsToExclude } }) =>
         documentService.fetchDocumentForUser(
           user._id,
@@ -52,10 +52,15 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     settings: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async () => ({
         json: JSON.stringify(settingsLoader.getSettings()),
       }),
+    }),
+
+    specialDocuments: buildAuthenticatedController({
+      permissions: ['specialDocumentAnnotator'],
+      controllerWithUser: async () => documentService.fetchSpecialDocuments(),
     }),
 
     treatedDocuments: buildAuthenticatedController({
@@ -86,7 +91,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
     changePassword: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (
         user,
         { args: { previousPassword, newPassword } },
@@ -102,7 +107,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     },
 
     monitoringEntries: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (user, { args: { newMonitoringEntries } }) => {
         const monitoringEntries = newMonitoringEntries.map(
           (newMonitoringEntry) => ({
@@ -117,7 +122,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     problemReport: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (
         user,
         { args: { documentId, problemText, problemType } },
@@ -132,7 +137,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     updateAssignationDocumentStatus: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (_, { args: { assignationId, status } }) => {
         await assignationService.updateAssignationDocumentStatus(
           idModule.lib.buildId(assignationId),
@@ -142,7 +147,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     updateDocumentStatus: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (_, { args: { documentId, status } }) => {
         await documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
@@ -152,7 +157,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     updateTreatment: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (
         user,
         { args: { annotationsDiff, documentId } },

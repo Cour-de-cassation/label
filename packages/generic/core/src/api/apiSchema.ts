@@ -75,6 +75,12 @@ const apiSchema = {
     settings: {
       out: fetchedDataModelEntries.settings,
     },
+    specialDocuments: {
+      out: buildDataModelEntry({
+        kind: 'list',
+        content: fetchedDataModelEntries.document,
+      }),
+    },
     treatedDocuments: {
       out: buildDataModelEntry({
         kind: 'list',
@@ -147,7 +153,7 @@ const apiSchema = {
         },
         role: {
           kind: 'constant',
-          content: ['admin', 'annotator'] as const,
+          content: fetchedDataModelEntries.user.content.role.content,
         },
       },
       out: { kind: 'primitive', content: 'string' },
@@ -166,9 +172,9 @@ const apiSchema = {
       out: {
         kind: 'object',
         content: {
-          email: { kind: 'primitive', content: 'string' },
-          name: { kind: 'primitive', content: 'string' },
-          role: { kind: 'constant', content: ['admin', 'annotator'] as const },
+          email: { kind: 'primitive', content: fetchedDataModelEntries.user.content.email.content },
+          name: { kind: 'primitive', content: fetchedDataModelEntries.user.content.name.content },
+          role: { kind: 'constant', content: fetchedDataModelEntries.user.content.role.content },
           token: { kind: 'primitive', content: 'string' },
         },
       },

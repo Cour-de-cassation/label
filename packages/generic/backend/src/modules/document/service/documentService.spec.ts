@@ -34,6 +34,22 @@ describe('documentService', () => {
     });
   });
 
+  describe('fetchSpecialDocuments', () => {
+    it('should fetch all the special documents', async () => {
+      const documents = [
+        { status: 'done' as const, publicationCategory: ['P'] },
+        { status: 'pending' as const, publicationCategory: [] },
+        { status: 'done' as const, publicationCategory: ['I'] },
+        { status: 'done' as const, publicationCategory: [] },
+      ].map(documentModule.generator.generate);
+      await Promise.all(documents.map(documentRepository.insert));
+
+      const specialDocuments = await documentService.fetchSpecialDocuments();
+
+      expect(specialDocuments).toEqual([documents[0]]);
+    });
+  });
+
   describe('fetchDocumentsWithoutAnnotations', () => {
     it('should fetch all the documents without annotation report', async () => {
       const documentsWithTreatments = range(5).map(() =>

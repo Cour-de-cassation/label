@@ -15,6 +15,14 @@ const documentService = {
     return documentRepository.findAllByIds(documentIds);
   },
 
+  async fetchSpecialDocuments() {
+    const documentRepository = buildDocumentRepository();
+    return documentRepository.findAllByPublicationCategoryAndStatus({
+      publicationCategory: ['P'],
+      status: 'done',
+    });
+  },
+
   async fetchTreatedDocuments() {
     const documentRepository = buildDocumentRepository();
 

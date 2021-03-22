@@ -5,10 +5,11 @@ import { Agents } from './Admin/Agents';
 import { DocumentInspector } from './Admin/DocumentInspector';
 import { TreatedDocuments } from './Admin/TreatedDocuments';
 import { ProblemReports } from './Admin/ProblemReports';
+import { UntreatedDocuments } from './Admin/UntreatedDocuments';
 import { Home } from './Home';
 import { Login } from './Login';
+import { SpecialDocuments } from './SpecialDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
-import { UntreatedDocuments } from './Admin/UntreatedDocuments';
 
 export { Router };
 
@@ -33,6 +34,9 @@ function Router() {
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/admin/document/:documentId">
           <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/special-documents">
+          <SpecialDocuments />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/annotation">
           <SettingsDataFetcher>{({ settings }) => <Home settings={settings} />}</SettingsDataFetcher>
@@ -85,6 +89,8 @@ function getRedirectionRoute() {
       return '/admin/treated-documents';
     case 'annotator':
       return '/annotation';
+    case 'specialDocumentAnnotator':
+      return '/special-documents';
   }
 }
 

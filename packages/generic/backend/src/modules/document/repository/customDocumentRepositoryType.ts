@@ -7,6 +7,13 @@ type customDocumentRepositoryType = {
   findAllByStatus: (
     status: documentType['status'][],
   ) => Promise<documentType[]>;
+  findAllByPublicationCategoryAndStatus: ({
+    publicationCategory,
+    status,
+  }: {
+    publicationCategory: documentType['publicationCategory'];
+    status: documentType['status'];
+  }) => Promise<documentType[]>;
   updateStatusById: (
     id: idType,
     status: documentType['status'],

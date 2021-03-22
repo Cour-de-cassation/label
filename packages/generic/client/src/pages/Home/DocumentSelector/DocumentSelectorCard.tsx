@@ -2,7 +2,7 @@ import React from 'react';
 import { groupBy, orderBy } from 'lodash';
 import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
-import { ButtonWithIcon, CategoryIcon, ComponentsList, Text } from '../../../components';
+import { ButtonWithIcon, CategoryIcon, ComponentsList, PublicationCategoryBadge, Text } from '../../../components';
 import { wordings } from '../../../wordings';
 import { computeDocumentInfoEntries } from './computeDocumentInfoEntries';
 
@@ -25,9 +25,12 @@ function DocumentSelectorCard(props: {
   const isDocumentPublished = props.choice.document.publicationCategory.length > 0;
   return isDocumentPublished ? (
     <div style={styles.publishedDocumentCardContainer}>
-      <Text variant="h2" style={styles.publishedDocumentTitle}>
-        {wordings.homePage.documentSelector.publishedDocumentTitle}
-      </Text>
+      <div style={styles.publishedDocumentTitleContainer}>
+        <PublicationCategoryBadge publicationCategoryLetter={props.choice.document.publicationCategory[0]} />
+        <Text variant="h2" style={styles.publishedDocumentTitle}>
+          {wordings.homePage.documentSelector.publishedDocumentTitle}
+        </Text>
+      </div>
       {renderCard()}
     </div>
   ) : (
@@ -105,10 +108,15 @@ function buildStyles(theme: customThemeType) {
       flexDirection: 'column',
       padding: theme.spacing,
     },
-    publishedDocumentTitle: {
+    publishedDocumentTitleContainer: {
+      display: 'flex',
+      alignItems: 'center',
       paddingLeft: theme.spacing * 2,
       paddingBottom: theme.spacing * 2,
       paddingTop: theme.spacing,
+    },
+    publishedDocumentTitle: {
+      paddingLeft: theme.spacing * 2,
     },
     card: {
       borderRadius: theme.shape.borderRadius.m,

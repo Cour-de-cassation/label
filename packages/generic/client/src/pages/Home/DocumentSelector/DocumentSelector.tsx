@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { DocumentSelectorCard } from './DocumentSelectorCard';
 
@@ -11,22 +11,28 @@ function DocumentSelector(props: {
 }) {
   const styles = buildStyles();
   return (
-    <div style={styles.cardsContainer}>
-      {props.choices.map((choice) => (
-        <DocumentSelectorCard choice={choice} onSelect={props.onSelectDocument} settings={props.settings} />
-      ))}
+    <div style={styles.container}>
+      <div style={styles.cardsContainer}>
+        {props.choices.map((choice) => (
+          <DocumentSelectorCard choice={choice} onSelect={props.onSelectDocument} settings={props.settings} />
+        ))}
+      </div>
     </div>
   );
 }
 
-function buildStyles(): { [cssClass: string]: CSSProperties } {
+function buildStyles() {
   return {
-    cardsContainer: {
+    container: {
       display: 'flex',
       flex: 1,
-      justifyContent: 'space-around',
-      height: '100vh',
       alignItems: 'center',
     },
-  };
+    cardsContainer: {
+      display: 'flex',
+      width: '100%',
+      justifyContent: 'space-around',
+      alignItems: 'flex-end',
+    },
+  } as const;
 }

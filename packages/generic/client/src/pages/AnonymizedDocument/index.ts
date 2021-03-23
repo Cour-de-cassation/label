@@ -1,0 +1,1 @@
+export { AnonymizedDocument } from './AnonymizedDocument';

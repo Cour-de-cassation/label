@@ -1,4 +1,12 @@
-import { documentType, idType, idModule, assignationType } from '@label/core';
+import {
+  documentType,
+  idType,
+  idModule,
+  assignationType,
+  errorHandlers,
+  buildAnonymizer,
+} from '@label/core';
+import { settingsLoader } from '../../../lib/settingsLoader';
 import { dateBuilder } from '../../../utils';
 import { assignationService } from '../../assignation';
 import { treatmentService } from '../../treatment';
@@ -13,6 +21,29 @@ const documentService = {
   async fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByIds(documentIds);
+  },
+
+  async fetchAnonymizedDocumentText(documentId: documentType['_id']) {
+    const documentRepository = buildDocumentRepository();
+    const document = await documentRepository.findById(documentId);
+
+    if (!document) {
+      throw errorHandlers.notFoundErrorHandler.build(
+        `No document found for id ${documentId}`,
+      );
+    }
+
+    const annotations = await treatmentService.fetchAnnotationsOfDocument(
+      documentId,
+    );
+    const settings = settingsLoader.getSettings();
+    const anonymizer = buildAnonymizer(settings);
+
+    const anonymizedDocument = anonymizer.anonymizeDocument(
+      document,
+      annotations,
+    );
+    return anonymizedDocument.text;
   },
 
   async fetchSpecialDocuments() {

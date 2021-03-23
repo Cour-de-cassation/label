@@ -6,6 +6,7 @@ import { DocumentInspector } from './Admin/DocumentInspector';
 import { TreatedDocuments } from './Admin/TreatedDocuments';
 import { ProblemReports } from './Admin/ProblemReports';
 import { UntreatedDocuments } from './Admin/UntreatedDocuments';
+import { AnonymizedDocument } from './AnonymizedDocument';
 import { Home } from './Home';
 import { Login } from './Login';
 import { SpecialDocuments } from './SpecialDocuments';
@@ -35,6 +36,9 @@ function Router() {
         <AuthenticatedRoute path="/admin/document/:documentId">
           <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
         </AuthenticatedRoute>
+        <Route path="/anonymized-document/:documentId">
+          <AnonymizedDocument />
+        </Route>
         <AuthenticatedRoute path="/special-documents">
           <SpecialDocuments />
         </AuthenticatedRoute>

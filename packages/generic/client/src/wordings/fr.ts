@@ -150,6 +150,9 @@ const fr = {
       columnTitles: {
         number: 'N° décision',
       },
+      optionItems: {
+        openAnonymizedDocument: 'Ouvrir la décision anonymisée...',
+      },
     },
   },
   treatedDocumentsPage: {

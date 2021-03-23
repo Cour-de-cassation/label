@@ -35,6 +35,18 @@ const apiSchema = {
         content: annotationModule.dataModelField,
       }),
     },
+    anonymizedDocumentText: {
+      in: {
+        documentId: buildDataModelEntry({
+          kind: 'primitive',
+          content: 'string',
+        }),
+      },
+      out: buildDataModelEntry({
+        kind: 'primitive',
+        content: 'string',
+      }),
+    },
     document: {
       in: {
         documentId: buildDataModelEntry({

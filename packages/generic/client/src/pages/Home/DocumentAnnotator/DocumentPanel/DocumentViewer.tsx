@@ -1,4 +1,4 @@
-import React, { ReactElement, CSSProperties } from 'react';
+import React, { ReactElement } from 'react';
 import { annotationChunkType, textChunkType } from '@label/core';
 import { Text } from '../../../../components';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
@@ -80,11 +80,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     }
   }
 
-  function buildStyle(
-    theme: customThemeType,
-    viewerMode: viewerModeType,
-    isAnonymizedView: boolean,
-  ): { [cssClass: string]: CSSProperties } {
+  function buildStyle(theme: customThemeType, viewerMode: viewerModeType, isAnonymizedView: boolean) {
     const lineVerticalPadding = viewerMode.kind === 'occurrence' ? theme.spacing * 4 : 0;
     const backgroundImage = isAnonymizedView
       ? `repeating-linear-gradient(45deg, transparent, transparent 20px, ${theme.colors.line.level2}30 1px, ${theme.colors.line.level2}30 21px)`
@@ -109,6 +105,6 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
         flexDirection: 'row-reverse',
         paddingRight: theme.spacing * 2,
       },
-    };
+    } as const;
   }
 }

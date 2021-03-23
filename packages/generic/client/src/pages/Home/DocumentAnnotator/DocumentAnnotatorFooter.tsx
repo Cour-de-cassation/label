@@ -83,11 +83,11 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => void 
     if (props.onStopAnnotatingDocument) {
       return [
         <ReportProblemButton onStopAnnotatingDocument={props.onStopAnnotatingDocument} />,
-        <IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.homePage.copyToClipboard} />,
+        <IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.shared.copyToClipboard} />,
         <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.homePage.validate} />,
       ];
     }
-    return [<IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.homePage.copyToClipboard} />];
+    return [<IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.shared.copyToClipboard} />];
   }
 
   async function copyToClipboard() {

@@ -1,6 +1,6 @@
 import { range } from 'lodash';
 import { annotationType, textSplitter, textChunkType, annotationChunkType } from '@label/core';
-import { splitTextAccordingToNewLine } from './splitTextAccordingToNewLine';
+import { lineSplitter } from '../../../../services/lineSplitter';
 
 export { getSplittedTextByLine };
 
@@ -12,7 +12,7 @@ type splittedTextByLineType = Array<{
 }>;
 
 function getSplittedTextByLine(text: string, annotations: annotationType[]): splittedTextByLineType {
-  const numberOfLines = splitTextAccordingToNewLine(text).length;
+  const numberOfLines = lineSplitter.splitTextAccordingToNewLine(text).length;
   const splittedText = textSplitter.splitTextAccordingToAnnotations(text, annotations);
   const splittedTextByLine = computeSplittedTextByLine(splittedText, numberOfLines);
 
@@ -29,7 +29,7 @@ function computeSplittedTextByLine(splittedText: Array<textChunkType | annotatio
   splittedText.forEach((chunk) => {
     switch (chunk.type) {
       case 'text':
-        const splittedTextAccordingToNewline = splitTextAccordingToNewLine(chunk.content.text);
+        const splittedTextAccordingToNewline = lineSplitter.splitTextAccordingToNewLine(chunk.content.text);
         let currentIndex = chunk.content.index;
         splittedTextAccordingToNewline.forEach((textLine, lineIndex) => {
           const after = computeAfterNeighbours(splittedTextAccordingToNewline, chunk.content.index, lineIndex);

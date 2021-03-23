@@ -78,13 +78,22 @@ function StatisticsBox(props: {
   }
 
   function getReadableDuration() {
-    return timeOperator.convertDurationToReadableDuration(getComputationValue(props.totalDuration));
+    return timeOperator.convertDurationToReadableDuration(getComputationDuration(props.totalDuration));
+  }
+
+  function getComputationDuration(total: number) {
+    switch (computation) {
+      case 'average':
+        return props.treatedDocumentsCount ? Math.floor(total / props.treatedDocumentsCount) : 0;
+      case 'total':
+        return total;
+    }
   }
 
   function getComputationValue(total: number) {
     switch (computation) {
       case 'average':
-        return props.treatedDocumentsCount ? Math.floor(total / props.treatedDocumentsCount) : 0;
+        return props.treatedDocumentsCount ? (total / props.treatedDocumentsCount).toFixed(2) : 0;
       case 'total':
         return total;
     }

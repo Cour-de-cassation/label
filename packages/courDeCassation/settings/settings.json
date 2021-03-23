@@ -106,17 +106,17 @@
     "text": "Professionnel (prénom)"
   },
   "dateNaissance": {
-    "anonymization": "[XX/XX/XXXX]",
+    "anonymization": "[Date anniversaire %d]",
     "color": {
       "lightMode": ["teal", 300],
       "darkMode": ["teal", 800]
     },
     "iconName": "cake",
     "order": 11,
-    "text": "Date de naissance"
+    "text": "Date d'anniversaire"
   },
   "dateMariage": {
-    "anonymization": "[XX/XX/XXXX]",
+    "anonymization": "[Date mariage %d]",
     "color": {
       "lightMode": ["green", 300],
       "darkMode": ["green", 800]
@@ -126,7 +126,7 @@
     "text": "Date de mariage"
   },
   "dateDeces": {
-    "anonymization": "[XX/XX/XXXX]",
+    "anonymization": "[Date décès %d]",
     "color": {
       "lightMode": ["lime", 300],
       "darkMode": ["lime", 900]

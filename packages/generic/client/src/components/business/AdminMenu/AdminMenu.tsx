@@ -1,5 +1,6 @@
 import React from 'react';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { wordings } from '../../../wordings';
 import { MenuIcon } from './MenuIcon';
 
 export { AdminMenu };
@@ -12,10 +13,18 @@ function AdminMenu() {
   return (
     <div style={styles.container}>
       <div style={styles.iconContainer}>
-        <MenuIcon pathname="/admin/untreated-documents" iconName="playlistPlay" />
-        <MenuIcon pathname="/admin/treated-documents" iconName="playlistCheck" />
-        <MenuIcon pathname="/admin/problem-reports" iconName="warning" />
-        <MenuIcon pathname="/admin/agents" iconName="admin" />
+        <MenuIcon
+          title={wordings.untreatedDocumentsPage.subtitle}
+          pathname="/admin/untreated-documents"
+          iconName="playlistPlay"
+        />
+        <MenuIcon
+          title={wordings.treatedDocumentsPage.subtitle}
+          pathname="/admin/treated-documents"
+          iconName="playlistCheck"
+        />
+        <MenuIcon title={wordings.problemReportsPage.subtitle} pathname="/admin/problem-reports" iconName="warning" />
+        <MenuIcon title={wordings.agentsPage.subtitle} pathname="/admin/agents" iconName="admin" />
       </div>
     </div>
   );

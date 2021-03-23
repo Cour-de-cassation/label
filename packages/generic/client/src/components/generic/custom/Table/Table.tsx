@@ -44,10 +44,11 @@ function Table<InputT>(props: {
   function renderHeader() {
     return (
       <TableHeader
-        cells={props.fields.map(({ id, title, canBeSorted }) => ({
+        cells={props.fields.map(({ id, title, canBeSorted, tooltipText }) => ({
           id,
           canBeSorted,
-          text: title,
+          title,
+          tooltipText,
         }))}
         fieldCellStyles={fieldCellStyles}
         isSticky={props.isHeaderSticky}

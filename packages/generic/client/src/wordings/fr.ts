@@ -178,16 +178,16 @@ const fr = {
         },
       },
       columnTitles: {
-        agent: 'Agent',
-        duration: 'Tps',
-        publicationCategory: 'Dif.',
+        agent: { title: 'Agent', tooltipText: 'Agent principal' },
+        duration: { title: 'Tps', tooltipText: 'Temps de traitement' },
+        publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         date: 'Traité le',
-        surAnnotation: 'Sur',
-        resizeAnnotationSmaller: 'R.-',
-        subAnnotation: 'Ss.',
-        resizeAnnotationBigger: 'R.+',
-        changeAnnotation: 'Mod.',
-        number: 'N° décision',
+        surAnnotation: { title: 'Sur', tooltipText: 'Nombre de surannotations' },
+        resizeAnnotationSmaller: { title: 'R.-', tooltipText: '...dont redimensionnements' },
+        subAnnotation: { title: 'Ss.', tooltipText: 'Nombre de sous-annotations' },
+        resizeAnnotationBigger: { title: 'R.+', tooltipText: '...dont redimensionnements' },
+        changeAnnotation: { title: 'Mod.', tooltipText: 'Modifications de catégorie' },
+        number: { title: 'N° décision', tooltipText: 'Numéro de la décision' },
       },
       statistics: {
         computation: {
@@ -214,7 +214,7 @@ const fr = {
     table: {
       columnTitles: {
         number: 'N° décision',
-        publicationCategory: 'Dif.',
+        publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
       },
       filter: {
         resultsCount: '{count} décisions affichées',

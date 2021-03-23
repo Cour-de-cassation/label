@@ -190,14 +190,16 @@ function TreatedDocuments() {
     const treatedDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatedDocuments'>[number]>> = [
       {
         id: 'documentId',
-        title: wordings.treatedDocumentsPage.table.columnTitles.number,
+        title: wordings.treatedDocumentsPage.table.columnTitles.number.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.number.title,
         canBeSorted: true,
         extractor: (treatedDocument) => JSON.stringify(treatedDocument.document.documentId),
         width: 10,
       },
       {
         id: 'publicationCategory',
-        title: wordings.treatedDocumentsPage.table.columnTitles.publicationCategory,
+        title: wordings.treatedDocumentsPage.table.columnTitles.publicationCategory.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.publicationCategory.join(','),
         render: (treatedDocument) => (
@@ -213,7 +215,8 @@ function TreatedDocuments() {
       },
       {
         id: 'userName',
-        title: wordings.treatedDocumentsPage.table.columnTitles.agent,
+        title: wordings.treatedDocumentsPage.table.columnTitles.agent.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.agent.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.userName,
         width: 10,
@@ -231,7 +234,8 @@ function TreatedDocuments() {
       },
       {
         id: 'deletions',
-        title: wordings.treatedDocumentsPage.table.columnTitles.surAnnotation,
+        title: wordings.treatedDocumentsPage.table.columnTitles.surAnnotation.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.surAnnotation.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].deletionsCount,
@@ -239,7 +243,8 @@ function TreatedDocuments() {
       },
       {
         id: 'resizeSmaller',
-        title: wordings.treatedDocumentsPage.table.columnTitles.resizeAnnotationSmaller,
+        title: wordings.treatedDocumentsPage.table.columnTitles.resizeAnnotationSmaller.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.resizeAnnotationSmaller.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].resizedSmallerCount,
@@ -247,7 +252,8 @@ function TreatedDocuments() {
       },
       {
         id: 'additions',
-        title: wordings.treatedDocumentsPage.table.columnTitles.subAnnotation,
+        title: wordings.treatedDocumentsPage.table.columnTitles.subAnnotation.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.subAnnotation.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].additionsCount,
@@ -255,7 +261,8 @@ function TreatedDocuments() {
       },
       {
         id: 'resizeBigger',
-        title: wordings.treatedDocumentsPage.table.columnTitles.resizeAnnotationBigger,
+        title: wordings.treatedDocumentsPage.table.columnTitles.resizeAnnotationBigger.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.resizeAnnotationBigger.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].resizedBiggerCount,
@@ -263,7 +270,8 @@ function TreatedDocuments() {
       },
       {
         id: 'modifications',
-        title: wordings.treatedDocumentsPage.table.columnTitles.changeAnnotation,
+        title: wordings.treatedDocumentsPage.table.columnTitles.changeAnnotation.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.changeAnnotation.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].modificationsCount,
@@ -272,7 +280,8 @@ function TreatedDocuments() {
       {
         id: 'duration',
         canBeSorted: true,
-        title: wordings.treatedDocumentsPage.table.columnTitles.duration,
+        title: wordings.treatedDocumentsPage.table.columnTitles.duration.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.duration.tooltipText,
         extractor: (treatedDocument) =>
           timeOperator.convertDurationToReadableDuration(
             sumBy(treatedDocument.treatments, (treatment) => treatment.duration),

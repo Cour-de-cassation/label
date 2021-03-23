@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { customThemeType, useCustomTheme, widths } from '../../../styles';
-import { Icon, iconNameType } from '../../generic';
+import { Icon, iconNameType, Tooltip } from '../../generic';
 
 export { MenuIcon };
 
@@ -9,7 +9,7 @@ const MENU_ICON_HEIGHT = 72;
 
 const CORNER_HEIGHT = 16;
 
-function MenuIcon(props: { iconName: iconNameType; pathname: string }) {
+function MenuIcon(props: { iconName: iconNameType; pathname: string; title: string }) {
   const theme = useCustomTheme();
   const location = useLocation();
   const history = useHistory();
@@ -21,7 +21,9 @@ function MenuIcon(props: { iconName: iconNameType; pathname: string }) {
         <div style={styles.topCorner} />
       </div>
       <div onClick={onClick} style={styles.iconContainer}>
-        <Icon iconName={props.iconName} />
+        <Tooltip title={props.title} placement="right">
+          <Icon iconName={props.iconName} />
+        </Tooltip>
       </div>
       <div style={styles.cornerSquare}>
         <div style={styles.bottomCorner} />

@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
-import { TableSortLabel, Text } from '../../materialUI';
 import { customThemeType, useCustomTheme } from '../../../../styles';
+import { TableSortLabel, Text, Tooltip } from '../../materialUI';
 
 export { TableHeader, DEFAULT_ORDER_DIRECTION };
 
@@ -10,12 +10,15 @@ type orderDirectionType = 'asc' | 'desc';
 
 const DEFAULT_ORDER_DIRECTION = 'asc';
 
+type cellType = {
+  id: string;
+  title: string;
+  tooltipText?: string;
+  canBeSorted?: boolean;
+};
+
 function TableHeader(props: {
-  cells: Array<{
-    id: string;
-    text: string;
-    canBeSorted?: boolean;
-  }>;
+  cells: Array<cellType>;
   isSticky?: boolean;
   fieldCellStyles: Record<string, CSSProperties>;
   optionCellStyle?: CSSProperties;
@@ -39,10 +42,10 @@ function TableHeader(props: {
                 active={props.orderByProperty === cell.id}
                 onClick={onOrderByPropertyClickBuilder(cell.id)}
               >
-                <Text variant="h3">{cell.text}</Text>
+                {renderCellTitle(cell)}
               </TableSortLabel>
             ) : (
-              <Text variant="h3">{cell.text}</Text>
+              renderCellTitle(cell)
             )}
           </td>
         ))}
@@ -62,6 +65,17 @@ function TableHeader(props: {
     };
     return onOrderByPropertyClick;
   }
+}
+
+function renderCellTitle(cell: cellType) {
+  if (cell.tooltipText) {
+    return (
+      <Tooltip title={cell.tooltipText}>
+        <Text variant="h3">{cell.title}</Text>
+      </Tooltip>
+    );
+  }
+  return <Text variant="h3">{cell.title}</Text>;
 }
 
 function buildHeaderStickyStyle(theme: customThemeType) {

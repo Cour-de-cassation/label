@@ -12,6 +12,7 @@ export type { tableRowFieldType };
 type tableRowFieldType<InputT> = {
   id: string;
   title: string;
+  tooltipText?: string;
   canBeSorted: boolean;
   extractor: (data: InputT) => string | number;
   render?: (data: InputT) => JSX.Element;

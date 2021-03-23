@@ -91,7 +91,8 @@ function UntreatedDocuments() {
       },
       {
         id: 'publicationCategory',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory,
+        title: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.title,
+        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
         extractor: (untreatedDocument) => untreatedDocument.publicationCategory.join(','),
         render: (untreatedDocument) => (

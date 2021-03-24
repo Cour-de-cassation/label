@@ -4,11 +4,12 @@ import {
   buildAssignationRepository,
 } from '../../assignation';
 import { buildUserRepository } from '../repository';
-import { userService } from './userService';
+import { buildUserService } from './userService';
 
 describe('userService', () => {
   describe('changePassword', () => {
     it('should change the password of the given user', async () => {
+      const userService = buildUserService();
       const userRepository = buildUserRepository();
       const userEmail = 'MAIL@MAIL.MAIL';
       const userName = 'NAME';
@@ -40,6 +41,7 @@ describe('userService', () => {
     });
 
     it('should not change the password of the given user if the previous password is wrong', async () => {
+      const userService = buildUserService();
       const userRepository = buildUserRepository();
       const userEmail = 'MAIL@MAIL.MAIL';
       const userName = 'NAME';
@@ -71,6 +73,7 @@ describe('userService', () => {
     });
 
     it('should not change the password of the given user if the new password is not valid (less than 8 characters)', async () => {
+      const userService = buildUserService();
       const userRepository = buildUserRepository();
       const userEmail = 'MAIL@MAIL.MAIL';
       const userName = 'NAME';
@@ -105,6 +108,7 @@ describe('userService', () => {
   describe('login/signUpUser', () => {
     describe('success', () => {
       it('should login and return a token', async () => {
+        const userService = buildUserService();
         const userEmail = 'MAIL@MAIL.MAIL';
         const userName = 'NAME';
         const userPassword = 'PASSWORD';
@@ -129,6 +133,8 @@ describe('userService', () => {
     });
     describe('failure', () => {
       it('should fail when no user has been signed up', async () => {
+        const userService = buildUserService();
+
         const userEmail = 'MAIL@MAIL.MAIL';
         const userPassword = 'PASSWORD';
 
@@ -143,6 +149,8 @@ describe('userService', () => {
         );
       });
       it('should fail when only another user has been signed up', async () => {
+        const userService = buildUserService();
+
         const userEmail = 'MAIL@MAIL.MAIL';
         const userPassword = 'PASSWORD';
         await userService.signUpUser({
@@ -159,6 +167,8 @@ describe('userService', () => {
         );
       });
       it('should fail when the user has been signed up but the password is not the right one', async () => {
+        const userService = buildUserService();
+
         const userEmail = 'MAIL@MAIL.MAIL';
         const userName = 'NAME';
         const userPassword = 'PASSWORD';
@@ -177,11 +187,82 @@ describe('userService', () => {
           `The received password does not match the stored one for mail@mail.mail`,
         );
       });
+
+      it('should fail when the user has tried too many times to log in', async () => {
+        const userService = buildUserService();
+
+        const userEmail = 'MAIL@MAIL.MAIL';
+        const userName = 'NAME';
+        const userPassword = 'PASSWORD';
+        const userRole = 'admin';
+        await userService.signUpUser({
+          email: userEmail,
+          name: userName,
+          password: userPassword,
+          role: userRole,
+        });
+        try {
+          await userService.login({
+            email: userEmail,
+            password: 'WRONG_PASSWORD',
+          });
+        } catch (error) {}
+        try {
+          await userService.login({
+            email: userEmail,
+            password: 'WRONG_PASSWORD',
+          });
+        } catch (error) {}
+
+        const promise = () =>
+          userService.login({ email: userEmail, password: 'WRONG_PASSWORD' });
+
+        await expect(promise()).rejects.toThrow(
+          `Too many login attempts for email mail@mail.mail`,
+        );
+      });
+
+      it('should succeed when the user has only tried once with email/password', async () => {
+        const userService = buildUserService();
+
+        const userEmail = 'MAIL@MAIL.MAIL';
+        const otherUserEmail = 'OTHER@MAIL.MAIL';
+        const userName = 'NAME';
+        const userPassword = 'PASSWORD';
+        const userRole = 'admin';
+        await userService.signUpUser({
+          email: userEmail,
+          name: userName,
+          password: userPassword,
+          role: userRole,
+        });
+        try {
+          await userService.login({
+            email: userEmail,
+            password: 'WRONG_PASSWORD',
+          });
+        } catch (error) {}
+        try {
+          await userService.login({
+            email: otherUserEmail,
+            password: 'WRONG_PASSWORD',
+          });
+        } catch (error) {}
+
+        const { email } = await userService.login({
+          email: userEmail,
+          password: userPassword,
+        });
+
+        expect(email).toBe('mail@mail.mail');
+      });
     });
   });
 
   describe('fetchUserNamesByAssignationId', () => {
     it('should return userNames mapped by assignationId', async () => {
+      const userService = buildUserService();
+
       const assignationRepository = buildAssignationRepository();
       const userRepository = buildUserRepository();
       const [user1, user2] = ['Nicolas', 'Benoit'].map((name) =>

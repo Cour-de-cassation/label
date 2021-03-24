@@ -9,12 +9,29 @@ import {
 import { jwtSigner } from '../../../utils';
 import { buildUserRepository } from '../repository';
 
-export { userService };
+export { userService, buildUserService };
 
 const DEFAULT_ROLE = 'annotator';
 
-const userService = {
-  async createUser({
+const DELAY_BETWEEN_LOGIN_ATTEMPTS = 1 * 60 * 1000;
+
+const MAX_LOGIN_ATTEMPTS = 3;
+
+const userService = buildUserService();
+
+function buildUserService() {
+  const loginAttempts: Record<string, number[]> = {};
+  return {
+    changePassword,
+    createUser,
+    fetchAuthenticatedUserFromAuthorizationHeader,
+    fetchUserNamesByAssignationId,
+    fetchUsersWithDetails,
+    login,
+    signUpUser,
+  };
+
+  async function createUser({
     name,
     email,
     role,
@@ -24,10 +41,11 @@ const userService = {
     role: userType['role'];
   }) {
     const password = userModule.lib.generatePassword();
-    await this.signUpUser({ name, email, role, password });
+    await signUpUser({ name, email, role, password });
     return password;
-  },
-  async changePassword({
+  }
+
+  async function changePassword({
     user,
     previousPassword,
     newPassword,
@@ -55,9 +73,9 @@ const userService = {
 
       return 'passwordUpdated';
     }
-  },
+  }
 
-  async fetchUserNamesByAssignationId(
+  async function fetchUserNamesByAssignationId(
     assignationsById: Record<string, assignationType>,
   ) {
     const userRepository = buildUserRepository();
@@ -79,9 +97,9 @@ const userService = {
     );
 
     return userNamesByAssignationId;
-  },
+  }
 
-  async fetchUsersWithDetails() {
+  async function fetchUsersWithDetails() {
     const userRepository = buildUserRepository();
     const users = await userRepository.findAll();
     return users.map(({ _id, email, name, role }) => ({
@@ -92,15 +110,16 @@ const userService = {
         role,
       },
     }));
-  },
+  }
 
-  async login({
+  async function login({
     email,
     password,
   }: {
     email: userType['email'];
     password: string;
   }) {
+    checkLoginAttempts(email);
     const userRepository = buildUserRepository();
     const user = await userRepository.findByEmail(email);
 
@@ -118,9 +137,9 @@ const userService = {
       role: user.role,
       token,
     };
-  },
+  }
 
-  async signUpUser({
+  async function signUpUser({
     email,
     name,
     password,
@@ -140,8 +159,11 @@ const userService = {
     });
 
     return userRepository.insert(newUser);
-  },
-  async fetchAuthenticatedUserFromAuthorizationHeader(authorization?: string) {
+  }
+
+  async function fetchAuthenticatedUserFromAuthorizationHeader(
+    authorization?: string,
+  ) {
     const userRepository = buildUserRepository();
 
     if (authorization) {
@@ -160,5 +182,24 @@ const userService = {
         'No authorization value provided',
       );
     }
-  },
-};
+  }
+
+  function checkLoginAttempts(email: string) {
+    const formattedEmail = userModule.lib.formatEmail(email);
+
+    const now = new Date().getTime();
+    if (!loginAttempts[formattedEmail]) {
+      loginAttempts[formattedEmail] = [now];
+      return;
+    }
+    loginAttempts[formattedEmail] = [
+      ...loginAttempts[formattedEmail].filter(
+        (timestamp) => now - timestamp < DELAY_BETWEEN_LOGIN_ATTEMPTS,
+      ),
+      now,
+    ];
+    if (loginAttempts[formattedEmail].length >= MAX_LOGIN_ATTEMPTS) {
+      throw new Error(`Too many login attempts for email ${formattedEmail}`);
+    }
+  }
+}

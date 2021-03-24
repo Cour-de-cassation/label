@@ -322,6 +322,7 @@ function TreatedDocuments() {
         marginRight: theme.spacing,
       },
       statisticsBoxContainer: {
+        flex: 1,
         marginTop: theme.spacing * 2,
       },
       tableHeader: {

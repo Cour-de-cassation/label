@@ -13,7 +13,7 @@ export { userService, buildUserService };
 
 const DEFAULT_ROLE = 'annotator';
 
-const DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS = 60 * 1000;
+const DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS = 1 * 1000;
 
 const MAX_LOGIN_ATTEMPTS = 1;
 
@@ -199,7 +199,7 @@ function buildUserService() {
       ),
       now,
     ];
-    if (loginAttempts[formattedEmail].length >= MAX_LOGIN_ATTEMPTS) {
+    if (loginAttempts[formattedEmail].length > MAX_LOGIN_ATTEMPTS) {
       throw new Error(`Too many login attempts for email ${formattedEmail}`);
     }
   }

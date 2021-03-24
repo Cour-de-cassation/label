@@ -19,7 +19,7 @@ function ExportCSVButton<InputT>(props: { data: Array<InputT>; fields: Array<tab
 
   function createCSVFile() {
     const CSVData = csvExtractor.convertDataToCsv(props.data, props.fields);
-    const blob = new Blob([CSVData]);
+    const blob = new Blob([CSVData], { type: 'text/csv;charset=UTF-8' });
     const fileDownloadUrl = URL.createObjectURL(blob);
     return fileDownloadUrl;
   }

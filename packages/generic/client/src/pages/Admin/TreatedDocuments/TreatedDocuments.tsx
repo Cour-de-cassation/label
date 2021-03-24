@@ -230,6 +230,8 @@ function TreatedDocuments() {
             treatedDocument.treatments[treatedDocument.treatments.length - 1].lastUpdateDate,
             true,
           ),
+        getSortingValue: (treatedDocument) =>
+          treatedDocument.treatments[treatedDocument.treatments.length - 1].lastUpdateDate,
         width: 10,
       },
       {
@@ -286,6 +288,7 @@ function TreatedDocuments() {
           timeOperator.convertDurationToReadableDuration(
             sumBy(treatedDocument.treatments, (treatment) => treatment.duration),
           ),
+        getSortingValue: (treatedDocument) => sumBy(treatedDocument.treatments, (treatment) => treatment.duration),
         width: 3,
       },
     ];

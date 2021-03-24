@@ -15,6 +15,7 @@ type tableRowFieldType<InputT> = {
   tooltipText?: string;
   canBeSorted: boolean;
   extractor: (data: InputT) => string | number;
+  getSortingValue?: (data: InputT) => number;
   render?: (data: InputT) => JSX.Element;
   width: number;
 };
@@ -101,8 +102,12 @@ function TableBody<InputT>(props: {
       return data;
     }
     return data.sort((dataA, dataB) => {
-      const propertyA = orderByField.extractor(dataA);
-      const propertyB = orderByField.extractor(dataB);
+      const propertyA = orderByField.getSortingValue
+        ? orderByField.getSortingValue(dataA)
+        : orderByField.extractor(dataA);
+      const propertyB = orderByField.getSortingValue
+        ? orderByField.getSortingValue(dataB)
+        : orderByField.extractor(dataB);
       if (propertyA === propertyB) {
         return 0;
       } else if (propertyA < propertyB) {

@@ -86,6 +86,7 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
     canBeSorted: true,
     extractor: (problemReportWithDetails) =>
       timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date, true),
+    getSortingValue: (problemReportWithDetails) => problemReportWithDetails.problemReport.date,
     width: 5,
   },
   {

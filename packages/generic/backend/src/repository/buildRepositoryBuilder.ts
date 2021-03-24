@@ -93,7 +93,9 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     }
 
     async function setIndexes() {
-      await collection.createIndex(indexes);
+      for (const index of indexes) {
+        await collection.createIndex(index);
+      }
     }
   };
 }

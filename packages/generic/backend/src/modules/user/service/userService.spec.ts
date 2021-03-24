@@ -207,12 +207,6 @@ describe('userService', () => {
             password: 'WRONG_PASSWORD',
           });
         } catch (error) {}
-        try {
-          await userService.login({
-            email: userEmail,
-            password: 'WRONG_PASSWORD',
-          });
-        } catch (error) {}
 
         const promise = () =>
           userService.login({ email: userEmail, password: 'WRONG_PASSWORD' });
@@ -236,12 +230,6 @@ describe('userService', () => {
           password: userPassword,
           role: userRole,
         });
-        try {
-          await userService.login({
-            email: userEmail,
-            password: 'WRONG_PASSWORD',
-          });
-        } catch (error) {}
         try {
           await userService.login({
             email: otherUserEmail,

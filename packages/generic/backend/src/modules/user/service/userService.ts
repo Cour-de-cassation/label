@@ -13,9 +13,9 @@ export { userService, buildUserService };
 
 const DEFAULT_ROLE = 'annotator';
 
-const DELAY_BETWEEN_LOGIN_ATTEMPTS = 1 * 60 * 1000;
+const DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS = 60 * 1000;
 
-const MAX_LOGIN_ATTEMPTS = 3;
+const MAX_LOGIN_ATTEMPTS = 1;
 
 const userService = buildUserService();
 
@@ -194,7 +194,8 @@ function buildUserService() {
     }
     loginAttempts[formattedEmail] = [
       ...loginAttempts[formattedEmail].filter(
-        (timestamp) => now - timestamp < DELAY_BETWEEN_LOGIN_ATTEMPTS,
+        (timestamp) =>
+          now - timestamp < DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS,
       ),
       now,
     ];

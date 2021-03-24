@@ -6,8 +6,14 @@ export type { sderApiType, sderCourtDecisionType };
 type sderApiType = {
   fetchCourtDecisions: (days: number) => Promise<Array<sderCourtDecisionType>>;
   setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
-  setCourtDecisionDone: (documentId: documentType['documentId']) => Promise<void>;
-  updateDecisionPseudonymisation: (param: { documentId: documentType['documentId']; pseudonymizationText: string; labelTreatments: labelTreatmentsType }) => Promise<void>
+  setCourtDecisionDone: (
+    documentId: documentType['documentId'],
+  ) => Promise<void>;
+  updateDecisionPseudonymisation: (param: {
+    documentId: documentType['documentId'];
+    pseudonymizationText: string;
+    labelTreatments: labelTreatmentsType;
+  }) => Promise<void>;
 };
 
 type sderCourtDecisionType = {
@@ -24,7 +30,7 @@ type sderCourtDecisionType = {
   sourceName: string;
   zoning: {
     introduction_subzonage: {
-      publication: string[] | null
-    } | null
-  } | null
+      publication: string[] | null;
+    } | null;
+  } | null;
 };

@@ -110,7 +110,7 @@ async function bootstrapFiles(
   files: Array<{ template: string; target: string }>,
   env: { [key: string]: number | string },
 ) {
-  await Promise.all(files.map(file => bootstrapFile(file, env)));
+  await Promise.all(files.map((file) => bootstrapFile(file, env)));
 }
 
 async function bootstrapFile(

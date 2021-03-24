@@ -1,7 +1,6 @@
 import React from 'react';
-import { csvExtractor } from '@label/core';
+import { csvExtractor, timeOperator } from '@label/core';
 import { ButtonWithIcon, tableRowFieldType } from '../../../components';
-import { timeOperator } from '../../../services/timeOperator';
 import { wordings } from '../../../wordings';
 
 export { ExportCSVButton };

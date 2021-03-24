@@ -27,7 +27,7 @@ const sderApi: sderApiType = {
   async setCourtDecisionsLoaded(documents: documentType[]) {
     await axios({
       data: {
-        decisionIds: documents.map(document => document.documentId),
+        decisionIds: documents.map((document) => document.documentId),
         labelStatus: 'loaded',
       },
       headers: { 'Content-Type': 'application/json' },

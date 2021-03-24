@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
-import { apiRouteOutType, idModule, keysOf, treatmentInfoType, treatmentModule } from '@label/core';
+import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator, treatmentModule } from '@label/core';
 import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType, Text } from '../../../components';
-import { timeOperator } from '../../../services/timeOperator';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ExportCSVButton } from './ExportCSVButton';

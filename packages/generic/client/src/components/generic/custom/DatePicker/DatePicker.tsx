@@ -1,5 +1,5 @@
 import React, { MouseEvent, useState } from 'react';
-import { timeOperator } from '../../../../services/timeOperator';
+import { timeOperator } from '@label/core';
 import { rectPositionType } from '../../../../types';
 import { DropdownButton } from '../DropdownButton';
 import { DatePickerTooltip } from './DatePickerTooltip';

@@ -9,12 +9,10 @@ import { parametersHandler } from '../lib/parametersHandler';
   const backend = buildBackend(environment, settings);
 
   await backend.runScript(
-    () => backend.scripts.extractMonitoringEntriesIntoCsv.run({filename}),
+    () => backend.scripts.extractMonitoringEntriesIntoCsv.run({ filename }),
     backend.scripts.extractMonitoringEntriesIntoCsv.option,
   );
 })();
-
-
 
 function parseArgv() {
   const argv = yargs

@@ -1,8 +1,7 @@
 import React from 'react';
 import format from 'string-template';
-import { keysOf } from '@label/core';
+import { keysOf, timeOperator } from '@label/core';
 import { Chip, FilterButton, filterType, Text } from '../../../../components';
-import { timeOperator } from '../../../../services/timeOperator';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { treatedDocumentFilterInfoType, treatedDocumentFilterType } from './treatedDocumentFilterTypes';

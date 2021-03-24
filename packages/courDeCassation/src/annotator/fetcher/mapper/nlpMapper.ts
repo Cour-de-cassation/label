@@ -17,7 +17,7 @@ const nlpMapper = {
 function mapNlpAnnotationsToAnnotations(
   nlpAnnotations: nlpAnnotationsType,
 ): annotationType[] {
-  return nlpAnnotations.entities.map(nlpAnnotation =>
+  return nlpAnnotations.entities.map((nlpAnnotation) =>
     annotationModule.lib.buildAnnotation({
       category: nlpAnnotation.label,
       start: nlpAnnotation.start,

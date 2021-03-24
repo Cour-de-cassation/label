@@ -18,9 +18,9 @@ const sderLocalApi: sderApiType = {
       pathToCourtDecisions,
     );
 
-    return courtDecisions.map(
-      ({ content }) => JSON.parse(content) as sderCourtDecisionType,
-    ).map(sderCourtDecisionGenerator.generate);
+    return courtDecisions
+      .map(({ content }) => JSON.parse(content) as sderCourtDecisionType)
+      .map(sderCourtDecisionGenerator.generate);
   },
 
   async setCourtDecisionsLoaded() {},

@@ -33,10 +33,10 @@ describe('nlpFetcher', () => {
       );
 
       const nlpAnnotations = nlpFakeServer.getNlpAnnotations();
-      nlpAnnotations.entities.forEach(nlpAnnotation => {
+      nlpAnnotations.entities.forEach((nlpAnnotation) => {
         expect(
           annotations.some(
-            annotation =>
+            (annotation) =>
               annotation.text === nlpAnnotation.text &&
               annotation.start === nlpAnnotation.start &&
               annotation.category === nlpAnnotation.label,

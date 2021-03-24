@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { sumBy } from 'lodash';
-import { treatmentInfoType } from '@label/core';
+import { timeOperator, treatmentInfoType } from '@label/core';
 import { Text } from '../../../../components';
-import { timeOperator } from '../../../../services/timeOperator';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { ComputationToggle, computationType } from './ComputationToggle';

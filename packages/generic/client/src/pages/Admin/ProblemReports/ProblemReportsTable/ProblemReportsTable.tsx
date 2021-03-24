@@ -1,9 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { apiRouteOutType, idModule } from '@label/core';
+import { apiRouteOutType, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
-import { timeOperator } from '../../../../services/timeOperator';
 import { wordings } from '../../../../wordings';
 
 export { ProblemReportsTable };

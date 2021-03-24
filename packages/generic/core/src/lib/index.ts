@@ -9,6 +9,7 @@ import { csvExtractor } from './csvExtractor';
 import { httpRequester } from './httpRequester';
 import { stringComparator } from './stringComparator';
 import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
+import { timeOperator } from './timeOperator';
 
 export {
   annotationHandler,
@@ -22,6 +23,7 @@ export {
   httpRequester,
   stringComparator,
   textSplitter,
+  timeOperator,
 };
 
 export type { anonymizerType, annotationChunkType, textChunkType, textChunkContentType };

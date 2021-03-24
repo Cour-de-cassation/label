@@ -4,11 +4,21 @@ import { repositoryType } from './repositoryType';
 
 export { buildRepositoryBuilder };
 
+type indexesType<T extends { [key: string]: any }> = Array<
+  Partial<
+    {
+      [key in keyof T]: 1 | -1;
+    }
+  >
+>;
+
 function buildRepositoryBuilder<T extends { _id: idType }, U>({
   collectionName,
+  indexes,
   buildCustomRepository,
 }: {
   collectionName: string;
+  indexes: indexesType<T>;
   buildCustomRepository: (collection: mongoCollectionType<T>) => U;
 }): () => repositoryType<T> & U {
   return () => {
@@ -23,6 +33,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       findAllByIds,
       findById,
       insert,
+      setIndexes,
       ...customRepository,
     };
 
@@ -79,6 +90,10 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     async function insert(newObject: T) {
       const insertResult = await collection.insertOne(newObject as any);
       return { success: !!insertResult.result.ok };
+    }
+
+    async function setIndexes() {
+      await collection.createIndex(indexes);
     }
   };
 }

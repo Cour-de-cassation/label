@@ -9,6 +9,7 @@ const buildMonitoringEntryRepository = buildRepositoryBuilder<
   customMonitoringEntryRepositoryType
 >({
   collectionName: 'monitoringEntries',
+  indexes: [],
   buildCustomRepository: (collection) => ({
     async insertMany(monitoringEntries) {
       if (monitoringEntries.length === 0) {

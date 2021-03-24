@@ -2,6 +2,7 @@ import { settingsType } from '@label/core';
 import { environmentType } from '../lib/environment';
 import { settingsLoader } from '../lib/settingsLoader';
 import { logger, mongo } from '../utils';
+import { setIndexesOnAllCollections } from './scripts';
 
 export { setup, setupMongo };
 
@@ -22,4 +23,8 @@ async function setupMongo(environment: environmentType) {
     url: `${environment.pathName.db}:${environment.port.db}`,
   });
   logger.log(`MongoDB ready!`);
+
+  logger.log('Set indexes on all collections');
+  await setIndexesOnAllCollections();
+  logger.log('Indexation done');
 }

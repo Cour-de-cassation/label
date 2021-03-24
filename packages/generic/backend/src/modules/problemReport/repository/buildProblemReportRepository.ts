@@ -9,5 +9,6 @@ const buildProblemReportRepository = buildRepositoryBuilder<
   customProblemReportRepositoryType
 >({
   collectionName: 'problemReports',
+  indexes: [],
   buildCustomRepository: () => ({}),
 });

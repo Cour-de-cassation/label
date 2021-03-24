@@ -9,6 +9,11 @@ const buildDocumentRepository = buildRepositoryBuilder<
   customDocumentRepositoryType
 >({
   collectionName: 'documents',
+  indexes: [
+    {
+      status: 1,
+    } as const,
+  ],
   buildCustomRepository: (collection) => ({
     async assign(priority) {
       const document = await collection.findOne({

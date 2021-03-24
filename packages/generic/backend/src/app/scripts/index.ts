@@ -4,6 +4,7 @@ import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoC
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestUsers } from './insertTestUsers';
 import { insertUser } from './insertUser';
+import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
 
 export {
   clearDb,
@@ -12,4 +13,5 @@ export {
   insertTestUsers,
   insertUser,
   runDeploymentScripts,
+  setIndexesOnAllCollections,
 };

@@ -18,6 +18,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     findAllByIds,
     findById,
     insert,
+    setIndexes,
     ...customRepository,
   });
 
@@ -74,6 +75,8 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     collection.push(newObject);
     return { success: true };
   }
+
+  async function setIndexes() {}
 
   async function deleteManyByIds(ids: idType[]) {
     updateFakeCollection(

@@ -9,6 +9,7 @@ const buildAnnotationReportRepository = buildRepositoryBuilder<
   customAnnotationReportRepositoryType
 >({
   collectionName: 'annotationReports',
+  indexes: [],
   buildCustomRepository: (collection) => ({
     async findByDocumentId(documentId) {
       const annotationReport = await collection.findOne({

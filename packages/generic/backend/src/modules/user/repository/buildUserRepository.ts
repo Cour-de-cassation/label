@@ -9,6 +9,7 @@ const buildUserRepository = buildRepositoryBuilder<
   customUserRepositoryType
 >({
   collectionName: 'users',
+  indexes: [],
   buildCustomRepository: (collection) => ({
     async findByEmail(email) {
       const formattedEmail = userModule.lib.formatEmail(email);

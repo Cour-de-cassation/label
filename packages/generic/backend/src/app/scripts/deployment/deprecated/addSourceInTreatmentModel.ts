@@ -1,4 +1,4 @@
-import { buildTreatmentRepository } from '../../../modules/treatment';
+import { buildTreatmentRepository } from '../../../../modules/treatment';
 
 export { addSourceInTreatmentModel };
 

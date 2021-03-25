@@ -7,4 +7,4 @@ echo "Free port"
 fuser -k 55430/tcp
 
 echo "Start LABEL service"
-systemctl stop LabelServer
+systemctl start LabelServer

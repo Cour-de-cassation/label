@@ -105,7 +105,7 @@ function DocumentSwitcher(props: {
     }
   }
 
-  async function onStopAnnotatingDocument() {
+  function onStopAnnotatingDocument() {
     resetMonitoringEntries();
     props.fetchNewDocumentsForUser();
   }

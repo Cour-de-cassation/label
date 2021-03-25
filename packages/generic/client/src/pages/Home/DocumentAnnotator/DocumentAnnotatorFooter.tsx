@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { documentType } from '@label/core';
 import { apiCaller } from '../../../api';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
@@ -13,6 +13,7 @@ export { DocumentAnnotatorFooter };
 function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => void }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
+  const [isValidating, setIsValidating] = useState(false);
   const { addMonitoringEntry, sendMonitoringEntries } = useMonitoring();
 
   const styles = buildStyles(theme);
@@ -84,7 +85,13 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => void 
       return [
         <ReportProblemButton onStopAnnotatingDocument={props.onStopAnnotatingDocument} />,
         <IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.shared.copyToClipboard} />,
-        <ButtonWithIcon color="primary" iconName="send" onClick={validate} text={wordings.homePage.validate} />,
+        <ButtonWithIcon
+          isLoading={isValidating}
+          color="primary"
+          iconName="send"
+          onClick={validate}
+          text={wordings.homePage.validate}
+        />,
       ];
     }
     return [<IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.shared.copyToClipboard} />];
@@ -96,13 +103,18 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => void 
   }
 
   async function validate() {
-    addMonitoringEntry({
-      origin: 'footer',
-      action: 'validate_document',
-    });
-    await saveAnnotationsAndUpdateAssignationStatus('done');
-    await sendMonitoringEntries();
-    props.onStopAnnotatingDocument && props.onStopAnnotatingDocument();
+    setIsValidating(true);
+    try {
+      addMonitoringEntry({
+        origin: 'footer',
+        action: 'validate_document',
+      });
+      await saveAnnotationsAndUpdateAssignationStatus('done');
+      await sendMonitoringEntries();
+      props.onStopAnnotatingDocument && props.onStopAnnotatingDocument();
+    } finally {
+      setIsValidating(false);
+    }
   }
 
   async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {

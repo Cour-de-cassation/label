@@ -1,4 +1,4 @@
-@import './pages/LoadingPage/LoadingPage.css';
+@import './components/generic/custom/Loader/Loader.css';
 
 body {
   margin: 0;

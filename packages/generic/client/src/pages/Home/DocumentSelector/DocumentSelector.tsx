@@ -7,7 +7,7 @@ export { DocumentSelector };
 function DocumentSelector(props: {
   choices: Array<{ annotations: annotationType[]; document: fetchedDocumentType }>;
   settings: settingsType;
-  onSelectDocument: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => void;
+  onSelectDocument: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => Promise<void>;
 }) {
   const styles = buildStyles();
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { groupBy, orderBy } from 'lodash';
 import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
@@ -15,10 +15,11 @@ const MAX_CATEGORIES_SHOWN = 8;
 
 function DocumentSelectorCard(props: {
   choice: { annotations: annotationType[]; document: fetchedDocumentType };
-  onSelect: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => void;
+  onSelect: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => Promise<void>;
   settings: settingsType;
 }) {
   const theme = useCustomTheme();
+  const [isSelecting, setIsSelecting] = useState(false);
   const styles = buildStyles(theme);
   const documentInfoEntries = computeDocumentInfoEntries(props.choice.annotations);
   const categoryIconsByAnnotation = computeCategoryIconNamesByEntitiesCount(props.choice.annotations);
@@ -78,11 +79,21 @@ function DocumentSelectorCard(props: {
         <ButtonWithIcon
           iconName="clock"
           color="primary"
-          onClick={() => props.onSelect(props.choice)}
+          isLoading={isSelecting}
+          onClick={onSelect}
           text={wordings.homePage.documentSelector.start}
         />
       </div>
     );
+
+    async function onSelect() {
+      setIsSelecting(true);
+      try {
+        await props.onSelect(props.choice);
+      } finally {
+        setIsSelecting(false);
+      }
+    }
   }
 
   function computeCategoryIconNamesByEntitiesCount(annotations: annotationType[]) {

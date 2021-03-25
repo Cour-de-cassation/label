@@ -11,6 +11,7 @@ import { Header } from './Header';
 import { IconButton } from './IconButton';
 import { IconDropdown } from './IconDropdown';
 import { LabelledDropdown } from './LabelledDropdown';
+import { Loader } from './Loader';
 import { PaginatedTable } from './PaginatedTable';
 import { PopUp } from './PopUp';
 import { SText } from './SText';
@@ -31,6 +32,7 @@ export {
   IconButton,
   IconDropdown,
   LabelledDropdown,
+  Loader,
   PaginatedTable,
   PopUp,
   SText,

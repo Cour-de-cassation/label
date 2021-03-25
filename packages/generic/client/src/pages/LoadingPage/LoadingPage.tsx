@@ -1,9 +1,11 @@
 import React from 'react';
-import { Text } from '../../components';
+import { Text, Loader } from '../../components';
 import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
 
 export { LoadingPage };
+
+const LOADER_SIZE = 100;
 
 function LoadingPage() {
   const theme = useCustomTheme();
@@ -12,7 +14,9 @@ function LoadingPage() {
   return (
     <div style={styles.container}>
       <div style={styles.loadingPage}>
-        <div className="loading-wheel" style={styles.loadingWheel} />
+        <div style={styles.loaderContainer}>
+          <Loader size={LOADER_SIZE} />
+        </div>
         <Text>{wordings.loadingPage}</Text>
       </div>
     </div>
@@ -31,9 +35,10 @@ function LoadingPage() {
       loadingPage: {
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
       },
-      loadingWheel: {
-        color: theme.colors.line.level1,
+      loaderContainer: {
+        marginBottom: theme.spacing * 4,
       },
     } as const;
   }

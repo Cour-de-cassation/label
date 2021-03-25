@@ -1,4 +1,4 @@
-import { assignationType, idModule } from '@label/core';
+import { assignationType, idModule, indexer } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customAssignationRepositoryType } from './customAssignationRepositoryType';
 
@@ -20,12 +20,9 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
           idModule.lib.equalId(documentId, assignation.documentId),
         ),
       );
-      return assignations.reduce((accumulator, assignation) => {
-        return {
-          ...accumulator,
-          [idModule.lib.convertToString(assignation.documentId)]: assignation,
-        };
-      }, {} as Record<string, assignationType>);
+      return indexer.indexBy(assignations, (assignation) =>
+        idModule.lib.convertToString(assignation.documentId),
+      );
     },
     async findByDocumentIdAndUserId({ documentId, userId }) {
       const result = collection.find(

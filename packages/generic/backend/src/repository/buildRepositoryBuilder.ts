@@ -1,4 +1,4 @@
-import { idModule, idType } from '@label/core';
+import { idModule, idType, indexer } from '@label/core';
 import { mongo, mongoCollectionType } from '../utils';
 import { repositoryType } from './repositoryType';
 
@@ -59,22 +59,9 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
         items = await collection.find().toArray();
       }
 
-      return items.reduce((accumulator, currentItem) => {
-        const idString = idModule.lib.convertToString(currentItem._id);
-        if (!!accumulator[idString]) {
-          return accumulator;
-        }
-        const item = items.find(({ _id }) =>
-          idModule.lib.equalId(currentItem._id, _id),
-        );
-        if (!item) {
-          return accumulator;
-        }
-        return {
-          ...accumulator,
-          [idString]: item,
-        };
-      }, {} as Record<string, T>);
+      return indexer.indexBy(items, (item) =>
+        idModule.lib.convertToString(item._id),
+      );
     }
 
     async function findById(id: idType) {

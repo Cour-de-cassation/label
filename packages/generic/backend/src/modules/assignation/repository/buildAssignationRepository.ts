@@ -1,4 +1,4 @@
-import { assignationType, idModule } from '@label/core';
+import { assignationType, idModule, indexer } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { customAssignationRepositoryType } from './customAssignationRepositoryType';
 
@@ -26,12 +26,10 @@ const buildAssignationRepository = buildRepositoryBuilder<
       const assignations = await collection
         .find({ documentId: { $in: documentIdsToSearchIn } })
         .toArray();
-      return assignations.reduce((accumulator, assignation) => {
-        return {
-          ...accumulator,
-          [idModule.lib.convertToString(assignation.documentId)]: assignation,
-        };
-      }, {} as Record<string, assignationType>);
+
+      return indexer.indexBy(assignations, (assignation) =>
+        idModule.lib.convertToString(assignation.documentId),
+      );
     },
     async findByDocumentIdAndUserId({ documentId, userId }) {
       const result = await collection.find({ documentId, userId }).toArray();

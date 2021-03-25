@@ -1,4 +1,4 @@
-import { idModule, treatmentType } from '@label/core';
+import { idModule, indexer, treatmentType } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
   updateFakeCollection,
@@ -18,28 +18,14 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
       );
     },
     async findAllByDocumentIds(documentIds) {
-      return collection
-        .filter((treatment) =>
-          documentIds.some((documentId) =>
-            idModule.lib.equalId(documentId, treatment.documentId),
-          ),
-        )
-        .reduce((accumulator, treatment) => {
-          const documentIdString = idModule.lib.convertToString(
-            treatment.documentId,
-          );
-
-          if (!!accumulator[documentIdString]) {
-            return {
-              ...accumulator,
-              [documentIdString]: [...accumulator[documentIdString], treatment],
-            };
-          }
-          return {
-            ...accumulator,
-            [documentIdString]: [treatment],
-          };
-        }, {} as Record<string, treatmentType[]>);
+      const treatments = collection.filter((treatment) =>
+        documentIds.some((documentId) =>
+          idModule.lib.equalId(documentId, treatment.documentId),
+        ),
+      );
+      return indexer.indexManyBy(treatments, (treatment) =>
+        idModule.lib.convertToString(treatment.documentId),
+      );
     },
     async findLastOneByDocumentId(documentId) {
       const result = collection.filter((treatment) =>

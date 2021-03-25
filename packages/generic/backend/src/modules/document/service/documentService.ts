@@ -2,7 +2,7 @@ import {
   documentType,
   idType,
   idModule,
-  assignationType,
+  indexer,
   errorHandlers,
   buildAnonymizer,
 } from '@label/core';
@@ -62,12 +62,9 @@ const documentService = {
     const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
       documentIds,
     );
-    const assignationsById = Object.values(assignationsByDocumentId).reduce(
-      (accumulator, assignation) => ({
-        ...accumulator,
-        [idModule.lib.convertToString(assignation._id)]: assignation,
-      }),
-      {} as Record<string, assignationType>,
+    const assignationsById = indexer.indexBy(
+      Object.values(assignationsByDocumentId),
+      (assignation) => idModule.lib.convertToString(assignation._id),
     );
     const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
       assignationsById,

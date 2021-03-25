@@ -1,4 +1,4 @@
-import { idModule, treatmentType } from '@label/core';
+import { idModule, indexer, treatmentType } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { customTreatmentRepositoryType } from './customTreatmentRepositoryType';
 
@@ -29,24 +29,14 @@ const buildTreatmentRepository = buildRepositoryBuilder<
       const treatments = await collection
         .find({ documentId: { $in: documentIds } })
         .toArray();
-      return treatments
-        .sort((treatmentA, treatmentB) => treatmentB.order - treatmentA.order)
-        .reduce((accumulator, treatment) => {
-          const documentIdString = idModule.lib.convertToString(
-            treatment.documentId,
-          );
 
-          if (!!accumulator[documentIdString]) {
-            return {
-              ...accumulator,
-              [documentIdString]: [...accumulator[documentIdString], treatment],
-            };
-          }
-          return {
-            ...accumulator,
-            [documentIdString]: [treatment],
-          };
-        }, {} as Record<string, treatmentType[]>);
+      const sortedTreatments = treatments.sort(
+        (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
+      );
+
+      return indexer.indexManyBy(sortedTreatments, (treatment) =>
+        idModule.lib.convertToString(treatment.documentId),
+      );
     },
     async updateOne(
       treatmentId,

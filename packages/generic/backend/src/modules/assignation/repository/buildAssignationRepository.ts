@@ -9,7 +9,15 @@ const buildAssignationRepository = buildRepositoryBuilder<
   customAssignationRepositoryType
 >({
   collectionName: 'assignations',
-  indexes: [],
+  indexes: [
+    {
+      documentId: 1,
+    } as const,
+    {
+      documentId: 1,
+      userId: 1,
+    } as const,
+  ],
   buildCustomRepository: (collection) => ({
     async findAllByUserId(userId) {
       return collection.find({ userId }).toArray();

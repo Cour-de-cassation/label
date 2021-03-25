@@ -9,7 +9,11 @@ const buildTreatmentRepository = buildRepositoryBuilder<
   customTreatmentRepositoryType
 >({
   collectionName: 'treatments',
-  indexes: [],
+  indexes: [
+    {
+      documentId: 1,
+    } as const,
+  ],
   buildCustomRepository: (collection) => ({
     async findAllByDocumentId(documentId) {
       return collection.find({ documentId }).toArray();

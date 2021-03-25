@@ -13,6 +13,14 @@ const buildDocumentRepository = buildRepositoryBuilder<
     {
       status: 1,
     } as const,
+    {
+      publicationCategory: 1,
+      status: 1,
+    } as const,
+    {
+      priority: 1,
+      status: 1,
+    } as const,
   ],
   buildCustomRepository: (collection) => ({
     async assign(priority) {

@@ -34,13 +34,11 @@ function Header(props: {
       },
       leftContainer: {
         display: 'flex',
-        flex: 1,
         alignItems: 'center',
         width: `${left}%`,
       },
       rightContainer: {
         display: 'flex',
-        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
         width: `${right}%`,

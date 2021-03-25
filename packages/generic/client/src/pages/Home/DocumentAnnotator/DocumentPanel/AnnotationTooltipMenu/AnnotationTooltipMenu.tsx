@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { annotationType } from '@label/core';
 import {
-  LayoutGrid,
   FloatingTooltipMenu,
   ComponentsList,
   ChangeAnnotationCategoryDropdown,
@@ -36,9 +35,7 @@ function AnnotationTooltipMenu(props: {
       width={ANNOTATION_TOOLTIP_SUMMARY_WIDTH}
     >
       <>
-        <LayoutGrid container>
-          <AnnotationTooltipMenuHeader annotation={props.annotation} isAnonymizedView={props.isAnonymizedView} />
-        </LayoutGrid>
+        <AnnotationTooltipMenuHeader annotation={props.annotation} isAnonymizedView={props.isAnonymizedView} />
         {renderAnnotationButtons()}
       </>
     </FloatingTooltipMenu>
@@ -50,7 +47,7 @@ function AnnotationTooltipMenu(props: {
     }
 
     return (
-      <LayoutGrid container style={style.annotationButtonsContainer}>
+      <div style={style.annotationButtonsContainer}>
         <ComponentsList
           components={[
             <ChangeAnnotationCategoryDropdown annotation={props.annotation} origin="document" />,
@@ -60,7 +57,7 @@ function AnnotationTooltipMenu(props: {
           ]}
           spaceBetweenComponents={theme.spacing * 2}
         />
-      </LayoutGrid>
+      </div>
     );
   }
 

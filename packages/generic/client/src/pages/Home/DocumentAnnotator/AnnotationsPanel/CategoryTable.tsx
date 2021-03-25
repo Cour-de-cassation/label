@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { settingsModule } from '@label/core';
-import { LayoutGrid, Accordion, Text, Icon, CategoryIcon } from '../../../../components';
+import { Accordion, Text, Icon, CategoryIcon } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { annotationPerEntityType, splittedTextByLineType } from '../lib';
@@ -31,21 +31,19 @@ function CategoryTable(props: {
   const categoryName = settingsModule.lib.getAnnotationCategoryText(props.category, annotatorState.settings);
   return (
     <Accordion
-      headerStyle={styles.accordionHeader}
+      headerStyle={styles.accordionHeaderContainer}
       header={
-        <LayoutGrid container>
-          <LayoutGrid container item alignItems="center" xs={11}>
-            <LayoutGrid item>
-              <CategoryIcon category={props.category} iconSize={iconSize} settings={annotatorState.settings} />
-            </LayoutGrid>
-            <LayoutGrid item style={styles.categoryContainer}>
+        <div style={styles.accordionHeader}>
+          <div style={styles.accordionHeaderLeftContainer}>
+            <CategoryIcon category={props.category} iconSize={iconSize} settings={annotatorState.settings} />
+            <div style={styles.categoryContainer}>
               <Text>{`${categoryName} (${props.categorySize})`}</Text>
-            </LayoutGrid>
-          </LayoutGrid>
-          <LayoutGrid container item alignItems="center" xs={1}>
+            </div>
+          </div>
+          <div style={styles.accordionHeaderArrowContainer}>
             <Icon iconName={isExpanded ? 'arrowUp' : 'arrowDown'} />
-          </LayoutGrid>
-        </LayoutGrid>
+          </div>
+        </div>
       }
       body={
         <Div_Body>
@@ -66,13 +64,27 @@ function CategoryTable(props: {
 
   function buildStyles(theme: customThemeType) {
     return {
-      accordionHeader: {
+      accordionHeaderContainer: {
         padding: ACCORDION_HEADER_PADDING,
         // Should be set in order to have a fixed header (Material UI dependent)
         minHeight: iconSize,
         '&$expanded': {
           minHeight: iconSize,
         },
+      },
+      accordionHeader: {
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
+      accordionHeaderLeftContainer: {
+        display: 'flex',
+        alignItems: 'center',
+      },
+      accordionHeaderArrowContainer: {
+        paddingRight: theme.spacing,
+        paddingTop: '4px',
       },
       categoryContainer: {
         paddingLeft: theme.spacing,

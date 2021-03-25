@@ -1,10 +1,10 @@
-import React, { ChangeEvent, CSSProperties, FormEvent, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { apiCaller } from '../../api';
-import { ButtonWithIcon, LayoutGrid, Logo, Text, TextInput } from '../../components';
+import { ButtonWithIcon, Logo, Text, TextInput } from '../../components';
 import { localStorage } from '../../services/localStorage';
-import { wordings } from '../../wordings';
 import { customThemeType, useCustomTheme } from '../../styles';
+import { wordings } from '../../wordings';
 
 export { Login };
 
@@ -18,12 +18,12 @@ const Login: FunctionComponent = () => {
   const styles = buildStyles(theme);
 
   return (
-    <LayoutGrid container direction="column" justifyContent="center" alignItems="center" style={styles.mainContainer}>
-      <LayoutGrid item style={styles.logoContainer}>
+    <div style={styles.mainContainer}>
+      <div style={styles.logoContainer}>
         <Logo size="medium" />
-      </LayoutGrid>
+      </div>
       <form style={styles.formContainer} onSubmit={handleSubmit}>
-        <LayoutGrid item style={styles.inputContainer}>
+        <div style={styles.inputContainer}>
           <TextInput
             name="email"
             type="email"
@@ -33,8 +33,8 @@ const Login: FunctionComponent = () => {
             error={!isFormValid}
             style={styles.input}
           />
-        </LayoutGrid>
-        <LayoutGrid item style={styles.inputContainer}>
+        </div>
+        <div style={styles.inputContainer}>
           <TextInput
             name="password"
             type="password"
@@ -44,15 +44,15 @@ const Login: FunctionComponent = () => {
             error={!isFormValid}
             style={styles.input}
           />
-        </LayoutGrid>
-        <LayoutGrid item style={styles.forgottenPasswordContainer}>
+        </div>
+        <div style={styles.forgottenPasswordContainer}>
           <Link to="/reset-password-request">
             <Text style={styles.forgottenPasswordText} variant="h3" color="textPrimary">
               {wordings.loginPage.forgottenPassword}
             </Text>
           </Link>
-        </LayoutGrid>
-        <LayoutGrid item direction="column" alignItems="flex-end" style={styles.loginButtonContainer}>
+        </div>
+        <div style={styles.loginButtonContainer}>
           <ButtonWithIcon
             iconName={isFormValid ? 'login' : 'error'}
             onClick={handleSubmit}
@@ -60,21 +60,21 @@ const Login: FunctionComponent = () => {
             text={wordings.loginPage.login}
             type="submit"
           />
-        </LayoutGrid>
-        <LayoutGrid item direction="column" style={styles.errorContainer}>
+        </div>
+        <div style={styles.errorContainer}>
           {!isFormValid && (
-            <LayoutGrid item direction="column">
+            <div style={styles.invalidErrorContainer}>
               <Text style={styles.formErrorText} variant="h3">
                 {wordings.loginPage.wrongEmailOrPassword}
               </Text>
               <Text style={styles.formErrorText} variant="h3">
                 {wordings.loginPage.pleaseTryAgain}
               </Text>
-            </LayoutGrid>
+            </div>
           )}
-        </LayoutGrid>
+        </div>
       </form>
-    </LayoutGrid>
+    </div>
   );
 
   function resetIsFormValid() {
@@ -108,13 +108,17 @@ const Login: FunctionComponent = () => {
     }
   }
 
-  function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
+  function buildStyles(theme: customThemeType) {
     const MIN_WIDTH_FORM = 366;
     const ERROR_LINE_HEIGHT = 19;
 
     return {
       mainContainer: {
         height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
       },
       logoContainer: {
         marginBottom: theme.spacing * 2,
@@ -140,6 +144,7 @@ const Login: FunctionComponent = () => {
       },
       loginButtonContainer: {
         display: 'flex',
+        justifyContent: 'flex-end',
         marginBottom: theme.spacing,
       },
       formErrorText: {
@@ -149,6 +154,10 @@ const Login: FunctionComponent = () => {
       errorContainer: {
         height: `${2 * ERROR_LINE_HEIGHT}px`,
       },
-    };
+      invalidErrorContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+      },
+    } as const;
   }
 };

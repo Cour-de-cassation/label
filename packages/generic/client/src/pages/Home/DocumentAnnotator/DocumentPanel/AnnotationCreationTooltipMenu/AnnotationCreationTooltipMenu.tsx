@@ -6,7 +6,6 @@ import {
   CircleIcon,
   FloatingTooltipMenu,
   LabelledDropdown,
-  LayoutGrid,
   Text,
 } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
@@ -65,7 +64,7 @@ function AnnotationCreationTooltipMenu(props: {
             </div>
           </>
         )}
-        <LayoutGrid item container>
+        <div style={styles.categoryDropdownContainer}>
           <LabelledDropdown
             items={categories.map((category) => ({
               icon: (
@@ -84,7 +83,7 @@ function AnnotationCreationTooltipMenu(props: {
             }
             onChange={applyAnnotationCreation}
           />
-        </LayoutGrid>
+        </div>
       </div>
     </FloatingTooltipMenu>
   );
@@ -150,7 +149,6 @@ function AnnotationCreationTooltipMenu(props: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        flex: 1,
       },
       annotationTextContainer: {
         marginBottom: theme.spacing * 2,
@@ -173,6 +171,10 @@ function AnnotationCreationTooltipMenu(props: {
       },
       identicalOccurrencesNumber: {
         fontWeight: 'bold',
+      },
+      categoryDropdownContainer: {
+        display: 'flex',
+        alignSelf: 'stretch',
       },
     } as const;
   }

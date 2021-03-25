@@ -6,11 +6,11 @@ import {
   Checkbox,
   FloatingTooltipMenu,
   LabelledDropdown,
-  LayoutGrid,
   Text,
   TextInput,
 } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
+import { customThemeType, useCustomTheme } from '../../../../styles';
 import { positionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 
@@ -25,7 +25,8 @@ function ReportProblemToolTipMenu(props: {
   originPosition: positionType;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const style = buildStyle();
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
   const problemCategories = buildProblemCategories();
   const [problemCategory, setProblemCategory] = useState<problemReportType['type'] | undefined>(undefined);
   const [problemDescription, setProblemDescription] = useState<string>('');
@@ -40,8 +41,8 @@ function ReportProblemToolTipMenu(props: {
       onClose={props.onClose}
       width={REPORT_PROBLEM_TOOLTIP_MENU_WIDTH}
     >
-      <LayoutGrid>
-        <LayoutGrid style={style.tooltipItem}>
+      <div>
+        <div style={styles.tooltipItem}>
           <LabelledDropdown<problemReportType['type']>
             error={isSentWithoutCategory}
             items={problemCategories.map((problemCategory) => ({
@@ -52,8 +53,8 @@ function ReportProblemToolTipMenu(props: {
             onChange={changeProblemCategory}
             width={REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}
           />
-        </LayoutGrid>
-        <LayoutGrid style={style.tooltipItem}>
+        </div>
+        <div style={styles.tooltipItem}>
           <Text>{wordings.homePage.describeTheProblem}</Text>
           <TextInput
             name="problemDescription"
@@ -61,55 +62,37 @@ function ReportProblemToolTipMenu(props: {
             size={10}
             multiline
             onChange={(event) => setProblemDescription(event.target.value)}
-            style={style.tooltipElement}
+            style={styles.tooltipElement}
             value={problemDescription}
           />
-        </LayoutGrid>
-        <LayoutGrid style={style.tooltipItem}>
+        </div>
+        <div style={styles.tooltipItem}>
           <Checkbox
             defaultChecked={false}
             onChange={(checked) => setIsBlocking(checked)}
             text={wordings.homePage.problemIsBlocking}
-            style={style.tooltipElement}
+            style={styles.tooltipElement}
           ></Checkbox>
-        </LayoutGrid>
-        <LayoutGrid container style={style.tooltipItem} direction="row-reverse">
-          <LayoutGrid item>
-            <span style={style.tooltipButton}>
-              <ButtonWithIcon
-                color="default"
-                iconName="close"
-                onClick={closeTooltipMenu}
-                text={wordings.homePage.cancel}
-              />
-            </span>
-            <span style={style.tooltipButton}>
-              <ButtonWithIcon
-                color="primary"
-                iconName="send"
-                onClick={sendProblemReportAndClose}
-                text={wordings.homePage.send}
-              />
-            </span>
-          </LayoutGrid>
-        </LayoutGrid>
-      </LayoutGrid>
+        </div>
+        <div style={{ ...styles.tooltipItem, ...styles.tooltipButtons }}>
+          <div style={styles.closeButtonContainer}>
+            <ButtonWithIcon
+              color="default"
+              iconName="close"
+              onClick={closeTooltipMenu}
+              text={wordings.homePage.cancel}
+            />
+          </div>
+          <ButtonWithIcon
+            color="primary"
+            iconName="send"
+            onClick={sendProblemReportAndClose}
+            text={wordings.homePage.send}
+          />
+        </div>
+      </div>
     </FloatingTooltipMenu>
   );
-
-  function buildStyle() {
-    return {
-      tooltipElement: {
-        width: `${REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}px`,
-      },
-      tooltipItem: {
-        padding: '12px 0px',
-      },
-      tooltipButton: {
-        paddingRight: '10px',
-      },
-    };
-  }
 
   function buildProblemCategories(): Array<problemReportType['type']> {
     return ['bug', 'annotationProblem', 'suggestion'];
@@ -154,4 +137,24 @@ function ReportProblemToolTipMenu(props: {
       setIsSentWithoutCategory(true);
     }
   }
+}
+
+function buildStyles(theme: customThemeType) {
+  return {
+    tooltipElement: {
+      width: `${REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}px`,
+    },
+    tooltipItem: {
+      padding: `${theme.spacing}px 0px`,
+    },
+    tooltipButtons: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+      paddingRight: theme.spacing,
+    },
+    closeButtonContainer: {
+      marginBottom: theme.spacing,
+    },
+  } as const;
 }

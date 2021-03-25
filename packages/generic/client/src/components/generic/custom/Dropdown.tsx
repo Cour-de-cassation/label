@@ -26,14 +26,16 @@ function Dropdown<T extends string>(props: {
         item: props.items.find((item) => item.value === selectedValue),
         onClick: openDropdown,
       })}
-      <DropdownMenu
-        anchorElement={anchorElement}
-        dropdownPosition={dropdownPosition}
-        items={props.items}
-        onChange={handleSelection}
-        onClose={closeDropdown}
-        width={props.width}
-      />
+      {isOpen() && (
+        <DropdownMenu
+          anchorElement={anchorElement}
+          dropdownPosition={dropdownPosition}
+          items={props.items}
+          onChange={handleSelection}
+          onClose={closeDropdown}
+          width={props.width}
+        />
+      )}
     </>
   );
 

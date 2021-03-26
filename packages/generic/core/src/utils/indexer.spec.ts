@@ -19,6 +19,28 @@ describe('indexer', () => {
     });
   });
 
+  describe('mapIndexBy', () => {
+    it('should index by the given function', () => {
+      const datas = [
+        { a: 'STRING1', b: 1 },
+        { a: 'STRING2', b: 2 },
+        { a: 'STRING3', b: 3 },
+      ];
+
+      const indexedDatas = indexer.mapIndexBy(
+        datas,
+        (data) => data.a,
+        (data) => data.b * data.b,
+      );
+
+      expect(indexedDatas).toEqual({
+        STRING1: 1,
+        STRING2: 4,
+        STRING3: 9,
+      });
+    });
+  });
+
   describe('indexManyBy', () => {
     it('should index by the given function', () => {
       const datas = [

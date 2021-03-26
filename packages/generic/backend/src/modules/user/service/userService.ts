@@ -3,6 +3,7 @@ import {
   errorHandlers,
   hasher,
   idModule,
+  indexer,
   userModule,
   userType,
 } from '@label/core';
@@ -83,20 +84,13 @@ function buildUserService() {
       (assignation) => assignation.userId,
     );
     const usersById = await userRepository.findAllByIds(userIds);
-    const userNamesByAssignationId = Object.entries(assignationsById).reduce(
-      (accumulator, [assignationId, assignation]) => {
-        const user =
-          usersById[idModule.lib.convertToString(assignation.userId)];
 
-        return {
-          ...accumulator,
-          [assignationId]: user.name,
-        };
-      },
-      {} as Record<string, string>,
+    return indexer.mapIndexBy(
+      Object.values(assignationsById),
+      (assignation) => idModule.lib.convertToString(assignation._id),
+      (assignation) =>
+        usersById[idModule.lib.convertToString(assignation.userId)].name,
     );
-
-    return userNamesByAssignationId;
   }
 
   async function fetchUsersWithDetails() {

@@ -2,14 +2,17 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { customThemeType, useCustomTheme, widths } from '../../../styles';
 import { Icon, iconNameType, Tooltip } from '../../generic';
+import { AlertBadge } from './AlertBadge';
 
 export { MenuIcon };
 
-const MENU_ICON_HEIGHT = 72;
+const ICON_CONTAINER_HEIGHT = 72;
+
+const ICON_SIZE = 32;
 
 const CORNER_HEIGHT = 16;
 
-function MenuIcon(props: { iconName: iconNameType; pathname: string; title: string }) {
+function MenuIcon(props: { iconName: iconNameType; pathname: string; title: string; alertCount?: number }) {
   const theme = useCustomTheme();
   const location = useLocation();
   const history = useHistory();
@@ -21,15 +24,28 @@ function MenuIcon(props: { iconName: iconNameType; pathname: string; title: stri
         <div style={styles.topCorner} />
       </div>
       <div onClick={onClick} style={styles.iconContainer}>
-        <Tooltip title={props.title} placement="right">
-          <Icon iconName={props.iconName} />
-        </Tooltip>
+        {renderIcon()}
       </div>
       <div style={styles.cornerSquare}>
         <div style={styles.bottomCorner} />
       </div>
     </div>
   );
+
+  function renderIcon() {
+    return (
+      <>
+        {props.alertCount && (
+          <div style={styles.alertBadgeContainer}>
+            <AlertBadge count={props.alertCount} />
+          </div>
+        )}
+        <Tooltip title={props.title} placement="right">
+          <Icon style={styles.icon} iconName={props.iconName} />
+        </Tooltip>
+      </>
+    );
+  }
 
   function onClick() {
     history.replace(props.pathname);
@@ -47,15 +63,25 @@ function MenuIcon(props: { iconName: iconNameType; pathname: string; title: stri
       },
       iconContainer: {
         color,
-        height: `${MENU_ICON_HEIGHT}px`,
+        position: 'relative',
+        height: `${ICON_CONTAINER_HEIGHT}px`,
         width: `calc(${widths.adminMenu} - ${theme.spacing}px)`,
         backgroundColor,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        borderTopLeftRadius: `${MENU_ICON_HEIGHT / 2}px`,
-        borderBottomLeftRadius: `${MENU_ICON_HEIGHT / 2}px`,
+        borderTopLeftRadius: `${ICON_CONTAINER_HEIGHT / 2}px`,
+        borderBottomLeftRadius: `${ICON_CONTAINER_HEIGHT / 2}px`,
         cursor: 'pointer',
+      },
+      icon: {
+        fontSize: `${ICON_SIZE}px`,
+      },
+      alertBadgeContainer: {
+        position: 'absolute',
+        display: 'flex',
+        right: `calc(${widths.adminMenu} - ${ICON_CONTAINER_HEIGHT / 2}px - ${ICON_SIZE}px - ${theme.spacing}px)`,
+        top: `calc(${ICON_CONTAINER_HEIGHT / 2}px - ${ICON_SIZE / 2}px - ${theme.spacing}px)`,
       },
       cornerSquare: {
         backgroundColor,

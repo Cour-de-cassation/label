@@ -23,7 +23,12 @@ function AdminMenu() {
           pathname="/admin/treated-documents"
           iconName="playlistCheck"
         />
-        <MenuIcon title={wordings.problemReportsPage.subtitle} pathname="/admin/problem-reports" iconName="warning" />
+        <MenuIcon
+          title={wordings.problemReportsPage.subtitle}
+          pathname="/admin/problem-reports"
+          alertCount={10}
+          iconName="warning"
+        />
         <MenuIcon title={wordings.agentsPage.subtitle} pathname="/admin/agents" iconName="admin" />
       </div>
     </div>

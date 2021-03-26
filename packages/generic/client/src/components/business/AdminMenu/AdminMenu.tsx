@@ -7,29 +7,29 @@ export { AdminMenu };
 
 const OFFSET_TOP = 80;
 
-function AdminMenu() {
+function AdminMenu(props: { unreadProblemReportsCount: number }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   return (
     <div style={styles.container}>
       <div style={styles.iconContainer}>
         <MenuIcon
-          title={wordings.untreatedDocumentsPage.subtitle}
+          title={wordings.untreatedDocumentsPage.header.subtitle}
           pathname="/admin/untreated-documents"
           iconName="playlistPlay"
         />
         <MenuIcon
-          title={wordings.treatedDocumentsPage.subtitle}
+          title={wordings.treatedDocumentsPage.header.subtitle}
           pathname="/admin/treated-documents"
           iconName="playlistCheck"
         />
         <MenuIcon
-          title={wordings.problemReportsPage.subtitle}
+          title={wordings.problemReportsPage.header.subtitle}
           pathname="/admin/problem-reports"
-          alertCount={10}
+          alertCount={props.unreadProblemReportsCount}
           iconName="warning"
         />
-        <MenuIcon title={wordings.agentsPage.subtitle} pathname="/admin/agents" iconName="admin" />
+        <MenuIcon title={wordings.agentsPage.header.subtitle} pathname="/admin/agents" iconName="admin" />
       </div>
     </div>
   );

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf } from '@label/core';
-import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType, Text } from '../../../components';
+import { PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { UntreatedDocumentsDataFetcher } from './UntreatedDocumentsDataFetcher';
 import { UntreatedDocumentsTable } from './UntreatedDocumentsTable';
 import { untreatedDocumentFilterType, UntreatedDocumentsFilters } from './UntreatedDocumentsFilters';
 
@@ -14,49 +13,30 @@ const DEFAULT_FILTERS = {
   publicationCategoryLetter: undefined,
 };
 
-function UntreatedDocuments() {
+function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'> }) {
   const [filterValues, setFilterValues] = useState<untreatedDocumentFilterType>(DEFAULT_FILTERS);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
+
+  const untreatedDocumentsFields = buildUntreatedDocumentsFields();
+  const filterInfo = extractFilterInfoFromDocuments(props.untreatedDocuments);
+  const filteredUntreatedDocuments = getFilteredUntreatedDocuments(props.untreatedDocuments, filterValues);
   return (
-    <>
-      <div style={styles.header}>
-        <MainHeader
-          title={wordings.untreatedDocumentsPage.title}
-          subtitle={<Text>{wordings.untreatedDocumentsPage.subtitle}</Text>}
-        />
+    <div style={styles.table}>
+      <div style={styles.tableHeaderContainer}>
+        <div style={styles.tableHeader}>
+          <UntreatedDocumentsFilters
+            filterInfo={filterInfo}
+            filterValues={filterValues}
+            setFilterValues={setFilterValues}
+            resultsCount={filteredUntreatedDocuments.length}
+          />
+        </div>
       </div>
-      <div style={styles.contentContainer}>
-        <AdminMenu />
-        <UntreatedDocumentsDataFetcher>
-          {({ untreatedDocuments }) => {
-            const untreatedDocumentsFields = buildUntreatedDocumentsFields();
-            const filterInfo = extractFilterInfoFromDocuments(untreatedDocuments);
-            const filteredUntreatedDocuments = getFilteredUntreatedDocuments(untreatedDocuments, filterValues);
-            return (
-              <div style={styles.table}>
-                <div style={styles.tableHeaderContainer}>
-                  <div style={styles.tableHeader}>
-                    <UntreatedDocumentsFilters
-                      filterInfo={filterInfo}
-                      filterValues={filterValues}
-                      setFilterValues={setFilterValues}
-                      resultsCount={filteredUntreatedDocuments.length}
-                    />
-                  </div>
-                </div>
-                <div style={styles.tableContentContainer}>
-                  <UntreatedDocumentsTable
-                    fields={untreatedDocumentsFields}
-                    untreatedDocuments={filteredUntreatedDocuments}
-                  />
-                </div>
-              </div>
-            );
-          }}
-        </UntreatedDocumentsDataFetcher>
+      <div style={styles.tableContentContainer}>
+        <UntreatedDocumentsTable fields={untreatedDocumentsFields} untreatedDocuments={filteredUntreatedDocuments} />
       </div>
-    </>
+    </div>
   );
 
   function getFilteredUntreatedDocuments(
@@ -112,14 +92,6 @@ function UntreatedDocuments() {
 
   function buildStyles(theme: customThemeType) {
     return {
-      header: {
-        height: heights.header,
-      },
-      contentContainer: {
-        display: 'flex',
-        width: '100vw',
-        height: heights.adminPanel,
-      },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
       },

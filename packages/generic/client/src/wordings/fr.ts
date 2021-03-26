@@ -2,8 +2,10 @@ export { fr };
 
 const fr = {
   agentsPage: {
-    title: 'Administration',
-    subtitle: 'Gestion des agents',
+    header: {
+      title: 'Administration',
+      subtitle: 'Gestion des agents',
+    },
     createAgentDrawer: {
       title: 'Créer un agent',
       fields: {
@@ -127,8 +129,10 @@ const fr = {
   },
   loadingPage: 'Veuillez patienter...',
   problemReportsPage: {
-    title: 'Administration',
-    subtitle: 'Alertes',
+    header: {
+      title: 'Administration',
+      subtitle: 'Alertes',
+    },
     table: {
       columnTitles: {
         agent: 'Agent',
@@ -156,8 +160,10 @@ const fr = {
     },
   },
   treatedDocumentsPage: {
-    title: 'Administration',
-    subtitle: 'Décisions traitées',
+    header: {
+      title: 'Administration',
+      subtitle: 'Décisions traitées',
+    },
     table: {
       filter: {
         exportButton: 'Exporter',
@@ -209,8 +215,10 @@ const fr = {
     },
   },
   untreatedDocumentsPage: {
-    title: 'Administration',
-    subtitle: 'Flux de décisions',
+    header: {
+      title: 'Administration',
+      subtitle: 'Flux de décisions',
+    },
     table: {
       columnTitles: {
         number: 'N° décision',

@@ -1,6 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom';
 import { localStorage } from '../services/localStorage';
+import { wordings } from '../wordings';
+import { AdminPage } from './Admin/AdminPage';
+import { AdminInfosDataFetcher } from './Admin/AdminInfosDataFetcher';
 import { Agents } from './Admin/Agents';
 import { DocumentInspector } from './Admin/DocumentInspector';
 import { TreatedDocuments } from './Admin/TreatedDocuments';
@@ -21,20 +24,53 @@ function Router() {
         <UnauthenticatedRoute path="/login">
           <Login />
         </UnauthenticatedRoute>
-        <AuthenticatedRoute path="/admin/problem-reports">
-          <ProblemReports />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute path="/admin/treated-documents">
-          <TreatedDocuments />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute path="/admin/untreated-documents">
-          <UntreatedDocuments />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute path="/admin/agents">
-          <Agents />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute path="/admin/document/:documentId">
-          <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
+        <AuthenticatedRoute path="/admin">
+          <AdminInfosDataFetcher>
+            {({ adminInfos }) => {
+              const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
+                ({ problemReport }) => !problemReport.hasBeenRead,
+              ).length;
+              return (
+                <>
+                  <AuthenticatedRoute path="/admin/agents">
+                    <AdminPage
+                      header={wordings.agentsPage.header}
+                      unreadProblemReportsCount={unreadProblemReportsCount}
+                    >
+                      <Agents usersWithDetails={adminInfos.usersWithDetails} />
+                    </AdminPage>
+                  </AuthenticatedRoute>
+                  <AuthenticatedRoute path="/admin/problem-reports">
+                    <AdminPage
+                      header={wordings.problemReportsPage.header}
+                      unreadProblemReportsCount={unreadProblemReportsCount}
+                    >
+                      <ProblemReports problemReportsWithDetails={adminInfos.problemReportsWithDetails} />
+                    </AdminPage>
+                  </AuthenticatedRoute>
+                  <AuthenticatedRoute path="/admin/treated-documents">
+                    <AdminPage
+                      header={wordings.treatedDocumentsPage.header}
+                      unreadProblemReportsCount={unreadProblemReportsCount}
+                    >
+                      <TreatedDocuments treatedDocuments={adminInfos.treatedDocuments} />
+                    </AdminPage>
+                  </AuthenticatedRoute>
+                  <AuthenticatedRoute path="/admin/untreated-documents">
+                    <AdminPage
+                      header={wordings.untreatedDocumentsPage.header}
+                      unreadProblemReportsCount={unreadProblemReportsCount}
+                    >
+                      <UntreatedDocuments untreatedDocuments={adminInfos.untreatedDocuments} />
+                    </AdminPage>
+                  </AuthenticatedRoute>
+                </>
+              );
+            }}
+          </AdminInfosDataFetcher>
+          <AuthenticatedRoute path="/admin/document/:documentId">
+            <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
+          </AuthenticatedRoute>
         </AuthenticatedRoute>
         <Route path="/anonymized-document/:documentId">
           <AnonymizedDocument />

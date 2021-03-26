@@ -35,7 +35,7 @@ function MenuIcon(props: { iconName: iconNameType; pathname: string; title: stri
   function renderIcon() {
     return (
       <>
-        {props.alertCount && (
+        {!!props.alertCount && (
           <div style={styles.alertBadgeContainer}>
             <AlertBadge count={props.alertCount} />
           </div>

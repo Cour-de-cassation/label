@@ -1,43 +1,28 @@
 import React from 'react';
 import { apiRouteOutType } from '@label/core';
-import { AdminMenu, MainHeader, tableRowFieldType, Text } from '../../../components';
+import { tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { AgentsDataFetcher } from './AgentsDataFetcher';
 import { AgentsTable } from './AgentsTable';
 import { AddAgentButton } from './AddAgentDrawer/AddAgentButton';
 
 export { Agents };
 
-function Agents() {
+function Agents(props: { usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'> }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const userFields = buildUserFields();
   return (
-    <>
-      <div style={styles.header}>
-        <MainHeader title={wordings.agentsPage.title} subtitle={<Text>{wordings.agentsPage.subtitle}</Text>} />
+    <div style={styles.table}>
+      <div style={styles.tableHeaderContainer}>
+        <div style={styles.tableHeader}>
+          <AddAgentButton />
+        </div>
       </div>
-      <div style={styles.contentContainer}>
-        <AdminMenu />
-        <AgentsDataFetcher>
-          {({ usersWithDetails }) => {
-            return (
-              <div style={styles.table}>
-                <div style={styles.tableHeaderContainer}>
-                  <div style={styles.tableHeader}>
-                    <AddAgentButton />
-                  </div>
-                </div>
-                <div style={styles.tableContentContainer}>
-                  <AgentsTable usersWithDetails={usersWithDetails} fields={userFields} />
-                </div>
-              </div>
-            );
-          }}
-        </AgentsDataFetcher>
+      <div style={styles.tableContentContainer}>
+        <AgentsTable usersWithDetails={props.usersWithDetails} fields={userFields} />
       </div>
-    </>
+    </div>
   );
 
   function buildUserFields() {
@@ -69,14 +54,6 @@ function Agents() {
 
   function buildStyles(theme: customThemeType) {
     return {
-      header: {
-        height: heights.header,
-      },
-      contentContainer: {
-        display: 'flex',
-        width: '100vw',
-        height: heights.adminPanel,
-      },
       tableHeaderContainer: {
         height: heights.adminTreatmentsTableHeader,
       },

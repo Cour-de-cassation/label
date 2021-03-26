@@ -1,54 +1,29 @@
 import React from 'react';
-import { AdminMenu, MainHeader, Text } from '../../../components';
+import { apiRouteOutType } from '@label/core';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
-import { wordings } from '../../../wordings';
-import { ProblemReportsDataFetcher } from './ProblemReportsDataFetcher';
 import { ProblemReportsTable } from './ProblemReportsTable';
 
 export { ProblemReports };
 
-function ProblemReports() {
+function ProblemReports(props: { problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'> }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   return (
-    <>
-      <div style={styles.header}>
-        <MainHeader
-          title={wordings.problemReportsPage.title}
-          subtitle={<Text>{wordings.problemReportsPage.subtitle}</Text>}
-        />
+    <div style={styles.table}>
+      <div style={styles.tableHeaderContainer}>
+        <div style={styles.tableHeader}></div>
       </div>
-      <div style={styles.contentContainer}>
-        <AdminMenu />
-        <ProblemReportsDataFetcher>
-          {({ problemReportsWithDetails }) => (
-            <div style={styles.table}>
-              <div style={styles.tableHeaderContainer}>
-                <div style={styles.tableHeader}></div>
-              </div>
-              <div style={styles.tableContentContainer}>
-                <ProblemReportsTable problemReportsWithDetails={problemReportsWithDetails} />
-              </div>
-            </div>
-          )}
-        </ProblemReportsDataFetcher>
+      <div style={styles.tableContentContainer}>
+        <ProblemReportsTable problemReportsWithDetails={props.problemReportsWithDetails} />
       </div>
-    </>
+    </div>
   );
 }
 
 function buildStyles(theme: customThemeType) {
   return {
-    header: {
-      height: heights.header,
-    },
     tableHeaderContainer: {
       height: heights.adminTreatmentsTableHeader,
-    },
-    contentContainer: {
-      display: 'flex',
-      width: '100vw',
-      height: heights.adminPanel,
     },
     tableHeader: {
       paddingTop: theme.spacing * 2,

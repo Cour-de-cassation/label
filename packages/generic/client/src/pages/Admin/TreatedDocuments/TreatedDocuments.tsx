@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
 import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator, treatmentModule } from '@label/core';
-import { AdminMenu, MainHeader, PublicationCategoryBadge, tableRowFieldType, Text } from '../../../components';
+import { PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ExportCSVButton } from './ExportCSVButton';
 import { TreatedDocumentsFilters, treatedDocumentFilterType } from './TreatedDocumentsFilters';
 import { StatisticsBox } from './StatisticsBox';
-import { TreatedDocumentsDataFetcher } from './TreatedDocumentsDataFetcher';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
 
 export { TreatedDocuments };
@@ -21,84 +20,68 @@ const DEFAULT_FILTERS = {
   mustHaveSubAnnotations: false,
 };
 
-function TreatedDocuments() {
+function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'> }) {
   const theme = useCustomTheme();
   const [filterValues, setFilterValues] = useState<treatedDocumentFilterType>(DEFAULT_FILTERS);
   const styles = buildStyles(theme);
+
+  const filterInfo = extractFilterInfoFromTreatedDocuments(props.treatedDocuments);
+  const summedTreatmentsInfo = computeSummedTreatmentsInfo(props.treatedDocuments);
+  const treatmentFields = buildTreatedDocumentsFields(summedTreatmentsInfo);
+  const filteredTreatedDocuments = getFilteredTreatedDocuments(
+    props.treatedDocuments,
+    summedTreatmentsInfo,
+    filterValues,
+  );
+  const filteredDocumentIdsString = filteredTreatedDocuments.map((treatedDocument) =>
+    idModule.lib.convertToString(treatedDocument.document._id),
+  );
+  const filteredTreatmentsInfo = Object.entries(summedTreatmentsInfo).reduce(
+    (accumulator, [documentIdString, treatmentsInfo]) => {
+      if (filteredDocumentIdsString.includes(documentIdString)) {
+        return {
+          ...accumulator,
+          [documentIdString]: treatmentsInfo,
+        };
+      }
+      return accumulator;
+    },
+    {} as Record<string, treatmentInfoType>,
+  );
+
+  const totalDuration = sumBy(
+    flatten(filteredTreatedDocuments.map((treatedDocument) => treatedDocument.treatments)),
+    (treatment) => treatment.duration,
+  );
+
   return (
-    <>
-      <div style={styles.header}>
-        <MainHeader
-          title={wordings.treatedDocumentsPage.title}
-          subtitle={<Text>{wordings.treatedDocumentsPage.subtitle}</Text>}
-        />
+    <div style={styles.table}>
+      <div style={styles.tableHeaderContainer}>
+        <div style={styles.tableHeader}>
+          <div style={styles.leftHeaderContent}>
+            <TreatedDocumentsFilters
+              filterInfo={filterInfo}
+              filterValues={filterValues}
+              setFilterValues={setFilterValues}
+              resultsCount={filteredTreatedDocuments.length}
+            />
+          </div>
+          <div style={styles.statisticsBoxContainer}>
+            <StatisticsBox
+              totalDuration={totalDuration}
+              treatedDocumentsCount={filteredTreatedDocuments.length}
+              treatmentsInfo={filteredTreatmentsInfo}
+            />
+          </div>
+        </div>
       </div>
-      <div style={styles.contentContainer}>
-        <AdminMenu />
-        <TreatedDocumentsDataFetcher>
-          {({ treatedDocuments }) => {
-            const filterInfo = extractFilterInfoFromTreatedDocuments(treatedDocuments);
-            const summedTreatmentsInfo = computeSummedTreatmentsInfo(treatedDocuments);
-            const treatmentFields = buildTreatedDocumentsFields(summedTreatmentsInfo);
-            const filteredTreatedDocuments = getFilteredTreatedDocuments(
-              treatedDocuments,
-              summedTreatmentsInfo,
-              filterValues,
-            );
-            const filteredDocumentIdsString = filteredTreatedDocuments.map((treatedDocument) =>
-              idModule.lib.convertToString(treatedDocument.document._id),
-            );
-            const filteredTreatmentsInfo = Object.entries(summedTreatmentsInfo).reduce(
-              (accumulator, [documentIdString, treatmentsInfo]) => {
-                if (filteredDocumentIdsString.includes(documentIdString)) {
-                  return {
-                    ...accumulator,
-                    [documentIdString]: treatmentsInfo,
-                  };
-                }
-                return accumulator;
-              },
-              {} as Record<string, treatmentInfoType>,
-            );
-
-            const totalDuration = sumBy(
-              flatten(filteredTreatedDocuments.map((treatedDocument) => treatedDocument.treatments)),
-              (treatment) => treatment.duration,
-            );
-
-            return (
-              <div style={styles.table}>
-                <div style={styles.tableHeaderContainer}>
-                  <div style={styles.tableHeader}>
-                    <div style={styles.leftHeaderContent}>
-                      <TreatedDocumentsFilters
-                        filterInfo={filterInfo}
-                        filterValues={filterValues}
-                        setFilterValues={setFilterValues}
-                        resultsCount={filteredTreatedDocuments.length}
-                      />
-                    </div>
-                    <div style={styles.statisticsBoxContainer}>
-                      <StatisticsBox
-                        totalDuration={totalDuration}
-                        treatedDocumentsCount={filteredTreatedDocuments.length}
-                        treatmentsInfo={filteredTreatmentsInfo}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div style={styles.tableContentContainer}>
-                  <TreatedDocumentsTable treatedDocuments={filteredTreatedDocuments} fields={treatmentFields} />
-                </div>
-                <div style={styles.csvButtonContainer}>
-                  <ExportCSVButton data={filteredTreatedDocuments} fields={treatmentFields} />
-                </div>
-              </div>
-            );
-          }}
-        </TreatedDocumentsDataFetcher>
+      <div style={styles.tableContentContainer}>
+        <TreatedDocumentsTable treatedDocuments={filteredTreatedDocuments} fields={treatmentFields} />
       </div>
-    </>
+      <div style={styles.csvButtonContainer}>
+        <ExportCSVButton data={filteredTreatedDocuments} fields={treatmentFields} />
+      </div>
+    </div>
   );
 
   function computeSummedTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {

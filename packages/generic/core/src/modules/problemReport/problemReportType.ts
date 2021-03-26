@@ -9,6 +9,7 @@ const problemReportDataModel = {
   date: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
   _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
   text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
+  hasBeenRead: { type: buildDataModelEntry({ kind: 'primitive', content: 'boolean' }), network: true },
   type: {
     type: buildDataModelEntry({ kind: 'constant', content: ['bug', 'annotationProblem', 'suggestion'] as const }),
     network: true,

@@ -38,6 +38,7 @@ const problemReportService = {
       problemReportModule.lib.buildProblemReport({
         assignationId,
         date: new Date().getTime(),
+        hasBeenRead: false,
         text: problemText,
         type: problemType,
       }),

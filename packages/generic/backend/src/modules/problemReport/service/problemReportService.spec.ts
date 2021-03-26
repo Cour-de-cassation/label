@@ -38,6 +38,7 @@ describe('problemReportService', () => {
         assignationId: assignation._id,
         date: problemReport.date,
         _id: problemReport._id,
+        hasBeenRead: problemReport.hasBeenRead,
         text: problemText,
         type: problemType,
       });

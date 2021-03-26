@@ -5,7 +5,7 @@ import { wordings } from '../../wordings';
 
 export { LoadingPage };
 
-const LOADER_SIZE = 100;
+const LOADER_SIZE = 36;
 
 function LoadingPage() {
   const theme = useCustomTheme();

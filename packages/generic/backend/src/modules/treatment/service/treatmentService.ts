@@ -15,6 +15,43 @@ import { buildTreatmentRepository } from '../repository';
 export { treatmentService };
 
 const treatmentService = {
+  async createTreatment({
+    documentId,
+    previousAnnotations,
+    nextAnnotations,
+    source,
+  }: {
+    documentId: documentType['_id'];
+    previousAnnotations: annotationType[];
+    nextAnnotations: annotationType[];
+    source: treatmentType['source'];
+  }): Promise<treatmentType['_id']> {
+    const treatmentRepository = buildTreatmentRepository();
+    const lastTreatment = await treatmentRepository.findLastOneByDocumentId(
+      documentId,
+    );
+    const order = lastTreatment ? lastTreatment.order + 1 : 0;
+    const treatment = treatmentModule.lib.buildTreatment({
+      annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
+        previousAnnotations,
+        nextAnnotations,
+      ),
+      documentId,
+      duration: 0,
+      lastUpdateDate: new Date().getTime(),
+      order,
+      source,
+    });
+
+    await treatmentRepository.insert(treatment);
+    return treatment._id;
+  },
+
+  async deleteTreatmentsByDocumentId(documentId: treatmentType['documentId']) {
+    const treatmentRepository = buildTreatmentRepository();
+    await treatmentRepository.deleteByDocumentId(documentId);
+  },
+
   async fetchAnnotationsOfDocument(documentId: idType) {
     const treatmentRepository = buildTreatmentRepository();
     const treatments = await treatmentRepository.findAllByDocumentId(
@@ -51,38 +88,6 @@ const treatmentService = {
     );
 
     return treatedDocumentIds;
-  },
-
-  async createTreatment({
-    documentId,
-    previousAnnotations,
-    nextAnnotations,
-    source,
-  }: {
-    documentId: documentType['_id'];
-    previousAnnotations: annotationType[];
-    nextAnnotations: annotationType[];
-    source: treatmentType['source'];
-  }): Promise<treatmentType['_id']> {
-    const treatmentRepository = buildTreatmentRepository();
-    const lastTreatment = await treatmentRepository.findLastOneByDocumentId(
-      documentId,
-    );
-    const order = lastTreatment ? lastTreatment.order + 1 : 0;
-    const treatment = treatmentModule.lib.buildTreatment({
-      annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
-        previousAnnotations,
-        nextAnnotations,
-      ),
-      documentId,
-      duration: 0,
-      lastUpdateDate: new Date().getTime(),
-      order,
-      source,
-    });
-
-    await treatmentRepository.insert(treatment);
-    return treatment._id;
   },
 
   async updateTreatment({

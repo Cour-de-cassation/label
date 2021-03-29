@@ -3,6 +3,9 @@ import { documentType, treatmentType } from '@label/core';
 export type { customTreatmentRepositoryType };
 
 type customTreatmentRepositoryType = {
+  deleteByDocumentId: (
+    documentId: treatmentType['documentId'],
+  ) => Promise<void>;
   findAllByDocumentId: (
     documentId: documentType['_id'],
   ) => Promise<treatmentType[]>;

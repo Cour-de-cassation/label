@@ -12,11 +12,22 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
   customTreatmentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
+    async deleteByDocumentId(documentId) {
+      updateFakeCollection(
+        collection,
+        collection.filter(
+          (treatment) =>
+            !idModule.lib.equalId(treatment.documentId, documentId),
+        ),
+      );
+    },
+
     async findAllByDocumentId(documentId) {
       return collection.filter((treatment) =>
         idModule.lib.equalId(treatment.documentId, documentId),
       );
     },
+
     async findAllByDocumentIds(documentIds) {
       const treatments = collection.filter((treatment) =>
         documentIds.some((documentId) =>
@@ -27,6 +38,7 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
         idModule.lib.convertToString(treatment.documentId),
       );
     },
+
     async findLastOneByDocumentId(documentId) {
       const result = collection.filter((treatment) =>
         idModule.lib.equalId(treatment.documentId, documentId),
@@ -36,6 +48,7 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
         (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
       )[0];
     },
+
     async updateOne(treatmentId, { annotationsDiff, duration }) {
       updateFakeCollection(
         collection,

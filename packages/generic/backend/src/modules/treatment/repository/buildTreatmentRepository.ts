@@ -15,9 +15,14 @@ const buildTreatmentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
+    async deleteByDocumentId(documentId) {
+      await collection.deleteMany({ documentId });
+    },
+
     async findAllByDocumentId(documentId) {
       return collection.find({ documentId }).toArray();
     },
+
     async findLastOneByDocumentId(documentId) {
       const result = await collection.find({ documentId }).toArray();
 
@@ -25,6 +30,7 @@ const buildTreatmentRepository = buildRepositoryBuilder<
         (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
       )[0];
     },
+
     async findAllByDocumentIds(documentIds) {
       const treatments = await collection
         .find({ documentId: { $in: documentIds } })
@@ -38,6 +44,7 @@ const buildTreatmentRepository = buildRepositoryBuilder<
         idModule.lib.convertToString(treatment.documentId),
       );
     },
+
     async updateOne(
       treatmentId,
       { annotationsDiff, duration, lastUpdateDate },

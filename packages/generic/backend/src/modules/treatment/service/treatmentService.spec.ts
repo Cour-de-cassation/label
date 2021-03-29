@@ -10,6 +10,23 @@ import { treatmentService } from './treatmentService';
 describe('treatmentService', () => {
   const treatmentRepository = buildTreatmentRepository();
 
+  describe('deleteTreatmentsByDocumentId', () => {
+    it('should remove all the treatments from the database with the given document id', async () => {
+      const documentId = idModule.lib.buildId();
+      const treatments = ([
+        { documentId },
+        { documentId },
+        { documentId: idModule.lib.buildId() },
+      ] as const).map(treatmentModule.generator.generate);
+      await Promise.all(treatments.map(treatmentRepository.insert));
+
+      await treatmentService.deleteTreatmentsByDocumentId(documentId);
+
+      const treatmentsAfterRemove = await treatmentRepository.findAll();
+      expect(treatmentsAfterRemove).toEqual([treatments[2]]);
+    });
+  });
+
   describe('fetchAnnotationsOfDocument', () => {
     it('should fetch the annotations from the treatments of the given document id', async () => {
       const annotations = [

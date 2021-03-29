@@ -8,8 +8,10 @@ import {
 } from '@label/core';
 import { settingsLoader } from '../../../lib/settingsLoader';
 import { dateBuilder } from '../../../utils';
+import { annotationReportService } from '../../annotationReport';
 import { assignationService } from '../../assignation';
 import { treatmentService } from '../../treatment';
+import { monitoringEntryService } from '../../monitoringEntry';
 import { userService } from '../../user';
 import { buildDocumentRepository } from '../repository';
 
@@ -18,6 +20,17 @@ export { documentService };
 const DAYS_BEFORE_EXPORT = 10;
 
 const documentService = {
+  async deleteDocument(id: documentType['_id']) {
+    const documentRepository = buildDocumentRepository();
+
+    await annotationReportService.deleteAnnotationReportsByDocumentId(id);
+    await assignationService.deleteAssignationsByDocumentId(id);
+    await monitoringEntryService.deleteMonitoringEntriesByDocumentId(id);
+    await treatmentService.deleteTreatmentsByDocumentId(id);
+
+    await documentRepository.deleteManyByIds([id]);
+  },
+
   async fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByIds(documentIds);

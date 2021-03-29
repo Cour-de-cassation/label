@@ -1,20 +1,78 @@
 import { range } from 'lodash';
 import {
+  annotationReportModule,
   assignationModule,
   documentModule,
+  monitoringEntryModule,
   treatmentModule,
   idModule,
 } from '@label/core';
 import { dateBuilder } from '../../../utils';
+import { buildAnnotationReportRepository } from '../../annotationReport';
 import { buildAssignationRepository } from '../../assignation';
+import { buildMonitoringEntryRepository } from '../../monitoringEntry';
 import { buildTreatmentRepository } from '../../treatment';
 import { buildDocumentRepository } from '../repository';
 import { documentService } from './documentService';
 
 describe('documentService', () => {
+  const annotationReportRepository = buildAnnotationReportRepository();
   const assignationRepository = buildAssignationRepository();
-  const treatmentRepository = buildTreatmentRepository();
   const documentRepository = buildDocumentRepository();
+  const monitoringEntryRepository = buildMonitoringEntryRepository();
+  const treatmentRepository = buildTreatmentRepository();
+
+  describe('deleteDocument', () => {
+    it('should remove the given document from the database with all its dependencies', async () => {
+      const documentId = idModule.lib.buildId();
+      const annotationReports = ([
+        { documentId },
+        { documentId },
+        { documentId: idModule.lib.buildId() },
+      ] as const).map(annotationReportModule.generator.generate);
+      const assignations = ([
+        { documentId },
+        { documentId },
+        { documentId: idModule.lib.buildId() },
+      ] as const).map(assignationModule.generator.generate);
+      const documents = ([
+        { _id: documentId },
+        { _id: idModule.lib.buildId() },
+      ] as const).map(documentModule.generator.generate);
+      const monitoringEntries = ([
+        { documentId },
+        { documentId },
+        { documentId: idModule.lib.buildId() },
+      ] as const).map(monitoringEntryModule.generator.generate);
+      const treatments = ([
+        { documentId },
+        { documentId },
+        { documentId: idModule.lib.buildId() },
+      ] as const).map(treatmentModule.generator.generate);
+      await Promise.all(
+        annotationReports.map(annotationReportRepository.insert),
+      );
+      await Promise.all(assignations.map(assignationRepository.insert));
+      await Promise.all(documents.map(documentRepository.insert));
+      await Promise.all(
+        monitoringEntries.map(monitoringEntryRepository.insert),
+      );
+      await Promise.all(treatments.map(treatmentRepository.insert));
+
+      await documentService.deleteDocument(documentId);
+
+      const annotationReportsAfterRemove = await annotationReportRepository.findAll();
+      const assignationsAfterRemove = await assignationRepository.findAll();
+      const documentsAfterRemove = await documentRepository.findAll();
+      const monitoringEntriesAfterRemove = await monitoringEntryRepository.findAll();
+      const treatmentsAfterRemove = await treatmentRepository.findAll();
+      expect(annotationReportsAfterRemove).toEqual([annotationReports[2]]);
+      expect(assignationsAfterRemove).toEqual([assignations[2]]);
+      expect(documentsAfterRemove).toEqual([documents[1]]);
+      expect(monitoringEntriesAfterRemove).toEqual([monitoringEntries[2]]);
+      expect(treatmentsAfterRemove).toEqual([treatments[2]]);
+    });
+  });
 
   describe('fetchDocumentsReadyToExport', () => {
     it('should fetch all the documents done more than 10 days ago', async () => {

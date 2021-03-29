@@ -15,6 +15,7 @@ import {
   shadeColorType,
   categoryIconNameType,
 } from './settings';
+import { statisticModule, statisticType } from './statistic';
 import { treatmentType, treatmentModule, treatmentInfoType } from './treatment';
 import { userModule, userType } from './user';
 import {
@@ -36,6 +37,7 @@ export {
   monitoringEntryModule,
   problemReportModule,
   settingsModule,
+  statisticModule,
   treatmentModule,
   userModule,
   buildDataModelEntry,
@@ -57,6 +59,7 @@ export type {
   monitoringEntryType,
   problemReportType,
   settingsType,
+  statisticType,
   categoryIconNameType,
   userType,
   treatmentType,

@@ -4,58 +4,37 @@ import { annotationModule, annotationType } from '../../modules';
 export { annotationLinkHandler };
 
 const annotationLinkHandler = {
-  link,
-  getRepresentatives,
+  countLinkedEntities,
   getLinkableAnnotations,
   getLinkedAnnotations,
   getLinkedAnnotationRepresentatives,
+  getRepresentatives,
   isLinked,
   isLinkedTo,
+  link,
   unlink,
   unlinkByCategoryAndText,
   updateMainLinkEntity,
 };
 
-function link(
-  annotationSource: annotationType,
-  annotationTarget: annotationType,
-  annotations: annotationType[],
-): annotationType[] {
-  return annotations.map((annotation) =>
-    annotation.entityId === annotationSource.entityId
-      ? annotationModule.lib.annotationLinker.link(annotation, annotationTarget)
-      : annotation,
-  );
-}
+function countLinkedEntities(annotations: annotationType[]) {
+  let linkedEntities = 0;
+  let representatives = getRepresentatives(annotations);
 
-function isLinked(annotation: annotationType, annotations: annotationType[]): boolean {
-  return annotations.some(
-    (otherAnnotation) => otherAnnotation.entityId === annotation.entityId && otherAnnotation.text !== annotation.text,
-  );
-}
+  while (representatives.length !== 0) {
+    const representative = representatives[0];
+    representatives = representatives.slice(1);
+    const linkedRepresentatives = getLinkedAnnotations(representative.entityId, representatives);
 
-function isLinkedTo(annotationSource: annotationType, annotationTarget: annotationType) {
-  return annotationSource.entityId === annotationTarget.entityId;
-}
+    linkedEntities = linkedEntities + linkedRepresentatives.length;
+    representatives = representatives.filter((someRepresentative) =>
+      linkedRepresentatives.every(
+        (linkedRepresentative) => !annotationModule.lib.comparator.equal(someRepresentative, linkedRepresentative),
+      ),
+    );
+  }
 
-function getRepresentatives(annotations: annotationType[]) {
-  return uniqBy(annotations, (otherAnnotation) =>
-    annotationModule.lib.entityIdHandler.compute(otherAnnotation.category, otherAnnotation.text),
-  ).sort(annotationModule.lib.comparator.compareByText);
-}
-
-function getLinkedAnnotationRepresentatives(
-  entityId: annotationType['entityId'],
-  annotations: annotationType[],
-): annotationType[] {
-  return uniqBy(
-    getLinkedAnnotations(entityId, annotations),
-    (otherAnnotation) => otherAnnotation.text,
-  ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
-}
-
-function getLinkedAnnotations(entityId: annotationType['entityId'], annotations: annotationType[]): annotationType[] {
-  return annotations.filter((otherAnnotation) => otherAnnotation.entityId === entityId);
+  return linkedEntities;
 }
 
 function getLinkableAnnotations(annotation: annotationType, annotations: annotationType[]): annotationType[] {
@@ -72,6 +51,48 @@ function getLinkableAnnotations(annotation: annotationType, annotations: annotat
     .map((annotations) => annotations[0]);
 
   return linkeableAnnotations;
+}
+
+function getLinkedAnnotations(entityId: annotationType['entityId'], annotations: annotationType[]): annotationType[] {
+  return annotations.filter((otherAnnotation) => otherAnnotation.entityId === entityId);
+}
+
+function getLinkedAnnotationRepresentatives(
+  entityId: annotationType['entityId'],
+  annotations: annotationType[],
+): annotationType[] {
+  return uniqBy(
+    getLinkedAnnotations(entityId, annotations),
+    (otherAnnotation) => otherAnnotation.text,
+  ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
+}
+
+function getRepresentatives(annotations: annotationType[]) {
+  return uniqBy(annotations, (otherAnnotation) =>
+    annotationModule.lib.entityIdHandler.compute(otherAnnotation.category, otherAnnotation.text),
+  ).sort(annotationModule.lib.comparator.compareByText);
+}
+
+function isLinked(annotation: annotationType, annotations: annotationType[]): boolean {
+  return annotations.some(
+    (otherAnnotation) => otherAnnotation.entityId === annotation.entityId && otherAnnotation.text !== annotation.text,
+  );
+}
+
+function isLinkedTo(annotationSource: annotationType, annotationTarget: annotationType) {
+  return annotationSource.entityId === annotationTarget.entityId;
+}
+
+function link(
+  annotationSource: annotationType,
+  annotationTarget: annotationType,
+  annotations: annotationType[],
+): annotationType[] {
+  return annotations.map((annotation) =>
+    annotation.entityId === annotationSource.entityId
+      ? annotationModule.lib.annotationLinker.link(annotation, annotationTarget)
+      : annotation,
+  );
 }
 
 function unlink(annotationToUnlink: annotationType, annotations: annotationType[]): annotationType[] {

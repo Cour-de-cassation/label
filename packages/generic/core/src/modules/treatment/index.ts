@@ -1,6 +1,12 @@
 import { treatmentGenerator } from './generator';
 import { treatmentDataModel, treatmentType } from './treatmentType';
-import { buildTreatment, computeAnnotations, computeTreatmentsInfo, treatmentInfoType } from './lib';
+import {
+  buildTreatment,
+  computeAnnotations,
+  computeTreatmentInfo,
+  computeTreatmentsInfo,
+  treatmentInfoType,
+} from './lib';
 
 export { treatmentModule };
 
@@ -12,6 +18,7 @@ const treatmentModule = {
   lib: {
     buildTreatment,
     computeAnnotations,
+    computeTreatmentInfo,
     computeTreatmentsInfo,
   },
 };

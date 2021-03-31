@@ -7,6 +7,7 @@ import { annotationOverlapDetector } from './annotationOverlapDetector';
 import { annotationTextDetector } from './annotationTextDetector';
 import { csvExtractor } from './csvExtractor';
 import { httpRequester } from './httpRequester';
+import { statisticsCreator } from './statisticsCreator';
 import { stringComparator } from './stringComparator';
 import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
 import { timeOperator } from './timeOperator';
@@ -21,6 +22,7 @@ export {
   buildAutoAnnotator,
   csvExtractor,
   httpRequester,
+  statisticsCreator,
   stringComparator,
   textSplitter,
   timeOperator,

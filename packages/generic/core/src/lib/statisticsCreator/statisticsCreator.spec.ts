@@ -20,6 +20,7 @@ describe('statisticsCreator', () => {
         documentId: documentNumber,
         publicationCategory: documentPublicationCategory,
         source: documentSource,
+        text: 'Some text with five words',
       });
       const treatments = [
         {
@@ -75,6 +76,7 @@ describe('statisticsCreator', () => {
         source: documentSource,
         treatmentDuration: duration,
         userId,
+        wordsCount: 5,
       });
     });
   });

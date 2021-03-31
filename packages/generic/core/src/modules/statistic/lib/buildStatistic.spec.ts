@@ -19,6 +19,7 @@ describe('buildStatistic', () => {
       documentId: documentNumber,
       publicationCategory: documentPublicationCategory,
       source: documentSource,
+      text: 'Some text with five words',
     });
     const treatment = treatmentModule.generator.generate({
       annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
@@ -62,6 +63,7 @@ describe('buildStatistic', () => {
       source: documentSource,
       treatmentDuration: duration,
       userId,
+      wordsCount: 5,
     });
   });
 });

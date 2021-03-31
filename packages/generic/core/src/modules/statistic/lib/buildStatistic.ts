@@ -1,5 +1,5 @@
 import { assignationType } from '../../assignation';
-import { documentType } from '../../document';
+import { documentModule, documentType } from '../../document';
 import { idModule } from '../../id';
 import { treatmentModule, treatmentType } from '../../treatment';
 import { statisticType } from '../statisticType';
@@ -41,5 +41,6 @@ function buildStatistic({
     source: document.source,
     treatmentDuration: treatment.duration,
     userId: assignation.userId,
+    wordsCount: documentModule.lib.countWords(document),
   };
 }

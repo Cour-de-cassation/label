@@ -19,6 +19,7 @@ const statisticGenerator: generatorType<statisticType> = {
     source,
     treatmentDuration,
     userId,
+    wordsCount,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     addedAnnotationsCount: addedAnnotationsCount ? addedAnnotationsCount : 0,
@@ -33,5 +34,6 @@ const statisticGenerator: generatorType<statisticType> = {
     source: source ? source : `SOURCE_${Math.random()}`,
     treatmentDuration: treatmentDuration ? treatmentDuration : 0,
     userId: userId ? idModule.lib.buildId(userId) : idModule.lib.buildId(),
+    wordsCount: wordsCount ? wordsCount : 0,
   }),
 };

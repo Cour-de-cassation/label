@@ -24,6 +24,7 @@ const statisticDataModel = {
   source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
   treatmentDuration: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
   userId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
+  wordsCount: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
 } as const;
 
 type statisticType = typeOfDataModel<typeof statisticDataModel>;

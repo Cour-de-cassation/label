@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { httpRequester } from '@label/core';
 import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
 
 export { nlpApi };
@@ -15,13 +15,11 @@ const nlpApi: nlpApiType = {
       categories: Object.keys(settings),
     };
 
-    const response = await axios({
-      data: nlpRequestParameters,
-      headers: { 'Content-Type': 'application/json' },
-      method: 'post',
-      url: `${NLP_API_BASE_URL}/ner`,
-    });
+    const response = await httpRequester.post(
+      `${NLP_API_BASE_URL}/ner`,
+      nlpRequestParameters,
+    );
 
-    return response.data as nlpAnnotationsType;
+    return response as nlpAnnotationsType;
   },
 };

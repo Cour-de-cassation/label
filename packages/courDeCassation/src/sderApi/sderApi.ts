@@ -1,6 +1,4 @@
-import axios from 'axios';
-import http from 'http';
-import { dependencyManager, documentType } from '@label/core';
+import { dependencyManager, documentType, httpRequester } from '@label/core';
 import { dateBuilder } from '@label/backend';
 import { sderApiType, sderCourtDecisionType } from './sderApiType';
 
@@ -14,39 +12,24 @@ const SDER_API_BASE_URL = dependencyManager.inject({
 const sderApi: sderApiType = {
   async fetchCourtDecisions(days) {
     const dateDaysAgo = new Date(dateBuilder.daysAgo(days)).toISOString();
-    const response = await axios({
-      headers: { 'Content-Type': 'application/json' },
-      httpAgent: new http.Agent({ keepAlive: true }),
-      method: 'get',
-      url: `${SDER_API_BASE_URL}/decisions-to-pseudonymise?date="${dateDaysAgo}"`,
-    });
+    const response = await httpRequester.get(
+      `${SDER_API_BASE_URL}/decisions-to-pseudonymise?date="${dateDaysAgo}"`,
+    );
 
-    return response.data as sderCourtDecisionType[];
+    return response as sderCourtDecisionType[];
   },
 
   async setCourtDecisionsLoaded(documents: documentType[]) {
-    await axios({
-      data: {
-        decisionIds: documents.map(document => document.documentId),
-        labelStatus: 'loaded',
-      },
-      headers: { 'Content-Type': 'application/json' },
-      httpAgent: new http.Agent({ keepAlive: true }),
-      method: 'patch',
-      url: `${SDER_API_BASE_URL}/update-label-status`,
+    await httpRequester.patch(`${SDER_API_BASE_URL}/update-label-status`, {
+      decisionIds: documents.map(document => document.documentId),
+      labelStatus: 'loaded',
     });
   },
 
   async setCourtDecisionDone(documentId) {
-    await axios({
-      data: {
-        decisionIds: [documentId],
-        labelStatus: 'done',
-      },
-      headers: { 'Content-Type': 'application/json' },
-      httpAgent: new http.Agent({ keepAlive: true }),
-      method: 'patch',
-      url: `${SDER_API_BASE_URL}/update-label-status`,
+    await httpRequester.patch(`${SDER_API_BASE_URL}/update-label-status`, {
+      decisionIds: [documentId],
+      labelStatus: 'done',
     });
   },
 
@@ -55,16 +38,13 @@ const sderApi: sderApiType = {
     pseudonymizationText,
     labelTreatments,
   }) {
-    await axios({
-      data: {
+    await httpRequester.patch(
+      `${SDER_API_BASE_URL}/update-decision-pseudonymisation`,
+      {
         decisionId: documentId,
         decisionPseudonymisedText: pseudonymizationText,
         labelTreatments,
       },
-      headers: { 'Content-Type': 'application/json' },
-      httpAgent: new http.Agent({ keepAlive: true }),
-      method: 'patch',
-      url: `${SDER_API_BASE_URL}/update-decision-pseudonymisation`,
-    });
+    );
   },
 };

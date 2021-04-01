@@ -18,8 +18,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
       await insertDocuments(documents);
       logger.log(`Insertion done!`);
 
-      //logger.log(`Send documents have been loaded...`);
-      //await connectorConfig.updateDocumentsLoadedStatus(documents);
+      logger.log(`Send documents have been loaded...`);
+      await connectorConfig.updateDocumentsLoadedStatus(documents);
       logger.log(`DONE`);
     },
   };

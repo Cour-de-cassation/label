@@ -27,10 +27,11 @@ const sderApi: sderApiType = {
   async setCourtDecisionsLoaded(documents: documentType[]) {
     await axios({
       data: {
-        decisionIds: documents.map((document) => document.documentId),
+        decisionIds: documents.map(document => document.documentId),
         labelStatus: 'loaded',
       },
       headers: { 'Content-Type': 'application/json' },
+      httpAgent: new http.Agent({ keepAlive: true }),
       method: 'patch',
       url: `${SDER_API_BASE_URL}/update-label-status`,
     });
@@ -43,6 +44,7 @@ const sderApi: sderApiType = {
         labelStatus: 'done',
       },
       headers: { 'Content-Type': 'application/json' },
+      httpAgent: new http.Agent({ keepAlive: true }),
       method: 'patch',
       url: `${SDER_API_BASE_URL}/update-label-status`,
     });
@@ -60,6 +62,7 @@ const sderApi: sderApiType = {
         labelTreatments,
       },
       headers: { 'Content-Type': 'application/json' },
+      httpAgent: new http.Agent({ keepAlive: true }),
       method: 'patch',
       url: `${SDER_API_BASE_URL}/update-decision-pseudonymisation`,
     });

@@ -19,7 +19,7 @@ function mapCourtDecisionToDocument(
 
   return documentModule.lib.buildDocument({
     creationDate: new Date(),
-    documentId: parseInt(sderCourtDecision.sourceId),
+    documentId: sderCourtDecision.sourceId,
     metadata: '',
     priority,
     publicationCategory:

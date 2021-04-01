@@ -19,14 +19,14 @@ const sderApi: sderApiType = {
 
   async setCourtDecisionsLoaded(documents: documentType[]) {
     await decisionModule.service.updateDecisionsLabelStatus({
-      decisionIds: documents.map(document => document.documentId.toString()),
+      decisionIds: documents.map(document => document.documentId),
       labelStatus: 'loaded',
     });
   },
 
   async setCourtDecisionDone(documentId) {
     await decisionModule.service.updateDecisionsLabelStatus({
-      decisionIds: [documentId.toString()],
+      decisionIds: [documentId],
       labelStatus: 'done',
     });
   },
@@ -37,7 +37,7 @@ const sderApi: sderApiType = {
     labelTreatments,
   }) {
     await decisionModule.service.updateDecisionPseudonymisation({
-      decisionId: documentId.toString(),
+      decisionId: documentId,
       decisionPseudonymisedText: pseudonymizationText,
       labelTreatments,
     });

@@ -27,22 +27,28 @@ const assignationService = {
       documentId,
       userId,
     });
+
     if (!assignation) {
       throw errorHandlers.notFoundErrorHandler.build(
         `No assignation found for userId ${userId} and documentId ${documentId}`,
       );
     }
   },
+
   async fetchAssignatedTreatmentIds() {
     const assignationRepository = buildAssignationRepository();
     const assignations = await assignationRepository.findAll();
+
     return assignations.map((assignation) => assignation.treatmentId);
   },
+
   async fetchAssignations() {
     const assignationRepository = buildAssignationRepository();
     const assignations = await assignationRepository.findAll();
+
     return assignations;
   },
+
   async fetchAssignationId({
     userId,
     documentId,
@@ -61,12 +67,22 @@ const assignationService = {
 
   async fetchAllAssignationsById(assignationIds?: assignationType['_id'][]) {
     const assignationRepository = buildAssignationRepository();
+
     return assignationRepository.findAllByIds(assignationIds);
   },
 
   async fetchAssignationsByDocumentIds(documentIdsToSearchIn: idType[]) {
     const assignationRepository = buildAssignationRepository();
+
     return assignationRepository.findAllByDocumentIds(documentIdsToSearchIn);
+  },
+
+  async fetchAssignationsOfDocumentId(
+    documentId: idType,
+  ): Promise<assignationType[]> {
+    const assignationRepository = buildAssignationRepository();
+
+    return assignationRepository.findAllByDocumentId(documentId);
   },
 
   async fetchDocumentIdsAssignatedToUserId(userId: idType) {
@@ -88,9 +104,11 @@ const assignationService = {
       documentId,
       userId,
     });
+
     if (assignation) {
       return assignation;
     }
+
     return this.createAssignation({ documentId, userId });
   },
 
@@ -100,8 +118,10 @@ const assignationService = {
   ) {
     const assignationRepository = buildAssignationRepository();
     const assignation = await assignationRepository.findById(assignationId);
+
     await documentService.updateDocumentStatus(assignation.documentId, status);
   },
+
   async createAssignation({
     userId,
     documentId,
@@ -116,13 +136,14 @@ const assignationService = {
       nextAnnotations: [],
       source: 'annotator',
     });
-
     const assignation = assignationModule.lib.buildAssignation({
       userId,
       documentId,
       treatmentId,
     });
+
     await assignationRepository.insert(assignation);
+
     return assignation;
   },
 
@@ -132,6 +153,7 @@ const assignationService = {
     const assignationsToDelete = await assignationRepository.findAllByDocumentId(
       documentId,
     );
+
     await assignationRepository.deleteManyByIds(
       assignationsToDelete.map(({ _id }) => _id),
     );

@@ -18,6 +18,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     findAllByIds,
     findById,
     insert,
+    insertMany,
     setIndexes,
     ...customRepository,
   });
@@ -62,6 +63,10 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   async function insert(newObject: T) {
     collection.push(newObject);
     return { success: true };
+  }
+
+  async function insertMany(newObjects: T[]) {
+    collection.push(...newObjects);
   }
 
   async function setIndexes() {}

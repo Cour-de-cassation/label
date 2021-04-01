@@ -21,9 +21,5 @@ const buildFakeMonitoringEntryRepository = buildFakeRepositoryBuilder<
         ),
       );
     },
-
-    async insertMany(monitoringEntries) {
-      collection.push(...monitoringEntries);
-    },
   }),
 });

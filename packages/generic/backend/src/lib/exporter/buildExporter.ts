@@ -5,6 +5,7 @@ import {
   treatmentType,
 } from '@label/core';
 import { documentService } from '../../modules/document';
+import { statisticService } from '../../modules/statistic';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { exporterConfigType, labelTreatmentsType } from './exporterConfigType';
@@ -47,6 +48,10 @@ function buildExporter(
         });
 
         await documentService.updateDocumentStatus(document._id, 'exported');
+
+        await statisticService.saveStatisticsOfDocument(document);
+
+        await documentService.deleteDocument(document._id);
       }
 
       logger.log(`Exportation done!`);

@@ -9,5 +9,6 @@ type repositoryType<T extends { _id: idType }> = {
   findAllByIds: (idsToSearchIn?: idType[]) => Promise<Record<string, T>>;
   findById: (id: idType) => Promise<T>;
   insert: (newObject: T) => Promise<{ success: boolean }>;
+  insertMany: (newObjects: T[]) => Promise<void>;
   setIndexes: () => Promise<void>;
 };

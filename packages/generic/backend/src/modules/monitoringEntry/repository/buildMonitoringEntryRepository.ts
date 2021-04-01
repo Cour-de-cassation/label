@@ -14,12 +14,5 @@ const buildMonitoringEntryRepository = buildRepositoryBuilder<
     async deleteByDocumentId(documentId) {
       await collection.deleteMany({ documentId });
     },
-
-    async insertMany(monitoringEntries) {
-      if (monitoringEntries.length === 0) {
-        return;
-      }
-      await collection.insertMany(monitoringEntries);
-    },
   }),
 });

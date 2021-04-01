@@ -33,6 +33,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       findAllByIds,
       findById,
       insert,
+      insertMany,
       setIndexes,
       ...customRepository,
     };
@@ -77,6 +78,13 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     async function insert(newObject: T) {
       const insertResult = await collection.insertOne(newObject as any);
       return { success: !!insertResult.result.ok };
+    }
+
+    async function insertMany(newObjects: T[]) {
+      if (newObjects.length === 0) {
+        return;
+      }
+      await collection.insertMany(newObjects as any[]);
     }
 
     async function setIndexes() {

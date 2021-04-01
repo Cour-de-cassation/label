@@ -22,6 +22,7 @@ const buildAssignationRepository = buildRepositoryBuilder<
     async findAllByUserId(userId) {
       return collection.find({ userId }).toArray();
     },
+
     async findAllByDocumentIds(documentIdsToSearchIn) {
       const assignations = await collection
         .find({ documentId: { $in: documentIdsToSearchIn } })
@@ -31,15 +32,20 @@ const buildAssignationRepository = buildRepositoryBuilder<
         idModule.lib.convertToString(assignation.documentId),
       );
     },
+
     async findByDocumentIdAndUserId({ documentId, userId }) {
       const result = await collection.find({ documentId, userId }).toArray();
+
       if (result.length === 0) {
         return undefined;
       }
+
       return result[0];
     },
+
     async findAllByDocumentId(documentId) {
       const result = await collection.find({ documentId }).toArray();
+
       return result;
     },
   }),

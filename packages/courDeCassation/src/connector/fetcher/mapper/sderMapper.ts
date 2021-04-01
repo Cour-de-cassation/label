@@ -1,12 +1,12 @@
+import { decisionType } from 'sder';
 import { documentType, documentModule, timeOperator } from '@label/core';
-import { sderCourtDecisionType } from '../../../sderApi';
 
 export { sderMapper };
 
 const sderMapper = { mapCourtDecisionToDocument };
 
 function mapCourtDecisionToDocument(
-  sderCourtDecision: sderCourtDecisionType,
+  sderCourtDecision: decisionType,
 ): documentType {
   const title = computeTitleFromParsedCourtDecision({
     number: sderCourtDecision.registerNumber,
@@ -19,7 +19,7 @@ function mapCourtDecisionToDocument(
 
   return documentModule.lib.buildDocument({
     creationDate: new Date(),
-    documentId: sderCourtDecision.sourceId,
+    documentId: parseInt(sderCourtDecision.sourceId),
     metadata: '',
     priority,
     publicationCategory:
@@ -42,7 +42,7 @@ function computeTitleFromParsedCourtDecision({
   number?: string;
   chamber?: string;
   juridiction?: string;
-  date?: string;
+  date?: Date;
 }) {
   const readableNumber = `Décision n°${number}`;
   const readableChamber = convertChamberIntoReadableChamber(chamber);
@@ -53,15 +53,14 @@ function computeTitleFromParsedCourtDecision({
   return title;
 }
 
-function convertRawDateIntoReadableDate(rawDate: string | undefined) {
+function convertRawDateIntoReadableDate(rawDate: Date | undefined) {
   if (!rawDate) {
     return undefined;
   }
-  const parsedDate = new Date(rawDate);
-  if (isNaN(parsedDate.getTime())) {
+  if (isNaN(rawDate.getTime())) {
     return undefined;
   }
-  return timeOperator.convertTimestampToReadableDate(parsedDate.getTime());
+  return timeOperator.convertTimestampToReadableDate(rawDate.getTime());
 }
 
 function convertChamberIntoReadableChamber(chamber: string | undefined) {

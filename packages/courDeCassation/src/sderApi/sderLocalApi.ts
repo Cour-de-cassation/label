@@ -1,6 +1,6 @@
+import { decisionModule, decisionType } from 'sder';
 import { fileSystem } from '@label/backend';
-import { sderCourtDecisionGenerator } from '../connector/test';
-import { sderApiType, sderCourtDecisionType } from './sderApiType';
+import { sderApiType } from './sderApiType';
 
 export { sderLocalApi };
 
@@ -19,8 +19,8 @@ const sderLocalApi: sderApiType = {
     );
 
     return courtDecisions
-      .map(({ content }) => JSON.parse(content) as sderCourtDecisionType)
-      .map(sderCourtDecisionGenerator.generate);
+      .map(({ content }) => JSON.parse(content) as decisionType)
+      .map(decisionModule.lib.generateDecision);
   },
 
   async setCourtDecisionsLoaded() {},

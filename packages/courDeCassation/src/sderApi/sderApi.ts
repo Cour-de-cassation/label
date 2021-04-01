@@ -1,34 +1,32 @@
-import { dependencyManager, documentType, httpRequester } from '@label/core';
+import { decisionModule } from 'sder';
+import { documentType } from '@label/core';
 import { dateBuilder } from '@label/backend';
-import { sderApiType, sderCourtDecisionType } from './sderApiType';
+import { sderApiType } from './sderApiType';
 
 export { sderApi };
 
-const SDER_API_BASE_URL = dependencyManager.inject({
-  forPreProd: 'http://127.0.0.1:54321',
-  forProd: 'http://127.0.0.1:54321',
-});
-
 const sderApi: sderApiType = {
   async fetchCourtDecisions(days) {
-    const dateDaysAgo = new Date(dateBuilder.daysAgo(days)).toISOString();
-    const response = await httpRequester.get(
-      `${SDER_API_BASE_URL}/decisions-to-pseudonymise?date="${dateDaysAgo}"`,
+    const dateDaysAgo = new Date(dateBuilder.daysAgo(days));
+    const courtDecisions = await decisionModule.service.fetchDecisionsToPseudonymise(
+      {
+        date: dateDaysAgo,
+      },
     );
 
-    return response as sderCourtDecisionType[];
+    return courtDecisions;
   },
 
   async setCourtDecisionsLoaded(documents: documentType[]) {
-    await httpRequester.patch(`${SDER_API_BASE_URL}/update-label-status`, {
-      decisionIds: documents.map(document => document.documentId),
+    await decisionModule.service.updateDecisionsLabelStatus({
+      decisionIds: documents.map(document => document.documentId.toString()),
       labelStatus: 'loaded',
     });
   },
 
   async setCourtDecisionDone(documentId) {
-    await httpRequester.patch(`${SDER_API_BASE_URL}/update-label-status`, {
-      decisionIds: [documentId],
+    await decisionModule.service.updateDecisionsLabelStatus({
+      decisionIds: [documentId.toString()],
       labelStatus: 'done',
     });
   },
@@ -38,13 +36,10 @@ const sderApi: sderApiType = {
     pseudonymizationText,
     labelTreatments,
   }) {
-    await httpRequester.patch(
-      `${SDER_API_BASE_URL}/update-decision-pseudonymisation`,
-      {
-        decisionId: documentId,
-        decisionPseudonymisedText: pseudonymizationText,
-        labelTreatments,
-      },
-    );
+    await decisionModule.service.updateDecisionPseudonymisation({
+      decisionId: documentId.toString(),
+      decisionPseudonymisedText: pseudonymizationText,
+      labelTreatments,
+    });
   },
 };

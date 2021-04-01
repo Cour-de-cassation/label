@@ -1,10 +1,11 @@
+import { decisionType } from 'sder';
 import { documentType } from '@label/core';
 import { labelTreatmentsType } from '@label/backend';
 
-export type { sderApiType, sderCourtDecisionType };
+export type { sderApiType };
 
 type sderApiType = {
-  fetchCourtDecisions: (days: number) => Promise<Array<sderCourtDecisionType>>;
+  fetchCourtDecisions: (days: number) => Promise<Array<decisionType>>;
   setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
   setCourtDecisionDone: (
     documentId: documentType['documentId'],
@@ -14,23 +15,4 @@ type sderApiType = {
     pseudonymizationText: string;
     labelTreatments: labelTreatmentsType;
   }) => Promise<void>;
-};
-
-type sderCourtDecisionType = {
-  chamberId: string;
-  chamberName: string;
-  dateDecision: string;
-  dateCreation: string;
-  jurisdictionId: string;
-  jurisdictionCode: string;
-  jurisdictionName: string;
-  originalText: string;
-  registerNumber: string;
-  sourceId: number;
-  sourceName: string;
-  zoning: {
-    introduction_subzonage: {
-      publication: string[] | null;
-    } | null;
-  } | null;
 };

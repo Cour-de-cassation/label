@@ -45,6 +45,13 @@ const problemReportService = {
     );
   },
 
+  async deleteProblemReportsByAssignationId(
+    assignationId: problemReportType['assignationId'],
+  ) {
+    const problemReportRepository = buildProblemReportRepository();
+    await problemReportRepository.deleteByAssignationId(assignationId);
+  },
+
   async fetchProblemReportsWithDetails() {
     const problemReportRepository = buildProblemReportRepository();
     const problemReports = await problemReportRepository.findAll();

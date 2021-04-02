@@ -9,6 +9,7 @@ import {
 } from '@label/core';
 import { buildTreatmentRepository } from '../../treatment/repository';
 import { documentService } from '../../document';
+import { problemReportService } from '../../problemReport';
 import { treatmentService } from '../../treatment';
 import { buildAssignationRepository } from '../repository';
 
@@ -33,6 +34,53 @@ const assignationService = {
         `No assignation found for userId ${userId} and documentId ${documentId}`,
       );
     }
+  },
+
+  async createAssignation({
+    userId,
+    documentId,
+  }: {
+    userId: idType;
+    documentId: idType;
+  }) {
+    const assignationRepository = buildAssignationRepository();
+    const treatmentId = await treatmentService.createTreatment({
+      documentId,
+      previousAnnotations: [],
+      nextAnnotations: [],
+      source: 'annotator',
+    });
+    const assignation = assignationModule.lib.buildAssignation({
+      userId,
+      documentId,
+      treatmentId,
+    });
+
+    await assignationRepository.insert(assignation);
+
+    return assignation;
+  },
+
+  async deleteAssignationsByDocumentId(documentId: documentType['_id']) {
+    const assignationRepository = buildAssignationRepository();
+    const treatmentRepository = buildTreatmentRepository();
+    const assignationsToDelete = await assignationRepository.findAllByDocumentId(
+      documentId,
+    );
+
+    await Promise.all(
+      assignationsToDelete.map((assignation) =>
+        problemReportService.deleteProblemReportsByAssignationId(
+          assignation._id,
+        ),
+      ),
+    );
+    await treatmentRepository.deleteManyByIds(
+      assignationsToDelete.map(({ treatmentId }) => treatmentId),
+    );
+    await assignationRepository.deleteManyByIds(
+      assignationsToDelete.map(({ _id }) => _id),
+    );
   },
 
   async fetchAssignatedTreatmentIds() {
@@ -120,45 +168,5 @@ const assignationService = {
     const assignation = await assignationRepository.findById(assignationId);
 
     await documentService.updateDocumentStatus(assignation.documentId, status);
-  },
-
-  async createAssignation({
-    userId,
-    documentId,
-  }: {
-    userId: idType;
-    documentId: idType;
-  }) {
-    const assignationRepository = buildAssignationRepository();
-    const treatmentId = await treatmentService.createTreatment({
-      documentId,
-      previousAnnotations: [],
-      nextAnnotations: [],
-      source: 'annotator',
-    });
-    const assignation = assignationModule.lib.buildAssignation({
-      userId,
-      documentId,
-      treatmentId,
-    });
-
-    await assignationRepository.insert(assignation);
-
-    return assignation;
-  },
-
-  async deleteAssignationsByDocumentId(documentId: documentType['_id']) {
-    const assignationRepository = buildAssignationRepository();
-    const treatmentRepository = buildTreatmentRepository();
-    const assignationsToDelete = await assignationRepository.findAllByDocumentId(
-      documentId,
-    );
-
-    await assignationRepository.deleteManyByIds(
-      assignationsToDelete.map(({ _id }) => _id),
-    );
-    await treatmentRepository.deleteManyByIds(
-      assignationsToDelete.map(({ treatmentId }) => treatmentId),
-    );
   },
 };

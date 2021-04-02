@@ -10,6 +10,26 @@ import { buildProblemReportRepository } from '../repository';
 import { problemReportService } from './problemReportService';
 
 describe('problemReportService', () => {
+  describe('deleteProblemReportsByAssignationId', () => {
+    it('should remove all the problem reports from the database with the given assignation id', async () => {
+      const problemReportRepository = buildProblemReportRepository();
+      const assignationId = idModule.lib.buildId();
+      const problemReports = ([
+        { assignationId },
+        { assignationId },
+        { assignationId: idModule.lib.buildId() },
+      ] as const).map(problemReportModule.generator.generate);
+      await Promise.all(problemReports.map(problemReportRepository.insert));
+
+      await problemReportService.deleteProblemReportsByAssignationId(
+        assignationId,
+      );
+
+      const problemReportsAfterRemove = await problemReportRepository.findAll();
+      expect(problemReportsAfterRemove).toEqual([problemReports[2]]);
+    });
+  });
+
   describe('fetchDocumentIdAssignatedToUserId', () => {
     const assignationRepository = buildAssignationRepository();
     const problemReportRepository = buildProblemReportRepository();

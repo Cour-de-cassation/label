@@ -8,14 +8,14 @@ import {
   isPasswordValid,
   isUserPassword,
 } from './lib';
-import { userDataModel, userType } from './userType';
+import { userModel, userType } from './userType';
 
 export { userModule };
 
 export type { userType };
 
 const userModule = {
-  dataModel: userDataModel,
+  model: userModel,
   generator: userGenerator,
   lib: {
     assertPermissions,

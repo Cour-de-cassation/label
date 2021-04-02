@@ -1,4 +1,4 @@
-import { idType, typeOfDataModelEntryType } from '../modules';
+import { buildType, idType } from '../modules';
 import { apiSchema, apiSchemaMethodNameType } from './apiSchema';
 
 export type { apiRouteInType, apiRouteOutType, networkType };
@@ -8,8 +8,9 @@ type apiRouteInType<
   routeNameT extends keyof typeof apiSchema[methodNameT]
 > = Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT] extends { in: { [argName: string]: any } }
   ? {
-      [argName in keyof Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['in']]: typeOfDataModelEntryType<
-        Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['in'][argName]
+      [argName in keyof Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['in']]: buildType<
+        Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['in'][argName],
+        { id: idType }
       >;
     }
   : undefined;
@@ -18,7 +19,7 @@ type apiRouteOutType<
   methodNameT extends apiSchemaMethodNameType,
   routeNameT extends keyof typeof apiSchema[methodNameT]
 > = Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT] extends { out: any }
-  ? typeOfDataModelEntryType<Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['out']>
+  ? buildType<Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['out'], { id: idType }>
   : never;
 
 type networkType<T> = T extends { [key: string]: unknown }

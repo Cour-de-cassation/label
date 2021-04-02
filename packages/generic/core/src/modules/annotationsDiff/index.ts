@@ -1,4 +1,4 @@
-import { annotationsDiffDataModelField, annotationsDiffType } from './annotationsDiffType';
+import { annotationsDiffModel, annotationsDiffType } from './annotationsDiffType';
 import { annotationsDiffGenerator } from './generator';
 import {
   applyToAnnotations,
@@ -14,7 +14,7 @@ export { annotationsDiffModule };
 export type { annotationsDiffType };
 
 const annotationsDiffModule = {
-  dataModelField: annotationsDiffDataModelField,
+  model: annotationsDiffModel,
   generator: annotationsDiffGenerator,
   lib: {
     applyToAnnotations,

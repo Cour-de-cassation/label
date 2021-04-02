@@ -1,19 +1,20 @@
-import { buildDataModelEntry, typeOfDataModel } from '../dataModelType';
+import { idType } from '../id';
+import { buildModel, buildType } from '../modelType';
 
-export { problemReportDataModel };
+export { problemReportModel };
 
 export type { problemReportType };
 
-const problemReportDataModel = {
-  assignationId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  date: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-  hasBeenRead: { type: buildDataModelEntry({ kind: 'primitive', content: 'boolean' }), network: true },
-  type: {
-    type: buildDataModelEntry({ kind: 'constant', content: ['bug', 'annotationProblem', 'suggestion'] as const }),
-    network: true,
+const problemReportModel = buildModel({
+  kind: 'object',
+  content: {
+    _id: { kind: 'custom', content: 'id' },
+    assignationId: { kind: 'custom', content: 'id' },
+    date: { kind: 'primitive', content: 'number' },
+    text: { kind: 'primitive', content: 'string' },
+    hasBeenRead: { kind: 'primitive', content: 'boolean' },
+    type: { kind: 'constant', content: ['bug', 'annotationProblem', 'suggestion'] as const },
   },
-} as const;
+} as const);
 
-type problemReportType = typeOfDataModel<typeof problemReportDataModel>;
+type problemReportType = buildType<typeof problemReportModel, { id: idType }>;

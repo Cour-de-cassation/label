@@ -1,12 +1,15 @@
 import {
   annotationModule,
   annotationsDiffModule,
-  buildDataModelEntry,
-  dataModelEntryType,
+  annotationReportModule,
   documentModule,
+  monitoringEntryModule,
   problemReportModule,
+  settingsModule,
+  treatmentModule,
+  userModule,
 } from '../modules';
-import { fetchedDataModelEntries } from './fetchedDataModelEntries';
+import { buildModel, modelType } from '../modules/modelType';
 
 export { apiSchema };
 
@@ -16,100 +19,100 @@ const apiSchema = {
   get: {
     annotationReport: {
       in: {
-        documentId: buildDataModelEntry({
+        documentId: buildModel({
           kind: 'primitive',
           content: 'string',
-        }),
+        } as const),
       },
-      out: fetchedDataModelEntries.annotationReport,
+      out: annotationReportModule.model,
     },
     annotations: {
       in: {
-        documentId: buildDataModelEntry({
+        documentId: buildModel({
           kind: 'primitive',
           content: 'string',
-        }),
+        } as const),
       },
-      out: buildDataModelEntry({
-        kind: 'list',
-        content: annotationModule.dataModelField,
-      }),
+      out: buildModel({
+        kind: 'array',
+        content: annotationModule.model,
+      } as const),
     },
     anonymizedDocumentText: {
       in: {
-        documentId: buildDataModelEntry({
+        documentId: buildModel({
           kind: 'primitive',
           content: 'string',
-        }),
+        } as const),
       },
-      out: buildDataModelEntry({
+      out: buildModel({
         kind: 'primitive',
         content: 'string',
-      }),
+      } as const),
     },
     document: {
       in: {
-        documentId: buildDataModelEntry({
+        documentId: buildModel({
           kind: 'primitive',
           content: 'string',
-        }),
+        } as const),
       },
-      out: fetchedDataModelEntries.document,
+      out: documentModule.fetchedModel,
     },
     documentForUser: {
       in: {
-        documentIdsToExclude: buildDataModelEntry({
-          kind: 'list',
+        documentIdsToExclude: buildModel({
+          kind: 'array',
           content: {
-            kind: 'primitive',
+            kind: 'custom',
             content: 'id',
           },
-        }),
+        } as const),
       },
-      out: fetchedDataModelEntries.document,
+      out: documentModule.fetchedModel,
     },
     problemReportsWithDetails: {
-      out: buildDataModelEntry({
-        kind: 'list',
+      out: buildModel({
+        kind: 'array',
         content: {
           kind: 'object',
           content: {
-            problemReport: fetchedDataModelEntries.problemReport,
-            documentId: { kind: 'primitive', content: 'id' },
+            problemReport: problemReportModule.model,
+            documentId: { kind: 'custom', content: 'id' },
             userName: {
               kind: 'primitive',
               content: 'string',
             },
           },
         },
-      }),
+      } as const),
     },
     settings: {
-      out: fetchedDataModelEntries.settings,
+      out: settingsModule.model,
     },
     specialDocuments: {
-      out: buildDataModelEntry({
-        kind: 'list',
-        content: fetchedDataModelEntries.document,
-      }),
+      out: buildModel({
+        kind: 'array',
+        content: documentModule.fetchedModel,
+      } as const),
     },
     treatedDocuments: {
-      out: buildDataModelEntry({
-        kind: 'list',
+      out: buildModel({
+        kind: 'array',
         content: {
           kind: 'object',
           content: {
             document: {
               kind: 'object',
               content: {
-                _id: fetchedDataModelEntries.document.content._id,
-                documentId: fetchedDataModelEntries.document.content.documentId,
-                publicationCategory: fetchedDataModelEntries.document.content.publicationCategory,
+                _id: documentModule.fetchedModel.content._id,
+                documentId: documentModule.fetchedModel.content.documentId,
+                publicationCategory: documentModule.fetchedModel.content.publicationCategory,
               },
             },
             treatments: {
-              kind: 'list',
-              content: fetchedDataModelEntries.treatment,
+              kind: 'array',
+              content: treatmentModule.model,
             },
             userName: {
               kind: 'primitive',
@@ -117,147 +120,147 @@ const apiSchema = {
             },
           },
         },
-      }),
+      } as const),
     },
     untreatedDocuments: {
-      out: buildDataModelEntry({
-        kind: 'list',
-        content: fetchedDataModelEntries.document,
-      }),
+      out: buildModel({
+        kind: 'array',
+        content: documentModule.fetchedModel,
+      } as const),
     },
     usersWithDetails: {
-      out: buildDataModelEntry({
-        kind: 'list',
+      out: buildModel({
+        kind: 'array',
         content: {
           kind: 'object',
           content: {
             user: {
               kind: 'object',
               content: {
-                _id: fetchedDataModelEntries.user.content._id,
-                email: fetchedDataModelEntries.user.content.email,
-                name: fetchedDataModelEntries.user.content.name,
-                role: fetchedDataModelEntries.user.content.role,
+                _id: userModule.model.content._id,
+                email: userModule.model.content.email,
+                name: userModule.model.content.name,
+                role: userModule.model.content.role,
               },
             },
           },
         },
-      }),
+      } as const),
     },
   },
   post: {
     changePassword: {
       in: {
-        previousPassword: { kind: 'primitive', content: 'string' },
-        newPassword: { kind: 'primitive', content: 'string' },
+        previousPassword: buildModel({ kind: 'primitive', content: 'string' } as const),
+        newPassword: buildModel({ kind: 'primitive', content: 'string' } as const),
       },
-      out: { kind: 'constant', content: ['notValidNewPassword', 'passwordUpdated', 'wrongPassword'] as const },
+      out: buildModel({
+        kind: 'constant',
+        content: ['notValidNewPassword', 'passwordUpdated', 'wrongPassword'] as const,
+      } as const),
     },
     createUser: {
       in: {
-        name: {
+        name: buildModel({
           kind: 'primitive',
           content: 'string',
-        },
-        email: {
+        } as const),
+        email: buildModel({
           kind: 'primitive',
           content: 'string',
-        },
-        role: {
-          kind: 'constant',
-          content: fetchedDataModelEntries.user.content.role.content,
-        },
+        } as const),
+        role: userModule.model.content.role,
       },
-      out: { kind: 'primitive', content: 'string' },
+      out: buildModel({ kind: 'primitive', content: 'string' } as const),
     },
     login: {
       in: {
-        email: {
+        email: buildModel({
           kind: 'primitive',
           content: 'string',
-        },
-        password: {
+        } as const),
+        password: buildModel({
           kind: 'primitive',
           content: 'string',
-        },
+        } as const),
       },
-      out: {
+      out: buildModel({
         kind: 'object',
         content: {
-          email: { kind: 'primitive', content: fetchedDataModelEntries.user.content.email.content },
-          name: { kind: 'primitive', content: fetchedDataModelEntries.user.content.name.content },
-          role: { kind: 'constant', content: fetchedDataModelEntries.user.content.role.content },
+          email: userModule.model.content.email,
+          name: userModule.model.content.name,
+          role: userModule.model.content.role,
           token: { kind: 'primitive', content: 'string' },
         },
-      },
+      } as const),
     },
     monitoringEntries: {
       in: {
-        newMonitoringEntries: buildDataModelEntry({
-          kind: 'list',
-          content: fetchedDataModelEntries.monitoringEntry,
-        }),
+        newMonitoringEntries: buildModel({
+          kind: 'array',
+          content: monitoringEntryModule.fetchedModel,
+        } as const),
       },
-      out: {
+      out: buildModel({
         kind: 'primitive',
         content: 'void',
-      },
+      } as const),
     },
     problemReport: {
       in: {
-        documentId: buildDataModelEntry({
-          kind: 'primitive',
+        documentId: buildModel({
+          kind: 'custom',
           content: 'id',
-        }),
-        problemType: problemReportModule.dataModel.type.type,
-        problemText: buildDataModelEntry({
+        } as const),
+        problemType: problemReportModule.model.content.type,
+        problemText: buildModel({
           kind: 'primitive',
           content: 'string',
-        }),
+        } as const),
       },
-      out: {
+      out: buildModel({
         kind: 'primitive',
         content: 'void',
-      },
+      } as const),
     },
     updateAssignationDocumentStatus: {
       in: {
-        assignationId: buildDataModelEntry({
-          kind: 'primitive',
+        assignationId: buildModel({
+          kind: 'custom',
           content: 'id',
-        }),
-        status: documentModule.dataModel.status.type,
+        } as const),
+        status: documentModule.fetchedModel.content.status,
       },
-      out: {
+      out: buildModel({
         kind: 'primitive',
         content: 'void',
-      },
+      } as const),
     },
     updateDocumentStatus: {
       in: {
-        documentId: buildDataModelEntry({
-          kind: 'primitive',
+        documentId: buildModel({
+          kind: 'custom',
           content: 'id',
-        }),
-        status: documentModule.dataModel.status.type,
+        } as const),
+        status: documentModule.fetchedModel.content.status,
       },
-      out: {
+      out: buildModel({
         kind: 'primitive',
         content: 'void',
-      },
+      } as const),
     },
     updateTreatment: {
       in: {
-        annotationsDiff: annotationsDiffModule.dataModelField,
-        documentId: buildDataModelEntry({
-          kind: 'primitive',
+        annotationsDiff: annotationsDiffModule.model,
+        documentId: buildModel({
+          kind: 'custom',
           content: 'id',
-        }),
+        } as const),
       },
-      out: {
+      out: buildModel({
         kind: 'primitive',
         content: 'void',
-      },
+      } as const),
     },
   },
 } as const;
@@ -271,7 +274,7 @@ type apiSchemaMethodNameType = keyof apiSchemaType;
 
 type apiSchemaMethodType = { [key: string]: apiSchemaEntryType };
 
-type apiSchemaEntryType = { in?: { [param: string]: dataModelEntryType }; out: dataModelEntryType };
+type apiSchemaEntryType = { in?: { [param: string]: modelType }; out: modelType };
 
 // We need this line for type checking
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

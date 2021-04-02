@@ -1,16 +1,17 @@
-import { buildDataModelEntry, networkTypeOfDataModel } from '../dataModelType';
+import { idType } from '../id';
+import { buildModel, buildType } from '../modelType';
 
-export { annotationReportDataModel };
+export { annotationReportModel };
 
 export type { annotationReportType };
 
-const annotationReportDataModel = {
-  checkList: {
-    type: buildDataModelEntry({ kind: 'list', content: { kind: 'primitive', content: 'string' } }),
-    network: true,
+const annotationReportModel = buildModel({
+  kind: 'object',
+  content: {
+    checkList: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+    documentId: { kind: 'custom', content: 'id' },
+    _id: { kind: 'custom', content: 'id' },
   },
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-} as const;
+} as const);
 
-type annotationReportType = networkTypeOfDataModel<typeof annotationReportDataModel>;
+type annotationReportType = buildType<typeof annotationReportModel, { id: idType }>;

@@ -1,4 +1,4 @@
-import { annotationDataModelField, annotationType } from './annotationType';
+import { annotationModel, annotationType } from './annotationType';
 import { annotationGenerator } from './generator';
 import {
   annotationLinker,
@@ -15,7 +15,7 @@ export { annotationModule };
 export type { annotationType };
 
 const annotationModule = {
-  dataModelField: annotationDataModelField,
+  model: annotationModel,
   generator: annotationGenerator,
   lib: {
     annotationLinker,

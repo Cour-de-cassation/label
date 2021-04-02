@@ -88,7 +88,7 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
               <LabelledDropdown<userType['role']>
                 label={wordings.agentsPage.createAgentDrawer.fields.role}
                 error={!!formErrors.role}
-                items={userModule.dataModel.role.type.content.map((role) => ({
+                items={userModule.model.content.role.content.map((role) => ({
                   text: wordings.agentsPage.table.roles[role],
                   value: role,
                 }))}

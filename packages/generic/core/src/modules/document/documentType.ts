@@ -1,35 +1,39 @@
-import { buildDataModelEntry, networkTypeOfDataModel, typeOfDataModel } from '../dataModelType';
+import { idType } from '../id';
+import { buildModel, buildType } from '../modelType';
 
-export { documentDataModel };
+export { documentModel, fetchedDocumentModel };
 
 export type { documentType, fetchedDocumentType };
 
-const documentDataModel = {
-  creationDate: { type: buildDataModelEntry({ kind: 'primitive', content: 'date' }), network: false },
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  metadata: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: false },
-  priority: {
-    type: buildDataModelEntry({ kind: 'constant', content: ['low', 'medium', 'high'] as const }),
-    network: false,
-  },
-  publicationCategory: {
-    type: buildDataModelEntry({ kind: 'list', content: { kind: 'primitive', content: 'string' } }),
-    network: true,
-  },
-  source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: false },
+const documentModelCommonFields = {
+  documentId: { kind: 'primitive', content: 'number' },
+  _id: { kind: 'custom', content: 'id' },
+  publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
   status: {
-    type: buildDataModelEntry({
-      kind: 'constant',
-      content: ['done', 'exported', 'free', 'pending', 'rejected', 'saved'] as const,
-    }),
-    network: true,
+    kind: 'constant',
+    content: ['done', 'exported', 'free', 'pending', 'rejected', 'saved'] as const,
   },
-  title: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-  text: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-  updateDate: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: false },
+  title: { kind: 'primitive', content: 'string' },
+  text: { kind: 'primitive', content: 'string' },
 } as const;
 
-type documentType = typeOfDataModel<typeof documentDataModel>;
+const fetchedDocumentModel = buildModel({
+  kind: 'object',
+  content: documentModelCommonFields,
+} as const);
 
-type fetchedDocumentType = networkTypeOfDataModel<typeof documentDataModel>;
+const documentModel = buildModel({
+  kind: 'object',
+  content: {
+    ...documentModelCommonFields,
+    creationDate: { kind: 'primitive', content: 'date' },
+    metadata: { kind: 'primitive', content: 'string' },
+    priority: { kind: 'constant', content: ['low', 'medium', 'high'] as const },
+    source: { kind: 'primitive', content: 'string' },
+    updateDate: { kind: 'primitive', content: 'number' },
+  },
+} as const);
+
+type fetchedDocumentType = buildType<typeof fetchedDocumentModel, { id: idType }>;
+
+type documentType = buildType<typeof documentModel, { id: idType }>;

@@ -1,17 +1,17 @@
-import { buildDataModelEntry, typeOfDataModelEntryType } from '../dataModelType';
+import { buildModel, buildType } from '../modelType';
 
-export { annotationDataModelField };
+export { annotationModel };
 
 export type { annotationType };
 
-const annotationDataModelField = buildDataModelEntry({
+const annotationModel = buildModel({
   kind: 'object',
   content: {
-    category: buildDataModelEntry({ kind: 'primitive', content: 'string' }),
-    entityId: buildDataModelEntry({ kind: 'primitive', content: 'string' }),
-    start: buildDataModelEntry({ kind: 'primitive', content: 'number' }),
-    text: buildDataModelEntry({ kind: 'primitive', content: 'string' }),
+    category: { kind: 'primitive', content: 'string' },
+    entityId: { kind: 'primitive', content: 'string' },
+    start: { kind: 'primitive', content: 'number' },
+    text: { kind: 'primitive', content: 'string' },
   },
 } as const);
 
-type annotationType = typeOfDataModelEntryType<typeof annotationDataModelField>;
+type annotationType = buildType<typeof annotationModel>;

@@ -18,14 +18,6 @@ import {
 import { statisticModule, statisticType } from './statistic';
 import { treatmentType, treatmentModule, treatmentInfoType } from './treatment';
 import { userModule, userType } from './user';
-import {
-  buildDataModelEntry,
-  dataModelEntryType,
-  dataModelType,
-  networkTypeOfDataModel,
-  typeOfDataModel,
-  typeOfDataModelEntryType,
-} from './dataModelType';
 
 export {
   annotationModule,
@@ -40,8 +32,9 @@ export {
   statisticModule,
   treatmentModule,
   userModule,
-  buildDataModelEntry,
 };
+
+export * from './modelType';
 
 export type {
   annotationType,
@@ -64,9 +57,4 @@ export type {
   userType,
   treatmentType,
   treatmentInfoType,
-  dataModelEntryType,
-  dataModelType,
-  networkTypeOfDataModel,
-  typeOfDataModel,
-  typeOfDataModelEntryType,
 };

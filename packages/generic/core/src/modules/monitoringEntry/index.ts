@@ -1,5 +1,10 @@
 import { monitoringEntryGenerator } from './generator';
-import { fetchedMonitoringEntryType, monitoringEntryDataModel, monitoringEntryType } from './monitoringEntryType';
+import {
+  fetchedMonitoringEntryModel,
+  fetchedMonitoringEntryType,
+  monitoringEntryModel,
+  monitoringEntryType,
+} from './monitoringEntryType';
 import { monitoringEntryBuilder } from './lib';
 
 export { monitoringEntryModule };
@@ -7,7 +12,8 @@ export { monitoringEntryModule };
 export type { fetchedMonitoringEntryType, monitoringEntryType };
 
 const monitoringEntryModule = {
-  dataModel: monitoringEntryDataModel,
+  fetchedModel: fetchedMonitoringEntryModel,
+  model: monitoringEntryModel,
   generator: monitoringEntryGenerator,
   lib: {
     monitoringEntryBuilder,

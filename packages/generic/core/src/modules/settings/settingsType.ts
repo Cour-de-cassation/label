@@ -1,6 +1,6 @@
-import { buildDataModelEntry } from '../dataModelType';
+import { buildModel } from '../modelType';
 
-export { categoryIconNames, constantColors, settingsDataModel, shadeColors };
+export { categoryIconNames, constantColors, settingsModel, shadeColors };
 
 export type {
   categoryIconNameType,
@@ -81,6 +81,9 @@ type shadeColorType = [typeof shadeColors[number], number];
 type colorType = constantColorType | shadeColorType;
 
 // The settings are passed as a JSON string to parse
-const settingsDataModel = {
-  json: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-} as const;
+const settingsModel = buildModel({
+  kind: 'object',
+  content: {
+    json: { kind: 'primitive', content: 'string' },
+  },
+} as const);

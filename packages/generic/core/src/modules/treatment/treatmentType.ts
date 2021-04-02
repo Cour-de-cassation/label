@@ -1,21 +1,22 @@
-import { buildDataModelEntry, typeOfDataModel } from '../dataModelType';
 import { annotationsDiffModule } from '../annotationsDiff';
+import { idType } from '../id';
+import { buildModel, buildType } from '../modelType';
 
-export { treatmentDataModel };
+export { treatmentModel };
 
 export type { treatmentType };
 
-const treatmentDataModel = {
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  annotationsDiff: { type: annotationsDiffModule.dataModelField, network: true },
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  duration: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  lastUpdateDate: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  order: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  source: {
-    type: buildDataModelEntry({ kind: 'constant', content: ['annotator', 'admin', 'NLP', 'postProcess'] as const }),
-    network: true,
+const treatmentModel = buildModel({
+  kind: 'object',
+  content: {
+    _id: { kind: 'custom', content: 'id' },
+    annotationsDiff: annotationsDiffModule.model,
+    documentId: { kind: 'custom', content: 'id' },
+    duration: { kind: 'primitive', content: 'number' },
+    lastUpdateDate: { kind: 'primitive', content: 'number' },
+    order: { kind: 'primitive', content: 'number' },
+    source: { kind: 'constant', content: ['annotator', 'admin', 'NLP', 'postProcess'] as const },
   },
-} as const;
+} as const);
 
-type treatmentType = typeOfDataModel<typeof treatmentDataModel>;
+type treatmentType = buildType<typeof treatmentModel, { id: idType }>;

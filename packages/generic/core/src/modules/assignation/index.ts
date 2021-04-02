@@ -1,4 +1,4 @@
-import { assignationType, assignationDataModel } from './assignationType';
+import { assignationModel, assignationType } from './assignationType';
 import { assignationGenerator } from './generator';
 import { buildAssignation } from './lib';
 
@@ -7,7 +7,7 @@ export { assignationModule };
 export type { assignationType };
 
 const assignationModule = {
-  dataModel: assignationDataModel,
+  model: assignationModel,
   generator: assignationGenerator,
   lib: { buildAssignation },
 };

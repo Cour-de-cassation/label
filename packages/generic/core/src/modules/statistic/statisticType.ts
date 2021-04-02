@@ -1,30 +1,28 @@
-import { buildDataModelEntry, typeOfDataModel } from '../dataModelType';
+import { idType } from '../id';
+import { buildModel, buildType } from '../modelType';
 
-export { statisticDataModel };
+export { statisticModel };
 
 export type { statisticType };
 
-const statisticDataModel = {
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  addedAnnotationsCount: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  annotationsCount: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  deletedAnnotationsCount: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  documentNumber: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  linkedEntitiesCount: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  modifiedAnnotationsCount: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  publicationCategory: {
-    type: buildDataModelEntry({ kind: 'list', content: { kind: 'primitive', content: 'string' } }),
-    network: true,
+const statisticModel = buildModel({
+  kind: 'object',
+  content: {
+    _id: { kind: 'custom', content: 'id' },
+    addedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    annotationsCount: { kind: 'primitive', content: 'number' },
+    deletedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    documentNumber: { kind: 'primitive', content: 'number' },
+    linkedEntitiesCount: { kind: 'primitive', content: 'number' },
+    modifiedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+    resizedBiggerAnnotationsCount: { kind: 'primitive', content: 'number' },
+    resizedSmallerAnnotationsCount: { kind: 'primitive', content: 'number' },
+    source: { kind: 'primitive', content: 'string' },
+    treatmentDuration: { kind: 'primitive', content: 'number' },
+    userId: { kind: 'custom', content: 'id' },
+    wordsCount: { kind: 'primitive', content: 'number' },
   },
-  resizedBiggerAnnotationsCount: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  resizedSmallerAnnotationsCount: {
-    type: buildDataModelEntry({ kind: 'primitive', content: 'number' }),
-    network: true,
-  },
-  source: { type: buildDataModelEntry({ kind: 'primitive', content: 'string' }), network: true },
-  treatmentDuration: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-  userId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  wordsCount: { type: buildDataModelEntry({ kind: 'primitive', content: 'number' }), network: true },
-} as const;
+} as const);
 
-type statisticType = typeOfDataModel<typeof statisticDataModel>;
+type statisticType = buildType<typeof statisticModel, { id: idType }>;

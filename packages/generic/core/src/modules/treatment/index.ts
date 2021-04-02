@@ -1,5 +1,5 @@
 import { treatmentGenerator } from './generator';
-import { treatmentDataModel, treatmentType } from './treatmentType';
+import { treatmentModel, treatmentType } from './treatmentType';
 import {
   buildTreatment,
   computeAnnotations,
@@ -13,7 +13,7 @@ export { treatmentModule };
 export type { treatmentType, treatmentInfoType };
 
 const treatmentModule = {
-  dataModel: treatmentDataModel,
+  model: treatmentModel,
   generator: treatmentGenerator,
   lib: {
     buildTreatment,

@@ -1,5 +1,5 @@
 import { problemReportGenerator } from './generator';
-import { problemReportDataModel, problemReportType } from './problemReportType';
+import { problemReportModel, problemReportType } from './problemReportType';
 import { buildProblemReport } from './lib';
 
 export { problemReportModule };
@@ -7,7 +7,7 @@ export { problemReportModule };
 export type { problemReportType };
 
 const problemReportModule = {
-  dataModel: problemReportDataModel,
+  model: problemReportModel,
   generator: problemReportGenerator,
   lib: { buildProblemReport },
 };

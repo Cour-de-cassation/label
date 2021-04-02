@@ -1,14 +1,18 @@
-import { buildDataModelEntry, typeOfDataModel } from '../dataModelType';
+import { idType } from '../id';
+import { buildModel, buildType } from '../modelType';
 
-export { assignationDataModel };
+export { assignationModel };
 
 export type { assignationType };
 
-const assignationDataModel = {
-  documentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  _id: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  treatmentId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-  userId: { type: buildDataModelEntry({ kind: 'primitive', content: 'id' }), network: true },
-} as const;
+const assignationModel = buildModel({
+  kind: 'object',
+  content: {
+    _id: { kind: 'custom', content: 'id' },
+    documentId: { kind: 'custom', content: 'id' },
+    treatmentId: { kind: 'custom', content: 'id' },
+    userId: { kind: 'custom', content: 'id' },
+  },
+} as const);
 
-type assignationType = typeOfDataModel<typeof assignationDataModel>;
+type assignationType = buildType<typeof assignationModel, { id: idType }>;

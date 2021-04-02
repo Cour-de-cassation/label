@@ -10,7 +10,7 @@ import {
   colorType,
   constantColorType,
   displayModeType,
-  settingsDataModel,
+  settingsModel,
   settingsType,
   shadeColorType,
   categoryIconNameType,
@@ -21,7 +21,7 @@ export { settingsModule };
 export type { colorType, constantColorType, displayModeType, settingsType, shadeColorType, categoryIconNameType };
 
 const settingsModule = {
-  dataModel: settingsDataModel,
+  model: settingsModel,
   lib: {
     buildSettings,
     parseFromJson,

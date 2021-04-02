@@ -1,16 +1,16 @@
-import { buildDataModelEntry, typeOfDataModelEntryType } from '../dataModelType';
 import { annotationModule } from '../annotation';
+import { buildModel, buildType } from '../modelType';
 
-export { annotationsDiffDataModelField };
+export { annotationsDiffModel };
 
 export type { annotationsDiffType };
 
-const annotationsDiffDataModelField = buildDataModelEntry({
+const annotationsDiffModel = buildModel({
   kind: 'object',
   content: {
-    before: buildDataModelEntry({ kind: 'list', content: annotationModule.dataModelField }),
-    after: buildDataModelEntry({ kind: 'list', content: annotationModule.dataModelField }),
+    before: { kind: 'array', content: annotationModule.model },
+    after: { kind: 'array', content: annotationModule.model },
   },
 } as const);
 
-type annotationsDiffType = typeOfDataModelEntryType<typeof annotationsDiffDataModelField>;
+type annotationsDiffType = buildType<typeof annotationsDiffModel>;

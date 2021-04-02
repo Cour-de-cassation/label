@@ -19,7 +19,13 @@ const sderLocalApi: sderApiType = {
     );
 
     return courtDecisions
-      .map(({ content }) => JSON.parse(content) as decisionType)
+      .map(({ content }) => {
+        const parsedContent = JSON.parse(content) as decisionType;
+        return {
+          ...parsedContent,
+          dateDecision: new Date(parsedContent.dateDecision),
+        };
+      })
       .map(decisionModule.lib.generateDecision);
   },
 

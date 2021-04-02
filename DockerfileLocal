@@ -4,6 +4,9 @@ FROM node:14-alpine
 # Create the app directory
 WORKDIR /usr/src/app
 
+# Install git
+RUN apk add git
+
 # Copy context files
 COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/

@@ -6,7 +6,6 @@ import { annotationLinkHandler } from './annotationLinkHandler';
 import { annotationOverlapDetector } from './annotationOverlapDetector';
 import { annotationTextDetector } from './annotationTextDetector';
 import { csvExtractor } from './csvExtractor';
-import { httpRequester } from './httpRequester';
 import { statisticsCreator } from './statisticsCreator';
 import { stringComparator } from './stringComparator';
 import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
@@ -21,7 +20,6 @@ export {
   buildAnonymizer,
   buildAutoAnnotator,
   csvExtractor,
-  httpRequester,
   statisticsCreator,
   stringComparator,
   textSplitter,

@@ -166,6 +166,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    updateProblemReportHasBeenRead: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (
+        _,
+        { args: { problemReportId, hasBeenRead } },
+      ) => {
+        return problemReportService.updateHasBeenRead(
+          idModule.lib.buildId(problemReportId),
+          hasBeenRead,
+        );
+      },
+    }),
+
     updateTreatment: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (

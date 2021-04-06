@@ -85,7 +85,9 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     updateFakeCollection(
       collection,
       collection.map((item) =>
-        idModule.lib.equalId(id, item._id) ? { ...item, objectFields } : item,
+        idModule.lib.equalId(id, item._id)
+          ? { ...item, ...objectFields }
+          : item,
       ),
     );
   }

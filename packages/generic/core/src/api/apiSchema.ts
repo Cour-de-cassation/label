@@ -249,6 +249,22 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
+    updateProblemReportHasBeenRead: {
+      in: {
+        problemReportId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+        hasBeenRead: buildModel({
+          kind: 'primitive',
+          content: 'boolean',
+        }),
+      },
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
+    },
     updateTreatment: {
       in: {
         annotationsDiff: annotationsDiffModule.model,

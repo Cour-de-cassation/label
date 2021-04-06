@@ -25,6 +25,8 @@ const ROW_DEFAULT_HEIGHT = 50;
 function TableBody<InputT>(props: {
   data: InputT[];
   fields: Array<tableRowFieldType<InputT>>;
+  isRowHighlighted?: (row: InputT) => boolean;
+  onRowClick?: (row: InputT) => void;
   optionCellStyle?: CSSProperties;
   optionItems?: Array<{
     text: string;
@@ -36,25 +38,31 @@ function TableBody<InputT>(props: {
 }) {
   const theme = useCustomTheme();
   const sortedData = paginateData(sortData(props.data));
-  const styleProps = {
-    theme,
-  };
+
   const { Tr } = buildStyledComponents();
 
   return <tbody>{sortedData.map(renderRow)}</tbody>;
 
   function renderRow(row: InputT) {
+    const styleProps = {
+      theme,
+      hasOnClick: !!props.onRowClick,
+    };
+    const cellTextStyle =
+      props.isRowHighlighted && props.isRowHighlighted(row) ? ({ fontWeight: 'bold' } as const) : undefined;
     const formattedRow = props.fields.map((field) =>
       field.render ? field.render(row) : <Text variant="h3">{field.extractor(row)}</Text>,
     );
-    const { optionItems } = props;
+    const { onRowClick, optionItems } = props;
 
     if (!optionItems) {
       return (
-        <Tr styleProps={styleProps}>
+        <Tr onClick={!!onRowClick ? () => onRowClick(row) : undefined} styleProps={styleProps}>
           {formattedRow.map((cellContent) => (
             <td>
-              <Text variant="h3">{cellContent}</Text>
+              <Text style={cellTextStyle} variant="h3">
+                {cellContent}
+              </Text>
             </td>
           ))}
           <td style={props.optionCellStyle} />
@@ -72,10 +80,12 @@ function TableBody<InputT>(props: {
     };
     return (
       <>
-        <Tr styleProps={styleProps}>
+        <Tr onClick={!!onRowClick ? () => onRowClick(row) : undefined} styleProps={styleProps}>
           {Object.values(formattedRow).map((value) => (
             <td>
-              <Text variant="h3">{value}</Text>
+              <Text style={cellTextStyle} variant="h3">
+                {value}
+              </Text>
             </td>
           ))}
           <td className="optionItemCell" style={props.optionCellStyle}>
@@ -122,12 +132,14 @@ function TableBody<InputT>(props: {
     type stylePropsType = {
       styleProps: {
         theme: customThemeType;
+        hasOnClick?: boolean;
       };
     };
 
     const Tr = styled.tr<stylePropsType>`
       ${({ styleProps }) => {
         return `
+          cursor: ${styleProps.hasOnClick ? 'pointer' : 'default'};
           height: ${ROW_DEFAULT_HEIGHT}px;
           &:hover {
             background-color: ${styleProps.theme.colors.default.background};

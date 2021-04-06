@@ -1,15 +1,16 @@
 import { heights } from './heights';
 import { widths } from './widths';
 import {
+  customThemeType,
   emphasizeShadeColor,
   getColor,
-  typographyType,
-  useCustomTheme,
-  customThemeType,
-  useDisplayMode,
   ThemeProvider,
+  typographyType,
+  typography,
+  useCustomTheme,
+  useDisplayMode,
 } from './theme';
 
-export { emphasizeShadeColor, getColor, heights, widths, ThemeProvider, useDisplayMode, useCustomTheme };
+export { emphasizeShadeColor, getColor, heights, widths, typography, ThemeProvider, useDisplayMode, useCustomTheme };
 
 export type { typographyType, customThemeType };

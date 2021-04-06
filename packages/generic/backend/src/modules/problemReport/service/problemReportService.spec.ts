@@ -129,4 +129,21 @@ describe('problemReportService', () => {
       expect(problemReports[1].userName).toBe(userName2);
     });
   });
+
+  describe('updateHasBeenRead', () => {
+    it('should update the hasBeenRead value', async () => {
+      const problemReportRepository = buildProblemReportRepository();
+      const problemReport = problemReportModule.generator.generate({
+        hasBeenRead: true,
+      });
+      await problemReportRepository.insert(problemReport);
+
+      await problemReportService.updateHasBeenRead(problemReport._id, false);
+
+      const updatedProblemReport = await problemReportRepository.findById(
+        problemReport._id,
+      );
+      expect(updatedProblemReport.hasBeenRead).toBe(false);
+    });
+  });
 });

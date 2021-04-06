@@ -1,6 +1,5 @@
-import { Typography } from '@material-ui/core';
 import React, { ReactElement, ReactNode, CSSProperties } from 'react';
-import { typographyType } from '../../../styles';
+import { customThemeType, typography, typographyType, useCustomTheme } from '../../../styles';
 
 export { Text };
 
@@ -11,14 +10,29 @@ function Text(props: {
   inline?: boolean;
   style?: CSSProperties;
 }): ReactElement {
-  return (
-    <Typography
-      color={props.color}
-      display={props.inline ? 'inline' : 'initial'}
-      style={props.style}
-      variant={props.variant}
-    >
-      {props.children}
-    </Typography>
-  );
+  const theme = useCustomTheme();
+  const style = buildStyle(theme);
+  return <div style={{ ...style, ...props.style }}>{props.children}</div>;
+
+  function buildStyle(theme: customThemeType) {
+    const color = getTextColor(theme, props.color);
+    const display = props.inline ? 'inline' : 'initial';
+    const variantProperties = typography[props.variant || 'body1'];
+    return {
+      color,
+      display,
+      ...variantProperties,
+    };
+  }
+}
+
+function getTextColor(theme: customThemeType, color: 'textPrimary' | 'textSecondary' | undefined) {
+  switch (color) {
+    case 'textPrimary':
+      return theme.colors.line.level1;
+    case 'textSecondary':
+      return theme.colors.line.level2;
+    default:
+      return theme.colors.line.level1;
+  }
 }

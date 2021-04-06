@@ -75,4 +75,12 @@ const problemReportService = {
       return { problemReport, userName, documentId: assignation.documentId };
     });
   },
+
+  async updateHasBeenRead(
+    problemReportId: problemReportType['_id'],
+    hasBeenRead: problemReportType['hasBeenRead'],
+  ) {
+    const problemReportRepository = buildProblemReportRepository();
+    return problemReportRepository.updateOne(problemReportId, { hasBeenRead });
+  },
 };

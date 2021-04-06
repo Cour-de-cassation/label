@@ -18,11 +18,13 @@ function Table<InputT>(props: {
   footer?: Array<footerCellType>;
   isFooterSticky?: boolean;
   isHeaderSticky?: boolean;
+  isRowHighlighted?: (row: InputT) => boolean;
   data: InputT[];
   optionItems?: Array<{
     text: string;
     onClick: (data: InputT) => void;
   }>;
+  onRowClick?: (row: InputT) => void;
   pagination?: { start: number; end: number };
   fields: Array<tableRowFieldType<InputT>>;
 }) {
@@ -66,11 +68,13 @@ function Table<InputT>(props: {
       <TableBody
         data={props.data}
         fields={props.fields}
+        isRowHighlighted={props.isRowHighlighted}
         orderByProperty={orderByProperty}
         orderDirection={orderDirection}
         optionItems={props.optionItems}
         optionCellStyle={optionCellStyle}
         pagination={props.pagination}
+        onRowClick={props.onRowClick}
       />
     );
   }

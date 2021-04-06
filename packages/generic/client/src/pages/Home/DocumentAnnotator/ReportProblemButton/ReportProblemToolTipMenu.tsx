@@ -7,7 +7,7 @@ import {
   FloatingTooltipMenu,
   LabelledDropdown,
   Text,
-  TextInput,
+  RichTextInput,
 } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
@@ -56,12 +56,12 @@ function ReportProblemToolTipMenu(props: {
         </div>
         <div style={styles.tooltipItem}>
           <Text>{wordings.homePage.describeTheProblem}</Text>
-          <TextInput
+          <RichTextInput
             name="problemDescription"
             placeholder={wordings.homePage.enterYourText}
             size={10}
             multiline
-            onChange={(event) => setProblemDescription(event.target.value)}
+            onChange={setProblemDescription}
             style={styles.tooltipElement}
             value={problemDescription}
           />

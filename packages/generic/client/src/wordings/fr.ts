@@ -165,6 +165,9 @@ const fr = {
       subtitle: 'Décisions traitées',
     },
     table: {
+      searchedDecisionNumber: {
+        placeholder: 'Rechercher...',
+      },
       filter: {
         exportButton: 'Exporter',
         resultsCount: '{count} décisions affichées',

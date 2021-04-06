@@ -8,6 +8,7 @@ import { ExportCSVButton } from './ExportCSVButton';
 import { TreatedDocumentsFilters, treatedDocumentFilterType } from './TreatedDocumentsFilters';
 import { StatisticsBox } from './StatisticsBox';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
+import { DecisionNumberTextInput } from './DecisionNumberTextInput';
 
 export { TreatedDocuments };
 
@@ -23,16 +24,15 @@ const DEFAULT_FILTERS = {
 function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'> }) {
   const theme = useCustomTheme();
   const [filterValues, setFilterValues] = useState<treatedDocumentFilterType>(DEFAULT_FILTERS);
+  const [searchedDecisionNumber, setSearchedDecisionNumber] = useState<number | undefined>();
   const styles = buildStyles(theme);
 
   const filterInfo = extractFilterInfoFromTreatedDocuments(props.treatedDocuments);
   const summedTreatmentsInfo = computeSummedTreatmentsInfo(props.treatedDocuments);
   const treatmentFields = buildTreatedDocumentsFields(summedTreatmentsInfo);
-  const filteredTreatedDocuments = getFilteredTreatedDocuments(
-    props.treatedDocuments,
-    summedTreatmentsInfo,
-    filterValues,
-  );
+  const filteredTreatedDocuments = searchedDecisionNumber
+    ? filterSearchedDecisions(props.treatedDocuments, searchedDecisionNumber)
+    : getFilteredTreatedDocuments(props.treatedDocuments, summedTreatmentsInfo, filterValues);
   const filteredDocumentIdsString = filteredTreatedDocuments.map((treatedDocument) =>
     idModule.lib.convertToString(treatedDocument.document._id),
   );
@@ -65,8 +65,9 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
               setFilterValues={setFilterValues}
               resultsCount={filteredTreatedDocuments.length}
             />
+            <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
           </div>
-          <div style={styles.statisticsBoxContainer}>
+          <div style={styles.rightHeaderContent}>
             <StatisticsBox
               totalDuration={totalDuration}
               treatedDocumentsCount={filteredTreatedDocuments.length}
@@ -277,51 +278,63 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
     return treatedDocumentsFields;
   }
 
-  function buildStyles(theme: customThemeType) {
-    return {
-      header: {
-        height: heights.header,
-      },
-      csvButtonContainer: {
-        position: 'fixed',
-        bottom: theme.spacing,
-        right: theme.spacing * 2,
-      },
-      contentContainer: {
-        display: 'flex',
-        width: '100vw',
-        height: heights.adminPanel,
-      },
-      leftHeaderContent: {
-        flex: 1,
-      },
-      tableHeaderContainer: {
-        height: heights.adminTreatmentsTableHeader,
-      },
-      publicationCategoryBadgesContainer: {
-        display: 'flex',
-      },
-      publicationCategoryBadgeContainer: {
-        marginRight: theme.spacing,
-      },
-      statisticsBoxContainer: {
-        flex: 1,
-        marginTop: theme.spacing * 2,
-      },
-      tableHeader: {
-        paddingTop: theme.spacing * 2,
-        display: 'flex',
-        justifyContent: 'space-between',
-      },
-      tableContentContainer: {
-        height: heights.adminTreatmentsTable,
-        overflowY: 'auto',
-      },
-      table: {
-        width: widths.adminContent,
-        paddingLeft: theme.spacing * 3,
-        paddingRight: theme.spacing * 2,
-      },
-    } as const;
+  function filterSearchedDecisions(
+    treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>,
+    searchedDecisionNumber: number,
+  ) {
+    return treatedDocuments.filter((treatedDocument) =>
+      treatedDocument.document.documentId.toString().includes(searchedDecisionNumber.toString()),
+    );
   }
+}
+function buildStyles(theme: customThemeType) {
+  return {
+    header: {
+      height: heights.header,
+    },
+    csvButtonContainer: {
+      position: 'fixed',
+      bottom: theme.spacing,
+      right: theme.spacing * 2,
+    },
+    contentContainer: {
+      display: 'flex',
+      width: '100vw',
+      height: heights.adminPanel,
+    },
+    leftHeaderContent: {
+      flex: 3,
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingRight: theme.spacing * 4,
+    },
+    tableHeaderContainer: {
+      height: heights.adminTreatmentsTableHeader,
+    },
+    publicationCategoryBadgesContainer: {
+      display: 'flex',
+    },
+    publicationCategoryBadgeContainer: {
+      marginRight: theme.spacing,
+    },
+    rightHeaderContent: {
+      flex: 1,
+      marginTop: theme.spacing * 2,
+    },
+    tableHeader: {
+      paddingTop: theme.spacing * 2,
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    tableContentContainer: {
+      height: heights.adminTreatmentsTable,
+      overflowY: 'auto',
+    },
+    table: {
+      width: widths.adminContent,
+      paddingLeft: theme.spacing * 3,
+      paddingRight: theme.spacing * 2,
+    },
+  } as const;
 }

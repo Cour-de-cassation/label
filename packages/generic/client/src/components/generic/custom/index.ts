@@ -16,6 +16,7 @@ import { PaginatedTable } from './PaginatedTable';
 import { PopUp } from './PopUp';
 import { SText } from './SText';
 import { Table, tableRowFieldType } from './Table';
+import { TextInput } from './TextInput';
 import { TooltipMenu } from './TooltipMenu';
 
 export {
@@ -37,6 +38,7 @@ export {
   PopUp,
   SText,
   Table,
+  TextInput,
   TooltipMenu,
 };
 

@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
+import React, { FormEvent, FunctionComponent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { apiCaller } from '../../api';
-import { ButtonWithIcon, Logo, Text, TextInput } from '../../components';
+import { ButtonWithIcon, Logo, Text, RichTextInput } from '../../components';
 import { localStorage } from '../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
@@ -24,7 +24,7 @@ const Login: FunctionComponent = () => {
       </div>
       <form style={styles.formContainer} onSubmit={handleSubmit}>
         <div style={styles.inputContainer}>
-          <TextInput
+          <RichTextInput
             name="email"
             type="email"
             placeholder={wordings.loginPage.email}
@@ -35,7 +35,7 @@ const Login: FunctionComponent = () => {
           />
         </div>
         <div style={styles.inputContainer}>
-          <TextInput
+          <RichTextInput
             name="password"
             type="password"
             placeholder={wordings.loginPage.password}
@@ -83,14 +83,14 @@ const Login: FunctionComponent = () => {
     }
   }
 
-  function changeEmail(event: ChangeEvent<HTMLInputElement>) {
+  function changeEmail(email: string) {
     resetIsFormValid();
-    setEmail(event.target.value);
+    setEmail(email);
   }
 
-  function changePassword(event: ChangeEvent<HTMLInputElement>) {
+  function changePassword(password: string) {
     resetIsFormValid();
-    setPassword(event.target.value);
+    setPassword(password);
   }
 
   async function handleSubmit(event: FormEvent) {

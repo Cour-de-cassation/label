@@ -16,6 +16,7 @@ import {
   SText,
   Table,
   tableRowFieldType,
+  TextInput,
   TooltipMenu,
 } from './custom';
 import {
@@ -30,7 +31,7 @@ import {
   SwitchButton,
   TableSortLabel,
   Text,
-  TextInput,
+  RichTextInput,
   Tooltip,
 } from './materialUI';
 
@@ -55,6 +56,7 @@ export {
   PopUp,
   PaginatedTable,
   RadioButton,
+  RichTextInput,
   SText,
   SvgImage,
   SwitchButton,

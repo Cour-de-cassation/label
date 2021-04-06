@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { userModule, userType } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { ButtonWithIcon, Drawer, IconButton, LabelledDropdown, Text, TextInput } from '../../../../components';
+import { ButtonWithIcon, Drawer, IconButton, LabelledDropdown, Text, RichTextInput } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { AgentCreatedPopUp } from './AgentCreatedPopUp';
@@ -55,31 +55,31 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
           </div>
           <div style={styles.formContainer}>
             <div style={styles.fieldContainer}>
-              <TextInput
+              <RichTextInput
                 name="firstName"
                 error={!!formErrors.firstName}
                 value={formValues.firstName || ''}
-                onChange={(event) => updateField('firstName', event.target.value)}
+                onChange={(firstName) => updateField('firstName', firstName)}
                 placeholder={wordings.agentsPage.createAgentDrawer.fields.firstName}
                 style={styles.field}
               />
             </div>
             <div style={styles.fieldContainer}>
-              <TextInput
+              <RichTextInput
                 name="lastName"
                 error={!!formErrors.lastName}
                 value={formValues.lastName || ''}
-                onChange={(event) => updateField('lastName', event.target.value)}
+                onChange={(lastName) => updateField('lastName', lastName)}
                 placeholder={wordings.agentsPage.createAgentDrawer.fields.lastName}
                 style={styles.field}
               />
             </div>
             <div style={styles.fieldContainer}>
-              <TextInput
+              <RichTextInput
                 name="email"
                 error={!!formErrors.email}
                 value={formValues.email || ''}
-                onChange={(event) => updateField('email', event.target.value)}
+                onChange={(email) => updateField('email', email)}
                 placeholder={wordings.agentsPage.createAgentDrawer.fields.email}
                 style={styles.field}
               />

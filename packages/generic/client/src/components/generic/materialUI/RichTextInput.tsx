@@ -2,9 +2,9 @@ import React, { ChangeEvent, CSSProperties, ReactElement } from 'react';
 import { makeStyles, TextField } from '@material-ui/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 
-export { TextInput, buildInputClasses };
+export { RichTextInput, buildInputClasses };
 
-function TextInput(props: {
+function RichTextInput(props: {
   name: string;
   placeholder?: string;
   value: string;
@@ -12,13 +12,14 @@ function TextInput(props: {
   errorText?: string;
   helperText?: string;
   multiline?: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
   size?: number;
   style?: CSSProperties;
   type?: React.InputHTMLAttributes<unknown>['type'];
 }): ReactElement {
   const theme = useCustomTheme();
   const inputClasses = buildInputClasses(theme);
+
   return (
     <TextField
       id={props.name}
@@ -27,7 +28,7 @@ function TextInput(props: {
       helperText={props.error ? props.errorText : props.helperText}
       label={props.placeholder}
       multiline={props.multiline}
-      onChange={props.onChange}
+      onChange={onChange}
       rows={props.size}
       style={props.style}
       type={props.type}
@@ -35,6 +36,10 @@ function TextInput(props: {
       variant="outlined"
     />
   );
+
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    return props.onChange(event.target.value);
+  }
 }
 
 function buildInputClasses(theme: customThemeType) {

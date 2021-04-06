@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiCaller } from '../../../api';
 import { localStorage } from '../../../services/localStorage';
 import { useCustomTheme, customThemeType, useDisplayMode } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { ButtonWithIcon, Drawer, IconButton, RadioButton, Text, TextInput } from '../../generic';
+import { ButtonWithIcon, Drawer, IconButton, RadioButton, Text, RichTextInput } from '../../generic';
 import { SettingsSection } from './SettingsSection';
 
 export { SettingsDrawer };
@@ -71,32 +71,32 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
         <SettingsSection
           content={
             <>
-              <TextInput
+              <RichTextInput
                 error={shouldShowErrorForPreviousPassword()}
                 errorText={wordings.business.wrongPassword}
                 name="previousPassword"
-                onChange={changePreviousPassword}
+                onChange={setPreviousPassword}
                 placeholder={wordings.business.previousPassword}
                 style={styles.passwordTextInput}
                 type="password"
                 value={previousPassword}
               />
-              <TextInput
+              <RichTextInput
                 error={shouldShowErrorForNewPassword()}
                 errorText={computeErrorMessageForNewPassword()}
                 helperText={wordings.business.newPasswordInstructions}
                 name="newPassword"
-                onChange={changeNewPassword}
+                onChange={setNewPassword}
                 placeholder={wordings.business.newPassword}
                 style={styles.passwordTextInput}
                 type="password"
                 value={newPassword}
               />
-              <TextInput
+              <RichTextInput
                 error={shouldShowErrorForNewPassword()}
                 errorText={computeErrorMessageForNewPassword()}
                 name="confirmedNewPassword"
-                onChange={changeConfirmedNewPassword}
+                onChange={setConfirmedNewPassword}
                 placeholder={wordings.business.confirmPassword}
                 style={styles.passwordTextInput}
                 type="password"
@@ -147,16 +147,8 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
     }
   }
 
-  function changePreviousPassword(event: ChangeEvent<HTMLInputElement>) {
-    setPreviousPassword(event.target.value);
-  }
-
   function shouldShowErrorForPreviousPassword() {
     return passwordChangeValidity === 'wrongPassword';
-  }
-
-  function changeNewPassword(event: ChangeEvent<HTMLInputElement>) {
-    setNewPassword(event.target.value);
   }
 
   function shouldShowErrorForNewPassword() {
@@ -169,10 +161,6 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
     }
 
     return wordings.business.newPasswordInstructions;
-  }
-
-  function changeConfirmedNewPassword(event: ChangeEvent<HTMLInputElement>) {
-    setConfirmedNewPassword(event.target.value);
   }
 
   function buildStyles(theme: customThemeType) {

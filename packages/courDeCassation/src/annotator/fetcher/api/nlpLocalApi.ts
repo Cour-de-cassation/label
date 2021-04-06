@@ -9,13 +9,13 @@ const nlpLocalApi: nlpApiType = {
   async fetchNlpAnnotations(settings, document) {
     const annotations = JSON.parse(
       await fs.readFile(`${pathToNlpAnnotations}${document.documentId}.json`, {
-        encoding: 'latin1',
+        encoding: 'utf8',
       }),
     ) as nlpAnnotationsType;
 
     return {
       ...annotations,
-      entities: annotations.entities.filter((entity) =>
+      entities: annotations.entities.filter(entity =>
         Object.keys(settings).includes(entity.label),
       ),
     };

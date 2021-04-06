@@ -48,20 +48,5 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
         (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
       )[0];
     },
-
-    async updateOne(treatmentId, { annotationsDiff, duration }) {
-      updateFakeCollection(
-        collection,
-        collection.map((treatment) =>
-          idModule.lib.equalId(treatmentId, treatment._id)
-            ? {
-                ...treatment,
-                duration,
-                annotationsDiff,
-              }
-            : treatment,
-        ),
-      );
-    },
   }),
 });

@@ -35,6 +35,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       insert,
       insertMany,
       setIndexes,
+      updateOne,
       ...customRepository,
     };
 
@@ -91,6 +92,12 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       for (const index of indexes) {
         await collection.createIndex(index);
       }
+    }
+
+    async function updateOne(id: idType, objectFields: Partial<T>) {
+      await collection.updateOne({ _id: id } as any, {
+        $set: objectFields,
+      });
     }
   };
 }

@@ -20,6 +20,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     insert,
     insertMany,
     setIndexes,
+    updateOne,
     ...customRepository,
   });
 
@@ -27,6 +28,15 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     while (collection.length) {
       collection.pop();
     }
+  }
+
+  async function deleteManyByIds(ids: idType[]) {
+    updateFakeCollection(
+      collection,
+      collection.filter(
+        (item) => !ids.some((id) => idModule.lib.equalId(id, item._id)),
+      ),
+    );
   }
 
   async function findAll() {
@@ -71,11 +81,11 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
 
   async function setIndexes() {}
 
-  async function deleteManyByIds(ids: idType[]) {
+  async function updateOne(id: idType, objectFields: Partial<T>) {
     updateFakeCollection(
       collection,
-      collection.filter(
-        (item) => !ids.some((id) => idModule.lib.equalId(id, item._id)),
+      collection.map((item) =>
+        idModule.lib.equalId(id, item._id) ? { ...item, objectFields } : item,
       ),
     );
   }

@@ -11,4 +11,5 @@ type repositoryType<T extends { _id: idType }> = {
   insert: (newObject: T) => Promise<{ success: boolean }>;
   insertMany: (newObjects: T[]) => Promise<void>;
   setIndexes: () => Promise<void>;
+  updateOne: (id: idType, objectFields: Partial<T>) => Promise<void>;
 };

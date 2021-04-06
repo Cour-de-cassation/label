@@ -44,15 +44,5 @@ const buildTreatmentRepository = buildRepositoryBuilder<
         idModule.lib.convertToString(treatment.documentId),
       );
     },
-
-    async updateOne(
-      treatmentId,
-      { annotationsDiff, duration, lastUpdateDate },
-    ) {
-      await collection.updateOne(
-        { _id: treatmentId },
-        { $set: { annotationsDiff, duration, lastUpdateDate } },
-      );
-    },
   }),
 });

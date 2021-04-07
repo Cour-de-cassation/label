@@ -8,6 +8,8 @@ import { SpecialDocumentsTable } from './SpecialDocumentsTable';
 
 export { SpecialDocuments };
 
+const TABLE_WIDTH = '300px';
+
 function SpecialDocuments() {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -59,7 +61,8 @@ function buildStyles(theme: customThemeType) {
     },
     contentContainer: {
       display: 'flex',
-      width: '100vw',
+      width: TABLE_WIDTH,
+      margin: '0 auto',
       height: heights.specialDocuments,
     },
     tableHeaderContainer: {

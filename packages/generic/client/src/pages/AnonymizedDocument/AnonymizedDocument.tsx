@@ -1,6 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router';
-import { IconButton, MainHeader, Text } from '../../components';
+import { useHistory, useParams } from 'react-router';
+import { ButtonWithIcon, MainHeader, Text } from '../../components';
 import { lineSplitter } from '../../services/lineSplitter';
 import { customThemeType, heights, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
@@ -9,6 +9,7 @@ import { AnonymizedDocumentTextDataFetcher } from './AnonymizedDocumentTextDataF
 export { AnonymizedDocument };
 
 const LINE_MIN_HEIGHT = 10;
+const TEXT_CONTENT_WIDTH = '900px';
 
 type AnonymizedDocumentParamsType = {
   documentId: string;
@@ -19,9 +20,11 @@ function AnonymizedDocument() {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
+  const history = useHistory();
+
   return (
     <>
-      <MainHeader />
+      <MainHeader onBackButtonPress={navigateToSpecialDocuments} />
       <AnonymizedDocumentTextDataFetcher documentId={params.documentId}>
         {({ anonymizedDocumentText }) => {
           const splittedTextByLine = lineSplitter.splitTextAccordingToNewLine(anonymizedDocumentText);
@@ -43,10 +46,10 @@ function AnonymizedDocument() {
                 </div>
               </div>
               <div style={styles.documentFooterContainer}>
-                <IconButton
+                <ButtonWithIcon
                   iconName="copy"
                   onClick={() => copyToClipboard(anonymizedDocumentText)}
-                  hint={wordings.shared.copyToClipboard}
+                  text={wordings.shared.copyToClipboard}
                 />
               </div>
             </div>
@@ -55,6 +58,9 @@ function AnonymizedDocument() {
       </AnonymizedDocumentTextDataFetcher>
     </>
   );
+  function navigateToSpecialDocuments() {
+    history.push('/special-documents');
+  }
 }
 
 async function copyToClipboard(text: string) {
@@ -71,8 +77,9 @@ function buildStyles(theme: customThemeType) {
       height: heights.anonymizedDocumentHeader,
     },
     documentContainer: {
-      paddingLeft: theme.spacing * 2,
-      paddingRight: theme.spacing * 2,
+      width: '100vw',
+      maxWidth: TEXT_CONTENT_WIDTH,
+      margin: '0 auto',
     },
     documentTextContainer: {
       height: heights.anonymizedDocument,

@@ -30,7 +30,6 @@ function useApi<T>(callApi: () => Promise<{ data: T; statusCode: number }>) {
   return { data, isLoaded, refetch, statusCode };
 
   function refetch() {
-    setData(undefined);
     setIsLoaded(false);
     setStatusCode(undefined);
     setRefetchFlag(!refetchFlag);

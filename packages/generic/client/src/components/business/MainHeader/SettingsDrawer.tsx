@@ -41,8 +41,10 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
           content={
             <div style={styles.accountSectionContent}>
               <div style={styles.accountInfoContainer}>
-                <Text variant="h2"> {userName}</Text>
-                <Text variant="body1"> {userEmail}</Text>
+                <Text variant="h2" weight="bold">
+                  {userName}
+                </Text>
+                <Text variant="body1">{userEmail}</Text>
               </div>
               <ButtonWithIcon iconName="logout" color="default" onClick={logout} text={wordings.shared.logout} />
             </div>

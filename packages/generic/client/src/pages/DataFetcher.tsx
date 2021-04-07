@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { errorHandlers, httpStatusCodeHandler } from '@label/core';
+import { handleFetchedData } from '../api';
 import { localStorage } from '../services/localStorage';
 import { ErrorPage } from './ErrorPage';
 import { LoadingPage } from './LoadingPage';
@@ -10,23 +10,24 @@ export { DataFetcher };
 function DataFetcher<dataT>(props: {
   buildComponentWithData: (returnedData: dataT) => ReactElement;
   fetchInfo: { isLoaded: boolean; statusCode?: number; data?: dataT };
+  showLoadingOnRefetch?: boolean;
 }) {
-  if (!props.fetchInfo.isLoaded) {
-    return buildLoadingPage();
-  }
+  const fetchedData = handleFetchedData(props.fetchInfo, props.showLoadingOnRefetch);
 
-  if (props.fetchInfo.statusCode) {
-    if (httpStatusCodeHandler.isSuccess(props.fetchInfo.statusCode) && props.fetchInfo.data) {
-      return props.buildComponentWithData(props.fetchInfo.data);
-    } else if (errorHandlers.authenticationErrorHandler.check(props.fetchInfo.statusCode)) {
-      localStorage.bearerTokenHandler.remove();
-      return buildLoginRedirectionPage();
-    } else {
-      return buildErrorPage();
-    }
+  switch (fetchedData.kind) {
+    case 'loading':
+      return buildLoadingPage();
+    case 'data':
+      return props.buildComponentWithData(fetchedData.data);
+    case 'error':
+      switch (fetchedData.error) {
+        case 'authentication':
+          localStorage.bearerTokenHandler.remove();
+          return buildLoginRedirectionPage();
+        case 'unknown':
+          return buildErrorPage();
+      }
   }
-
-  return buildErrorPage();
 
   function buildErrorPage() {
     return <ErrorPage />;

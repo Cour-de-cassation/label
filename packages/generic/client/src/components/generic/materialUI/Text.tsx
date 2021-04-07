@@ -6,6 +6,7 @@ export { Text };
 function Text(props: {
   children: ReactNode;
   variant?: typographyType;
+  weight?: 'normal' | 'bold';
   color?: 'textPrimary' | 'textSecondary';
   inline?: boolean;
   style?: CSSProperties;
@@ -17,7 +18,7 @@ function Text(props: {
   function buildStyle(theme: customThemeType) {
     const color = getTextColor(theme, props.color);
     const display = props.inline ? 'inline' : 'initial';
-    const variantProperties = typography[props.variant || 'body1'];
+    const variantProperties = typography[props.variant || 'body1'][props.weight || 'normal'];
     return {
       color,
       display,

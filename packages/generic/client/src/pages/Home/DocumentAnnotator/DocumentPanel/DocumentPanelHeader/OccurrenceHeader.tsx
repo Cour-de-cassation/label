@@ -67,7 +67,7 @@ function buildStyles(theme: customThemeType) {
       overflow: 'hidden',
     },
     annotationRepresentatives: {
-      height: theme.typography.body2.lineHeight,
+      height: theme.typography.body2.normal.lineHeight,
     },
   } as const;
 }

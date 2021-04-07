@@ -10,6 +10,7 @@ export { ProblemReportsTable };
 const PROBLEM_REPORT_ICON_SIZE = 24;
 
 function ProblemReportsTable(props: {
+  refetch: () => void;
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
   const history = useHistory();
@@ -54,17 +55,18 @@ function ProblemReportsTable(props: {
       },
     ];
   }
+
+  async function onRowClick(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
+    await apiCaller.post<'updateProblemReportHasBeenRead'>('updateProblemReportHasBeenRead', {
+      hasBeenRead: !problemReportWithDetails.problemReport.hasBeenRead,
+      problemReportId: problemReportWithDetails.problemReport._id,
+    });
+    props.refetch();
+  }
 }
 
 function isRowHighlighted(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
   return !problemReportWithDetails.problemReport.hasBeenRead;
-}
-
-async function onRowClick(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
-  await apiCaller.post<'updateProblemReportHasBeenRead'>('updateProblemReportHasBeenRead', {
-    hasBeenRead: !problemReportWithDetails.problemReport.hasBeenRead,
-    problemReportId: problemReportWithDetails.problemReport._id,
-  });
 }
 
 const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'problemReportsWithDetails'>[number]>> = [

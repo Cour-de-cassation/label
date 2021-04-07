@@ -26,7 +26,7 @@ function Router() {
         </UnauthenticatedRoute>
         <AuthenticatedRoute path="/admin">
           <AdminInfosDataFetcher>
-            {({ adminInfos }) => {
+            {({ adminInfos, refetch }) => {
               const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
                 ({ problemReport }) => !problemReport.hasBeenRead,
               ).length;
@@ -45,7 +45,10 @@ function Router() {
                       header={wordings.problemReportsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
                     >
-                      <ProblemReports problemReportsWithDetails={adminInfos.problemReportsWithDetails} />
+                      <ProblemReports
+                        refetch={refetch.problemReportsWithDetails}
+                        problemReportsWithDetails={adminInfos.problemReportsWithDetails}
+                      />
                     </AdminPage>
                   </AuthenticatedRoute>
                   <AuthenticatedRoute path="/admin/treated-documents">

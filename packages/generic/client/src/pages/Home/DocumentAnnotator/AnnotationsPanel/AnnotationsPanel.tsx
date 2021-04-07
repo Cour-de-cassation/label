@@ -20,7 +20,9 @@ function AnnotationsPanel(props: {
   return (
     <div style={styles.panel}>
       <div style={styles.panelHeader}>
-        <Text variant="h2">{wordings.homePage.askedAnnotations}</Text>
+        <Text variant="h2" weight="bold">
+          {wordings.homePage.askedAnnotations}
+        </Text>
       </div>
       <div style={styles.categoriesContainer}>
         {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => (

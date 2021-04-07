@@ -5,7 +5,10 @@ import { ProblemReportsTable } from './ProblemReportsTable';
 
 export { ProblemReports };
 
-function ProblemReports(props: { problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'> }) {
+function ProblemReports(props: {
+  problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
+  refetch: () => void;
+}) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   return (
@@ -14,7 +17,7 @@ function ProblemReports(props: { problemReportsWithDetails: apiRouteOutType<'get
         <div style={styles.tableHeader}></div>
       </div>
       <div style={styles.tableContentContainer}>
-        <ProblemReportsTable problemReportsWithDetails={props.problemReportsWithDetails} />
+        <ProblemReportsTable refetch={props.refetch} problemReportsWithDetails={props.problemReportsWithDetails} />
       </div>
     </div>
   );

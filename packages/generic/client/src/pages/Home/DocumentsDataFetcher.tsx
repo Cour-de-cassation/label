@@ -26,6 +26,7 @@ function DocumentsDataFetcher(props: {
         }[],
       ) => props.children({ documentsForUser, fetchNewDocumentsForUser: documentsForUserFetchInfo.refetch })}
       fetchInfo={documentsForUserFetchInfo}
+      showLoadingOnRefetch
     />
   );
 }

@@ -28,7 +28,7 @@ function DocumentSelectorCard(props: {
     <div style={styles.publishedDocumentCardContainer}>
       <div style={styles.publishedDocumentTitleContainer}>
         <PublicationCategoryBadge publicationCategoryLetter={props.choice.document.publicationCategory[0]} />
-        <Text variant="h2" style={styles.publishedDocumentTitle}>
+        <Text variant="h2" weight="bold" style={styles.publishedDocumentTitle}>
           {wordings.homePage.documentSelector.publishedDocumentTitle}
         </Text>
       </div>
@@ -44,7 +44,7 @@ function DocumentSelectorCard(props: {
         <Text style={styles.title} variant="h1">
           {wordings.homePage.documentSelector.wholeCheck}
         </Text>
-        <Text style={styles.subtitle} variant="h2">
+        <Text style={styles.subtitle} variant="h2" weight="bold">
           {props.choice.document.title}
         </Text>
         <div style={styles.documentInfoEntryTable}>
@@ -56,7 +56,9 @@ function DocumentSelectorCard(props: {
                 </Text>
               </div>
               <div style={styles.documentValueContainer}>
-                <Text variant="h2">{documentInfoEntries[documentInfoEntry]}</Text>
+                <Text variant="h2" weight="bold">
+                  {documentInfoEntries[documentInfoEntry]}
+                </Text>
               </div>
             </div>
           ))}

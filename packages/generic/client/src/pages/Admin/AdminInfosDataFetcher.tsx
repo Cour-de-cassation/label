@@ -14,25 +14,34 @@ type adminInfosType = {
   usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'>;
 };
 
-function AdminInfosDataFetcher(props: { children: (fetched: { adminInfos: adminInfosType }) => ReactElement }) {
+type refetchInfosType = {
+  problemReportsWithDetails: () => void;
+};
+
+function AdminInfosDataFetcher(props: {
+  children: (fetched: { adminInfos: adminInfosType; refetch: refetchInfosType }) => ReactElement;
+}) {
   return (
     <AgentsDataFetcher>
       {({ usersWithDetails }) => (
-        <ProblemReportsDataFetcher>
-          {({ problemReportsWithDetails }) => (
-            <TreatedDocumentsDataFetcher>
-              {({ treatedDocuments }) => (
-                <UntreatedDocumentsDataFetcher>
-                  {({ untreatedDocuments }) =>
+        <TreatedDocumentsDataFetcher>
+          {({ treatedDocuments }) => (
+            <UntreatedDocumentsDataFetcher>
+              {({ untreatedDocuments }) => (
+                <ProblemReportsDataFetcher>
+                  {({ problemReportsWithDetails, refetch: refetchProblemReportsWithDetails }) =>
                     props.children({
                       adminInfos: { problemReportsWithDetails, treatedDocuments, usersWithDetails, untreatedDocuments },
+                      refetch: {
+                        problemReportsWithDetails: refetchProblemReportsWithDetails,
+                      },
                     })
                   }
-                </UntreatedDocumentsDataFetcher>
+                </ProblemReportsDataFetcher>
               )}
-            </TreatedDocumentsDataFetcher>
+            </UntreatedDocumentsDataFetcher>
           )}
-        </ProblemReportsDataFetcher>
+        </TreatedDocumentsDataFetcher>
       )}
     </AgentsDataFetcher>
   );

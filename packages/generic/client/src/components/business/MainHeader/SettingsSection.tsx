@@ -11,7 +11,9 @@ function SettingsSection(props: { content: ReactElement; title: string }) {
   return (
     <div style={styles.settingsSection}>
       <div style={styles.settingsSectionTitle}>
-        <Text variant="h2"> {props.title}</Text>
+        <Text variant="h2" weight="bold">
+          {props.title}
+        </Text>
       </div>
       <div style={styles.settingsSectionContent}>{props.content}</div>
     </div>

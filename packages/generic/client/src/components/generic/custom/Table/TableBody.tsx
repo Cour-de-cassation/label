@@ -48,8 +48,7 @@ function TableBody<InputT>(props: {
       theme,
       hasOnClick: !!props.onRowClick,
     };
-    const cellTextStyle =
-      props.isRowHighlighted && props.isRowHighlighted(row) ? ({ fontWeight: 'bold' } as const) : undefined;
+    const cellWeight = props.isRowHighlighted && props.isRowHighlighted(row) ? 'bold' : 'normal';
     const formattedRow = props.fields.map((field) =>
       field.render ? field.render(row) : <Text variant="h3">{field.extractor(row)}</Text>,
     );
@@ -60,7 +59,7 @@ function TableBody<InputT>(props: {
         <Tr onClick={!!onRowClick ? () => onRowClick(row) : undefined} styleProps={styleProps}>
           {formattedRow.map((cellContent) => (
             <td>
-              <Text style={cellTextStyle} variant="h3">
+              <Text weight={cellWeight} variant="h3">
                 {cellContent}
               </Text>
             </td>
@@ -83,7 +82,7 @@ function TableBody<InputT>(props: {
         <Tr onClick={!!onRowClick ? () => onRowClick(row) : undefined} styleProps={styleProps}>
           {Object.values(formattedRow).map((value) => (
             <td>
-              <Text style={cellTextStyle} variant="h3">
+              <Text weight={cellWeight} variant="h3">
                 {value}
               </Text>
             </td>

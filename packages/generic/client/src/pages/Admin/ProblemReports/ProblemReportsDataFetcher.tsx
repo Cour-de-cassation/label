@@ -8,6 +8,7 @@ export { ProblemReportsDataFetcher };
 function ProblemReportsDataFetcher(props: {
   children: (fetched: {
     problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
+    refetch: () => void;
   }) => ReactElement;
 }) {
   const problemReportsFetchInfo = useApi(buildFetchProblemReports());
@@ -15,7 +16,7 @@ function ProblemReportsDataFetcher(props: {
   return (
     <DataFetcher
       buildComponentWithData={(problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>) =>
-        props.children({ problemReportsWithDetails })
+        props.children({ problemReportsWithDetails, refetch: problemReportsFetchInfo.refetch })
       }
       fetchInfo={problemReportsFetchInfo}
     />

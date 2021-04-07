@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { uniq } from 'lodash';
 import { CategoryTableEntryBracketLink } from './CategoryTableEntryBracketLink';
 import { displayModeType, annotationType, settingsModule } from '@label/core';
-import { SText } from '../../../../../components';
+import { Text } from '../../../../../components';
 import { annotatorStateHandlerType, useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { customThemeType, emphasizeShadeColor, getColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { splittedTextByLineType } from '../../lib';
@@ -53,14 +53,16 @@ function CategoryTableEntry(props: {
                 variant={computeBracketPosition(entityAnnotationTexts, index)}
               />
               <Div_AnnotationTextMargin>
-                <SText variant="body2">{text}</SText>
+                <Text variant="body2" inline>
+                  {text}
+                </Text>
               </Div_AnnotationTextMargin>
             </Div_AnnotationText>
           </div>
         ))}
       </Div_EntityText>
       <Div_Occurences styleProps={styleProps}>
-        <SText>{numberOfEntities}</SText>
+        <Text inline>{numberOfEntities}</Text>
       </Div_Occurences>
       <Div_ActionButtons styleProps={styleProps}>
         <CategoryTableEntryActionButtons

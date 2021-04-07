@@ -14,7 +14,6 @@ import { LabelledDropdown } from './LabelledDropdown';
 import { Loader } from './Loader';
 import { PaginatedTable } from './PaginatedTable';
 import { PopUp } from './PopUp';
-import { SText } from './SText';
 import { Table, tableRowFieldType } from './Table';
 import { TextInput } from './TextInput';
 import { TooltipMenu } from './TooltipMenu';
@@ -36,7 +35,6 @@ export {
   Loader,
   PaginatedTable,
   PopUp,
-  SText,
   Table,
   TextInput,
   TooltipMenu,

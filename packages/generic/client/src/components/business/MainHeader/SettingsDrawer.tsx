@@ -40,7 +40,7 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
         <SettingsSection
           content={
             <div style={styles.accountSectionContent}>
-              <div>
+              <div style={styles.accountInfoContainer}>
                 <Text variant="h2"> {userName}</Text>
                 <Text variant="body1"> {userEmail}</Text>
               </div>
@@ -185,6 +185,10 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
         display: 'flex',
         justifyContent: 'space-between',
       },
+      accountInfoContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+      },
       passwordTextInput: {
         margin: `${theme.spacing * 2}px 0`,
         width: '100%',
@@ -193,6 +197,6 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
         display: 'flex',
         justifyContent: 'flex-end' as const,
       },
-    };
+    } as const;
   }
 }

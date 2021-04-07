@@ -33,6 +33,6 @@ function getTextColor(theme: customThemeType, color: 'textPrimary' | 'textSecond
     case 'textSecondary':
       return theme.colors.line.level2;
     default:
-      return theme.colors.line.level1;
+      return 'inherit';
   }
 }

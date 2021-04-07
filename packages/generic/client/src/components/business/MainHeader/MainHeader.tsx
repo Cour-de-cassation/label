@@ -8,7 +8,7 @@ export { MainHeader };
 
 function MainHeader(props: { subtitle?: JSX.Element; title?: string; onBackButtonPress?: () => void }) {
   const theme = useCustomTheme();
-  const style = buildStyle(theme);
+  const styles = buildStyles(theme);
   const leftHeaderComponents = buildLeftHeaders();
 
   return (
@@ -17,19 +17,23 @@ function MainHeader(props: { subtitle?: JSX.Element; title?: string; onBackButto
         leftHeaderComponents={leftHeaderComponents}
         rightHeaderComponents={[<SettingsButton />]}
         spaceBetweenComponents={theme.spacing * 2}
-        style={style.header}
+        style={styles.header}
         variant="classic"
       />
     </MenuBar>
   );
 
-  function buildStyle(theme: customThemeType) {
+  function buildStyles(theme: customThemeType) {
     return {
       header: {
         height: heights.header,
         paddingLeft: theme.spacing,
       },
-    };
+      composedTitleContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+      },
+    } as const;
   }
 
   function buildLeftHeaders() {
@@ -37,9 +41,9 @@ function MainHeader(props: { subtitle?: JSX.Element; title?: string; onBackButto
       return [];
     }
     const textComponent = props.subtitle ? (
-      <div>
+      <div style={styles.composedTitleContainer}>
         <Text variant="h3">{props.title}</Text>
-        {props.subtitle}
+        <Text>{props.subtitle}</Text>
       </div>
     ) : (
       <Text>{props.title}</Text>

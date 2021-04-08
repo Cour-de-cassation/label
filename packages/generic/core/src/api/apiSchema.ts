@@ -180,6 +180,18 @@ const apiSchema = {
       },
       out: buildModel({ kind: 'primitive', content: 'string' } as const),
     },
+    deleteProblemReport: {
+      in: {
+        problemReportId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     login: {
       in: {
         email: buildModel({

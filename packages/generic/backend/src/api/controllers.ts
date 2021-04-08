@@ -104,6 +104,14 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       ) => userService.changePassword({ user, previousPassword, newPassword }),
     }),
 
+    deleteProblemReport: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { problemReportId } }) =>
+        problemReportService.deleteProblemReportById(
+          idModule.lib.buildId(problemReportId),
+        ),
+    }),
+
     async login({ args: { email, password } }) {
       const { email: userEmail, name, role, token } = await userService.login({
         email,

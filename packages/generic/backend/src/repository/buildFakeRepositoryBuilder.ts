@@ -13,6 +13,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
 
   return () => ({
     clear,
+    deleteById,
     deleteManyByIds,
     findAll,
     findAllByIds,
@@ -28,6 +29,13 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     while (collection.length) {
       collection.pop();
     }
+  }
+
+  async function deleteById(_id: idType) {
+    updateFakeCollection(
+      collection,
+      collection.filter((item) => idModule.lib.equalId(item._id, _id)),
+    );
   }
 
   async function deleteManyByIds(ids: idType[]) {

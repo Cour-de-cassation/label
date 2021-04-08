@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { apiRouteOutType, idModule, timeOperator } from '@label/core';
+import { apiRouteOutType, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { DocumentStatusIcon, ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
 import { wordings } from '../../../../wordings';
@@ -29,6 +29,15 @@ function ProblemReportsTable(props: {
   function buildOptionItems() {
     return [
       {
+        text: wordings.problemReportsPage.table.optionItems.deleteProblemReport,
+        onClick: async (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
+          await apiCaller.post<'deleteProblemReport'>('deleteProblemReport', {
+            problemReportId: problemReportWithDetails.problemReport._id,
+          });
+          props.refetch();
+        },
+      },
+      {
         text: wordings.problemReportsPage.table.optionItems.openDocument,
         onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
           history.push(`/admin/document/${problemReportWithDetails.document._id}`);
@@ -37,18 +46,19 @@ function ProblemReportsTable(props: {
       },
       {
         text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
-        onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-          apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-            assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
+        onClick: async (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
+          await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+            assignationId: problemReportWithDetails.problemReport.assignationId,
             status: 'pending',
           });
+          props.refetch();
         },
       },
       {
         text: wordings.problemReportsPage.table.optionItems.validate,
         onClick: async (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
           await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-            assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
+            assignationId: problemReportWithDetails.problemReport.assignationId,
             status: 'done',
           });
           props.refetch();

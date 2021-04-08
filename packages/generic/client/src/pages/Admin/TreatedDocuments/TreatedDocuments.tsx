@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
-import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator, treatmentModule } from '@label/core';
+import { apiRouteOutType, idModule, indexer, keysOf, treatmentInfoType, timeOperator } from '@label/core';
 import { DecisionNumberTextInput, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -88,22 +88,22 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
     const treatments = flatten(treatedDocuments.map((treatedDocument) => treatedDocument.treatments)).filter(
       (treatment) => treatment.source === 'annotator',
     );
-    const treatmentsInfo = treatmentModule.lib.computeTreatmentsInfo(treatments);
+    const indexedTreatments = indexer.indexBy(treatments, (treatment) => idModule.lib.convertToString(treatment._id));
     const summedTreatmentsInfo = treatedDocuments.reduce((documentAccumulator, treatedDocument) => {
       const documentIdString = idModule.lib.convertToString(treatedDocument.document._id);
-      const documentTreatmentsInfo = treatedDocument.treatments
+      const documentTreatments = treatedDocument.treatments
         .filter((treatment) => treatment.source === 'annotator')
-        .map((treatment) => treatmentsInfo[idModule.lib.convertToString(treatment._id)]);
+        .map((treatment) => indexedTreatments[idModule.lib.convertToString(treatment._id)]);
       return {
         ...documentAccumulator,
-        [documentIdString]: documentTreatmentsInfo.reduce(
-          (treatmentInfoAccumulator, documentTreatmentInfo) => ({
-            additionsCount: treatmentInfoAccumulator.additionsCount + documentTreatmentInfo.additionsCount,
-            deletionsCount: treatmentInfoAccumulator.deletionsCount + documentTreatmentInfo.deletionsCount,
-            modificationsCount: treatmentInfoAccumulator.modificationsCount + documentTreatmentInfo.modificationsCount,
+        [documentIdString]: documentTreatments.reduce(
+          (treatmentInfoAccumulator, treatment) => ({
+            additionsCount: treatmentInfoAccumulator.additionsCount + treatment.addedAnnotationsCount,
+            deletionsCount: treatmentInfoAccumulator.deletionsCount + treatment.deletedAnnotationsCount,
+            modificationsCount: treatmentInfoAccumulator.modificationsCount + treatment.modifiedAnnotationsCount,
             resizedSmallerCount:
-              treatmentInfoAccumulator.resizedSmallerCount + documentTreatmentInfo.resizedSmallerCount,
-            resizedBiggerCount: treatmentInfoAccumulator.resizedBiggerCount + documentTreatmentInfo.resizedBiggerCount,
+              treatmentInfoAccumulator.resizedSmallerCount + treatment.resizedSmallerAnnotationsCount,
+            resizedBiggerCount: treatmentInfoAccumulator.resizedBiggerCount + treatment.resizedBiggerAnnotationsCount,
           }),
           {
             additionsCount: 0,

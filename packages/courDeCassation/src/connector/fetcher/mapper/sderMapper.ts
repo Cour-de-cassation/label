@@ -15,7 +15,7 @@ function mapCourtDecisionToDocument(
     date: sderCourtDecision.dateDecision,
   });
 
-  const priority = computePriority(sderCourtDecision.sourceName);
+  const priority = computePriority(sderCourtDecision.sourceName, sderCourtDecision.zoning?.introduction_subzonage?.publication);
 
   return documentModule.lib.buildDocument({
     creationDate: new Date(),
@@ -75,7 +75,10 @@ function convertChamberIntoReadableChamber(chamber: string | undefined) {
   return '';
 }
 
-function computePriority(source: string): documentType['priority'] {
+function computePriority(source: string, publicationCategory: string[] | undefined): documentType['priority'] {
+  if(publicationCategory && publicationCategory.includes("P")) {
+    return "high";
+  }
   switch (source) {
     case 'jurinet':
       return 'medium';

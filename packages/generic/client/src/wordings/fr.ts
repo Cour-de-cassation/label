@@ -153,8 +153,8 @@ const fr = {
       },
       optionItems: {
         openDocument: 'Ouvrir la décision...',
-        reinjectIntoStream: 'Réinjecter dans le flux',
         reassignToAgent: "Renvoyer à l'agent",
+        validate: 'Valider la décision',
       },
     },
   },

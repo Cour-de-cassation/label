@@ -36,21 +36,22 @@ function ProblemReportsTable(props: {
         },
       },
       {
-        text: wordings.problemReportsPage.table.optionItems.reinjectIntoStream,
-        onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-          apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-            assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
-            status: 'free',
-          });
-        },
-      },
-      {
         text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
         onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
           apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
             assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
             status: 'pending',
           });
+        },
+      },
+      {
+        text: wordings.problemReportsPage.table.optionItems.validate,
+        onClick: async (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
+          await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+            assignationId: idModule.lib.buildId(problemReportWithDetails.problemReport.assignationId),
+            status: 'done',
+          });
+          props.refetch();
         },
       },
     ];

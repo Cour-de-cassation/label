@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf } from '@label/core';
-import { PublicationCategoryBadge, tableRowFieldType } from '../../../components';
+import { DecisionNumberTextInput, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { UntreatedDocumentsTable } from './UntreatedDocumentsTable';
@@ -15,12 +15,15 @@ const DEFAULT_FILTERS = {
 
 function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'> }) {
   const [filterValues, setFilterValues] = useState<untreatedDocumentFilterType>(DEFAULT_FILTERS);
+  const [searchedDecisionNumber, setSearchedDecisionNumber] = useState<number | undefined>();
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
   const untreatedDocumentsFields = buildUntreatedDocumentsFields();
   const filterInfo = extractFilterInfoFromDocuments(props.untreatedDocuments);
-  const filteredUntreatedDocuments = getFilteredUntreatedDocuments(props.untreatedDocuments, filterValues);
+  const filteredUntreatedDocuments = searchedDecisionNumber
+    ? filterSearchedDecisions(props.untreatedDocuments, searchedDecisionNumber)
+    : getFilteredUntreatedDocuments(props.untreatedDocuments, filterValues);
   return (
     <div style={styles.table}>
       <div style={styles.tableHeaderContainer}>
@@ -31,6 +34,7 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
             setFilterValues={setFilterValues}
             resultsCount={filteredUntreatedDocuments.length}
           />
+          <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
         </div>
       </div>
       <div style={styles.tableContentContainer}>
@@ -51,6 +55,15 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
         return accumulator;
       }, true as boolean);
     });
+  }
+
+  function filterSearchedDecisions(
+    untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>,
+    searchedDecisionNumber: number,
+  ) {
+    return untreatedDocuments.filter((untreatedDocument) =>
+      untreatedDocument.documentId.toString().includes(searchedDecisionNumber.toString()),
+    );
   }
 
   function extractFilterInfoFromDocuments(untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>) {
@@ -97,8 +110,10 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
       },
       tableHeader: {
         paddingTop: theme.spacing * 2,
+        paddingRight: theme.spacing * 2,
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
       },
       tableContentContainer: {
         height: heights.adminTreatmentsTable,

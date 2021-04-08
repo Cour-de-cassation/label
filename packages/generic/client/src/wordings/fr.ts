@@ -39,6 +39,7 @@ const fr = {
     account: 'Compte',
     changePassword: 'Modifier le mot de passe',
     confirmPassword: 'Confirmer le nouveau mot de passe',
+    decisionNumberPlaceholder: 'Rechercher...',
     filters: {
       button: 'Filtrer',
       intervalDate: {
@@ -165,9 +166,6 @@ const fr = {
       subtitle: 'Décisions traitées',
     },
     table: {
-      searchedDecisionNumber: {
-        placeholder: 'Rechercher...',
-      },
       filter: {
         exportButton: 'Exporter',
         resultsCount: '{count} décisions affichées',

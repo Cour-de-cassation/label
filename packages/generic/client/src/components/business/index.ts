@@ -1,5 +1,6 @@
 import { AdminMenu } from './AdminMenu';
 import { CategoryIcon } from './CategoryIcon';
+import { DecisionNumberTextInput } from './DecisionNumberTextInput';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { FilterButton, filterType } from './FilterButton';
 import { LinkAnnotationDropdown } from './LinkAnnotationDropdown';
@@ -13,6 +14,7 @@ export {
   AdminMenu,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
+  DecisionNumberTextInput,
   FilterButton,
   LinkAnnotationDropdown,
   Logo,

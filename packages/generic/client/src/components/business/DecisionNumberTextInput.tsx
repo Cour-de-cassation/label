@@ -1,6 +1,6 @@
 import React from 'react';
-import { TextInput } from '../../../components';
-import { wordings } from '../../../wordings';
+import { TextInput } from '../generic';
+import { wordings } from '../../wordings';
 
 export { DecisionNumberTextInput };
 
@@ -13,7 +13,7 @@ function DecisionNumberTextInput(props: {
       name="decisionNumber"
       value={props.value !== undefined ? props.value.toString() : ''}
       onChange={onChange}
-      placeholder={wordings.treatedDocumentsPage.table.searchedDecisionNumber.placeholder}
+      placeholder={wordings.business.decisionNumberPlaceholder}
     />
   );
 

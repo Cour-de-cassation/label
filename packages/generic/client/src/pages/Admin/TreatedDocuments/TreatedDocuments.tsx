@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
 import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator, treatmentModule } from '@label/core';
-import { PublicationCategoryBadge, tableRowFieldType } from '../../../components';
+import { DecisionNumberTextInput, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ExportCSVButton } from './ExportCSVButton';
 import { TreatedDocumentsFilters, treatedDocumentFilterType } from './TreatedDocumentsFilters';
 import { StatisticsBox } from './StatisticsBox';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
-import { DecisionNumberTextInput } from './DecisionNumberTextInput';
 
 export { TreatedDocuments };
 

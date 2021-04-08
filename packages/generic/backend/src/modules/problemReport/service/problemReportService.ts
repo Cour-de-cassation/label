@@ -4,8 +4,9 @@ import {
   problemReportModule,
   problemReportType,
 } from '@label/core';
-import { userService } from '../../user';
 import { assignationService } from '../../assignation';
+import { documentService } from '../../document';
+import { userService } from '../../user';
 import { buildProblemReportRepository } from '../repository';
 
 export { problemReportService };
@@ -62,6 +63,10 @@ const problemReportService = {
       assignationIds,
     );
 
+    const documentsById = await documentService.fetchAllDocumentsByIds(
+      Object.values(assignationsById).map(({ documentId }) => documentId),
+    );
+
     const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
       assignationsById,
     );
@@ -72,7 +77,18 @@ const problemReportService = {
       );
       const userName = userNamesByAssignationId[assignationIdString];
       const assignation = assignationsById[assignationIdString];
-      return { problemReport, userName, documentId: assignation.documentId };
+      const document =
+        documentsById[idModule.lib.convertToString(assignation.documentId)];
+
+      return {
+        problemReport,
+        userName,
+        document: {
+          _id: document._id,
+          documentId: document.documentId,
+          status: document.status,
+        },
+      };
     });
   },
 

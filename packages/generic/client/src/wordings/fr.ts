@@ -40,6 +40,14 @@ const fr = {
     changePassword: 'Modifier le mot de passe',
     confirmPassword: 'Confirmer le nouveau mot de passe',
     decisionNumberPlaceholder: 'Rechercher...',
+    documentStatus: {
+      free: 'Disponible',
+      pending: 'Assigné',
+      saved: 'En cours de traitement',
+      done: 'Validé',
+      rejected: 'Bloqué',
+      exported: 'Publié',
+    },
     filters: {
       button: 'Filtrer',
       intervalDate: {
@@ -47,6 +55,7 @@ const fr = {
         end: 'Date fin',
       },
     },
+    problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
     newPassword: 'Nouveau mot de passe',
     newPasswordsDontMatch: 'Les nouveaux mots de passe ne correspondent pas',
     newPasswordInstructions: 'Le mot de passe doit contenir au moins 8 caractères',
@@ -126,7 +135,6 @@ const fr = {
     copyToClipboard: 'Copier dans le presse-papier',
     logout: 'Se déconnecter',
     moreOptions: "Plus d'options",
-    problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
   },
   loadingPage: 'Veuillez patienter...',
   problemReportsPage: {
@@ -139,6 +147,7 @@ const fr = {
         agent: 'Agent',
         date: 'Date',
         number: 'N° décision',
+        status: 'Statut',
         text: 'Message',
         type: 'Type',
       },

@@ -2,12 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiRouteOutType, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
+import { DocumentStatusIcon, ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
 import { wordings } from '../../../../wordings';
 
 export { ProblemReportsTable };
 
-const PROBLEM_REPORT_ICON_SIZE = 24;
+const TABLE_ICON_SIZE = 24;
 
 function ProblemReportsTable(props: {
   refetch: () => void;
@@ -31,7 +31,7 @@ function ProblemReportsTable(props: {
       {
         text: wordings.problemReportsPage.table.optionItems.openDocument,
         onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-          history.push(`/admin/document/${problemReportWithDetails.documentId}`);
+          history.push(`/admin/document/${problemReportWithDetails.document._id}`);
           return;
         },
       },
@@ -71,18 +71,18 @@ function isRowHighlighted(problemReportWithDetails: apiRouteOutType<'get', 'prob
 
 const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'problemReportsWithDetails'>[number]>> = [
   {
-    id: '_id',
+    id: 'documentId',
     title: wordings.problemReportsPage.table.columnTitles.number,
     canBeSorted: true,
-    extractor: (problemReportWithDetails) => idModule.lib.convertToString(problemReportWithDetails.problemReport._id),
-    width: 4,
+    extractor: (problemReportWithDetails) => problemReportWithDetails.document.documentId,
+    width: 2,
   },
   {
     id: 'userName',
     title: wordings.problemReportsPage.table.columnTitles.agent,
     canBeSorted: true,
     extractor: (problemReportWithDetails) => problemReportWithDetails.userName,
-    width: 6,
+    width: 3,
   },
   {
     id: 'type',
@@ -90,7 +90,17 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
     title: wordings.problemReportsPage.table.columnTitles.type,
     extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.type,
     render: (problemReportWithDetails) => (
-      <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={PROBLEM_REPORT_ICON_SIZE} />
+      <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={TABLE_ICON_SIZE} />
+    ),
+    width: 1,
+  },
+  {
+    id: 'status',
+    canBeSorted: true,
+    title: wordings.problemReportsPage.table.columnTitles.status,
+    extractor: (problemReportWithDetails) => problemReportWithDetails.document.status,
+    render: (problemReportWithDetails) => (
+      <DocumentStatusIcon status={problemReportWithDetails.document.status} iconSize={TABLE_ICON_SIZE} />
     ),
     width: 1,
   },
@@ -101,7 +111,7 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
     extractor: (problemReportWithDetails) =>
       timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date, true),
     getSortingValue: (problemReportWithDetails) => problemReportWithDetails.problemReport.date,
-    width: 5,
+    width: 4,
   },
   {
     id: 'text',

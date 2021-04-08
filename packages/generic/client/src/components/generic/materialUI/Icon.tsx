@@ -16,6 +16,7 @@ import {
   CloudRounded,
   DeleteOutlineRounded,
   DirectionsCarRounded,
+  DoneRounded,
   EditRounded,
   EmailRounded,
   EmojiObjectsRounded,
@@ -28,6 +29,8 @@ import {
   FileCopyOutlined,
   GavelRounded,
   GetAppRounded,
+  HourglassEmptyRounded,
+  HowToRegRounded,
   Link,
   LinkOff,
   LocationCityRounded,
@@ -40,6 +43,7 @@ import {
   PlaylistAddCheckRounded,
   PlaylistPlayRounded,
   PowerSettingsNewRounded,
+  PublicRounded,
   QuestionAnswerRounded,
   RedoRounded,
   RemoveCircleRounded,
@@ -51,6 +55,7 @@ import {
   StoreRounded,
   SupervisorAccountRounded,
   UndoRounded,
+  UpdateRounded,
 } from '@material-ui/icons';
 import { categoryIconNameType } from '@label/core';
 import { Tooltip } from './Tooltip';
@@ -66,7 +71,9 @@ const materialIconMapping = {
   arrowLeft: ChevronLeftRounded,
   arrowRight: ChevronRightRounded,
   arrowUp: ExpandLessRounded,
+  assigned: HowToRegRounded,
   bug: BugReportRounded,
+  check: DoneRounded,
   clock: AlarmOnRounded,
   close: CloseRounded,
   copy: FileCopyOutlined,
@@ -91,9 +98,13 @@ const materialIconMapping = {
   reset: LoopRounded,
   send: SendRounded,
   settings: SettingsRounded,
+  stop: BlockRounded,
   undo: UndoRounded,
   unlink: LinkOff,
+  update: UpdateRounded,
+  waiting: HourglassEmptyRounded,
   warning: ReportProblemRounded,
+  world: PublicRounded,
 };
 
 const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {

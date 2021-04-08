@@ -1,11 +1,13 @@
 import {
   assignationModule,
+  documentModule,
   idModule,
   problemReportModule,
   userModule,
 } from '@label/core';
 import { buildUserRepository } from '../../user';
 import { buildAssignationRepository } from '../../assignation';
+import { buildDocumentRepository } from '../../document';
 import { buildProblemReportRepository } from '../repository';
 import { problemReportService } from './problemReportService';
 
@@ -82,20 +84,21 @@ describe('problemReportService', () => {
   describe('fetchProblemReports', () => {
     const problemReportRepository = buildProblemReportRepository();
     const assignationRepository = buildAssignationRepository();
+    const documentRepository = buildDocumentRepository();
     const userRepository = buildUserRepository();
 
-    const documentId1 = idModule.lib.buildId();
-    const documentId2 = idModule.lib.buildId();
+    const document1 = documentModule.generator.generate();
+    const document2 = documentModule.generator.generate();
     const userName1 = 'userName 1';
     const userName2 = 'userName 2';
     const user1 = userModule.generator.generate({ name: userName1 });
     const user2 = userModule.generator.generate({ name: userName2 });
     const assignation1 = assignationModule.generator.generate({
-      documentId: documentId1,
+      documentId: document1._id,
       userId: user1._id,
     });
     const assignation2 = assignationModule.generator.generate({
-      documentId: documentId2,
+      documentId: document2._id,
       userId: user2._id,
     });
     const problemText1 = 'PROBLEM_TEXT1';
@@ -119,6 +122,8 @@ describe('problemReportService', () => {
       await assignationRepository.insert(assignation2);
       await problemReportRepository.insert(problemReport1);
       await problemReportRepository.insert(problemReport2);
+      await documentRepository.insert(document1);
+      await documentRepository.insert(document2);
 
       const problemReports = await problemReportService.fetchProblemReportsWithDetails();
 

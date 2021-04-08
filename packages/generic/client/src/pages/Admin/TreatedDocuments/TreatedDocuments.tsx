@@ -175,7 +175,7 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
         title: wordings.treatedDocumentsPage.table.columnTitles.number.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.number.title,
         canBeSorted: true,
-        extractor: (treatedDocument) => JSON.stringify(treatedDocument.document.documentId),
+        extractor: (treatedDocument) => treatedDocument.document.documentId,
         width: 10,
       },
       {

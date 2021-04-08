@@ -78,7 +78,14 @@ const apiSchema = {
           kind: 'object',
           content: {
             problemReport: problemReportModule.model,
-            documentId: { kind: 'custom', content: 'id' },
+            document: {
+              kind: 'object',
+              content: {
+                _id: documentModule.fetchedModel.content._id,
+                documentId: documentModule.fetchedModel.content.documentId,
+                status: documentModule.fetchedModel.content.status,
+              },
+            },
             userName: {
               kind: 'primitive',
               content: 'string',

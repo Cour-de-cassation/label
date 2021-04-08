@@ -21,7 +21,7 @@ function ProblemReportIcon(props: { iconSize: number; type: problemReportType['t
 
   return (
     <CircleIcon
-      hint={wordings.shared.problemReportType[props.type]}
+      hint={wordings.business.problemReportType[props.type]}
       iconName={iconName}
       iconSize={props.iconSize}
       backgroundColor={theme.colors[problemReportTypeIconNameMapping[props.type].colorName].background}

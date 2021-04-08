@@ -46,7 +46,7 @@ function ReportProblemToolTipMenu(props: {
           <LabelledDropdown<problemReportType['type']>
             error={isSentWithoutCategory}
             items={problemCategories.map((problemCategory) => ({
-              text: wordings.shared.problemReportType[problemCategory],
+              text: wordings.business.problemReportType[problemCategory],
               value: problemCategory,
             }))}
             label={wordings.homePage.problemType}

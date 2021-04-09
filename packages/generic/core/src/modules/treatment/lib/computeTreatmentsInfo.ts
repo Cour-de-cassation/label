@@ -27,8 +27,8 @@ function computeTreatmentsInfo(treatments: treatmentType[]) {
 function computeTreatmentInfo(treatment: treatmentType) {
   const {
     addedAnnotations,
+    categoryChangedAnnotations,
     deletedAnnotations,
-    strictlyModifiedAnnotations,
     resizedBiggerAnnotations,
     resizedSmallerAnnotations,
   } = annotationsDiffModule.lib.computeDetailsFromAnnotationsDiff(treatment.annotationsDiff);
@@ -36,7 +36,7 @@ function computeTreatmentInfo(treatment: treatmentType) {
   return {
     additionsCount: addedAnnotations.length,
     deletionsCount: deletedAnnotations.length,
-    modificationsCount: strictlyModifiedAnnotations.length,
+    modificationsCount: categoryChangedAnnotations.length,
     resizedSmallerCount: resizedSmallerAnnotations.length,
     resizedBiggerCount: resizedBiggerAnnotations.length,
   };

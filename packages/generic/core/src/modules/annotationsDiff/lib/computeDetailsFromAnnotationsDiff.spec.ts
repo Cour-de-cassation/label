@@ -8,12 +8,14 @@ describe('computeDetailsFromAnnotationsDiff', () => {
     { category: 'ANOTHER_CATEGORY', text: 'ANOTHER_TEXT', start: 30 },
     { category: 'CATEGORY', text: 'LAP', start: 24 },
     { category: 'CATEGORY', text: 'TOO_BIG', start: 70 },
+    { category: 'ANOTHER_CATEGORY', text: 'RESIZED', start: 100 },
   ].map(annotationModule.generator.generate);
   const annotationsAfter = [
     { category: 'CATEGORY', text: 'ANOTHER_TEXT', start: 30 },
     { category: 'CATEGORY', text: 'OVERLAP', start: 20 },
     { category: 'CATEGORY', text: 'NEW_TEXT', start: 0 },
     { category: 'CATEGORY', text: 'BIG', start: 74 },
+    { category: 'CATEGORY', text: 'RESIZED_TEXT', start: 100 },
   ].map(annotationModule.generator.generate);
   const annotationsDiff = buildAnnotationsDiff(annotationsBefore, annotationsAfter);
 
@@ -29,16 +31,22 @@ describe('computeDetailsFromAnnotationsDiff', () => {
     expect(deletedAnnotations).toEqual([annotationsBefore[0]]);
   });
 
-  it('should compute the details of the annotations strictlyModified in the diff', () => {
-    const { strictlyModifiedAnnotations } = computeDetailsFromAnnotationsDiff(annotationsDiff);
+  it('should compute the details of the annotations with a modified category in the diff', () => {
+    const { categoryChangedAnnotations } = computeDetailsFromAnnotationsDiff(annotationsDiff);
 
-    expect(strictlyModifiedAnnotations).toEqual([[annotationsBefore[1], annotationsAfter[0]]]);
+    expect(categoryChangedAnnotations).toEqual([
+      [annotationsBefore[1], annotationsAfter[0]],
+      [annotationsBefore[4], annotationsAfter[4]],
+    ]);
   });
 
   it('should compute the details of the annotations resized bigger in the diff', () => {
     const { resizedBiggerAnnotations } = computeDetailsFromAnnotationsDiff(annotationsDiff);
 
-    expect(resizedBiggerAnnotations).toEqual([[annotationsBefore[2], annotationsAfter[1]]]);
+    expect(resizedBiggerAnnotations).toEqual([
+      [annotationsBefore[2], annotationsAfter[1]],
+      [annotationsBefore[4], annotationsAfter[4]],
+    ]);
   });
 
   it('should compute the details of the annotations resized smaller in the diff', () => {

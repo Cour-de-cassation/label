@@ -7,15 +7,15 @@ function computeDetailsFromAnnotationsDiff(annotationsDiff: annotationsDiffType)
   const deletedAnnotations = computeDeletedAnnotations(annotationsDiff);
   const addedAnnotations = computeAddedAnnotations(annotationsDiff);
   const {
+    categoryChangedAnnotations,
     resizedBiggerAnnotations,
     resizedSmallerAnnotations,
-    strictlyModifiedAnnotations,
   } = computeModifiedAnnotations(annotationsDiff);
 
   return {
     addedAnnotations,
+    categoryChangedAnnotations,
     deletedAnnotations,
-    strictlyModifiedAnnotations,
     resizedBiggerAnnotations,
     resizedSmallerAnnotations,
   };
@@ -44,15 +44,15 @@ function computeAddedAnnotations(annotationsDiff: annotationsDiffType): annotati
 function computeModifiedAnnotations(
   annotationsDiff: annotationsDiffType,
 ): {
-  strictlyModifiedAnnotations: Array<[annotationType, annotationType]>;
+  categoryChangedAnnotations: Array<[annotationType, annotationType]>;
   resizedBiggerAnnotations: Array<[annotationType, annotationType]>;
   resizedSmallerAnnotations: Array<[annotationType, annotationType]>;
 } {
   const resizedBiggerAnnotations = computeResizedBiggerAnnotations(annotationsDiff);
   const resizedSmallerAnnotations = computeResizedSmallerAnnotations(annotationsDiff);
-  const strictlyModifiedAnnotations = computeStrictlyModifiedAnnotations(annotationsDiff);
+  const categoryChangedAnnotations = computeCategoryChangedAnnotations(annotationsDiff);
 
-  return { strictlyModifiedAnnotations, resizedBiggerAnnotations, resizedSmallerAnnotations };
+  return { categoryChangedAnnotations, resizedBiggerAnnotations, resizedSmallerAnnotations };
 }
 
 function computeResizedBiggerAnnotations(
@@ -97,12 +97,14 @@ function computeResizedSmallerAnnotations(
   }, [] as Array<[annotationType, annotationType]>);
 }
 
-function computeStrictlyModifiedAnnotations(
+function computeCategoryChangedAnnotations(
   annotationsDiff: annotationsDiffType,
 ): Array<[annotationType, annotationType]> {
   return annotationsDiff.before.reduce((modifiedAnnotations, beforeAnnotation) => {
-    const strictlyModifiedAnnotation = annotationsDiff.after.find((afterAnnotation) =>
-      annotationModule.lib.comparator.equalModuloCategory(beforeAnnotation, afterAnnotation),
+    const strictlyModifiedAnnotation = annotationsDiff.after.find(
+      (afterAnnotation) =>
+        annotationModule.lib.areOverlapping(beforeAnnotation, afterAnnotation) &&
+        beforeAnnotation.category !== afterAnnotation.category,
     );
 
     if (!strictlyModifiedAnnotation) {

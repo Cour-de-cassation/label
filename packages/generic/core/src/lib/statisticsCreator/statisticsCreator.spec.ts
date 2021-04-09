@@ -69,7 +69,7 @@ describe('statisticsCreator', () => {
         deletedAnnotationsCount: 1,
         documentNumber: documentNumber,
         linkedEntitiesCount: 0,
-        modifiedAnnotationsCount: 0,
+        modifiedAnnotationsCount: 1,
         publicationCategory: documentPublicationCategory,
         resizedBiggerAnnotationsCount: 1,
         resizedSmallerAnnotationsCount: 0,

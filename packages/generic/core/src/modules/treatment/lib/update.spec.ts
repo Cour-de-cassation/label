@@ -28,7 +28,7 @@ describe('update', () => {
       addedAnnotationsCount: 1,
       deletedAnnotationsCount: 1,
       lastUpdateDate: updatedTreatment.lastUpdateDate,
-      modifiedAnnotationsCount: 0,
+      modifiedAnnotationsCount: 1,
       resizedBiggerAnnotationsCount: 1,
       resizedSmallerAnnotationsCount: 0,
     });

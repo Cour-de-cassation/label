@@ -31,7 +31,7 @@ describe('build', () => {
       documentId: treatmentFields.documentId,
       duration: 0,
       lastUpdateDate: treatment.lastUpdateDate,
-      modifiedAnnotationsCount: 0,
+      modifiedAnnotationsCount: 1,
       order: treatmentFields.order,
       resizedBiggerAnnotationsCount: 1,
       resizedSmallerAnnotationsCount: 0,

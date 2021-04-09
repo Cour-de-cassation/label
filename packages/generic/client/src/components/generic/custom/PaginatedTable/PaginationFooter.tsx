@@ -1,8 +1,8 @@
 import React from 'react';
-import { range } from 'lodash';
 import styled from 'styled-components';
 import { Icon, Text } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
+import { computeDisplayedPages } from './lib';
 
 export { PaginationFooter };
 
@@ -17,7 +17,7 @@ function PaginationFooter(props: {
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const displayedPages = getDisplayedPages();
+  const displayedPages = computeDisplayedPages(props.currentPage, props.numberOfPages);
   const { ClickableDiv } = buildStyledComponents();
 
   return (
@@ -56,18 +56,6 @@ function PaginationFooter(props: {
           </div>
         );
     }
-  }
-
-  function getDisplayedPages() {
-    return range(props.numberOfPages).reduce((accumulator, page) => {
-      if (page === 0 || page === props.numberOfPages - 1 || Math.abs(page - props.currentPage) < 3) {
-        return [...accumulator, { kind: 'page' as const, value: page }];
-      }
-      if (accumulator[accumulator.length - 1].kind === 'blank') {
-        return accumulator;
-      }
-      return [...accumulator, { kind: 'blank' as const }];
-    }, [] as Array<{ kind: 'page'; value: number } | { kind: 'blank' }>);
   }
 
   function buildStyledComponents() {

@@ -3,11 +3,11 @@ import { settingsType } from '@label/core';
 import { DocumentsDataFetcher } from './DocumentsDataFetcher';
 import { DocumentSwitcher } from './DocumentSwitcher';
 
-const NUMBER_OF_CHOICES = 3;
+const MAX_NUMBER_OF_CHOICES = 3;
 
 function Home(props: { settings: settingsType }) {
   return (
-    <DocumentsDataFetcher numberOfDocuments={NUMBER_OF_CHOICES}>
+    <DocumentsDataFetcher maxNumberOfDocuments={MAX_NUMBER_OF_CHOICES}>
       {({ documentsForUser, fetchNewDocumentsForUser }) => (
         <DocumentSwitcher
           choices={documentsForUser}

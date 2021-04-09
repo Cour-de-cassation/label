@@ -87,6 +87,8 @@ const fr = {
         entities: 'Entités',
         linkedEntities: "Liaison d'entités",
       },
+      noDocumentLeft: "Il n'y a plus de documents à traiter pour le moment...",
+      pleaseRefresh: 'Veuillez rafraîchir la page',
       start: 'Commencer',
       wholeCheck: 'Lecture exhaustive',
     },

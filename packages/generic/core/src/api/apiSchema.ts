@@ -86,9 +86,12 @@ const apiSchema = {
                 status: documentModule.fetchedModel.content.status,
               },
             },
-            userName: {
-              kind: 'primitive',
-              content: 'string',
+            user: {
+              kind: 'object',
+              content: {
+                email: userModule.model.content.email,
+                name: userModule.model.content.name,
+              },
             },
           },
         },

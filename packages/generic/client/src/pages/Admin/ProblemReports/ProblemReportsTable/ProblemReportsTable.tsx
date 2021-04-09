@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import format from 'string-template';
 import { apiRouteOutType, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { DocumentStatusIcon, ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
@@ -26,8 +27,22 @@ function ProblemReportsTable(props: {
     />
   );
 
+  function openMailToAgent(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
+    const subject = format(wordings.problemReportsPage.table.mailSubject, {
+      doumentId: problemReportWithDetails.document.documentId,
+    });
+    const email = problemReportWithDetails.user.email;
+    const mailto = document.createElement('a');
+    mailto.href = `mailto:${email}?subject=${subject}`;
+    mailto.click();
+  }
+
   function buildOptionItems() {
     return [
+      {
+        text: wordings.problemReportsPage.table.optionItems.answerByEmail,
+        onClick: openMailToAgent,
+      },
       {
         text: wordings.problemReportsPage.table.optionItems.deleteProblemReport,
         onClick: async (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
@@ -92,7 +107,7 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
     id: 'userName',
     title: wordings.problemReportsPage.table.columnTitles.agent,
     canBeSorted: true,
-    extractor: (problemReportWithDetails) => problemReportWithDetails.userName,
+    extractor: (problemReportWithDetails) => problemReportWithDetails.user.name,
     width: 3,
   },
   {

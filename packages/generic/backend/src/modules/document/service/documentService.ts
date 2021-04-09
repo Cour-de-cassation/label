@@ -79,7 +79,7 @@ const documentService = {
       Object.values(assignationsByDocumentId),
       (assignation) => idModule.lib.convertToString(assignation._id),
     );
-    const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
+    const usersByAssignationId = await userService.fetchUsersByAssignationId(
       assignationsById,
     );
     const treatmentsByDocumentId = await treatmentService.fetchTreatmentsByDocumentIds(
@@ -90,7 +90,7 @@ const documentService = {
       const documentIdString = idModule.lib.convertToString(document._id);
       const assignation = assignationsByDocumentId[documentIdString];
       const assignationIdString = idModule.lib.convertToString(assignation._id);
-      const userName = userNamesByAssignationId[assignationIdString];
+      const userName = usersByAssignationId[assignationIdString].name;
       const treatments = treatmentsByDocumentId[documentIdString];
       return {
         document: {

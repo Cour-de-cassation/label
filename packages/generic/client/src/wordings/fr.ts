@@ -152,11 +152,13 @@ const fr = {
         type: 'Type',
       },
       optionItems: {
+        answerByEmail: 'Répondre par email...',
         deleteProblemReport: "Supprimer l'alerte",
         openDocument: 'Ouvrir la décision...',
         reassignToAgent: "Renvoyer à l'agent",
         validate: 'Valider la décision',
       },
+      mailSubject: 'Alerte sur le document {documentId}',
     },
   },
   specialDocumentsPage: {

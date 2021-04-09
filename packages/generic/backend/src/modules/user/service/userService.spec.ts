@@ -265,18 +265,16 @@ describe('userService', () => {
       await assignationRepository.insert(assignation2);
       const assignationsById = await assignationService.fetchAllAssignationsById();
 
-      const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
+      const userNamesByAssignationId = await userService.fetchUsersByAssignationId(
         assignationsById,
       );
       expect(
-        userNamesByAssignationId[
-          idModule.lib.convertToString(assignation1._id)
-        ],
+        userNamesByAssignationId[idModule.lib.convertToString(assignation1._id)]
+          .name,
       ).toEqual('Nicolas');
       expect(
-        userNamesByAssignationId[
-          idModule.lib.convertToString(assignation2._id)
-        ],
+        userNamesByAssignationId[idModule.lib.convertToString(assignation2._id)]
+          .name,
       ).toEqual('Benoit');
     });
   });

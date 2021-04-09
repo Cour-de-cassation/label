@@ -26,7 +26,7 @@ function buildUserService() {
     changePassword,
     createUser,
     fetchAuthenticatedUserFromAuthorizationHeader,
-    fetchUserNamesByAssignationId,
+    fetchUsersByAssignationId,
     fetchUsersWithDetails,
     login,
     signUpUser,
@@ -76,7 +76,7 @@ function buildUserService() {
     }
   }
 
-  async function fetchUserNamesByAssignationId(
+  async function fetchUsersByAssignationId(
     assignationsById: Record<string, assignationType>,
   ) {
     const userRepository = buildUserRepository();
@@ -89,7 +89,7 @@ function buildUserService() {
       Object.values(assignationsById),
       (assignation) => idModule.lib.convertToString(assignation._id),
       (assignation) =>
-        usersById[idModule.lib.convertToString(assignation.userId)].name,
+        usersById[idModule.lib.convertToString(assignation.userId)],
     );
   }
 

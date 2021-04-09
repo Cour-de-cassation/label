@@ -129,9 +129,9 @@ describe('problemReportService', () => {
 
       expect(problemReports.length).toBe(2);
       expect(problemReports[0].problemReport.text).toBe(problemText1);
-      expect(problemReports[0].userName).toBe(userName1);
+      expect(problemReports[0].user.name).toBe(userName1);
       expect(problemReports[1].problemReport.text).toBe(problemText2);
-      expect(problemReports[1].userName).toBe(userName2);
+      expect(problemReports[1].user.name).toBe(userName2);
     });
   });
 

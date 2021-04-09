@@ -72,7 +72,7 @@ const problemReportService = {
       Object.values(assignationsById).map(({ documentId }) => documentId),
     );
 
-    const userNamesByAssignationId = await userService.fetchUserNamesByAssignationId(
+    const usersByAssignationId = await userService.fetchUsersByAssignationId(
       assignationsById,
     );
 
@@ -80,14 +80,17 @@ const problemReportService = {
       const assignationIdString = idModule.lib.convertToString(
         problemReport.assignationId,
       );
-      const userName = userNamesByAssignationId[assignationIdString];
+      const { email, name } = usersByAssignationId[assignationIdString];
       const assignation = assignationsById[assignationIdString];
       const document =
         documentsById[idModule.lib.convertToString(assignation.documentId)];
 
       return {
         problemReport,
-        userName,
+        user: {
+          email,
+          name,
+        },
         document: {
           _id: document._id,
           documentId: document.documentId,

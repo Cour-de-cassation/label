@@ -75,7 +75,8 @@ describe('documentService', () => {
   });
 
   describe('fetchDocumentsReadyToExport', () => {
-    it('should fetch all the documents done more than 10 days ago', async () => {
+    it('should fetch all the documents done more than the given days ago', async () => {
+      const days = 10;
       const documents = ([
         { status: 'done', updateDate: dateBuilder.daysAgo(13) },
         { status: 'pending' },
@@ -84,7 +85,9 @@ describe('documentService', () => {
       ] as const).map(documentModule.generator.generate);
       await Promise.all(documents.map(documentRepository.insert));
 
-      const documentsReadyToExport = await documentService.fetchDocumentsReadyToExport();
+      const documentsReadyToExport = await documentService.fetchDocumentsReadyToExport(
+        days,
+      );
 
       expect(documentsReadyToExport.sort()).toEqual(
         [documents[0], documents[2]].sort(),

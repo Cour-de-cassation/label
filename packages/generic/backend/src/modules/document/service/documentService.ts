@@ -17,8 +17,6 @@ import { buildDocumentRepository } from '../repository';
 
 export { documentService };
 
-const DAYS_BEFORE_EXPORT = 10;
-
 const documentService = {
   async deleteDocument(id: documentType['_id']) {
     const documentRepository = buildDocumentRepository();
@@ -109,7 +107,7 @@ const documentService = {
     return documentRepository.findAllByStatus(['free', 'pending', 'saved']);
   },
 
-  async fetchDocumentsReadyToExport(): Promise<documentType[]> {
+  async fetchDocumentsReadyToExport(days: number): Promise<documentType[]> {
     const documentRepository = buildDocumentRepository();
 
     const documentsCompletelyTreated = await documentRepository.findAllByStatus(
@@ -117,8 +115,7 @@ const documentService = {
     );
 
     const documentsReadyToExport = documentsCompletelyTreated.filter(
-      (document) =>
-        document.updateDate < dateBuilder.daysAgo(DAYS_BEFORE_EXPORT),
+      (document) => document.updateDate < dateBuilder.daysAgo(days),
     );
 
     return documentsReadyToExport;

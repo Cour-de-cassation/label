@@ -18,15 +18,15 @@ describe('buildExporter', () => {
         {
           text: 'Benoit est ingénieur',
           status: 'done',
-          updateDate: dateBuilder.daysAgo(13),
+          updateDate: dateBuilder.daysAgo(4),
         },
         { status: 'pending' },
         {
           text: 'Romain est designer',
           status: 'done',
-          updateDate: dateBuilder.daysAgo(20),
+          updateDate: dateBuilder.daysAgo(7),
         },
-        { status: 'done', updateDate: dateBuilder.daysAgo(8) },
+        { status: 'done', updateDate: dateBuilder.daysAgo(2) },
       ] as const).map(documentModule.generator.generate);
       const treatments = [
         {

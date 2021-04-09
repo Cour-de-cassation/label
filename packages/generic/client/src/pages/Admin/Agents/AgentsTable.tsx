@@ -12,7 +12,7 @@ function AgentsTable(props: {
 
   return (
     <div style={styles.container}>
-      <Table isHeaderSticky fields={props.fields} data={props.usersWithDetails} />
+      <Table fields={props.fields} data={props.usersWithDetails} />
     </div>
   );
 

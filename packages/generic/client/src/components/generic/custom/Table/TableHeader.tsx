@@ -19,7 +19,6 @@ type cellType = {
 
 function TableHeader(props: {
   cells: Array<cellType>;
-  isSticky?: boolean;
   fieldCellStyles: Record<string, CSSProperties>;
   optionCellStyle?: CSSProperties;
   orderByProperty: string | undefined;
@@ -28,12 +27,10 @@ function TableHeader(props: {
   setOrderByProperty: (orderByProperty: string) => void;
 }) {
   const theme = useCustomTheme();
-  const headerStyles = props.isSticky
-    ? { ...buildHeaderStyles(theme), ...buildHeaderStickyStyle(theme) }
-    : buildHeaderStyles(theme);
+  const styles = buildStyles(theme);
   return (
     <thead>
-      <tr style={headerStyles}>
+      <tr style={styles.header}>
         {props.cells.map((cell) => (
           <td style={props.fieldCellStyles[cell.id]}>
             {cell.canBeSorted ? (
@@ -78,16 +75,12 @@ function renderCellTitle(cell: cellType) {
   return <Text variant="h3">{cell.title}</Text>;
 }
 
-function buildHeaderStickyStyle(theme: customThemeType) {
+function buildStyles(theme: customThemeType) {
   return {
-    backgroundColor: theme.colors.background,
-    top: 0,
-    position: 'sticky',
+    header: {
+      top: 0,
+      position: 'sticky',
+      backgroundColor: theme.colors.background,
+    },
   } as const;
-}
-
-function buildHeaderStyles(theme: customThemeType) {
-  return {
-    borderBottom: `1px solid ${theme.colors.line.level2}`,
-  };
 }

@@ -17,7 +17,6 @@ function TreatedDocumentsTable(props: {
   return (
     <div style={styles.container}>
       <PaginatedTable
-        isHeaderSticky
         defaultOrderByProperty="date"
         defaultOrderDirection="desc"
         fields={props.fields}
@@ -43,6 +42,7 @@ function TreatedDocumentsTable(props: {
           history.push(`/admin/document/${treatmentWithDetails.document._id}`);
           return;
         },
+        iconName: 'eye',
       },
     ];
   }

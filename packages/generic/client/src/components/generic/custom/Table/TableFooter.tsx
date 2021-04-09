@@ -10,14 +10,12 @@ type footerCellType = {
   content: ReactElement;
 };
 
-function TableFooter(props: { isSticky?: boolean; cells: Array<footerCellType> }) {
+function TableFooter(props: { cells: Array<footerCellType> }) {
   const theme = useCustomTheme();
-  const footerStyles = props.isSticky
-    ? { ...buildFooterStyles(theme), ...buildFooterStickyStyle(theme) }
-    : buildFooterStyles(theme);
+  const footerStyles = buildStyles(theme);
   return (
     <tfoot>
-      <tr style={footerStyles}>
+      <tr style={footerStyles.footer}>
         {props.cells.map((cell) => (
           <td key={cell.id}>{cell.content}</td>
         ))}
@@ -26,16 +24,10 @@ function TableFooter(props: { isSticky?: boolean; cells: Array<footerCellType> }
   );
 }
 
-function buildFooterStickyStyle(theme: customThemeType) {
+function buildStyles(theme: customThemeType) {
   return {
-    backgroundColor: theme.colors.background,
-    bottom: 0,
-    position: 'sticky',
-  } as const;
-}
-
-function buildFooterStyles(theme: customThemeType) {
-  return {
-    borderTop: `1px solid ${theme.colors.line.level2}`,
+    footer: {
+      borderTop: `1px solid ${theme.colors.line.level2}`,
+    },
   };
 }

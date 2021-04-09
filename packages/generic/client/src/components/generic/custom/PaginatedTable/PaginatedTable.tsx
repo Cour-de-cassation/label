@@ -13,8 +13,6 @@ function PaginatedTable<InputT>(props: {
   defaultOrderByProperty?: string;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
-  isFooterSticky?: boolean;
-  isHeaderSticky?: boolean;
   data: InputT[];
   optionItems?: Array<{
     text: string;
@@ -29,7 +27,6 @@ function PaginatedTable<InputT>(props: {
   return (
     <>
       <Table
-        isHeaderSticky
         defaultOrderByProperty={props.defaultOrderByProperty}
         defaultOrderDirection={props.defaultOrderDirection}
         fields={props.fields}

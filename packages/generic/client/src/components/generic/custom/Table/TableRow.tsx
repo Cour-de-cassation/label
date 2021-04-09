@@ -1,8 +1,8 @@
 import React, { CSSProperties, useState } from 'react';
 import { customThemeType, useCustomTheme } from '../../../../styles';
-import { Text } from '../../materialUI';
+import { Icon, Text } from '../../materialUI';
 import { OptionButton } from './OptionButton';
-import { tableRowFieldType } from './Table';
+import { optionItemType, tableRowFieldType } from './Table';
 
 export { TableRow };
 
@@ -13,10 +13,7 @@ function TableRow<InputT>(props: {
   row: InputT;
   isHighlighted: boolean;
   onRowClick?: () => void;
-  optionItems?: Array<{
-    text: string;
-    onClick: (data: InputT) => void;
-  }>;
+  optionItems?: Array<optionItemType<InputT>>;
   optionCellStyle?: CSSProperties;
 }) {
   const theme = useCustomTheme();
@@ -57,6 +54,7 @@ function TableRow<InputT>(props: {
     const items = optionItems.map((optionItem) => ({
       text: optionItem.text,
       value: optionItem.text,
+      icon: optionItem.iconName ? <Icon iconName={optionItem.iconName} /> : undefined,
     }));
     const onSelect = (optionItemText: string) => {
       const optionItem = optionItems.find(({ text }) => text === optionItemText);

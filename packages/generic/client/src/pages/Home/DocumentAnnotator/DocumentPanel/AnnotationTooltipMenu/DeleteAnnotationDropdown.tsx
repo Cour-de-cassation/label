@@ -38,7 +38,7 @@ function DeleteAnnotationDropdown(props: {
         buttonSize={props.buttonSize}
         backgroundColor="alert"
         hint={wordings.homePage.delete}
-        iconName="delete"
+        iconName="deleteOutline"
         items={items}
         onChange={deleteAnnotation}
         onClose={props.onClose}
@@ -52,7 +52,7 @@ function DeleteAnnotationDropdown(props: {
         buttonSize={props.buttonSize}
         backgroundColor="alert"
         hint={wordings.homePage.delete}
-        iconName="delete"
+        iconName="deleteOutline"
         onClick={() => deleteAnnotation('annotation')}
       />
     );

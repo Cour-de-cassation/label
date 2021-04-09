@@ -15,7 +15,7 @@ function SpecialDocumentsTable(props: {
   const optionItems = buildOptionItems();
   return (
     <div style={styles.container}>
-      <PaginatedTable isHeaderSticky fields={props.fields} data={props.specialDocuments} optionItems={optionItems} />
+      <PaginatedTable fields={props.fields} data={props.specialDocuments} optionItems={optionItems} />
     </div>
   );
 

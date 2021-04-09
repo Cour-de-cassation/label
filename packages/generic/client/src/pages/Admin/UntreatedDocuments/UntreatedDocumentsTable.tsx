@@ -12,7 +12,7 @@ function UntreatedDocumentsTable(props: {
 
   return (
     <div style={styles.container}>
-      <PaginatedTable isHeaderSticky fields={props.fields} data={props.untreatedDocuments} />
+      <PaginatedTable fields={props.fields} data={props.untreatedDocuments} />
     </div>
   );
 

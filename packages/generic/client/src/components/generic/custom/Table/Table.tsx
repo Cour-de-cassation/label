@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
 import { sumBy } from 'lodash';
+import { iconNameType } from '../../materialUI';
 import { DEFAULT_ORDER_DIRECTION, TableHeader } from './TableHeader';
 import { TableBody, tableRowFieldType } from './TableBody';
 import { footerCellType, TableFooter } from './TableFooter';
 
 export { Table };
 
-export type { tableRowFieldType };
+export type { optionItemType, tableRowFieldType };
 
 const OPTION_CELL_WIDTH = 40;
 
 type orderDirectionType = 'asc' | 'desc';
 
+type optionItemType<InputT> = {
+  text: string;
+  onClick: (data: InputT) => void;
+  iconName?: iconNameType;
+};
+
 function Table<InputT>(props: {
   defaultOrderByProperty?: string;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
-  isFooterSticky?: boolean;
-  isHeaderSticky?: boolean;
   isRowHighlighted?: (row: InputT) => boolean;
   data: InputT[];
-  optionItems?: Array<{
-    text: string;
-    onClick: (data: InputT) => void;
-  }>;
+  optionItems?: Array<optionItemType<InputT>>;
   onRowClick?: (row: InputT) => void;
   pagination?: { start: number; end: number };
   fields: Array<tableRowFieldType<InputT>>;
@@ -53,7 +55,6 @@ function Table<InputT>(props: {
           tooltipText,
         }))}
         fieldCellStyles={fieldCellStyles}
-        isSticky={props.isHeaderSticky}
         optionCellStyle={optionCellStyle}
         orderByProperty={orderByProperty}
         orderDirection={orderDirection}
@@ -83,7 +84,7 @@ function Table<InputT>(props: {
     if (!props.footer) {
       return;
     }
-    return <TableFooter cells={props.footer} isSticky={props.isFooterSticky} />;
+    return <TableFooter cells={props.footer} />;
   }
 
   function buildFieldCellStyles() {

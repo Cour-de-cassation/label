@@ -19,7 +19,6 @@ function ProblemReportsTable(props: {
   return (
     <Table
       data={props.problemReportsWithDetails}
-      isHeaderSticky
       isRowHighlighted={isRowHighlighted}
       fields={problemReportsFields}
       optionItems={optionItems}
@@ -42,6 +41,7 @@ function ProblemReportsTable(props: {
       {
         text: wordings.problemReportsPage.table.optionItems.answerByEmail,
         onClick: openMailToAgent,
+        iconName: 'mail' as const,
       },
       {
         text: wordings.problemReportsPage.table.optionItems.deleteProblemReport,
@@ -51,6 +51,7 @@ function ProblemReportsTable(props: {
           });
           props.refetch();
         },
+        iconName: 'delete' as const,
       },
       {
         text: wordings.problemReportsPage.table.optionItems.openDocument,
@@ -58,6 +59,7 @@ function ProblemReportsTable(props: {
           history.push(`/admin/document/${problemReportWithDetails.document._id}`);
           return;
         },
+        iconName: 'eye' as const,
       },
       {
         text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
@@ -68,6 +70,7 @@ function ProblemReportsTable(props: {
           });
           props.refetch();
         },
+        iconName: 'turnRight' as const,
       },
       {
         text: wordings.problemReportsPage.table.optionItems.validate,
@@ -78,6 +81,7 @@ function ProblemReportsTable(props: {
           });
           props.refetch();
         },
+        iconName: 'send' as const,
       },
     ];
   }

@@ -2,13 +2,14 @@ import React from 'react';
 import format from 'string-template';
 import { keysOf, timeOperator } from '@label/core';
 import { Chip, FilterButton, filterType, Text } from '../../../../components';
+import { treatedDocumentFilterType } from '../../../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
-import { treatedDocumentFilterInfoType, treatedDocumentFilterType } from './treatedDocumentFilterTypes';
+import { treatedDocumentFilterInfoType } from './treatedDocumentFilterInfoType';
 
 export { TreatedDocumentsFilters };
 
-export type { treatedDocumentFilterInfoType, treatedDocumentFilterType };
+export type { treatedDocumentFilterInfoType };
 
 function TreatedDocumentsFilters(props: {
   filterValues: treatedDocumentFilterType;

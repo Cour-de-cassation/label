@@ -2,27 +2,20 @@ import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
 import { apiRouteOutType, idModule, indexer, keysOf, treatmentInfoType, timeOperator } from '@label/core';
 import { DecisionNumberTextInput, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
+import { localStorage, treatedDocumentFilterType } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ExportCSVButton } from './ExportCSVButton';
-import { TreatedDocumentsFilters, treatedDocumentFilterType } from './TreatedDocumentsFilters';
+import { TreatedDocumentsFilters } from './TreatedDocumentsFilters';
 import { StatisticsBox } from './StatisticsBox';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
 
 export { TreatedDocuments };
 
-const DEFAULT_FILTERS = {
-  startDate: undefined,
-  endDate: undefined,
-  userName: undefined,
-  publicationCategoryLetter: undefined,
-  mustHaveSurAnnotations: false,
-  mustHaveSubAnnotations: false,
-};
-
 function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'> }) {
   const theme = useCustomTheme();
-  const [filterValues, setFilterValues] = useState<treatedDocumentFilterType>(DEFAULT_FILTERS);
+  const INITIAL_FILTER_VALUES = localStorage.treatedDocumentFiltersHandler.get();
+  const [filterValues, setFilterValues] = useState<treatedDocumentFilterType>(INITIAL_FILTER_VALUES);
   const [searchedDecisionNumber, setSearchedDecisionNumber] = useState<number | undefined>();
   const styles = buildStyles(theme);
 
@@ -61,7 +54,7 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
             <TreatedDocumentsFilters
               filterInfo={filterInfo}
               filterValues={filterValues}
-              setFilterValues={setFilterValues}
+              setFilterValues={setAndStoreFilterValues}
               resultsCount={filteredTreatedDocuments.length}
             />
             <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
@@ -83,6 +76,11 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
       </div>
     </div>
   );
+
+  function setAndStoreFilterValues(filterValues: treatedDocumentFilterType) {
+    localStorage.treatedDocumentFiltersHandler.set(filterValues);
+    setFilterValues(filterValues);
+  }
 
   function computeSummedTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
     const treatments = flatten(treatedDocuments.map((treatedDocument) => treatedDocument.treatments)).filter(

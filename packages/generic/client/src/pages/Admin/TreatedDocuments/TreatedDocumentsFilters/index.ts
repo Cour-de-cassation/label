@@ -1,6 +1,6 @@
 import { TreatedDocumentsFilters } from './TreatedDocumentsFilters';
-import { treatedDocumentFilterInfoType, treatedDocumentFilterType } from './treatedDocumentFilterTypes';
+import { treatedDocumentFilterInfoType } from './treatedDocumentFilterInfoType';
 
 export { TreatedDocumentsFilters };
 
-export type { treatedDocumentFilterInfoType, treatedDocumentFilterType };
+export type { treatedDocumentFilterInfoType };

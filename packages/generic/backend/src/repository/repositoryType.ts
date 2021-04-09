@@ -1,6 +1,6 @@
 import { idType } from '@label/core';
 
-export type { repositoryType };
+export type { projectedType, repositoryType };
 
 type repositoryType<T extends { _id: idType }> = {
   clear: () => Promise<void>;
@@ -14,3 +14,5 @@ type repositoryType<T extends { _id: idType }> = {
   setIndexes: () => Promise<void>;
   updateOne: (id: idType, objectFields: Partial<T>) => Promise<void>;
 };
+
+type projectedType<T, U extends keyof T> = Pick<T, U>;

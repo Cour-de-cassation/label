@@ -1,5 +1,9 @@
 import { documentType } from '@label/core';
-import { buildRepositoryBuilder } from '../../../repository';
+import {
+  buildProjection,
+  buildRepositoryBuilder,
+  projectedType,
+} from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';
 
 export { buildDocumentRepository };
@@ -53,6 +57,16 @@ const buildDocumentRepository = buildRepositoryBuilder<
 
     async findAllByStatus(status) {
       return collection.find({ status: { $in: status } }).toArray();
+    },
+
+    async findAllByStatusProjection<projectionT extends keyof documentType>(
+      status: documentType['status'][],
+      projection: Array<projectionT>,
+    ): Promise<Array<projectedType<documentType, projectionT>>> {
+      return (collection
+        .find({ status: { $in: status } })
+        .project(buildProjection(projection))
+        .toArray() as any) as Array<projectedType<documentType, projectionT>>;
     },
 
     async updateStatusById(id, status) {

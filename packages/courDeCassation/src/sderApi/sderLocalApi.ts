@@ -23,7 +23,7 @@ const sderLocalApi: sderApiType = {
         const parsedContent = JSON.parse(content) as decisionType;
         return {
           ...parsedContent,
-          dateDecision: new Date(parsedContent.dateDecision),
+          dateDecision: parsedContent.dateDecision,
         };
       })
       .map(decisionModule.lib.generateDecision);

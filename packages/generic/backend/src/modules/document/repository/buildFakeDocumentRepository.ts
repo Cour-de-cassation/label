@@ -2,6 +2,8 @@ import { isEqual } from 'lodash';
 import { documentType, idModule } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
+  projectedType,
+  projectFakeObjects,
   updateFakeCollection,
 } from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';
@@ -52,6 +54,15 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
 
     async findAllByStatus(status) {
       return collection.filter((document) => status.includes(document.status));
+    },
+
+    async findAllByStatusProjection<projectionT extends keyof documentType>(
+      status: documentType['status'][],
+      projections: Array<projectionT>,
+    ): Promise<Array<projectedType<documentType, projectionT>>> {
+      return collection
+        .filter((document) => status.includes(document.status))
+        .map((document) => projectFakeObjects(document, projections));
     },
 
     async updateStatusById(id, status) {

@@ -1,4 +1,5 @@
 import { documentType, idType } from '@label/core';
+import { projectedType } from '../../../repository';
 
 export type { customDocumentRepositoryType };
 
@@ -7,6 +8,10 @@ type customDocumentRepositoryType = {
   findAllByStatus: (
     status: documentType['status'][],
   ) => Promise<documentType[]>;
+  findAllByStatusProjection: <projectionT extends keyof documentType>(
+    status: documentType['status'][],
+    projection: Array<projectionT>,
+  ) => Promise<Array<projectedType<documentType, projectionT>>>;
   findAllByPublicationCategoryAndStatus: ({
     publicationCategory,
     status,

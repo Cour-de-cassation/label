@@ -122,7 +122,21 @@ const apiSchema = {
             },
             treatments: {
               kind: 'array',
-              content: treatmentModule.model,
+              content: {
+                kind: 'object',
+                content: {
+                  _id: treatmentModule.model.content._id,
+                  addedAnnotationsCount: treatmentModule.model.content.addedAnnotationsCount,
+                  deletedAnnotationsCount: treatmentModule.model.content.deletedAnnotationsCount,
+                  documentId: treatmentModule.model.content.documentId,
+                  duration: treatmentModule.model.content.duration,
+                  lastUpdateDate: treatmentModule.model.content.lastUpdateDate,
+                  modifiedAnnotationsCount: treatmentModule.model.content.modifiedAnnotationsCount,
+                  resizedBiggerAnnotationsCount: treatmentModule.model.content.resizedBiggerAnnotationsCount,
+                  resizedSmallerAnnotationsCount: treatmentModule.model.content.resizedSmallerAnnotationsCount,
+                  source: treatmentModule.model.content.source,
+                },
+              },
             },
             userName: {
               kind: 'primitive',
@@ -135,7 +149,14 @@ const apiSchema = {
     untreatedDocuments: {
       out: buildModel({
         kind: 'array',
-        content: documentModule.fetchedModel,
+        content: {
+          kind: 'object',
+          content: {
+            _id: documentModule.model.content._id,
+            documentId: documentModule.model.content.documentId,
+            publicationCategory: documentModule.model.content.publicationCategory,
+          },
+        },
       } as const),
     },
     usersWithDetails: {

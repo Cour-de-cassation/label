@@ -1,7 +1,7 @@
 import { idModule, idType, indexer } from '@label/core';
-import { repositoryType } from './repositoryType';
+import { projectedType, repositoryType } from './repositoryType';
 
-export { buildFakeRepositoryBuilder, updateFakeCollection };
+export { buildFakeRepositoryBuilder, projectFakeObjects, updateFakeCollection };
 
 function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   buildCustomFakeRepository,
@@ -109,4 +109,18 @@ function updateFakeCollection<T>(collection: T[], newCollection: T[]) {
   for (let index = 0; index < newCollection.length; index++) {
     collection.push(newCollection[index]);
   }
+}
+
+function projectFakeObjects<T, projectionT extends keyof T>(
+  object: T,
+  projections: Array<projectionT>,
+): projectedType<T, projectionT> {
+  const projectedObject = {} as projectedType<T, projectionT>;
+
+  projections.forEach(
+    /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+    (projection) => ((projectedObject as any)[projection] = object[projection]),
+  );
+
+  return projectedObject;
 }

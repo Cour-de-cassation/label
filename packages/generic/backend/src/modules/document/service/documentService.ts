@@ -94,8 +94,12 @@ function buildDocumentService() {
   async function fetchTreatedDocuments() {
     const documentRepository = buildDocumentRepository();
 
-    const documents = await documentRepository.findAllByStatus(['done']);
-    const documentIds = documents.map(({ _id }) => _id);
+    const treatedDocuments = await documentRepository.findAllByStatusProjection(
+      ['done'],
+      ['_id', 'documentId', 'publicationCategory'],
+    );
+
+    const documentIds = treatedDocuments.map(({ _id }) => _id);
     const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
       documentIds,
     );
@@ -110,19 +114,34 @@ function buildDocumentService() {
       documentIds,
     );
 
-    return documents.map((document) => {
-      const documentIdString = idModule.lib.convertToString(document._id);
+    return treatedDocuments.map((treatedDocument) => {
+      const documentIdString = idModule.lib.convertToString(
+        treatedDocument._id,
+      );
       const assignation = assignationsByDocumentId[documentIdString];
       const assignationIdString = idModule.lib.convertToString(assignation._id);
       const userName = usersByAssignationId[assignationIdString].name;
       const treatments = treatmentsByDocumentId[documentIdString];
       return {
         document: {
-          _id: document._id,
-          documentId: document.documentId,
-          publicationCategory: document.publicationCategory,
+          _id: treatedDocument._id,
+          documentId: treatedDocument.documentId,
+          publicationCategory: treatedDocument.publicationCategory,
         },
-        treatments,
+        treatments: treatments.map((treatment) => ({
+          _id: treatment._id,
+          addedAnnotationsCount: treatment.addedAnnotationsCount,
+          deletedAnnotationsCount: treatment.deletedAnnotationsCount,
+          documentId: treatment.documentId,
+          duration: treatment.duration,
+          lastUpdateDate: treatment.lastUpdateDate,
+          modifiedAnnotationsCount: treatment.modifiedAnnotationsCount,
+          resizedBiggerAnnotationsCount:
+            treatment.resizedBiggerAnnotationsCount,
+          resizedSmallerAnnotationsCount:
+            treatment.resizedSmallerAnnotationsCount,
+          source: treatment.source,
+        })),
         userName,
       };
     });
@@ -130,7 +149,12 @@ function buildDocumentService() {
 
   async function fetchUntreatedDocuments() {
     const documentRepository = buildDocumentRepository();
-    return documentRepository.findAllByStatus(['free', 'pending', 'saved']);
+    const untreatedDocuments = await documentRepository.findAllByStatusProjection(
+      ['free', 'pending', 'saved'],
+      ['_id', 'documentId', 'publicationCategory'],
+    );
+
+    return untreatedDocuments;
   }
 
   async function fetchDocumentsReadyToExport(

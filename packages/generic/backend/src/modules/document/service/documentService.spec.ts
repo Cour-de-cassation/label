@@ -13,7 +13,7 @@ import { buildAssignationRepository } from '../../assignation';
 import { buildMonitoringEntryRepository } from '../../monitoringEntry';
 import { buildTreatmentRepository } from '../../treatment';
 import { buildDocumentRepository } from '../repository';
-import { documentService } from './documentService';
+import { buildDocumentService, documentService } from './documentService';
 
 describe('documentService', () => {
   const annotationReportRepository = buildAnnotationReportRepository();
@@ -218,6 +218,27 @@ describe('documentService', () => {
       );
 
       expect(documentForUser).toEqual(documents[1]);
+    });
+
+    it('should throw an error on too many attempts', async () => {
+      const documentService = buildDocumentService();
+      const userId = idModule.lib.buildId();
+      await Promise.all(
+        range(301).map(() =>
+          documentRepository.insert(documentModule.generator.generate()),
+        ),
+      );
+      await Promise.all(
+        range(300).map(() => documentService.fetchDocumentForUser(userId)),
+      );
+
+      const promise = () => documentService.fetchDocumentForUser(userId);
+
+      await expect(promise()).rejects.toThrow(
+        `Too many call attempts for identifier ${idModule.lib.convertToString(
+          userId,
+        )}`,
+      );
     });
   });
 

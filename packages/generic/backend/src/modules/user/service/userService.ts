@@ -7,6 +7,7 @@ import {
   userModule,
   userType,
 } from '@label/core';
+import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
 import { jwtSigner } from '../../../utils';
 import { buildUserRepository } from '../repository';
 
@@ -21,7 +22,10 @@ const MAX_LOGIN_ATTEMPTS = 1;
 const userService = buildUserService();
 
 function buildUserService() {
-  const loginAttempts: Record<string, number[]> = {};
+  const { checkCallAttempts } = buildCallAttemptsRegulator(
+    MAX_LOGIN_ATTEMPTS,
+    DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS,
+  );
   return {
     changePassword,
     createUser,
@@ -113,7 +117,7 @@ function buildUserService() {
     email: userType['email'];
     password: string;
   }) {
-    checkLoginAttempts(email);
+    checkCallAttempts(userModule.lib.formatEmail(email));
     const userRepository = buildUserRepository();
     const user = await userRepository.findByEmail(email);
 
@@ -175,26 +179,6 @@ function buildUserService() {
       throw errorHandlers.authenticationErrorHandler.build(
         'No authorization value provided',
       );
-    }
-  }
-
-  function checkLoginAttempts(email: string) {
-    const formattedEmail = userModule.lib.formatEmail(email);
-
-    const now = new Date().getTime();
-    if (!loginAttempts[formattedEmail]) {
-      loginAttempts[formattedEmail] = [now];
-      return;
-    }
-    loginAttempts[formattedEmail] = [
-      ...loginAttempts[formattedEmail].filter(
-        (timestamp) =>
-          now - timestamp < DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS,
-      ),
-      now,
-    ];
-    if (loginAttempts[formattedEmail].length > MAX_LOGIN_ATTEMPTS) {
-      throw new Error(`Too many login attempts for email ${formattedEmail}`);
     }
   }
 }

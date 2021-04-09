@@ -7,6 +7,7 @@ import {
   buildAnonymizer,
 } from '@label/core';
 import { settingsLoader } from '../../../lib/settingsLoader';
+import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
 import { dateBuilder } from '../../../utils';
 import { annotationReportService } from '../../annotationReport';
 import { assignationService } from '../../assignation';
@@ -15,10 +16,35 @@ import { monitoringEntryService } from '../../monitoringEntry';
 import { userService } from '../../user';
 import { buildDocumentRepository } from '../repository';
 
-export { documentService };
+export { buildDocumentService, documentService };
 
-const documentService = {
-  async deleteDocument(id: documentType['_id']) {
+const DELAY_BETWEEN_FETCH_DOCUMENT_ATTEMPTS_IN_SECONDS = 60 * 60 * 1000;
+
+const MAX_FETCH_DOCUMENT_ATTEMPTS = 300;
+
+const documentService = buildDocumentService();
+
+function buildDocumentService() {
+  const { checkCallAttempts } = buildCallAttemptsRegulator(
+    MAX_FETCH_DOCUMENT_ATTEMPTS,
+    DELAY_BETWEEN_FETCH_DOCUMENT_ATTEMPTS_IN_SECONDS,
+  );
+
+  return {
+    deleteDocument,
+    fetchAllDocumentsByIds,
+    fetchAnonymizedDocumentText,
+    fetchSpecialDocuments,
+    fetchTreatedDocuments,
+    fetchUntreatedDocuments,
+    fetchDocumentsReadyToExport,
+    fetchDocumentsWithoutAnnotations,
+    fetchDocumentForUser,
+    fetchDocument,
+    updateDocumentStatus,
+  };
+
+  async function deleteDocument(id: documentType['_id']) {
     const documentRepository = buildDocumentRepository();
 
     await annotationReportService.deleteAnnotationReportsByDocumentId(id);
@@ -27,14 +53,14 @@ const documentService = {
     await treatmentService.deleteTreatmentsByDocumentId(id);
 
     await documentRepository.deleteManyByIds([id]);
-  },
+  }
 
-  async fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
+  async function fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByIds(documentIds);
-  },
+  }
 
-  async fetchAnonymizedDocumentText(documentId: documentType['_id']) {
+  async function fetchAnonymizedDocumentText(documentId: documentType['_id']) {
     const documentRepository = buildDocumentRepository();
     const document = await documentRepository.findById(documentId);
 
@@ -55,17 +81,17 @@ const documentService = {
       annotations,
     );
     return anonymizedDocument.text;
-  },
+  }
 
-  async fetchSpecialDocuments() {
+  async function fetchSpecialDocuments() {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByPublicationCategoryAndStatus({
       publicationCategory: ['P'],
       status: 'done',
     });
-  },
+  }
 
-  async fetchTreatedDocuments() {
+  async function fetchTreatedDocuments() {
     const documentRepository = buildDocumentRepository();
 
     const documents = await documentRepository.findAllByStatus(['done']);
@@ -100,14 +126,16 @@ const documentService = {
         userName,
       };
     });
-  },
+  }
 
-  async fetchUntreatedDocuments() {
+  async function fetchUntreatedDocuments() {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByStatus(['free', 'pending', 'saved']);
-  },
+  }
 
-  async fetchDocumentsReadyToExport(days: number): Promise<documentType[]> {
+  async function fetchDocumentsReadyToExport(
+    days: number,
+  ): Promise<documentType[]> {
     const documentRepository = buildDocumentRepository();
 
     const documentsCompletelyTreated = await documentRepository.findAllByStatus(
@@ -119,9 +147,9 @@ const documentService = {
     );
 
     return documentsReadyToExport;
-  },
+  }
 
-  async fetchDocumentsWithoutAnnotations(): Promise<documentType[]> {
+  async function fetchDocumentsWithoutAnnotations(): Promise<documentType[]> {
     const documentRepository = buildDocumentRepository();
 
     const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
@@ -133,17 +161,19 @@ const documentService = {
           idModule.lib.equalId(documentId, document._id),
         ),
     );
-  },
+  }
 
-  async fetchDocument(documentId: documentType['_id']) {
+  async function fetchDocument(documentId: documentType['_id']) {
     const documentRepository = buildDocumentRepository();
 
     return documentRepository.findById(documentId);
-  },
-  async fetchDocumentForUser(
+  }
+
+  async function fetchDocumentForUser(
     userId: idType,
     documentIdsToExclude: idType[] = [],
   ): Promise<documentType> {
+    checkCallAttempts(idModule.lib.convertToString(userId));
     const documentRepository = buildDocumentRepository();
     const documentIdsAssignated = await assignationService.fetchDocumentIdsAssignatedToUserId(
       userId,
@@ -200,9 +230,9 @@ const documentService = {
 
       return document;
     }
-  },
+  }
 
-  async updateDocumentStatus(
+  async function updateDocumentStatus(
     id: documentType['_id'],
     status: documentType['status'],
   ) {
@@ -212,5 +242,5 @@ const documentService = {
     if (status === 'free') {
       await assignationService.deleteAssignationsByDocumentId(id);
     }
-  },
-};
+  }
+}

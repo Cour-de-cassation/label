@@ -212,7 +212,7 @@ describe('userService', () => {
           userService.login({ email: userEmail, password: 'WRONG_PASSWORD' });
 
         await expect(promise()).rejects.toThrow(
-          `Too many login attempts for email mail@mail.mail`,
+          `Too many call attempts for identifier mail@mail.mail`,
         );
       });
 

@@ -96,7 +96,7 @@ function buildDocumentService() {
 
     const treatedDocuments = await documentRepository.findAllByStatusProjection(
       ['done'],
-      ['_id', 'documentId', 'publicationCategory'],
+      ['_id', 'documentNumber', 'publicationCategory'],
     );
 
     const documentIds = treatedDocuments.map(({ _id }) => _id);
@@ -125,7 +125,7 @@ function buildDocumentService() {
       return {
         document: {
           _id: treatedDocument._id,
-          documentId: treatedDocument.documentId,
+          documentNumber: treatedDocument.documentNumber,
           publicationCategory: treatedDocument.publicationCategory,
         },
         treatments: treatments.map((treatment) => ({
@@ -151,7 +151,7 @@ function buildDocumentService() {
     const documentRepository = buildDocumentRepository();
     const untreatedDocuments = await documentRepository.findAllByStatusProjection(
       ['free', 'pending', 'saved'],
-      ['_id', 'documentId', 'publicationCategory'],
+      ['_id', 'documentNumber', 'publicationCategory'],
     );
 
     return untreatedDocuments;

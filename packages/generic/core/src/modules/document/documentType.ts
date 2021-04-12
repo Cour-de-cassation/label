@@ -6,7 +6,7 @@ export { documentModel, fetchedDocumentModel };
 export type { documentType, fetchedDocumentType };
 
 const documentModelCommonFields = {
-  documentId: { kind: 'primitive', content: 'number' },
+  documentNumber: { kind: 'primitive', content: 'number' },
   _id: { kind: 'custom', content: 'id' },
   publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
   status: {

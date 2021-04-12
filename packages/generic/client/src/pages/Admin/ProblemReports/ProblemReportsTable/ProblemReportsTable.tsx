@@ -28,7 +28,7 @@ function ProblemReportsTable(props: {
 
   function openMailToAgent(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
     const subject = format(wordings.problemReportsPage.table.mailSubject, {
-      doumentId: problemReportWithDetails.document.documentId,
+      documentNumber: problemReportWithDetails.document.documentNumber,
     });
     const email = problemReportWithDetails.user.email;
     const mailto = document.createElement('a');
@@ -101,10 +101,10 @@ function isRowHighlighted(problemReportWithDetails: apiRouteOutType<'get', 'prob
 
 const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'problemReportsWithDetails'>[number]>> = [
   {
-    id: 'documentId',
+    id: 'documentNumber',
     title: wordings.problemReportsPage.table.columnTitles.number,
     canBeSorted: true,
-    extractor: (problemReportWithDetails) => problemReportWithDetails.document.documentId,
+    extractor: (problemReportWithDetails) => problemReportWithDetails.document.documentNumber,
     width: 2,
   },
   {

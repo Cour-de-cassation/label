@@ -169,11 +169,11 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
   function buildTreatedDocumentsFields(treatmentsInfo: Record<string, treatmentInfoType>) {
     const treatedDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatedDocuments'>[number]>> = [
       {
-        id: 'documentId',
+        id: 'documentNumber',
         title: wordings.treatedDocumentsPage.table.columnTitles.number.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.number.title,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.documentId,
+        extractor: (treatedDocument) => treatedDocument.document.documentNumber,
         width: 10,
       },
       {
@@ -280,7 +280,7 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
     searchedDecisionNumber: number,
   ) {
     return treatedDocuments.filter((treatedDocument) =>
-      treatedDocument.document.documentId.toString().includes(searchedDecisionNumber.toString()),
+      treatedDocument.document.documentNumber.toString().includes(searchedDecisionNumber.toString()),
     );
   }
 }

@@ -82,7 +82,7 @@ const apiSchema = {
               kind: 'object',
               content: {
                 _id: documentModule.fetchedModel.content._id,
-                documentId: documentModule.fetchedModel.content.documentId,
+                documentNumber: documentModule.fetchedModel.content.documentNumber,
                 status: documentModule.fetchedModel.content.status,
               },
             },
@@ -116,7 +116,7 @@ const apiSchema = {
               kind: 'object',
               content: {
                 _id: documentModule.fetchedModel.content._id,
-                documentId: documentModule.fetchedModel.content.documentId,
+                documentNumber: documentModule.fetchedModel.content.documentNumber,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
               },
             },
@@ -153,7 +153,7 @@ const apiSchema = {
           kind: 'object',
           content: {
             _id: documentModule.model.content._id,
-            documentId: documentModule.model.content.documentId,
+            documentNumber: documentModule.model.content.documentNumber,
             publicationCategory: documentModule.model.content.publicationCategory,
           },
         },

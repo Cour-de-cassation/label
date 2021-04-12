@@ -93,7 +93,7 @@ const problemReportService = {
         },
         document: {
           _id: document._id,
-          documentId: document.documentId,
+          documentNumber: document.documentNumber,
           status: document.status,
         },
       };

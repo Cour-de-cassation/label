@@ -44,10 +44,10 @@ function SpecialDocuments() {
 function buildSpecialDocumentsFields() {
   const specialDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'specialDocuments'>[number]>> = [
     {
-      id: 'documentId',
+      id: 'documentNumber',
       title: wordings.specialDocumentsPage.table.columnTitles.number,
       canBeSorted: true,
-      extractor: (specialDocument) => JSON.stringify(specialDocument.documentId),
+      extractor: (specialDocument) => JSON.stringify(specialDocument.documentNumber),
       width: 10,
     },
   ];

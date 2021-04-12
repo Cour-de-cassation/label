@@ -8,9 +8,12 @@ const pathToNlpAnnotations = './storage/annotations/';
 const nlpLocalApi: nlpApiType = {
   async fetchNlpAnnotations(settings, document) {
     const annotations = JSON.parse(
-      await fs.readFile(`${pathToNlpAnnotations}${document.documentId}.json`, {
-        encoding: 'utf8',
-      }),
+      await fs.readFile(
+        `${pathToNlpAnnotations}${document.documentNumber}.json`,
+        {
+          encoding: 'utf8',
+        },
+      ),
     ) as nlpAnnotationsType;
 
     return {

@@ -17,7 +17,7 @@ describe('statisticsCreator', () => {
       const duration = 1500;
       const userId = idModule.lib.buildId();
       const document = documentModule.generator.generate({
-        documentId: documentNumber,
+        documentNumber,
         publicationCategory: documentPublicationCategory,
         source: documentSource,
         text: 'Some text with five words',

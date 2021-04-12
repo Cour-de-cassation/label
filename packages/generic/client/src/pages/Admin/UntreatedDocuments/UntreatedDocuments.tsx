@@ -62,7 +62,7 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
     searchedDecisionNumber: number,
   ) {
     return untreatedDocuments.filter((untreatedDocument) =>
-      untreatedDocument.documentId.toString().includes(searchedDecisionNumber.toString()),
+      untreatedDocument.documentNumber.toString().includes(searchedDecisionNumber.toString()),
     );
   }
 
@@ -76,10 +76,10 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
   function buildUntreatedDocumentsFields() {
     const untreatedDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'untreatedDocuments'>[number]>> = [
       {
-        id: 'documentId',
+        id: 'documentNumber',
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
-        extractor: (untreatedDocument) => untreatedDocument.documentId,
+        extractor: (untreatedDocument) => untreatedDocument.documentNumber,
         width: 10,
       },
       {

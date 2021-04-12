@@ -22,7 +22,8 @@ describe('buildConnector', () => {
         expect(
           insertedDocuments.some(
             (insertedDocument) =>
-              insertedDocument.documentId === connectorDocument.documentId,
+              insertedDocument.documentNumber ===
+              connectorDocument.documentNumber,
           ),
         ),
       );

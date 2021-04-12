@@ -8,10 +8,10 @@ type sderApiType = {
   fetchCourtDecisions: (days: number) => Promise<Array<decisionType>>;
   setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
   setCourtDecisionDone: (
-    documentId: documentType['documentId'],
+    documentNumber: documentType['documentNumber'],
   ) => Promise<void>;
   updateDecisionPseudonymisation: (param: {
-    documentId: documentType['documentId'];
+    documentNumber: documentType['documentNumber'];
     pseudonymizationText: string;
     labelTreatments: labelTreatmentsType;
   }) => Promise<void>;

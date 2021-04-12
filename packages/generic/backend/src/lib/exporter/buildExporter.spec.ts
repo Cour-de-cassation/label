@@ -67,11 +67,11 @@ describe('buildExporter', () => {
 
       await exporter.exportTreatedDocuments();
 
-      const exportedDocumentIds = fakeExporterConfig.getExportedDocumentIds();
+      const exportedDocumentIds = fakeExporterConfig.getExportedDocumentNumbers();
       const exportedPseudonymizationTexts = fakeExporterConfig.getExportedPseudonymizationTexts();
       const exportedLabelTreatments = fakeExporterConfig.getExportedLabelTreatments();
       expect(exportedDocumentIds.sort()).toEqual(
-        [documents[0].documentId, documents[2].documentId].sort(),
+        [documents[0].documentNumber, documents[2].documentNumber].sort(),
       );
       expect(exportedPseudonymizationTexts.sort()).toEqual(
         ['[FIRST_NAME 1] est ingénieur', '[FIRST_NAME 1] est designer'].sort(),
@@ -113,11 +113,11 @@ describe('buildExporter', () => {
 });
 
 function buildFakeExporterConfig(): exporterConfigType & {
-  getExportedDocumentIds: () => number[];
+  getExportedDocumentNumbers: () => number[];
   getExportedPseudonymizationTexts: () => string[];
   getExportedLabelTreatments: () => labelTreatmentsType[];
 } {
-  const exportedDocumentIds: number[] = [];
+  const exportedDocumentNumbers: number[] = [];
   const exportedpseudonymizationTexts: string[] = [];
   const exportedlabelTreatments: labelTreatmentsType[] = [];
 
@@ -125,17 +125,17 @@ function buildFakeExporterConfig(): exporterConfigType & {
     name: 'FAKE_EXPORTER',
 
     async sendDocumentPseudonymisationAndTreatments({
-      documentId,
+      documentNumber,
       pseudonymizationText,
       labelTreatments,
     }) {
-      exportedDocumentIds.push(documentId);
+      exportedDocumentNumbers.push(documentNumber);
       exportedpseudonymizationTexts.push(pseudonymizationText);
       exportedlabelTreatments.push(labelTreatments);
     },
 
-    getExportedDocumentIds() {
-      return exportedDocumentIds;
+    getExportedDocumentNumbers() {
+      return exportedDocumentNumbers;
     },
 
     getExportedPseudonymizationTexts() {

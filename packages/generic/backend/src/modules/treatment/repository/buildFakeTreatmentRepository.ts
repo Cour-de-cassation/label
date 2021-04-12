@@ -29,11 +29,13 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
     },
 
     async findAllByDocumentIds(documentIds) {
-      const treatments = collection.filter((treatment) =>
-        documentIds.some((documentId) =>
-          idModule.lib.equalId(documentId, treatment.documentId),
-        ),
-      );
+      const treatments = collection
+        .filter((treatment) =>
+          documentIds.some((documentId) =>
+            idModule.lib.equalId(documentId, treatment.documentId),
+          ),
+        )
+        .sort((treatmentA, treatmentB) => treatmentA.order - treatmentB.order);
       return indexer.indexManyBy(treatments, (treatment) =>
         idModule.lib.convertToString(treatment.documentId),
       );

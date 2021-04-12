@@ -37,7 +37,7 @@ const buildTreatmentRepository = buildRepositoryBuilder<
         .toArray();
 
       const sortedTreatments = treatments.sort(
-        (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
+        (treatmentA, treatmentB) => treatmentA.order - treatmentB.order,
       );
 
       return indexer.indexManyBy(sortedTreatments, (treatment) =>

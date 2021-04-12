@@ -109,6 +109,40 @@ describe('treatmentService', () => {
     });
   });
 
+  describe('fetchTreatmentsByDocumentIds', () => {
+    it('should fetch the treatments for the given document ids', async () => {
+      const documentId1 = idModule.lib.buildId();
+      const documentId2 = idModule.lib.buildId();
+      const treatments = [
+        {
+          documentId: documentId1,
+          order: 3,
+        },
+        {
+          documentId: documentId1,
+          order: 2,
+        },
+        {
+          documentId: documentId2,
+          order: 1,
+        },
+      ].map(treatmentModule.generator.generate);
+      await Promise.all(treatments.map(treatmentRepository.insert));
+
+      const documentTreatments = await treatmentService.fetchTreatmentsByDocumentIds(
+        [documentId1, documentId2],
+      );
+
+      expect(documentTreatments).toEqual({
+        [idModule.lib.convertToString(documentId1)]: [
+          treatments[1],
+          treatments[0],
+        ],
+        [idModule.lib.convertToString(documentId2)]: [treatments[2]],
+      });
+    });
+  });
+
   describe('fetchTreatedDocumentIds', () => {
     it('should fetch the annotations from the treatments of the given document id', async () => {
       const documentId1 = idModule.lib.buildId();

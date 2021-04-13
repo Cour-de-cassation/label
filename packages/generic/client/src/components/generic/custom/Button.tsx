@@ -8,6 +8,8 @@ export type { buttonColorType };
 
 type buttonColorType = 'primary' | 'warning' | 'alert' | 'default';
 
+const BUTTON_SIZE = 40;
+
 function Button(props: {
   children?: ReactNode;
   color?: buttonColorType;
@@ -70,6 +72,7 @@ function Button(props: {
       opacity,
       border: 'none',
       color: 'inherit',
+      height: `${BUTTON_SIZE}px`,
       ...hoveredStyles,
     };
   }

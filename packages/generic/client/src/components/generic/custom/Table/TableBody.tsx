@@ -71,9 +71,9 @@ function TableBody<InputT>(props: {
       if (propertyA === propertyB) {
         return 0;
       } else if (propertyA < propertyB) {
-        return props.orderDirection === 'asc' ? 1 : -1;
-      } else {
         return props.orderDirection === 'asc' ? -1 : 1;
+      } else {
+        return props.orderDirection === 'asc' ? 1 : -1;
       }
     });
   }

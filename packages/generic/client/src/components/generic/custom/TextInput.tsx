@@ -1,5 +1,5 @@
 import React, { ChangeEvent, ReactElement } from 'react';
-import { customThemeType, useCustomTheme } from '../../../styles';
+import { customThemeType, typography, useCustomTheme } from '../../../styles';
 
 export { TextInput };
 
@@ -36,6 +36,7 @@ function buildStyles(theme: customThemeType) {
       color: theme.colors.line.level1,
       borderBottom: `${theme.colors.line.level2} 2px solid`,
       textAlign: 'right',
+      ...typography.body1.normal,
     },
   } as const;
 }

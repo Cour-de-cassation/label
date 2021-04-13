@@ -38,7 +38,7 @@ function DocumentInspector(props: { settings: settingsType }) {
                   settings: props.settings,
                 }}
               >
-                <MainHeader title={document.title} onBackButtonPress={navigateToTreatments} />
+                <MainHeader title={document.title} onBackButtonPress={history.goBack} />
                 <DocumentAnnotator />
               </AnnotatorStateHandlerContextProvider>
             </MonitoringEntriesHandlerContextProvider>
@@ -57,9 +57,5 @@ function DocumentInspector(props: { settings: settingsType }) {
     } catch (error) {
       console.warn(error);
     }
-  }
-
-  function navigateToTreatments() {
-    history.push('/admin/treated-documents');
   }
 }

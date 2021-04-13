@@ -23,6 +23,8 @@ function ProblemReportsTable(props: {
       fields={problemReportsFields}
       optionItems={optionItems}
       onRowClick={onRowClick}
+      defaultOrderByProperty="date"
+      defaultOrderDirection="desc"
     />
   );
 

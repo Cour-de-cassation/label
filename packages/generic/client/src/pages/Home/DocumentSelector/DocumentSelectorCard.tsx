@@ -4,12 +4,14 @@ import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { ButtonWithIcon, CategoryIcon, ComponentsList, PublicationCategoryBadge, Text } from '../../../components';
 import { wordings } from '../../../wordings';
-import { computeDocumentInfoEntries } from './computeDocumentInfoEntries';
+import { computeGenericDocumentInfoEntries } from './computeGenericDocumentInfoEntries';
+import { computeSpecificDocumentInfoEntries } from './computeSpecificDocumentInfoEntries';
 
 export { DocumentSelectorCard };
 
-const DOCUMENT_INFO_ENTRIES = ['annotations', 'linkedEntities', 'entities'] as const;
-const MAX_WIDTH = 400;
+const SPECIFIC_DOCUMENT_INFO_ENTRIES = ['chamberName', 'decisionNumber'] as const;
+const GENERIC_DOCUMENT_INFO_ENTRIES = ['wordCount', 'annotations', 'linkedEntities', 'entities'] as const;
+const CARD_WIDTH = 400;
 const CATEGORY_ICON_SIZE = 32;
 const MAX_CATEGORIES_SHOWN = 8;
 
@@ -21,7 +23,12 @@ function DocumentSelectorCard(props: {
   const theme = useCustomTheme();
   const [isSelecting, setIsSelecting] = useState(false);
   const styles = buildStyles(theme);
-  const documentInfoEntries = computeDocumentInfoEntries(props.choice.annotations);
+  const specificDocumentInfoEntries = computeSpecificDocumentInfoEntries(props.choice.document);
+  const genericDocumentInfoEntries = computeGenericDocumentInfoEntries(
+    props.choice.document.text,
+    props.choice.annotations,
+  );
+
   const categoryIconsByAnnotation = computeCategoryIconNamesByEntitiesCount(props.choice.annotations);
   const isDocumentPublished = props.choice.document.publicationCategory.length > 0;
   return isDocumentPublished ? (
@@ -41,23 +48,36 @@ function DocumentSelectorCard(props: {
   function renderCard() {
     return (
       <div style={styles.card}>
-        <Text style={styles.title} variant="h1">
-          {wordings.homePage.documentSelector.wholeCheck}
+        <Text style={styles.title} variant="h2" weight="bold">
+          {props.choice.document.decisionMetadata.juridiction || wordings.homePage.documentSelector.unknownJuridiction}
         </Text>
-        <Text style={styles.subtitle} variant="h2" weight="bold">
-          {props.choice.document.title}
-        </Text>
-        <div style={styles.documentInfoEntryTable}>
-          {DOCUMENT_INFO_ENTRIES.map((documentInfoEntry) => (
+
+        <div style={styles.specificDocumentInfoEntryTable}>
+          {SPECIFIC_DOCUMENT_INFO_ENTRIES.map((documentInfoEntry) => (
+            <div key={documentInfoEntry} style={styles.documentInfoEntryRow}>
+              <div style={styles.documentLabelContainer}>
+                <Text>{wordings.homePage.documentSelector.specificDocumentInfoEntries[documentInfoEntry]}</Text>
+              </div>
+              <div style={styles.documentValueContainer}>
+                <Text variant="h2" weight="bold">
+                  {specificDocumentInfoEntries[documentInfoEntry]}
+                </Text>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={styles.genericDocumentInfoEntryTable}>
+          {GENERIC_DOCUMENT_INFO_ENTRIES.map((documentInfoEntry) => (
             <div key={documentInfoEntry} style={styles.documentInfoEntryRow}>
               <div style={styles.documentLabelContainer}>
                 <Text style={styles.documentLabelText}>
-                  {wordings.homePage.documentSelector.documentInfoEntries[documentInfoEntry]}
+                  {wordings.homePage.documentSelector.genericDocumentInfoEntries[documentInfoEntry]}
                 </Text>
               </div>
               <div style={styles.documentValueContainer}>
                 <Text variant="h2" weight="bold">
-                  {documentInfoEntries[documentInfoEntry]}
+                  {genericDocumentInfoEntries[documentInfoEntry]}
                 </Text>
               </div>
             </div>
@@ -138,7 +158,7 @@ function buildStyles(theme: customThemeType) {
       flexDirection: 'column',
       alignItems: 'center',
       boxShadow: theme.boxShadow.major.out,
-      maxWidth: `${MAX_WIDTH}px`,
+      width: `${CARD_WIDTH}px`,
       backgroundColor: theme.colors.background,
     },
     categoryIconsContainer: {
@@ -155,12 +175,15 @@ function buildStyles(theme: customThemeType) {
       marginBottom: theme.spacing,
     },
     title: {
-      marginBottom: theme.spacing,
+      marginBottom: theme.spacing * 4,
     },
-    subtitle: {
+    specificDocumentInfoEntryTable: {
+      display: 'flex',
+      width: '100%',
+      flexDirection: 'column',
       marginBottom: theme.spacing * 3,
     },
-    documentInfoEntryTable: {
+    genericDocumentInfoEntryTable: {
       display: 'flex',
       width: '100%',
       flexDirection: 'column',
@@ -173,6 +196,8 @@ function buildStyles(theme: customThemeType) {
     },
     documentLabelContainer: {
       flex: 1,
+      display: 'flex',
+      justifyContent: 'flex-end',
       paddingRight: theme.spacing,
     },
     documentValueContainer: {

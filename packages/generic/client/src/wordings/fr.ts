@@ -82,15 +82,20 @@ const fr = {
     displayMode: "Type d'affichage",
     documentSelector: {
       publishedDocumentTitle: 'Cette décision sera publiée',
-      documentInfoEntries: {
+      genericDocumentInfoEntries: {
         annotations: 'Annotations',
         entities: 'Entités',
         linkedEntities: "Liaison d'entités",
+        wordCount: 'Mots',
+      },
+      specificDocumentInfoEntries: {
+        decisionNumber: 'N° de décision',
+        chamberName: 'Chambre',
       },
       noDocumentLeft: "Il n'y a plus de documents à traiter pour le moment...",
       pleaseRefresh: 'Veuillez rafraîchir la page',
       start: 'Commencer',
-      wholeCheck: 'Lecture exhaustive',
+      unknownJuridiction: 'Juridiction non précisée',
     },
     enterYourText: 'Saisissez votre texte...',
     identicalOccurrencesSpotted: 'occurence(s) identique(s) détectée(s)',

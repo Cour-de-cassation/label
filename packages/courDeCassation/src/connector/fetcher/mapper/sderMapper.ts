@@ -17,6 +17,10 @@ function mapCourtDecisionToDocument(
       : undefined,
   });
 
+  const chamberName = convertChamberIntoReadableChamberName(sderCourtDecision.chamberName)
+
+  const juridiction = computeJuridiction(sderCourtDecision.jurisdictionName, sderCourtDecision.chamberName)
+
   const priority = computePriority(
     sderCourtDecision.sourceName,
     sderCourtDecision.zoning?.introduction_subzonage?.publication,
@@ -24,18 +28,27 @@ function mapCourtDecisionToDocument(
 
   return documentModule.lib.buildDocument({
     creationDate: new Date(),
+    decisionMetadata: {
+      chamberName,
+      juridiction
+    },
     documentNumber: sderCourtDecision.sourceId,
     metadata: '',
     priority,
     publicationCategory:
-      (sderCourtDecision.zoning &&
-        sderCourtDecision.zoning.introduction_subzonage &&
-        sderCourtDecision.zoning.introduction_subzonage.publication) ||
+        sderCourtDecision.zoning?.introduction_subzonage?.publication ||
       [],
     source: sderCourtDecision.sourceName,
     title,
     text: sderCourtDecision.originalText,
   });
+}
+
+function computeJuridiction(jurisdictionName?: string, chamber?: string) {
+  if((!!jurisdictionName && jurisdictionName.toLowerCase() === "cour de cassation") || !!chamber && (chamber.match(/CIV\.[1-3]/) || chamber === "SOC") ) {
+    return "Cour de cassation";
+  }
+  return '';
 }
 
 function computeTitleFromParsedCourtDecision({
@@ -50,9 +63,9 @@ function computeTitleFromParsedCourtDecision({
   date?: Date;
 }) {
   const readableNumber = `Décision n°${number}`;
-  const readableChamber = convertChamberIntoReadableChamber(chamber);
+  const readableChamber = convertChamberIntoReadableChamberName(chamber);
   const readableDate = convertRawDateIntoReadableDate(date);
-  const title = [readableNumber, juridiction, readableChamber, readableDate]
+  const title = [readableNumber, juridiction, readableChamber && `Chambre ${readableChamber.toLowerCase()}`, readableDate]
     .filter(Boolean)
     .join(' · ');
   return title;
@@ -68,14 +81,14 @@ function convertRawDateIntoReadableDate(rawDate: Date | undefined) {
   return timeOperator.convertTimestampToReadableDate(rawDate.getTime());
 }
 
-function convertChamberIntoReadableChamber(chamber: string | undefined) {
+function convertChamberIntoReadableChamberName(chamber: string | undefined) {
   if (!chamber) {
     return '';
   }
   if (chamber && chamber.match(/CIV\.[1-3]/)) {
-    return 'Chambre civile';
+    return 'Civile';
   } else if (chamber === 'SOC') {
-    return 'Chambre sociale';
+    return 'Sociale';
   }
   return '';
 }

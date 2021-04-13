@@ -6,6 +6,13 @@ export { documentModel, fetchedDocumentModel };
 export type { documentType, fetchedDocumentType };
 
 const documentModelCommonFields = {
+  decisionMetadata: {
+    kind: 'object',
+    content: {
+      chamberName: { kind: 'primitive', content: 'string' },
+      juridiction: { kind: 'primitive', content: 'string' },
+    },
+  },
   documentNumber: { kind: 'primitive', content: 'number' },
   _id: { kind: 'custom', content: 'id' },
   publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },

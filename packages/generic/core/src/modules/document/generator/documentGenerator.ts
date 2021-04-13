@@ -7,6 +7,7 @@ export { documentGenerator };
 const documentGenerator: generatorType<documentType> = {
   generate: ({
     creationDate,
+    decisionMetadata,
     documentNumber,
     _id,
     metadata,
@@ -19,6 +20,7 @@ const documentGenerator: generatorType<documentType> = {
     updateDate,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date(),
+    decisionMetadata: decisionMetadata ? decisionMetadata : { juridiction: '', chamberName: '' },
     documentNumber: documentNumber ? documentNumber : Math.floor(Math.random() * 1000000),
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     metadata: metadata ? metadata : `METADATA_${Math.random()}`,

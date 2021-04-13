@@ -1,4 +1,5 @@
-import { getBooleanItem, getDateItem, setBooleanItem, setDateItem } from './utils';
+import { localStorageHandler } from './localStorageHandler';
+import { localStorageMappers } from './localStorageMappers';
 
 const TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_START_DATE';
 const TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_END_DATE';
@@ -34,39 +35,63 @@ function set({
   mustHaveSurAnnotations,
   mustHaveSubAnnotations,
 }: treatedDocumentFilterType) {
-  if (startDate) {
-    setDateItem(TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY, startDate);
-  } else {
-    localStorage.removeItem(TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY);
-  }
-  if (endDate) {
-    setDateItem(TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY, endDate);
-  } else {
-    localStorage.removeItem(TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY);
-  }
-  if (userName) {
-    localStorage.setItem(TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY, userName);
-  } else {
-    localStorage.removeItem(TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY);
-  }
-  if (publicationCategoryLetter) {
-    localStorage.setItem(TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY, publicationCategoryLetter);
-  } else {
-    localStorage.removeItem(TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY);
-  }
-  setBooleanItem(TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS_STORAGE_KEY, mustHaveSurAnnotations);
-  setBooleanItem(TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS_STORAGE_KEY, mustHaveSubAnnotations);
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY,
+    value: startDate,
+    mapper: localStorageMappers.date,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY,
+    value: endDate,
+    mapper: localStorageMappers.date,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY,
+    value: userName,
+    mapper: localStorageMappers.string,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY,
+    value: publicationCategoryLetter,
+    mapper: localStorageMappers.string,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS_STORAGE_KEY,
+    value: mustHaveSurAnnotations,
+    mapper: localStorageMappers.boolean,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS_STORAGE_KEY,
+    value: mustHaveSubAnnotations,
+    mapper: localStorageMappers.boolean,
+  });
 }
 
 function get(): treatedDocumentFilterType {
-  const startDate = getDateItem(TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY);
-  const endDate = getDateItem(TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY);
-  const userName = localStorage.getItem(TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY);
-  const publicationCategoryLetter = localStorage.getItem(
-    TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY,
-  );
-  const mustHaveSurAnnotations = getBooleanItem(TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS_STORAGE_KEY);
-  const mustHaveSubAnnotations = getBooleanItem(TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS_STORAGE_KEY);
+  const startDate = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY,
+    mapper: localStorageMappers.date,
+  });
+  const endDate = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY,
+    mapper: localStorageMappers.date,
+  });
+  const userName = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY,
+    mapper: localStorageMappers.string,
+  });
+  const publicationCategoryLetter = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY,
+    mapper: localStorageMappers.string,
+  });
+  const mustHaveSurAnnotations = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS_STORAGE_KEY,
+    mapper: localStorageMappers.boolean,
+  });
+  const mustHaveSubAnnotations = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS_STORAGE_KEY,
+    mapper: localStorageMappers.boolean,
+  });
 
   return {
     startDate: startDate || undefined,

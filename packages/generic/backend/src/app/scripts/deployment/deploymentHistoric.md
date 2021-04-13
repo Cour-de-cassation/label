@@ -9,6 +9,7 @@ This document sums up the scripts run in pre-production and production
 - [x] addSourceInTreatmentModel
 - [x] addHasBeenReadInProblemReportModel
 - [x] addInfoInTreatment
+- [ ] renameDocumentIdToDocumentNumberInDocumentModel
 
 ## Production
 

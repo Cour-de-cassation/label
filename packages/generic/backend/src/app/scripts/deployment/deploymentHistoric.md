@@ -7,8 +7,8 @@ This document sums up the scripts run in pre-production and production
 - [x] renamePasswordToHashedPasswordInUserModel
 - [x] addPublicationCategoryInDocumentModel
 - [x] addSourceInTreatmentModel
-- [ ] addHasBeenReadInProblemReportModel
-- [ ] addInfoInTreatment
+- [x] addHasBeenReadInProblemReportModel
+- [x] addInfoInTreatment
 
 ## Production
 

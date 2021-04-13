@@ -1,6 +1,6 @@
 import { omit } from 'lodash';
 import { problemReportModule, problemReportType } from '@label/core';
-import { buildProblemReportRepository } from '../../../modules/problemReport';
+import { buildProblemReportRepository } from '../../../../modules/problemReport';
 import { addHasBeenReadInProblemReportModel } from './addHasBeenReadInProblemReportModel';
 
 describe('addHasBeenReadInProblemReportModel.spec', () => {

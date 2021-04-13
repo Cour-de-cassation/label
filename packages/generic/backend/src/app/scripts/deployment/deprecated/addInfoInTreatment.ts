@@ -1,6 +1,6 @@
 import { treatmentModule } from '@label/core';
-import { logger } from '../../../utils';
-import { buildTreatmentRepository } from '../../../modules/treatment';
+import { logger } from '../../../../utils';
+import { buildTreatmentRepository } from '../../../../modules/treatment';
 
 export { addInfoInTreatment };
 

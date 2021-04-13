@@ -1,4 +1,4 @@
-import { buildProblemReportRepository } from '../../../modules/problemReport';
+import { buildProblemReportRepository } from '../../../../modules/problemReport';
 
 export { addHasBeenReadInProblemReportModel };
 

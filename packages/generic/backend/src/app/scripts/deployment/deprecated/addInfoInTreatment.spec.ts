@@ -1,6 +1,6 @@
 import { omit } from 'lodash';
 import { treatmentModule, treatmentType } from '@label/core';
-import { buildTreatmentRepository } from '../../../modules/treatment';
+import { buildTreatmentRepository } from '../../../../modules/treatment';
 import { addInfoInTreatment } from './addInfoInTreatment';
 
 describe('addInfoInTreatment', () => {

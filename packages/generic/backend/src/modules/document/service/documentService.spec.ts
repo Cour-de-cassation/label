@@ -220,6 +220,26 @@ describe('documentService', () => {
       expect(documentForUser).toEqual(documents[1]);
     });
 
+    it('should fetch a document with annotation report first', async () => {
+      const userId1 = idModule.lib.buildId();
+      const documents = range(3).map(() =>
+        documentModule.generator.generate({
+          status: 'free',
+        }),
+      );
+      const annotationReport = annotationReportModule.generator.generate({
+        documentId: documents[1]._id,
+      });
+      await Promise.all(documents.map(documentRepository.insert));
+      await annotationReportRepository.insert(annotationReport);
+
+      const documentForUser = await documentService.fetchDocumentForUser(
+        userId1,
+      );
+
+      expect(documentForUser).toEqual(documents[1]);
+    });
+
     it('should throw an error on too many attempts', async () => {
       const documentService = buildDocumentService();
       const userId = idModule.lib.buildId();

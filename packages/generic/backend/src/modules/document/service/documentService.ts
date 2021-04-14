@@ -235,16 +235,26 @@ function buildDocumentService() {
     }
 
     async function assignNewDocument() {
-      let document: documentType;
-
-      try {
-        document = await documentRepository.assign('high');
-      } catch {
-        try {
-          document = await documentRepository.assign('medium');
-        } catch {
-          document = await documentRepository.assign('low');
-        }
+      let document: documentType | undefined;
+      const documentIdsWithAnnotationReport = await annotationReportService.fetchDocumentIdsWithAnnotationReport();
+      document = await assignDocumentByPriority(
+        'high',
+        documentIdsWithAnnotationReport,
+      );
+      if (!document) {
+        document = await assignDocumentByPriority(
+          'medium',
+          documentIdsWithAnnotationReport,
+        );
+      }
+      if (!document) {
+        document = await assignDocumentByPriority(
+          'low',
+          documentIdsWithAnnotationReport,
+        );
+      }
+      if (!document) {
+        throw new Error(`No free document available`);
       }
 
       await assignationService.createAssignation({
@@ -254,6 +264,41 @@ function buildDocumentService() {
 
       return document;
     }
+  }
+
+  async function assignDocumentByPriority(
+    priority: documentType['priority'],
+    documentIdsWithAnnotationReport: documentType['_id'][],
+  ): Promise<documentType | undefined> {
+    const documentRepository = buildDocumentRepository();
+
+    let document: documentType | undefined;
+    document = await documentRepository.findOneByStatusAndPriorityAmong(
+      { priority, status: 'free' },
+      documentIdsWithAnnotationReport,
+    );
+    if (!document) {
+      document = await documentRepository.findOneByStatusAndPriority({
+        priority,
+        status: 'free',
+      });
+    }
+
+    if (!document) {
+      return undefined;
+    }
+
+    const hasBeenChangedToPending = await documentRepository.updateOneStatusByIdAndStatus(
+      { _id: document._id, status: 'free' },
+      { status: 'pending' },
+    );
+    if (!hasBeenChangedToPending) {
+      return assignDocumentByPriority(
+        priority,
+        documentIdsWithAnnotationReport,
+      );
+    }
+    return document;
   }
 
   async function updateDocumentStatus(

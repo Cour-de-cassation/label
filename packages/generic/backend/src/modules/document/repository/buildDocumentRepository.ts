@@ -27,25 +27,24 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
-    async assign(priority) {
+    async findOneByStatusAndPriority({ status, priority }) {
       const document = await collection.findOne({
         priority,
-        status: 'free',
+        status,
       });
 
-      if (!document) {
-        throw new Error(`No free document of ${priority} priority`);
-      }
-
-      const { modifiedCount } = await collection.updateOne(document, {
-        $set: buildUpdateStatusQuery('pending'),
+      return document || undefined;
+    },
+    async findOneByStatusAndPriorityAmong(
+      { status, priority },
+      idsToSearchInFirst,
+    ) {
+      const document = await collection.findOne({
+        priority,
+        status,
+        _id: { $in: idsToSearchInFirst },
       });
-
-      if (modifiedCount !== 1) {
-        return this.assign(priority);
-      }
-
-      return document;
+      return document || undefined;
     },
 
     async findAllByPublicationCategoryAndStatus({
@@ -74,6 +73,14 @@ const buildDocumentRepository = buildRepositoryBuilder<
         { _id: id },
         { $set: buildUpdateStatusQuery(status) },
       );
+    },
+
+    async updateOneStatusByIdAndStatus(filter, update) {
+      const result = await collection.updateOne(
+        { _id: filter._id, status: filter.status },
+        { $set: buildUpdateStatusQuery(update.status) },
+      );
+      return result.modifiedCount === 1;
     },
   }),
 });

@@ -1,5 +1,9 @@
 import { annotationReportType } from '@label/core';
-import { buildRepositoryBuilder } from '../../../repository';
+import {
+  buildProjection,
+  buildRepositoryBuilder,
+  projectedType,
+} from '../../../repository';
 import { customAnnotationReportRepositoryType } from './customAnnotationReportRepositoryType';
 
 export { buildAnnotationReportRepository };
@@ -27,6 +31,17 @@ const buildAnnotationReportRepository = buildRepositoryBuilder<
       }
 
       return annotationReport;
+    },
+
+    async findAllProjection<projectionT extends keyof annotationReportType>(
+      projection: Array<projectionT>,
+    ): Promise<Array<projectedType<annotationReportType, projectionT>>> {
+      return (collection
+        .find({})
+        .project(buildProjection(projection))
+        .toArray() as any) as Array<
+        projectedType<annotationReportType, projectionT>
+      >;
     },
   }),
 });

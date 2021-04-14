@@ -15,32 +15,6 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
   customDocumentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
-    async assign(priority) {
-      const freeDocument = collection.find(
-        (document) =>
-          document.priority === priority && document.status === 'free',
-      );
-
-      if (!freeDocument) {
-        throw new Error(`No free document of ${priority} priority`);
-      }
-
-      updateFakeCollection(
-        collection,
-        collection.map((document) =>
-          idModule.lib.equalId(document._id, freeDocument._id)
-            ? {
-                ...document,
-                status: 'pending',
-                updateDate: new Date().getTime(),
-              }
-            : document,
-        ),
-      );
-
-      return freeDocument;
-    },
-
     async findAllByPublicationCategoryAndStatus({
       publicationCategory,
       status,
@@ -65,6 +39,29 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         .map((document) => projectFakeObjects(document, projections));
     },
 
+    async findOneByStatusAndPriority({ status, priority }) {
+      const freeDocument = collection.find(
+        (document) =>
+          document.priority === priority && document.status === status,
+      );
+      return freeDocument;
+    },
+
+    async findOneByStatusAndPriorityAmong(
+      { status, priority },
+      idsToSearchInFirst,
+    ) {
+      const freeDocument = collection.find(
+        (document) =>
+          document.priority === priority &&
+          document.status === status &&
+          idsToSearchInFirst.some((id) =>
+            idModule.lib.equalId(document._id, id),
+          ),
+      );
+      return freeDocument;
+    },
+
     async updateStatusById(id, status) {
       updateFakeCollection(
         collection,
@@ -78,6 +75,27 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
             : document,
         ),
       );
+    },
+    async updateOneStatusByIdAndStatus(filter, update) {
+      const documentsToModifyCount = collection.filter(
+        (document) =>
+          idModule.lib.equalId(filter._id, document._id) &&
+          document.status === filter.status,
+      ).length;
+      updateFakeCollection(
+        collection,
+        collection.map((document) =>
+          idModule.lib.equalId(filter._id, document._id) &&
+          document.status === filter.status
+            ? {
+                ...document,
+                status: update.status,
+                updateDate: new Date().getTime(),
+              }
+            : document,
+        ),
+      );
+      return documentsToModifyCount === 1;
     },
   }),
 });

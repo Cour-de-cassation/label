@@ -3,9 +3,7 @@ import { buildDocumentRepository } from '../../modules/document';
 
 export { freePendingDocuments };
 
-const MINUTES_BEFORE_FREEING = 15;
-
-async function freePendingDocuments() {
+async function freePendingDocuments(minutesBeforeFreeing: number) {
   const documentRepository = buildDocumentRepository();
 
   logger.log('Fetching pending documents');
@@ -15,7 +13,7 @@ async function freePendingDocuments() {
   logger.log(`${pendingDocuments.length} documents fetched`);
   const pendingDocumentsToFree = pendingDocuments.filter(
     (document) =>
-      document.updateDate <= dateBuilder.minutesAgo(MINUTES_BEFORE_FREEING),
+      document.updateDate <= dateBuilder.minutesAgo(minutesBeforeFreeing),
   );
   logger.log(`${pendingDocumentsToFree.length} documents to free`);
 

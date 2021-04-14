@@ -1,9 +1,9 @@
 # Importation from SDER
-0 7 * * * ./scripts/runProdScript.sh dist/crons/importAllDocumentsFromSderSince.js --days 7 &> /dev/null
-0 8 * * * ./scripts/runProdScript.sh dist/crons/annotateDocumentsWithoutAnnotationsWithNlp.js &> /dev/null
+0 7 * * * ./scripts/runProdScript.sh dist/scripts/importAllDocumentsFromSderSince.js --days 7 &> /dev/null
+0 8 * * * ./scripts/runProdScript.sh dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js &> /dev/null
 
 # Exportation to SDER
-0 23 * * * ./scripts/runProdScript.sh dist/crons/annotateDocumentsWithoutAnnotationsWithNlp.js &> /dev/null
+0 23 * * * ./scripts/runProdScript.sh dist/scripts/exportTreatedDocuments.js &> /dev/null
 
 # Database maintenance
-0 * * * * ./scripts/runProdScript.sh dist/crons/freePendingDocuments.js &> /dev/null
+*/15 * * * * ./scripts/runProdScript.sh dist/scripts/freePendingDocuments.js --sinceMinutes 15 &> /dev/null

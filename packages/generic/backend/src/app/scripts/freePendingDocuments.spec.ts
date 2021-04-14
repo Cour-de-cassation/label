@@ -4,7 +4,7 @@ import { buildDocumentRepository } from '../../modules/document';
 import { freePendingDocuments } from './freePendingDocuments';
 
 describe('freePendingDocuments', () => {
-  it('should free all the document that are pending from more than 15 minutes', async () => {
+  it('should free all the document that are pending from more than the given minutes', async () => {
     const documentRepository = buildDocumentRepository();
     const documents = ([
       { status: 'pending', updateDate: dateBuilder.minutesAgo(16) },
@@ -15,7 +15,7 @@ describe('freePendingDocuments', () => {
     ] as const).map(documentModule.generator.generate);
     await Promise.all(documents.map(documentRepository.insert));
 
-    await freePendingDocuments();
+    await freePendingDocuments(15);
 
     const updatedDocument0 = await documentRepository.findById(
       documents[0]._id,

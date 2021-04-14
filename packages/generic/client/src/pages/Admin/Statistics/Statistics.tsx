@@ -1,10 +1,12 @@
 import React from 'react';
 import { apiRouteOutType } from '@label/core';
 import { aggregatedStatisticType, StatisticsBox } from './StatisticsBox';
+import { heights, widths } from '../../../styles';
 
 export { Statistics };
 
 function Statistics(props: { statistics: apiRouteOutType<'get', 'statistics'> }) {
+  const styles = buildStyles();
   const aggregatedStatistic = props.statistics.reduce(
     (accumulator, statistic) => ({
       addedAnnotationsCount: accumulator.addedAnnotationsCount + statistic.addedAnnotationsCount,
@@ -31,5 +33,32 @@ function Statistics(props: { statistics: apiRouteOutType<'get', 'statistics'> })
       wordsCount: 0,
     } as aggregatedStatisticType,
   );
-  return <StatisticsBox aggregatedStatistic={aggregatedStatistic} statisticsCount={props.statistics.length} />;
+  return (
+    <div style={styles.container}>
+      <div style={styles.header}></div>
+      <div style={styles.body}>
+        <StatisticsBox aggregatedStatistic={aggregatedStatistic} statisticsCount={props.statistics.length} />
+      </div>
+    </div>
+  );
+
+  function buildStyles() {
+    return {
+      container: {
+        display: 'flex',
+        flexDirection: 'column',
+      },
+      header: {
+        height: heights.statisticsHeaderHeight,
+        width: widths.adminContent,
+      },
+      body: {
+        height: heights.statisticsBodyHeight,
+        width: widths.adminContent,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    } as const;
+  }
 }

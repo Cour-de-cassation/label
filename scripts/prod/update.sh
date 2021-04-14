@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 echo "Check out prod version"
 git checkout prod

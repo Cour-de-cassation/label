@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 echo "Check out pre prod version"
 git checkout pre-prod

@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 cd packages/courDeCassation
 echo "Import the documents from SDER database"

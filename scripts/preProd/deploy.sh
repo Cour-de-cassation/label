@@ -1,4 +1,8 @@
 #!/bin/sh
+set -e
+
+echo "Update LABEL"
+yarn updatePreProd
 
 echo "Stop LABEL service"
 systemctl stop LabelServer

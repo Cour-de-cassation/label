@@ -1,5 +1,5 @@
 import { documentModule, documentType } from '@label/core';
-import { buildDocumentRepository } from '../../../modules/document';
+import { buildDocumentRepository } from '../../../../modules/document';
 import { renameDocumentIdToDocumentNumberInDocumentModel } from './renameDocumentIdToDocumentNumberInDocumentModel';
 
 describe('renameDocumentIdToDocumentNumberInDocumentModel', () => {

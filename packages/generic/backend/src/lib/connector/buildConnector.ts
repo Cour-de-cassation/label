@@ -8,6 +8,8 @@ export { buildConnector };
 function buildConnector(connectorConfig: connectorConfigType) {
   return {
     async importAllDocumentsSince(days: number) {
+      logger.log(`importAllDocumentsSince ${days}`);
+
       logger.log(`Fetching ${connectorConfig.name} documents...`);
       const documents = await connectorConfig.fetchAllDocumentsSince(days);
       logger.log(

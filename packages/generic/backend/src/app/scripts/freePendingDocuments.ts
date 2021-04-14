@@ -1,9 +1,11 @@
-import { dateBuilder, logger } from '../../utils';
 import { buildDocumentRepository } from '../../modules/document';
+import { dateBuilder, logger } from '../../utils';
 
 export { freePendingDocuments };
 
 async function freePendingDocuments(minutesBeforeFreeing: number) {
+  logger.log(`freePendingDocuments ${minutesBeforeFreeing}`);
+
   const documentRepository = buildDocumentRepository();
 
   logger.log('Fetching pending documents');

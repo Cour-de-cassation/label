@@ -1,15 +1,15 @@
 import { loggerType } from './loggerType';
-import { getFormattedDate } from './utils';
+import { prettyLogFormatter } from './prettyLogFormatter';
 
 export { localLogger };
 
 const localLogger: loggerType = {
   log(value) {
     // eslint-disable-next-line no-console
-    console.log(getFormattedDate(), JSON.stringify(value, null, 2));
+    console.log(prettyLogFormatter.formatLog(value));
   },
   error(errorText) {
     // eslint-disable-next-line no-console
-    console.error(getFormattedDate(), errorText);
+    console.error(prettyLogFormatter.formatErrorLog(errorText));
   },
 };

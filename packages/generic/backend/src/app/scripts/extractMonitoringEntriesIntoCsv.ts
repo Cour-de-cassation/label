@@ -10,6 +10,8 @@ async function extractMonitoringEntriesIntoCsv({
 }: {
   filename: string;
 }) {
+  logger.log(`extractMonitoringEntriesIntoCsv ${filename}`);
+
   const monitoringEntries = await monitoringEntryService.fetchAllMonitoringEntries();
   const csvContent = convertMonitoringEntriesToCsvContent(monitoringEntries);
   try {

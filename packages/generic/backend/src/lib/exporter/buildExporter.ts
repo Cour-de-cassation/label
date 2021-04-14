@@ -20,6 +20,7 @@ function buildExporter(
 ) {
   return {
     async exportTreatedDocuments() {
+      logger.log('exportTreatedDocuments');
       logger.log(`Exportation to ${exporterConfig.name}`);
 
       logger.log(`Fetching treated documents...`);

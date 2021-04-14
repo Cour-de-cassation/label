@@ -6,6 +6,7 @@ import { buildProblemReportRepository } from '../../modules/problemReport';
 import { buildStatisticRepository } from '../../modules/statistic';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildUserRepository } from '../../modules/user';
+import { logger } from '../../utils';
 
 export { clearDb };
 
@@ -28,6 +29,23 @@ async function clearDb({
   treatment?: boolean;
   user?: boolean;
 }) {
+  logger.log(
+    `clearDb ${JSON.stringify(
+      {
+        annotation,
+        assignation,
+        document,
+        monitoringEntry,
+        problemReport,
+        statistic,
+        treatment,
+        user,
+      },
+      null,
+      2,
+    )}`,
+  );
+
   const repositories = [
     {
       shouldClear: annotation,

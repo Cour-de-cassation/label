@@ -23,6 +23,8 @@ function buildAnnotator(
 
   return {
     async annotateDocumentsWithoutAnnotations() {
+      logger.log('annotateDocumentsWithoutAnnotations');
+
       const documentsToAnnotate = await documentService.fetchDocumentsWithoutAnnotations();
       await annotateDocuments(documentsToAnnotate);
     },

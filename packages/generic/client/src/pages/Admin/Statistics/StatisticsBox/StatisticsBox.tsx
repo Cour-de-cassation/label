@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { sumBy } from 'lodash';
-import { timeOperator, treatmentInfoType } from '@label/core';
+import { timeOperator } from '@label/core';
 import { Text } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -8,13 +7,23 @@ import { ComputationToggle, computationType } from './ComputationToggle';
 
 export { StatisticsBox };
 
+export type { aggregatedStatisticType };
+
 const HEIGHT = 75;
 
-function StatisticsBox(props: {
-  treatmentsInfo: Record<string, treatmentInfoType>;
-  totalDuration: number;
-  treatedDocumentsCount: number;
-}) {
+type aggregatedStatisticType = {
+  addedAnnotationsCount: number;
+  annotationsCount: number;
+  deletedAnnotationsCount: number;
+  linkedEntitiesCount: number;
+  modifiedAnnotationsCount: number;
+  resizedBiggerAnnotationsCount: number;
+  resizedSmallerAnnotationsCount: number;
+  treatmentDuration: number;
+  wordsCount: number;
+};
+
+function StatisticsBox(props: { aggregatedStatistic: aggregatedStatisticType; statisticsCount: number }) {
   const [computation, setComputation] = useState<computationType>('average');
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -46,28 +55,28 @@ function StatisticsBox(props: {
   );
 
   function buildStatisticsCells() {
-    const annotationStatistics = Object.values(props.treatmentsInfo);
+    const { aggregatedStatistic } = props;
 
     return [
       {
         title: wordings.treatedDocumentsPage.table.statistics.fields.surAnnotation,
-        value: getComputationValue(sumBy(annotationStatistics, ({ deletionsCount }) => deletionsCount)),
+        value: getComputationValue(aggregatedStatistic.deletedAnnotationsCount),
       },
       {
         title: wordings.treatedDocumentsPage.table.statistics.fields.resizeAnnotationSmaller,
-        value: getComputationValue(sumBy(annotationStatistics, ({ resizedSmallerCount }) => resizedSmallerCount)),
+        value: getComputationValue(aggregatedStatistic.resizedSmallerAnnotationsCount),
       },
       {
         title: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotation,
-        value: getComputationValue(sumBy(annotationStatistics, ({ additionsCount }) => additionsCount)),
+        value: getComputationValue(aggregatedStatistic.addedAnnotationsCount),
       },
       {
         title: wordings.treatedDocumentsPage.table.statistics.fields.resizeAnnotationBigger,
-        value: getComputationValue(sumBy(annotationStatistics, ({ resizedBiggerCount }) => resizedBiggerCount)),
+        value: getComputationValue(aggregatedStatistic.resizedBiggerAnnotationsCount),
       },
       {
         title: wordings.treatedDocumentsPage.table.statistics.fields.changeAnnotation,
-        value: getComputationValue(sumBy(annotationStatistics, ({ modificationsCount }) => modificationsCount)),
+        value: getComputationValue(aggregatedStatistic.modifiedAnnotationsCount),
       },
       {
         title: wordings.treatedDocumentsPage.table.statistics.fields.duration,
@@ -77,13 +86,15 @@ function StatisticsBox(props: {
   }
 
   function getReadableDuration() {
-    return timeOperator.convertDurationToReadableDuration(getComputationDuration(props.totalDuration));
+    return timeOperator.convertDurationToReadableDuration(
+      getComputationDuration(props.aggregatedStatistic.treatmentDuration),
+    );
   }
 
   function getComputationDuration(total: number) {
     switch (computation) {
       case 'average':
-        return props.treatedDocumentsCount ? Math.floor(total / props.treatedDocumentsCount) : 0;
+        return props.statisticsCount ? Math.floor(total / props.statisticsCount) : 0;
       case 'total':
         return total;
     }
@@ -92,7 +103,7 @@ function StatisticsBox(props: {
   function getComputationValue(total: number) {
     switch (computation) {
       case 'average':
-        return props.treatedDocumentsCount ? (total / props.treatedDocumentsCount).toFixed(2) : 0;
+        return props.statisticsCount ? (total / props.statisticsCount).toFixed(2) : 0;
       case 'total':
         return total;
     }

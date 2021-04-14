@@ -14,6 +14,7 @@ import { Home } from './Home';
 import { Login } from './Login';
 import { SpecialDocuments } from './SpecialDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
+import { Statistics } from './Admin/Statistics';
 
 export { Router };
 
@@ -32,6 +33,14 @@ function Router() {
               ).length;
               return (
                 <>
+                  <AuthenticatedRoute path="/admin/statistics">
+                    <AdminPage
+                      header={wordings.statisticsPage.header}
+                      unreadProblemReportsCount={unreadProblemReportsCount}
+                    >
+                      <Statistics statistics={adminInfos.statistics} />
+                    </AdminPage>
+                  </AuthenticatedRoute>
                   <AuthenticatedRoute path="/admin/agents">
                     <AdminPage
                       header={wordings.agentsPage.header}

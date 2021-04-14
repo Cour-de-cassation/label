@@ -179,6 +179,12 @@ const fr = {
       },
     },
   },
+  statisticsPage: {
+    header: {
+      title: 'Administration',
+      subtitle: 'Statistiques',
+    },
+  },
   treatedDocumentsPage: {
     header: {
       title: 'Administration',

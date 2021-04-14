@@ -7,7 +7,6 @@ import { customThemeType, heights, useCustomTheme, widths } from '../../../style
 import { wordings } from '../../../wordings';
 import { ExportCSVButton } from './ExportCSVButton';
 import { TreatedDocumentsFilters } from './TreatedDocumentsFilters';
-import { StatisticsBox } from './StatisticsBox';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
 
 export { TreatedDocuments };
@@ -25,32 +24,12 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
   const filteredTreatedDocuments = searchedDecisionNumber
     ? filterSearchedDecisions(props.treatedDocuments, searchedDecisionNumber)
     : getFilteredTreatedDocuments(props.treatedDocuments, summedTreatmentsInfo, filterValues);
-  const filteredDocumentIdsString = filteredTreatedDocuments.map((treatedDocument) =>
-    idModule.lib.convertToString(treatedDocument.document._id),
-  );
-  const filteredTreatmentsInfo = Object.entries(summedTreatmentsInfo).reduce(
-    (accumulator, [documentIdString, treatmentsInfo]) => {
-      if (filteredDocumentIdsString.includes(documentIdString)) {
-        return {
-          ...accumulator,
-          [documentIdString]: treatmentsInfo,
-        };
-      }
-      return accumulator;
-    },
-    {} as Record<string, treatmentInfoType>,
-  );
-
-  const totalDuration = sumBy(
-    flatten(filteredTreatedDocuments.map((treatedDocument) => treatedDocument.treatments)),
-    (treatment) => treatment.duration,
-  );
 
   return (
     <div style={styles.table}>
       <div style={styles.tableHeaderContainer}>
         <div style={styles.tableHeader}>
-          <div style={styles.leftHeaderContent}>
+          <div style={styles.headerContent}>
             <TreatedDocumentsFilters
               filterInfo={filterInfo}
               filterValues={filterValues}
@@ -58,13 +37,6 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
               resultsCount={filteredTreatedDocuments.length}
             />
             <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
-          </div>
-          <div style={styles.rightHeaderContent}>
-            <StatisticsBox
-              totalDuration={totalDuration}
-              treatedDocumentsCount={filteredTreatedDocuments.length}
-              treatmentsInfo={filteredTreatmentsInfo}
-            />
           </div>
         </div>
       </div>
@@ -299,8 +271,8 @@ function buildStyles(theme: customThemeType) {
       width: '100vw',
       height: heights.adminPanel,
     },
-    leftHeaderContent: {
-      flex: 3,
+    headerContent: {
+      flex: 1,
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',

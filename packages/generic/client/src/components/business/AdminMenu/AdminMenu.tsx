@@ -13,6 +13,7 @@ function AdminMenu(props: { unreadProblemReportsCount: number }) {
   return (
     <div style={styles.container}>
       <div style={styles.iconContainer}>
+        <MenuIcon title={wordings.statisticsPage.header.subtitle} pathname="/admin/statistics" iconName="home" />
         <MenuIcon
           title={wordings.untreatedDocumentsPage.header.subtitle}
           pathname="/admin/untreated-documents"

@@ -5,6 +5,7 @@ import { assignationService } from '../modules/assignation';
 import { documentService } from '../modules/document';
 import { monitoringEntryService } from '../modules/monitoringEntry';
 import { problemReportService } from '../modules/problemReport';
+import { statisticService } from '../modules/statistic';
 import { treatmentService } from '../modules/treatment';
 import { userService } from '../modules/user';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
@@ -67,6 +68,11 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     specialDocuments: buildAuthenticatedController({
       permissions: ['specialDocumentAnnotator'],
       controllerWithUser: async () => documentService.fetchSpecialDocuments(),
+    }),
+
+    statistics: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async () => statisticService.fetchAll(),
     }),
 
     treatedDocuments: buildAuthenticatedController({

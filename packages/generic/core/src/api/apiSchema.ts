@@ -8,6 +8,7 @@ import {
   settingsModule,
   treatmentModule,
   userModule,
+  statisticModule,
 } from '../modules';
 import { buildModel, modelType } from '../modules/modelType';
 
@@ -105,6 +106,9 @@ const apiSchema = {
         kind: 'array',
         content: documentModule.fetchedModel,
       } as const),
+    },
+    statistics: {
+      out: buildModel({ kind: 'array', content: statisticModule.model } as const),
     },
     treatedDocuments: {
       out: buildModel({

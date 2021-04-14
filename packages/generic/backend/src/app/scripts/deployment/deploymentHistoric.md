@@ -10,8 +10,11 @@ This document sums up the scripts run in pre-production and production
 - [x] addHasBeenReadInProblemReportModel
 - [x] addInfoInTreatment
 - [x] renameDocumentIdToDocumentNumberInDocumentModel
+- [ ] addDecisionMetadataInDocumentModel
 
 ## Production
+
+- [ ] addDecisionMetadataInDocumentModel
 
 # Use
 

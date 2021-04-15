@@ -1,12 +1,12 @@
 # Importation from SDER
-0 7 * * * ./scripts/runPreProdScript.sh dist/scripts/importAllDocumentsFromSderSince.js --days 7 &> /dev/null
-0 8 * * * ./scripts/runPreProdScript.sh dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js &> /dev/null
+0 7 * * * /home/label/git/label/packages/courDeCassation/scripts/runPreProdScript.sh /home/label/git/label/packages/courDeCassation/dist/scripts/importAllDocumentsFromSderSince.js --days 7 &> /dev/null
+0 8 * * * /home/label/git/label/packages/courDeCassation/scripts/runPreProdScript.sh /home/label/git/label/packages/courDeCassation/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js &> /dev/null
 
 # Exportation to SDER
-0 23 * * * ./scripts/runPreProdScript.sh dist/scripts/exportTreatedDocuments.js &> /dev/null
+0 23 * * * /home/label/git/label/packages/courDeCassation/scripts/runPreProdScript.sh /home/label/git/label/packages/courDeCassation/dist/scripts/exportTreatedDocuments.js &> /dev/null
 
 # Database maintenance
-*/15 * * * * ./scripts/runPreProdScript.sh dist/scripts/freePendingDocuments.js --sinceMinutes 15 &> /dev/null
+*/15 * * * * /home/label/git/label/packages/courDeCassation/scripts/runPreProdScript.sh /home/label/git/label/packages/courDeCassation/dist/scripts/freePendingDocuments.js --sinceMinutes 15 &> /dev/null
 
 # Re-initialize Pre Prod
-0 0 * * SUN ./crons/reinitializePreProd.sh &> /dev/null
+0 0 * * SUN /home/label/git/label/packages/courDeCassation/crons/reinitializePreProd.sh &> /dev/null

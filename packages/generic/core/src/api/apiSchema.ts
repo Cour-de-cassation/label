@@ -195,9 +195,21 @@ const apiSchema = {
         content: {
           kind: 'object',
           content: {
-            _id: documentModule.model.content._id,
-            documentNumber: documentModule.model.content.documentNumber,
-            publicationCategory: documentModule.model.content.publicationCategory,
+            document: {
+              kind: 'object',
+              content: {
+                _id: documentModule.model.content._id,
+                documentNumber: documentModule.model.content.documentNumber,
+                publicationCategory: documentModule.model.content.publicationCategory,
+              },
+            },
+            userName: {
+              kind: 'or',
+              content: [
+                { kind: 'primitive', content: 'string' },
+                { kind: 'primitive', content: 'undefined' },
+              ],
+            },
           },
         },
       } as const),

@@ -262,6 +262,7 @@ const fr = {
       columnTitles: {
         number: 'N° décision',
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
+        userName: 'Attribué à',
       },
       filter: {
         resultsCount: '{count} décisions affichées',

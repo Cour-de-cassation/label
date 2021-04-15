@@ -50,7 +50,10 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
     return untreatedDocuments.filter((untreatedDocument) => {
       return keysOf(filterValues).reduce((accumulator, currentFilterKey) => {
         if (currentFilterKey === 'publicationCategoryLetter' && !!filterValues.publicationCategoryLetter) {
-          return accumulator && untreatedDocument.publicationCategory.includes(filterValues.publicationCategoryLetter);
+          return (
+            accumulator &&
+            untreatedDocument.document.publicationCategory.includes(filterValues.publicationCategoryLetter)
+          );
         }
         return accumulator;
       }, true as boolean);
@@ -62,13 +65,13 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
     searchedDecisionNumber: number,
   ) {
     return untreatedDocuments.filter((untreatedDocument) =>
-      untreatedDocument.documentNumber.toString().includes(searchedDecisionNumber.toString()),
+      untreatedDocument.document.documentNumber.toString().includes(searchedDecisionNumber.toString()),
     );
   }
 
   function extractFilterInfoFromDocuments(untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>) {
     const publicationCategoryLetters = uniq(
-      flatten(untreatedDocuments.map((untreatedDocuments) => untreatedDocuments.publicationCategory)),
+      flatten(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.publicationCategory)),
     );
     return { publicationCategoryLetters };
   }
@@ -79,7 +82,7 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
         id: 'documentNumber',
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
-        extractor: (untreatedDocument) => untreatedDocument.documentNumber,
+        extractor: (untreatedDocument) => untreatedDocument.document.documentNumber,
         width: 10,
       },
       {
@@ -87,10 +90,10 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
         title: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.title,
         tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
-        extractor: (untreatedDocument) => untreatedDocument.publicationCategory.join(','),
+        extractor: (untreatedDocument) => untreatedDocument.document.publicationCategory.join(','),
         render: (untreatedDocument) => (
           <div style={styles.publicationCategoryBadgesContainer}>
-            {untreatedDocument.publicationCategory.map((publicationCategoryLetter) => (
+            {untreatedDocument.document.publicationCategory.map((publicationCategoryLetter) => (
               <div style={styles.publicationCategoryBadgeContainer}>
                 <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
               </div>
@@ -98,6 +101,13 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
           </div>
         ),
         width: 10,
+      },
+      {
+        id: 'userName',
+        title: wordings.untreatedDocumentsPage.table.columnTitles.userName,
+        canBeSorted: true,
+        width: 10,
+        extractor: (untreatedDocument) => untreatedDocument.userName || '-',
       },
     ];
     return untreatedDocumentsFields;

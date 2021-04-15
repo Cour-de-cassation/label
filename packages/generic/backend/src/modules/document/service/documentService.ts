@@ -151,10 +151,37 @@ function buildDocumentService() {
     const documentRepository = buildDocumentRepository();
     const untreatedDocuments = await documentRepository.findAllByStatusProjection(
       ['free', 'pending', 'saved'],
-      ['_id', 'documentNumber', 'publicationCategory'],
+      ['_id', 'documentNumber', 'publicationCategory', 'status'],
     );
-
-    return untreatedDocuments;
+    const assignedDocumentIds = untreatedDocuments
+      .filter(
+        (document) =>
+          document.status === 'pending' || document.status === 'saved',
+      )
+      .map((document) => document._id);
+    const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
+      assignedDocumentIds,
+    );
+    const usersByAssignationId = await userService.fetchUsersByAssignationId(
+      assignationsByDocumentId,
+    );
+    return untreatedDocuments.map((untreatedDocument) => {
+      const assignation =
+        assignationsByDocumentId[
+          idModule.lib.convertToString(untreatedDocument._id)
+        ];
+      const user =
+        assignation &&
+        usersByAssignationId[idModule.lib.convertToString(assignation._id)];
+      return {
+        document: {
+          _id: untreatedDocument._id,
+          publicationCategory: untreatedDocument.publicationCategory,
+          documentNumber: untreatedDocument.documentNumber,
+        },
+        userName: user ? user.name : undefined,
+      };
+    });
   }
 
   async function fetchDocumentsReadyToExport(

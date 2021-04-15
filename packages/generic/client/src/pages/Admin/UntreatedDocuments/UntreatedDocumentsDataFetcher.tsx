@@ -27,7 +27,10 @@ function buildFetchUntreatedDocuments() {
     return {
       data: untreatedDocuments.map((untreatedDocument) => ({
         ...untreatedDocument,
-        _id: idModule.lib.buildId(untreatedDocument._id),
+        document: {
+          ...untreatedDocument.document,
+          _id: idModule.lib.buildId(untreatedDocument.document._id),
+        },
       })),
       statusCode,
     };

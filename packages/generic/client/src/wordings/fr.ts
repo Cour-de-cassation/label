@@ -151,6 +151,7 @@ const fr = {
     copyToClipboard: 'Copier dans le presse-papier',
     logout: 'Se déconnecter',
     moreOptions: "Plus d'options",
+    passwordChangedConfirmation: { text: 'Votre mot de passe a été modifié.', button: 'OK' },
   },
   loadingPage: 'Veuillez patienter...',
   problemReportsPage: {

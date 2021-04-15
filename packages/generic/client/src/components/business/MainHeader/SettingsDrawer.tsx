@@ -5,6 +5,7 @@ import { localStorage } from '../../../services/localStorage';
 import { useCustomTheme, customThemeType, useDisplayMode } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ButtonWithIcon, Drawer, IconButton, RadioButton, Text, RichTextInput } from '../../generic';
+import { PasswordChangeConfirmationPopup } from './PasswordChangeConfirmationPopup';
 import { SettingsSection } from './SettingsSection';
 
 export { SettingsDrawer };
@@ -21,103 +22,109 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
   const [newPassword, setNewPassword] = useState('');
   const [confirmedNewPassword, setConfirmedNewPassword] = useState('');
   const [passwordChangeValidity, setPasswordChangeValidity] = useState<passwordChangeValidityType>('valid');
+  const [isPasswordConfirmationPopupShown, setIsPasswordConfirmationPopupShown] = useState(false);
 
   const userEmail = localStorage.userHandler.getEmail();
   const userName = localStorage.userHandler.getName();
 
   return (
-    <Drawer onClose={props.close} isOpen={props.isOpen}>
-      <div style={styles.drawer}>
-        <div style={styles.header}>
-          <div>
-            <Text variant="h1">{wordings.homePage.settings}</Text>
-          </div>
-          <div>
-            <IconButton hint={wordings.homePage.cancel} onClick={props.close} iconName="close" />
-          </div>
-        </div>
-
-        <SettingsSection
-          content={
-            <div style={styles.accountSectionContent}>
-              <div style={styles.accountInfoContainer}>
-                <Text variant="h2" weight="bold">
-                  {userName}
-                </Text>
-                <Text variant="body1">{userEmail}</Text>
-              </div>
-              <ButtonWithIcon iconName="logout" color="default" onClick={logout} text={wordings.shared.logout} />
+    <>
+      {isPasswordConfirmationPopupShown && (
+        <PasswordChangeConfirmationPopup onClose={() => setIsPasswordConfirmationPopupShown(false)} />
+      )}
+      <Drawer onClose={props.close} isOpen={props.isOpen}>
+        <div style={styles.drawer}>
+          <div style={styles.header}>
+            <div>
+              <Text variant="h1">{wordings.homePage.settings}</Text>
             </div>
-          }
-          title={wordings.business.account}
-        />
+            <div>
+              <IconButton hint={wordings.homePage.cancel} onClick={props.close} iconName="close" />
+            </div>
+          </div>
 
-        <SettingsSection
-          content={
-            <>
-              <RadioButton
-                label={wordings.homePage.lightMode}
-                isChecked={displayMode === 'lightMode'}
-                onClick={() => setDisplayMode('lightMode')}
-              />
-              <RadioButton
-                label={wordings.homePage.darkMode}
-                isChecked={displayMode === 'darkMode'}
-                onClick={() => setDisplayMode('darkMode')}
-              />
-            </>
-          }
-          title={wordings.homePage.displayMode}
-        />
-
-        <SettingsSection
-          content={
-            <>
-              <RichTextInput
-                error={shouldShowErrorForPreviousPassword()}
-                errorText={wordings.business.wrongPassword}
-                name="previousPassword"
-                onChange={setPreviousPassword}
-                placeholder={wordings.business.previousPassword}
-                style={styles.passwordTextInput}
-                type="password"
-                value={previousPassword}
-              />
-              <RichTextInput
-                error={shouldShowErrorForNewPassword()}
-                errorText={computeErrorMessageForNewPassword()}
-                helperText={wordings.business.newPasswordInstructions}
-                name="newPassword"
-                onChange={setNewPassword}
-                placeholder={wordings.business.newPassword}
-                style={styles.passwordTextInput}
-                type="password"
-                value={newPassword}
-              />
-              <RichTextInput
-                error={shouldShowErrorForNewPassword()}
-                errorText={computeErrorMessageForNewPassword()}
-                name="confirmedNewPassword"
-                onChange={setConfirmedNewPassword}
-                placeholder={wordings.business.confirmPassword}
-                style={styles.passwordTextInput}
-                type="password"
-                value={confirmedNewPassword}
-              />
-              <div style={styles.passwordUpdateButtonContainer}>
-                <ButtonWithIcon
-                  iconName="reset"
-                  color="default"
-                  onClick={updatePassword}
-                  text={wordings.business.update}
-                />
+          <SettingsSection
+            content={
+              <div style={styles.accountSectionContent}>
+                <div style={styles.accountInfoContainer}>
+                  <Text variant="h2" weight="bold">
+                    {userName}
+                  </Text>
+                  <Text variant="body1">{userEmail}</Text>
+                </div>
+                <ButtonWithIcon iconName="logout" color="default" onClick={logout} text={wordings.shared.logout} />
               </div>
-            </>
-          }
-          title={wordings.business.changePassword}
-        />
-      </div>
-    </Drawer>
+            }
+            title={wordings.business.account}
+          />
+
+          <SettingsSection
+            content={
+              <>
+                <RadioButton
+                  label={wordings.homePage.lightMode}
+                  isChecked={displayMode === 'lightMode'}
+                  onClick={() => setDisplayMode('lightMode')}
+                />
+                <RadioButton
+                  label={wordings.homePage.darkMode}
+                  isChecked={displayMode === 'darkMode'}
+                  onClick={() => setDisplayMode('darkMode')}
+                />
+              </>
+            }
+            title={wordings.homePage.displayMode}
+          />
+
+          <SettingsSection
+            content={
+              <>
+                <RichTextInput
+                  error={shouldShowErrorForPreviousPassword()}
+                  errorText={wordings.business.wrongPassword}
+                  name="previousPassword"
+                  onChange={setPreviousPassword}
+                  placeholder={wordings.business.previousPassword}
+                  style={styles.passwordTextInput}
+                  type="password"
+                  value={previousPassword}
+                />
+                <RichTextInput
+                  error={shouldShowErrorForNewPassword()}
+                  errorText={computeErrorMessageForNewPassword()}
+                  helperText={wordings.business.newPasswordInstructions}
+                  name="newPassword"
+                  onChange={setNewPassword}
+                  placeholder={wordings.business.newPassword}
+                  style={styles.passwordTextInput}
+                  type="password"
+                  value={newPassword}
+                />
+                <RichTextInput
+                  error={shouldShowErrorForNewPassword()}
+                  errorText={computeErrorMessageForNewPassword()}
+                  name="confirmedNewPassword"
+                  onChange={setConfirmedNewPassword}
+                  placeholder={wordings.business.confirmPassword}
+                  style={styles.passwordTextInput}
+                  type="password"
+                  value={confirmedNewPassword}
+                />
+                <div style={styles.passwordUpdateButtonContainer}>
+                  <ButtonWithIcon
+                    iconName="reset"
+                    color="default"
+                    onClick={updatePassword}
+                    text={wordings.business.update}
+                  />
+                </div>
+              </>
+            }
+            title={wordings.business.changePassword}
+          />
+        </div>
+      </Drawer>
+    </>
   );
 
   function logout() {
@@ -142,6 +149,8 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
         setNewPassword('');
         setConfirmedNewPassword('');
         setPasswordChangeValidity('valid');
+        setIsPasswordConfirmationPopupShown(true);
+        props.close();
         break;
       case 'wrongPassword':
         setPasswordChangeValidity('wrongPassword');

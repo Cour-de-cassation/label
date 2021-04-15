@@ -23,7 +23,7 @@ async function freePendingDocuments(minutesBeforeFreeing: number) {
     logger.log(
       `Freeing document ${index + 1}/${pendingDocumentsToFree.length}`,
     );
-    documentRepository.updateStatusById(
+    await documentRepository.updateStatusById(
       pendingDocumentsToFree[index]._id,
       'free',
     );

@@ -9,7 +9,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
   await backend.runScript(
     () => backend.scripts.freePendingDocuments.run(sinceMinutes),
-    backend.scripts.insertUser.option,
+    backend.scripts.freePendingDocuments.option,
   );
 })();
 

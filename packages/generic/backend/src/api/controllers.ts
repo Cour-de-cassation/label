@@ -156,6 +156,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    resetPassword: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { userId } }) =>
+        userService.resetPassword(idModule.lib.buildId(userId)),
+    }),
+
     updateAssignationDocumentStatus: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { assignationId, status } }) => {

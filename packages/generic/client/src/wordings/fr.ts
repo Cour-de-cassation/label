@@ -28,6 +28,15 @@ const fr = {
         email: 'E-mail',
         role: 'Habilitation',
       },
+      optionItems: {
+        resetPassword: 'Réinitialiser le mot de passe',
+      },
+      passwordResetPopup: {
+        passwordResetConfirmation: 'Le mot de passe a bien été réinitialisé',
+        passwordIndication:
+          'Veuillez noter et lui transmettre son nouveau mot de passe ci-après. Ce mot de passe doit être changé dès la première connexion afin d’assurer la sécurité du système.',
+        button: "C'est noté",
+      },
       roles: {
         admin: 'Administrateur',
         annotator: 'Annotateur',

@@ -46,6 +46,7 @@ import {
   PlaylistAddCheckRounded,
   PlaylistPlayRounded,
   PowerSettingsNewRounded,
+  PriorityHighRounded,
   PublicRounded,
   QuestionAnswerRounded,
   RedoRounded,
@@ -72,6 +73,7 @@ export type { iconNameType };
 const materialIconMapping = {
   addPerson: PersonAddRounded,
   admin: SupervisorAccountRounded,
+  alert: PriorityHighRounded,
   arrowDown: ExpandMoreRounded,
   arrowLeft: ChevronLeftRounded,
   arrowRight: ChevronRightRounded,

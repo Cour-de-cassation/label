@@ -23,9 +23,9 @@ const buildUserRepository = buildRepositoryBuilder<
       }
       return result;
     },
-    async updateHashedPassword(user, hashedPassword) {
+    async updateHashedPassword(userId, hashedPassword) {
       const { result } = await collection.updateOne(
-        { _id: user._id },
+        { _id: userId },
         { $set: { hashedPassword } },
       );
       return {

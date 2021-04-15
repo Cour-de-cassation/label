@@ -270,6 +270,18 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
+    resetPassword: {
+      in: {
+        userId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'string',
+      } as const),
+    },
     updateAssignationDocumentStatus: {
       in: {
         assignationId: buildModel({

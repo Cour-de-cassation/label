@@ -33,6 +33,7 @@ function buildUserService() {
     fetchUsersByAssignationId,
     fetchUsersWithDetails,
     login,
+    resetPassword,
     signUpUser,
   };
 
@@ -72,7 +73,7 @@ function buildUserService() {
       return 'notValidNewPassword';
     } else {
       await userRepository.updateHashedPassword(
-        user,
+        user._id,
         await userModule.lib.computeHashedPassword(newPassword),
       );
 
@@ -135,6 +136,24 @@ function buildUserService() {
       role: user.role,
       token,
     };
+  }
+
+  async function resetPassword(userId: userType['_id']) {
+    const userRepository = buildUserRepository();
+    const password = userModule.lib.generatePassword();
+    const hashedPassword = await userModule.lib.computeHashedPassword(password);
+    const { success } = await userRepository.updateHashedPassword(
+      userId,
+      hashedPassword,
+    );
+
+    if (!success) {
+      throw errorHandlers.notFoundErrorHandler.build(
+        `No user found for id ${userId}`,
+      );
+    }
+
+    return password;
   }
 
   async function signUpUser({

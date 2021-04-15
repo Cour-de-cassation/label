@@ -17,14 +17,15 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
       }
       return result;
     },
-    async updateHashedPassword(user, hashedPassword) {
-      const storedUserIndex = collection.findIndex(
-        ({ _id }) => _id === user._id,
-      );
+    async updateHashedPassword(userId, hashedPassword) {
+      const storedUserIndex = collection.findIndex(({ _id }) => _id === userId);
       if (storedUserIndex === -1) {
         return { success: false };
       }
-      collection[storedUserIndex] = { ...user, hashedPassword };
+      collection[storedUserIndex] = {
+        ...collection[storedUserIndex],
+        hashedPassword,
+      };
       return { success: true };
     },
   }),

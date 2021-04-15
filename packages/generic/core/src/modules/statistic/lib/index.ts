@@ -1,3 +1,4 @@
+import { aggregate } from './aggregate';
 import { buildStatistic } from './buildStatistic';
 
-export { buildStatistic };
+export { aggregate, buildStatistic };

@@ -8,6 +8,7 @@ import {
   settingsModule,
   treatmentModule,
   userModule,
+  ressourceFilterModule,
   statisticModule,
 } from '../modules';
 import { buildModel, modelType } from '../modules/modelType';
@@ -18,6 +19,47 @@ export type { apiSchemaType, apiSchemaMethodNameType, apiSchemaMethodType, apiSc
 
 const apiSchema = {
   get: {
+    aggregatedStatistics: {
+      in: {
+        ressourceFilter: ressourceFilterModule.model,
+      },
+      out: buildModel({
+        kind: 'object',
+        content: {
+          perAssignation: {
+            kind: 'object',
+            content: {
+              cumulatedValue: {
+                kind: 'object',
+                content: {
+                  addedAnnotationsCount: statisticModule.model.content.addedAnnotationsCount,
+                  deletedAnnotationsCount: statisticModule.model.content.deletedAnnotationsCount,
+                  linkedEntitiesCount: statisticModule.model.content.linkedEntitiesCount,
+                  modifiedAnnotationsCount: statisticModule.model.content.modifiedAnnotationsCount,
+                  resizedBiggerAnnotationsCount: statisticModule.model.content.resizedBiggerAnnotationsCount,
+                  resizedSmallerAnnotationsCount: statisticModule.model.content.resizedSmallerAnnotationsCount,
+                  treatmentDuration: statisticModule.model.content.treatmentDuration,
+                },
+              },
+              total: { kind: 'primitive', content: 'number' },
+            },
+          },
+          perDocument: {
+            kind: 'object',
+            content: {
+              cumulatedValue: {
+                kind: 'object',
+                content: {
+                  annotationsCount: statisticModule.model.content.annotationsCount,
+                  wordsCount: statisticModule.model.content.wordsCount,
+                },
+              },
+              total: { kind: 'primitive', content: 'number' },
+            },
+          },
+        },
+      } as const),
+    },
     annotationReport: {
       in: {
         documentId: buildModel({
@@ -106,9 +148,6 @@ const apiSchema = {
         kind: 'array',
         content: documentModule.fetchedModel,
       } as const),
-    },
-    statistics: {
-      out: buildModel({ kind: 'array', content: statisticModule.model } as const),
     },
     treatedDocuments: {
       out: buildModel({

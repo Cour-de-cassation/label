@@ -3,6 +3,7 @@ import { annotationReportModule, annotationReportType } from './annotationReport
 import { annotationsDiffModule, annotationsDiffType } from './annotationsDiff';
 import { assignationModule, assignationType } from './assignation';
 import { documentModule, documentType, fetchedDocumentType } from './document';
+import { ressourceFilterModule, ressourceFilterType } from './ressourceFilter';
 import { idModule, idType } from './id';
 import { fetchedMonitoringEntryType, monitoringEntryModule, monitoringEntryType } from './monitoringEntry';
 import { problemReportModule, problemReportType } from './problemReport';
@@ -25,6 +26,7 @@ export {
   annotationsDiffModule,
   assignationModule,
   documentModule,
+  ressourceFilterModule,
   idModule,
   monitoringEntryModule,
   problemReportModule,
@@ -47,6 +49,7 @@ export type {
   displayModeType,
   documentType,
   fetchedDocumentType,
+  ressourceFilterType,
   idType,
   fetchedMonitoringEntryType,
   monitoringEntryType,

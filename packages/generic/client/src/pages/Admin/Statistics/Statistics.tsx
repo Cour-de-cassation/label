@@ -1,43 +1,35 @@
 import React from 'react';
 import { apiRouteOutType } from '@label/core';
-import { aggregatedStatisticType, StatisticsBox } from './StatisticsBox';
+import { StatisticsBox } from './StatisticsBox';
 import { heights, widths } from '../../../styles';
 
 export { Statistics };
 
-function Statistics(props: { statistics: apiRouteOutType<'get', 'statistics'> }) {
+function Statistics(props: { aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'> }) {
   const styles = buildStyles();
-  const aggregatedStatistic = props.statistics.reduce(
-    (accumulator, statistic) => ({
-      addedAnnotationsCount: accumulator.addedAnnotationsCount + statistic.addedAnnotationsCount,
-      annotationsCount: accumulator.annotationsCount + statistic.annotationsCount,
-      deletedAnnotationsCount: accumulator.deletedAnnotationsCount + statistic.deletedAnnotationsCount,
-      linkedEntitiesCount: accumulator.linkedEntitiesCount + statistic.linkedEntitiesCount,
-      modifiedAnnotationsCount: accumulator.modifiedAnnotationsCount + statistic.modifiedAnnotationsCount,
-      resizedBiggerAnnotationsCount:
-        accumulator.resizedBiggerAnnotationsCount + statistic.resizedBiggerAnnotationsCount,
-      resizedSmallerAnnotationsCount:
-        accumulator.resizedSmallerAnnotationsCount + statistic.resizedSmallerAnnotationsCount,
-      treatmentDuration: accumulator.treatmentDuration + statistic.treatmentDuration,
-      wordsCount: accumulator.wordsCount + statistic.wordsCount,
-    }),
-    {
-      addedAnnotationsCount: 0,
-      annotationsCount: 0,
-      deletedAnnotationsCount: 0,
-      linkedEntitiesCount: 0,
-      modifiedAnnotationsCount: 0,
-      resizedBiggerAnnotationsCount: 0,
-      resizedSmallerAnnotationsCount: 0,
-      treatmentDuration: 0,
-      wordsCount: 0,
-    } as aggregatedStatisticType,
-  );
+
+  const aggregatedStatistics = {
+    addedAnnotationsCount: props.aggregatedStatistics.perAssignation.cumulatedValue.addedAnnotationsCount,
+    annotationsCount: props.aggregatedStatistics.perDocument.cumulatedValue.annotationsCount,
+    deletedAnnotationsCount: props.aggregatedStatistics.perAssignation.cumulatedValue.deletedAnnotationsCount,
+    linkedEntitiesCount: props.aggregatedStatistics.perAssignation.cumulatedValue.linkedEntitiesCount,
+    modifiedAnnotationsCount: props.aggregatedStatistics.perAssignation.cumulatedValue.modifiedAnnotationsCount,
+    resizedBiggerAnnotationsCount:
+      props.aggregatedStatistics.perAssignation.cumulatedValue.resizedBiggerAnnotationsCount,
+    resizedSmallerAnnotationsCount:
+      props.aggregatedStatistics.perAssignation.cumulatedValue.resizedSmallerAnnotationsCount,
+    treatmentDuration: props.aggregatedStatistics.perAssignation.cumulatedValue.treatmentDuration,
+    wordsCount: props.aggregatedStatistics.perDocument.cumulatedValue.wordsCount,
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.header}></div>
       <div style={styles.body}>
-        <StatisticsBox aggregatedStatistic={aggregatedStatistic} statisticsCount={props.statistics.length} />
+        <StatisticsBox
+          aggregatedStatistic={aggregatedStatistics}
+          statisticsCount={props.aggregatedStatistics.perAssignation.total}
+        />
       </div>
     </div>
   );

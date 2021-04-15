@@ -15,6 +15,17 @@ export { controllers };
 
 const controllers: controllersFromSchemaType<typeof apiSchema> = {
   get: {
+    aggregatedStatistics: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { ressourceFilter } }) =>
+        statisticService.fetchAccordingToFilter({
+          userId:
+            ressourceFilter.userId !== undefined
+              ? idModule.lib.buildId(ressourceFilter.userId)
+              : undefined,
+        }),
+    }),
+
     annotationReport: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
@@ -68,11 +79,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     specialDocuments: buildAuthenticatedController({
       permissions: ['specialDocumentAnnotator'],
       controllerWithUser: async () => documentService.fetchSpecialDocuments(),
-    }),
-
-    statistics: buildAuthenticatedController({
-      permissions: ['admin'],
-      controllerWithUser: async () => statisticService.fetchAll(),
     }),
 
     treatedDocuments: buildAuthenticatedController({

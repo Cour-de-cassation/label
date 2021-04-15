@@ -38,7 +38,7 @@ function Router() {
                       header={wordings.statisticsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
                     >
-                      <Statistics statistics={adminInfos.statistics} />
+                      <Statistics aggregatedStatistics={adminInfos.aggregatedStatistics} />
                     </AdminPage>
                   </AuthenticatedRoute>
                   <AuthenticatedRoute path="/admin/agents">

@@ -20,6 +20,7 @@ type modelType =
   | modelCasePrimitiveType
   | modelCaseConstantType
   | modelCaseCustomType
+  | modelCaseOrType
   | modelCaseObjectType
   | modelCaseArrayType;
 
@@ -38,6 +39,8 @@ type modelCaseCustomType = {
   content: string;
 };
 
+type modelCaseOrType = { kind: 'or'; content: Readonly<[modelOrEntryType, modelOrEntryType]> };
+
 type modelCaseObjectType = {
   kind: 'object';
   content: modelObjectType;
@@ -52,6 +55,8 @@ type modelPrimitiveType = 'boolean' | 'date' | 'number' | 'string' | 'undefined'
 
 type modelConstantType = readonly string[];
 
+type modelOrEntryType = modelCasePrimitiveType | modelCaseConstantType | modelCaseCustomType;
+
 type modelObjectType = { [key in string]: modelType };
 
 /* eslint-disable @typescript-eslint/ban-types */
@@ -64,6 +69,8 @@ type buildType<
   ? buildConstantType<modelT['content']>
   : modelT extends modelCaseCustomType
   ? customMappingT[modelT['content']]
+  : modelT extends modelCaseOrType
+  ? buildOrEntryType<modelT['content'][0], customMappingT> | buildOrEntryType<modelT['content'][1], customMappingT>
   : modelT extends modelCaseObjectType
   ? {
       [key in keyof modelT['content']]: buildType<modelT['content'][key], customMappingT>;
@@ -87,6 +94,17 @@ type buildPrimitiveType<modelPrimitiveT extends modelPrimitiveType> = modelPrimi
   : never;
 
 type buildConstantType<modelConstantT extends modelConstantType> = modelConstantT[number];
+
+type buildOrEntryType<
+  modelOrEntryT extends modelOrEntryType,
+  customMappingT extends customMappingType = {}
+> = modelOrEntryT extends modelCasePrimitiveType
+  ? buildPrimitiveType<modelOrEntryT['content']>
+  : modelOrEntryT extends modelCaseConstantType
+  ? buildConstantType<modelOrEntryT['content']>
+  : modelOrEntryT extends modelCaseCustomType
+  ? customMappingT[modelOrEntryT['content']]
+  : never;
 
 type customMappingType = { [typeName: string]: any };
 

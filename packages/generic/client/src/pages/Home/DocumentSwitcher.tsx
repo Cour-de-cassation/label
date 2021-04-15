@@ -6,6 +6,7 @@ import {
   settingsType,
   annotationsDiffType,
   idModule,
+  documentType,
 } from '@label/core';
 import { MainHeader, PublicationCategoryBadge, Text } from '../../components';
 import { apiCaller } from '../../api';
@@ -32,7 +33,7 @@ function DocumentSwitcher(props: {
   settings: settingsType;
 }) {
   const [documentState, setDocumentState] = useState<documentStateType>(computeInitialDocumentState());
-  const { resetMonitoringEntries } = useMonitoring();
+  const { resetMonitoringEntries, sendMonitoringEntries } = useMonitoring();
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -64,7 +65,9 @@ function DocumentSwitcher(props: {
               }}
             >
               <MainHeader title={documentState.choice.document.title} subtitle={subtitle} />
-              <DocumentAnnotator onStopAnnotatingDocument={onStopAnnotatingDocument} />
+              <DocumentAnnotator
+                onStopAnnotatingDocument={() => onStopAnnotatingDocument(documentState.choice.document._id)}
+              />
             </AnnotatorStateHandlerContextProvider>
           </MonitoringEntriesHandlerContextProvider>
         );
@@ -105,9 +108,24 @@ function DocumentSwitcher(props: {
     }
   }
 
-  function onStopAnnotatingDocument() {
+  async function onStopAnnotatingDocument(documentId: documentType['_id']) {
+    await applyAutoSave(documentId, { before: [], after: [] });
+    await sendMonitoringEntries();
+    await setDocumentStatusDone(documentId);
     resetMonitoringEntries();
     props.fetchNewDocumentsForUser();
+  }
+
+  async function setDocumentStatusDone(documentId: documentType['_id']) {
+    try {
+      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        documentId,
+        status: 'done',
+      });
+      return;
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {

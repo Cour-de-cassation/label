@@ -12,7 +12,7 @@ import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
 
 export { DocumentAnnotator };
 
-function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => void }): ReactElement {
+function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<void> }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
   useKeyboardShortcutsHandler([

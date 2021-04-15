@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { documentType } from '@label/core';
-import { apiCaller } from '../../../api';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { useMonitoring } from '../../../services/monitoring';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
@@ -10,11 +8,11 @@ import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorFooter };
 
-function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => void }) {
+function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promise<void> }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const [isValidating, setIsValidating] = useState(false);
-  const { addMonitoringEntry, sendMonitoringEntries } = useMonitoring();
+  const { addMonitoringEntry } = useMonitoring();
 
   const styles = buildStyles(theme);
   const annotatorState = annotatorStateHandler.get();
@@ -109,23 +107,9 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => void 
         origin: 'footer',
         action: 'validate_document',
       });
-      await saveAnnotationsAndUpdateAssignationStatus('done');
-      await sendMonitoringEntries();
-      props.onStopAnnotatingDocument && props.onStopAnnotatingDocument();
+      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument());
     } finally {
       setIsValidating(false);
-    }
-  }
-
-  async function saveAnnotationsAndUpdateAssignationStatus(status: documentType['status']) {
-    try {
-      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-        documentId: annotatorState.document._id,
-        status,
-      });
-      return;
-    } catch (error) {
-      console.warn(error);
     }
   }
 }

@@ -2,7 +2,7 @@ import React, { ChangeEvent, CSSProperties, ReactElement } from 'react';
 import { makeStyles, TextField } from '@material-ui/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 
-export { RichTextInput, buildInputClasses };
+export { RichTextInput };
 
 function RichTextInput(props: {
   name: string;
@@ -16,6 +16,7 @@ function RichTextInput(props: {
   size?: number;
   style?: CSSProperties;
   type?: React.InputHTMLAttributes<unknown>['type'];
+  width?: number;
 }): ReactElement {
   const theme = useCustomTheme();
   const inputClasses = buildInputClasses(theme);
@@ -40,13 +41,13 @@ function RichTextInput(props: {
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     return props.onChange(event.target.value);
   }
-}
-
-function buildInputClasses(theme: customThemeType) {
-  return makeStyles({
-    notchedOutline: {
-      borderWidth: 2,
-      borderColor: theme.colors.line.level2,
-    },
-  })();
+  function buildInputClasses(theme: customThemeType) {
+    return makeStyles({
+      notchedOutline: {
+        borderWidth: 2,
+        borderColor: theme.colors.line.level2,
+      },
+      root: { width: props.width },
+    })();
+  }
 }

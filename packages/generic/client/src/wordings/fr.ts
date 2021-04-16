@@ -106,7 +106,6 @@ const fr = {
       start: 'Commencer',
       unknownJuridiction: 'Juridiction non précisée',
     },
-    enterYourText: 'Saisissez votre texte...',
     identicalOccurrencesSpotted: 'occurence(s) identique(s) détectée(s)',
     lightMode: 'Mode lumineux',
     link: 'Créer une liaison',

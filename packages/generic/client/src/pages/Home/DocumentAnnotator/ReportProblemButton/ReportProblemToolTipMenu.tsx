@@ -1,14 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { problemReportType } from '@label/core';
 import { apiCaller } from '../../../../api';
-import {
-  ButtonWithIcon,
-  Checkbox,
-  FloatingTooltipMenu,
-  LabelledDropdown,
-  Text,
-  RichTextInput,
-} from '../../../../components';
+import { ButtonWithIcon, Checkbox, FloatingTooltipMenu, LabelledDropdown, RichTextInput } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { positionType } from '../../../../types';
@@ -16,8 +9,8 @@ import { wordings } from '../../../../wordings';
 
 export { ReportProblemToolTipMenu };
 
-const REPORT_PROBLEM_TOOLTIP_MENU_WIDTH = 400;
-const REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH = 350;
+const REPORT_PROBLEM_TOOLTIP_MENU_WIDTH = 888;
+const REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH = 400;
 
 function ReportProblemToolTipMenu(props: {
   onClose: () => void;
@@ -41,54 +34,50 @@ function ReportProblemToolTipMenu(props: {
       onClose={props.onClose}
       width={REPORT_PROBLEM_TOOLTIP_MENU_WIDTH}
     >
-      <div>
-        <div style={styles.tooltipItem}>
-          <LabelledDropdown<problemReportType['type']>
-            error={isSentWithoutCategory}
-            items={problemCategories.map((problemCategory) => ({
-              text: wordings.business.problemReportType[problemCategory],
-              value: problemCategory,
-            }))}
-            label={wordings.homePage.problemType}
-            onChange={changeProblemCategory}
-            width={REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}
-          />
-        </div>
-        <div style={styles.tooltipItem}>
-          <Text>{wordings.homePage.describeTheProblem}</Text>
-          <RichTextInput
-            name="problemDescription"
-            placeholder={wordings.homePage.enterYourText}
-            size={10}
-            multiline
-            onChange={setProblemDescription}
-            style={styles.tooltipElement}
-            value={problemDescription}
-          />
-        </div>
-        <div style={styles.tooltipItem}>
-          <Checkbox
-            defaultChecked={false}
-            onChange={(checked) => setIsBlocking(checked)}
-            text={wordings.homePage.problemIsBlocking}
-            style={styles.tooltipElement}
-          ></Checkbox>
-        </div>
-        <div style={{ ...styles.tooltipItem, ...styles.tooltipButtons }}>
-          <div style={styles.closeButtonContainer}>
-            <ButtonWithIcon
-              color="default"
-              iconName="close"
-              onClick={closeTooltipMenu}
-              text={wordings.homePage.cancel}
+      <div style={styles.container}>
+        <div style={styles.leftContainer}>
+          <div style={styles.dropdownContainer}>
+            <LabelledDropdown<problemReportType['type']>
+              error={isSentWithoutCategory}
+              items={problemCategories.map((problemCategory) => ({
+                text: wordings.business.problemReportType[problemCategory],
+                value: problemCategory,
+              }))}
+              label={wordings.homePage.problemType}
+              onChange={changeProblemCategory}
+              width={REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}
             />
           </div>
-          <ButtonWithIcon
-            color="primary"
-            iconName="send"
-            onClick={sendProblemReportAndClose}
-            text={wordings.homePage.send}
-          />
+          <Checkbox defaultChecked={false} onChange={setIsBlocking} text={wordings.homePage.problemIsBlocking} />
+        </div>
+        <div style={styles.rightContainer}>
+          <div style={styles.textAreaContainer}>
+            <RichTextInput
+              name="problemDescription"
+              placeholder={wordings.homePage.describeTheProblem}
+              size={10}
+              multiline
+              onChange={setProblemDescription}
+              value={problemDescription}
+              width={REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}
+            />
+          </div>
+          <div style={styles.tooltipButtons}>
+            <div style={styles.leftButtonContainer}>
+              <ButtonWithIcon
+                color="default"
+                iconName="close"
+                onClick={closeTooltipMenu}
+                text={wordings.homePage.cancel}
+              />
+            </div>
+            <ButtonWithIcon
+              color="primary"
+              iconName="send"
+              onClick={sendProblemReportAndClose}
+              text={wordings.homePage.send}
+            />
+          </div>
         </div>
       </div>
     </FloatingTooltipMenu>
@@ -141,20 +130,29 @@ function ReportProblemToolTipMenu(props: {
 
 function buildStyles(theme: customThemeType) {
   return {
-    tooltipElement: {
-      width: `${REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}px`,
-    },
-    tooltipItem: {
-      padding: `${theme.spacing}px 0px`,
+    container: {
+      padding: theme.spacing * 2,
+      display: 'flex',
     },
     tooltipButtons: {
       display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'flex-end',
-      paddingRight: theme.spacing,
+      justifyContent: 'flex-end',
     },
-    closeButtonContainer: {
-      marginBottom: theme.spacing,
+    leftContainer: {
+      width: `${REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}px`,
+      marginRight: theme.spacing * 3,
+    },
+    dropdownContainer: {
+      marginBottom: theme.spacing * 3,
+    },
+    textAreaContainer: {
+      marginBottom: theme.spacing * 2,
+    },
+    leftButtonContainer: {
+      marginRight: theme.spacing * 2,
+    },
+    rightContainer: {
+      width: `${REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH}px`,
     },
   } as const;
 }

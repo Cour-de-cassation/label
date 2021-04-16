@@ -39,7 +39,7 @@ function TooltipMenu(props: {
       },
       tooltipMenu: {
         boxShadow: theme.boxShadow.minor.out,
-        backgroundColor: theme.colors.default.background,
+        backgroundColor: theme.colors.background,
         borderRadius: theme.shape.borderRadius.xxs,
         position: 'absolute',
         width: props.width,

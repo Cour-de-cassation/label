@@ -1,14 +1,14 @@
-PATH=/home/label/packages/courDeCassation
-ENVIRONMENT=$PATH/environments/prodEnvironment.json
-SETTINGS=$PATH/settings/settings.json
+LABELPATH=/home/label/packages/courDeCassation
+LABELENVIRONMENT=$LABELPATH/environments/prodEnvironment.json
+LABELSETTINGS=$LABELPATH/settings/settings.json
 
 
 # Importation from SDER
-0 7 * * * node $PATH/dist/scripts/importAllDocumentsFromSderSince.js --environment $ENVIRONMENT --settings $SETTINGS --days 7
-0 8 * * * node $PATH/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment $ENVIRONMENT --settings $SETTINGS
+0 7 * * * node $LABELPATH/dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7
+0 8 * * * node $LABELPATH/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS
 
 # Exportation to SDER
-0 23 * * * node $PATH/dist/scripts/exportTreatedDocuments.js --environment $ENVIRONMENT --settings $SETTINGS
+0 23 * * * node $LABELPATH/dist/scripts/exportTreatedDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS
 
 # Database maintenance
-*/15 * * * * node $PATH/dist/scripts/freePendingDocuments.js --environment $ENVIRONMENT --settings $SETTINGS --sinceMinutes 15
+*/15 * * * * node $LABELPATH/dist/scripts/freePendingDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --sinceMinutes 15

@@ -1,9 +1,14 @@
+PATH=/home/label/packages/courDeCassation
+ENVIRONMENT=$PATH/environments/prodEnvironment.json
+SETTINGS=$PATH/settings/settings.json
+
+
 # Importation from SDER
-0 7 * * * /home/label/packages/courDeCassation/scripts/runProdScript.sh /home/label/packages/courDeCassation/dist/scripts/importAllDocumentsFromSderSince.js --days 7 &> /dev/null
-0 8 * * * /home/label/packages/courDeCassation/scripts/runProdScript.sh /home/label/packages/courDeCassation/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js &> /dev/null
+0 7 * * * node $PATH/dist/scripts/importAllDocumentsFromSderSince.js --environment $ENVIRONMENT --settings $SETTINGS --days 7
+0 8 * * * node $PATH/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment $ENVIRONMENT --settings $SETTINGS
 
 # Exportation to SDER
-0 23 * * * /home/label/packages/courDeCassation/scripts/runProdScript.sh /home/label/packages/courDeCassation/dist/scripts/exportTreatedDocuments.js &> /dev/null
+0 23 * * * node $PATH/dist/scripts/exportTreatedDocuments.js --environment $ENVIRONMENT --settings $SETTINGS
 
 # Database maintenance
-*/15 * * * * /home/label/packages/courDeCassation/scripts/runProdScript.sh /home/label/packages/courDeCassation/dist/scripts/freePendingDocuments.js --sinceMinutes 15 &> /dev/null
+*/15 * * * * node $PATH/dist/scripts/freePendingDocuments.js --environment $ENVIRONMENT --settings $SETTINGS --sinceMinutes 15

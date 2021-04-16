@@ -34,6 +34,7 @@ function buildDocumentService() {
     deleteDocument,
     fetchAllDocumentsByIds,
     fetchAnonymizedDocumentText,
+    fetchDoneDocuments,
     fetchSpecialDocuments,
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
@@ -81,6 +82,12 @@ function buildDocumentService() {
       annotations,
     );
     return anonymizedDocument.text;
+  }
+
+  async function fetchDoneDocuments() {
+    const documentRepository = buildDocumentRepository();
+
+    return documentRepository.findAllByStatus(['done']);
   }
 
   async function fetchSpecialDocuments() {

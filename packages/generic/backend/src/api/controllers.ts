@@ -18,7 +18,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     aggregatedStatistics: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { ressourceFilter } }) =>
-        statisticService.fetchAccordingToFilter({
+        statisticService.fetchAggregatedStatisticsAccordingToFilter({
           userId:
             ressourceFilter.userId !== undefined
               ? idModule.lib.buildId(ressourceFilter.userId)

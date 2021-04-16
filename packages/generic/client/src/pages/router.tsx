@@ -141,6 +141,13 @@ function getRedirectionRoute() {
     return routes.LOGIN;
   }
 
+  if (userRole === 'admin') {
+    const adminView = localStorage.adminViewHandler.get();
+    if (adminView) {
+      return defaultRoutes[adminView];
+    }
+  }
+
   return defaultRoutes[userRole];
 }
 

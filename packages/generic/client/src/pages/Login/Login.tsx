@@ -5,6 +5,7 @@ import { ButtonWithIcon, Logo, Text, RichTextInput } from '../../components';
 import { localStorage } from '../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
+import { routes } from '../routes';
 
 export { Login };
 
@@ -101,7 +102,7 @@ const Login: FunctionComponent = () => {
       } = await apiCaller.post<'login'>('login', { email, password });
       localStorage.bearerTokenHandler.set(token);
       localStorage.userHandler.set({ email: userEmail, name, role });
-      history.push('/');
+      history.push(routes.DEFAULT);
     } catch (error) {
       setIsFormValid(false);
       console.warn(error);

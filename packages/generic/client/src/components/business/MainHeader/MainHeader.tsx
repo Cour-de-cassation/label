@@ -1,7 +1,9 @@
 import React from 'react';
 import { Header, IconButton, MenuBar, Text } from '../..';
+import { localStorage } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
+import { AdminViewDropdown } from './AdminViewDropdown';
 import { SettingsButton } from './SettingsButton';
 
 export { MainHeader };
@@ -15,13 +17,21 @@ function MainHeader(props: { subtitle?: JSX.Element; title?: string; onBackButto
     <MenuBar color="inherit" isElevated={!!props.title}>
       <Header
         leftHeaderComponents={leftHeaderComponents}
-        rightHeaderComponents={[<SettingsButton />]}
+        rightHeaderComponents={buildRightHeaderComponents()}
         spaceBetweenComponents={theme.spacing * 2}
         style={styles.header}
         variant="classic"
       />
     </MenuBar>
   );
+
+  function buildRightHeaderComponents() {
+    const userRole = localStorage.userHandler.getRole();
+    if (userRole === 'admin') {
+      return [<AdminViewDropdown />, <SettingsButton />];
+    }
+    return [<SettingsButton />];
+  }
 
   function buildStyles(theme: customThemeType) {
     return {

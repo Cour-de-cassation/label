@@ -15,6 +15,7 @@ import { Login } from './Login';
 import { SpecialDocuments } from './SpecialDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { Statistics } from './Admin/Statistics';
+import { defaultRoutes, routes } from './routes';
 
 export { Router };
 
@@ -22,10 +23,10 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <UnauthenticatedRoute path="/login">
+        <UnauthenticatedRoute path={routes.LOGIN}>
           <Login />
         </UnauthenticatedRoute>
-        <AuthenticatedRoute path="/admin">
+        <AuthenticatedRoute path={routes.ADMIN}>
           <AdminInfosDataFetcher>
             {({ adminInfos, refetch }) => {
               const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
@@ -33,7 +34,7 @@ function Router() {
               ).length;
               return (
                 <>
-                  <AuthenticatedRoute path="/admin/statistics">
+                  <AuthenticatedRoute path={routes.STATISTICS}>
                     <AdminPage
                       header={wordings.statisticsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
@@ -41,7 +42,7 @@ function Router() {
                       <Statistics aggregatedStatistics={adminInfos.aggregatedStatistics} />
                     </AdminPage>
                   </AuthenticatedRoute>
-                  <AuthenticatedRoute path="/admin/agents">
+                  <AuthenticatedRoute path={routes.AGENTS}>
                     <AdminPage
                       header={wordings.agentsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
@@ -49,7 +50,7 @@ function Router() {
                       <Agents usersWithDetails={adminInfos.usersWithDetails} />
                     </AdminPage>
                   </AuthenticatedRoute>
-                  <AuthenticatedRoute path="/admin/problem-reports">
+                  <AuthenticatedRoute path={routes.PROBLEM_REPORTS}>
                     <AdminPage
                       header={wordings.problemReportsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
@@ -60,7 +61,7 @@ function Router() {
                       />
                     </AdminPage>
                   </AuthenticatedRoute>
-                  <AuthenticatedRoute path="/admin/treated-documents">
+                  <AuthenticatedRoute path={routes.TREATED_DOCUMENTS}>
                     <AdminPage
                       header={wordings.treatedDocumentsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
@@ -68,7 +69,7 @@ function Router() {
                       <TreatedDocuments treatedDocuments={adminInfos.treatedDocuments} />
                     </AdminPage>
                   </AuthenticatedRoute>
-                  <AuthenticatedRoute path="/admin/untreated-documents">
+                  <AuthenticatedRoute path={routes.UNTREATED_DOCUMENT}>
                     <AdminPage
                       header={wordings.untreatedDocumentsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
@@ -80,21 +81,21 @@ function Router() {
               );
             }}
           </AdminInfosDataFetcher>
-          <AuthenticatedRoute path="/admin/document/:documentId">
+          <AuthenticatedRoute path={routes.DOCUMENT}>
             <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
           </AuthenticatedRoute>
         </AuthenticatedRoute>
-        <Route path="/anonymized-document/:documentId">
+        <Route path={routes.ANONYMIZED_DOCUMENT}>
           <AnonymizedDocument />
         </Route>
-        <AuthenticatedRoute path="/special-documents">
+        <AuthenticatedRoute path={routes.SPECIAL_DOCUMENTS}>
           <SpecialDocuments />
         </AuthenticatedRoute>
-        <AuthenticatedRoute path="/annotation">
+        <AuthenticatedRoute path={routes.ANNOTATION}>
           <SettingsDataFetcher>{({ settings }) => <Home settings={settings} />}</SettingsDataFetcher>
         </AuthenticatedRoute>
         <AuthenticatedRoute>
-          <HomeRoute path="/" />
+          <HomeRoute path={routes.DEFAULT} />
         </AuthenticatedRoute>
       </Switch>
     </BrowserRouter>
@@ -110,7 +111,7 @@ const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }
       ) : (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: routes.LOGIN,
             state: { from: location },
           }}
         />
@@ -136,14 +137,11 @@ const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => (
 function getRedirectionRoute() {
   const userRole = localStorage.userHandler.getRole();
 
-  switch (userRole) {
-    case 'admin':
-      return '/admin/treated-documents';
-    case 'annotator':
-      return '/annotation';
-    case 'specialDocumentAnnotator':
-      return '/special-documents';
+  if (!userRole) {
+    return routes.LOGIN;
   }
+
+  return defaultRoutes[userRole];
 }
 
 const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
@@ -155,7 +153,7 @@ const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest
       ) : (
         <Redirect
           to={{
-            pathname: '/',
+            pathname: routes.DEFAULT,
             state: { from: location },
           }}
         />

@@ -4,6 +4,7 @@ import { ButtonWithIcon, Icon, Text } from '../../components';
 import { localStorage } from '../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
+import { routes } from '../routes';
 
 export { ErrorPage };
 
@@ -24,7 +25,7 @@ function ErrorPage() {
 
   function logout() {
     localStorage.bearerTokenHandler.remove();
-    history.push('/login');
+    history.push(routes.LOGIN);
   }
 
   function buildStyles(theme: customThemeType) {

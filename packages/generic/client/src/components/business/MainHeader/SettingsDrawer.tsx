@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiCaller } from '../../../api';
+import { routes } from '../../../pages';
 import { localStorage } from '../../../services/localStorage';
 import { useCustomTheme, customThemeType, useDisplayMode } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -129,7 +130,7 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
 
   function logout() {
     localStorage.bearerTokenHandler.remove();
-    history.push('/login');
+    history.push(routes.LOGIN);
   }
 
   async function updatePassword() {

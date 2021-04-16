@@ -4,6 +4,7 @@ import { ButtonWithIcon, MainHeader, Text } from '../../components';
 import { lineSplitter } from '../../services/lineSplitter';
 import { customThemeType, heights, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
+import { routes } from '../routes';
 import { AnonymizedDocumentTextDataFetcher } from './AnonymizedDocumentTextDataFetcher';
 
 export { AnonymizedDocument };
@@ -59,7 +60,7 @@ function AnonymizedDocument() {
     </>
   );
   function navigateToSpecialDocuments() {
-    history.push('/special-documents');
+    history.push(routes.SPECIAL_DOCUMENTS);
   }
 }
 

@@ -77,7 +77,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     specialDocuments: buildAuthenticatedController({
-      permissions: ['specialDocumentAnnotator'],
+      permissions: ['admin', 'specialDocumentAnnotator'],
       controllerWithUser: async () => documentService.fetchSpecialDocuments(),
     }),
 

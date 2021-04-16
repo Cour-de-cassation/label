@@ -4,6 +4,7 @@ import format from 'string-template';
 import { apiRouteOutType, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { DocumentStatusIcon, ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
+import { sendMail } from '../../../../services/sendMail';
 import { wordings } from '../../../../wordings';
 
 export { ProblemReportsTable };
@@ -33,9 +34,8 @@ function ProblemReportsTable(props: {
       documentNumber: problemReportWithDetails.document.documentNumber,
     });
     const email = problemReportWithDetails.user.email;
-    const mailto = document.createElement('a');
-    mailto.href = `mailto:${email}?subject=${subject}`;
-    mailto.click();
+    const body = problemReportWithDetails.problemReport.text;
+    sendMail({ email, subject, body });
   }
 
   function buildOptionItems() {

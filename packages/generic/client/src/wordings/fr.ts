@@ -46,6 +46,14 @@ const fr = {
   },
   business: {
     account: 'Compte',
+    adminViews: {
+      label: 'Choisir une vue',
+      values: {
+        admin: 'Vue administrateur',
+        annotator: 'Vue annotateur',
+        specialDocumentAnnotator: 'Vue publicateur',
+      },
+    },
     changePassword: 'Modifier le mot de passe',
     confirmPassword: 'Confirmer le nouveau mot de passe',
     decisionNumberPlaceholder: 'Rechercher...',

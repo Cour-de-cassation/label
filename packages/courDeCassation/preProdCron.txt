@@ -1,6 +1,6 @@
 LABELPATH=/home/label/git/label/packages/courDeCassation
-LABELENVIRONMENT=$LABELPATH/environments/preProdEnvironment.json
-LABELSETTINGS=$LABELPATH/settings/settings.json
+LABELENVIRONMENT=/home/label/git/label/packages/courDeCassation/environments/preProdEnvironment.json
+LABELSETTINGS=/home/label/git/label/packages/courDeCassation/settings/settings.json
 
 # Importation from SDER
 0 7 * * * node $LABELPATH/dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7

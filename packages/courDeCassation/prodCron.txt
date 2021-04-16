@@ -1,6 +1,6 @@
 LABELPATH=/home/label/packages/courDeCassation
-LABELENVIRONMENT=$LABELPATH/environments/prodEnvironment.json
-LABELSETTINGS=$LABELPATH/settings/settings.json
+LABELENVIRONMENT/home/label/packages/courDeCassation/environments/prodEnvironment.json
+LABELSETTINGS=/home/label/packages/courDeCassation/settings/settings.json
 
 
 # Importation from SDER

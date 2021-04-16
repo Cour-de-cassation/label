@@ -16,7 +16,6 @@ import {
   buildAutoSaver,
 } from '../../services/annotatorState';
 import { useMonitoring, MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
-import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentSelector } from './DocumentSelector';
@@ -34,8 +33,8 @@ function DocumentSwitcher(props: {
 }) {
   const [documentState, setDocumentState] = useState<documentStateType>(computeInitialDocumentState());
   const { resetMonitoringEntries, sendMonitoringEntries } = useMonitoring();
-  const theme = useCustomTheme();
-  const styles = buildStyles(theme);
+
+  const styles = buildStyles();
 
   return <div style={styles.documentSwitcher}>{renderPage()}</div>;
 
@@ -44,11 +43,9 @@ function DocumentSwitcher(props: {
       case 'annotating':
         const subtitle = documentState.choice.document.publicationCategory.length ? (
           <div style={styles.documentHeaderSubtitle}>
-            <div style={styles.publicationCategoryBadgeContainer}>
-              <PublicationCategoryBadge
-                publicationCategoryLetter={documentState.choice.document.publicationCategory[0]}
-              />
-            </div>
+            <PublicationCategoryBadge
+              publicationCategoryLetter={documentState.choice.document.publicationCategory[0]}
+            />
             <Text>{wordings.homePage.publishedDocument}</Text>
           </div>
         ) : undefined;
@@ -81,7 +78,7 @@ function DocumentSwitcher(props: {
     }
   }
 
-  function buildStyles(theme: customThemeType) {
+  function buildStyles() {
     return {
       documentSwitcher: {
         display: 'flex',
@@ -91,9 +88,7 @@ function DocumentSwitcher(props: {
       },
       documentHeaderSubtitle: {
         display: 'flex',
-      },
-      publicationCategoryBadgeContainer: {
-        marginRight: theme.spacing,
+        alignItems: 'center',
       },
     } as const;
   }

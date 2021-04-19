@@ -12,20 +12,18 @@ import { exporterConfigType, labelTreatmentsType } from './exporterConfigType';
 
 export { buildExporter };
 
-const DAYS_BEFORE_EXPORT = 4;
-
 function buildExporter(
   settings: settingsType,
   exporterConfig: exporterConfigType,
 ) {
   return {
-    async exportTreatedDocuments() {
-      logger.log('exportTreatedDocuments');
+    async exportTreatedDocumentsSince(days: number) {
+      logger.log('exportTreatedDocumentsSince');
       logger.log(`Exportation to ${exporterConfig.name}`);
 
       logger.log(`Fetching treated documents...`);
       const documentsReadyToExport = await documentService.fetchDocumentsReadyToExport(
-        DAYS_BEFORE_EXPORT,
+        days,
       );
       logger.log(`${documentsReadyToExport.length} documents to export`);
 

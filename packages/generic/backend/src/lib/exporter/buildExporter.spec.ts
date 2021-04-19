@@ -12,8 +12,9 @@ describe('buildExporter', () => {
     firstName: { anonymization: '[FIRST_NAME %d]' },
   });
 
-  describe('exportTreatedDocuments', () => {
-    it('should export all the ready document fetched by the exporter', async () => {
+  describe('exportTreatedDocumentsSince', () => {
+    it('should export all the ready document since the given days fetched by the exporter', async () => {
+      const days = 4;
       const documents = ([
         {
           text: 'Benoit est ingénieur',
@@ -65,7 +66,7 @@ describe('buildExporter', () => {
       const fakeExporterConfig = buildFakeExporterConfig();
       const exporter = buildExporter(settings, fakeExporterConfig);
 
-      await exporter.exportTreatedDocuments();
+      await exporter.exportTreatedDocumentsSince(days);
 
       const exportedDocumentIds = fakeExporterConfig.getExportedDocumentNumbers();
       const exportedPseudonymizationTexts = fakeExporterConfig.getExportedPseudonymizationTexts();

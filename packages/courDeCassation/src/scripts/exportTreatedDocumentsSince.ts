@@ -1,3 +1,4 @@
+import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
 import { settingsModule } from '@label/core';
 import { buildSderExporter } from '../exporter';
@@ -5,12 +6,28 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
+  const { days } = parseArgv();
   const backend = buildBackend(environment, settings);
   const sderExporter = buildSderExporter(
     settingsModule.lib.parseFromJson(settings),
   );
 
-  backend.runScript(sderExporter.exportTreatedDocuments, {
+  backend.runScript(() => sderExporter.exportTreatedDocumentsSince(days), {
     shouldLoadDb: true,
   });
 })();
+
+function parseArgv() {
+  const argv = yargs
+    .options({
+      days: {
+        demandOption: true,
+        description: 'treated since days',
+        type: 'number',
+      },
+    })
+    .help()
+    .alias('help', 'h').argv;
+
+  return { days: argv.days as number };
+}

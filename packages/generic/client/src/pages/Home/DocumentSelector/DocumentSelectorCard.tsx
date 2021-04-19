@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
-import { groupBy, orderBy } from 'lodash';
+import { groupBy, orderBy, sumBy } from 'lodash';
 import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
-import { ButtonWithIcon, CategoryIcon, ComponentsList, PublicationCategoryBadge, Text } from '../../../components';
+import {
+  ButtonWithIcon,
+  CategoryIcon,
+  ComponentsList,
+  Icon,
+  PublicationCategoryBadge,
+  Text,
+} from '../../../components';
 import { wordings } from '../../../wordings';
 import { computeGenericDocumentInfoEntries } from './computeGenericDocumentInfoEntries';
 import { computeSpecificDocumentInfoEntries } from './computeSpecificDocumentInfoEntries';
@@ -13,7 +20,8 @@ const SPECIFIC_DOCUMENT_INFO_ENTRIES = ['chamberName', 'decisionNumber'] as cons
 const GENERIC_DOCUMENT_INFO_ENTRIES = ['wordCount', 'annotations', 'linkedEntities', 'entities'] as const;
 const CARD_WIDTH = 400;
 const CATEGORY_ICON_SIZE = 32;
-const MAX_CATEGORIES_SHOWN = 8;
+const MAX_CATEGORIES_PER_LINE = 5;
+const ICONS_CONTAINER_HEIGHT = 140;
 
 function DocumentSelectorCard(props: {
   choice: { annotations: annotationType[]; document: fetchedDocumentType };
@@ -83,21 +91,7 @@ function DocumentSelectorCard(props: {
             </div>
           ))}
         </div>
-        <div style={styles.categoryIconsContainer}>
-          <ComponentsList
-            components={categoryIconsByAnnotation.map(({ category, entitiesCount }) => (
-              <div style={styles.categoryContainer}>
-                <div style={styles.categoryIconContainer}>
-                  <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={props.settings} />
-                </div>
-                <div>
-                  <Text>{entitiesCount} </Text>
-                </div>
-              </div>
-            ))}
-            spaceBetweenComponents={theme.spacing * 3}
-          />
-        </div>
+        <div style={styles.categoryIconsContainer}>{renderCategoryIcons()}</div>
         <ButtonWithIcon
           iconName="clock"
           color="primary"
@@ -107,6 +101,71 @@ function DocumentSelectorCard(props: {
         />
       </div>
     );
+
+    function renderCategoryIcons() {
+      if (categoryIconsByAnnotation.length <= MAX_CATEGORIES_PER_LINE) {
+        return (
+          <ComponentsList
+            components={categoryIconsByAnnotation.map(renderCategoryIconWithCount)}
+            spaceBetweenComponents={theme.spacing * 3}
+          />
+        );
+      }
+      if (categoryIconsByAnnotation.length <= 2 * MAX_CATEGORIES_PER_LINE) {
+        return (
+          <div style={styles.twoRowsContainer}>
+            <ComponentsList
+              components={categoryIconsByAnnotation.slice(0, MAX_CATEGORIES_PER_LINE).map(renderCategoryIconWithCount)}
+              spaceBetweenComponents={theme.spacing * 3}
+            />
+            <ComponentsList
+              components={categoryIconsByAnnotation.slice(MAX_CATEGORIES_PER_LINE).map(renderCategoryIconWithCount)}
+              spaceBetweenComponents={theme.spacing * 3}
+            />
+          </div>
+        );
+      }
+      const slicedSecondRow = categoryIconsByAnnotation
+        .slice(MAX_CATEGORIES_PER_LINE, 2 * MAX_CATEGORIES_PER_LINE - 1)
+        .map(renderCategoryIconWithCount);
+      const lastIcon = (
+        <div style={styles.categoryContainer}>
+          <div style={styles.categoryIconContainer}>
+            <Icon iconName="moreHoriz" />
+          </div>
+          <div>
+            <Text>
+              {sumBy(
+                categoryIconsByAnnotation.slice(2 * MAX_CATEGORIES_PER_LINE - 1),
+                ({ entitiesCount }) => entitiesCount,
+              )}
+            </Text>
+          </div>
+        </div>
+      );
+      return (
+        <div style={styles.twoRowsContainer}>
+          <ComponentsList
+            components={categoryIconsByAnnotation.slice(0, MAX_CATEGORIES_PER_LINE).map(renderCategoryIconWithCount)}
+            spaceBetweenComponents={theme.spacing * 3}
+          />
+          <ComponentsList components={[...slicedSecondRow, lastIcon]} spaceBetweenComponents={theme.spacing * 3} />
+        </div>
+      );
+    }
+
+    function renderCategoryIconWithCount({ entitiesCount, category }: { entitiesCount: number; category: string }) {
+      return (
+        <div style={styles.categoryContainer}>
+          <div style={styles.categoryIconContainer}>
+            <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={props.settings} />
+          </div>
+          <div>
+            <Text>{entitiesCount} </Text>
+          </div>
+        </div>
+      );
+    }
 
     async function onSelect() {
       setIsSelecting(true);
@@ -128,7 +187,7 @@ function DocumentSelectorCard(props: {
       ),
       'entitiesCount',
       'desc',
-    ).slice(0, MAX_CATEGORIES_SHOWN);
+    );
   }
 }
 
@@ -164,12 +223,18 @@ function buildStyles(theme: customThemeType) {
     categoryIconsContainer: {
       display: 'flex',
       flex: 1,
-      marginBottom: theme.spacing * 7,
+      marginBottom: theme.spacing * 4,
+      minHeight: ICONS_CONTAINER_HEIGHT,
+    },
+    twoRowsContainer: {
+      display: 'flex',
+      flexDirection: 'column',
     },
     categoryContainer: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      marginBottom: theme.spacing,
     },
     categoryIconContainer: {
       marginBottom: theme.spacing,
@@ -187,7 +252,7 @@ function buildStyles(theme: customThemeType) {
       display: 'flex',
       width: '100%',
       flexDirection: 'column',
-      marginBottom: theme.spacing * 7,
+      marginBottom: theme.spacing * 5,
     },
     documentInfoEntryRow: {
       display: 'flex',

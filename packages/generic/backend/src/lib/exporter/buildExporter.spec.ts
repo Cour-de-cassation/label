@@ -18,7 +18,7 @@ describe('buildExporter', () => {
         {
           text: 'Benoit est ingénieur',
           status: 'done',
-          updateDate: dateBuilder.daysAgo(4),
+          updateDate: dateBuilder.daysAgo(5),
         },
         { status: 'pending' },
         {

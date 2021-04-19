@@ -14,7 +14,7 @@ function OptionButton<T extends string>(props: {
       onClose={props.onClose}
       hint={wordings.shared.moreOptions}
       items={props.items}
-      iconName="more"
+      iconName="moreVert"
       onChange={props.onSelect}
     />
   );

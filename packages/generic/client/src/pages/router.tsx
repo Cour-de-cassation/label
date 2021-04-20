@@ -28,7 +28,7 @@ function Router() {
         </UnauthenticatedRoute>
         <AuthenticatedRoute path={routes.ADMIN}>
           <AdminInfosDataFetcher>
-            {({ adminInfos, refetch }) => {
+            {({ adminInfos, refetch, ressourceFilters }) => {
               const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
                 ({ problemReport }) => !problemReport.hasBeenRead,
               ).length;
@@ -40,6 +40,7 @@ function Router() {
                       unreadProblemReportsCount={unreadProblemReportsCount}
                     >
                       <Statistics
+                        ressourceFilter={ressourceFilters.aggregatedStatistics}
                         refetch={refetch.aggregatedStatistics}
                         aggregatedStatistics={adminInfos.aggregatedStatistics}
                         users={adminInfos.usersWithDetails.map(({ user }) => user)}

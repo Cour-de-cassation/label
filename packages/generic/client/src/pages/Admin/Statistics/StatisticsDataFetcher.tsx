@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { apiRouteOutType, userType } from '@label/core';
+import { apiRouteInType, apiRouteOutType, userType } from '@label/core';
 import { apiCaller, useApi } from '../../../api';
 import { DataFetcher } from '../../DataFetcher';
 
@@ -8,7 +8,8 @@ export { StatisticsDataFetcher };
 function StatisticsDataFetcher(props: {
   children: (fetched: {
     aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
-    refetch: (params: { userId: userType['_id'] | undefined }) => void;
+    refetch: (params: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => void;
+    ressourceFilter: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter'];
   }) => ReactElement;
 }) {
   const statisticsFetchInfo = useApi(buildFetchStatistics(), { userId: undefined as userType['_id'] | undefined });
@@ -16,7 +17,11 @@ function StatisticsDataFetcher(props: {
   return (
     <DataFetcher
       buildComponentWithData={(aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>) =>
-        props.children({ aggregatedStatistics, refetch: statisticsFetchInfo.refetch })
+        props.children({
+          aggregatedStatistics,
+          refetch: statisticsFetchInfo.refetch,
+          ressourceFilter: statisticsFetchInfo.params,
+        })
       }
       fetchInfo={statisticsFetchInfo}
     />
@@ -24,7 +29,7 @@ function StatisticsDataFetcher(props: {
 }
 
 function buildFetchStatistics() {
-  return async ({ userId }: { userId: userType['_id'] | undefined }) => {
+  return async ({ userId }: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => {
     return apiCaller.get<'aggregatedStatistics'>('aggregatedStatistics', { ressourceFilter: { userId } });
   };
 }

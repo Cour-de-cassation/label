@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { apiRouteOutType, userType } from '@label/core';
+import React from 'react';
+import { apiRouteInType, apiRouteOutType, idModule, userType } from '@label/core';
 import { StatisticsBox } from './StatisticsBox';
 import { FilterButton } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
@@ -7,18 +7,12 @@ import { wordings } from '../../../wordings';
 
 export { Statistics };
 
-type statisticFilterType = {
-  userName: string | undefined;
-};
-
-const INITIAL_FILTER_VALUES = { userName: undefined };
-
 function Statistics(props: {
   aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
   users: Omit<userType, 'hashedPassword'>[];
-  refetch: (params: { userId: userType['_id'] }) => void;
+  refetch: (params: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => void;
+  ressourceFilter: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter'];
 }) {
-  const [filterValues, setFilterValues] = useState<statisticFilterType>(INITIAL_FILTER_VALUES);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -55,21 +49,35 @@ function Statistics(props: {
   );
 
   function buildFilters() {
+    const userName = props.ressourceFilter.userId && findUserNameByUserId(props.ressourceFilter.userId);
     const userFilter = {
       kind: 'dropdown' as const,
       name: 'user',
       label: wordings.statisticsPage.filter.fields.agents,
       possibleValues: props.users.map(({ name }) => name),
-      value: filterValues.userName,
+      value: userName,
       onChange: (userName: string) => {
-        setFilterValues({ userName });
-        const user = props.users.find(({ name }) => name === userName);
-        if (!!user) {
-          props.refetch({ userId: user._id });
+        const userId = findUserIdByUserName(userName);
+        if (!!userId) {
+          props.refetch({ userId });
         }
       },
     };
     return [userFilter];
+  }
+
+  function findUserIdByUserName(userName: userType['name']) {
+    const user = props.users.find(({ name }) => name === userName);
+    if (user) {
+      return user._id;
+    }
+  }
+
+  function findUserNameByUserId(userId: userType['_id']) {
+    const user = props.users.find(({ _id }) => idModule.lib.equalId(userId, _id));
+    if (user) {
+      return user.name;
+    }
   }
 }
 

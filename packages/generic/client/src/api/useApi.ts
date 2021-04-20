@@ -31,7 +31,7 @@ function useApi<dataT, paramsT>(
     );
   }, [refetchFlag]);
 
-  return { data, isLoaded, refetch, statusCode };
+  return { data, params, isLoaded, refetch, statusCode };
 
   function refetch(params?: paramsT) {
     if (params) {

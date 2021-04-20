@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { apiRouteOutType, userType } from '@label/core';
+import { apiRouteInType, apiRouteOutType } from '@label/core';
 import { AgentsDataFetcher } from './Agents/AgentsDataFetcher';
 import { ProblemReportsDataFetcher } from './ProblemReports/ProblemReportsDataFetcher';
 import { TreatedDocumentsDataFetcher } from './TreatedDocuments/TreatedDocumentsDataFetcher';
@@ -19,11 +19,19 @@ type adminInfosType = {
 type refetchInfosType = {
   untreatedDocuments: () => void;
   problemReportsWithDetails: () => void;
-  aggregatedStatistics: (params: { userId: userType['_id'] | undefined }) => void;
+  aggregatedStatistics: (params: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => void;
+};
+
+type ressourceFiltersType = {
+  aggregatedStatistics: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter'];
 };
 
 function AdminInfosDataFetcher(props: {
-  children: (fetched: { adminInfos: adminInfosType; refetch: refetchInfosType }) => ReactElement;
+  children: (fetched: {
+    adminInfos: adminInfosType;
+    refetch: refetchInfosType;
+    ressourceFilters: ressourceFiltersType;
+  }) => ReactElement;
 }) {
   return (
     <AgentsDataFetcher>
@@ -33,7 +41,11 @@ function AdminInfosDataFetcher(props: {
             <UntreatedDocumentsDataFetcher>
               {({ untreatedDocuments, refetch: refetchUntreatedDocuments }) => (
                 <StatisticsDataFetcher>
-                  {({ aggregatedStatistics, refetch: refetchAggregatedStatistics }) => (
+                  {({
+                    aggregatedStatistics,
+                    refetch: refetchAggregatedStatistics,
+                    ressourceFilter: ressourceFilterAggregatedStatistics,
+                  }) => (
                     <ProblemReportsDataFetcher>
                       {({ problemReportsWithDetails, refetch: refetchProblemReportsWithDetails }) =>
                         props.children({
@@ -48,6 +60,9 @@ function AdminInfosDataFetcher(props: {
                             aggregatedStatistics: refetchAggregatedStatistics,
                             problemReportsWithDetails: refetchProblemReportsWithDetails,
                             untreatedDocuments: refetchUntreatedDocuments,
+                          },
+                          ressourceFilters: {
+                            aggregatedStatistics: ressourceFilterAggregatedStatistics,
                           },
                         })
                       }

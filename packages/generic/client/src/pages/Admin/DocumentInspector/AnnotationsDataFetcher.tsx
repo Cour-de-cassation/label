@@ -9,7 +9,7 @@ function AnnotationsDataFetcher(props: {
   children: (fetched: { annotations: apiRouteOutType<'get', 'annotations'> }) => ReactElement;
   documentId: string;
 }) {
-  const annotationsFetchInfo = useApi(buildFetchAnnotations(props.documentId));
+  const annotationsFetchInfo = useApi(buildFetchAnnotations(), { documentId: props.documentId });
 
   return (
     <DataFetcher
@@ -19,8 +19,8 @@ function AnnotationsDataFetcher(props: {
   );
 }
 
-function buildFetchAnnotations(documentId: string) {
-  return async () => {
+function buildFetchAnnotations() {
+  return async ({ documentId }: { documentId: string }) => {
     const { data: annotations, statusCode } = await apiCaller.get<'annotations'>('annotations', { documentId });
     return {
       data: annotations,

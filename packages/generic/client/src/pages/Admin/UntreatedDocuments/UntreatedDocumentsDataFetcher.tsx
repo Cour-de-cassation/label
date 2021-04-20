@@ -8,7 +8,7 @@ export { UntreatedDocumentsDataFetcher };
 function UntreatedDocumentsDataFetcher(props: {
   children: (fetched: { untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'> }) => ReactElement;
 }) {
-  const untreatedDocumentsFetchInfo = useApi(buildFetchUntreatedDocuments());
+  const untreatedDocumentsFetchInfo = useApi(buildFetchUntreatedDocuments(), {});
 
   return (
     <DataFetcher

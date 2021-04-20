@@ -39,7 +39,11 @@ function Router() {
                       header={wordings.statisticsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
                     >
-                      <Statistics aggregatedStatistics={adminInfos.aggregatedStatistics} />
+                      <Statistics
+                        refetch={refetch.aggregatedStatistics}
+                        aggregatedStatistics={adminInfos.aggregatedStatistics}
+                        users={adminInfos.usersWithDetails.map(({ user }) => user)}
+                      />
                     </AdminPage>
                   </AuthenticatedRoute>
                   <AuthenticatedRoute path={routes.AGENTS}>

@@ -9,7 +9,7 @@ function DocumentDataFetcher(props: {
   children: (fetched: { document: apiRouteOutType<'get', 'document'> }) => ReactElement;
   documentId: string;
 }) {
-  const documentFetchInfo = useApi(buildFetchDocument(props.documentId));
+  const documentFetchInfo = useApi(buildFetchDocument(), { documentId: props.documentId });
 
   return (
     <DataFetcher
@@ -19,8 +19,8 @@ function DocumentDataFetcher(props: {
   );
 }
 
-function buildFetchDocument(documentId: string) {
-  return async () => {
+function buildFetchDocument() {
+  return async ({ documentId }: { documentId: string }) => {
     const { data: document, statusCode } = await apiCaller.get<'document'>('document', { documentId });
     return {
       data: {

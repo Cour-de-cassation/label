@@ -11,12 +11,12 @@ function ProblemReportsDataFetcher(props: {
     refetch: () => void;
   }) => ReactElement;
 }) {
-  const problemReportsFetchInfo = useApi(buildFetchProblemReports());
+  const problemReportsFetchInfo = useApi(buildFetchProblemReports(), {});
 
   return (
     <DataFetcher
       buildComponentWithData={(problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>) =>
-        props.children({ problemReportsWithDetails, refetch: problemReportsFetchInfo.refetch })
+        props.children({ problemReportsWithDetails, refetch: () => problemReportsFetchInfo.refetch({}) })
       }
       fetchInfo={problemReportsFetchInfo}
     />

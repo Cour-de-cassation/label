@@ -8,7 +8,7 @@ export { AgentsDataFetcher };
 function AgentsDataFetcher(props: {
   children: (fetched: { usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'> }) => ReactElement;
 }) {
-  const usersWithDetailsFetchInfo = useApi(buildFetchAgents());
+  const usersWithDetailsFetchInfo = useApi(buildFetchAgents(), {});
 
   return (
     <DataFetcher

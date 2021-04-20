@@ -15,7 +15,9 @@ function DocumentsDataFetcher(props: {
   }) => ReactElement;
   maxNumberOfDocuments: number;
 }) {
-  const documentsForUserFetchInfo = useApi(buildFetchDocumentsForUser(props.maxNumberOfDocuments));
+  const documentsForUserFetchInfo = useApi(buildFetchDocumentsForUser(), {
+    maxNumberOfDocuments: props.maxNumberOfDocuments,
+  });
 
   return (
     <DataFetcher
@@ -24,15 +26,15 @@ function DocumentsDataFetcher(props: {
           document: fetchedDocumentType;
           annotations: annotationType[];
         }[],
-      ) => props.children({ documentsForUser, fetchNewDocumentsForUser: documentsForUserFetchInfo.refetch })}
+      ) => props.children({ documentsForUser, fetchNewDocumentsForUser: () => documentsForUserFetchInfo.refetch() })}
       fetchInfo={documentsForUserFetchInfo}
       showLoadingOnRefetch
     />
   );
 }
 
-function buildFetchDocumentsForUser(maxNumberOfDocuments: number) {
-  return async () => {
+function buildFetchDocumentsForUser() {
+  return async ({ maxNumberOfDocuments }: { maxNumberOfDocuments: number }) => {
     const documentsForUser = [];
     const documentIdsToExclude = [] as idType[];
     const statusCodes = [];

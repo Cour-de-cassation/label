@@ -6,7 +6,7 @@ import { DataFetcher } from './DataFetcher';
 export { SettingsDataFetcher };
 
 function SettingsDataFetcher(props: { children: (fetched: { settings: settingsType }) => ReactElement }) {
-  const settingsFetchInfo = useApi(buildFetchSettings());
+  const settingsFetchInfo = useApi(buildFetchSettings(), {});
   return (
     <DataFetcher
       buildComponentWithData={(settings: settingsType) => props.children({ settings })}

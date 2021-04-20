@@ -201,6 +201,11 @@ const fr = {
       title: 'Administration',
       subtitle: 'Statistiques',
     },
+    filter: {
+      fields: {
+        agents: 'Agents',
+      },
+    },
   },
   treatedDocumentsPage: {
     header: {

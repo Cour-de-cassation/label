@@ -1,12 +1,26 @@
-import React from 'react';
-import { apiRouteOutType } from '@label/core';
+import React, { useState } from 'react';
+import { apiRouteOutType, userType } from '@label/core';
 import { StatisticsBox } from './StatisticsBox';
-import { heights, widths } from '../../../styles';
+import { FilterButton } from '../../../components';
+import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { wordings } from '../../../wordings';
 
 export { Statistics };
 
-function Statistics(props: { aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'> }) {
-  const styles = buildStyles();
+type statisticFilterType = {
+  userName: string | undefined;
+};
+
+const INITIAL_FILTER_VALUES = { userName: undefined };
+
+function Statistics(props: {
+  aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
+  users: Omit<userType, 'hashedPassword'>[];
+  refetch: (params: { userId: userType['_id'] }) => void;
+}) {
+  const [filterValues, setFilterValues] = useState<statisticFilterType>(INITIAL_FILTER_VALUES);
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
 
   const aggregatedStatistics = {
     addedAnnotationsCount: props.aggregatedStatistics.perAssignation.cumulatedValue.addedAnnotationsCount,
@@ -22,9 +36,15 @@ function Statistics(props: { aggregatedStatistics: apiRouteOutType<'get', 'aggre
     wordsCount: props.aggregatedStatistics.perDocument.cumulatedValue.wordsCount,
   };
 
+  const filters = buildFilters();
+
   return (
     <div style={styles.container}>
-      <div style={styles.header}></div>
+      <div style={styles.header}>
+        <div style={styles.filtersContainer}>
+          <FilterButton filters={filters} />
+        </div>
+      </div>
       <div style={styles.body}>
         <StatisticsBox
           aggregatedStatistic={aggregatedStatistics}
@@ -34,23 +54,45 @@ function Statistics(props: { aggregatedStatistics: apiRouteOutType<'get', 'aggre
     </div>
   );
 
-  function buildStyles() {
-    return {
-      container: {
-        display: 'flex',
-        flexDirection: 'column',
+  function buildFilters() {
+    const userFilter = {
+      kind: 'dropdown' as const,
+      name: 'user',
+      label: wordings.statisticsPage.filter.fields.agents,
+      possibleValues: props.users.map(({ name }) => name),
+      value: filterValues.userName,
+      onChange: (userName: string) => {
+        setFilterValues({ userName });
+        const user = props.users.find(({ name }) => name === userName);
+        if (!!user) {
+          props.refetch({ userId: user._id });
+        }
       },
-      header: {
-        height: heights.statisticsHeaderHeight,
-        width: widths.adminContent,
-      },
-      body: {
-        height: heights.statisticsBodyHeight,
-        width: widths.adminContent,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-    } as const;
+    };
+    return [userFilter];
   }
+}
+
+function buildStyles(theme: customThemeType) {
+  return {
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    header: {
+      height: heights.statisticsHeaderHeight,
+      width: widths.adminContent,
+    },
+    filtersContainer: {
+      paddingTop: theme.spacing * 4,
+      paddingLeft: theme.spacing * 3,
+    },
+    body: {
+      height: heights.statisticsBodyHeight,
+      width: widths.adminContent,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  } as const;
 }

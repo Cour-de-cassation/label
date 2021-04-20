@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { apiRouteOutType } from '@label/core';
+import { apiRouteOutType, userType } from '@label/core';
 import { AgentsDataFetcher } from './Agents/AgentsDataFetcher';
 import { ProblemReportsDataFetcher } from './ProblemReports/ProblemReportsDataFetcher';
 import { TreatedDocumentsDataFetcher } from './TreatedDocuments/TreatedDocumentsDataFetcher';
@@ -18,6 +18,7 @@ type adminInfosType = {
 
 type refetchInfosType = {
   problemReportsWithDetails: () => void;
+  aggregatedStatistics: (params: { userId: userType['_id'] | undefined }) => void;
 };
 
 function AdminInfosDataFetcher(props: {
@@ -31,7 +32,7 @@ function AdminInfosDataFetcher(props: {
             <UntreatedDocumentsDataFetcher>
               {({ untreatedDocuments }) => (
                 <StatisticsDataFetcher>
-                  {({ aggregatedStatistics }) => (
+                  {({ aggregatedStatistics, refetch: refetchAggregatedStatistics }) => (
                     <ProblemReportsDataFetcher>
                       {({ problemReportsWithDetails, refetch: refetchProblemReportsWithDetails }) =>
                         props.children({
@@ -43,6 +44,7 @@ function AdminInfosDataFetcher(props: {
                             untreatedDocuments,
                           },
                           refetch: {
+                            aggregatedStatistics: refetchAggregatedStatistics,
                             problemReportsWithDetails: refetchProblemReportsWithDetails,
                           },
                         })

@@ -3,14 +3,18 @@ import { CustomError } from '@label/core';
 
 export { useApi };
 
-function useApi<T>(callApi: () => Promise<{ data: T; statusCode: number }>) {
-  const [data, setData] = useState<T | undefined>(undefined);
+function useApi<dataT, paramsT>(
+  callApi: (params: paramsT) => Promise<{ data: dataT; statusCode: number }>,
+  initialParams: paramsT,
+) {
+  const [data, setData] = useState<dataT | undefined>(undefined);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [statusCode, setStatusCode] = useState<number | undefined>(undefined);
   const [refetchFlag, setRefetchFlag] = useState<boolean>(false);
+  const [params, setParams] = useState<paramsT>(initialParams);
 
   useEffect(() => {
-    callApi().then(
+    callApi(params).then(
       ({ data, statusCode }) => {
         setData(data);
         setIsLoaded(true);
@@ -29,7 +33,10 @@ function useApi<T>(callApi: () => Promise<{ data: T; statusCode: number }>) {
 
   return { data, isLoaded, refetch, statusCode };
 
-  function refetch() {
+  function refetch(params?: paramsT) {
+    if (params) {
+      setParams(params);
+    }
     setIsLoaded(false);
     setStatusCode(undefined);
     setRefetchFlag(!refetchFlag);

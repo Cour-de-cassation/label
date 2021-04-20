@@ -8,7 +8,7 @@ export { SpecialDocumentsDataFetcher };
 function SpecialDocumentsDataFetcher(props: {
   children: (fetched: { specialDocuments: apiRouteOutType<'get', 'specialDocuments'> }) => ReactElement;
 }) {
-  const specialDocumentsFetchInfo = useApi(buildFetchSpecialDocuments());
+  const specialDocumentsFetchInfo = useApi(buildFetchSpecialDocuments(), {});
 
   return (
     <DataFetcher

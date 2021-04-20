@@ -9,7 +9,7 @@ function AnonymizedDocumentTextDataFetcher(props: {
   children: (fetched: { anonymizedDocumentText: apiRouteOutType<'get', 'anonymizedDocumentText'> }) => ReactElement;
   documentId: string;
 }) {
-  const anonymizedDocumentTextFetchInfo = useApi(buildFetchDocument(props.documentId));
+  const anonymizedDocumentTextFetchInfo = useApi(buildFetchDocument(), { documentId: props.documentId });
 
   return (
     <DataFetcher
@@ -21,8 +21,8 @@ function AnonymizedDocumentTextDataFetcher(props: {
   );
 }
 
-function buildFetchDocument(documentId: string) {
-  return async () => {
+function buildFetchDocument() {
+  return async ({ documentId }: { documentId: string }) => {
     const { data: anonymizedDocumentText, statusCode } = await apiCaller.get<'anonymizedDocumentText'>(
       'anonymizedDocumentText',
       { documentId },

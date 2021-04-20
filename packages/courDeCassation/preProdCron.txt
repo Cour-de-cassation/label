@@ -14,4 +14,4 @@ LABELCRONLOGFILE=/home/label/git/label/packages/courDeCassation/cron.log.txt
 */15 * * * * node $LABELPATH/dist/scripts/freePendingDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --sinceMinutes 15 >> $LABELCRONLOGFILE 2>&1
 
 # Re-initialize Pre Prod
-0 0 * * SUN $LABELPATH/crons/reinitializePreProd.sh >> $LABELCRONLOGFILE 2>&1
+0 0 * * SUN cd $LABELPATH && ./crons/reinitializePreProd.sh >> $LABELCRONLOGFILE 2>&1

@@ -181,10 +181,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     updateDocumentStatus: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { documentId, status } }) => {
-        await assignationService.assertDocumentIsAssignatedToUser({
-          documentId: idModule.lib.buildId(documentId),
-          userId: user._id,
-        });
+        if (user.role !== 'admin') {
+          await assignationService.assertDocumentIsAssignatedToUser({
+            documentId: idModule.lib.buildId(documentId),
+            userId: user._id,
+          });
+        }
         return documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
           status,

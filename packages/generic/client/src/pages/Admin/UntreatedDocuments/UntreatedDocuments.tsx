@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf } from '@label/core';
-import { DecisionNumberTextInput, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
+import {
+  DecisionNumberTextInput,
+  DocumentStatusIcon,
+  PublicationCategoryBadge,
+  tableRowFieldType,
+} from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { UntreatedDocumentsTable } from './UntreatedDocumentsTable';
@@ -9,11 +14,16 @@ import { untreatedDocumentFilterType, UntreatedDocumentsFilters } from './Untrea
 
 export { UntreatedDocuments };
 
+const TABLE_ICON_SIZE = 24;
+
 const DEFAULT_FILTERS = {
   publicationCategoryLetter: undefined,
 };
 
-function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'> }) {
+function UntreatedDocuments(props: {
+  untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
+  refetch: () => void;
+}) {
   const [filterValues, setFilterValues] = useState<untreatedDocumentFilterType>(DEFAULT_FILTERS);
   const [searchedDecisionNumber, setSearchedDecisionNumber] = useState<number | undefined>();
   const theme = useCustomTheme();
@@ -38,7 +48,11 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
         </div>
       </div>
       <div style={styles.tableContentContainer}>
-        <UntreatedDocumentsTable fields={untreatedDocumentsFields} untreatedDocuments={filteredUntreatedDocuments} />
+        <UntreatedDocumentsTable
+          fields={untreatedDocumentsFields}
+          untreatedDocuments={filteredUntreatedDocuments}
+          refetch={props.refetch}
+        />
       </div>
     </div>
   );
@@ -109,6 +123,16 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
         canBeSorted: true,
         width: 10,
         extractor: (untreatedDocument) => untreatedDocument.userName || '-',
+      },
+      {
+        id: 'status',
+        canBeSorted: true,
+        title: wordings.untreatedDocumentsPage.table.columnTitles.status,
+        extractor: (untreatedDocument) => untreatedDocument.document.status,
+        render: (untreatedDocument) => (
+          <DocumentStatusIcon status={untreatedDocument.document.status} iconSize={TABLE_ICON_SIZE} />
+        ),
+        width: 1,
       },
     ];
     return untreatedDocumentsFields;

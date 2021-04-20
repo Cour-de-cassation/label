@@ -11,7 +11,7 @@ const documentStatusIconNameMapping: Record<
   { iconName: iconNameType; colorName: 'alert' | 'primary' }
 > = {
   free: { iconName: 'waiting', colorName: 'primary' },
-  pending: { iconName: 'assigned', colorName: 'alert' },
+  pending: { iconName: 'assigned', colorName: 'primary' },
   saved: { iconName: 'update', colorName: 'primary' },
   done: { iconName: 'check', colorName: 'primary' },
   rejected: { iconName: 'stop', colorName: 'alert' },

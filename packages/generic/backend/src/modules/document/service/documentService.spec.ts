@@ -271,7 +271,10 @@ describe('documentService', () => {
     const userRepository = buildUserRepository();
 
     it('should return untreated documents', async () => {
-      const user = userModule.generator.generate({ name: 'NAME' });
+      const user = userModule.generator.generate({
+        name: 'NAME',
+        role: 'annotator',
+      });
       const freeDocument = documentModule.generator.generate({
         status: 'free',
       });
@@ -318,6 +321,7 @@ describe('documentService', () => {
             '_id',
             'documentNumber',
             'publicationCategory',
+            'status',
           ]),
           userName: undefined,
         },
@@ -326,6 +330,7 @@ describe('documentService', () => {
             '_id',
             'documentNumber',
             'publicationCategory',
+            'status',
           ]),
           userName: 'NAME',
         },
@@ -334,6 +339,7 @@ describe('documentService', () => {
             '_id',
             'documentNumber',
             'publicationCategory',
+            'status',
           ]),
           userName: 'NAME',
         },

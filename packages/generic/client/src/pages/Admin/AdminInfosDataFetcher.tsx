@@ -17,6 +17,7 @@ type adminInfosType = {
 };
 
 type refetchInfosType = {
+  untreatedDocuments: () => void;
   problemReportsWithDetails: () => void;
   aggregatedStatistics: (params: { userId: userType['_id'] | undefined }) => void;
 };
@@ -30,7 +31,7 @@ function AdminInfosDataFetcher(props: {
         <TreatedDocumentsDataFetcher>
           {({ treatedDocuments }) => (
             <UntreatedDocumentsDataFetcher>
-              {({ untreatedDocuments }) => (
+              {({ untreatedDocuments, refetch: refetchUntreatedDocuments }) => (
                 <StatisticsDataFetcher>
                   {({ aggregatedStatistics, refetch: refetchAggregatedStatistics }) => (
                     <ProblemReportsDataFetcher>
@@ -46,6 +47,7 @@ function AdminInfosDataFetcher(props: {
                           refetch: {
                             aggregatedStatistics: refetchAggregatedStatistics,
                             problemReportsWithDetails: refetchProblemReportsWithDetails,
+                            untreatedDocuments: refetchUntreatedDocuments,
                           },
                         })
                       }

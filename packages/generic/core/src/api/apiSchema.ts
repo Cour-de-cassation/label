@@ -201,6 +201,7 @@ const apiSchema = {
                 _id: documentModule.model.content._id,
                 documentNumber: documentModule.model.content.documentNumber,
                 publicationCategory: documentModule.model.content.publicationCategory,
+                status: documentModule.model.content.status,
               },
             },
             userName: {

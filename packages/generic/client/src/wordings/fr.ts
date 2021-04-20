@@ -275,6 +275,10 @@ const fr = {
         number: 'N° décision',
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         userName: 'Attribué à',
+        status: 'Statut',
+      },
+      optionItems: {
+        freeDocument: 'Libérer la décision',
       },
       filter: {
         resultsCount: '{count} décisions affichées',

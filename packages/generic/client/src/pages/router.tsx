@@ -78,7 +78,10 @@ function Router() {
                       header={wordings.untreatedDocumentsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
                     >
-                      <UntreatedDocuments untreatedDocuments={adminInfos.untreatedDocuments} />
+                      <UntreatedDocuments
+                        untreatedDocuments={adminInfos.untreatedDocuments}
+                        refetch={refetch.untreatedDocuments}
+                      />
                     </AdminPage>
                   </AuthenticatedRoute>
                 </>

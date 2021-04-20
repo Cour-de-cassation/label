@@ -185,6 +185,7 @@ function buildDocumentService() {
           _id: untreatedDocument._id,
           publicationCategory: untreatedDocument.publicationCategory,
           documentNumber: untreatedDocument.documentNumber,
+          status: untreatedDocument.status,
         },
         userName: user ? user.name : undefined,
       };

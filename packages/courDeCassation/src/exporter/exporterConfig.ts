@@ -7,16 +7,16 @@ const exporterConfig: exporterConfigType = {
   name: 'SDER',
 
   async sendDocumentPseudonymisationAndTreatments({
-    documentNumber,
+    externalId,
     pseudonymizationText,
     labelTreatments,
   }) {
     await sderApi.updateDecisionPseudonymisation({
-      documentNumber,
+      externalId,
       pseudonymizationText,
       labelTreatments,
     });
 
-    await sderApi.setCourtDecisionDone(documentNumber);
+    await sderApi.setCourtDecisionDone(externalId);
   },
 };

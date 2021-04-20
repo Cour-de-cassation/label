@@ -1,5 +1,10 @@
 import { decisionType } from 'sder';
-import { documentType, documentModule, timeOperator } from '@label/core';
+import {
+  documentType,
+  documentModule,
+  idModule,
+  timeOperator,
+} from '@label/core';
 
 export { sderMapper };
 
@@ -17,11 +22,18 @@ function mapCourtDecisionToDocument(
       : undefined,
   });
 
-  const chamberName = convertChamberIntoReadableChamberName(sderCourtDecision.chamberName)
+  const chamberName = convertChamberIntoReadableChamberName(
+    sderCourtDecision.chamberName,
+  );
 
-  const juridiction = computeJuridiction(sderCourtDecision.jurisdictionName, sderCourtDecision.chamberName)
+  const juridiction = computeJuridiction(
+    sderCourtDecision.jurisdictionName,
+    sderCourtDecision.chamberName,
+  );
 
-  const publicationCategory = sderCourtDecision.pubCategory ? [sderCourtDecision.pubCategory] : []
+  const publicationCategory = sderCourtDecision.pubCategory
+    ? [sderCourtDecision.pubCategory]
+    : [];
   const priority = computePriority(
     sderCourtDecision.sourceName,
     publicationCategory,
@@ -31,9 +43,10 @@ function mapCourtDecisionToDocument(
     creationDate: new Date(),
     decisionMetadata: {
       chamberName,
-      juridiction
+      juridiction,
     },
     documentNumber: sderCourtDecision.sourceId,
+    externalId: idModule.lib.convertToString(sderCourtDecision._id),
     metadata: '',
     priority,
     publicationCategory,
@@ -44,8 +57,12 @@ function mapCourtDecisionToDocument(
 }
 
 function computeJuridiction(jurisdictionName?: string, chamber?: string) {
-  if((!!jurisdictionName && jurisdictionName.toLowerCase() === "cour de cassation") || !!chamber && (chamber.match(/CIV\.[1-3]/) || chamber === "SOC") ) {
-    return "Cour de cassation";
+  if (
+    (!!jurisdictionName &&
+      jurisdictionName.toLowerCase() === 'cour de cassation') ||
+    (!!chamber && (chamber.match(/CIV\.[1-3]/) || chamber === 'SOC'))
+  ) {
+    return 'Cour de cassation';
   }
   return '';
 }
@@ -64,7 +81,12 @@ function computeTitleFromParsedCourtDecision({
   const readableNumber = `Décision n°${number}`;
   const readableChamber = convertChamberIntoReadableChamberName(chamber);
   const readableDate = convertRawDateIntoReadableDate(date);
-  const title = [readableNumber, juridiction, readableChamber && `Chambre ${readableChamber.toLowerCase()}`, readableDate]
+  const title = [
+    readableNumber,
+    juridiction,
+    readableChamber && `Chambre ${readableChamber.toLowerCase()}`,
+    readableDate,
+  ]
     .filter(Boolean)
     .join(' · ');
   return title;

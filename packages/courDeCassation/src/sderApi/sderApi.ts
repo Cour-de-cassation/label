@@ -1,5 +1,5 @@
 import { decisionModule } from 'sder';
-import { documentType } from '@label/core';
+import { documentType, idModule } from '@label/core';
 import { dateBuilder } from '@label/backend';
 import { sderApiType } from './sderApiType';
 
@@ -19,25 +19,27 @@ const sderApi: sderApiType = {
 
   async setCourtDecisionsLoaded(documents: documentType[]) {
     await decisionModule.service.updateDecisionsLabelStatus({
-      decisionIds: documents.map(document => document.documentNumber),
+      decisionIds: documents.map(document =>
+        idModule.lib.buildId(document.externalId),
+      ),
       labelStatus: 'loaded',
     });
   },
 
-  async setCourtDecisionDone(documentNumber) {
+  async setCourtDecisionDone(externalId) {
     await decisionModule.service.updateDecisionsLabelStatus({
-      decisionIds: [documentNumber],
+      decisionIds: [idModule.lib.buildId(externalId)],
       labelStatus: 'done',
     });
   },
 
   async updateDecisionPseudonymisation({
-    documentNumber,
+    externalId,
     pseudonymizationText,
     labelTreatments,
   }) {
     await decisionModule.service.updateDecisionPseudonymisation({
-      decisionId: documentNumber,
+      decisionId: idModule.lib.buildId(externalId),
       decisionPseudonymisedText: pseudonymizationText,
       labelTreatments,
     });

@@ -68,11 +68,11 @@ describe('buildExporter', () => {
 
       await exporter.exportTreatedDocumentsSince(days);
 
-      const exportedDocumentIds = fakeExporterConfig.getExportedDocumentNumbers();
+      const exportedExternalIds = fakeExporterConfig.getExportedExternalIds();
       const exportedPseudonymizationTexts = fakeExporterConfig.getExportedPseudonymizationTexts();
       const exportedLabelTreatments = fakeExporterConfig.getExportedLabelTreatments();
-      expect(exportedDocumentIds.sort()).toEqual(
-        [documents[0].documentNumber, documents[2].documentNumber].sort(),
+      expect(exportedExternalIds.sort()).toEqual(
+        [documents[0].externalId, documents[2].externalId].sort(),
       );
       expect(exportedPseudonymizationTexts.sort()).toEqual(
         ['[FIRST_NAME 1] est ingénieur', '[FIRST_NAME 1] est designer'].sort(),
@@ -114,11 +114,11 @@ describe('buildExporter', () => {
 });
 
 function buildFakeExporterConfig(): exporterConfigType & {
-  getExportedDocumentNumbers: () => number[];
+  getExportedExternalIds: () => string[];
   getExportedPseudonymizationTexts: () => string[];
   getExportedLabelTreatments: () => labelTreatmentsType[];
 } {
-  const exportedDocumentNumbers: number[] = [];
+  const exportedExternalIds: string[] = [];
   const exportedpseudonymizationTexts: string[] = [];
   const exportedlabelTreatments: labelTreatmentsType[] = [];
 
@@ -126,17 +126,17 @@ function buildFakeExporterConfig(): exporterConfigType & {
     name: 'FAKE_EXPORTER',
 
     async sendDocumentPseudonymisationAndTreatments({
-      documentNumber,
+      externalId,
       pseudonymizationText,
       labelTreatments,
     }) {
-      exportedDocumentNumbers.push(documentNumber);
+      exportedExternalIds.push(externalId);
       exportedpseudonymizationTexts.push(pseudonymizationText);
       exportedlabelTreatments.push(labelTreatments);
     },
 
-    getExportedDocumentNumbers() {
-      return exportedDocumentNumbers;
+    getExportedExternalIds() {
+      return exportedExternalIds;
     },
 
     getExportedPseudonymizationTexts() {

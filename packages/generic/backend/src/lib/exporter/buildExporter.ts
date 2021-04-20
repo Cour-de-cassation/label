@@ -42,7 +42,7 @@ function buildExporter(
         );
 
         await exporterConfig.sendDocumentPseudonymisationAndTreatments({
-          documentNumber: document.documentNumber,
+          externalId: document.externalId,
           pseudonymizationText: anonymizer.anonymizeDocument(
             document,
             treatmentModule.lib.computeAnnotations(treatments),

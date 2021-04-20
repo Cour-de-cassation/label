@@ -5,7 +5,7 @@ export type { exporterConfigType, labelTreatmentsType };
 type exporterConfigType = {
   name: string;
   sendDocumentPseudonymisationAndTreatments: (param: {
-    documentNumber: documentType['documentNumber'];
+    externalId: documentType['externalId'];
     pseudonymizationText: string;
     labelTreatments: labelTreatmentsType;
   }) => Promise<void>;

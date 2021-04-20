@@ -153,6 +153,7 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
         title: wordings.treatedDocumentsPage.table.columnTitles.publicationCategory.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
+        getSortingValue: (treatedDocument) => treatedDocument.document.publicationCategory.length,
         extractor: (treatedDocument) => treatedDocument.document.publicationCategory.join(','),
         render: (treatedDocument) => (
           <div style={styles.publicationCategoryBadgesContainer}>

@@ -90,6 +90,7 @@ function UntreatedDocuments(props: { untreatedDocuments: apiRouteOutType<'get', 
         title: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.title,
         tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
+        getSortingValue: (untreatedDocument) => untreatedDocument.document.publicationCategory.length,
         extractor: (untreatedDocument) => untreatedDocument.document.publicationCategory.join(','),
         render: (untreatedDocument) => (
           <div style={styles.publicationCategoryBadgesContainer}>

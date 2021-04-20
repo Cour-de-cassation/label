@@ -21,9 +21,10 @@ function mapCourtDecisionToDocument(
 
   const juridiction = computeJuridiction(sderCourtDecision.jurisdictionName, sderCourtDecision.chamberName)
 
+  const publicationCategory = sderCourtDecision.pubCategory ? [sderCourtDecision.pubCategory] : []
   const priority = computePriority(
     sderCourtDecision.sourceName,
-    sderCourtDecision.zoning?.introduction_subzonage?.publication,
+    publicationCategory,
   );
 
   return documentModule.lib.buildDocument({
@@ -35,9 +36,7 @@ function mapCourtDecisionToDocument(
     documentNumber: sderCourtDecision.sourceId,
     metadata: '',
     priority,
-    publicationCategory:
-        sderCourtDecision.zoning?.introduction_subzonage?.publication ||
-      [],
+    publicationCategory,
     source: sderCourtDecision.sourceName,
     title,
     text: sderCourtDecision.originalText,
@@ -95,9 +94,9 @@ function convertChamberIntoReadableChamberName(chamber: string | undefined) {
 
 function computePriority(
   source: string,
-  publicationCategory: string[] | undefined,
+  publicationCategory: string[],
 ): documentType['priority'] {
-  if (publicationCategory && publicationCategory.includes('P')) {
+  if (publicationCategory.includes('P')) {
     return 'high';
   }
   switch (source) {

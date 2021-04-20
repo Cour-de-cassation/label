@@ -38,8 +38,8 @@ function DocumentSelectorCard(props: {
   );
 
   const categoryIconsByAnnotation = computeCategoryIconNamesByEntitiesCount(props.choice.annotations);
-  const isDocumentPublished = props.choice.document.publicationCategory.length > 0;
-  return isDocumentPublished ? (
+  const mustBePublished = props.choice.document.publicationCategory.includes('P');
+  return mustBePublished ? (
     <div style={styles.publishedDocumentCardContainer}>
       <div style={styles.publishedDocumentTitleContainer}>
         <PublicationCategoryBadge publicationCategoryLetter={props.choice.document.publicationCategory[0]} />

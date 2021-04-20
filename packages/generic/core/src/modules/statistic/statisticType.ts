@@ -12,7 +12,7 @@ const statisticModel = buildModel({
     addedAnnotationsCount: { kind: 'primitive', content: 'number' },
     annotationsCount: { kind: 'primitive', content: 'number' },
     deletedAnnotationsCount: { kind: 'primitive', content: 'number' },
-    documentNumber: { kind: 'primitive', content: 'number' },
+    documentExternalId: { kind: 'primitive', content: 'string' },
     linkedEntitiesCount: { kind: 'primitive', content: 'number' },
     modifiedAnnotationsCount: { kind: 'primitive', content: 'number' },
     publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },

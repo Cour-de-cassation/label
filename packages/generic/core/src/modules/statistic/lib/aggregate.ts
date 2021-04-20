@@ -58,7 +58,7 @@ function aggregatePerDocument(
   cumulatedValue: Pick<statisticType, 'annotationsCount' | 'wordsCount'>;
   total: number;
 } {
-  const documentStatistics = Object.values(groupBy(statistics, (statistic) => statistic.documentNumber)).map(
+  const documentStatistics = Object.values(groupBy(statistics, (statistic) => statistic.documentExternalId)).map(
     (statistics) => statistics[0],
   );
 

@@ -32,7 +32,7 @@ function buildStatistic({
     addedAnnotationsCount: additionsCount,
     annotationsCount,
     deletedAnnotationsCount: deletionsCount,
-    documentNumber: document.documentNumber,
+    documentExternalId: document.externalId,
     linkedEntitiesCount,
     modifiedAnnotationsCount: modificationsCount,
     publicationCategory: document.publicationCategory,

@@ -11,13 +11,13 @@ import { statisticsCreator } from './statisticsCreator';
 describe('statisticsCreator', () => {
   describe('buildFromDocument', () => {
     it('should build all the statistics of the given documents', () => {
-      const documentNumber = 8;
+      const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
       const documentPublicationCategory = ['P'];
       const documentSource = 'SOURCE';
       const duration = 1500;
       const userId = idModule.lib.buildId();
       const document = documentModule.generator.generate({
-        documentNumber,
+        externalId: documentExternalId,
         publicationCategory: documentPublicationCategory,
         source: documentSource,
         text: 'Some text with five words',
@@ -67,7 +67,7 @@ describe('statisticsCreator', () => {
         addedAnnotationsCount: 1,
         annotationsCount: 2,
         deletedAnnotationsCount: 1,
-        documentNumber: documentNumber,
+        documentExternalId,
         linkedEntitiesCount: 0,
         modifiedAnnotationsCount: 1,
         publicationCategory: documentPublicationCategory,

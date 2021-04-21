@@ -39,7 +39,6 @@ function buildDocumentService() {
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
     fetchDocumentsReadyToExport,
-    fetchDocumentIdsWithAnnotations,
     fetchDocumentsWithoutAnnotations,
     fetchDocumentForUser,
     fetchDocument,
@@ -223,23 +222,6 @@ function buildDocumentService() {
     );
   }
 
-  async function fetchDocumentIdsWithAnnotations(): Promise<
-    documentType['_id'][]
-  > {
-    const documentRepository = buildDocumentRepository();
-
-    const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
-    const documents = await documentRepository.findAll();
-
-    return documents
-      .map(({ _id }) => _id)
-      .filter((_id) =>
-        treatedDocumentIds.some((documentId) =>
-          idModule.lib.equalId(documentId, _id),
-        ),
-      );
-  }
-
   async function fetchDocument(documentId: documentType['_id']) {
     const documentRepository = buildDocumentRepository();
 
@@ -289,7 +271,7 @@ function buildDocumentService() {
 
     async function assignNewDocument() {
       let document: documentType | undefined;
-      const documentIdsWithAnnotations = await fetchDocumentIdsWithAnnotations();
+      const documentIdsWithAnnotations = await treatmentService.fetchTreatedDocumentIds();
 
       document = await assignDocumentByPriority(
         'high',

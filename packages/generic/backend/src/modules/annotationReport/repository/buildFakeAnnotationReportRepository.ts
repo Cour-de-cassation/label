@@ -1,8 +1,6 @@
 import { annotationReportType, idModule } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
-  projectedType,
-  projectFakeObjects,
   updateFakeCollection,
 } from '../../../repository';
 import { customAnnotationReportRepositoryType } from './customAnnotationReportRepositoryType';
@@ -37,14 +35,6 @@ const buildFakeAnnotationReportRepository = buildFakeRepositoryBuilder<
       }
 
       return annotationReport;
-    },
-
-    async findAllProjection<projectionT extends keyof annotationReportType>(
-      projections: Array<projectionT>,
-    ): Promise<Array<projectedType<annotationReportType, projectionT>>> {
-      return collection.map((document) =>
-        projectFakeObjects(document, projections),
-      );
     },
   }),
 });

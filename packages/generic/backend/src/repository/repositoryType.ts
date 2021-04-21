@@ -7,6 +7,9 @@ type repositoryType<T extends { _id: idType }> = {
   deleteById: (_id: idType) => Promise<void>;
   deleteManyByIds: (ids: idType[]) => Promise<void>;
   findAll: () => Promise<T[]>;
+  findAllProjection: <projectionT extends keyof T>(
+    projection: Array<projectionT>,
+  ) => Promise<Array<projectedType<T, projectionT>>>;
   findAllByIds: (idsToSearchIn?: idType[]) => Promise<Record<string, T>>;
   findById: (id: idType) => Promise<T>;
   insert: (newObject: T) => Promise<{ success: boolean }>;

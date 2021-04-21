@@ -47,6 +47,7 @@
     },
     "couldBe": "personnePhysiqueNom",
     "iconName": "work",
+    "isAnonymized": false,
     "order": 5,
     "text": "Personne morale"
   },

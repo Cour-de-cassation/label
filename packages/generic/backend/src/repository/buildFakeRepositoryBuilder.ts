@@ -16,6 +16,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     deleteById,
     deleteManyByIds,
     findAll,
+    findAllProjection,
     findAllByIds,
     findById,
     insert,
@@ -49,6 +50,14 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
 
   async function findAll() {
     return collection;
+  }
+
+  async function findAllProjection<projectionT extends keyof T>(
+    projections: Array<projectionT>,
+  ): Promise<Array<projectedType<T, projectionT>>> {
+    return collection.map((document) =>
+      projectFakeObjects(document, projections),
+    );
   }
 
   async function findAllByIds(idsToSearchIn?: idType[]) {

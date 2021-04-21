@@ -1,6 +1,7 @@
 import { idModule, idType, indexer } from '@label/core';
 import { mongo, mongoCollectionType } from '../utils';
-import { repositoryType } from './repositoryType';
+import { projectedType, repositoryType } from './repositoryType';
+import { buildProjection } from './repositoryUtils';
 
 export { buildRepositoryBuilder };
 
@@ -31,6 +32,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       deleteById,
       deleteManyByIds,
       findAll,
+      findAllProjection,
       findAllByIds,
       findById,
       insert,
@@ -54,6 +56,15 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
 
     async function findAll() {
       return collection.find().toArray();
+    }
+
+    async function findAllProjection<projectionT extends keyof T>(
+      projection: Array<projectionT>,
+    ): Promise<Array<projectedType<T, projectionT>>> {
+      return (collection
+        .find()
+        .project(buildProjection(projection as string[]))
+        .toArray() as any) as Array<projectedType<T, projectionT>>;
     }
 
     async function findAllByIds(idsToSearchIn?: idType[]) {

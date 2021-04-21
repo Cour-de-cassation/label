@@ -79,7 +79,9 @@ const treatmentService = {
 
   async fetchTreatedDocumentIds() {
     const treatmentRepository = buildTreatmentRepository();
-    const treatments = await treatmentRepository.findAll();
+    const treatments = await treatmentRepository.findAllProjection([
+      'documentId',
+    ]);
     const treatedDocumentIds = uniqWith(
       treatments.map((treatment) => treatment.documentId),
       idModule.lib.equalId,

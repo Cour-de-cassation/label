@@ -33,6 +33,7 @@ function buildDocumentService() {
   return {
     deleteDocument,
     fetchAllDocumentsByIds,
+    fetchAllSources,
     fetchAnonymizedDocumentText,
     fetchDoneDocuments,
     fetchSpecialDocuments,
@@ -59,6 +60,12 @@ function buildDocumentService() {
   async function fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByIds(documentIds);
+  }
+
+  async function fetchAllSources() {
+    const documentRepository = buildDocumentRepository();
+
+    return documentRepository.findAllSources();
   }
 
   async function fetchAnonymizedDocumentText(documentId: documentType['_id']) {

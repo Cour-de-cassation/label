@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { isEqual, uniq } from 'lodash';
 import { documentType, idModule } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
@@ -15,6 +15,10 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
   customDocumentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
+    async findAllSources() {
+      return uniq(collection.map((document) => document.source));
+    },
+
     async findAllByPublicationCategoryAndStatus({
       publicationCategory,
       status,

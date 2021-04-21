@@ -43,6 +43,7 @@ function Router() {
                         ressourceFilter={ressourceFilters.aggregatedStatistics}
                         refetch={refetch.aggregatedStatistics}
                         aggregatedStatistics={adminInfos.aggregatedStatistics}
+                        availableStatisticFilters={adminInfos.availableStatisticFilters}
                         users={adminInfos.usersWithDetails.map(({ user }) => user)}
                       />
                     </AdminPage>

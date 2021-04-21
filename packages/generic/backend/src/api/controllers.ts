@@ -19,6 +19,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { ressourceFilter } }) =>
         statisticService.fetchAggregatedStatisticsAccordingToFilter({
+          ...ressourceFilter,
           userId:
             ressourceFilter.userId !== undefined
               ? idModule.lib.buildId(ressourceFilter.userId)
@@ -47,6 +48,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         idModule.lib.buildId(documentId),
       );
     },
+
+    availableStatisticFilters: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async () =>
+        statisticService.fetchAvailableStatisticFilters(),
+    }),
 
     document: buildAuthenticatedController({
       permissions: ['admin'],

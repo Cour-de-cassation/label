@@ -27,6 +27,10 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
+    async findAllSources() {
+      return collection.distinct('source', {});
+    },
+
     async findOneByStatusAndPriorityAmong(
       { status, priority },
       idsToSearchInFirst,

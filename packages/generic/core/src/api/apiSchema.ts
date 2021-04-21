@@ -93,6 +93,20 @@ const apiSchema = {
         content: 'string',
       } as const),
     },
+    availableStatisticFilters: {
+      out: buildModel({
+        kind: 'object',
+        content: {
+          sources: {
+            kind: 'array',
+            content: {
+              kind: 'primitive',
+              content: 'string',
+            },
+          },
+        },
+      } as const),
+    },
     document: {
       in: {
         documentId: buildModel({

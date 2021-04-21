@@ -10,6 +10,7 @@ export { AdminInfosDataFetcher };
 
 type adminInfosType = {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
+  availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
   aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
@@ -42,6 +43,7 @@ function AdminInfosDataFetcher(props: {
               {({ untreatedDocuments, refetch: refetchUntreatedDocuments }) => (
                 <StatisticsDataFetcher>
                   {({
+                    availableStatisticFilters,
                     aggregatedStatistics,
                     refetch: refetchAggregatedStatistics,
                     ressourceFilter: ressourceFilterAggregatedStatistics,
@@ -50,6 +52,7 @@ function AdminInfosDataFetcher(props: {
                       {({ problemReportsWithDetails, refetch: refetchProblemReportsWithDetails }) =>
                         props.children({
                           adminInfos: {
+                            availableStatisticFilters,
                             aggregatedStatistics,
                             problemReportsWithDetails,
                             treatedDocuments,

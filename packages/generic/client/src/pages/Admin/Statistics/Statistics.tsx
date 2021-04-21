@@ -1,5 +1,5 @@
 import React from 'react';
-import { apiRouteInType, apiRouteOutType, idModule, userType } from '@label/core';
+import { apiRouteOutType, idModule, ressourceFilterType, userType } from '@label/core';
 import { StatisticsBox } from './StatisticsBox';
 import { FilterButton } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
@@ -9,9 +9,10 @@ export { Statistics };
 
 function Statistics(props: {
   aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
+  availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
   users: Omit<userType, 'hashedPassword'>[];
-  refetch: (params: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => void;
-  ressourceFilter: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter'];
+  refetch: (ressourceFilter: ressourceFilterType) => void;
+  ressourceFilter: ressourceFilterType;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -49,21 +50,43 @@ function Statistics(props: {
   );
 
   function buildFilters() {
-    const userName = props.ressourceFilter.userId && findUserNameByUserId(props.ressourceFilter.userId);
-    const userFilter = {
-      kind: 'dropdown' as const,
-      name: 'user',
-      label: wordings.statisticsPage.filter.fields.agents,
-      possibleValues: props.users.map(({ name }) => name),
-      value: userName,
-      onChange: (userName: string) => {
-        const userId = findUserIdByUserName(userName);
-        if (!!userId) {
-          props.refetch({ userId });
-        }
-      },
-    };
-    return [userFilter];
+    const sourceFilter = buildSourceFilter();
+    const userFilter = buildUserFilter();
+
+    return [sourceFilter, userFilter];
+
+    function buildSourceFilter() {
+      return {
+        kind: 'dropdown' as const,
+        name: 'source',
+        label: wordings.statisticsPage.filter.fields.source,
+        possibleValues: props.availableStatisticFilters.sources,
+        value: props.ressourceFilter.source,
+        onChange: (newSource: string) => {
+          if (newSource !== undefined) {
+            props.refetch({ ...props.ressourceFilter, source: newSource });
+          }
+        },
+      };
+    }
+
+    function buildUserFilter() {
+      const userName = props.ressourceFilter.userId && findUserNameByUserId(props.ressourceFilter.userId);
+
+      return {
+        kind: 'dropdown' as const,
+        name: 'user',
+        label: wordings.statisticsPage.filter.fields.agents,
+        possibleValues: props.users.map(({ name }) => name),
+        value: userName,
+        onChange: (userName: string) => {
+          const userId = findUserIdByUserName(userName);
+          if (!!userId) {
+            props.refetch({ ...props.ressourceFilter, userId });
+          }
+        },
+      };
+    }
   }
 
   function findUserIdByUserName(userName: userType['name']) {

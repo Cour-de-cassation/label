@@ -8,6 +8,13 @@ export type { ressourceFilterType };
 const ressourceFilterModel = buildModel({
   kind: 'object',
   content: {
+    source: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'string' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     userId: {
       kind: 'or',
       content: [

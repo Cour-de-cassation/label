@@ -5,7 +5,8 @@ import { ressourceFilterType } from '../ressourceFilterType';
 export { ressourceFilterGenerator };
 
 const ressourceFilterGenerator: generatorType<ressourceFilterType> = {
-  generate: ({ userId } = {}) => ({
+  generate: ({ source, userId } = {}) => ({
+    source: source ? source : undefined,
     userId: userId ? idModule.lib.buildId(userId) : undefined,
   }),
 };

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { apiRouteInType, apiRouteOutType, userType } from '@label/core';
+import { apiRouteOutType, httpStatusCodeHandler, ressourceFilterType } from '@label/core';
 import { apiCaller, useApi } from '../../../api';
 import { DataFetcher } from '../../DataFetcher';
 
@@ -7,17 +7,22 @@ export { StatisticsDataFetcher };
 
 function StatisticsDataFetcher(props: {
   children: (fetched: {
+    availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
     aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
-    refetch: (params: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => void;
-    ressourceFilter: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter'];
+    refetch: (ressourceFilter: ressourceFilterType) => void;
+    ressourceFilter: ressourceFilterType;
   }) => ReactElement;
 }) {
-  const statisticsFetchInfo = useApi(buildFetchStatistics(), { userId: undefined as userType['_id'] | undefined });
+  const statisticsFetchInfo = useApi(buildFetchStatistics(), {
+    source: undefined,
+    userId: undefined,
+  } as ressourceFilterType);
 
   return (
     <DataFetcher
-      buildComponentWithData={(aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>) =>
+      buildComponentWithData={({ availableStatisticFilters, aggregatedStatistics }) =>
         props.children({
+          availableStatisticFilters,
           aggregatedStatistics,
           refetch: statisticsFetchInfo.refetch,
           ressourceFilter: statisticsFetchInfo.params,
@@ -29,7 +34,17 @@ function StatisticsDataFetcher(props: {
 }
 
 function buildFetchStatistics() {
-  return async ({ userId }: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => {
-    return apiCaller.get<'aggregatedStatistics'>('aggregatedStatistics', { ressourceFilter: { userId } });
+  return async (ressourceFilter: ressourceFilterType) => {
+    const { data: availableStatisticFilters, statusCode: statusCodeAvailableStatisticFilters } = await apiCaller.get<
+      'availableStatisticFilters'
+    >('availableStatisticFilters');
+    const { data: aggregatedStatistics, statusCode: statusCodeAggregatedStatistics } = await apiCaller.get<
+      'aggregatedStatistics'
+    >('aggregatedStatistics', { ressourceFilter });
+
+    return {
+      data: { availableStatisticFilters, aggregatedStatistics },
+      statusCode: httpStatusCodeHandler.merge([statusCodeAvailableStatisticFilters, statusCodeAggregatedStatistics]),
+    };
   };
 }

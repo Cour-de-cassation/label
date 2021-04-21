@@ -4,6 +4,7 @@ import { apiRouteOutType, keysOf } from '@label/core';
 import {
   DecisionNumberTextInput,
   DocumentStatusIcon,
+  IconButton,
   PublicationCategoryBadge,
   tableRowFieldType,
 } from '../../../components';
@@ -44,7 +45,17 @@ function UntreatedDocuments(props: {
             setFilterValues={setFilterValues}
             resultsCount={filteredUntreatedDocuments.length}
           />
-          <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
+          <div style={styles.tableRightHeader}>
+            <div style={styles.searchTextInputContainer}>
+              <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
+            </div>
+            <IconButton
+              backgroundColor="primary"
+              onClick={props.refetch}
+              hint={wordings.shared.refresh}
+              iconName="reset"
+            />
+          </div>
         </div>
       </div>
       <div style={styles.tableContentContainer}>
@@ -149,6 +160,12 @@ function UntreatedDocuments(props: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+      },
+      tableRightHeader: {
+        display: 'flex',
+      },
+      searchTextInputContainer: {
+        marginRight: theme.spacing * 2,
       },
       tableContentContainer: {
         height: heights.adminTreatmentsTable,

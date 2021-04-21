@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
 import { apiRouteOutType, idModule, indexer, keysOf, treatmentInfoType, timeOperator } from '@label/core';
-import { DecisionNumberTextInput, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
+import { DecisionNumberTextInput, IconButton, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import { localStorage, treatedDocumentFilterType } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -11,7 +11,10 @@ import { TreatedDocumentsTable } from './TreatedDocumentsTable';
 
 export { TreatedDocuments };
 
-function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'> }) {
+function TreatedDocuments(props: {
+  treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
+  refetch: () => void;
+}) {
   const theme = useCustomTheme();
   const INITIAL_FILTER_VALUES = localStorage.treatedDocumentFiltersHandler.get();
   const [filterValues, setFilterValues] = useState<treatedDocumentFilterType>(INITIAL_FILTER_VALUES);
@@ -36,7 +39,17 @@ function TreatedDocuments(props: { treatedDocuments: apiRouteOutType<'get', 'tre
               setFilterValues={setAndStoreFilterValues}
               resultsCount={filteredTreatedDocuments.length}
             />
-            <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
+            <div style={styles.tableRightHeader}>
+              <div style={styles.searchTextInputContainer}>
+                <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
+              </div>
+              <IconButton
+                backgroundColor="primary"
+                onClick={props.refetch}
+                hint={wordings.shared.refresh}
+                iconName="reset"
+              />
+            </div>{' '}
           </div>
         </div>
       </div>
@@ -277,7 +290,7 @@ function buildStyles(theme: customThemeType) {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingRight: theme.spacing * 4,
+      paddingRight: theme.spacing * 2,
     },
     tableHeaderContainer: {
       height: heights.adminTreatmentsTableHeader,
@@ -288,14 +301,16 @@ function buildStyles(theme: customThemeType) {
     publicationCategoryBadgeContainer: {
       marginRight: theme.spacing,
     },
-    rightHeaderContent: {
-      flex: 1,
-      marginTop: theme.spacing * 2,
-    },
     tableHeader: {
       paddingTop: theme.spacing * 2,
       display: 'flex',
       justifyContent: 'space-between',
+    },
+    tableRightHeader: {
+      display: 'flex',
+    },
+    searchTextInputContainer: {
+      marginRight: theme.spacing * 2,
     },
     tableContentContainer: {
       height: heights.adminTreatmentsTable,

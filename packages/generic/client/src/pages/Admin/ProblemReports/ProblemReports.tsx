@@ -2,6 +2,8 @@ import React from 'react';
 import { apiRouteOutType } from '@label/core';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { ProblemReportsTable } from './ProblemReportsTable';
+import { wordings } from '../../../wordings';
+import { IconButton } from '../../../components';
 
 export { ProblemReports };
 
@@ -14,7 +16,14 @@ function ProblemReports(props: {
   return (
     <div style={styles.table}>
       <div style={styles.tableHeaderContainer}>
-        <div style={styles.tableHeader}></div>
+        <div style={styles.tableHeader}>
+          <IconButton
+            backgroundColor="primary"
+            onClick={props.refetch}
+            hint={wordings.shared.refresh}
+            iconName="reset"
+          />
+        </div>
       </div>
       <div style={styles.tableContentContainer}>
         <ProblemReportsTable refetch={props.refetch} problemReportsWithDetails={props.problemReportsWithDetails} />
@@ -29,10 +38,11 @@ function buildStyles(theme: customThemeType) {
       height: heights.adminTreatmentsTableHeader,
     },
     tableHeader: {
-      paddingTop: theme.spacing * 2,
-      paddingRight: theme.spacing,
+      paddingTop: theme.spacing * 5,
+      paddingRight: theme.spacing * 2,
       display: 'flex',
-      justifyContent: 'space-between',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
     },
     tableContentContainer: {
       height: heights.adminTreatmentsTable,

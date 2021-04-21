@@ -18,9 +18,10 @@ type adminInfosType = {
 };
 
 type refetchInfosType = {
-  untreatedDocuments: () => void;
-  problemReportsWithDetails: () => void;
   aggregatedStatistics: (params: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => void;
+  problemReportsWithDetails: () => void;
+  treatedDocuments: () => void;
+  untreatedDocuments: () => void;
 };
 
 type ressourceFiltersType = {
@@ -38,7 +39,7 @@ function AdminInfosDataFetcher(props: {
     <AgentsDataFetcher>
       {({ usersWithDetails }) => (
         <TreatedDocumentsDataFetcher>
-          {({ treatedDocuments }) => (
+          {({ treatedDocuments, refetch: refetchTreatedDocuments }) => (
             <UntreatedDocumentsDataFetcher>
               {({ untreatedDocuments, refetch: refetchUntreatedDocuments }) => (
                 <StatisticsDataFetcher>
@@ -62,6 +63,7 @@ function AdminInfosDataFetcher(props: {
                           refetch: {
                             aggregatedStatistics: refetchAggregatedStatistics,
                             problemReportsWithDetails: refetchProblemReportsWithDetails,
+                            treatedDocuments: refetchTreatedDocuments,
                             untreatedDocuments: refetchUntreatedDocuments,
                           },
                           ressourceFilters: {

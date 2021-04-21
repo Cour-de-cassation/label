@@ -6,14 +6,17 @@ import { DataFetcher } from '../../DataFetcher';
 export { TreatedDocumentsDataFetcher };
 
 function TreatedDocumentsDataFetcher(props: {
-  children: (fetched: { treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'> }) => ReactElement;
+  children: (fetched: {
+    treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
+    refetch: () => void;
+  }) => ReactElement;
 }) {
   const treatedDocumentsFetchInfo = useApi(buildFetchTreatedDocuments(), {});
 
   return (
     <DataFetcher
       buildComponentWithData={(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) =>
-        props.children({ treatedDocuments })
+        props.children({ treatedDocuments, refetch: treatedDocumentsFetchInfo.refetch })
       }
       fetchInfo={treatedDocumentsFetchInfo}
     />

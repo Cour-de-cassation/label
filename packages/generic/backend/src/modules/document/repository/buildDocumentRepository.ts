@@ -27,14 +27,6 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
-    async findOneByStatusAndPriority({ status, priority }) {
-      const document = await collection.findOne({
-        priority,
-        status,
-      });
-
-      return document || undefined;
-    },
     async findOneByStatusAndPriorityAmong(
       { status, priority },
       idsToSearchInFirst,

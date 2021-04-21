@@ -18,13 +18,6 @@ type customDocumentRepositoryType = {
     publicationCategory: documentType['publicationCategory'];
     status: documentType['status'];
   }) => Promise<documentType[]>;
-  findOneByStatusAndPriority: ({
-    status,
-    priority,
-  }: {
-    status: documentType['status'];
-    priority: documentType['priority'];
-  }) => Promise<documentType | undefined>;
   findOneByStatusAndPriorityAmong: (
     {
       status,

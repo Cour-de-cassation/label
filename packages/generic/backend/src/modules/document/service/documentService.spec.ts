@@ -181,6 +181,14 @@ describe('documentService', () => {
           documentId: documentOfUser2._id,
         }),
       );
+      const treatment1 = treatmentModule.generator.generate({
+        documentId: documentofUser1._id,
+      });
+      const treatment2 = treatmentModule.generator.generate({
+        documentId: documentOfUser2._id,
+      });
+      await treatmentRepository.insert(treatment1);
+      await treatmentRepository.insert(treatment2);
 
       const documentForUser = await documentService.fetchDocumentForUser(
         userId1,
@@ -208,7 +216,11 @@ describe('documentService', () => {
           status: 'pending',
         },
       ] as const).map(documentModule.generator.generate);
+      const treatments = documents.map((document) =>
+        treatmentModule.generator.generate({ documentId: document._id }),
+      );
       await Promise.all(documents.map(documentRepository.insert));
+      await Promise.all(treatments.map(treatmentRepository.insert));
       await assignationRepository.insert(
         assignationModule.generator.generate({
           userId: userId2,
@@ -223,18 +235,18 @@ describe('documentService', () => {
       expect(documentForUser).toEqual(documents[1]);
     });
 
-    it('should fetch a document with annotation report first', async () => {
+    it('should fetch a document with treatment first', async () => {
       const userId1 = idModule.lib.buildId();
       const documents = range(3).map(() =>
         documentModule.generator.generate({
           status: 'free',
         }),
       );
-      const annotationReport = annotationReportModule.generator.generate({
+      const treatment = treatmentModule.generator.generate({
         documentId: documents[1]._id,
       });
       await Promise.all(documents.map(documentRepository.insert));
-      await annotationReportRepository.insert(annotationReport);
+      await treatmentRepository.insert(treatment);
 
       const documentForUser = await documentService.fetchDocumentForUser(
         userId1,
@@ -246,11 +258,14 @@ describe('documentService', () => {
     it('should throw an error on too many attempts', async () => {
       const documentService = buildDocumentService();
       const userId = idModule.lib.buildId();
-      await Promise.all(
-        range(301).map(() =>
-          documentRepository.insert(documentModule.generator.generate()),
-        ),
+      const documents = range(301).map(() =>
+        documentModule.generator.generate(),
       );
+      const treatments = documents.map((document) =>
+        treatmentModule.generator.generate({ documentId: document._id }),
+      );
+      await Promise.all(treatments.map(treatmentRepository.insert));
+      await Promise.all(documents.map(documentRepository.insert));
       await Promise.all(
         range(300).map(() => documentService.fetchDocumentForUser(userId)),
       );

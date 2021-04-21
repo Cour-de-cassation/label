@@ -39,6 +39,7 @@ function buildDocumentService() {
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
     fetchDocumentsReadyToExport,
+    fetchDocumentIdsWithAnnotations,
     fetchDocumentsWithoutAnnotations,
     fetchDocumentForUser,
     fetchDocument,
@@ -222,6 +223,23 @@ function buildDocumentService() {
     );
   }
 
+  async function fetchDocumentIdsWithAnnotations(): Promise<
+    documentType['_id'][]
+  > {
+    const documentRepository = buildDocumentRepository();
+
+    const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
+    const documents = await documentRepository.findAll();
+
+    return documents
+      .map(({ _id }) => _id)
+      .filter((_id) =>
+        treatedDocumentIds.some((documentId) =>
+          idModule.lib.equalId(documentId, _id),
+        ),
+      );
+  }
+
   async function fetchDocument(documentId: documentType['_id']) {
     const documentRepository = buildDocumentRepository();
 
@@ -271,21 +289,22 @@ function buildDocumentService() {
 
     async function assignNewDocument() {
       let document: documentType | undefined;
-      const documentIdsWithAnnotationReport = await annotationReportService.fetchDocumentIdsWithAnnotationReport();
+      const documentIdsWithAnnotations = await fetchDocumentIdsWithAnnotations();
+
       document = await assignDocumentByPriority(
         'high',
-        documentIdsWithAnnotationReport,
+        documentIdsWithAnnotations,
       );
       if (!document) {
         document = await assignDocumentByPriority(
           'medium',
-          documentIdsWithAnnotationReport,
+          documentIdsWithAnnotations,
         );
       }
       if (!document) {
         document = await assignDocumentByPriority(
           'low',
-          documentIdsWithAnnotationReport,
+          documentIdsWithAnnotations,
         );
       }
       if (!document) {
@@ -303,21 +322,14 @@ function buildDocumentService() {
 
   async function assignDocumentByPriority(
     priority: documentType['priority'],
-    documentIdsWithAnnotationReport: documentType['_id'][],
+    documentIdsWithAnnotations: documentType['_id'][],
   ): Promise<documentType | undefined> {
     const documentRepository = buildDocumentRepository();
 
-    let document: documentType | undefined;
-    document = await documentRepository.findOneByStatusAndPriorityAmong(
+    const document = await documentRepository.findOneByStatusAndPriorityAmong(
       { priority, status: 'free' },
-      documentIdsWithAnnotationReport,
+      documentIdsWithAnnotations,
     );
-    if (!document) {
-      document = await documentRepository.findOneByStatusAndPriority({
-        priority,
-        status: 'free',
-      });
-    }
 
     if (!document) {
       return undefined;
@@ -328,10 +340,7 @@ function buildDocumentService() {
       { status: 'pending' },
     );
     if (!hasBeenChangedToPending) {
-      return assignDocumentByPriority(
-        priority,
-        documentIdsWithAnnotationReport,
-      );
+      return assignDocumentByPriority(priority, documentIdsWithAnnotations);
     }
     return document;
   }

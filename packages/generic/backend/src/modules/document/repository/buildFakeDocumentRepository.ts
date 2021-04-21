@@ -39,14 +39,6 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         .map((document) => projectFakeObjects(document, projections));
     },
 
-    async findOneByStatusAndPriority({ status, priority }) {
-      const freeDocument = collection.find(
-        (document) =>
-          document.priority === priority && document.status === status,
-      );
-      return freeDocument;
-    },
-
     async findOneByStatusAndPriorityAmong(
       { status, priority },
       idsToSearchInFirst,

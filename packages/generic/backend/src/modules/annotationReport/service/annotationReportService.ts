@@ -15,12 +15,4 @@ const annotationReportService = {
     const annotationReportRepository = buildAnnotationReportRepository();
     return annotationReportRepository.findByDocumentId(documentId);
   },
-
-  async fetchDocumentIdsWithAnnotationReport() {
-    const annotationReportRepository = buildAnnotationReportRepository();
-    const documentIdsWithAnnotationReport = await annotationReportRepository.findAllProjection(
-      ['documentId'],
-    );
-    return documentIdsWithAnnotationReport.map(({ documentId }) => documentId);
-  },
 };

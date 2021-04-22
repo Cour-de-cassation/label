@@ -84,11 +84,9 @@ const fr = {
     anonymisedView: 'Vue anonymisée',
     applyEveryWhere: 'Appliquer à tous',
     askedAnnotations: 'Annotations demandées',
-    cancel: 'Annuler',
     category: 'Catégorie',
     changeCategory: 'Changer de catégorie',
     close: 'Fermer',
-    darkMode: 'Mode sombre',
     describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
     delete: 'Supprimer',
     deletionOption: {
@@ -96,7 +94,6 @@ const fr = {
       representative: 'Représentant seul ({count} annot.)',
       entity: "Supprimer toute l'entité",
     },
-    displayMode: "Type d'affichage",
     documentSelector: {
       publishedDocumentTitle: 'Cette décision sera publiée',
       genericDocumentInfoEntries: {
@@ -115,7 +112,6 @@ const fr = {
       unknownJuridiction: 'Juridiction non précisée',
     },
     identicalOccurrencesSpotted: 'occurence(s) identique(s) détectée(s)',
-    lightMode: 'Mode lumineux',
     link: 'Créer une liaison',
     originalText: 'Texte original',
     problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
@@ -126,7 +122,6 @@ const fr = {
     reportProblem: 'Signaler un problème',
     reset: 'Réinitialiser',
     send: 'Envoyer',
-    settings: 'Réglages',
     undo: 'Annuler',
     unlink: 'Supprimer la liaison',
     unlinkOption: {
@@ -155,11 +150,18 @@ const fr = {
       sunday: 'D',
     },
     back: 'Précédent',
+    cancel: 'Annuler',
     copyToClipboard: 'Copier dans le presse-papier',
     logout: 'Se déconnecter',
     refresh: 'Rafraîchir',
     moreOptions: "Plus d'options",
     passwordChangedConfirmation: { text: 'Votre mot de passe a été modifié.', button: 'OK' },
+    settingsDrawer: {
+      displayMode: "Type d'affichage",
+      darkMode: 'Mode sombre',
+      lightMode: 'Mode lumineux',
+      title: 'Réglages',
+    },
   },
   loadingPage: 'Veuillez patienter...',
   problemReportsPage: {

@@ -10,7 +10,7 @@ function SettingsButton() {
 
   return (
     <>
-      <IconButton iconName="settings" onClick={toggleDrawer} hint={wordings.homePage.settings} />
+      <IconButton iconName="settings" onClick={toggleDrawer} hint={wordings.shared.settingsDrawer.title} />
       <SettingsDrawer isOpen={isSettingsDrawerOpen} close={closeDrawer} />
     </>
   );

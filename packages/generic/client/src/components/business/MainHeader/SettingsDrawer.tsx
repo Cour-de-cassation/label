@@ -5,7 +5,7 @@ import { routes } from '../../../pages';
 import { localStorage } from '../../../services/localStorage';
 import { useCustomTheme, customThemeType, useDisplayMode } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { ButtonWithIcon, Drawer, IconButton, RadioButton, Text, RichTextInput } from '../../generic';
+import { ButtonWithIcon, Drawer, RadioButton, Text, RichTextInput } from '../../generic';
 import { PasswordChangeConfirmationPopup } from './PasswordChangeConfirmationPopup';
 import { SettingsSection } from './SettingsSection';
 
@@ -33,17 +33,8 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
       {isPasswordConfirmationPopupShown && (
         <PasswordChangeConfirmationPopup onClose={() => setIsPasswordConfirmationPopupShown(false)} />
       )}
-      <Drawer onClose={props.close} isOpen={props.isOpen}>
+      <Drawer onClose={props.close} title={wordings.shared.settingsDrawer.title} isOpen={props.isOpen}>
         <div style={styles.drawer}>
-          <div style={styles.header}>
-            <div>
-              <Text variant="h1">{wordings.homePage.settings}</Text>
-            </div>
-            <div>
-              <IconButton hint={wordings.homePage.cancel} onClick={props.close} iconName="close" />
-            </div>
-          </div>
-
           <SettingsSection
             content={
               <div style={styles.accountSectionContent}>
@@ -58,23 +49,22 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
             }
             title={wordings.business.account}
           />
-
           <SettingsSection
             content={
               <>
                 <RadioButton
-                  label={wordings.homePage.lightMode}
+                  label={wordings.shared.settingsDrawer.lightMode}
                   isChecked={displayMode === 'lightMode'}
                   onClick={() => setDisplayMode('lightMode')}
                 />
                 <RadioButton
-                  label={wordings.homePage.darkMode}
+                  label={wordings.shared.settingsDrawer.darkMode}
                   isChecked={displayMode === 'darkMode'}
                   onClick={() => setDisplayMode('darkMode')}
                 />
               </>
             }
-            title={wordings.homePage.displayMode}
+            title={wordings.shared.settingsDrawer.displayMode}
           />
 
           <SettingsSection
@@ -183,15 +173,6 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
         alignItems: 'center',
         justifyContent: 'space-between',
         width: 600,
-        padding: theme.spacing * 6,
-      },
-      header: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        paddingBottom: theme.spacing * 5,
-        borderBottom: 'solid 1px',
-        borderBottomColor: theme.colors.separator,
-        width: '100%',
       },
       accountSectionContent: {
         display: 'flex',

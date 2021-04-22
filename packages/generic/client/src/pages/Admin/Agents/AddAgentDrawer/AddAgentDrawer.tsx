@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { userModule, userType } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { ButtonWithIcon, Drawer, IconButton, LabelledDropdown, Text, RichTextInput } from '../../../../components';
+import { ButtonWithIcon, Drawer, LabelledDropdown, RichTextInput } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { AgentCreatedPopUp } from './AgentCreatedPopUp';
@@ -43,16 +43,8 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
       {!!temporaryPassword && (
         <AgentCreatedPopUp onClose={() => setTemporaryPassword(undefined)} password={temporaryPassword} />
       )}
-      <Drawer onClose={props.onClose} isOpen={props.isOpen}>
+      <Drawer onClose={props.onClose} title={wordings.agentsPage.createAgentDrawer.title} isOpen={props.isOpen}>
         <div style={styles.drawer}>
-          <div style={styles.header}>
-            <div>
-              <Text variant="h1">{wordings.agentsPage.createAgentDrawer.title}</Text>
-            </div>
-            <div>
-              <IconButton hint={wordings.homePage.cancel} onClick={props.onClose} iconName="close" />
-            </div>
-          </div>
           <div style={styles.formContainer}>
             <div style={styles.fieldContainer}>
               <RichTextInput

@@ -68,7 +68,7 @@ function ReportProblemToolTipMenu(props: {
                 color="default"
                 iconName="close"
                 onClick={closeTooltipMenu}
-                text={wordings.homePage.cancel}
+                text={wordings.shared.cancel}
               />
             </div>
             <ButtonWithIcon

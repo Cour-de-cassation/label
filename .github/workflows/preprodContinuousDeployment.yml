@@ -1,0 +1,19 @@
+name: Automatic deployment on preprod branch
+
+on:
+  schedule:
+    - workflow_dispatch:
+    - cron: "00 19 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        cd scripts/gitflow
+        ./updatePreprod.sh

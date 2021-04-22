@@ -91,10 +91,15 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
       const userId1 = idModule.lib.buildId();
       const userId2 = idModule.lib.buildId();
       const ressourceFilter = ressourceFilterModule.generator.generate({
+        source: 'SOURCE1',
         userId: userId1,
       });
       const documents = ([
-        { status: 'done', text: 'Some text with five words' },
+        {
+          source: 'SOURCE1',
+          status: 'done',
+          text: 'Some text with five words',
+        },
         { status: 'done' },
         { status: 'saved' },
       ] as const).map(documentModule.generator.generate);

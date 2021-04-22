@@ -1,6 +1,7 @@
 import { flatten } from 'lodash';
 import {
   idModule,
+  ressourceFilterModule,
   ressourceFilterType,
   statisticModule,
   statisticsCreator,
@@ -46,21 +47,10 @@ async function fetchAggregatedStatisticsAccordingToFilter(
         treatmentsByDocumentId[idModule.lib.convertToString(document._id)],
     }));
 
-    const filteredTreatedDocuments = treatedDocuments.filter(
-      ({ assignations }) => {
-        let isInTheFilter = true;
-
-        if (filter.userId) {
-          const userIdToFilter = filter.userId;
-
-          isInTheFilter =
-            isInTheFilter &&
-            assignations.some((assignation) =>
-              idModule.lib.equalId(assignation.userId, userIdToFilter),
-            );
-        }
-
-        return isInTheFilter;
+    const filteredTreatedDocuments = ressourceFilterModule.lib.filterTreatedDocuments(
+      {
+        ressourceFilter: filter,
+        treatedDocuments,
       },
     );
 

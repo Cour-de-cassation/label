@@ -5,10 +5,11 @@ import {
   indexer,
   errorHandlers,
   buildAnonymizer,
+  userType,
 } from '@label/core';
 import { settingsLoader } from '../../../lib/settingsLoader';
 import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
-import { dateBuilder } from '../../../utils';
+import { dateBuilder, logger } from '../../../utils';
 import { annotationReportService } from '../../annotationReport';
 import { assignationService } from '../../assignation';
 import { treatmentService } from '../../treatment';
@@ -41,6 +42,7 @@ function buildDocumentService() {
     fetchUntreatedDocuments,
     fetchDocumentsReadyToExport,
     fetchDocumentsWithoutAnnotations,
+    fetchDocumentsForUser,
     fetchDocumentForUser,
     fetchDocument,
     updateDocumentStatus,
@@ -235,66 +237,62 @@ function buildDocumentService() {
     return documentRepository.findById(documentId);
   }
 
+  async function fetchDocumentsForUser(
+    userId: idType,
+    documentsMaxCount: number,
+  ) {
+    const documents: documentType[] = [];
+    const documentIdsToExclude: documentType['_id'][] = [];
+    const documentIdsWithAnnotations = await treatmentService.fetchTreatedDocumentIds();
+    const documentsAssignated = await fetchAlreadyAssignatedDocuments(userId);
+    for (
+      let i = 0;
+      i < documentsAssignated.length && i < documentsMaxCount;
+      i++
+    ) {
+      checkCallAttempts(idModule.lib.convertToString(userId));
+      const assignatedDocument = documentsAssignated[i];
+      documents.push(assignatedDocument);
+      documentIdsToExclude.push(assignatedDocument._id);
+    }
+
+    for (let i = documents.length; i < documentsMaxCount; i++) {
+      try {
+        const document = await fetchDocumentForUser(
+          userId,
+          documentIdsWithAnnotations,
+        );
+        documents.push(document);
+        documentIdsToExclude.push(document._id);
+      } catch (error) {
+        logger.log(error);
+      }
+    }
+    return documents;
+  }
+
   async function fetchDocumentForUser(
     userId: idType,
-    documentIdsToExclude: idType[] = [],
+    documentIdsToSearchIn: documentType['_id'][],
   ): Promise<documentType> {
     checkCallAttempts(idModule.lib.convertToString(userId));
-    const documentRepository = buildDocumentRepository();
-    const documentIdsAssignated = await assignationService.fetchDocumentIdsAssignatedToUserId(
-      userId,
-    );
 
-    const documentsAssignated = await fetchAlreadyAssignatedDocuments();
+    return assignNewDocument(documentIdsToSearchIn);
 
-    if (documentsAssignated.length !== 0) {
-      return documentsAssignated[0];
-    } else {
-      return assignNewDocument();
-    }
-
-    async function fetchAlreadyAssignatedDocuments() {
-      const documentsById = await documentRepository.findAllByIds(
-        documentIdsAssignated.filter(
-          (documentId) =>
-            !documentIdsToExclude.some((anotherDocumentId) =>
-              idModule.lib.equalId(documentId, anotherDocumentId),
-            ),
-        ),
-      );
-      return Object.values(documentsById)
-        .filter(
-          (document) =>
-            document.status === 'pending' || document.status === 'saved',
-        )
-        .sort((document1, document2) =>
-          document1.status === 'saved'
-            ? -1
-            : document2.status === 'saved'
-            ? 1
-            : 0,
-        );
-    }
-
-    async function assignNewDocument() {
+    async function assignNewDocument(
+      documentIdsToSearchIn: documentType['_id'][],
+    ) {
       let document: documentType | undefined;
-      const documentIdsWithAnnotations = await treatmentService.fetchTreatedDocumentIds();
 
-      document = await assignDocumentByPriority(
-        'high',
-        documentIdsWithAnnotations,
-      );
+      document = await assignDocumentByPriority('high', documentIdsToSearchIn);
       if (!document) {
         document = await assignDocumentByPriority(
           'medium',
-          documentIdsWithAnnotations,
+          documentIdsToSearchIn,
         );
       }
       if (!document) {
-        document = await assignDocumentByPriority(
-          'low',
-          documentIdsWithAnnotations,
-        );
+        document = await assignDocumentByPriority('low', documentIdsToSearchIn);
       }
       if (!document) {
         throw new Error(`No free document available`);
@@ -307,6 +305,29 @@ function buildDocumentService() {
 
       return document;
     }
+  }
+
+  async function fetchAlreadyAssignatedDocuments(userId: userType['_id']) {
+    const documentRepository = buildDocumentRepository();
+    const documentIdsAssignated = await assignationService.fetchDocumentIdsAssignatedToUserId(
+      userId,
+    );
+
+    const documentsById = await documentRepository.findAllByIds(
+      documentIdsAssignated,
+    );
+    return Object.values(documentsById)
+      .filter(
+        (document) =>
+          document.status === 'pending' || document.status === 'saved',
+      )
+      .sort((document1, document2) =>
+        document1.status === 'saved'
+          ? -1
+          : document2.status === 'saved'
+          ? 1
+          : 0,
+      );
   }
 
   async function assignDocumentByPriority(

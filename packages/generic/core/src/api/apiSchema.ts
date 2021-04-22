@@ -116,17 +116,14 @@ const apiSchema = {
       },
       out: documentModule.fetchedModel,
     },
-    documentForUser: {
+    documentsForUser: {
       in: {
-        documentIdsToExclude: buildModel({
-          kind: 'array',
-          content: {
-            kind: 'custom',
-            content: 'id',
-          },
+        documentsMaxCount: buildModel({
+          kind: 'primitive',
+          content: 'number',
         } as const),
       },
-      out: documentModule.fetchedModel,
+      out: buildModel({ kind: 'array', content: documentModule.fetchedModel }),
     },
     problemReportsWithDetails: {
       out: buildModel({

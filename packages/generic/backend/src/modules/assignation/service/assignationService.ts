@@ -83,20 +83,6 @@ const assignationService = {
     );
   },
 
-  async fetchAssignatedTreatmentIds() {
-    const assignationRepository = buildAssignationRepository();
-    const assignations = await assignationRepository.findAll();
-
-    return assignations.map((assignation) => assignation.treatmentId);
-  },
-
-  async fetchAssignations() {
-    const assignationRepository = buildAssignationRepository();
-    const assignations = await assignationRepository.findAll();
-
-    return assignations;
-  },
-
   async fetchAssignationId({
     userId,
     documentId,

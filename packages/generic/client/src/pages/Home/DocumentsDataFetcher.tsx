@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationType, fetchedDocumentType, httpStatusCodeHandler, idModule, idType } from '@label/core';
+import { annotationType, fetchedDocumentType, httpStatusCodeHandler, idModule } from '@label/core';
 import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
 
@@ -13,10 +13,10 @@ function DocumentsDataFetcher(props: {
     }[];
     fetchNewDocumentsForUser: () => void;
   }) => ReactElement;
-  maxNumberOfDocuments: number;
+  documentsMaxCount: number;
 }) {
   const documentsForUserFetchInfo = useApi(buildFetchDocumentsForUser(), {
-    maxNumberOfDocuments: props.maxNumberOfDocuments,
+    documentsMaxCount: props.documentsMaxCount,
   });
 
   return (
@@ -34,60 +34,61 @@ function DocumentsDataFetcher(props: {
 }
 
 function buildFetchDocumentsForUser() {
-  return async ({ maxNumberOfDocuments }: { maxNumberOfDocuments: number }) => {
-    const documentsForUser = [];
-    const documentIdsToExclude = [] as idType[];
-    const statusCodes = [];
+  return async ({ documentsMaxCount }: { documentsMaxCount: number }) => {
+    const { documentsForUser, statusCode } = await fetchDocumentsForUser(documentsMaxCount);
 
-    for (let i = 0; i < maxNumberOfDocuments; i++) {
-      const fetchInfo = await fetchDocumentForUser(documentIdsToExclude);
-      if (!fetchInfo) {
-        break;
-      }
-      documentsForUser.push(fetchInfo.documentForUser);
-      documentIdsToExclude.push(idModule.lib.buildId(fetchInfo.documentForUser.document._id));
-      statusCodes.push(fetchInfo.statusCode);
-    }
-
-    return { data: documentsForUser, statusCode: httpStatusCodeHandler.merge(statusCodes) };
+    return { data: documentsForUser, statusCode };
   };
 }
 
-async function fetchDocumentForUser(documentIdsToExclude: idType[]) {
-  try {
-    const { data: document, statusCode: statusCodeDocument } = await apiCaller.get<'documentForUser'>(
-      'documentForUser',
-      {
-        documentIdsToExclude: documentIdsToExclude || [],
-      },
-    );
-    const { data: annotations, statusCode: statusCodeAnnotations } = await apiCaller.get<'annotations'>('annotations', {
-      documentId: document._id,
-    });
+async function fetchDocumentsForUser(documentsMaxCount: number) {
+  const documentsForUser = [];
+  const statusCodesAnnotations = [];
 
-    const { data: annotationReport } = await apiCaller.get<'annotationReport'>('annotationReport', {
-      documentId: document._id,
-    });
+  const { data: documents, statusCode: statusCodeDocuments } = await apiCaller.get<'documentsForUser'>(
+    'documentsForUser',
+    {
+      documentsMaxCount,
+    },
+  );
 
-    /* eslint-disable no-console */
-    console.log(document.title);
-    /* eslint-disable no-console */
-    annotationReport.checkList.map((item) => console.log(item));
-    /* eslint-disable no-console */
-    console.log('———————————————————————————————————');
+  for (let i = 0; i < documents.length; i++) {
+    const document = documents[i];
 
-    return {
-      documentForUser: {
+    try {
+      const { data: annotations, statusCode: statusCodeAnnotations } = await apiCaller.get<'annotations'>(
+        'annotations',
+        {
+          documentId: document._id,
+        },
+      );
+
+      const { data: annotationReport } = await apiCaller.get<'annotationReport'>('annotationReport', {
+        documentId: document._id,
+      });
+
+      /* eslint-disable no-console */
+      console.log(document.title);
+      /* eslint-disable no-console */
+      annotationReport.checkList.map((item) => console.log(item));
+      /* eslint-disable no-console */
+      console.log('———————————————————————————————————');
+
+      documentsForUser.push({
         document: {
           ...document,
           _id: idModule.lib.buildId(document._id),
         },
         annotations: annotations,
-      },
-      statusCode: httpStatusCodeHandler.merge([statusCodeDocument, statusCodeAnnotations]),
-    };
-  } catch (error) {
-    console.warn(error);
-    return undefined;
+      });
+      statusCodesAnnotations.push(statusCodeAnnotations);
+    } catch (error) {
+      console.warn(error);
+    }
   }
+
+  return {
+    documentsForUser,
+    statusCode: httpStatusCodeHandler.merge([statusCodeDocuments, ...statusCodesAnnotations]),
+  };
 }

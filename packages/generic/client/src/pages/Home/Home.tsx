@@ -7,7 +7,7 @@ const MAX_NUMBER_OF_CHOICES = 3;
 
 function Home(props: { settings: settingsType }) {
   return (
-    <DocumentsDataFetcher maxNumberOfDocuments={MAX_NUMBER_OF_CHOICES}>
+    <DocumentsDataFetcher documentsMaxCount={MAX_NUMBER_OF_CHOICES}>
       {({ documentsForUser, fetchNewDocumentsForUser }) => (
         <DocumentSwitcher
           choices={documentsForUser}

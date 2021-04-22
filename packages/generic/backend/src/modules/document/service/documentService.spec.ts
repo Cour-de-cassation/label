@@ -140,7 +140,7 @@ describe('documentService', () => {
     });
   });
 
-  describe('fetchDocumentForUser', () => {
+  describe('fetchDocumentsForUser', () => {
     it('should fetch a document already assignated if it exists', async () => {
       const userId = idModule.lib.buildId();
       const document = documentModule.generator.generate({
@@ -155,11 +155,12 @@ describe('documentService', () => {
         }),
       );
 
-      const documentForUser = await documentService.fetchDocumentForUser(
+      const documentsForUser = await documentService.fetchDocumentsForUser(
         userId,
+        1,
       );
 
-      expect(documentForUser).toEqual(document);
+      expect(documentsForUser[0]).toEqual(document);
     });
 
     it('should fetch a document assignated to nobody if there are no assignation for this user', async () => {
@@ -190,11 +191,12 @@ describe('documentService', () => {
       await treatmentRepository.insert(treatment1);
       await treatmentRepository.insert(treatment2);
 
-      const documentForUser = await documentService.fetchDocumentForUser(
+      const documentsForUser = await documentService.fetchDocumentsForUser(
         userId1,
+        1,
       );
 
-      expect(documentForUser).toEqual(documentofUser1);
+      expect(documentsForUser[0]).toEqual(documentofUser1);
     });
 
     it('should fetch a document with the highest priority assignated to nobody if there are no assignation for this user', async () => {
@@ -228,11 +230,12 @@ describe('documentService', () => {
         }),
       );
 
-      const documentForUser = await documentService.fetchDocumentForUser(
+      const documentsForUser = await documentService.fetchDocumentsForUser(
         userId1,
+        1,
       );
 
-      expect(documentForUser).toEqual(documents[1]);
+      expect(documentsForUser[0]).toEqual(documents[1]);
     });
 
     it('should fetch a document with treatment first', async () => {
@@ -248,11 +251,12 @@ describe('documentService', () => {
       await Promise.all(documents.map(documentRepository.insert));
       await treatmentRepository.insert(treatment);
 
-      const documentForUser = await documentService.fetchDocumentForUser(
+      const documentsForUser = await documentService.fetchDocumentsForUser(
         userId1,
+        1,
       );
 
-      expect(documentForUser).toEqual(documents[1]);
+      expect(documentsForUser[0]).toEqual(documents[1]);
     });
 
     it('should throw an error on too many attempts', async () => {
@@ -266,11 +270,9 @@ describe('documentService', () => {
       );
       await Promise.all(treatments.map(treatmentRepository.insert));
       await Promise.all(documents.map(documentRepository.insert));
-      await Promise.all(
-        range(300).map(() => documentService.fetchDocumentForUser(userId)),
-      );
+      await documentService.fetchDocumentsForUser(userId, 300);
 
-      const promise = () => documentService.fetchDocumentForUser(userId);
+      const promise = () => documentService.fetchDocumentsForUser(userId, 1);
 
       await expect(promise()).rejects.toThrow(
         `Too many call attempts for identifier ${idModule.lib.convertToString(

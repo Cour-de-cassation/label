@@ -61,13 +61,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         documentService.fetchDocument(idModule.lib.buildId(documentId)),
     }),
 
-    documentForUser: buildAuthenticatedController({
+    documentsForUser: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
-      controllerWithUser: async (user, { args: { documentIdsToExclude } }) =>
-        documentService.fetchDocumentForUser(
-          user._id,
-          documentIdsToExclude.map(idModule.lib.buildId),
-        ),
+      controllerWithUser: async (user, { args: { documentsMaxCount } }) =>
+        documentService.fetchDocumentsForUser(user._id, documentsMaxCount),
     }),
 
     problemReportsWithDetails: buildAuthenticatedController({

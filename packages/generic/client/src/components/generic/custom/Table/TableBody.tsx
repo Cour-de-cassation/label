@@ -6,8 +6,8 @@ export { TableBody };
 
 export type { tableRowFieldType };
 
-type tableRowFieldType<InputT> = {
-  id: string;
+type tableRowFieldType<InputT, orderByPropertyT = string> = {
+  id: orderByPropertyT;
   title: string;
   tooltipText?: string;
   canBeSorted: boolean;
@@ -17,9 +17,9 @@ type tableRowFieldType<InputT> = {
   width: number;
 };
 
-function TableBody<InputT>(props: {
+function TableBody<InputT, orderByPropertyT extends string = string>(props: {
   data: InputT[];
-  fields: Array<tableRowFieldType<InputT>>;
+  fields: Array<tableRowFieldType<InputT, orderByPropertyT>>;
   isRowHighlighted?: (row: InputT) => boolean;
   onRowClick?: (row: InputT) => void;
   optionCellStyle?: CSSProperties;

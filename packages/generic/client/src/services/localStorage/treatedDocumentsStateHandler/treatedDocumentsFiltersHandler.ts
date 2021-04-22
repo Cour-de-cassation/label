@@ -1,5 +1,5 @@
-import { localStorageHandler } from './localStorageHandler';
-import { localStorageMappers } from './localStorageMappers';
+import { localStorageHandler } from '../localStorageHandler';
+import { localStorageMappers } from '../localStorageMappers';
 
 const TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_START_DATE';
 const TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_END_DATE';
@@ -9,7 +9,7 @@ const TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY =
 const TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS';
 const TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS';
 
-export { treatedDocumentFiltersHandler };
+export { setFilters, getFilters };
 
 export type { treatedDocumentFilterType };
 
@@ -22,12 +22,7 @@ type treatedDocumentFilterType = {
   mustHaveSubAnnotations: boolean;
 };
 
-const treatedDocumentFiltersHandler = {
-  set,
-  get,
-};
-
-function set({
+function setFilters({
   startDate,
   endDate,
   userName,
@@ -67,7 +62,7 @@ function set({
   });
 }
 
-function get(): treatedDocumentFilterType {
+function getFilters(): treatedDocumentFilterType {
   const startDate = localStorageHandler.get({
     key: TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY,
     mapper: localStorageMappers.date,

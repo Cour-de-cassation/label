@@ -10,21 +10,21 @@ type orderDirectionType = 'asc' | 'desc';
 
 const DEFAULT_ORDER_DIRECTION = 'asc';
 
-type cellType = {
-  id: string;
+type cellType<orderByPropertyT> = {
+  id: orderByPropertyT;
   title: string;
   tooltipText?: string;
   canBeSorted?: boolean;
 };
 
-function TableHeader(props: {
-  cells: Array<cellType>;
+function TableHeader<orderByPropertyT extends string = string>(props: {
+  cells: Array<cellType<orderByPropertyT>>;
   fieldCellStyles: Record<string, CSSProperties>;
   optionCellStyle?: CSSProperties;
-  orderByProperty: string | undefined;
+  orderByProperty: orderByPropertyT | undefined;
   orderDirection: orderDirectionType;
   setOrderDirection: (orderDirection: orderDirectionType) => void;
-  setOrderByProperty: (orderByProperty: string) => void;
+  setOrderByProperty: (orderByProperty: orderByPropertyT) => void;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -51,7 +51,7 @@ function TableHeader(props: {
     </thead>
   );
 
-  function onOrderByPropertyClickBuilder(newOrderByProperty: string) {
+  function onOrderByPropertyClickBuilder(newOrderByProperty: orderByPropertyT) {
     const onOrderByPropertyClick = () => {
       if (newOrderByProperty === props.orderByProperty) {
         props.setOrderDirection(props.orderDirection === 'asc' ? 'desc' : 'asc');
@@ -62,17 +62,17 @@ function TableHeader(props: {
     };
     return onOrderByPropertyClick;
   }
-}
 
-function renderCellTitle(cell: cellType) {
-  if (cell.tooltipText) {
-    return (
-      <Tooltip title={cell.tooltipText}>
-        <Text variant="h3">{cell.title}</Text>
-      </Tooltip>
-    );
+  function renderCellTitle(cell: cellType<orderByPropertyT>) {
+    if (cell.tooltipText) {
+      return (
+        <Tooltip title={cell.tooltipText}>
+          <Text variant="h3">{cell.title}</Text>
+        </Tooltip>
+      );
+    }
+    return <Text variant="h3">{cell.title}</Text>;
   }
-  return <Text variant="h3">{cell.title}</Text>;
 }
 
 function buildStyles(theme: customThemeType) {

@@ -19,18 +19,20 @@ type optionItemType<InputT> = {
   iconName?: iconNameType;
 };
 
-function Table<InputT>(props: {
-  defaultOrderByProperty?: string;
+function Table<InputT, orderByPropertyT extends string = string>(props: {
+  defaultOrderByProperty?: orderByPropertyT;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
   isRowHighlighted?: (row: InputT) => boolean;
   data: InputT[];
   optionItems?: Array<optionItemType<InputT>>;
+  onOrderByPropertyChange?: (newOrderByProperty: orderByPropertyT) => void;
+  onOrderDirectionChange?: (newOrderDirection: orderDirectionType) => void;
   onRowClick?: (row: InputT) => void;
   pagination?: { start: number; end: number };
-  fields: Array<tableRowFieldType<InputT>>;
+  fields: Array<tableRowFieldType<InputT, orderByPropertyT>>;
 }) {
-  const [orderByProperty, setOrderByProperty] = useState<string | undefined>(props.defaultOrderByProperty);
+  const [orderByProperty, setOrderByProperty] = useState<orderByPropertyT | undefined>(props.defaultOrderByProperty);
   const [orderDirection, setOrderDirection] = useState<orderDirectionType>(
     props.defaultOrderDirection || DEFAULT_ORDER_DIRECTION,
   );
@@ -58,10 +60,20 @@ function Table<InputT>(props: {
         optionCellStyle={optionCellStyle}
         orderByProperty={orderByProperty}
         orderDirection={orderDirection}
-        setOrderByProperty={setOrderByProperty}
-        setOrderDirection={setOrderDirection}
+        setOrderByProperty={onOrderByPropertyChange}
+        setOrderDirection={onOrderDirectionChange}
       />
     );
+  }
+
+  function onOrderByPropertyChange(newOrderByProperty: orderByPropertyT) {
+    setOrderByProperty(newOrderByProperty);
+    props.onOrderByPropertyChange && props.onOrderByPropertyChange(newOrderByProperty);
+  }
+
+  function onOrderDirectionChange(newOrderDirection: orderDirectionType) {
+    setOrderDirection(newOrderDirection);
+    props.onOrderDirectionChange && props.onOrderDirectionChange(newOrderDirection);
   }
 
   function renderBody() {

@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { flatten, sumBy, uniq } from 'lodash';
 import { apiRouteOutType, idModule, indexer, keysOf, treatmentInfoType, timeOperator } from '@label/core';
 import { DecisionNumberTextInput, IconButton, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
-import { localStorage, treatedDocumentFilterType } from '../../../services/localStorage';
+import {
+  localStorage,
+  treatedDocumentOrderByProperties,
+  treatedDocumentFilterType,
+} from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ExportCSVButton } from './ExportCSVButton';
@@ -16,7 +20,7 @@ function TreatedDocuments(props: {
   refetch: () => void;
 }) {
   const theme = useCustomTheme();
-  const INITIAL_FILTER_VALUES = localStorage.treatedDocumentFiltersHandler.get();
+  const INITIAL_FILTER_VALUES = localStorage.treatedDocumentsStateHandler.getFilters();
   const [filterValues, setFilterValues] = useState<treatedDocumentFilterType>(INITIAL_FILTER_VALUES);
   const [searchedDecisionNumber, setSearchedDecisionNumber] = useState<number | undefined>();
   const styles = buildStyles(theme);
@@ -63,7 +67,7 @@ function TreatedDocuments(props: {
   );
 
   function setAndStoreFilterValues(filterValues: treatedDocumentFilterType) {
-    localStorage.treatedDocumentFiltersHandler.set(filterValues);
+    localStorage.treatedDocumentsStateHandler.setFilters(filterValues);
     setFilterValues(filterValues);
   }
 
@@ -152,7 +156,10 @@ function TreatedDocuments(props: {
   }
 
   function buildTreatedDocumentsFields(treatmentsInfo: Record<string, treatmentInfoType>) {
-    const treatedDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'treatedDocuments'>[number]>> = [
+    const treatedDocumentsFields: Array<tableRowFieldType<
+      apiRouteOutType<'get', 'treatedDocuments'>[number],
+      typeof treatedDocumentOrderByProperties[number]
+    >> = [
       {
         id: 'documentNumber',
         title: wordings.treatedDocumentsPage.table.columnTitles.number.title,

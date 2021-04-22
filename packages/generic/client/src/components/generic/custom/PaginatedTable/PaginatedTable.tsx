@@ -9,16 +9,18 @@ const ROWS_PER_PAGE = 20;
 
 export { PaginatedTable };
 
-function PaginatedTable<InputT>(props: {
-  defaultOrderByProperty?: string;
+function PaginatedTable<InputT, orderByPropertyT extends string = string>(props: {
+  defaultOrderByProperty?: orderByPropertyT;
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
   data: InputT[];
+  onOrderByPropertyChange?: (newOrderByProperty: orderByPropertyT) => void;
+  onOrderDirectionChange?: (newOrderDirection: orderDirectionType) => void;
   optionItems?: Array<{
     text: string;
     onClick: (data: InputT) => void;
   }>;
-  fields: Array<tableRowFieldType<InputT>>;
+  fields: Array<tableRowFieldType<InputT, orderByPropertyT>>;
 }) {
   const [currentPage, setCurrentPage] = useState(0);
   const numberOfPages = computeNumberOfPages(props.data.length, ROWS_PER_PAGE);
@@ -27,12 +29,14 @@ function PaginatedTable<InputT>(props: {
   return (
     <>
       <Table
+        data={props.data}
         defaultOrderByProperty={props.defaultOrderByProperty}
         defaultOrderDirection={props.defaultOrderDirection}
         fields={props.fields}
-        pagination={pagination}
-        data={props.data}
+        onOrderByPropertyChange={props.onOrderByPropertyChange}
+        onOrderDirectionChange={props.onOrderDirectionChange}
         optionItems={props.optionItems}
+        pagination={pagination}
       />
       <PaginationFooter numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </>

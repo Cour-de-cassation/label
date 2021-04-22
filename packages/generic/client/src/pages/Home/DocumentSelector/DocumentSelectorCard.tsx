@@ -20,7 +20,7 @@ const SPECIFIC_DOCUMENT_INFO_ENTRIES = ['chamberName', 'decisionNumber'] as cons
 const GENERIC_DOCUMENT_INFO_ENTRIES = ['wordCount', 'annotations', 'linkedEntities', 'entities'] as const;
 const CARD_WIDTH = 400;
 const CATEGORY_ICON_SIZE = 32;
-const MAX_CATEGORIES_PER_LINE = 5;
+const MAX_CATEGORIES_PER_LINE = 6;
 const ICONS_CONTAINER_HEIGHT = 140;
 
 function DocumentSelectorCard(props: {

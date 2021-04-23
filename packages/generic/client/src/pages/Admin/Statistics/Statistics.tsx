@@ -1,11 +1,13 @@
 import React from 'react';
 import { apiRouteOutType, idModule, ressourceFilterType, userType } from '@label/core';
 import { StatisticsBox } from './StatisticsBox';
-import { FilterButton } from '../../../components';
+import { FilterButton, Text } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 
 export { Statistics };
+
+const WIDTH = 350;
 
 function Statistics(props: {
   aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
@@ -41,9 +43,14 @@ function Statistics(props: {
         </div>
       </div>
       <div style={styles.body}>
+        <div style={styles.numberOfDecisionContainer}>
+          <Text variant="h1">{wordings.statisticsPage.treatedDecisions}</Text>
+          <Text variant="h1">{props.aggregatedStatistics.perDocument.total}</Text>
+        </div>
         <StatisticsBox
           aggregatedStatistic={aggregatedStatistics}
           statisticsCount={props.aggregatedStatistics.perAssignation.total}
+          width={WIDTH}
         />
       </div>
     </div>
@@ -122,8 +129,15 @@ function buildStyles(theme: customThemeType) {
       height: heights.statisticsBodyHeight,
       width: widths.adminContent,
       display: 'flex',
+      flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    numberOfDecisionContainer: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      paddingBottom: theme.spacing * 3,
+      width: `${WIDTH}px`,
     },
   } as const;
 }

@@ -9,7 +9,6 @@ export { StatisticsBox };
 
 export type { aggregatedStatisticType };
 
-const WIDTH = 350;
 const ROW_HEIGHT = 30;
 
 type aggregatedStatisticType = {
@@ -24,7 +23,11 @@ type aggregatedStatisticType = {
   wordsCount: number;
 };
 
-function StatisticsBox(props: { aggregatedStatistic: aggregatedStatisticType; statisticsCount: number }) {
+function StatisticsBox(props: {
+  aggregatedStatistic: aggregatedStatisticType;
+  statisticsCount: number;
+  width: number;
+}) {
   const [computation, setComputation] = useState<computationType>('average');
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -113,7 +116,7 @@ function StatisticsBox(props: { aggregatedStatistic: aggregatedStatisticType; st
   function buildStyles(theme: customThemeType) {
     return {
       container: {
-        width: `${WIDTH}px`,
+        width: `${props.width}px`,
         borderRadius: theme.shape.borderRadius.s,
         padding: theme.spacing * 4,
         display: 'flex',

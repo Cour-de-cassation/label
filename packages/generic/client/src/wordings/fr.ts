@@ -204,6 +204,7 @@ const fr = {
       title: 'Administration',
       subtitle: 'Statistiques',
     },
+    treatedDecisions: 'Décisions traitées',
     filter: {
       fields: {
         agents: 'Agents',

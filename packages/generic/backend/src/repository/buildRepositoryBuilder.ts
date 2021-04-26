@@ -39,6 +39,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       insertMany,
       setIndexes,
       updateOne,
+      upsert,
       ...customRepository,
     };
 
@@ -114,6 +115,18 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       await collection.updateOne({ _id: id } as any, {
         $set: objectFields,
       });
+    }
+
+    async function upsert(newObject: T) {
+      await collection.updateOne(
+        { _id: newObject._id } as any,
+        {
+          $set: newObject,
+        },
+        {
+          upsert: true,
+        },
+      );
     }
   };
 }

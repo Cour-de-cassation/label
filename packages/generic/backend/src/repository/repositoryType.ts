@@ -16,6 +16,7 @@ type repositoryType<T extends { _id: idType }> = {
   insertMany: (newObjects: T[]) => Promise<void>;
   setIndexes: () => Promise<void>;
   updateOne: (id: idType, objectFields: Partial<T>) => Promise<void>;
+  upsert: (newObject: T) => Promise<void>;
 };
 
 type projectedType<T, U extends keyof T> = Pick<T, U>;

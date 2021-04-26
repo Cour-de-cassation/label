@@ -23,6 +23,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     insertMany,
     setIndexes,
     updateOne,
+    upsert,
     ...customRepository,
   });
 
@@ -107,6 +108,18 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
           : item,
       ),
     );
+  }
+
+  async function upsert(newObject: T) {
+    if (
+      collection.some((object) =>
+        idModule.lib.equalId(object._id, newObject._id),
+      )
+    ) {
+      await updateOne(newObject._id, newObject);
+    } else {
+      await insert(newObject);
+    }
   }
 }
 

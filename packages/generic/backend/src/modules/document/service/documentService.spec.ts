@@ -259,6 +259,44 @@ describe('documentService', () => {
       expect(documentsForUser[0]).toEqual(documents[1]);
     });
 
+    it('should not assign more document if one is already saved', async () => {
+      const userId1 = idModule.lib.buildId();
+      const documents = (['saved', 'pending', 'free'] as const).map((status) =>
+        documentModule.generator.generate({ status }),
+      );
+      const treatments = documents.map((document) =>
+        treatmentModule.generator.generate({
+          documentId: document._id,
+        }),
+      );
+      const assignations = [
+        assignationModule.generator.generate({
+          userId: userId1,
+          documentId: documents[0]._id,
+          treatmentId: treatments[0]._id,
+        }),
+        assignationModule.generator.generate({
+          userId: userId1,
+          documentId: documents[1]._id,
+          treatmentId: treatments[1]._id,
+        }),
+      ];
+      await Promise.all(assignations.map(assignationRepository.insert));
+      await Promise.all(documents.map(documentRepository.insert));
+      await Promise.all(
+        treatments.map((treatment) => treatmentRepository.insert(treatment)),
+      );
+
+      const documentsForUser = await documentService.fetchDocumentsForUser(
+        userId1,
+        3,
+      );
+
+      expect(documentsForUser.sort()).toEqual(
+        [documents[0], documents[1]].sort(),
+      );
+    });
+
     it('should throw an error on too many attempts', async () => {
       const documentService = buildDocumentService();
       const userId = idModule.lib.buildId();

@@ -1,4 +1,7 @@
-import { buildDocumentRepository } from '../../modules/document';
+import {
+  buildDocumentRepository,
+  documentService,
+} from '../../modules/document';
 import { dateBuilder, logger } from '../../utils';
 
 export { freePendingDocuments };
@@ -9,9 +12,10 @@ async function freePendingDocuments(minutesBeforeFreeing: number) {
   const documentRepository = buildDocumentRepository();
 
   logger.log('Fetching pending documents');
-  const pendingDocuments = await documentRepository.findAllByStatus([
-    'pending',
-  ]);
+  const pendingDocuments = await documentRepository.findAllByStatusProjection(
+    ['pending'],
+    ['_id', 'updateDate'],
+  );
   logger.log(`${pendingDocuments.length} documents fetched`);
   const pendingDocumentsToFree = pendingDocuments.filter(
     (document) =>
@@ -23,7 +27,7 @@ async function freePendingDocuments(minutesBeforeFreeing: number) {
     logger.log(
       `Freeing document ${index + 1}/${pendingDocumentsToFree.length}`,
     );
-    await documentRepository.updateStatusById(
+    await documentService.updateDocumentStatus(
       pendingDocumentsToFree[index]._id,
       'free',
     );

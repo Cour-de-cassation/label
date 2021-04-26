@@ -256,6 +256,10 @@ function buildDocumentService() {
       documentIdsToExclude.push(assignatedDocument._id);
     }
 
+    if (documents.some(({ status }) => status === 'saved')) {
+      return documents;
+    }
+
     for (let i = documents.length; i < documentsMaxCount; i++) {
       try {
         const document = await fetchDocumentForUser(

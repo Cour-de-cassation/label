@@ -1,4 +1,4 @@
-import { dependencyManager } from '@label/core';
+import { dependencyManager } from '../dependencyManager';
 import { localLogger } from './localLogger';
 import { prodLogger } from './prodLogger';
 import { testLogger } from './testLogger';

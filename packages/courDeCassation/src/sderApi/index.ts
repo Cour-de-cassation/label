@@ -1,4 +1,4 @@
-import { dependencyManager } from '@label/core';
+import { dependencyManager } from '@label/backend';
 import { sderApi } from './sderApi';
 import { sderLocalApi } from './sderLocalApi';
 

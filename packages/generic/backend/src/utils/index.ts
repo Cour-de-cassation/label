@@ -1,5 +1,6 @@
 import { dateBuilder } from './dateBuilder';
 import { decoder } from './decoder';
+import { dependencyManager } from './dependencyManager';
 import {
   buildHandlingErrorController,
   expressRequestHandlerType,
@@ -14,6 +15,7 @@ export {
   buildMongo,
   dateBuilder,
   decoder,
+  dependencyManager,
   fileSystem,
   jwtSigner,
   logger,

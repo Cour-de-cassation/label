@@ -1,4 +1,5 @@
 import { customColorsType } from './customColorsType';
+import { primaryColors } from './primaryColors';
 
 export { customLightColors };
 
@@ -17,7 +18,7 @@ const customLightColors: customColorsType = {
   error: ['red', 500],
   icon: 'black',
   line: { level1: 'black', level2: ['grey', 600] },
-  primary: ['cyan', 800],
+  primary: primaryColors.lightMode,
   success: ['lightGreen', 500],
   warning: ['orange', 500],
 };

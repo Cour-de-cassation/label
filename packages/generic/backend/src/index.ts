@@ -5,7 +5,12 @@ import {
   exporterConfigType,
   labelTreatmentsType,
 } from './lib/exporter';
-import { buildMongo, dateBuilder, fileSystem } from './utils';
+import {
+  buildMongo,
+  dateBuilder,
+  dependencyManager,
+  fileSystem,
+} from './utils';
 import { buildBackend } from './app';
 
 export {
@@ -15,6 +20,7 @@ export {
   buildExporter,
   buildMongo,
   dateBuilder,
+  dependencyManager,
   fileSystem,
 };
 

@@ -1,4 +1,4 @@
-import { dependencyManager } from '@label/core';
+import { dependencyManager } from '../../../utils';
 import { buildFakeAnnotationReportRepository } from './buildFakeAnnotationReportRepository';
 import { buildAnnotationReportRepository } from './buildAnnotationReportRepository';
 

@@ -1,4 +1,4 @@
-import { dependencyManager } from '@label/core';
+import { dependencyManager } from '@label/backend';
 import { nlpApi } from './nlpApi';
 import { nlpFakeApi } from './nlpFakeApi';
 import { nlpLocalApi } from './nlpLocalApi';

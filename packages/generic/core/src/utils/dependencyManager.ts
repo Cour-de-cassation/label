@@ -1,18 +1,24 @@
-export { dependencyManager };
+export { buildDependencyManager };
 
-const dependencyManager = {
-  inject<T>({ forLocal, forPreProd, forProd, forTest }: { forLocal?: T; forPreProd?: T; forProd: T; forTest?: T }) {
-    switch (process.env.RUN_MODE) {
-      case 'LOCAL':
-        return forLocal || forProd;
-      case 'PREPROD':
-        return forPreProd || forProd;
-      case 'PROD':
-        return forProd;
-      case 'TEST':
-        return forTest || forProd;
-      default:
-        return forProd;
-    }
-  },
-};
+type injectionValuesType<T> = { forLocal?: T; forPreProd?: T; forProd: T; forTest?: T };
+
+function buildDependencyManager(environmentValue: string | undefined) {
+  const dependencyManager = {
+    inject<T>(injectionValues: injectionValuesType<T>) {
+      switch (environmentValue) {
+        case 'LOCAL':
+          return injectionValues.forLocal || injectionValues.forProd;
+        case 'PREPROD':
+          return injectionValues.forPreProd || injectionValues.forProd;
+        case 'PROD':
+          return injectionValues.forProd;
+        case 'TEST':
+          return injectionValues.forTest || injectionValues.forProd;
+        default:
+          return injectionValues.forProd;
+      }
+    },
+  };
+
+  return { dependencyManager };
+}

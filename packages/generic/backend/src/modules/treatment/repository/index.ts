@@ -1,4 +1,4 @@
-import { dependencyManager } from '@label/core';
+import { dependencyManager } from '../../../utils';
 import { buildTreatmentRepository } from './buildTreatmentRepository';
 import { buildFakeTreatmentRepository } from './buildFakeTreatmentRepository';
 

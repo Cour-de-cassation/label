@@ -1,6 +1,4 @@
-import { dependencyManager } from './utils';
-
-export { environment, environments };
+export { environments };
 
 const dbName = 'labelDb';
 
@@ -47,9 +45,3 @@ const environments = {
     },
   },
 };
-
-const environment = dependencyManager.inject({
-  forLocal: environments.local,
-  forPreProd: environments.preProd,
-  forProd: environments.prod,
-});

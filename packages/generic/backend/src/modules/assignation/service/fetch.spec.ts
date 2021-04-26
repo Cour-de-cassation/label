@@ -1,6 +1,9 @@
 import { assignationModule, idModule } from '@label/core';
 import { buildAssignationRepository } from '../repository';
-import { assignationService } from './assignationService';
+import {
+  fetchAssignationId,
+  fetchDocumentIdsAssignatedToUserId,
+} from './fetch';
 
 describe('fetch', () => {
   describe('fetchAssignationId', () => {
@@ -16,7 +19,7 @@ describe('fetch', () => {
       });
       await assignationRepository.insert(assignation);
 
-      const assignationId = await assignationService.fetchAssignationId({
+      const assignationId = await fetchAssignationId({
         userId,
         documentId,
       });
@@ -24,7 +27,7 @@ describe('fetch', () => {
       expect(assignationId).toEqual(assignation._id);
     });
     it('should return undefined if no assignation exists for the given user id and document id', async () => {
-      const assignationId = await assignationService.fetchAssignationId({
+      const assignationId = await fetchAssignationId({
         userId,
         documentId,
       });
@@ -47,7 +50,7 @@ describe('fetch', () => {
       ] as const).map(assignationModule.generator.generate);
       await Promise.all(assignements.map(assignationRepository.insert));
 
-      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdsAssignatedToUserId(
+      const documentIdAssignatedToUserId = await fetchDocumentIdsAssignatedToUserId(
         userId1,
       );
 
@@ -62,7 +65,7 @@ describe('fetch', () => {
       );
       await Promise.all(assignements.map(assignationRepository.insert));
 
-      const documentIdAssignatedToUserId = await assignationService.fetchDocumentIdsAssignatedToUserId(
+      const documentIdAssignatedToUserId = await fetchDocumentIdsAssignatedToUserId(
         userId2,
       );
 

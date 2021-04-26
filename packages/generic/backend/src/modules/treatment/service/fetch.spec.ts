@@ -5,27 +5,15 @@ import {
   treatmentModule,
 } from '@label/core';
 import { buildTreatmentRepository } from '../repository';
-import { treatmentService } from './treatmentService';
+import {
+  fetchAnnotationsOfDocument,
+  fetchTreatedDocumentIds,
+  fetchTreatmentsByDocumentId,
+  fetchTreatmentsByDocumentIds,
+} from './fetch';
 
-describe('treatmentService', () => {
+describe('fetch', () => {
   const treatmentRepository = buildTreatmentRepository();
-
-  describe('deleteTreatmentsByDocumentId', () => {
-    it('should remove all the treatments from the database with the given document id', async () => {
-      const documentId = idModule.lib.buildId();
-      const treatments = ([
-        { documentId },
-        { documentId },
-        { documentId: idModule.lib.buildId() },
-      ] as const).map(treatmentModule.generator.generate);
-      await Promise.all(treatments.map(treatmentRepository.insert));
-
-      await treatmentService.deleteTreatmentsByDocumentId(documentId);
-
-      const treatmentsAfterRemove = await treatmentRepository.findAll();
-      expect(treatmentsAfterRemove).toEqual([treatments[2]]);
-    });
-  });
 
   describe('fetchAnnotationsOfDocument', () => {
     it('should fetch the annotations from the treatments of the given document id', async () => {
@@ -65,9 +53,7 @@ describe('treatmentService', () => {
       ].map(treatmentModule.generator.generate);
       await Promise.all(treatments.map(treatmentRepository.insert));
 
-      const fetchedAnnotations = await treatmentService.fetchAnnotationsOfDocument(
-        documentId,
-      );
+      const fetchedAnnotations = await fetchAnnotationsOfDocument(documentId);
 
       expect(annotationModule.lib.sortAnnotations(fetchedAnnotations)).toEqual(
         annotationsDiffModule.lib.buildAnnotationsDiff(
@@ -78,6 +64,31 @@ describe('treatmentService', () => {
             annotations[4],
           ]),
         ).after,
+      );
+    });
+  });
+
+  describe('fetchTreatedDocumentIds', () => {
+    it('should fetch the annotations from the treatments of the given document id', async () => {
+      const documentId1 = idModule.lib.buildId();
+      const documentId2 = idModule.lib.buildId();
+      const treatments = [
+        {
+          documentId: documentId1,
+        },
+        {
+          documentId: documentId1,
+        },
+        {
+          documentId: documentId2,
+        },
+      ].map(treatmentModule.generator.generate);
+      await Promise.all(treatments.map(treatmentRepository.insert));
+
+      const treatedDocumentIds = await fetchTreatedDocumentIds();
+
+      expect(treatedDocumentIds.sort()).toEqual(
+        [documentId1, documentId2].sort(),
       );
     });
   });
@@ -99,9 +110,7 @@ describe('treatmentService', () => {
       ].map(treatmentModule.generator.generate);
       await Promise.all(treatments.map(treatmentRepository.insert));
 
-      const documentTreatments = await treatmentService.fetchTreatmentsByDocumentId(
-        documentId1,
-      );
+      const documentTreatments = await fetchTreatmentsByDocumentId(documentId1);
 
       expect(documentTreatments.sort()).toEqual(
         [treatments[0], treatments[1]].sort(),
@@ -129,9 +138,10 @@ describe('treatmentService', () => {
       ].map(treatmentModule.generator.generate);
       await Promise.all(treatments.map(treatmentRepository.insert));
 
-      const documentTreatments = await treatmentService.fetchTreatmentsByDocumentIds(
-        [documentId1, documentId2],
-      );
+      const documentTreatments = await fetchTreatmentsByDocumentIds([
+        documentId1,
+        documentId2,
+      ]);
 
       expect(documentTreatments).toEqual({
         [idModule.lib.convertToString(documentId1)]: [
@@ -140,31 +150,6 @@ describe('treatmentService', () => {
         ],
         [idModule.lib.convertToString(documentId2)]: [treatments[2]],
       });
-    });
-  });
-
-  describe('fetchTreatedDocumentIds', () => {
-    it('should fetch the annotations from the treatments of the given document id', async () => {
-      const documentId1 = idModule.lib.buildId();
-      const documentId2 = idModule.lib.buildId();
-      const treatments = [
-        {
-          documentId: documentId1,
-        },
-        {
-          documentId: documentId1,
-        },
-        {
-          documentId: documentId2,
-        },
-      ].map(treatmentModule.generator.generate);
-      await Promise.all(treatments.map(treatmentRepository.insert));
-
-      const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
-
-      expect(treatedDocumentIds.sort()).toEqual(
-        [documentId1, documentId2].sort(),
-      );
     });
   });
 });

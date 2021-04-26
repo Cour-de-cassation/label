@@ -7,7 +7,7 @@ import {
 import { buildProblemReportRepository } from '../../problemReport';
 import { buildTreatmentRepository } from '../../treatment';
 import { buildAssignationRepository } from '../repository';
-import { assignationService } from './assignationService';
+import { deleteAssignationsByDocumentId } from './deleteAssignationsByDocumentId';
 
 describe('deleteAssignationsByDocumentId', () => {
   it('should delete treatments and assignations', async () => {
@@ -27,7 +27,7 @@ describe('deleteAssignationsByDocumentId', () => {
     await problemReportRepository.insert(problemReport);
     await treatmentRepository.insert(treatment);
 
-    await assignationService.deleteAssignationsByDocumentId(documentId);
+    await deleteAssignationsByDocumentId(documentId);
 
     const assignations = await assignationRepository.findAll();
     const problemReports = await problemReportRepository.findAll();

@@ -14,7 +14,7 @@ function mapCourtDecisionToDocument(
   sderCourtDecision: decisionType,
 ): documentType {
   const title = computeTitleFromParsedCourtDecision({
-    number: sderCourtDecision.registerNumber,
+    number: sderCourtDecision.sourceId,
     chamber: sderCourtDecision.chamberName,
     juridiction: sderCourtDecision.jurisdictionName,
     date: sderCourtDecision.dateDecision
@@ -73,7 +73,7 @@ function computeTitleFromParsedCourtDecision({
   juridiction,
   date,
 }: {
-  number?: string;
+  number?: number;
   chamber?: string;
   juridiction?: string;
   date?: Date;

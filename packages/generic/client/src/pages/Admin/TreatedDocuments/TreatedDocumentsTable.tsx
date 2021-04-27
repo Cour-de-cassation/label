@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { apiRouteOutType } from '@label/core';
+import { apiRouteOutType, documentType } from '@label/core';
 import { PaginatedTable, tableRowFieldType } from '../../../components';
 import { wordings } from '../../../wordings';
 import { localStorage, treatedDocumentOrderByProperties } from '../../../services/localStorage';
+import { AnnotationsDiffDrawer } from './AnnotationsDiffDrawer';
 
 export { TreatedDocumentsTable };
 
@@ -17,6 +18,7 @@ function TreatedDocumentsTable(props: {
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
 }) {
   const history = useHistory();
+  const [annotationDiffDocumentId, setAnnotationDiffDocumentId] = useState<documentType['_id'] | undefined>();
 
   const orderByProperty = localStorage.treatedDocumentsStateHandler.getOrderByProperty();
   const orderDirection = localStorage.treatedDocumentsStateHandler.getOrderDirection();
@@ -24,6 +26,12 @@ function TreatedDocumentsTable(props: {
   const optionItems = buildOptionItems();
   return (
     <div style={styles.container}>
+      <AnnotationsDiffDrawer
+        documentId={annotationDiffDocumentId}
+        isOpen={!!annotationDiffDocumentId}
+        close={() => setAnnotationDiffDocumentId(undefined)}
+      />
+
       <PaginatedTable
         defaultOrderByProperty={orderByProperty}
         defaultOrderDirection={orderDirection}
@@ -61,6 +69,13 @@ function TreatedDocumentsTable(props: {
           return;
         },
         iconName: 'eye',
+      },
+      {
+        text: wordings.treatedDocumentsPage.table.optionItems.displayAnnotationDiff,
+        onClick: (treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) => {
+          setAnnotationDiffDocumentId(treatmentWithDetails.document._id);
+        },
+        iconName: 'link',
       },
     ];
   }

@@ -6,6 +6,7 @@ import {
   areOverlapping,
   buildAnnotation,
   comparator,
+  computeNearbyText,
   entityIdHandler,
   sortAnnotations,
 } from './lib';
@@ -23,6 +24,7 @@ const annotationModule = {
     areOverlapping,
     buildAnnotation,
     comparator,
+    computeNearbyText,
     entityIdHandler,
     sortAnnotations,
   },

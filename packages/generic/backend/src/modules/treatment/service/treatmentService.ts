@@ -2,6 +2,7 @@ import { createTreatment } from './createTreatment';
 import { deleteTreatmentsByDocumentId } from './deleteTreatmentsByDocumentId';
 import {
   fetchAnnotationsOfDocument,
+  fetchAnnotationsDiffDetailsForDocument,
   fetchTreatedDocumentIds,
   fetchTreatmentsByDocumentId,
   fetchTreatmentsByDocumentIds,
@@ -14,6 +15,7 @@ const treatmentService = {
   createTreatment,
   deleteTreatmentsByDocumentId,
   fetchAnnotationsOfDocument,
+  fetchAnnotationsDiffDetailsForDocument,
   fetchTreatedDocumentIds,
   fetchTreatmentsByDocumentId,
   fetchTreatmentsByDocumentIds,

@@ -3,6 +3,7 @@ import { treatmentModel, treatmentType } from './treatmentType';
 import {
   build,
   computeAnnotations,
+  computeAnnotationsDiff,
   computeTreatmentInfo,
   computeTreatmentsInfo,
   treatmentInfoType,
@@ -19,6 +20,7 @@ const treatmentModule = {
   lib: {
     build,
     computeAnnotations,
+    computeAnnotationsDiff,
     computeTreatmentInfo,
     computeTreatmentsInfo,
     update,

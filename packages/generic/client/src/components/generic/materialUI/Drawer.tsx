@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 import { Drawer as MuiDrawer, makeStyles } from '@material-ui/core';
 import { customThemeType, heights, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { zIndices } from './constants';
 import { IconButton, Text } from '../../generic';
+import { zIndices } from './constants';
 
 export { Drawer };
 
@@ -41,7 +41,7 @@ function Drawer(props: { children?: ReactNode; title: string; isOpen: boolean; o
         flexDirection: 'column',
       },
       content: {
-        overflow: 'scroll',
+        overflow: 'auto',
         paddingBottom: theme.spacing * 4,
       },
       header: {

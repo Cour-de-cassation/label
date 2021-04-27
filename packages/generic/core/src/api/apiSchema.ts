@@ -81,6 +81,77 @@ const apiSchema = {
         content: annotationModule.model,
       } as const),
     },
+    annotationsDiffDetails: {
+      in: {
+        documentId: buildModel({
+          kind: 'primitive',
+          content: 'string',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'object',
+        content: {
+          addedAnnotations: {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {
+                text: { kind: 'primitive', content: 'string' },
+                textStart: { kind: 'primitive', content: 'number' },
+                addedAnnotation: annotationModule.model,
+              },
+            },
+          },
+          deletedAnnotations: {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {
+                text: { kind: 'primitive', content: 'string' },
+                textStart: { kind: 'primitive', content: 'number' },
+                deletedAnnotation: annotationModule.model,
+              },
+            },
+          },
+          resizedBiggerAnnotations: {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {
+                text: { kind: 'primitive', content: 'string' },
+                textStart: { kind: 'primitive', content: 'number' },
+                annotationBefore: annotationModule.model,
+                annotationAfter: annotationModule.model,
+              },
+            },
+          },
+          resizedSmallerAnnotations: {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {
+                text: { kind: 'primitive', content: 'string' },
+                textStart: { kind: 'primitive', content: 'number' },
+                annotationBefore: annotationModule.model,
+                annotationAfter: annotationModule.model,
+              },
+            },
+          },
+          categoryChangedAnnotations: {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {
+                text: { kind: 'primitive', content: 'string' },
+                textStart: { kind: 'primitive', content: 'number' },
+                annotationBefore: annotationModule.model,
+                annotationAfter: annotationModule.model,
+              },
+            },
+          },
+        },
+      } as const),
+    },
     anonymizedDocumentText: {
       in: {
         documentId: buildModel({

@@ -27,6 +27,14 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         }),
     }),
 
+    annotationsDiffDetails: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { documentId } }) =>
+        treatmentService.fetchAnnotationsDiffDetailsForDocument(
+          idModule.lib.buildId(documentId),
+        ),
+    }),
+
     annotationReport: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (_, { args: { documentId } }) =>

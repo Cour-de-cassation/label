@@ -219,6 +219,9 @@ const fr = {
       subtitle: 'Décisions traitées',
     },
     table: {
+      annotationDiffDrawer: {
+        title: 'Modifications',
+      },
       filter: {
         exportButton: 'Exporter',
         resultsCount: '{count} décisions affichées',
@@ -268,6 +271,7 @@ const fr = {
       },
       optionItems: {
         openDocument: 'Ouvrir la décision...',
+        displayAnnotationDiff: 'Afficher les modifications',
       },
     },
   },

@@ -97,6 +97,13 @@ const apiSchema = {
       out: buildModel({
         kind: 'object',
         content: {
+          publicationCategories: {
+            kind: 'array',
+            content: {
+              kind: 'primitive',
+              content: 'string',
+            },
+          },
           sources: {
             kind: 'array',
             content: {

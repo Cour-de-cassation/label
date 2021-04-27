@@ -6,6 +6,26 @@ import { ressourceFilterGenerator } from '../generator';
 import { filterTreatedDocuments } from './filterTreatedDocuments';
 
 describe('filterTreatedDocuments', () => {
+  it('should filter all the given treated documents according to the source', () => {
+    const documents = [{ publicationCategory: ['P'] }, { publicationCategory: ['W'] }].map(
+      documentModule.generator.generate,
+    );
+    const ressourceFilter = ressourceFilterGenerator.generate({
+      publicationCategory: 'P',
+    });
+    const treatedDocuments = [
+      { assignations: [], document: documents[0], treatments: [] },
+      { assignations: [], document: documents[1], treatments: [] },
+    ];
+
+    const filteredTreatedDocuments = filterTreatedDocuments({
+      ressourceFilter,
+      treatedDocuments,
+    });
+
+    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[0], treatments: [] }]);
+  });
+
   it('should filter all the given treated documents according to the user id', () => {
     const userId1 = idModule.lib.buildId();
     const userId2 = idModule.lib.buildId();

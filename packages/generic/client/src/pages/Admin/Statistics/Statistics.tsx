@@ -57,10 +57,26 @@ function Statistics(props: {
   );
 
   function buildFilters() {
+    const publicationCategoryFilter = buildPublicationCategoryFilter();
     const sourceFilter = buildSourceFilter();
     const userFilter = buildUserFilter();
 
-    return [sourceFilter, userFilter];
+    return [userFilter, sourceFilter, publicationCategoryFilter];
+
+    function buildPublicationCategoryFilter() {
+      return {
+        kind: 'dropdown' as const,
+        name: 'publicationCategory',
+        label: wordings.statisticsPage.filter.fields.publicationCategory,
+        possibleValues: props.availableStatisticFilters.publicationCategories,
+        value: props.ressourceFilter.publicationCategory,
+        onChange: (newPublicationCategory: string) => {
+          if (newPublicationCategory !== undefined) {
+            props.refetch({ ...props.ressourceFilter, publicationCategory: newPublicationCategory });
+          }
+        },
+      };
+    }
 
     function buildSourceFilter() {
       return {

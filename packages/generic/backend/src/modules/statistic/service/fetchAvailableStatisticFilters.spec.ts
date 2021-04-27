@@ -7,6 +7,28 @@ describe('fetchAvailableStatisticFilters', () => {
   const documentRepository = buildDocumentRepository();
   const statisticRepository = buildStatisticRepository();
 
+  it('should fetch all the publication categories available', async () => {
+    const documents = [{ publicationCategory: ['A'] }].map(
+      documentModule.generator.generate,
+    );
+    const statistics = [
+      {
+        publicationCategory: ['P', 'W'],
+      },
+      { publicationCategory: ['P'] },
+    ].map(statisticModule.generator.generate);
+    await Promise.all(documents.map(documentRepository.insert));
+    await Promise.all(statistics.map(statisticRepository.insert));
+
+    const availableStatisticFilters = await fetchAvailableStatisticFilters();
+
+    expect(availableStatisticFilters.publicationCategories).toEqual([
+      'A',
+      'P',
+      'W',
+    ]);
+  });
+
   it('should fetch all the sources available', async () => {
     const documents = [{ source: 'DOC_SOURCE_1' }].map(
       documentModule.generator.generate,

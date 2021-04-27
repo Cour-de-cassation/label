@@ -4,6 +4,7 @@ import { projectedType } from '../../../repository';
 export type { customDocumentRepositoryType };
 
 type customDocumentRepositoryType = {
+  findAllPublicationCategories: () => Promise<Array<string>>;
   findAllSources: () => Promise<Array<string>>;
   findAllByStatus: (
     status: documentType['status'][],

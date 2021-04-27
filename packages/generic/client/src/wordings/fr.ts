@@ -208,6 +208,7 @@ const fr = {
     filter: {
       fields: {
         agents: 'Agents',
+        publicationCategory: 'Diffusion',
         source: 'Base de données source',
       },
     },

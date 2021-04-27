@@ -20,6 +20,10 @@ function filterTreatedDocuments({
   return treatedDocuments.filter(({ assignations, document }) => {
     let isInTheFilter = true;
 
+    if (ressourceFilter.publicationCategory) {
+      isInTheFilter = isInTheFilter && document.publicationCategory.includes(ressourceFilter.publicationCategory);
+    }
+
     if (ressourceFilter.source) {
       isInTheFilter = isInTheFilter && document.source === ressourceFilter.source;
     }

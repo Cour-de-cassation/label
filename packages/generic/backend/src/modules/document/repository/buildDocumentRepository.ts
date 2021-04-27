@@ -1,3 +1,4 @@
+import { uniq } from 'lodash';
 import { documentType } from '@label/core';
 import {
   buildProjection,
@@ -27,6 +28,15 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
+    async findAllPublicationCategories() {
+      const publicationCategories = await collection.distinct(
+        'publicationCategory',
+        {},
+      );
+
+      return uniq(publicationCategories);
+    },
+
     async findAllSources() {
       return collection.distinct('source', {});
     },

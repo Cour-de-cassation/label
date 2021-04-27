@@ -15,6 +15,18 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
   customDocumentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
+    async findAllPublicationCategories() {
+      let publicationCategories: string[] = [];
+      collection.forEach(
+        (document) =>
+          (publicationCategories = uniq(
+            publicationCategories.concat(document.publicationCategory),
+          )),
+      );
+
+      return publicationCategories;
+    },
+
     async findAllSources() {
       return uniq(collection.map((document) => document.source));
     },

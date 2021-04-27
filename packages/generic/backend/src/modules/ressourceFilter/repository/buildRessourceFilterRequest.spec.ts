@@ -7,6 +7,7 @@ describe('buildRessourceFilterRequest', () => {
     const source = 'SOURCE';
     const userId = idModule.lib.buildId();
     const ressourceFilter = ressourceFilterModule.generator.generate({
+      mustHaveAddedAnnotations: true,
       publicationCategory,
       source,
       userId,
@@ -15,6 +16,7 @@ describe('buildRessourceFilterRequest', () => {
     const ressourceFilterRequest = buildRessourceFilterRequest(ressourceFilter);
 
     expect(ressourceFilterRequest).toEqual({
+      addedAnnotationsCount: { $gte: 0 },
       publicationCategory: [publicationCategory],
       source,
       userId,

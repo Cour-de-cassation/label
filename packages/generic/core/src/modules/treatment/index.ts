@@ -7,6 +7,7 @@ import {
   computeTreatmentInfo,
   computeTreatmentsInfo,
   treatmentInfoType,
+  sortInConsistentOrder,
   update,
 } from './lib';
 
@@ -23,6 +24,7 @@ const treatmentModule = {
     computeAnnotationsDiff,
     computeTreatmentInfo,
     computeTreatmentsInfo,
+    sortInConsistentOrder,
     update,
   },
 };

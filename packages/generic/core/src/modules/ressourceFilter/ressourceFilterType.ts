@@ -8,6 +8,7 @@ export type { ressourceFilterType };
 const ressourceFilterModel = buildModel({
   kind: 'object',
   content: {
+    mustHaveAddedAnnotations: { kind: 'primitive', content: 'boolean' },
     publicationCategory: {
       kind: 'or',
       content: [

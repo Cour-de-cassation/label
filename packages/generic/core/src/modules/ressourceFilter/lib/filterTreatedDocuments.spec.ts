@@ -6,7 +6,30 @@ import { ressourceFilterGenerator } from '../generator';
 import { filterTreatedDocuments } from './filterTreatedDocuments';
 
 describe('filterTreatedDocuments', () => {
-  it('should filter all the given treated documents according to the source', () => {
+  it('should filter all the given treated documents with added annotations', () => {
+    const documents = [{}, {}].map(documentModule.generator.generate);
+    const treatments = [
+      { addedAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { documentId: documents[1]._id, order: 0 },
+      { documentId: documents[1]._id, order: 1 },
+    ].map(treatmentModule.generator.generate);
+    const ressourceFilter = ressourceFilterGenerator.generate({
+      mustHaveAddedAnnotations: true,
+    });
+    const treatedDocuments = [
+      { assignations: [], document: documents[0], treatments: [] },
+      { assignations: [], document: documents[1], treatments: treatments },
+    ];
+
+    const filteredTreatedDocuments = filterTreatedDocuments({
+      ressourceFilter,
+      treatedDocuments,
+    });
+
+    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[1], treatments: treatments }]);
+  });
+
+  it('should filter all the given treated documents according to the publication category', () => {
     const documents = [{ publicationCategory: ['P'] }, { publicationCategory: ['W'] }].map(
       documentModule.generator.generate,
     );

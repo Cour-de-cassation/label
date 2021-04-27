@@ -2,11 +2,12 @@ import { annotationType } from '../../annotation';
 import { annotationsDiffModule, annotationsDiffType } from '../../annotationsDiff';
 import { idModule } from '../../id';
 import { treatmentType } from '../treatmentType';
+import { sortInConsistentOrder } from './sortInConsistentOrder';
 
 export { computeAnnotations, computeAnnotationsDiff };
 
 function computeAnnotations(treatments: treatmentType[]): annotationType[] {
-  const sortedTreatments = sortTreatments(treatments);
+  const sortedTreatments = sortInConsistentOrder(treatments);
 
   if (checkTreatmentsConsistency(sortedTreatments) && areAnnotationsInitiallyEmpty(treatments)) {
     const annotationsDiffs = sortedTreatments.map((treatment) => treatment.annotationsDiff);
@@ -17,7 +18,7 @@ function computeAnnotations(treatments: treatmentType[]): annotationType[] {
 }
 
 function computeAnnotationsDiff(treatments: treatmentType[]): annotationsDiffType {
-  const sortedTreatments = sortTreatments(treatments);
+  const sortedTreatments = sortInConsistentOrder(treatments);
 
   if (checkTreatmentsConsistency(sortedTreatments)) {
     const annotationsDiffs = sortedTreatments.map((treatment) => treatment.annotationsDiff);
@@ -25,10 +26,6 @@ function computeAnnotationsDiff(treatments: treatmentType[]): annotationsDiffTyp
   } else {
     throw new Error('Can not compute annotations from inconsistent treatments');
   }
-}
-
-function sortTreatments(treatments: treatmentType[]): treatmentType[] {
-  return treatments.sort((treatment1, treatment2) => treatment1.order - treatment2.order);
 }
 
 function checkTreatmentsConsistency(treatments: treatmentType[]): boolean {

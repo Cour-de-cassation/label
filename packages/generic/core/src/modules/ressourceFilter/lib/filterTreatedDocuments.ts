@@ -1,7 +1,7 @@
 import { assignationType } from '../../assignation';
 import { documentType } from '../../document';
 import { idModule } from '../../id';
-import { treatmentType } from '../../treatment';
+import { treatmentModule, treatmentType } from '../../treatment';
 import { ressourceFilterType } from '../ressourceFilterType';
 
 export { filterTreatedDocuments };
@@ -17,8 +17,14 @@ function filterTreatedDocuments({
     treatments: treatmentType[];
   }>;
 }) {
-  return treatedDocuments.filter(({ assignations, document }) => {
+  return treatedDocuments.filter(({ assignations, document, treatments }) => {
     let isInTheFilter = true;
+    const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(treatments);
+
+    if (ressourceFilter.mustHaveAddedAnnotations) {
+      isInTheFilter =
+        isInTheFilter && sortedTreatments.slice(2).some((treatment) => treatment.addedAnnotationsCount > 0);
+    }
 
     if (ressourceFilter.publicationCategory) {
       isInTheFilter = isInTheFilter && document.publicationCategory.includes(ressourceFilter.publicationCategory);

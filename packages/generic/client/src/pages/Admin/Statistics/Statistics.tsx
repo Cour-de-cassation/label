@@ -57,11 +57,27 @@ function Statistics(props: {
   );
 
   function buildFilters() {
+    const mustHaveAddedAnnotationsFilter = buildMustHaveAddedAnnotationsFilter();
     const publicationCategoryFilter = buildPublicationCategoryFilter();
     const sourceFilter = buildSourceFilter();
     const userFilter = buildUserFilter();
 
-    return [userFilter, sourceFilter, publicationCategoryFilter];
+    return [userFilter, sourceFilter, publicationCategoryFilter, mustHaveAddedAnnotationsFilter];
+
+    function buildMustHaveAddedAnnotationsFilter() {
+      return {
+        kind: 'boolean' as const,
+        name: 'mustHaveAddedAnnotations',
+        label: wordings.statisticsPage.filter.fields.mustHaveAddedAnnotations,
+        checked: props.ressourceFilter.mustHaveAddedAnnotations,
+        onToggle: () => {
+          props.refetch({
+            ...props.ressourceFilter,
+            mustHaveAddedAnnotations: !props.ressourceFilter.mustHaveAddedAnnotations,
+          });
+        },
+      };
+    }
 
     function buildPublicationCategoryFilter() {
       return {

@@ -2,7 +2,7 @@ import React, { MouseEvent, ReactElement, useState } from 'react';
 import { annotationType, settingsModule } from '@label/core';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
-import { getColor, useDisplayMode } from '../../../../styles';
+import { customThemeType, getColor, useCustomTheme, useDisplayMode } from '../../../../styles';
 import { positionType } from '../../../../types';
 import { MouseMoveListener, useMousePosition } from '../../../../utils';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
@@ -14,11 +14,12 @@ function DocumentAnnotationText(props: { annotation: annotationType }): ReactEle
   const anonymizer = annotatorStateHandler.getAnonymizer();
   const [isTooltipMenuVisible, setIsTooltipMenuVisible] = useState(false);
   const [isTooltipMenuExpanded, setIsTooltipMenuExpanded] = useState(false);
+  const theme = useCustomTheme();
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const { displayMode } = useDisplayMode();
   const mouseMoveHandler = useMousePosition();
   const [tooltipMenuFixedPosition, setTooltipMenuFixedPosition] = useState<positionType | undefined>(undefined);
-  const style = buildStyle();
+  const style = buildStyles(theme);
 
   return (
     <span>
@@ -59,13 +60,13 @@ function DocumentAnnotationText(props: { annotation: annotationType }): ReactEle
     }
   }
 
-  function buildStyle() {
+  function buildStyles(theme: customThemeType) {
     const viewerModeSpecificStyle = buildViewerModeSpecificStyle();
     return {
       annotationText: {
         cursor: 'pointer',
         padding: '0px 2px',
-        borderRadius: '3px',
+        borderRadius: theme.shape.borderRadius.xxxs,
         ...viewerModeSpecificStyle,
       },
     };

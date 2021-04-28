@@ -41,7 +41,7 @@ function DocumentSwitcher(props: {
   function renderPage() {
     switch (documentState.kind) {
       case 'annotating':
-        const subtitle = documentState.choice.document.publicationCategory.length ? (
+        const subtitle = documentState.choice.document.publicationCategory.includes('P') ? (
           <div style={styles.documentHeaderSubtitle}>
             <PublicationCategoryBadge
               publicationCategoryLetter={documentState.choice.document.publicationCategory[0]}

@@ -209,6 +209,11 @@ const fr = {
       fields: {
         agents: 'Agents',
         mustHaveAddedAnnotations: 'Avec sous-annotations',
+        mustHaveDeletedAnnotations: 'Avec sur-annotations',
+        mustHaveModifiedAnnotations: 'Avec modifications de catégorie',
+        mustHaveNoModifications: 'Aucune modification',
+        mustHaveResizedBiggerAnnotations: 'Avec redimensionnements +',
+        mustHaveResizedSmallerAnnotations: 'Avec redimensionnements -',
         publicationCategory: 'Diffusion',
         source: 'Base de données source',
       },

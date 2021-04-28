@@ -19,11 +19,35 @@ function filterTreatedDocuments({
 }) {
   return treatedDocuments.filter(({ assignations, document, treatments }) => {
     let isInTheFilter = true;
-    const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(treatments);
+    const humanTreatments = treatmentModule.lib.sortInConsistentOrder(treatments).slice(2);
 
     if (ressourceFilter.mustHaveAddedAnnotations) {
+      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.addedAnnotationsCount > 0);
+    }
+
+    if (ressourceFilter.mustHaveDeletedAnnotations) {
+      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.deletedAnnotationsCount > 0);
+    }
+
+    if (ressourceFilter.mustHaveModifiedAnnotations) {
+      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.modifiedAnnotationsCount > 0);
+    }
+
+    if (ressourceFilter.mustHaveNoModifications) {
       isInTheFilter =
-        isInTheFilter && sortedTreatments.slice(2).some((treatment) => treatment.addedAnnotationsCount > 0);
+        isInTheFilter &&
+        humanTreatments.every(
+          (treatment) => treatment.annotationsDiff.before.length === 0 && treatment.annotationsDiff.after.length === 0,
+        );
+    }
+
+    if (ressourceFilter.mustHaveResizedBiggerAnnotations) {
+      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.resizedBiggerAnnotationsCount > 0);
+    }
+
+    if (ressourceFilter.mustHaveResizedSmallerAnnotations) {
+      isInTheFilter =
+        isInTheFilter && humanTreatments.some((treatment) => treatment.resizedSmallerAnnotationsCount > 0);
     }
 
     if (ressourceFilter.publicationCategory) {

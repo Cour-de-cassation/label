@@ -1,3 +1,5 @@
+import { annotationModule } from '../../annotation';
+import { annotationsDiffModule } from '../../annotationsDiff';
 import { assignationModule } from '../../assignation';
 import { documentModule } from '../../document';
 import { idModule } from '../../id';
@@ -15,6 +17,137 @@ describe('filterTreatedDocuments', () => {
     ].map(treatmentModule.generator.generate);
     const ressourceFilter = ressourceFilterGenerator.generate({
       mustHaveAddedAnnotations: true,
+    });
+    const treatedDocuments = [
+      { assignations: [], document: documents[0], treatments: [] },
+      { assignations: [], document: documents[1], treatments: treatments },
+    ];
+
+    const filteredTreatedDocuments = filterTreatedDocuments({
+      ressourceFilter,
+      treatedDocuments,
+    });
+
+    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[1], treatments: treatments }]);
+  });
+
+  it('should filter all the given treated documents with deleted annotations', () => {
+    const documents = [{}, {}].map(documentModule.generator.generate);
+    const treatments = [
+      { deletedAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { documentId: documents[1]._id, order: 0 },
+      { documentId: documents[1]._id, order: 1 },
+    ].map(treatmentModule.generator.generate);
+    const ressourceFilter = ressourceFilterGenerator.generate({
+      mustHaveDeletedAnnotations: true,
+    });
+    const treatedDocuments = [
+      { assignations: [], document: documents[0], treatments: [] },
+      { assignations: [], document: documents[1], treatments: treatments },
+    ];
+
+    const filteredTreatedDocuments = filterTreatedDocuments({
+      ressourceFilter,
+      treatedDocuments,
+    });
+
+    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[1], treatments: treatments }]);
+  });
+
+  it('should filter all the given treated documents with modified annotations', () => {
+    const documents = [{}, {}].map(documentModule.generator.generate);
+    const treatments = [
+      { modifiedAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { documentId: documents[1]._id, order: 0 },
+      { documentId: documents[1]._id, order: 1 },
+    ].map(treatmentModule.generator.generate);
+    const ressourceFilter = ressourceFilterGenerator.generate({
+      mustHaveModifiedAnnotations: true,
+    });
+    const treatedDocuments = [
+      { assignations: [], document: documents[0], treatments: [] },
+      { assignations: [], document: documents[1], treatments: treatments },
+    ];
+
+    const filteredTreatedDocuments = filterTreatedDocuments({
+      ressourceFilter,
+      treatedDocuments,
+    });
+
+    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[1], treatments: treatments }]);
+  });
+
+  it('should filter all the given treated documents with no modifications', () => {
+    const documents = [{}, {}].map(documentModule.generator.generate);
+    const treatments = [
+      {
+        annotationsDiff: annotationsDiffModule.generator.generate({ before: [], after: [] }),
+        documentId: documents[1]._id,
+        order: 2,
+      },
+      { documentId: documents[1]._id, order: 0 },
+      { documentId: documents[1]._id, order: 1 },
+      {
+        annotationsDiff: annotationsDiffModule.generator.generate({
+          before: [annotationModule.generator.generate()],
+          after: [],
+        }),
+        documentId: documents[0]._id,
+        order: 2,
+      },
+      { documentId: documents[0]._id, order: 0 },
+      { documentId: documents[0]._id, order: 1 },
+    ].map(treatmentModule.generator.generate);
+    const ressourceFilter = ressourceFilterGenerator.generate({
+      mustHaveNoModifications: true,
+    });
+    const treatedDocuments = [
+      { assignations: [], document: documents[0], treatments: [treatments[3], treatments[4], treatments[5]] },
+      { assignations: [], document: documents[1], treatments: [treatments[0], treatments[1], treatments[2]] },
+    ];
+
+    const filteredTreatedDocuments = filterTreatedDocuments({
+      ressourceFilter,
+      treatedDocuments,
+    });
+
+    expect(filteredTreatedDocuments).toEqual([
+      { assignations: [], document: documents[1], treatments: [treatments[0], treatments[1], treatments[2]] },
+    ]);
+  });
+
+  it('should filter all the given treated documents with resized bigger annotations', () => {
+    const documents = [{}, {}].map(documentModule.generator.generate);
+    const treatments = [
+      { resizedBiggerAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { documentId: documents[1]._id, order: 0 },
+      { documentId: documents[1]._id, order: 1 },
+    ].map(treatmentModule.generator.generate);
+    const ressourceFilter = ressourceFilterGenerator.generate({
+      mustHaveResizedBiggerAnnotations: true,
+    });
+    const treatedDocuments = [
+      { assignations: [], document: documents[0], treatments: [] },
+      { assignations: [], document: documents[1], treatments: treatments },
+    ];
+
+    const filteredTreatedDocuments = filterTreatedDocuments({
+      ressourceFilter,
+      treatedDocuments,
+    });
+
+    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[1], treatments: treatments }]);
+  });
+
+  it('should filter all the given treated documents with resized smaller annotations', () => {
+    const documents = [{}, {}].map(documentModule.generator.generate);
+    const treatments = [
+      { resizedSmallerAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { documentId: documents[1]._id, order: 0 },
+      { documentId: documents[1]._id, order: 1 },
+    ].map(treatmentModule.generator.generate);
+    const ressourceFilter = ressourceFilterGenerator.generate({
+      mustHaveResizedSmallerAnnotations: true,
     });
     const treatedDocuments = [
       { assignations: [], document: documents[0], treatments: [] },

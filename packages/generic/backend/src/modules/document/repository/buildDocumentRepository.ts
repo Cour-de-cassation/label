@@ -53,11 +53,8 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
-    async findAllByPublicationCategoryAndStatus({
-      publicationCategory,
-      status,
-    }) {
-      return collection.find({ publicationCategory, status }).toArray();
+    async findAllByPublicationCategory({ publicationCategory }) {
+      return collection.find({ publicationCategory }).toArray();
     },
 
     async findAllByStatus(status) {

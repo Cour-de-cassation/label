@@ -108,9 +108,8 @@ function buildDocumentService() {
 
   async function fetchSpecialDocuments() {
     const documentRepository = buildDocumentRepository();
-    return documentRepository.findAllByPublicationCategoryAndStatus({
+    return documentRepository.findAllByPublicationCategory({
       publicationCategory: ['P'],
-      status: 'done',
     });
   }
 

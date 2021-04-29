@@ -31,14 +31,9 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return uniq(collection.map((document) => document.source));
     },
 
-    async findAllByPublicationCategoryAndStatus({
-      publicationCategory,
-      status,
-    }) {
-      return collection.filter(
-        (document) =>
-          isEqual(document.publicationCategory, publicationCategory) &&
-          document.status === status,
+    async findAllByPublicationCategory({ publicationCategory }) {
+      return collection.filter((document) =>
+        isEqual(document.publicationCategory, publicationCategory),
       );
     },
 

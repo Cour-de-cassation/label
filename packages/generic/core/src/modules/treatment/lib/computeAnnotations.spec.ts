@@ -65,7 +65,11 @@ describe('computeAnnotations', () => {
       },
     ].map(treatmentGenerator.generate);
 
-    expect(() => computeAnnotations(treatments)).toThrow('Can not compute annotations from inconsistent treatments');
+    expect(() => computeAnnotations(treatments)).toThrow(
+      `Can not compute annotations from inconsistent treatments : [${idModule.lib.convertToString(
+        treatments[0]._id,
+      )}, ${idModule.lib.convertToString(treatments[1]._id)}]`,
+    );
   });
 
   it('should throw if the first treatment is empty at the beginning', () => {
@@ -88,7 +92,11 @@ describe('computeAnnotations', () => {
       },
     ].map(treatmentGenerator.generate);
 
-    expect(() => computeAnnotations(treatments)).toThrow('Can not compute annotations from inconsistent treatments');
+    expect(() => computeAnnotations(treatments)).toThrow(
+      `Can not compute annotations from inconsistent treatments : [${idModule.lib.convertToString(
+        treatments[0]._id,
+      )}, ${idModule.lib.convertToString(treatments[1]._id)}]`,
+    );
   });
 
   it('should throw if there are missing treatments', () => {
@@ -111,7 +119,11 @@ describe('computeAnnotations', () => {
       },
     ].map(treatmentGenerator.generate);
 
-    expect(() => computeAnnotations(treatments)).toThrow('Can not compute annotations from inconsistent treatments');
+    expect(() => computeAnnotations(treatments)).toThrow(
+      `Can not compute annotations from inconsistent treatments : [${idModule.lib.convertToString(
+        treatments[0]._id,
+      )}, ${idModule.lib.convertToString(treatments[1]._id)}]`,
+    );
   });
 });
 

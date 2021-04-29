@@ -13,7 +13,9 @@ function computeAnnotations(treatments: treatmentType[]): annotationType[] {
     const annotationsDiffs = sortedTreatments.map((treatment) => treatment.annotationsDiff);
     return annotationsDiffModule.lib.squash(annotationsDiffs).after;
   } else {
-    throw new Error('Can not compute annotations from inconsistent treatments');
+    throw new Error(
+      `Can not compute annotations from inconsistent treatments : [${treatments.map(({ _id }) => _id).join(', ')}]`,
+    );
   }
 }
 
@@ -24,7 +26,9 @@ function computeAnnotationsDiff(treatments: treatmentType[]): annotationsDiffTyp
     const annotationsDiffs = sortedTreatments.map((treatment) => treatment.annotationsDiff);
     return annotationsDiffModule.lib.squash(annotationsDiffs);
   } else {
-    throw new Error('Can not compute annotations from inconsistent treatments');
+    throw new Error(
+      `Can not compute annotations from inconsistent treatments : [${treatments.map(({ _id }) => _id).join(', ')}]`,
+    );
   }
 }
 

@@ -119,24 +119,22 @@ describe('documentService', () => {
       const documentsWithTreatments = range(5).map(() =>
         documentModule.generator.generate(),
       );
-      const documentsWithoutTreatments = range(3).map(() =>
-        documentModule.generator.generate(),
-      );
+      const documentWithoutTreatments = documentModule.generator.generate({
+        priority: 'high',
+      });
       const treatments = documentsWithTreatments.map((document) =>
         treatmentModule.generator.generate({ documentId: document._id }),
       );
       await Promise.all(
-        [...documentsWithTreatments, ...documentsWithoutTreatments].map(
+        [...documentsWithTreatments, documentWithoutTreatments].map(
           documentRepository.insert,
         ),
       );
       await Promise.all(treatments.map(treatmentRepository.insert));
 
-      const fetchedDocumentsWithoutAnnotations = await documentService.fetchDocumentsWithoutAnnotations();
+      const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotations();
 
-      expect(fetchedDocumentsWithoutAnnotations.sort()).toEqual(
-        documentsWithoutTreatments.sort(),
-      );
+      expect(documentWithoutAnnotations).toEqual(documentWithoutTreatments);
     });
   });
 

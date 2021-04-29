@@ -28,6 +28,13 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
+    async countNotIn(idsNotToSearchIn) {
+      const count = await collection.countDocuments({
+        _id: { $nin: idsNotToSearchIn },
+      });
+      return count;
+    },
+
     async findAllPublicationCategories() {
       const publicationCategories = await collection.distinct(
         'publicationCategory',
@@ -49,6 +56,14 @@ const buildDocumentRepository = buildRepositoryBuilder<
         priority,
         status,
         _id: { $in: idsToSearchInFirst },
+      });
+      return document || undefined;
+    },
+
+    async findOneByPriorityNotIn({ priority }, idsNotToSearchIn) {
+      const document = await collection.findOne({
+        priority,
+        _id: { $nin: idsNotToSearchIn },
       });
       return document || undefined;
     },

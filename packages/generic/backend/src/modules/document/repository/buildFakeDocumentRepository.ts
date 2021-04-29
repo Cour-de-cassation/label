@@ -15,6 +15,15 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
   customDocumentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
+    async countNotIn(idsNotToSearchIn) {
+      return collection.filter(
+        (document) =>
+          !idsNotToSearchIn.some((id) =>
+            idModule.lib.equalId(document._id, id),
+          ),
+      ).length;
+    },
+
     async findAllPublicationCategories() {
       let publicationCategories: string[] = [];
       collection.forEach(
@@ -48,6 +57,17 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return collection
         .filter((document) => status.includes(document.status))
         .map((document) => projectFakeObjects(document, projections));
+    },
+
+    async findOneByPriorityNotIn({ priority }, idsNotToSearchIn) {
+      const document = await collection.find(
+        (document) =>
+          document.priority === priority &&
+          !idsNotToSearchIn.some((id) =>
+            idModule.lib.equalId(document._id, id),
+          ),
+      );
+      return document || undefined;
     },
 
     async findOneByStatusAndPriorityAmong(

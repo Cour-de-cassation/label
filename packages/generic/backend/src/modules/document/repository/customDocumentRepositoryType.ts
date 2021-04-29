@@ -4,6 +4,7 @@ import { projectedType } from '../../../repository';
 export type { customDocumentRepositoryType };
 
 type customDocumentRepositoryType = {
+  countNotIn: (idsNotToSearchIn: documentType['_id'][]) => Promise<number>;
   findAllPublicationCategories: () => Promise<Array<string>>;
   findAllSources: () => Promise<Array<string>>;
   findAllByStatus: (
@@ -24,6 +25,10 @@ type customDocumentRepositoryType = {
       priority,
     }: { status: documentType['status']; priority: documentType['priority'] },
     idsToSearchInFirst: documentType['_id'][],
+  ) => Promise<documentType | undefined>;
+  findOneByPriorityNotIn: (
+    { priority }: { priority: documentType['priority'] },
+    idsNotToSearchIn: documentType['_id'][],
   ) => Promise<documentType | undefined>;
   updateStatusById: (
     id: idType,

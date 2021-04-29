@@ -2,7 +2,6 @@ import {
   annotationType,
   annotationReportType,
   buildAutoAnnotator,
-  documentModule,
   documentType,
   idType,
   settingsModule,
@@ -25,24 +24,22 @@ function buildAnnotator(
     async annotateDocumentsWithoutAnnotations() {
       logger.log('annotateDocumentsWithoutAnnotations');
 
-      const documentsToAnnotate = await documentService.fetchDocumentsWithoutAnnotations();
-      await annotateDocuments(documentsToAnnotate);
+      const documentsCountToAnnotate = await documentService.countDocumentsWithoutAnnotations();
+      logger.log(`Found ${documentsCountToAnnotate} documents to annotate`);
+      let currentDocumentToAnnotate: documentType | undefined;
+      let documentsAnnotatedCount = 0;
+      do {
+        currentDocumentToAnnotate = await documentService.fetchDocumentWithoutAnnotations();
+        if (currentDocumentToAnnotate) {
+          documentsAnnotatedCount++;
+          logger.log(
+            `Annotating with ${annotatorConfig.name} document ${documentsAnnotatedCount}/${documentsCountToAnnotate}`,
+          );
+          await annotateDocument(currentDocumentToAnnotate);
+        }
+      } while (currentDocumentToAnnotate !== undefined);
     },
   };
-
-  async function annotateDocuments(documents: documentType[]) {
-    const sortedDocuments = documents.sort(
-      documentModule.lib.comparator.compareByPriority,
-    );
-    for (let ind = 0; ind < sortedDocuments.length; ind++) {
-      logger.log(
-        `Annotating  with ${annotatorConfig.name} document ${ind + 1}/${
-          sortedDocuments.length
-        }`,
-      );
-      await annotateDocument(sortedDocuments[ind]);
-    }
-  }
 
   async function annotateDocument(document: documentType) {
     const {

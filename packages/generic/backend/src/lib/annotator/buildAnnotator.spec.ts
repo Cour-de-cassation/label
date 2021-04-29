@@ -19,8 +19,8 @@ describe('buildAnnotator', () => {
 
       await annotator.annotateDocumentsWithoutAnnotations();
 
-      const documentsWithoutAnnotations = await documentService.fetchDocumentsWithoutAnnotations();
-      expect(documentsWithoutAnnotations).toEqual([]);
+      const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotations();
+      expect(documentWithoutAnnotations).toEqual(undefined);
     });
   });
 });

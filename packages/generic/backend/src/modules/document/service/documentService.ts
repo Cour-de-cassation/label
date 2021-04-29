@@ -32,6 +32,7 @@ function buildDocumentService() {
   );
 
   return {
+    countDocumentsWithoutAnnotations,
     deleteDocument,
     fetchAllDocumentsByIds,
     fetchAllPublicationCategories,
@@ -42,7 +43,7 @@ function buildDocumentService() {
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
     fetchDocumentsReadyToExport,
-    fetchDocumentsWithoutAnnotations,
+    fetchDocumentWithoutAnnotations,
     fetchDocumentsForUser,
     fetchDocumentForUser,
     fetchDocument,
@@ -223,18 +224,40 @@ function buildDocumentService() {
     return documentsReadyToExport;
   }
 
-  async function fetchDocumentsWithoutAnnotations(): Promise<documentType[]> {
+  async function fetchDocumentWithoutAnnotations(): Promise<
+    documentType | undefined
+  > {
     const documentRepository = buildDocumentRepository();
 
     const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
-    const documents = await documentRepository.findAll();
-
-    return documents.filter(
-      (document) =>
-        !treatedDocumentIds.some((documentId) =>
-          idModule.lib.equalId(documentId, document._id),
-        ),
+    let document: documentType | undefined;
+    document = await documentRepository.findOneByPriorityNotIn(
+      { priority: 'high' },
+      treatedDocumentIds,
     );
+    if (document) {
+      return document;
+    }
+    document = await documentRepository.findOneByPriorityNotIn(
+      { priority: 'medium' },
+      treatedDocumentIds,
+    );
+    if (document) {
+      return document;
+    }
+    document = await documentRepository.findOneByPriorityNotIn(
+      { priority: 'medium' },
+      treatedDocumentIds,
+    );
+
+    return document;
+  }
+
+  async function countDocumentsWithoutAnnotations(): Promise<number> {
+    const documentRepository = buildDocumentRepository();
+
+    const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
+    return documentRepository.countNotIn(treatedDocumentIds);
   }
 
   async function fetchDocument(documentId: documentType['_id']) {

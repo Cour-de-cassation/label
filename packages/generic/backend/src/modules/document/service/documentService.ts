@@ -246,7 +246,7 @@ function buildDocumentService() {
       return document;
     }
     document = await documentRepository.findOneByPriorityNotIn(
-      { priority: 'medium' },
+      { priority: 'low' },
       treatedDocumentIds,
     );
 

@@ -6,8 +6,8 @@ LABELSETTINGS=/home/label/git/label/packages/courDeCassation/settings/settings.j
 LABELCRONLOGFILE=/home/label/git/label/packages/courDeCassation/cron.log.txt
 
 # Importation from SDER
-0 7 * * * node $LABELCOURDECASSATIONPATH/dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7 >> $LABELCRONLOGFILE 2>&1
-0 8 * * * node $LABELCOURDECASSATIONPATH/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS >> $LABELCRONLOGFILE 2>&1
+*/5 * * * * node $LABELCOURDECASSATIONPATH/dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7 >> $LABELCRONLOGFILE 2>&1
+*/5 * * * * node $LABELCOURDECASSATIONPATH/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS >> $LABELCRONLOGFILE 2>&1
 
 # Exportation to SDER
 0 23 * * * node $LABELCOURDECASSATIONPATH/dist/scripts/exportTreatedDocumentsSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 3 >> $LABELCRONLOGFILE 2>&1

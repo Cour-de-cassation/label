@@ -1,21 +1,25 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import { apiRouteOutType } from '@label/core';
-import { PaginatedTable, tableRowFieldType } from '../../components';
+import { DocumentStatusIcon, PaginatedTable, tableRowFieldType } from '../../components';
 import { wordings } from '../../wordings';
 
 export { SpecialDocumentsTable };
 
-function SpecialDocumentsTable(props: {
-  fields: Array<tableRowFieldType<apiRouteOutType<'get', 'specialDocuments'>[number]>>;
-  specialDocuments: apiRouteOutType<'get', 'specialDocuments'>;
-}) {
+const TABLE_ICON_SIZE = 24;
+
+function SpecialDocumentsTable(props: { specialDocuments: apiRouteOutType<'get', 'specialDocuments'> }) {
   const history = useHistory();
+  const fields = buildSpecialDocumentsFields();
   const styles = buildStyles();
   const optionItems = buildOptionItems();
   return (
     <div style={styles.container}>
-      <PaginatedTable fields={props.fields} data={props.specialDocuments} optionItems={optionItems} />
+      <PaginatedTable
+        fields={fields}
+        data={props.specialDocuments.filter((document) => document.status === 'done')}
+        optionItems={optionItems}
+      />
     </div>
   );
 
@@ -30,6 +34,29 @@ function SpecialDocumentsTable(props: {
       },
     ];
   }
+}
+
+function buildSpecialDocumentsFields() {
+  const specialDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'specialDocuments'>[number]>> = [
+    {
+      id: 'documentNumber',
+      title: wordings.specialDocumentsPage.table.columnTitles.number,
+      canBeSorted: true,
+      extractor: (specialDocument) => JSON.stringify(specialDocument.documentNumber),
+      width: 10,
+    },
+    {
+      id: 'status',
+      title: wordings.specialDocumentsPage.table.columnTitles.status,
+      canBeSorted: true,
+      extractor: (specialDocument) => specialDocument.status,
+      render: (specialDocument) => (
+        <DocumentStatusIcon status={specialDocument.status} iconSize={TABLE_ICON_SIZE}></DocumentStatusIcon>
+      ),
+      width: 10,
+    },
+  ];
+  return specialDocumentsFields;
 }
 
 function buildStyles() {

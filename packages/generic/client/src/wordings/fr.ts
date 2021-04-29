@@ -193,6 +193,7 @@ const fr = {
     table: {
       columnTitles: {
         number: 'N° décision',
+        status: 'Statut',
       },
       optionItems: {
         openAnonymizedDocument: 'Ouvrir la décision anonymisée...',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, tableRowFieldType } from '../Table';
+import { optionItemType, Table, tableRowFieldType } from '../Table';
 import { footerCellType } from '../Table/TableFooter';
 import { orderDirectionType } from '../Table/TableHeader';
 import { computeNumberOfPages, computePagination } from './lib';
@@ -16,10 +16,7 @@ function PaginatedTable<InputT, orderByPropertyT extends string = string>(props:
   data: InputT[];
   onOrderByPropertyChange?: (newOrderByProperty: orderByPropertyT) => void;
   onOrderDirectionChange?: (newOrderDirection: orderDirectionType) => void;
-  optionItems?: Array<{
-    text: string;
-    onClick: (data: InputT) => void;
-  }>;
+  buildOptionItems?: (data: InputT) => Array<optionItemType>;
   fields: Array<tableRowFieldType<InputT, orderByPropertyT>>;
 }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -35,7 +32,7 @@ function PaginatedTable<InputT, orderByPropertyT extends string = string>(props:
         fields={props.fields}
         onOrderByPropertyChange={props.onOrderByPropertyChange}
         onOrderDirectionChange={props.onOrderDirectionChange}
-        optionItems={props.optionItems}
+        buildOptionItems={props.buildOptionItems}
         pagination={pagination}
       />
       <PaginationFooter numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />

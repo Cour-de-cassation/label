@@ -1,13 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { apiRouteOutType } from '@label/core';
-import { DocumentStatusIcon, PaginatedTable, tableRowFieldType } from '../../components';
+import { apiRouteOutType, documentType } from '@label/core';
+import { PaginatedTable, tableRowFieldType } from '../../components';
 import { wordings } from '../../wordings';
 import { apiCaller } from '../../api';
 
 export { SpecialDocumentsTable };
-
-const TABLE_ICON_SIZE = 24;
 
 function SpecialDocumentsTable(props: {
   specialDocuments: apiRouteOutType<'get', 'specialDocuments'>;
@@ -16,37 +14,49 @@ function SpecialDocumentsTable(props: {
   const history = useHistory();
   const fields = buildSpecialDocumentsFields();
   const styles = buildStyles();
-  const optionItems = buildOptionItems();
+
   return (
     <div style={styles.container}>
-      <PaginatedTable
-        fields={fields}
-        data={props.specialDocuments.filter((document) => document.status === 'done')}
-        optionItems={optionItems}
-      />
+      <PaginatedTable fields={fields} data={props.specialDocuments} buildOptionItems={buildOptionItems} />
     </div>
   );
 
-  function buildOptionItems() {
-    return [
-      {
-        text: wordings.specialDocumentsPage.table.optionItems.openAnonymizedDocument,
-        onClick: (specialDocument: apiRouteOutType<'get', 'specialDocuments'>[number]) => {
-          history.push(`/anonymized-document/${specialDocument._id}`);
-          return;
-        },
+  function buildOptionItems(specialDocument: apiRouteOutType<'get', 'specialDocuments'>[number]) {
+    if (specialDocument.status !== 'done') {
+      return [];
+    }
+
+    const openAnonymizedDocumentOptionItem = {
+      text: wordings.specialDocumentsPage.table.optionItems.openAnonymizedDocument,
+      onClick: () => {
+        history.push(`/anonymized-document/${specialDocument._id}`);
+        return;
       },
-      {
-        text: wordings.specialDocumentsPage.table.optionItems.markAsPublished,
-        onClick: async (specialDocument: apiRouteOutType<'get', 'specialDocuments'>[number]) => {
-          await apiCaller.post<'updateDocumentMarkedAsPublished'>('updateDocumentMarkedAsPublished', {
-            documentId: specialDocument._id,
-            markedAsPublished: true,
-          });
-          props.refetch();
-        },
-      },
-    ];
+    };
+
+    const markAsPublishedOptionItem = specialDocument.markedAsPublished
+      ? {
+          text: wordings.specialDocumentsPage.table.optionItems.markAsUnPublished,
+          onClick: async () => {
+            await apiCaller.post<'updateDocumentMarkedAsPublished'>('updateDocumentMarkedAsPublished', {
+              documentId: specialDocument._id,
+              markedAsPublished: false,
+            });
+            props.refetch();
+          },
+        }
+      : {
+          text: wordings.specialDocumentsPage.table.optionItems.markAsPublished,
+          onClick: async () => {
+            await apiCaller.post<'updateDocumentMarkedAsPublished'>('updateDocumentMarkedAsPublished', {
+              documentId: specialDocument._id,
+              markedAsPublished: true,
+            });
+            props.refetch();
+          },
+        };
+
+    return [openAnonymizedDocumentOptionItem, markAsPublishedOptionItem];
   }
 }
 
@@ -63,14 +73,20 @@ function buildSpecialDocumentsFields() {
       id: 'status',
       title: wordings.specialDocumentsPage.table.columnTitles.status,
       canBeSorted: true,
-      extractor: (specialDocument) => specialDocument.status,
-      render: (specialDocument) => (
-        <DocumentStatusIcon status={specialDocument.status} iconSize={TABLE_ICON_SIZE}></DocumentStatusIcon>
-      ),
+      extractor: (specialDocument) => computeStatusWording(specialDocument.status, specialDocument.markedAsPublished),
       width: 10,
     },
   ];
   return specialDocumentsFields;
+}
+
+function computeStatusWording(status: documentType['status'], markedAsPublished: documentType['markedAsPublished']) {
+  if (status !== 'done') {
+    return wordings.specialDocumentsPage.table.status.notTreated;
+  }
+  return markedAsPublished
+    ? wordings.specialDocumentsPage.table.status.published
+    : wordings.specialDocumentsPage.table.status.toBePublished;
 }
 
 function buildStyles() {

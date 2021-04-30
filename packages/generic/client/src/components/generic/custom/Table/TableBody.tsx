@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react';
+import { optionItemType } from './Table';
 import { orderDirectionType } from './TableHeader';
 import { TableRow } from './TableRow';
 
@@ -23,10 +24,7 @@ function TableBody<InputT, orderByPropertyT extends string = string>(props: {
   isRowHighlighted?: (row: InputT) => boolean;
   onRowClick?: (row: InputT) => void;
   optionCellStyle?: CSSProperties;
-  optionItems?: Array<{
-    text: string;
-    onClick: (data: InputT) => void;
-  }>;
+  buildOptionItems?: (data: InputT) => Array<optionItemType>;
   orderByProperty: string | undefined;
   orderDirection: orderDirectionType;
   pagination?: { start: number; end: number };
@@ -41,7 +39,7 @@ function TableBody<InputT, orderByPropertyT extends string = string>(props: {
           isHighlighted={!!props.isRowHighlighted && props.isRowHighlighted(row)}
           onRowClick={onRowClick ? () => onRowClick(row) : undefined}
           optionCellStyle={props.optionCellStyle}
-          optionItems={props.optionItems}
+          buildOptionItems={props.buildOptionItems}
           row={row}
         />
       ))}

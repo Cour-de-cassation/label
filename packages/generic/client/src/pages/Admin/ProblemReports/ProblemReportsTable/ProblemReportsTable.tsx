@@ -16,76 +16,88 @@ function ProblemReportsTable(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
   const history = useHistory();
-  const optionItems = buildOptionItems();
   return (
     <Table
       data={props.problemReportsWithDetails}
       isRowHighlighted={isRowHighlighted}
       fields={problemReportsFields}
-      optionItems={optionItems}
+      buildOptionItems={buildOptionItems}
       onRowClick={onRowClick}
       defaultOrderByProperty="date"
       defaultOrderDirection="desc"
     />
   );
 
-  function openMailToAgent(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
-    const subject = format(wordings.problemReportsPage.table.mailSubject, {
-      documentNumber: problemReportWithDetails.document.documentNumber,
-    });
-    const email = problemReportWithDetails.user.email;
-    const body = problemReportWithDetails.problemReport.text;
-    sendMail({ email, subject, body });
-  }
+  function buildOptionItems(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
+    const validateDocumentOptionItem =
+      problemReportWithDetails.document.status !== 'done'
+        ? {
+            text: wordings.problemReportsPage.table.optionItems.validate,
+            onClick: async () => {
+              await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+                assignationId: problemReportWithDetails.problemReport.assignationId,
+                status: 'done',
+              });
+              props.refetch();
+            },
+            iconName: 'send' as const,
+          }
+        : undefined;
 
-  function buildOptionItems() {
-    return [
-      {
-        text: wordings.problemReportsPage.table.optionItems.answerByEmail,
-        onClick: openMailToAgent,
-        iconName: 'mail' as const,
+    const answerByEmailOptionItem = {
+      text: wordings.problemReportsPage.table.optionItems.answerByEmail,
+      onClick: () => {
+        const subject = format(wordings.problemReportsPage.table.mailSubject, {
+          documentNumber: problemReportWithDetails.document.documentNumber,
+        });
+        const email = problemReportWithDetails.user.email;
+        const body = problemReportWithDetails.problemReport.text;
+        sendMail({ email, subject, body });
       },
-      {
-        text: wordings.problemReportsPage.table.optionItems.deleteProblemReport,
-        onClick: async (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-          await apiCaller.post<'deleteProblemReport'>('deleteProblemReport', {
-            problemReportId: problemReportWithDetails.problemReport._id,
-          });
-          props.refetch();
-        },
-        iconName: 'delete' as const,
+      iconName: 'mail' as const,
+    };
+
+    const deleteProblemReportOptionItem = {
+      text: wordings.problemReportsPage.table.optionItems.deleteProblemReport,
+      onClick: async () => {
+        await apiCaller.post<'deleteProblemReport'>('deleteProblemReport', {
+          problemReportId: problemReportWithDetails.problemReport._id,
+        });
+        props.refetch();
       },
-      {
-        text: wordings.problemReportsPage.table.optionItems.openDocument,
-        onClick: (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-          history.push(`/admin/document/${problemReportWithDetails.document._id}`);
-          return;
-        },
-        iconName: 'eye' as const,
+      iconName: 'delete' as const,
+    };
+
+    const openDocumentOptionItem = {
+      text: wordings.problemReportsPage.table.optionItems.openDocument,
+      onClick: () => {
+        history.push(`/admin/document/${problemReportWithDetails.document._id}`);
+        return;
       },
-      {
-        text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
-        onClick: async (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-          await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-            assignationId: problemReportWithDetails.problemReport.assignationId,
-            status: 'pending',
-          });
-          props.refetch();
-        },
-        iconName: 'turnRight' as const,
+      iconName: 'eye' as const,
+    };
+
+    const reassignToAgentOptionItem = {
+      text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
+      onClick: async () => {
+        await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+          assignationId: problemReportWithDetails.problemReport.assignationId,
+          status: 'pending',
+        });
+        props.refetch();
       },
-      {
-        text: wordings.problemReportsPage.table.optionItems.validate,
-        onClick: async (problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) => {
-          await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-            assignationId: problemReportWithDetails.problemReport.assignationId,
-            status: 'done',
-          });
-          props.refetch();
-        },
-        iconName: 'send' as const,
-      },
+      iconName: 'turnRight' as const,
+    };
+    const optionItems = [
+      answerByEmailOptionItem,
+      deleteProblemReportOptionItem,
+      openDocumentOptionItem,
+      reassignToAgentOptionItem,
     ];
+    if (validateDocumentOptionItem) {
+      return [...optionItems, validateDocumentOptionItem];
+    }
+    return optionItems;
   }
 
   async function onRowClick(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {

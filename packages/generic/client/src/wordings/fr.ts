@@ -195,6 +195,11 @@ const fr = {
         number: 'N° décision',
         status: 'Statut',
       },
+      status: {
+        notTreated: 'En traitement',
+        toBePublished: 'À publier',
+        published: 'Publié',
+      },
       optionItems: {
         openAnonymizedDocument: 'Ouvrir la décision anonymisée...',
         markAsPublished: 'Marquer comme publiée',

@@ -23,7 +23,7 @@ function TreatedDocumentsTable(props: {
   const orderByProperty = localStorage.treatedDocumentsStateHandler.getOrderByProperty();
   const orderDirection = localStorage.treatedDocumentsStateHandler.getOrderDirection();
   const styles = buildStyles();
-  const optionItems = buildOptionItems();
+
   return (
     <div style={styles.container}>
       <AnnotationsDiffDrawer
@@ -39,7 +39,7 @@ function TreatedDocumentsTable(props: {
         onOrderByPropertyChange={onOrderByPropertyChange}
         onOrderDirectionChange={onOrderDirectionChange}
         data={props.treatedDocuments}
-        optionItems={optionItems}
+        buildOptionItems={buildOptionItems}
       />
     </div>
   );
@@ -60,22 +60,22 @@ function TreatedDocumentsTable(props: {
     };
   }
 
-  function buildOptionItems() {
+  function buildOptionItems(treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) {
     return [
       {
         text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
-        onClick: (treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) => {
+        onClick: () => {
           history.push(`/admin/document/${treatmentWithDetails.document._id}`);
           return;
         },
-        iconName: 'eye',
+        iconName: 'eye' as const,
       },
       {
         text: wordings.treatedDocumentsPage.table.optionItems.displayAnnotationDiff,
-        onClick: (treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) => {
+        onClick: () => {
           setAnnotationDiffDocumentId(treatmentWithDetails.document._id);
         },
-        iconName: 'link',
+        iconName: 'link' as const,
       },
     ];
   }

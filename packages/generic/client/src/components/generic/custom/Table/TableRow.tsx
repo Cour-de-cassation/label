@@ -13,7 +13,7 @@ function TableRow<InputT>(props: {
   row: InputT;
   isHighlighted: boolean;
   onRowClick?: () => void;
-  optionItems?: Array<optionItemType<InputT>>;
+  buildOptionItems?: (data: InputT) => Array<optionItemType>;
   optionCellStyle?: CSSProperties;
 }) {
   const theme = useCustomTheme();
@@ -46,9 +46,13 @@ function TableRow<InputT>(props: {
   );
 
   function renderOptionButton() {
-    const { optionItems } = props;
+    const { buildOptionItems } = props;
 
-    if (!optionItems || !isHovered) {
+    if (!buildOptionItems || !isHovered) {
+      return null;
+    }
+    const optionItems = buildOptionItems(props.row);
+    if (optionItems.length === 0) {
       return null;
     }
     const items = optionItems.map((optionItem) => ({
@@ -58,7 +62,7 @@ function TableRow<InputT>(props: {
     }));
     const onSelect = (optionItemText: string) => {
       const optionItem = optionItems.find(({ text }) => text === optionItemText);
-      optionItem && optionItem.onClick(props.row);
+      optionItem && optionItem.onClick();
     };
     return <OptionButton items={items} onClose={() => setIsHovered(false)} onSelect={onSelect} />;
   }

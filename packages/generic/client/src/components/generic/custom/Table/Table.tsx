@@ -13,9 +13,9 @@ const OPTION_CELL_WIDTH = 40;
 
 type orderDirectionType = 'asc' | 'desc';
 
-type optionItemType<InputT> = {
+type optionItemType = {
   text: string;
-  onClick: (data: InputT) => void;
+  onClick: () => void;
   iconName?: iconNameType;
 };
 
@@ -25,7 +25,7 @@ function Table<InputT, orderByPropertyT extends string = string>(props: {
   footer?: Array<footerCellType>;
   isRowHighlighted?: (row: InputT) => boolean;
   data: InputT[];
-  optionItems?: Array<optionItemType<InputT>>;
+  buildOptionItems?: (data: InputT) => Array<optionItemType>;
   onOrderByPropertyChange?: (newOrderByProperty: orderByPropertyT) => void;
   onOrderDirectionChange?: (newOrderDirection: orderDirectionType) => void;
   onRowClick?: (row: InputT) => void;
@@ -38,7 +38,7 @@ function Table<InputT, orderByPropertyT extends string = string>(props: {
   );
   const tableStyle = buildTableStyle();
   const fieldCellStyles = buildFieldCellStyles();
-  const optionCellStyle = props.optionItems && props.optionItems.length > 0 ? buildOptionCellStyle() : undefined;
+  const optionCellStyle = props.buildOptionItems ? buildOptionCellStyle() : undefined;
   return (
     <table style={tableStyle}>
       {renderHeader()}
@@ -84,7 +84,7 @@ function Table<InputT, orderByPropertyT extends string = string>(props: {
         isRowHighlighted={props.isRowHighlighted}
         orderByProperty={orderByProperty}
         orderDirection={orderDirection}
-        optionItems={props.optionItems}
+        buildOptionItems={props.buildOptionItems}
         optionCellStyle={optionCellStyle}
         pagination={props.pagination}
         onRowClick={props.onRowClick}

@@ -13,20 +13,19 @@ function AgentsTable(props: {
 }) {
   const [passwordReset, setPasswordReset] = useState<string | undefined>();
   const styles = buildStyles();
-  const optionItems = buildOptionItems();
 
   return (
     <div style={styles.container}>
       {!!passwordReset && <PasswordResetPopup password={passwordReset} onClose={() => setPasswordReset(undefined)} />}
-      <Table fields={props.fields} data={props.usersWithDetails} optionItems={optionItems} />
+      <Table fields={props.fields} data={props.usersWithDetails} buildOptionItems={buildOptionItems} />
     </div>
   );
 
-  function buildOptionItems() {
+  function buildOptionItems(userWithDetails: apiRouteOutType<'get', 'usersWithDetails'>[number]) {
     return [
       {
         text: wordings.agentsPage.table.optionItems.resetPassword,
-        onClick: async (userWithDetails: apiRouteOutType<'get', 'usersWithDetails'>[number]) => {
+        onClick: async () => {
           const { data: newPassword } = await apiCaller.post<'resetPassword'>('resetPassword', {
             userId: userWithDetails.user._id,
           });

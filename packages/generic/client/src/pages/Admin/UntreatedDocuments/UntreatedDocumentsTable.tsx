@@ -12,19 +12,21 @@ function UntreatedDocumentsTable(props: {
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
 }) {
   const styles = buildStyles();
-  const optionItems = buildOptionItems();
 
   return (
     <div style={styles.container}>
-      <PaginatedTable fields={props.fields} data={props.untreatedDocuments} optionItems={optionItems} />
+      <PaginatedTable fields={props.fields} data={props.untreatedDocuments} buildOptionItems={buildOptionItems} />
     </div>
   );
 
-  function buildOptionItems() {
+  function buildOptionItems(untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) {
+    if (untreatedDocument.document.status !== 'pending') {
+      return [];
+    }
     return [
       {
         text: wordings.untreatedDocumentsPage.table.optionItems.freeDocument,
-        onClick: async (untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) => {
+        onClick: async () => {
           await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
             documentId: untreatedDocument.document._id,
             status: 'free',

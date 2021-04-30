@@ -1,4 +1,4 @@
-import { Table, tableRowFieldType } from './Table';
+import { Table, tableRowFieldType, optionItemType } from './Table';
 
 export { Table };
-export type { tableRowFieldType };
+export type { tableRowFieldType, optionItemType };

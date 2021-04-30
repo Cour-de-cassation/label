@@ -7,7 +7,7 @@ function buildDocument(documentFields: Omit<omitIdType<documentType>, 'status' |
   return {
     ...documentFields,
     _id: idModule.lib.buildId(),
-    status: 'free',
+    status: 'loaded',
     updateDate: new Date().getTime(),
   };
 }

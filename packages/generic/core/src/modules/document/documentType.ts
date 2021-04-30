@@ -19,7 +19,7 @@ const documentModelCommonFields = {
   publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
   status: {
     kind: 'constant',
-    content: ['done', 'exported', 'free', 'pending', 'rejected', 'saved'] as const,
+    content: ['done', 'exported', 'free', 'loaded', 'nlpAnnotating', 'pending', 'rejected', 'saved'] as const,
   },
   title: { kind: 'primitive', content: 'string' },
   text: { kind: 'primitive', content: 'string' },

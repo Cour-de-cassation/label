@@ -121,6 +121,7 @@ describe('documentService', () => {
       );
       const documentWithoutTreatments = documentModule.generator.generate({
         priority: 'high',
+        status: 'loaded',
       });
       const treatments = documentsWithTreatments.map((document) =>
         treatmentModule.generator.generate({ documentId: document._id }),

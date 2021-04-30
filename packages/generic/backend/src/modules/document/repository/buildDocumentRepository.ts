@@ -60,9 +60,13 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
-    async findOneByPriorityNotIn({ priority }, idsNotToSearchIn) {
+    async findOneByStatusAndPriorityNotIn(
+      { status, priority },
+      idsNotToSearchIn,
+    ) {
       const document = await collection.findOne({
         priority,
+        status,
         _id: { $nin: idsNotToSearchIn },
       });
       return document || undefined;

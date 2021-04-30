@@ -59,9 +59,13 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         .map((document) => projectFakeObjects(document, projections));
     },
 
-    async findOneByPriorityNotIn({ priority }, idsNotToSearchIn) {
+    async findOneByStatusAndPriorityNotIn(
+      { status, priority },
+      idsNotToSearchIn,
+    ) {
       const document = await collection.find(
         (document) =>
+          document.status === status &&
           document.priority === priority &&
           !idsNotToSearchIn.some((id) =>
             idModule.lib.equalId(document._id, id),

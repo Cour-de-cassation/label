@@ -232,22 +232,22 @@ function buildDocumentService() {
 
     const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
     let document: documentType | undefined;
-    document = await documentRepository.findOneByPriorityNotIn(
-      { priority: 'high' },
+    document = await documentRepository.findOneByStatusAndPriorityNotIn(
+      { status: 'loaded', priority: 'high' },
       treatedDocumentIds,
     );
     if (document) {
       return document;
     }
-    document = await documentRepository.findOneByPriorityNotIn(
-      { priority: 'medium' },
+    document = await documentRepository.findOneByStatusAndPriorityNotIn(
+      { status: 'loaded', priority: 'medium' },
       treatedDocumentIds,
     );
     if (document) {
       return document;
     }
-    document = await documentRepository.findOneByPriorityNotIn(
-      { priority: 'low' },
+    document = await documentRepository.findOneByStatusAndPriorityNotIn(
+      { status: 'loaded', priority: 'low' },
       treatedDocumentIds,
     );
 

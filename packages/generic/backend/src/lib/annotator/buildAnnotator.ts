@@ -33,8 +33,13 @@ function buildAnnotator(
         currentDocumentToAnnotate = await documentService.fetchDocumentWithoutAnnotations();
         if (currentDocumentToAnnotate) {
           documentsAnnotatedCount++;
+          logger.log(`Found a document to annotate. Reserving...`);
+          await documentService.updateDocumentStatus(
+            currentDocumentToAnnotate._id,
+            'nlpAnnotating',
+          );
           logger.log(
-            `Annotating with ${annotatorConfig.name} document ${documentsAnnotatedCount}/${documentsCountToAnnotate}`,
+            `Annotating with ${annotatorConfig.name} document ${documentsAnnotatedCount}/${documentsCountToAnnotate}...`,
           );
           await annotateDocument(currentDocumentToAnnotate);
         }
@@ -60,6 +65,7 @@ function buildAnnotator(
       );
       return;
     }
+    await documentService.updateDocumentStatus(document._id, 'free');
     await createAnnotatorTreatment({ annotations, documentId });
     await createAutoTreatment({ annotations, documentId });
     await createReport(report);

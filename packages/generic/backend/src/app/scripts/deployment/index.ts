@@ -1,10 +1,10 @@
 import { logger } from '../../../utils';
-import { addDecisionMetadataInDocumentModel } from './addDecisionMetadataInDocumentModel';
+import { addMarkedAsPublishedInDocumentModel } from './addMarkedAsPublishedInDocumentModel';
 
 export { runDeploymentScripts };
 
 async function runDeploymentScripts() {
   logger.log('Deployment scripts');
-  logger.log('Add decision metadata in document model');
-  await addDecisionMetadataInDocumentModel();
+  logger.log('add markedAsPublished in document model');
+  await addMarkedAsPublishedInDocumentModel();
 }

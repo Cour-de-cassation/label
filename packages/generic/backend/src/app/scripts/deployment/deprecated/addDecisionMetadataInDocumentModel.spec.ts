@@ -1,6 +1,6 @@
 import { omit } from 'lodash';
 import { documentModule, documentType } from '@label/core';
-import { buildDocumentRepository } from '../../../modules/document';
+import { buildDocumentRepository } from '../../../../modules/document';
 import { addDecisionMetadataInDocumentModel } from './addDecisionMetadataInDocumentModel';
 
 describe('addDecisionMetadataInDocumentModel.spec', () => {

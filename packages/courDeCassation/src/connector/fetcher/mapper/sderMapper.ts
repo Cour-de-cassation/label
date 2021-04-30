@@ -47,6 +47,7 @@ function mapCourtDecisionToDocument(
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),
+    markedAsPublished: false,
     metadata: '',
     priority,
     publicationCategory,

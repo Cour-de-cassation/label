@@ -144,6 +144,18 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       return { email: userEmail, name, role, token };
     },
 
+    updateDocumentMarkedAsPublished: buildAuthenticatedController({
+      permissions: ['admin', 'specialDocumentAnnotator'],
+      controllerWithUser: async (
+        _,
+        { args: { documentId, markedAsPublished } },
+      ) =>
+        documentService.updateDocumentMarkedAsPublished(
+          idModule.lib.buildId(documentId),
+          markedAsPublished,
+        ),
+    }),
+
     monitoringEntries: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { newMonitoringEntries } }) => {

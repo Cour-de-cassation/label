@@ -436,6 +436,22 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
+    updateDocumentMarkedAsPublished: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+        markedAsPublished: buildModel({
+          kind: 'primitive',
+          content: 'boolean',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     updateDocumentStatus: {
       in: {
         documentId: buildModel({

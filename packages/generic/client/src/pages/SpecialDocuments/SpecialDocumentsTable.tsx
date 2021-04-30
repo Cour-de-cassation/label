@@ -3,12 +3,16 @@ import { useHistory } from 'react-router';
 import { apiRouteOutType } from '@label/core';
 import { DocumentStatusIcon, PaginatedTable, tableRowFieldType } from '../../components';
 import { wordings } from '../../wordings';
+import { apiCaller } from '../../api';
 
 export { SpecialDocumentsTable };
 
 const TABLE_ICON_SIZE = 24;
 
-function SpecialDocumentsTable(props: { specialDocuments: apiRouteOutType<'get', 'specialDocuments'> }) {
+function SpecialDocumentsTable(props: {
+  specialDocuments: apiRouteOutType<'get', 'specialDocuments'>;
+  refetch: () => void;
+}) {
   const history = useHistory();
   const fields = buildSpecialDocumentsFields();
   const styles = buildStyles();
@@ -30,6 +34,16 @@ function SpecialDocumentsTable(props: { specialDocuments: apiRouteOutType<'get',
         onClick: (specialDocument: apiRouteOutType<'get', 'specialDocuments'>[number]) => {
           history.push(`/anonymized-document/${specialDocument._id}`);
           return;
+        },
+      },
+      {
+        text: wordings.specialDocumentsPage.table.optionItems.markAsPublished,
+        onClick: async (specialDocument: apiRouteOutType<'get', 'specialDocuments'>[number]) => {
+          await apiCaller.post<'updateDocumentMarkedAsPublished'>('updateDocumentMarkedAsPublished', {
+            documentId: specialDocument._id,
+            markedAsPublished: true,
+          });
+          props.refetch();
         },
       },
     ];

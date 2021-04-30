@@ -100,9 +100,23 @@ const buildDocumentRepository = buildRepositoryBuilder<
       );
       return result.modifiedCount === 1;
     },
+
+    async updateOneMarkedAsPublishedByIdAndStatus(filter, update) {
+      const result = await collection.updateOne(
+        { _id: filter._id, status: filter.status },
+        { $set: buildUpdateMarkedAsPublishedQuery(update.markedAsPublished) },
+      );
+      return result.modifiedCount === 1;
+    },
   }),
 });
 
 function buildUpdateStatusQuery(status: documentType['status']) {
   return { status, updateDate: new Date().getTime() };
+}
+
+function buildUpdateMarkedAsPublishedQuery(
+  markedAsPublished: documentType['markedAsPublished'],
+) {
+  return { markedAsPublished, updateDate: new Date().getTime() };
 }

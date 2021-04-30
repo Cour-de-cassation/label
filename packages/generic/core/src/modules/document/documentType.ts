@@ -15,6 +15,7 @@ const documentModelCommonFields = {
   },
   documentNumber: { kind: 'primitive', content: 'number' },
   _id: { kind: 'custom', content: 'id' },
+  markedAsPublished: { kind: 'primitive', content: 'boolean' },
   publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
   status: {
     kind: 'constant',

@@ -38,7 +38,7 @@ function Table<InputT, orderByPropertyT extends string = string>(props: {
   );
   const tableStyle = buildTableStyle();
   const fieldCellStyles = buildFieldCellStyles();
-  const optionCellStyle = props.optionItems ? buildOptionCellStyle() : undefined;
+  const optionCellStyle = props.optionItems && props.optionItems.length > 0 ? buildOptionCellStyle() : undefined;
   return (
     <table style={tableStyle}>
       {renderHeader()}

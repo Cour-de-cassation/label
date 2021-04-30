@@ -47,6 +47,7 @@ function buildDocumentService() {
     fetchDocumentsForUser,
     fetchDocumentForUser,
     fetchDocument,
+    updateDocumentMarkedAsPublished,
     updateDocumentStatus,
   };
 
@@ -361,6 +362,22 @@ function buildDocumentService() {
           ? 1
           : 0,
       );
+  }
+
+  async function updateDocumentMarkedAsPublished(
+    documentId: documentType['_id'],
+    markedAsPublished: documentType['markedAsPublished'],
+  ) {
+    const documentRepository = buildDocumentRepository();
+
+    const hasDocumentBeenUpdated = await documentRepository.updateOneMarkedAsPublishedByIdAndStatus(
+      { _id: documentId, status: 'done' },
+      { markedAsPublished },
+    );
+
+    if (!hasDocumentBeenUpdated) {
+      throw new Error(`The document ${documentId} has not been updated`);
+    }
   }
 
   async function assignDocumentByPriority(

@@ -197,6 +197,8 @@ const fr = {
       },
       optionItems: {
         openAnonymizedDocument: 'Ouvrir la décision anonymisée...',
+        markAsPublished: 'Marquer comme publiée',
+        markAsUnPublished: 'Marquer comme à publier',
       },
     },
   },

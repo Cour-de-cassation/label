@@ -20,13 +20,13 @@ function SpecialDocuments() {
       </div>
       <div style={styles.contentContainer}>
         <SpecialDocumentsDataFetcher>
-          {({ specialDocuments }) => (
+          {({ specialDocuments, refetch }) => (
             <div style={styles.table}>
               <div style={styles.tableHeaderContainer}>
                 <div style={styles.tableHeader}></div>
               </div>
               <div style={styles.tableContentContainer}>
-                <SpecialDocumentsTable specialDocuments={specialDocuments} />
+                <SpecialDocumentsTable refetch={refetch} specialDocuments={specialDocuments} />
               </div>
             </div>
           )}

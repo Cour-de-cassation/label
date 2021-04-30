@@ -15,6 +15,9 @@ const buildTreatmentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
+    async countByDocumentId(documentId) {
+      return collection.countDocuments({ documentId });
+    },
     async deleteByDocumentId(documentId) {
       await collection.deleteMany({ documentId });
     },

@@ -5,6 +5,7 @@ import {
   documentType,
   idType,
   settingsModule,
+  idModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { treatmentService } from '../../modules/treatment';
@@ -48,6 +49,17 @@ function buildAnnotator(
       report,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
 
+    const previousTreatments = await treatmentService.fetchTreatmentsByDocumentId(
+      document._id,
+    );
+    if (previousTreatments.length > 0) {
+      logger.log(
+        `Conflict of annotation on document ${idModule.lib.convertToString(
+          document._id,
+        )}. Skipping...`,
+      );
+      return;
+    }
     await createAnnotatorTreatment({ annotations, documentId });
     await createAutoTreatment({ annotations, documentId });
     await createReport(report);

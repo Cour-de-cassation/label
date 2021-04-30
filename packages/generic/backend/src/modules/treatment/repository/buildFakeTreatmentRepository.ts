@@ -12,6 +12,11 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
   customTreatmentRepositoryType
 >({
   buildCustomFakeRepository: (collection) => ({
+    async countByDocumentId(documentId) {
+      return collection.filter((treatment) =>
+        idModule.lib.equalId(documentId, treatment.documentId),
+      ).length;
+    },
     async deleteByDocumentId(documentId) {
       updateFakeCollection(
         collection,

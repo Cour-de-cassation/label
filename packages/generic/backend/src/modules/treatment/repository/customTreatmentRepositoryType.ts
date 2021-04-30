@@ -1,18 +1,21 @@
-import { documentType, treatmentType } from '@label/core';
+import { treatmentType } from '@label/core';
 
 export type { customTreatmentRepositoryType };
 
 type customTreatmentRepositoryType = {
+  countByDocumentId: (
+    documentId: treatmentType['documentId'],
+  ) => Promise<number>;
   deleteByDocumentId: (
     documentId: treatmentType['documentId'],
   ) => Promise<void>;
   findAllByDocumentId: (
-    documentId: documentType['_id'],
+    documentId: treatmentType['documentId'],
   ) => Promise<treatmentType[]>;
   findAllByDocumentIds: (
-    documentIds: documentType['_id'][],
+    documentIds: treatmentType['documentId'][],
   ) => Promise<Record<string, treatmentType[]>>;
   findLastOneByDocumentId: (
-    documentId: documentType['_id'],
+    documentId: treatmentType['documentId'],
   ) => Promise<treatmentType> | undefined;
 };

@@ -9,13 +9,23 @@ const prodLogger: loggerType = {
     const prettyValue = prettyLogFormatter.formatLog(value);
     // eslint-disable-next-line no-console
     console.log(prettyValue);
-    fileSystem.appendToFile('./logs.txt', `${prettyValue}\n`);
+    try {
+      fileSystem.appendToFile('./logs.txt', `${prettyValue}\n`);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   },
 
   error(errorText) {
     const prettyError = prettyLogFormatter.formatErrorLog(errorText);
     // eslint-disable-next-line no-console
     console.error(prettyError);
-    fileSystem.appendToFile('./errors.txt', `${prettyError}\n`);
+    try {
+      fileSystem.appendToFile('./errors.txt', `${prettyError}\n`);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   },
 };

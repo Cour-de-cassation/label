@@ -35,6 +35,7 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
   });
   const [temporaryPassword, setTemporaryPassword] = useState<string | undefined>();
   const [formErrors, setFormErrors] = useState<formErrorType>({});
+  const [isLoading, setIsLoading] = useState(false);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -89,7 +90,12 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
               />
             </div>
             <div style={styles.submitButtonContainer}>
-              <ButtonWithIcon onClick={addAgent} iconName="human" text={wordings.agentsPage.createAgentDrawer.submit} />
+              <ButtonWithIcon
+                isLoading={isLoading}
+                onClick={isLoading ? undefined : addAgent}
+                iconName="human"
+                text={wordings.agentsPage.createAgentDrawer.submit}
+              />
             </div>
           </div>
         </div>
@@ -110,13 +116,20 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
       updateFormErrors();
       return;
     }
-    const { data: temporaryPassword } = await apiCaller.post<'createUser'>('createUser', {
-      email,
-      name: `${firstName} ${lastName}`,
-      role,
-    });
-    props.onClose();
-    setTemporaryPassword(temporaryPassword);
+    setIsLoading(true);
+    try {
+      const { data: temporaryPassword } = await apiCaller.post<'createUser'>('createUser', {
+        email,
+        name: `${firstName} ${lastName}`,
+        role,
+      });
+      props.onClose();
+      setTemporaryPassword(temporaryPassword);
+    } catch (error) {
+      console.warn(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function updateFormErrors() {

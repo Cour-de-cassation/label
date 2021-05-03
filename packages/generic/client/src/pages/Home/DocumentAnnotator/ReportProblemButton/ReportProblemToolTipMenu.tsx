@@ -21,6 +21,7 @@ function ReportProblemToolTipMenu(props: {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const problemCategories = buildProblemCategories();
+  const [isLoading, setIsLoading] = useState(false);
   const [problemCategory, setProblemCategory] = useState<problemReportType['type'] | undefined>(undefined);
   const [problemDescription, setProblemDescription] = useState<string>('');
   const [isBlocking, setIsBlocking] = useState<boolean>(false);
@@ -72,9 +73,10 @@ function ReportProblemToolTipMenu(props: {
               />
             </div>
             <ButtonWithIcon
+              isLoading={isLoading}
               color="primary"
               iconName="send"
-              onClick={sendProblemReportAndClose}
+              onClick={isLoading ? undefined : sendProblemReportAndClose}
               text={wordings.homePage.send}
             />
           </div>
@@ -103,6 +105,7 @@ function ReportProblemToolTipMenu(props: {
   async function sendProblemReportAndClose() {
     if (problemCategory) {
       setIsSentWithoutCategory(false);
+      setIsLoading(true);
       try {
         await apiCaller.post<'problemReport'>('problemReport', {
           documentId: annotatorState.document._id,
@@ -121,6 +124,8 @@ function ReportProblemToolTipMenu(props: {
         closeTooltipMenu();
       } catch (error) {
         console.warn(error);
+      } finally {
+        setIsLoading(false);
       }
     } else {
       setIsSentWithoutCategory(true);

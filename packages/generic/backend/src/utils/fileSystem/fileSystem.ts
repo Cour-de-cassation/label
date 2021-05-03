@@ -1,18 +1,11 @@
 import { promises as fs } from 'fs';
-import { logger } from '../logger';
 
 export { fileSystem };
 
 const fileSystem = { appendToFile, listFilesOfDirectory, readFiles };
 
 async function appendToFile(filePath: string, text: string) {
-  try {
-    await fs.appendFile(filePath, text);
-    return;
-  } catch (error) {
-    logger.error(error);
-    throw new Error(`Could not write in file ${filePath}`);
-  }
+  return fs.appendFile(filePath, text);
 }
 
 async function listFilesOfDirectory(directoryPath: string) {

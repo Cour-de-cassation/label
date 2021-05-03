@@ -41,7 +41,24 @@ function buildAnnotator(
           logger.log(
             `Annotating with ${annotatorConfig.name} document ${documentsAnnotatedCount}/${documentsCountToAnnotate}...`,
           );
-          await annotateDocument(currentDocumentToAnnotate);
+          try {
+            await annotateDocument(currentDocumentToAnnotate);
+          } catch (error) {
+            logger.log(
+              `Error while annotating document ${idModule.lib.convertToString(
+                currentDocumentToAnnotate._id,
+              )}. Freeing the reservation...`,
+            );
+            await documentService.updateDocumentStatus(
+              currentDocumentToAnnotate._id,
+              'loaded',
+            );
+            logger.log(
+              `Document ${idModule.lib.convertToString(
+                currentDocumentToAnnotate._id,
+              )} free!`,
+            );
+          }
         }
       } while (currentDocumentToAnnotate !== undefined);
     },

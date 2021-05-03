@@ -319,6 +319,38 @@ describe('documentService', () => {
     });
   });
 
+  describe('updateDocumentMarkedAsPublished', () => {
+    const documentRepository = buildDocumentRepository();
+
+    it('should update the markedAsPublished property', async () => {
+      const document = documentModule.generator.generate({
+        status: 'done',
+        markedAsPublished: false,
+      });
+      await documentRepository.insert(document);
+
+      await documentService.updateDocumentMarkedAsPublished(document._id, true);
+
+      const updatedDocument = await documentRepository.findById(document._id);
+      expect(updatedDocument.markedAsPublished).toBeTruthy();
+    });
+
+    it('should throw an error if updating an undone document', async () => {
+      const document = documentModule.generator.generate({
+        status: 'pending',
+        markedAsPublished: false,
+      });
+      await documentRepository.insert(document);
+
+      const promise = () =>
+        documentService.updateDocumentMarkedAsPublished(document._id, true);
+
+      expect(promise()).rejects.toThrow(
+        `The document ${document._id} has not been updated`,
+      );
+    });
+  });
+
   describe('fetchUntreatedDocuments', () => {
     const documentRepository = buildDocumentRepository();
     const assignationRepository = buildAssignationRepository();

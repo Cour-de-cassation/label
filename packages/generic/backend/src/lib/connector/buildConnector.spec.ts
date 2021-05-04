@@ -1,4 +1,5 @@
 import { documentModule } from '@label/core';
+import { decisionModule, decisionType } from 'sder';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildConnector } from './buildConnector';
 
@@ -11,7 +12,7 @@ describe('buildConnector', () => {
 
   describe('importAllDocumentsSince', () => {
     it('should import all the document fetched by the connector', async () => {
-      const fakeConnector = buildFakeConnectorWithNDocuments(5);
+      const fakeConnector = buildFakeConnectorWithNDecisions(5);
       const connector = buildConnector(fakeConnector);
 
       await connector.importAllDocumentsSince(10);
@@ -31,19 +32,38 @@ describe('buildConnector', () => {
   });
 });
 
-function buildFakeConnectorWithNDocuments(n: number) {
-  const documents = [...Array(n).keys()].map(() =>
-    documentModule.generator.generate(),
+function buildFakeConnectorWithNDecisions(n: number) {
+  const courtDecisions = [...Array(n).keys()].map(() =>
+    decisionModule.lib.generateDecision(),
+  );
+  const documents = courtDecisions.map(
+    fakeSderMapper.mapCourtDecisionToDocument,
   );
 
   return {
     name: 'FAKE_CONNECTOR',
-    async fetchAllDocumentsSince() {
-      return documents;
+    async fetchAllCourtDecisionsSince() {
+      return courtDecisions;
+    },
+    async fetchBoundDocumentsBySourceIds(sourceIds: number[]) {
+      return documents.filter(
+        (document) =>
+          document.source === 'jurica' &&
+          sourceIds.includes(Number(document.externalId)),
+      );
     },
     async updateDocumentsLoadedStatus() {},
     getAllDocuments() {
       return documents;
     },
+    mapCourtDecisionToDocument: fakeSderMapper.mapCourtDecisionToDocument,
   };
 }
+
+const fakeSderMapper = {
+  mapCourtDecisionToDocument(courtDecision: decisionType) {
+    return documentModule.generator.generate({
+      documentNumber: courtDecision.sourceId,
+    });
+  },
+};

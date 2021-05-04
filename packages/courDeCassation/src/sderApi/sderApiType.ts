@@ -6,7 +6,8 @@ export type { sderApiType };
 
 type sderApiType = {
   fetchCourtDecisions: (days: number) => Promise<Array<decisionType>>;
-  setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
+  fetchCourtDecisionsBySourceIdsAndSourceName: (sourceIds: decisionType['sourceId'][], sourceName: decisionType['sourceName']) => Promise<decisionType[]>;
+setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
   setCourtDecisionDone: (
     externalId: documentType['externalId'],
   ) => Promise<void>;

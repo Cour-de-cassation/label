@@ -3,7 +3,7 @@ import { problemReportModule, problemReportType } from '@label/core';
 import { buildProblemReportRepository } from '../../../../modules/problemReport';
 import { addHasBeenReadInProblemReportModel } from './addHasBeenReadInProblemReportModel';
 
-describe('addHasBeenReadInProblemReportModel.spec', () => {
+xdescribe('addHasBeenReadInProblemReportModel.spec', () => {
   it('should add a false hasBeenRead value in the problemReport data model in the database', async () => {
     const problemReportRepository = buildProblemReportRepository();
     const problemReports = [

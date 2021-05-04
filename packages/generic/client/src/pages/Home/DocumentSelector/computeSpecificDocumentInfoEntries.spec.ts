@@ -5,7 +5,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
   it('should return all the specific infos of a document', () => {
     const document = documentModule.generator.generate({
       documentNumber: 1234567,
-      decisionMetadata: { chamberName: 'Civile', juridiction: 'Cour de cassation' },
+      decisionMetadata: { chamberName: 'Civile', juridiction: 'Cour de cassation', boundDecisionDocumentNumbers: [] },
     });
 
     const specificDocumentInfoEntries = computeSpecificDocumentInfoEntries(document);

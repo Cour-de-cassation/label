@@ -11,6 +11,7 @@ const documentModelCommonFields = {
     content: {
       chamberName: { kind: 'primitive', content: 'string' },
       juridiction: { kind: 'primitive', content: 'string' },
+      boundDecisionDocumentNumbers: { kind: 'array', content: { kind: 'primitive', content: 'number' } },
     },
   },
   documentNumber: { kind: 'primitive', content: 'number' },

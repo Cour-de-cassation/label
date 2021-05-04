@@ -3,7 +3,7 @@ import { treatmentModule, treatmentType } from '@label/core';
 import { buildTreatmentRepository } from '../../../../modules/treatment';
 import { addInfoInTreatment } from './addInfoInTreatment';
 
-describe('addInfoInTreatment', () => {
+xdescribe('addInfoInTreatment', () => {
   it('should add treatment info in the treatments in the database', async () => {
     const treatmentRepository = buildTreatmentRepository();
     const treatments = [{}, {}, {}].map(treatmentModule.generator.generate);

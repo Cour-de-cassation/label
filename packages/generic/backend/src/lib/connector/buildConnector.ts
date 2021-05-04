@@ -11,12 +11,35 @@ function buildConnector(connectorConfig: connectorConfigType) {
       logger.log(`importAllDocumentsSince ${days}`);
 
       logger.log(`Fetching ${connectorConfig.name} documents...`);
-      const documents = await connectorConfig.fetchAllDocumentsSince(days);
-      logger.log(
-        `${documents.length} ${connectorConfig.name} documents fetched!`,
+      const newCourtDecisions = await connectorConfig.fetchAllCourtDecisionsSince(
+        days,
       );
-
-      logger.log(`Insertion into the database...`);
+      logger.log(
+        `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
+      );
+      const newDocuments = newCourtDecisions.map(
+        connectorConfig.mapCourtDecisionToDocument,
+      );
+      const boundDecisionsDocumentNumbers = newDocuments.map(
+        ({ decisionMetadata }) => decisionMetadata.boundDecisionDocumentNumbers,
+      );
+      logger.log(
+        `Fetching ${boundDecisionsDocumentNumbers.length} bound documents...`,
+      );
+      const boundDocuments = await connectorConfig.fetchBoundDocumentsBySourceIds(
+        boundDecisionsDocumentNumbers.flat(),
+      );
+      const priorizedBoundDocuments = boundDocuments.map((document) => ({
+        ...document,
+        priority: 'medium' as const,
+      }));
+      logger.log(
+        `${priorizedBoundDocuments.length} ${connectorConfig.name} bound court decisions fetched!`,
+      );
+      const documents = [...newDocuments, ...priorizedBoundDocuments];
+      logger.log(
+        `Insertion ${documents.length} documents into the database...`,
+      );
       await insertDocuments(documents);
       logger.log(`Insertion done!`);
 

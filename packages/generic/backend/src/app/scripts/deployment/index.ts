@@ -1,10 +1,10 @@
 import { logger } from '../../../utils';
-import { addMarkedAsPublishedInDocumentModel } from './addMarkedAsPublishedInDocumentModel';
+import { addBoundDecisionDocumentNumbersInDocumentModel } from './addBoundDecisionDocumentNumbersInDocumentModel';
 
 export { runDeploymentScripts };
 
 async function runDeploymentScripts() {
   logger.log('Deployment scripts');
-  logger.log('add markedAsPublished in document model');
-  await addMarkedAsPublishedInDocumentModel();
+  logger.log('add boundDecisionExternalId in document model');
+  await addBoundDecisionDocumentNumbersInDocumentModel();
 }

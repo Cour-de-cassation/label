@@ -2,7 +2,7 @@ import { userModule, userType } from '@label/core';
 import { buildUserRepository } from '../../../../modules/user';
 import { renamePasswordToHashedPasswordInUserModel } from './renamePasswordToHashedPasswordInUserModel';
 
-describe('renamePasswordToHashedPasswordInUserModel', () => {
+xdescribe('renamePasswordToHashedPasswordInUserModel', () => {
   it('should rename password to hashedPassword in user model in the database', async () => {
     const userRepository = buildUserRepository();
     const users = [

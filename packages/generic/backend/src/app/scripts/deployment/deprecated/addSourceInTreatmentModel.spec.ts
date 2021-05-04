@@ -3,7 +3,7 @@ import { treatmentModule, treatmentType } from '@label/core';
 import { buildTreatmentRepository } from '../../../../modules/treatment';
 import { addSourceInTreatmentModel } from './addSourceInTreatmentModel';
 
-describe('addSourceInTreatmentModel.spec', () => {
+xdescribe('addSourceInTreatmentModel.spec', () => {
   it('should add an NLP source the treatment data model in the database', async () => {
     const treatmentRepository = buildTreatmentRepository();
     const treatments = [

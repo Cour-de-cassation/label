@@ -17,6 +17,10 @@ const sderApi: sderApiType = {
     return courtDecisions;
   },
 
+  async fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, sourceName) {
+    return decisionModule.service.fetchDecisionsBySourceIdsAndSourceName(sourceIds, sourceName);
+  },
+
   async setCourtDecisionsLoaded(documents: documentType[]) {
     await decisionModule.service.updateDecisionsLabelStatus({
       decisionIds: documents.map(document =>

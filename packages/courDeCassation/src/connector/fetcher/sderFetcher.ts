@@ -1,19 +1,25 @@
+import { decisionType } from 'sder';
+import { sderMapper } from '../mapper';
 import { sderApi } from '../../sderApi';
-import { sderMapper } from './mapper';
 
 export { sderFetcher };
 
 const MAX_DOCUMENT_SIZE = 500000;
 
 const sderFetcher = {
-  async fetchAllDocumentsSince(days: number) {
+  async fetchAllCourtDecisionsSince(days: number) {
     const courtDecisions = await sderApi.fetchCourtDecisions(days);
 
     return courtDecisions
-      .map(sderMapper.mapCourtDecisionToDocument)
       .filter(
-        (document) =>
-          document.text && document.text.length <= MAX_DOCUMENT_SIZE,
+        (courtDecision) =>
+          courtDecision && courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,
       );
+  },
+
+  async fetchBoundDocumentsBySourceIds(sourceIds: decisionType['sourceId'][]) {
+    const courtDecisions = await sderApi.fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, 'jurica');
+
+    return courtDecisions.map(sderMapper.mapCourtDecisionToDocument)
   },
 };

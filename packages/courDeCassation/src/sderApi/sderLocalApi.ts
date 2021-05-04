@@ -29,6 +29,29 @@ const sderLocalApi: sderApiType = {
       .map(decisionModule.lib.generateDecision);
   },
 
+  async fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, sourceName) {
+    const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
+      pathToCourtDecisions,
+    );
+
+    const courtDecisions = await fileSystem.readFiles(
+      courtDecisionFileNames,
+      'utf8',
+      pathToCourtDecisions,
+    );
+
+    const mappedCourtDecisions = courtDecisions
+      .map(({ content }) => {
+        const parsedContent = JSON.parse(content) as decisionType;
+        return {
+          ...parsedContent,
+          dateDecision: parsedContent.dateDecision,
+        };
+      })
+
+      return mappedCourtDecisions.filter((courtDecision) => sourceIds.includes(courtDecision.sourceId) && courtDecision.sourceName === sourceName )
+  },
+
   async setCourtDecisionsLoaded() {},
 
   async setCourtDecisionDone() {},

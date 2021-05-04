@@ -44,6 +44,7 @@ function mapCourtDecisionToDocument(
     decisionMetadata: {
       chamberName,
       juridiction,
+      boundDecisionDocumentNumbers: sderCourtDecision.decatt || []
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),

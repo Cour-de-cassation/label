@@ -55,7 +55,12 @@ type modelPrimitiveType = 'boolean' | 'date' | 'number' | 'string' | 'undefined'
 
 type modelConstantType = readonly string[];
 
-type modelOrEntryType = modelCasePrimitiveType | modelCaseConstantType | modelCaseCustomType | modelCaseObjectType;
+type modelOrEntryType =
+  | modelCasePrimitiveType
+  | modelCaseConstantType
+  | modelCaseCustomType
+  | modelCaseObjectType
+  | modelCaseArrayType;
 
 type modelObjectType = { [key in string]: modelType };
 
@@ -102,6 +107,8 @@ type buildOrEntryType<
   ? buildPrimitiveType<modelOrEntryT['content']>
   : modelOrEntryT extends modelCaseConstantType
   ? buildConstantType<modelOrEntryT['content']>
+  : modelOrEntryT extends modelCaseArrayType
+  ? Array<buildType<modelOrEntryT['content'], customMappingT>>
   : modelOrEntryT extends modelCaseCustomType
   ? customMappingT[modelOrEntryT['content']]
   : modelOrEntryT extends modelCaseObjectType

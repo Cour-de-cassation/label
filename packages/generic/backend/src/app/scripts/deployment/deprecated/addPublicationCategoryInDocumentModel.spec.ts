@@ -3,7 +3,7 @@ import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../../../modules/document';
 import { addPublicationCategoryInDocumentModel } from './addPublicationCategoryInDocumentModel';
 
-describe('addPublicationCategoryInDocumentModel.spec', () => {
+xdescribe('addPublicationCategoryInDocumentModel.spec', () => {
   it('should add an empty publication category in the document data model in the database', async () => {
     const documentRepository = buildDocumentRepository();
     const documents = [

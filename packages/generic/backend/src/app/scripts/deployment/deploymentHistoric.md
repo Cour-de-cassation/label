@@ -12,11 +12,13 @@ This document sums up the scripts run in pre-production and production
 - [x] renameDocumentIdToDocumentNumberInDocumentModel
 - [x] addDecisionMetadataInDocumentModel
 - [x] addMarkedAsPublishedInDocumentModel
+- [ ] addBoundDecisionDocumentNumbersInDocumentModel
 
 ## Production
 
 - [x] addDecisionMetadataInDocumentModel
-- [ ] addMarkedAsPublishedInDocumentModel
+- [x] addMarkedAsPublishedInDocumentModel
+- [ ] addBoundDecisionDocumentNumbersInDocumentModel
 
 # Use
 

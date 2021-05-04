@@ -22,7 +22,9 @@ const documentGenerator: generatorType<documentType> = {
     updateDate,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date(),
-    decisionMetadata: decisionMetadata ? decisionMetadata : { juridiction: '', chamberName: '' },
+    decisionMetadata: decisionMetadata
+      ? decisionMetadata
+      : { juridiction: '', chamberName: '', boundDecisionDocumentNumbers: [] },
     documentNumber: documentNumber ? documentNumber : Math.floor(Math.random() * 1000000),
     externalId: externalId ? externalId : `EXTERNAL_ID_${Math.random()}`,
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),

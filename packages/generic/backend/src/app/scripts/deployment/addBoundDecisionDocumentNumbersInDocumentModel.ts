@@ -1,11 +1,10 @@
-import { buildDocumentRepository } from '../../../../modules/document';
+import { buildDocumentRepository } from '../../../modules/document';
 
-export { addDecisionMetadataInDocumentModel };
+export { addBoundDecisionDocumentNumbersInDocumentModel };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-async function addDecisionMetadataInDocumentModel() {
+async function addBoundDecisionDocumentNumbersInDocumentModel() {
   const documentRepository = buildDocumentRepository();
 
   const documents = await documentRepository.findAll();
@@ -13,14 +12,12 @@ async function addDecisionMetadataInDocumentModel() {
   const documentsWithNewDataModel = documents.map((document) => ({
     ...document,
     decisionMetadata: {
-      chamberName: '',
-      juridiction: '',
+      ...document.decisionMetadata,
+      boundDecisionExternalId: undefined,
     },
   }));
 
   await documentRepository.clear();
 
-  await Promise.all(
-    (documentsWithNewDataModel as any).map(documentRepository.insert),
-  );
+  await Promise.all(documentsWithNewDataModel.map(documentRepository.insert));
 }

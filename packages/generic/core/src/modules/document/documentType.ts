@@ -6,6 +6,7 @@ export { documentModel, fetchedDocumentModel };
 export type { documentType, fetchedDocumentType };
 
 const documentModelCommonFields = {
+  creationDate: { kind: 'primitive', content: 'number' },
   decisionMetadata: {
     kind: 'object',
     content: {
@@ -35,7 +36,6 @@ const documentModel = buildModel({
   kind: 'object',
   content: {
     ...documentModelCommonFields,
-    creationDate: { kind: 'primitive', content: 'date' },
     externalId: { kind: 'primitive', content: 'string' },
     metadata: { kind: 'primitive', content: 'string' },
     priority: { kind: 'constant', content: ['low', 'medium', 'high'] as const },

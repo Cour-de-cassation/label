@@ -235,7 +235,16 @@ const apiSchema = {
     specialDocuments: {
       out: buildModel({
         kind: 'array',
-        content: documentModule.fetchedModel,
+        content: {
+          kind: 'object',
+          content: {
+            _id: documentModule.fetchedModel.content._id,
+            creationDate: documentModule.fetchedModel.content.creationDate,
+            documentNumber: documentModule.fetchedModel.content.documentNumber,
+            status: documentModule.fetchedModel.content.status,
+            markedAsPublished: documentModule.fetchedModel.content.markedAsPublished,
+          },
+        },
       } as const),
     },
     treatedDocuments: {
@@ -287,10 +296,11 @@ const apiSchema = {
             document: {
               kind: 'object',
               content: {
-                _id: documentModule.model.content._id,
-                documentNumber: documentModule.model.content.documentNumber,
-                publicationCategory: documentModule.model.content.publicationCategory,
-                status: documentModule.model.content.status,
+                _id: documentModule.fetchedModel.content._id,
+                creationDate: documentModule.fetchedModel.content.creationDate,
+                documentNumber: documentModule.fetchedModel.content.documentNumber,
+                publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+                status: documentModule.fetchedModel.content.status,
               },
             },
             userName: {

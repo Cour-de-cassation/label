@@ -158,7 +158,7 @@ describe('fetch', () => {
   });
 
   describe('fetchAnnotationsDiffDetailsForDocument', () => {
-    it.only('should return the annotation diff details', async () => {
+    it('should return the annotation diff details', async () => {
       const documentText =
         'The developer who knows all design patterns is Romain Glé.\nNicolas is a designer who speaks several languages.\nAs a data scientist, Benoit knows everything about pizzas';
       const document = documentModule.generator.generate({

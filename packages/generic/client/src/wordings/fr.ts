@@ -196,6 +196,7 @@ const fr = {
       columnTitles: {
         number: 'N° décision',
         status: 'Statut',
+        importDate: "Date d'import",
       },
       status: {
         notTreated: 'En traitement',
@@ -302,6 +303,7 @@ const fr = {
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         userName: 'Attribué à',
         status: 'Statut',
+        importDate: "Date d'import",
       },
       optionItems: {
         freeDocument: 'Libérer la décision',

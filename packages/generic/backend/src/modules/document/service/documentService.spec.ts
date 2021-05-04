@@ -110,7 +110,16 @@ describe('documentService', () => {
 
       const specialDocuments = await documentService.fetchSpecialDocuments();
 
-      expect(specialDocuments).toEqual([documents[0]]);
+      const {
+        _id,
+        status,
+        creationDate,
+        documentNumber,
+        markedAsPublished,
+      } = documents[0];
+      expect(specialDocuments).toEqual([
+        { _id, status, creationDate, documentNumber, markedAsPublished },
+      ]);
     });
   });
 
@@ -408,6 +417,7 @@ describe('documentService', () => {
             'documentNumber',
             'publicationCategory',
             'status',
+            'creationDate',
           ]),
           userName: undefined,
         },
@@ -417,6 +427,7 @@ describe('documentService', () => {
             'documentNumber',
             'publicationCategory',
             'status',
+            'creationDate',
           ]),
           userName: 'NAME',
         },
@@ -426,6 +437,7 @@ describe('documentService', () => {
             'documentNumber',
             'publicationCategory',
             'status',
+            'creationDate',
           ]),
           userName: 'NAME',
         },

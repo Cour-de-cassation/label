@@ -13,12 +13,14 @@ This document sums up the scripts run in pre-production and production
 - [x] addDecisionMetadataInDocumentModel
 - [x] addMarkedAsPublishedInDocumentModel
 - [ ] addBoundDecisionDocumentNumbersInDocumentModel
+- [ ] changeTypeCreationDateInDocumentModel
 
 ## Production
 
 - [x] addDecisionMetadataInDocumentModel
 - [x] addMarkedAsPublishedInDocumentModel
 - [ ] addBoundDecisionDocumentNumbersInDocumentModel
+- [ ] changeTypeCreationDateInDocumentModel
 
 # Use
 

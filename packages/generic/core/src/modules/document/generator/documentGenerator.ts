@@ -21,7 +21,7 @@ const documentGenerator: generatorType<documentType> = {
     text,
     updateDate,
   } = {}) => ({
-    creationDate: creationDate ? creationDate : new Date(),
+    creationDate: creationDate ? creationDate : new Date().getTime(),
     decisionMetadata: decisionMetadata
       ? decisionMetadata
       : { juridiction: '', chamberName: '', boundDecisionDocumentNumbers: [] },

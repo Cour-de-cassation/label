@@ -14,11 +14,12 @@ type customDocumentRepositoryType = {
     status: documentType['status'][],
     projection: Array<projectionT>,
   ) => Promise<Array<projectedType<documentType, projectionT>>>;
-  findAllByPublicationCategory: ({
-    publicationCategory,
-  }: {
-    publicationCategory: documentType['publicationCategory'];
-  }) => Promise<documentType[]>;
+  findAllByPublicationCategoryProjection: <
+    projectionT extends keyof documentType
+  >(
+    publicationCategory: documentType['publicationCategory'],
+    projections: Array<projectionT>,
+  ) => Promise<Array<projectedType<documentType, projectionT>>>;
   findOneByStatusAndPriorityAmong: (
     {
       status,

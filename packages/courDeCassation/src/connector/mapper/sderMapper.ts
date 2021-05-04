@@ -40,7 +40,7 @@ function mapCourtDecisionToDocument(
   );
 
   return documentModule.lib.buildDocument({
-    creationDate: new Date(),
+    creationDate: new Date().getTime(),
     decisionMetadata: {
       chamberName,
       juridiction,

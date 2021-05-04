@@ -7,7 +7,7 @@ import { SpecialDocumentsTable } from './SpecialDocumentsTable';
 
 export { SpecialDocuments };
 
-const TABLE_WIDTH = '300px';
+const TABLE_WIDTH = 500;
 
 function SpecialDocuments() {
   const theme = useCustomTheme();
@@ -43,7 +43,7 @@ function buildStyles(theme: customThemeType) {
     },
     contentContainer: {
       display: 'flex',
-      width: TABLE_WIDTH,
+      width: `${TABLE_WIDTH}px`,
       margin: '0 auto',
       height: heights.specialDocuments,
     },

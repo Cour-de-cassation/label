@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { apiRouteOutType, documentType } from '@label/core';
+import { apiRouteOutType, documentType, timeOperator } from '@label/core';
 import { PaginatedTable, tableRowFieldType } from '../../components';
 import { wordings } from '../../wordings';
 import { apiCaller } from '../../api';
@@ -74,6 +74,14 @@ function buildSpecialDocumentsFields() {
       title: wordings.specialDocumentsPage.table.columnTitles.status,
       canBeSorted: true,
       extractor: (specialDocument) => computeStatusWording(specialDocument.status, specialDocument.markedAsPublished),
+      width: 10,
+    },
+    {
+      id: 'creationDate',
+      title: wordings.specialDocumentsPage.table.columnTitles.importDate,
+      canBeSorted: true,
+      extractor: (specialDocument) => timeOperator.convertTimestampToReadableDate(specialDocument.creationDate, true),
+      getSortingValue: (specialDocument) => specialDocument.creationDate,
       width: 10,
     },
   ];

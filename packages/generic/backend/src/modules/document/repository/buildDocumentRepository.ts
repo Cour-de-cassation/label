@@ -1,10 +1,6 @@
 import { uniq } from 'lodash';
 import { documentType } from '@label/core';
-import {
-  buildProjection,
-  buildRepositoryBuilder,
-  projectedType,
-} from '../../../repository';
+import { buildProjection, buildRepositoryBuilder } from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';
 
 export { buildDocumentRepository };
@@ -72,22 +68,25 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
-    async findAllByPublicationCategory({ publicationCategory }) {
-      return collection.find({ publicationCategory }).toArray();
+    async findAllByPublicationCategoryProjection(
+      publicationCategory,
+      projections,
+    ) {
+      return collection
+        .find({ publicationCategory })
+        .project(buildProjection(projections))
+        .toArray();
     },
 
     async findAllByStatus(status) {
       return collection.find({ status: { $in: status } }).toArray();
     },
 
-    async findAllByStatusProjection<projectionT extends keyof documentType>(
-      status: documentType['status'][],
-      projection: Array<projectionT>,
-    ): Promise<Array<projectedType<documentType, projectionT>>> {
-      return (collection
+    async findAllByStatusProjection(status, projection) {
+      return collection
         .find({ status: { $in: status } })
         .project(buildProjection(projection))
-        .toArray() as any) as Array<projectedType<documentType, projectionT>>;
+        .toArray();
     },
 
     async updateStatusById(id, status) {

@@ -2,7 +2,6 @@ import { isEqual, uniq } from 'lodash';
 import { documentType, idModule } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
-  projectedType,
   projectFakeObjects,
   updateFakeCollection,
 } from '../../../repository';
@@ -40,20 +39,22 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return uniq(collection.map((document) => document.source));
     },
 
-    async findAllByPublicationCategory({ publicationCategory }) {
-      return collection.filter((document) =>
-        isEqual(document.publicationCategory, publicationCategory),
-      );
+    async findAllByPublicationCategoryProjection(
+      publicationCategory,
+      projections,
+    ) {
+      return collection
+        .filter((document) =>
+          isEqual(document.publicationCategory, publicationCategory),
+        )
+        .map((document) => projectFakeObjects(document, projections));
     },
 
     async findAllByStatus(status) {
       return collection.filter((document) => status.includes(document.status));
     },
 
-    async findAllByStatusProjection<projectionT extends keyof documentType>(
-      status: documentType['status'][],
-      projections: Array<projectionT>,
-    ): Promise<Array<projectedType<documentType, projectionT>>> {
+    async findAllByStatusProjection(status, projections) {
       return collection
         .filter((document) => status.includes(document.status))
         .map((document) => projectFakeObjects(document, projections));

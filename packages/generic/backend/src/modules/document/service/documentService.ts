@@ -110,9 +110,10 @@ function buildDocumentService() {
 
   async function fetchSpecialDocuments() {
     const documentRepository = buildDocumentRepository();
-    return documentRepository.findAllByPublicationCategory({
-      publicationCategory: ['P'],
-    });
+    return documentRepository.findAllByPublicationCategoryProjection(
+      ['P'],
+      ['_id', 'creationDate', 'documentNumber', 'markedAsPublished', 'status'],
+    );
   }
 
   async function fetchTreatedDocuments() {
@@ -175,7 +176,13 @@ function buildDocumentService() {
     const documentRepository = buildDocumentRepository();
     const untreatedDocuments = await documentRepository.findAllByStatusProjection(
       ['free', 'pending', 'saved'],
-      ['_id', 'documentNumber', 'publicationCategory', 'status'],
+      [
+        '_id',
+        'creationDate',
+        'documentNumber',
+        'publicationCategory',
+        'status',
+      ],
     );
     const assignedDocumentIds = untreatedDocuments
       .filter(
@@ -200,6 +207,7 @@ function buildDocumentService() {
       return {
         document: {
           _id: untreatedDocument._id,
+          creationDate: untreatedDocument.creationDate,
           publicationCategory: untreatedDocument.publicationCategory,
           documentNumber: untreatedDocument.documentNumber,
           status: untreatedDocument.status,

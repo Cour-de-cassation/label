@@ -1,7 +1,8 @@
 import React from 'react';
 import { apiRouteOutType, idModule, ressourceFilterType, userType } from '@label/core';
-import { FilterButton } from '../../../components';
+import { Chip, FilterButton, filterType } from '../../../components';
 import { wordings } from '../../../wordings';
+import { customThemeType, useCustomTheme } from '../../../styles';
 
 export { StatisticsFilterButton };
 
@@ -11,9 +12,16 @@ function StatisticsFilterButton(props: {
   refetch: (ressourceFilter: ressourceFilterType) => void;
   ressourceFilter: ressourceFilterType;
 }) {
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
   const filters = buildFilters();
 
-  return <FilterButton filters={filters} />;
+  return (
+    <div style={styles.container}>
+      <FilterButton filters={filters} />
+      <div style={styles.chipsContainer}>{filters.map(renderFilterChip)}</div>
+    </div>
+  );
 
   function buildFilters() {
     const mustHaveAddedAnnotationsFilter = buildMustHaveAddedAnnotationsFilter();
@@ -44,6 +52,7 @@ function StatisticsFilterButton(props: {
         name: 'mustHaveAddedAnnotations',
         label: wordings.statisticsPage.filter.fields.mustHaveAddedAnnotations,
         checked: props.ressourceFilter.mustHaveAddedAnnotations,
+        chipLabel: wordings.business.filters.chips.mustHaveAddedAnnotations,
         onToggle: () => {
           props.refetch({
             ...props.ressourceFilter,
@@ -59,6 +68,7 @@ function StatisticsFilterButton(props: {
         name: 'mustHaveDeletedAnnotations',
         label: wordings.statisticsPage.filter.fields.mustHaveDeletedAnnotations,
         checked: props.ressourceFilter.mustHaveDeletedAnnotations,
+        chipLabel: wordings.business.filters.chips.mustHaveDeletedAnnotations,
         onToggle: () => {
           props.refetch({
             ...props.ressourceFilter,
@@ -74,6 +84,7 @@ function StatisticsFilterButton(props: {
         name: 'mustHaveModifiedAnnotations',
         label: wordings.statisticsPage.filter.fields.mustHaveModifiedAnnotations,
         checked: props.ressourceFilter.mustHaveModifiedAnnotations,
+        chipLabel: wordings.business.filters.chips.mustHaveModifiedAnnotations,
         onToggle: () => {
           props.refetch({
             ...props.ressourceFilter,
@@ -89,6 +100,7 @@ function StatisticsFilterButton(props: {
         name: 'mustHaveNoModifications',
         label: wordings.statisticsPage.filter.fields.mustHaveNoModifications,
         checked: props.ressourceFilter.mustHaveNoModifications,
+        chipLabel: wordings.business.filters.chips.mustHaveNoModifications,
         onToggle: () => {
           props.refetch({
             ...props.ressourceFilter,
@@ -104,6 +116,7 @@ function StatisticsFilterButton(props: {
         name: 'mustHaveResizedBiggerAnnotations',
         label: wordings.statisticsPage.filter.fields.mustHaveResizedBiggerAnnotations,
         checked: props.ressourceFilter.mustHaveResizedBiggerAnnotations,
+        chipLabel: wordings.business.filters.chips.mustHaveResizedBiggerAnnotations,
         onToggle: () => {
           props.refetch({
             ...props.ressourceFilter,
@@ -119,6 +132,7 @@ function StatisticsFilterButton(props: {
         name: 'mustHaveResizedSmallerAnnotations',
         label: wordings.statisticsPage.filter.fields.mustHaveResizedSmallerAnnotations,
         checked: props.ressourceFilter.mustHaveResizedSmallerAnnotations,
+        chipLabel: wordings.business.filters.chips.mustHaveResizedSmallerAnnotations,
         onToggle: () => {
           props.refetch({
             ...props.ressourceFilter,
@@ -135,7 +149,7 @@ function StatisticsFilterButton(props: {
         label: wordings.statisticsPage.filter.fields.publicationCategory,
         possibleValues: props.availableStatisticFilters.publicationCategories,
         value: props.ressourceFilter.publicationCategory,
-        onChange: (newPublicationCategory: string) => {
+        onChange: (newPublicationCategory: string | undefined) => {
           if (newPublicationCategory !== undefined) {
             props.refetch({ ...props.ressourceFilter, publicationCategory: newPublicationCategory });
           }
@@ -150,7 +164,7 @@ function StatisticsFilterButton(props: {
         label: wordings.statisticsPage.filter.fields.source,
         possibleValues: props.availableStatisticFilters.sources,
         value: props.ressourceFilter.source,
-        onChange: (newSource: string) => {
+        onChange: (newSource: string | undefined) => {
           if (newSource !== undefined) {
             props.refetch({ ...props.ressourceFilter, source: newSource });
           }
@@ -167,7 +181,10 @@ function StatisticsFilterButton(props: {
         label: wordings.statisticsPage.filter.fields.agents,
         possibleValues: props.users.map(({ name }) => name),
         value: userName,
-        onChange: (userName: string) => {
+        onChange: (userName: string | undefined) => {
+          if (!userName) {
+            return props.refetch({ ...props.ressourceFilter, userId: undefined });
+          }
           const userId = findUserIdByUserName(userName);
           if (!!userId) {
             props.refetch({ ...props.ressourceFilter, userId });
@@ -190,4 +207,47 @@ function StatisticsFilterButton(props: {
       return user.name;
     }
   }
+
+  function renderFilterChip(filter: filterType) {
+    switch (filter.kind) {
+      case 'dropdown':
+        if (!filter.value) {
+          return undefined;
+        }
+        return (
+          <div style={styles.chipContainer}>
+            <Chip label={filter.value} onClose={() => filter.onChange(undefined)} />
+          </div>
+        );
+      case 'boolean':
+        if (!filter.checked) {
+          return undefined;
+        }
+        return (
+          <div style={styles.chipContainer}>
+            <Chip label={filter.chipLabel} onClose={filter.onToggle} />
+          </div>
+        );
+    }
+  }
+}
+
+function buildStyles(theme: customThemeType) {
+  return {
+    container: {
+      display: 'flex',
+    },
+    chipsContainer: {
+      paddingLeft: theme.spacing,
+      display: 'flex',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+    },
+    chipContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: theme.spacing,
+    },
+  } as const;
 }

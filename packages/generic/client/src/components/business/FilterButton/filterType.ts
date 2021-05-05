@@ -7,12 +7,13 @@ type filterType =
       label: string;
       possibleValues: string[];
       value: string | undefined;
-      onChange: (value: string) => void;
+      onChange: (value: string | undefined) => void;
     }
   | {
       kind: 'boolean';
       name: string;
       label: string;
+      chipLabel: string;
       checked: boolean;
       onToggle: () => void;
     }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { apiRouteOutType, ressourceFilterType, userType } from '@label/core';
-import { StatisticsBox } from './StatisticsBox';
 import { Text } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
+import { StatisticsBox } from './StatisticsBox';
 import { StatisticsFilterButton } from './StatisticsFilterButton';
 
 export { Statistics };

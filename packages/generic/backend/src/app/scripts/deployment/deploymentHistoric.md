@@ -13,7 +13,8 @@ This document sums up the scripts run in pre-production and production
 - [x] addDecisionMetadataInDocumentModel
 - [x] addMarkedAsPublishedInDocumentModel
 - [x] addBoundDecisionDocumentNumbersInDocumentModel
-- [ ] changeTypeCreationDateInDocumentModel
+- [x] changeTypeCreationDateInDocumentModel
+- [ ] renameBoundDecisionExternalIdToBoundDecisionDocumentNumbersInDocumentModel
 
 ## Production
 
@@ -21,6 +22,7 @@ This document sums up the scripts run in pre-production and production
 - [x] addMarkedAsPublishedInDocumentModel
 - [ ] addBoundDecisionDocumentNumbersInDocumentModel
 - [ ] changeTypeCreationDateInDocumentModel
+- [ ] addBoundDecisionDocumentNumbersInDocumentModel
 
 # Use
 

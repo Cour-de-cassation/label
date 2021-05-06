@@ -1,6 +1,6 @@
 import { documentGenerator } from './generator';
 import { documentModel, documentType, fetchedDocumentModel, fetchedDocumentType } from './documentType';
-import { buildDocument, comparator, countWords } from './lib';
+import { buildDocument, comparator, countWords, publicationHandler } from './lib';
 
 export { documentModule };
 
@@ -10,5 +10,5 @@ const documentModule = {
   fetchedModel: fetchedDocumentModel,
   model: documentModel,
   generator: documentGenerator,
-  lib: { buildDocument, comparator, countWords },
+  lib: { buildDocument, comparator, countWords, publicationHandler },
 };

@@ -1,4 +1,4 @@
-import { isEqual, uniq } from 'lodash';
+import { uniq } from 'lodash';
 import { documentType, idModule } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
@@ -39,13 +39,15 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return uniq(collection.map((document) => document.source));
     },
 
-    async findAllByPublicationCategoryProjection(
-      publicationCategory,
+    async findAllByPublicationCategoryLettersProjection(
+      publicationCategoryLetters,
       projections,
     ) {
       return collection
         .filter((document) =>
-          isEqual(document.publicationCategory, publicationCategory),
+          publicationCategoryLetters.some((publicationCategoryLetter) =>
+            document.publicationCategory.includes(publicationCategoryLetter),
+          ),
         )
         .map((document) => projectFakeObjects(document, projections));
     },

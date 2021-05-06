@@ -7,6 +7,7 @@ import {
   annotationsDiffType,
   idModule,
   documentType,
+  documentModule,
 } from '@label/core';
 import { MainHeader, PublicationCategoryBadge, Text } from '../../components';
 import { apiCaller } from '../../api';
@@ -41,7 +42,9 @@ function DocumentSwitcher(props: {
   function renderPage() {
     switch (documentState.kind) {
       case 'annotating':
-        const subtitle = documentState.choice.document.publicationCategory.includes('P') ? (
+        const subtitle = documentModule.lib.publicationHandler.mustBePublished(
+          documentState.choice.document.publicationCategory,
+        ) ? (
           <div style={styles.documentHeaderSubtitle}>
             <PublicationCategoryBadge
               publicationCategoryLetter={documentState.choice.document.publicationCategory[0]}

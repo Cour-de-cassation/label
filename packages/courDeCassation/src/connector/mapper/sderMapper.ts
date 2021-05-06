@@ -120,7 +120,7 @@ function computePriority(
   source: string,
   publicationCategory: string[],
 ): documentType['priority'] {
-  if (publicationCategory.includes('P')) {
+  if (documentModule.lib.publicationHandler.mustBePublished(publicationCategory)) {
     return 'high';
   }
   switch (source) {

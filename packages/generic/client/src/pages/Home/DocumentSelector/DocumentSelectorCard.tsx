@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { groupBy, orderBy, sumBy } from 'lodash';
-import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
+import { annotationType, documentModule, fetchedDocumentType, settingsType } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import {
   ButtonWithIcon,
@@ -38,7 +38,9 @@ function DocumentSelectorCard(props: {
   );
 
   const categoryIconsByAnnotation = computeCategoryIconNamesByEntitiesCount(props.choice.annotations);
-  const mustBePublished = props.choice.document.publicationCategory.includes('P');
+  const mustBePublished = documentModule.lib.publicationHandler.mustBePublished(
+    props.choice.document.publicationCategory,
+  );
   return mustBePublished ? (
     <div style={styles.publishedDocumentCardContainer}>
       <div style={styles.publishedDocumentTitleContainer}>

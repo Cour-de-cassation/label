@@ -6,6 +6,7 @@ import {
   errorHandlers,
   buildAnonymizer,
   userType,
+  documentModule,
 } from '@label/core';
 import { settingsLoader } from '../../../lib/settingsLoader';
 import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
@@ -110,8 +111,8 @@ function buildDocumentService() {
 
   async function fetchSpecialDocuments() {
     const documentRepository = buildDocumentRepository();
-    return documentRepository.findAllByPublicationCategoryProjection(
-      ['P'],
+    return documentRepository.findAllByPublicationCategoryLettersProjection(
+      documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
       ['_id', 'creationDate', 'documentNumber', 'markedAsPublished', 'status'],
     );
   }

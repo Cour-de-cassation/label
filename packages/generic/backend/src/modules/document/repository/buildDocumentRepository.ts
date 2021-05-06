@@ -68,12 +68,16 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
-    async findAllByPublicationCategoryProjection(
-      publicationCategory,
+    async findAllByPublicationCategoryLettersProjection(
+      publicationCategoryLetters,
       projections,
     ) {
       return collection
-        .find({ publicationCategory })
+        .find(
+          buildFindByPublicationCategoryLettersRequest(
+            publicationCategoryLetters,
+          ),
+        )
         .project(buildProjection(projections))
         .toArray();
     },
@@ -122,4 +126,14 @@ function buildUpdateMarkedAsPublishedQuery(
   markedAsPublished: documentType['markedAsPublished'],
 ) {
   return { markedAsPublished, updateDate: new Date().getTime() };
+}
+
+function buildFindByPublicationCategoryLettersRequest(
+  publicationCategoryLetters: string[],
+) {
+  return {
+    $or: publicationCategoryLetters.map((publicationCategoryLetter) => ({
+      publicationCategory: [publicationCategoryLetter],
+    })),
+  };
 }

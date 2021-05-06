@@ -8,6 +8,8 @@ import {
 } from '../../modules';
 import { statisticsCreator } from './statisticsCreator';
 
+const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
+
 describe('statisticsCreator', () => {
   describe('buildFromDocument', () => {
     it('should build all the statistics of the given documents', () => {
@@ -33,6 +35,7 @@ describe('statisticsCreator', () => {
           ),
           documentId: document._id,
           order: 0,
+          lastUpdateDate: TREATMENT_DATE.getTime(),
         },
         {
           annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
@@ -48,6 +51,7 @@ describe('statisticsCreator', () => {
           documentId: document._id,
           duration,
           order: 1,
+          lastUpdateDate: TREATMENT_DATE.getTime(),
         },
       ].map(treatmentModule.generator.generate);
       const assignation = assignationModule.generator.generate({
@@ -74,6 +78,7 @@ describe('statisticsCreator', () => {
         resizedBiggerAnnotationsCount: 1,
         resizedSmallerAnnotationsCount: 0,
         source: documentSource,
+        treatmentDate: TREATMENT_DATE.getTime(),
         treatmentDuration: duration,
         userId,
         wordsCount: 5,

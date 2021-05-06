@@ -21,6 +21,20 @@ const ressourceFilterModel = buildModel({
         { kind: 'primitive', content: 'undefined' },
       ],
     },
+    startDate: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'number' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
+    endDate: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'number' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     source: {
       kind: 'or',
       content: [

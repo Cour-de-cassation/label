@@ -38,22 +38,15 @@ function TreatedDocumentsFilters(props: {
     </div>
   );
 
-  function buildFilters() {
+  function buildFilters(): Array<filterType> {
     return [
       {
         kind: 'dateInterval',
         name: 'dateInterval',
         value: { startDate: props.filterValues.startDate, endDate: props.filterValues.endDate },
-        onChangeStartDate: (startDate: Date) =>
-          props.setFilterValues({
-            ...props.filterValues,
-            startDate,
-          }),
-        onChangeEndDate: (endDate: Date) =>
-          props.setFilterValues({
-            ...props.filterValues,
-            endDate,
-          }),
+        onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => {
+          props.setFilterValues({ ...props.filterValues, startDate: value.startDate, endDate: value.endDate });
+        },
       },
       {
         kind: 'dropdown',

@@ -6,6 +6,8 @@ import { idModule } from '../../id';
 import { treatmentModule } from '../../treatment';
 import { buildStatistic } from './buildStatistic';
 
+const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
+
 describe('buildStatistic', () => {
   it('should build a new statistic', () => {
     const annotationsCount = 10;
@@ -34,6 +36,7 @@ describe('buildStatistic', () => {
       ),
       documentId: document._id,
       duration,
+      lastUpdateDate: TREATMENT_DATE.getTime(),
     });
     const assignation = assignationModule.generator.generate({
       documentId: document._id,
@@ -61,6 +64,7 @@ describe('buildStatistic', () => {
       resizedBiggerAnnotationsCount: 1,
       resizedSmallerAnnotationsCount: 0,
       source: documentSource,
+      treatmentDate: TREATMENT_DATE.getTime(),
       treatmentDuration: duration,
       userId,
       wordsCount: 5,

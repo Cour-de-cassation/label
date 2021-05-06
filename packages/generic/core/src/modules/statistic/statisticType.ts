@@ -19,6 +19,7 @@ const statisticModel = buildModel({
     resizedBiggerAnnotationsCount: { kind: 'primitive', content: 'number' },
     resizedSmallerAnnotationsCount: { kind: 'primitive', content: 'number' },
     source: { kind: 'primitive', content: 'string' },
+    treatmentDate: { kind: 'primitive', content: 'number' },
     treatmentDuration: { kind: 'primitive', content: 'number' },
     userId: { kind: 'custom', content: 'id' },
     wordsCount: { kind: 'primitive', content: 'number' },

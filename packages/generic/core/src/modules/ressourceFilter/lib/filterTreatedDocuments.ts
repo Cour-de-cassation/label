@@ -58,6 +58,17 @@ function filterTreatedDocuments({
       isInTheFilter = isInTheFilter && document.source === ressourceFilter.source;
     }
 
+    if (ressourceFilter.startDate) {
+      const { startDate } = ressourceFilter;
+      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.lastUpdateDate > startDate);
+    }
+
+    if (ressourceFilter.endDate) {
+      const { endDate } = ressourceFilter;
+
+      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.lastUpdateDate < endDate);
+    }
+
     if (ressourceFilter.userId) {
       const userIdToFilter = ressourceFilter.userId;
 

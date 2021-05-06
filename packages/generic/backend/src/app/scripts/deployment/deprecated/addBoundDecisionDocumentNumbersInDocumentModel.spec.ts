@@ -1,9 +1,9 @@
 import { omit } from 'lodash';
 import { documentModule, documentType } from '@label/core';
-import { buildDocumentRepository } from '../../../modules/document';
+import { buildDocumentRepository } from '../../../../modules/document';
 import { addBoundDecisionDocumentNumbersInDocumentModel } from './addBoundDecisionDocumentNumbersInDocumentModel';
 
-describe('addBoundDecisionDocumentNumbersInDocumentModel.spec', () => {
+xdescribe('addBoundDecisionDocumentNumbersInDocumentModel.spec', () => {
   it('should add an undefined boundDecisionExternalId value in the document data model in the database', async () => {
     const documentRepository = buildDocumentRepository();
     const documents = [

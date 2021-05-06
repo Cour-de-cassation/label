@@ -9,6 +9,7 @@ type ressourceFilterRequestType = {
   publicationCategory: string[];
   resizedBiggerAnnotationsCount?: { $gte: 0 } | 0;
   resizedSmallerAnnotationsCount?: { $gte: 0 } | 0;
+  treatmentDate: { $gte?: number; $lte?: number };
   source: ressourceFilterType['source'];
   userId: ressourceFilterType['userId'];
 };
@@ -50,6 +51,20 @@ function buildRessourceFilterRequest(
     ressourceFilterRequest.publicationCategory = [
       ressourceFilter.publicationCategory,
     ];
+  }
+
+  if (ressourceFilter.startDate) {
+    ressourceFilterRequest.treatmentDate = {
+      ...ressourceFilterRequest.treatmentDate,
+      $gte: ressourceFilter.startDate,
+    };
+  }
+
+  if (ressourceFilter.endDate) {
+    ressourceFilterRequest.treatmentDate = {
+      ...ressourceFilterRequest.treatmentDate,
+      $lte: ressourceFilter.endDate,
+    };
   }
 
   if (ressourceFilter.source) {

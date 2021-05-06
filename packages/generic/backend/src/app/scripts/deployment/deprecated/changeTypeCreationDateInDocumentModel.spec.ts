@@ -1,8 +1,8 @@
 import { documentModule, documentType } from '@label/core';
-import { buildDocumentRepository } from '../../../modules/document';
+import { buildDocumentRepository } from '../../../../modules/document';
 import { changeTypeCreationDateInDocumentModel } from './changeTypeCreationDateInDocumentModel';
 
-describe('changeTypeCreationDateInDocumentModel', () => {
+xdescribe('changeTypeCreationDateInDocumentModel', () => {
   it('should rename password to hashedPassword in document model in the database', async () => {
     const date = new Date();
     const documentRepository = buildDocumentRepository();

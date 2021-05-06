@@ -159,6 +159,11 @@ const fr = {
       saturday: 'S',
       sunday: 'D',
     },
+    intervalDate: {
+      startDate: 'depuis le {startDate}',
+      endDate: "jusqu'au {endDate}",
+      both: 'du {startDate} au {endDate}',
+    },
     back: 'Précédent',
     cancel: 'Annuler',
     copyToClipboard: 'Copier dans le presse-papier',

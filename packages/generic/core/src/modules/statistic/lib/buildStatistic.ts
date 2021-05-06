@@ -39,6 +39,7 @@ function buildStatistic({
     resizedBiggerAnnotationsCount: resizedBiggerCount,
     resizedSmallerAnnotationsCount: resizedSmallerCount,
     source: document.source,
+    treatmentDate: treatment.lastUpdateDate,
     treatmentDuration: treatment.duration,
     userId: assignation.userId,
     wordsCount: documentModule.lib.countWords(document),

@@ -21,6 +21,5 @@ type filterType =
       kind: 'dateInterval';
       name: string;
       value: { startDate: Date | undefined; endDate: Date | undefined };
-      onChangeStartDate: (startDate: Date) => void;
-      onChangeEndDate: (endDate: Date) => void;
+      onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => void;
     };

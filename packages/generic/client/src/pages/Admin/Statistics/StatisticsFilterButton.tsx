@@ -1,5 +1,6 @@
 import React from 'react';
-import { apiRouteOutType, idModule, ressourceFilterType, userType } from '@label/core';
+import format from 'string-template';
+import { apiRouteOutType, idModule, ressourceFilterType, timeOperator, userType } from '@label/core';
 import { Chip, FilterButton, filterType } from '../../../components';
 import { wordings } from '../../../wordings';
 import { customThemeType, useCustomTheme } from '../../../styles';
@@ -31,10 +32,12 @@ function StatisticsFilterButton(props: {
     const mustHaveResizedBiggerAnnotationsFilter = buildMustHaveResizedBiggerAnnotationsFilter();
     const mustHaveResizedSmallerAnnotationsFilter = buildMustHaveResizedSmallerAnnotationsFilter();
     const publicationCategoryFilter = buildPublicationCategoryFilter();
+    const dateIntervalFilter = buildDateIntervalFilter();
     const sourceFilter = buildSourceFilter();
     const userFilter = buildUserFilter();
 
     return [
+      dateIntervalFilter,
       userFilter,
       sourceFilter,
       publicationCategoryFilter,
@@ -157,6 +160,24 @@ function StatisticsFilterButton(props: {
       };
     }
 
+    function buildDateIntervalFilter() {
+      return {
+        kind: 'dateInterval' as const,
+        name: 'dateInterval',
+        value: {
+          startDate: props.ressourceFilter.startDate ? new Date(props.ressourceFilter.startDate) : undefined,
+          endDate: props.ressourceFilter.endDate ? new Date(props.ressourceFilter.endDate) : undefined,
+        },
+        onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => {
+          props.refetch({
+            ...props.ressourceFilter,
+            startDate: value.startDate ? value.startDate.getTime() : undefined,
+            endDate: value.endDate ? value.endDate.getTime() : undefined,
+          });
+        },
+      };
+    }
+
     function buildSourceFilter() {
       return {
         kind: 'dropdown' as const,
@@ -228,8 +249,43 @@ function StatisticsFilterButton(props: {
             <Chip label={filter.chipLabel} onClose={filter.onToggle} />
           </div>
         );
+      case 'dateInterval':
+        const label = computeDateIntervalChipLabel(filter.value.startDate, filter.value.endDate);
+        if (!label) {
+          return undefined;
+        }
+        return (
+          <div style={styles.chipContainer}>
+            <Chip
+              label={label}
+              onClose={() => {
+                filter.onChange({ startDate: undefined, endDate: undefined });
+              }}
+            />
+          </div>
+        );
     }
   }
+}
+
+function computeDateIntervalChipLabel(startDate: Date | undefined, endDate: Date | undefined) {
+  if (!startDate && endDate) {
+    return format(wordings.shared.intervalDate.endDate, {
+      endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),
+    });
+  }
+  if (startDate && !endDate) {
+    return format(wordings.shared.intervalDate.startDate, {
+      startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
+    });
+  }
+  if (startDate && endDate) {
+    return format(wordings.shared.intervalDate.both, {
+      startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
+      endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),
+    });
+  }
+  return undefined;
 }
 
 function buildStyles(theme: customThemeType) {

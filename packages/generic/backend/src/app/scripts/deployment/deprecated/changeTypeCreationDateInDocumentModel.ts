@@ -1,4 +1,4 @@
-import { buildDocumentRepository } from '../../../modules/document';
+import { buildDocumentRepository } from '../../../../modules/document';
 
 export { changeTypeCreationDateInDocumentModel };
 

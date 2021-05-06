@@ -1,4 +1,4 @@
-import { buildStatisticRepository } from '../../../modules/statistic';
+import { buildStatisticRepository } from '../../../../modules/statistic';
 
 export { addTreatmentDateInStatisticModel };
 

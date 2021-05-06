@@ -1,11 +1,11 @@
 import { omit } from 'lodash';
 import { statisticModule, statisticType } from '@label/core';
-import { buildStatisticRepository } from '../../../modules/statistic';
+import { buildStatisticRepository } from '../../../../modules/statistic';
 import { addTreatmentDateInStatisticModel } from './addTreatmentDateInStatisticModel';
 
 const MIGRATION_DATE = new Date(2021, 3, 30, 0, 0, 0);
 
-describe('addTreatmentDateInStatisticModel', () => {
+xdescribe('addTreatmentDateInStatisticModel', () => {
   it('should add a fix treatmentDate value in the statistic data model in the database', async () => {
     const statisticRepository = buildStatisticRepository();
     const statistics = [

@@ -15,7 +15,7 @@ This document sums up the scripts run in pre-production and production
 - [x] addBoundDecisionDocumentNumbersInDocumentModel
 - [x] changeTypeCreationDateInDocumentModel
 - [x] renameBoundDecisionExternalIdToBoundDecisionDocumentNumbersInDocumentModel
-- [ ] addTreatmentDateInStatisticModel
+- [x] addTreatmentDateInStatisticModel
 
 ## Production
 
@@ -24,7 +24,7 @@ This document sums up the scripts run in pre-production and production
 - [x] addBoundDecisionDocumentNumbersInDocumentModel
 - [x] changeTypeCreationDateInDocumentModel
 - [x] renameBoundDecisionExternalIdToBoundDecisionDocumentNumbersInDocumentModel
-- [ ] addTreatmentDateInStatisticModel
+- [x] addTreatmentDateInStatisticModel
 
 # Use
 

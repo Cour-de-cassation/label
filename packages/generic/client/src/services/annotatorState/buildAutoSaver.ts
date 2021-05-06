@@ -11,26 +11,32 @@ type autoSaverType = {
 
 function buildAutoSaver({
   documentId,
-  applySave = () => {},
+  applySave = async () => {},
 }: {
   documentId: fetchedDocumentType['_id'];
-  applySave?: (documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) => void;
+  applySave?: (documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) => Promise<void>;
 }): autoSaverType {
-  let commitToSave = [] as annotationsDiffType[];
+  let commitsToSave = [] as annotationsDiffType[];
 
   return {
     autoSave,
     saveCommit,
   };
 
-  function autoSave() {
-    const annotationsDiffToSave = annotationsDiffModule.lib.squash(commitToSave);
-    applySave(documentId, annotationsDiffToSave);
-    commitToSave = [];
+  async function autoSave() {
+    const cachedCommitsToSave = [...commitsToSave];
+    const annotationsDiffToSave = annotationsDiffModule.lib.squash(commitsToSave);
+    commitsToSave = [];
+    try {
+      await applySave(documentId, annotationsDiffToSave);
+    } catch (error) {
+      commitsToSave = [...cachedCommitsToSave, ...commitsToSave];
+      console.warn(error);
+    }
   }
 
   function saveCommit(commit: annotationsDiffType) {
-    commitToSave.push(commit);
+    commitsToSave.push(commit);
 
     autoSave();
   }

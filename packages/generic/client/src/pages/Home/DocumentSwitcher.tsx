@@ -127,14 +127,11 @@ function DocumentSwitcher(props: {
   }
 
   async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {
-    try {
-      await apiCaller.post<'updateTreatment'>('updateTreatment', {
-        annotationsDiff,
-        documentId,
-      });
-    } catch (error) {
-      console.warn(error);
-    }
+    await apiCaller.post<'updateTreatment'>('updateTreatment', {
+      annotationsDiff,
+      documentId,
+    });
+    return;
   }
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: annotationType[] }) {

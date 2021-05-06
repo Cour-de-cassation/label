@@ -13,6 +13,10 @@ const buildTreatmentRepository = buildRepositoryBuilder<
     {
       documentId: 1,
     } as const,
+    {
+      documentId: 1,
+      order: 1,
+    } as const,
   ],
   buildCustomRepository: (collection) => ({
     async countByDocumentId(documentId) {

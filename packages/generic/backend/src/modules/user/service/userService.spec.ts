@@ -265,8 +265,8 @@ describe('userService', () => {
       await assignationRepository.insert(assignation2);
       const assignationsById = await assignationService.fetchAllAssignationsById();
 
-      const userNamesByAssignationId = await userService.fetchUsersByAssignationId(
-        assignationsById,
+      const userNamesByAssignationId = await userService.fetchUsersByAssignations(
+        Object.values(assignationsById),
       );
       expect(
         userNamesByAssignationId[idModule.lib.convertToString(assignation1._id)]

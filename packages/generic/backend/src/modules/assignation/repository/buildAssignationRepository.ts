@@ -28,7 +28,7 @@ const buildAssignationRepository = buildRepositoryBuilder<
         .find({ documentId: { $in: documentIdsToSearchIn } })
         .toArray();
 
-      return indexer.indexBy(assignations, (assignation) =>
+      return indexer.indexManyBy(assignations, (assignation) =>
         idModule.lib.convertToString(assignation.documentId),
       );
     },

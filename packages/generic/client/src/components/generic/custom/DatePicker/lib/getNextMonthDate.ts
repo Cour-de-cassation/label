@@ -10,5 +10,6 @@ function getNextMonthDate(date: Date) {
   } else {
     nextMonthDate.setMonth(month + 1);
   }
+
   return nextMonthDate;
 }

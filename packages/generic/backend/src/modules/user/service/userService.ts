@@ -30,7 +30,7 @@ function buildUserService() {
     changePassword,
     createUser,
     fetchAuthenticatedUserFromAuthorizationHeader,
-    fetchUsersByAssignationId,
+    fetchUsersByAssignations,
     fetchUsersWithDetails,
     login,
     resetPassword,
@@ -81,17 +81,13 @@ function buildUserService() {
     }
   }
 
-  async function fetchUsersByAssignationId(
-    assignationsById: Record<string, assignationType>,
-  ) {
+  async function fetchUsersByAssignations(assignations: assignationType[]) {
     const userRepository = buildUserRepository();
-    const userIds = Object.values(assignationsById).map(
-      (assignation) => assignation.userId,
-    );
+    const userIds = assignations.map((assignation) => assignation.userId);
     const usersById = await userRepository.findAllByIds(userIds);
 
     return indexer.mapIndexBy(
-      Object.values(assignationsById),
+      assignations,
       (assignation) => idModule.lib.convertToString(assignation._id),
       (assignation) =>
         usersById[idModule.lib.convertToString(assignation.userId)],

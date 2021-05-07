@@ -134,8 +134,8 @@ function TreatedDocuments(props: {
               filterValues.endDate.getTime()
           );
         }
-        if (currentFilterKey === 'userName' && !!filterValues[currentFilterKey]) {
-          return accumulator && treatedDocument.userName === filterValues.userName;
+        if (currentFilterKey === 'userName' && !!filterValues.userName) {
+          return accumulator && treatedDocument.userNames.includes(filterValues.userName);
         }
         if (currentFilterKey === 'publicationCategoryLetter' && !!filterValues.publicationCategoryLetter) {
           return (
@@ -148,7 +148,7 @@ function TreatedDocuments(props: {
   }
 
   function extractFilterInfoFromTreatedDocuments(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
-    const userNames = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.userName));
+    const userNames = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.userNames).flat());
     const publicationCategoryLetters = uniq(
       flatten(treatedDocuments.map((treatedDocument) => treatedDocument.document.publicationCategory)),
     );
@@ -166,7 +166,7 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.number.title,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.documentNumber,
-        width: 10,
+        width: 3,
       },
       {
         id: 'publicationCategory',
@@ -184,14 +184,14 @@ function TreatedDocuments(props: {
             ))}
           </div>
         ),
-        width: 10,
+        width: 2,
       },
       {
         id: 'userName',
         title: wordings.treatedDocumentsPage.table.columnTitles.agent.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.agent.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.userName,
+        extractor: (treatedDocument) => treatedDocument.userNames.join(', '),
         width: 10,
       },
       {
@@ -205,7 +205,7 @@ function TreatedDocuments(props: {
           ),
         getSortingValue: (treatedDocument) =>
           treatedDocument.treatments[treatedDocument.treatments.length - 1].lastUpdateDate,
-        width: 10,
+        width: 5,
       },
       {
         id: 'deletions',
@@ -214,7 +214,7 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].deletionsCount,
-        width: 3,
+        width: 2,
       },
       {
         id: 'resizeSmaller',
@@ -223,7 +223,7 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].resizedSmallerCount,
-        width: 3,
+        width: 2,
       },
       {
         id: 'additions',
@@ -232,7 +232,7 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].additionsCount,
-        width: 3,
+        width: 2,
       },
       {
         id: 'resizeBigger',
@@ -241,7 +241,7 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].resizedBiggerCount,
-        width: 3,
+        width: 2,
       },
       {
         id: 'modifications',
@@ -250,7 +250,7 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].modificationsCount,
-        width: 3,
+        width: 2,
       },
       {
         id: 'duration',

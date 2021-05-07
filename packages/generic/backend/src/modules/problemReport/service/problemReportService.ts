@@ -67,13 +67,14 @@ const problemReportService = {
     const assignationsById = await assignationService.fetchAllAssignationsById(
       assignationIds,
     );
+    const assignations = Object.values(assignationsById);
 
     const documentsById = await documentService.fetchAllDocumentsByIds(
-      Object.values(assignationsById).map(({ documentId }) => documentId),
+      assignations.map(({ documentId }) => documentId),
     );
 
-    const usersByAssignationId = await userService.fetchUsersByAssignationId(
-      assignationsById,
+    const usersByAssignationId = await userService.fetchUsersByAssignations(
+      assignations,
     );
 
     return problemReports.map((problemReport) => {

@@ -2,7 +2,6 @@ import {
   documentType,
   idType,
   idModule,
-  indexer,
   errorHandlers,
   buildAnonymizer,
   userType,
@@ -129,12 +128,9 @@ function buildDocumentService() {
     const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
       documentIds,
     );
-    const assignationsById = indexer.indexBy(
-      Object.values(assignationsByDocumentId),
-      (assignation) => idModule.lib.convertToString(assignation._id),
-    );
-    const usersByAssignationId = await userService.fetchUsersByAssignationId(
-      assignationsById,
+    const assignations = Object.values(assignationsByDocumentId).flat();
+    const usersByAssignationId = await userService.fetchUsersByAssignations(
+      assignations,
     );
     const treatmentsByDocumentId = await treatmentService.fetchTreatmentsByDocumentIds(
       documentIds,
@@ -144,10 +140,14 @@ function buildDocumentService() {
       const documentIdString = idModule.lib.convertToString(
         treatedDocument._id,
       );
-      const assignation = assignationsByDocumentId[documentIdString];
-      const assignationIdString = idModule.lib.convertToString(assignation._id);
-      const userName = usersByAssignationId[assignationIdString].name;
+      const assignations = assignationsByDocumentId[documentIdString];
+      const userNames = assignations.map(
+        (assignation) =>
+          usersByAssignationId[idModule.lib.convertToString(assignation._id)]
+            .name,
+      );
       const treatments = treatmentsByDocumentId[documentIdString];
+
       return {
         document: {
           _id: treatedDocument._id,
@@ -168,7 +168,7 @@ function buildDocumentService() {
             treatment.resizedSmallerAnnotationsCount,
           source: treatment.source,
         })),
-        userName,
+        userNames,
       };
     });
   }
@@ -194,17 +194,24 @@ function buildDocumentService() {
     const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
       assignedDocumentIds,
     );
-    const usersByAssignationId = await userService.fetchUsersByAssignationId(
-      assignationsByDocumentId,
+    const allAssignations = Object.values(assignationsByDocumentId).flat();
+    const usersByAssignationId = await userService.fetchUsersByAssignations(
+      allAssignations,
     );
     return untreatedDocuments.map((untreatedDocument) => {
-      const assignation =
+      const assignationsForDocument =
         assignationsByDocumentId[
           idModule.lib.convertToString(untreatedDocument._id)
         ];
-      const user =
-        assignation &&
-        usersByAssignationId[idModule.lib.convertToString(assignation._id)];
+      const userNames = assignationsForDocument
+        ? assignationsForDocument.map(
+            (assignation) =>
+              usersByAssignationId[
+                idModule.lib.convertToString(assignation._id)
+              ].name,
+          )
+        : [];
+
       return {
         document: {
           _id: untreatedDocument._id,
@@ -213,7 +220,7 @@ function buildDocumentService() {
           documentNumber: untreatedDocument.documentNumber,
           status: untreatedDocument.status,
         },
-        userName: user ? user.name : undefined,
+        userNames,
       };
     });
   }

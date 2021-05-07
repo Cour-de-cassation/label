@@ -22,7 +22,7 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
         ),
       );
 
-      return indexer.indexBy(assignations, (assignation) =>
+      return indexer.indexManyBy(assignations, (assignation) =>
         idModule.lib.convertToString(assignation.documentId),
       );
     },

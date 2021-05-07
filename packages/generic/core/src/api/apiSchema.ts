@@ -279,9 +279,12 @@ const apiSchema = {
                 },
               },
             },
-            userName: {
-              kind: 'primitive',
-              content: 'string',
+            userNames: {
+              kind: 'array',
+              content: {
+                kind: 'primitive',
+                content: 'string',
+              },
             },
           },
         },
@@ -303,12 +306,12 @@ const apiSchema = {
                 status: documentModule.fetchedModel.content.status,
               },
             },
-            userName: {
-              kind: 'or',
-              content: [
-                { kind: 'primitive', content: 'string' },
-                { kind: 'primitive', content: 'undefined' },
-              ],
+            userNames: {
+              kind: 'array',
+              content: {
+                kind: 'primitive',
+                content: 'string',
+              },
             },
           },
         },

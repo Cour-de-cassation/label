@@ -419,7 +419,7 @@ describe('documentService', () => {
             'status',
             'creationDate',
           ]),
-          userName: undefined,
+          userNames: [],
         },
         {
           document: projectFakeObjects(pendingDocument, [
@@ -429,7 +429,7 @@ describe('documentService', () => {
             'status',
             'creationDate',
           ]),
-          userName: 'NAME',
+          userNames: ['NAME'],
         },
         {
           document: projectFakeObjects(savedDocument, [
@@ -439,7 +439,7 @@ describe('documentService', () => {
             'status',
             'creationDate',
           ]),
-          userName: 'NAME',
+          userNames: ['NAME'],
         },
       ]);
     });

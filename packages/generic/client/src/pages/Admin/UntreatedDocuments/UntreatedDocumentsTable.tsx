@@ -74,7 +74,8 @@ function UntreatedDocumentsTable(props: {
         title: wordings.untreatedDocumentsPage.table.columnTitles.userName,
         canBeSorted: true,
         width: 10,
-        extractor: (untreatedDocument) => untreatedDocument.userName || '-',
+        extractor: (untreatedDocument) =>
+          untreatedDocument.userNames.length > 0 ? untreatedDocument.userNames.join(', ') : '-',
       },
       {
         id: 'status',

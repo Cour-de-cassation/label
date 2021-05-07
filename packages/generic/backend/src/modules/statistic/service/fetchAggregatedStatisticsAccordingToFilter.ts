@@ -39,9 +39,8 @@ async function fetchAggregatedStatisticsAccordingToFilter(
     );
 
     const treatedDocuments = doneDocuments.map((document) => ({
-      assignations: [
+      assignations:
         assignationsByDocumentId[idModule.lib.convertToString(document._id)],
-      ],
       document,
       treatments:
         treatmentsByDocumentId[idModule.lib.convertToString(document._id)],

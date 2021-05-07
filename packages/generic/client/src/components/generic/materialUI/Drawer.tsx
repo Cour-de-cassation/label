@@ -7,7 +7,13 @@ import { zIndices } from './constants';
 
 export { Drawer };
 
-function Drawer(props: { children?: ReactNode; title: string; isOpen: boolean; onClose: () => void }) {
+function Drawer(props: {
+  children?: ReactNode;
+  subtitle?: string;
+  title: string;
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   const theme = useCustomTheme();
   const styles = buildStyles();
   const classes = buildClasses(theme);
@@ -18,6 +24,11 @@ function Drawer(props: { children?: ReactNode; title: string; isOpen: boolean; o
         <div style={styles.header}>
           <div>
             <Text variant="h1">{props.title}</Text>
+            {props.subtitle && (
+              <Text variant="h3" style={styles.subtitle}>
+                {props.subtitle}
+              </Text>
+            )}
           </div>
           <div>
             <IconButton hint={wordings.shared.cancel} onClick={props.onClose} iconName="close" />
@@ -39,6 +50,9 @@ function Drawer(props: { children?: ReactNode; title: string; isOpen: boolean; o
         height: 'inherit',
         display: 'flex',
         flexDirection: 'column',
+      },
+      subtitle: {
+        display: 'inherit',
       },
       content: {
         overflow: 'auto',

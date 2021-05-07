@@ -1,5 +1,7 @@
 import { documentType, idModule } from '@label/core';
+import { useCustomTheme } from '../../../../styles';
 import React from 'react';
+import format from 'string-template';
 import { Drawer } from '../../../../components';
 import { wordings } from '../../../../wordings';
 import { SettingsDataFetcher } from '../../../SettingsDataFetcher';
@@ -7,23 +9,35 @@ import { AnnotationsDiffDetails } from './AnnotationsDiffDetails';
 import { AnnotationsDiffDetailsDataFetcher } from './AnnotationsDiffDetailsDataFetcher';
 
 export { AnnotationsDiffDrawer };
+export type { annotationDiffDocumentInfoType };
 
-function AnnotationsDiffDrawer(props: {
-  close: () => void;
-  isOpen: boolean;
-  documentId: documentType['_id'] | undefined;
-}) {
+type annotationDiffDocumentInfoType = {
+  _id: documentType['_id'];
+  documentNumber: documentType['documentNumber'];
+  userName: string;
+};
+
+function AnnotationsDiffDrawer(props: { close: () => void; documentInfo: annotationDiffDocumentInfoType | undefined }) {
+  const theme = useCustomTheme();
   const styles = buildStyles();
+
+  const subtitle = props.documentInfo
+    ? format(wordings.treatedDocumentsPage.table.annotationDiffDrawer.subtitle, {
+        documentNumber: props.documentInfo.documentNumber,
+        userName: props.documentInfo.userName,
+      })
+    : undefined;
 
   return (
     <Drawer
       onClose={props.close}
       title={wordings.treatedDocumentsPage.table.annotationDiffDrawer.title}
-      isOpen={!!props.documentId}
+      subtitle={subtitle}
+      isOpen={!!props.documentInfo}
     >
       <div style={styles.drawer}>
-        {!!props.documentId ? (
-          <AnnotationsDiffDetailsDataFetcher documentId={idModule.lib.convertToString(props.documentId)}>
+        {!!props.documentInfo ? (
+          <AnnotationsDiffDetailsDataFetcher documentId={idModule.lib.convertToString(props.documentInfo._id)}>
             {({ annotationsDiffDetails }) => (
               <SettingsDataFetcher>
                 {({ settings }) => (
@@ -44,6 +58,7 @@ function AnnotationsDiffDrawer(props: {
         flexDirection: 'column' as const,
         alignItems: 'center',
         justifyContent: 'space-between',
+        marginTop: theme.spacing * 4,
         width: 600,
       },
     } as const;

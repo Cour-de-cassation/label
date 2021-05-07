@@ -251,6 +251,7 @@ const fr = {
     table: {
       annotationDiffDrawer: {
         title: 'Modifications',
+        subtitle: 'Décision n° {documentNumber}, traitée par {userName}',
       },
       filter: {
         exportButton: 'Exporter',

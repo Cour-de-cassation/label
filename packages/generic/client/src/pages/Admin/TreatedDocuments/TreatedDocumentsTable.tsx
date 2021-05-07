@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { apiRouteOutType, documentType } from '@label/core';
+import { apiRouteOutType } from '@label/core';
 import { PaginatedTable, tableRowFieldType } from '../../../components';
 import { wordings } from '../../../wordings';
 import { localStorage, treatedDocumentOrderByProperties } from '../../../services/localStorage';
-import { AnnotationsDiffDrawer } from './AnnotationsDiffDrawer';
+import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';
 
 export { TreatedDocumentsTable };
 
@@ -18,7 +18,9 @@ function TreatedDocumentsTable(props: {
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
 }) {
   const history = useHistory();
-  const [annotationDiffDocumentId, setAnnotationDiffDocumentId] = useState<documentType['_id'] | undefined>();
+  const [annotationDiffDocumentInfo, setAnnotationDiffDocumentInfo] = useState<
+    annotationDiffDocumentInfoType | undefined
+  >();
 
   const orderByProperty = localStorage.treatedDocumentsStateHandler.getOrderByProperty();
   const orderDirection = localStorage.treatedDocumentsStateHandler.getOrderDirection();
@@ -26,12 +28,7 @@ function TreatedDocumentsTable(props: {
 
   return (
     <div style={styles.container}>
-      <AnnotationsDiffDrawer
-        documentId={annotationDiffDocumentId}
-        isOpen={!!annotationDiffDocumentId}
-        close={() => setAnnotationDiffDocumentId(undefined)}
-      />
-
+      <AnnotationsDiffDrawer documentInfo={annotationDiffDocumentInfo} close={resetDrawer} />
       <PaginatedTable
         defaultOrderByProperty={orderByProperty}
         defaultOrderDirection={orderDirection}
@@ -43,6 +40,9 @@ function TreatedDocumentsTable(props: {
       />
     </div>
   );
+  function resetDrawer() {
+    setAnnotationDiffDocumentInfo(undefined);
+  }
 
   function onOrderByPropertyChange(newOrderByProperty: typeof treatedDocumentOrderByProperties[number]) {
     localStorage.treatedDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
@@ -73,7 +73,11 @@ function TreatedDocumentsTable(props: {
       {
         text: wordings.treatedDocumentsPage.table.optionItems.displayAnnotationDiff,
         onClick: () => {
-          setAnnotationDiffDocumentId(treatmentWithDetails.document._id);
+          setAnnotationDiffDocumentInfo({
+            _id: treatmentWithDetails.document._id,
+            documentNumber: treatmentWithDetails.document.documentNumber,
+            userName: treatmentWithDetails.userNames[0],
+          });
         },
         iconName: 'link' as const,
       },

@@ -1,3 +1,4 @@
+import { flatten } from 'lodash';
 import {
   documentType,
   idType,
@@ -128,7 +129,7 @@ function buildDocumentService() {
     const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
       documentIds,
     );
-    const assignations = Object.values(assignationsByDocumentId).flat();
+    const assignations = flatten(Object.values(assignationsByDocumentId));
     const usersByAssignationId = await userService.fetchUsersByAssignations(
       assignations,
     );
@@ -194,7 +195,7 @@ function buildDocumentService() {
     const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
       assignedDocumentIds,
     );
-    const allAssignations = Object.values(assignationsByDocumentId).flat();
+    const allAssignations = flatten(Object.values(assignationsByDocumentId));
     const usersByAssignationId = await userService.fetchUsersByAssignations(
       allAssignations,
     );

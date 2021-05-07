@@ -1,3 +1,4 @@
+import { flatten } from 'lodash';
 import { documentType } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { logger } from '../../utils';
@@ -27,7 +28,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         `Fetching ${boundDecisionsDocumentNumbers.length} bound documents...`,
       );
       const boundDocuments = await connectorConfig.fetchBoundDocumentsBySourceIds(
-        boundDecisionsDocumentNumbers.flat(),
+        flatten(boundDecisionsDocumentNumbers),
       );
       const priorizedBoundDocuments = boundDocuments.map((document) => ({
         ...document,

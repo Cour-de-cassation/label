@@ -148,7 +148,7 @@ function TreatedDocuments(props: {
   }
 
   function extractFilterInfoFromTreatedDocuments(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
-    const userNames = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.userNames).flat());
+    const userNames = uniq(flatten(treatedDocuments.map((treatedDocument) => treatedDocument.userNames)));
     const publicationCategoryLetters = uniq(
       flatten(treatedDocuments.map((treatedDocument) => treatedDocument.document.publicationCategory)),
     );

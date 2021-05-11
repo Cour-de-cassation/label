@@ -34,10 +34,7 @@ describe('computeDetailsFromAnnotationsDiff', () => {
   it('should compute the details of the annotations with a modified category in the diff', () => {
     const { categoryChangedAnnotations } = computeDetailsFromAnnotationsDiff(annotationsDiff);
 
-    expect(categoryChangedAnnotations).toEqual([
-      [annotationsBefore[1], annotationsAfter[0]],
-      [annotationsBefore[4], annotationsAfter[4]],
-    ]);
+    expect(categoryChangedAnnotations).toEqual([[annotationsBefore[1], annotationsAfter[0]]]);
   });
 
   it('should compute the details of the annotations resized bigger in the diff', () => {

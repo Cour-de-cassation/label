@@ -199,24 +199,7 @@ describe('fetch', () => {
             textStart: 59,
           },
         ],
-        categoryChangedAnnotations: [
-          {
-            annotationAfter: {
-              category: 'LAST_NAME',
-              entityId: 'LAST_NAME_Glé',
-              start: 54,
-              text: 'Glé',
-            },
-            annotationBefore: {
-              category: 'FIRST_NAME',
-              entityId: 'FIRST_NAME_Romain Glé',
-              start: 47,
-              text: 'Romain Glé',
-            },
-            text: ' all design patterns is Romain Glé.',
-            textStart: 23,
-          },
-        ],
+        categoryChangedAnnotations: [],
         deletedAnnotations: [
           {
             deletedAnnotation: {

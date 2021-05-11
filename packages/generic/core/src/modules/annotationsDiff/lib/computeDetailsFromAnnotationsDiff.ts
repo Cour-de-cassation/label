@@ -104,6 +104,7 @@ function computeCategoryChangedAnnotations(
     const strictlyModifiedAnnotation = annotationsDiff.after.find(
       (afterAnnotation) =>
         annotationModule.lib.areOverlapping(beforeAnnotation, afterAnnotation) &&
+        annotationModule.lib.comparator.equalModuloCategory(beforeAnnotation, afterAnnotation) &&
         beforeAnnotation.category !== afterAnnotation.category,
     );
 

@@ -162,7 +162,7 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
             addedAnnotationsCount: 1,
             deletedAnnotationsCount: 1,
             linkedEntitiesCount: 0,
-            modifiedAnnotationsCount: 1,
+            modifiedAnnotationsCount: 0,
             resizedBiggerAnnotationsCount: 1,
             resizedSmallerAnnotationsCount: 0,
             treatmentDuration: 10,

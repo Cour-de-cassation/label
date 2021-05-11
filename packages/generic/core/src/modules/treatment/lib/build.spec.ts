@@ -10,10 +10,12 @@ describe('build', () => {
         [
           { start: 29, text: 'Dupuis', category: 'personnePhysiqueNom' },
           { start: 41, text: 'his cat', category: 'personnePhysiqueNom' },
+          { start: 90, text: 'Gaston', category: 'personnePhysiqueNom' },
         ].map(annotationModule.generator.generate),
         [
           { start: 0, text: 'Spirou', category: 'personnePhysiqueNom' },
           { start: 20, text: 'Editions Dupuis', category: 'personneMorale' },
+          { start: 90, text: 'Gaston', category: 'personnePhysiquePrenom' },
         ].map(annotationModule.generator.generate),
       ),
       documentId: idModule.lib.buildId(),

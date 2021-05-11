@@ -1,5 +1,5 @@
 import { treatmentType } from '../treatmentType';
-import { computeTreatmentInfo } from './computeTreatmentsInfo';
+import { computeTreatmentInfo } from './computeTreatmentInfo';
 
 export { update };
 

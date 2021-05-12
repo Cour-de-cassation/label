@@ -8,8 +8,10 @@ import {
   idModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
-import { treatmentService } from '../../modules/treatment';
+import { annotationReportService } from '../../modules/annotationReport';
+import { assignationService } from '../../modules/assignation';
 import { documentService } from '../../modules/document';
+import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
 
@@ -21,48 +23,64 @@ function buildAnnotator(
 ) {
   const settings = settingsModule.lib.parseFromJson(settingsJson);
 
-  return {
-    async annotateDocumentsWithoutAnnotations() {
-      logger.log('annotateDocumentsWithoutAnnotations');
+  return { annotateDocumentsWithoutAnnotations, reAnnotateUntreatedDocuments };
 
-      const documentsCountToAnnotate = await documentService.countDocumentsWithoutAnnotations();
-      logger.log(`Found ${documentsCountToAnnotate} documents to annotate`);
-      let currentDocumentToAnnotate: documentType | undefined;
-      let documentsAnnotatedCount = 0;
-      do {
-        currentDocumentToAnnotate = await documentService.fetchDocumentWithoutAnnotations();
-        if (currentDocumentToAnnotate) {
-          documentsAnnotatedCount++;
-          logger.log(`Found a document to annotate. Reserving...`);
+  async function annotateDocumentsWithoutAnnotations() {
+    logger.log('annotateDocumentsWithoutAnnotations');
+
+    const documentsCountToAnnotate = await documentService.countDocumentsWithoutAnnotations();
+    logger.log(`Found ${documentsCountToAnnotate} documents to annotate`);
+    let currentDocumentToAnnotate: documentType | undefined;
+    let documentsAnnotatedCount = 0;
+    do {
+      currentDocumentToAnnotate = await documentService.fetchDocumentWithoutAnnotations();
+      if (currentDocumentToAnnotate) {
+        documentsAnnotatedCount++;
+        logger.log(`Found a document to annotate. Reserving...`);
+        await documentService.updateDocumentStatus(
+          currentDocumentToAnnotate._id,
+          'nlpAnnotating',
+        );
+        logger.log(
+          `Annotating with ${annotatorConfig.name} document ${documentsAnnotatedCount}/${documentsCountToAnnotate}...`,
+        );
+        try {
+          await annotateDocument(currentDocumentToAnnotate);
+        } catch (error) {
+          logger.log(
+            `Error while annotating document ${idModule.lib.convertToString(
+              currentDocumentToAnnotate._id,
+            )}. Freeing the reservation...`,
+          );
           await documentService.updateDocumentStatus(
             currentDocumentToAnnotate._id,
-            'nlpAnnotating',
+            'loaded',
           );
           logger.log(
-            `Annotating with ${annotatorConfig.name} document ${documentsAnnotatedCount}/${documentsCountToAnnotate}...`,
-          );
-          try {
-            await annotateDocument(currentDocumentToAnnotate);
-          } catch (error) {
-            logger.log(
-              `Error while annotating document ${idModule.lib.convertToString(
-                currentDocumentToAnnotate._id,
-              )}. Freeing the reservation...`,
-            );
-            await documentService.updateDocumentStatus(
+            `Document ${idModule.lib.convertToString(
               currentDocumentToAnnotate._id,
-              'loaded',
-            );
-            logger.log(
-              `Document ${idModule.lib.convertToString(
-                currentDocumentToAnnotate._id,
-              )} free!`,
-            );
-          }
+            )} free!`,
+          );
         }
-      } while (currentDocumentToAnnotate !== undefined);
-    },
-  };
+      }
+    } while (currentDocumentToAnnotate !== undefined);
+  }
+
+  async function reAnnotateUntreatedDocuments() {
+    const documentIds = (await documentService.fetchUntreatedDocuments()).map(
+      ({ document: { _id } }) => _id,
+    );
+
+    for (const documentId of documentIds) {
+      await annotationReportService.deleteAnnotationReportsByDocumentId(
+        documentId,
+      );
+      await assignationService.deleteAssignationsByDocumentId(documentId);
+      await treatmentService.deleteTreatmentsByDocumentId(documentId);
+    }
+
+    await annotateDocumentsWithoutAnnotations();
+  }
 
   async function annotateDocument(document: documentType) {
     const {

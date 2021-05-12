@@ -23,6 +23,20 @@ describe('buildAnnotator', () => {
       expect(documentWithoutAnnotations).toEqual(undefined);
     });
   });
+
+  describe('reAnnotateUntreatedDocuments', () => {
+    it('should re annotate all the documents', async () => {
+      await insertNDocumentsWithoutAnnotationsInDb(5);
+      const fakeAnnotator = buildFakeAnnotatorConfig();
+      const annotator = buildAnnotator('{}', fakeAnnotator);
+      await annotator.annotateDocumentsWithoutAnnotations();
+
+      await annotator.reAnnotateUntreatedDocuments();
+
+      const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotations();
+      expect(documentWithoutAnnotations).toEqual(undefined);
+    });
+  });
 });
 
 async function insertNDocumentsWithoutAnnotationsInDb(n: number) {

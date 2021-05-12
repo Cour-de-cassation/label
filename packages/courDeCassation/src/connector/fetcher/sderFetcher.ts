@@ -10,16 +10,20 @@ const sderFetcher = {
   async fetchAllCourtDecisionsSince(days: number) {
     const courtDecisions = await sderApi.fetchCourtDecisions(days);
 
-    return courtDecisions
-      .filter(
-        (courtDecision) =>
-          courtDecision && courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,
-      );
+    return courtDecisions.filter(
+      courtDecision =>
+        courtDecision &&
+        courtDecision.originalText &&
+        courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,
+    );
   },
 
   async fetchBoundDocumentsBySourceIds(sourceIds: decisionType['sourceId'][]) {
-    const courtDecisions = await sderApi.fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, 'jurica');
+    const courtDecisions = await sderApi.fetchCourtDecisionsBySourceIdsAndSourceName(
+      sourceIds,
+      'jurica',
+    );
 
-    return courtDecisions.map(sderMapper.mapCourtDecisionToDocument)
+    return courtDecisions.map(sderMapper.mapCourtDecisionToDocument);
   },
 };

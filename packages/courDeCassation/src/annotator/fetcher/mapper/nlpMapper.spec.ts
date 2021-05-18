@@ -13,8 +13,8 @@ const nlpAnnotations: nlpAnnotationsType = {
     },
     {
       text: 'ANNOTATION2',
-      start: 6,
-      end: 17,
+      start: 12,
+      end: 23,
       label: 'LABEL2',
       source: 'NLP',
     },
@@ -22,13 +22,16 @@ const nlpAnnotations: nlpAnnotationsType = {
   checklist: ['CHECK 1', 'CHECK 2'],
 };
 
-const document = documentModule.generator.generate();
+const document = documentModule.generator.generate({
+  text: 'ANNOTATION1 ANNOTATION2',
+});
 
 describe('nlpMapper', () => {
   describe('mapNlpAnnotationsToAnnotations', () => {
     it('should convert the nlp annotations into our annotations', () => {
       const annotations = nlpMapper.mapNlpAnnotationsToAnnotations(
         nlpAnnotations,
+        document,
       );
 
       expect(annotations[0]).toEqual({
@@ -40,7 +43,7 @@ describe('nlpMapper', () => {
       expect(annotations[1]).toEqual({
         category: 'LABEL2',
         entityId: 'LABEL2_ANNOTATION2',
-        start: 6,
+        start: 12,
         text: 'ANNOTATION2',
       });
     });

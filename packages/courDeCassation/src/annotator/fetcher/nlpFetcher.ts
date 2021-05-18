@@ -12,7 +12,10 @@ const nlpFetcher = {
     const nlpAnnotations = await nlpApi.fetchNlpAnnotations(settings, document);
 
     return {
-      annotations: nlpMapper.mapNlpAnnotationsToAnnotations(nlpAnnotations),
+      annotations: nlpMapper.mapNlpAnnotationsToAnnotations(
+        nlpAnnotations,
+        document,
+      ),
       documentId: document._id,
       report: nlpMapper.mapNlpAnnotationstoReport(nlpAnnotations, document),
     };

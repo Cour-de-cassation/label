@@ -1,5 +1,9 @@
 import { clearDb } from './clearDb';
-import { runDeploymentScripts } from './deployment';
+import {
+  createMigrationFile,
+  runDeploymentScripts,
+  runNewMigrations,
+} from './deployment';
 import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestUsers } from './insertTestUsers';
@@ -8,10 +12,12 @@ import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
 
 export {
   clearDb,
+  createMigrationFile,
   extractMonitoringEntriesIntoCsv,
   freePendingDocuments,
   insertTestUsers,
   insertUser,
+  runNewMigrations,
   runDeploymentScripts,
   setIndexesOnAllCollections,
 };

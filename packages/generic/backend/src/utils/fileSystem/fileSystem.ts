@@ -2,10 +2,19 @@ import { promises as fs } from 'fs';
 
 export { fileSystem };
 
-const fileSystem = { appendToFile, listFilesOfDirectory, readFiles };
+const fileSystem = {
+  appendToFile,
+  createFile,
+  listFilesOfDirectory,
+  readFiles,
+};
 
 async function appendToFile(filePath: string, text: string) {
   return fs.appendFile(filePath, text);
+}
+
+async function createFile(filePath: string, text: string) {
+  return fs.writeFile(filePath, text);
 }
 
 async function listFilesOfDirectory(directoryPath: string) {

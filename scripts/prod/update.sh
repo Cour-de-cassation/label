@@ -16,6 +16,9 @@ yarn bootstrap
 echo "Compile"
 yarn build
 
+echo "Run new migrations"
+./scripts/prod/runNewMigrations.sh
+
 echo "Run E2E test"
 cd packages/courDeCassation
 yarn testE2E

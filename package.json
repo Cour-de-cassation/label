@@ -23,6 +23,7 @@
     "compile": "lerna run compile",
     "compileClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation compile ",
     "lint": "lerna run lint",
+    "migrationCreate": "scripts/createMigrationFile.sh",
     "startLocalDev": "scripts/startLocalDev.sh",
     "startLocalClientDev": "yarn compileClient && cd packages/generic/client && yarn start",
     "startLocalDevDocker": "docker-compose -f docker-compose-dev.yml up",

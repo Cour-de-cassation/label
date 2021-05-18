@@ -4,10 +4,12 @@ import { buildRunScript } from './buildRunScript';
 import { buildRunServer } from './buildRunServer';
 import {
   clearDb,
+  createMigrationFile,
   extractMonitoringEntriesIntoCsv,
   freePendingDocuments,
   insertTestUsers,
   insertUser,
+  runNewMigrations,
   runDeploymentScripts,
 } from './scripts';
 
@@ -28,6 +30,10 @@ function buildBackend(environmentJson: string, settingsJson: string) {
         run: clearDb,
         option: { shouldLoadDb: true, shouldExit: false },
       },
+      createMigrationFile: {
+        run: createMigrationFile,
+        option: { shouldLoadDb: false, shouldExit: true },
+      },
       extractMonitoringEntriesIntoCsv: {
         run: extractMonitoringEntriesIntoCsv,
         option: { shouldLoadDb: true, shouldExit: false },
@@ -43,6 +49,10 @@ function buildBackend(environmentJson: string, settingsJson: string) {
       insertUser: {
         run: insertUser,
         option: { shouldLoadDb: true, shouldExit: false },
+      },
+      runNewMigrations: {
+        run: runNewMigrations,
+        option: { shouldLoadDb: true, shouldExit: true },
       },
       runDeploymentScripts: {
         run: runDeploymentScripts,

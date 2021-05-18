@@ -19,6 +19,7 @@ import {
 import { statisticModule, statisticType } from './statistic';
 import { treatmentType, treatmentModule, treatmentInfoType } from './treatment';
 import { userModule, userType } from './user';
+import { migrationModule, migrationType } from './migration';
 
 export {
   annotationModule,
@@ -28,6 +29,7 @@ export {
   documentModule,
   ressourceFilterModule,
   idModule,
+  migrationModule,
   monitoringEntryModule,
   problemReportModule,
   settingsModule,
@@ -52,6 +54,7 @@ export type {
   ressourceFilterType,
   idType,
   fetchedMonitoringEntryType,
+  migrationType,
   monitoringEntryType,
   problemReportType,
   settingsType,

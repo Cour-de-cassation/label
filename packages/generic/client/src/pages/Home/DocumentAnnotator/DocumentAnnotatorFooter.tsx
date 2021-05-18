@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { documentType } from '@label/core';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { useMonitoring } from '../../../services/monitoring';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
@@ -8,7 +9,9 @@ import { ReportProblemButton } from './ReportProblemButton';
 
 export { DocumentAnnotatorFooter };
 
-function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promise<void> }) {
+function DocumentAnnotatorFooter(props: {
+  onStopAnnotatingDocument?: (status: documentType['status']) => Promise<void>;
+}) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const [isValidating, setIsValidating] = useState(false);
@@ -79,9 +82,10 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promi
   }
 
   function buildRightComponents() {
-    if (props.onStopAnnotatingDocument) {
+    const { onStopAnnotatingDocument } = props;
+    if (onStopAnnotatingDocument) {
       return [
-        <ReportProblemButton onStopAnnotatingDocument={props.onStopAnnotatingDocument} />,
+        <ReportProblemButton onStopAnnotatingDocument={() => onStopAnnotatingDocument('rejected')} />,
         <IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.shared.copyToClipboard} />,
         <ButtonWithIcon
           isLoading={isValidating}
@@ -107,7 +111,7 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promi
         origin: 'footer',
         action: 'validate_document',
       });
-      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument());
+      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument('done'));
     } finally {
       setIsValidating(false);
     }

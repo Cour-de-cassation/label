@@ -14,7 +14,7 @@ const REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH = 400;
 
 function ReportProblemToolTipMenu(props: {
   onClose: () => void;
-  onStopAnnotatingDocument: () => void;
+  onStopAnnotatingDocument: () => Promise<void>;
   originPosition: positionType;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
@@ -114,11 +114,7 @@ function ReportProblemToolTipMenu(props: {
         });
 
         if (isBlocking) {
-          await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-            documentId: annotatorState.document._id,
-            status: 'rejected',
-          });
-          props.onStopAnnotatingDocument();
+          await props.onStopAnnotatingDocument();
         }
 
         closeTooltipMenu();

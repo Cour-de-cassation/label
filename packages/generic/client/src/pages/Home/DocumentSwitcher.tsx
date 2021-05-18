@@ -66,7 +66,9 @@ function DocumentSwitcher(props: {
             >
               <MainHeader title={documentState.choice.document.title} subtitle={subtitle} />
               <DocumentAnnotator
-                onStopAnnotatingDocument={() => onStopAnnotatingDocument(documentState.choice.document._id)}
+                onStopAnnotatingDocument={(status) =>
+                  onStopAnnotatingDocument(documentState.choice.document._id, status)
+                }
               />
             </AnnotatorStateHandlerContextProvider>
           </MonitoringEntriesHandlerContextProvider>
@@ -106,19 +108,19 @@ function DocumentSwitcher(props: {
     }
   }
 
-  async function onStopAnnotatingDocument(documentId: documentType['_id']) {
+  async function onStopAnnotatingDocument(documentId: documentType['_id'], status: documentType['status']) {
     await applyAutoSave(documentId, { before: [], after: [] });
     await sendMonitoringEntries();
-    await setDocumentStatusDone(documentId);
+    await setDocumentStatus(documentId, status);
     resetMonitoringEntries();
     props.fetchNewDocumentsForUser();
   }
 
-  async function setDocumentStatusDone(documentId: documentType['_id']) {
+  async function setDocumentStatus(documentId: documentType['_id'], status: documentType['status']) {
     try {
       await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
         documentId,
-        status: 'done',
+        status,
       });
       return;
     } catch (error) {

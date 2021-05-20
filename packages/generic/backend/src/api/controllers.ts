@@ -144,18 +144,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       return { email: userEmail, name, role, token };
     },
 
-    updateDocumentMarkedAsPublished: buildAuthenticatedController({
-      permissions: ['admin', 'specialDocumentAnnotator'],
-      controllerWithUser: async (
-        _,
-        { args: { documentId, markedAsPublished } },
-      ) =>
-        documentService.updateDocumentMarkedAsPublished(
-          idModule.lib.buildId(documentId),
-          markedAsPublished,
-        ),
-    }),
-
     monitoringEntries: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { newMonitoringEntries } }) => {
@@ -203,9 +191,9 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     updateDocumentStatus: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
       controllerWithUser: async (user, { args: { documentId, status } }) => {
-        if (user.role !== 'admin') {
+        if (user.role !== 'admin' && user.role !== 'specialDocumentAnnotator') {
           await assignationService.assertDocumentIsAssignatedToUser({
             documentId: idModule.lib.buildId(documentId),
             userId: user._id,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { documentType } from '@label/core';
+import { documentModule, documentType } from '@label/core';
 import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
 import { useMonitoring } from '../../../services/monitoring';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
@@ -105,17 +105,22 @@ function DocumentAnnotatorFooter(props: {
   }
 
   async function validate() {
+    const newStatus = computeNewStatus(annotatorStateHandler.get().document.publicationCategory);
     setIsValidating(true);
     try {
       addMonitoringEntry({
         origin: 'footer',
         action: 'validate_document',
       });
-      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument('done'));
+      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument(newStatus));
     } finally {
       setIsValidating(false);
     }
   }
+}
+
+function computeNewStatus(publicationCategory: documentType['publicationCategory']) {
+  return documentModule.lib.publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
 }
 
 function buildStyles(theme: customThemeType) {

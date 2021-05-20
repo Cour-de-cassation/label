@@ -22,10 +22,6 @@ function SpecialDocumentsTable(props: {
   );
 
   function buildOptionItems(specialDocument: apiRouteOutType<'get', 'specialDocuments'>[number]) {
-    if (specialDocument.status !== 'done') {
-      return [];
-    }
-
     const openAnonymizedDocumentOptionItem = {
       text: wordings.specialDocumentsPage.table.optionItems.openAnonymizedDocument,
       onClick: () => {
@@ -34,29 +30,38 @@ function SpecialDocumentsTable(props: {
       },
     };
 
-    const markAsPublishedOptionItem = specialDocument.markedAsPublished
-      ? {
-          text: wordings.specialDocumentsPage.table.optionItems.markAsUnPublished,
-          onClick: async () => {
-            await apiCaller.post<'updateDocumentMarkedAsPublished'>('updateDocumentMarkedAsPublished', {
-              documentId: specialDocument._id,
-              markedAsPublished: false,
-            });
-            props.refetch();
+    switch (specialDocument.status) {
+      case 'toBePublished':
+        return [
+          openAnonymizedDocumentOptionItem,
+          {
+            text: wordings.specialDocumentsPage.table.optionItems.markAsPublished,
+            onClick: async () => {
+              await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+                documentId: specialDocument._id,
+                status: 'done',
+              });
+              props.refetch();
+            },
           },
-        }
-      : {
-          text: wordings.specialDocumentsPage.table.optionItems.markAsPublished,
-          onClick: async () => {
-            await apiCaller.post<'updateDocumentMarkedAsPublished'>('updateDocumentMarkedAsPublished', {
-              documentId: specialDocument._id,
-              markedAsPublished: true,
-            });
-            props.refetch();
+        ];
+      case 'done':
+        return [
+          openAnonymizedDocumentOptionItem,
+          {
+            text: wordings.specialDocumentsPage.table.optionItems.markAsUnPublished,
+            onClick: async () => {
+              await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+                documentId: specialDocument._id,
+                status: 'toBePublished',
+              });
+              props.refetch();
+            },
           },
-        };
-
-    return [openAnonymizedDocumentOptionItem, markAsPublishedOptionItem];
+        ];
+      default:
+        return [];
+    }
   }
 }
 
@@ -73,7 +78,7 @@ function buildSpecialDocumentsFields() {
       id: 'status',
       title: wordings.specialDocumentsPage.table.columnTitles.status,
       canBeSorted: true,
-      extractor: (specialDocument) => computeStatusWording(specialDocument.status, specialDocument.markedAsPublished),
+      extractor: (specialDocument) => computeStatusWording(specialDocument.status),
       width: 10,
     },
     {
@@ -88,13 +93,15 @@ function buildSpecialDocumentsFields() {
   return specialDocumentsFields;
 }
 
-function computeStatusWording(status: documentType['status'], markedAsPublished: documentType['markedAsPublished']) {
-  if (status !== 'done') {
-    return wordings.specialDocumentsPage.table.status.notTreated;
+function computeStatusWording(status: documentType['status']) {
+  switch (status) {
+    case 'done':
+      return wordings.specialDocumentsPage.table.status.published;
+    case 'toBePublished':
+      return wordings.specialDocumentsPage.table.status.toBePublished;
+    default:
+      return wordings.specialDocumentsPage.table.status.notTreated;
   }
-  return markedAsPublished
-    ? wordings.specialDocumentsPage.table.status.published
-    : wordings.specialDocumentsPage.table.status.toBePublished;
 }
 
 function buildStyles() {

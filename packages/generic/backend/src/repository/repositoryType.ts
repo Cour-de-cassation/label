@@ -14,8 +14,13 @@ type repositoryType<T extends { _id: idType }> = {
   findById: (id: idType) => Promise<T>;
   insert: (newObject: T) => Promise<{ success: boolean }>;
   insertMany: (newObjects: T[]) => Promise<void>;
+  deletePropertiesForMany: (
+    filter: Partial<T>,
+    fieldNames: Array<keyof T>,
+  ) => Promise<void>;
   setIndexes: () => Promise<void>;
   updateOne: (id: idType, objectFields: Partial<T>) => Promise<void>;
+  updateMany: (filter: Partial<T>, objectFields: Partial<T>) => Promise<void>;
   upsert: (newObject: T) => Promise<void>;
 };
 

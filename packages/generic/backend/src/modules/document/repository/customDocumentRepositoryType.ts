@@ -42,8 +42,4 @@ type customDocumentRepositoryType = {
     filter: { status: documentType['status']; _id: documentType['_id'] },
     update: { status: documentType['status'] },
   ) => Promise<boolean>;
-  updateOneMarkedAsPublishedByIdAndStatus: (
-    filter: { _id: documentType['_id']; status: documentType['status'] },
-    update: { markedAsPublished: documentType['markedAsPublished'] },
-  ) => Promise<boolean>;
 };

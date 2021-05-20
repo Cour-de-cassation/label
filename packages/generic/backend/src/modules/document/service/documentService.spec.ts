@@ -110,15 +110,9 @@ describe('documentService', () => {
 
       const specialDocuments = await documentService.fetchSpecialDocuments();
 
-      const {
-        _id,
-        status,
-        creationDate,
-        documentNumber,
-        markedAsPublished,
-      } = documents[0];
+      const { _id, status, creationDate, documentNumber } = documents[0];
       expect(specialDocuments).toEqual([
-        { _id, status, creationDate, documentNumber, markedAsPublished },
+        { _id, status, creationDate, documentNumber },
       ]);
     });
   });
@@ -324,38 +318,6 @@ describe('documentService', () => {
         `Too many call attempts for identifier ${idModule.lib.convertToString(
           userId,
         )}`,
-      );
-    });
-  });
-
-  describe('updateDocumentMarkedAsPublished', () => {
-    const documentRepository = buildDocumentRepository();
-
-    it('should update the markedAsPublished property', async () => {
-      const document = documentModule.generator.generate({
-        status: 'done',
-        markedAsPublished: false,
-      });
-      await documentRepository.insert(document);
-
-      await documentService.updateDocumentMarkedAsPublished(document._id, true);
-
-      const updatedDocument = await documentRepository.findById(document._id);
-      expect(updatedDocument.markedAsPublished).toBeTruthy();
-    });
-
-    it('should throw an error if updating an undone document', async () => {
-      const document = documentModule.generator.generate({
-        status: 'pending',
-        markedAsPublished: false,
-      });
-      await documentRepository.insert(document);
-
-      const promise = () =>
-        documentService.updateDocumentMarkedAsPublished(document._id, true);
-
-      expect(promise()).rejects.toThrow(
-        `The document ${document._id} has not been updated`,
       );
     });
   });

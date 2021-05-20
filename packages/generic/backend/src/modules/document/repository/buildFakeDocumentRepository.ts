@@ -127,27 +127,5 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       );
       return documentsToModifyCount === 1;
     },
-
-    async updateOneMarkedAsPublishedByIdAndStatus(filter, update) {
-      const documentsToModifyCount = collection.filter(
-        (document) =>
-          idModule.lib.equalId(filter._id, document._id) &&
-          document.status === filter.status,
-      ).length;
-      updateFakeCollection(
-        collection,
-        collection.map((document) =>
-          idModule.lib.equalId(filter._id, document._id) &&
-          document.status === filter.status
-            ? {
-                ...document,
-                markedAsPublished: update.markedAsPublished,
-                updateDate: new Date().getTime(),
-              }
-            : document,
-        ),
-      );
-      return documentsToModifyCount === 1;
-    },
   }),
 });

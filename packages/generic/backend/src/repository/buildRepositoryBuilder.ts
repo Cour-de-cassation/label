@@ -35,10 +35,12 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       findAllProjection,
       findAllByIds,
       findById,
+      deletePropertiesForMany,
       insert,
       insertMany,
       setIndexes,
       updateOne,
+      updateMany,
       upsert,
       ...customRepository,
     };
@@ -105,6 +107,13 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       await collection.insertMany(newObjects as any[]);
     }
 
+    async function deletePropertiesForMany(
+      filter: Partial<T>,
+      fieldNames: Array<keyof T>,
+    ) {
+      await collection.updateMany(filter, buildUnsetQuery(fieldNames));
+    }
+
     async function setIndexes() {
       for (const index of indexes) {
         await collection.createIndex(index);
@@ -113,6 +122,12 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
 
     async function updateOne(id: idType, objectFields: Partial<T>) {
       await collection.updateOne({ _id: id } as any, {
+        $set: objectFields,
+      });
+    }
+
+    async function updateMany(filter: Partial<T>, objectFields: Partial<T>) {
+      await collection.updateMany({ filter } as any, {
         $set: objectFields,
       });
     }
@@ -127,6 +142,15 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
           upsert: true,
         },
       );
+    }
+
+    function buildUnsetQuery(fieldNames: Array<keyof T>) {
+      return {
+        $unset: fieldNames.reduce(
+          (accumulator, fieldName) => ({ ...accumulator, [fieldName]: 1 }),
+          {},
+        ),
+      };
     }
   };
 }

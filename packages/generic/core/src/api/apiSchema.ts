@@ -242,7 +242,6 @@ const apiSchema = {
             creationDate: documentModule.fetchedModel.content.creationDate,
             documentNumber: documentModule.fetchedModel.content.documentNumber,
             status: documentModule.fetchedModel.content.status,
-            markedAsPublished: documentModule.fetchedModel.content.markedAsPublished,
           },
         },
       } as const),
@@ -443,22 +442,6 @@ const apiSchema = {
           content: 'id',
         } as const),
         status: documentModule.fetchedModel.content.status,
-      },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
-    },
-    updateDocumentMarkedAsPublished: {
-      in: {
-        documentId: buildModel({
-          kind: 'custom',
-          content: 'id',
-        } as const),
-        markedAsPublished: buildModel({
-          kind: 'primitive',
-          content: 'boolean',
-        } as const),
       },
       out: buildModel({
         kind: 'primitive',

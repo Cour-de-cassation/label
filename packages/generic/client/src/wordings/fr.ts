@@ -63,6 +63,7 @@ const fr = {
       free: 'Disponible pour être annoté',
       pending: 'Assigné à un agent',
       saved: 'En cours de traitement par un agent',
+      toBePublished: 'Doit être publié',
       done: 'Validé',
       rejected: 'Bloqué',
       exported: 'Publié',

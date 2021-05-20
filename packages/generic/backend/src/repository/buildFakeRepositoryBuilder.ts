@@ -1,4 +1,5 @@
-import { idModule, idType, indexer } from '@label/core';
+import { idModule, idType, indexer, keysOf } from '@label/core';
+import { omit } from 'lodash';
 import { projectedType, repositoryType } from './repositoryType';
 
 export { buildFakeRepositoryBuilder, projectFakeObjects, updateFakeCollection };
@@ -19,10 +20,12 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     findAllProjection,
     findAllByIds,
     findById,
+    deletePropertiesForMany,
     insert,
     insertMany,
     setIndexes,
     updateOne,
+    updateMany,
     upsert,
     ...customRepository,
   });
@@ -46,6 +49,25 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
       collection.filter(
         (item) => !ids.some((id) => idModule.lib.equalId(id, item._id)),
       ),
+    );
+  }
+
+  async function deletePropertiesForMany(
+    filter: Partial<T>,
+    fieldNames: Array<keyof T>,
+  ) {
+    updateFakeCollection(
+      collection,
+      collection.map((item) => {
+        const mustBeUpdated = keysOf<keyof T>(
+          filter as Record<keyof T, any>,
+        ).every((key) => filter[key] === item[key]);
+        if (mustBeUpdated) {
+          return omit(item, fieldNames);
+        } else {
+          return item;
+        }
+      }),
     );
   }
 
@@ -107,6 +129,22 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
           ? { ...item, ...objectFields }
           : item,
       ),
+    );
+  }
+
+  async function updateMany(filter: Partial<T>, objectFields: Partial<T>) {
+    updateFakeCollection(
+      collection,
+      collection.map((item) => {
+        const mustBeUpdated = keysOf<keyof T>(
+          filter as Record<keyof T, any>,
+        ).every((key) => filter[key] === item[key]);
+        if (mustBeUpdated) {
+          return { ...item, ...objectFields };
+        } else {
+          return item;
+        }
+      }),
     );
   }
 

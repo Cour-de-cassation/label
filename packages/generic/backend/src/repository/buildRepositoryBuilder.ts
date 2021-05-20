@@ -5,12 +5,15 @@ import { buildProjection } from './repositoryUtils';
 
 export { buildRepositoryBuilder };
 
-type indexesType<T extends { [key: string]: any }> = Array<
-  Partial<
-    {
-      [key in keyof T]: 1 | -1;
-    }
-  >
+type indexesType<T extends { [key: string]: any }> = Array<{
+  index: indexType<T>;
+  mustBeUnique?: boolean;
+}>;
+
+type indexType<T extends { [key: string]: any }> = Partial<
+  {
+    [key in keyof T]: 1 | -1;
+  }
 >;
 
 function buildRepositoryBuilder<T extends { _id: idType }, U>({
@@ -115,8 +118,13 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     }
 
     async function setIndexes() {
-      for (const index of indexes) {
-        await collection.createIndex(index);
+      await collection.dropIndexes();
+      for (const { index, mustBeUnique } of indexes) {
+        if (mustBeUnique) {
+          await collection.createIndex(index, { unique: true });
+        } else {
+          await collection.createIndex(index);
+        }
       }
     }
 

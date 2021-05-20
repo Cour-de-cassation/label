@@ -11,11 +11,14 @@ const buildAssignationRepository = buildRepositoryBuilder<
   collectionName: 'assignations',
   indexes: [
     {
-      documentId: 1,
+      index: { documentId: 1 },
     } as const,
     {
-      documentId: 1,
-      userId: 1,
+      index: { documentId: 1, userId: 1 },
+    } as const,
+    {
+      index: { treatmentId: 1 },
+      mustBeUnique: true,
     } as const,
   ],
   buildCustomRepository: (collection) => ({

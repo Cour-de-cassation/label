@@ -12,15 +12,21 @@ const buildDocumentRepository = buildRepositoryBuilder<
   collectionName: 'documents',
   indexes: [
     {
-      status: 1,
+      index: {
+        status: 1,
+      },
     } as const,
     {
-      publicationCategory: 1,
-      status: 1,
+      index: {
+        publicationCategory: 1,
+        status: 1,
+      },
     } as const,
     {
-      priority: 1,
-      status: 1,
+      index: {
+        priority: 1,
+        status: 1,
+      },
     } as const,
   ],
   buildCustomRepository: (collection) => ({

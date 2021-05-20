@@ -11,7 +11,10 @@ const buildUserRepository = buildRepositoryBuilder<
   collectionName: 'users',
   indexes: [
     {
-      email: 1,
+      index: {
+        email: 1,
+      },
+      mustBeUnique: true,
     } as const,
   ],
   buildCustomRepository: (collection) => ({

@@ -11,11 +11,16 @@ const buildTreatmentRepository = buildRepositoryBuilder<
   collectionName: 'treatments',
   indexes: [
     {
-      documentId: 1,
+      index: {
+        documentId: 1,
+      },
     } as const,
     {
-      documentId: 1,
-      order: 1,
+      index: {
+        documentId: 1,
+        order: 1,
+      },
+      mustBeUnique: true,
     } as const,
   ],
   buildCustomRepository: (collection) => ({

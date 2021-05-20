@@ -48,5 +48,14 @@ const buildAssignationRepository = buildRepositoryBuilder<
 
       return result;
     },
+
+    async findByTreatmentId(treatmentId) {
+      const result = await collection.find({ treatmentId }).toArray();
+
+      if (result.length === 0) {
+        return undefined;
+      }
+      return result[0];
+    },
   }),
 });

@@ -1,4 +1,5 @@
-import { documentType, userType } from '@label/core';
+import { documentType, idModule, treatmentModule, userType } from '@label/core';
+import { treatmentService } from '../../../modules/treatment';
 import { buildAssignationRepository } from '../repository';
 import { createAssignation } from './createAssignation';
 
@@ -12,12 +13,16 @@ async function findOrCreateByDocumentIdAndUserId({
   userId: userType['_id'];
 }) {
   const assignationRepository = buildAssignationRepository();
-  const assignation = await assignationRepository.findByDocumentIdAndUserId({
+  const treatments = await treatmentService.fetchTreatmentsByDocumentId(
     documentId,
-    userId,
-  });
+  );
+  const lastTreatment = treatmentModule.lib.getLastTreatment(treatments);
 
-  if (assignation) {
+  const assignation =
+    !!lastTreatment &&
+    (await assignationRepository.findByTreatmentId(lastTreatment._id));
+
+  if (assignation && idModule.lib.equalId(assignation.userId, userId)) {
     return assignation;
   }
 

@@ -1,4 +1,9 @@
-import { assignationType, documentType, userType } from '@label/core';
+import {
+  assignationType,
+  documentType,
+  treatmentType,
+  userType,
+} from '@label/core';
 
 export type { customAssignationRepositoryType };
 
@@ -17,4 +22,7 @@ type customAssignationRepositoryType = {
     documentId: documentType['_id'];
     userId: userType['_id'];
   }) => Promise<assignationType | undefined>;
+  findByTreatmentId: (
+    treatmentId: treatmentType['_id'],
+  ) => Promise<assignationType | undefined>;
 };

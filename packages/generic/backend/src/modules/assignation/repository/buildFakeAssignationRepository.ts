@@ -42,5 +42,11 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
         idModule.lib.equalId(assignation.documentId, documentId),
       );
     },
+
+    async findByTreatmentId(treatmentId) {
+      return collection.find((assignation) =>
+        idModule.lib.equalId(assignation.treatmentId, treatmentId),
+      );
+    },
   }),
 });

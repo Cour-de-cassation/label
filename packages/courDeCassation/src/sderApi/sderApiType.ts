@@ -5,7 +5,10 @@ import { labelTreatmentsType } from '@label/backend';
 export type { sderApiType };
 
 type sderApiType = {
-  fetchCourtDecisions: (days: number) => Promise<Array<decisionType>>;
+  fetchCourtDecisionsBetween: (params: {
+    startDate: Date;
+    endDate: Date;
+  }) => Promise<Array<decisionType>>;
   fetchCourtDecisionsBySourceIdsAndSourceName: (sourceIds: decisionType['sourceId'][], sourceName: decisionType['sourceName']) => Promise<decisionType[]>;
 setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
   setCourtDecisionDone: (

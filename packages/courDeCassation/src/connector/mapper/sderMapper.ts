@@ -44,7 +44,7 @@ function mapCourtDecisionToDocument(
     decisionMetadata: {
       chamberName,
       juridiction,
-      boundDecisionDocumentNumbers: sderCourtDecision.decatt || []
+      boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),
@@ -119,7 +119,9 @@ function computePriority(
   source: string,
   publicationCategory: string[],
 ): documentType['priority'] {
-  if (documentModule.lib.publicationHandler.mustBePublished(publicationCategory)) {
+  if (
+    documentModule.lib.publicationHandler.mustBePublished(publicationCategory)
+  ) {
     return 'high';
   }
   switch (source) {

@@ -1,43 +1,29 @@
-import { flatten } from 'lodash';
 import { documentType } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
-import { logger } from '../../utils';
+import { dateBuilder, logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 
 export { buildConnector };
 
 function buildConnector(connectorConfig: connectorConfigType) {
   return {
-    async importAllDocumentsSince(days: number) {
+    async importDocumentsSince(days: number) {
       logger.log(`importAllDocumentsSince ${days}`);
 
       logger.log(`Fetching ${connectorConfig.name} documents...`);
-      const newCourtDecisions = await connectorConfig.fetchAllCourtDecisionsSince(
-        days,
+      const newCourtDecisions = await connectorConfig.fetchAllCourtDecisionsBetween(
+        {
+          startDate: new Date(dateBuilder.daysAgo(days)),
+          endDate: new Date(),
+        },
       );
       logger.log(
         `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
       );
-      const newDocuments = newCourtDecisions.map(
+      const documents = newCourtDecisions.map(
         connectorConfig.mapCourtDecisionToDocument,
       );
-      const boundDecisionsDocumentNumbers = newDocuments.map(
-        ({ decisionMetadata }) => decisionMetadata.boundDecisionDocumentNumbers,
-      );
-      logger.log(
-        `Fetching ${boundDecisionsDocumentNumbers.length} bound documents...`,
-      );
-      const boundDocuments = await connectorConfig.fetchBoundDocumentsBySourceIds(
-        flatten(boundDecisionsDocumentNumbers),
-      );
-      const priorizedBoundDocuments = boundDocuments.map((document) => ({
-        ...document,
-        priority: 'medium' as const,
-      }));
-      logger.log(
-        `${priorizedBoundDocuments.length} ${connectorConfig.name} bound court decisions fetched!`,
-      );
-      const documents = [...newDocuments, ...priorizedBoundDocuments];
+
       logger.log(
         `Insertion ${documents.length} documents into the database...`,
       );

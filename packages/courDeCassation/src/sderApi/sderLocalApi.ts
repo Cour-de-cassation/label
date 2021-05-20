@@ -7,7 +7,7 @@ export { sderLocalApi };
 const pathToCourtDecisions = './storage/documents/';
 
 const sderLocalApi: sderApiType = {
-  async fetchCourtDecisions() {
+  async fetchCourtDecisionsBetween() {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,
     );
@@ -40,16 +40,19 @@ const sderLocalApi: sderApiType = {
       pathToCourtDecisions,
     );
 
-    const mappedCourtDecisions = courtDecisions
-      .map(({ content }) => {
-        const parsedContent = JSON.parse(content) as decisionType;
-        return {
-          ...parsedContent,
-          dateDecision: parsedContent.dateDecision,
-        };
-      })
+    const mappedCourtDecisions = courtDecisions.map(({ content }) => {
+      const parsedContent = JSON.parse(content) as decisionType;
+      return {
+        ...parsedContent,
+        dateDecision: parsedContent.dateDecision,
+      };
+    });
 
-      return mappedCourtDecisions.filter((courtDecision) => sourceIds.includes(courtDecision.sourceId) && courtDecision.sourceName === sourceName )
+    return mappedCourtDecisions.filter(
+      courtDecision =>
+        sourceIds.includes(courtDecision.sourceId) &&
+        courtDecision.sourceName === sourceName,
+    );
   },
 
   async setCourtDecisionsLoaded() {},

@@ -7,8 +7,17 @@ export { sderFetcher };
 const MAX_DOCUMENT_SIZE = 500000;
 
 const sderFetcher = {
-  async fetchAllCourtDecisionsSince(days: number) {
-    const courtDecisions = await sderApi.fetchCourtDecisions(days);
+  async fetchAllCourtDecisionsBetween({
+    startDate,
+    endDate,
+  }: {
+    startDate: Date;
+    endDate: Date;
+  }) {
+    const courtDecisions = await sderApi.fetchCourtDecisionsBetween({
+      startDate,
+      endDate,
+    });
 
     return courtDecisions.filter(
       courtDecision =>

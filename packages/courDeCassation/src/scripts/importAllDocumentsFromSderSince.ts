@@ -14,7 +14,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 })();
 
 async function importAllDocumentsFromSder(days: number) {
-  await sderConnector.importAllDocumentsSince(days);
+  await sderConnector.importDocumentsSince(days);
 }
 
 function parseArgv() {

@@ -5,7 +5,10 @@ export type { connectorConfigType };
 
 type connectorConfigType = {
   name: string;
-  fetchAllCourtDecisionsSince(days: number): Promise<decisionType[]>;
+  fetchAllCourtDecisionsBetween(params: {
+    startDate: Date;
+    endDate: Date;
+  }): Promise<decisionType[]>;
   fetchBoundDocumentsBySourceIds: (
     sourceIds: number[],
   ) => Promise<documentType[]>;

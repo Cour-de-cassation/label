@@ -1,24 +1,29 @@
 import { decisionModule } from 'sder';
 import { documentType, idModule } from '@label/core';
-import { dateBuilder } from '@label/backend';
 import { sderApiType } from './sderApiType';
 
 export { sderApi };
 
 const sderApi: sderApiType = {
-  async fetchCourtDecisions(days) {
-    const dateDaysAgo = new Date(dateBuilder.daysAgo(days));
-    const courtDecisions = await decisionModule.service.fetchDecisionsToPseudonymise(
-      {
-        date: dateDaysAgo,
-      },
+  async fetchCourtDecisionsBetween({
+    startDate,
+    endDate,
+  }: {
+    startDate: Date;
+    endDate: Date;
+  }) {
+    const courtDecisions = await decisionModule.service.fetchJurinetAndChainedJuricaDecisionsToPseudonymiseBetween(
+      { startDate, endDate },
     );
 
     return courtDecisions;
   },
 
   async fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, sourceName) {
-    return decisionModule.service.fetchDecisionsBySourceIdsAndSourceName(sourceIds, sourceName);
+    return decisionModule.service.fetchDecisionsBySourceIdsAndSourceName(
+      sourceIds,
+      sourceName,
+    );
   },
 
   async setCourtDecisionsLoaded(documents: documentType[]) {

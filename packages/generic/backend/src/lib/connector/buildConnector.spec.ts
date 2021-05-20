@@ -15,7 +15,7 @@ describe('buildConnector', () => {
       const fakeConnector = buildFakeConnectorWithNDecisions(5);
       const connector = buildConnector(fakeConnector);
 
-      await connector.importAllDocumentsSince(10);
+      await connector.importDocumentsSince(10);
 
       const connectorDocuments = fakeConnector.getAllDocuments();
       const insertedDocuments = await documentRepository.findAll();
@@ -42,7 +42,7 @@ function buildFakeConnectorWithNDecisions(n: number) {
 
   return {
     name: 'FAKE_CONNECTOR',
-    async fetchAllCourtDecisionsSince() {
+    async fetchAllCourtDecisionsBetween() {
       return courtDecisions;
     },
     async fetchBoundDocumentsBySourceIds(sourceIds: number[]) {

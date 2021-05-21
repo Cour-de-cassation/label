@@ -13,6 +13,7 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
   documentType,
   customDocumentRepositoryType
 >({
+  collectionName: 'documents',
   buildCustomFakeRepository: (collection) => ({
     async countNotIn(idsNotToSearchIn) {
       return collection.filter(

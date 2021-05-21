@@ -10,6 +10,7 @@ const migrationModel = buildModel({
   content: {
     _id: { kind: 'custom', content: 'id' },
     creationDate: { kind: 'primitive', content: 'number' },
+    order: { kind: 'primitive', content: 'number' },
   },
 } as const);
 

@@ -8,6 +8,7 @@ const buildFakeAssignationRepository = buildFakeRepositoryBuilder<
   assignationType,
   customAssignationRepositoryType
 >({
+  collectionName: 'assignations',
   buildCustomFakeRepository: (collection) => ({
     async findAllByUserId(userId) {
       return collection.filter((assignation) =>

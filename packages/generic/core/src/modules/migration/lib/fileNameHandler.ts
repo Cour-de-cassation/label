@@ -8,8 +8,8 @@ const fileNameHandler = {
   sortFileNames,
 };
 
-function buildFileName({ id, order, extension }: { id: idType; order: number; extension: 'ts' | 'js' }) {
-  return `${order}_${idModule.lib.convertToString(id)}.${extension}`;
+function buildFileName({ _id, order, extension }: { _id: idType; order: number; extension: 'ts' | 'js' }) {
+  return `${order}_${idModule.lib.convertToString(_id)}.${extension}`;
 }
 
 function sortFileNames(fileNames: string[], direction: 'asc' | 'desc') {
@@ -32,7 +32,7 @@ function parseFileName(fileName: string) {
     throw new Error(`Wrong format for migration filename : ${fileName}`);
   }
   const order = Number(result[1]);
-  const id = idModule.lib.buildId(result[2]);
+  const _id = idModule.lib.buildId(result[2]);
 
-  return { id, order };
+  return { _id, order };
 }

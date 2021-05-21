@@ -11,6 +11,7 @@ const buildFakeAnnotationReportRepository = buildFakeRepositoryBuilder<
   annotationReportType,
   customAnnotationReportRepositoryType
 >({
+  collectionName: 'annotationReports',
   buildCustomFakeRepository: (collection) => ({
     async deleteByDocumentId(documentId) {
       updateFakeCollection(

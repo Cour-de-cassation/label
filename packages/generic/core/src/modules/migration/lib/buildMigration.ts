@@ -1,11 +1,10 @@
-import { idType } from '../../id';
 import { migrationType } from '../migrationType';
 
 export { buildMigration };
 
-function buildMigration(_id: idType): migrationType {
+function buildMigration(migrationFields: Omit<migrationType, 'creationDate'>): migrationType {
   return {
-    _id,
+    ...migrationFields,
     creationDate: new Date().getTime(),
   };
 }

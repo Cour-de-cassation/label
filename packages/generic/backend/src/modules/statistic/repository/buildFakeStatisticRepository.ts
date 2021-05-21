@@ -9,6 +9,7 @@ const buildFakeStatisticRepository = buildFakeRepositoryBuilder<
   statisticType,
   customStatisticRepositoryType
 >({
+  collectionName: 'statistics',
   buildCustomFakeRepository: (collection) => ({
     async findAllByRessourceFilter(ressourceFilter) {
       return collection.filter(

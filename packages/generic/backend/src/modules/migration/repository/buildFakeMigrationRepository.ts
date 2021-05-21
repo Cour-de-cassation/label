@@ -8,5 +8,6 @@ const buildFakeMigrationRepository = buildFakeRepositoryBuilder<
   migrationType,
   customMigrationRepositoryType
 >({
+  collectionName: 'migrations',
   buildCustomFakeRepository: () => ({}),
 });

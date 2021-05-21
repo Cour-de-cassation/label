@@ -11,6 +11,7 @@ const buildFakeProblemReportRepository = buildFakeRepositoryBuilder<
   problemReportType,
   customProblemReportRepositoryType
 >({
+  collectionName: 'problemReports',
   buildCustomFakeRepository: (collection) => ({
     async deleteByAssignationId(assignationId) {
       updateFakeCollection(

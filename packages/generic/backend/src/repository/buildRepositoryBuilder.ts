@@ -53,7 +53,12 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     }
 
     async function deleteById(_id: idType) {
-      await collection.deleteOne({ _id } as any);
+      const result = await collection.deleteOne({ _id } as any);
+      if (result.deletedCount !== 1) {
+        throw new Error(
+          `No ${collectionName} with _id ${idModule.lib.convertToString(_id)}`,
+        );
+      }
     }
 
     async function deleteManyByIds(ids: idType[]) {

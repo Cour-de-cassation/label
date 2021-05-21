@@ -20,16 +20,16 @@ async function runNewMigrations() {
   logger.log(`${alreadyRunMigrations.length} migrations in the database`);
   logger.log(`${fileNames.length} migrations locally stored`);
   for (const fileName of sortedFileNames) {
-    const { id, order } = migrationModule.lib.fileNameHandler.parseFileName(
+    const { _id, order } = migrationModule.lib.fileNameHandler.parseFileName(
       fileName,
     );
 
     if (
       !alreadyRunMigrations.some((migration) =>
-        idModule.lib.equalId(migration._id, id),
+        idModule.lib.equalId(migration._id, _id),
       )
     ) {
-      logger.log(`Executing migration ${idModule.lib.convertToString(id)}...`);
+      logger.log(`Executing migration ${idModule.lib.convertToString(_id)}...`);
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const migrationFile: {
@@ -37,7 +37,7 @@ async function runNewMigrations() {
         down: () => Promise<void>;
         // eslint-disable-next-line @typescript-eslint/no-var-requires
       } = require(`./migrations/${migrationModule.lib.fileNameHandler.buildFileName(
-        { id, order, extension: 'js' },
+        { _id, order, extension: 'js' },
       )}`);
       if (
         typeof migrationFile.up === 'function' &&
@@ -45,14 +45,14 @@ async function runNewMigrations() {
       ) {
         await migrationFile.up();
         try {
-          await migrationService.createOne(id);
+          await migrationService.createOne({ _id, order });
         } catch (error) {
           await migrationFile.down();
           throw new Error(error);
         }
         logger.log(
           `Migration ${idModule.lib.convertToString(
-            id,
+            _id,
           )} successfully executed!`,
         );
       } else {

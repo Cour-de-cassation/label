@@ -6,8 +6,10 @@ export { buildFakeRepositoryBuilder, projectFakeObjects, updateFakeCollection };
 
 function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   buildCustomFakeRepository,
+  collectionName,
 }: {
   buildCustomFakeRepository: (collection: T[]) => U;
+  collectionName: string;
 }): () => repositoryType<T> & U {
   const collection: T[] = [];
   const customRepository = buildCustomFakeRepository(collection);
@@ -37,9 +39,17 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   }
 
   async function deleteById(_id: idType) {
+    const itemToDelete = collection.find(
+      (item) => !idModule.lib.equalId(item._id, _id),
+    );
+    if (!itemToDelete) {
+      throw new Error(
+        `No ${collectionName} with _id ${idModule.lib.convertToString(_id)}`,
+      );
+    }
     updateFakeCollection(
       collection,
-      collection.filter((item) => idModule.lib.equalId(item._id, _id)),
+      collection.filter((item) => !idModule.lib.equalId(item._id, _id)),
     );
   }
 

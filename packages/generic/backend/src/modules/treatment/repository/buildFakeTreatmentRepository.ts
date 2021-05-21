@@ -11,6 +11,7 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
   treatmentType,
   customTreatmentRepositoryType
 >({
+  collectionName: 'treatments',
   buildCustomFakeRepository: (collection) => ({
     async countByDocumentId(documentId) {
       return collection.filter((treatment) =>

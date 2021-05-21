@@ -1,6 +1,7 @@
 import { clearDb } from './clearDb';
 import {
   createMigrationFile,
+  revertOneMigration,
   runDeploymentScripts,
   runNewMigrations,
 } from './deployment';
@@ -17,6 +18,7 @@ export {
   freePendingDocuments,
   insertTestUsers,
   insertUser,
+  revertOneMigration,
   runNewMigrations,
   runDeploymentScripts,
   setIndexesOnAllCollections,

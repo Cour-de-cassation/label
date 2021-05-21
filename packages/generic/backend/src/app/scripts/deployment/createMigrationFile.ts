@@ -6,7 +6,7 @@ import { emptyMigration } from './emptyMigration';
 export { createMigrationFile };
 
 async function createMigrationFile() {
-  const id = idModule.lib.buildId();
+  const _id = idModule.lib.buildId();
   const pathToMigrationFolder = getPathToMigrationFolder();
   const fileNames = await fileSystem.listFilesOfDirectory(
     pathToMigrationFolder,
@@ -22,7 +22,7 @@ async function createMigrationFile() {
           .order + 1
       : 0;
   const newMigrationFileName = migrationModule.lib.fileNameHandler.buildFileName(
-    { id, order: newMigrationOrder, extension: 'ts' },
+    { _id, order: newMigrationOrder, extension: 'ts' },
   );
   const filePath = `${getPathToMigrationFolder()}/${newMigrationFileName}`;
 

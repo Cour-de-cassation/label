@@ -11,6 +11,7 @@ const buildFakeMonitoringEntryRepository = buildFakeRepositoryBuilder<
   monitoringEntryType,
   customMonitoringEntryRepositoryType
 >({
+  collectionName: 'monitoringEntries',
   buildCustomFakeRepository: (collection) => ({
     async deleteByDocumentId(documentId) {
       updateFakeCollection(

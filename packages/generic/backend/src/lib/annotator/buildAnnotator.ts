@@ -77,6 +77,8 @@ function buildAnnotator(
       );
       await assignationService.deleteAssignationsByDocumentId(documentId);
       await treatmentService.deleteTreatmentsByDocumentId(documentId);
+
+      await documentService.updateDocumentStatus(documentId, 'loaded');
     }
 
     await annotateDocumentsWithoutAnnotations();

@@ -86,14 +86,14 @@
     "text": "Professionnel (prénom)"
   },
   "dateNaissance": {
-    "anonymization": "[Date anniversaire %d]",
+    "anonymization": "[Date naissance %d]",
     "color": {
       "lightMode": ["teal", 300],
       "darkMode": ["teal", 800]
     },
     "iconName": "cake",
     "order": 9,
-    "text": "Date d'anniversaire"
+    "text": "Date de naissance/anniversaire"
   },
   "dateMariage": {
     "anonymization": "[Date mariage %d]",

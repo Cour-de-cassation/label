@@ -144,7 +144,7 @@ const fr = {
   loginPage: {
     login: 'Connexion',
     email: 'E-mail',
-    forgottenPassword: 'Mot de passe oublié ?',
+    forgottenPassword: "En cas d'oubli de votre mot de passe, veuillez contacter votre administrateur.",
     password: 'Mot de passe',
     pleaseTryAgain: 'Veuillez réessayer.',
     wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",

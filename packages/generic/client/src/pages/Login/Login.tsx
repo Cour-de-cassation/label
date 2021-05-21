@@ -1,5 +1,5 @@
 import React, { FormEvent, FunctionComponent, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { apiCaller } from '../../api';
 import { ButtonWithIcon, Logo, Text, RichTextInput } from '../../components';
 import { localStorage } from '../../services/localStorage';
@@ -47,11 +47,9 @@ const Login: FunctionComponent = () => {
           />
         </div>
         <div style={styles.forgottenPasswordContainer}>
-          <Link to="/reset-password-request">
-            <Text style={styles.forgottenPasswordText} variant="h3" color="textPrimary">
-              {wordings.loginPage.forgottenPassword}
-            </Text>
-          </Link>
+          <Text style={styles.forgottenPasswordText} variant="h3" color="textPrimary">
+            {wordings.loginPage.forgottenPassword}
+          </Text>
         </div>
         <div style={styles.loginButtonContainer}>
           <ButtonWithIcon
@@ -141,7 +139,7 @@ const Login: FunctionComponent = () => {
         marginBottom: theme.spacing * 3,
       },
       forgottenPasswordText: {
-        textDecoration: 'underline',
+        color: theme.colors.disabled.color,
       },
       loginButtonContainer: {
         display: 'flex',

@@ -15,7 +15,4 @@ type customTreatmentRepositoryType = {
   findAllByDocumentIds: (
     documentIds: treatmentType['documentId'][],
   ) => Promise<Record<string, treatmentType[]>>;
-  findLastOneByDocumentId: (
-    documentId: treatmentType['documentId'],
-  ) => Promise<treatmentType> | undefined;
 };

@@ -2,6 +2,7 @@ import { treatmentGenerator } from './generator';
 import { treatmentModel, treatmentType } from './treatmentType';
 import {
   build,
+  areAnnotationsConsistent,
   computeAnnotations,
   computeAnnotationsDiff,
   computeTreatmentInfo,
@@ -19,6 +20,7 @@ const treatmentModule = {
   model: treatmentModel,
   generator: treatmentGenerator,
   lib: {
+    areAnnotationsConsistent,
     build,
     computeAnnotations,
     computeAnnotationsDiff,

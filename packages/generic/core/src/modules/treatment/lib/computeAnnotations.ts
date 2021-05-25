@@ -7,6 +7,9 @@ import { sortInConsistentOrder } from './sortInConsistentOrder';
 export { computeAnnotations, computeAnnotationsDiff };
 
 function computeAnnotations(treatments: treatmentType[]): annotationType[] {
+  if (treatments.length === 0) {
+    return [];
+  }
   const sortedTreatments = sortInConsistentOrder(treatments);
 
   if (checkTreatmentsConsistency(sortedTreatments) && areAnnotationsInitiallyEmpty(treatments)) {
@@ -20,6 +23,9 @@ function computeAnnotations(treatments: treatmentType[]): annotationType[] {
 }
 
 function computeAnnotationsDiff(treatments: treatmentType[]): annotationsDiffType {
+  if (treatments.length === 0) {
+    return { before: [], after: [] };
+  }
   const sortedTreatments = sortInConsistentOrder(treatments);
 
   if (checkTreatmentsConsistency(sortedTreatments)) {

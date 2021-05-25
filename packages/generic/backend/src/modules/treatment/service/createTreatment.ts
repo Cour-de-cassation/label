@@ -4,6 +4,7 @@ import {
   documentType,
   treatmentModule,
   treatmentType,
+  idModule,
 } from '@label/core';
 import { buildTreatmentRepository } from '../repository';
 
@@ -21,10 +22,16 @@ async function createTreatment({
   source: treatmentType['source'];
 }): Promise<treatmentType['_id']> {
   const treatmentRepository = buildTreatmentRepository();
-  const lastTreatment = await treatmentRepository.findLastOneByDocumentId(
+  const previousTreatments = await treatmentRepository.findAllByDocumentId(
     documentId,
   );
-  const order = lastTreatment ? lastTreatment.order + 1 : 0;
+  const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
+    previousTreatments,
+  );
+  const order =
+    sortedTreatments.length > 0
+      ? sortedTreatments[sortedTreatments.length - 1].order + 1
+      : 0;
   const treatment = treatmentModule.lib.build({
     annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
       previousAnnotations,
@@ -34,6 +41,16 @@ async function createTreatment({
     order,
     source,
   });
+
+  if (
+    !treatmentModule.lib.areAnnotationsConsistent(sortedTreatments, treatment)
+  ) {
+    throw new Error(
+      `Could not create treatment for documentId ${idModule.lib.convertToString(
+        documentId,
+      )}: inconsistent annotations`,
+    );
+  }
 
   await treatmentRepository.insert(treatment);
 

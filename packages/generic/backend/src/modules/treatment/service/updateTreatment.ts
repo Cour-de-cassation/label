@@ -1,6 +1,7 @@
 import {
   annotationsDiffModule,
   annotationsDiffType,
+  idModule,
   idType,
   treatmentModule,
 } from '@label/core';
@@ -26,6 +27,12 @@ async function updateTreatment({
   const assignation = await assignationService.findOrCreateByDocumentIdAndUserId(
     { documentId, userId },
   );
+  const previousTreatments = await treatmentRepository.findAllByDocumentId(
+    documentId,
+  );
+  const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
+    previousTreatments,
+  );
 
   const treatment = await treatmentRepository.findById(assignation.treatmentId);
 
@@ -40,6 +47,21 @@ async function updateTreatment({
         ? currentDate - treatment.lastUpdateDate + treatment.duration
         : treatment.duration,
   });
+
+  if (
+    !treatmentModule.lib.areAnnotationsConsistent(
+      sortedTreatments.filter(
+        ({ _id }) => !idModule.lib.equalId(_id, treatment._id),
+      ),
+      updatedTreatment,
+    )
+  ) {
+    throw new Error(
+      `Could not create treatment for documentId ${idModule.lib.convertToString(
+        documentId,
+      )}: inconsistent annotations`,
+    );
+  }
 
   await treatmentRepository.updateOne(
     assignation.treatmentId,

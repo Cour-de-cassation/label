@@ -35,14 +35,6 @@ const buildTreatmentRepository = buildRepositoryBuilder<
       return collection.find({ documentId }).toArray();
     },
 
-    async findLastOneByDocumentId(documentId) {
-      const result = await collection.find({ documentId }).toArray();
-
-      return result.sort(
-        (treatmentA, treatmentB) => treatmentB.order - treatmentA.order,
-      )[0];
-    },
-
     async findAllByDocumentIds(documentIds) {
       const treatments = await collection
         .find({ documentId: { $in: documentIds } })

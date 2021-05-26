@@ -6,6 +6,9 @@ type repositoryType<T extends { _id: idType }> = {
   clear: () => Promise<void>;
   deleteById: (_id: idType) => Promise<void>;
   deleteManyByIds: (ids: idType[]) => Promise<void>;
+  distinct: <fieldNameT extends keyof T>(
+    fieldName: fieldNameT,
+  ) => Promise<Array<T[fieldNameT]>>;
   findAll: () => Promise<T[]>;
   findAllProjection: <projectionT extends keyof T>(
     projection: Array<projectionT>,

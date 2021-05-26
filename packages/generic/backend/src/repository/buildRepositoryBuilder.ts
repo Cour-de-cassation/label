@@ -34,6 +34,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       clear,
       deleteById,
       deleteManyByIds,
+      distinct,
       findAll,
       findAllProjection,
       findAllByIds,
@@ -63,6 +64,10 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
 
     async function deleteManyByIds(ids: idType[]) {
       await collection.deleteMany({ _id: { $in: ids } } as any);
+    }
+
+    async function distinct<fieldNameT extends keyof T>(fieldName: fieldNameT) {
+      return collection.distinct(fieldName as string, {});
     }
 
     async function findAll() {

@@ -36,10 +36,6 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return publicationCategories;
     },
 
-    async findAllSources() {
-      return uniq(collection.map((document) => document.source));
-    },
-
     async findAllByPublicationCategoryLettersProjection(
       publicationCategoryLetters,
       projections,

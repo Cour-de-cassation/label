@@ -76,7 +76,7 @@ function buildDocumentService() {
   async function fetchAllSources() {
     const documentRepository = buildDocumentRepository();
 
-    return documentRepository.findAllSources();
+    return documentRepository.distinct('source');
   }
 
   async function fetchAnonymizedDocumentText(documentId: documentType['_id']) {

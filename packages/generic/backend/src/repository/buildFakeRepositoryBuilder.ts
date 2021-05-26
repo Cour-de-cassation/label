@@ -18,6 +18,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     clear,
     deleteById,
     deleteManyByIds,
+    distinct,
     findAll,
     findAllProjection,
     findAllByIds,
@@ -79,6 +80,23 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
         }
       }),
     );
+  }
+
+  async function distinct<fieldNameT extends keyof T>(fieldName: fieldNameT) {
+    const distinctValues = [] as Array<T[fieldNameT]>;
+
+    collection.forEach((value) => {
+      if (
+        distinctValues.every(
+          (anotherValue) =>
+            JSON.stringify(anotherValue) !== JSON.stringify(value[fieldName]),
+        )
+      ) {
+        distinctValues.push(value[fieldName]);
+      }
+    });
+
+    return distinctValues;
   }
 
   async function findAll() {

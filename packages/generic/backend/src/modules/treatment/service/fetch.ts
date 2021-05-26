@@ -1,10 +1,8 @@
-import { uniqWith } from 'lodash';
 import {
   annotationModule,
   annotationsDiffModule,
   annotationType,
   documentType,
-  idModule,
   idType,
   treatmentModule,
 } from '@label/core';
@@ -131,15 +129,8 @@ async function fetchAnnotationsDiffDetailsForDocument(
 
 async function fetchTreatedDocumentIds() {
   const treatmentRepository = buildTreatmentRepository();
-  const treatments = await treatmentRepository.findAllProjection([
-    'documentId',
-  ]);
-  const treatedDocumentIds = uniqWith(
-    treatments.map((treatment) => treatment.documentId),
-    idModule.lib.equalId,
-  );
 
-  return treatedDocumentIds;
+  return treatmentRepository.distinct('documentId');
 }
 
 async function fetchTreatmentsByDocumentId(documentId: idType) {

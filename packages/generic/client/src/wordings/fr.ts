@@ -164,6 +164,7 @@ const fr = {
       startDate: 'depuis le {startDate}',
       endDate: "jusqu'au {endDate}",
       both: 'du {startDate} au {endDate}',
+      sameDay: 'le {date}',
     },
     back: 'Précédent',
     cancel: 'Annuler',

@@ -57,6 +57,7 @@ function FilterTooltipMenu(props: { filters: filterType[]; onClose: () => void; 
         return (
           <div style={styles.dateIntervalContainer}>
             <DatePicker
+              momentOfTheDay="beginning"
               onChange={(startDate) => filter.onChange({ endDate: filter.value.endDate, startDate })}
               value={filter.value.startDate}
               width={DATE_DROPDOWN_WIDTH}
@@ -65,6 +66,7 @@ function FilterTooltipMenu(props: { filters: filterType[]; onClose: () => void; 
             />
             <Icon iconName="doubleArrow" />
             <DatePicker
+              momentOfTheDay="end"
               onChange={(endDate) => filter.onChange({ startDate: filter.value.startDate, endDate })}
               value={filter.value.endDate}
               width={DATE_DROPDOWN_WIDTH}

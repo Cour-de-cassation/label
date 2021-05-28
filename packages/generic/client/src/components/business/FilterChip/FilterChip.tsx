@@ -4,6 +4,7 @@ import { timeOperator } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { filterType } from '../FilterButton';
+import { areSameDay } from './lib';
 import { Chip } from './Chip';
 
 export { FilterChip };
@@ -60,6 +61,11 @@ function FilterChip(props: { filter: filterType }) {
       });
     }
     if (startDate && endDate) {
+      if (areSameDay(startDate, endDate)) {
+        return format(wordings.shared.intervalDate.sameDay, {
+          date: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
+        });
+      }
       return format(wordings.shared.intervalDate.both, {
         startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
         endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),

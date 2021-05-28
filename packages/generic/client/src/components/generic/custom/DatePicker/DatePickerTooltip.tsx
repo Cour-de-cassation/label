@@ -9,12 +9,17 @@ import { createCalendarTable } from './lib/createCalendarTable';
 
 export { DatePickerTooltip };
 
+export type { momentOfTheDayType };
+
 const TOOLTIP_WIDTH = 300;
 
 const dayOfTheWeekKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 
+type momentOfTheDayType = 'beginning' | 'end';
+
 function DatePickerTooltip(props: {
   value: Date | undefined;
+  momentOfTheDay: momentOfTheDayType;
   onChange: (value: Date) => void;
   rectPosition: rectPositionType;
   onClose: () => void;
@@ -65,7 +70,7 @@ function DatePickerTooltip(props: {
         {week.map((dayOfMonth) =>
           dayOfMonth ? (
             <td>
-              <div style={styles.dayContainer} onClick={() => changeDate(new Date(year, month, dayOfMonth))}>
+              <div style={styles.dayContainer} onClick={() => changeDate({ year, month, dayOfMonth })}>
                 <Text>{dayOfMonth}</Text>
               </div>
             </td>
@@ -79,28 +84,39 @@ function DatePickerTooltip(props: {
     return calendar;
   }
 
-  function changeDate(date: Date) {
+  function changeDate({ year, month, dayOfMonth }: { year: number; month: number; dayOfMonth: number }) {
+    const { hours, minutes, seconds } = computeTimeFromMomentOfTheDay(props.momentOfTheDay);
+    const date = new Date(year, month, dayOfMonth, hours, minutes, seconds);
     props.onChange(date);
     props.onClose();
   }
+}
 
-  function buildStyles() {
-    return {
-      header: {
-        display: 'flex',
-        justifyContent: 'space-between',
-      },
-      arrowContainer: {
-        cursor: 'pointer',
-      },
-      tooltipContent: {
-        display: 'flex',
-        flexDirection: 'column',
-      },
-      daysTable: { width: '100%' },
-      dayContainer: {
-        cursor: 'pointer',
-      },
-    } as const;
+function computeTimeFromMomentOfTheDay(momentOfTheDay: momentOfTheDayType) {
+  switch (momentOfTheDay) {
+    case 'beginning':
+      return { hours: 0, minutes: 0, seconds: 0 };
+    case 'end':
+      return { hours: 23, minutes: 59, seconds: 59 };
   }
+}
+
+function buildStyles() {
+  return {
+    header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    arrowContainer: {
+      cursor: 'pointer',
+    },
+    tooltipContent: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    daysTable: { width: '100%' },
+    dayContainer: {
+      cursor: 'pointer',
+    },
+  } as const;
 }

@@ -39,7 +39,7 @@ function FilterButton(props: { filters: filterType[] }) {
         case 'dropdown':
           return filter.value ? accumulator + 1 : accumulator;
         case 'dateInterval':
-          return accumulator + (!!filter.value.startDate ? 1 : 0) + (!!filter.value.endDate ? 1 : 0);
+          return !!filter.value.startDate || !!filter.value.endDate ? accumulator + 1 : 0;
       }
     }, 0);
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { customThemeType, useCustomTheme } from '../../../styles';
-import { Icon, Text } from '../materialUI';
+import { Icon, Text } from '../../generic';
 
 export { Chip };
 

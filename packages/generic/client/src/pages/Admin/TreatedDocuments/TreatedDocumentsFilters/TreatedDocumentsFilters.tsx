@@ -1,7 +1,6 @@
 import React from 'react';
 import format from 'string-template';
-import { keysOf, timeOperator } from '@label/core';
-import { Chip, FilterButton, filterType, Text } from '../../../../components';
+import { FilterButton, FilterChip, Text } from '../../../../components';
 import { treatedDocumentFilterType } from '../../../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -33,15 +32,17 @@ function TreatedDocumentsFilters(props: {
         </div>
       </div>
       <div style={styles.chipsContainer}>
-        {keysOf(props.filterValues).map((filterKey) => renderFilterChip(filterKey, props.filterValues))}
+        {filters.map((filter) => (
+          <FilterChip filter={filter} />
+        ))}
       </div>
     </div>
   );
 
-  function buildFilters(): Array<filterType> {
+  function buildFilters() {
     return [
       {
-        kind: 'dateInterval',
+        kind: 'dateInterval' as const,
         name: 'dateInterval',
         value: { startDate: props.filterValues.startDate, endDate: props.filterValues.endDate },
         onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => {
@@ -49,25 +50,26 @@ function TreatedDocumentsFilters(props: {
         },
       },
       {
-        kind: 'dropdown',
+        kind: 'dropdown' as const,
         name: 'userName',
         label: wordings.treatedDocumentsPage.table.filter.fields.agents,
         possibleValues: props.filterInfo.userNames,
         value: props.filterValues.userName,
-        onChange: (userName: string) => props.setFilterValues({ ...props.filterValues, userName }),
+        onChange: (userName?: string) => props.setFilterValues({ ...props.filterValues, userName }),
       },
       {
-        kind: 'dropdown',
+        kind: 'dropdown' as const,
         name: 'publicationCategoryLetter',
         label: wordings.treatedDocumentsPage.table.filter.fields.publicationCategoryLetter,
         possibleValues: props.filterInfo.publicationCategoryLetters,
         value: props.filterValues.publicationCategoryLetter,
-        onChange: (publicationCategoryLetter: string) =>
+        onChange: (publicationCategoryLetter?: string) =>
           props.setFilterValues({ ...props.filterValues, publicationCategoryLetter }),
       },
       {
-        kind: 'boolean',
+        kind: 'boolean' as const,
         name: 'mustHaveSubAnnotations',
+        chipLabel: wordings.treatedDocumentsPage.table.filter.chips.mustHaveSubAnnotations,
         label: wordings.treatedDocumentsPage.table.filter.fields.mustHaveSubAnnotations,
         checked: props.filterValues.mustHaveSubAnnotations,
         onToggle: () =>
@@ -77,8 +79,9 @@ function TreatedDocumentsFilters(props: {
           }),
       },
       {
-        kind: 'boolean',
+        kind: 'boolean' as const,
         name: 'mustHaveSurAnnotations',
+        chipLabel: wordings.treatedDocumentsPage.table.filter.chips.mustHaveSurAnnotations,
         label: wordings.treatedDocumentsPage.table.filter.fields.mustHaveSurAnnotations,
         checked: props.filterValues.mustHaveSurAnnotations,
         onToggle: () =>
@@ -87,112 +90,7 @@ function TreatedDocumentsFilters(props: {
             mustHaveSurAnnotations: !props.filterValues.mustHaveSurAnnotations,
           }),
       },
-    ] as filterType[];
-  }
-
-  function renderFilterChip(filterKey: keyof treatedDocumentFilterType, filterValues: treatedDocumentFilterType) {
-    switch (filterKey) {
-      case 'mustHaveSubAnnotations':
-        return renderMustHaveSubAnnotationsChip(filterValues.mustHaveSubAnnotations);
-      case 'mustHaveSurAnnotations':
-        return renderMustHaveSurAnnotationsChip(filterValues.mustHaveSurAnnotations);
-      case 'startDate':
-        return renderStartDateChip(filterValues.startDate);
-      case 'endDate':
-        return renderEndDateChip(filterValues.endDate);
-      case 'userName':
-        return renderUserNameChip(filterValues.userName);
-      case 'publicationCategoryLetter':
-        return renderPublicationCategoryLetterChip(filterValues.publicationCategoryLetter);
-    }
-
-    function renderMustHaveSurAnnotationsChip(filterValue: boolean) {
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip
-              label={wordings.treatedDocumentsPage.table.filter.chips.mustHaveSurAnnotations}
-              onClose={buildRemoveFilter(filterKey)}
-            />
-          </div>
-        )
-      );
-    }
-
-    function renderMustHaveSubAnnotationsChip(filterValue: boolean) {
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip
-              label={wordings.treatedDocumentsPage.table.filter.chips.mustHaveSubAnnotations}
-              onClose={buildRemoveFilter(filterKey)}
-            />
-          </div>
-        )
-      );
-    }
-
-    function renderStartDateChip(filterValue: Date | undefined) {
-      if (!filterValue) {
-        return null;
-      }
-      const filterText = format(wordings.treatedDocumentsPage.table.filter.chips.startDate, {
-        startDate: timeOperator.convertTimestampToReadableDate(filterValue.getTime(), false),
-      });
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip label={filterText} onClose={buildRemoveFilter(filterKey)} />
-          </div>
-        )
-      );
-    }
-
-    function renderEndDateChip(filterValue: Date | undefined) {
-      if (!filterValue) {
-        return null;
-      }
-      const filterText = format(wordings.treatedDocumentsPage.table.filter.chips.endDate, {
-        endDate: timeOperator.convertTimestampToReadableDate(filterValue.getTime(), false),
-      });
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip label={filterText} onClose={buildRemoveFilter(filterKey)} />
-          </div>
-        )
-      );
-    }
-
-    function renderUserNameChip(filterValue: string | undefined) {
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip label={filterValue} onClose={buildRemoveFilter(filterKey)} />
-          </div>
-        )
-      );
-    }
-
-    function renderPublicationCategoryLetterChip(filterValue: string | undefined) {
-      if (!filterValue) {
-        return null;
-      }
-      const filterText = format(wordings.untreatedDocumentsPage.table.filter.chips.publicationCategoryLetter, {
-        publicationCategoryLetter: filterValue,
-      });
-      return (
-        !!filterValue && (
-          <div style={styles.chipContainer}>
-            <Chip label={filterText} onClose={buildRemoveFilter(filterKey)} />
-          </div>
-        )
-      );
-    }
-  }
-
-  function buildRemoveFilter(filterKeyToRemove: string) {
-    return () => props.setFilterValues({ ...props.filterValues, [filterKeyToRemove]: undefined });
+    ];
   }
 }
 

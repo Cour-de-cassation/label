@@ -1,7 +1,6 @@
 import React from 'react';
-import format from 'string-template';
-import { apiRouteOutType, idModule, ressourceFilterType, timeOperator, userType } from '@label/core';
-import { Chip, FilterButton, filterType } from '../../../components';
+import { apiRouteOutType, idModule, ressourceFilterType, userType } from '@label/core';
+import { FilterButton, FilterChip } from '../../../components';
 import { wordings } from '../../../wordings';
 import { customThemeType, useCustomTheme } from '../../../styles';
 
@@ -20,7 +19,11 @@ function StatisticsFilterButton(props: {
   return (
     <div style={styles.container}>
       <FilterButton filters={filters} />
-      <div style={styles.chipsContainer}>{filters.map(renderFilterChip)}</div>
+      <div style={styles.chipsContainer}>
+        {filters.map((filter) => (
+          <FilterChip filter={filter} />
+        ))}
+      </div>
     </div>
   );
 
@@ -228,64 +231,6 @@ function StatisticsFilterButton(props: {
       return user.name;
     }
   }
-
-  function renderFilterChip(filter: filterType) {
-    switch (filter.kind) {
-      case 'dropdown':
-        if (!filter.value) {
-          return undefined;
-        }
-        return (
-          <div style={styles.chipContainer}>
-            <Chip label={filter.value} onClose={() => filter.onChange(undefined)} />
-          </div>
-        );
-      case 'boolean':
-        if (!filter.checked) {
-          return undefined;
-        }
-        return (
-          <div style={styles.chipContainer}>
-            <Chip label={filter.chipLabel} onClose={filter.onToggle} />
-          </div>
-        );
-      case 'dateInterval':
-        const label = computeDateIntervalChipLabel(filter.value.startDate, filter.value.endDate);
-        if (!label) {
-          return undefined;
-        }
-        return (
-          <div style={styles.chipContainer}>
-            <Chip
-              label={label}
-              onClose={() => {
-                filter.onChange({ startDate: undefined, endDate: undefined });
-              }}
-            />
-          </div>
-        );
-    }
-  }
-}
-
-function computeDateIntervalChipLabel(startDate: Date | undefined, endDate: Date | undefined) {
-  if (!startDate && endDate) {
-    return format(wordings.shared.intervalDate.endDate, {
-      endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),
-    });
-  }
-  if (startDate && !endDate) {
-    return format(wordings.shared.intervalDate.startDate, {
-      startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
-    });
-  }
-  if (startDate && endDate) {
-    return format(wordings.shared.intervalDate.both, {
-      startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
-      endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),
-    });
-  }
-  return undefined;
 }
 
 function buildStyles(theme: customThemeType) {
@@ -298,12 +243,6 @@ function buildStyles(theme: customThemeType) {
       display: 'flex',
       flexWrap: 'wrap',
       alignItems: 'center',
-    },
-    chipContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginRight: theme.spacing,
     },
   } as const;
 }

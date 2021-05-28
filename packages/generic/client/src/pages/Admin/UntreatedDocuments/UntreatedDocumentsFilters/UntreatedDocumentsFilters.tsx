@@ -1,7 +1,6 @@
 import React from 'react';
 import format from 'string-template';
-import { keysOf } from '@label/core';
-import { Chip, FilterButton, filterType, Text } from '../../../../components';
+import { FilterButton, FilterChip, Text } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { untreatedDocumentFilterInfoType, untreatedDocumentFilterType } from './untreatedDocumentFilterTypes';
@@ -32,7 +31,9 @@ function UntreatedDocumentsFilters(props: {
         </div>
       </div>
       <div style={styles.chipsContainer}>
-        {keysOf(props.filterValues).map((filterKey) => renderFilterChip(filterKey, props.filterValues))}
+        {filters.map((filter) => (
+          <FilterChip filter={filter} />
+        ))}
       </div>
     </div>
   );
@@ -40,45 +41,19 @@ function UntreatedDocumentsFilters(props: {
   function buildFilters() {
     return [
       {
-        kind: 'dropdown',
+        kind: 'dropdown' as const,
         name: 'publicationCategoryLetter',
+        computeChipLabel: (publicationCategoryLetter: string) =>
+          format(wordings.untreatedDocumentsPage.table.filter.chips.publicationCategoryLetter, {
+            publicationCategoryLetter,
+          }),
         label: wordings.untreatedDocumentsPage.table.filter.fields.publicationCategoryLetter,
         possibleValues: props.filterInfo.publicationCategoryLetters,
         value: props.filterValues.publicationCategoryLetter,
-        onChange: (publicationCategoryLetter: string) =>
+        onChange: (publicationCategoryLetter?: string) =>
           props.setFilterValues({ ...props.filterValues, publicationCategoryLetter }),
       },
-    ] as filterType[];
-  }
-
-  function renderFilterChip(filterKey: keyof untreatedDocumentFilterType, filterValues: untreatedDocumentFilterType) {
-    switch (filterKey) {
-      case 'publicationCategoryLetter':
-        return renderPublicationCategoryLetterChip('publicationCategoryLetter', filterValues.publicationCategoryLetter);
-    }
-  }
-
-  function renderPublicationCategoryLetterChip(
-    filterKey: keyof untreatedDocumentFilterType,
-    filterValue: string | undefined,
-  ) {
-    if (!filterValue) {
-      return null;
-    }
-    const filterText = format(wordings.untreatedDocumentsPage.table.filter.chips.publicationCategoryLetter, {
-      publicationCategoryLetter: filterValue,
-    });
-    return (
-      !!filterValue && (
-        <div style={styles.chipContainer}>
-          <Chip label={filterText} onClose={buildRemoveFilter(filterKey)} />
-        </div>
-      )
-    );
-  }
-
-  function buildRemoveFilter(filterKeyToRemove: string) {
-    return () => props.setFilterValues({ ...props.filterValues, [filterKeyToRemove]: undefined });
+    ];
   }
 }
 

@@ -4,6 +4,7 @@ type filterType =
   | {
       kind: 'dropdown';
       name: string;
+      computeChipLabel?: (value: string) => string;
       label: string;
       possibleValues: string[];
       value: string | undefined;

@@ -4,6 +4,7 @@ import { DecisionNumberTextInput } from './DecisionNumberTextInput';
 import { DocumentStatusIcon } from './DocumentStatusIcon';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { FilterButton, filterType } from './FilterButton';
+import { FilterChip } from './FilterChip';
 import { LinkAnnotationDropdown } from './LinkAnnotationDropdown';
 import { Logo } from './Logo';
 import { MainHeader } from './MainHeader';
@@ -18,6 +19,7 @@ export {
   DecisionNumberTextInput,
   DocumentStatusIcon,
   FilterButton,
+  FilterChip,
   LinkAnnotationDropdown,
   Logo,
   MainHeader,

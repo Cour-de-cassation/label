@@ -23,7 +23,13 @@ const documentGenerator: generatorType<documentType> = {
     creationDate: creationDate ? creationDate : new Date().getTime(),
     decisionMetadata: decisionMetadata
       ? decisionMetadata
-      : { juridiction: '', chamberName: '', boundDecisionDocumentNumbers: [] },
+      : {
+          additionalTermsToAnnotate: '',
+          boundDecisionDocumentNumbers: [],
+          categoriesToOmit: [],
+          chamberName: '',
+          juridiction: '',
+        },
     documentNumber: documentNumber ? documentNumber : Math.floor(Math.random() * 1000000),
     externalId: externalId ? externalId : `EXTERNAL_ID_${Math.random()}`,
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),

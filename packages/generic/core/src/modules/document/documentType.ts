@@ -10,9 +10,11 @@ const documentModelCommonFields = {
   decisionMetadata: {
     kind: 'object',
     content: {
+      additionalTermsToAnnotate: { kind: 'primitive', content: 'string' },
+      boundDecisionDocumentNumbers: { kind: 'array', content: { kind: 'primitive', content: 'number' } },
+      categoriesToOmit: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       chamberName: { kind: 'primitive', content: 'string' },
       juridiction: { kind: 'primitive', content: 'string' },
-      boundDecisionDocumentNumbers: { kind: 'array', content: { kind: 'primitive', content: 'number' } },
     },
   },
   documentNumber: { kind: 'primitive', content: 'number' },

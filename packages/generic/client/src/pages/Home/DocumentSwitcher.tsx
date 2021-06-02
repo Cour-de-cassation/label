@@ -8,6 +8,7 @@ import {
   idModule,
   documentType,
   documentModule,
+  settingsModule,
 } from '@label/core';
 import { MainHeader, PublicationCategoryBadge, Text } from '../../components';
 import { apiCaller } from '../../api';
@@ -52,6 +53,10 @@ function DocumentSwitcher(props: {
             <Text>{wordings.homePage.publishedDocument}</Text>
           </div>
         ) : undefined;
+        const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+          props.settings,
+          documentState.choice.document.decisionMetadata.categoriesToOmit,
+        );
         return (
           <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
             <AnnotatorStateHandlerContextProvider
@@ -61,7 +66,7 @@ function DocumentSwitcher(props: {
               initialAnnotatorState={{
                 annotations: documentState.choice.annotations,
                 document: documentState.choice.document,
-                settings: props.settings,
+                settings: settingsForDocument,
               }}
             >
               <MainHeader title={documentState.choice.document.title} subtitle={subtitle} />

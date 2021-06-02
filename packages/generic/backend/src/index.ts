@@ -5,6 +5,7 @@ import {
   exporterConfigType,
   labelTreatmentsType,
 } from './lib/exporter';
+import { settingsLoader } from './lib/settingsLoader';
 import {
   buildMongo,
   dateBuilder,
@@ -22,6 +23,7 @@ export {
   dateBuilder,
   dependencyManager,
   fileSystem,
+  settingsLoader,
 };
 
 export type {

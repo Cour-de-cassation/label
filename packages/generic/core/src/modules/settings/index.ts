@@ -1,5 +1,6 @@
 import {
   buildSettings,
+  computeFilteredSettings,
   parseFromJson,
   getAnnotationCategoryColor,
   getAnnotationCategoryIconName,
@@ -24,6 +25,7 @@ const settingsModule = {
   model: settingsModel,
   lib: {
     buildSettings,
+    computeFilteredSettings,
     parseFromJson,
     getAnnotationCategoryColor,
     getAnnotationCategoryIconName,

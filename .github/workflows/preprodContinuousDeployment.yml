@@ -19,4 +19,4 @@ jobs:
       - run: git checkout pre-prod
       - run: git pull
       - run: git reset origin/master
-      - run: git push
+      - run: git push --force

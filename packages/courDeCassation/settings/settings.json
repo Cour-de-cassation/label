@@ -51,27 +51,6 @@
     "order": 5,
     "text": "Personne morale"
   },
-  "personnePhysicoMorale": {
-    "anonymization": "[Personne physico-morale %d]",
-    "color": {
-      "lightMode": ["deepPurple", 300],
-      "darkMode": ["deepPurple", 800]
-    },
-    "couldBe": "personnePhysiqueNom",
-    "iconName": "work",
-    "order": 6,
-    "text": "Personne physico-morale"
-  },
-  "personneGeoMorale": {
-    "anonymization": "[Personne géo-morale %d]",
-    "color": {
-      "lightMode": ["deepPurple", 200],
-      "darkMode": ["deepPurple", 600]
-    },
-    "iconName": "work",
-    "order": 7,
-    "text": "Personne géo-morale"
-  },
   "etablissement": {
     "anonymization": "[Établissement %d]",
     "color": {
@@ -79,7 +58,7 @@
       "darkMode": ["purple", 600]
     },
     "iconName": "store",
-    "order": 8,
+    "order": 6,
     "text": "Établissement"
   },
   "professionnelNom": {
@@ -91,7 +70,7 @@
     "couldBe": "personnePhysiqueNom",
     "iconName": "hammer",
     "isAnonymized": false,
-    "order": 9,
+    "order": 7,
     "text": "Professionnel (nom)"
   },
   "professionnelPrenom": {
@@ -103,7 +82,7 @@
     "couldBe": "personnePhysiquePrenom",
     "iconName": "hammer",
     "isAnonymized": false,
-    "order": 10,
+    "order": 8,
     "text": "Professionnel (prénom)"
   },
   "dateNaissance": {
@@ -113,7 +92,7 @@
       "darkMode": ["teal", 800]
     },
     "iconName": "cake",
-    "order": 11,
+    "order": 9,
     "text": "Date de naissance/anniversaire"
   },
   "dateMariage": {
@@ -123,7 +102,7 @@
       "darkMode": ["green", 800]
     },
     "iconName": "heart",
-    "order": 12,
+    "order": 10,
     "text": "Date de mariage"
   },
   "dateDeces": {
@@ -133,7 +112,7 @@
       "darkMode": ["lime", 900]
     },
     "iconName": "cloud",
-    "order": 13,
+    "order": 11,
     "text": "Date de décès"
   },
   "cadastre": {
@@ -143,7 +122,7 @@
       "darkMode": ["cyan", 600]
     },
     "iconName": "map",
-    "order": 14,
+    "order": 12,
     "text": "Cadastre"
   },
   "insee": {
@@ -153,7 +132,7 @@
       "darkMode": ["indigo", 800]
     },
     "iconName": "book",
-    "order": 15,
+    "order": 13,
     "text": "N° INSEE"
   },
   "telephoneFax": {
@@ -163,7 +142,7 @@
       "darkMode": ["lightBlue", 900]
     },
     "iconName": "phone",
-    "order": 16,
+    "order": 14,
     "text": "Téléphone/Fax"
   },
   "email": {
@@ -173,7 +152,7 @@
       "darkMode": ["lightBlue", 800]
     },
     "iconName": "email",
-    "order": 17,
+    "order": 15,
     "text": "Email"
   },
   "compteBancaire": {
@@ -183,7 +162,7 @@
       "darkMode": ["pink", 600]
     },
     "iconName": "bank",
-    "order": 18,
+    "order": 16,
     "text": "Compte bancaire"
   },
   "plaqueImmatriculation": {
@@ -193,7 +172,7 @@
       "darkMode": ["pink", 800]
     },
     "iconName": "car",
-    "order": 19,
+    "order": 17,
     "text": "Plaque d'immatriculation"
   },
   "custom": {
@@ -203,7 +182,7 @@
       "darkMode": ["red", 700]
     },
     "iconName": "pencil",
-    "order": 20,
+    "order": 18,
     "text": "Occultation supplémentaire"
   }
 }

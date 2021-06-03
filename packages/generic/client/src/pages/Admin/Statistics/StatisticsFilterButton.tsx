@@ -156,9 +156,7 @@ function StatisticsFilterButton(props: {
         possibleValues: props.availableStatisticFilters.publicationCategories,
         value: props.ressourceFilter.publicationCategory,
         onChange: (newPublicationCategory: string | undefined) => {
-          if (newPublicationCategory !== undefined) {
-            props.refetch({ ...props.ressourceFilter, publicationCategory: newPublicationCategory });
-          }
+          props.refetch({ ...props.ressourceFilter, publicationCategory: newPublicationCategory });
         },
       };
     }
@@ -189,9 +187,7 @@ function StatisticsFilterButton(props: {
         possibleValues: props.availableStatisticFilters.sources,
         value: props.ressourceFilter.source,
         onChange: (newSource: string | undefined) => {
-          if (newSource !== undefined) {
-            props.refetch({ ...props.ressourceFilter, source: newSource });
-          }
+          props.refetch({ ...props.ressourceFilter, source: newSource });
         },
       };
     }

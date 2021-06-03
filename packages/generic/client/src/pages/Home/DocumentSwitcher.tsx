@@ -61,7 +61,7 @@ function DocumentSwitcher(props: {
           <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
             <AnnotatorStateHandlerContextProvider
               autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: documentState.choice.document._id })}
-              buildAnonymizer={() => buildAnonymizer(props.settings)}
+              buildAnonymizer={() => buildAnonymizer(settingsForDocument)}
               committer={buildAnnotationsCommitter()}
               initialAnnotatorState={{
                 annotations: documentState.choice.annotations,

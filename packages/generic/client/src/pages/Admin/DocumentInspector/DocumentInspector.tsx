@@ -1,6 +1,13 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { annotationsDiffType, buildAnonymizer, fetchedDocumentType, idModule, settingsType } from '@label/core';
+import {
+  annotationsDiffType,
+  buildAnonymizer,
+  fetchedDocumentType,
+  idModule,
+  settingsModule,
+  settingsType,
+} from '@label/core';
 import { apiCaller } from '../../../api';
 import { MainHeader } from '../../../components';
 import {
@@ -22,27 +29,35 @@ type DocumentInspectorParamsType = {
 function DocumentInspector(props: { settings: settingsType }) {
   const params = useParams<DocumentInspectorParamsType>();
   const history = useHistory();
+
   return (
     <DocumentDataFetcher documentId={params.documentId}>
       {({ document }) => (
         <AnnotationsDataFetcher documentId={params.documentId}>
-          {({ annotations }) => (
-            <MonitoringEntriesHandlerContextProvider documentId={idModule.lib.buildId(params.documentId)}>
-              <AnnotatorStateHandlerContextProvider
-                autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: document._id })}
-                buildAnonymizer={() => buildAnonymizer(props.settings)}
-                committer={buildAnnotationsCommitter()}
-                initialAnnotatorState={{
-                  annotations: annotations,
-                  document: document,
-                  settings: props.settings,
-                }}
-              >
-                <MainHeader title={document.title} onBackButtonPress={history.goBack} />
-                <DocumentAnnotator />
-              </AnnotatorStateHandlerContextProvider>
-            </MonitoringEntriesHandlerContextProvider>
-          )}
+          {({ annotations }) => {
+            const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+              props.settings,
+              document.decisionMetadata.categoriesToOmit,
+            );
+
+            return (
+              <MonitoringEntriesHandlerContextProvider documentId={idModule.lib.buildId(params.documentId)}>
+                <AnnotatorStateHandlerContextProvider
+                  autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: document._id })}
+                  buildAnonymizer={() => buildAnonymizer(settingsForDocument)}
+                  committer={buildAnnotationsCommitter()}
+                  initialAnnotatorState={{
+                    annotations: annotations,
+                    document: document,
+                    settings: settingsForDocument,
+                  }}
+                >
+                  <MainHeader title={document.title} onBackButtonPress={history.goBack} />
+                  <DocumentAnnotator />
+                </AnnotatorStateHandlerContextProvider>
+              </MonitoringEntriesHandlerContextProvider>
+            );
+          }}
         </AnnotationsDataFetcher>
       )}
     </DocumentDataFetcher>

@@ -53,7 +53,7 @@ function Router() {
                       header={wordings.agentsPage.header}
                       unreadProblemReportsCount={unreadProblemReportsCount}
                     >
-                      <Agents usersWithDetails={adminInfos.usersWithDetails} />
+                      <Agents usersWithDetails={adminInfos.usersWithDetails} refetch={refetch.usersWithDetails} />
                     </AdminPage>
                   </AuthenticatedRoute>
                   <AuthenticatedRoute path={routes.PROBLEM_REPORTS}>

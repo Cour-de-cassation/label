@@ -6,14 +6,17 @@ import { DataFetcher } from '../../DataFetcher';
 export { AgentsDataFetcher };
 
 function AgentsDataFetcher(props: {
-  children: (fetched: { usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'> }) => ReactElement;
+  children: (fetched: {
+    usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'>;
+    refetch: () => void;
+  }) => ReactElement;
 }) {
   const usersWithDetailsFetchInfo = useApi(buildFetchAgents(), {});
 
   return (
     <DataFetcher
       buildComponentWithData={(usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'>) =>
-        props.children({ usersWithDetails })
+        props.children({ usersWithDetails, refetch: usersWithDetailsFetchInfo.refetch })
       }
       fetchInfo={usersWithDetailsFetchInfo}
     />

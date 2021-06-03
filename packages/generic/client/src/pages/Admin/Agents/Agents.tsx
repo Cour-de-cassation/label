@@ -8,7 +8,7 @@ import { AddAgentButton } from './AddAgentDrawer/AddAgentButton';
 
 export { Agents };
 
-function Agents(props: { usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'> }) {
+function Agents(props: { usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'>; refetch: () => void }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const userFields = buildUserFields();
@@ -16,7 +16,7 @@ function Agents(props: { usersWithDetails: apiRouteOutType<'get', 'usersWithDeta
     <div style={styles.table}>
       <div style={styles.tableHeaderContainer}>
         <div style={styles.tableHeader}>
-          <AddAgentButton />
+          <AddAgentButton refetch={props.refetch} />
         </div>
       </div>
       <div style={styles.tableContentContainer}>

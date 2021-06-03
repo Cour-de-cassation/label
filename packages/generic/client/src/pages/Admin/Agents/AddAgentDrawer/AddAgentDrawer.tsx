@@ -26,7 +26,7 @@ type formValuesType = {
   role: userType['role'] | undefined;
 };
 
-function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
+function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void; refetch: () => void }) {
   const [formValues, setFormValues] = useState<formValuesType>({
     firstName: undefined,
     lastName: undefined,
@@ -123,6 +123,7 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void }) {
         name: `${firstName} ${lastName}`,
         role,
       });
+      props.refetch();
       props.onClose();
       setTemporaryPassword(temporaryPassword);
     } catch (error) {

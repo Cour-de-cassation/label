@@ -5,7 +5,7 @@ import { AddAgentDrawer } from './AddAgentDrawer';
 
 export { AddAgentButton };
 
-function AddAgentButton() {
+function AddAgentButton(props: { refetch: () => void }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
@@ -16,7 +16,7 @@ function AddAgentButton() {
         iconName="addPerson"
       />
 
-      <AddAgentDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
+      <AddAgentDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} refetch={props.refetch} />
     </>
   );
 }

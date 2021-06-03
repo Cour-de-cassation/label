@@ -20,6 +20,7 @@ const documentModelCommonFields = {
   documentNumber: { kind: 'primitive', content: 'number' },
   _id: { kind: 'custom', content: 'id' },
   publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+  source: { kind: 'primitive', content: 'string' },
   status: {
     kind: 'constant',
     content: [
@@ -50,7 +51,6 @@ const documentModel = buildModel({
     externalId: { kind: 'primitive', content: 'string' },
     metadata: { kind: 'primitive', content: 'string' },
     priority: { kind: 'constant', content: ['low', 'medium', 'high'] as const },
-    source: { kind: 'primitive', content: 'string' },
     updateDate: { kind: 'primitive', content: 'number' },
   },
 } as const);

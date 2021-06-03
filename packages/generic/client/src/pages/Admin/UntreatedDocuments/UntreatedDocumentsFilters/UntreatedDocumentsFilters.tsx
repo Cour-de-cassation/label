@@ -53,6 +53,18 @@ function UntreatedDocumentsFilters(props: {
         onChange: (publicationCategoryLetter?: string) =>
           props.setFilterValues({ ...props.filterValues, publicationCategoryLetter }),
       },
+      {
+        kind: 'dropdown' as const,
+        name: 'source',
+        computeChipLabel: (source: string) =>
+          format(wordings.untreatedDocumentsPage.table.filter.chips.source, {
+            source,
+          }),
+        label: wordings.untreatedDocumentsPage.table.filter.fields.source,
+        possibleValues: props.filterInfo.sources,
+        value: props.filterValues.source,
+        onChange: (source?: string) => props.setFilterValues({ ...props.filterValues, source }),
+      },
     ];
   }
 }

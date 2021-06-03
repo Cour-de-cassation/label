@@ -10,6 +10,7 @@ import { untreatedDocumentFilterType, UntreatedDocumentsFilters } from './Untrea
 export { UntreatedDocuments };
 
 const DEFAULT_FILTERS = {
+  source: undefined,
   publicationCategoryLetter: undefined,
 };
 
@@ -67,6 +68,9 @@ function UntreatedDocuments(props: {
             untreatedDocument.document.publicationCategory.includes(filterValues.publicationCategoryLetter)
           );
         }
+        if (currentFilterKey === 'source' && !!filterValues.source) {
+          return accumulator && untreatedDocument.document.source === filterValues.source;
+        }
         return accumulator;
       }, true as boolean);
     });
@@ -85,7 +89,8 @@ function UntreatedDocuments(props: {
     const publicationCategoryLetters = uniq(
       flatten(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.publicationCategory)),
     );
-    return { publicationCategoryLetters };
+    const sources = uniq(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.source));
+    return { publicationCategoryLetters, sources };
   }
 
   function buildStyles(theme: customThemeType) {

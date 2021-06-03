@@ -258,6 +258,7 @@ const apiSchema = {
                 _id: documentModule.fetchedModel.content._id,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+                source: documentModule.fetchedModel.content.source,
               },
             },
             treatments: {
@@ -302,6 +303,7 @@ const apiSchema = {
                 creationDate: documentModule.fetchedModel.content.creationDate,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+                source: documentModule.fetchedModel.content.source,
                 status: documentModule.fetchedModel.content.status,
               },
             },

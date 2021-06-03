@@ -49,7 +49,7 @@ function UntreatedDocumentsTable(props: {
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
         extractor: (untreatedDocument) => untreatedDocument.document.documentNumber,
-        width: 10,
+        width: 3,
       },
       {
         id: 'publicationCategory',
@@ -67,7 +67,15 @@ function UntreatedDocumentsTable(props: {
             ))}
           </div>
         ),
-        width: 10,
+        width: 2,
+      },
+      {
+        id: 'source',
+        title: wordings.untreatedDocumentsPage.table.columnTitles.source.title,
+        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.source.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.source,
+        width: 2,
       },
       {
         id: 'userName',
@@ -94,7 +102,7 @@ function UntreatedDocumentsTable(props: {
         extractor: (untreatedDocument) =>
           timeOperator.convertTimestampToReadableDate(untreatedDocument.document.creationDate, true),
         getSortingValue: (untreatedDocument) => untreatedDocument.document.creationDate,
-        width: 10,
+        width: 5,
       },
     ];
     return untreatedDocumentsFields;

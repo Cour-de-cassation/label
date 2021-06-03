@@ -8,6 +8,7 @@ export { setOrderByProperty, getOrderByProperty, treatedDocumentOrderByPropertie
 const treatedDocumentOrderByProperties = [
   'documentNumber',
   'publicationCategory',
+  'source',
   'userName',
   'date',
   'deletions',

@@ -59,6 +59,18 @@ function TreatedDocumentsFilters(props: {
       },
       {
         kind: 'dropdown' as const,
+        name: 'source',
+        label: wordings.treatedDocumentsPage.table.filter.fields.source,
+        possibleValues: props.filterInfo.sources,
+        value: props.filterValues.source,
+        computeChipLabel: (source: string) =>
+          format(wordings.treatedDocumentsPage.table.filter.chips.source, {
+            source,
+          }),
+        onChange: (source?: string) => props.setFilterValues({ ...props.filterValues, source }),
+      },
+      {
+        kind: 'dropdown' as const,
         name: 'publicationCategoryLetter',
         label: wordings.treatedDocumentsPage.table.filter.fields.publicationCategoryLetter,
         possibleValues: props.filterInfo.publicationCategoryLetters,

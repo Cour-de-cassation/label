@@ -53,7 +53,7 @@ function TreatedDocuments(props: {
                 hint={wordings.shared.refresh}
                 iconName="reset"
               />
-            </div>{' '}
+            </div>
           </div>
         </div>
       </div>
@@ -137,6 +137,9 @@ function TreatedDocuments(props: {
         if (currentFilterKey === 'userName' && !!filterValues.userName) {
           return accumulator && treatedDocument.userNames.includes(filterValues.userName);
         }
+        if (currentFilterKey === 'source' && !!filterValues.source) {
+          return accumulator && treatedDocument.document.source === filterValues.source;
+        }
         if (currentFilterKey === 'publicationCategoryLetter' && !!filterValues.publicationCategoryLetter) {
           return (
             accumulator && treatedDocument.document.publicationCategory.includes(filterValues.publicationCategoryLetter)
@@ -152,7 +155,8 @@ function TreatedDocuments(props: {
     const publicationCategoryLetters = uniq(
       flatten(treatedDocuments.map((treatedDocument) => treatedDocument.document.publicationCategory)),
     );
-    return { publicationCategoryLetters, userNames };
+    const sources = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.document.source));
+    return { publicationCategoryLetters, userNames, sources };
   }
 
   function buildTreatedDocumentsFields(treatmentsInfo: Record<string, treatmentInfoType>) {
@@ -184,6 +188,14 @@ function TreatedDocuments(props: {
             ))}
           </div>
         ),
+        width: 2,
+      },
+      {
+        id: 'source',
+        title: wordings.treatedDocumentsPage.table.columnTitles.source.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.source.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.source,
         width: 2,
       },
       {

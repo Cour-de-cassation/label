@@ -4,6 +4,7 @@ import { localStorageMappers } from '../localStorageMappers';
 const TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_START_DATE';
 const TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_END_DATE';
 const TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_USER_NAME';
+const TREATED_DOCUMENTS_FILTER_SOURCE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SOURCE';
 const TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY =
   'TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER';
 const TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS';
@@ -17,6 +18,7 @@ type treatedDocumentFilterType = {
   startDate: Date | undefined;
   endDate: Date | undefined;
   userName: string | undefined;
+  source: string | undefined;
   publicationCategoryLetter: string | undefined;
   mustHaveSurAnnotations: boolean;
   mustHaveSubAnnotations: boolean;
@@ -26,6 +28,7 @@ function setFilters({
   startDate,
   endDate,
   userName,
+  source,
   publicationCategoryLetter,
   mustHaveSurAnnotations,
   mustHaveSubAnnotations,
@@ -43,6 +46,11 @@ function setFilters({
   localStorageHandler.set({
     key: TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY,
     value: userName,
+    mapper: localStorageMappers.string,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_SOURCE_STORAGE_KEY,
+    value: source,
     mapper: localStorageMappers.string,
   });
   localStorageHandler.set({
@@ -75,6 +83,10 @@ function getFilters(): treatedDocumentFilterType {
     key: TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY,
     mapper: localStorageMappers.string,
   });
+  const source = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_SOURCE_STORAGE_KEY,
+    mapper: localStorageMappers.string,
+  });
   const publicationCategoryLetter = localStorageHandler.get({
     key: TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY,
     mapper: localStorageMappers.string,
@@ -91,6 +103,7 @@ function getFilters(): treatedDocumentFilterType {
   return {
     startDate: startDate || undefined,
     endDate: endDate || undefined,
+    source: source || undefined,
     userName: userName || undefined,
     publicationCategoryLetter: publicationCategoryLetter || undefined,
     mustHaveSurAnnotations: mustHaveSurAnnotations || false,

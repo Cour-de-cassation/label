@@ -261,6 +261,7 @@ const fr = {
         chips: {
           mustHaveSurAnnotations: 'Avec sur annotation',
           mustHaveSubAnnotations: 'Avec sous annotation',
+          source: 'BDD {source}',
           startDate: '> {startDate}',
           endDate: '< {endDate}',
         },
@@ -270,20 +271,22 @@ const fr = {
           mustHaveSubAnnotations: 'Avec sous annotation',
           startDate: 'Date début',
           endDate: 'Date fin',
+          source: 'Source',
           publicationCategoryLetter: 'Diffusion',
         },
       },
       columnTitles: {
-        agent: { title: 'Agent', tooltipText: 'Agent principal' },
-        duration: { title: 'Tps', tooltipText: 'Temps de traitement (agent principal)' },
+        number: { title: 'N° décision', tooltipText: 'Numéro de la décision' },
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
+        source: { title: 'Source', tooltipText: 'Base de données source' },
+        agent: { title: 'Agent', tooltipText: 'Agent principal' },
         date: 'Traité le',
         surAnnotation: { title: 'Sur.', tooltipText: 'Nombre de surannotations' },
         resizeAnnotationSmaller: { title: 'R.-', tooltipText: 'Sur-annotations partielles (redimensionnements)' },
         subAnnotation: { title: 'Sous.', tooltipText: 'Sous-annotations partielles' },
         resizeAnnotationBigger: { title: 'R.+', tooltipText: 'Sous-annotations partielles (redimensionnements)' },
         changeAnnotation: { title: 'Cat.', tooltipText: 'Modifications de catégorie' },
-        number: { title: 'N° décision', tooltipText: 'Numéro de la décision' },
+        duration: { title: 'Tps', tooltipText: 'Temps de traitement (agent principal)' },
       },
       statistics: {
         computation: {
@@ -317,6 +320,7 @@ const fr = {
       columnTitles: {
         number: 'N° décision',
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
+        source: { title: 'Source', tooltipText: 'Base de données source' },
         userName: 'Attribué à',
         status: 'Statut',
         importDate: "Date d'import",
@@ -328,9 +332,11 @@ const fr = {
         resultsCount: '{count} décisions affichées',
         chips: {
           publicationCategoryLetter: 'Arrêts {publicationCategoryLetter}',
+          source: 'BDD {source}',
         },
         fields: {
           publicationCategoryLetter: 'Diffusion',
+          source: 'Source',
         },
       },
     },

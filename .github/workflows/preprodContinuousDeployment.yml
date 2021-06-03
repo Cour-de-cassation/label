@@ -18,5 +18,5 @@ jobs:
       - run: git pull
       - run: git checkout pre-prod
       - run: git pull
-      - run: git rebase master
+      - run: git reset origin/master
       - run: git push

@@ -12,12 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions" 
-          git checkout master
-          git pull
-          git checkout pre-prod
-          git pull
-          git rebase master
-          git push
+      - run: git config --local user.email "actions@github.com"
+      - run: git config --local user.name "GitHub Actions"
+      - run: git checkout master
+      - run: git pull
+      - run: git checkout pre-prod
+      - run: git pull
+      - run: git rebase master
+      - run: git push

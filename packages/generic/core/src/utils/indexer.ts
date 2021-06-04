@@ -1,6 +1,9 @@
+import { errorHandlers } from '../errors';
+
 export { indexer };
 
 const indexer = {
+  assertEveryIdIsDefined,
   indexBy,
   indexManyBy,
   mapIndexBy,
@@ -40,4 +43,15 @@ function indexManyBy<T>(datas: Array<T>, indexFun: (data: T) => string): { [inde
   });
 
   return indexedDatas;
+}
+
+function assertEveryIdIsDefined<T>(
+  ids: string[],
+  itemsById: Record<string, T>,
+  buildErrorDescription: (_id: string) => string,
+) {
+  const idWithNoItem = ids.find((_id) => !itemsById[_id]);
+  if (idWithNoItem) {
+    throw errorHandlers.notFoundErrorHandler.build(buildErrorDescription(idWithNoItem));
+  }
 }

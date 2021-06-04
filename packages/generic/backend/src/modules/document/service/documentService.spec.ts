@@ -410,6 +410,95 @@ describe('documentService', () => {
     });
   });
 
+  describe('fetchTreatedDocuments', () => {
+    const documentRepository = buildDocumentRepository();
+    const assignationRepository = buildAssignationRepository();
+    const userRepository = buildUserRepository();
+
+    it('should return treated documents', async () => {
+      const user = userModule.generator.generate({
+        name: 'NAME',
+        role: 'annotator',
+      });
+      const freeDocument = documentModule.generator.generate({
+        status: 'free',
+      });
+      const pendingDocument = documentModule.generator.generate({
+        status: 'pending',
+      });
+      const savedDocument = documentModule.generator.generate({
+        status: 'saved',
+      });
+      const doneDocument = documentModule.generator.generate({
+        status: 'done',
+      });
+      const savedTreatment = treatmentModule.generator.generate({
+        documentId: savedDocument._id,
+      });
+      const doneTreatment = treatmentModule.generator.generate({
+        documentId: doneDocument._id,
+      });
+      const pendingDocumentAssignation = assignationModule.generator.generate({
+        documentId: pendingDocument._id,
+        userId: user._id,
+      });
+      const savedDocumentAssignation = assignationModule.generator.generate({
+        documentId: savedDocument._id,
+        userId: user._id,
+        treatmentId: savedTreatment._id,
+      });
+      const doneDocumentAssignation = assignationModule.generator.generate({
+        documentId: doneDocument._id,
+        userId: user._id,
+        treatmentId: doneTreatment._id,
+      });
+      await Promise.all(
+        [freeDocument, pendingDocument, savedDocument, doneDocument].map(
+          documentRepository.insert,
+        ),
+      );
+      await Promise.all(
+        [savedTreatment, doneTreatment].map(treatmentRepository.insert),
+      );
+      await Promise.all(
+        [
+          pendingDocumentAssignation,
+          savedDocumentAssignation,
+          doneDocumentAssignation,
+        ].map(assignationRepository.insert),
+      );
+      await userRepository.insert(user);
+
+      const treatedDocuments = await documentService.fetchTreatedDocuments();
+
+      expect(treatedDocuments.sort()).toEqual([
+        {
+          document: projectFakeObjects(doneDocument, [
+            '_id',
+            'documentNumber',
+            'publicationCategory',
+            'source',
+          ]),
+          treatments: [
+            projectFakeObjects(doneTreatment, [
+              '_id',
+              'addedAnnotationsCount',
+              'deletedAnnotationsCount',
+              'documentId',
+              'duration',
+              'lastUpdateDate',
+              'modifiedAnnotationsCount',
+              'resizedBiggerAnnotationsCount',
+              'resizedSmallerAnnotationsCount',
+              'source',
+            ]),
+          ],
+          userNames: ['NAME'],
+        },
+      ]);
+    });
+  });
+
   describe('updateDocumentStatus', () => {
     it('should update document status', async () => {
       const document = documentModule.generator.generate({ status: 'free' });

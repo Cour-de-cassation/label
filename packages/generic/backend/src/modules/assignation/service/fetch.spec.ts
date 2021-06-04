@@ -1,8 +1,11 @@
-import { assignationModule, idModule } from '@label/core';
+import { range } from 'lodash';
+import { assignationModule, documentModule, idModule } from '@label/core';
+import { buildDocumentRepository } from '../../../modules/document';
 import { buildAssignationRepository } from '../repository';
 import {
   fetchAssignationId,
   fetchDocumentIdsAssignatedToUserId,
+  fetchAssignationsByDocumentIds,
 } from './fetch';
 
 describe('fetch', () => {
@@ -33,6 +36,45 @@ describe('fetch', () => {
       });
 
       expect(assignationId).toEqual(undefined);
+    });
+  });
+
+  describe('fetchAssignationsByDocumentIds', () => {
+    const documentRepository = buildDocumentRepository();
+    const assignationRepository = buildAssignationRepository();
+    const documents = range(3).map(() =>
+      documentModule.generator.generate({ status: 'pending' }),
+    );
+    const assignations = documents.map((document) =>
+      assignationModule.generator.generate({ documentId: document._id }),
+    );
+
+    it('should return assignations by document Id', async () => {
+      await documentRepository.insertMany(documents);
+      await assignationRepository.insertMany(assignations);
+
+      const assignationsByDocumentIds = await fetchAssignationsByDocumentIds([
+        documents[0]._id,
+        documents[1]._id,
+      ]);
+
+      expect(assignationsByDocumentIds).toEqual({
+        [idModule.lib.convertToString(documents[0]._id)]: [assignations[0]],
+        [idModule.lib.convertToString(documents[1]._id)]: [assignations[1]],
+      });
+    });
+
+    it('should throw error', async () => {
+      await documentRepository.insertMany(documents);
+      await assignationRepository.insert(assignations[0]);
+
+      expect(
+        fetchAssignationsByDocumentIds([documents[0]._id, documents[1]._id]),
+      ).rejects.toThrowError(
+        `The document ${idModule.lib.convertToString(
+          documents[1]._id,
+        )} has no matching assignations`,
+      );
     });
   });
 

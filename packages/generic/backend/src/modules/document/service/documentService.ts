@@ -59,7 +59,7 @@ function buildDocumentService() {
     await monitoringEntryService.deleteMonitoringEntriesByDocumentId(id);
     await treatmentService.deleteTreatmentsByDocumentId(id);
 
-    await documentRepository.deleteManyByIds([id]);
+    await documentRepository.deleteById(id);
   }
 
   async function fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {

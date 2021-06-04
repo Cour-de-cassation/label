@@ -1,6 +1,21 @@
 import { indexer } from './indexer';
 
 describe('indexer', () => {
+  describe('assertEveryIdIsDefined', () => {
+    const datas = { a: 'STRING1', b: 'STRING2', c: 'STRING3' };
+    const buildErrorDescription = (id: string) => `No objet found for id ${id}`;
+
+    it('should not throw error', () => {
+      indexer.assertEveryIdIsDefined(['a', 'c'], datas, buildErrorDescription);
+    });
+
+    it('should throw error', () => {
+      expect(() => indexer.assertEveryIdIsDefined(['a', 'd'], datas, buildErrorDescription)).toThrowError(
+        buildErrorDescription('d'),
+      );
+    });
+  });
+
   describe('indexBy', () => {
     it('should index by the given function', () => {
       const datas = [

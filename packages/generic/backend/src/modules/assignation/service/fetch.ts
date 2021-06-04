@@ -1,4 +1,4 @@
-import { assignationType, idModule, idType } from '@label/core';
+import { assignationType, idModule, idType, indexer } from '@label/core';
 import { buildAssignationRepository } from '../repository';
 
 export {
@@ -36,7 +36,16 @@ async function fetchAssignationId({
 async function fetchAssignationsByDocumentIds(documentIdsToSearchIn: idType[]) {
   const assignationRepository = buildAssignationRepository();
 
-  return assignationRepository.findAllByDocumentIds(documentIdsToSearchIn);
+  const assignationsByDocumentIds = await assignationRepository.findAllByDocumentIds(
+    documentIdsToSearchIn,
+  );
+
+  indexer.assertEveryIdIsDefined(
+    documentIdsToSearchIn.map(idModule.lib.convertToString),
+    assignationsByDocumentIds,
+    (_id) => `The document ${_id} has no matching assignations`,
+  );
+  return assignationsByDocumentIds;
 }
 
 async function fetchAssignationsOfDocumentId(

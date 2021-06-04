@@ -120,7 +120,7 @@ function buildDocumentService() {
     const documentRepository = buildDocumentRepository();
 
     const treatedDocuments = await documentRepository.findAllByStatusProjection(
-      ['done'],
+      ['done', 'toBePublished'],
       ['_id', 'documentNumber', 'publicationCategory', 'source'],
     );
 

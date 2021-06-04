@@ -7,6 +7,8 @@ import {
   treatmentModule,
   idModule,
   userModule,
+  documentType,
+  treatmentType,
 } from '@label/core';
 import { projectFakeObjects } from '../../../repository';
 import { dateBuilder } from '../../../utils';
@@ -426,14 +428,14 @@ describe('documentService', () => {
       const pendingDocument = documentModule.generator.generate({
         status: 'pending',
       });
-      const savedDocument = documentModule.generator.generate({
-        status: 'saved',
+      const toBePublishedDocument = documentModule.generator.generate({
+        status: 'toBePublished',
       });
       const doneDocument = documentModule.generator.generate({
         status: 'done',
       });
-      const savedTreatment = treatmentModule.generator.generate({
-        documentId: savedDocument._id,
+      const toBePublishedTreatment = treatmentModule.generator.generate({
+        documentId: toBePublishedDocument._id,
       });
       const doneTreatment = treatmentModule.generator.generate({
         documentId: doneDocument._id,
@@ -442,28 +444,33 @@ describe('documentService', () => {
         documentId: pendingDocument._id,
         userId: user._id,
       });
-      const savedDocumentAssignation = assignationModule.generator.generate({
-        documentId: savedDocument._id,
-        userId: user._id,
-        treatmentId: savedTreatment._id,
-      });
+      const toBePublishedDocumentAssignation = assignationModule.generator.generate(
+        {
+          documentId: toBePublishedDocument._id,
+          userId: user._id,
+          treatmentId: toBePublishedTreatment._id,
+        },
+      );
       const doneDocumentAssignation = assignationModule.generator.generate({
         documentId: doneDocument._id,
         userId: user._id,
         treatmentId: doneTreatment._id,
       });
       await Promise.all(
-        [freeDocument, pendingDocument, savedDocument, doneDocument].map(
-          documentRepository.insert,
-        ),
+        [
+          freeDocument,
+          pendingDocument,
+          toBePublishedDocument,
+          doneDocument,
+        ].map(documentRepository.insert),
       );
       await Promise.all(
-        [savedTreatment, doneTreatment].map(treatmentRepository.insert),
+        [toBePublishedTreatment, doneTreatment].map(treatmentRepository.insert),
       );
       await Promise.all(
         [
           pendingDocumentAssignation,
-          savedDocumentAssignation,
+          toBePublishedDocumentAssignation,
           doneDocumentAssignation,
         ].map(assignationRepository.insert),
       );
@@ -471,28 +478,15 @@ describe('documentService', () => {
 
       const treatedDocuments = await documentService.fetchTreatedDocuments();
 
-      expect(treatedDocuments.sort()).toEqual([
+      expect(treatedDocuments).toEqual([
         {
-          document: projectFakeObjects(doneDocument, [
-            '_id',
-            'documentNumber',
-            'publicationCategory',
-            'source',
-          ]),
-          treatments: [
-            projectFakeObjects(doneTreatment, [
-              '_id',
-              'addedAnnotationsCount',
-              'deletedAnnotationsCount',
-              'documentId',
-              'duration',
-              'lastUpdateDate',
-              'modifiedAnnotationsCount',
-              'resizedBiggerAnnotationsCount',
-              'resizedSmallerAnnotationsCount',
-              'source',
-            ]),
-          ],
+          document: projectTreatedDocumentDocument(toBePublishedDocument),
+          treatments: [projectTreatedDocumentTreatment(toBePublishedTreatment)],
+          userNames: ['NAME'],
+        },
+        {
+          document: projectTreatedDocumentDocument(doneDocument),
+          treatments: [projectTreatedDocumentTreatment(doneTreatment)],
           userNames: ['NAME'],
         },
       ]);
@@ -531,3 +525,27 @@ describe('documentService', () => {
     });
   });
 });
+
+function projectTreatedDocumentDocument(document: documentType) {
+  return projectFakeObjects(document, [
+    '_id',
+    'documentNumber',
+    'publicationCategory',
+    'source',
+  ]);
+}
+
+function projectTreatedDocumentTreatment(treatment: treatmentType) {
+  return projectFakeObjects(treatment, [
+    '_id',
+    'addedAnnotationsCount',
+    'deletedAnnotationsCount',
+    'documentId',
+    'duration',
+    'lastUpdateDate',
+    'modifiedAnnotationsCount',
+    'resizedBiggerAnnotationsCount',
+    'resizedSmallerAnnotationsCount',
+    'source',
+  ]);
+}

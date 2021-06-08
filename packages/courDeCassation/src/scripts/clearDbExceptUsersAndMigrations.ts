@@ -6,7 +6,7 @@ import { parametersHandler } from '../lib/parametersHandler';
   const backend = buildBackend(environment, settings);
 
   await backend.runScript(
-    () => backend.scripts.clearDb.run({ user: false }),
+    () => backend.scripts.clearDb.run({ user: false, migration: false }),
     backend.scripts.clearDb.option,
   );
 })();

@@ -2,7 +2,7 @@
 set -x
 set -e
 
-./scripts/runPreProdScript.sh dist/scripts/clearDbExceptUsers.js
+./scripts/runPreProdScript.sh dist/scripts/clearDbExceptUsersAndMigrations.js
 
 ./scripts/runPreProdScript.sh dist/scripts/importAllDocumentsFromSderSince.js --days 7
 

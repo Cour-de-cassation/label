@@ -42,9 +42,9 @@ function mapCourtDecisionToDocument(
   return documentModule.lib.buildDocument({
     creationDate: new Date().getTime(),
     decisionMetadata: {
-      additionalTermsToAnnotate: sderCourtDecision.occultation.additionalTerms || '',
+      additionalTermsToAnnotate: sderCourtDecision.occultation?.additionalTerms || '',
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
-      categoriesToOmit: sderCourtDecision.occultation.categoriesToOmit,
+      categoriesToOmit: sderCourtDecision.occultation?.categoriesToOmit || [],
       chamberName,
       juridiction,
     },

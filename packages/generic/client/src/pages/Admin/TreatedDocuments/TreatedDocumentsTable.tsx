@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { apiRouteOutType } from '@label/core';
+import { apiRouteOutType, documentType } from '@label/core';
+import { apiCaller } from '../../../api';
 import { PaginatedTable, tableRowFieldType } from '../../../components';
 import { wordings } from '../../../wordings';
 import { localStorage, treatedDocumentOrderByProperties } from '../../../services/localStorage';
 import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';
+import { ResetDocumentConfirmationPopup } from './ResetDocumentConfirmationPopup';
+import { useAlert } from '../../../services/alert';
 
 export { TreatedDocumentsTable };
 
@@ -15,9 +18,12 @@ function TreatedDocumentsTable(props: {
       typeof treatedDocumentOrderByProperties[number]
     >
   >;
+  refetch: () => void;
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
 }) {
   const history = useHistory();
+  const [documentIdToReset, setDocumentIdToReset] = useState<documentType['_id'] | undefined>(undefined);
+  const { displayAlert } = useAlert();
   const [annotationDiffDocumentInfo, setAnnotationDiffDocumentInfo] = useState<
     annotationDiffDocumentInfoType | undefined
   >();
@@ -28,6 +34,12 @@ function TreatedDocumentsTable(props: {
 
   return (
     <div style={styles.container}>
+      {!!documentIdToReset && (
+        <ResetDocumentConfirmationPopup
+          onConfirm={() => onConfirmResetDocument(documentIdToReset)}
+          onClose={() => setDocumentIdToReset(undefined)}
+        />
+      )}
       <AnnotationsDiffDrawer documentInfo={annotationDiffDocumentInfo} close={resetDrawer} />
       <PaginatedTable
         defaultOrderByProperty={orderByProperty}
@@ -50,6 +62,19 @@ function TreatedDocumentsTable(props: {
 
   function onOrderDirectionChange(newOrderDirection: 'asc' | 'desc') {
     localStorage.treatedDocumentsStateHandler.setOrderDirection(newOrderDirection);
+  }
+
+  async function onConfirmResetDocument(documentIdToReset: documentType['_id']) {
+    setDocumentIdToReset(undefined);
+    try {
+      await apiCaller.post<'deleteHumanTreatmentsForDocument'>('deleteHumanTreatmentsForDocument', {
+        documentId: documentIdToReset,
+      });
+      props.refetch();
+    } catch (error) {
+      displayAlert({ text: wordings.business.errors.deleteHumanTreatmentsByDocumentIdFailed, variant: 'alert' });
+      console.warn(error);
+    }
   }
 
   function buildStyles() {
@@ -80,6 +105,13 @@ function TreatedDocumentsTable(props: {
           });
         },
         iconName: 'link' as const,
+      },
+      {
+        text: wordings.treatedDocumentsPage.table.optionItems.resetTheDocument,
+        onClick: () => {
+          setDocumentIdToReset(treatmentWithDetails.document._id);
+        },
+        iconName: 'restore' as const,
       },
     ];
   }

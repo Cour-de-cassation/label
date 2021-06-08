@@ -69,6 +69,8 @@ const fr = {
       exported: 'Publié',
     },
     errors: {
+      deleteHumanTreatmentsByDocumentIdFailed:
+        'La suppression des traitements manuels effectués sur ce document a échoué. Veuillez recharger la page.',
       updateDocumentStatusFailed: 'La mise à jour du statut du document a échoué. Veuillez recharger la page.',
       updateTreatmentFailed: 'La mise à jour des annotations pour ce traitement a échoué. Veuillez recharger la page.',
     },
@@ -172,6 +174,7 @@ const fr = {
     },
     back: 'Précédent',
     cancel: 'Annuler',
+    confirm: 'Confirmer',
     copyToClipboard: 'Copier dans le presse-papier',
     logout: 'Se déconnecter',
     refresh: 'Rafraîchir',
@@ -255,6 +258,10 @@ const fr = {
       subtitle: 'Décisions traitées',
     },
     table: {
+      resetDocumentConfirmationPopup: {
+        text:
+          'Cette action va supprimer toutes les corrections effectuées par les agents et renvoyer la décision dans le flux à traiter.\nÊtes-vous sûr de vouloir effectuer cette opération ?',
+      },
       annotationDiffDrawer: {
         title: 'Modifications',
         subtitle: 'Décision n° {documentNumber}, traitée par {userName}',
@@ -312,6 +319,7 @@ const fr = {
       optionItems: {
         openDocument: 'Ouvrir la décision...',
         displayAnnotationDiff: 'Afficher les modifications',
+        resetTheDocument: 'Réinitialiser la décision',
       },
     },
   },

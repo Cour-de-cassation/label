@@ -136,6 +136,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         ),
     }),
 
+    deleteHumanTreatmentsForDocument: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { documentId } }) => {
+        await assignationService.deleteAssignationsByDocumentId(
+          idModule.lib.buildId(documentId),
+        );
+        await documentService.updateDocumentStatus(
+          idModule.lib.buildId(documentId),
+          'free',
+        );
+      },
+    }),
+
     async login({ args: { email, password } }) {
       const { email: userEmail, name, role, token } = await userService.login({
         email,

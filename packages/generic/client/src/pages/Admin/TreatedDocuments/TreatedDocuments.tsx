@@ -58,7 +58,11 @@ function TreatedDocuments(props: {
         </div>
       </div>
       <div style={styles.tableContentContainer}>
-        <TreatedDocumentsTable treatedDocuments={filteredTreatedDocuments} fields={treatmentFields} />
+        <TreatedDocumentsTable
+          refetch={props.refetch}
+          treatedDocuments={filteredTreatedDocuments}
+          fields={treatmentFields}
+        />
       </div>
       <div style={styles.csvButtonContainer}>
         <ExportCSVButton data={filteredTreatedDocuments} fields={treatmentFields} />

@@ -375,6 +375,18 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
+    deleteHumanTreatmentsForDocument: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     login: {
       in: {
         email: buildModel({

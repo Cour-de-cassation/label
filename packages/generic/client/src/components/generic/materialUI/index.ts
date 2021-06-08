@@ -6,6 +6,7 @@ import { Menu } from './Menu';
 import { MenuBar } from './MenuBar';
 import { RadioButton } from './RadioButton';
 import { RichTextInput } from './RichTextInput';
+import { Snackbar } from './Snackbar';
 import { SvgImage } from './SvgImage';
 import { SwitchButton } from './SwitchButton';
 import { TableSortLabel } from './TableSortLabel';
@@ -21,6 +22,7 @@ export {
   MenuBar,
   RadioButton,
   RichTextInput,
+  Snackbar,
   SvgImage,
   SwitchButton,
   TableSortLabel,

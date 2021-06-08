@@ -21,6 +21,7 @@ import { useMonitoring, MonitoringEntriesHandlerContextProvider } from '../../se
 import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
 import { DocumentSelector } from './DocumentSelector';
+import { useAlert } from '../../services/alert';
 
 export { DocumentSwitcher };
 
@@ -35,7 +36,7 @@ function DocumentSwitcher(props: {
 }) {
   const [documentState, setDocumentState] = useState<documentStateType>(computeInitialDocumentState());
   const { resetMonitoringEntries, sendMonitoringEntries } = useMonitoring();
-
+  const { displayAlert } = useAlert();
   const styles = buildStyles();
 
   return <div style={styles.documentSwitcher}>{renderPage()}</div>;
@@ -127,18 +128,22 @@ function DocumentSwitcher(props: {
         documentId,
         status,
       });
-      return;
     } catch (error) {
+      displayAlert({ variant: 'alert', text: wordings.business.errors.updateDocumentStatusFailed });
       console.warn(error);
     }
   }
 
   async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {
-    await apiCaller.post<'updateTreatment'>('updateTreatment', {
-      annotationsDiff,
-      documentId,
-    });
-    return;
+    try {
+      await apiCaller.post<'updateTreatment'>('updateTreatment', {
+        annotationsDiff,
+        documentId,
+      });
+    } catch (error) {
+      displayAlert({ variant: 'alert', text: wordings.business.errors.updateTreatmentFailed });
+      console.warn(error);
+    }
   }
 
   async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: annotationType[] }) {

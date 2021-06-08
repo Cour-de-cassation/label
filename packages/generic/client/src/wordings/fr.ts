@@ -68,6 +68,10 @@ const fr = {
       rejected: 'Bloqué',
       exported: 'Publié',
     },
+    errors: {
+      updateDocumentStatusFailed: 'La mise à jour du statut du document a échoué. Veuillez recharger la page.',
+      updateTreatmentFailed: 'La mise à jour des annotations pour ce traitement a échoué. Veuillez recharger la page.',
+    },
     filters: {
       button: 'Filtrer',
       chips: {

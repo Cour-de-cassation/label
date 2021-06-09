@@ -1,11 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import format from 'string-template';
-import { apiRouteOutType, timeOperator } from '@label/core';
+import { apiRouteOutType, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { DocumentStatusIcon, ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
 import { sendMail } from '../../../../services/sendMail';
 import { wordings } from '../../../../wordings';
+import { routes } from '../../../routes';
 
 export { ProblemReportsTable };
 
@@ -71,7 +72,7 @@ function ProblemReportsTable(props: {
     const openDocumentOptionItem = {
       text: wordings.problemReportsPage.table.optionItems.openDocument,
       onClick: () => {
-        history.push(`/admin/document/${problemReportWithDetails.document._id}`);
+        history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(problemReportWithDetails.document._id)));
         return;
       },
       iconName: 'eye' as const,

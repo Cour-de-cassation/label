@@ -1,4 +1,5 @@
 import React from 'react';
+import { routes } from '../../../pages';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { MenuIcon } from './MenuIcon';
@@ -13,24 +14,28 @@ function AdminMenu(props: { unreadProblemReportsCount: number }) {
   return (
     <div style={styles.container}>
       <div style={styles.iconContainer}>
-        <MenuIcon title={wordings.statisticsPage.header.subtitle} pathname="/admin/statistics" iconName="home" />
+        <MenuIcon
+          title={wordings.statisticsPage.header.subtitle}
+          pathname={routes.STATISTICS.getPath()}
+          iconName="home"
+        />
         <MenuIcon
           title={wordings.untreatedDocumentsPage.header.subtitle}
-          pathname="/admin/untreated-documents"
+          pathname={routes.UNTREATED_DOCUMENT.getPath()}
           iconName="playlistPlay"
         />
         <MenuIcon
           title={wordings.treatedDocumentsPage.header.subtitle}
-          pathname="/admin/treated-documents"
+          pathname={routes.TREATED_DOCUMENTS.getPath()}
           iconName="playlistCheck"
         />
         <MenuIcon
           title={wordings.problemReportsPage.header.subtitle}
-          pathname="/admin/problem-reports"
+          pathname={routes.PROBLEM_REPORTS.getPath()}
           alertCount={props.unreadProblemReportsCount}
           iconName="warning"
         />
-        <MenuIcon title={wordings.agentsPage.header.subtitle} pathname="/admin/agents" iconName="admin" />
+        <MenuIcon title={wordings.agentsPage.header.subtitle} pathname={routes.AGENTS.getPath()} iconName="admin" />
       </div>
     </div>
   );

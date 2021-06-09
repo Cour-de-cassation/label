@@ -25,7 +25,7 @@ function ErrorPage() {
 
   function logout() {
     localStorage.bearerTokenHandler.remove();
-    history.push(routes.LOGIN);
+    history.push(routes.LOGIN.getPath());
   }
 
   function buildStyles(theme: customThemeType) {

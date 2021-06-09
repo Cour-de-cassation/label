@@ -60,7 +60,7 @@ function AnonymizedDocument() {
     </>
   );
   function navigateToSpecialDocuments() {
-    history.push(routes.SPECIAL_DOCUMENTS);
+    history.push(routes.SPECIAL_DOCUMENTS.getPath());
   }
 }
 

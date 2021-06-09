@@ -100,7 +100,7 @@ const Login: FunctionComponent = () => {
       } = await apiCaller.post<'login'>('login', { email, password });
       localStorage.bearerTokenHandler.set(token);
       localStorage.userHandler.set({ email: userEmail, name, role });
-      history.push(routes.DEFAULT);
+      history.push(routes.DEFAULT.getPath());
     } catch (error) {
       setIsFormValid(false);
       console.warn(error);

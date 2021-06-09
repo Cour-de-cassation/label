@@ -1,22 +1,23 @@
 export { defaultRoutes, routes };
 
 const routes = {
-  ADMIN: '/admin',
-  AGENTS: '/admin/agents',
-  ANNOTATION: '/annotation',
-  ANONYMIZED_DOCUMENT: '/anonymized-document/:documentId',
-  DEFAULT: '/',
-  DOCUMENT: '/admin/document/:documentId',
-  LOGIN: '/login',
-  PROBLEM_REPORTS: '/admin/problem-reports',
-  SPECIAL_DOCUMENTS: '/special-documents',
-  STATISTICS: '/admin/statistics',
-  TREATED_DOCUMENTS: '/admin/treated-documents',
-  UNTREATED_DOCUMENT: '/admin/untreated-documents',
+  ADMIN: { getPath: () => '/admin' },
+  ADMIN_MAIN: { getPath: () => '/admin/main/' },
+  AGENTS: { getPath: () => '/admin/main/agents' },
+  ANNOTATION: { getPath: () => '/annotation' },
+  ANONYMIZED_DOCUMENT: { getPath: (documentId?: string) => `/anonymized-document/${documentId || ':documentId'}` },
+  DEFAULT: { getPath: () => '/' },
+  DOCUMENT: { getPath: (documentId?: string) => `/admin/document/${documentId || ':documentId'}` },
+  LOGIN: { getPath: () => '/login' },
+  PROBLEM_REPORTS: { getPath: () => '/admin/main/problem-reports' },
+  SPECIAL_DOCUMENTS: { getPath: () => '/special-documents' },
+  STATISTICS: { getPath: () => '/admin/main/statistics' },
+  TREATED_DOCUMENTS: { getPath: () => '/admin/main/treated-documents' },
+  UNTREATED_DOCUMENT: { getPath: () => '/admin/main/untreated-documents' },
 };
 
 const defaultRoutes = {
-  admin: routes.STATISTICS,
-  annotator: routes.ANNOTATION,
-  specialDocumentAnnotator: routes.SPECIAL_DOCUMENTS,
+  admin: routes.STATISTICS.getPath(),
+  annotator: routes.ANNOTATION.getPath(),
+  specialDocumentAnnotator: routes.SPECIAL_DOCUMENTS.getPath(),
 };

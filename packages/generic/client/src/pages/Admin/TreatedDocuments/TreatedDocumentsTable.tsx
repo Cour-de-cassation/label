@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { apiRouteOutType, documentType } from '@label/core';
+import { apiRouteOutType, documentType, idModule } from '@label/core';
 import { apiCaller } from '../../../api';
 import { PaginatedTable, tableRowFieldType } from '../../../components';
 import { wordings } from '../../../wordings';
@@ -8,6 +8,7 @@ import { localStorage, treatedDocumentOrderByProperties } from '../../../service
 import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';
 import { ResetDocumentConfirmationPopup } from './ResetDocumentConfirmationPopup';
 import { useAlert } from '../../../services/alert';
+import { routes } from '../../routes';
 
 export { TreatedDocumentsTable };
 
@@ -90,8 +91,7 @@ function TreatedDocumentsTable(props: {
       {
         text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
         onClick: () => {
-          history.push(`/admin/document/${treatmentWithDetails.document._id}`);
-          return;
+          history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id)));
         },
         iconName: 'eye' as const,
       },

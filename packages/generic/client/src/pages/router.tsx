@@ -23,91 +23,93 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <UnauthenticatedRoute path={routes.LOGIN}>
+        <UnauthenticatedRoute path={routes.LOGIN.getPath()}>
           <Login />
         </UnauthenticatedRoute>
-        <AuthenticatedRoute path={routes.ADMIN}>
-          <AdminInfosDataFetcher>
-            {({ adminInfos, refetch, ressourceFilters }) => {
-              const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
-                ({ problemReport }) => !problemReport.hasBeenRead,
-              ).length;
-              return (
-                <>
-                  <AuthenticatedRoute path={routes.STATISTICS}>
-                    <AdminPage
-                      header={wordings.statisticsPage.header}
-                      unreadProblemReportsCount={unreadProblemReportsCount}
-                    >
-                      <Statistics
-                        ressourceFilter={ressourceFilters.aggregatedStatistics}
-                        refetch={refetch.aggregatedStatistics}
-                        aggregatedStatistics={adminInfos.aggregatedStatistics}
-                        availableStatisticFilters={adminInfos.availableStatisticFilters}
-                        users={adminInfos.usersWithDetails.map(({ user }) => user)}
-                      />
-                    </AdminPage>
-                  </AuthenticatedRoute>
-                  <AuthenticatedRoute path={routes.AGENTS}>
-                    <AdminPage
-                      header={wordings.agentsPage.header}
-                      unreadProblemReportsCount={unreadProblemReportsCount}
-                    >
-                      <Agents usersWithDetails={adminInfos.usersWithDetails} refetch={refetch.usersWithDetails} />
-                    </AdminPage>
-                  </AuthenticatedRoute>
-                  <AuthenticatedRoute path={routes.PROBLEM_REPORTS}>
-                    <AdminPage
-                      header={wordings.problemReportsPage.header}
-                      unreadProblemReportsCount={unreadProblemReportsCount}
-                    >
-                      <ProblemReports
-                        refetch={refetch.problemReportsWithDetails}
-                        problemReportsWithDetails={adminInfos.problemReportsWithDetails}
-                      />
-                    </AdminPage>
-                  </AuthenticatedRoute>
-                  <AuthenticatedRoute path={routes.TREATED_DOCUMENTS}>
-                    <AdminPage
-                      header={wordings.treatedDocumentsPage.header}
-                      unreadProblemReportsCount={unreadProblemReportsCount}
-                    >
-                      <TreatedDocuments
-                        treatedDocuments={adminInfos.treatedDocuments}
-                        refetch={refetch.treatedDocuments}
-                      />
-                    </AdminPage>
-                  </AuthenticatedRoute>
-                  <AuthenticatedRoute path={routes.UNTREATED_DOCUMENT}>
-                    <AdminPage
-                      header={wordings.untreatedDocumentsPage.header}
-                      unreadProblemReportsCount={unreadProblemReportsCount}
-                    >
-                      <UntreatedDocuments
-                        untreatedDocuments={adminInfos.untreatedDocuments}
-                        refetch={refetch.untreatedDocuments}
-                      />
-                    </AdminPage>
-                  </AuthenticatedRoute>
-                </>
-              );
-            }}
-          </AdminInfosDataFetcher>
-          <AuthenticatedRoute path={routes.DOCUMENT}>
+        <AuthenticatedRoute path={routes.ADMIN.getPath()}>
+          <AuthenticatedRoute path={routes.DOCUMENT.getPath()}>
             <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
           </AuthenticatedRoute>
+          <AuthenticatedRoute path={routes.ADMIN_MAIN.getPath()}>
+            <AdminInfosDataFetcher>
+              {({ adminInfos, refetch, ressourceFilters }) => {
+                const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
+                  ({ problemReport }) => !problemReport.hasBeenRead,
+                ).length;
+                return (
+                  <>
+                    <AuthenticatedRoute path={routes.STATISTICS.getPath()}>
+                      <AdminPage
+                        header={wordings.statisticsPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                      >
+                        <Statistics
+                          ressourceFilter={ressourceFilters.aggregatedStatistics}
+                          refetch={refetch.aggregatedStatistics}
+                          aggregatedStatistics={adminInfos.aggregatedStatistics}
+                          availableStatisticFilters={adminInfos.availableStatisticFilters}
+                          users={adminInfos.usersWithDetails.map(({ user }) => user)}
+                        />
+                      </AdminPage>
+                    </AuthenticatedRoute>
+                    <AuthenticatedRoute path={routes.AGENTS.getPath()}>
+                      <AdminPage
+                        header={wordings.agentsPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                      >
+                        <Agents usersWithDetails={adminInfos.usersWithDetails} refetch={refetch.usersWithDetails} />
+                      </AdminPage>
+                    </AuthenticatedRoute>
+                    <AuthenticatedRoute path={routes.PROBLEM_REPORTS.getPath()}>
+                      <AdminPage
+                        header={wordings.problemReportsPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                      >
+                        <ProblemReports
+                          refetch={refetch.problemReportsWithDetails}
+                          problemReportsWithDetails={adminInfos.problemReportsWithDetails}
+                        />
+                      </AdminPage>
+                    </AuthenticatedRoute>
+                    <AuthenticatedRoute path={routes.TREATED_DOCUMENTS.getPath()}>
+                      <AdminPage
+                        header={wordings.treatedDocumentsPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                      >
+                        <TreatedDocuments
+                          treatedDocuments={adminInfos.treatedDocuments}
+                          refetch={refetch.treatedDocuments}
+                        />
+                      </AdminPage>
+                    </AuthenticatedRoute>
+                    <AuthenticatedRoute path={routes.UNTREATED_DOCUMENT.getPath()}>
+                      <AdminPage
+                        header={wordings.untreatedDocumentsPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                      >
+                        <UntreatedDocuments
+                          untreatedDocuments={adminInfos.untreatedDocuments}
+                          refetch={refetch.untreatedDocuments}
+                        />
+                      </AdminPage>
+                    </AuthenticatedRoute>
+                  </>
+                );
+              }}
+            </AdminInfosDataFetcher>
+          </AuthenticatedRoute>
         </AuthenticatedRoute>
-        <Route path={routes.ANONYMIZED_DOCUMENT}>
+        <Route path={routes.ANONYMIZED_DOCUMENT.getPath()}>
           <AnonymizedDocument />
         </Route>
-        <AuthenticatedRoute path={routes.SPECIAL_DOCUMENTS}>
+        <AuthenticatedRoute path={routes.SPECIAL_DOCUMENTS.getPath()}>
           <SpecialDocuments />
         </AuthenticatedRoute>
-        <AuthenticatedRoute path={routes.ANNOTATION}>
+        <AuthenticatedRoute path={routes.ANNOTATION.getPath()}>
           <SettingsDataFetcher>{({ settings }) => <Home settings={settings} />}</SettingsDataFetcher>
         </AuthenticatedRoute>
         <AuthenticatedRoute>
-          <HomeRoute path={routes.DEFAULT} />
+          <HomeRoute path={routes.DEFAULT.getPath()} />
         </AuthenticatedRoute>
       </Switch>
     </BrowserRouter>
@@ -123,7 +125,7 @@ const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }
       ) : (
         <Redirect
           to={{
-            pathname: routes.LOGIN,
+            pathname: routes.LOGIN.getPath(),
             state: { from: location },
           }}
         />
@@ -150,7 +152,7 @@ function getRedirectionRoute() {
   const userRole = localStorage.userHandler.getRole();
 
   if (!userRole) {
-    return routes.LOGIN;
+    return routes.LOGIN.getPath();
   }
 
   if (userRole === 'admin') {
@@ -172,7 +174,7 @@ const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest
       ) : (
         <Redirect
           to={{
-            pathname: routes.DEFAULT,
+            pathname: routes.DEFAULT.getPath(),
             state: { from: location },
           }}
         />

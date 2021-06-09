@@ -1,9 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { apiRouteOutType, documentType, timeOperator } from '@label/core';
+import { apiRouteOutType, documentType, idModule, timeOperator } from '@label/core';
 import { PaginatedTable, tableRowFieldType } from '../../components';
 import { wordings } from '../../wordings';
 import { apiCaller } from '../../api';
+import { routes } from '../routes';
 
 export { SpecialDocumentsTable };
 
@@ -25,7 +26,7 @@ function SpecialDocumentsTable(props: {
     const openAnonymizedDocumentOptionItem = {
       text: wordings.specialDocumentsPage.table.optionItems.openAnonymizedDocument,
       onClick: () => {
-        history.push(`/anonymized-document/${specialDocument._id}`);
+        history.push(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(specialDocument._id)));
         return;
       },
     };

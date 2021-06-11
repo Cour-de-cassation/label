@@ -89,7 +89,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     specialDocuments: buildAuthenticatedController({
-      permissions: ['admin', 'specialDocumentAnnotator'],
+      permissions: ['admin', 'publicator'],
       controllerWithUser: async () => documentService.fetchSpecialDocuments(),
     }),
 
@@ -121,7 +121,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
     changePassword: buildAuthenticatedController({
-      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
+      permissions: ['admin', 'annotator', 'publicator'],
       controllerWithUser: async (
         user,
         { args: { previousPassword, newPassword } },
@@ -204,9 +204,9 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     updateDocumentStatus: buildAuthenticatedController({
-      permissions: ['admin', 'annotator', 'specialDocumentAnnotator'],
+      permissions: ['admin', 'annotator', 'publicator'],
       controllerWithUser: async (user, { args: { documentId, status } }) => {
-        if (user.role !== 'admin' && user.role !== 'specialDocumentAnnotator') {
+        if (user.role !== 'admin' && user.role !== 'publicator') {
           await assignationService.assertDocumentIsAssignatedToUser({
             documentId: idModule.lib.buildId(documentId),
             userId: user._id,

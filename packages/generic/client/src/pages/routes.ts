@@ -19,5 +19,5 @@ const routes = {
 const defaultRoutes = {
   admin: routes.STATISTICS.getPath(),
   annotator: routes.ANNOTATION.getPath(),
-  specialDocumentAnnotator: routes.SPECIAL_DOCUMENTS.getPath(),
+  publicator: routes.SPECIAL_DOCUMENTS.getPath(),
 };

@@ -44,7 +44,7 @@ const fr = {
       roles: {
         admin: 'Administrateur',
         annotator: 'Annotateur',
-        specialDocumentAnnotator: 'Annotateur arrêt P',
+        publicator: 'Publicateur',
       },
     },
   },
@@ -55,7 +55,7 @@ const fr = {
       values: {
         admin: 'Vue administrateur',
         annotator: 'Vue annotateur',
-        specialDocumentAnnotator: 'Vue publicateur',
+        publicator: 'Vue publicateur',
       },
     },
     changePassword: 'Modifier le mot de passe',

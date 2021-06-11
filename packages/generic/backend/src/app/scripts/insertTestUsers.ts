@@ -31,7 +31,7 @@ async function insertTestUsers() {
     email: 'harald.achille@justice.fr',
     name: 'Harald Achille',
     password: 'HA',
-    role: 'specialDocumentAnnotator',
+    role: 'publicator',
   });
   await userService.signUpUser({
     email: 'franka.hochet@justice.fr',

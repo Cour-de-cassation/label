@@ -14,7 +14,7 @@ const userModel = buildModel({
     name: { kind: 'primitive', content: 'string' },
     role: {
       kind: 'constant',
-      content: ['admin', 'annotator', 'specialDocumentAnnotator'] as const,
+      content: ['admin', 'annotator', 'publicator'] as const,
     },
   },
 } as const);

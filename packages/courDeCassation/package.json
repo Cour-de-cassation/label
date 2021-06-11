@@ -4,7 +4,7 @@
     "@label/core": "*",
     "axios": "0.21.1",
     "fast-xml-parser": "^3.17.4",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "sder": "https://github.com/Cour-de-cassation/sder#15375ef0750df27801d65bea2d79878db292cd79",
     "string-template": "^1.0.0",
     "yargs": "16.2.0"

@@ -2,7 +2,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "bcryptjs": "^2.4.3",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
     "string-template": "^1.0.0"
   },

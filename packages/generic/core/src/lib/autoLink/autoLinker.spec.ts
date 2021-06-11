@@ -1,4 +1,4 @@
-import { annotationModule } from '../../modules';
+import { annotationModule } from '../../modules/annotation';
 import { annotationLinkHandler } from '../annotationLinkHandler';
 import { autoLinker } from './autoLinker';
 

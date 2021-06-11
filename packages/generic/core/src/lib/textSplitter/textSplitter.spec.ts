@@ -1,4 +1,4 @@
-import { annotationModule } from '../../modules';
+import { annotationModule } from '../../modules/annotation';
 import { textSplitter } from './textSplitter';
 
 describe('textSplitter', () => {

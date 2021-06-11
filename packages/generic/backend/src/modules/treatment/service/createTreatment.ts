@@ -32,18 +32,22 @@ async function createTreatment({
     sortedTreatments.length > 0
       ? sortedTreatments[sortedTreatments.length - 1].order + 1
       : 0;
+  const annotationsDiff = annotationsDiffModule.lib.computeAnnotationsDiff(
+    previousAnnotations,
+    nextAnnotations,
+  );
   const treatment = treatmentModule.lib.build({
-    annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
-      previousAnnotations,
-      nextAnnotations,
-    ),
+    annotationsDiff,
     documentId,
     order,
     source,
   });
 
   if (
-    !treatmentModule.lib.areAnnotationsConsistent(sortedTreatments, treatment)
+    !annotationsDiffModule.lib.areAnnotationsDiffCompatibleWithAnnotations(
+      treatmentModule.lib.computeAnnotations(sortedTreatments),
+      annotationsDiff,
+    )
   ) {
     throw new Error(
       `Could not create treatment for documentId ${idModule.lib.convertToString(

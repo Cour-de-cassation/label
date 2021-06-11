@@ -27,6 +27,23 @@ async function updateTreatment({
   const assignation = await assignationService.findOrCreateByDocumentIdAndUserId(
     { documentId, userId },
   );
+  const treatments = await treatmentRepository.findAllByDocumentId(documentId);
+  const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
+    treatments,
+  );
+
+  if (
+    !annotationsDiffModule.lib.areAnnotationsDiffCompatibleWithAnnotations(
+      treatmentModule.lib.computeAnnotations(sortedTreatments),
+      annotationsDiff,
+    )
+  ) {
+    throw new Error(
+      `Could not update treatment for documentId ${idModule.lib.convertToString(
+        documentId,
+      )}: inconsistent annotations`,
+    );
+  }
 
   const treatment = await treatmentRepository.findById(assignation.treatmentId);
 
@@ -41,28 +58,6 @@ async function updateTreatment({
         ? currentDate - treatment.lastUpdateDate + treatment.duration
         : treatment.duration,
   });
-
-  const previousTreatments = await treatmentRepository.findAllByDocumentId(
-    documentId,
-  );
-  const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
-    previousTreatments,
-  );
-
-  if (
-    !treatmentModule.lib.areAnnotationsConsistent(
-      sortedTreatments.filter(
-        ({ _id }) => !idModule.lib.equalId(_id, treatment._id),
-      ),
-      updatedTreatment,
-    )
-  ) {
-    throw new Error(
-      `Could not update treatment for documentId ${idModule.lib.convertToString(
-        documentId,
-      )}: inconsistent annotations`,
-    );
-  }
 
   await treatmentRepository.updateOne(
     assignation.treatmentId,

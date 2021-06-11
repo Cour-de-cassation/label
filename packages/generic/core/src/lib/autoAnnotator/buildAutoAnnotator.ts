@@ -1,4 +1,5 @@
-import { annotationType, settingsType } from '../../modules';
+import { annotationType } from '../../modules/annotation';
+import { settingsType } from '../../modules/settings';
 import { autoLinker } from '../autoLink';
 import { resolveCouldBeAnotherCategory } from './resolveCouldBeAnotherCategory';
 

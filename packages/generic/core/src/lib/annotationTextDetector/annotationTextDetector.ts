@@ -1,4 +1,4 @@
-import { annotationType } from '../../modules';
+import { annotationType } from '../../modules/annotation';
 import { annotationOverlapDetector } from '../annotationOverlapDetector';
 
 export { annotationTextDetector };

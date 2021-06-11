@@ -1,5 +1,7 @@
 import { mapValues } from 'lodash';
-import { annotationType, fetchedDocumentType, settingsType } from '../../modules';
+import { annotationType } from '../../modules/annotation';
+import { fetchedDocumentType } from '../../modules/document';
+import { settingsType } from '../../modules/settings';
 import { textSplitter } from '../textSplitter';
 import { buildAnonymizedStringGenerator } from './anonymizedStringGenerator';
 

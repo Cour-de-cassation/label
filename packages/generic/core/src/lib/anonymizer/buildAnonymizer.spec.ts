@@ -1,4 +1,6 @@
-import { annotationModule, documentModule, settingsModule } from '../../modules';
+import { annotationModule } from '../../modules/annotation';
+import { documentModule } from '../../modules/document';
+import { settingsModule } from '../../modules/settings';
 import { buildAnonymizer } from './buildAnonymizer';
 
 describe('buildAnonymizer', () => {

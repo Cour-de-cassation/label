@@ -1,5 +1,5 @@
 import { groupBy, uniqBy } from 'lodash';
-import { annotationModule, annotationType } from '../../modules';
+import { annotationModule, annotationType } from '../../modules/annotation';
 
 export { annotationLinkHandler };
 

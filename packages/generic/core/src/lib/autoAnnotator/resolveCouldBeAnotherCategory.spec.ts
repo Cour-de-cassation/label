@@ -1,4 +1,5 @@
-import { annotationModule, settingsModule } from '../../modules';
+import { annotationModule } from '../../modules/annotation';
+import { settingsModule } from '../../modules/settings';
 import { resolveCouldBeAnotherCategory } from './resolveCouldBeAnotherCategory';
 
 describe('resolveCouldBeAnotherCategory', () => {

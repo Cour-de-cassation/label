@@ -1,4 +1,5 @@
-import { annotationModule, annotationType, settingsType } from '../../modules';
+import { annotationModule, annotationType } from '../../modules/annotation';
+import { settingsType } from '../../modules/settings';
 import { stringComparator } from '../stringComparator';
 
 export { resolveCouldBeAnotherCategory };

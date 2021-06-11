@@ -1,12 +1,8 @@
-import {
-  assignationType,
-  documentType,
-  idModule,
-  treatmentModule,
-  treatmentType,
-  statisticModule,
-  statisticType,
-} from '../../modules';
+import { treatmentModule, treatmentType } from '../../modules/treatment';
+import { assignationType } from '../../modules/assignation';
+import { documentType } from '../../modules/document';
+import { statisticType, statisticModule } from '../../modules/statistic';
+import { idModule } from '../../modules/id';
 import { annotationLinkHandler } from '../annotationLinkHandler';
 
 export { statisticsCreator };

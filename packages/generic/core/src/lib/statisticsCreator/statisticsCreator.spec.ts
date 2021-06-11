@@ -1,11 +1,9 @@
-import {
-  annotationModule,
-  annotationsDiffModule,
-  assignationModule,
-  documentModule,
-  idModule,
-  treatmentModule,
-} from '../../modules';
+import { annotationModule } from '../../modules/annotation';
+import { assignationModule } from '../../modules/assignation';
+import { annotationsDiffModule } from '../../modules/annotationsDiff';
+import { documentModule } from '../../modules/document';
+import { idModule } from '../../modules/id';
+import { treatmentModule } from '../../modules/treatment';
 import { statisticsCreator } from './statisticsCreator';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);

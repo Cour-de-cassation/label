@@ -1,4 +1,4 @@
-import { annotationType } from '../../modules';
+import { annotationType } from '../../modules/annotation';
 
 export { textSplitter };
 

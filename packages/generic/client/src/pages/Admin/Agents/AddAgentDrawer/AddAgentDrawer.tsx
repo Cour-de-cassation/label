@@ -26,13 +26,15 @@ type formValuesType = {
   role: userType['role'] | undefined;
 };
 
+const INITIAL_FORM_VALUES = {
+  firstName: undefined,
+  lastName: undefined,
+  email: undefined,
+  role: undefined,
+};
+
 function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void; refetch: () => void }) {
-  const [formValues, setFormValues] = useState<formValuesType>({
-    firstName: undefined,
-    lastName: undefined,
-    email: undefined,
-    role: undefined,
-  });
+  const [formValues, setFormValues] = useState<formValuesType>(INITIAL_FORM_VALUES);
   const [temporaryPassword, setTemporaryPassword] = useState<string | undefined>();
   const [formErrors, setFormErrors] = useState<formErrorType>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -41,9 +43,7 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void; refetch: 
 
   return (
     <>
-      {!!temporaryPassword && (
-        <AgentCreatedPopUp onClose={() => setTemporaryPassword(undefined)} password={temporaryPassword} />
-      )}
+      {!!temporaryPassword && <AgentCreatedPopUp onClose={onClose} password={temporaryPassword} />}
       <Drawer onClose={props.onClose} title={wordings.agentsPage.createAgentDrawer.title} isOpen={props.isOpen}>
         <div style={styles.drawer}>
           <div style={styles.formContainer}>
@@ -102,6 +102,12 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void; refetch: 
       </Drawer>
     </>
   );
+
+  function onClose() {
+    setTemporaryPassword(undefined);
+    setFormErrors({});
+    setFormValues(INITIAL_FORM_VALUES);
+  }
 
   function updateField<T extends keyof formValuesType>(field: T, value: formValuesType[T]) {
     setFormValues({ ...formValues, [field]: value });

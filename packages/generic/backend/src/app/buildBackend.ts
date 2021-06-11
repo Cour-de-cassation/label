@@ -11,7 +11,6 @@ import {
   insertUser,
   revertOneMigration,
   runNewMigrations,
-  runDeploymentScripts,
 } from './scripts';
 
 export { buildBackend };
@@ -57,10 +56,6 @@ function buildBackend(environmentJson: string, settingsJson: string) {
       },
       runNewMigrations: {
         run: runNewMigrations,
-        option: { shouldLoadDb: true, shouldExit: true },
-      },
-      runDeploymentScripts: {
-        run: runDeploymentScripts,
         option: { shouldLoadDb: true, shouldExit: true },
       },
     },

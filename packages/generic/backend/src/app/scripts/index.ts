@@ -2,7 +2,6 @@ import { clearDb } from './clearDb';
 import {
   createMigrationFile,
   revertOneMigration,
-  runDeploymentScripts,
   runNewMigrations,
 } from './deployment';
 import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
@@ -20,6 +19,5 @@ export {
   insertUser,
   revertOneMigration,
   runNewMigrations,
-  runDeploymentScripts,
   setIndexesOnAllCollections,
 };

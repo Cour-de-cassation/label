@@ -1,18 +1,20 @@
 import React from 'react';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { ButtonWithIcon, PopUp, Text } from '../../../components';
+import { Text } from '../materialUI';
+import { ButtonWithIcon } from './ButtonWithIcon';
+import { PopUp } from './PopUp';
 
-export { ResetDocumentConfirmationPopup };
+export { ConfirmationPopup };
 
-function ResetDocumentConfirmationPopup(props: { onConfirm: () => void; onClose: () => void }) {
+function ConfirmationPopup(props: { text: string; onConfirm: () => void; onClose: () => void }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
   return (
     <PopUp>
       <div style={styles.textContainer}>
-        <Text>{wordings.treatedDocumentsPage.table.resetDocumentConfirmationPopup.text}</Text>
+        <Text>{props.text}</Text>
       </div>
       <div style={styles.buttonContainer}>
         <div style={styles.confirmButtonContainer}>

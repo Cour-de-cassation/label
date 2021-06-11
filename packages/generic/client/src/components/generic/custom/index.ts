@@ -2,6 +2,7 @@ import { Button, buttonColorType } from './Button';
 import { ButtonWithIcon } from './ButtonWithIcon';
 import { CircleIcon } from './CircleIcon';
 import { ComponentsList } from './ComponentsList';
+import { ConfirmationPopup } from './ConfirmationPopup';
 import { DatePicker } from './DatePicker';
 import { Dropdown } from './Dropdown';
 import { DropdownButton } from './DropdownButton';
@@ -22,6 +23,7 @@ export {
   ButtonWithIcon,
   CircleIcon,
   ComponentsList,
+  ConfirmationPopup,
   DatePicker,
   Dropdown,
   DropdownButton,

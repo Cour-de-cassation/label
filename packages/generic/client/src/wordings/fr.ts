@@ -31,11 +31,15 @@ const fr = {
       optionItems: {
         resetPassword: 'Réinitialiser le mot de passe',
       },
-      passwordResetPopup: {
+      passwordResetSuccessPopup: {
         passwordResetConfirmation: 'Le mot de passe a bien été réinitialisé',
         passwordIndication:
           'Veuillez noter et lui transmettre son nouveau mot de passe ci-après. Ce mot de passe doit être changé dès la première connexion afin d’assurer la sécurité du système.',
         button: "C'est noté",
+      },
+      passwordResetConfirmationPopup: {
+        text:
+          "Cette action supprimera l'ancien mot de passe et vous affichera un nouveau mot de passe que vous devrez transmettre à l'agent.",
       },
       roles: {
         admin: 'Administrateur',

@@ -48,7 +48,6 @@ import {
   PlaylistAddCheckRounded,
   PlaylistPlayRounded,
   PowerSettingsNewRounded,
-  PriorityHighRounded,
   PublicRounded,
   PublishRounded,
   QuestionAnswerRounded,
@@ -66,6 +65,7 @@ import {
   UndoRounded,
   UpdateRounded,
   VisibilityRounded,
+  VpnKeyRounded,
 } from '@material-ui/icons';
 import { categoryIconNameType } from '@label/core';
 import { Tooltip } from './Tooltip';
@@ -77,7 +77,6 @@ export type { iconNameType };
 const materialIconMapping = {
   addPerson: PersonAddRounded,
   admin: SupervisorAccountRounded,
-  alert: PriorityHighRounded,
   arrowDown: ExpandMoreRounded,
   arrowLeft: ChevronLeftRounded,
   arrowRight: ChevronRightRounded,
@@ -98,6 +97,7 @@ const materialIconMapping = {
   export: GetAppRounded,
   home: HomeRounded,
   human: AccessibilityNewRounded,
+  key: VpnKeyRounded,
   lightBulb: EmojiObjectsRounded,
   link: Link,
   login: ExitToAppRounded,

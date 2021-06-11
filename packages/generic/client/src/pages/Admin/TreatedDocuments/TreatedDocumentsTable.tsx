@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiRouteOutType, documentType, idModule } from '@label/core';
 import { apiCaller } from '../../../api';
-import { PaginatedTable, tableRowFieldType } from '../../../components';
+import { PaginatedTable, tableRowFieldType, ConfirmationPopup } from '../../../components';
 import { wordings } from '../../../wordings';
 import { localStorage, treatedDocumentOrderByProperties } from '../../../services/localStorage';
 import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';
-import { ResetDocumentConfirmationPopup } from './ResetDocumentConfirmationPopup';
 import { useAlert } from '../../../services/alert';
 import { routes } from '../../routes';
 
@@ -36,7 +35,8 @@ function TreatedDocumentsTable(props: {
   return (
     <div style={styles.container}>
       {!!documentIdToReset && (
-        <ResetDocumentConfirmationPopup
+        <ConfirmationPopup
+          text={wordings.treatedDocumentsPage.table.resetDocumentConfirmationPopup.text}
           onConfirm={() => onConfirmResetDocument(documentIdToReset)}
           onClose={() => setDocumentIdToReset(undefined)}
         />

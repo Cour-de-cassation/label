@@ -3,18 +3,18 @@ import { ButtonWithIcon, PopUp, Text } from '../../../components';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 
-export { PasswordResetPopup };
+export { PasswordResetSuccessPopup };
 
-function PasswordResetPopup(props: { password: string; onClose: () => void }) {
+function PasswordResetSuccessPopup(props: { password: string; onClose: () => void }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
   return (
     <PopUp>
       <div style={styles.textContainer}>
-        <Text>{wordings.agentsPage.table.passwordResetPopup.passwordResetConfirmation}</Text>
+        <Text>{wordings.agentsPage.table.passwordResetSuccessPopup.passwordResetConfirmation}</Text>
         <br />
-        <Text>{wordings.agentsPage.table.passwordResetPopup.passwordIndication}</Text>
+        <Text>{wordings.agentsPage.table.passwordResetSuccessPopup.passwordIndication}</Text>
       </div>
       <div style={styles.passwordContainer}>
         <Text variant="h1">{props.password}</Text>
@@ -23,7 +23,7 @@ function PasswordResetPopup(props: { password: string; onClose: () => void }) {
         <ButtonWithIcon
           onClick={props.onClose}
           iconName="edit"
-          text={wordings.agentsPage.table.passwordResetPopup.button}
+          text={wordings.agentsPage.table.passwordResetSuccessPopup.button}
           color="primary"
         />
       </div>

@@ -11,6 +11,7 @@ const userModel = buildModel({
     _id: { kind: 'custom', content: 'id' },
     email: { kind: 'primitive', content: 'string' },
     hashedPassword: { kind: 'primitive', content: 'string' },
+    isActivated: { kind: 'primitive', content: 'boolean' },
     name: { kind: 'primitive', content: 'string' },
     role: {
       kind: 'constant',

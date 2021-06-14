@@ -1,3 +1,4 @@
+import { assertAuthorization } from './assertAuthorization';
 import { assertPermissions } from './assertPermissions';
 import { buildUser } from './buildUser';
 import { computeHashedPassword } from './computeHashedPassword';
@@ -7,6 +8,7 @@ import { isPasswordValid } from './isPasswordValid';
 import { isUserPassword } from './isUserPassword';
 
 export {
+  assertAuthorization,
   assertPermissions,
   buildUser,
   computeHashedPassword,

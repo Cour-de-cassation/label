@@ -20,7 +20,7 @@ function Agents(props: { usersWithDetails: apiRouteOutType<'get', 'usersWithDeta
         </div>
       </div>
       <div style={styles.tableContentContainer}>
-        <AgentsTable usersWithDetails={props.usersWithDetails} fields={userFields} />
+        <AgentsTable refetch={props.refetch} usersWithDetails={props.usersWithDetails} fields={userFields} />
       </div>
     </div>
   );

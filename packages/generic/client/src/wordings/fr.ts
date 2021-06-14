@@ -29,6 +29,8 @@ const fr = {
         role: 'Habilitation',
       },
       optionItems: {
+        activate: 'Activer',
+        deactivate: 'Désactiver',
         resetPassword: 'Réinitialiser le mot de passe',
       },
       passwordResetSuccessPopup: {

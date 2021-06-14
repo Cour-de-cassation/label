@@ -1,5 +1,6 @@
 import { userGenerator } from './generator';
 import {
+  assertAuthorization,
   assertPermissions,
   buildUser,
   computeHashedPassword,
@@ -18,6 +19,7 @@ const userModule = {
   model: userModel,
   generator: userGenerator,
   lib: {
+    assertAuthorization,
     assertPermissions,
     buildUser,
     computeHashedPassword,

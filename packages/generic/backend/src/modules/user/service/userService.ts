@@ -34,6 +34,7 @@ function buildUserService() {
     fetchUsersWithDetails,
     login,
     resetPassword,
+    setIsActivatedForUser,
     signUpUser,
   };
 
@@ -99,13 +100,15 @@ function buildUserService() {
     const users = await userRepository.findAllProjection([
       '_id',
       'email',
+      'isActivated',
       'name',
       'role',
     ]);
-    return users.map(({ _id, email, name, role }) => ({
+    return users.map(({ _id, email, isActivated, name, role }) => ({
       user: {
         _id,
         email,
+        isActivated,
         name,
         role,
       },
@@ -155,6 +158,17 @@ function buildUserService() {
     }
 
     return password;
+  }
+
+  async function setIsActivatedForUser({
+    userId,
+    isActivated,
+  }: {
+    userId: userType['_id'];
+    isActivated: userType['isActivated'];
+  }) {
+    const userRepository = buildUserRepository();
+    await userRepository.updateOne(userId, { isActivated });
   }
 
   async function signUpUser({

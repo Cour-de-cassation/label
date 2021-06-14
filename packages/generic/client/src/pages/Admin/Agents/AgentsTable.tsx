@@ -9,6 +9,7 @@ export { AgentsTable };
 
 function AgentsTable(props: {
   fields: Array<tableRowFieldType<apiRouteOutType<'get', 'usersWithDetails'>[number]>>;
+  refetch: () => void;
   usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'>;
 }) {
   const [newPassword, setNewPassword] = useState<string | undefined>();
@@ -25,9 +26,18 @@ function AgentsTable(props: {
           text={wordings.agentsPage.table.passwordResetConfirmationPopup.text}
         />
       )}
-      <Table fields={props.fields} data={props.usersWithDetails} buildOptionItems={buildOptionItems} />
+      <Table
+        isRowMinored={isRowMinored}
+        fields={props.fields}
+        data={props.usersWithDetails}
+        buildOptionItems={buildOptionItems}
+      />
     </div>
   );
+
+  function isRowMinored(userWithDetails: apiRouteOutType<'get', 'usersWithDetails'>[number]) {
+    return !userWithDetails.user.isActivated;
+  }
 
   function buildOnConfirmResetPassword(resetPasswordUserId: userType['_id']) {
     return () => {
@@ -44,13 +54,30 @@ function AgentsTable(props: {
   }
 
   function buildOptionItems(userWithDetails: apiRouteOutType<'get', 'usersWithDetails'>[number]) {
+    const toggleIsActivatedOptionItem = buildToggleIsActivatedOptionItem(userWithDetails.user);
     return [
       {
         text: wordings.agentsPage.table.optionItems.resetPassword,
         onClick: async () => setResetPasswordUserId(userWithDetails.user._id),
         iconName: 'key' as const,
       },
+      toggleIsActivatedOptionItem,
     ];
+  }
+
+  function buildToggleIsActivatedOptionItem(user: apiRouteOutType<'get', 'usersWithDetails'>[number]['user']) {
+    const iconName: 'lock' | 'unlock' = user.isActivated ? 'lock' : 'unlock';
+    const onClick = async () => {
+      await apiCaller.post<'setIsActivatedForUser'>('setIsActivatedForUser', {
+        isActivated: !user.isActivated,
+        userId: user._id,
+      });
+      props.refetch();
+    };
+    const text = user.isActivated
+      ? wordings.agentsPage.table.optionItems.deactivate
+      : wordings.agentsPage.table.optionItems.activate;
+    return { iconName, text, onClick };
   }
 
   function buildStyles() {

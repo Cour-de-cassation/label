@@ -329,6 +329,7 @@ const apiSchema = {
               content: {
                 _id: userModule.model.content._id,
                 email: userModule.model.content.email,
+                isActivated: userModule.model.content.isActivated,
                 name: userModule.model.content.name,
                 role: userModule.model.content.role,
               },
@@ -447,6 +448,19 @@ const apiSchema = {
       out: buildModel({
         kind: 'primitive',
         content: 'string',
+      } as const),
+    },
+    setIsActivatedForUser: {
+      in: {
+        userId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+        isActivated: userModule.model.content.isActivated,
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
       } as const),
     },
     updateAssignationDocumentStatus: {

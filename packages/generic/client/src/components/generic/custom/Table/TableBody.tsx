@@ -22,6 +22,7 @@ function TableBody<InputT, orderByPropertyT extends string = string>(props: {
   data: InputT[];
   fields: Array<tableRowFieldType<InputT, orderByPropertyT>>;
   isRowHighlighted?: (row: InputT) => boolean;
+  isRowMinored?: (row: InputT) => boolean;
   onRowClick?: (row: InputT) => void;
   optionCellStyle?: CSSProperties;
   buildOptionItems?: (data: InputT) => Array<optionItemType>;
@@ -37,6 +38,7 @@ function TableBody<InputT, orderByPropertyT extends string = string>(props: {
         <TableRow
           fields={props.fields}
           isHighlighted={!!props.isRowHighlighted && props.isRowHighlighted(row)}
+          isMinored={!!props.isRowMinored && props.isRowMinored(row)}
           onRowClick={onRowClick ? () => onRowClick(row) : undefined}
           optionCellStyle={props.optionCellStyle}
           buildOptionItems={props.buildOptionItems}

@@ -22,6 +22,7 @@ async function buildUser({
     email: formatEmail(email),
     hashedPassword,
     _id: idModule.lib.buildId(),
+    isActivated: true,
     name,
     role,
   };

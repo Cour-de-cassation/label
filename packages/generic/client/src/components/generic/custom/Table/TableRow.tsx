@@ -12,6 +12,7 @@ function TableRow<InputT>(props: {
   fields: Array<tableRowFieldType<InputT>>;
   row: InputT;
   isHighlighted: boolean;
+  isMinored: boolean;
   onRowClick?: () => void;
   buildOptionItems?: (data: InputT) => Array<optionItemType>;
   optionCellStyle?: CSSProperties;
@@ -20,6 +21,7 @@ function TableRow<InputT>(props: {
   const [isHovered, setIsHovered] = useState(false);
   const styles = buildStyles(theme);
   const cellWeight = props.isHighlighted ? 'bold' : 'normal';
+  const cellColor = props.isMinored ? 'textSecondary' : 'textPrimary';
   const formattedRow = props.fields.map((field) =>
     field.render ? field.render(props.row) : <Text variant="h3">{field.extractor(props.row)}</Text>,
   );
@@ -35,7 +37,7 @@ function TableRow<InputT>(props: {
       >
         {Object.values(formattedRow).map((value) => (
           <td>
-            <Text weight={cellWeight} variant="h3">
+            <Text weight={cellWeight} color={cellColor} variant="h3">
               {value}
             </Text>
           </td>

@@ -24,6 +24,7 @@ function Table<InputT, orderByPropertyT extends string = string>(props: {
   defaultOrderDirection?: orderDirectionType;
   footer?: Array<footerCellType>;
   isRowHighlighted?: (row: InputT) => boolean;
+  isRowMinored?: (row: InputT) => boolean;
   data: InputT[];
   buildOptionItems?: (data: InputT) => Array<optionItemType>;
   onOrderByPropertyChange?: (newOrderByProperty: orderByPropertyT) => void;
@@ -82,6 +83,7 @@ function Table<InputT, orderByPropertyT extends string = string>(props: {
         data={props.data}
         fields={props.fields}
         isRowHighlighted={props.isRowHighlighted}
+        isRowMinored={props.isRowMinored}
         orderByProperty={orderByProperty}
         orderDirection={orderDirection}
         buildOptionItems={props.buildOptionItems}

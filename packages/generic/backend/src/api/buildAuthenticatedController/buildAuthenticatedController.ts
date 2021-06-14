@@ -23,6 +23,7 @@ function buildAuthenticatedController<inT, outT>({
     const user = await userService.fetchAuthenticatedUserFromAuthorizationHeader(
       req.headers.authorization,
     );
+    userModule.lib.assertAuthorization(user);
     userModule.lib.assertPermissions(user, permissions);
 
     return controllerWithUser(user, req);

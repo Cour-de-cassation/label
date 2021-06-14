@@ -19,6 +19,7 @@ async function buildUser({
   const hashedPassword = await computeHashedPassword(password);
 
   return {
+    deletionDate: undefined,
     email: formatEmail(email),
     hashedPassword,
     _id: idModule.lib.buildId(),

@@ -35,6 +35,7 @@ function buildUserService() {
     login,
     resetPassword,
     setIsActivatedForUser,
+    setDeletionDateForUser,
     signUpUser,
   };
 
@@ -97,7 +98,7 @@ function buildUserService() {
 
   async function fetchUsersWithDetails() {
     const userRepository = buildUserRepository();
-    const users = await userRepository.findAllProjection([
+    const users = await userRepository.findAllWithNoDeletionDateProjection([
       '_id',
       'email',
       'isActivated',
@@ -158,6 +159,13 @@ function buildUserService() {
     }
 
     return password;
+  }
+
+  async function setDeletionDateForUser(userId: userType['_id']) {
+    const userRepository = buildUserRepository();
+    await userRepository.updateOne(userId, {
+      deletionDate: new Date().getTime(),
+    });
   }
 
   async function setIsActivatedForUser({

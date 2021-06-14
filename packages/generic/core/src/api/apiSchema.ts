@@ -450,6 +450,18 @@ const apiSchema = {
         content: 'string',
       } as const),
     },
+    setDeletionDateForUser: {
+      in: {
+        userId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     setIsActivatedForUser: {
       in: {
         userId: buildModel({

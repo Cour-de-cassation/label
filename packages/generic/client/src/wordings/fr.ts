@@ -31,7 +31,12 @@ const fr = {
       optionItems: {
         activate: 'Activer',
         deactivate: 'Désactiver',
+        delete: 'Supprimer...',
         resetPassword: 'Réinitialiser le mot de passe',
+      },
+      deleteUserConfirmationPopup: {
+        text:
+          'Cette action supprimera cet utilisateur. Ses statistiques seront cependant toujours présentes en base de données. Cette action est irréversible, souhaitez-vous continuer ?',
       },
       passwordResetSuccessPopup: {
         passwordResetConfirmation: 'Le mot de passe a bien été réinitialisé',

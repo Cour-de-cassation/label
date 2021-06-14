@@ -120,6 +120,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         });
       },
     }),
+
     changePassword: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'publicator'],
       controllerWithUser: async (
@@ -191,6 +192,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { userId } }) =>
         userService.resetPassword(idModule.lib.buildId(userId)),
+    }),
+
+    setDeletionDateForUser: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { userId } }) =>
+        userService.setDeletionDateForUser(idModule.lib.buildId(userId)),
     }),
 
     setIsActivatedForUser: buildAuthenticatedController({

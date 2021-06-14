@@ -14,6 +14,7 @@ function AgentsTable(props: {
 }) {
   const [newPassword, setNewPassword] = useState<string | undefined>();
   const [resetPasswordUserId, setResetPasswordUserId] = useState<userType['_id'] | undefined>();
+  const [deleteUserId, setDeleteUserId] = useState<userType['_id'] | undefined>();
   const styles = buildStyles();
 
   return (
@@ -24,6 +25,13 @@ function AgentsTable(props: {
           onClose={() => setResetPasswordUserId(undefined)}
           onConfirm={buildOnConfirmResetPassword(resetPasswordUserId)}
           text={wordings.agentsPage.table.passwordResetConfirmationPopup.text}
+        />
+      )}
+      {!!deleteUserId && (
+        <ConfirmationPopup
+          onClose={() => setDeleteUserId(undefined)}
+          onConfirm={buildOnConfirmDeleteUser(deleteUserId)}
+          text={wordings.agentsPage.table.deleteUserConfirmationPopup.text}
         />
       )}
       <Table
@@ -46,6 +54,14 @@ function AgentsTable(props: {
     };
   }
 
+  function buildOnConfirmDeleteUser(deleteUserId: userType['_id']) {
+    return async () => {
+      await apiCaller.post<'setDeletionDateForUser'>('setDeletionDateForUser', { userId: deleteUserId });
+      setDeleteUserId(undefined);
+      props.refetch();
+    };
+  }
+
   async function resetPasswordForUserId(userId: userType['_id']) {
     const { data: newPassword } = await apiCaller.post<'resetPassword'>('resetPassword', {
       userId,
@@ -62,6 +78,13 @@ function AgentsTable(props: {
         iconName: 'key' as const,
       },
       toggleIsActivatedOptionItem,
+      {
+        text: wordings.agentsPage.table.optionItems.delete,
+        onClick: () => {
+          setDeleteUserId(userWithDetails.user._id);
+        },
+        iconName: 'delete' as const,
+      },
     ];
   }
 

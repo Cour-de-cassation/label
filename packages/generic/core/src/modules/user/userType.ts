@@ -9,6 +9,13 @@ const userModel = buildModel({
   kind: 'object',
   content: {
     _id: { kind: 'custom', content: 'id' },
+    deletionDate: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'number' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     email: { kind: 'primitive', content: 'string' },
     hashedPassword: { kind: 'primitive', content: 'string' },
     isActivated: { kind: 'primitive', content: 'boolean' },

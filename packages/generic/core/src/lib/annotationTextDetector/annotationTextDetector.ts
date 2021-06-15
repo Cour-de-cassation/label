@@ -9,54 +9,55 @@ const annotationTextDetector = {
 
 function detectAnnotationTextsAndIndices({
   documentText,
-  annotationIndex,
   annotationText,
   annotations,
 }: {
   documentText: string;
-  annotationIndex: number;
   annotationText: string;
   annotations: annotationType[];
 }) {
   let currentIndex = -1;
   const textsAndIndices: { text: string; index: number }[] = [];
   do {
-    const annotationDetection = computeAnnotationDetection(annotationText, currentIndex);
+    const annotationDetection = computeAnnotationDetection(documentText, annotationText, currentIndex);
     currentIndex = annotationDetection.index;
-    const { text } = annotationDetection;
     if (
       currentIndex !== -1 &&
-      !annotationOverlapDetector.isAnnotationTextOverlappedWithAnyAnnotations(annotations, currentIndex, text) &&
-      (!isAnnotationTextInsideLargerWord(currentIndex) || currentIndex === annotationIndex)
+      !annotationOverlapDetector.isAnnotationTextOverlappedWithAnyAnnotations(
+        annotations,
+        currentIndex,
+        annotationDetection.text,
+      ) &&
+      !isAnnotationTextInsideLargerWord(documentText, annotationText, currentIndex)
     ) {
-      textsAndIndices.push({ index: currentIndex, text });
+      textsAndIndices.push({ index: currentIndex, text: annotationDetection.text });
     }
   } while (currentIndex !== -1);
   return textsAndIndices;
+}
 
-  function isAnnotationTextInsideLargerWord(index: number) {
-    const nonBoundaryCharacterRegex = /^[a-zA-Z0-9ÈÉÊÎÏÔÖÙÚÛÜèéêîïôöùû]/;
-    const isWordBeginningOnBoundary = index === 0 || !documentText[index - 1].match(nonBoundaryCharacterRegex);
-    const isWordEndingOnBoundary =
-      index + annotationText.length === documentText.length ||
-      !documentText[index + annotationText.length].match(nonBoundaryCharacterRegex);
-    return !isWordBeginningOnBoundary || !isWordEndingOnBoundary;
-  }
+function isAnnotationTextInsideLargerWord(documentText: string, annotationText: string, index: number) {
+  const nonBoundaryCharacterRegex = /^[a-zA-Z0-9ÈÉÊÎÏÔÖÙÚÛÜèéêîïôöùû]/;
+  const isWordBeginningOnBoundary = index === 0 || !documentText[index - 1].match(nonBoundaryCharacterRegex);
+  const isWordEndingOnBoundary =
+    index + annotationText.length === documentText.length ||
+    !documentText[index + annotationText.length].match(nonBoundaryCharacterRegex);
+  return !isWordBeginningOnBoundary || !isWordEndingOnBoundary;
+}
 
-  function computeAnnotationDetection(annotationText: string, currentIndex: number) {
-    const text = replaceAccents(annotationText);
-    const index = replaceAccents(documentText).indexOf(text, currentIndex + 1);
-    if (index !== -1) {
-      return {
-        index,
-        text: documentText.substr(index, text.length),
-      };
-    }
+function computeAnnotationDetection(documentText: string, annotationText: string, currentIndex: number) {
+  const text = replaceAccents(annotationText);
+  const index = replaceAccents(documentText).indexOf(text, currentIndex + 1);
+  if (index !== -1) {
     return {
-      text: annotationText,
-      index: -1,
+      index,
+      text: documentText.substr(index, text.length),
     };
   }
+  return {
+    text: annotationText,
+    index: -1,
+  };
 }
 
 function replaceAccents(text: string) {

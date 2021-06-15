@@ -9,9 +9,6 @@ type connectorConfigType = {
     startDate: Date;
     endDate: Date;
   }): Promise<decisionType[]>;
-  fetchBoundDocumentsBySourceIds: (
-    sourceIds: number[],
-  ) => Promise<documentType[]>;
   updateDocumentsLoadedStatus: (documents: documentType[]) => Promise<void>;
   mapCourtDecisionToDocument: (courtDecision: decisionType) => documentType;
 };

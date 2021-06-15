@@ -20,7 +20,10 @@ const treatmentModel = buildModel({
     order: { kind: 'primitive', content: 'number' },
     resizedBiggerAnnotationsCount: { kind: 'primitive', content: 'number' },
     resizedSmallerAnnotationsCount: { kind: 'primitive', content: 'number' },
-    source: { kind: 'constant', content: ['annotator', 'admin', 'NLP', 'postProcess'] as const },
+    source: {
+      kind: 'constant',
+      content: ['annotator', 'admin', 'NLP', 'postProcess', 'supplementaryAnnotations'] as const,
+    },
   },
 } as const);
 

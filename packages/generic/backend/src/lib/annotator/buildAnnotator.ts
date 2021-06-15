@@ -14,6 +14,7 @@ import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
+import { computeAdditionalAnnotations } from './computeAdditionalAnnotations';
 
 export { buildAnnotator };
 
@@ -104,7 +105,30 @@ function buildAnnotator(
     }
     await documentService.updateDocumentStatus(document._id, 'free');
     await createAnnotatorTreatment({ annotations, documentId });
-    await createAutoTreatment({ annotations, documentId });
+    const customCategory = 'custom';
+    if (Object.keys(settings).includes(customCategory)) {
+      const additionalAnnotations = computeAdditionalAnnotations(
+        document,
+        annotations,
+        customCategory,
+      );
+      if (additionalAnnotations.length > 0) {
+        await createAdditionalAnnotationsTreatment({
+          annotations: additionalAnnotations,
+          documentId: document._id,
+        });
+      }
+      await createAutoTreatment({
+        annotations: [...annotations, ...additionalAnnotations],
+        documentId,
+      });
+    } else {
+      await createAutoTreatment({
+        annotations,
+        documentId,
+      });
+    }
+
     await createReport(report);
   }
 
@@ -120,6 +144,21 @@ function buildAnnotator(
       previousAnnotations: [],
       nextAnnotations: annotations,
       source: 'NLP',
+    });
+  }
+
+  async function createAdditionalAnnotationsTreatment({
+    annotations,
+    documentId,
+  }: {
+    annotations: annotationType[];
+    documentId: idType;
+  }) {
+    await treatmentService.createTreatment({
+      documentId,
+      previousAnnotations: [],
+      nextAnnotations: annotations,
+      source: 'supplementaryAnnotations',
     });
   }
 

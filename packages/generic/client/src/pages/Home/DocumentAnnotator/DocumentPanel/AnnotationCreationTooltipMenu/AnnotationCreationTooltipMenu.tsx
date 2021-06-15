@@ -131,12 +131,13 @@ function AnnotationCreationTooltipMenu(props: {
 
   function getAnnotationTextsAndIndices() {
     if (props.textSelection.length === 1) {
-      return annotationTextDetector.detectAnnotationTextsAndIndices({
-        documentText: annotatorState.document.text,
-        annotationIndex: props.textSelection[0].index,
-        annotationText: props.textSelection[0].text,
-        annotations: annotatorState.annotations,
-      });
+      return annotationTextDetector
+        .detectAnnotationTextsAndIndices({
+          documentText: annotatorState.document.text,
+          annotationText: props.textSelection[0].text,
+          annotations: annotatorState.annotations,
+        })
+        .filter(({ index }) => index !== props.textSelection[0].index);
     }
     return [];
   }

@@ -1,5 +1,3 @@
-import { decisionType } from 'sder';
-import { sderMapper } from '../mapper';
 import { sderApi } from '../../sderApi';
 
 export { sderFetcher };
@@ -25,14 +23,5 @@ const sderFetcher = {
         courtDecision.originalText &&
         courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,
     );
-  },
-
-  async fetchBoundDocumentsBySourceIds(sourceIds: decisionType['sourceId'][]) {
-    const courtDecisions = await sderApi.fetchCourtDecisionsBySourceIdsAndSourceName(
-      sourceIds,
-      'jurica',
-    );
-
-    return courtDecisions.map(sderMapper.mapCourtDecisionToDocument);
   },
 };

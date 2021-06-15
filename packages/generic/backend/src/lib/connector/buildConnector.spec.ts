@@ -45,13 +45,6 @@ function buildFakeConnectorWithNDecisions(n: number) {
     async fetchAllCourtDecisionsBetween() {
       return courtDecisions;
     },
-    async fetchBoundDocumentsBySourceIds(sourceIds: number[]) {
-      return documents.filter(
-        (document) =>
-          document.source === 'jurica' &&
-          sourceIds.includes(Number(document.externalId)),
-      );
-    },
     async updateDocumentsLoadedStatus() {},
     getAllDocuments() {
       return documents;

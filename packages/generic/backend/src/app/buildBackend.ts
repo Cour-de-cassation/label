@@ -9,6 +9,7 @@ import {
   freePendingDocuments,
   insertTestUsers,
   insertUser,
+  purgeDb,
   revertOneMigration,
   runNewMigrations,
 } from './scripts';
@@ -49,6 +50,10 @@ function buildBackend(environmentJson: string, settingsJson: string) {
       insertUser: {
         run: insertUser,
         option: { shouldLoadDb: true, shouldExit: false },
+      },
+      purgeDb: {
+        run: purgeDb,
+        option: { shouldLoadDb: true, shouldExit: true },
       },
       revertOneMigration: {
         run: revertOneMigration,

@@ -8,6 +8,7 @@ import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoC
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestUsers } from './insertTestUsers';
 import { insertUser } from './insertUser';
+import { purgeDb } from './purgeDb';
 import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
 
 export {
@@ -17,6 +18,7 @@ export {
   freePendingDocuments,
   insertTestUsers,
   insertUser,
+  purgeDb,
   revertOneMigration,
   runNewMigrations,
   setIndexesOnAllCollections,

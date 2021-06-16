@@ -16,5 +16,13 @@ const buildFakeStatisticRepository = buildFakeRepositoryBuilder<
         buildFakeRessourceFilterRequest(ressourceFilter),
       );
     },
+
+    async findAllIdsBefore(date) {
+      const statistics = collection.filter(
+        (statistic) => statistic.treatmentDate <= date,
+      );
+
+      return statistics.map((statistic) => statistic._id);
+    },
   }),
 });

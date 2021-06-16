@@ -19,5 +19,14 @@ const buildStatisticRepository = buildRepositoryBuilder<
 
       return collection.find(ressourceFilterRequest).toArray();
     },
+
+    async findAllIdsBefore(date) {
+      const statistics = await collection
+        .find({ treatmentDate: { $lte: date } })
+        .project({ _id: 1 })
+        .toArray();
+
+      return statistics.map((statistic) => statistic._id);
+    },
   }),
 });

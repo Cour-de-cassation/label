@@ -13,3 +13,6 @@ LABELCRONLOGFILE=/home/label/packages/courDeCassation/cron.log.txt
 
 # Database maintenance
 */15 * * * * node $LABELPATH/dist/scripts/freePendingDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --sinceMinutes 15 >> $LABELCRONLOGFILE 2>&1
+
+# Database purge
+0 1 * * * node $LABELPATH/dist/scripts/purgeDb.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --beforeMonths 6 >> $LABELCRONLOGFILE 2>&1

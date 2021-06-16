@@ -22,5 +22,15 @@ function buildDateBuilder(now: () => Date) {
 
       return dateInSeveralMinutesInThePast.getTime();
     },
+
+    monthsAgo(months: number): number {
+      const dateInSeveralMonthsInThePast = now();
+
+      dateInSeveralMonthsInThePast.setMonth(
+        dateInSeveralMonthsInThePast.getMonth() - months,
+      );
+
+      return dateInSeveralMonthsInThePast.getTime();
+    },
   };
 }

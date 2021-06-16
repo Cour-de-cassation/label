@@ -1,4 +1,4 @@
-import { ressourceFilterType, statisticType } from '@label/core';
+import { idType, ressourceFilterType, statisticType } from '@label/core';
 
 export type { customStatisticRepositoryType };
 
@@ -7,4 +7,5 @@ type customStatisticRepositoryType = {
   findAllByRessourceFilter: (
     ressourceFilter: ressourceFilterType,
   ) => Promise<Array<statisticType>>;
+  findAllIdsBefore: (date: number) => Promise<Array<idType>>;
 };

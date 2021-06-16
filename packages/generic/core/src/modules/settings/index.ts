@@ -1,4 +1,5 @@
 import {
+  additionalAnnotationCategoryHandler,
   buildSettings,
   computeFilteredSettings,
   parseFromJson,
@@ -24,6 +25,7 @@ export type { colorType, constantColorType, displayModeType, settingsType, shade
 const settingsModule = {
   model: settingsModel,
   lib: {
+    additionalAnnotationCategoryHandler,
     buildSettings,
     computeFilteredSettings,
     parseFromJson,

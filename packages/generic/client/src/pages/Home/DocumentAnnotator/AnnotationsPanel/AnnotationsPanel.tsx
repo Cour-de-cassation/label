@@ -1,4 +1,5 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
+import { settingsModule, fetchedDocumentType } from '@label/core';
 import { Text } from '../../../../components';
 import { customThemeType, heights, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -10,6 +11,7 @@ import { useEntityEntryHandler } from './useEntityEntryHandler';
 export { AnnotationsPanel };
 
 function AnnotationsPanel(props: {
+  document: fetchedDocumentType;
   annotationPerCategoryAndEntity: annotationPerCategoryAndEntityType;
   splittedTextByLine: splittedTextByLineType;
 }) {
@@ -25,26 +27,48 @@ function AnnotationsPanel(props: {
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
-        {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => (
-          <div key={category} style={styles.category}>
-            {categorySize > 0 ? (
-              <CategoryTable
-                categoryAnnotations={categoryAnnotations}
-                category={category}
-                categorySize={categorySize}
-                entityEntryHandler={entityEntryHandler}
-                splittedTextByLine={props.splittedTextByLine}
-              />
-            ) : (
-              <EmptyCategory category={category} />
-            )}
-          </div>
-        ))}
+        {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => {
+          const isCategoryAdditionalAnnotationCategory =
+            category === settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName();
+          const categoryContainerStyle = isCategoryAdditionalAnnotationCategory
+            ? styles.additionalAnnotationCategoryContainer
+            : styles.categoryContainer;
+
+          return (
+            <div key={category} style={categoryContainerStyle}>
+              {renderCategory({ category, categorySize, categoryAnnotations })}
+              {isCategoryAdditionalAnnotationCategory &&
+                renderAdditionalAnnotationTerms(props.document.decisionMetadata.additionalTermsToAnnotate)}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 
-  function buildStyles(theme: customThemeType): { [cssClass: string]: CSSProperties } {
+  function renderCategory({ category, categorySize, categoryAnnotations }: annotationPerCategoryAndEntityType[number]) {
+    return categorySize > 0 ? (
+      <CategoryTable
+        categoryAnnotations={categoryAnnotations}
+        category={category}
+        categorySize={categorySize}
+        entityEntryHandler={entityEntryHandler}
+        splittedTextByLine={props.splittedTextByLine}
+      />
+    ) : (
+      <EmptyCategory category={category} />
+    );
+  }
+
+  function renderAdditionalAnnotationTerms(additionalTermsToAnnotate: string) {
+    return (
+      <div style={styles.additionalAnnotationTermsContainer}>
+        <Text>{additionalTermsToAnnotate}</Text>
+      </div>
+    );
+  }
+
+  function buildStyles(theme: customThemeType) {
     return {
       panel: {
         width: '100%',
@@ -61,9 +85,19 @@ function AnnotationsPanel(props: {
         height: heights.annotatorPanel,
         paddingRight: theme.spacing * 2,
       },
-      category: {
+      additionalAnnotationTermsContainer: {
+        marginTop: theme.spacing,
+        marginRight: theme.spacing,
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'flex-end',
+      },
+      additionalAnnotationCategoryContainer: {
+        marginBottom: theme.spacing * 3,
+      },
+      categoryContainer: {
         marginBottom: theme.spacing,
       },
-    };
+    } as const;
   }
 }

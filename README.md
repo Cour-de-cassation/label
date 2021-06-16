@@ -10,9 +10,9 @@ To run the backend, use the command associate yarn docker command:
 
 ```sh
 # Build the container
-yarn dockerBackendBuild
+yarn buildLocalDevDocker
 # Run the container
-yarn dockerBackendStart
+yarn startLocalDevDocker
 ```
 
 The container will be started with a database with fresh data.

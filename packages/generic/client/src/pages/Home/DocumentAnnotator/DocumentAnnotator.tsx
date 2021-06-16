@@ -7,7 +7,7 @@ import { useMonitoring } from '../../../services/monitoring';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { useKeyboardShortcutsHandler } from './hooks';
-import { getSplittedTextByLine, groupByCategoryAndEntity } from './lib';
+import { annotationPerCategoryAndEntityType, getSplittedTextByLine, groupByCategoryAndEntity } from './lib';
 import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
 
 export { DocumentAnnotator };
@@ -25,7 +25,9 @@ function DocumentAnnotator(props: {
 
   const styles = buildStyles();
   const categories = settingsModule.lib.getCategories(annotatorState.settings);
-  const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories);
+  const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories).sort(
+    sortAdditionalAnnotationsFirst,
+  );
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
 
   return (
@@ -34,6 +36,7 @@ function DocumentAnnotator(props: {
         <div style={styles.annotatorBody}>
           <div style={styles.leftContainer}>
             <AnnotationsPanel
+              document={annotatorState.document}
               annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
               splittedTextByLine={splittedTextByLine}
             />
@@ -55,6 +58,20 @@ function DocumentAnnotator(props: {
   function onRestoreState() {
     addMonitoringEntry({ origin: 'shortcut', action: 'restore' });
     annotatorStateHandler.restore();
+  }
+
+  function sortAdditionalAnnotationsFirst(
+    { category: categoryA }: annotationPerCategoryAndEntityType[number],
+    { category: categoryB }: annotationPerCategoryAndEntityType[number],
+  ) {
+    const additionalAnnotationCategoryName = settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName();
+    if (categoryA === additionalAnnotationCategoryName) {
+      return -1;
+    }
+    if (categoryB === additionalAnnotationCategoryName) {
+      return 1;
+    }
+    return 0;
   }
 
   function buildStyles() {

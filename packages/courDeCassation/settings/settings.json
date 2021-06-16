@@ -174,15 +174,5 @@
     "iconName": "car",
     "order": 17,
     "text": "Plaque d'immatriculation"
-  },
-  "custom": {
-    "anonymization": "[Occultation supplémentaire %d]",
-    "color": {
-      "lightMode": ["red", 300],
-      "darkMode": ["red", 700]
-    },
-    "iconName": "pencil",
-    "order": 18,
-    "text": "Occultation supplémentaire"
   }
 }

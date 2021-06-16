@@ -105,19 +105,16 @@ function buildAnnotator(
     }
     await documentService.updateDocumentStatus(document._id, 'free');
     await createAnnotatorTreatment({ annotations, documentId });
-    const customCategory = 'custom';
-    if (Object.keys(settings).includes(customCategory)) {
-      const additionalAnnotations = computeAdditionalAnnotations(
-        document,
-        annotations,
-        customCategory,
-      );
-      if (additionalAnnotations.length > 0) {
-        await createAdditionalAnnotationsTreatment({
-          annotations: additionalAnnotations,
-          documentId: document._id,
-        });
-      }
+    const additionalAnnotations = computeAdditionalAnnotations(
+      document,
+      annotations,
+      settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
+    );
+    if (additionalAnnotations.length > 0) {
+      await createAdditionalAnnotationsTreatment({
+        annotations: additionalAnnotations,
+        documentId: document._id,
+      });
       await createAutoTreatment({
         annotations: [...annotations, ...additionalAnnotations],
         documentId,

@@ -19,9 +19,9 @@ type settingsType = {
 type categorySettingType = {
   anonymization: string;
   color: { [displayMode in displayModeType]: colorType };
-  couldBe: string | undefined;
+  couldBe?: string;
   iconName: categoryIconNameType;
-  isAnonymized: boolean;
+  isAnonymized?: boolean;
   order: number | undefined;
   text: string;
 };

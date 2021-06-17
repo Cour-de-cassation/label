@@ -48,7 +48,7 @@ function buildUserService() {
     email: string;
     role: userType['role'];
   }) {
-    const password = userModule.lib.generatePassword();
+    const password = userModule.lib.passwordHandler.generate();
     await signUpUser({ name, email, role, password });
     return password;
   }
@@ -71,7 +71,7 @@ function buildUserService() {
 
     if (!isPreviousPasswordValid) {
       return 'wrongPassword';
-    } else if (!userModule.lib.isPasswordValid(newPassword)) {
+    } else if (!userModule.lib.passwordHandler.isValid(newPassword)) {
       return 'notValidNewPassword';
     } else {
       await userRepository.updateHashedPassword(
@@ -127,7 +127,7 @@ function buildUserService() {
     const userRepository = buildUserRepository();
     const user = await userRepository.findByEmail(email);
 
-    if (!(await userModule.lib.isUserPassword(user, password))) {
+    if (!(await userModule.lib.passwordHandler.checkUser(user, password))) {
       throw new Error(
         `The received password does not match the stored one for ${user.email}`,
       );
@@ -145,7 +145,7 @@ function buildUserService() {
 
   async function resetPassword(userId: userType['_id']) {
     const userRepository = buildUserRepository();
-    const password = userModule.lib.generatePassword();
+    const password = userModule.lib.passwordHandler.generate();
     const hashedPassword = await userModule.lib.computeHashedPassword(password);
     const { success } = await userRepository.updateHashedPassword(
       userId,

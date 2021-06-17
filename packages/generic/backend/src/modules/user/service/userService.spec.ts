@@ -13,7 +13,8 @@ describe('userService', () => {
       const userRepository = buildUserRepository();
       const userEmail = 'MAIL@MAIL.MAIL';
       const userName = 'NAME';
-      const userPassword = 'PASSWORD';
+      const userPassword = userModule.lib.passwordHandler.generate();
+      const userNewPassword = userModule.lib.passwordHandler.generate();
       const userRole = 'admin';
       await userService.signUpUser({
         email: userEmail,
@@ -26,12 +27,12 @@ describe('userService', () => {
       const result = await userService.changePassword({
         user,
         previousPassword: userPassword,
-        newPassword: 'NEW_PASSWORD',
+        newPassword: userNewPassword,
       });
 
       const { email, name, role, token } = await userService.login({
         email: userEmail,
-        password: 'NEW_PASSWORD',
+        password: userNewPassword,
       });
       expect(result).toEqual('passwordUpdated');
       expect(email).toEqual('mail@mail.mail');

@@ -5,9 +5,7 @@ import {
   buildUser,
   computeHashedPassword,
   formatEmail,
-  generatePassword,
-  isPasswordValid,
-  isUserPassword,
+  passwordHandler,
 } from './lib';
 import { userModel, userType } from './userType';
 
@@ -24,8 +22,6 @@ const userModule = {
     buildUser,
     computeHashedPassword,
     formatEmail,
-    generatePassword,
-    isPasswordValid,
-    isUserPassword,
+    passwordHandler,
   },
 };

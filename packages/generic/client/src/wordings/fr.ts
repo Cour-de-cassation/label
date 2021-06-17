@@ -103,7 +103,8 @@ const fr = {
     problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
     newPassword: 'Nouveau mot de passe',
     newPasswordsDontMatch: 'Les nouveaux mots de passe ne correspondent pas',
-    newPasswordInstructions: 'Le mot de passe doit contenir au moins 8 caractères',
+    newPasswordInstructions:
+      'Le mot de passe doit contenir au moins 8 caractères dont 2 minuscules, 2 majuscules, 2 chiffres et 2 caractères spéciaux',
     previousPassword: 'Ancien mot de passe',
     update: 'Mettre à jour',
     wrongPassword: 'Le mot de passe est erroné',

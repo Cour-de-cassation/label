@@ -35,6 +35,12 @@ const sderApi: sderApiType = {
     });
   },
 
+  async setCourtDecisionsToBeTreated(documents: documentType[]) {
+    await decisionModule.service.updateDecisionsLabelStatus({decisionIds: documents.map(document =>
+      idModule.lib.buildId(document.externalId),
+    ), labelStatus: "toBeTreated"})
+  },
+
   async setCourtDecisionDone(externalId) {
     await decisionModule.service.updateDecisionsLabelStatus({
       decisionIds: [idModule.lib.buildId(externalId)],

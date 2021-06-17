@@ -11,6 +11,7 @@ type sderApiType = {
   }) => Promise<Array<decisionType>>;
   fetchCourtDecisionsBySourceIdsAndSourceName: (sourceIds: decisionType['sourceId'][], sourceName: decisionType['sourceName']) => Promise<decisionType[]>;
 setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
+setCourtDecisionsToBeTreated: (documents: Array<documentType>) => Promise<void>;
   setCourtDecisionDone: (
     externalId: documentType['externalId'],
   ) => Promise<void>;

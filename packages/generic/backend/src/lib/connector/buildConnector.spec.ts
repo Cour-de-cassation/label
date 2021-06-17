@@ -1,4 +1,4 @@
-import { documentModule } from '@label/core';
+import { documentModule, documentType, idModule } from '@label/core';
 import { decisionModule, decisionType } from 'sder';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildConnector } from './buildConnector';
@@ -12,7 +12,7 @@ describe('buildConnector', () => {
 
   describe('importAllDocumentsSince', () => {
     it('should import all the document fetched by the connector', async () => {
-      const fakeConnector = buildFakeConnectorWithNDecisions(5);
+      const fakeConnector = await buildFakeConnectorWithNDecisions(5);
       const connector = buildConnector(fakeConnector);
 
       await connector.importDocumentsSince(10);
@@ -30,22 +30,98 @@ describe('buildConnector', () => {
       );
     });
   });
+
+  describe('deleteJuricaDocumentsFromLabelDb', () => {
+    it('should delete all the jurica document from label db', async () => {
+      const fakeConnector = await buildFakeConnectorWithNDecisions(5, {
+        labelStatus: 'loaded',
+        sourceName: 'jurica',
+      });
+      const connector = buildConnector(fakeConnector);
+
+      await connector.deleteJuricaDocumentsFromLabelDb();
+
+      const updatedCourtDecisions = await fakeConnector.fetchAllCourtDecisionsBetween();
+      const documents = await documentRepository.findAll();
+      updatedCourtDecisions.forEach((courtDecision) =>
+        expect(courtDecision.labelStatus).toBe('toBeTreated'),
+      );
+      expect(documents).toEqual([]);
+    });
+  });
+
+  it('should leave all the jurinet documents in label db', async () => {
+    const fakeConnector = await buildFakeConnectorWithNDecisions(5, {
+      labelStatus: 'loaded',
+      sourceName: 'jurinet',
+    });
+    const connector = buildConnector(fakeConnector);
+
+    await connector.deleteJuricaDocumentsFromLabelDb();
+
+    const updatedCourtDecisions = await fakeConnector.fetchAllCourtDecisionsBetween();
+    const documents = await documentRepository.findAll();
+    updatedCourtDecisions.forEach((courtDecision) =>
+      expect(courtDecision.labelStatus).toBe('loaded'),
+    );
+    expect(documents.length).toBe(5);
+  });
 });
 
-function buildFakeConnectorWithNDecisions(n: number) {
-  const courtDecisions = [...Array(n).keys()].map(() =>
-    decisionModule.lib.generateDecision(),
+async function buildFakeConnectorWithNDecisions(
+  n: number,
+  courtDecisionFields?: {
+    sourceName?: decisionType['sourceName'];
+    labelStatus?: decisionType['labelStatus'];
+  },
+) {
+  let courtDecisions = [...Array(n).keys()].map(() =>
+    decisionModule.lib.generateDecision({
+      sourceName: courtDecisionFields?.sourceName,
+      labelStatus: courtDecisionFields?.labelStatus,
+    }),
   );
   const documents = courtDecisions.map(
     fakeSderMapper.mapCourtDecisionToDocument,
   );
+  const documentRepository = buildDocumentRepository();
+  await documentRepository.insertMany(documents);
 
   return {
     name: 'FAKE_CONNECTOR',
     async fetchAllCourtDecisionsBetween() {
       return courtDecisions;
     },
-    async updateDocumentsLoadedStatus() {},
+    async updateDocumentsLoadedStatus(documents: documentType[]) {
+      courtDecisions = courtDecisions.map((courtDecision) => {
+        if (
+          documents.some((document) =>
+            idModule.lib.equalId(
+              idModule.lib.buildId(document.externalId),
+              courtDecision._id,
+            ),
+          )
+        ) {
+          return { ...courtDecision, labelStatus: 'loaded' };
+        }
+        return courtDecision;
+      });
+    },
+    async updateDocumentsToBeTreatedStatus(documents: documentType[]) {
+      courtDecisions = courtDecisions.map((courtDecision) => {
+        if (
+          documents.some((document) =>
+            idModule.lib.equalId(
+              idModule.lib.buildId(document.externalId),
+              courtDecision._id,
+            ),
+          )
+        ) {
+          return { ...courtDecision, labelStatus: 'toBeTreated' };
+        }
+        return courtDecision;
+      });
+    },
     getAllDocuments() {
       return documents;
     },
@@ -56,7 +132,10 @@ function buildFakeConnectorWithNDecisions(n: number) {
 const fakeSderMapper = {
   mapCourtDecisionToDocument(courtDecision: decisionType) {
     return documentModule.generator.generate({
+      status: 'free',
+      externalId: idModule.lib.convertToString(courtDecision._id),
       documentNumber: courtDecision.sourceId,
+      source: courtDecision.sourceName,
     });
   },
 };

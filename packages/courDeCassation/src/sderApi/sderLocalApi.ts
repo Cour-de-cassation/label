@@ -56,6 +56,8 @@ const sderLocalApi: sderApiType = {
   },
 
   async setCourtDecisionsLoaded() {},
+  
+  async setCourtDecisionsToBeTreated() {},
 
   async setCourtDecisionDone() {},
 

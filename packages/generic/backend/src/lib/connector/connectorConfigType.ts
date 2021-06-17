@@ -10,5 +10,8 @@ type connectorConfigType = {
     endDate: Date;
   }): Promise<decisionType[]>;
   updateDocumentsLoadedStatus: (documents: documentType[]) => Promise<void>;
+  updateDocumentsToBeTreatedStatus: (
+    documents: documentType[],
+  ) => Promise<void>;
   mapCourtDecisionToDocument: (courtDecision: decisionType) => documentType;
 };

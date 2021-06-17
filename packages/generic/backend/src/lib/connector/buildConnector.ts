@@ -34,6 +34,19 @@ function buildConnector(connectorConfig: connectorConfigType) {
       await connectorConfig.updateDocumentsLoadedStatus(documents);
       logger.log(`DONE`);
     },
+    async deleteJuricaDocumentsFromLabelDb() {
+      const documentRepository = buildDocumentRepository();
+      const freeDocuments = await documentRepository.findAllByStatus(['free']);
+      const freeJuricaDocuments = freeDocuments.filter(
+        (document) => document.source === 'jurica',
+      );
+      await connectorConfig.updateDocumentsToBeTreatedStatus(
+        freeJuricaDocuments,
+      );
+      await documentRepository.deleteManyByIds(
+        freeJuricaDocuments.map(({ _id }) => _id),
+      );
+    },
   };
 }
 

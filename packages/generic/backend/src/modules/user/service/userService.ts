@@ -69,9 +69,17 @@ function buildUserService() {
       user.hashedPassword,
     );
 
+    const isNewPasswordEqualToCurrent = await hasher.compare(
+      newPassword,
+      user.hashedPassword,
+    );
+
     if (!isPreviousPasswordValid) {
       return 'wrongPassword';
-    } else if (!userModule.lib.passwordHandler.isValid(newPassword)) {
+    } else if (
+      isNewPasswordEqualToCurrent ||
+      !userModule.lib.passwordHandler.isValid(newPassword)
+    ) {
       return 'notValidNewPassword';
     } else {
       await userRepository.updateHashedPassword(

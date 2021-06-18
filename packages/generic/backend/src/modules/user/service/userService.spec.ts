@@ -104,6 +104,38 @@ describe('userService', () => {
       expect(role).toEqual(user.role);
       expect(token).toBeDefined;
     });
+
+    it('should not change the password of the given user if the new password is not changed', async () => {
+      const userService = buildUserService();
+      const userRepository = buildUserRepository();
+      const userEmail = 'MAIL@MAIL.MAIL';
+      const userName = 'NAME';
+      const userPassword = userModule.lib.passwordHandler.generate();
+      const userRole = 'admin';
+      await userService.signUpUser({
+        email: userEmail,
+        name: userName,
+        password: userPassword,
+        role: userRole,
+      });
+      const user = await userRepository.findByEmail(userEmail);
+
+      const result = await userService.changePassword({
+        user,
+        previousPassword: userPassword,
+        newPassword: userPassword,
+      });
+
+      const { email, name, role, token } = await userService.login({
+        email: userEmail,
+        password: userPassword,
+      });
+      expect(result).toEqual('notValidNewPassword');
+      expect(email).toEqual('mail@mail.mail');
+      expect(name).toEqual(user.name);
+      expect(role).toEqual(user.role);
+      expect(token).toBeDefined;
+    });
   });
 
   describe('login/signUpUser', () => {

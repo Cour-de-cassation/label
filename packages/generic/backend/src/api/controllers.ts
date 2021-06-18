@@ -235,6 +235,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    updatePublishableDocumentStatus: buildAuthenticatedController({
+      permissions: ['admin', 'publicator'],
+      controllerWithUser: async (_, { args: { documentId, status } }) => {
+        await documentService.assertDocumentIsPublishable(
+          idModule.lib.buildId(documentId),
+        );
+        return documentService.updateDocumentStatus(
+          idModule.lib.buildId(documentId),
+          status,
+        );
+      },
+    }),
+
     updateProblemReportHasBeenRead: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (

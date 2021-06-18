@@ -38,7 +38,7 @@ function SpecialDocumentsTable(props: {
           {
             text: wordings.specialDocumentsPage.table.optionItems.markAsPublished,
             onClick: async () => {
-              await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+              await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {
                 documentId: specialDocument._id,
                 status: 'done',
               });
@@ -52,7 +52,7 @@ function SpecialDocumentsTable(props: {
           {
             text: wordings.specialDocumentsPage.table.optionItems.markAsUnPublished,
             onClick: async () => {
-              await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+              await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {
                 documentId: specialDocument._id,
                 status: 'toBePublished',
               });

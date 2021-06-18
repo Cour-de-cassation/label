@@ -27,6 +27,33 @@ describe('documentService', () => {
   const monitoringEntryRepository = buildMonitoringEntryRepository();
   const treatmentRepository = buildTreatmentRepository();
 
+  describe('assertDocumentIsPublishable', () => {
+    it('should throw an error if the document status is not right', async () => {
+      const document = documentModule.generator.generate({ status: 'free' });
+      await documentRepository.insert(document);
+
+      expect(
+        documentService.assertDocumentIsPublishable(document._id),
+      ).rejects.toThrowError(
+        `You cannot edit the document status, because its current status is "free"`,
+      );
+    });
+
+    it('should throw an error if the document publication category is not right', async () => {
+      const document = documentModule.generator.generate({
+        status: 'toBePublished',
+        publicationCategory: ['N', 'W'],
+      });
+      await documentRepository.insert(document);
+
+      expect(
+        documentService.assertDocumentIsPublishable(document._id),
+      ).rejects.toThrowError(
+        `You cannot edit the document status, because its publication category is "N, W"`,
+      );
+    });
+  });
+
   describe('deleteDocument', () => {
     it('should remove the given document from the database with all its dependencies', async () => {
       const documentId = idModule.lib.buildId();

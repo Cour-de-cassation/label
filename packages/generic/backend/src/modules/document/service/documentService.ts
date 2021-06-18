@@ -33,6 +33,7 @@ function buildDocumentService() {
   );
 
   return {
+    assertDocumentIsPublishable,
     countDocumentsWithoutAnnotations,
     deleteDocument,
     fetchAllDocumentsByIds,
@@ -50,6 +51,31 @@ function buildDocumentService() {
     fetchDocument,
     updateDocumentStatus,
   };
+
+  async function assertDocumentIsPublishable(documentId: documentType['_id']) {
+    const documentRepository = buildDocumentRepository();
+
+    const document = await documentRepository.findById(documentId);
+    const publishedPublicationCategoryLetters = documentModule.lib.publicationHandler.getPublishedPublicationCategory();
+    if (document.status !== 'done' && document.status !== 'toBePublished') {
+      throw errorHandlers.permissionErrorHandler.build(
+        `You cannot edit the document status, because its current status is "${document.status}"`,
+      );
+    }
+
+    if (
+      !publishedPublicationCategoryLetters.some((publicationCategoryLetter) =>
+        document.publicationCategory.includes(publicationCategoryLetter),
+      )
+    ) {
+      throw errorHandlers.permissionErrorHandler.build(
+        `You cannot edit the document status, because its publication category is "${document.publicationCategory.join(
+          ', ',
+        )}"`,
+      );
+    }
+    return true;
+  }
 
   async function deleteDocument(id: documentType['_id']) {
     const documentRepository = buildDocumentRepository();

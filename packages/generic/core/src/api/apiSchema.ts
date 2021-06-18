@@ -501,6 +501,22 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
+    updatePublishableDocumentStatus: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+        status: buildModel({
+          kind: documentModule.fetchedModel.content.status.kind,
+          content: ['done', 'toBePublished'],
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     updateProblemReportHasBeenRead: {
       in: {
         problemReportId: buildModel({

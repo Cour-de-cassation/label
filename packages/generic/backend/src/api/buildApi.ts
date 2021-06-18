@@ -80,7 +80,7 @@ function buildController(
         res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
       }
 
-      next(error);
+      next(new Error('Request failure'));
     }
 
     async function executeController(): Promise<{

@@ -145,9 +145,7 @@ describe('userService', () => {
             password: userPassword,
           });
 
-        await expect(promise()).rejects.toThrow(
-          `No matching user for email ${userEmail}`,
-        );
+        await expect(promise()).rejects.toThrow('Login failed');
       });
       it('should fail when only another user has been signed up', async () => {
         const userService = buildUserService();
@@ -163,9 +161,7 @@ describe('userService', () => {
         const promise = () =>
           userService.login({ email: userEmail, password: userPassword });
 
-        await expect(promise()).rejects.toThrow(
-          `No matching user for email ${userEmail}`,
-        );
+        await expect(promise()).rejects.toThrow('Login failed');
       });
       it('should fail when the user has been signed up but the password is not the right one', async () => {
         const userService = buildUserService();
@@ -184,9 +180,7 @@ describe('userService', () => {
         const promise = () =>
           userService.login({ email: userEmail, password: 'WRONG_PASSWORD' });
 
-        await expect(promise()).rejects.toThrow(
-          `The received password does not match the stored one for mail@mail.mail`,
-        );
+        await expect(promise()).rejects.toThrow('Login failed');
       });
 
       it('should fail when the user has tried too many times to log in', async () => {
@@ -212,9 +206,7 @@ describe('userService', () => {
         const promise = () =>
           userService.login({ email: userEmail, password: 'WRONG_PASSWORD' });
 
-        await expect(promise()).rejects.toThrow(
-          `Too many call attempts for identifier mail@mail.mail`,
-        );
+        await expect(promise()).rejects.toThrow('Login failed');
       });
 
       it('should succeed when the user has only tried once with email/password', async () => {

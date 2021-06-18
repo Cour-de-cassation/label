@@ -8,7 +8,7 @@ import {
   userType,
 } from '@label/core';
 import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
-import { jwtSigner } from '../../../utils';
+import { jwtSigner, logger } from '../../../utils';
 import { buildUserRepository } from '../repository';
 
 export { userService, buildUserService };
@@ -123,24 +123,29 @@ function buildUserService() {
     email: userType['email'];
     password: string;
   }) {
-    checkCallAttempts(userModule.lib.formatEmail(email));
-    const userRepository = buildUserRepository();
-    const user = await userRepository.findByEmail(email);
+    try {
+      checkCallAttempts(userModule.lib.formatEmail(email));
+      const userRepository = buildUserRepository();
+      const user = await userRepository.findByEmail(email);
 
-    if (!(await userModule.lib.passwordHandler.checkUser(user, password))) {
-      throw new Error(
-        `The received password does not match the stored one for ${user.email}`,
-      );
+      if (!(await userModule.lib.passwordHandler.checkUser(user, password))) {
+        throw new Error(
+          `The received password does not match the stored one for ${user.email}`,
+        );
+      }
+
+      const token = jwtSigner.sign(user._id);
+
+      return {
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        token,
+      };
+    } catch (err) {
+      logger.error(err);
+      throw new Error('Login failed');
     }
-
-    const token = jwtSigner.sign(user._id);
-
-    return {
-      email: user.email,
-      name: user.name,
-      role: user.role,
-      token,
-    };
   }
 
   async function resetPassword(userId: userType['_id']) {

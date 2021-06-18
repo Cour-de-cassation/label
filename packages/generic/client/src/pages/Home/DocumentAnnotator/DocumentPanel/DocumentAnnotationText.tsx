@@ -5,6 +5,7 @@ import { useDocumentViewerModeHandler } from '../../../../services/documentViewe
 import { customThemeType, getColor, useCustomTheme, useDisplayMode } from '../../../../styles';
 import { positionType } from '../../../../types';
 import { MouseMoveListener, useMousePosition } from '../../../../utils';
+import { getAnnotationTextDisplayStyle } from './lib';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 
 export { DocumentAnnotationText };
@@ -76,36 +77,25 @@ function DocumentAnnotationText(props: { annotation: annotationType }): ReactEle
       const categoryColor = getColor(
         settingsModule.lib.getAnnotationCategoryColor(props.annotation.category, settings, displayMode),
       );
-      const categoryStatus = settingsModule.lib.getAnnotationCategoryStatus(props.annotation.category, settings);
       const OUTLINE_WIDTH = 2;
+      const { documentViewerMode } = documentViewerModeHandler;
 
-      switch (categoryStatus) {
-        case 'hidden':
+      switch (getAnnotationTextDisplayStyle({ settings, annotation: props.annotation, documentViewerMode })) {
+        case 'none':
           return {};
-        case 'visible':
+        case 'underlined':
           return {
             borderBottom: `${OUTLINE_WIDTH}px solid ${categoryColor}`,
           };
-        case 'annotable':
-          const { documentViewerMode } = documentViewerModeHandler;
-          switch (documentViewerMode.kind) {
-            case 'annotation':
-              return {
-                backgroundColor: categoryColor,
-              };
-            case 'occurrence':
-              const isSelectedEntity = documentViewerMode.entityId === props.annotation.entityId;
-              if (isSelectedEntity) {
-                return {
-                  backgroundColor: categoryColor,
-                };
-              } else {
-                return {
-                  outline: `${OUTLINE_WIDTH}px solid ${categoryColor}`,
-                  outlineOffset: `-${OUTLINE_WIDTH}px`,
-                };
-              }
-          }
+        case 'outlined':
+          return {
+            outline: `${OUTLINE_WIDTH}px solid ${categoryColor}`,
+            outlineOffset: `-${OUTLINE_WIDTH}px`,
+          };
+        case 'filled':
+          return {
+            backgroundColor: categoryColor,
+          };
       }
     }
   }

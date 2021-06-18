@@ -1,9 +1,8 @@
-import { settingsType } from '../settingsType';
 import { buildSettings } from './buildSettings';
 import { getCategories } from './getCategories';
 
 describe('getCategories', () => {
-  const settings: settingsType = buildSettings({
+  const settings = buildSettings({
     prenom: { order: 1, text: 'Prénom', status: 'hidden' },
     nom: { order: 2, text: 'Nom', status: 'visible' },
     adresse: { order: 3, text: 'Adresse', status: 'annotable' },

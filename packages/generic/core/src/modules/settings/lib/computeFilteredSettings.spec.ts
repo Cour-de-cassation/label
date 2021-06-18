@@ -1,9 +1,8 @@
-import { settingsType } from '../settingsType';
 import { buildSettings } from './buildSettings';
 import { computeFilteredSettings } from './computeFilteredSettings';
 
 describe('computeFilteredSettings', () => {
-  const settings: settingsType = buildSettings({
+  const settings = buildSettings({
     prenom: { order: 1, text: 'Prénom', status: 'hidden' },
     nom: { order: 2, text: 'Nom', status: 'visible' },
     adresse: { order: 3, text: 'Adresse', status: 'annotable' },

@@ -21,7 +21,7 @@ const nlpLocalApi: nlpApiType = {
     return {
       ...annotations,
       entities: annotations.entities.filter(entity =>
-        Object.keys(filteredSettings).includes(entity.label),
+        settingsModule.lib.getCategories(filteredSettings, ['annotable', 'visible']).includes(entity.label),
       ),
     };
   },

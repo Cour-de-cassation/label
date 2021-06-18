@@ -5,6 +5,7 @@ import {
   parseFromJson,
   getAnnotationCategoryColor,
   getAnnotationCategoryIconName,
+  getAnnotationCategoryStatus,
   getAnnotationCategoryText,
   getCategories,
 } from './lib';
@@ -31,6 +32,7 @@ const settingsModule = {
     parseFromJson,
     getAnnotationCategoryColor,
     getAnnotationCategoryIconName,
+    getAnnotationCategoryStatus,
     getAnnotationCategoryText,
     getCategories,
   },

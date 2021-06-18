@@ -72,31 +72,39 @@ function DocumentAnnotationText(props: { annotation: annotationType }): ReactEle
     };
 
     function buildViewerModeSpecificStyle() {
+      const settings = annotatorStateHandler.get().settings;
       const categoryColor = getColor(
-        settingsModule.lib.getAnnotationCategoryColor(
-          props.annotation.category,
-          annotatorStateHandler.get().settings,
-          displayMode,
-        ),
+        settingsModule.lib.getAnnotationCategoryColor(props.annotation.category, settings, displayMode),
       );
-      const { documentViewerMode } = documentViewerModeHandler;
-      switch (documentViewerMode.kind) {
-        case 'annotation':
+      const categoryStatus = settingsModule.lib.getAnnotationCategoryStatus(props.annotation.category, settings);
+      const OUTLINE_WIDTH = 2;
+
+      switch (categoryStatus) {
+        case 'hidden':
+          return {};
+        case 'visible':
           return {
-            backgroundColor: categoryColor,
+            borderBottom: `${OUTLINE_WIDTH}px solid ${categoryColor}`,
           };
-        case 'occurrence':
-          const isSelectedEntity = documentViewerMode.entityId === props.annotation.entityId;
-          const OUTLINE_WIDTH = 2;
-          if (isSelectedEntity) {
-            return {
-              backgroundColor: categoryColor,
-            };
-          } else {
-            return {
-              outline: `${OUTLINE_WIDTH}px solid ${categoryColor}`,
-              outlineOffset: `-${OUTLINE_WIDTH}px`,
-            };
+        case 'annotable':
+          const { documentViewerMode } = documentViewerModeHandler;
+          switch (documentViewerMode.kind) {
+            case 'annotation':
+              return {
+                backgroundColor: categoryColor,
+              };
+            case 'occurrence':
+              const isSelectedEntity = documentViewerMode.entityId === props.annotation.entityId;
+              if (isSelectedEntity) {
+                return {
+                  backgroundColor: categoryColor,
+                };
+              } else {
+                return {
+                  outline: `${OUTLINE_WIDTH}px solid ${categoryColor}`,
+                  outlineOffset: `-${OUTLINE_WIDTH}px`,
+                };
+              }
           }
       }
     }

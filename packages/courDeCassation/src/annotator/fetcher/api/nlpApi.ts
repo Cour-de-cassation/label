@@ -22,7 +22,7 @@ const nlpApi: nlpApiType = {
       text: document.text,
       source: document.source,
       meta: document.metadata !== '' ? document.metadata : undefined,
-      categories: Object.keys(filteredSettings),
+      categories: settingsModule.lib.getCategories(filteredSettings, ['visible', 'annotable']),
     };
 
     const response = await axios({

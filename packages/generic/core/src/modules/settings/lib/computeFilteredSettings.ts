@@ -11,10 +11,10 @@ function computeFilteredSettings(
     if (!categoriesToOmit.includes(category)) {
       return {
         ...accumulator,
-        [category]: categorySetting,
+        [category]: { ...categorySetting, status: 'annotable' as const },
       };
     }
-    return accumulator;
+    return { ...accumulator, [category]: categorySetting };
   }, {} as settingsType);
   return settingsForDocument;
 }

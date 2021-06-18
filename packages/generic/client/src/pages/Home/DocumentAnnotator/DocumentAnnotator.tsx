@@ -24,7 +24,7 @@ function DocumentAnnotator(props: {
   const annotatorState = annotatorStateHandler.get();
 
   const styles = buildStyles();
-  const categories = settingsModule.lib.getCategories(annotatorState.settings);
+  const categories = settingsModule.lib.getCategories(annotatorState.settings, ['annotable']);
   const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories).sort(
     sortAdditionalAnnotationsFirst,
   );

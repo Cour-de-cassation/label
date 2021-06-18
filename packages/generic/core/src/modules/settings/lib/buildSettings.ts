@@ -33,6 +33,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
         iconName: buildIconName(partialSettings[category]?.iconName),
         isAnonymized: buildIsAnonymized(partialSettings[category]?.isAnonymized),
         order: partialSettings[category]?.order,
+        status: partialSettings[category].status || 'hidden',
         text: buildText(partialSettings[category]?.text),
       }),
   );

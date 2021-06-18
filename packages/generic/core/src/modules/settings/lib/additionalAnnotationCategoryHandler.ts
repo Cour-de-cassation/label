@@ -25,6 +25,7 @@ function buildAdditionalAnnotationCategoryHandler() {
         },
         iconName: 'pencil',
         order: order,
+        status: 'annotable',
         text: 'Occultation supplémentaire',
       },
     };

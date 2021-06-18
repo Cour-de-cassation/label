@@ -59,6 +59,7 @@
     },
     "iconName": "store",
     "order": 6,
+    "status": "visible",
     "text": "Établissement"
   },
   "professionnelNom": {
@@ -71,6 +72,7 @@
     "iconName": "hammer",
     "isAnonymized": false,
     "order": 7,
+    "status": "visible",
     "text": "Professionnel (nom)"
   },
   "professionnelPrenom": {

@@ -16,7 +16,7 @@ type nlpRequestParametersType = {
 
 const nlpApi: nlpApiType = {
   async fetchNlpAnnotations(settings, document) {
-    const filteredSettings = settingsModule.lib.computeFilteredSettings(settings, document.decisionMetadata.categoriesToOmit)
+    const filteredSettings = settingsModule.lib.computeFilteredSettings(settings, document.decisionMetadata.categoriesToOmit, document.decisionMetadata.additionalTermsToAnnotate)
     const nlpRequestParameters: nlpRequestParametersType = {
       idDocument: document.documentNumber,
       text: document.text,

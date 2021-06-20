@@ -38,6 +38,7 @@ function DocumentInspector(props: { settings: settingsType }) {
             const settingsForDocument = settingsModule.lib.computeFilteredSettings(
               props.settings,
               document.decisionMetadata.categoriesToOmit,
+              document.decisionMetadata.additionalTermsToAnnotate,
             );
 
             return (

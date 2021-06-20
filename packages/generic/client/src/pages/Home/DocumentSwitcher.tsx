@@ -28,6 +28,7 @@ function DocumentSwitcher(props: {
         const settingsForDocument = settingsModule.lib.computeFilteredSettings(
           props.settings,
           documentState.choice.document.decisionMetadata.categoriesToOmit,
+          documentState.choice.document.decisionMetadata.additionalTermsToAnnotate,
         );
         return (
           <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>

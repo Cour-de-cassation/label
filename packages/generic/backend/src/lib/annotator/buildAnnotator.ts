@@ -24,7 +24,7 @@ function buildAnnotator(
 ) {
   const settings = settingsModule.lib.parseFromJson(settingsJson);
 
-  return { annotateDocumentsWithoutAnnotations, reAnnotateUntreatedDocuments };
+  return { annotateDocumentsWithoutAnnotations, reAnnotateFreeDocuments };
 
   async function annotateDocumentsWithoutAnnotations() {
     logger.log('annotateDocumentsWithoutAnnotations');
@@ -67,10 +67,8 @@ function buildAnnotator(
     } while (currentDocumentToAnnotate !== undefined);
   }
 
-  async function reAnnotateUntreatedDocuments() {
-    const documentIds = (await documentService.fetchUntreatedDocuments()).map(
-      ({ document: { _id } }) => _id,
-    );
+  async function reAnnotateFreeDocuments() {
+    const documentIds = await documentService.fetchFreeDocumentsIds();
 
     for (const documentId of documentIds) {
       await annotationReportService.deleteAnnotationReportsByDocumentId(

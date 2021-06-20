@@ -42,6 +42,7 @@ function buildDocumentService() {
     fetchAllSources,
     fetchAnonymizedDocumentText,
     fetchDoneDocuments,
+    fetchFreeDocumentsIds,
     fetchSpecialDocuments,
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
@@ -135,6 +136,16 @@ function buildDocumentService() {
     const documentRepository = buildDocumentRepository();
 
     return documentRepository.findAllByStatus(['done']);
+  }
+
+  async function fetchFreeDocumentsIds() {
+    const documentRepository = buildDocumentRepository();
+
+    const documents = await documentRepository.findAllByStatusProjection(
+      ['free'],
+      ['_id'],
+    );
+    return documents.map(({ _id }) => _id);
   }
 
   async function fetchSpecialDocuments() {

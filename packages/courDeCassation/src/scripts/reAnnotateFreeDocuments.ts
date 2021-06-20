@@ -6,13 +6,13 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { environment, settings } = await parametersHandler.getParameters();
   const backend = buildBackend(environment, settings);
 
-  backend.runScript(() => reAnnotateUntreatedDocumentsWithNlp(settings), {
+  backend.runScript(() => reAnnotateFreeDocumentsWithNlp(settings), {
     shouldLoadDb: true,
   });
 })();
 
-async function reAnnotateUntreatedDocumentsWithNlp(settings: string) {
+async function reAnnotateFreeDocumentsWithNlp(settings: string) {
   const nlpAnnotator = buildNlpAnnotator(settings);
 
-  await nlpAnnotator.reAnnotateUntreatedDocuments();
+  await nlpAnnotator.reAnnotateFreeDocuments();
 }

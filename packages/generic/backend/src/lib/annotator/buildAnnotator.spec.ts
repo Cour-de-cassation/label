@@ -24,14 +24,14 @@ describe('buildAnnotator', () => {
     });
   });
 
-  describe('reAnnotateUntreatedDocuments', () => {
+  describe('reAnnotateFreeDocuments', () => {
     it('should re annotate all the documents', async () => {
       await insertNDocumentsWithoutAnnotationsInDb(5);
       const fakeAnnotator = buildFakeAnnotatorConfig();
       const annotator = buildAnnotator('{}', fakeAnnotator);
       await annotator.annotateDocumentsWithoutAnnotations();
 
-      await annotator.reAnnotateUntreatedDocuments();
+      await annotator.reAnnotateFreeDocuments();
 
       const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotations();
       expect(documentWithoutAnnotations).toEqual(undefined);

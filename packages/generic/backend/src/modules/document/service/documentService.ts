@@ -7,6 +7,7 @@ import {
   buildAnonymizer,
   userType,
   documentModule,
+  indexer,
 } from '@label/core';
 import { settingsLoader } from '../../../lib/settingsLoader';
 import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
@@ -90,7 +91,15 @@ function buildDocumentService() {
 
   async function fetchAllDocumentsByIds(documentIds: documentType['_id'][]) {
     const documentRepository = buildDocumentRepository();
-    return documentRepository.findAllByIds(documentIds);
+    const documentsByIds = await documentRepository.findAllByIds(documentIds);
+
+    indexer.assertEveryIdIsDefined(
+      documentIds.map((documentId) => idModule.lib.convertToString(documentId)),
+      documentsByIds,
+      (_id) => `The document id ${_id} has no matching document`,
+    );
+
+    return documentsByIds;
   }
 
   async function fetchAllPublicationCategories() {
@@ -108,12 +117,6 @@ function buildDocumentService() {
   async function fetchAnonymizedDocumentText(documentId: documentType['_id']) {
     const documentRepository = buildDocumentRepository();
     const document = await documentRepository.findById(documentId);
-
-    if (!document) {
-      throw errorHandlers.notFoundErrorHandler.build(
-        `No document found for id ${documentId}`,
-      );
-    }
 
     const annotations = await treatmentService.fetchAnnotationsOfDocument(
       documentId,

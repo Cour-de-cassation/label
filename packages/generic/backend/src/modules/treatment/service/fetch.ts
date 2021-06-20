@@ -3,7 +3,9 @@ import {
   annotationsDiffModule,
   annotationType,
   documentType,
+  idModule,
   idType,
+  indexer,
   treatmentModule,
 } from '@label/core';
 import { buildDocumentRepository } from '../../../modules/document';
@@ -144,6 +146,12 @@ async function fetchTreatmentsByDocumentIds(documentIds: idType[]) {
   const treatmentRepository = buildTreatmentRepository();
   const treatmentsByDocumentIds = await treatmentRepository.findAllByDocumentIds(
     documentIds,
+  );
+
+  indexer.assertEveryIdIsDefined(
+    documentIds.map((documentId) => idModule.lib.convertToString(documentId)),
+    treatmentsByDocumentIds,
+    (_id) => `The document id ${_id} has no matching treatments`,
   );
 
   return treatmentsByDocumentIds;

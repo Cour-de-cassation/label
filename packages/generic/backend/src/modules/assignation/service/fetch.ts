@@ -14,7 +14,21 @@ async function fetchAllAssignationsById(
 ) {
   const assignationRepository = buildAssignationRepository();
 
-  return assignationRepository.findAllByIds(assignationIds);
+  const assignationsById = await assignationRepository.findAllByIds(
+    assignationIds,
+  );
+
+  if (assignationIds) {
+    indexer.assertEveryIdIsDefined(
+      assignationIds.map((assignationId) =>
+        idModule.lib.convertToString(assignationId),
+      ),
+      assignationsById,
+      (_id) => `The assignation id ${_id} has no matching assignation`,
+    );
+  }
+
+  return assignationsById;
 }
 
 async function fetchAssignationId({

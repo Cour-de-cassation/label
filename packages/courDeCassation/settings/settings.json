@@ -157,6 +157,16 @@
     "order": 15,
     "text": "Email"
   },
+  "siteWebSensible": {
+    "anonymization": "[Site Web %d]",
+    "color": {
+      "lightMode": ["lightBlue", 200],
+      "darkMode": ["lightBlue", 700]
+    },
+    "iconName": "web",
+    "order": 16,
+    "text": "Site web sensible"
+  },
   "compteBancaire": {
     "anonymization": "[Compte bancaire %d]",
     "color": {
@@ -164,7 +174,7 @@
       "darkMode": ["pink", 600]
     },
     "iconName": "bank",
-    "order": 16,
+    "order": 17,
     "text": "Compte bancaire"
   },
   "plaqueImmatriculation": {
@@ -174,7 +184,7 @@
       "darkMode": ["pink", 800]
     },
     "iconName": "car",
-    "order": 17,
+    "order": 18,
     "text": "Plaque d'immatriculation"
   }
 }

@@ -33,6 +33,7 @@ import {
   HomeRounded,
   HourglassEmptyRounded,
   HowToRegRounded,
+  LanguageRounded,
   Link,
   LinkOff,
   LocationCityRounded,
@@ -147,6 +148,7 @@ const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {
   person: PersonRounded,
   phone: PhoneRounded,
   store: StoreRounded,
+  web: LanguageRounded,
   work: BusinessCenterRounded,
 };
 

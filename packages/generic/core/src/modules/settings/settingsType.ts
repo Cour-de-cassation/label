@@ -47,6 +47,7 @@ const categoryIconNames = [
   'person',
   'phone',
   'store',
+  'web',
   'work',
 ] as const;
 

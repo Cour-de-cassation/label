@@ -155,7 +155,7 @@ function buildDocumentService() {
   async function fetchDoneDocuments() {
     const documentRepository = buildDocumentRepository();
 
-    return documentRepository.findAllByStatus(['done']);
+    return documentRepository.findAllByStatus(['done', 'toBePublished']);
   }
 
   async function fetchFreeDocumentsIds() {

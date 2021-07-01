@@ -21,7 +21,7 @@ async function updateTreatment({
 }) {
   const treatmentRepository = buildTreatmentRepository();
 
-  const DURATION_THRESHOLD_BETWEEN_TIMESTAMPS = 10 * 60 * 1000;
+  const DURATION_THRESHOLD_BETWEEN_TIMESTAMPS = 15 * 60 * 1000;
   const currentDate = new Date().getTime();
 
   const assignation = await assignationService.findOrCreateByDocumentIdAndUserId(

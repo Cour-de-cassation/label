@@ -13,11 +13,12 @@ describe('buildAnonymizer', () => {
     { category: 'firstName', text: 'Nicolas', start: 29 },
     { category: 'firstName', text: 'Romain', start: 61 },
   ].map(annotationModule.generator.generate);
+  const text = 'Benoit is software engineer. Nicolas is a software engineer. Romain is a designer.';
 
   describe('anonymizeDocument', () => {
     it('should anonymize a document', () => {
       const document = documentModule.generator.generate({
-        text: 'Benoit is software engineer. Nicolas is a software engineer. Romain is a designer.',
+        text,
       });
 
       const anonymizedDocument = anonymizer.anonymizeDocument(document, annotations);

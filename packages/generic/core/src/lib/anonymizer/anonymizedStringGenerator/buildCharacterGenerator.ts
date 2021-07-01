@@ -1,3 +1,4 @@
+import { range } from 'lodash';
 import { anonymizedGeneratorType } from './types';
 
 export { buildCharacterGenerator };
@@ -6,13 +7,16 @@ const A_ASCII_CODE = 65;
 const Z_ASCII_CODE = 90;
 
 function buildCharacterGenerator(): anonymizedGeneratorType {
+  let characterCount = 1;
   let availableCharacterCode = initializeAvailableCharacterCode();
 
   return {
     generate() {
       const generatedCharacter = String.fromCharCode(getAvailableCharacterCode());
-
-      return generatedCharacter;
+      const generatedCharacters = range(characterCount)
+        .map(() => generatedCharacter)
+        .join('');
+      return generatedCharacters;
     },
   };
 
@@ -20,6 +24,7 @@ function buildCharacterGenerator(): anonymizedGeneratorType {
     const availableCharacterCodeArray = Array.from(availableCharacterCode.values());
 
     if (availableCharacterCodeArray.length === 0) {
+      characterCount++;
       availableCharacterCode = initializeAvailableCharacterCode();
       return getAvailableCharacterCode();
     }

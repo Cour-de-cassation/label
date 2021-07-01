@@ -110,6 +110,24 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   },
 
   post: {
+    assignDocumentToUser: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (user, { args: { documentId } }) => {
+        await documentService.assertDocumentStatus({
+          documentId: idModule.lib.buildId(documentId),
+          status: 'free',
+        });
+        await assignationService.createAssignation({
+          documentId: idModule.lib.buildId(documentId),
+          userId: user._id,
+        });
+        await documentService.updateDocumentStatus(
+          idModule.lib.buildId(documentId),
+          'saved',
+        );
+      },
+    }),
+
     createUser: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: (_, { args: { name, email, role } }) => {

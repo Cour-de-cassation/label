@@ -340,6 +340,18 @@ const apiSchema = {
     },
   },
   post: {
+    assignDocumentToUser: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     changePassword: {
       in: {
         previousPassword: buildModel({ kind: 'primitive', content: 'string' } as const),

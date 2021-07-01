@@ -4,7 +4,6 @@ import { ButtonWithIcon, MainHeader, Text } from '../../components';
 import { lineSplitter } from '../../services/lineSplitter';
 import { customThemeType, heights, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
-import { routes } from '../routes';
 import { AnonymizedDocumentTextDataFetcher } from './AnonymizedDocumentTextDataFetcher';
 
 export { AnonymizedDocument };
@@ -25,7 +24,7 @@ function AnonymizedDocument() {
 
   return (
     <>
-      <MainHeader onBackButtonPress={navigateToSpecialDocuments} />
+      <MainHeader onBackButtonPress={history.goBack} />
       <AnonymizedDocumentTextDataFetcher documentId={params.documentId}>
         {({ anonymizedDocumentText }) => {
           const splittedTextByLine = lineSplitter.splitTextAccordingToNewLine(anonymizedDocumentText);
@@ -59,9 +58,6 @@ function AnonymizedDocument() {
       </AnonymizedDocumentTextDataFetcher>
     </>
   );
-  function navigateToSpecialDocuments() {
-    history.push(routes.SPECIAL_DOCUMENTS.getPath());
-  }
 }
 
 async function copyToClipboard(text: string) {

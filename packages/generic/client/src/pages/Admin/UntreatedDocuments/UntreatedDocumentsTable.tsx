@@ -1,9 +1,18 @@
-import React from 'react';
-import { apiRouteOutType, timeOperator } from '@label/core';
-import { DocumentStatusIcon, PaginatedTable, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
-import { wordings } from '../../../wordings';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { apiRouteOutType, documentType, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../api';
+import {
+  ConfirmationPopup,
+  DocumentStatusIcon,
+  PaginatedTable,
+  PublicationCategoryBadge,
+  tableRowFieldType,
+} from '../../../components';
+import { useAlert } from '../../../services/alert';
 import { customThemeType, useCustomTheme } from '../../../styles';
+import { wordings } from '../../../wordings';
+import { routes } from '../../routes';
 
 export { UntreatedDocumentsTable };
 
@@ -13,21 +22,50 @@ function UntreatedDocumentsTable(props: {
   refetch: () => void;
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
 }) {
+  const history = useHistory();
   const theme = useCustomTheme();
+  const { displayAlert } = useAlert();
+  const [documentIdToUpdateStatus, setDocumentIdToUpdateStatus] = useState<documentType['_id'] | undefined>(undefined);
+
   const styles = buildStyles(theme);
   const fields = buildUntreatedDocumentsFields();
 
   return (
     <div style={styles.container}>
+      {!!documentIdToUpdateStatus && (
+        <ConfirmationPopup
+          text={wordings.untreatedDocumentsPage.table.assignDocumentConfirmationPopup.text}
+          onConfirm={() => onConfirmUpdateDocumentStatus(documentIdToUpdateStatus)}
+          onClose={() => setDocumentIdToUpdateStatus(undefined)}
+        />
+      )}
       <PaginatedTable fields={fields} data={props.untreatedDocuments} buildOptionItems={buildOptionItems} />
     </div>
   );
 
   function buildOptionItems(untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) {
+    const openAnonymizedDocumentOptionItem = {
+      text: wordings.untreatedDocumentsPage.table.optionItems.openAnonymizedDocument,
+      onClick: () => {
+        history.push(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(untreatedDocument.document._id)));
+        return;
+      },
+      iconName: 'eye' as const,
+    };
+    const resetAndAssignToMyselfOptionItem = {
+      text: wordings.untreatedDocumentsPage.table.optionItems.assignToMyself,
+      onClick: () => {
+        setDocumentIdToUpdateStatus(untreatedDocument.document._id);
+      },
+      iconName: 'restore' as const,
+    };
+
     if (untreatedDocument.document.status !== 'pending') {
-      return [];
+      return [openAnonymizedDocumentOptionItem, resetAndAssignToMyselfOptionItem];
     }
     return [
+      openAnonymizedDocumentOptionItem,
+      resetAndAssignToMyselfOptionItem,
       {
         text: wordings.untreatedDocumentsPage.table.optionItems.freeDocument,
         onClick: async () => {
@@ -40,6 +78,31 @@ function UntreatedDocumentsTable(props: {
         iconName: 'unlock' as const,
       },
     ];
+  }
+
+  async function onConfirmUpdateDocumentStatus(documentIdToUpdateStatus: documentType['_id']) {
+    setDocumentIdToUpdateStatus(undefined);
+    try {
+      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        documentId: documentIdToUpdateStatus,
+        status: 'free',
+      });
+    } catch (error) {
+      displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert' });
+      console.warn(error);
+      return;
+    }
+    try {
+      await apiCaller.post<'assignDocumentToUser'>('assignDocumentToUser', {
+        documentId: documentIdToUpdateStatus,
+      });
+    } catch (error) {
+      displayAlert({ text: wordings.business.errors.assignDocumentFailed, variant: 'alert' });
+      console.warn(error);
+      return;
+    }
+
+    props.refetch();
   }
 
   function buildUntreatedDocumentsFields() {

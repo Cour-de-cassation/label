@@ -35,6 +35,7 @@ function buildDocumentService() {
 
   return {
     assertDocumentIsPublishable,
+    assertDocumentStatus,
     countDocumentsWithoutAnnotations,
     deleteDocument,
     fetchAllDocumentsByIds,
@@ -61,7 +62,7 @@ function buildDocumentService() {
     const publishedPublicationCategoryLetters = documentModule.lib.publicationHandler.getPublishedPublicationCategory();
     if (document.status !== 'done' && document.status !== 'toBePublished') {
       throw errorHandlers.permissionErrorHandler.build(
-        `You cannot edit the document status, because its current status is "${document.status}"`,
+        `The document is not publishable, because its current status is "${document.status}"`,
       );
     }
 
@@ -71,11 +72,30 @@ function buildDocumentService() {
       )
     ) {
       throw errorHandlers.permissionErrorHandler.build(
-        `You cannot edit the document status, because its publication category is "${document.publicationCategory.join(
+        `The document is not publishable, because its publication category is "${document.publicationCategory.join(
           ', ',
         )}"`,
       );
     }
+    return true;
+  }
+
+  async function assertDocumentStatus({
+    documentId,
+    status,
+  }: {
+    documentId: documentType['_id'];
+    status: documentType['status'];
+  }) {
+    const documentRepository = buildDocumentRepository();
+
+    const document = await documentRepository.findById(documentId);
+    if (document.status !== status) {
+      throw errorHandlers.serverErrorHandler.build(
+        `The document status "${document.status}" does not match the following: "${status}"`,
+      );
+    }
+
     return true;
   }
 

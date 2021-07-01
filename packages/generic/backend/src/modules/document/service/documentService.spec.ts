@@ -35,7 +35,7 @@ describe('documentService', () => {
       expect(
         documentService.assertDocumentIsPublishable(document._id),
       ).rejects.toThrowError(
-        `You cannot edit the document status, because its current status is "free"`,
+        `The document is not publishable, because its current status is "free"`,
       );
     });
 
@@ -49,7 +49,7 @@ describe('documentService', () => {
       expect(
         documentService.assertDocumentIsPublishable(document._id),
       ).rejects.toThrowError(
-        `You cannot edit the document status, because its publication category is "N, W"`,
+        `The document is not publishable, because its publication category is "N, W"`,
       );
     });
   });

@@ -80,6 +80,7 @@ const fr = {
       exported: 'Publié',
     },
     errors: {
+      assignDocumentFailed: 'La réassignation du document a échoué. Veuillez recharger la page',
       deleteHumanTreatmentsByDocumentIdFailed:
         'La suppression des traitements manuels effectués sur ce document a échoué. Veuillez recharger la page.',
       updateDocumentStatusFailed: 'La mise à jour du statut du document a échoué. Veuillez recharger la page.',
@@ -341,6 +342,10 @@ const fr = {
       subtitle: 'Flux de décisions',
     },
     table: {
+      assignDocumentConfirmationPopup: {
+        text:
+          "Cette action supprimera les annotations effectuées au préalable sur ce document, et vous assignera ensuite ce document pour traitement. Si l'utilisateur était en train d'annoter le document, il devra recharger la page. Souhaitez-vous continuer ?",
+      },
       columnTitles: {
         number: 'N° décision',
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
@@ -350,7 +355,9 @@ const fr = {
         importDate: "Date d'import",
       },
       optionItems: {
+        assignToMyself: "M'assigner la décision",
         freeDocument: 'Libérer la décision',
+        openAnonymizedDocument: 'Ouvrir la décision anonymisée...',
       },
       filter: {
         resultsCount: '{count} décisions affichées',

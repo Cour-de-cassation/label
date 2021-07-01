@@ -93,7 +93,7 @@ function TreatedDocumentsTable(props: {
         onClick: () => {
           history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id)));
         },
-        iconName: 'eye' as const,
+        iconName: 'find' as const,
       },
       {
         text: wordings.treatedDocumentsPage.table.optionItems.displayAnnotationDiff,

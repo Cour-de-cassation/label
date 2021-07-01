@@ -75,7 +75,7 @@ function ProblemReportsTable(props: {
         history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(problemReportWithDetails.document._id)));
         return;
       },
-      iconName: 'eye' as const,
+      iconName: 'find' as const,
     };
 
     const reassignToAgentOptionItem = {

@@ -5,23 +5,30 @@ import {
   treatmentModule,
   treatmentType,
   idModule,
+  settingsModule,
+  settingsType,
 } from '@label/core';
+import { documentService } from '../../document';
 import { buildTreatmentRepository } from '../repository';
 
 export { createTreatment };
 
-async function createTreatment({
-  documentId,
-  previousAnnotations,
-  nextAnnotations,
-  source,
-}: {
-  documentId: documentType['_id'];
-  previousAnnotations: annotationType[];
-  nextAnnotations: annotationType[];
-  source: treatmentType['source'];
-}): Promise<treatmentType['_id']> {
+async function createTreatment(
+  {
+    documentId,
+    previousAnnotations,
+    nextAnnotations,
+    source,
+  }: {
+    documentId: documentType['_id'];
+    previousAnnotations: annotationType[];
+    nextAnnotations: annotationType[];
+    source: treatmentType['source'];
+  },
+  settings: settingsType,
+): Promise<treatmentType['_id']> {
   const treatmentRepository = buildTreatmentRepository();
+
   const previousTreatments = await treatmentRepository.findAllByDocumentId(
     documentId,
   );
@@ -36,12 +43,24 @@ async function createTreatment({
     previousAnnotations,
     nextAnnotations,
   );
-  const treatment = treatmentModule.lib.build({
-    annotationsDiff,
-    documentId,
-    order,
-    source,
-  });
+
+  const document = await documentService.fetchDocument(documentId);
+
+  const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+    settings,
+    document.decisionMetadata.categoriesToOmit,
+    document.decisionMetadata.additionalTermsToAnnotate,
+  );
+
+  const treatment = treatmentModule.lib.build(
+    {
+      annotationsDiff,
+      documentId,
+      order,
+      source,
+    },
+    settingsForDocument,
+  );
 
   if (
     !annotationsDiffModule.lib.areAnnotationsDiffCompatibleWithAnnotations(

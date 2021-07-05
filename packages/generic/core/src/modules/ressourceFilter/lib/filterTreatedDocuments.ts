@@ -22,11 +22,13 @@ function filterTreatedDocuments({
     const humanTreatments = treatmentModule.lib.sortInConsistentOrder(treatments).slice(2);
 
     if (ressourceFilter.mustHaveAddedAnnotations) {
-      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.addedAnnotationsCount > 0);
+      isInTheFilter =
+        isInTheFilter && humanTreatments.some((treatment) => treatment.addedAnnotationsCount.sensitive > 0);
     }
 
     if (ressourceFilter.mustHaveDeletedAnnotations) {
-      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.deletedAnnotationsCount > 0);
+      isInTheFilter =
+        isInTheFilter && humanTreatments.some((treatment) => treatment.deletedAnnotationsCount.anonymised > 0);
     }
 
     if (ressourceFilter.mustHaveModifiedAnnotations) {

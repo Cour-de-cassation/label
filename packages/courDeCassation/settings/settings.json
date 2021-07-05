@@ -6,6 +6,7 @@
       "darkMode": ["deepOrange", 800]
     },
     "iconName": "person",
+    "isSensitive": true,
     "order": 1,
     "text": "Nom de famille"
   },
@@ -16,6 +17,7 @@
       "darkMode": ["deepOrange", 400]
     },
     "iconName": "person",
+    "isSensitive": true,
     "order": 2,
     "text": "Prénom"
   },

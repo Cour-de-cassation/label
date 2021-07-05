@@ -3,22 +3,28 @@ import {
   annotationsDiffType,
   idModule,
   idType,
+  settingsModule,
+  settingsType,
   treatmentModule,
 } from '@label/core';
-import { assignationService } from '../../../modules/assignation';
+import { documentService } from '../../document';
+import { assignationService } from '../../assignation';
 import { buildTreatmentRepository } from '../repository';
 
 export { updateTreatment };
 
-async function updateTreatment({
-  annotationsDiff,
-  documentId,
-  userId,
-}: {
-  annotationsDiff: annotationsDiffType;
-  documentId: idType;
-  userId: idType;
-}) {
+async function updateTreatment(
+  {
+    annotationsDiff,
+    documentId,
+    userId,
+  }: {
+    annotationsDiff: annotationsDiffType;
+    documentId: idType;
+    userId: idType;
+  },
+  settings: settingsType,
+) {
   const treatmentRepository = buildTreatmentRepository();
 
   const DURATION_THRESHOLD_BETWEEN_TIMESTAMPS = 15 * 60 * 1000;
@@ -30,6 +36,13 @@ async function updateTreatment({
   const treatments = await treatmentRepository.findAllByDocumentId(documentId);
   const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
     treatments,
+  );
+
+  const document = await documentService.fetchDocument(documentId);
+  const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+    settings,
+    document.decisionMetadata.categoriesToOmit,
+    document.decisionMetadata.additionalTermsToAnnotate,
   );
 
   if (
@@ -47,17 +60,21 @@ async function updateTreatment({
 
   const treatment = await treatmentRepository.findById(assignation.treatmentId);
 
-  const updatedTreatment = treatmentModule.lib.update(treatment, {
-    annotationsDiff: annotationsDiffModule.lib.squash([
-      treatment.annotationsDiff,
-      annotationsDiff,
-    ]),
-    duration:
-      currentDate - treatment.lastUpdateDate <
-      DURATION_THRESHOLD_BETWEEN_TIMESTAMPS
-        ? currentDate - treatment.lastUpdateDate + treatment.duration
-        : treatment.duration,
-  });
+  const updatedTreatment = treatmentModule.lib.update(
+    treatment,
+    {
+      annotationsDiff: annotationsDiffModule.lib.squash([
+        treatment.annotationsDiff,
+        annotationsDiff,
+      ]),
+      duration:
+        currentDate - treatment.lastUpdateDate <
+        DURATION_THRESHOLD_BETWEEN_TIMESTAMPS
+          ? currentDate - treatment.lastUpdateDate + treatment.duration
+          : treatment.duration,
+    },
+    settingsForDocument,
+  );
 
   await treatmentRepository.updateOne(
     assignation.treatmentId,

@@ -1,4 +1,5 @@
 import { groupBy } from 'lodash';
+import { settingsType } from '../../settings';
 import { annotationModule } from '../../annotation';
 import { annotationsDiffModule } from '../../annotationsDiff';
 import { treatmentType } from '../treatmentType';
@@ -8,14 +9,14 @@ export { computeTreatmentInfo };
 export type { treatmentInfoType };
 
 type treatmentInfoType = {
-  additionsCount: number;
-  deletionsCount: number;
+  additionsCount: { sensitive: number; other: number };
+  deletionsCount: { anonymised: number; other: number };
   modificationsCount: number;
   resizedBiggerCount: number;
   resizedSmallerCount: number;
 };
 
-function computeTreatmentInfo(treatment: treatmentType) {
+function computeTreatmentInfo(treatment: treatmentType, settings: settingsType) {
   const {
     addedAnnotations,
     categoryChangedAnnotations,
@@ -25,16 +26,42 @@ function computeTreatmentInfo(treatment: treatmentType) {
   } = annotationsDiffModule.lib.computeDetailsFromAnnotationsDiff(treatment.annotationsDiff);
 
   return {
-    additionsCount: Object.values(
-      groupBy(addedAnnotations, (annotation) =>
-        annotationModule.lib.entityIdHandler.compute(annotation.category, annotation.text),
-      ),
-    ).length,
-    deletionsCount: Object.values(
-      groupBy(deletedAnnotations, (annotation) =>
-        annotationModule.lib.entityIdHandler.compute(annotation.category, annotation.text),
-      ),
-    ).length,
+    additionsCount: {
+      sensitive: Object.values(
+        groupBy(
+          addedAnnotations.filter(
+            (annotation) => !!settings[annotation.category] && !!settings[annotation.category].isSensitive,
+          ),
+          (annotation) => annotation.entityId,
+        ),
+      ).length,
+      other: Object.values(
+        groupBy(
+          addedAnnotations.filter(
+            (annotation) => !!settings[annotation.category] && !settings[annotation.category].isSensitive,
+          ),
+          (annotation) => annotation.entityId,
+        ),
+      ).length,
+    },
+    deletionsCount: {
+      anonymised: Object.values(
+        groupBy(
+          deletedAnnotations.filter(
+            (annotation) => !!settings[annotation.category] && !!settings[annotation.category].isAnonymized,
+          ),
+          (annotation) => annotation.entityId,
+        ),
+      ).length,
+      other: Object.values(
+        groupBy(
+          deletedAnnotations.filter(
+            (annotation) => !!settings[annotation.category] && !settings[annotation.category].isAnonymized,
+          ),
+          (annotation) => annotation.entityId,
+        ),
+      ).length,
+    },
     modificationsCount: Object.values(
       groupBy(
         categoryChangedAnnotations,

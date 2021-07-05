@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { timeOperator } from '@label/core';
+import { statisticType, timeOperator } from '@label/core';
 import { Text } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -11,17 +11,10 @@ export type { aggregatedStatisticType };
 
 const ROW_HEIGHT = 30;
 
-type aggregatedStatisticType = {
-  addedAnnotationsCount: number;
-  annotationsCount: number;
-  deletedAnnotationsCount: number;
-  linkedEntitiesCount: number;
-  modifiedAnnotationsCount: number;
-  resizedBiggerAnnotationsCount: number;
-  resizedSmallerAnnotationsCount: number;
-  treatmentDuration: number;
-  wordsCount: number;
-};
+type aggregatedStatisticType = Omit<
+  statisticType,
+  '_id' | 'documentExternalId' | 'publicationCategory' | 'source' | 'treatmentDate' | 'userId'
+>;
 
 function StatisticsBox(props: {
   aggregatedStatistic: aggregatedStatisticType;
@@ -63,16 +56,24 @@ function StatisticsBox(props: {
         value: getComputationValue(aggregatedStatistic.linkedEntitiesCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.addedAnnotationsCount,
-        value: getComputationValue(aggregatedStatistic.addedAnnotationsCount),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.addedAnnotationsCount.sensitive,
+        value: getComputationValue(aggregatedStatistic.addedAnnotationsCount.sensitive),
+      },
+      {
+        label: wordings.treatedDocumentsPage.table.statistics.fields.addedAnnotationsCount.other,
+        value: getComputationValue(aggregatedStatistic.addedAnnotationsCount.other),
       },
       {
         label: wordings.treatedDocumentsPage.table.statistics.fields.resizedBiggerAnnotationsCount,
         value: getComputationValue(aggregatedStatistic.resizedBiggerAnnotationsCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.deletedAnnotationsCount,
-        value: getComputationValue(aggregatedStatistic.deletedAnnotationsCount),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.deletedAnnotationsCount.anonymised,
+        value: getComputationValue(aggregatedStatistic.deletedAnnotationsCount.anonymised),
+      },
+      {
+        label: wordings.treatedDocumentsPage.table.statistics.fields.deletedAnnotationsCount.other,
+        value: getComputationValue(aggregatedStatistic.deletedAnnotationsCount.other),
       },
       {
         label: wordings.treatedDocumentsPage.table.statistics.fields.resizedSmallerAnnotationsCount,

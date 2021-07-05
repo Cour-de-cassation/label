@@ -17,11 +17,9 @@ async function findOrCreateByDocumentIdAndUserId({
     documentId,
   );
   const lastTreatment = treatmentModule.lib.getLastTreatment(treatments);
-
   const assignation =
     !!lastTreatment &&
     (await assignationRepository.findByTreatmentId(lastTreatment._id));
-
   if (assignation && idModule.lib.equalId(assignation.userId, userId)) {
     return assignation;
   }

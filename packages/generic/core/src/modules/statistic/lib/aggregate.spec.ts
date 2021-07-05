@@ -5,8 +5,8 @@ describe('aggregate', () => {
   it('should aggregate statistics per assignation', () => {
     const statistics = [
       {
-        addedAnnotationsCount: 3,
-        deletedAnnotationsCount: 3,
+        addedAnnotationsCount: { sensitive: 3, other: 1 },
+        deletedAnnotationsCount: { anonymised: 3, other: 1 },
         documentNumber: 0,
         linkedEntitiesCount: 3,
         modifiedAnnotationsCount: 3,
@@ -15,8 +15,8 @@ describe('aggregate', () => {
         treatmentDuration: 3,
       },
       {
-        addedAnnotationsCount: 4,
-        deletedAnnotationsCount: 4,
+        addedAnnotationsCount: { sensitive: 1, other: 6 },
+        deletedAnnotationsCount: { anonymised: 6, other: 2 },
         documentNumber: 1,
         linkedEntitiesCount: 4,
         modifiedAnnotationsCount: 4,
@@ -30,8 +30,8 @@ describe('aggregate', () => {
 
     expect(aggregatedStatistics.perAssignation).toEqual({
       cumulatedValue: {
-        addedAnnotationsCount: 7,
-        deletedAnnotationsCount: 7,
+        addedAnnotationsCount: { sensitive: 4, other: 7 },
+        deletedAnnotationsCount: { anonymised: 9, other: 3 },
         linkedEntitiesCount: 7,
         modifiedAnnotationsCount: 7,
         resizedBiggerAnnotationsCount: 7,

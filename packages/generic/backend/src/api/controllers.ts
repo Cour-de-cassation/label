@@ -17,14 +17,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   get: {
     aggregatedStatistics: buildAuthenticatedController({
       permissions: ['admin'],
-      controllerWithUser: async (_, { args: { ressourceFilter } }) =>
-        statisticService.fetchAggregatedStatisticsAccordingToFilter({
-          ...ressourceFilter,
-          userId:
-            ressourceFilter.userId !== undefined
-              ? idModule.lib.buildId(ressourceFilter.userId)
-              : undefined,
-        }),
+      controllerWithUser: async (_, { args: { ressourceFilter } }) => {
+        const settings = settingsLoader.getSettings();
+        return statisticService.fetchAggregatedStatisticsAccordingToFilter(
+          {
+            ...ressourceFilter,
+            userId:
+              ressourceFilter.userId !== undefined
+                ? idModule.lib.buildId(ressourceFilter.userId)
+                : undefined,
+          },
+          settings,
+        );
+      },
     }),
 
     annotationsDiffDetails: buildAuthenticatedController({
@@ -285,11 +290,15 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         user,
         { args: { annotationsDiff, documentId } },
       ) => {
-        return treatmentService.updateTreatment({
-          annotationsDiff,
-          documentId: idModule.lib.buildId(documentId),
-          userId: user._id,
-        });
+        const settings = settingsLoader.getSettings();
+        return treatmentService.updateTreatment(
+          {
+            annotationsDiff,
+            documentId: idModule.lib.buildId(documentId),
+            userId: user._id,
+          },
+          settings,
+        );
       },
     }),
   },

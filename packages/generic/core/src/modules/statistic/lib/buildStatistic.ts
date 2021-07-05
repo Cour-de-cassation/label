@@ -1,6 +1,7 @@
 import { assignationType } from '../../assignation';
 import { documentModule, documentType } from '../../document';
 import { idModule } from '../../id';
+import { settingsType } from '../../settings';
 import { treatmentModule, treatmentType } from '../../treatment';
 import { statisticType } from '../statisticType';
 
@@ -11,12 +12,14 @@ function buildStatistic({
   assignation,
   document,
   linkedEntitiesCount,
+  settings,
   treatment,
 }: {
   annotationsCount: number;
   assignation: assignationType;
   document: documentType;
   linkedEntitiesCount: number;
+  settings: settingsType;
   treatment: treatmentType;
 }): statisticType {
   const {
@@ -25,7 +28,7 @@ function buildStatistic({
     modificationsCount,
     resizedSmallerCount,
     resizedBiggerCount,
-  } = treatmentModule.lib.computeTreatmentInfo(treatment);
+  } = treatmentModule.lib.computeTreatmentInfo(treatment, settings);
 
   return {
     _id: idModule.lib.buildId(),

@@ -3,6 +3,8 @@ import {
   idModule,
   ressourceFilterModule,
   ressourceFilterType,
+  settingsModule,
+  settingsType,
   statisticModule,
   statisticsCreator,
 } from '@label/core';
@@ -15,6 +17,7 @@ export { fetchAggregatedStatisticsAccordingToFilter };
 
 async function fetchAggregatedStatisticsAccordingToFilter(
   filter: ressourceFilterType,
+  settings: settingsType,
 ) {
   const statisticRepository = buildStatisticRepository();
 
@@ -58,6 +61,11 @@ async function fetchAggregatedStatisticsAccordingToFilter(
         statisticsCreator.buildFromDocument({
           assignations,
           document,
+          settings: settingsModule.lib.computeFilteredSettings(
+            settings,
+            document.decisionMetadata.categoriesToOmit,
+            document.decisionMetadata.additionalTermsToAnnotate,
+          ),
           treatments,
         }),
       ),

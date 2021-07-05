@@ -10,8 +10,10 @@ describe('buildRessourceFilterRequest', () => {
     const ressourceFilterRequest = buildRessourceFilterRequest(ressourceFilter);
 
     expect(ressourceFilterRequest).toEqual({
-      addedAnnotationsCount: 0,
-      deletedAnnotationsCount: 0,
+      'addedAnnotationsCount.sensitive': 0,
+      'addedAnnotationsCount.other': 0,
+      'deletedAnnotationsCount.anonymised': 0,
+      'deletedAnnotationsCount.other': 0,
       modifiedAnnotationsCount: 0,
       resizedBiggerAnnotationsCount: 0,
       resizedSmallerAnnotationsCount: 0,
@@ -36,8 +38,8 @@ describe('buildRessourceFilterRequest', () => {
     const ressourceFilterRequest = buildRessourceFilterRequest(ressourceFilter);
 
     expect(ressourceFilterRequest).toEqual({
-      addedAnnotationsCount: { $gte: 0 },
-      deletedAnnotationsCount: { $gte: 0 },
+      'addedAnnotationsCount.sensitive': { $gte: 0 },
+      'deletedAnnotationsCount.anonymised': { $gte: 0 },
       modifiedAnnotationsCount: { $gte: 0 },
       publicationCategory: [publicationCategory],
       resizedBiggerAnnotationsCount: { $gte: 0 },

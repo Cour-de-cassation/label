@@ -3,8 +3,10 @@ import { ressourceFilterType } from '@label/core';
 export { buildRessourceFilterRequest };
 
 type ressourceFilterRequestType = {
-  addedAnnotationsCount?: { $gte: 0 } | 0;
-  deletedAnnotationsCount?: { $gte: 0 } | 0;
+  'addedAnnotationsCount.sensitive'?: { $gte: 0 } | 0;
+  'addedAnnotationsCount.other'?: { $gte: 0 } | 0;
+  'deletedAnnotationsCount.anonymised'?: { $gte: 0 } | 0;
+  'deletedAnnotationsCount.other'?: { $gte: 0 } | 0;
   modifiedAnnotationsCount?: { $gte: 0 } | 0;
   publicationCategory: string[];
   resizedBiggerAnnotationsCount?: { $gte: 0 } | 0;
@@ -20,19 +22,21 @@ function buildRessourceFilterRequest(
   const ressourceFilterRequest = {} as ressourceFilterRequestType;
 
   if (ressourceFilter.mustHaveNoModifications) {
-    ressourceFilterRequest.addedAnnotationsCount = 0;
-    ressourceFilterRequest.deletedAnnotationsCount = 0;
+    ressourceFilterRequest['addedAnnotationsCount.sensitive'] = 0;
+    ressourceFilterRequest['addedAnnotationsCount.other'] = 0;
+    ressourceFilterRequest['deletedAnnotationsCount.anonymised'] = 0;
+    ressourceFilterRequest['deletedAnnotationsCount.other'] = 0;
     ressourceFilterRequest.modifiedAnnotationsCount = 0;
     ressourceFilterRequest.resizedBiggerAnnotationsCount = 0;
     ressourceFilterRequest.resizedSmallerAnnotationsCount = 0;
   }
 
   if (ressourceFilter.mustHaveAddedAnnotations) {
-    ressourceFilterRequest.addedAnnotationsCount = { $gte: 0 };
+    ressourceFilterRequest['addedAnnotationsCount.sensitive'] = { $gte: 0 };
   }
 
   if (ressourceFilter.mustHaveDeletedAnnotations) {
-    ressourceFilterRequest.deletedAnnotationsCount = { $gte: 0 };
+    ressourceFilterRequest['deletedAnnotationsCount.anonymised'] = { $gte: 0 };
   }
 
   if (ressourceFilter.mustHaveModifiedAnnotations) {

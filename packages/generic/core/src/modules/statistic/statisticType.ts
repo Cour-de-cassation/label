@@ -9,9 +9,21 @@ const statisticModel = buildModel({
   kind: 'object',
   content: {
     _id: { kind: 'custom', content: 'id' },
-    addedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    addedAnnotationsCount: {
+      kind: 'object',
+      content: {
+        sensitive: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
     annotationsCount: { kind: 'primitive', content: 'number' },
-    deletedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    deletedAnnotationsCount: {
+      kind: 'object',
+      content: {
+        anonymised: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
     documentExternalId: { kind: 'primitive', content: 'string' },
     linkedEntitiesCount: { kind: 'primitive', content: 'number' },
     modifiedAnnotationsCount: { kind: 'primitive', content: 'number' },

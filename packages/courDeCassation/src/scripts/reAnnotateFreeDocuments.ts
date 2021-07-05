@@ -1,4 +1,5 @@
 import { buildBackend } from '@label/backend';
+import { settingsType } from '@label/core';
 import { buildNlpAnnotator } from '../annotator';
 import { parametersHandler } from '../lib/parametersHandler';
 
@@ -11,7 +12,7 @@ import { parametersHandler } from '../lib/parametersHandler';
   });
 })();
 
-async function reAnnotateFreeDocumentsWithNlp(settings: string) {
+async function reAnnotateFreeDocumentsWithNlp(settings: settingsType) {
   const nlpAnnotator = buildNlpAnnotator(settings);
 
   await nlpAnnotator.reAnnotateFreeDocuments();

@@ -1,4 +1,5 @@
 import { build } from './build';
+import { buildEmpty } from './buildEmpty';
 import { getLastTreatment } from './getLastTreatment';
 import { computeAnnotations, computeAnnotationsDiff } from './computeAnnotations';
 import { computeTreatmentInfo, treatmentInfoType } from './computeTreatmentInfo';
@@ -7,6 +8,7 @@ import { update } from './update';
 
 export {
   build,
+  buildEmpty,
   computeAnnotations,
   computeAnnotationsDiff,
   computeTreatmentInfo,

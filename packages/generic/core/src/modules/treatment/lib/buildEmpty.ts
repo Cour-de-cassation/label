@@ -1,12 +1,10 @@
-import { settingsType } from '../../../modules/settings';
 import { idModule, omitIdType } from '../../id';
 import { treatmentGenerator } from '../generator';
 import { treatmentType } from '../treatmentType';
-import { computeTreatmentInfo } from './computeTreatmentInfo';
 
-export { build };
+export { buildEmpty };
 
-function build(
+function buildEmpty(
   treatmentFields: Omit<
     omitIdType<treatmentType>,
     | 'addedAnnotationsCount'
@@ -17,26 +15,18 @@ function build(
     | 'resizedBiggerAnnotationsCount'
     | 'resizedSmallerAnnotationsCount'
   >,
-  settings: settingsType,
 ): treatmentType {
   const treatment = treatmentGenerator.generate(treatmentFields);
-  const {
-    additionsCount,
-    deletionsCount,
-    modificationsCount,
-    resizedBiggerCount,
-    resizedSmallerCount,
-  } = computeTreatmentInfo(treatment, settings);
 
   return {
     ...treatment,
     _id: idModule.lib.buildId(),
-    addedAnnotationsCount: additionsCount,
-    deletedAnnotationsCount: deletionsCount,
+    addedAnnotationsCount: { sensitive: 0, other: 0 },
+    deletedAnnotationsCount: { anonymised: 0, other: 0 },
     duration: 0,
     lastUpdateDate: new Date().getTime(),
-    modifiedAnnotationsCount: modificationsCount,
-    resizedBiggerAnnotationsCount: resizedBiggerCount,
-    resizedSmallerAnnotationsCount: resizedSmallerCount,
+    modifiedAnnotationsCount: 0,
+    resizedBiggerAnnotationsCount: 0,
+    resizedSmallerAnnotationsCount: 0,
   };
 }

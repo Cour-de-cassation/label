@@ -1,3 +1,4 @@
+import { settingsModule } from '@label/core';
 import { promises as fs } from 'fs';
 import yargs from 'yargs';
 
@@ -18,7 +19,7 @@ async function getParameters() {
     encoding: 'utf8',
   });
 
-  return { environment, settings };
+  return { environment, settings: settingsModule.lib.parseFromJson(settings) };
 }
 
 function getCommandParameters() {

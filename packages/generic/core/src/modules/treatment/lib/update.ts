@@ -1,9 +1,14 @@
+import { settingsType } from '../../settings';
 import { treatmentType } from '../treatmentType';
 import { computeTreatmentInfo } from './computeTreatmentInfo';
 
 export { update };
 
-function update(treatment: treatmentType, treatmentFields: Partial<treatmentType>): treatmentType {
+function update(
+  treatment: treatmentType,
+  treatmentFields: Partial<treatmentType>,
+  settings: settingsType,
+): treatmentType {
   const newTreatment = { ...treatment, ...treatmentFields };
   const {
     additionsCount,
@@ -11,7 +16,7 @@ function update(treatment: treatmentType, treatmentFields: Partial<treatmentType
     modificationsCount,
     resizedBiggerCount,
     resizedSmallerCount,
-  } = computeTreatmentInfo(newTreatment);
+  } = computeTreatmentInfo(newTreatment, settings);
 
   return {
     ...newTreatment,

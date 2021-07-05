@@ -1,18 +1,22 @@
 import {
   assignationModule,
+  documentModule,
   idModule,
   treatmentModule,
   userModule,
 } from '@label/core';
 import { range } from 'lodash';
-import { buildTreatmentRepository } from '../../treatment/repository';
-import { buildUserRepository } from '../../user/repository';
+import { buildDocumentRepository } from '../../document';
+import { buildTreatmentRepository } from '../../treatment';
+import { buildUserRepository } from '../../user';
 import { buildAssignationRepository } from '../repository';
 import { findOrCreateByDocumentIdAndUserId } from './findOrCreateByDocumentIdAndUserId';
 
 describe('findOrCreateByDocumentIdAndUserId', () => {
   const userId = idModule.lib.buildId();
-  const documentId = idModule.lib.buildId();
+  const document = documentModule.generator.generate();
+  const documentId = document._id;
+  const documentRepository = buildDocumentRepository();
 
   it('should find the corresponding assignation', async () => {
     const assignationRepository = buildAssignationRepository();
@@ -23,6 +27,7 @@ describe('findOrCreateByDocumentIdAndUserId', () => {
       userId,
       treatmentId: treatment._id,
     });
+    await documentRepository.insert(document);
     await treatmentRepository.insert(treatment);
     await assignationRepository.insert(assignation);
 
@@ -37,6 +42,7 @@ describe('findOrCreateByDocumentIdAndUserId', () => {
 
   it('should create the corresponding assignation', async () => {
     const assignationRepository = buildAssignationRepository();
+    await documentRepository.insert(document);
 
     await findOrCreateByDocumentIdAndUserId({
       documentId,

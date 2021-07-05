@@ -1,6 +1,5 @@
 import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
-import { settingsModule } from '@label/core';
 import { buildSderExporter } from '../exporter';
 import { parametersHandler } from '../lib/parametersHandler';
 
@@ -9,7 +8,7 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { days } = parseArgv();
   const backend = buildBackend(environment, settings);
   const sderExporter = buildSderExporter(
-    settingsModule.lib.parseFromJson(settings),
+    settings
   );
 
   backend.runScript(() => sderExporter.exportTreatedDocumentsSince(days), {

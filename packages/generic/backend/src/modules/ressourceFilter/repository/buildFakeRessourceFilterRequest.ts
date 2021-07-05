@@ -4,8 +4,8 @@ export { buildFakeRessourceFilterRequest };
 
 function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
   return (item: {
-    addedAnnotationsCount: number;
-    deletedAnnotationsCount: number;
+    addedAnnotationsCount: { sensitive: number; other: number };
+    deletedAnnotationsCount: { anonymised: number; other: number };
     modifiedAnnotationsCount: number;
     publicationCategory: string[];
     resizedBiggerAnnotationsCount: number;
@@ -17,12 +17,12 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
 
     if (ressourceFilter.mustHaveAddedAnnotations) {
       isValidAccordingToFilter =
-        isValidAccordingToFilter && item.addedAnnotationsCount > 0;
+        isValidAccordingToFilter && item.addedAnnotationsCount.sensitive > 0;
     }
 
     if (ressourceFilter.mustHaveDeletedAnnotations) {
       isValidAccordingToFilter =
-        isValidAccordingToFilter && item.deletedAnnotationsCount > 0;
+        isValidAccordingToFilter && item.deletedAnnotationsCount.anonymised > 0;
     }
 
     if (ressourceFilter.mustHaveModifiedAnnotations) {
@@ -33,8 +33,10 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
     if (ressourceFilter.mustHaveNoModifications) {
       isValidAccordingToFilter =
         isValidAccordingToFilter &&
-        item.addedAnnotationsCount === 0 &&
-        item.deletedAnnotationsCount === 0 &&
+        item.addedAnnotationsCount.sensitive === 0 &&
+        item.addedAnnotationsCount.other === 0 &&
+        item.deletedAnnotationsCount.anonymised === 0 &&
+        item.deletedAnnotationsCount.other === 0 &&
         item.modifiedAnnotationsCount === 0 &&
         item.resizedBiggerAnnotationsCount === 0 &&
         item.resizedSmallerAnnotationsCount === 0;

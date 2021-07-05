@@ -23,9 +23,9 @@ const statisticGenerator: generatorType<statisticType> = {
     wordsCount,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
-    addedAnnotationsCount: addedAnnotationsCount ? addedAnnotationsCount : 0,
+    addedAnnotationsCount: addedAnnotationsCount ? addedAnnotationsCount : { sensitive: 0, other: 0 },
     annotationsCount: annotationsCount ? annotationsCount : 0,
-    deletedAnnotationsCount: deletedAnnotationsCount ? deletedAnnotationsCount : 0,
+    deletedAnnotationsCount: deletedAnnotationsCount ? deletedAnnotationsCount : { anonymised: 0, other: 0 },
     documentExternalId: documentExternalId ? documentExternalId : idModule.lib.convertToString(idModule.lib.buildId()),
     linkedEntitiesCount: linkedEntitiesCount ? linkedEntitiesCount : 0,
     modifiedAnnotationsCount: modifiedAnnotationsCount ? modifiedAnnotationsCount : 0,

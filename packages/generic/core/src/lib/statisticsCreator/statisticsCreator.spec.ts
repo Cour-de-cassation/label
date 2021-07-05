@@ -3,12 +3,19 @@ import { assignationModule } from '../../modules/assignation';
 import { annotationsDiffModule } from '../../modules/annotationsDiff';
 import { documentModule } from '../../modules/document';
 import { idModule } from '../../modules/id';
+import { settingsModule } from '../../modules/settings';
 import { treatmentModule } from '../../modules/treatment';
 import { statisticsCreator } from './statisticsCreator';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
 
 describe('statisticsCreator', () => {
+  const settings = settingsModule.lib.buildSettings({
+    personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
+    personnePhysiquePrenom: { isSensitive: false, isAnonymized: true },
+    personneMorale: { isSensitive: false, isAnonymized: false },
+  });
+
   describe('buildFromDocument', () => {
     it('should build all the statistics of the given documents', () => {
       const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
@@ -64,14 +71,15 @@ describe('statisticsCreator', () => {
       const statistics = statisticsCreator.buildFromDocument({
         assignations: [assignation],
         document,
+        settings,
         treatments: treatments,
       });
 
       expect(statistics[0]).toEqual({
         _id: statistics[0]._id,
-        addedAnnotationsCount: 1,
+        addedAnnotationsCount: { sensitive: 1, other: 0 },
         annotationsCount: 3,
-        deletedAnnotationsCount: 1,
+        deletedAnnotationsCount: { anonymised: 1, other: 0 },
         documentExternalId,
         linkedEntitiesCount: 0,
         modifiedAnnotationsCount: 1,

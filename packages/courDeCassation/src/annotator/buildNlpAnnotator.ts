@@ -1,4 +1,5 @@
 import { buildAnnotator, annotatorConfigType } from '@label/backend';
+import { settingsType } from '@label/core';
 import { nlpFetcher } from './fetcher';
 
 export { buildNlpAnnotator };
@@ -8,6 +9,6 @@ const nlpAnnotatorConfig: annotatorConfigType = {
   ...nlpFetcher,
 };
 
-function buildNlpAnnotator(settings: string) {
+function buildNlpAnnotator(settings: settingsType) {
   return buildAnnotator(settings, nlpAnnotatorConfig);
 }

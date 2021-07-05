@@ -11,7 +11,7 @@ describe('filterTreatedDocuments', () => {
   it('should filter all the given treated documents with added annotations', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
     const treatments = [
-      { addedAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { addedAnnotationsCount: { sensitive: 3, other: 5 }, documentId: documents[1]._id, order: 2 },
       { documentId: documents[1]._id, order: 0 },
       { documentId: documents[1]._id, order: 1 },
     ].map(treatmentModule.generator.generate);
@@ -34,7 +34,7 @@ describe('filterTreatedDocuments', () => {
   it('should filter all the given treated documents with deleted annotations', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
     const treatments = [
-      { deletedAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { deletedAnnotationsCount: { anonymised: 5, other: 1 }, documentId: documents[1]._id, order: 2 },
       { documentId: documents[1]._id, order: 0 },
       { documentId: documents[1]._id, order: 1 },
     ].map(treatmentModule.generator.generate);

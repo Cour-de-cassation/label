@@ -10,9 +10,21 @@ const treatmentModel = buildModel({
   kind: 'object',
   content: {
     _id: { kind: 'custom', content: 'id' },
-    addedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    addedAnnotationsCount: {
+      kind: 'object',
+      content: {
+        sensitive: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
     annotationsDiff: annotationsDiffModule.model,
-    deletedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    deletedAnnotationsCount: {
+      kind: 'object',
+      content: {
+        anonymised: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
     documentId: { kind: 'custom', content: 'id' },
     duration: { kind: 'primitive', content: 'number' },
     lastUpdateDate: { kind: 'primitive', content: 'number' },

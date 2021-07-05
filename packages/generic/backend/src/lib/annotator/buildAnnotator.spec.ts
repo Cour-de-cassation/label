@@ -2,6 +2,7 @@ import {
   annotationModule,
   annotationReportModule,
   documentModule,
+  settingsModule,
 } from '@label/core';
 import {
   documentService,
@@ -15,7 +16,10 @@ describe('buildAnnotator', () => {
     it('should annotate all the documents without annotations', async () => {
       await insertNDocumentsWithoutAnnotationsInDb(5);
       const fakeAnnotator = buildFakeAnnotatorConfig();
-      const annotator = buildAnnotator('{}', fakeAnnotator);
+      const annotator = buildAnnotator(
+        settingsModule.lib.buildSettings({}),
+        fakeAnnotator,
+      );
 
       await annotator.annotateDocumentsWithoutAnnotations();
 
@@ -28,7 +32,10 @@ describe('buildAnnotator', () => {
     it('should re annotate all the documents', async () => {
       await insertNDocumentsWithoutAnnotationsInDb(5);
       const fakeAnnotator = buildFakeAnnotatorConfig();
-      const annotator = buildAnnotator('{}', fakeAnnotator);
+      const annotator = buildAnnotator(
+        settingsModule.lib.buildSettings({}),
+        fakeAnnotator,
+      );
       await annotator.annotateDocumentsWithoutAnnotations();
 
       await annotator.reAnnotateFreeDocuments();

@@ -16,9 +16,8 @@ import {
 
 export { buildBackend };
 
-function buildBackend(environmentJson: string, settingsJson: string) {
+function buildBackend(environmentJson: string, settings: settingsType) {
   const environment = JSON.parse(environmentJson) as environmentType;
-  const settings = JSON.parse(settingsJson) as settingsType;
 
   const runServer = buildRunServer(environment, settings);
   const runScript = buildRunScript(environment);

@@ -12,12 +12,12 @@ async function createAssignation({
   documentId: idType;
 }) {
   const assignationRepository = buildAssignationRepository();
-  const treatmentId = await treatmentService.createTreatment({
+
+  const treatmentId = await treatmentService.createEmptyTreatment({
     documentId,
-    previousAnnotations: [],
-    nextAnnotations: [],
     source: 'annotator',
   });
+
   const assignation = assignationModule.lib.buildAssignation({
     userId,
     documentId,

@@ -1,4 +1,5 @@
 import { buildBackend } from '@label/backend';
+import { settingsType } from '@label/core';
 import { buildNlpAnnotator } from '../annotator';
 import { parametersHandler } from '../lib/parametersHandler';
 
@@ -14,7 +15,7 @@ import { parametersHandler } from '../lib/parametersHandler';
   );
 })();
 
-async function annotateDocumentsWithoutAnnotationsWithNlp(settings: string) {
+async function annotateDocumentsWithoutAnnotationsWithNlp(settings: settingsType) {
   const nlpAnnotator = buildNlpAnnotator(settings);
 
   await nlpAnnotator.annotateDocumentsWithoutAnnotations();

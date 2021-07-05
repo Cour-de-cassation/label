@@ -28,8 +28,15 @@ function aggregatePerAssignation(
   return {
     cumulatedValue: statistics.reduce(
       (aggregatedStatistics, statistic) => ({
-        addedAnnotationsCount: aggregatedStatistics.addedAnnotationsCount + statistic.addedAnnotationsCount,
-        deletedAnnotationsCount: aggregatedStatistics.deletedAnnotationsCount + statistic.deletedAnnotationsCount,
+        addedAnnotationsCount: {
+          sensitive: aggregatedStatistics.addedAnnotationsCount.sensitive + statistic.addedAnnotationsCount.sensitive,
+          other: aggregatedStatistics.addedAnnotationsCount.other + statistic.addedAnnotationsCount.other,
+        },
+        deletedAnnotationsCount: {
+          anonymised:
+            aggregatedStatistics.deletedAnnotationsCount.anonymised + statistic.deletedAnnotationsCount.anonymised,
+          other: aggregatedStatistics.deletedAnnotationsCount.other + statistic.deletedAnnotationsCount.other,
+        },
         linkedEntitiesCount: aggregatedStatistics.linkedEntitiesCount + statistic.linkedEntitiesCount,
         modifiedAnnotationsCount: aggregatedStatistics.modifiedAnnotationsCount + statistic.modifiedAnnotationsCount,
         resizedBiggerAnnotationsCount:
@@ -39,8 +46,8 @@ function aggregatePerAssignation(
         treatmentDuration: aggregatedStatistics.treatmentDuration + statistic.treatmentDuration,
       }),
       {
-        addedAnnotationsCount: 0,
-        deletedAnnotationsCount: 0,
+        addedAnnotationsCount: { sensitive: 0, other: 0 },
+        deletedAnnotationsCount: { anonymised: 0, other: 0 },
         linkedEntitiesCount: 0,
         modifiedAnnotationsCount: 0,
         resizedBiggerAnnotationsCount: 0,

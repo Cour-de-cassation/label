@@ -31,6 +31,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
         },
         couldBe: partialSettings[category]?.couldBe,
         iconName: buildIconName(partialSettings[category]?.iconName),
+        isSensitive: !!partialSettings[category].isSensitive,
         isAnonymized: buildIsAnonymized(partialSettings[category]?.isAnonymized),
         order: partialSettings[category]?.order,
         status: partialSettings[category].status || 'hidden',

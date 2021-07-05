@@ -1,9 +1,16 @@
 import { annotationModule } from '../../annotation';
 import { annotationsDiffModule } from '../../annotationsDiff';
+import { settingsModule } from '../../settings';
 import { treatmentGenerator } from '../generator';
 import { computeTreatmentInfo } from './computeTreatmentInfo';
 
 describe('computeTreatmentInfo', () => {
+  const settings = settingsModule.lib.buildSettings({
+    personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
+    personnePhysiquePrenom: { isSensitive: false, isAnonymized: true },
+    personneMorale: { isSensitive: false, isAnonymized: false },
+    adresse: { isSensitive: false, isAnonymized: true },
+  });
   it('should compute the treatments info for a treatment', () => {
     // 'Spirou works at the Editions Dupuis with his cat';
     const previousAnnotations = [
@@ -19,11 +26,11 @@ describe('computeTreatmentInfo', () => {
     const annotationsDiff = annotationsDiffModule.lib.computeAnnotationsDiff(previousAnnotations, nextAnnotations);
     const treatment = treatmentGenerator.generate({ annotationsDiff });
 
-    const treatmentInfo = computeTreatmentInfo(treatment);
+    const treatmentInfo = computeTreatmentInfo(treatment, settings);
 
     expect(treatmentInfo).toEqual({
-      additionsCount: 1,
-      deletionsCount: 1,
+      additionsCount: { sensitive: 1, other: 0 },
+      deletionsCount: { anonymised: 1, other: 0 },
       modificationsCount: 1,
       resizedBiggerCount: 1,
       resizedSmallerCount: 0,
@@ -41,11 +48,11 @@ describe('computeTreatmentInfo', () => {
     const annotationsDiff = annotationsDiffModule.lib.computeAnnotationsDiff(previousAnnotations, nextAnnotations);
     const treatment = treatmentGenerator.generate({ annotationsDiff });
 
-    const treatmentInfo = computeTreatmentInfo(treatment);
+    const treatmentInfo = computeTreatmentInfo(treatment, settings);
 
     expect(treatmentInfo).toEqual({
-      additionsCount: 3,
-      deletionsCount: 0,
+      additionsCount: { sensitive: 2, other: 1 },
+      deletionsCount: { anonymised: 0, other: 0 },
       modificationsCount: 0,
       resizedBiggerCount: 0,
       resizedSmallerCount: 0,
@@ -57,17 +64,17 @@ describe('computeTreatmentInfo', () => {
       { start: 29, text: 'Gaston', category: 'personnePhysiqueNom' },
       { start: 40, text: 'Gaston', category: 'personnePhysiqueNom' },
       { start: 65, text: 'Lagaffe', category: 'personnePhysiqueNom' },
-      { start: 90, text: 'Lagaffe', category: 'adresse' },
+      { start: 90, text: 'Lagaffe', category: 'personneMorale' },
     ].map(annotationModule.generator.generate);
     const nextAnnotations = [].map(annotationModule.generator.generate);
     const annotationsDiff = annotationsDiffModule.lib.computeAnnotationsDiff(previousAnnotations, nextAnnotations);
     const treatment = treatmentGenerator.generate({ annotationsDiff });
 
-    const treatmentInfo = computeTreatmentInfo(treatment);
+    const treatmentInfo = computeTreatmentInfo(treatment, settings);
 
     expect(treatmentInfo).toEqual({
-      additionsCount: 0,
-      deletionsCount: 3,
+      additionsCount: { sensitive: 0, other: 0 },
+      deletionsCount: { anonymised: 2, other: 1 },
       modificationsCount: 0,
       resizedBiggerCount: 0,
       resizedSmallerCount: 0,
@@ -90,11 +97,11 @@ describe('computeTreatmentInfo', () => {
     const annotationsDiff = annotationsDiffModule.lib.computeAnnotationsDiff(previousAnnotations, nextAnnotations);
     const treatment = treatmentGenerator.generate({ annotationsDiff });
 
-    const treatmentInfo = computeTreatmentInfo(treatment);
+    const treatmentInfo = computeTreatmentInfo(treatment, settings);
 
     expect(treatmentInfo).toEqual({
-      additionsCount: 0,
-      deletionsCount: 0,
+      additionsCount: { sensitive: 0, other: 0 },
+      deletionsCount: { anonymised: 0, other: 0 },
       modificationsCount: 2,
       resizedBiggerCount: 0,
       resizedSmallerCount: 0,
@@ -115,11 +122,11 @@ describe('computeTreatmentInfo', () => {
     const annotationsDiff = annotationsDiffModule.lib.computeAnnotationsDiff(previousAnnotations, nextAnnotations);
     const treatment = treatmentGenerator.generate({ annotationsDiff });
 
-    const treatmentInfo = computeTreatmentInfo(treatment);
+    const treatmentInfo = computeTreatmentInfo(treatment, settings);
 
     expect(treatmentInfo).toEqual({
-      additionsCount: 0,
-      deletionsCount: 0,
+      additionsCount: { sensitive: 0, other: 0 },
+      deletionsCount: { anonymised: 0, other: 0 },
       modificationsCount: 0,
       resizedBiggerCount: 2,
       resizedSmallerCount: 0,
@@ -140,11 +147,11 @@ describe('computeTreatmentInfo', () => {
     const annotationsDiff = annotationsDiffModule.lib.computeAnnotationsDiff(previousAnnotations, nextAnnotations);
     const treatment = treatmentGenerator.generate({ annotationsDiff });
 
-    const treatmentInfo = computeTreatmentInfo(treatment);
+    const treatmentInfo = computeTreatmentInfo(treatment, settings);
 
     expect(treatmentInfo).toEqual({
-      additionsCount: 0,
-      deletionsCount: 0,
+      additionsCount: { sensitive: 0, other: 0 },
+      deletionsCount: { anonymised: 0, other: 0 },
       modificationsCount: 0,
       resizedBiggerCount: 0,
       resizedSmallerCount: 2,

@@ -1,5 +1,6 @@
 import {
   buildAnonymizer,
+  settingsModule,
   settingsType,
   treatmentModule,
   treatmentType,
@@ -52,7 +53,15 @@ function buildExporter(
 
         await documentService.updateDocumentStatus(document._id, 'exported');
 
-        await statisticService.saveStatisticsOfDocument(document);
+        const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+          settings,
+          document.decisionMetadata.categoriesToOmit,
+          document.decisionMetadata.additionalTermsToAnnotate,
+        );
+        await statisticService.saveStatisticsOfDocument(
+          document,
+          settingsForDocument,
+        );
 
         await documentService.deleteDocument(document._id);
       }

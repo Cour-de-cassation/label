@@ -1,4 +1,5 @@
 import { createTreatment } from './createTreatment';
+import { createEmptyTreatment } from './createEmptyTreatment';
 import { deleteTreatmentsByDocumentId } from './deleteTreatmentsByDocumentId';
 import {
   fetchAnnotationsOfDocument,
@@ -15,6 +16,7 @@ export { treatmentService };
 const treatmentService = {
   countTreatmentsByDocumentId,
   createTreatment,
+  createEmptyTreatment,
   deleteTreatmentsByDocumentId,
   fetchAnnotationsOfDocument,
   fetchAnnotationsDiffDetailsForDocument,

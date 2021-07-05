@@ -21,9 +21,9 @@ const treatmentGenerator: generatorType<treatmentType> = {
     source,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
-    addedAnnotationsCount: addedAnnotationsCount ? addedAnnotationsCount : 0,
+    addedAnnotationsCount: addedAnnotationsCount ? addedAnnotationsCount : { sensitive: 0, other: 0 },
     annotationsDiff: annotationsDiff ? annotationsDiff : annotationsDiffModule.generator.generate(),
-    deletedAnnotationsCount: deletedAnnotationsCount ? deletedAnnotationsCount : 0,
+    deletedAnnotationsCount: deletedAnnotationsCount ? deletedAnnotationsCount : { anonymised: 0, other: 0 },
     documentId: documentId ? idModule.lib.buildId(documentId) : idModule.lib.buildId(),
     duration: duration ? duration : 0,
     lastUpdateDate: lastUpdateDate ? lastUpdateDate : new Date().getTime(),

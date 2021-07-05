@@ -7,6 +7,7 @@ import {
   statisticModule,
   treatmentModule,
   assignationModule,
+  settingsModule,
 } from '@label/core';
 import { buildAssignationRepository } from '../../assignation';
 import { buildDocumentRepository } from '../../document';
@@ -19,6 +20,12 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
   const documentRepository = buildDocumentRepository();
   const statisticRepository = buildStatisticRepository();
   const treatmentRepository = buildTreatmentRepository();
+  const settings = settingsModule.lib.buildSettings({
+    personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
+    personnePhysiquePrenom: { isSensitive: false, isAnonymized: true },
+    personneMorale: { isSensitive: false, isAnonymized: false },
+    adresse: { isSensitive: false, isAnonymized: true },
+  });
 
   describe('statistics', () => {
     it('should fetch all the statistics according to filter', async () => {
@@ -29,9 +36,9 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
       });
       const statistics = [
         {
-          addedAnnotationsCount: 3,
+          addedAnnotationsCount: { sensitive: 3, other: 1 },
           annotationsCount: 9,
-          deletedAnnotationsCount: 3,
+          deletedAnnotationsCount: { anonymised: 3, other: 2 },
           documentExternalId: 'DOCUMENT_EXTERNAL_ID_0',
           linkedEntitiesCount: 3,
           modifiedAnnotationsCount: 3,
@@ -43,9 +50,9 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
         },
         { userId: userId2 },
         {
-          addedAnnotationsCount: 4,
+          addedAnnotationsCount: { sensitive: 4, other: 1 },
           annotationsCount: 9,
-          deletedAnnotationsCount: 4,
+          deletedAnnotationsCount: { anonymised: 4, other: 3 },
           documentExternalId: 'DOCUMENT_EXTERNAL_ID_0',
           linkedEntitiesCount: 4,
           modifiedAnnotationsCount: 4,
@@ -60,13 +67,14 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
 
       const aggregatedStatistics = await fetchAggregatedStatisticsAccordingToFilter(
         ressourceFilter,
+        settings,
       );
 
       expect(aggregatedStatistics).toEqual({
         perAssignation: {
           cumulatedValue: {
-            addedAnnotationsCount: 7,
-            deletedAnnotationsCount: 7,
+            addedAnnotationsCount: { sensitive: 7, other: 2 },
+            deletedAnnotationsCount: { anonymised: 7, other: 5 },
             linkedEntitiesCount: 7,
             modifiedAnnotationsCount: 7,
             resizedBiggerAnnotationsCount: 7,
@@ -154,13 +162,14 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
 
       const aggregatedStatistics = await fetchAggregatedStatisticsAccordingToFilter(
         ressourceFilter,
+        settings,
       );
 
       expect(aggregatedStatistics).toEqual({
         perAssignation: {
           cumulatedValue: {
-            addedAnnotationsCount: 1,
-            deletedAnnotationsCount: 1,
+            addedAnnotationsCount: { sensitive: 1, other: 0 },
+            deletedAnnotationsCount: { anonymised: 1, other: 0 },
             linkedEntitiesCount: 0,
             modifiedAnnotationsCount: 0,
             resizedBiggerAnnotationsCount: 1,

@@ -6,6 +6,7 @@ import {
   idType,
   settingsModule,
   idModule,
+  settingsType,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { annotationReportService } from '../../modules/annotationReport';
@@ -19,11 +20,9 @@ import { computeAdditionalAnnotations } from './computeAdditionalAnnotations';
 export { buildAnnotator };
 
 function buildAnnotator(
-  settingsJson: string,
+  settings: settingsType,
   annotatorConfig: annotatorConfigType,
 ) {
-  const settings = settingsModule.lib.parseFromJson(settingsJson);
-
   return { annotateDocumentsWithoutAnnotations, reAnnotateFreeDocuments };
 
   async function annotateDocumentsWithoutAnnotations() {
@@ -134,12 +133,15 @@ function buildAnnotator(
     annotations: annotationType[];
     documentId: idType;
   }) {
-    await treatmentService.createTreatment({
-      documentId,
-      previousAnnotations: [],
-      nextAnnotations: annotations,
-      source: 'NLP',
-    });
+    await treatmentService.createTreatment(
+      {
+        documentId,
+        previousAnnotations: [],
+        nextAnnotations: annotations,
+        source: 'NLP',
+      },
+      settings,
+    );
   }
 
   async function createAdditionalAnnotationsTreatment({
@@ -149,12 +151,15 @@ function buildAnnotator(
     annotations: annotationType[];
     documentId: idType;
   }) {
-    await treatmentService.createTreatment({
-      documentId,
-      previousAnnotations: [],
-      nextAnnotations: annotations,
-      source: 'supplementaryAnnotations',
-    });
+    await treatmentService.createTreatment(
+      {
+        documentId,
+        previousAnnotations: [],
+        nextAnnotations: annotations,
+        source: 'supplementaryAnnotations',
+      },
+      settings,
+    );
   }
 
   async function createAutoTreatment({
@@ -166,12 +171,15 @@ function buildAnnotator(
   }) {
     const autoAnnotator = buildAutoAnnotator(settings);
     const autoTreatedAnnotations = autoAnnotator.annotate(annotations);
-    await treatmentService.createTreatment({
-      documentId,
-      previousAnnotations: annotations,
-      nextAnnotations: autoTreatedAnnotations,
-      source: 'postProcess',
-    });
+    await treatmentService.createTreatment(
+      {
+        documentId,
+        previousAnnotations: annotations,
+        nextAnnotations: autoTreatedAnnotations,
+        source: 'postProcess',
+      },
+      settings,
+    );
   }
 
   async function createReport(report: annotationReportType) {

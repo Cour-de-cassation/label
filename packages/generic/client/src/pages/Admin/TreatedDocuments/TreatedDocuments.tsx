@@ -89,16 +89,23 @@ function TreatedDocuments(props: {
         ...documentAccumulator,
         [documentIdString]: documentTreatments.reduce(
           (treatmentInfoAccumulator, treatment) => ({
-            additionsCount: treatmentInfoAccumulator.additionsCount + treatment.addedAnnotationsCount,
-            deletionsCount: treatmentInfoAccumulator.deletionsCount + treatment.deletedAnnotationsCount,
+            additionsCount: {
+              sensitive: treatmentInfoAccumulator.additionsCount.sensitive + treatment.addedAnnotationsCount.sensitive,
+              other: treatmentInfoAccumulator.additionsCount.other + treatment.addedAnnotationsCount.other,
+            },
+            deletionsCount: {
+              anonymised:
+                treatmentInfoAccumulator.deletionsCount.anonymised + treatment.deletedAnnotationsCount.anonymised,
+              other: treatmentInfoAccumulator.deletionsCount.other + treatment.deletedAnnotationsCount.other,
+            },
             modificationsCount: treatmentInfoAccumulator.modificationsCount + treatment.modifiedAnnotationsCount,
             resizedSmallerCount:
               treatmentInfoAccumulator.resizedSmallerCount + treatment.resizedSmallerAnnotationsCount,
             resizedBiggerCount: treatmentInfoAccumulator.resizedBiggerCount + treatment.resizedBiggerAnnotationsCount,
           }),
           {
-            additionsCount: 0,
-            deletionsCount: 0,
+            additionsCount: { sensitive: 0, other: 0 },
+            deletionsCount: { anonymised: 0, other: 0 },
             modificationsCount: 0,
             resizedSmallerCount: 0,
             resizedBiggerCount: 0,
@@ -118,11 +125,11 @@ function TreatedDocuments(props: {
       return keysOf(filterValues).reduce((accumulator, currentFilterKey) => {
         if (currentFilterKey === 'mustHaveSurAnnotations' && !!filterValues[currentFilterKey]) {
           const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)];
-          return accumulator && treatmentInfo.deletionsCount > 0;
+          return accumulator && treatmentInfo.deletionsCount.anonymised > 0;
         }
         if (currentFilterKey === 'mustHaveSubAnnotations' && !!filterValues[currentFilterKey]) {
           const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)];
-          return accumulator && treatmentInfo.additionsCount > 0;
+          return accumulator && treatmentInfo.additionsCount.sensitive > 0;
         }
         if (currentFilterKey === 'startDate' && !!filterValues.startDate) {
           return (
@@ -224,12 +231,21 @@ function TreatedDocuments(props: {
         width: 5,
       },
       {
-        id: 'deletions',
-        title: wordings.treatedDocumentsPage.table.columnTitles.surAnnotation.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.surAnnotation.tooltipText,
+        id: 'pseudonymisedDeletions',
+        title: wordings.treatedDocumentsPage.table.columnTitles.surAnnotationPseudonymised.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.surAnnotationPseudonymised.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
-          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].deletionsCount,
+          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].deletionsCount.anonymised,
+        width: 2,
+      },
+      {
+        id: 'otherDeletions',
+        title: wordings.treatedDocumentsPage.table.columnTitles.surAnnotationOther.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.surAnnotationOther.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) =>
+          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].deletionsCount.other,
         width: 2,
       },
       {
@@ -242,12 +258,21 @@ function TreatedDocuments(props: {
         width: 2,
       },
       {
-        id: 'additions',
-        title: wordings.treatedDocumentsPage.table.columnTitles.subAnnotation.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.subAnnotation.tooltipText,
+        id: 'sensitiveAdditions',
+        title: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationSensitive.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationSensitive.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
-          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].additionsCount,
+          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].additionsCount.sensitive,
+        width: 2,
+      },
+      {
+        id: 'otherAdditions',
+        title: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationOther.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationOther.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) =>
+          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].additionsCount.other,
         width: 2,
       },
       {

@@ -22,6 +22,7 @@ type categorySettingType = {
   couldBe?: string;
   iconName: categoryIconNameType;
   isAnonymized?: boolean;
+  isSensitive?: boolean;
   order: number | undefined;
   status: 'hidden' | 'visible' | 'annotable';
   text: string;

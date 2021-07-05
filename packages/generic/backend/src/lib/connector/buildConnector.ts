@@ -7,6 +7,41 @@ export { buildConnector };
 
 function buildConnector(connectorConfig: connectorConfigType) {
   return {
+    async importNewDocuments(documentCount: number) {
+      const DAYS_INTERVAL = 100;
+      logger.log(`importNewDocuments: ${documentCount}`);
+
+      logger.log(`Fetching ${connectorConfig.name} documents...`);
+      let daysAgo = 0;
+      const newDocuments: documentType[] = [];
+      while (newDocuments.length < documentCount) {
+        const newCourtDecisions = await connectorConfig.fetchAllCourtDecisionsBetween(
+          {
+            startDate: new Date(dateBuilder.daysAgo(daysAgo + DAYS_INTERVAL)),
+            endDate: new Date(dateBuilder.daysAgo(daysAgo)),
+          },
+        );
+        logger.log(
+          `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
+        );
+        const documents = newCourtDecisions.map(
+          connectorConfig.mapCourtDecisionToDocument,
+        );
+        newDocuments.push(...documents);
+        daysAgo += DAYS_INTERVAL;
+      }
+
+      logger.log(
+        `Insertion ${newDocuments.length} documents into the database...`,
+      );
+      await insertDocuments(newDocuments);
+      logger.log(`Insertion done!`);
+
+      logger.log(`Send documents have been loaded...`);
+      await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
+      logger.log(`DONE`);
+    },
+
     async importDocumentsSince(days: number) {
       logger.log(`importAllDocumentsSince ${days}`);
 

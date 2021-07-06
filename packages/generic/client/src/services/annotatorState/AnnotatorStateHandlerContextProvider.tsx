@@ -1,5 +1,5 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
-import { annotationsDiffModule, buildAnonymizer, documentModule } from '@label/core';
+import { buildAnonymizer, documentModule } from '@label/core';
 import { clientAnonymizerType } from '../../types';
 import { annotationsCommitterType } from './buildAnnotationsCommitter';
 import { annotatorStateType } from './annotatorStateType';
@@ -20,7 +20,6 @@ const AnnotatorStateHandlerContext = createContext<annotatorStateHandlerType>({
   restore: () => null,
   revert: () => null,
   set: () => null,
-  getGlobalAnnotationsDiff: () => annotationsDiffModule.lib.buildAnnotationsDiff([], []),
   getAnonymizer: () => buildAnonymizer({}),
 });
 

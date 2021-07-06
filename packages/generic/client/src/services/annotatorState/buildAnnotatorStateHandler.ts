@@ -16,7 +16,6 @@ type annotatorStateHandlerType = {
   canRevert: () => boolean;
   canRestore: () => boolean;
   reinitialize: () => void;
-  getGlobalAnnotationsDiff: () => annotationsDiffType;
   getAnonymizer: () => clientAnonymizerType;
 };
 
@@ -46,7 +45,6 @@ function buildAnnotatorStateHandler({
       canRevert: canRevertAnnotatorState,
       canRestore: canRestoreAnnotatorState,
       reinitialize: reinitializeAnnotatorState,
-      getGlobalAnnotationsDiff,
       getAnonymizer,
     },
   };
@@ -89,10 +87,6 @@ function buildAnnotatorStateHandler({
 
   function canRestoreAnnotatorState() {
     return committer.canRestore();
-  }
-
-  function getGlobalAnnotationsDiff() {
-    return committer.squash();
   }
 
   function getAnonymizer() {

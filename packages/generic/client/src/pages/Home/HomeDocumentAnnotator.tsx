@@ -2,7 +2,6 @@ import React from 'react';
 import {
   annotationsDiffType,
   annotationType,
-  buildAnonymizer,
   documentModule,
   documentType,
   fetchedDocumentType,
@@ -11,18 +10,21 @@ import {
 import { apiCaller } from '../../api';
 import { MainHeader, PublicationCategoryBadge, Text } from '../../components';
 import {
+  annotationsCommitterType,
   AnnotatorStateHandlerContextProvider,
-  buildAnnotationsCommitter,
   buildAutoSaver,
 } from '../../services/annotatorState';
 import { useMonitoring } from '../../services/monitoring';
 import { useAlert } from '../../services/alert';
+import { clientAnonymizerType } from '../../types';
 import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
 
 export { HomeDocumentAnnotator };
 function HomeDocumentAnnotator(props: {
   annotations: annotationType[];
+  buildAnonymiser: () => clientAnonymizerType;
+  committer: annotationsCommitterType;
   document: fetchedDocumentType;
   fetchNewDocumentsForUser: () => void;
   settings: settingsType;
@@ -40,8 +42,8 @@ function HomeDocumentAnnotator(props: {
   return (
     <AnnotatorStateHandlerContextProvider
       autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: props.document._id })}
-      buildAnonymizer={() => buildAnonymizer(props.settings)}
-      committer={buildAnnotationsCommitter()}
+      buildAnonymizer={props.buildAnonymiser}
+      committer={props.committer}
       initialAnnotatorState={{
         annotations: props.annotations,
         document: props.document,

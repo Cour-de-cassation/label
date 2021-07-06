@@ -4,43 +4,60 @@ import { Text } from '../../generic';
 
 export { PublicationCategoryBadge };
 
-const BADGE_WIDTH = 20;
-const BADGE_HEIGHT = 30;
-const TRIANGLE_SIZE = 10;
-
 function PublicationCategoryBadge(props: { publicationCategoryLetter: string }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
   return (
-    <div style={styles.rectangle}>
-      <div style={styles.triangle} />
-      <Text>{props.publicationCategoryLetter}</Text>
+    <div style={styles.container}>
+      <div style={styles.leftRectangle}>
+        <Text>{props.publicationCategoryLetter}</Text>
+      </div>
+      <div style={styles.rightRectangle}>
+        <div style={styles.rightTopRectangle}></div>
+        <div style={styles.rightBottomRectangle}></div>
+      </div>
     </div>
   );
 }
 
 function buildStyles(theme: customThemeType) {
+  const TOTAL_WIDTH = 16;
+  const TOTAL_HEIGHT = 20;
+  const LEFT_RECTANGLE_WIDTH = 9;
+  const RIGHT_BOTTOM_RECTANGLE_WIDTH = 13;
   return {
-    rectangle: {
-      position: 'relative',
-      width: BADGE_WIDTH,
-      height: BADGE_HEIGHT,
-      backgroundColor: theme.colors.badge.type1.backgroundColor,
-      color: theme.colors.badge.type1.color,
+    container: {
+      width: TOTAL_WIDTH,
+      height: TOTAL_HEIGHT,
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: theme.shape.borderRadius.xxxs,
     },
-    triangle: {
-      position: 'absolute',
-      zIndex: 100,
-      top: 0,
-      right: 0,
-      borderTopRightRadius: theme.shape.borderRadius.xxxs,
-      borderLeft: `${TRIANGLE_SIZE}px solid transparent`,
-      borderTop: `${TRIANGLE_SIZE}px solid ${theme.colors.line.level2}`,
+    leftRectangle: {
+      width: LEFT_RECTANGLE_WIDTH,
+      height: TOTAL_HEIGHT,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      color: theme.colors.badge.type1.color,
+      backgroundColor: theme.colors.badge.type1.backgroundColor,
+      borderTopLeftRadius: theme.shape.borderRadius.xxxs,
+      borderBottomLeftRadius: theme.shape.borderRadius.xxxs,
+    },
+    rightRectangle: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    rightTopRectangle: {
+      height: 0,
+      width: 0,
+      borderRight: `8px solid transparent`,
+      borderBottom: `8px solid ${theme.colors.badge.type1.backgroundColor}`,
+    },
+    rightBottomRectangle: {
+      height: RIGHT_BOTTOM_RECTANGLE_WIDTH,
+      width: TOTAL_WIDTH - LEFT_RECTANGLE_WIDTH,
+      backgroundColor: theme.colors.badge.type1.backgroundColor,
+      borderBottomRightRadius: theme.shape.borderRadius.xxxs,
     },
   } as const;
 }

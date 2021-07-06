@@ -31,9 +31,8 @@ function mapCourtDecisionToDocument(
     sderCourtDecision.chamberName,
   );
 
-  const publicationCategory = sderCourtDecision.pubCategory
-    ? [sderCourtDecision.pubCategory]
-    : [];
+  const publicationCategory = computePublicationCategory(sderCourtDecision.pubCategory, sderCourtDecision.publication)
+
   const priority = computePriority(
     sderCourtDecision.sourceName,
     publicationCategory,
@@ -93,6 +92,17 @@ function computeTitleFromParsedCourtDecision({
     .filter(Boolean)
     .join(' · ');
   return title;
+}
+
+function computePublicationCategory(pubCategory: string | undefined, publication: string[] | undefined) {
+  const publicationCategory: string[] = [];
+  if(!!pubCategory) {
+    publicationCategory.push(pubCategory);
+  }
+  if(!!publication) {
+    publicationCategory.push(...publication)
+  }
+  return publicationCategory
 }
 
 function convertRawDateIntoReadableDate(rawDate: Date | undefined) {

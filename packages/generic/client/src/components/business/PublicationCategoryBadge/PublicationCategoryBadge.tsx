@@ -1,29 +1,46 @@
 import React from 'react';
-import { useCustomTheme } from '../../../styles';
+import { customThemeType, useCustomTheme } from '../../../styles';
+import { Text } from '../../generic';
 
 export { PublicationCategoryBadge };
 
-const BADGE_SIZE = 24;
-const ICON =
-  'M0.01 2C0.01 0.9 0.9 0 2 0H9.17C9.7 0 10.21 0.21 10.58 0.59L15.41 5.42C15.79 5.79 16 6.3 16 6.83V18C16 19.1 15.1 20 14 20H1.99C0.89 20 0 19.1 0 18L0.01 2ZM9 1.5V6C9 6.55 9.45 7 10 7H14.5L9 1.5Z';
+const BADGE_WIDTH = 20;
+const BADGE_HEIGHT = 30;
+const TRIANGLE_SIZE = 10;
 
 function PublicationCategoryBadge(props: { publicationCategoryLetter: string }) {
   const theme = useCustomTheme();
+  const styles = buildStyles(theme);
+
   return (
-    <svg width={BADGE_SIZE} height={BADGE_SIZE} viewBox={`0 0 ${BADGE_SIZE} ${BADGE_SIZE}`} fill="none">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d={ICON}
-        fill={theme.colors.badge.type1.backgroundColor}
-        mask="url(#knockout-text)"
-      />
-      <mask id="knockout-text">
-        <rect width={BADGE_SIZE} height={BADGE_SIZE} fill="#fff" />
-        <text x="1" y="18" fill="#000" fontSize="13px">
-          {props.publicationCategoryLetter}
-        </text>
-      </mask>
-    </svg>
+    <div style={styles.rectangle}>
+      <div style={styles.triangle} />
+      <Text>{props.publicationCategoryLetter}</Text>
+    </div>
   );
+}
+
+function buildStyles(theme: customThemeType) {
+  return {
+    rectangle: {
+      position: 'relative',
+      width: BADGE_WIDTH,
+      height: BADGE_HEIGHT,
+      backgroundColor: theme.colors.badge.type1.backgroundColor,
+      color: theme.colors.badge.type1.color,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: theme.shape.borderRadius.xxxs,
+    },
+    triangle: {
+      position: 'absolute',
+      zIndex: 100,
+      top: 0,
+      right: 0,
+      borderTopRightRadius: theme.shape.borderRadius.xxxs,
+      borderLeft: `${TRIANGLE_SIZE}px solid transparent`,
+      borderTop: `${TRIANGLE_SIZE}px solid ${theme.colors.line.level2}`,
+    },
+  } as const;
 }

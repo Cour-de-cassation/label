@@ -1,4 +1,5 @@
-import { decisionModule, decisionType } from 'sder';
+import { decisionType } from 'sder';
+import { idModule } from '@label/core';
 import { fileSystem } from '@label/backend';
 import { sderApiType } from './sderApiType';
 
@@ -23,10 +24,10 @@ const sderLocalApi: sderApiType = {
         const parsedContent = JSON.parse(content) as decisionType;
         return {
           ...parsedContent,
+          _id: idModule.lib.buildId(),
           dateDecision: parsedContent.dateDecision,
         };
-      })
-      .map(decisionModule.lib.generateDecision);
+      });
   },
 
   async fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, sourceName) {

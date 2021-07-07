@@ -1,13 +1,10 @@
 import {
-  annotationModule,
-  annotationsDiffModule,
   documentModule,
   idModule,
   ressourceFilterModule,
   statisticModule,
   treatmentModule,
   assignationModule,
-  settingsModule,
 } from '@label/core';
 import { buildAssignationRepository } from '../../assignation';
 import { buildDocumentRepository } from '../../document';
@@ -20,12 +17,6 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
   const documentRepository = buildDocumentRepository();
   const statisticRepository = buildStatisticRepository();
   const treatmentRepository = buildTreatmentRepository();
-  const settings = settingsModule.lib.buildSettings({
-    personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
-    personnePhysiquePrenom: { isSensitive: false, isAnonymized: true },
-    personneMorale: { isSensitive: false, isAnonymized: false },
-    adresse: { isSensitive: false, isAnonymized: true },
-  });
 
   describe('statistics', () => {
     it('should fetch all the statistics according to filter', async () => {
@@ -75,7 +66,6 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
 
       const aggregatedStatistics = await fetchAggregatedStatisticsAccordingToFilter(
         ressourceFilter,
-        settings,
       );
 
       expect(aggregatedStatistics).toEqual({
@@ -119,31 +109,13 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
       ] as const).map(documentModule.generator.generate);
       const treatments = [
         {
-          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
-            [],
-            [
-              { start: 29, text: 'Dupuis', category: 'personnePhysiqueNom' },
-              { start: 41, text: 'his cat', category: 'personnePhysiqueNom' },
-            ].map(annotationModule.generator.generate),
-          ),
           documentId: documents[0]._id,
           order: 0,
+          duration: 0,
         },
         {
-          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
-            [
-              { start: 29, text: 'Dupuis', category: 'personnePhysiqueNom' },
-              { start: 41, text: 'his cat', category: 'personnePhysiqueNom' },
-            ].map(annotationModule.generator.generate),
-            [
-              { start: 0, text: 'Spirou', category: 'personnePhysiqueNom' },
-              {
-                start: 20,
-                text: 'Editions Dupuis',
-                category: 'personneMorale',
-              },
-            ].map(annotationModule.generator.generate),
-          ),
+          deletedAnnotationsCount: { anonymised: 1, other: 0 },
+          addedAnnotationsCount: { sensitive: 1, other: 0 },
           documentId: documents[0]._id,
           duration: 10,
           order: 1,
@@ -168,7 +140,6 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
 
       const aggregatedStatistics = await fetchAggregatedStatisticsAccordingToFilter(
         ressourceFilter,
-        settings,
       );
 
       expect(aggregatedStatistics).toEqual({
@@ -184,7 +155,7 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
         },
         perDocument: {
           cumulatedValue: {
-            annotationsCount: 2,
+            annotationsCount: 0,
             wordsCount: 5,
           },
           total: 1,

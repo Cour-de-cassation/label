@@ -3,21 +3,12 @@ import { assignationModule } from '../../modules/assignation';
 import { annotationsDiffModule } from '../../modules/annotationsDiff';
 import { documentModule } from '../../modules/document';
 import { idModule } from '../../modules/id';
-import { settingsModule } from '../../modules/settings';
 import { treatmentModule } from '../../modules/treatment';
 import { statisticsCreator } from './statisticsCreator';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
 
 describe('statisticsCreator', () => {
-  const settings = settingsModule.lib.buildSettings({
-    personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
-    personnePhysiquePrenom: { isSensitive: true, isAnonymized: true },
-    adresse: { isSensitive: false, isAnonymized: true },
-    personneMorale: { isSensitive: false, isAnonymized: false },
-    professionnelNom: { isSensitive: false, isAnonymized: false },
-  });
-
   const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
   const documentPublicationCategory = ['P'];
   const documentSource = 'SOURCE';
@@ -58,6 +49,11 @@ describe('statisticsCreator', () => {
               { start: 90, text: 'Gaston', category: 'personnePhysiquePrenom' },
             ].map(annotationModule.generator.generate),
           ),
+          addedAnnotationsCount: { sensitive: 1, other: 0 },
+          deletedAnnotationsCount: { anonymised: 1, other: 0 },
+          modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
+          resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
+
           documentId: document._id,
           duration,
           order: 1,
@@ -73,7 +69,6 @@ describe('statisticsCreator', () => {
       const statistics = statisticsCreator.buildFromDocument({
         assignations: [assignation],
         document,
-        settings,
         treatments: treatments,
       });
 
@@ -119,6 +114,7 @@ describe('statisticsCreator', () => {
               annotationModule.generator.generate,
             ),
           ),
+          modifiedAnnotationsCount: { nonAnonymisedToSensitive: 1, anonymisedToNonAnonymised: 0, other: 0 },
           documentId: document._id,
           duration,
           order: 1,
@@ -134,7 +130,6 @@ describe('statisticsCreator', () => {
       const statistics = statisticsCreator.buildFromDocument({
         assignations: [assignation],
         document,
-        settings,
         treatments: treatments,
       });
 

@@ -1,7 +1,6 @@
 import { treatmentModule, treatmentType } from '../../modules/treatment';
 import { assignationType } from '../../modules/assignation';
 import { documentType } from '../../modules/document';
-import { settingsType } from '../../modules/settings';
 import { statisticType, statisticModule } from '../../modules/statistic';
 import { idModule } from '../../modules/id';
 import { annotationLinkHandler } from '../annotationLinkHandler';
@@ -13,12 +12,10 @@ const statisticsCreator = { buildFromDocument };
 function buildFromDocument({
   assignations,
   document,
-  settings,
   treatments,
 }: {
   assignations: assignationType[];
   document: documentType;
-  settings: settingsType;
   treatments: treatmentType[];
 }): statisticType[] {
   const annotations = treatmentModule.lib.computeAnnotations(treatments);
@@ -36,7 +33,6 @@ function buildFromDocument({
       assignation,
       document,
       linkedEntitiesCount,
-      settings,
       treatment,
     });
   });

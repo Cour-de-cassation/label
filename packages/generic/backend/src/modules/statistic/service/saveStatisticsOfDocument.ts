@@ -1,14 +1,11 @@
-import { documentType, settingsType, statisticsCreator } from '@label/core';
+import { documentType, statisticsCreator } from '@label/core';
 import { assignationService } from '../../assignation';
 import { treatmentService } from '../../treatment';
 import { buildStatisticRepository } from '../repository';
 
 export { saveStatisticsOfDocument };
 
-async function saveStatisticsOfDocument(
-  document: documentType,
-  settings: settingsType,
-) {
+async function saveStatisticsOfDocument(document: documentType) {
   const statisticRepository = buildStatisticRepository();
 
   const assignations = await assignationService.fetchAssignationsOfDocumentId(
@@ -21,7 +18,6 @@ async function saveStatisticsOfDocument(
   const statistics = statisticsCreator.buildFromDocument({
     assignations,
     document,
-    settings,
     treatments,
   });
 

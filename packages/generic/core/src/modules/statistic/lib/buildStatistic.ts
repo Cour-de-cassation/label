@@ -1,8 +1,7 @@
 import { assignationType } from '../../assignation';
 import { documentModule, documentType } from '../../document';
 import { idModule } from '../../id';
-import { settingsType } from '../../settings';
-import { treatmentModule, treatmentType } from '../../treatment';
+import { treatmentType } from '../../treatment';
 import { statisticType } from '../statisticType';
 
 export { buildStatistic };
@@ -12,35 +11,25 @@ function buildStatistic({
   assignation,
   document,
   linkedEntitiesCount,
-  settings,
   treatment,
 }: {
   annotationsCount: number;
   assignation: assignationType;
   document: documentType;
   linkedEntitiesCount: number;
-  settings: settingsType;
   treatment: treatmentType;
 }): statisticType {
-  const {
-    additionsCount,
-    deletionsCount,
-    modificationsCount,
-    resizedSmallerCount,
-    resizedBiggerCount,
-  } = treatmentModule.lib.computeTreatmentInfo(treatment, settings);
-
   return {
     _id: idModule.lib.buildId(),
-    addedAnnotationsCount: additionsCount,
+    addedAnnotationsCount: treatment.addedAnnotationsCount,
     annotationsCount,
-    deletedAnnotationsCount: deletionsCount,
+    deletedAnnotationsCount: treatment.deletedAnnotationsCount,
     documentExternalId: document.externalId,
     linkedEntitiesCount,
-    modifiedAnnotationsCount: modificationsCount,
+    modifiedAnnotationsCount: treatment.modifiedAnnotationsCount,
     publicationCategory: document.publicationCategory,
-    resizedBiggerAnnotationsCount: resizedBiggerCount,
-    resizedSmallerAnnotationsCount: resizedSmallerCount,
+    resizedBiggerAnnotationsCount: treatment.resizedBiggerAnnotationsCount,
+    resizedSmallerAnnotationsCount: treatment.resizedSmallerAnnotationsCount,
     source: document.source,
     treatmentDate: treatment.lastUpdateDate,
     treatmentDuration: treatment.duration,

@@ -18,17 +18,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     aggregatedStatistics: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { ressourceFilter } }) => {
-        const settings = settingsLoader.getSettings();
-        return statisticService.fetchAggregatedStatisticsAccordingToFilter(
-          {
-            ...ressourceFilter,
-            userId:
-              ressourceFilter.userId !== undefined
-                ? idModule.lib.buildId(ressourceFilter.userId)
-                : undefined,
-          },
-          settings,
-        );
+        return statisticService.fetchAggregatedStatisticsAccordingToFilter({
+          ...ressourceFilter,
+          userId:
+            ressourceFilter.userId !== undefined
+              ? idModule.lib.buildId(ressourceFilter.userId)
+              : undefined,
+        });
       },
     }),
 

@@ -26,10 +26,29 @@ const statisticModel = buildModel({
     },
     documentExternalId: { kind: 'primitive', content: 'string' },
     linkedEntitiesCount: { kind: 'primitive', content: 'number' },
-    modifiedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    modifiedAnnotationsCount: {
+      kind: 'object',
+      content: {
+        nonAnonymisedToSensitive: { kind: 'primitive', content: 'number' },
+        anonymisedToNonAnonymised: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
     publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
-    resizedBiggerAnnotationsCount: { kind: 'primitive', content: 'number' },
-    resizedSmallerAnnotationsCount: { kind: 'primitive', content: 'number' },
+    resizedBiggerAnnotationsCount: {
+      kind: 'object',
+      content: {
+        sensitive: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
+    resizedSmallerAnnotationsCount: {
+      kind: 'object',
+      content: {
+        anonymised: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
     source: { kind: 'primitive', content: 'string' },
     treatmentDate: { kind: 'primitive', content: 'number' },
     treatmentDuration: { kind: 'primitive', content: 'number' },

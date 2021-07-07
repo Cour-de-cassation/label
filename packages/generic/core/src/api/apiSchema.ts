@@ -32,12 +32,22 @@ const apiSchema = {
               cumulatedValue: {
                 kind: 'object',
                 content: {
-                  addedAnnotationsCount: statisticModule.model.content.addedAnnotationsCount,
-                  deletedAnnotationsCount: statisticModule.model.content.deletedAnnotationsCount,
-                  linkedEntitiesCount: statisticModule.model.content.linkedEntitiesCount,
-                  modifiedAnnotationsCount: statisticModule.model.content.modifiedAnnotationsCount,
-                  resizedBiggerAnnotationsCount: statisticModule.model.content.resizedBiggerAnnotationsCount,
-                  resizedSmallerAnnotationsCount: statisticModule.model.content.resizedSmallerAnnotationsCount,
+                  surAnnotationsCompleteCount: buildModel({
+                    kind: 'primitive',
+                    content: 'number',
+                  } as const),
+                  surAnnotationsPartialCount: buildModel({
+                    kind: 'primitive',
+                    content: 'number',
+                  } as const),
+                  subAnnotationsCompleteCount: buildModel({
+                    kind: 'primitive',
+                    content: 'number',
+                  } as const),
+                  subAnnotationsPartialCount: buildModel({
+                    kind: 'primitive',
+                    content: 'number',
+                  } as const),
                   treatmentDuration: statisticModule.model.content.treatmentDuration,
                 },
               },
@@ -267,14 +277,25 @@ const apiSchema = {
                 kind: 'object',
                 content: {
                   _id: treatmentModule.model.content._id,
-                  addedAnnotationsCount: treatmentModule.model.content.addedAnnotationsCount,
-                  deletedAnnotationsCount: treatmentModule.model.content.deletedAnnotationsCount,
+                  surAnnotationsCompleteCount: buildModel({
+                    kind: 'primitive',
+                    content: 'number',
+                  } as const),
+                  surAnnotationsPartialCount: buildModel({
+                    kind: 'primitive',
+                    content: 'number',
+                  } as const),
+                  subAnnotationsCompleteCount: buildModel({
+                    kind: 'primitive',
+                    content: 'number',
+                  } as const),
+                  subAnnotationsPartialCount: buildModel({
+                    kind: 'primitive',
+                    content: 'number',
+                  } as const),
                   documentId: treatmentModule.model.content.documentId,
                   duration: treatmentModule.model.content.duration,
                   lastUpdateDate: treatmentModule.model.content.lastUpdateDate,
-                  modifiedAnnotationsCount: treatmentModule.model.content.modifiedAnnotationsCount,
-                  resizedBiggerAnnotationsCount: treatmentModule.model.content.resizedBiggerAnnotationsCount,
-                  resizedSmallerAnnotationsCount: treatmentModule.model.content.resizedSmallerAnnotationsCount,
                   source: treatmentModule.model.content.source,
                 },
               },

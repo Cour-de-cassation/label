@@ -43,10 +43,10 @@ describe('build', () => {
       documentId: treatmentFields.documentId,
       duration: 0,
       lastUpdateDate: treatment.lastUpdateDate,
-      modifiedAnnotationsCount: 1,
+      modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
       order: treatmentFields.order,
-      resizedBiggerAnnotationsCount: 1,
-      resizedSmallerAnnotationsCount: 0,
+      resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
+      resizedSmallerAnnotationsCount: { anonymised: 0, other: 0 },
       source: treatmentFields.source,
     });
   });

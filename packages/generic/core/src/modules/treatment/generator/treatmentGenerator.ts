@@ -27,10 +27,16 @@ const treatmentGenerator: generatorType<treatmentType> = {
     documentId: documentId ? idModule.lib.buildId(documentId) : idModule.lib.buildId(),
     duration: duration ? duration : 0,
     lastUpdateDate: lastUpdateDate ? lastUpdateDate : new Date().getTime(),
-    modifiedAnnotationsCount: modifiedAnnotationsCount ? modifiedAnnotationsCount : 0,
+    modifiedAnnotationsCount: modifiedAnnotationsCount
+      ? modifiedAnnotationsCount
+      : { nonAnonymisedToSensitive: 0, other: 0, anonymisedToNonAnonymised: 0 },
     order: order ? order : 0,
-    resizedBiggerAnnotationsCount: resizedBiggerAnnotationsCount ? resizedBiggerAnnotationsCount : 0,
-    resizedSmallerAnnotationsCount: resizedSmallerAnnotationsCount ? resizedSmallerAnnotationsCount : 0,
+    resizedBiggerAnnotationsCount: resizedBiggerAnnotationsCount
+      ? resizedBiggerAnnotationsCount
+      : { sensitive: 0, other: 0 },
+    resizedSmallerAnnotationsCount: resizedSmallerAnnotationsCount
+      ? resizedSmallerAnnotationsCount
+      : { anonymised: 0, other: 0 },
     source: source ? source : 'NLP',
   }),
 };

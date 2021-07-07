@@ -11,13 +11,10 @@ const treatedDocumentOrderByProperties = [
   'source',
   'userName',
   'date',
-  'pseudonymisedDeletions',
-  'otherDeletions',
-  'resizeSmaller',
-  'sensitiveAdditions',
-  'otherAdditions',
-  'resizeBigger',
-  'modifications',
+  'surAnnotationsCompleteCount',
+  'surAnnotationsPartialCount',
+  'subAnnotationsCompleteCount',
+  'subAnnotationsPartialCount',
   'duration',
 ] as const;
 

@@ -31,9 +31,13 @@ describe('computeTreatmentInfo', () => {
     expect(treatmentInfo).toEqual({
       additionsCount: { sensitive: 1, other: 0 },
       deletionsCount: { anonymised: 1, other: 0 },
-      modificationsCount: 1,
-      resizedBiggerCount: 1,
-      resizedSmallerCount: 0,
+      modificationsCount: {
+        nonAnonymisedToSensitive: 0,
+        anonymisedToNonAnonymised: 0,
+        other: 1,
+      },
+      resizedBiggerCount: { sensitive: 0, other: 1 },
+      resizedSmallerCount: { anonymised: 0, other: 0 },
     });
   });
 
@@ -53,9 +57,13 @@ describe('computeTreatmentInfo', () => {
     expect(treatmentInfo).toEqual({
       additionsCount: { sensitive: 2, other: 1 },
       deletionsCount: { anonymised: 0, other: 0 },
-      modificationsCount: 0,
-      resizedBiggerCount: 0,
-      resizedSmallerCount: 0,
+      modificationsCount: {
+        nonAnonymisedToSensitive: 0,
+        anonymisedToNonAnonymised: 0,
+        other: 0,
+      },
+      resizedBiggerCount: { sensitive: 0, other: 0 },
+      resizedSmallerCount: { anonymised: 0, other: 0 },
     });
   });
 
@@ -75,9 +83,13 @@ describe('computeTreatmentInfo', () => {
     expect(treatmentInfo).toEqual({
       additionsCount: { sensitive: 0, other: 0 },
       deletionsCount: { anonymised: 2, other: 1 },
-      modificationsCount: 0,
-      resizedBiggerCount: 0,
-      resizedSmallerCount: 0,
+      modificationsCount: {
+        nonAnonymisedToSensitive: 0,
+        anonymisedToNonAnonymised: 0,
+        other: 0,
+      },
+      resizedBiggerCount: { sensitive: 0, other: 0 },
+      resizedSmallerCount: { anonymised: 0, other: 0 },
     });
   });
 
@@ -102,9 +114,13 @@ describe('computeTreatmentInfo', () => {
     expect(treatmentInfo).toEqual({
       additionsCount: { sensitive: 0, other: 0 },
       deletionsCount: { anonymised: 0, other: 0 },
-      modificationsCount: 2,
-      resizedBiggerCount: 0,
-      resizedSmallerCount: 0,
+      modificationsCount: {
+        nonAnonymisedToSensitive: 0,
+        anonymisedToNonAnonymised: 0,
+        other: 2,
+      },
+      resizedBiggerCount: { sensitive: 0, other: 0 },
+      resizedSmallerCount: { anonymised: 0, other: 0 },
     });
   });
 
@@ -127,9 +143,13 @@ describe('computeTreatmentInfo', () => {
     expect(treatmentInfo).toEqual({
       additionsCount: { sensitive: 0, other: 0 },
       deletionsCount: { anonymised: 0, other: 0 },
-      modificationsCount: 0,
-      resizedBiggerCount: 2,
-      resizedSmallerCount: 0,
+      modificationsCount: {
+        nonAnonymisedToSensitive: 0,
+        anonymisedToNonAnonymised: 0,
+        other: 0,
+      },
+      resizedBiggerCount: { sensitive: 1, other: 1 },
+      resizedSmallerCount: { anonymised: 0, other: 0 },
     });
   });
 
@@ -152,9 +172,13 @@ describe('computeTreatmentInfo', () => {
     expect(treatmentInfo).toEqual({
       additionsCount: { sensitive: 0, other: 0 },
       deletionsCount: { anonymised: 0, other: 0 },
-      modificationsCount: 0,
-      resizedBiggerCount: 0,
-      resizedSmallerCount: 2,
+      modificationsCount: {
+        nonAnonymisedToSensitive: 0,
+        anonymisedToNonAnonymised: 0,
+        other: 0,
+      },
+      resizedBiggerCount: { sensitive: 0, other: 0 },
+      resizedSmallerCount: { anonymised: 2, other: 0 },
     });
   });
 });

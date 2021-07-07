@@ -25,8 +25,12 @@ function buildEmpty(
     deletedAnnotationsCount: { anonymised: 0, other: 0 },
     duration: 0,
     lastUpdateDate: new Date().getTime(),
-    modifiedAnnotationsCount: 0,
-    resizedBiggerAnnotationsCount: 0,
-    resizedSmallerAnnotationsCount: 0,
+    modifiedAnnotationsCount: {
+      nonAnonymisedToSensitive: 0,
+      anonymisedToNonAnonymised: 0,
+      other: 0,
+    },
+    resizedBiggerAnnotationsCount: { sensitive: 0, other: 0 },
+    resizedSmallerAnnotationsCount: { anonymised: 0, other: 0 },
   };
 }

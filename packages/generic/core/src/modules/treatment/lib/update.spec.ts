@@ -39,9 +39,9 @@ describe('update', () => {
       addedAnnotationsCount: { sensitive: 1, other: 1 },
       deletedAnnotationsCount: { anonymised: 2, other: 1 },
       lastUpdateDate: updatedTreatment.lastUpdateDate,
-      modifiedAnnotationsCount: 1,
-      resizedBiggerAnnotationsCount: 1,
-      resizedSmallerAnnotationsCount: 0,
+      modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
+      resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
+      resizedSmallerAnnotationsCount: { anonymised: 0, other: 0 },
     });
   });
 });

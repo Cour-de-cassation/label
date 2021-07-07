@@ -57,7 +57,15 @@ describe('filterTreatedDocuments', () => {
   it('should filter all the given treated documents with modified annotations', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
     const treatments = [
-      { modifiedAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      {
+        modifiedAnnotationsCount: {
+          nonAnonymisedToSensitive: 3,
+          anonymisedToNonAnonymised: 0,
+          other: 0,
+        },
+        documentId: documents[1]._id,
+        order: 2,
+      },
       { documentId: documents[1]._id, order: 0 },
       { documentId: documents[1]._id, order: 1 },
     ].map(treatmentModule.generator.generate);
@@ -119,7 +127,7 @@ describe('filterTreatedDocuments', () => {
   it('should filter all the given treated documents with resized bigger annotations', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
     const treatments = [
-      { resizedBiggerAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { resizedBiggerAnnotationsCount: { sensitive: 3, other: 0 }, documentId: documents[1]._id, order: 2 },
       { documentId: documents[1]._id, order: 0 },
       { documentId: documents[1]._id, order: 1 },
     ].map(treatmentModule.generator.generate);
@@ -142,7 +150,7 @@ describe('filterTreatedDocuments', () => {
   it('should filter all the given treated documents with resized smaller annotations', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
     const treatments = [
-      { resizedSmallerAnnotationsCount: 3, documentId: documents[1]._id, order: 2 },
+      { resizedSmallerAnnotationsCount: { anonymised: 3, other: 0 }, documentId: documents[1]._id, order: 2 },
       { documentId: documents[1]._id, order: 0 },
       { documentId: documents[1]._id, order: 1 },
     ].map(treatmentModule.generator.generate);

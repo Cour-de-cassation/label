@@ -6,10 +6,14 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
   return (item: {
     addedAnnotationsCount: { sensitive: number; other: number };
     deletedAnnotationsCount: { anonymised: number; other: number };
-    modifiedAnnotationsCount: number;
+    modifiedAnnotationsCount: {
+      nonAnonymisedToSensitive: number;
+      anonymisedToNonAnonymised: number;
+      other: number;
+    };
     publicationCategory: string[];
-    resizedBiggerAnnotationsCount: number;
-    resizedSmallerAnnotationsCount: number;
+    resizedBiggerAnnotationsCount: { sensitive: number; other: number };
+    resizedSmallerAnnotationsCount: { anonymised: number; other: number };
     source: string;
     userId: idType;
   }) => {
@@ -27,7 +31,10 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
 
     if (ressourceFilter.mustHaveModifiedAnnotations) {
       isValidAccordingToFilter =
-        isValidAccordingToFilter && item.modifiedAnnotationsCount > 0;
+        isValidAccordingToFilter &&
+        item.modifiedAnnotationsCount.anonymisedToNonAnonymised +
+          item.modifiedAnnotationsCount.nonAnonymisedToSensitive >
+          0;
     }
 
     if (ressourceFilter.mustHaveNoModifications) {
@@ -37,19 +44,25 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
         item.addedAnnotationsCount.other === 0 &&
         item.deletedAnnotationsCount.anonymised === 0 &&
         item.deletedAnnotationsCount.other === 0 &&
-        item.modifiedAnnotationsCount === 0 &&
-        item.resizedBiggerAnnotationsCount === 0 &&
-        item.resizedSmallerAnnotationsCount === 0;
+        item.modifiedAnnotationsCount.anonymisedToNonAnonymised === 0 &&
+        item.modifiedAnnotationsCount.nonAnonymisedToSensitive === 0 &&
+        item.modifiedAnnotationsCount.other === 0 &&
+        item.resizedBiggerAnnotationsCount.sensitive === 0 &&
+        item.resizedBiggerAnnotationsCount.other === 0 &&
+        item.resizedSmallerAnnotationsCount.anonymised === 0 &&
+        item.resizedSmallerAnnotationsCount.other === 0;
     }
 
     if (ressourceFilter.mustHaveResizedBiggerAnnotations) {
       isValidAccordingToFilter =
-        isValidAccordingToFilter && item.resizedBiggerAnnotationsCount > 0;
+        isValidAccordingToFilter &&
+        item.resizedBiggerAnnotationsCount.sensitive > 0;
     }
 
     if (ressourceFilter.mustHaveResizedSmallerAnnotations) {
       isValidAccordingToFilter =
-        isValidAccordingToFilter && item.resizedSmallerAnnotationsCount > 0;
+        isValidAccordingToFilter &&
+        item.resizedSmallerAnnotationsCount.anonymised > 0;
     }
 
     if (ressourceFilter.publicationCategory) {

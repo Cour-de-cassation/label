@@ -1,5 +1,6 @@
 import { groupBy } from 'lodash';
 import { statisticType } from '../statisticType';
+import { simplify } from './simplify';
 
 export { aggregate };
 
@@ -13,45 +14,36 @@ function aggregate(statistics: statisticType[]) {
 function aggregatePerAssignation(
   statistics: statisticType[],
 ): {
-  cumulatedValue: Pick<
-    statisticType,
-    | 'addedAnnotationsCount'
-    | 'deletedAnnotationsCount'
-    | 'linkedEntitiesCount'
-    | 'modifiedAnnotationsCount'
-    | 'resizedBiggerAnnotationsCount'
-    | 'resizedSmallerAnnotationsCount'
-    | 'treatmentDuration'
-  >;
+  cumulatedValue: {
+    surAnnotationsCompleteCount: number;
+    surAnnotationsPartialCount: number;
+    subAnnotationsCompleteCount: number;
+    subAnnotationsPartialCount: number;
+    treatmentDuration: statisticType['treatmentDuration'];
+  };
   total: number;
 } {
   return {
     cumulatedValue: statistics.reduce(
-      (aggregatedStatistics, statistic) => ({
-        addedAnnotationsCount: {
-          sensitive: aggregatedStatistics.addedAnnotationsCount.sensitive + statistic.addedAnnotationsCount.sensitive,
-          other: aggregatedStatistics.addedAnnotationsCount.other + statistic.addedAnnotationsCount.other,
-        },
-        deletedAnnotationsCount: {
-          anonymised:
-            aggregatedStatistics.deletedAnnotationsCount.anonymised + statistic.deletedAnnotationsCount.anonymised,
-          other: aggregatedStatistics.deletedAnnotationsCount.other + statistic.deletedAnnotationsCount.other,
-        },
-        linkedEntitiesCount: aggregatedStatistics.linkedEntitiesCount + statistic.linkedEntitiesCount,
-        modifiedAnnotationsCount: aggregatedStatistics.modifiedAnnotationsCount + statistic.modifiedAnnotationsCount,
-        resizedBiggerAnnotationsCount:
-          aggregatedStatistics.resizedBiggerAnnotationsCount + statistic.resizedBiggerAnnotationsCount,
-        resizedSmallerAnnotationsCount:
-          aggregatedStatistics.resizedSmallerAnnotationsCount + statistic.resizedSmallerAnnotationsCount,
-        treatmentDuration: aggregatedStatistics.treatmentDuration + statistic.treatmentDuration,
-      }),
+      (aggregatedStatistics, statistic) => {
+        const simplifyedStatistic = simplify(statistic);
+        return {
+          surAnnotationsCompleteCount:
+            aggregatedStatistics.surAnnotationsCompleteCount + simplifyedStatistic.surAnnotationsCompleteCount,
+          surAnnotationsPartialCount:
+            aggregatedStatistics.surAnnotationsPartialCount + simplifyedStatistic.surAnnotationsPartialCount,
+          subAnnotationsCompleteCount:
+            aggregatedStatistics.subAnnotationsCompleteCount + simplifyedStatistic.subAnnotationsCompleteCount,
+          subAnnotationsPartialCount:
+            aggregatedStatistics.subAnnotationsPartialCount + simplifyedStatistic.subAnnotationsPartialCount,
+          treatmentDuration: aggregatedStatistics.treatmentDuration + statistic.treatmentDuration,
+        };
+      },
       {
-        addedAnnotationsCount: { sensitive: 0, other: 0 },
-        deletedAnnotationsCount: { anonymised: 0, other: 0 },
-        linkedEntitiesCount: 0,
-        modifiedAnnotationsCount: 0,
-        resizedBiggerAnnotationsCount: 0,
-        resizedSmallerAnnotationsCount: 0,
+        surAnnotationsCompleteCount: 0,
+        surAnnotationsPartialCount: 0,
+        subAnnotationsCompleteCount: 0,
+        subAnnotationsPartialCount: 0,
         treatmentDuration: 0,
       },
     ),

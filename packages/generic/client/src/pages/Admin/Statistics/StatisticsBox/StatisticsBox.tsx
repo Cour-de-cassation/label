@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { statisticType, timeOperator } from '@label/core';
+import { timeOperator } from '@label/core';
 import { Text } from '../../../../components';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -11,10 +11,15 @@ export type { aggregatedStatisticType };
 
 const ROW_HEIGHT = 30;
 
-type aggregatedStatisticType = Omit<
-  statisticType,
-  '_id' | 'documentExternalId' | 'publicationCategory' | 'source' | 'treatmentDate' | 'userId'
->;
+type aggregatedStatisticType = {
+  surAnnotationsCompleteCount: number;
+  surAnnotationsPartialCount: number;
+  subAnnotationsCompleteCount: number;
+  subAnnotationsPartialCount: number;
+  treatmentDuration: number;
+  annotationsCount: number;
+  wordsCount: number;
+};
 
 function StatisticsBox(props: {
   aggregatedStatistic: aggregatedStatisticType;
@@ -52,36 +57,20 @@ function StatisticsBox(props: {
         value: getComputationValue(aggregatedStatistic.annotationsCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.linkedEntitiesCount,
-        value: getComputationValue(aggregatedStatistic.linkedEntitiesCount),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.surAnnotationsCompleteCount,
+        value: getComputationValue(aggregatedStatistic.surAnnotationsCompleteCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.addedAnnotationsCount.sensitive,
-        value: getComputationValue(aggregatedStatistic.addedAnnotationsCount.sensitive),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.surAnnotationsPartialCount,
+        value: getComputationValue(aggregatedStatistic.surAnnotationsPartialCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.addedAnnotationsCount.other,
-        value: getComputationValue(aggregatedStatistic.addedAnnotationsCount.other),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotationsCompleteCount,
+        value: getComputationValue(aggregatedStatistic.subAnnotationsCompleteCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.resizedBiggerAnnotationsCount,
-        value: getComputationValue(aggregatedStatistic.resizedBiggerAnnotationsCount),
-      },
-      {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.deletedAnnotationsCount.anonymised,
-        value: getComputationValue(aggregatedStatistic.deletedAnnotationsCount.anonymised),
-      },
-      {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.deletedAnnotationsCount.other,
-        value: getComputationValue(aggregatedStatistic.deletedAnnotationsCount.other),
-      },
-      {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.resizedSmallerAnnotationsCount,
-        value: getComputationValue(aggregatedStatistic.resizedSmallerAnnotationsCount),
-      },
-      {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.modifiedAnnotationsCount,
-        value: getComputationValue(aggregatedStatistic.modifiedAnnotationsCount),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotationsPartialCount,
+        value: getComputationValue(aggregatedStatistic.subAnnotationsPartialCount),
       },
       {
         label: wordings.treatedDocumentsPage.table.statistics.fields.treatmentDuration,

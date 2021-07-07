@@ -9,6 +9,7 @@ import {
   userModule,
   documentType,
   treatmentType,
+  statisticModule,
 } from '@label/core';
 import { projectFakeObjects } from '../../../repository';
 import { dateBuilder } from '../../../utils';
@@ -508,12 +509,18 @@ describe('documentService', () => {
       expect(treatedDocuments).toEqual([
         {
           document: projectTreatedDocumentDocument(toBePublishedDocument),
-          treatments: [projectTreatedDocumentTreatment(toBePublishedTreatment)],
+          treatments: [
+            projectTreatedDocumentTreatmentExceptStatistics(
+              toBePublishedTreatment,
+            ),
+          ],
           userNames: ['NAME'],
         },
         {
           document: projectTreatedDocumentDocument(doneDocument),
-          treatments: [projectTreatedDocumentTreatment(doneTreatment)],
+          treatments: [
+            projectTreatedDocumentTreatmentExceptStatistics(doneTreatment),
+          ],
           userNames: ['NAME'],
         },
       ]);
@@ -562,17 +569,17 @@ function projectTreatedDocumentDocument(document: documentType) {
   ]);
 }
 
-function projectTreatedDocumentTreatment(treatment: treatmentType) {
-  return projectFakeObjects(treatment, [
-    '_id',
-    'addedAnnotationsCount',
-    'deletedAnnotationsCount',
-    'documentId',
-    'duration',
-    'lastUpdateDate',
-    'modifiedAnnotationsCount',
-    'resizedBiggerAnnotationsCount',
-    'resizedSmallerAnnotationsCount',
-    'source',
-  ]);
+function projectTreatedDocumentTreatmentExceptStatistics(
+  treatment: treatmentType,
+) {
+  return {
+    ...projectFakeObjects(treatment, [
+      '_id',
+      'documentId',
+      'duration',
+      'lastUpdateDate',
+      'source',
+    ]),
+    ...statisticModule.lib.simplify(treatment),
+  };
 }

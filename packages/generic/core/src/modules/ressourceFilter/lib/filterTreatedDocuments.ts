@@ -32,7 +32,14 @@ function filterTreatedDocuments({
     }
 
     if (ressourceFilter.mustHaveModifiedAnnotations) {
-      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.modifiedAnnotationsCount > 0);
+      isInTheFilter =
+        isInTheFilter &&
+        humanTreatments.some(
+          (treatment) =>
+            treatment.modifiedAnnotationsCount.anonymisedToNonAnonymised +
+              treatment.modifiedAnnotationsCount.nonAnonymisedToSensitive >
+            0,
+        );
     }
 
     if (ressourceFilter.mustHaveNoModifications) {
@@ -44,12 +51,13 @@ function filterTreatedDocuments({
     }
 
     if (ressourceFilter.mustHaveResizedBiggerAnnotations) {
-      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.resizedBiggerAnnotationsCount > 0);
+      isInTheFilter =
+        isInTheFilter && humanTreatments.some((treatment) => treatment.resizedBiggerAnnotationsCount.sensitive > 0);
     }
 
     if (ressourceFilter.mustHaveResizedSmallerAnnotations) {
       isInTheFilter =
-        isInTheFilter && humanTreatments.some((treatment) => treatment.resizedSmallerAnnotationsCount > 0);
+        isInTheFilter && humanTreatments.some((treatment) => treatment.resizedSmallerAnnotationsCount.anonymised > 0);
     }
 
     if (ressourceFilter.publicationCategory) {

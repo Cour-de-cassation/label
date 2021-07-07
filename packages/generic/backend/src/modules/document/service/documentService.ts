@@ -8,6 +8,7 @@ import {
   userType,
   documentModule,
   indexer,
+  statisticModule,
 } from '@label/core';
 import { settingsLoader } from '../../../lib/settingsLoader';
 import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
@@ -217,17 +218,11 @@ function buildDocumentService() {
         },
         treatments: treatments.map((treatment) => ({
           _id: treatment._id,
-          addedAnnotationsCount: treatment.addedAnnotationsCount,
-          deletedAnnotationsCount: treatment.deletedAnnotationsCount,
           documentId: treatment.documentId,
           duration: treatment.duration,
           lastUpdateDate: treatment.lastUpdateDate,
-          modifiedAnnotationsCount: treatment.modifiedAnnotationsCount,
-          resizedBiggerAnnotationsCount:
-            treatment.resizedBiggerAnnotationsCount,
-          resizedSmallerAnnotationsCount:
-            treatment.resizedSmallerAnnotationsCount,
           source: treatment.source,
+          ...statisticModule.lib.simplify(treatment),
         })),
         userNames,
       };

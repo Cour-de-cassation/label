@@ -11,7 +11,9 @@ function PublicationCategoryBadge(props: { publicationCategoryLetter: string }) 
   return (
     <div style={styles.container}>
       <div style={styles.leftRectangle}>
-        <Text>{props.publicationCategoryLetter}</Text>
+        <Text variant="h3" style={styles.letterText}>
+          {props.publicationCategoryLetter}
+        </Text>
       </div>
       <div style={styles.rightRectangle}>
         <div style={styles.rightTopRectangle}></div>
@@ -22,10 +24,10 @@ function PublicationCategoryBadge(props: { publicationCategoryLetter: string }) 
 }
 
 function buildStyles(theme: customThemeType) {
-  const TOTAL_WIDTH = 16;
-  const TOTAL_HEIGHT = 20;
-  const LEFT_RECTANGLE_WIDTH = 9;
-  const RIGHT_BOTTOM_RECTANGLE_WIDTH = 13;
+  const TOTAL_WIDTH = 19;
+  const TOTAL_HEIGHT = 24;
+  const LEFT_RECTANGLE_WIDTH = 12;
+  const RIGHT_BOTTOM_RECTANGLE_HEIGHT = 17;
   return {
     container: {
       width: TOTAL_WIDTH,
@@ -43,6 +45,9 @@ function buildStyles(theme: customThemeType) {
       borderTopLeftRadius: theme.shape.borderRadius.xxxs,
       borderBottomLeftRadius: theme.shape.borderRadius.xxxs,
     },
+    letterText: {
+      paddingLeft: 2,
+    },
     rightRectangle: {
       display: 'flex',
       flexDirection: 'column',
@@ -50,11 +55,11 @@ function buildStyles(theme: customThemeType) {
     rightTopRectangle: {
       height: 0,
       width: 0,
-      borderRight: `8px solid transparent`,
-      borderBottom: `8px solid ${theme.colors.badge.type1.backgroundColor}`,
+      borderRight: `7px solid transparent`,
+      borderBottom: `7px solid ${theme.colors.badge.type1.backgroundColor}`,
     },
     rightBottomRectangle: {
-      height: RIGHT_BOTTOM_RECTANGLE_WIDTH,
+      height: RIGHT_BOTTOM_RECTANGLE_HEIGHT,
       width: TOTAL_WIDTH - LEFT_RECTANGLE_WIDTH,
       backgroundColor: theme.colors.badge.type1.backgroundColor,
       borderBottomRightRadius: theme.shape.borderRadius.xxxs,

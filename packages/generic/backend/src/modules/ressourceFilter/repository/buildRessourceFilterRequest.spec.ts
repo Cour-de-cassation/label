@@ -14,9 +14,11 @@ describe('buildRessourceFilterRequest', () => {
       'addedAnnotationsCount.other': 0,
       'deletedAnnotationsCount.anonymised': 0,
       'deletedAnnotationsCount.other': 0,
-      modifiedAnnotationsCount: 0,
-      resizedBiggerAnnotationsCount: 0,
-      resizedSmallerAnnotationsCount: 0,
+      'modifiedAnnotationsCount.nonAnonymisedToSensitive': 0,
+      'modifiedAnnotationsCount.anonymisedToNonAnonymised': 0,
+      'modifiedAnnotationsCount.other': 0,
+      'resizedBiggerAnnotationsCount.sensitive': 0,
+      'resizedSmallerAnnotationsCount.anonymised': 0,
     });
   });
 
@@ -40,10 +42,11 @@ describe('buildRessourceFilterRequest', () => {
     expect(ressourceFilterRequest).toEqual({
       'addedAnnotationsCount.sensitive': { $gte: 0 },
       'deletedAnnotationsCount.anonymised': { $gte: 0 },
-      modifiedAnnotationsCount: { $gte: 0 },
+      'modifiedAnnotationsCount.nonAnonymisedToSensitive': { $gte: 0 },
+      'modifiedAnnotationsCount.anonymisedToNonAnonymised': { $gte: 0 },
       publicationCategory: [publicationCategory],
-      resizedBiggerAnnotationsCount: { $gte: 0 },
-      resizedSmallerAnnotationsCount: { $gte: 0 },
+      'resizedBiggerAnnotationsCount.sensitive': { $gte: 0 },
+      'resizedSmallerAnnotationsCount.anonymised': { $gte: 0 },
       source,
       userId,
     });

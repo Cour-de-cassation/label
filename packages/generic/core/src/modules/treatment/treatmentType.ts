@@ -28,10 +28,29 @@ const treatmentModel = buildModel({
     documentId: { kind: 'custom', content: 'id' },
     duration: { kind: 'primitive', content: 'number' },
     lastUpdateDate: { kind: 'primitive', content: 'number' },
-    modifiedAnnotationsCount: { kind: 'primitive', content: 'number' },
+    modifiedAnnotationsCount: {
+      kind: 'object',
+      content: {
+        nonAnonymisedToSensitive: { kind: 'primitive', content: 'number' },
+        anonymisedToNonAnonymised: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
     order: { kind: 'primitive', content: 'number' },
-    resizedBiggerAnnotationsCount: { kind: 'primitive', content: 'number' },
-    resizedSmallerAnnotationsCount: { kind: 'primitive', content: 'number' },
+    resizedBiggerAnnotationsCount: {
+      kind: 'object',
+      content: {
+        sensitive: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
+    resizedSmallerAnnotationsCount: {
+      kind: 'object',
+      content: {
+        anonymised: { kind: 'primitive', content: 'number' },
+        other: { kind: 'primitive', content: 'number' },
+      },
+    },
     source: {
       kind: 'constant',
       content: ['annotator', 'admin', 'NLP', 'postProcess', 'supplementaryAnnotations'] as const,

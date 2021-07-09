@@ -1,3 +1,8 @@
-export { localStorage, adminViews, treatedDocumentOrderByProperties } from './localStorage';
+export {
+  localStorage,
+  adminViews,
+  treatedDocumentOrderByProperties,
+  untreatedDocumentOrderByProperties,
+} from './localStorage';
 
-export type { treatedDocumentFilterType } from './localStorage';
+export type { treatedDocumentFilterType, untreatedDocumentFilterType } from './localStorage';

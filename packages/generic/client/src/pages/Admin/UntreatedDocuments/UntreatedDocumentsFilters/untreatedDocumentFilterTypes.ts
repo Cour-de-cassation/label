@@ -1,9 +1,4 @@
-export type { untreatedDocumentFilterType, untreatedDocumentFilterInfoType };
-
-type untreatedDocumentFilterType = {
-  source: string | undefined;
-  publicationCategoryLetter: string | undefined;
-};
+export type { untreatedDocumentFilterInfoType };
 
 type untreatedDocumentFilterInfoType = {
   publicationCategoryLetters: string[];

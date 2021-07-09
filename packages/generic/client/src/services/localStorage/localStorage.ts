@@ -6,16 +6,22 @@ import {
   treatedDocumentOrderByProperties,
   treatedDocumentFilterType,
 } from './treatedDocumentsStateHandler';
+import {
+  untreatedDocumentsStateHandler,
+  untreatedDocumentOrderByProperties,
+  untreatedDocumentFilterType,
+} from './untreatedDocumentsStateHandler';
 import { userHandler } from './userHandler';
 
-export { adminViews, treatedDocumentOrderByProperties, localStorage };
+export { adminViews, treatedDocumentOrderByProperties, untreatedDocumentOrderByProperties, localStorage };
 
-export type { treatedDocumentFilterType };
+export type { treatedDocumentFilterType, untreatedDocumentFilterType };
 
 const localStorage = {
   adminViewHandler,
   bearerTokenHandler,
   displayModeHandler,
   treatedDocumentsStateHandler,
+  untreatedDocumentsStateHandler,
   userHandler,
 };

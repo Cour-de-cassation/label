@@ -1,9 +1,10 @@
 import React from 'react';
 import format from 'string-template';
 import { FilterButton, FilterChip, Text } from '../../../../components';
+import { untreatedDocumentFilterType } from '../../../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
-import { untreatedDocumentFilterInfoType, untreatedDocumentFilterType } from './untreatedDocumentFilterTypes';
+import { untreatedDocumentFilterInfoType } from './untreatedDocumentFilterTypes';
 
 export { UntreatedDocumentsFilters };
 

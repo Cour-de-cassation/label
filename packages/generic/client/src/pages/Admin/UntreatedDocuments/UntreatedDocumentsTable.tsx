@@ -10,6 +10,7 @@ import {
   tableRowFieldType,
 } from '../../../components';
 import { useAlert } from '../../../services/alert';
+import { localStorage, untreatedDocumentOrderByProperties } from '../../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { routes } from '../../routes';
@@ -27,6 +28,8 @@ function UntreatedDocumentsTable(props: {
   const { displayAlert } = useAlert();
   const [documentIdToUpdateStatus, setDocumentIdToUpdateStatus] = useState<documentType['_id'] | undefined>(undefined);
 
+  const orderByProperty = localStorage.untreatedDocumentsStateHandler.getOrderByProperty();
+  const orderDirection = localStorage.untreatedDocumentsStateHandler.getOrderDirection();
   const styles = buildStyles(theme);
   const fields = buildUntreatedDocumentsFields();
 
@@ -39,9 +42,25 @@ function UntreatedDocumentsTable(props: {
           onClose={() => setDocumentIdToUpdateStatus(undefined)}
         />
       )}
-      <PaginatedTable fields={fields} data={props.untreatedDocuments} buildOptionItems={buildOptionItems} />
+      <PaginatedTable
+        fields={fields}
+        data={props.untreatedDocuments}
+        buildOptionItems={buildOptionItems}
+        onOrderByPropertyChange={onOrderByPropertyChange}
+        onOrderDirectionChange={onOrderDirectionChange}
+        defaultOrderByProperty={orderByProperty}
+        defaultOrderDirection={orderDirection}
+      />
     </div>
   );
+
+  function onOrderByPropertyChange(newOrderByProperty: typeof untreatedDocumentOrderByProperties[number]) {
+    localStorage.untreatedDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
+  }
+
+  function onOrderDirectionChange(newOrderDirection: 'asc' | 'desc') {
+    localStorage.untreatedDocumentsStateHandler.setOrderDirection(newOrderDirection);
+  }
 
   function buildOptionItems(untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) {
     const openAnonymizedDocumentOptionItem = {
@@ -106,7 +125,10 @@ function UntreatedDocumentsTable(props: {
   }
 
   function buildUntreatedDocumentsFields() {
-    const untreatedDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'untreatedDocuments'>[number]>> = [
+    const untreatedDocumentsFields: Array<tableRowFieldType<
+      apiRouteOutType<'get', 'untreatedDocuments'>[number],
+      typeof untreatedDocumentOrderByProperties[number]
+    >> = [
       {
         id: 'documentNumber',
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,

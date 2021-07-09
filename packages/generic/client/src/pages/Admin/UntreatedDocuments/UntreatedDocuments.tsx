@@ -2,23 +2,20 @@ import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf } from '@label/core';
 import { DecisionNumberTextInput, IconButton } from '../../../components';
+import { localStorage, untreatedDocumentFilterType } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { UntreatedDocumentsTable } from './UntreatedDocumentsTable';
-import { untreatedDocumentFilterType, UntreatedDocumentsFilters } from './UntreatedDocumentsFilters';
+import { UntreatedDocumentsFilters } from './UntreatedDocumentsFilters';
 
 export { UntreatedDocuments };
-
-const DEFAULT_FILTERS = {
-  source: undefined,
-  publicationCategoryLetter: undefined,
-};
 
 function UntreatedDocuments(props: {
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
   refetch: () => void;
 }) {
-  const [filterValues, setFilterValues] = useState<untreatedDocumentFilterType>(DEFAULT_FILTERS);
+  const INITIAL_FILTER_VALUES = localStorage.untreatedDocumentsStateHandler.getFilters();
+  const [filterValues, setFilterValues] = useState<untreatedDocumentFilterType>(INITIAL_FILTER_VALUES);
   const [searchedDecisionNumber, setSearchedDecisionNumber] = useState<number | undefined>();
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -34,7 +31,7 @@ function UntreatedDocuments(props: {
           <UntreatedDocumentsFilters
             filterInfo={filterInfo}
             filterValues={filterValues}
-            setFilterValues={setFilterValues}
+            setFilterValues={setAndStoreFilterValues}
             resultsCount={filteredUntreatedDocuments.length}
           />
           <div style={styles.tableRightHeader}>
@@ -55,6 +52,11 @@ function UntreatedDocuments(props: {
       </div>
     </div>
   );
+
+  function setAndStoreFilterValues(filterValues: untreatedDocumentFilterType) {
+    localStorage.untreatedDocumentsStateHandler.setFilters(filterValues);
+    setFilterValues(filterValues);
+  }
 
   function getFilteredUntreatedDocuments(
     untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>,

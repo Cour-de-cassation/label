@@ -96,6 +96,7 @@ const problemReportService = {
           _id: document._id,
           documentNumber: document.documentNumber,
           status: document.status,
+          publicationCategory: document.publicationCategory,
         },
       };
     });

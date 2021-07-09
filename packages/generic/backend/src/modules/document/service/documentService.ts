@@ -173,7 +173,13 @@ function buildDocumentService() {
     const documentRepository = buildDocumentRepository();
     return documentRepository.findAllByPublicationCategoryLettersProjection(
       documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
-      ['_id', 'creationDate', 'documentNumber', 'status'],
+      [
+        '_id',
+        'creationDate',
+        'documentNumber',
+        'publicationCategory',
+        'status',
+      ],
     );
   }
 
@@ -453,25 +459,42 @@ function buildDocumentService() {
       return undefined;
     }
 
-    const hasBeenChangedToPending = await documentRepository.updateOneStatusByIdAndStatus(
+    const nextStatus = documentModule.lib.getNextStatus({
+      status: document.status,
+      publicationCategory: document.publicationCategory,
+    });
+
+    const updatedDocument = await documentRepository.updateOneStatusByIdAndStatus(
       { _id: document._id, status: 'free' },
-      { status: 'pending' },
+      {
+        status: nextStatus,
+      },
     );
-    if (!hasBeenChangedToPending) {
+    if (updatedDocument?.status !== nextStatus) {
       return assignDocumentByPriority(priority, documentIdsWithAnnotations);
     }
-    return document;
+    return updatedDocument;
   }
 
   async function updateDocumentStatus(
-    id: documentType['_id'],
+    _id: documentType['_id'],
     status: documentType['status'],
   ) {
     const documentRepository = buildDocumentRepository();
-    await documentRepository.updateStatusById(id, status);
-
-    if (status === 'free') {
-      await assignationService.deleteAssignationsByDocumentId(id);
+    const updatedDocument = await documentRepository.updateStatusById(
+      _id,
+      status,
+    );
+    if (!updatedDocument) {
+      throw errorHandlers.notFoundErrorHandler.build(
+        `The document ${idModule.lib.convertToString(
+          _id,
+        )} was not found in the document collection`,
+      );
     }
+    if (status === 'free') {
+      await assignationService.deleteAssignationsByDocumentId(_id);
+    }
+    return updatedDocument;
   }
 }

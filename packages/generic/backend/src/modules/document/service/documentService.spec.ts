@@ -140,9 +140,15 @@ describe('documentService', () => {
 
       const specialDocuments = await documentService.fetchSpecialDocuments();
 
-      const { _id, status, creationDate, documentNumber } = documents[0];
+      const {
+        _id,
+        status,
+        creationDate,
+        documentNumber,
+        publicationCategory,
+      } = documents[0];
       expect(specialDocuments).toEqual([
-        { _id, status, creationDate, documentNumber },
+        { _id, status, creationDate, documentNumber, publicationCategory },
       ]);
     });
   });
@@ -227,8 +233,10 @@ describe('documentService', () => {
         userId1,
         1,
       );
-
-      expect(documentsForUser[0]).toEqual(documentofUser1);
+      const updatedDocument = await documentRepository.findById(
+        documentofUser1._id,
+      );
+      expect(documentsForUser[0]).toEqual(updatedDocument);
     });
 
     it('should fetch a document with the highest priority assignated to nobody if there are no assignation for this user', async () => {
@@ -267,7 +275,10 @@ describe('documentService', () => {
         1,
       );
 
-      expect(documentsForUser[0]).toEqual(documents[1]);
+      const updatedDocument = await documentRepository.findById(
+        documents[1]._id,
+      );
+      expect(documentsForUser[0]).toEqual(updatedDocument);
     });
 
     it('should fetch a document with treatment first', async () => {
@@ -288,7 +299,10 @@ describe('documentService', () => {
         1,
       );
 
-      expect(documentsForUser[0]).toEqual(documents[1]);
+      const updatedDocument = await documentRepository.findById(
+        documents[1]._id,
+      );
+      expect(documentsForUser[0]).toEqual(updatedDocument);
     });
 
     it('should not assign more document if one is already saved', async () => {
@@ -532,9 +546,11 @@ describe('documentService', () => {
       const document = documentModule.generator.generate({ status: 'free' });
       await documentRepository.insert(document);
 
-      await documentService.updateDocumentStatus(document._id, 'pending');
+      const updatedDocument = await documentService.updateDocumentStatus(
+        document._id,
+        'pending',
+      );
 
-      const updatedDocument = await documentRepository.findById(document._id);
       expect(updatedDocument.status).toEqual('pending');
     });
 

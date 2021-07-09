@@ -18,7 +18,6 @@ const documentStatusIconNameMapping: Record<
   toBePublished: { iconName: 'publish', colorName: 'primary' },
   done: { iconName: 'check', colorName: 'primary' },
   rejected: { iconName: 'stop', colorName: 'alert' },
-  exported: { iconName: 'world', colorName: 'primary' },
 };
 
 function DocumentStatusIcon(props: { iconSize: number; status: documentType['status'] }) {

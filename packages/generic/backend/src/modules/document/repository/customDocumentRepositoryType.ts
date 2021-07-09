@@ -34,11 +34,11 @@ type customDocumentRepositoryType = {
     idsNotToSearchIn: documentType['_id'][],
   ) => Promise<documentType | undefined>;
   updateStatusById: (
-    id: idType,
+    _id: idType,
     status: documentType['status'],
-  ) => Promise<void>;
+  ) => Promise<documentType | undefined>;
   updateOneStatusByIdAndStatus: (
     filter: { status: documentType['status']; _id: documentType['_id'] },
     update: { status: documentType['status'] },
-  ) => Promise<boolean>;
+  ) => Promise<documentType | undefined>;
 };

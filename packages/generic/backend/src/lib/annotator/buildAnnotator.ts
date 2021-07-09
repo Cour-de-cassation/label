@@ -7,6 +7,7 @@ import {
   settingsModule,
   idModule,
   settingsType,
+  documentModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { annotationReportService } from '../../modules/annotationReport';
@@ -37,24 +38,29 @@ function buildAnnotator(
       if (currentDocumentToAnnotate) {
         documentsAnnotatedCount++;
         logger.log(`Found a document to annotate. Reserving...`);
-        await documentService.updateDocumentStatus(
+        const previousDocumentStatus = currentDocumentToAnnotate.status;
+        const nextDocumentStatus = documentModule.lib.getNextStatus({
+          status: currentDocumentToAnnotate.status,
+          publicationCategory: currentDocumentToAnnotate.publicationCategory,
+        });
+        const updatedDocument = await documentService.updateDocumentStatus(
           currentDocumentToAnnotate._id,
-          'nlpAnnotating',
+          nextDocumentStatus,
         );
         logger.log(
           `Annotating with ${annotatorConfig.name} document ${documentsAnnotatedCount}/${documentsCountToAnnotate}...`,
         );
         try {
-          await annotateDocument(currentDocumentToAnnotate);
+          await annotateDocument(updatedDocument);
         } catch (error) {
           logger.log(
             `Error while annotating document ${idModule.lib.convertToString(
               currentDocumentToAnnotate._id,
-            )}. Freeing the reservation...`,
+            )}. Setting the document to its previous status...`,
           );
           await documentService.updateDocumentStatus(
             currentDocumentToAnnotate._id,
-            'loaded',
+            previousDocumentStatus,
           );
           logger.log(
             `Document ${idModule.lib.convertToString(
@@ -100,7 +106,6 @@ function buildAnnotator(
       );
       return;
     }
-    await documentService.updateDocumentStatus(document._id, 'free');
     await createAnnotatorTreatment({ annotations, documentId });
     const additionalAnnotations = computeAdditionalAnnotations(
       document,
@@ -124,6 +129,14 @@ function buildAnnotator(
     }
 
     await createReport(report);
+    const nextDocumentStatus = documentModule.lib.getNextStatus({
+      status: document.status,
+      publicationCategory: document.publicationCategory,
+    });
+    await documentService.updateDocumentStatus(
+      document._id,
+      nextDocumentStatus,
+    );
   }
 
   async function createAnnotatorTreatment({

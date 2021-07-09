@@ -52,7 +52,6 @@ import {
   PlaylistAddCheckRounded,
   PlaylistPlayRounded,
   PowerSettingsNewRounded,
-  PublicRounded,
   PublishRounded,
   QuestionAnswerRounded,
   RedoRounded,
@@ -131,7 +130,6 @@ const materialIconMapping = {
   update: UpdateRounded,
   waiting: HourglassEmptyRounded,
   warning: ReportProblemRounded,
-  world: PublicRounded,
 };
 
 const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {

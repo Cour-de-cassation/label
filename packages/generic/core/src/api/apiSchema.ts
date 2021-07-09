@@ -226,6 +226,7 @@ const apiSchema = {
                 _id: documentModule.fetchedModel.content._id,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
                 status: documentModule.fetchedModel.content.status,
+                publicationCategory: documentModule.fetchedModel.content.publicationCategory,
               },
             },
             user: {
@@ -251,6 +252,7 @@ const apiSchema = {
             _id: documentModule.fetchedModel.content._id,
             creationDate: documentModule.fetchedModel.content.creationDate,
             documentNumber: documentModule.fetchedModel.content.documentNumber,
+            publicationCategory: documentModule.fetchedModel.content.publicationCategory,
             status: documentModule.fetchedModel.content.status,
           },
         },
@@ -368,10 +370,7 @@ const apiSchema = {
           content: 'id',
         } as const),
       },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
+      out: documentModule.fetchedModel,
     },
     changePassword: {
       in: {
@@ -516,10 +515,7 @@ const apiSchema = {
         } as const),
         status: documentModule.fetchedModel.content.status,
       },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
+      out: documentModule.fetchedModel,
     },
     updateDocumentStatus: {
       in: {
@@ -529,10 +525,7 @@ const apiSchema = {
         } as const),
         status: documentModule.fetchedModel.content.status,
       },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
+      out: documentModule.fetchedModel,
     },
     updatePublishableDocumentStatus: {
       in: {
@@ -545,10 +538,7 @@ const apiSchema = {
           content: ['done', 'toBePublished'],
         } as const),
       },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
+      out: documentModule.fetchedModel,
     },
     updateProblemReportHasBeenRead: {
       in: {

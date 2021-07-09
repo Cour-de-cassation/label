@@ -11,5 +11,5 @@ async function updateAssignationDocumentStatus(
   const assignationRepository = buildAssignationRepository();
   const assignation = await assignationRepository.findById(assignationId);
 
-  await documentService.updateDocumentStatus(assignation.documentId, status);
+  return documentService.updateDocumentStatus(assignation.documentId, status);
 }

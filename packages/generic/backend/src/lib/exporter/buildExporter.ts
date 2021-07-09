@@ -50,8 +50,6 @@ function buildExporter(
           labelTreatments: buildLabelTreatments(treatments),
         });
 
-        await documentService.updateDocumentStatus(document._id, 'exported');
-
         await statisticService.saveStatisticsOfDocument(document);
 
         await documentService.deleteDocument(document._id);

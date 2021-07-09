@@ -38,8 +38,11 @@ function mapCourtDecisionToDocument(
     publicationCategory,
   );
 
+  const criticity = computeCriticity();
+
   return documentModule.lib.buildDocument({
     creationDate: new Date().getTime(),
+    criticity,
     decisionMetadata: {
       additionalTermsToAnnotate: sderCourtDecision.occultation?.additionalTerms || '',
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
@@ -92,6 +95,10 @@ function computeTitleFromParsedCourtDecision({
     .filter(Boolean)
     .join(' · ');
   return title;
+}
+
+function computeCriticity() {
+  return 1;
 }
 
 function computePublicationCategory(pubCategory: string | undefined, publication: string[] | undefined) {

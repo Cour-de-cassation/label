@@ -77,7 +77,6 @@ const fr = {
       toBePublished: 'Doit être publié',
       done: 'Validé',
       rejected: 'Bloqué',
-      exported: 'Publié',
     },
     errors: {
       assignDocumentFailed: 'La réassignation du document a échoué. Veuillez recharger la page',

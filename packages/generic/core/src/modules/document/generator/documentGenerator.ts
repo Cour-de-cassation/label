@@ -7,6 +7,7 @@ export { documentGenerator };
 const documentGenerator: generatorType<documentType> = {
   generate: ({
     creationDate,
+    criticity,
     decisionMetadata,
     documentNumber,
     externalId,
@@ -21,6 +22,7 @@ const documentGenerator: generatorType<documentType> = {
     updateDate,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date().getTime(),
+    criticity: criticity ? criticity : 1,
     decisionMetadata: decisionMetadata
       ? decisionMetadata
       : {

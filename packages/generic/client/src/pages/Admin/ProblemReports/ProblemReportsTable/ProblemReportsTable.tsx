@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import format from 'string-template';
-import { apiRouteOutType, idModule, timeOperator } from '@label/core';
+import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { DocumentStatusIcon, ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
 import { sendMail } from '../../../../services/sendMail';
@@ -37,7 +37,10 @@ function ProblemReportsTable(props: {
             onClick: async () => {
               await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
                 assignationId: problemReportWithDetails.problemReport.assignationId,
-                status: 'done',
+                status: documentModule.lib.getNextStatus({
+                  status: problemReportWithDetails.document.status,
+                  publicationCategory: problemReportWithDetails.document.publicationCategory,
+                }),
               });
               props.refetch();
             },
@@ -83,7 +86,10 @@ function ProblemReportsTable(props: {
       onClick: async () => {
         await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
           assignationId: problemReportWithDetails.problemReport.assignationId,
-          status: 'pending',
+          status: documentModule.lib.getNextStatus({
+            status: 'pending',
+            publicationCategory: problemReportWithDetails.document.publicationCategory,
+          }),
         });
         props.refetch();
       },

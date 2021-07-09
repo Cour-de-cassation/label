@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { apiRouteOutType, documentType, idModule, timeOperator } from '@label/core';
+import { apiRouteOutType, documentModule, documentType, idModule, timeOperator } from '@label/core';
 import { PaginatedTable, tableRowFieldType } from '../../components';
 import { wordings } from '../../wordings';
 import { apiCaller } from '../../api';
@@ -40,7 +40,10 @@ function SpecialDocumentsTable(props: {
             onClick: async () => {
               await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {
                 documentId: specialDocument._id,
-                status: 'done',
+                status: documentModule.lib.getNextStatus({
+                  status: specialDocument.status,
+                  publicationCategory: specialDocument.publicationCategory,
+                }) as 'done' | 'toBePublished',
               });
               props.refetch();
             },

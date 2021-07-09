@@ -105,22 +105,22 @@ function DocumentAnnotatorFooter(props: {
   }
 
   async function validate() {
-    const newStatus = computeNewStatus(annotatorStateHandler.get().document.publicationCategory);
+    const { document } = annotatorStateHandler.get();
+    const nextStatus = documentModule.lib.getNextStatus({
+      publicationCategory: document.publicationCategory,
+      status: document.status,
+    });
     setIsValidating(true);
     try {
       addMonitoringEntry({
         origin: 'footer',
         action: 'validate_document',
       });
-      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument(newStatus));
+      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument(nextStatus));
     } finally {
       setIsValidating(false);
     }
   }
-}
-
-function computeNewStatus(publicationCategory: documentType['publicationCategory']) {
-  return documentModule.lib.publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
 }
 
 function buildStyles(theme: customThemeType) {

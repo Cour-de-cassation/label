@@ -89,11 +89,11 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return freeDocument;
     },
 
-    async updateStatusById(id, status) {
+    async updateStatusById(_id, status) {
       updateFakeCollection(
         collection,
         collection.map((document) =>
-          idModule.lib.equalId(id, document._id)
+          idModule.lib.equalId(_id, document._id)
             ? {
                 ...document,
                 status,
@@ -102,13 +102,13 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
             : document,
         ),
       );
+      const updatedDocument = collection.find((document) =>
+        idModule.lib.equalId(_id, document._id),
+      );
+
+      return updatedDocument;
     },
     async updateOneStatusByIdAndStatus(filter, update) {
-      const documentsToModifyCount = collection.filter(
-        (document) =>
-          idModule.lib.equalId(filter._id, document._id) &&
-          document.status === filter.status,
-      ).length;
       updateFakeCollection(
         collection,
         collection.map((document) =>
@@ -122,7 +122,12 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
             : document,
         ),
       );
-      return documentsToModifyCount === 1;
+
+      const updatedDocument = collection.find((document) =>
+        idModule.lib.equalId(filter._id, document._id),
+      );
+
+      return updatedDocument;
     },
   }),
 });

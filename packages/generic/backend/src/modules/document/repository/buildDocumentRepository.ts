@@ -95,19 +95,22 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .toArray();
     },
 
-    async updateStatusById(id, status) {
+    async updateStatusById(_id, status) {
       await collection.updateOne(
-        { _id: id },
+        { _id },
         { $set: buildUpdateStatusQuery(status) },
       );
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
     },
 
     async updateOneStatusByIdAndStatus(filter, update) {
-      const result = await collection.updateOne(
+      await collection.updateOne(
         { _id: filter._id, status: filter.status },
         { $set: buildUpdateStatusQuery(update.status) },
       );
-      return result.modifiedCount === 1;
+      const updatedDocument = await collection.findOne({ _id: filter._id });
+      return updatedDocument || undefined;
     },
   }),
 });
@@ -121,7 +124,7 @@ function buildFindByPublicationCategoryLettersRequest(
 ) {
   return {
     $or: publicationCategoryLetters.map((publicationCategoryLetter) => ({
-      publicationCategory: [publicationCategoryLetter],
+      publicationCategory: { $in: [publicationCategoryLetter] },
     })),
   };
 }

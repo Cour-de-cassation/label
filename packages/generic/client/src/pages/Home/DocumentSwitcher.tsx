@@ -6,6 +6,7 @@ import {
   idModule,
   settingsModule,
   buildAnonymizer,
+  documentModule,
 } from '@label/core';
 import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
@@ -94,15 +95,22 @@ function DocumentSwitcher(props: {
         }),
       );
       try {
-        await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        const nextStatus = documentModule.lib.getNextStatus({
+          status: choice.document.status,
+          publicationCategory: choice.document.publicationCategory,
+        });
+        const { data: updatedDocument } = await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
           documentId: choice.document._id,
-          status: 'saved',
+          status: nextStatus,
+        });
+        setDocumentState({
+          kind: 'annotating',
+          choice: { ...choice, document: { ...updatedDocument, _id: idModule.lib.buildId(updatedDocument._id) } },
         });
       } catch (error) {
         console.warn(error);
         return window.location.reload();
       }
-      setDocumentState({ kind: 'annotating', choice });
     } catch (error) {
       console.warn(error);
     }

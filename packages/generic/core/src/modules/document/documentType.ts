@@ -7,6 +7,7 @@ export type { documentType, fetchedDocumentType };
 
 const documentModelCommonFields = {
   creationDate: { kind: 'primitive', content: 'number' },
+  criticity: { kind: 'primitive', content: 'number' },
   decisionMetadata: {
     kind: 'object',
     content: {
@@ -23,17 +24,7 @@ const documentModelCommonFields = {
   source: { kind: 'primitive', content: 'string' },
   status: {
     kind: 'constant',
-    content: [
-      'done',
-      'exported',
-      'free',
-      'loaded',
-      'nlpAnnotating',
-      'pending',
-      'rejected',
-      'saved',
-      'toBePublished',
-    ] as const,
+    content: ['done', 'free', 'loaded', 'nlpAnnotating', 'pending', 'rejected', 'saved', 'toBePublished'] as const,
   },
   title: { kind: 'primitive', content: 'string' },
   text: { kind: 'primitive', content: 'string' },

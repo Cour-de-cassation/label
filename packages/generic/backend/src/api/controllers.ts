@@ -122,7 +122,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           documentId: idModule.lib.buildId(documentId),
           userId: user._id,
         });
-        await documentService.updateDocumentStatus(
+        return documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
           'saved',
         );

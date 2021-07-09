@@ -48,7 +48,7 @@ function Router() {
                           refetch={refetch.aggregatedStatistics}
                           aggregatedStatistics={adminInfos.aggregatedStatistics}
                           availableStatisticFilters={adminInfos.availableStatisticFilters}
-                          users={adminInfos.usersWithDetails.map(({ user }) => user)}
+                          users={adminInfos.usersWithDetails.map(({ user: { _id, name } }) => ({ _id, name }))}
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
@@ -88,6 +88,7 @@ function Router() {
                         unreadProblemReportsCount={unreadProblemReportsCount}
                       >
                         <UntreatedDocuments
+                          users={adminInfos.usersWithDetails.map(({ user: { _id, name } }) => ({ _id, name }))}
                           untreatedDocuments={adminInfos.untreatedDocuments}
                           refetch={refetch.untreatedDocuments}
                         />

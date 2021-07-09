@@ -1,3 +1,5 @@
+import { idModule, idType } from '@label/core';
+
 export { localStorageMappers };
 
 export type { localStorageMapperType };
@@ -11,6 +13,7 @@ const localStorageMappers = {
   boolean: buildBooleanMapper(),
   date: buildDateMapper(),
   string: buildStringMapper(),
+  id: buildIdMapper(),
 };
 
 function buildBooleanMapper(): localStorageMapperType<boolean> {
@@ -28,6 +31,21 @@ function buildBooleanMapper(): localStorageMapperType<boolean> {
 
     toLocalStorage(value) {
       return value ? 'true' : 'false';
+    },
+  };
+}
+
+function buildIdMapper(): localStorageMapperType<idType> {
+  return {
+    fromLocalStorage(item) {
+      if (item === null) {
+        return undefined;
+      }
+      return idModule.lib.buildId(item);
+    },
+
+    toLocalStorage(value) {
+      return idModule.lib.convertToString(value);
     },
   };
 }

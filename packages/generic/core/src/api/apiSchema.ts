@@ -369,6 +369,10 @@ const apiSchema = {
           kind: 'custom',
           content: 'id',
         } as const),
+        userId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
       },
       out: documentModule.fetchedModel,
     },
@@ -434,6 +438,7 @@ const apiSchema = {
       out: buildModel({
         kind: 'object',
         content: {
+          _id: userModule.model.content._id,
           email: userModule.model.content.email,
           name: userModule.model.content.name,
           role: userModule.model.content.role,

@@ -23,6 +23,7 @@ function DataFetcher<dataT>(props: {
       switch (fetchedData.error) {
         case 'authentication':
           localStorage.bearerTokenHandler.remove();
+          localStorage.userHandler.remove();
           return buildLoginRedirectionPage();
         case 'unknown':
           return buildErrorPage();

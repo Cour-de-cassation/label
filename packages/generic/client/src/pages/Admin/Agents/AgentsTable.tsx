@@ -73,12 +73,14 @@ function AgentsTable(props: {
     const toggleIsActivatedOptionItem = buildToggleIsActivatedOptionItem(userWithDetails.user);
     return [
       {
+        kind: 'text' as const,
         text: wordings.agentsPage.table.optionItems.resetPassword,
         onClick: async () => setResetPasswordUserId(userWithDetails.user._id),
         iconName: 'key' as const,
       },
       toggleIsActivatedOptionItem,
       {
+        kind: 'text' as const,
         text: wordings.agentsPage.table.optionItems.delete,
         onClick: () => {
           setDeleteUserId(userWithDetails.user._id);
@@ -100,7 +102,7 @@ function AgentsTable(props: {
     const text = user.isActivated
       ? wordings.agentsPage.table.optionItems.deactivate
       : wordings.agentsPage.table.optionItems.activate;
-    return { iconName, text, onClick };
+    return { kind: 'text' as const, iconName, text, onClick };
   }
 
   function buildStyles() {

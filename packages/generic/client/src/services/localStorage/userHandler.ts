@@ -1,7 +1,10 @@
 import { userType } from '@label/core';
+import { localStorageHandler } from './localStorageHandler';
+import { localStorageMappers } from './localStorageMappers';
 
 export { userHandler };
 
+const USER_ID_STORAGE_KEY = 'USER_ID';
 const USER_EMAIL_STORAGE_KEY = 'USER_EMAIL';
 const USER_NAME_STORAGE_KEY = 'USER_NAME';
 const USER_ROLE_STORAGE_KEY = 'USER_ROLE';
@@ -9,31 +12,40 @@ const USER_ROLE_STORAGE_KEY = 'USER_ROLE';
 const userHandler = {
   set,
   remove,
+  getId,
   getEmail,
   getName,
   getRole,
 };
 
-function set({ email, name, role }: { email: userType['email']; name: userType['name']; role: userType['role'] }) {
-  localStorage.setItem(USER_EMAIL_STORAGE_KEY, email);
-  localStorage.setItem(USER_NAME_STORAGE_KEY, name);
-  localStorage.setItem(USER_ROLE_STORAGE_KEY, role);
+function set({ _id, email, name, role }: Pick<userType, '_id' | 'email' | 'role' | 'name'>) {
+  localStorageHandler.set({ key: USER_ID_STORAGE_KEY, value: _id, mapper: localStorageMappers.id });
+  localStorageHandler.set({ key: USER_EMAIL_STORAGE_KEY, value: email, mapper: localStorageMappers.string });
+  localStorageHandler.set({ key: USER_NAME_STORAGE_KEY, value: name, mapper: localStorageMappers.string });
+  localStorageHandler.set({ key: USER_ROLE_STORAGE_KEY, value: role, mapper: localStorageMappers.string });
 }
 
 function remove() {
-  localStorage.removeItem(USER_EMAIL_STORAGE_KEY);
-  localStorage.removeItem(USER_NAME_STORAGE_KEY);
-  localStorage.removeItem(USER_ROLE_STORAGE_KEY);
+  localStorageHandler.set({ key: USER_ID_STORAGE_KEY, value: undefined, mapper: localStorageMappers.id });
+  localStorageHandler.set({ key: USER_EMAIL_STORAGE_KEY, value: undefined, mapper: localStorageMappers.string });
+  localStorageHandler.set({ key: USER_NAME_STORAGE_KEY, value: undefined, mapper: localStorageMappers.string });
+  localStorageHandler.set({ key: USER_ROLE_STORAGE_KEY, value: undefined, mapper: localStorageMappers.string });
+}
+
+function getId() {
+  return localStorageHandler.get({ key: USER_ID_STORAGE_KEY, mapper: localStorageMappers.id });
 }
 
 function getEmail() {
-  return localStorage.getItem(USER_EMAIL_STORAGE_KEY) as userType['email'] | null;
+  return localStorageHandler.get({ key: USER_EMAIL_STORAGE_KEY, mapper: localStorageMappers.string });
 }
 
 function getName() {
-  return localStorage.getItem(USER_NAME_STORAGE_KEY) as userType['name'] | null;
+  return localStorageHandler.get({ key: USER_NAME_STORAGE_KEY, mapper: localStorageMappers.string });
 }
 
 function getRole() {
-  return localStorage.getItem(USER_ROLE_STORAGE_KEY) as userType['role'] | null;
+  return localStorageHandler.get({ key: USER_ROLE_STORAGE_KEY, mapper: localStorageMappers.string }) as
+    | userType['role']
+    | undefined;
 }

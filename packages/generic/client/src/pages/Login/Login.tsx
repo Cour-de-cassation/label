@@ -1,3 +1,4 @@
+import { idModule } from '@label/core';
 import React, { FormEvent, FunctionComponent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiCaller } from '../../api';
@@ -96,10 +97,10 @@ const Login: FunctionComponent = () => {
     event.preventDefault();
     try {
       const {
-        data: { email: userEmail, name, role, token },
+        data: { _id, email: userEmail, name, role, token },
       } = await apiCaller.post<'login'>('login', { email, password });
       localStorage.bearerTokenHandler.set(token);
-      localStorage.userHandler.set({ email: userEmail, name, role });
+      localStorage.userHandler.set({ _id: idModule.lib.buildId(_id), email: userEmail, name, role });
       history.push(routes.DEFAULT.getPath());
     } catch (error) {
       setIsFormValid(false);

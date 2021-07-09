@@ -41,6 +41,7 @@ import {
   TableSortLabel,
   Text,
   tableRowFieldType,
+  orderDirectionType,
   TextInput,
   Tooltip,
   TooltipMenu,
@@ -90,4 +91,4 @@ export {
   UnlinkAnnotationDropdown,
 };
 
-export type { filterType, tableRowFieldType };
+export type { filterType, tableRowFieldType, orderDirectionType };

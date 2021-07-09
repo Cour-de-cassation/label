@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiRouteOutType, documentType, idModule } from '@label/core';
 import { apiCaller } from '../../../api';
-import { PaginatedTable, tableRowFieldType, ConfirmationPopup } from '../../../components';
+import { PaginatedTable, tableRowFieldType, ConfirmationPopup, orderDirectionType } from '../../../components';
 import { wordings } from '../../../wordings';
 import { localStorage, treatedDocumentOrderByProperties } from '../../../services/localStorage';
 import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';
@@ -61,7 +61,7 @@ function TreatedDocumentsTable(props: {
     localStorage.treatedDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
   }
 
-  function onOrderDirectionChange(newOrderDirection: 'asc' | 'desc') {
+  function onOrderDirectionChange(newOrderDirection: orderDirectionType) {
     localStorage.treatedDocumentsStateHandler.setOrderDirection(newOrderDirection);
   }
 
@@ -89,6 +89,7 @@ function TreatedDocumentsTable(props: {
   function buildOptionItems(treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) {
     return [
       {
+        kind: 'text' as const,
         text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
         onClick: () => {
           history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id)));
@@ -96,6 +97,7 @@ function TreatedDocumentsTable(props: {
         iconName: 'find' as const,
       },
       {
+        kind: 'text' as const,
         text: wordings.treatedDocumentsPage.table.optionItems.displayAnnotationDiff,
         onClick: () => {
           setAnnotationDiffDocumentInfo({
@@ -107,6 +109,7 @@ function TreatedDocumentsTable(props: {
         iconName: 'link' as const,
       },
       {
+        kind: 'text' as const,
         text: wordings.treatedDocumentsPage.table.optionItems.resetTheDocument,
         onClick: () => {
           setDocumentIdToReset(treatmentWithDetails.document._id);

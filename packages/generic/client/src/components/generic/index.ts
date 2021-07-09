@@ -15,6 +15,7 @@ import {
   PaginatedTable,
   Table,
   tableRowFieldType,
+  orderDirectionType,
   TextInput,
   TooltipMenu,
 } from './custom';
@@ -68,4 +69,4 @@ export {
   TooltipMenu,
 };
 
-export type { iconNameType, tableRowFieldType };
+export type { iconNameType, tableRowFieldType, orderDirectionType };

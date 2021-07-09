@@ -8,7 +8,7 @@ export { StatisticsFilterButton };
 
 function StatisticsFilterButton(props: {
   availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
-  users: Omit<userType, 'hashedPassword' | 'deletionDate'>[];
+  users: Pick<userType, '_id' | 'name'>[];
   refetch: (ressourceFilter: ressourceFilterType) => void;
   ressourceFilter: ressourceFilterType;
 }) {

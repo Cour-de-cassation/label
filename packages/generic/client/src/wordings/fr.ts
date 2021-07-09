@@ -79,7 +79,9 @@ const fr = {
       rejected: 'Bloqué',
     },
     errors: {
-      assignDocumentFailed: 'La réassignation du document a échoué. Veuillez recharger la page',
+      noUserIdFound:
+        'Une erreur est survenue lors de votre identification. Veuillez vous déconnecter et vous reconnecter.',
+      assignDocumentFailed: 'La réassignation du document a échoué. Veuillez recharger la page.',
       deleteHumanTreatmentsByDocumentIdFailed:
         'La suppression des traitements manuels effectués sur ce document a échoué. Veuillez recharger la page.',
       updateDocumentStatusFailed: 'La mise à jour du statut du document a échoué. Veuillez recharger la page.',
@@ -359,6 +361,11 @@ const fr = {
       },
       optionItems: {
         assignToMyself: "M'assigner la décision",
+        assignToAgent: {
+          label: 'Assigner à un agent',
+          description: 'A quel agent souhaitez-vous assigner la décision ?',
+          dropdownLabel: "Nom de l'agent",
+        },
         freeDocument: 'Libérer la décision',
         openAnonymizedDocument: 'Ouvrir la décision anonymisée...',
       },

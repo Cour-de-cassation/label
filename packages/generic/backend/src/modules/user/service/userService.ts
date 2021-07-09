@@ -154,6 +154,7 @@ function buildUserService() {
       const token = jwtSigner.sign(user._id);
 
       return {
+        _id: user._id,
         email: user.email,
         name: user.name,
         role: user.role,

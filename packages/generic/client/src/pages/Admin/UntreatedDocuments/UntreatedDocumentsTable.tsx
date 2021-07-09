@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { apiRouteOutType, documentType, idModule, timeOperator } from '@label/core';
+import { apiRouteOutType, documentType, idModule, timeOperator, userType } from '@label/core';
 import { apiCaller } from '../../../api';
 import {
   ConfirmationPopup,
   DocumentStatusIcon,
+  orderDirectionType,
   PaginatedTable,
   PublicationCategoryBadge,
   tableRowFieldType,
@@ -21,6 +22,7 @@ const TABLE_ICON_SIZE = 24;
 
 function UntreatedDocumentsTable(props: {
   refetch: () => void;
+  users: Array<Pick<userType, '_id' | 'name'>>;
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
 }) {
   const history = useHistory();
@@ -58,12 +60,13 @@ function UntreatedDocumentsTable(props: {
     localStorage.untreatedDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
   }
 
-  function onOrderDirectionChange(newOrderDirection: 'asc' | 'desc') {
+  function onOrderDirectionChange(newOrderDirection: orderDirectionType) {
     localStorage.untreatedDocumentsStateHandler.setOrderDirection(newOrderDirection);
   }
 
   function buildOptionItems(untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) {
     const openAnonymizedDocumentOptionItem = {
+      kind: 'text' as const,
       text: wordings.untreatedDocumentsPage.table.optionItems.openAnonymizedDocument,
       onClick: () => {
         history.push(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(untreatedDocument.document._id)));
@@ -72,6 +75,7 @@ function UntreatedDocumentsTable(props: {
       iconName: 'eye' as const,
     };
     const resetAndAssignToMyselfOptionItem = {
+      kind: 'text' as const,
       text: wordings.untreatedDocumentsPage.table.optionItems.assignToMyself,
       onClick: () => {
         setDocumentIdToUpdateStatus(untreatedDocument.document._id);
@@ -79,13 +83,24 @@ function UntreatedDocumentsTable(props: {
       iconName: 'restore' as const,
     };
 
+    const assignToAgentOptionItem = {
+      kind: 'selection' as const,
+      text: wordings.untreatedDocumentsPage.table.optionItems.assignToAgent.label,
+      dropdownLabel: wordings.untreatedDocumentsPage.table.optionItems.assignToAgent.dropdownLabel,
+      description: wordings.untreatedDocumentsPage.table.optionItems.assignToAgent.description,
+      items: props.users.map(({ name }) => name),
+      iconName: 'assignment' as const,
+      onSelect: buildOnSelectAgentToAssignDocument(untreatedDocument.document._id),
+    };
+
     if (untreatedDocument.document.status !== 'pending') {
-      return [openAnonymizedDocumentOptionItem, resetAndAssignToMyselfOptionItem];
+      return [openAnonymizedDocumentOptionItem, resetAndAssignToMyselfOptionItem, assignToAgentOptionItem];
     }
     return [
       openAnonymizedDocumentOptionItem,
       resetAndAssignToMyselfOptionItem,
       {
+        kind: 'text' as const,
         text: wordings.untreatedDocumentsPage.table.optionItems.freeDocument,
         onClick: async () => {
           await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
@@ -99,11 +114,36 @@ function UntreatedDocumentsTable(props: {
     ];
   }
 
+  function buildOnSelectAgentToAssignDocument(documentId: documentType['_id']) {
+    return async (userName: string) => {
+      const user = props.users.find(({ name }) => name === userName);
+      if (!user) {
+        return;
+      }
+      await releaseAndAssignDocumentToUser({ documentId, userId: user._id });
+    };
+  }
+
   async function onConfirmUpdateDocumentStatus(documentIdToUpdateStatus: documentType['_id']) {
     setDocumentIdToUpdateStatus(undefined);
+    const userId = localStorage.userHandler.getId();
+    if (!userId) {
+      displayAlert({ text: wordings.business.errors.noUserIdFound, variant: 'alert' });
+      return;
+    }
+    await releaseAndAssignDocumentToUser({ userId, documentId: documentIdToUpdateStatus });
+  }
+
+  async function releaseAndAssignDocumentToUser({
+    documentId,
+    userId,
+  }: {
+    userId: userType['_id'];
+    documentId: documentType['_id'];
+  }) {
     try {
       await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-        documentId: documentIdToUpdateStatus,
+        documentId,
         status: 'free',
       });
     } catch (error) {
@@ -113,14 +153,14 @@ function UntreatedDocumentsTable(props: {
     }
     try {
       await apiCaller.post<'assignDocumentToUser'>('assignDocumentToUser', {
-        documentId: documentIdToUpdateStatus,
+        documentId,
+        userId,
       });
     } catch (error) {
       displayAlert({ text: wordings.business.errors.assignDocumentFailed, variant: 'alert' });
       console.warn(error);
       return;
     }
-
     props.refetch();
   }
 

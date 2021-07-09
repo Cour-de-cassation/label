@@ -3,10 +3,18 @@ import { customThemeType, useCustomTheme } from '../../../../styles';
 import { Icon, Text } from '../../materialUI';
 import { OptionButton } from './OptionButton';
 import { optionItemType, tableRowFieldType } from './Table';
+import { TableOptionItemSelectionPopUp } from './TableOptionItemSelectionPopUp';
 
 export { TableRow };
 
 const ROW_DEFAULT_HEIGHT = 50;
+
+type optionItemSelectionType = {
+  items: Array<string>;
+  description: string;
+  dropdownLabel: string;
+  onSelect: (item: string) => void;
+};
 
 function TableRow<InputT>(props: {
   fields: Array<tableRowFieldType<InputT>>;
@@ -18,6 +26,7 @@ function TableRow<InputT>(props: {
   optionCellStyle?: CSSProperties;
 }) {
   const theme = useCustomTheme();
+  const [optionItemSelection, setOptionItemSelection] = useState<optionItemSelectionType | undefined>();
   const [isHovered, setIsHovered] = useState(false);
   const styles = buildStyles(theme);
   const cellWeight = props.isHighlighted ? 'bold' : 'normal';
@@ -29,6 +38,15 @@ function TableRow<InputT>(props: {
 
   return (
     <>
+      {!!optionItemSelection && (
+        <TableOptionItemSelectionPopUp
+          dropdownLabel={optionItemSelection.dropdownLabel}
+          description={optionItemSelection.description}
+          items={optionItemSelection.items}
+          onSelect={optionItemSelection.onSelect}
+          onClose={() => setOptionItemSelection(undefined)}
+        />
+      )}
       <tr
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -64,9 +82,31 @@ function TableRow<InputT>(props: {
     }));
     const onSelect = (optionItemText: string) => {
       const optionItem = optionItems.find(({ text }) => text === optionItemText);
-      optionItem && optionItem.onClick();
+      if (!optionItem) {
+        return;
+      }
+      switch (optionItem.kind) {
+        case 'text':
+          optionItem.onClick();
+          return;
+        case 'selection':
+          setOptionItemSelection({
+            description: optionItem.description,
+            items: optionItem.items,
+            dropdownLabel: optionItem.dropdownLabel,
+            onSelect: buildOptionItemOnSelect(optionItem.onSelect),
+          });
+          return;
+      }
     };
     return <OptionButton items={items} onClose={() => setIsHovered(false)} onSelect={onSelect} />;
+  }
+
+  function buildOptionItemOnSelect(onSelect: (text: string) => Promise<void>) {
+    return async (text: string) => {
+      await onSelect(text);
+      setOptionItemSelection(undefined);
+    };
   }
 
   function buildStyles(theme: customThemeType) {

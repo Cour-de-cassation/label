@@ -113,14 +113,14 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
   post: {
     assignDocumentToUser: buildAuthenticatedController({
       permissions: ['admin'],
-      controllerWithUser: async (user, { args: { documentId } }) => {
+      controllerWithUser: async (_, { args: { documentId, userId } }) => {
         await documentService.assertDocumentStatus({
           documentId: idModule.lib.buildId(documentId),
           status: 'free',
         });
         await assignationService.createAssignation({
           documentId: idModule.lib.buildId(documentId),
-          userId: user._id,
+          userId: idModule.lib.buildId(userId),
         });
         return documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
@@ -170,11 +170,17 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     async login({ args: { email, password } }) {
-      const { email: userEmail, name, role, token } = await userService.login({
+      const {
+        _id,
+        email: userEmail,
+        name,
+        role,
+        token,
+      } = await userService.login({
         email,
         password,
       });
-      return { email: userEmail, name, role, token };
+      return { email: userEmail, name, role, token, _id };
     },
 
     monitoringEntries: buildAuthenticatedController({

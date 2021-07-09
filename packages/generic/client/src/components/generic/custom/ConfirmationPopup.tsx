@@ -20,7 +20,7 @@ function ConfirmationPopup(props: { text: string; onConfirm: () => void; onClose
         <div style={styles.confirmButtonContainer}>
           <ButtonWithIcon iconName="check" onClick={props.onConfirm} text={wordings.shared.confirm} color="primary" />
         </div>
-        <ButtonWithIcon iconName="close" onClick={props.onClose} text={wordings.shared.cancel} color="primary" />
+        <ButtonWithIcon iconName="close" onClick={props.onClose} text={wordings.shared.cancel} color="default" />
       </div>
     </PopUp>
   );

@@ -25,6 +25,7 @@ function ErrorPage() {
 
   function logout() {
     localStorage.bearerTokenHandler.remove();
+    localStorage.userHandler.remove();
     history.push(routes.LOGIN.getPath());
   }
 

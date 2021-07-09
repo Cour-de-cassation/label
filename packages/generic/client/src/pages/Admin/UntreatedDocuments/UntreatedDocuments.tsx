@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
-import { apiRouteOutType, keysOf } from '@label/core';
+import { apiRouteOutType, keysOf, userType } from '@label/core';
 import { DecisionNumberTextInput, IconButton } from '../../../components';
 import { localStorage, untreatedDocumentFilterType } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
@@ -12,6 +12,7 @@ export { UntreatedDocuments };
 
 function UntreatedDocuments(props: {
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
+  users: Array<Pick<userType, '_id' | 'name'>>;
   refetch: () => void;
 }) {
   const INITIAL_FILTER_VALUES = localStorage.untreatedDocumentsStateHandler.getFilters();
@@ -48,7 +49,11 @@ function UntreatedDocuments(props: {
         </div>
       </div>
       <div style={styles.tableContentContainer}>
-        <UntreatedDocumentsTable untreatedDocuments={filteredUntreatedDocuments} refetch={props.refetch} />
+        <UntreatedDocumentsTable
+          users={props.users}
+          untreatedDocuments={filteredUntreatedDocuments}
+          refetch={props.refetch}
+        />
       </div>
     </div>
   );

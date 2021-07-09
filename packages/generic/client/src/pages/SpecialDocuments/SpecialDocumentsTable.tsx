@@ -24,6 +24,7 @@ function SpecialDocumentsTable(props: {
 
   function buildOptionItems(specialDocument: apiRouteOutType<'get', 'specialDocuments'>[number]) {
     const openAnonymizedDocumentOptionItem = {
+      kind: 'text' as const,
       text: wordings.specialDocumentsPage.table.optionItems.openAnonymizedDocument,
       onClick: () => {
         history.push(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(specialDocument._id)));
@@ -36,6 +37,7 @@ function SpecialDocumentsTable(props: {
         return [
           openAnonymizedDocumentOptionItem,
           {
+            kind: 'text' as const,
             text: wordings.specialDocumentsPage.table.optionItems.markAsPublished,
             onClick: async () => {
               await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {
@@ -53,6 +55,7 @@ function SpecialDocumentsTable(props: {
         return [
           openAnonymizedDocumentOptionItem,
           {
+            kind: 'text' as const,
             text: wordings.specialDocumentsPage.table.optionItems.markAsUnPublished,
             onClick: async () => {
               await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {

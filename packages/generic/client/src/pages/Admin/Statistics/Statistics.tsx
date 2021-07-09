@@ -13,7 +13,7 @@ const WIDTH = 350;
 function Statistics(props: {
   aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
   availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
-  users: Omit<userType, 'hashedPassword' | 'deletionDate'>[];
+  users: Pick<userType, '_id' | 'name'>[];
   refetch: (ressourceFilter: ressourceFilterType) => void;
   ressourceFilter: ressourceFilterType;
 }) {

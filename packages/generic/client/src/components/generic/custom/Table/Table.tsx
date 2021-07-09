@@ -1,23 +1,32 @@
 import React, { useState } from 'react';
 import { sumBy } from 'lodash';
 import { iconNameType } from '../../materialUI';
-import { DEFAULT_ORDER_DIRECTION, TableHeader } from './TableHeader';
+import { DEFAULT_ORDER_DIRECTION, orderDirectionType, TableHeader } from './TableHeader';
 import { TableBody, tableRowFieldType } from './TableBody';
 import { footerCellType, TableFooter } from './TableFooter';
 
 export { Table };
 
-export type { optionItemType, tableRowFieldType };
+export type { optionItemType, orderDirectionType, tableRowFieldType };
 
 const OPTION_CELL_WIDTH = 40;
 
-type orderDirectionType = 'asc' | 'desc';
-
-type optionItemType = {
-  text: string;
-  onClick: () => void;
-  iconName?: iconNameType;
-};
+type optionItemType =
+  | {
+      kind: 'text';
+      text: string;
+      onClick: () => void;
+      iconName?: iconNameType;
+    }
+  | {
+      kind: 'selection';
+      text: string;
+      items: Array<string>;
+      dropdownLabel: string;
+      description: string;
+      onSelect: (text: string) => Promise<void>;
+      iconName?: iconNameType;
+    };
 
 function Table<InputT, orderByPropertyT extends string = string>(props: {
   defaultOrderByProperty?: orderByPropertyT;

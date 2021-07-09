@@ -1,11 +1,12 @@
 import React, { ReactNode } from 'react';
 import { TableSortLabel as MuiTableSortLabel } from '@material-ui/core';
+import { orderDirectionType } from '../custom';
 export { TableSortLabel };
 
 function TableSortLabel(props: {
   active: boolean;
   children: ReactNode;
-  direction: 'asc' | 'desc';
+  direction: orderDirectionType;
   onClick: () => void;
 }) {
   return (

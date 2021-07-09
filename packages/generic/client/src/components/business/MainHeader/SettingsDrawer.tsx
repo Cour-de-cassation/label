@@ -120,6 +120,7 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
 
   function logout() {
     localStorage.bearerTokenHandler.remove();
+    localStorage.userHandler.remove();
     history.push(routes.LOGIN.getPath());
   }
 

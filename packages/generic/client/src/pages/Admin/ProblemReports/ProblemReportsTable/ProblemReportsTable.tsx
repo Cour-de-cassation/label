@@ -33,6 +33,7 @@ function ProblemReportsTable(props: {
     const validateDocumentOptionItem =
       problemReportWithDetails.document.status !== 'done'
         ? {
+            kind: 'text' as const,
             text: wordings.problemReportsPage.table.optionItems.validate,
             onClick: async () => {
               await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
@@ -49,6 +50,7 @@ function ProblemReportsTable(props: {
         : undefined;
 
     const answerByEmailOptionItem = {
+      kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.answerByEmail,
       onClick: () => {
         const subject = format(wordings.problemReportsPage.table.mailSubject, {
@@ -62,6 +64,7 @@ function ProblemReportsTable(props: {
     };
 
     const deleteProblemReportOptionItem = {
+      kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.deleteProblemReport,
       onClick: async () => {
         await apiCaller.post<'deleteProblemReport'>('deleteProblemReport', {
@@ -73,6 +76,7 @@ function ProblemReportsTable(props: {
     };
 
     const openDocumentOptionItem = {
+      kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.openDocument,
       onClick: () => {
         history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(problemReportWithDetails.document._id)));
@@ -82,6 +86,7 @@ function ProblemReportsTable(props: {
     };
 
     const reassignToAgentOptionItem = {
+      kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
       onClick: async () => {
         await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {

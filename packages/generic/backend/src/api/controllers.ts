@@ -176,11 +176,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         name,
         role,
         token,
+        passwordTimeValidityStatus,
       } = await userService.login({
         email,
         password,
       });
-      return { email: userEmail, name, role, token, _id };
+      return {
+        email: userEmail,
+        name,
+        role,
+        token,
+        _id,
+        passwordTimeValidityStatus,
+      };
     },
 
     monitoringEntries: buildAuthenticatedController({

@@ -33,6 +33,7 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
       }
       collection[storedUserIndex] = {
         ...collection[storedUserIndex],
+        passwordLastUpdateDate: Date.now(),
         hashedPassword,
       };
       return { success: true };

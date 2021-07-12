@@ -41,7 +41,7 @@ function UntreatedDocumentsTable(props: {
         <ConfirmationPopup
           text={wordings.untreatedDocumentsPage.table.assignDocumentConfirmationPopup.text}
           onConfirm={() => onConfirmUpdateDocumentStatus(documentIdToUpdateStatus)}
-          onClose={() => setDocumentIdToUpdateStatus(undefined)}
+          onCancel={() => setDocumentIdToUpdateStatus(undefined)}
         />
       )}
       <PaginatedTable

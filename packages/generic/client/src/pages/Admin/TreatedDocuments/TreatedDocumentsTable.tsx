@@ -38,7 +38,7 @@ function TreatedDocumentsTable(props: {
         <ConfirmationPopup
           text={wordings.treatedDocumentsPage.table.resetDocumentConfirmationPopup.text}
           onConfirm={() => onConfirmResetDocument(documentIdToReset)}
-          onClose={() => setDocumentIdToReset(undefined)}
+          onCancel={() => setDocumentIdToReset(undefined)}
         />
       )}
       <AnnotationsDiffDrawer documentInfo={annotationDiffDocumentInfo} close={resetDrawer} />

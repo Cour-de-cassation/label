@@ -1,8 +1,9 @@
+import { dateBuilder } from '@label/core';
 import {
   buildDocumentRepository,
   documentService,
 } from '../../modules/document';
-import { dateBuilder, logger } from '../../utils';
+import { logger } from '../../utils';
 
 export { freePendingDocuments };
 

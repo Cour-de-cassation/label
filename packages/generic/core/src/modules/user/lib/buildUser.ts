@@ -24,6 +24,7 @@ async function buildUser({
     hashedPassword,
     _id: idModule.lib.buildId(),
     isActivated: true,
+    passwordLastUpdateDate: new Date().getTime(),
     name,
     role,
   };

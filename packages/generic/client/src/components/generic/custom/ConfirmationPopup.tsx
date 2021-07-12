@@ -7,7 +7,7 @@ import { PopUp } from './PopUp';
 
 export { ConfirmationPopup };
 
-function ConfirmationPopup(props: { text: string; onConfirm: () => void; onClose: () => void }) {
+function ConfirmationPopup(props: { text: string; onConfirm: () => void; onCancel: () => void }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -20,7 +20,7 @@ function ConfirmationPopup(props: { text: string; onConfirm: () => void; onClose
         <div style={styles.confirmButtonContainer}>
           <ButtonWithIcon iconName="check" onClick={props.onConfirm} text={wordings.shared.confirm} color="primary" />
         </div>
-        <ButtonWithIcon iconName="close" onClick={props.onClose} text={wordings.shared.cancel} color="default" />
+        <ButtonWithIcon iconName="close" onClick={props.onCancel} text={wordings.shared.cancel} color="default" />
       </div>
     </PopUp>
   );

@@ -153,12 +153,17 @@ function buildUserService() {
 
       const token = jwtSigner.sign(user._id);
 
+      const passwordTimeValidityStatus = userModule.lib.passwordHandler.getPasswordTimeValidityStatus(
+        user,
+      );
+
       return {
         _id: user._id,
         email: user.email,
         name: user.name,
         role: user.role,
         token,
+        passwordTimeValidityStatus,
       };
     } catch (err) {
       logger.error(err);

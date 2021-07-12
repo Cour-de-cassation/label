@@ -232,8 +232,8 @@ const apiSchema = {
             user: {
               kind: 'object',
               content: {
-                email: userModule.model.content.email,
-                name: userModule.model.content.name,
+                email: userModule.models.user.content.email,
+                name: userModule.models.user.content.name,
               },
             },
           },
@@ -350,11 +350,11 @@ const apiSchema = {
             user: {
               kind: 'object',
               content: {
-                _id: userModule.model.content._id,
-                email: userModule.model.content.email,
-                isActivated: userModule.model.content.isActivated,
-                name: userModule.model.content.name,
-                role: userModule.model.content.role,
+                _id: userModule.models.user.content._id,
+                email: userModule.models.user.content.email,
+                isActivated: userModule.models.user.content.isActivated,
+                name: userModule.models.user.content.name,
+                role: userModule.models.user.content.role,
               },
             },
           },
@@ -396,7 +396,7 @@ const apiSchema = {
           kind: 'primitive',
           content: 'string',
         } as const),
-        role: userModule.model.content.role,
+        role: userModule.models.user.content.role,
       },
       out: buildModel({ kind: 'primitive', content: 'string' } as const),
     },
@@ -438,11 +438,12 @@ const apiSchema = {
       out: buildModel({
         kind: 'object',
         content: {
-          _id: userModule.model.content._id,
-          email: userModule.model.content.email,
-          name: userModule.model.content.name,
-          role: userModule.model.content.role,
+          _id: userModule.models.user.content._id,
+          email: userModule.models.user.content.email,
+          name: userModule.models.user.content.name,
+          role: userModule.models.user.content.role,
           token: { kind: 'primitive', content: 'string' },
+          passwordTimeValidityStatus: userModule.models.passwordTimeValidityStatus,
         },
       } as const),
     },
@@ -505,7 +506,7 @@ const apiSchema = {
           kind: 'custom',
           content: 'id',
         } as const),
-        isActivated: userModule.model.content.isActivated,
+        isActivated: userModule.models.user.content.isActivated,
       },
       out: buildModel({
         kind: 'primitive',

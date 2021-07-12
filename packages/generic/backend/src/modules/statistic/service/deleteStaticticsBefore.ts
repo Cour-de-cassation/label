@@ -1,4 +1,4 @@
-import { dateBuilder } from '../../../utils';
+import { dateBuilder } from '@label/core';
 import { buildStatisticRepository } from '../repository';
 
 export { deleteStaticticsBefore };

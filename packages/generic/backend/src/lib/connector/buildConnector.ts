@@ -1,6 +1,6 @@
-import { documentType } from '@label/core';
+import { dateBuilder, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
-import { dateBuilder, logger } from '../../utils';
+import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 
 export { buildConnector };

@@ -1,3 +1,5 @@
+import { dateBuilder } from '../../../utils';
+import { userGenerator } from '../generator';
 import { passwordHandler } from './passwordHandler';
 
 describe('passwordHandler', () => {
@@ -6,6 +8,20 @@ describe('passwordHandler', () => {
       const password = passwordHandler.generate();
 
       expect(passwordHandler.isValid(password)).toBeTruthy();
+    });
+  });
+
+  describe('getPasswordTimeValidityStatus', () => {
+    it('should return valid for a generated user', () => {
+      const user = userGenerator.generate();
+
+      expect(passwordHandler.getPasswordTimeValidityStatus(user)).toBe('valid');
+    });
+
+    it('should return outdated for an old user', () => {
+      const user = userGenerator.generate({ passwordLastUpdateDate: dateBuilder.monthsAgo(7) });
+
+      expect(passwordHandler.getPasswordTimeValidityStatus(user)).toBe('outdated');
     });
   });
 

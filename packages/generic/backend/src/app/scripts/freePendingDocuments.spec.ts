@@ -1,5 +1,4 @@
-import { documentModule } from '@label/core';
-import { dateBuilder } from '../../utils';
+import { dateBuilder, documentModule } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { freePendingDocuments } from './freePendingDocuments';
 

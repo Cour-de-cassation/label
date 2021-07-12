@@ -12,6 +12,7 @@ import {
   MainHeader,
   ProblemReportIcon,
   PublicationCategoryBadge,
+  ResetPasswordForm,
   UnlinkAnnotationDropdown,
 } from './business';
 import {
@@ -79,6 +80,7 @@ export {
   ProblemReportIcon,
   PublicationCategoryBadge,
   RadioButton,
+  ResetPasswordForm,
   RichTextInput,
   Snackbar,
   SwitchButton,

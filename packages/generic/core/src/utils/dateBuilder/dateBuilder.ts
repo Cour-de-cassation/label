@@ -6,9 +6,7 @@ function buildDateBuilder(now: () => Date) {
   return {
     daysAgo(days: number): number {
       const dateInSeveralDaysInThePast = now();
-      dateInSeveralDaysInThePast.setDate(
-        dateInSeveralDaysInThePast.getDate() - days,
-      );
+      dateInSeveralDaysInThePast.setDate(dateInSeveralDaysInThePast.getDate() - days);
 
       return dateInSeveralDaysInThePast.getTime();
     },
@@ -16,9 +14,7 @@ function buildDateBuilder(now: () => Date) {
     minutesAgo(minutes: number): number {
       const dateInSeveralMinutesInThePast = now();
 
-      dateInSeveralMinutesInThePast.setMinutes(
-        dateInSeveralMinutesInThePast.getMinutes() - minutes,
-      );
+      dateInSeveralMinutesInThePast.setMinutes(dateInSeveralMinutesInThePast.getMinutes() - minutes);
 
       return dateInSeveralMinutesInThePast.getTime();
     },
@@ -26,9 +22,7 @@ function buildDateBuilder(now: () => Date) {
     monthsAgo(months: number): number {
       const dateInSeveralMonthsInThePast = now();
 
-      dateInSeveralMonthsInThePast.setMonth(
-        dateInSeveralMonthsInThePast.getMonth() - months,
-      );
+      dateInSeveralMonthsInThePast.setMonth(dateInSeveralMonthsInThePast.getMonth() - months);
 
       return dateInSeveralMonthsInThePast.getTime();
     },

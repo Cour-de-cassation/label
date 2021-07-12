@@ -1,9 +1,7 @@
 import { buildDateBuilder } from './dateBuilder';
 
 describe('dateBuilder', () => {
-  const dateBuilder = buildDateBuilder(
-    () => new Date('2012-07-14T14:00:00.000Z'),
-  );
+  const dateBuilder = buildDateBuilder(() => new Date('2012-07-14T14:00:00.000Z'));
 
   describe('daysAgo', () => {
     it('should return the date in the given days ago', () => {

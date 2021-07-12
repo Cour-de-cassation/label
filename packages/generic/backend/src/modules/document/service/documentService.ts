@@ -9,10 +9,11 @@ import {
   documentModule,
   indexer,
   statisticModule,
+  dateBuilder,
 } from '@label/core';
 import { settingsLoader } from '../../../lib/settingsLoader';
 import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
-import { dateBuilder, logger } from '../../../utils';
+import { logger } from '../../../utils';
 import { annotationReportService } from '../../annotationReport';
 import { assignationService } from '../../assignation';
 import { treatmentService } from '../../treatment';

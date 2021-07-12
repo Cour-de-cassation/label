@@ -1,5 +1,4 @@
-import { statisticModule } from '@label/core';
-import { dateBuilder } from '../../../utils';
+import { dateBuilder, statisticModule } from '@label/core';
 import { buildStatisticRepository } from '../repository';
 import { deleteStaticticsBefore } from './deleteStaticticsBefore';
 

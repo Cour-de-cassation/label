@@ -22,14 +22,14 @@ function AgentsTable(props: {
       {!!newPassword && <PasswordResetSuccessPopup password={newPassword} onClose={() => setNewPassword(undefined)} />}
       {!!resetPasswordUserId && (
         <ConfirmationPopup
-          onClose={() => setResetPasswordUserId(undefined)}
+          onCancel={() => setResetPasswordUserId(undefined)}
           onConfirm={buildOnConfirmResetPassword(resetPasswordUserId)}
           text={wordings.agentsPage.table.passwordResetConfirmationPopup.text}
         />
       )}
       {!!deleteUserId && (
         <ConfirmationPopup
-          onClose={() => setDeleteUserId(undefined)}
+          onCancel={() => setDeleteUserId(undefined)}
           onConfirm={buildOnConfirmDeleteUser(deleteUserId)}
           text={wordings.agentsPage.table.deleteUserConfirmationPopup.text}
         />

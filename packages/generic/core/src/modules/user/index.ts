@@ -7,14 +7,14 @@ import {
   formatEmail,
   passwordHandler,
 } from './lib';
-import { userModel, userType } from './userType';
+import { userModel, userType, passwordTimeValidityStatusType, passwordTimeValidityStatusModel } from './userType';
 
 export { userModule };
 
-export type { userType };
+export type { userType, passwordTimeValidityStatusType };
 
 const userModule = {
-  model: userModel,
+  models: { user: userModel, passwordTimeValidityStatus: passwordTimeValidityStatusModel },
   generator: userGenerator,
   lib: {
     assertAuthorization,

@@ -1,9 +1,9 @@
 import { idType } from '../id';
 import { buildModel, buildType } from '../modelType';
 
-export { userModel };
+export { userModel, passwordTimeValidityStatusModel };
 
-export type { userType };
+export type { userType, passwordTimeValidityStatusType };
 
 const userModel = buildModel({
   kind: 'object',
@@ -20,6 +20,7 @@ const userModel = buildModel({
     hashedPassword: { kind: 'primitive', content: 'string' },
     isActivated: { kind: 'primitive', content: 'boolean' },
     name: { kind: 'primitive', content: 'string' },
+    passwordLastUpdateDate: { kind: 'primitive', content: 'number' },
     role: {
       kind: 'constant',
       content: ['admin', 'annotator', 'publicator'] as const,
@@ -27,4 +28,7 @@ const userModel = buildModel({
   },
 } as const);
 
+const passwordTimeValidityStatusModel = buildModel({ kind: 'constant', content: ['valid', 'outdated'] as const });
+
 type userType = buildType<typeof userModel, { id: idType }>;
+type passwordTimeValidityStatusType = buildType<typeof passwordTimeValidityStatusModel>;

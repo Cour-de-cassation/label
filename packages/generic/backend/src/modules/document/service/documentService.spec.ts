@@ -10,9 +10,9 @@ import {
   documentType,
   treatmentType,
   statisticModule,
+  dateBuilder,
 } from '@label/core';
 import { projectFakeObjects } from '../../../repository';
-import { dateBuilder } from '../../../utils';
 import { buildAnnotationReportRepository } from '../../annotationReport';
 import { buildAssignationRepository } from '../../assignation';
 import { buildMonitoringEntryRepository } from '../../monitoringEntry';

@@ -1,4 +1,4 @@
-import { userType } from '@label/core';
+import { passwordTimeValidityStatusType, userType } from '@label/core';
 import { localStorageHandler } from './localStorageHandler';
 import { localStorageMappers } from './localStorageMappers';
 
@@ -8,14 +8,17 @@ const USER_ID_STORAGE_KEY = 'USER_ID';
 const USER_EMAIL_STORAGE_KEY = 'USER_EMAIL';
 const USER_NAME_STORAGE_KEY = 'USER_NAME';
 const USER_ROLE_STORAGE_KEY = 'USER_ROLE';
+const USER_PASSWORD_TIME_VALIDITY_STATUS_STORAGE_KEY = 'USER_PASSWORD_TIME_VALIDITY_STATUS';
 
 const userHandler = {
   set,
+  setPasswordTimeValidityStatus,
   remove,
   getId,
   getEmail,
   getName,
   getRole,
+  getPasswordTimeValidityStatus,
 };
 
 function set({ _id, email, name, role }: Pick<userType, '_id' | 'email' | 'role' | 'name'>) {
@@ -25,11 +28,24 @@ function set({ _id, email, name, role }: Pick<userType, '_id' | 'email' | 'role'
   localStorageHandler.set({ key: USER_ROLE_STORAGE_KEY, value: role, mapper: localStorageMappers.string });
 }
 
+function setPasswordTimeValidityStatus(passwordTimeValidityStatus: passwordTimeValidityStatusType) {
+  localStorageHandler.set({
+    key: USER_PASSWORD_TIME_VALIDITY_STATUS_STORAGE_KEY,
+    value: passwordTimeValidityStatus,
+    mapper: localStorageMappers.string,
+  });
+}
+
 function remove() {
   localStorageHandler.set({ key: USER_ID_STORAGE_KEY, value: undefined, mapper: localStorageMappers.id });
   localStorageHandler.set({ key: USER_EMAIL_STORAGE_KEY, value: undefined, mapper: localStorageMappers.string });
   localStorageHandler.set({ key: USER_NAME_STORAGE_KEY, value: undefined, mapper: localStorageMappers.string });
   localStorageHandler.set({ key: USER_ROLE_STORAGE_KEY, value: undefined, mapper: localStorageMappers.string });
+  localStorageHandler.set({
+    key: USER_PASSWORD_TIME_VALIDITY_STATUS_STORAGE_KEY,
+    value: undefined,
+    mapper: localStorageMappers.string,
+  });
 }
 
 function getId() {
@@ -48,4 +64,11 @@ function getRole() {
   return localStorageHandler.get({ key: USER_ROLE_STORAGE_KEY, mapper: localStorageMappers.string }) as
     | userType['role']
     | undefined;
+}
+
+function getPasswordTimeValidityStatus() {
+  return localStorageHandler.get({
+    key: USER_PASSWORD_TIME_VALIDITY_STATUS_STORAGE_KEY,
+    mapper: localStorageMappers.string,
+  }) as passwordTimeValidityStatusType | undefined;
 }

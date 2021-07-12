@@ -1,4 +1,9 @@
-import { assignationModule, idModule, userModule } from '@label/core';
+import {
+  assignationModule,
+  dateBuilder,
+  idModule,
+  userModule,
+} from '@label/core';
 import {
   assignationService,
   buildAssignationRepository,
@@ -262,12 +267,37 @@ describe('userService', () => {
           });
         } catch (error) {}
 
-        const { email } = await userService.login({
+        const { email, passwordTimeValidityStatus } = await userService.login({
           email: userEmail,
           password: userPassword,
         });
 
         expect(email).toBe('mail@mail.mail');
+        expect(passwordTimeValidityStatus).toBe('valid');
+      });
+
+      it('should succeed when the user has only tried once with email/password', async () => {
+        const userService = buildUserService();
+        const userRepository = buildUserRepository();
+        const userPassword = 'password';
+        const hashedPassword = await userModule.lib.computeHashedPassword(
+          userPassword,
+        );
+        const userEmail = 'mail@mail.mail';
+        const user = userModule.generator.generate({
+          email: userEmail,
+          hashedPassword,
+          passwordLastUpdateDate: dateBuilder.monthsAgo(7),
+        });
+        await userRepository.insert(user);
+
+        const { email, passwordTimeValidityStatus } = await userService.login({
+          email: userEmail,
+          password: userPassword,
+        });
+
+        expect(email).toBe('mail@mail.mail');
+        expect(passwordTimeValidityStatus).toBe('outdated');
       });
     });
   });

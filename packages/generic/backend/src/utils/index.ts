@@ -1,4 +1,3 @@
-import { dateBuilder } from './dateBuilder';
 import { decoder } from './decoder';
 import { dependencyManager } from './dependencyManager';
 import {
@@ -13,7 +12,6 @@ import { buildMongo, mongo, mongoCollectionType } from './mongo';
 export {
   buildHandlingErrorController,
   buildMongo,
-  dateBuilder,
   decoder,
   dependencyManager,
   fileSystem,

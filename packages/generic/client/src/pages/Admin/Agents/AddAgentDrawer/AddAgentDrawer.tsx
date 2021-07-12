@@ -81,7 +81,7 @@ function AddAgentDrawer(props: { isOpen: boolean; onClose: () => void; refetch: 
               <LabelledDropdown<userType['role']>
                 label={wordings.agentsPage.createAgentDrawer.fields.role}
                 error={!!formErrors.role}
-                items={userModule.model.content.role.content.map((role) => ({
+                items={userModule.models.user.content.role.content.map((role) => ({
                   text: wordings.agentsPage.table.roles[role],
                   value: role,
                 }))}

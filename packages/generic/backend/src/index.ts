@@ -6,12 +6,7 @@ import {
   labelTreatmentsType,
 } from './lib/exporter';
 import { settingsLoader } from './lib/settingsLoader';
-import {
-  buildMongo,
-  dateBuilder,
-  dependencyManager,
-  fileSystem,
-} from './utils';
+import { buildMongo, dependencyManager, fileSystem } from './utils';
 import { buildBackend } from './app';
 
 export {
@@ -20,7 +15,6 @@ export {
   buildConnector,
   buildExporter,
   buildMongo,
-  dateBuilder,
   dependencyManager,
   fileSystem,
   settingsLoader,

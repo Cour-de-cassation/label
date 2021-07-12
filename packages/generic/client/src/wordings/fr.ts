@@ -226,6 +226,10 @@ const fr = {
       mailSubject: 'Alerte sur le document {documentNumber}',
     },
   },
+  resetPasswordPage: {
+    popup:
+      "Votre mot de passe n'a pas été mis à jour depuis plus de 6 mois. Pour des raisons de sécurité, il vous est demandé d'en renseigner un nouveau respectant les règles du PSSI.",
+  },
   specialDocumentsPage: {
     title: 'Arrêts P',
     table: {

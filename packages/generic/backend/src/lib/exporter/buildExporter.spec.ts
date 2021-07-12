@@ -1,7 +1,11 @@
-import { documentModule, settingsModule, treatmentModule } from '@label/core';
+import {
+  dateBuilder,
+  documentModule,
+  settingsModule,
+  treatmentModule,
+} from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
-import { dateBuilder } from '../../utils';
 import { buildExporter } from './buildExporter';
 import { exporterConfigType, labelTreatmentsType } from './exporterConfigType';
 

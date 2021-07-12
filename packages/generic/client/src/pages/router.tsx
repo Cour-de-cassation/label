@@ -12,6 +12,7 @@ import { UntreatedDocuments } from './Admin/UntreatedDocuments';
 import { AnonymizedDocument } from './AnonymizedDocument';
 import { Home } from './Home';
 import { Login } from './Login';
+import { ResetPassword } from './ResetPassword';
 import { SpecialDocuments } from './SpecialDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { Statistics } from './Admin/Statistics';
@@ -26,6 +27,9 @@ function Router() {
         <UnauthenticatedRoute path={routes.LOGIN.getPath()}>
           <Login />
         </UnauthenticatedRoute>
+        <AuthenticatedRoute path={routes.RESET_PASSWORD.getPath()}>
+          <ResetPassword />
+        </AuthenticatedRoute>
         <AuthenticatedRoute path={routes.ADMIN.getPath()}>
           <AuthenticatedRoute path={routes.DOCUMENT.getPath()}>
             <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
@@ -150,6 +154,10 @@ const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => (
 );
 
 function getRedirectionRoute() {
+  const passwordTimeValidityStatus = localStorage.userHandler.getPasswordTimeValidityStatus();
+  if (passwordTimeValidityStatus === 'outdated') {
+    return routes.RESET_PASSWORD.getPath();
+  }
   const userRole = localStorage.userHandler.getRole();
 
   if (!userRole) {

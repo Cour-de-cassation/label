@@ -97,10 +97,11 @@ const Login: FunctionComponent = () => {
     event.preventDefault();
     try {
       const {
-        data: { _id, email: userEmail, name, role, token },
+        data: { _id, email: userEmail, name, role, token, passwordTimeValidityStatus },
       } = await apiCaller.post<'login'>('login', { email, password });
       localStorage.bearerTokenHandler.set(token);
       localStorage.userHandler.set({ _id: idModule.lib.buildId(_id), email: userEmail, name, role });
+      localStorage.userHandler.setPasswordTimeValidityStatus(passwordTimeValidityStatus);
       history.push(routes.DEFAULT.getPath());
     } catch (error) {
       setIsFormValid(false);

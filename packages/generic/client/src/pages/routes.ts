@@ -10,6 +10,7 @@ const routes = {
   DOCUMENT: { getPath: (documentId?: string) => `/admin/document/${documentId || ':documentId'}` },
   LOGIN: { getPath: () => '/login' },
   PROBLEM_REPORTS: { getPath: () => '/admin/main/problem-reports' },
+  RESET_PASSWORD: { getPath: () => '/reset-password' },
   SPECIAL_DOCUMENTS: { getPath: () => '/special-documents' },
   STATISTICS: { getPath: () => '/admin/main/statistics' },
   TREATED_DOCUMENTS: { getPath: () => '/admin/main/treated-documents' },

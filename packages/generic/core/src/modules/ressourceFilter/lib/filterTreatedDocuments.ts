@@ -2,6 +2,7 @@ import { assignationType } from '../../assignation';
 import { documentType } from '../../document';
 import { idModule } from '../../id';
 import { treatmentModule, treatmentType } from '../../treatment';
+import { statisticModule } from '../../statistic';
 import { ressourceFilterType } from '../ressourceFilterType';
 
 export { filterTreatedDocuments };
@@ -21,45 +22,23 @@ function filterTreatedDocuments({
     let isInTheFilter = true;
     const humanTreatments = treatmentModule.lib.sortInConsistentOrder(treatments).slice(2);
 
-    if (ressourceFilter.mustHaveAddedAnnotations) {
-      isInTheFilter =
-        isInTheFilter && humanTreatments.some((treatment) => treatment.addedAnnotationsCount.sensitive > 0);
-    }
-
-    if (ressourceFilter.mustHaveDeletedAnnotations) {
-      isInTheFilter =
-        isInTheFilter && humanTreatments.some((treatment) => treatment.deletedAnnotationsCount.anonymised > 0);
-    }
-
-    if (ressourceFilter.mustHaveModifiedAnnotations) {
+    if (ressourceFilter.mustHaveSurAnnotations) {
       isInTheFilter =
         isInTheFilter &&
-        humanTreatments.some(
-          (treatment) =>
-            treatment.modifiedAnnotationsCount.anonymisedToNonAnonymised +
-              treatment.modifiedAnnotationsCount.nonAnonymisedToSensitive >
-            0,
-        );
+        humanTreatments.some((treatment) => {
+          const simplifyedStatistic = statisticModule.lib.simplify(treatment);
+          return simplifyedStatistic.surAnnotationsCompleteCount + simplifyedStatistic.surAnnotationsPartialCount > 0;
+        });
     }
 
-    if (ressourceFilter.mustHaveNoModifications) {
+    if (ressourceFilter.mustHaveSubAnnotations) {
       isInTheFilter =
         isInTheFilter &&
-        humanTreatments.every(
-          (treatment) => treatment.annotationsDiff.before.length === 0 && treatment.annotationsDiff.after.length === 0,
-        );
+        humanTreatments.some((treatment) => {
+          const simplifyedStatistic = statisticModule.lib.simplify(treatment);
+          return simplifyedStatistic.subAnnotationsCompleteCount + simplifyedStatistic.subAnnotationsPartialCount > 0;
+        });
     }
-
-    if (ressourceFilter.mustHaveResizedBiggerAnnotations) {
-      isInTheFilter =
-        isInTheFilter && humanTreatments.some((treatment) => treatment.resizedBiggerAnnotationsCount.sensitive > 0);
-    }
-
-    if (ressourceFilter.mustHaveResizedSmallerAnnotations) {
-      isInTheFilter =
-        isInTheFilter && humanTreatments.some((treatment) => treatment.resizedSmallerAnnotationsCount.anonymised > 0);
-    }
-
     if (ressourceFilter.publicationCategory) {
       isInTheFilter = isInTheFilter && document.publicationCategory.includes(ressourceFilter.publicationCategory);
     }

@@ -90,12 +90,8 @@ const fr = {
     filters: {
       button: 'Filtrer',
       chips: {
-        mustHaveAddedAnnotations: 'Avec sous-annotations',
-        mustHaveDeletedAnnotations: 'Avec sur-annotations',
-        mustHaveModifiedAnnotations: 'Avec modifications de catégorie',
-        mustHaveNoModifications: 'Aucune modification',
-        mustHaveResizedBiggerAnnotations: 'Avec redimensionnements +',
-        mustHaveResizedSmallerAnnotations: 'Avec redimensionnements -',
+        mustHaveSubAnnotations: 'Avec sous-annotations',
+        mustHaveSurAnnotations: 'Avec sur-annotations',
       },
       intervalDate: {
         start: 'Date début',
@@ -259,12 +255,8 @@ const fr = {
     filter: {
       fields: {
         agents: 'Agents',
-        mustHaveAddedAnnotations: 'Avec sous-annotations',
-        mustHaveDeletedAnnotations: 'Avec sur-annotations',
-        mustHaveModifiedAnnotations: 'Avec modifications de catégorie',
-        mustHaveNoModifications: 'Aucune modification',
-        mustHaveResizedBiggerAnnotations: 'Avec redimensionnements +',
-        mustHaveResizedSmallerAnnotations: 'Avec redimensionnements -',
+        mustHaveSubAnnotations: 'Avec sous-annotations',
+        mustHaveSurAnnotations: 'Avec sur-annotations',
         publicationCategory: 'Diffusion',
         source: 'Base de données source',
       },

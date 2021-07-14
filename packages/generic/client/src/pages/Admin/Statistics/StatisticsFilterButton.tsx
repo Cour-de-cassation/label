@@ -28,12 +28,8 @@ function StatisticsFilterButton(props: {
   );
 
   function buildFilters() {
-    const mustHaveAddedAnnotationsFilter = buildMustHaveAddedAnnotationsFilter();
-    const mustHaveDeletedAnnotationsFilter = buildMustHaveDeletedAnnotationsFilter();
-    const mustHaveModifiedAnnotationsFilter = buildMustHaveModifiedAnnotationsFilter();
-    const mustHaveNoModificationsFilter = buildMustHaveNoModificationsFilter();
-    const mustHaveResizedBiggerAnnotationsFilter = buildMustHaveResizedBiggerAnnotationsFilter();
-    const mustHaveResizedSmallerAnnotationsFilter = buildMustHaveResizedSmallerAnnotationsFilter();
+    const mustHaveSubAnnotationsFilter = buildMustHaveSubAnnotationsFilter();
+    const mustHaveSurAnnotationsFilter = buildMustHaveSurAnnotationsFilter();
     const publicationCategoryFilter = buildPublicationCategoryFilter();
     const dateIntervalFilter = buildDateIntervalFilter();
     const sourceFilter = buildSourceFilter();
@@ -44,105 +40,37 @@ function StatisticsFilterButton(props: {
       userFilter,
       sourceFilter,
       publicationCategoryFilter,
-      mustHaveNoModificationsFilter,
-      mustHaveAddedAnnotationsFilter,
-      mustHaveResizedBiggerAnnotationsFilter,
-      mustHaveDeletedAnnotationsFilter,
-      mustHaveResizedSmallerAnnotationsFilter,
-      mustHaveModifiedAnnotationsFilter,
+      mustHaveSubAnnotationsFilter,
+      mustHaveSurAnnotationsFilter,
     ];
 
-    function buildMustHaveAddedAnnotationsFilter() {
+    function buildMustHaveSubAnnotationsFilter() {
       return {
         kind: 'boolean' as const,
-        name: 'mustHaveAddedAnnotations',
-        label: wordings.statisticsPage.filter.fields.mustHaveAddedAnnotations,
-        checked: props.ressourceFilter.mustHaveAddedAnnotations,
-        chipLabel: wordings.business.filters.chips.mustHaveAddedAnnotations,
+        name: 'mustHaveSubAnnotations',
+        label: wordings.statisticsPage.filter.fields.mustHaveSubAnnotations,
+        checked: props.ressourceFilter.mustHaveSubAnnotations,
+        chipLabel: wordings.business.filters.chips.mustHaveSubAnnotations,
         onToggle: () => {
           props.refetch({
             ...props.ressourceFilter,
-            mustHaveAddedAnnotations: !props.ressourceFilter.mustHaveAddedAnnotations,
+            mustHaveSubAnnotations: !props.ressourceFilter.mustHaveSubAnnotations,
           });
         },
       };
     }
 
-    function buildMustHaveDeletedAnnotationsFilter() {
+    function buildMustHaveSurAnnotationsFilter() {
       return {
         kind: 'boolean' as const,
-        name: 'mustHaveDeletedAnnotations',
-        label: wordings.statisticsPage.filter.fields.mustHaveDeletedAnnotations,
-        checked: props.ressourceFilter.mustHaveDeletedAnnotations,
-        chipLabel: wordings.business.filters.chips.mustHaveDeletedAnnotations,
+        name: 'mustHaveSurAnnotations',
+        label: wordings.statisticsPage.filter.fields.mustHaveSurAnnotations,
+        checked: props.ressourceFilter.mustHaveSurAnnotations,
+        chipLabel: wordings.business.filters.chips.mustHaveSurAnnotations,
         onToggle: () => {
           props.refetch({
             ...props.ressourceFilter,
-            mustHaveDeletedAnnotations: !props.ressourceFilter.mustHaveDeletedAnnotations,
-          });
-        },
-      };
-    }
-
-    function buildMustHaveModifiedAnnotationsFilter() {
-      return {
-        kind: 'boolean' as const,
-        name: 'mustHaveModifiedAnnotations',
-        label: wordings.statisticsPage.filter.fields.mustHaveModifiedAnnotations,
-        checked: props.ressourceFilter.mustHaveModifiedAnnotations,
-        chipLabel: wordings.business.filters.chips.mustHaveModifiedAnnotations,
-        onToggle: () => {
-          props.refetch({
-            ...props.ressourceFilter,
-            mustHaveModifiedAnnotations: !props.ressourceFilter.mustHaveModifiedAnnotations,
-          });
-        },
-      };
-    }
-
-    function buildMustHaveNoModificationsFilter() {
-      return {
-        kind: 'boolean' as const,
-        name: 'mustHaveNoModifications',
-        label: wordings.statisticsPage.filter.fields.mustHaveNoModifications,
-        checked: props.ressourceFilter.mustHaveNoModifications,
-        chipLabel: wordings.business.filters.chips.mustHaveNoModifications,
-        onToggle: () => {
-          props.refetch({
-            ...props.ressourceFilter,
-            mustHaveNoModifications: !props.ressourceFilter.mustHaveNoModifications,
-          });
-        },
-      };
-    }
-
-    function buildMustHaveResizedBiggerAnnotationsFilter() {
-      return {
-        kind: 'boolean' as const,
-        name: 'mustHaveResizedBiggerAnnotations',
-        label: wordings.statisticsPage.filter.fields.mustHaveResizedBiggerAnnotations,
-        checked: props.ressourceFilter.mustHaveResizedBiggerAnnotations,
-        chipLabel: wordings.business.filters.chips.mustHaveResizedBiggerAnnotations,
-        onToggle: () => {
-          props.refetch({
-            ...props.ressourceFilter,
-            mustHaveResizedBiggerAnnotations: !props.ressourceFilter.mustHaveResizedBiggerAnnotations,
-          });
-        },
-      };
-    }
-
-    function buildMustHaveResizedSmallerAnnotationsFilter() {
-      return {
-        kind: 'boolean' as const,
-        name: 'mustHaveResizedSmallerAnnotations',
-        label: wordings.statisticsPage.filter.fields.mustHaveResizedSmallerAnnotations,
-        checked: props.ressourceFilter.mustHaveResizedSmallerAnnotations,
-        chipLabel: wordings.business.filters.chips.mustHaveResizedSmallerAnnotations,
-        onToggle: () => {
-          props.refetch({
-            ...props.ressourceFilter,
-            mustHaveResizedSmallerAnnotations: !props.ressourceFilter.mustHaveResizedSmallerAnnotations,
+            mustHaveSurAnnotations: !props.ressourceFilter.mustHaveSurAnnotations,
           });
         },
       };

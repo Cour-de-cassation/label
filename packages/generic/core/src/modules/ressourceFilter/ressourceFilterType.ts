@@ -8,12 +8,8 @@ export type { ressourceFilterType };
 const ressourceFilterModel = buildModel({
   kind: 'object',
   content: {
-    mustHaveAddedAnnotations: { kind: 'primitive', content: 'boolean' },
-    mustHaveDeletedAnnotations: { kind: 'primitive', content: 'boolean' },
-    mustHaveModifiedAnnotations: { kind: 'primitive', content: 'boolean' },
-    mustHaveNoModifications: { kind: 'primitive', content: 'boolean' },
-    mustHaveResizedBiggerAnnotations: { kind: 'primitive', content: 'boolean' },
-    mustHaveResizedSmallerAnnotations: { kind: 'primitive', content: 'boolean' },
+    mustHaveSurAnnotations: { kind: 'primitive', content: 'boolean' },
+    mustHaveSubAnnotations: { kind: 'primitive', content: 'boolean' },
     publicationCategory: {
       kind: 'or',
       content: [

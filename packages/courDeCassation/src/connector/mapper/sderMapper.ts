@@ -5,6 +5,7 @@ import {
   idModule,
   timeOperator,
 } from '@label/core';
+import { extractReadableChamberName, extractReadableJurisdictionName } from './extractors';
 
 export { sderMapper };
 
@@ -12,24 +13,23 @@ const sderMapper = { mapCourtDecisionToDocument };
 
 function mapCourtDecisionToDocument(
   sderCourtDecision: decisionType,
-): documentType {
+  ): documentType {
+  const readableChamberName = extractReadableChamberName(
+    {chamberName: sderCourtDecision.chamberName,
+    chamberId: sderCourtDecision.chamberId
+    },
+  );
+  const readableJurisdictionName = extractReadableJurisdictionName(
+    sderCourtDecision.jurisdictionName,
+  );
   const title = computeTitleFromParsedCourtDecision({
     number: sderCourtDecision.sourceId,
-    chamber: sderCourtDecision.chamberName,
-    juridiction: sderCourtDecision.jurisdictionName,
+    readableChamberName,
+    readableJurisdictionName,
     date: sderCourtDecision.dateDecision
       ? new Date(sderCourtDecision.dateDecision)
       : undefined,
   });
-
-  const chamberName = convertChamberIntoReadableChamberName(
-    sderCourtDecision.chamberName,
-  );
-
-  const juridiction = computeJuridiction(
-    sderCourtDecision.jurisdictionName,
-    sderCourtDecision.chamberName,
-  );
 
   const publicationCategory = computePublicationCategory(sderCourtDecision.pubCategory, sderCourtDecision.publication)
 
@@ -47,8 +47,8 @@ function mapCourtDecisionToDocument(
       additionalTermsToAnnotate: sderCourtDecision.occultation?.additionalTerms || '',
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit: sderCourtDecision.occultation?.categoriesToOmit || [],
-      chamberName,
-      juridiction,
+      chamberName: readableChamberName,
+      juridiction: readableJurisdictionName,
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),
@@ -61,35 +61,23 @@ function mapCourtDecisionToDocument(
   });
 }
 
-function computeJuridiction(jurisdictionName?: string, chamber?: string) {
-  if (
-    (!!jurisdictionName &&
-      jurisdictionName.toLowerCase() === 'cour de cassation') ||
-    (!!chamber && (chamber.match(/CIV\.[1-3]/) || chamber === 'SOC'))
-  ) {
-    return 'Cour de cassation';
-  }
-  return '';
-}
-
 function computeTitleFromParsedCourtDecision({
   number,
-  chamber,
-  juridiction,
+  readableChamberName,
+  readableJurisdictionName,
   date,
 }: {
   number?: number;
-  chamber?: string;
-  juridiction?: string;
+  readableChamberName: string;
+  readableJurisdictionName: string;
   date?: Date;
 }) {
   const readableNumber = `Décision n°${number}`;
-  const readableChamber = convertChamberIntoReadableChamberName(chamber);
   const readableDate = convertRawDateIntoReadableDate(date);
   const title = [
     readableNumber,
-    juridiction,
-    readableChamber && `Chambre ${readableChamber.toLowerCase()}`,
+    readableJurisdictionName,
+    readableChamberName,
     readableDate,
   ]
     .filter(Boolean)
@@ -120,18 +108,6 @@ function convertRawDateIntoReadableDate(rawDate: Date | undefined) {
     return undefined;
   }
   return timeOperator.convertTimestampToReadableDate(rawDate.getTime());
-}
-
-function convertChamberIntoReadableChamberName(chamber: string | undefined) {
-  if (!chamber) {
-    return '';
-  }
-  if (chamber && chamber.match(/CIV\.[1-3]/)) {
-    return 'Civile';
-  } else if (chamber === 'SOC') {
-    return 'Sociale';
-  }
-  return '';
 }
 
 function computePriority(

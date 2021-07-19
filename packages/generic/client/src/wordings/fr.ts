@@ -302,15 +302,14 @@ const fr = {
         source: { title: 'Source', tooltipText: 'Base de données source' },
         agent: { title: 'Agent', tooltipText: 'Agent principal' },
         date: 'Traité le',
-        surAnnotationsCompleteCount: { title: 'Sur. (tot.)', tooltipText: 'Nombre de sur-annotations entières' },
-        surAnnotationsPartialCount: { title: 'Sur. (part.)', tooltipText: 'Nombre de sur-annotations partielles' },
-        subAnnotationsCompleteCount: {
-          title: 'Sous. (tot.)',
-          tooltipText: 'Nombre de sous-annotations sensibles entières',
+        surAnnotationsCount: { title: 'Sur.', tooltipText: 'Nombre de sur-annotations' },
+        subAnnotationsSensitiveCount: {
+          title: 'Sous. (sens.)',
+          tooltipText: 'Nombre de sous-annotations sensibles',
         },
-        subAnnotationsPartialCount: {
-          title: 'Sous. (part.)',
-          tooltipText: 'Nombre de sous-annotations sensibles partielles',
+        subAnnotationsNonSensitiveCount: {
+          title: 'Sous. (autres)',
+          tooltipText: 'Nombre de sous-annotations non sensibles',
         },
         duration: { title: 'Tps', tooltipText: 'Temps de traitement (agent principal)' },
       },
@@ -321,11 +320,9 @@ const fr = {
         },
         fields: {
           annotationsCount: 'Annotations',
-
-          surAnnotationsCompleteCount: 'Sur. (tot.)',
-          surAnnotationsPartialCount: 'Sur. (part.)',
-          subAnnotationsCompleteCount: 'Sous. (tot.)',
-          subAnnotationsPartialCount: 'Sous. (part.)',
+          surAnnotationsCount: 'Sur.',
+          subAnnotationsSensitiveCount: 'Sous. (sens.)',
+          subAnnotationsNonSensitiveCount: 'Sous. (autres)',
           treatmentDuration: 'Temps de traitement',
           wordsCount: 'Mots',
         },

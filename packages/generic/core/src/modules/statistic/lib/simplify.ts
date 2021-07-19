@@ -17,10 +17,14 @@ function simplify({
   | 'modifiedAnnotationsCount'
 >) {
   return {
-    surAnnotationsCompleteCount:
-      deletedAnnotationsCount.anonymised + modifiedAnnotationsCount.anonymisedToNonAnonymised,
-    surAnnotationsPartialCount: resizedSmallerAnnotationsCount.anonymised,
-    subAnnotationsCompleteCount: addedAnnotationsCount.sensitive + modifiedAnnotationsCount.nonAnonymisedToSensitive,
-    subAnnotationsPartialCount: resizedBiggerAnnotationsCount.sensitive,
+    surAnnotationsCount:
+      deletedAnnotationsCount.anonymised +
+      modifiedAnnotationsCount.anonymisedToNonAnonymised +
+      resizedSmallerAnnotationsCount.anonymised,
+    subAnnotationsSensitiveCount:
+      addedAnnotationsCount.sensitive +
+      modifiedAnnotationsCount.nonAnonymisedToSensitive +
+      resizedBiggerAnnotationsCount.sensitive,
+    subAnnotationsNonSensitiveCount: addedAnnotationsCount.other + resizedBiggerAnnotationsCount.other,
   };
 }

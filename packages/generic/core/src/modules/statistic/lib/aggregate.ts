@@ -15,10 +15,9 @@ function aggregatePerAssignation(
   statistics: statisticType[],
 ): {
   cumulatedValue: {
-    surAnnotationsCompleteCount: number;
-    surAnnotationsPartialCount: number;
-    subAnnotationsCompleteCount: number;
-    subAnnotationsPartialCount: number;
+    surAnnotationsCount: number;
+    subAnnotationsSensitiveCount: number;
+    subAnnotationsNonSensitiveCount: number;
     treatmentDuration: statisticType['treatmentDuration'];
   };
   total: number;
@@ -28,22 +27,18 @@ function aggregatePerAssignation(
       (aggregatedStatistics, statistic) => {
         const simplifyedStatistic = simplify(statistic);
         return {
-          surAnnotationsCompleteCount:
-            aggregatedStatistics.surAnnotationsCompleteCount + simplifyedStatistic.surAnnotationsCompleteCount,
-          surAnnotationsPartialCount:
-            aggregatedStatistics.surAnnotationsPartialCount + simplifyedStatistic.surAnnotationsPartialCount,
-          subAnnotationsCompleteCount:
-            aggregatedStatistics.subAnnotationsCompleteCount + simplifyedStatistic.subAnnotationsCompleteCount,
-          subAnnotationsPartialCount:
-            aggregatedStatistics.subAnnotationsPartialCount + simplifyedStatistic.subAnnotationsPartialCount,
+          surAnnotationsCount: aggregatedStatistics.surAnnotationsCount + simplifyedStatistic.surAnnotationsCount,
+          subAnnotationsSensitiveCount:
+            aggregatedStatistics.subAnnotationsSensitiveCount + simplifyedStatistic.subAnnotationsSensitiveCount,
+          subAnnotationsNonSensitiveCount:
+            aggregatedStatistics.subAnnotationsNonSensitiveCount + simplifyedStatistic.subAnnotationsNonSensitiveCount,
           treatmentDuration: aggregatedStatistics.treatmentDuration + statistic.treatmentDuration,
         };
       },
       {
-        surAnnotationsCompleteCount: 0,
-        surAnnotationsPartialCount: 0,
-        subAnnotationsCompleteCount: 0,
-        subAnnotationsPartialCount: 0,
+        surAnnotationsCount: 0,
+        subAnnotationsSensitiveCount: 0,
+        subAnnotationsNonSensitiveCount: 0,
         treatmentDuration: 0,
       },
     ),

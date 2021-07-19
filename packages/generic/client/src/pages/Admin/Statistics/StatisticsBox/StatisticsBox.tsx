@@ -12,10 +12,9 @@ export type { aggregatedStatisticType };
 const ROW_HEIGHT = 30;
 
 type aggregatedStatisticType = {
-  surAnnotationsCompleteCount: number;
-  surAnnotationsPartialCount: number;
-  subAnnotationsCompleteCount: number;
-  subAnnotationsPartialCount: number;
+  surAnnotationsCount: number;
+  subAnnotationsSensitiveCount: number;
+  subAnnotationsNonSensitiveCount: number;
   treatmentDuration: number;
   annotationsCount: number;
   wordsCount: number;
@@ -57,20 +56,16 @@ function StatisticsBox(props: {
         value: getComputationValue(aggregatedStatistic.annotationsCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.surAnnotationsCompleteCount,
-        value: getComputationValue(aggregatedStatistic.surAnnotationsCompleteCount),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotationsSensitiveCount,
+        value: getComputationValue(aggregatedStatistic.subAnnotationsSensitiveCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.surAnnotationsPartialCount,
-        value: getComputationValue(aggregatedStatistic.surAnnotationsPartialCount),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotationsNonSensitiveCount,
+        value: getComputationValue(aggregatedStatistic.subAnnotationsNonSensitiveCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotationsCompleteCount,
-        value: getComputationValue(aggregatedStatistic.subAnnotationsCompleteCount),
-      },
-      {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotationsPartialCount,
-        value: getComputationValue(aggregatedStatistic.subAnnotationsPartialCount),
+        label: wordings.treatedDocumentsPage.table.statistics.fields.surAnnotationsCount,
+        value: getComputationValue(aggregatedStatistic.surAnnotationsCount),
       },
       {
         label: wordings.treatedDocumentsPage.table.statistics.fields.treatmentDuration,

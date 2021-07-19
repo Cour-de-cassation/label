@@ -51,10 +51,11 @@ function Statistics(props: {
   function buildAggregatedStatistics() {
     return {
       annotationsCount: props.aggregatedStatistics.perDocument.cumulatedValue.annotationsCount,
-      surAnnotationsCompleteCount: props.aggregatedStatistics.perAssignation.cumulatedValue.surAnnotationsCompleteCount,
-      surAnnotationsPartialCount: props.aggregatedStatistics.perAssignation.cumulatedValue.surAnnotationsPartialCount,
-      subAnnotationsCompleteCount: props.aggregatedStatistics.perAssignation.cumulatedValue.subAnnotationsCompleteCount,
-      subAnnotationsPartialCount: props.aggregatedStatistics.perAssignation.cumulatedValue.subAnnotationsPartialCount,
+      surAnnotationsCount: props.aggregatedStatistics.perAssignation.cumulatedValue.surAnnotationsCount,
+      subAnnotationsSensitiveCount:
+        props.aggregatedStatistics.perAssignation.cumulatedValue.subAnnotationsSensitiveCount,
+      subAnnotationsNonSensitiveCount:
+        props.aggregatedStatistics.perAssignation.cumulatedValue.subAnnotationsNonSensitiveCount,
       treatmentDuration: props.aggregatedStatistics.perAssignation.cumulatedValue.treatmentDuration,
       wordsCount: props.aggregatedStatistics.perDocument.cumulatedValue.wordsCount,
     };

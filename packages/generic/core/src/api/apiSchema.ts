@@ -32,19 +32,15 @@ const apiSchema = {
               cumulatedValue: {
                 kind: 'object',
                 content: {
-                  surAnnotationsCompleteCount: buildModel({
+                  subAnnotationsSensitiveCount: buildModel({
                     kind: 'primitive',
                     content: 'number',
                   } as const),
-                  surAnnotationsPartialCount: buildModel({
+                  subAnnotationsNonSensitiveCount: buildModel({
                     kind: 'primitive',
                     content: 'number',
                   } as const),
-                  subAnnotationsCompleteCount: buildModel({
-                    kind: 'primitive',
-                    content: 'number',
-                  } as const),
-                  subAnnotationsPartialCount: buildModel({
+                  surAnnotationsCount: buildModel({
                     kind: 'primitive',
                     content: 'number',
                   } as const),
@@ -279,19 +275,15 @@ const apiSchema = {
                 kind: 'object',
                 content: {
                   _id: treatmentModule.model.content._id,
-                  surAnnotationsCompleteCount: buildModel({
+                  subAnnotationsSensitiveCount: buildModel({
                     kind: 'primitive',
                     content: 'number',
                   } as const),
-                  surAnnotationsPartialCount: buildModel({
+                  subAnnotationsNonSensitiveCount: buildModel({
                     kind: 'primitive',
                     content: 'number',
                   } as const),
-                  subAnnotationsCompleteCount: buildModel({
-                    kind: 'primitive',
-                    content: 'number',
-                  } as const),
-                  subAnnotationsPartialCount: buildModel({
+                  surAnnotationsCount: buildModel({
                     kind: 'primitive',
                     content: 'number',
                   } as const),

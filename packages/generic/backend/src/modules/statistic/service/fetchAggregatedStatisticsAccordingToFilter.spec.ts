@@ -71,10 +71,9 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
       expect(aggregatedStatistics).toEqual({
         perAssignation: {
           cumulatedValue: {
-            subAnnotationsCompleteCount: 7,
-            subAnnotationsPartialCount: 7,
-            surAnnotationsCompleteCount: 7,
-            surAnnotationsPartialCount: 7,
+            subAnnotationsNonSensitiveCount: 2,
+            subAnnotationsSensitiveCount: 14,
+            surAnnotationsCount: 14,
             treatmentDuration: 7,
           },
           total: 2,
@@ -145,10 +144,9 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
       expect(aggregatedStatistics).toEqual({
         perAssignation: {
           cumulatedValue: {
-            subAnnotationsCompleteCount: 1,
-            subAnnotationsPartialCount: 0,
-            surAnnotationsCompleteCount: 1,
-            surAnnotationsPartialCount: 0,
+            subAnnotationsNonSensitiveCount: 0,
+            subAnnotationsSensitiveCount: 1,
+            surAnnotationsCount: 1,
             treatmentDuration: 10,
           },
           total: 1,

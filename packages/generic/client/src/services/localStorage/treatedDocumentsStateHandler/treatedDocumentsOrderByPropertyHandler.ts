@@ -11,10 +11,9 @@ const treatedDocumentOrderByProperties = [
   'source',
   'userName',
   'date',
-  'surAnnotationsCompleteCount',
-  'surAnnotationsPartialCount',
-  'subAnnotationsCompleteCount',
-  'subAnnotationsPartialCount',
+  'surAnnotationsCount',
+  'subAnnotationsSensitiveCount',
+  'subAnnotationsNonSensitiveCount',
   'duration',
 ] as const;
 

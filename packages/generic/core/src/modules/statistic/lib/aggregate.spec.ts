@@ -30,10 +30,9 @@ describe('aggregate', () => {
 
     expect(aggregatedStatistics.perAssignation).toEqual({
       cumulatedValue: {
-        subAnnotationsCompleteCount: 4,
-        subAnnotationsPartialCount: 7,
-        surAnnotationsCompleteCount: 9,
-        surAnnotationsPartialCount: 7,
+        subAnnotationsNonSensitiveCount: 7,
+        subAnnotationsSensitiveCount: 11,
+        surAnnotationsCount: 16,
         treatmentDuration: 7,
       },
       total: 2,

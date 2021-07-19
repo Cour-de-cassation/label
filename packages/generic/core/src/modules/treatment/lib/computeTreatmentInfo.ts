@@ -8,10 +8,9 @@ export { computeTreatmentInfo };
 export type { treatmentInfoType };
 
 type treatmentInfoType = {
-  surAnnotationsCompleteCount: number;
-  surAnnotationsPartialCount: number;
-  subAnnotationsCompleteCount: number;
-  subAnnotationsPartialCount: number;
+  surAnnotationsCount: number;
+  subAnnotationsSensitiveCount: number;
+  subAnnotationsNonSensitiveCount: number;
 };
 
 function computeTreatmentInfo(treatment: treatmentType, settings: settingsType) {

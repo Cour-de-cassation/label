@@ -27,7 +27,7 @@ function filterTreatedDocuments({
         isInTheFilter &&
         humanTreatments.some((treatment) => {
           const simplifyedStatistic = statisticModule.lib.simplify(treatment);
-          return simplifyedStatistic.surAnnotationsCompleteCount + simplifyedStatistic.surAnnotationsPartialCount > 0;
+          return simplifyedStatistic.surAnnotationsCount > 0;
         });
     }
 
@@ -36,7 +36,7 @@ function filterTreatedDocuments({
         isInTheFilter &&
         humanTreatments.some((treatment) => {
           const simplifyedStatistic = statisticModule.lib.simplify(treatment);
-          return simplifyedStatistic.subAnnotationsCompleteCount + simplifyedStatistic.subAnnotationsPartialCount > 0;
+          return simplifyedStatistic.subAnnotationsSensitiveCount > 0;
         });
     }
     if (ressourceFilter.publicationCategory) {

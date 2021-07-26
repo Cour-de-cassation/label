@@ -1,5 +1,8 @@
-import { dateBuilder, documentType } from '@label/core';
-import { buildDocumentRepository } from '../../modules/document';
+import { dateBuilder, documentType, idModule } from '@label/core';
+import {
+  buildDocumentRepository,
+  documentService,
+} from '../../modules/document';
 import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 
@@ -69,6 +72,42 @@ function buildConnector(connectorConfig: connectorConfigType) {
       await connectorConfig.updateDocumentsLoadedStatus(documents);
       logger.log(`DONE`);
     },
+
+    async resetAllDocumentsSince(days: number) {
+      const documentRepository = buildDocumentRepository();
+
+      const documents = await documentRepository.findAll();
+      logger.log(
+        `Found ${documents.length} in the DB. Filtering the documents to reset...`,
+      );
+
+      const documentsToReset = documents.filter(
+        (document) => document.creationDate >= dateBuilder.daysAgo(days),
+      );
+      logger.log(
+        `Found ${documentsToReset.length} in the DB. Updating their status to toBeTreated in SDER DB...`,
+      );
+
+      await connectorConfig.updateDocumentsToBeTreatedStatus(documentsToReset);
+      logger.log(
+        'Documents status updated! Deleting the documents in the Database...',
+      );
+
+      for (let i = 0, l = documentsToReset.length; i < l; i++) {
+        try {
+          const documentIdToReset = documentsToReset[i]._id;
+          logger.log(
+            `Deleting document ${idModule.lib.convertToString(
+              documentIdToReset,
+            )}: ${i + 1}/${l}...`,
+          );
+          await documentService.deleteDocument(documentIdToReset);
+        } catch (error) {
+          logger.error(`An error happened while deleting the document`);
+        }
+      }
+    },
+
     async deleteJuricaDocumentsFromLabelDb() {
       const documentRepository = buildDocumentRepository();
       const freeDocuments = await documentRepository.findAllByStatus(['free']);

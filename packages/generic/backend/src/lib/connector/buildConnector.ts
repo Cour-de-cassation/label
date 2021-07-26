@@ -82,7 +82,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
 
       const documentsToReset = documents.filter(
-        (document) => document.creationDate >= dateBuilder.daysAgo(days),
+        (document) =>
+          document.creationDate >= dateBuilder.daysAgo(days) &&
+          document.status !== 'done' &&
+          document.status !== 'toBePublished',
       );
       logger.log(
         `Found ${documentsToReset.length} in the DB. Updating their status to toBeTreated in SDER DB...`,

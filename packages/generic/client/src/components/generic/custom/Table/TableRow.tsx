@@ -31,9 +31,10 @@ function TableRow<InputT>(props: {
   const styles = buildStyles(theme);
   const cellWeight = props.isHighlighted ? 'bold' : 'normal';
   const cellColor = props.isMinored ? 'textSecondary' : 'textPrimary';
-  const formattedRow = props.fields.map((field) =>
-    field.render ? field.render(props.row) : <Text variant="h3">{field.extractor(props.row)}</Text>,
-  );
+  const formattedRow = props.fields.map((field) => ({
+    style: field.cellStyle,
+    content: field.render ? field.render(props.row) : <Text variant="h3">{field.extractor(props.row)}</Text>,
+  }));
   const { onRowClick } = props;
 
   return (
@@ -53,10 +54,10 @@ function TableRow<InputT>(props: {
         onClick={!!onRowClick ? onRowClick : undefined}
         style={styles.row}
       >
-        {Object.values(formattedRow).map((value) => (
-          <td>
+        {formattedRow.map(({ content, style }) => (
+          <td style={style}>
             <Text weight={cellWeight} color={cellColor} variant="h3">
-              {value}
+              {content}
             </Text>
           </td>
         ))}

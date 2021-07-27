@@ -12,6 +12,7 @@ type tableRowFieldType<InputT, orderByPropertyT = string> = {
   title: string;
   tooltipText?: string;
   canBeSorted: boolean;
+  cellStyle?: CSSProperties;
   extractor: (data: InputT) => string | number;
   getSortingValue?: (data: InputT) => number;
   render?: (data: InputT) => JSX.Element;

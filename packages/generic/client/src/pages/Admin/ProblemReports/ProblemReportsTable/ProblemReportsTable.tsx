@@ -12,6 +12,8 @@ export { ProblemReportsTable };
 
 const TABLE_ICON_SIZE = 24;
 
+const PROBLEM_REPORT_TEXT_CELL_MAX_WIDTH = 400;
+
 function ProblemReportsTable(props: {
   refetch: () => void;
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
@@ -175,5 +177,6 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
     title: wordings.problemReportsPage.table.columnTitles.text,
     extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.text,
     width: 10,
+    cellStyle: { maxWidth: `${PROBLEM_REPORT_TEXT_CELL_MAX_WIDTH}px`, overflow: 'hidden' },
   },
 ];

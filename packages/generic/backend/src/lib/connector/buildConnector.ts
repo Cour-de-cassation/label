@@ -1,4 +1,4 @@
-import { dateBuilder, documentType, idModule } from '@label/core';
+import { dateBuilder, documentType, idModule, timeOperator } from '@label/core';
 import {
   buildDocumentRepository,
   documentService,
@@ -18,14 +18,24 @@ function buildConnector(connectorConfig: connectorConfigType) {
       let daysAgo = 0;
       const newDocuments: documentType[] = [];
       while (newDocuments.length < documentCount) {
+        const startDate = new Date(
+          dateBuilder.daysAgo(daysAgo + DAYS_INTERVAL),
+        );
+        const endDate = new Date(dateBuilder.daysAgo(daysAgo));
         const newCourtDecisions = await connectorConfig.fetchAllCourtDecisionsBetween(
           {
-            startDate: new Date(dateBuilder.daysAgo(daysAgo + DAYS_INTERVAL)),
-            endDate: new Date(dateBuilder.daysAgo(daysAgo)),
+            startDate,
+            endDate,
           },
         );
         logger.log(
-          `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
+          `${newCourtDecisions.length} ${
+            connectorConfig.name
+          } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
+            startDate.getTime(),
+          )} and ${timeOperator.convertTimestampToReadableDate(
+            endDate.getTime(),
+          )}!`,
         );
         const documents = newCourtDecisions.map(
           connectorConfig.mapCourtDecisionToDocument,

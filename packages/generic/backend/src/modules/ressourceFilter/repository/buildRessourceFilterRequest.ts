@@ -24,7 +24,7 @@ type ressourceFilterRequestType = {
   publicationCategory?: string[];
   treatmentDate?: { $gt?: number; $lte?: number };
   source?: ressourceFilterType['source'];
-  userId?: ressourceFilterType['userId'];
+  'treatmentsSummary.userId'?: ressourceFilterType['userId'];
 };
 
 function buildRessourceFilterRequest(
@@ -88,7 +88,7 @@ function buildRessourceFilterRequest(
   }
 
   if (ressourceFilter.userId) {
-    ressourceFilterRequest.userId = ressourceFilter.userId;
+    ressourceFilterRequest['treatmentsSummary.userId'] = ressourceFilter.userId;
   }
 
   return ressourceFilterRequest;

@@ -37,11 +37,11 @@ function Statistics(props: {
       <div style={styles.body}>
         <div style={styles.numberOfDecisionContainer}>
           <Text variant="h1">{wordings.statisticsPage.treatedDecisions}</Text>
-          <Text variant="h1">{props.aggregatedStatistics.perDocument.total}</Text>
+          <Text variant="h1">{props.aggregatedStatistics.total}</Text>
         </div>
         <StatisticsBox
           aggregatedStatistic={aggregatedStatistics}
-          statisticsCount={props.aggregatedStatistics.perAssignation.total}
+          statisticsCount={props.aggregatedStatistics.total}
           width={WIDTH}
         />
       </div>
@@ -50,14 +50,12 @@ function Statistics(props: {
 
   function buildAggregatedStatistics() {
     return {
-      annotationsCount: props.aggregatedStatistics.perDocument.cumulatedValue.annotationsCount,
-      surAnnotationsCount: props.aggregatedStatistics.perAssignation.cumulatedValue.surAnnotationsCount,
-      subAnnotationsSensitiveCount:
-        props.aggregatedStatistics.perAssignation.cumulatedValue.subAnnotationsSensitiveCount,
-      subAnnotationsNonSensitiveCount:
-        props.aggregatedStatistics.perAssignation.cumulatedValue.subAnnotationsNonSensitiveCount,
-      treatmentDuration: props.aggregatedStatistics.perAssignation.cumulatedValue.treatmentDuration,
-      wordsCount: props.aggregatedStatistics.perDocument.cumulatedValue.wordsCount,
+      annotationsCount: props.aggregatedStatistics.cumulatedValue.annotationsCount,
+      surAnnotationsCount: props.aggregatedStatistics.cumulatedValue.surAnnotationsCount,
+      subAnnotationsSensitiveCount: props.aggregatedStatistics.cumulatedValue.subAnnotationsSensitiveCount,
+      subAnnotationsNonSensitiveCount: props.aggregatedStatistics.cumulatedValue.subAnnotationsNonSensitiveCount,
+      treatmentDuration: props.aggregatedStatistics.cumulatedValue.treatmentDuration,
+      wordsCount: props.aggregatedStatistics.cumulatedValue.wordsCount,
     };
   }
 }

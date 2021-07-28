@@ -6,10 +6,10 @@ import {
   monitoringEntryModule,
   problemReportModule,
   settingsModule,
-  treatmentModule,
   userModule,
   ressourceFilterModule,
   statisticModule,
+  treatmentModule,
 } from '../modules';
 import { buildModel, modelType } from '../modules/modelType';
 
@@ -26,43 +26,27 @@ const apiSchema = {
       out: buildModel({
         kind: 'object',
         content: {
-          perAssignation: {
+          cumulatedValue: {
             kind: 'object',
             content: {
-              cumulatedValue: {
-                kind: 'object',
-                content: {
-                  subAnnotationsSensitiveCount: buildModel({
-                    kind: 'primitive',
-                    content: 'number',
-                  } as const),
-                  subAnnotationsNonSensitiveCount: buildModel({
-                    kind: 'primitive',
-                    content: 'number',
-                  } as const),
-                  surAnnotationsCount: buildModel({
-                    kind: 'primitive',
-                    content: 'number',
-                  } as const),
-                  treatmentDuration: statisticModule.model.content.treatmentDuration,
-                },
-              },
-              total: { kind: 'primitive', content: 'number' },
+              subAnnotationsSensitiveCount: buildModel({
+                kind: 'primitive',
+                content: 'number',
+              } as const),
+              subAnnotationsNonSensitiveCount: buildModel({
+                kind: 'primitive',
+                content: 'number',
+              } as const),
+              surAnnotationsCount: buildModel({
+                kind: 'primitive',
+                content: 'number',
+              } as const),
+              treatmentDuration: treatmentModule.model.content.duration,
+              annotationsCount: statisticModule.model.content.annotationsCount,
+              wordsCount: statisticModule.model.content.wordsCount,
             },
           },
-          perDocument: {
-            kind: 'object',
-            content: {
-              cumulatedValue: {
-                kind: 'object',
-                content: {
-                  annotationsCount: statisticModule.model.content.annotationsCount,
-                  wordsCount: statisticModule.model.content.wordsCount,
-                },
-              },
-              total: { kind: 'primitive', content: 'number' },
-            },
-          },
+          total: { kind: 'primitive', content: 'number' },
         },
       } as const),
     },
@@ -269,29 +253,20 @@ const apiSchema = {
                 source: documentModule.fetchedModel.content.source,
               },
             },
-            treatments: {
-              kind: 'array',
+            totalTreatmentDuration: {
+              kind: 'primitive',
+              content: 'number',
+            },
+            lastTreatmentDate: {
+              kind: 'primitive',
+              content: 'number',
+            },
+            statistic: {
+              kind: 'object',
               content: {
-                kind: 'object',
-                content: {
-                  _id: treatmentModule.model.content._id,
-                  subAnnotationsSensitiveCount: buildModel({
-                    kind: 'primitive',
-                    content: 'number',
-                  } as const),
-                  subAnnotationsNonSensitiveCount: buildModel({
-                    kind: 'primitive',
-                    content: 'number',
-                  } as const),
-                  surAnnotationsCount: buildModel({
-                    kind: 'primitive',
-                    content: 'number',
-                  } as const),
-                  documentId: treatmentModule.model.content.documentId,
-                  duration: treatmentModule.model.content.duration,
-                  lastUpdateDate: treatmentModule.model.content.lastUpdateDate,
-                  source: treatmentModule.model.content.source,
-                },
+                surAnnotationsCount: { kind: 'primitive', content: 'number' },
+                subAnnotationsSensitiveCount: { kind: 'primitive', content: 'number' },
+                subAnnotationsNonSensitiveCount: { kind: 'primitive', content: 'number' },
               },
             },
             userNames: {

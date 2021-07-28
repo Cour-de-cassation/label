@@ -1,39 +1,43 @@
 import { treatmentModule, treatmentType } from '../../modules/treatment';
-import { assignationType } from '../../modules/assignation';
 import { documentType } from '../../modules/document';
 import { statisticType, statisticModule } from '../../modules/statistic';
-import { idModule } from '../../modules/id';
 import { annotationLinkHandler } from '../annotationLinkHandler';
+import { userType } from '../../modules/user';
+import { settingsType } from '../../modules/settings';
 
 export { statisticsCreator };
 
 const statisticsCreator = { buildFromDocument };
 
 function buildFromDocument({
-  assignations,
   document,
   treatments,
+  humanTreatments,
+  settings,
 }: {
-  assignations: assignationType[];
   document: documentType;
   treatments: treatmentType[];
-}): statisticType[] {
+  humanTreatments: Array<{ treatment: treatmentType; userId: userType['_id'] }>;
+  settings: settingsType;
+}): statisticType {
   const annotations = treatmentModule.lib.computeAnnotations(treatments);
   const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(annotations);
 
-  return assignations.map((assignation) => {
-    const treatment = treatments.find((treatment) => idModule.lib.equalId(assignation.treatmentId, treatment._id));
+  const aggregatedTreatment = treatmentModule.lib.aggregate(
+    humanTreatments.map(({ treatment }) => treatment),
+    'annotator',
+    settings,
+  );
+  const treatmentsSummary = humanTreatments.map(({ treatment, userId }) => ({
+    userId,
+    treatmentDuration: treatment.duration,
+  }));
 
-    if (!treatment) {
-      throw new Error('Incompatible assignations/treatments');
-    }
-
-    return statisticModule.lib.buildStatistic({
-      annotationsCount: annotations.length,
-      assignation,
-      document,
-      linkedEntitiesCount,
-      treatment,
-    });
+  return statisticModule.lib.buildStatistic({
+    annotationsCount: annotations.length,
+    treatmentsSummary,
+    document,
+    linkedEntitiesCount,
+    treatment: aggregatedTreatment,
   });
 }

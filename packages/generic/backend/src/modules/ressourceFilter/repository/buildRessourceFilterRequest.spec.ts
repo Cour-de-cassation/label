@@ -37,7 +37,7 @@ describe('buildRessourceFilterRequest', () => {
       ],
       publicationCategory: [publicationCategory],
       source,
-      userId,
+      'treatmentsSummary.userId': userId,
     });
   });
 });

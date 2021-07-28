@@ -1,9 +1,9 @@
-import { assignationType } from '../../assignation';
 import { documentType } from '../../document';
 import { idModule } from '../../id';
-import { treatmentModule, treatmentType } from '../../treatment';
+import { treatmentType } from '../../treatment';
 import { statisticModule } from '../../statistic';
 import { ressourceFilterType } from '../ressourceFilterType';
+import { userType } from '../../user';
 
 export { filterTreatedDocuments };
 
@@ -13,19 +13,18 @@ function filterTreatedDocuments({
 }: {
   ressourceFilter: ressourceFilterType;
   treatedDocuments: Array<{
-    assignations: assignationType[];
     document: documentType;
     treatments: treatmentType[];
+    humanTreatments: Array<{ treatment: treatmentType; userId: userType['_id'] }>;
   }>;
 }) {
-  return treatedDocuments.filter(({ assignations, document, treatments }) => {
+  return treatedDocuments.filter(({ document, humanTreatments }) => {
     let isInTheFilter = true;
-    const humanTreatments = treatmentModule.lib.sortInConsistentOrder(treatments).slice(2);
 
     if (ressourceFilter.mustHaveSurAnnotations) {
       isInTheFilter =
         isInTheFilter &&
-        humanTreatments.some((treatment) => {
+        humanTreatments.some(({ treatment }) => {
           const simplifyedStatistic = statisticModule.lib.simplify(treatment);
           return simplifyedStatistic.surAnnotationsCount > 0;
         });
@@ -34,7 +33,7 @@ function filterTreatedDocuments({
     if (ressourceFilter.mustHaveSubAnnotations) {
       isInTheFilter =
         isInTheFilter &&
-        humanTreatments.some((treatment) => {
+        humanTreatments.some(({ treatment }) => {
           const simplifyedStatistic = statisticModule.lib.simplify(treatment);
           return simplifyedStatistic.subAnnotationsSensitiveCount > 0;
         });
@@ -49,20 +48,20 @@ function filterTreatedDocuments({
 
     if (ressourceFilter.startDate) {
       const { startDate } = ressourceFilter;
-      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.lastUpdateDate > startDate);
+      isInTheFilter = isInTheFilter && humanTreatments.some(({ treatment }) => treatment.lastUpdateDate > startDate);
     }
 
     if (ressourceFilter.endDate) {
       const { endDate } = ressourceFilter;
 
-      isInTheFilter = isInTheFilter && humanTreatments.some((treatment) => treatment.lastUpdateDate < endDate);
+      isInTheFilter = isInTheFilter && humanTreatments.some(({ treatment }) => treatment.lastUpdateDate < endDate);
     }
 
     if (ressourceFilter.userId) {
       const userIdToFilter = ressourceFilter.userId;
 
       isInTheFilter =
-        isInTheFilter && assignations.some((assignation) => idModule.lib.equalId(assignation.userId, userIdToFilter));
+        isInTheFilter && humanTreatments.some(({ userId }) => idModule.lib.equalId(userId, userIdToFilter));
     }
 
     return isInTheFilter;

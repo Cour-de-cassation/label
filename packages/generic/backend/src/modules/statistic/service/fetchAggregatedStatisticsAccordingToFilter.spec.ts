@@ -5,6 +5,9 @@ import {
   statisticModule,
   treatmentModule,
   assignationModule,
+  settingsModule,
+  annotationsDiffModule,
+  annotationModule,
 } from '@label/core';
 import { buildAssignationRepository } from '../../assignation';
 import { buildDocumentRepository } from '../../document';
@@ -17,6 +20,11 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
   const documentRepository = buildDocumentRepository();
   const statisticRepository = buildStatisticRepository();
   const treatmentRepository = buildTreatmentRepository();
+  const settings = settingsModule.lib.buildSettings({
+    personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
+    personnePhysiquePrenom: { isSensitive: false, isAnonymized: true },
+    personneMorale: { isSensitive: false, isAnonymized: false },
+  });
 
   describe('statistics', () => {
     it('should fetch all the statistics according to filter', async () => {
@@ -30,7 +38,24 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
           addedAnnotationsCount: { sensitive: 3, other: 1 },
           annotationsCount: 9,
           deletedAnnotationsCount: { anonymised: 3, other: 2 },
-          documentExternalId: 'DOCUMENT_EXTERNAL_ID_0',
+          linkedEntitiesCount: 3,
+          modifiedAnnotationsCount: {
+            nonAnonymisedToSensitive: 0,
+            anonymisedToNonAnonymised: 0,
+            other: 3,
+          },
+          resizedBiggerAnnotationsCount: { sensitive: 3, other: 0 },
+          resizedSmallerAnnotationsCount: { anonymised: 3, other: 0 },
+          treatmentsSummary: [
+            { userId: userId1, treatmentDuration: 3 },
+            { userId: userId2, treatmentDuration: 10 },
+          ],
+          wordsCount: 9,
+        },
+        {
+          addedAnnotationsCount: { sensitive: 3, other: 1 },
+          annotationsCount: 9,
+          deletedAnnotationsCount: { anonymised: 3, other: 2 },
           linkedEntitiesCount: 3,
           modifiedAnnotationsCount: {
             nonAnonymisedToSensitive: 0,
@@ -40,25 +65,7 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
           resizedBiggerAnnotationsCount: { sensitive: 3, other: 0 },
           resizedSmallerAnnotationsCount: { anonymised: 3, other: 0 },
           treatmentDuration: 3,
-          userId: userId1,
-          wordsCount: 9,
-        },
-        { userId: userId2 },
-        {
-          addedAnnotationsCount: { sensitive: 4, other: 1 },
-          annotationsCount: 9,
-          deletedAnnotationsCount: { anonymised: 4, other: 3 },
-          documentExternalId: 'DOCUMENT_EXTERNAL_ID_0',
-          linkedEntitiesCount: 4,
-          modifiedAnnotationsCount: {
-            nonAnonymisedToSensitive: 0,
-            anonymisedToNonAnonymised: 0,
-            other: 4,
-          },
-          resizedBiggerAnnotationsCount: { sensitive: 4, other: 0 },
-          resizedSmallerAnnotationsCount: { anonymised: 4, other: 0 },
-          treatmentDuration: 4,
-          userId: userId1,
+          treatmentsSummary: [{ userId: userId2, treatmentDuration: 50 }],
           wordsCount: 9,
         },
       ].map(statisticModule.generator.generate);
@@ -66,25 +73,19 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
 
       const aggregatedStatistics = await fetchAggregatedStatisticsAccordingToFilter(
         ressourceFilter,
+        settings,
       );
 
       expect(aggregatedStatistics).toEqual({
-        perAssignation: {
-          cumulatedValue: {
-            subAnnotationsNonSensitiveCount: 2,
-            subAnnotationsSensitiveCount: 14,
-            surAnnotationsCount: 14,
-            treatmentDuration: 7,
-          },
-          total: 2,
+        cumulatedValue: {
+          subAnnotationsNonSensitiveCount: 1,
+          subAnnotationsSensitiveCount: 6,
+          surAnnotationsCount: 6,
+          treatmentDuration: 3,
+          annotationsCount: 9,
+          wordsCount: 9,
         },
-        perDocument: {
-          cumulatedValue: {
-            annotationsCount: 9,
-            wordsCount: 9,
-          },
-          total: 1,
-        },
+        total: 1,
       });
     });
   });
@@ -111,11 +112,41 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
           documentId: documents[0]._id,
           order: 0,
           duration: 0,
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
+            [],
+            [
+              { start: 29, text: 'Dupuis', category: 'personnePhysiqueNom' },
+              { start: 41, text: 'his cat', category: 'personnePhysiqueNom' },
+              { start: 90, text: 'Gaston', category: 'personnePhysiqueNom' },
+            ].map(annotationModule.generator.generate),
+          ),
         },
         {
-          deletedAnnotationsCount: { anonymised: 1, other: 0 },
-          addedAnnotationsCount: { sensitive: 1, other: 0 },
           documentId: documents[0]._id,
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
+            [
+              { start: 29, text: 'Dupuis', category: 'personnePhysiqueNom' },
+              { start: 41, text: 'his cat', category: 'personnePhysiqueNom' },
+              { start: 90, text: 'Gaston', category: 'personnePhysiqueNom' },
+            ].map(annotationModule.generator.generate),
+            [
+              { start: 0, text: 'Spirou', category: 'personnePhysiqueNom' },
+              {
+                start: 20,
+                text: 'Editions Dupuis',
+                category: 'personneMorale',
+              },
+              { start: 90, text: 'Gaston', category: 'personnePhysiquePrenom' },
+            ].map(annotationModule.generator.generate),
+          ),
+          addedAnnotationsCount: { sensitive: 1, other: 0 },
+          deletedAnnotationsCount: { anonymised: 1, other: 0 },
+          modifiedAnnotationsCount: {
+            nonAnonymisedToSensitive: 0,
+            anonymisedToNonAnonymised: 0,
+            other: 1,
+          },
+          resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
           duration: 10,
           order: 1,
         },
@@ -139,25 +170,19 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
 
       const aggregatedStatistics = await fetchAggregatedStatisticsAccordingToFilter(
         ressourceFilter,
+        settings,
       );
 
       expect(aggregatedStatistics).toEqual({
-        perAssignation: {
-          cumulatedValue: {
-            subAnnotationsNonSensitiveCount: 0,
-            subAnnotationsSensitiveCount: 1,
-            surAnnotationsCount: 1,
-            treatmentDuration: 10,
-          },
-          total: 1,
+        cumulatedValue: {
+          subAnnotationsNonSensitiveCount: 1,
+          subAnnotationsSensitiveCount: 1,
+          surAnnotationsCount: 1,
+          treatmentDuration: 10,
+          annotationsCount: 3,
+          wordsCount: 5,
         },
-        perDocument: {
-          cumulatedValue: {
-            annotationsCount: 0,
-            wordsCount: 5,
-          },
-          total: 1,
-        },
+        total: 1,
       });
     });
   });

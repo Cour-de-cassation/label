@@ -34,11 +34,6 @@ function buildFetchTreatedDocuments() {
           ...treatedDocument.document,
           _id: idModule.lib.buildId(treatedDocument.document._id),
         },
-        treatments: treatedDocument.treatments.map((treatment) => ({
-          ...treatment,
-          _id: idModule.lib.buildId(treatment._id),
-          documentId: idModule.lib.buildId(treatment.documentId),
-        })),
       })),
       statusCode,
     };

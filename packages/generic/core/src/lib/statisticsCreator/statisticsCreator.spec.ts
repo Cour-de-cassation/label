@@ -1,9 +1,9 @@
 import { annotationModule } from '../../modules/annotation';
-import { assignationModule } from '../../modules/assignation';
 import { annotationsDiffModule } from '../../modules/annotationsDiff';
 import { documentModule } from '../../modules/document';
 import { idModule } from '../../modules/id';
 import { treatmentModule } from '../../modules/treatment';
+import { settingsModule } from '../../modules/settings';
 import { statisticsCreator } from './statisticsCreator';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
@@ -20,6 +20,13 @@ describe('statisticsCreator', () => {
     source: documentSource,
     text: 'Some text with five words',
   });
+  const settings = settingsModule.lib.buildSettings({
+    personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
+    personnePhysiquePrenom: { isSensitive: false, isAnonymized: true },
+    personneMorale: { isSensitive: false, isAnonymized: false },
+    professionnelNom: { isSensitive: false, isAnonymized: false },
+  });
+
   describe('buildFromDocument', () => {
     it('should build all the statistics of the given documents', () => {
       const treatments = [
@@ -53,27 +60,22 @@ describe('statisticsCreator', () => {
           deletedAnnotationsCount: { anonymised: 1, other: 0 },
           modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
           resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
-
           documentId: document._id,
           duration,
           order: 1,
           lastUpdateDate: TREATMENT_DATE.getTime(),
         },
       ].map(treatmentModule.generator.generate);
-      const assignation = assignationModule.generator.generate({
-        documentId: document._id,
-        treatmentId: treatments[1]._id,
-        userId,
-      });
 
-      const statistics = statisticsCreator.buildFromDocument({
-        assignations: [assignation],
+      const statistic = statisticsCreator.buildFromDocument({
+        humanTreatments: [{ treatment: treatments[1], userId }],
         document,
         treatments: treatments,
+        settings,
       });
 
-      expect(statistics[0]).toEqual({
-        _id: statistics[0]._id,
+      expect(statistic).toEqual({
+        _id: statistic._id,
         addedAnnotationsCount: { sensitive: 1, other: 0 },
         annotationsCount: 3,
         deletedAnnotationsCount: { anonymised: 1, other: 0 },
@@ -85,8 +87,7 @@ describe('statisticsCreator', () => {
         resizedSmallerAnnotationsCount: { anonymised: 0, other: 0 },
         source: documentSource,
         treatmentDate: TREATMENT_DATE.getTime(),
-        treatmentDuration: duration,
-        userId,
+        treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
       });
     });
@@ -121,20 +122,16 @@ describe('statisticsCreator', () => {
           lastUpdateDate: TREATMENT_DATE.getTime(),
         },
       ].map(treatmentModule.generator.generate);
-      const assignation = assignationModule.generator.generate({
-        documentId: document._id,
-        treatmentId: treatments[1]._id,
-        userId,
-      });
 
-      const statistics = statisticsCreator.buildFromDocument({
-        assignations: [assignation],
+      const statistic = statisticsCreator.buildFromDocument({
         document,
         treatments: treatments,
+        humanTreatments: [{ treatment: treatments[1], userId }],
+        settings,
       });
 
-      expect(statistics[0]).toEqual({
-        _id: statistics[0]._id,
+      expect(statistic).toEqual({
+        _id: statistic._id,
         addedAnnotationsCount: { sensitive: 0, other: 0 },
         annotationsCount: 4,
         deletedAnnotationsCount: { anonymised: 0, other: 0 },
@@ -146,8 +143,7 @@ describe('statisticsCreator', () => {
         resizedSmallerAnnotationsCount: { anonymised: 0, other: 0 },
         source: documentSource,
         treatmentDate: TREATMENT_DATE.getTime(),
-        treatmentDuration: duration,
-        userId,
+        treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
       });
     });

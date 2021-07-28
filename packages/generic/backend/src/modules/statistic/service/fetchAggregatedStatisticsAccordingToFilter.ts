@@ -3,8 +3,10 @@ import {
   idModule,
   ressourceFilterModule,
   ressourceFilterType,
+  settingsType,
   statisticModule,
   statisticsCreator,
+  treatmentModule,
 } from '@label/core';
 import { assignationService } from '../../assignation';
 import { documentService } from '../../document';
@@ -15,6 +17,7 @@ export { fetchAggregatedStatisticsAccordingToFilter };
 
 async function fetchAggregatedStatisticsAccordingToFilter(
   filter: ressourceFilterType,
+  settings: settingsType,
 ) {
   const statisticRepository = buildStatisticRepository();
 
@@ -22,10 +25,10 @@ async function fetchAggregatedStatisticsAccordingToFilter(
 
   const doneDocumentStatistics = await computeStatisticsFromDoneDocuments();
 
-  return statisticModule.lib.aggregate([
-    ...statistics,
-    ...doneDocumentStatistics,
-  ]);
+  return statisticModule.lib.aggregate(
+    [...statistics, ...doneDocumentStatistics],
+    filter,
+  );
 
   async function computeStatisticsFromDoneDocuments() {
     const doneDocuments = await documentService.fetchDoneDocuments();
@@ -38,13 +41,22 @@ async function fetchAggregatedStatisticsAccordingToFilter(
       documentIds,
     );
 
-    const treatedDocuments = doneDocuments.map((document) => ({
-      assignations:
-        assignationsByDocumentId[idModule.lib.convertToString(document._id)],
-      document,
-      treatments:
-        treatmentsByDocumentId[idModule.lib.convertToString(document._id)],
-    }));
+    const treatedDocuments = doneDocuments.map((document) => {
+      const assignations =
+        assignationsByDocumentId[idModule.lib.convertToString(document._id)];
+      const treatments =
+        treatmentsByDocumentId[idModule.lib.convertToString(document._id)];
+      const humanTreatments = treatmentModule.lib.extractHumanTreatments(
+        treatments,
+        assignations,
+      );
+
+      return {
+        document,
+        treatments,
+        humanTreatments,
+      };
+    });
 
     const filteredTreatedDocuments = ressourceFilterModule.lib.filterTreatedDocuments(
       {
@@ -54,12 +66,14 @@ async function fetchAggregatedStatisticsAccordingToFilter(
     );
 
     return flatten(
-      filteredTreatedDocuments.map(({ assignations, document, treatments }) =>
-        statisticsCreator.buildFromDocument({
-          assignations,
-          document,
-          treatments,
-        }),
+      filteredTreatedDocuments.map(
+        ({ document, treatments, humanTreatments }) =>
+          statisticsCreator.buildFromDocument({
+            humanTreatments,
+            document,
+            treatments,
+            settings,
+          }),
       ),
     );
   }

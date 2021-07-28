@@ -1,4 +1,4 @@
-import { idModule, idType, ressourceFilterType } from '@label/core';
+import { idModule, ressourceFilterType, statisticType } from '@label/core';
 
 export { buildFakeRessourceFilterRequest };
 
@@ -15,7 +15,7 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
     resizedBiggerAnnotationsCount: { sensitive: number; other: number };
     resizedSmallerAnnotationsCount: { anonymised: number; other: number };
     source: string;
-    userId: idType;
+    treatmentsSummary: statisticType['treatmentsSummary'];
   }) => {
     let isValidAccordingToFilter = true;
 
@@ -47,9 +47,12 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
     }
 
     if (ressourceFilter.userId) {
+      const { userId: userIdToFilter } = ressourceFilter;
       isValidAccordingToFilter =
         isValidAccordingToFilter &&
-        idModule.lib.equalId(item.userId, ressourceFilter.userId);
+        item.treatmentsSummary.some(({ userId }) =>
+          idModule.lib.equalId(userId, userIdToFilter),
+        );
     }
 
     return isValidAccordingToFilter;

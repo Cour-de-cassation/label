@@ -1,4 +1,3 @@
-import { assignationModule } from '../../assignation';
 import { documentModule } from '../../document';
 import { idModule } from '../../id';
 import { treatmentModule } from '../../treatment';
@@ -8,6 +7,7 @@ import { filterTreatedDocuments } from './filterTreatedDocuments';
 describe('filterTreatedDocuments', () => {
   it('should filter all the given treated documents with added annotations', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
+    const userId = idModule.lib.buildId();
     const treatments = [
       { addedAnnotationsCount: { sensitive: 3, other: 5 }, documentId: documents[1]._id, order: 2 },
       { documentId: documents[1]._id, order: 0 },
@@ -17,8 +17,12 @@ describe('filterTreatedDocuments', () => {
       mustHaveSubAnnotations: true,
     });
     const treatedDocuments = [
-      { assignations: [], document: documents[0], treatments: [] },
-      { assignations: [], document: documents[1], treatments: treatments },
+      { document: documents[0], treatments: [], humanTreatments: [] },
+      {
+        document: documents[1],
+        treatments: treatments,
+        humanTreatments: [{ userId, treatment: treatments[0] }],
+      },
     ];
 
     const filteredTreatedDocuments = filterTreatedDocuments({
@@ -26,11 +30,14 @@ describe('filterTreatedDocuments', () => {
       treatedDocuments,
     });
 
-    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[1], treatments: treatments }]);
+    expect(filteredTreatedDocuments).toEqual([
+      { document: documents[1], treatments: treatments, humanTreatments: [{ userId, treatment: treatments[0] }] },
+    ]);
   });
 
   it('should filter all the given treated documents with deleted annotations', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
+    const userId = idModule.lib.buildId();
     const treatments = [
       { deletedAnnotationsCount: { anonymised: 5, other: 1 }, documentId: documents[1]._id, order: 2 },
       { documentId: documents[1]._id, order: 0 },
@@ -40,8 +47,12 @@ describe('filterTreatedDocuments', () => {
       mustHaveSurAnnotations: true,
     });
     const treatedDocuments = [
-      { assignations: [], document: documents[0], treatments: [] },
-      { assignations: [], document: documents[1], treatments: treatments },
+      { document: documents[0], treatments: [], humanTreatments: [] },
+      {
+        document: documents[1],
+        treatments,
+        humanTreatments: [{ userId, treatment: treatments[0] }],
+      },
     ];
 
     const filteredTreatedDocuments = filterTreatedDocuments({
@@ -49,7 +60,9 @@ describe('filterTreatedDocuments', () => {
       treatedDocuments,
     });
 
-    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[1], treatments: treatments }]);
+    expect(filteredTreatedDocuments).toEqual([
+      { document: documents[1], treatments, humanTreatments: [{ userId, treatment: treatments[0] }] },
+    ]);
   });
 
   it('should filter all the given treated documents according to the publication category', () => {
@@ -60,8 +73,8 @@ describe('filterTreatedDocuments', () => {
       publicationCategory: 'P',
     });
     const treatedDocuments = [
-      { assignations: [], document: documents[0], treatments: [] },
-      { assignations: [], document: documents[1], treatments: [] },
+      { document: documents[0], treatments: [], humanTreatments: [] },
+      { document: documents[1], treatments: [], humanTreatments: [] },
     ];
 
     const filteredTreatedDocuments = filterTreatedDocuments({
@@ -69,7 +82,7 @@ describe('filterTreatedDocuments', () => {
       treatedDocuments,
     });
 
-    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[0], treatments: [] }]);
+    expect(filteredTreatedDocuments).toEqual([{ document: documents[0], treatments: [], humanTreatments: [] }]);
   });
 
   it('should filter all the given treated documents according to the user id', () => {
@@ -82,21 +95,17 @@ describe('filterTreatedDocuments', () => {
     const treatments = [{ documentId: documents[0]._id }, { documentId: documents[1]._id }].map(
       treatmentModule.generator.generate,
     );
-    const assignations = [
-      {
-        documentId: documents[0]._id,
-        treatmentId: treatments[0]._id,
-        userId: userId1,
-      },
-      {
-        documentId: documents[1]._id,
-        treatmentId: treatments[1]._id,
-        userId: userId2,
-      },
-    ].map(assignationModule.generator.generate);
     const treatedDocuments = [
-      { assignations: [assignations[0]], document: documents[0], treatments: [treatments[0]] },
-      { assignations: [assignations[1]], document: documents[1], treatments: [treatments[1]] },
+      {
+        document: documents[0],
+        treatments: [treatments[0]],
+        humanTreatments: [{ treatment: treatments[0], userId: userId1 }],
+      },
+      {
+        document: documents[1],
+        treatments: [treatments[1]],
+        humanTreatments: [{ treatment: treatments[1], userId: userId2 }],
+      },
     ];
 
     const filteredTreatedDocuments = filterTreatedDocuments({
@@ -105,7 +114,11 @@ describe('filterTreatedDocuments', () => {
     });
 
     expect(filteredTreatedDocuments).toEqual([
-      { assignations: [assignations[0]], document: documents[0], treatments: [treatments[0]] },
+      {
+        document: documents[0],
+        treatments: [treatments[0]],
+        humanTreatments: [{ treatment: treatments[0], userId: userId1 }],
+      },
     ]);
   });
 
@@ -115,8 +128,8 @@ describe('filterTreatedDocuments', () => {
       source: 'SOURCE1',
     });
     const treatedDocuments = [
-      { assignations: [], document: documents[0], treatments: [] },
-      { assignations: [], document: documents[1], treatments: [] },
+      { document: documents[0], treatments: [], humanTreatments: [] },
+      { document: documents[1], treatments: [], humanTreatments: [] },
     ];
 
     const filteredTreatedDocuments = filterTreatedDocuments({
@@ -124,6 +137,6 @@ describe('filterTreatedDocuments', () => {
       treatedDocuments,
     });
 
-    expect(filteredTreatedDocuments).toEqual([{ assignations: [], document: documents[0], treatments: [] }]);
+    expect(filteredTreatedDocuments).toEqual([{ document: documents[0], treatments: [], humanTreatments: [] }]);
   });
 });

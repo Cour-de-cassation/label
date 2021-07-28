@@ -1,4 +1,4 @@
-import { flatten } from 'lodash';
+import { flatten, sumBy } from 'lodash';
 import {
   documentType,
   idType,
@@ -10,6 +10,8 @@ import {
   indexer,
   statisticModule,
   dateBuilder,
+  treatmentModule,
+  settingsType,
 } from '@label/core';
 import { settingsLoader } from '../../../lib/settingsLoader';
 import { buildCallAttemptsRegulator } from '../../../lib/callAttemptsRegulator';
@@ -184,7 +186,7 @@ function buildDocumentService() {
     );
   }
 
-  async function fetchTreatedDocuments() {
+  async function fetchTreatedDocuments(settings: settingsType) {
     const documentRepository = buildDocumentRepository();
 
     const treatedDocuments = await documentRepository.findAllByStatusProjection(
@@ -215,7 +217,28 @@ function buildDocumentService() {
             .name,
       );
       const treatments = treatmentsByDocumentId[documentIdString];
-
+      const humanTreatments = treatmentModule.lib.extractHumanTreatments(
+        treatments,
+        assignations,
+      );
+      if (humanTreatments.length === 0) {
+        throw errorHandlers.serverErrorHandler.build(
+          `No human treatment found for document ${documentIdString}`,
+        );
+      }
+      const totalTreatmentDuration = sumBy(
+        humanTreatments,
+        ({ treatment }) => treatment.duration,
+      );
+      const lastTreatmentDate =
+        humanTreatments[humanTreatments.length - 1].treatment.lastUpdateDate;
+      const statistic = statisticModule.lib.simplify(
+        treatmentModule.lib.aggregate(
+          humanTreatments.map(({ treatment }) => treatment),
+          'annotator',
+          settings,
+        ),
+      );
       return {
         document: {
           _id: treatedDocument._id,
@@ -223,14 +246,9 @@ function buildDocumentService() {
           publicationCategory: treatedDocument.publicationCategory,
           source: treatedDocument.source,
         },
-        treatments: treatments.map((treatment) => ({
-          _id: treatment._id,
-          documentId: treatment.documentId,
-          duration: treatment.duration,
-          lastUpdateDate: treatment.lastUpdateDate,
-          source: treatment.source,
-          ...statisticModule.lib.simplify(treatment),
-        })),
+        totalTreatmentDuration,
+        lastTreatmentDate,
+        statistic,
         userNames,
       };
     });

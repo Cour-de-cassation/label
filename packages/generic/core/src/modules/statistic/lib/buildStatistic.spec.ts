@@ -1,4 +1,3 @@
-import { assignationModule } from '../../assignation';
 import { documentModule } from '../../document';
 import { idModule } from '../../id';
 import { treatmentModule } from '../../treatment';
@@ -31,18 +30,13 @@ describe('buildStatistic', () => {
       resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
       lastUpdateDate: TREATMENT_DATE.getTime(),
     });
-    const assignation = assignationModule.generator.generate({
-      documentId: document._id,
-      treatmentId: treatment._id,
-      userId,
-    });
 
     const statistic = buildStatistic({
       annotationsCount,
-      assignation,
       document,
       linkedEntitiesCount,
       treatment,
+      treatmentsSummary: [{ userId, treatmentDuration: 10 }],
     });
 
     expect(statistic).toEqual({
@@ -58,8 +52,7 @@ describe('buildStatistic', () => {
       resizedSmallerAnnotationsCount: { anonymised: 0, other: 0 },
       source: documentSource,
       treatmentDate: TREATMENT_DATE.getTime(),
-      treatmentDuration: duration,
-      userId,
+      treatmentsSummary: [{ userId, treatmentDuration: 10 }],
       wordsCount: 5,
     });
   });

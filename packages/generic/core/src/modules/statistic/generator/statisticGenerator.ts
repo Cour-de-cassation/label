@@ -18,8 +18,7 @@ const statisticGenerator: generatorType<statisticType> = {
     resizedSmallerAnnotationsCount,
     source,
     treatmentDate,
-    treatmentDuration,
-    userId,
+    treatmentsSummary,
     wordsCount,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
@@ -40,8 +39,7 @@ const statisticGenerator: generatorType<statisticType> = {
       : { anonymised: 0, other: 0 },
     source: source ? source : `SOURCE_${Math.random()}`,
     treatmentDate: treatmentDate ? treatmentDate : new Date().getTime(),
-    treatmentDuration: treatmentDuration ? treatmentDuration : 0,
-    userId: userId ? idModule.lib.buildId(userId) : idModule.lib.buildId(),
+    treatmentsSummary: treatmentsSummary ? treatmentsSummary : [],
     wordsCount: wordsCount ? wordsCount : 0,
   }),
 };

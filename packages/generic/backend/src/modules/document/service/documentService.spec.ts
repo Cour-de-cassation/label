@@ -8,9 +8,8 @@ import {
   idModule,
   userModule,
   documentType,
-  treatmentType,
-  statisticModule,
   dateBuilder,
+  settingsModule,
 } from '@label/core';
 import { projectFakeObjects } from '../../../repository';
 import { buildAnnotationReportRepository } from '../../annotationReport';
@@ -27,6 +26,11 @@ describe('documentService', () => {
   const documentRepository = buildDocumentRepository();
   const monitoringEntryRepository = buildMonitoringEntryRepository();
   const treatmentRepository = buildTreatmentRepository();
+  const settings = settingsModule.lib.buildSettings({
+    personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
+    personnePhysiquePrenom: { isSensitive: false, isAnonymized: true },
+    personneMorale: { isSensitive: false, isAnonymized: false },
+  });
 
   describe('assertDocumentIsPublishable', () => {
     it('should throw an error if the document status is not right', async () => {
@@ -460,6 +464,7 @@ describe('documentService', () => {
     const userRepository = buildUserRepository();
 
     it('should return treated documents', async () => {
+      const TREATMENT_DATE = new Date().getTime();
       const user = userModule.generator.generate({
         name: 'NAME',
         role: 'annotator',
@@ -478,9 +483,13 @@ describe('documentService', () => {
       });
       const toBePublishedTreatment = treatmentModule.generator.generate({
         documentId: toBePublishedDocument._id,
+        duration: 10,
+        lastUpdateDate: TREATMENT_DATE,
       });
       const doneTreatment = treatmentModule.generator.generate({
         documentId: doneDocument._id,
+        duration: 20,
+        lastUpdateDate: TREATMENT_DATE,
       });
       const pendingDocumentAssignation = assignationModule.generator.generate({
         documentId: pendingDocument._id,
@@ -518,23 +527,31 @@ describe('documentService', () => {
       );
       await userRepository.insert(user);
 
-      const treatedDocuments = await documentService.fetchTreatedDocuments();
+      const treatedDocuments = await documentService.fetchTreatedDocuments(
+        settings,
+      );
 
       expect(treatedDocuments).toEqual([
         {
           document: projectTreatedDocumentDocument(toBePublishedDocument),
-          treatments: [
-            projectTreatedDocumentTreatmentExceptStatistics(
-              toBePublishedTreatment,
-            ),
-          ],
+          totalTreatmentDuration: 10,
+          lastTreatmentDate: TREATMENT_DATE,
+          statistic: {
+            subAnnotationsNonSensitiveCount: 0,
+            subAnnotationsSensitiveCount: 0,
+            surAnnotationsCount: 0,
+          },
           userNames: ['NAME'],
         },
         {
           document: projectTreatedDocumentDocument(doneDocument),
-          treatments: [
-            projectTreatedDocumentTreatmentExceptStatistics(doneTreatment),
-          ],
+          totalTreatmentDuration: 20,
+          lastTreatmentDate: TREATMENT_DATE,
+          statistic: {
+            subAnnotationsNonSensitiveCount: 0,
+            subAnnotationsSensitiveCount: 0,
+            surAnnotationsCount: 0,
+          },
           userNames: ['NAME'],
         },
       ]);
@@ -583,19 +600,4 @@ function projectTreatedDocumentDocument(document: documentType) {
     'publicationCategory',
     'source',
   ]);
-}
-
-function projectTreatedDocumentTreatmentExceptStatistics(
-  treatment: treatmentType,
-) {
-  return {
-    ...projectFakeObjects(treatment, [
-      '_id',
-      'documentId',
-      'duration',
-      'lastUpdateDate',
-      'source',
-    ]),
-    ...statisticModule.lib.simplify(treatment),
-  };
 }

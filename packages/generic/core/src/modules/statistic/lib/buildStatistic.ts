@@ -1,4 +1,3 @@
-import { assignationType } from '../../assignation';
 import { documentModule, documentType } from '../../document';
 import { idModule } from '../../id';
 import { treatmentType } from '../../treatment';
@@ -8,13 +7,13 @@ export { buildStatistic };
 
 function buildStatistic({
   annotationsCount,
-  assignation,
+  treatmentsSummary,
   document,
   linkedEntitiesCount,
   treatment,
 }: {
   annotationsCount: number;
-  assignation: assignationType;
+  treatmentsSummary: statisticType['treatmentsSummary'];
   document: documentType;
   linkedEntitiesCount: number;
   treatment: treatmentType;
@@ -32,8 +31,7 @@ function buildStatistic({
     resizedSmallerAnnotationsCount: treatment.resizedSmallerAnnotationsCount,
     source: document.source,
     treatmentDate: treatment.lastUpdateDate,
-    treatmentDuration: treatment.duration,
-    userId: assignation.userId,
+    treatmentsSummary,
     wordsCount: documentModule.lib.countWords(document),
   };
 }

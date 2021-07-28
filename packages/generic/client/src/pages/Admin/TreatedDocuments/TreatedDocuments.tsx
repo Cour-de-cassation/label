@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { flatten, sumBy, uniq } from 'lodash';
-import { apiRouteOutType, idModule, indexer, keysOf, treatmentInfoType, timeOperator } from '@label/core';
+import { flatten, uniq } from 'lodash';
+import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator } from '@label/core';
 import { DecisionNumberTextInput, IconButton, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
 import {
   localStorage,
@@ -26,11 +26,11 @@ function TreatedDocuments(props: {
   const styles = buildStyles(theme);
 
   const filterInfo = extractFilterInfoFromTreatedDocuments(props.treatedDocuments);
-  const summedTreatmentsInfo = computeSummedTreatmentsInfo(props.treatedDocuments);
-  const treatmentFields = buildTreatedDocumentsFields(summedTreatmentsInfo);
+  const treatmentsInfo = extractTreatmentsInfo(props.treatedDocuments);
+  const treatmentFields = buildTreatedDocumentsFields(treatmentsInfo);
   const filteredTreatedDocuments = searchedDecisionNumber
     ? filterSearchedDecisions(props.treatedDocuments, searchedDecisionNumber)
-    : getFilteredTreatedDocuments(props.treatedDocuments, summedTreatmentsInfo, filterValues);
+    : getFilteredTreatedDocuments(props.treatedDocuments, treatmentsInfo, filterValues);
 
   return (
     <div style={styles.table}>
@@ -75,35 +75,14 @@ function TreatedDocuments(props: {
     setFilterValues(filterValues);
   }
 
-  function computeSummedTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
-    const treatments = flatten(treatedDocuments.map((treatedDocument) => treatedDocument.treatments)).filter(
-      (treatment) => treatment.source === 'annotator',
+  function extractTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
+    return treatedDocuments.reduce(
+      (accumulator, treatedDocument) => ({
+        ...accumulator,
+        [idModule.lib.convertToString(treatedDocument.document._id)]: treatedDocument.statistic,
+      }),
+      {} as Record<string, treatmentInfoType>,
     );
-    const indexedTreatments = indexer.indexBy(treatments, (treatment) => idModule.lib.convertToString(treatment._id));
-    const summedTreatmentsInfo = treatedDocuments.reduce((documentAccumulator, treatedDocument) => {
-      const documentIdString = idModule.lib.convertToString(treatedDocument.document._id);
-      const documentTreatments = treatedDocument.treatments
-        .filter((treatment) => treatment.source === 'annotator')
-        .map((treatment) => indexedTreatments[idModule.lib.convertToString(treatment._id)]);
-      return {
-        ...documentAccumulator,
-        [documentIdString]: documentTreatments.reduce(
-          (treatmentInfoAccumulator, treatment) => ({
-            surAnnotationsCount: treatmentInfoAccumulator.surAnnotationsCount + treatment.surAnnotationsCount,
-            subAnnotationsSensitiveCount:
-              treatmentInfoAccumulator.subAnnotationsSensitiveCount + treatment.subAnnotationsSensitiveCount,
-            subAnnotationsNonSensitiveCount:
-              treatmentInfoAccumulator.subAnnotationsNonSensitiveCount + treatment.subAnnotationsNonSensitiveCount,
-          }),
-          {
-            surAnnotationsCount: 0,
-            subAnnotationsSensitiveCount: 0,
-            subAnnotationsNonSensitiveCount: 0,
-          },
-        ),
-      };
-    }, {} as Record<string, treatmentInfoType>);
-    return summedTreatmentsInfo;
   }
 
   function getFilteredTreatedDocuments(
@@ -122,18 +101,10 @@ function TreatedDocuments(props: {
           return accumulator && treatmentInfo.subAnnotationsSensitiveCount > 0;
         }
         if (currentFilterKey === 'startDate' && !!filterValues.startDate) {
-          return (
-            accumulator &&
-            treatedDocument.treatments[treatedDocument.treatments.length - 1].lastUpdateDate >=
-              filterValues.startDate.getTime()
-          );
+          return accumulator && treatedDocument.lastTreatmentDate >= filterValues.startDate.getTime();
         }
         if (currentFilterKey === 'endDate' && !!filterValues.endDate) {
-          return (
-            accumulator &&
-            treatedDocument.treatments[treatedDocument.treatments.length - 1].lastUpdateDate <=
-              filterValues.endDate.getTime()
-          );
+          return accumulator && treatedDocument.lastTreatmentDate <= filterValues.endDate.getTime();
         }
         if (currentFilterKey === 'userName' && !!filterValues.userName) {
           return accumulator && treatedDocument.userNames.includes(filterValues.userName);
@@ -212,12 +183,8 @@ function TreatedDocuments(props: {
         title: wordings.treatedDocumentsPage.table.columnTitles.date,
         canBeSorted: true,
         extractor: (treatedDocument) =>
-          timeOperator.convertTimestampToReadableDate(
-            treatedDocument.treatments[treatedDocument.treatments.length - 1].lastUpdateDate,
-            true,
-          ),
-        getSortingValue: (treatedDocument) =>
-          treatedDocument.treatments[treatedDocument.treatments.length - 1].lastUpdateDate,
+          timeOperator.convertTimestampToReadableDate(treatedDocument.lastTreatmentDate, true),
+        getSortingValue: (treatedDocument) => treatedDocument.lastTreatmentDate,
         width: 5,
       },
       {
@@ -253,10 +220,8 @@ function TreatedDocuments(props: {
         title: wordings.treatedDocumentsPage.table.columnTitles.duration.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.duration.tooltipText,
         extractor: (treatedDocument) =>
-          timeOperator.convertDurationToReadableDuration(
-            sumBy(treatedDocument.treatments, (treatment) => treatment.duration),
-          ),
-        getSortingValue: (treatedDocument) => sumBy(treatedDocument.treatments, (treatment) => treatment.duration),
+          timeOperator.convertDurationToReadableDuration(treatedDocument.totalTreatmentDuration),
+        getSortingValue: (treatedDocument) => treatedDocument.totalTreatmentDuration,
         width: 3,
       },
     ];

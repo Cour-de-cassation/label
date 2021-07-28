@@ -18,13 +18,18 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     aggregatedStatistics: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { ressourceFilter } }) => {
-        return statisticService.fetchAggregatedStatisticsAccordingToFilter({
-          ...ressourceFilter,
-          userId:
-            ressourceFilter.userId !== undefined
-              ? idModule.lib.buildId(ressourceFilter.userId)
-              : undefined,
-        });
+        const settings = settingsLoader.getSettings();
+
+        return statisticService.fetchAggregatedStatisticsAccordingToFilter(
+          {
+            ...ressourceFilter,
+            userId:
+              ressourceFilter.userId !== undefined
+                ? idModule.lib.buildId(ressourceFilter.userId)
+                : undefined,
+          },
+          settings,
+        );
       },
     }),
 
@@ -96,7 +101,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
     treatedDocuments: buildAuthenticatedController({
       permissions: ['admin'],
-      controllerWithUser: async () => documentService.fetchTreatedDocuments(),
+      controllerWithUser: async () => {
+        const settings = settingsLoader.getSettings();
+        return documentService.fetchTreatedDocuments(settings);
+      },
     }),
 
     untreatedDocuments: buildAuthenticatedController({

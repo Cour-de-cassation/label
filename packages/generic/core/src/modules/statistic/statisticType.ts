@@ -51,8 +51,16 @@ const statisticModel = buildModel({
     },
     source: { kind: 'primitive', content: 'string' },
     treatmentDate: { kind: 'primitive', content: 'number' },
-    treatmentDuration: { kind: 'primitive', content: 'number' },
-    userId: { kind: 'custom', content: 'id' },
+    treatmentsSummary: {
+      kind: 'array',
+      content: {
+        kind: 'object',
+        content: {
+          userId: { kind: 'custom', content: 'id' },
+          treatmentDuration: { kind: 'primitive', content: 'number' },
+        },
+      },
+    },
     wordsCount: { kind: 'primitive', content: 'number' },
   },
 } as const);

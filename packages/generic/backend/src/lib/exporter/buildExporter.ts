@@ -50,7 +50,7 @@ function buildExporter(
           labelTreatments: buildLabelTreatments(treatments),
         });
 
-        await statisticService.saveStatisticsOfDocument(document);
+        await statisticService.saveStatisticsOfDocument(document, settings);
 
         await documentService.deleteDocument(document._id);
       }

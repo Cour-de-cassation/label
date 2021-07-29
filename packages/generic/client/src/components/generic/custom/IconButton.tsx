@@ -15,6 +15,7 @@ function IconButton(props: {
   hint: string;
   iconName: iconNameType;
   onClick: (event: MouseEvent) => void;
+  type?: 'submit';
 }): ReactElement {
   const theme = useCustomTheme();
   const style = buildStyle(theme);
@@ -26,6 +27,7 @@ function IconButton(props: {
       hint={props.hint}
       onClick={props.onClick}
       style={style.button}
+      type={props.type}
     >
       <div style={style.iconContainer}>
         <Icon iconName={props.iconName} style={style.icon} />

@@ -68,6 +68,7 @@ const fr = {
     changePassword: 'Modifier le mot de passe',
     confirmPassword: 'Confirmer le nouveau mot de passe',
     decisionNumberPlaceholder: 'Rechercher...',
+    decisionNumberHint: 'Numéro de décision à rechercher',
     documentStatus: {
       loaded: 'Chargé depuis la base SDER',
       nlpAnnotating: "En cours d'annotation par le moteur NLP",

@@ -250,6 +250,7 @@ const apiSchema = {
                 _id: documentModule.fetchedModel.content._id,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+                reviewStatus: documentModule.fetchedModel.content.reviewStatus,
                 source: documentModule.fetchedModel.content.source,
               },
             },
@@ -489,6 +490,19 @@ const apiSchema = {
         status: documentModule.fetchedModel.content.status,
       },
       out: documentModule.fetchedModel,
+    },
+    updateDocumentReviewStatus: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+        reviewStatus: { kind: 'constant', content: ['read', 'amended'] },
+      },
+      out: {
+        kind: 'primitive',
+        content: 'void',
+      },
     },
     updateDocumentStatus: {
       in: {

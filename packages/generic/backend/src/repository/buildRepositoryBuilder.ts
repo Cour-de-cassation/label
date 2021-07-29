@@ -138,10 +138,12 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       }
     }
 
-    async function updateOne(id: idType, objectFields: Partial<T>) {
-      await collection.updateOne({ _id: id } as any, {
+    async function updateOne(_id: idType, objectFields: Partial<T>) {
+      await collection.updateOne({ _id } as any, {
         $set: objectFields,
       });
+      const updatedItem = await collection.findOne({ _id } as any);
+      return updatedItem || undefined;
     }
 
     async function updateMany(filter: Partial<T>, objectFields: Partial<T>) {

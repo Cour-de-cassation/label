@@ -22,7 +22,7 @@ type repositoryType<T extends { _id: idType }> = {
     fieldNames: Array<keyof T>,
   ) => Promise<void>;
   setIndexes: () => Promise<void>;
-  updateOne: (id: idType, objectFields: Partial<T>) => Promise<void>;
+  updateOne: (id: idType, objectFields: Partial<T>) => Promise<T | undefined>;
   updateMany: (filter: Partial<T>, objectFields: Partial<T>) => Promise<void>;
   upsert: (newObject: T) => Promise<void>;
 };

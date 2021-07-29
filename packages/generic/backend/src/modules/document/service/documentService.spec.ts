@@ -183,8 +183,11 @@ describe('documentService', () => {
   });
 
   describe('fetchDocumentsForUser', () => {
+    const userRepository = buildUserRepository();
+
     it('should fetch a document already assignated if it exists', async () => {
-      const userId = idModule.lib.buildId();
+      const user = userModule.generator.generate();
+      const userId = user._id;
       const document = documentModule.generator.generate({
         status: 'pending',
         text: 'lili',
@@ -196,6 +199,7 @@ describe('documentService', () => {
           documentId: document._id,
         }),
       );
+      await userRepository.insert(user);
 
       const documentsForUser = await documentService.fetchDocumentsForUser(
         userId,
@@ -206,8 +210,8 @@ describe('documentService', () => {
     });
 
     it('should fetch a document assignated to nobody if there are no assignation for this user', async () => {
-      const userId1 = idModule.lib.buildId();
-      const userId2 = idModule.lib.buildId();
+      const user1 = userModule.generator.generate();
+      const user2 = userModule.generator.generate();
       const documentofUser1 = documentModule.generator.generate({
         text: 'lolo',
         status: 'free',
@@ -220,10 +224,12 @@ describe('documentService', () => {
       await documentRepository.insert(documentOfUser2);
       await assignationRepository.insert(
         assignationModule.generator.generate({
-          userId: userId2,
+          userId: user2._id,
           documentId: documentOfUser2._id,
         }),
       );
+      await userRepository.insert(user1);
+      await userRepository.insert(user2);
       const treatment1 = treatmentModule.generator.generate({
         documentId: documentofUser1._id,
       });
@@ -234,7 +240,7 @@ describe('documentService', () => {
       await treatmentRepository.insert(treatment2);
 
       const documentsForUser = await documentService.fetchDocumentsForUser(
-        userId1,
+        user1._id,
         1,
       );
       const updatedDocument = await documentRepository.findById(
@@ -244,8 +250,8 @@ describe('documentService', () => {
     });
 
     it('should fetch a document with the highest priority assignated to nobody if there are no assignation for this user', async () => {
-      const userId1 = idModule.lib.buildId();
-      const userId2 = idModule.lib.buildId();
+      const user1 = userModule.generator.generate();
+      const user2 = userModule.generator.generate();
       const documents = ([
         {
           text: 'lolo',
@@ -269,13 +275,15 @@ describe('documentService', () => {
       await Promise.all(treatments.map(treatmentRepository.insert));
       await assignationRepository.insert(
         assignationModule.generator.generate({
-          userId: userId2,
+          userId: user2._id,
           documentId: documents[2]._id,
         }),
       );
+      await userRepository.insert(user1);
+      await userRepository.insert(user2);
 
       const documentsForUser = await documentService.fetchDocumentsForUser(
-        userId1,
+        user1._id,
         1,
       );
 
@@ -286,7 +294,7 @@ describe('documentService', () => {
     });
 
     it('should fetch a document with treatment first', async () => {
-      const userId1 = idModule.lib.buildId();
+      const user = userModule.generator.generate();
       const documents = range(3).map(() =>
         documentModule.generator.generate({
           status: 'free',
@@ -297,9 +305,10 @@ describe('documentService', () => {
       });
       await Promise.all(documents.map(documentRepository.insert));
       await treatmentRepository.insert(treatment);
+      await userRepository.insert(user);
 
       const documentsForUser = await documentService.fetchDocumentsForUser(
-        userId1,
+        user._id,
         1,
       );
 
@@ -310,7 +319,7 @@ describe('documentService', () => {
     });
 
     it('should not assign more document if one is already saved', async () => {
-      const userId1 = idModule.lib.buildId();
+      const user = userModule.generator.generate();
       const documents = (['saved', 'pending', 'free'] as const).map((status) =>
         documentModule.generator.generate({ status }),
       );
@@ -321,12 +330,12 @@ describe('documentService', () => {
       );
       const assignations = [
         assignationModule.generator.generate({
-          userId: userId1,
+          userId: user._id,
           documentId: documents[0]._id,
           treatmentId: treatments[0]._id,
         }),
         assignationModule.generator.generate({
-          userId: userId1,
+          userId: user._id,
           documentId: documents[1]._id,
           treatmentId: treatments[1]._id,
         }),
@@ -338,7 +347,7 @@ describe('documentService', () => {
       );
 
       const documentsForUser = await documentService.fetchDocumentsForUser(
-        userId1,
+        user._id,
         3,
       );
 
@@ -349,7 +358,7 @@ describe('documentService', () => {
 
     it('should throw an error on too many attempts', async () => {
       const documentService = buildDocumentService();
-      const userId = idModule.lib.buildId();
+      const user = userModule.generator.generate();
       const documents = range(301).map(() =>
         documentModule.generator.generate(),
       );
@@ -358,13 +367,14 @@ describe('documentService', () => {
       );
       await Promise.all(treatments.map(treatmentRepository.insert));
       await Promise.all(documents.map(documentRepository.insert));
-      await documentService.fetchDocumentsForUser(userId, 300);
+      await userRepository.insert(user);
+      await documentService.fetchDocumentsForUser(user._id, 300);
 
-      const promise = () => documentService.fetchDocumentsForUser(userId, 1);
+      const promise = () => documentService.fetchDocumentsForUser(user._id, 1);
 
       await expect(promise()).rejects.toThrow(
         `Too many call attempts for identifier ${idModule.lib.convertToString(
-          userId,
+          user._id,
         )}`,
       );
     });
@@ -598,6 +608,7 @@ function projectTreatedDocumentDocument(document: documentType) {
     '_id',
     'documentNumber',
     'publicationCategory',
+    'reviewStatus',
     'source',
   ]);
 }

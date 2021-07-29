@@ -13,10 +13,12 @@ import { buildAssignationRepository } from '../repository';
 import { findOrCreateByDocumentIdAndUserId } from './findOrCreateByDocumentIdAndUserId';
 
 describe('findOrCreateByDocumentIdAndUserId', () => {
-  const userId = idModule.lib.buildId();
+  const user = userModule.generator.generate();
+  const userId = user._id;
   const document = documentModule.generator.generate();
   const documentId = document._id;
   const documentRepository = buildDocumentRepository();
+  const userRepository = buildUserRepository();
 
   it('should find the corresponding assignation', async () => {
     const assignationRepository = buildAssignationRepository();
@@ -30,6 +32,7 @@ describe('findOrCreateByDocumentIdAndUserId', () => {
     await documentRepository.insert(document);
     await treatmentRepository.insert(treatment);
     await assignationRepository.insert(assignation);
+    await userRepository.insert(user);
 
     await findOrCreateByDocumentIdAndUserId({
       documentId,
@@ -43,6 +46,7 @@ describe('findOrCreateByDocumentIdAndUserId', () => {
   it('should create the corresponding assignation', async () => {
     const assignationRepository = buildAssignationRepository();
     await documentRepository.insert(document);
+    await userRepository.insert(user);
 
     await findOrCreateByDocumentIdAndUserId({
       documentId,

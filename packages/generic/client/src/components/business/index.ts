@@ -1,6 +1,7 @@
 import { AdminMenu } from './AdminMenu';
 import { CategoryIcon } from './CategoryIcon';
 import { DecisionNumberTextInput } from './DecisionNumberTextInput';
+import { DocumentReviewStatusIcon } from './DocumentReviewStatusIcon';
 import { DocumentStatusIcon } from './DocumentStatusIcon';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
 import { FilterButton, filterType } from './FilterButton';
@@ -12,11 +13,13 @@ import { ProblemReportIcon } from './ProblemReportIcon';
 import { PublicationCategoryBadge } from './PublicationCategoryBadge';
 import { UnlinkAnnotationDropdown } from './UnlinkAnnotationDropdown';
 import { ResetPasswordForm } from './ResetPasswordForm';
+
 export {
   AdminMenu,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
   DecisionNumberTextInput,
+  DocumentReviewStatusIcon,
   DocumentStatusIcon,
   FilterButton,
   FilterChip,

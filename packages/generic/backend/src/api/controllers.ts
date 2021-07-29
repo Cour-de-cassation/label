@@ -174,6 +174,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(documentId),
           'free',
         );
+        await documentService.updateReviewDocumentStatus(
+          idModule.lib.buildId(documentId),
+          'none',
+        );
       },
     }),
 
@@ -260,6 +264,16 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    updateDocumentReviewStatus: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { documentId, reviewStatus } }) => {
+        await documentService.updateReviewDocumentStatus(
+          idModule.lib.buildId(documentId),
+          reviewStatus,
+        );
+      },
+    }),
+
     updateDocumentStatus: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'publicator'],
       controllerWithUser: async (user, { args: { documentId, status } }) => {
@@ -295,7 +309,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         _,
         { args: { problemReportId, hasBeenRead } },
       ) => {
-        return problemReportService.updateHasBeenRead(
+        await problemReportService.updateHasBeenRead(
           idModule.lib.buildId(problemReportId),
           hasBeenRead,
         );

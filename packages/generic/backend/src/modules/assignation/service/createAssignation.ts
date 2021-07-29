@@ -1,5 +1,11 @@
-import { assignationModule, idType } from '@label/core';
+import {
+  assignationModule,
+  errorHandlers,
+  idModule,
+  idType,
+} from '@label/core';
 import { treatmentService } from '../../treatment';
+import { userService } from '../../user';
 import { buildAssignationRepository } from '../repository';
 
 export { createAssignation };
@@ -13,9 +19,19 @@ async function createAssignation({
 }) {
   const assignationRepository = buildAssignationRepository();
 
+  const userRole = await userService.fetchUserRole(userId);
+
+  if (userRole === 'publicator') {
+    throw errorHandlers.serverErrorHandler.build(
+      `User ${idModule.lib.convertToString(
+        userId,
+      )} is a publicator and is trying to create an assignation`,
+    );
+  }
+
   const treatmentId = await treatmentService.createEmptyTreatment({
     documentId,
-    source: 'annotator',
+    source: userRole,
   });
 
   const assignation = assignationModule.lib.buildAssignation({

@@ -32,6 +32,7 @@ function buildUserService() {
     fetchAuthenticatedUserFromAuthorizationHeader,
     fetchUsersByAssignations,
     fetchUsersWithDetails,
+    fetchUserRole,
     login,
     resetPassword,
     setIsActivatedForUser,
@@ -89,6 +90,14 @@ function buildUserService() {
 
       return 'passwordUpdated';
     }
+  }
+
+  async function fetchUserRole(userId: userType['_id']) {
+    const userRepository = buildUserRepository();
+
+    const user = await userRepository.findById(userId);
+
+    return user.role;
   }
 
   async function fetchUsersByAssignations(assignations: assignationType[]) {

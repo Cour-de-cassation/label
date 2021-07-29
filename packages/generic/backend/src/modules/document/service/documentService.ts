@@ -57,6 +57,7 @@ function buildDocumentService() {
     fetchDocumentForUser,
     fetchDocument,
     updateDocumentStatus,
+    updateReviewDocumentStatus,
   };
 
   async function assertDocumentIsPublishable(documentId: documentType['_id']) {
@@ -191,7 +192,13 @@ function buildDocumentService() {
 
     const treatedDocuments = await documentRepository.findAllByStatusProjection(
       ['done', 'toBePublished'],
-      ['_id', 'documentNumber', 'publicationCategory', 'source'],
+      [
+        '_id',
+        'documentNumber',
+        'publicationCategory',
+        'reviewStatus',
+        'source',
+      ],
     );
 
     const documentIds = treatedDocuments.map(({ _id }) => _id);
@@ -211,11 +218,14 @@ function buildDocumentService() {
         treatedDocument._id,
       );
       const assignations = assignationsByDocumentId[documentIdString];
-      const userNames = assignations.map(
-        (assignation) =>
-          usersByAssignationId[idModule.lib.convertToString(assignation._id)]
-            .name,
-      );
+      const userNames = assignations.reduce((accumulator, assignation) => {
+        const user =
+          usersByAssignationId[idModule.lib.convertToString(assignation._id)];
+        if (user.role !== 'annotator' || accumulator.includes(user.name)) {
+          return accumulator;
+        }
+        return [...accumulator, user.name];
+      }, [] as string[]);
       const treatments = treatmentsByDocumentId[documentIdString];
       const humanTreatments = treatmentModule.lib.extractHumanTreatments(
         treatments,
@@ -244,6 +254,7 @@ function buildDocumentService() {
           _id: treatedDocument._id,
           documentNumber: treatedDocument.documentNumber,
           publicationCategory: treatedDocument.publicationCategory,
+          reviewStatus: treatedDocument.reviewStatus,
           source: treatedDocument.source,
         },
         totalTreatmentDuration,
@@ -514,6 +525,26 @@ function buildDocumentService() {
     if (status === 'free') {
       await assignationService.deleteAssignationsByDocumentId(_id);
     }
+    return updatedDocument;
+  }
+
+  async function updateReviewDocumentStatus(
+    _id: documentType['_id'],
+    reviewStatus: documentType['reviewStatus'],
+  ) {
+    const documentRepository = buildDocumentRepository();
+    const updatedDocument = await documentRepository.updateOne(_id, {
+      reviewStatus,
+    });
+
+    if (!updatedDocument) {
+      throw errorHandlers.notFoundErrorHandler.build(
+        `The document ${idModule.lib.convertToString(
+          _id,
+        )} was not found in the document collection`,
+      );
+    }
+
     return updatedDocument;
   }
 }

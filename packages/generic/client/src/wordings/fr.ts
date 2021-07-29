@@ -69,6 +69,10 @@ const fr = {
     confirmPassword: 'Confirmer le nouveau mot de passe',
     decisionNumberPlaceholder: 'Rechercher...',
     decisionNumberHint: 'Numéro de décision à rechercher',
+    documentReviewStatus: {
+      read: 'Lu',
+      amended: 'Lu et modifié',
+    },
     documentStatus: {
       loaded: 'Chargé depuis la base SDER',
       nlpAnnotating: "En cours d'annotation par le moteur NLP",
@@ -302,6 +306,7 @@ const fr = {
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
         agent: { title: 'Agent', tooltipText: 'Agent principal' },
+        reviewStatus: { title: 'Relecture', tooltipText: 'Statut de relecture' },
         date: 'Traité le',
         surAnnotationsCount: { title: 'Sur.', tooltipText: 'Nombre de sur-annotations' },
         subAnnotationsSensitiveCount: {

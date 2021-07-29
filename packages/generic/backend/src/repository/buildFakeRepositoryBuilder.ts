@@ -158,6 +158,12 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
           : item,
       ),
     );
+
+    const updatedItem = collection.find((item) =>
+      idModule.lib.equalId(id, item._id),
+    );
+
+    return updatedItem;
   }
 
   async function updateMany(filter: Partial<T>, objectFields: Partial<T>) {

@@ -7,8 +7,9 @@ import {
   settingsType,
   treatmentModule,
 } from '@label/core';
-import { documentService } from '../../document';
 import { assignationService } from '../../assignation';
+import { documentService } from '../../document';
+import { userService } from '../../user';
 import { buildTreatmentRepository } from '../repository';
 
 export { updateTreatment };
@@ -33,6 +34,10 @@ async function updateTreatment(
   const assignation = await assignationService.findOrCreateByDocumentIdAndUserId(
     { documentId, userId },
   );
+  const userRole = await userService.fetchUserRole(userId);
+  if (userRole === 'admin') {
+    await documentService.updateReviewDocumentStatus(documentId, 'amended');
+  }
   const treatments = await treatmentRepository.findAllByDocumentId(documentId);
   const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
     treatments,

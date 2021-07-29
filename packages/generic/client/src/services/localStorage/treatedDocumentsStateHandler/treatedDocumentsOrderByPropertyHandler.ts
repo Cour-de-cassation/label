@@ -10,6 +10,7 @@ const treatedDocumentOrderByProperties = [
   'publicationCategory',
   'source',
   'userName',
+  'reviewStatus',
   'date',
   'surAnnotationsCount',
   'subAnnotationsSensitiveCount',

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { flatten, uniq } from 'lodash';
 import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator } from '@label/core';
-import { DecisionNumberTextInput, IconButton, PublicationCategoryBadge, tableRowFieldType } from '../../../components';
+import {
+  DecisionNumberTextInput,
+  DocumentReviewStatusIcon,
+  IconButton,
+  PublicationCategoryBadge,
+  tableRowFieldType,
+} from '../../../components';
 import {
   localStorage,
   treatedDocumentOrderByProperties,
@@ -14,6 +20,8 @@ import { TreatedDocumentsFilters } from './TreatedDocumentsFilters';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
 
 export { TreatedDocuments };
+
+const TABLE_ICON_SIZE = 28;
 
 function TreatedDocuments(props: {
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
@@ -177,6 +185,18 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.userNames.join(', '),
         width: 10,
+      },
+      {
+        id: 'reviewStatus',
+        title: wordings.treatedDocumentsPage.table.columnTitles.reviewStatus.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.reviewStatus.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.reviewStatus,
+        render: (treatedDocument) =>
+          treatedDocument.document.reviewStatus === 'none' ? undefined : (
+            <DocumentReviewStatusIcon iconSize={TABLE_ICON_SIZE} reviewStatus={treatedDocument.document.reviewStatus} />
+          ),
+        width: 2,
       },
       {
         id: 'date',

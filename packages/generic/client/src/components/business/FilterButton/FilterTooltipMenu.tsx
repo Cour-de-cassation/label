@@ -38,7 +38,10 @@ function FilterTooltipMenu(props: { filters: filterType[]; onClose: () => void; 
         return (
           <LabelledDropdown<string>
             defaultValue={filter.value}
-            items={filter.possibleValues.map((userName) => ({ text: userName, value: userName }))}
+            items={filter.possibleValues.map((value) => ({
+              text: filter.computeReadableValue ? filter.computeReadableValue(value) : value,
+              value,
+            }))}
             label={filter.label}
             onChange={filter.onChange}
             width={DROPDOWN_WIDTH}

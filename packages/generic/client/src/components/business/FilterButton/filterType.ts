@@ -7,6 +7,7 @@ type filterType =
       computeChipLabel?: (value: string) => string;
       label: string;
       possibleValues: string[];
+      computeReadableValue?: (value: string) => string;
       value: string | undefined;
       onChange: (value: string | undefined) => void;
     }

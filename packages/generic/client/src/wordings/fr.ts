@@ -70,8 +70,9 @@ const fr = {
     decisionNumberPlaceholder: 'Rechercher...',
     decisionNumberHint: 'Numéro de décision à rechercher',
     documentReviewStatus: {
-      read: 'Lu',
-      amended: 'Lu et modifié',
+      none: { iconTooltip: 'Non revue', filter: 'Décisions non revues' },
+      read: { iconTooltip: 'Revue', filter: 'Décisions revues' },
+      amended: { iconTooltip: 'Revue et modifiée', filter: 'Décisions revues et modifiées' },
     },
     documentStatus: {
       loaded: 'Chargé depuis la base SDER',
@@ -299,6 +300,7 @@ const fr = {
           endDate: 'Date fin',
           source: 'Source',
           publicationCategoryLetter: 'Diffusion',
+          documentReviewStatus: 'Statut de revue',
         },
       },
       columnTitles: {

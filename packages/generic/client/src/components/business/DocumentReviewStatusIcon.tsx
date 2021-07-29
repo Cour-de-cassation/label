@@ -16,7 +16,7 @@ function DocumentReviewStatusIcon(props: { iconSize: number; reviewStatus: 'read
 
   return (
     <CircleIcon
-      hint={wordings.business.documentReviewStatus[props.reviewStatus]}
+      hint={wordings.business.documentReviewStatus[props.reviewStatus].iconTooltip}
       iconName={iconName}
       iconSize={props.iconSize}
       backgroundColor={theme.colors.default.background}

@@ -1,6 +1,7 @@
 import React from 'react';
 import format from 'string-template';
-import { FilterButton, FilterChip, Text } from '../../../../components';
+import { documentModule, documentType } from '@label/core';
+import { FilterButton, FilterChip, filterType, Text } from '../../../../components';
 import { treatedDocumentFilterType } from '../../../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -39,7 +40,7 @@ function TreatedDocumentsFilters(props: {
     </div>
   );
 
-  function buildFilters() {
+  function buildFilters(): filterType[] {
     return [
       {
         kind: 'dateInterval' as const,
@@ -79,6 +80,20 @@ function TreatedDocumentsFilters(props: {
           props.setFilterValues({ ...props.filterValues, publicationCategoryLetter }),
       },
       {
+        kind: 'dropdown' as const,
+        name: 'documentReviewStatus',
+        label: wordings.treatedDocumentsPage.table.filter.fields.documentReviewStatus,
+        possibleValues: (documentModule.model.content.reviewStatus.content as unknown) as string[],
+        value: props.filterValues.documentReviewStatus,
+        computeChipLabel: convertDocumentReviewStatusToReadable,
+        computeReadableValue: convertDocumentReviewStatusToReadable,
+        onChange: (documentReviewStatus?: string) =>
+          props.setFilterValues({
+            ...props.filterValues,
+            documentReviewStatus: documentReviewStatus as documentType['reviewStatus'],
+          }),
+      },
+      {
         kind: 'boolean' as const,
         name: 'mustHaveSubAnnotations',
         chipLabel: wordings.treatedDocumentsPage.table.filter.chips.mustHaveSubAnnotations,
@@ -104,6 +119,10 @@ function TreatedDocumentsFilters(props: {
       },
     ];
   }
+}
+
+function convertDocumentReviewStatusToReadable(documentReviewStatus: string) {
+  return wordings.business.documentReviewStatus[documentReviewStatus as documentType['reviewStatus']].filter;
 }
 
 function buildStyles(theme: customThemeType) {

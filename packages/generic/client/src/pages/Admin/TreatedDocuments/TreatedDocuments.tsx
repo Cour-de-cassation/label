@@ -117,6 +117,9 @@ function TreatedDocuments(props: {
         if (currentFilterKey === 'userName' && !!filterValues.userName) {
           return accumulator && treatedDocument.userNames.includes(filterValues.userName);
         }
+        if (currentFilterKey === 'documentReviewStatus' && !!filterValues.documentReviewStatus) {
+          return accumulator && treatedDocument.document.reviewStatus === filterValues.documentReviewStatus;
+        }
         if (currentFilterKey === 'source' && !!filterValues.source) {
           return accumulator && treatedDocument.document.source === filterValues.source;
         }

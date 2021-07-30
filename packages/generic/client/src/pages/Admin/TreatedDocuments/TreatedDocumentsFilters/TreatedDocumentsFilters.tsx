@@ -53,7 +53,7 @@ function TreatedDocumentsFilters(props: {
       {
         kind: 'dropdown' as const,
         name: 'userName',
-        label: wordings.treatedDocumentsPage.table.filter.fields.agents,
+        label: wordings.treatedDocumentsPage.table.filter.fields.workingUser,
         possibleValues: props.filterInfo.userNames,
         value: props.filterValues.userName,
         onChange: (userName?: string) => props.setFilterValues({ ...props.filterValues, userName }),

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { apiRouteInType, apiRouteOutType } from '@label/core';
-import { AgentsDataFetcher } from './Agents/AgentsDataFetcher';
+import { WorkingUsersDataFetcher } from './WorkingUsers/WorkingUsersDataFetcher';
 import { ProblemReportsDataFetcher } from './ProblemReports/ProblemReportsDataFetcher';
 import { TreatedDocumentsDataFetcher } from './TreatedDocuments/TreatedDocumentsDataFetcher';
 import { UntreatedDocumentsDataFetcher } from './UntreatedDocuments/UntreatedDocumentsDataFetcher';
@@ -14,7 +14,7 @@ type adminInfosType = {
   aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
-  usersWithDetails: apiRouteOutType<'get', 'usersWithDetails'>;
+  workingUsers: apiRouteOutType<'get', 'workingUsers'>;
 };
 
 type refetchInfosType = {
@@ -22,7 +22,7 @@ type refetchInfosType = {
   problemReportsWithDetails: () => void;
   treatedDocuments: () => void;
   untreatedDocuments: () => void;
-  usersWithDetails: () => void;
+  workingUsers: () => void;
 };
 
 type ressourceFiltersType = {
@@ -37,8 +37,8 @@ function AdminInfosDataFetcher(props: {
   }) => ReactElement;
 }) {
   return (
-    <AgentsDataFetcher>
-      {({ usersWithDetails, refetch: refetchUsersWithDetails }) => (
+    <WorkingUsersDataFetcher>
+      {({ workingUsers, refetch: refetchWorkingUsers }) => (
         <TreatedDocumentsDataFetcher>
           {({ treatedDocuments, refetch: refetchTreatedDocuments }) => (
             <UntreatedDocumentsDataFetcher>
@@ -58,7 +58,7 @@ function AdminInfosDataFetcher(props: {
                             aggregatedStatistics,
                             problemReportsWithDetails,
                             treatedDocuments,
-                            usersWithDetails,
+                            workingUsers,
                             untreatedDocuments,
                           },
                           refetch: {
@@ -66,7 +66,7 @@ function AdminInfosDataFetcher(props: {
                             problemReportsWithDetails: refetchProblemReportsWithDetails,
                             treatedDocuments: refetchTreatedDocuments,
                             untreatedDocuments: refetchUntreatedDocuments,
-                            usersWithDetails: refetchUsersWithDetails,
+                            workingUsers: refetchWorkingUsers,
                           },
                           ressourceFilters: {
                             aggregatedStatistics: ressourceFilterAggregatedStatistics,
@@ -81,6 +81,6 @@ function AdminInfosDataFetcher(props: {
           )}
         </TreatedDocumentsDataFetcher>
       )}
-    </AgentsDataFetcher>
+    </WorkingUsersDataFetcher>
   );
 }

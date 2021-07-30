@@ -36,7 +36,7 @@ async function updateTreatment(
   );
   const userRole = await userService.fetchUserRole(userId);
   if (userRole === 'admin') {
-    await documentService.updateReviewDocumentStatus(documentId, 'amended');
+    await documentService.updateDocumentReviewStatus(documentId, 'amended');
   }
   const treatments = await treatmentRepository.findAllByDocumentId(documentId);
   const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(

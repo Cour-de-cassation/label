@@ -92,10 +92,12 @@ function TreatedDocumentsTable(props: {
         kind: 'text' as const,
         text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
         onClick: () => {
-          apiCaller.post<'updateDocumentReviewStatus'>('updateDocumentReviewStatus', {
-            documentId: treatmentWithDetails.document._id,
-            reviewStatus: 'read',
-          });
+          if (treatmentWithDetails.document.reviewStatus === 'none') {
+            apiCaller.post<'updateDocumentReviewStatus'>('updateDocumentReviewStatus', {
+              documentId: treatmentWithDetails.document._id,
+              reviewStatus: 'read',
+            });
+          }
           history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id)));
         },
         iconName: 'find' as const,

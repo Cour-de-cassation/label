@@ -35,7 +35,11 @@ function AdminMenu(props: { unreadProblemReportsCount: number }) {
           alertCount={props.unreadProblemReportsCount}
           iconName="warning"
         />
-        <MenuIcon title={wordings.agentsPage.header.subtitle} pathname={routes.AGENTS.getPath()} iconName="admin" />
+        <MenuIcon
+          title={wordings.workingUsersPage.header.subtitle}
+          pathname={routes.WORKING_USERS.getPath()}
+          iconName="admin"
+        />
       </div>
     </div>
   );

@@ -89,7 +89,7 @@ function buildLabelTreatments(
       case 2:
         return 'LABEL_AUTO_TREATMENT';
       default:
-        return 'LABEL_AGENT_TREATMENT';
+        return 'LABEL_WORKING_USER_TREATMENT';
     }
   }
 }

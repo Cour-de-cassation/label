@@ -4,7 +4,7 @@ import { localStorage } from '../services/localStorage';
 import { wordings } from '../wordings';
 import { AdminPage } from './Admin/AdminPage';
 import { AdminInfosDataFetcher } from './Admin/AdminInfosDataFetcher';
-import { Agents } from './Admin/Agents';
+import { WorkingUsers } from './Admin/WorkingUsers';
 import { DocumentInspector } from './Admin/DocumentInspector';
 import { TreatedDocuments } from './Admin/TreatedDocuments';
 import { ProblemReports } from './Admin/ProblemReports';
@@ -13,7 +13,7 @@ import { AnonymizedDocument } from './AnonymizedDocument';
 import { Home } from './Home';
 import { Login } from './Login';
 import { ResetPassword } from './ResetPassword';
-import { SpecialDocuments } from './SpecialDocuments';
+import { PublishableDocuments } from './PublishableDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { Statistics } from './Admin/Statistics';
 import { defaultRoutes, routes } from './routes';
@@ -52,16 +52,16 @@ function Router() {
                           refetch={refetch.aggregatedStatistics}
                           aggregatedStatistics={adminInfos.aggregatedStatistics}
                           availableStatisticFilters={adminInfos.availableStatisticFilters}
-                          users={adminInfos.usersWithDetails.map(({ user: { _id, name } }) => ({ _id, name }))}
+                          users={adminInfos.workingUsers.map(({ _id, name }) => ({ _id, name }))}
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
-                    <AuthenticatedRoute path={routes.AGENTS.getPath()}>
+                    <AuthenticatedRoute path={routes.WORKING_USERS.getPath()}>
                       <AdminPage
-                        header={wordings.agentsPage.header}
+                        header={wordings.workingUsersPage.header}
                         unreadProblemReportsCount={unreadProblemReportsCount}
                       >
-                        <Agents usersWithDetails={adminInfos.usersWithDetails} refetch={refetch.usersWithDetails} />
+                        <WorkingUsers workingUsers={adminInfos.workingUsers} refetch={refetch.workingUsers} />
                       </AdminPage>
                     </AuthenticatedRoute>
                     <AuthenticatedRoute path={routes.PROBLEM_REPORTS.getPath()}>
@@ -92,7 +92,7 @@ function Router() {
                         unreadProblemReportsCount={unreadProblemReportsCount}
                       >
                         <UntreatedDocuments
-                          users={adminInfos.usersWithDetails.map(({ user: { _id, name } }) => ({ _id, name }))}
+                          users={adminInfos.workingUsers.map(({ _id, name }) => ({ _id, name }))}
                           untreatedDocuments={adminInfos.untreatedDocuments}
                           refetch={refetch.untreatedDocuments}
                         />
@@ -107,8 +107,8 @@ function Router() {
         <Route path={routes.ANONYMIZED_DOCUMENT.getPath()}>
           <AnonymizedDocument />
         </Route>
-        <AuthenticatedRoute path={routes.SPECIAL_DOCUMENTS.getPath()}>
-          <SpecialDocuments />
+        <AuthenticatedRoute path={routes.PUBLISHABLE_DOCUMENTS.getPath()}>
+          <PublishableDocuments />
         </AuthenticatedRoute>
         <AuthenticatedRoute path={routes.ANNOTATION.getPath()}>
           <SettingsDataFetcher>{({ settings }) => <Home settings={settings} />}</SettingsDataFetcher>

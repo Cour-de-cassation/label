@@ -94,9 +94,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       }),
     }),
 
-    specialDocuments: buildAuthenticatedController({
+    publishableDocuments: buildAuthenticatedController({
       permissions: ['admin', 'publicator'],
-      controllerWithUser: async () => documentService.fetchSpecialDocuments(),
+      controllerWithUser: async () =>
+        documentService.fetchPublishableDocuments(),
     }),
 
     treatedDocuments: buildAuthenticatedController({
@@ -112,9 +113,9 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       controllerWithUser: async () => documentService.fetchUntreatedDocuments(),
     }),
 
-    usersWithDetails: buildAuthenticatedController({
+    workingUsers: buildAuthenticatedController({
       permissions: ['admin'],
-      controllerWithUser: async () => userService.fetchUsersWithDetails(),
+      controllerWithUser: async () => userService.fetchWorkingUsers(),
     }),
   },
 
@@ -174,7 +175,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(documentId),
           'free',
         );
-        await documentService.updateReviewDocumentStatus(
+        await documentService.updateDocumentReviewStatus(
           idModule.lib.buildId(documentId),
           'none',
         );
@@ -267,7 +268,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     updateDocumentReviewStatus: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { documentId, reviewStatus } }) => {
-        await documentService.updateReviewDocumentStatus(
+        await documentService.updateDocumentReviewStatus(
           idModule.lib.buildId(documentId),
           reviewStatus,
         );

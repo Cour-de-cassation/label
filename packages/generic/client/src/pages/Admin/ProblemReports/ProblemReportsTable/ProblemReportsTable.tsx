@@ -87,9 +87,9 @@ function ProblemReportsTable(props: {
       iconName: 'find' as const,
     };
 
-    const reassignToAgentOptionItem = {
+    const reassignToWorkingUserOptionItem = {
       kind: 'text' as const,
-      text: wordings.problemReportsPage.table.optionItems.reassignToAgent,
+      text: wordings.problemReportsPage.table.optionItems.reassignToWorkingUser,
       onClick: async () => {
         await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
           assignationId: problemReportWithDetails.problemReport.assignationId,
@@ -106,7 +106,7 @@ function ProblemReportsTable(props: {
       answerByEmailOptionItem,
       deleteProblemReportOptionItem,
       openDocumentOptionItem,
-      reassignToAgentOptionItem,
+      reassignToWorkingUserOptionItem,
     ];
     if (validateDocumentOptionItem) {
       return [...optionItems, validateDocumentOptionItem];
@@ -137,7 +137,7 @@ const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'prob
   },
   {
     id: 'userName',
-    title: wordings.problemReportsPage.table.columnTitles.agent,
+    title: wordings.problemReportsPage.table.columnTitles.workingUser,
     canBeSorted: true,
     extractor: (problemReportWithDetails) => problemReportWithDetails.user.name,
     width: 3,

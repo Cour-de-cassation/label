@@ -183,8 +183,8 @@ function TreatedDocuments(props: {
       },
       {
         id: 'userName',
-        title: wordings.treatedDocumentsPage.table.columnTitles.agent.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.agent.tooltipText,
+        title: wordings.treatedDocumentsPage.table.columnTitles.workingUser.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.workingUser.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.userNames.join(', '),
         width: 10,

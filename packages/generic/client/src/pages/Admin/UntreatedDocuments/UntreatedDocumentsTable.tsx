@@ -83,18 +83,18 @@ function UntreatedDocumentsTable(props: {
       iconName: 'restore' as const,
     };
 
-    const assignToAgentOptionItem = {
+    const assignToWorkingUserOptionItem = {
       kind: 'selection' as const,
-      text: wordings.untreatedDocumentsPage.table.optionItems.assignToAgent.label,
-      dropdownLabel: wordings.untreatedDocumentsPage.table.optionItems.assignToAgent.dropdownLabel,
-      description: wordings.untreatedDocumentsPage.table.optionItems.assignToAgent.description,
+      text: wordings.untreatedDocumentsPage.table.optionItems.assignToWorkingUser.label,
+      dropdownLabel: wordings.untreatedDocumentsPage.table.optionItems.assignToWorkingUser.dropdownLabel,
+      description: wordings.untreatedDocumentsPage.table.optionItems.assignToWorkingUser.description,
       items: props.users.map(({ name }) => name),
       iconName: 'assignment' as const,
-      onSelect: buildOnSelectAgentToAssignDocument(untreatedDocument.document._id),
+      onSelect: buildOnSelectWorkingUserToAssignDocument(untreatedDocument.document._id),
     };
 
     if (untreatedDocument.document.status !== 'pending') {
-      return [openAnonymizedDocumentOptionItem, resetAndAssignToMyselfOptionItem, assignToAgentOptionItem];
+      return [openAnonymizedDocumentOptionItem, resetAndAssignToMyselfOptionItem, assignToWorkingUserOptionItem];
     }
     return [
       openAnonymizedDocumentOptionItem,
@@ -114,7 +114,7 @@ function UntreatedDocumentsTable(props: {
     ];
   }
 
-  function buildOnSelectAgentToAssignDocument(documentId: documentType['_id']) {
+  function buildOnSelectWorkingUserToAssignDocument(documentId: documentType['_id']) {
     return async (userName: string) => {
       const user = props.users.find(({ name }) => name === userName);
       if (!user) {

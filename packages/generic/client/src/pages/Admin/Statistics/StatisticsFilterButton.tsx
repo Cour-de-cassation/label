@@ -126,7 +126,7 @@ function StatisticsFilterButton(props: {
       return {
         kind: 'dropdown' as const,
         name: 'user',
-        label: wordings.statisticsPage.filter.fields.agents,
+        label: wordings.statisticsPage.filter.fields.workingUser,
         possibleValues: props.users.map(({ name }) => name),
         value: userName,
         onChange: (userName: string | undefined) => {

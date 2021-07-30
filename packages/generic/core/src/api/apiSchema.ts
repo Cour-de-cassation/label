@@ -223,7 +223,7 @@ const apiSchema = {
     settings: {
       out: settingsModule.model,
     },
-    specialDocuments: {
+    publishableDocuments: {
       out: buildModel({
         kind: 'array',
         content: {
@@ -309,27 +309,23 @@ const apiSchema = {
         },
       } as const),
     },
-    usersWithDetails: {
+    workingUsers: {
       out: buildModel({
         kind: 'array',
         content: {
           kind: 'object',
           content: {
-            user: {
-              kind: 'object',
-              content: {
-                _id: userModule.models.user.content._id,
-                email: userModule.models.user.content.email,
-                isActivated: userModule.models.user.content.isActivated,
-                name: userModule.models.user.content.name,
-                role: userModule.models.user.content.role,
-              },
-            },
+            _id: userModule.models.user.content._id,
+            email: userModule.models.user.content.email,
+            isActivated: userModule.models.user.content.isActivated,
+            name: userModule.models.user.content.name,
+            role: userModule.models.user.content.role,
           },
         },
       } as const),
     },
   },
+
   post: {
     assignDocumentToUser: {
       in: {

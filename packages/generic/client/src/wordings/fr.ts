@@ -1,12 +1,12 @@
 export { fr };
 
 const fr = {
-  agentsPage: {
+  workingUsersPage: {
     header: {
       title: 'Administration',
       subtitle: 'Gestion des agents',
     },
-    createAgentDrawer: {
+    createWorkingUserDrawer: {
       title: 'Créer un agent',
       fields: {
         firstName: 'Prénom',
@@ -15,8 +15,8 @@ const fr = {
         role: 'Sélectionnez un rôle',
       },
       submit: "Créer l'agent",
-      createdAgentPopup: {
-        createdAgentConfirmation: "L'agent a bien été créé.",
+      createdWorkingUserPopup: {
+        createdWorkingUserConfirmation: "L'agent a bien été créé.",
         passwordIndication:
           'Veuillez noter et lui transmettre le mot de passe temporaire suivant. Ce mot de passe doit être changé dès la première connexion afin d’assurer la sécurité du système.',
         button: "C'est noté",
@@ -211,7 +211,7 @@ const fr = {
     },
     table: {
       columnTitles: {
-        agent: 'Agent',
+        workingUser: 'Agent',
         date: 'Date',
         number: 'N° décision',
         status: 'Statut',
@@ -222,7 +222,7 @@ const fr = {
         answerByEmail: 'Répondre par email...',
         deleteProblemReport: "Supprimer l'alerte",
         openDocument: 'Ouvrir la décision...',
-        reassignToAgent: "Renvoyer à l'agent",
+        reassignToWorkingUser: "Renvoyer à l'agent",
         validate: 'Valider la décision',
       },
       mailSubject: 'Alerte sur le document {documentNumber}',
@@ -232,7 +232,7 @@ const fr = {
     popup:
       "Votre mot de passe n'a pas été mis à jour depuis plus de 6 mois. Pour des raisons de sécurité, il vous est demandé d'en renseigner un nouveau respectant les règles du PSSI.",
   },
-  specialDocumentsPage: {
+  publishableDocumentsPage: {
     title: 'Arrêts P',
     table: {
       columnTitles: {
@@ -260,7 +260,7 @@ const fr = {
     treatedDecisions: 'Décisions traitées',
     filter: {
       fields: {
-        agents: 'Agents',
+        workingUser: 'Agent',
         mustHaveSubAnnotations: 'Avec sous-annotations',
         mustHaveSurAnnotations: 'Avec sur-annotations',
         publicationCategory: 'Diffusion',
@@ -293,7 +293,7 @@ const fr = {
           endDate: '< {endDate}',
         },
         fields: {
-          agents: 'Agents',
+          workingUser: 'Agent',
           mustHaveSurAnnotations: 'Avec sur annotation',
           mustHaveSubAnnotations: 'Avec sous annotation',
           startDate: 'Date début',
@@ -307,7 +307,7 @@ const fr = {
         number: { title: 'N° décision', tooltipText: 'Numéro de la décision' },
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
-        agent: { title: 'Agent', tooltipText: 'Agent principal' },
+        workingUser: { title: 'Agent', tooltipText: 'Agent principal' },
         reviewStatus: { title: 'Relecture', tooltipText: 'Statut de relecture' },
         date: 'Traité le',
         surAnnotationsCount: { title: 'Sur.', tooltipText: 'Nombre de sur-annotations' },
@@ -362,7 +362,7 @@ const fr = {
       },
       optionItems: {
         assignToMyself: "M'assigner la décision",
-        assignToAgent: {
+        assignToWorkingUser: {
           label: 'Assigner à un agent',
           description: 'A quel agent souhaitez-vous assigner la décision ?',
           dropdownLabel: "Nom de l'agent",

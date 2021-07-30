@@ -53,6 +53,7 @@ function buildAnnotator(
         try {
           await annotateDocument(updatedDocument);
         } catch (error) {
+          logger.error(error);
           logger.log(
             `Error while annotating document ${idModule.lib.convertToString(
               currentDocumentToAnnotate._id,
@@ -94,6 +95,7 @@ function buildAnnotator(
       documentId,
       report,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
+    logger.log(`NLP annotation succeeded!`);
 
     const previousTreatments = await treatmentService.fetchTreatmentsByDocumentId(
       document._id,

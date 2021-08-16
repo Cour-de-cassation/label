@@ -9,7 +9,7 @@ const sderConnectorConfig: connectorConfigType = {
   name: 'SDER',
   ...sderFetcher,
   ...sderUpdater,
-  ...sderMapper
+  ...sderMapper,
 };
 
 const sderConnector = buildConnector(sderConnectorConfig);

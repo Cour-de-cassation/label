@@ -89,6 +89,22 @@ async function buildFakeConnectorWithNDecisions(
 
   return {
     name: 'FAKE_CONNECTOR',
+    async fetch() {
+      return courtDecisions;
+    },
+    async fetchCourtDecisionBySourceIdAndSourceName({
+      sourceId,
+      sourceName,
+    }: {
+      sourceId: number;
+      sourceName: string;
+    }) {
+      return courtDecisions.find(
+        (courtDecision) =>
+          courtDecision.sourceId === sourceId &&
+          courtDecision.sourceName === sourceName,
+      );
+    },
     async fetchAllCourtDecisionsBetween() {
       return courtDecisions;
     },

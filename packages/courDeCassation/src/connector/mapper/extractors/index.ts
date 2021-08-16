@@ -1,4 +1,4 @@
-import {extractReadableChamberName} from './extractReadableChamberName'
-import {extractReadableJurisdictionName} from './extractReadableJurisdictionName'
+import { extractReadableChamberName } from './extractReadableChamberName';
+import { extractReadableJurisdictionName } from './extractReadableJurisdictionName';
 
-export {extractReadableChamberName, extractReadableJurisdictionName}
+export { extractReadableChamberName, extractReadableJurisdictionName };

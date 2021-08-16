@@ -5,6 +5,25 @@ export { sderFetcher };
 const MAX_DOCUMENT_SIZE = 500000;
 
 const sderFetcher = {
+  async fetchCourtDecisionBySourceIdAndSourceName({
+    sourceId,
+    sourceName,
+  }: {
+    sourceId: number;
+    sourceName: string;
+  }) {
+    const courtDecisions = await sderApi.fetchCourtDecisionsBySourceIdsAndSourceName(
+      [sourceId],
+      sourceName,
+    );
+
+    if (courtDecisions.length === 0) {
+      return undefined;
+    }
+
+    return courtDecisions[0];
+  },
+
   async fetchAllCourtDecisionsBetween({
     startDate,
     endDate,
@@ -18,7 +37,7 @@ const sderFetcher = {
     });
 
     return courtDecisions.filter(
-      courtDecision =>
+      (courtDecision) =>
         courtDecision &&
         courtDecision.originalText &&
         courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,

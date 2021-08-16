@@ -7,9 +7,7 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { environment, settings } = await parametersHandler.getParameters();
   const { days } = parseArgv();
   const backend = buildBackend(environment, settings);
-  const sderExporter = buildSderExporter(
-    settings
-  );
+  const sderExporter = buildSderExporter(settings);
 
   backend.runScript(() => sderExporter.exportTreatedDocumentsSince(days), {
     shouldLoadDb: true,

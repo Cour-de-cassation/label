@@ -5,7 +5,10 @@ import {
   idModule,
   timeOperator,
 } from '@label/core';
-import { extractReadableChamberName, extractReadableJurisdictionName } from './extractors';
+import {
+  extractReadableChamberName,
+  extractReadableJurisdictionName,
+} from './extractors';
 
 export { sderMapper };
 
@@ -13,12 +16,11 @@ const sderMapper = { mapCourtDecisionToDocument };
 
 function mapCourtDecisionToDocument(
   sderCourtDecision: decisionType,
-  ): documentType {
-  const readableChamberName = extractReadableChamberName(
-    {chamberName: sderCourtDecision.chamberName,
-    chamberId: sderCourtDecision.chamberId
-    },
-  );
+): documentType {
+  const readableChamberName = extractReadableChamberName({
+    chamberName: sderCourtDecision.chamberName,
+    chamberId: sderCourtDecision.chamberId,
+  });
   const readableJurisdictionName = extractReadableJurisdictionName(
     sderCourtDecision.jurisdictionName,
   );
@@ -31,7 +33,10 @@ function mapCourtDecisionToDocument(
       : undefined,
   });
 
-  const publicationCategory = computePublicationCategory(sderCourtDecision.pubCategory, sderCourtDecision.publication)
+  const publicationCategory = computePublicationCategory(
+    sderCourtDecision.pubCategory,
+    sderCourtDecision.publication,
+  );
 
   const priority = computePriority(
     sderCourtDecision.sourceName,
@@ -44,7 +49,8 @@ function mapCourtDecisionToDocument(
     creationDate: new Date().getTime(),
     criticity,
     decisionMetadata: {
-      additionalTermsToAnnotate: sderCourtDecision.occultation?.additionalTerms || '',
+      additionalTermsToAnnotate:
+        sderCourtDecision.occultation?.additionalTerms || '',
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit: sderCourtDecision.occultation?.categoriesToOmit || [],
       chamberName: readableChamberName,
@@ -89,15 +95,18 @@ function computeCriticity() {
   return 1;
 }
 
-function computePublicationCategory(pubCategory: string | undefined, publication: string[] | undefined) {
+function computePublicationCategory(
+  pubCategory: string | undefined,
+  publication: string[] | undefined,
+) {
   const publicationCategory: string[] = [];
-  if(!!pubCategory) {
+  if (!!pubCategory) {
     publicationCategory.push(pubCategory);
   }
-  if(!!publication) {
-    publicationCategory.push(...publication)
+  if (!!publication) {
+    publicationCategory.push(...publication);
   }
-  return publicationCategory
+  return publicationCategory;
 }
 
 function convertRawDateIntoReadableDate(rawDate: Date | undefined) {

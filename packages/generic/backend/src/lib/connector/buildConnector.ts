@@ -10,6 +10,45 @@ export { buildConnector };
 
 function buildConnector(connectorConfig: connectorConfigType) {
   return {
+    async importSpecificDocument({
+      documentNumber,
+      source,
+    }: {
+      documentNumber: number;
+      source: string;
+    }) {
+      logger.log(`importSpecificDocument: ${documentNumber} - ${source}`);
+
+      const courtDecision = await connectorConfig.fetchCourtDecisionBySourceIdAndSourceName(
+        { sourceId: documentNumber, sourceName: source },
+      );
+
+      if (!courtDecision) {
+        logger.log(
+          `No court decision found for specified documentNumber and source`,
+        );
+        return;
+      }
+
+      logger.log(
+        `Court decision found. labelStatus: ${courtDecision.labelStatus}, ${
+          !!courtDecision.pseudoText ? 'already' : 'never'
+        } pseudonymised`,
+      );
+      const document = connectorConfig.mapCourtDecisionToDocument(
+        courtDecision,
+      );
+      logger.log(
+        `Court decision converted. Inserting document into database...`,
+      );
+      await insertDocument(document);
+      logger.log(`Insertion done`);
+
+      logger.log(`Send document has been loaded...`);
+      await connectorConfig.updateDocumentsLoadedStatus([document]);
+      logger.log(`DONE`);
+    },
+
     async importNewDocuments(documentCount: number) {
       const DAYS_INTERVAL = 100;
       logger.log(`importNewDocuments: ${documentCount}`);
@@ -143,4 +182,10 @@ async function insertDocuments(documents: documentType[]) {
   for await (const document of documents) {
     await documentRepository.insert(document);
   }
+}
+
+function insertDocument(document: documentType) {
+  const documentRepository = buildDocumentRepository();
+
+  return documentRepository.insert(document);
 }

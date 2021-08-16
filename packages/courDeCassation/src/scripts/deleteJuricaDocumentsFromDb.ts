@@ -14,4 +14,3 @@ import { parametersHandler } from '../lib/parametersHandler';
 async function deleteJuricaDocumentsFromDb() {
   return sderConnector.deleteJuricaDocumentsFromLabelDb();
 }
-

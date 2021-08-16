@@ -19,15 +19,14 @@ const sderLocalApi: sderApiType = {
       pathToCourtDecisions,
     );
 
-    return courtDecisions
-      .map(({ content }) => {
-        const parsedContent = JSON.parse(content) as decisionType;
-        return {
-          ...parsedContent,
-          _id: idModule.lib.buildId(),
-          dateDecision: parsedContent.dateDecision,
-        };
-      });
+    return courtDecisions.map(({ content }) => {
+      const parsedContent = JSON.parse(content) as decisionType;
+      return {
+        ...parsedContent,
+        _id: idModule.lib.buildId(),
+        dateDecision: parsedContent.dateDecision,
+      };
+    });
   },
 
   async fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, sourceName) {
@@ -50,14 +49,14 @@ const sderLocalApi: sderApiType = {
     });
 
     return mappedCourtDecisions.filter(
-      courtDecision =>
+      (courtDecision) =>
         sourceIds.includes(courtDecision.sourceId) &&
         courtDecision.sourceName === sourceName,
     );
   },
 
   async setCourtDecisionsLoaded() {},
-  
+
   async setCourtDecisionsToBeTreated() {},
 
   async setCourtDecisionDone() {},

@@ -305,7 +305,9 @@ const fr = {
       },
       columnTitles: {
         number: { title: 'N° décision', tooltipText: 'Numéro de la décision' },
+        occultationBlock: { title: 'Bloc', tooltipText: "Bloc d'occultation" },
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
+        session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
         workingUser: { title: 'Agent', tooltipText: 'Agent principal' },
         reviewStatus: { title: 'Relecture', tooltipText: 'Statut de relecture' },
@@ -354,7 +356,9 @@ const fr = {
       },
       columnTitles: {
         number: 'N° décision',
+        occultationBlock: { title: 'Bloc', tooltipText: "Bloc d'occultation" },
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
+        session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
         userName: 'Attribué à',
         status: 'Statut',

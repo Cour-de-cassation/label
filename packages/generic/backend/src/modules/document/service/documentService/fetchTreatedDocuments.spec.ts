@@ -115,11 +115,15 @@ describe('fetchTreatedDocuments', () => {
 });
 
 function projectTreatedDocumentDocument(document: documentType) {
-  return projectFakeObjects(document, [
-    '_id',
-    'documentNumber',
-    'publicationCategory',
-    'reviewStatus',
-    'source',
-  ]);
+  return {
+    ...projectFakeObjects(document, [
+      '_id',
+      'documentNumber',
+      'publicationCategory',
+      'reviewStatus',
+      'source',
+    ]),
+    session: document.decisionMetadata.session,
+    occultationBlock: document.decisionMetadata.occultationBlock,
+  };
 }

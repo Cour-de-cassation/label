@@ -177,6 +177,15 @@ function UntreatedDocumentsTable(props: {
         width: 3,
       },
       {
+        id: 'occultationBlock',
+        title: wordings.untreatedDocumentsPage.table.columnTitles.occultationBlock.title,
+        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.occultationBlock.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '',
+        getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
+        width: 3,
+      },
+      {
         id: 'publicationCategory',
         title: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.title,
         tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
@@ -193,6 +202,14 @@ function UntreatedDocumentsTable(props: {
           </div>
         ),
         width: 2,
+      },
+      {
+        id: 'session',
+        title: wordings.untreatedDocumentsPage.table.columnTitles.session.title,
+        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.session.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.session,
+        width: 3,
       },
       {
         id: 'source',

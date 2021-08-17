@@ -65,7 +65,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
 
   async function deletePropertiesForMany(
     filter: Partial<T>,
-    fieldNames: Array<keyof T>,
+    fieldNames: Array<string>,
   ) {
     updateFakeCollection(
       collection,

@@ -13,6 +13,7 @@ async function fetchUntreatedDocuments() {
     [
       '_id',
       'creationDate',
+      'decisionMetadata',
       'documentNumber',
       'publicationCategory',
       'source',
@@ -49,8 +50,10 @@ async function fetchUntreatedDocuments() {
       document: {
         _id: untreatedDocument._id,
         creationDate: untreatedDocument.creationDate,
-        publicationCategory: untreatedDocument.publicationCategory,
         documentNumber: untreatedDocument.documentNumber,
+        occultationBlock: untreatedDocument.decisionMetadata.occultationBlock,
+        publicationCategory: untreatedDocument.publicationCategory,
+        session: untreatedDocument.decisionMetadata.session,
         source: untreatedDocument.source,
         status: untreatedDocument.status,
       },

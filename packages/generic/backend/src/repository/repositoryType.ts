@@ -19,7 +19,7 @@ type repositoryType<T extends { _id: idType }> = {
   insertMany: (newObjects: T[]) => Promise<void>;
   deletePropertiesForMany: (
     filter: Partial<T>,
-    fieldNames: Array<keyof T>,
+    fieldNames: Array<string>,
   ) => Promise<void>;
   setIndexes: () => Promise<void>;
   updateOne: (id: idType, objectFields: Partial<T>) => Promise<T | undefined>;

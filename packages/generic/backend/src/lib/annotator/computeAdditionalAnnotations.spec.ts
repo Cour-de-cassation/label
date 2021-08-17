@@ -32,6 +32,9 @@ describe('computeAdditionalAnnotations', () => {
         categoriesToOmit: [],
         chamberName: '',
         juridiction: '',
+        occultationBlock: undefined,
+        session: '',
+        solution: '',
       },
     });
 

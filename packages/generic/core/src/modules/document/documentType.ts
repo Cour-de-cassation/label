@@ -16,6 +16,15 @@ const documentModelCommonFields = {
       categoriesToOmit: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       chamberName: { kind: 'primitive', content: 'string' },
       juridiction: { kind: 'primitive', content: 'string' },
+      occultationBlock: {
+        kind: 'or',
+        content: [
+          { kind: 'primitive', content: 'number' },
+          { kind: 'primitive', content: 'undefined' },
+        ],
+      },
+      session: { kind: 'primitive', content: 'string' },
+      solution: { kind: 'primitive', content: 'string' },
     },
   },
   documentNumber: { kind: 'primitive', content: 'number' },

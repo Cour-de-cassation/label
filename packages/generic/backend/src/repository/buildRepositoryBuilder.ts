@@ -122,7 +122,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
 
     async function deletePropertiesForMany(
       filter: Partial<T>,
-      fieldNames: Array<keyof T>,
+      fieldNames: Array<string>,
     ) {
       await collection.updateMany(filter, buildUnsetQuery(fieldNames));
     }
@@ -164,7 +164,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       );
     }
 
-    function buildUnsetQuery(fieldNames: Array<keyof T>) {
+    function buildUnsetQuery(fieldNames: Array<string>) {
       return {
         $unset: fieldNames.reduce(
           (accumulator, fieldName) => ({ ...accumulator, [fieldName]: 1 }),

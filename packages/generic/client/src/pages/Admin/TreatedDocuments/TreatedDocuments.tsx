@@ -150,9 +150,18 @@ function TreatedDocuments(props: {
       {
         id: 'documentNumber',
         title: wordings.treatedDocumentsPage.table.columnTitles.number.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.number.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.number.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.documentNumber,
+        width: 3,
+      },
+      {
+        id: 'occultationBlock',
+        title: wordings.treatedDocumentsPage.table.columnTitles.occultationBlock.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.occultationBlock.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '',
+        getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
         width: 3,
       },
       {
@@ -172,6 +181,14 @@ function TreatedDocuments(props: {
           </div>
         ),
         width: 2,
+      },
+      {
+        id: 'session',
+        title: wordings.treatedDocumentsPage.table.columnTitles.session.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.session.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.session,
+        width: 3,
       },
       {
         id: 'source',

@@ -7,8 +7,10 @@ export { setOrderByProperty, getOrderByProperty, untreatedDocumentOrderByPropert
 
 const untreatedDocumentOrderByProperties = [
   'documentNumber',
-  'source',
+  'occultationBlock',
   'publicationCategory',
+  'session',
+  'source',
   'userName',
   'status',
   'creationDate',

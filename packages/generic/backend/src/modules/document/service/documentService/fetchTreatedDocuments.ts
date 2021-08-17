@@ -18,7 +18,14 @@ async function fetchTreatedDocuments(settings: settingsType) {
 
   const treatedDocuments = await documentRepository.findAllByStatusProjection(
     ['done', 'toBePublished'],
-    ['_id', 'documentNumber', 'publicationCategory', 'reviewStatus', 'source'],
+    [
+      '_id',
+      'decisionMetadata',
+      'documentNumber',
+      'publicationCategory',
+      'reviewStatus',
+      'source',
+    ],
   );
 
   const documentIds = treatedDocuments.map(({ _id }) => _id);
@@ -65,8 +72,10 @@ async function fetchTreatedDocuments(settings: settingsType) {
       document: {
         _id: treatedDocument._id,
         documentNumber: treatedDocument.documentNumber,
+        occultationBlock: treatedDocument.decisionMetadata.occultationBlock,
         publicationCategory: treatedDocument.publicationCategory,
         reviewStatus: treatedDocument.reviewStatus,
+        session: treatedDocument.decisionMetadata.session,
         source: treatedDocument.source,
       },
       totalTreatmentDuration,

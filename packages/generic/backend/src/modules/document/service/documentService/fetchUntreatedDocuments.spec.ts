@@ -1,4 +1,9 @@
-import { assignationModule, documentModule, userModule } from '@label/core';
+import {
+  assignationModule,
+  documentModule,
+  documentType,
+  userModule,
+} from '@label/core';
 import { projectFakeObjects } from '../../../../repository';
 import { buildAssignationRepository } from '../../../assignation/repository';
 import { buildUserRepository } from '../../../user/repository';
@@ -57,38 +62,32 @@ describe('fetchUntreatedDocuments', () => {
 
     expect(untreatedDocuments.sort()).toEqual([
       {
-        document: projectFakeObjects(freeDocument, [
-          '_id',
-          'documentNumber',
-          'publicationCategory',
-          'source',
-          'status',
-          'creationDate',
-        ]),
+        document: projectDocument(freeDocument),
         userNames: [],
       },
       {
-        document: projectFakeObjects(pendingDocument, [
-          '_id',
-          'documentNumber',
-          'publicationCategory',
-          'source',
-          'status',
-          'creationDate',
-        ]),
+        document: projectDocument(pendingDocument),
         userNames: ['NAME'],
       },
       {
-        document: projectFakeObjects(savedDocument, [
-          '_id',
-          'documentNumber',
-          'publicationCategory',
-          'source',
-          'status',
-          'creationDate',
-        ]),
+        document: projectDocument(savedDocument),
         userNames: ['NAME'],
       },
     ]);
   });
 });
+
+function projectDocument(document: documentType) {
+  return {
+    ...projectFakeObjects(document, [
+      '_id',
+      'documentNumber',
+      'publicationCategory',
+      'source',
+      'status',
+      'creationDate',
+    ]),
+    session: document.decisionMetadata.session,
+    occultationBlock: document.decisionMetadata.occultationBlock,
+  };
+}

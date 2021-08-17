@@ -1,3 +1,4 @@
+import { cleanDocuments } from './cleanDocuments';
 import { clearDb } from './clearDb';
 import {
   createMigrationFile,
@@ -12,6 +13,7 @@ import { purgeDb } from './purgeDb';
 import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
 
 export {
+  cleanDocuments,
   clearDb,
   createMigrationFile,
   extractMonitoringEntriesIntoCsv,

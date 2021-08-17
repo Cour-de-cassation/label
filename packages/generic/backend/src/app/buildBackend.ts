@@ -3,6 +3,7 @@ import { environmentType } from '../lib/environment';
 import { buildRunScript } from './buildRunScript';
 import { buildRunServer } from './buildRunServer';
 import {
+  cleanDocuments,
   clearDb,
   createMigrationFile,
   extractMonitoringEntriesIntoCsv,
@@ -26,6 +27,10 @@ function buildBackend(environmentJson: string, settings: settingsType) {
     runServer,
     runScript,
     scripts: {
+      cleanDocuments: {
+        run: cleanDocuments,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
       clearDb: {
         run: clearDb,
         option: { shouldLoadDb: true, shouldExit: false },

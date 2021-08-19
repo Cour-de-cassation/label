@@ -83,7 +83,6 @@
       "lightMode": ["brown", 200],
       "darkMode": ["brown", 800]
     },
-    "isAnonymized": false,
     "iconName": "hammer",
     "order": 8,
     "text": "Magistrat / membre du greffe"

@@ -1,6 +1,7 @@
 import { idModule } from '@label/core';
 import { assignationService } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
+import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 
 export { cleanDocuments };
@@ -35,11 +36,12 @@ async function cleanDocuments() {
 
   for (const loadedDocumentId of loadedDocumentsIds) {
     logger.log(
-      `Deleting assignations, treatments and problemReports for ${idModule.lib.convertToString(
+      `Deleting assignations and related treatments and problemReports for ${idModule.lib.convertToString(
         loadedDocumentId,
       )}`,
     );
     await assignationService.deleteAssignationsByDocumentId(loadedDocumentId);
+    await treatmentService.deleteTreatmentsByDocumentId(loadedDocumentId);
   }
 
   logger.log('Done');

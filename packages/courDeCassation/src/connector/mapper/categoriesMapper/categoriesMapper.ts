@@ -38,7 +38,10 @@ const categoriesMapper = {
       ];
     }
 
-    if (categoriesToOmit.includes('personneMorale')) {
+    if (
+      categoriesToOmit.includes('personneMorale') &&
+      !categoriesToOmit.includes('numeroSiretSiren')
+    ) {
       categoriesToOmit = [...categoriesToOmit, 'numeroSiretSiren'];
     }
 

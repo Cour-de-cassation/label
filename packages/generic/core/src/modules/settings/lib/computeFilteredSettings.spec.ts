@@ -6,7 +6,7 @@ describe('computeFilteredSettings', () => {
   const additionalAnnotationCategory = additionalAnnotationCategoryHandler.getCategoryName();
   const settings = buildSettings({
     prenom: { order: 1, text: 'Prénom', status: 'hidden' },
-    nom: { order: 2, text: 'Nom', status: 'visible' },
+    nom: { order: 2, text: 'Nom', status: 'alwaysVisible' },
     adresse: { order: 3, text: 'Adresse', status: 'annotable' },
     [additionalAnnotationCategory]: { order: 4, text: 'Occultation supplémentaire', status: 'hidden' },
   });
@@ -16,7 +16,7 @@ describe('computeFilteredSettings', () => {
 
     const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate);
     expect(filteredSettings['prenom'].status).toBe('hidden');
-    expect(filteredSettings['nom'].status).toBe('annotable');
+    expect(filteredSettings['nom'].status).toBe('alwaysVisible');
     expect(filteredSettings['adresse'].status).toBe('annotable');
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
@@ -28,7 +28,7 @@ describe('computeFilteredSettings', () => {
     const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate);
 
     expect(filteredSettings['prenom'].status).toBe('annotable');
-    expect(filteredSettings['nom'].status).toBe('visible');
+    expect(filteredSettings['nom'].status).toBe('alwaysVisible');
     expect(filteredSettings['adresse'].status).toBe('annotable');
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
@@ -40,7 +40,7 @@ describe('computeFilteredSettings', () => {
     const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate);
 
     expect(filteredSettings['prenom'].status).toBe('annotable');
-    expect(filteredSettings['nom'].status).toBe('annotable');
+    expect(filteredSettings['nom'].status).toBe('alwaysVisible');
     expect(filteredSettings['adresse'].status).toBe('annotable');
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
@@ -52,7 +52,7 @@ describe('computeFilteredSettings', () => {
     const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate);
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
-    expect(filteredSettings['nom'].status).toBe('visible');
+    expect(filteredSettings['nom'].status).toBe('alwaysVisible');
     expect(filteredSettings['adresse'].status).toBe('annotable');
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('annotable');
   });

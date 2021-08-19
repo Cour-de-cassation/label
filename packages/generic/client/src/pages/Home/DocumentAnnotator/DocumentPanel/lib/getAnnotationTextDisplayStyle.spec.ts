@@ -4,7 +4,7 @@ import { getAnnotationTextDisplayStyle } from './getAnnotationTextDisplayStyle';
 describe('getAnnotationTextDisplayStyle', () => {
   const settings = settingsModule.lib.buildSettings({
     prenom: { order: 1, text: 'Prénom', status: 'hidden' },
-    nom: { order: 2, text: 'Nom', status: 'visible' },
+    nom: { order: 2, text: 'Nom', status: 'alwaysVisible' },
     adresse: { order: 3, text: 'Adresse', status: 'annotable' },
   });
 

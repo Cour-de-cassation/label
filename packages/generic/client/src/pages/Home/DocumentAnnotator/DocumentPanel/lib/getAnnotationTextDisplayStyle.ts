@@ -17,7 +17,7 @@ function getAnnotationTextDisplayStyle({
   switch (categoryStatus) {
     case 'hidden':
       return 'none';
-    case 'visible':
+    case 'alwaysVisible':
       return 'underlined';
     case 'annotable':
       switch (documentViewerMode.kind) {

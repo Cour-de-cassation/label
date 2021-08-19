@@ -73,7 +73,7 @@
     "iconName": "hammer",
     "isAnonymized": false,
     "order": 7,
-    "status": "visible",
+    "status": "alwaysVisible",
     "text": "Avocat"
   },
   "professionnelMagistratGreffier": {

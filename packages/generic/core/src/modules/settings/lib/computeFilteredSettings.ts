@@ -10,6 +10,9 @@ function computeFilteredSettings(
   additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'],
 ) {
   const settingsForDocument = Object.entries(settings).reduce((accumulator, [category, categorySetting]) => {
+    if (categorySetting.status === 'alwaysVisible') {
+      return { ...accumulator, [category]: categorySetting };
+    }
     if (category === additionalAnnotationCategoryHandler.getCategoryName()) {
       if (!!additionalTermsToAnnotate) {
         return {

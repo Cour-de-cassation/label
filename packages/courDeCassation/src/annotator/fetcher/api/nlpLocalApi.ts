@@ -26,7 +26,7 @@ const nlpLocalApi: nlpApiType = {
       ...annotations,
       entities: annotations.entities.filter((entity) =>
         settingsModule.lib
-          .getCategories(filteredSettings, ['annotable', 'visible'])
+          .getCategories(filteredSettings, ['annotable', 'alwaysVisible'])
           .includes(entity.label),
       ),
     };

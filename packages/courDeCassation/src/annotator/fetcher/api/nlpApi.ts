@@ -27,7 +27,7 @@ const nlpApi: nlpApiType = {
       source: document.source,
       meta: document.metadata !== '' ? document.metadata : undefined,
       categories: settingsModule.lib.getCategories(filteredSettings, [
-        'visible',
+        'alwaysVisible',
         'annotable',
       ]),
     };

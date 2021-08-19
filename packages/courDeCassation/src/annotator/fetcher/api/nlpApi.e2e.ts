@@ -4,8 +4,7 @@ import { nlpApi } from './nlpApi';
 describe('nlpApi', () => {
   it('should fetch the annotations of a given document', async () => {
     const settings = settingsModule.lib.buildSettings({
-      personnePhysiquePrenom: {},
-      personnePhysiqueNom: {},
+      personnePhysique: {},
       adresse: {},
     });
     const document = documentModule.generator.generate({
@@ -20,14 +19,14 @@ describe('nlpApi', () => {
         text: 'François',
         start: 0,
         end: 8,
-        label: 'personnePhysiquePrenom',
+        label: 'personnePhysique',
         source: 'NER model',
       },
       {
         text: 'Dubois',
         start: 9,
         end: 15,
-        label: 'personnePhysiqueNom',
+        label: 'personnePhysique',
         source: 'NER model',
       },
       {

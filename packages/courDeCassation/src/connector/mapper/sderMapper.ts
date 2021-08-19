@@ -9,6 +9,7 @@ import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
 } from './extractors';
+import { categoriesMapper } from './categoriesMapper';
 
 export { sderMapper };
 
@@ -45,6 +46,10 @@ function mapCourtDecisionToDocument(
 
   const criticity = computeCriticity();
 
+  const categoriesToOmit = categoriesMapper.mapSderCategoriesToLabelCategories(
+    sderCourtDecision.occultation?.categoriesToOmit,
+  );
+
   return documentModule.lib.buildDocument({
     creationDate: new Date().getTime(),
     criticity,
@@ -52,7 +57,7 @@ function mapCourtDecisionToDocument(
       additionalTermsToAnnotate:
         sderCourtDecision.occultation?.additionalTerms || '',
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
-      categoriesToOmit: sderCourtDecision.occultation?.categoriesToOmit || [],
+      categoriesToOmit,
       chamberName: readableChamberName,
       juridiction: readableJurisdictionName,
       occultationBlock: sderCourtDecision.blocOccultation || undefined,

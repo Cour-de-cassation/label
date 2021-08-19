@@ -1,5 +1,5 @@
 {
-  "personnePhysiqueNom": {
+  "personnePhysique": {
     "anonymization": "[%c]",
     "color": {
       "lightMode": ["deepOrange", 300],
@@ -8,18 +8,7 @@
     "iconName": "person",
     "isSensitive": true,
     "order": 1,
-    "text": "Nom de famille"
-  },
-  "personnePhysiquePrenom": {
-    "anonymization": "[%c]",
-    "color": {
-      "lightMode": ["deepOrange", 100],
-      "darkMode": ["deepOrange", 400]
-    },
-    "iconName": "person",
-    "isSensitive": true,
-    "order": 2,
-    "text": "Prénom"
+    "text": "Personne physique"
   },
   "adresse": {
     "anonymization": "[Adresse %d]",
@@ -28,7 +17,7 @@
       "darkMode": ["blue", 800]
     },
     "iconName": "location",
-    "order": 3,
+    "order": 2,
     "text": "Adresse"
   },
   "localite": {
@@ -38,7 +27,7 @@
       "darkMode": ["blue", 900]
     },
     "iconName": "city",
-    "order": 4,
+    "order": 3,
     "text": "Localité"
   },
   "personneMorale": {
@@ -47,11 +36,22 @@
       "lightMode": ["deepPurple", 100],
       "darkMode": ["deepPurple", 400]
     },
-    "couldBe": "personnePhysiqueNom",
+    "couldBe": "personnePhysique",
+    "iconName": "work",
+    "isAnonymized": false,
+    "order": 4,
+    "text": "Personne morale"
+  },
+  "numeroSiretSiren": {
+    "anonymization": "[N° SIRET/SIREN %d]",
+    "color": {
+      "lightMode": ["deepPurple", 200],
+      "darkMode": ["deepPurple", 500]
+    },
     "iconName": "work",
     "isAnonymized": false,
     "order": 5,
-    "text": "Personne morale"
+    "text": "N° SIRET/SIREN"
   },
   "etablissement": {
     "anonymization": "[Établissement %d]",
@@ -64,30 +64,29 @@
     "status": "visible",
     "text": "Établissement"
   },
-  "professionnelNom": {
-    "anonymization": "[...]",
+  "professionnelAvocat": {
+    "anonymization": "",
     "color": {
       "lightMode": ["brown", 100],
       "darkMode": ["brown", 500]
     },
-    "couldBe": "personnePhysiqueNom",
+    "couldBe": "personnePhysique",
     "iconName": "hammer",
     "isAnonymized": false,
     "order": 7,
     "status": "visible",
-    "text": "Professionnel (nom)"
+    "text": "Avocat"
   },
-  "professionnelPrenom": {
-    "anonymization": "[...]",
+  "professionnelMagistratGreffier": {
+    "anonymization": "[professionnel %c]",
     "color": {
       "lightMode": ["brown", 200],
       "darkMode": ["brown", 800]
     },
-    "couldBe": "personnePhysiquePrenom",
-    "iconName": "hammer",
     "isAnonymized": false,
+    "iconName": "hammer",
     "order": 8,
-    "text": "Professionnel (prénom)"
+    "text": "Magistrat / membre du greffe"
   },
   "dateNaissance": {
     "anonymization": "[Date naissance %d]",

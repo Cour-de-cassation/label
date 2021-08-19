@@ -1,0 +1,1 @@
+export { categoriesMapper } from './categoriesMapper';

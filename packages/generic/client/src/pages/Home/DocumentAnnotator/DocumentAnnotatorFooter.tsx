@@ -6,6 +6,7 @@ import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
+import { useAnonymizerBuilder } from '../../../services/anonymizer';
 
 export { DocumentAnnotatorFooter };
 
@@ -13,14 +14,15 @@ function DocumentAnnotatorFooter(props: {
   onStopAnnotatingDocument?: (status: documentType['status']) => Promise<void>;
 }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
+  const anonymizerBuilder = useAnonymizerBuilder();
   const theme = useCustomTheme();
   const [isValidating, setIsValidating] = useState(false);
   const { addMonitoringEntry } = useMonitoring();
 
   const styles = buildStyles(theme);
   const annotatorState = annotatorStateHandler.get();
-  const anonymizer = annotatorStateHandler.getAnonymizer();
-
+  // const anonymizer = annotatorStateHandler.getAnonymizer();
+  const anonymizer = anonymizerBuilder.get();
   return (
     <div style={styles.footer}>
       <div style={styles.leftContainer}>
@@ -100,7 +102,7 @@ function DocumentAnnotatorFooter(props: {
   }
 
   async function copyToClipboard() {
-    const anonymizedDocument = anonymizer.anonymizeDocument(annotatorState.document, annotatorState.annotations);
+    const anonymizedDocument = anonymizer.anonymizeDocument(annotatorState.document);
     await navigator.clipboard.writeText(anonymizedDocument.text);
   }
 

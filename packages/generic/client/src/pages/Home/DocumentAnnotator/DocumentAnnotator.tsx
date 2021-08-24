@@ -9,6 +9,7 @@ import { DocumentPanel } from './DocumentPanel';
 import { useKeyboardShortcutsHandler } from './hooks';
 import { annotationPerCategoryAndEntityType, getSplittedTextByLine, groupByCategoryAndEntity } from './lib';
 import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
+import { AnonymizerBuilderContextProvider } from '../../../services/anonymizer';
 
 export { DocumentAnnotator };
 
@@ -31,23 +32,29 @@ function DocumentAnnotator(props: {
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
 
   return (
-    <DocumentViewerModeHandlerContextProvider>
-      <>
-        <div style={styles.annotatorBody}>
-          <div style={styles.leftContainer}>
-            <AnnotationsPanel
-              document={annotatorState.document}
-              annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
-              splittedTextByLine={splittedTextByLine}
-            />
+    <AnonymizerBuilderContextProvider
+      annotations={annotatorState.annotations}
+      document={annotatorState.document}
+      settings={annotatorState.settings}
+    >
+      <DocumentViewerModeHandlerContextProvider>
+        <>
+          <div style={styles.annotatorBody}>
+            <div style={styles.leftContainer}>
+              <AnnotationsPanel
+                document={annotatorState.document}
+                annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
+                splittedTextByLine={splittedTextByLine}
+              />
+            </div>
+            <div style={styles.rightContainer}>
+              <DocumentPanel splittedTextByLine={splittedTextByLine} />
+            </div>
           </div>
-          <div style={styles.rightContainer}>
-            <DocumentPanel splittedTextByLine={splittedTextByLine} />
-          </div>
-        </div>
-        <DocumentAnnotatorFooter onStopAnnotatingDocument={props.onStopAnnotatingDocument} />
-      </>
-    </DocumentViewerModeHandlerContextProvider>
+          <DocumentAnnotatorFooter onStopAnnotatingDocument={props.onStopAnnotatingDocument} />
+        </>
+      </DocumentViewerModeHandlerContextProvider>
+    </AnonymizerBuilderContextProvider>
   );
 
   function onRevertState() {

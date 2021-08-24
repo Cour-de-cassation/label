@@ -149,7 +149,6 @@ const fr = {
     originalText: 'Texte original',
     problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
     problemType: 'Type de problème',
-    pseudonymisation: 'Pseudonymisation',
     publishedDocument: 'Cette décision sera publiée',
     redo: 'Rétablir',
     reportProblem: 'Signaler un problème',

@@ -5,7 +5,6 @@ import {
   settingsType,
   idModule,
   settingsModule,
-  buildAnonymizer,
   documentModule,
 } from '@label/core';
 import { MainHeader } from '../../components';
@@ -42,7 +41,6 @@ function DocumentSwitcher(props: {
         return (
           <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
             <HomeDocumentAnnotator
-              buildAnonymiser={() => buildAnonymizer(settingsForDocument)}
               committer={buildAnnotationsCommitter()}
               settings={settingsForDocument}
               document={documentState.choice.document}

@@ -3,13 +3,11 @@ import { annotationHandler, annotationType, settingsModule } from '@label/core';
 import { CategoryIcon, Header, Text } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
-import { wordings } from '../../../../../wordings';
 
 export { AnnotationTooltipMenuHeader };
 
 function AnnotationTooltipMenuHeader(props: { annotation: annotationType; isAnonymizedView: boolean }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const anonymizer = annotatorStateHandler.getAnonymizer();
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const annotatorState = annotatorStateHandler.get();
@@ -32,12 +30,6 @@ function AnnotationTooltipMenuHeader(props: { annotation: annotationType; isAnon
         style={style.header}
         variant="mainLeft"
       />
-      <Text variant="body1">
-        {`${props.isAnonymizedView ? wordings.homePage.originalText : wordings.homePage.pseudonymisation} : `}
-        <Text inline variant="body2">
-          {props.isAnonymizedView ? props.annotation.text : anonymizer.anonymize(props.annotation)}
-        </Text>
-      </Text>
     </>
   );
 

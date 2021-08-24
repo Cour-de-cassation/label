@@ -1,5 +1,6 @@
 import {
   buildAnonymizer,
+  documentModule,
   settingsType,
   treatmentModule,
   treatmentType,
@@ -35,18 +36,17 @@ function buildExporter(
           }`,
         );
         const document = documentsReadyToExport[index];
-        const anonymizer = buildAnonymizer(settings);
 
         const treatments = await treatmentService.fetchTreatmentsByDocumentId(
           document._id,
         );
+        const annotations = treatmentModule.lib.computeAnnotations(treatments);
+        const seed = documentModule.lib.computeCaseNumber(document);
+        const anonymizer = buildAnonymizer(settings, annotations, seed);
 
         await exporterConfig.sendDocumentPseudonymisationAndTreatments({
           externalId: document.externalId,
-          pseudonymizationText: anonymizer.anonymizeDocument(
-            document,
-            treatmentModule.lib.computeAnnotations(treatments),
-          ).text,
+          pseudonymizationText: anonymizer.anonymizeDocument(document).text,
           labelTreatments: buildLabelTreatments(treatments),
         });
 

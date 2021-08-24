@@ -1,6 +1,5 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
-import { buildAnonymizer, documentModule } from '@label/core';
-import { clientAnonymizerType } from '../../types';
+import { documentModule } from '@label/core';
 import { annotationsCommitterType } from './buildAnnotationsCommitter';
 import { annotatorStateType } from './annotatorStateType';
 import { annotatorStateHandlerType, buildAnnotatorStateHandler } from './buildAnnotatorStateHandler';
@@ -20,12 +19,10 @@ const AnnotatorStateHandlerContext = createContext<annotatorStateHandlerType>({
   restore: () => null,
   revert: () => null,
   set: () => null,
-  getAnonymizer: () => buildAnonymizer({}),
 });
 
 function AnnotatorStateHandlerContextProvider(props: {
   autoSaver: autoSaverType;
-  buildAnonymizer: () => clientAnonymizerType;
   children: ReactNode;
   committer: annotationsCommitterType;
   initialAnnotatorState: annotatorStateType;
@@ -34,7 +31,6 @@ function AnnotatorStateHandlerContextProvider(props: {
   const { annotatorStateHandler } = buildAnnotatorStateHandler({
     annotatorState,
     autoSaver: props.autoSaver,
-    buildAnonymizer: props.buildAnonymizer,
     committer: props.committer,
     setAnnotatorState,
     resetAnnotatorState: () => setAnnotatorState(props.initialAnnotatorState),

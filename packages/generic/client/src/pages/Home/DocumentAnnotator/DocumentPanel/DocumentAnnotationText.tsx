@@ -7,12 +7,16 @@ import { positionType } from '../../../../types';
 import { MouseMoveListener, useMousePosition } from '../../../../utils';
 import { getAnnotationTextDisplayStyle } from './lib';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
+import { useAnonymizerBuilder } from '../../../../services/anonymizer';
 
 export { DocumentAnnotationText };
 
 function DocumentAnnotationText(props: { annotation: annotationType }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const anonymizer = annotatorStateHandler.getAnonymizer();
+  const anonymizerBuilder = useAnonymizerBuilder();
+
+  const anonymizer = anonymizerBuilder.get();
+
   const [isTooltipMenuVisible, setIsTooltipMenuVisible] = useState(false);
   const [isTooltipMenuExpanded, setIsTooltipMenuExpanded] = useState(false);
   const theme = useCustomTheme();

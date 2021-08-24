@@ -16,14 +16,13 @@ import {
 } from '../../services/annotatorState';
 import { useMonitoring } from '../../services/monitoring';
 import { useAlert } from '../../services/alert';
-import { clientAnonymizerType } from '../../types';
 import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
 
 export { HomeDocumentAnnotator };
+
 function HomeDocumentAnnotator(props: {
   annotations: annotationType[];
-  buildAnonymiser: () => clientAnonymizerType;
   committer: annotationsCommitterType;
   document: fetchedDocumentType;
   fetchNewDocumentsForUser: () => void;
@@ -42,7 +41,6 @@ function HomeDocumentAnnotator(props: {
   return (
     <AnnotatorStateHandlerContextProvider
       autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: props.document._id })}
-      buildAnonymizer={props.buildAnonymiser}
       committer={props.committer}
       initialAnnotatorState={{
         annotations: props.annotations,

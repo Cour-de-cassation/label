@@ -3,6 +3,7 @@ import { documentModel, documentType, fetchedDocumentModel, fetchedDocumentType 
 import {
   buildDocument,
   comparator,
+  computeCaseNumber,
   countWords,
   extractAdditionalAnnotationTerms,
   getNextStatus,
@@ -17,5 +18,13 @@ const documentModule = {
   fetchedModel: fetchedDocumentModel,
   model: documentModel,
   generator: documentGenerator,
-  lib: { buildDocument, comparator, countWords, extractAdditionalAnnotationTerms, getNextStatus, publicationHandler },
+  lib: {
+    buildDocument,
+    comparator,
+    computeCaseNumber,
+    countWords,
+    extractAdditionalAnnotationTerms,
+    getNextStatus,
+    publicationHandler,
+  },
 };

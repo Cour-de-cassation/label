@@ -1,5 +1,4 @@
 import { annotationsDiffType } from '@label/core';
-import { clientAnonymizerType } from '../../types';
 import { annotatorStateType } from './annotatorStateType';
 import { annotationsCommitterType } from './buildAnnotationsCommitter';
 import { autoSaverType } from './buildAutoSaver';
@@ -16,26 +15,21 @@ type annotatorStateHandlerType = {
   canRevert: () => boolean;
   canRestore: () => boolean;
   reinitialize: () => void;
-  getAnonymizer: () => clientAnonymizerType;
 };
 
 function buildAnnotatorStateHandler({
   annotatorState,
   autoSaver,
-  buildAnonymizer,
   committer,
   resetAnnotatorState,
   setAnnotatorState,
 }: {
   annotatorState: annotatorStateType;
   autoSaver: autoSaverType;
-  buildAnonymizer: () => clientAnonymizerType;
   committer: annotationsCommitterType;
   resetAnnotatorState: () => void;
   setAnnotatorState: (annotatorState: annotatorStateType) => void;
 }): { annotatorStateHandler: annotatorStateHandlerType } {
-  let anonymizer = buildAnonymizer();
-
   return {
     annotatorStateHandler: {
       get: () => annotatorState,
@@ -45,7 +39,6 @@ function buildAnnotatorStateHandler({
       canRevert: canRevertAnnotatorState,
       canRestore: canRestoreAnnotatorState,
       reinitialize: reinitializeAnnotatorState,
-      getAnonymizer,
     },
   };
 
@@ -89,12 +82,7 @@ function buildAnnotatorStateHandler({
     return committer.canRestore();
   }
 
-  function getAnonymizer() {
-    return anonymizer;
-  }
-
   function onAnnotatorStateChange(commit: annotationsDiffType) {
-    anonymizer = buildAnonymizer();
     autoSaver.saveCommit(commit);
   }
 }

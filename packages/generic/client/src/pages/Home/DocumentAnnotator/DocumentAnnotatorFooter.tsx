@@ -21,8 +21,8 @@ function DocumentAnnotatorFooter(props: {
 
   const styles = buildStyles(theme);
   const annotatorState = annotatorStateHandler.get();
-  // const anonymizer = annotatorStateHandler.getAnonymizer();
   const anonymizer = anonymizerBuilder.get();
+
   return (
     <div style={styles.footer}>
       <div style={styles.leftContainer}>

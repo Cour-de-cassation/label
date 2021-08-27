@@ -1,6 +1,6 @@
 import { AdminMenu } from './AdminMenu';
 import { CategoryIcon } from './CategoryIcon';
-import { DecisionNumberTextInput } from './DecisionNumberTextInput';
+import { DocumentNumberTextInput } from './DocumentNumberTextInput';
 import { DocumentReviewStatusIcon } from './DocumentReviewStatusIcon';
 import { DocumentStatusIcon } from './DocumentStatusIcon';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
@@ -18,7 +18,7 @@ export {
   AdminMenu,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
-  DecisionNumberTextInput,
+  DocumentNumberTextInput,
   DocumentReviewStatusIcon,
   DocumentStatusIcon,
   FilterButton,

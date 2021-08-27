@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { flatten, uniq } from 'lodash';
 import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator } from '@label/core';
 import {
-  DecisionNumberTextInput,
+  DocumentNumberTextInput,
   DocumentReviewStatusIcon,
   IconButton,
   PublicationCategoryBadge,
@@ -29,15 +29,18 @@ function TreatedDocuments(props: {
 }) {
   const theme = useCustomTheme();
   const INITIAL_FILTER_VALUES = localStorage.treatedDocumentsStateHandler.getFilters();
+  const INITIAL_SEARCHED_DOCUMENT_NUMBER = localStorage.treatedDocumentsStateHandler.getSearchedDocumentNumber();
   const [filterValues, setFilterValues] = useState<treatedDocumentFilterType>(INITIAL_FILTER_VALUES);
-  const [searchedDecisionNumber, setSearchedDecisionNumber] = useState<number | undefined>();
+  const [searchedDecisionNumber, setSearchedDocumentNumber] = useState<number | undefined>(
+    INITIAL_SEARCHED_DOCUMENT_NUMBER,
+  );
   const styles = buildStyles(theme);
 
   const filterInfo = extractFilterInfoFromTreatedDocuments(props.treatedDocuments);
   const treatmentsInfo = extractTreatmentsInfo(props.treatedDocuments);
   const treatmentFields = buildTreatedDocumentsFields(treatmentsInfo);
   const filteredTreatedDocuments = searchedDecisionNumber
-    ? filterSearchedDecisions(props.treatedDocuments, searchedDecisionNumber)
+    ? filterSearchedDocuments(props.treatedDocuments, searchedDecisionNumber)
     : getFilteredTreatedDocuments(props.treatedDocuments, treatmentsInfo, filterValues);
 
   return (
@@ -53,7 +56,7 @@ function TreatedDocuments(props: {
             />
             <div style={styles.tableRightHeader}>
               <div style={styles.searchTextInputContainer}>
-                <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
+                <DocumentNumberTextInput value={searchedDecisionNumber} onChange={setAndStoreSearchedDocumentNumber} />
               </div>
               <IconButton
                 backgroundColor="primary"
@@ -81,6 +84,11 @@ function TreatedDocuments(props: {
   function setAndStoreFilterValues(filterValues: treatedDocumentFilterType) {
     localStorage.treatedDocumentsStateHandler.setFilters(filterValues);
     setFilterValues(filterValues);
+  }
+
+  function setAndStoreSearchedDocumentNumber(searchedDocumentNumber: number | undefined) {
+    localStorage.treatedDocumentsStateHandler.setSearchedDocumentNumber(searchedDocumentNumber);
+    setSearchedDocumentNumber(searchedDocumentNumber);
   }
 
   function extractTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
@@ -268,7 +276,7 @@ function TreatedDocuments(props: {
     return treatedDocumentsFields;
   }
 
-  function filterSearchedDecisions(
+  function filterSearchedDocuments(
     treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>,
     searchedDecisionNumber: number,
   ) {

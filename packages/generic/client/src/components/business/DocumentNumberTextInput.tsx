@@ -3,14 +3,14 @@ import { IconButton, TextInput } from '../generic';
 import { wordings } from '../../wordings';
 import { customThemeType, useCustomTheme } from '../../styles';
 
-export { DecisionNumberTextInput };
+export { DocumentNumberTextInput };
 
-function DecisionNumberTextInput(props: {
+function DocumentNumberTextInput(props: {
   onChange: (decisionNumber: number | undefined) => void;
   value: number | undefined;
 }) {
   const theme = useCustomTheme();
-  const [decisionNumber, setDecisionNumber] = useState<number | undefined>();
+  const [decisionNumber, setDecisionNumber] = useState<number | undefined>(props.value);
   const styles = buildStyles(theme);
 
   return (

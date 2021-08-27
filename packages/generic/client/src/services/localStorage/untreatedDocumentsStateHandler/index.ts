@@ -5,6 +5,10 @@ import {
   untreatedDocumentOrderByProperties,
 } from './untreatedDocumentsOrderByPropertyHandler';
 import { getOrderDirection, setOrderDirection } from './untreatedDocumentsOrderDirectionHandler';
+import {
+  getSearchedDocumentNumber,
+  setSearchedDocumentNumber,
+} from './untreatedDocumentsSearchedDocumentNumberHandler';
 
 export { untreatedDocumentsStateHandler, untreatedDocumentOrderByProperties };
 
@@ -17,4 +21,6 @@ const untreatedDocumentsStateHandler = {
   setOrderByProperty,
   getOrderDirection,
   setOrderDirection,
+  getSearchedDocumentNumber,
+  setSearchedDocumentNumber,
 };

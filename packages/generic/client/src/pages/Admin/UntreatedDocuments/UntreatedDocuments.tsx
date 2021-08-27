@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf, userType } from '@label/core';
-import { DecisionNumberTextInput, IconButton } from '../../../components';
+import { DocumentNumberTextInput, IconButton } from '../../../components';
 import { localStorage, untreatedDocumentFilterType } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -16,14 +16,17 @@ function UntreatedDocuments(props: {
   refetch: () => void;
 }) {
   const INITIAL_FILTER_VALUES = localStorage.untreatedDocumentsStateHandler.getFilters();
+  const INITIAL_SEARCHED_DOCUMENT_NUMBER = localStorage.untreatedDocumentsStateHandler.getSearchedDocumentNumber();
   const [filterValues, setFilterValues] = useState<untreatedDocumentFilterType>(INITIAL_FILTER_VALUES);
-  const [searchedDecisionNumber, setSearchedDecisionNumber] = useState<number | undefined>();
+  const [searchedDocumentNumber, setSearchedDocumentNumber] = useState<number | undefined>(
+    INITIAL_SEARCHED_DOCUMENT_NUMBER,
+  );
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
   const filterInfo = extractFilterInfoFromDocuments(props.untreatedDocuments);
-  const filteredUntreatedDocuments = searchedDecisionNumber
-    ? filterSearchedDecisions(props.untreatedDocuments, searchedDecisionNumber)
+  const filteredUntreatedDocuments = searchedDocumentNumber
+    ? filterSearchedDocuments(props.untreatedDocuments, searchedDocumentNumber)
     : getFilteredUntreatedDocuments(props.untreatedDocuments, filterValues);
   return (
     <div style={styles.table}>
@@ -37,7 +40,7 @@ function UntreatedDocuments(props: {
           />
           <div style={styles.tableRightHeader}>
             <div style={styles.searchTextInputContainer}>
-              <DecisionNumberTextInput value={searchedDecisionNumber} onChange={setSearchedDecisionNumber} />
+              <DocumentNumberTextInput value={searchedDocumentNumber} onChange={setAndStoreSearchedDocumentNumber} />
             </div>
             <IconButton
               backgroundColor="primary"
@@ -63,6 +66,11 @@ function UntreatedDocuments(props: {
     setFilterValues(filterValues);
   }
 
+  function setAndStoreSearchedDocumentNumber(searchedDocumentNumber: number | undefined) {
+    localStorage.untreatedDocumentsStateHandler.setSearchedDocumentNumber(searchedDocumentNumber);
+    setSearchedDocumentNumber(searchedDocumentNumber);
+  }
+
   function getFilteredUntreatedDocuments(
     untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>,
     filterValues: untreatedDocumentFilterType,
@@ -83,12 +91,12 @@ function UntreatedDocuments(props: {
     });
   }
 
-  function filterSearchedDecisions(
+  function filterSearchedDocuments(
     untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>,
-    searchedDecisionNumber: number,
+    searchedDocumentNumber: number,
   ) {
     return untreatedDocuments.filter((untreatedDocument) =>
-      untreatedDocument.document.documentNumber.toString().includes(searchedDecisionNumber.toString()),
+      untreatedDocument.document.documentNumber.toString().includes(searchedDocumentNumber.toString()),
     );
   }
 

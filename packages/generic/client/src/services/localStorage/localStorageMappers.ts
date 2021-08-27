@@ -12,8 +12,9 @@ type localStorageMapperType<T> = {
 const localStorageMappers = {
   boolean: buildBooleanMapper(),
   date: buildDateMapper(),
-  string: buildStringMapper(),
   id: buildIdMapper(),
+  integer: buildIntegerMapper(),
+  string: buildStringMapper(),
 };
 
 function buildBooleanMapper(): localStorageMapperType<boolean> {
@@ -58,6 +59,24 @@ function buildDateMapper(): localStorageMapperType<Date> {
 
     toLocalStorage(value) {
       return value.toISOString();
+    },
+  };
+}
+
+function buildIntegerMapper(): localStorageMapperType<number> {
+  return {
+    fromLocalStorage(item) {
+      if (item) {
+        const parsedItem = parseInt(item);
+        if (!isNaN(parsedItem)) {
+          return parsedItem;
+        }
+      }
+      return undefined;
+    },
+
+    toLocalStorage(value) {
+      return value.toString();
     },
   };
 }

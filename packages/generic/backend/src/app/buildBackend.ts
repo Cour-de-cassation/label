@@ -8,6 +8,7 @@ import {
   createMigrationFile,
   extractMonitoringEntriesIntoCsv,
   freePendingDocuments,
+  insertTestStatistics,
   insertTestUsers,
   insertUser,
   purgeDb,
@@ -49,6 +50,10 @@ function buildBackend(environmentJson: string, settings: settingsType) {
       },
       insertTestUsers: {
         run: insertTestUsers,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      insertTestStatistics: {
+        run: insertTestStatistics,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       insertUser: {

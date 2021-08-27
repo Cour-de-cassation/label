@@ -5,5 +5,15 @@ import { hasher } from './hasher';
 import { httpStatusCodeHandler } from './httpStatusCodeHandler';
 import { indexer } from './indexer';
 import { keysOf } from './keysOf';
+import { buildTimer } from './timer';
 
-export { buildDependencyManager, dateBuilder, hasher, environmentHandler, httpStatusCodeHandler, indexer, keysOf };
+export {
+  buildDependencyManager,
+  buildTimer,
+  dateBuilder,
+  hasher,
+  environmentHandler,
+  httpStatusCodeHandler,
+  indexer,
+  keysOf,
+};

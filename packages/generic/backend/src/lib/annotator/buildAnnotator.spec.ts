@@ -4,6 +4,7 @@ import {
   documentModule,
   settingsModule,
 } from '@label/core';
+import { range } from 'lodash';
 import {
   documentService,
   buildDocumentRepository,
@@ -12,14 +13,12 @@ import { annotatorConfigType } from './annotatorConfigType';
 import { buildAnnotator } from './buildAnnotator';
 
 describe('buildAnnotator', () => {
+  const settings = settingsModule.lib.buildSettings({ prenom: {} });
   describe('annotateDocumentsWithoutAnnotations', () => {
     it('should annotate all the documents without annotations', async () => {
       await insertNDocumentsWithoutAnnotationsInDb(5);
       const fakeAnnotator = buildFakeAnnotatorConfig();
-      const annotator = buildAnnotator(
-        settingsModule.lib.buildSettings({}),
-        fakeAnnotator,
-      );
+      const annotator = buildAnnotator(settings, fakeAnnotator);
 
       await annotator.annotateDocumentsWithoutAnnotations();
 
@@ -32,10 +31,7 @@ describe('buildAnnotator', () => {
     it('should re annotate all the documents', async () => {
       await insertNDocumentsWithoutAnnotationsInDb(5);
       const fakeAnnotator = buildFakeAnnotatorConfig();
-      const annotator = buildAnnotator(
-        settingsModule.lib.buildSettings({}),
-        fakeAnnotator,
-      );
+      const annotator = buildAnnotator(settings, fakeAnnotator);
       await annotator.annotateDocumentsWithoutAnnotations();
 
       await annotator.reAnnotateFreeDocuments();
@@ -61,8 +57,13 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
   return {
     name: 'FAKE_ANNOTATOR',
     async fetchAnnotationOfDocument(settings, document) {
-      const annotations = [...Array(5).keys()].map(() =>
-        annotationModule.generator.generate(),
+      const category = Object.keys(settings)[0];
+      const annotations = range(5).map((_, index) =>
+        annotationModule.lib.buildAnnotation({
+          text: 'TEXT',
+          start: index * 10,
+          category,
+        }),
       );
       const report = annotationReportModule.generator.generate({
         documentId: document._id,

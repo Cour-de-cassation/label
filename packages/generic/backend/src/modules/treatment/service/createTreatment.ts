@@ -62,18 +62,14 @@ async function createTreatment(
     settingsForDocument,
   );
 
-  if (
-    !annotationsDiffModule.lib.areAnnotationsDiffCompatibleWithAnnotations(
-      treatmentModule.lib.computeAnnotations(sortedTreatments),
-      annotationsDiff,
-    )
-  ) {
-    throw new Error(
-      `Could not create treatment for documentId ${idModule.lib.convertToString(
-        documentId,
-      )}: inconsistent annotations`,
-    );
-  }
+  const actionToPerform = `create treatment for documentId ${idModule.lib.convertToString(
+    documentId,
+  )}`;
+  annotationsDiffModule.lib.assertAnnotationsDiffAreConsistent(
+    annotationsDiff,
+    { settings: settingsForDocument, previousAnnotations },
+    actionToPerform,
+  );
 
   await treatmentRepository.insert(treatment);
 

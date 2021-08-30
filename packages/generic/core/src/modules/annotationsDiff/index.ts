@@ -2,8 +2,7 @@ import { annotationsDiffModel, annotationsDiffType } from './annotationsDiffType
 import { annotationsDiffGenerator } from './generator';
 import {
   applyToAnnotations,
-  areAnnotationsDiffCompatibleWithAnnotations,
-  areAnnotationsDiffCompatibleWithSettings,
+  assertAnnotationsDiffAreConsistent,
   buildAnnotationsDiff,
   computeAnnotationsDiff,
   computeDetailsFromAnnotationsDiff,
@@ -20,8 +19,7 @@ const annotationsDiffModule = {
   generator: annotationsDiffGenerator,
   lib: {
     applyToAnnotations,
-    areAnnotationsDiffCompatibleWithAnnotations,
-    areAnnotationsDiffCompatibleWithSettings,
+    assertAnnotationsDiffAreConsistent,
     buildAnnotationsDiff,
     computeAnnotationsDiff,
     computeDetailsFromAnnotationsDiff,

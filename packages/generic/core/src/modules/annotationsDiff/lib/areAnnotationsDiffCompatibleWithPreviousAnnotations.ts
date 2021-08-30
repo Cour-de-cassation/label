@@ -2,9 +2,9 @@ import { annotationOverlapDetector } from '../../../lib/annotationOverlapDetecto
 import { annotationModule, annotationType } from '../../annotation';
 import { annotationsDiffType } from '../annotationsDiffType';
 
-export { areAnnotationsDiffCompatibleWithAnnotations };
+export { areAnnotationsDiffCompatibleWithPreviousAnnotations };
 
-function areAnnotationsDiffCompatibleWithAnnotations(
+function areAnnotationsDiffCompatibleWithPreviousAnnotations(
   previousAnnotations: annotationType[],
   annotationsDiff: annotationsDiffType,
 ) {

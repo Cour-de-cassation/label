@@ -1,8 +1,8 @@
 import { annotationModule } from '../../annotation';
 import { annotationsDiffGenerator } from '../generator';
-import { areAnnotationsDiffCompatibleWithAnnotations } from './areAnnotationsDiffCompatibleWithAnnotations';
+import { areAnnotationsDiffCompatibleWithPreviousAnnotations } from './areAnnotationsDiffCompatibleWithPreviousAnnotations';
 
-describe('areAnnotationsDiffCompatibleWithAnnotations', () => {
+describe('areAnnotationsDiffCompatibleWithPreviousAnnotations', () => {
   it('should return true if no discrepancy is found', () => {
     const previousAnnotations = [
       { start: 0, text: 'TRUC' },
@@ -13,7 +13,7 @@ describe('areAnnotationsDiffCompatibleWithAnnotations', () => {
       after: [annotationModule.generator.generate({ start: 10, text: 'BIDULE' })],
     });
 
-    expect(areAnnotationsDiffCompatibleWithAnnotations(previousAnnotations, annotationsDiff)).toBeTruthy();
+    expect(areAnnotationsDiffCompatibleWithPreviousAnnotations(previousAnnotations, annotationsDiff)).toBeTruthy();
   });
 
   it('should return true if there is a change in before array', () => {
@@ -28,7 +28,7 @@ describe('areAnnotationsDiffCompatibleWithAnnotations', () => {
       after: [annotationModule.generator.generate({ start: 19, text: ' MACHIN' })],
     });
 
-    expect(areAnnotationsDiffCompatibleWithAnnotations(previousAnnotations, annotationsDiff)).toBeTruthy();
+    expect(areAnnotationsDiffCompatibleWithPreviousAnnotations(previousAnnotations, annotationsDiff)).toBeTruthy();
   });
 
   it('should return false if a created annotation overlaps a previous one', () => {
@@ -40,7 +40,7 @@ describe('areAnnotationsDiffCompatibleWithAnnotations', () => {
       after: [annotationModule.generator.generate({ start: 15, text: 'BIDULE' })],
     });
 
-    expect(areAnnotationsDiffCompatibleWithAnnotations(previousAnnotations, annotationsDiff)).toBeFalsy();
+    expect(areAnnotationsDiffCompatibleWithPreviousAnnotations(previousAnnotations, annotationsDiff)).toBeFalsy();
   });
 
   it('should return false if a bigger annotation overlaps a previous one', () => {
@@ -53,6 +53,6 @@ describe('areAnnotationsDiffCompatibleWithAnnotations', () => {
       after: [annotationModule.generator.generate({ start: 10, text: 'BIDULE CHOSE' })],
     };
 
-    expect(areAnnotationsDiffCompatibleWithAnnotations(previousAnnotations, annotationsDiff)).toBeFalsy();
+    expect(areAnnotationsDiffCompatibleWithPreviousAnnotations(previousAnnotations, annotationsDiff)).toBeFalsy();
   });
 });

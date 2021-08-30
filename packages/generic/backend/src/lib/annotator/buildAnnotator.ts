@@ -70,7 +70,10 @@ function buildAnnotator(
           );
         }
       }
-    } while (currentDocumentToAnnotate !== undefined);
+    } while (
+      currentDocumentToAnnotate !== undefined &&
+      documentsAnnotatedCount < documentsCountToAnnotate
+    );
   }
 
   async function reAnnotateFreeDocuments() {

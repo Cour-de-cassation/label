@@ -50,34 +50,19 @@ async function updateTreatment(
     document.decisionMetadata.additionalTermsToAnnotate,
   );
 
-  if (
-    !annotationsDiffModule.lib.areAnnotationsDiffCompatibleWithAnnotations(
-      treatmentModule.lib.computeAnnotations(sortedTreatments),
-      annotationsDiff,
-    )
-  ) {
-    throw new Error(
-      `Could not update treatment for documentId ${idModule.lib.convertToString(
-        documentId,
-      )}: inconsistent annotations`,
-    );
-  }
-
-  if (
-    !annotationsDiffModule.lib.areAnnotationsDiffCompatibleWithSettings(
-      annotationsDiff,
-      settingsForDocument,
-    )
-  ) {
-    throw new Error(
-      `Could not update treatment for documentId ${idModule.lib.convertToString(
-        documentId,
-      )}: using a category that is not in the settings`,
-    );
-  }
+  const actionToPerform = `update treatment for documentId ${idModule.lib.convertToString(
+    documentId,
+  )}`;
+  const previousAnnotations = treatmentModule.lib.computeAnnotations(
+    sortedTreatments,
+  );
+  annotationsDiffModule.lib.assertAnnotationsDiffAreConsistent(
+    annotationsDiff,
+    { settings: settingsForDocument, previousAnnotations },
+    actionToPerform,
+  );
 
   const treatment = await treatmentRepository.findById(assignation.treatmentId);
-
   const updatedTreatment = treatmentModule.lib.update(
     treatment,
     {

@@ -63,6 +63,19 @@ async function updateTreatment(
     );
   }
 
+  if (
+    !annotationsDiffModule.lib.areAnnotationsDiffCompatibleWithSettings(
+      annotationsDiff,
+      settingsForDocument,
+    )
+  ) {
+    throw new Error(
+      `Could not update treatment for documentId ${idModule.lib.convertToString(
+        documentId,
+      )}: using a category that is not in the settings`,
+    );
+  }
+
   const treatment = await treatmentRepository.findById(assignation.treatmentId);
 
   const updatedTreatment = treatmentModule.lib.update(

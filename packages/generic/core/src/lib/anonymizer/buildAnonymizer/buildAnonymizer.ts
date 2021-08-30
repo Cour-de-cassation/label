@@ -3,12 +3,11 @@ import { fetchedDocumentType } from '../../../modules/document';
 import { settingsType } from '../../../modules/settings';
 import { textSplitter } from '../../textSplitter';
 import { buildEntityIdMapper } from './buildEntityIdMapper';
+import { ANONYMIZATION_DEFAULT_TEXT } from './constants';
 
 export { buildAnonymizer };
 
 export type { anonymizerType };
-
-const ANONYMIZATION_DEFAULT_TEXT = 'XXX';
 
 type anonymizerType<documentT extends fetchedDocumentType> = {
   anonymizeDocument: (document: documentT) => documentT;

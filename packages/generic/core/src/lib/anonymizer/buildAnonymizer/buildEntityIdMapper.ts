@@ -3,6 +3,7 @@ import { annotationModule } from '../../../modules/annotation';
 import { settingsType } from '../../../modules/settings';
 import { buildSpecifierGenerator } from './buildSpecifierGenerator';
 import { buildAnonymizationTextGenerator } from './buildAnonymizationTextGenerator';
+import { ANONYMIZATION_DEFAULT_TEXT } from './constants';
 
 export { buildEntityIdMapper };
 
@@ -17,7 +18,7 @@ function buildEntityIdMapper(settings: settingsType, entityIds: string[], seed: 
 
   return sortedEntityIds.reduce((accumulator, entityId) => {
     const category = annotationModule.lib.entityIdHandler.getCategory(entityId);
-    const anonymization = settings[category].anonymization;
+    const anonymization = settings[category]?.anonymization || ANONYMIZATION_DEFAULT_TEXT;
     const anonymizationTextGenerator = buildAnonymizationTextGenerator(anonymization, specifierGenerator);
     const anonymizationText = anonymizationTextGenerator.generate(entityId);
 

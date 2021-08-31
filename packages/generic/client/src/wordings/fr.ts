@@ -236,6 +236,8 @@ const fr = {
     table: {
       columnTitles: {
         number: 'N° décision',
+        chamberName: 'Chambre',
+        juridiction: 'Juridiction',
         status: 'Statut',
         importDate: "Date d'import",
       },

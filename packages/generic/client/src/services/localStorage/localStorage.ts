@@ -2,6 +2,10 @@ import { bearerTokenHandler } from './bearerTokenHandler';
 import { adminViewHandler, adminViews } from './adminViewHandler';
 import { displayModeHandler } from './displayModeHandler';
 import {
+  publishableDocumentOrderByProperties,
+  publishableDocumentsStateHandler,
+} from './publishableDocumentsStateHandler';
+import {
   treatedDocumentsStateHandler,
   treatedDocumentOrderByProperties,
   treatedDocumentFilterType,
@@ -13,7 +17,13 @@ import {
 } from './untreatedDocumentsStateHandler';
 import { userHandler } from './userHandler';
 
-export { adminViews, treatedDocumentOrderByProperties, untreatedDocumentOrderByProperties, localStorage };
+export {
+  adminViews,
+  publishableDocumentOrderByProperties,
+  treatedDocumentOrderByProperties,
+  untreatedDocumentOrderByProperties,
+  localStorage,
+};
 
 export type { treatedDocumentFilterType, untreatedDocumentFilterType };
 
@@ -21,6 +31,7 @@ const localStorage = {
   adminViewHandler,
   bearerTokenHandler,
   displayModeHandler,
+  publishableDocumentsStateHandler,
   treatedDocumentsStateHandler,
   untreatedDocumentsStateHandler,
   userHandler,

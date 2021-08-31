@@ -1,7 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import { apiRouteOutType, documentModule, documentType, idModule, timeOperator } from '@label/core';
-import { PaginatedTable, tableRowFieldType } from '../../components';
+import { orderDirectionType, PaginatedTable, tableRowFieldType } from '../../components';
+import { localStorage, publishableDocumentOrderByProperties } from '../../services/localStorage';
 import { wordings } from '../../wordings';
 import { apiCaller } from '../../api';
 import { routes } from '../routes';
@@ -15,12 +16,30 @@ function PublishableDocumentsTable(props: {
   const history = useHistory();
   const fields = buildPublishableDocumentsFields();
   const styles = buildStyles();
+  const orderByProperty = localStorage.publishableDocumentsStateHandler.getOrderByProperty();
+  const orderDirection = localStorage.publishableDocumentsStateHandler.getOrderDirection();
 
   return (
     <div style={styles.container}>
-      <PaginatedTable fields={fields} data={props.publishableDocuments} buildOptionItems={buildOptionItems} />
+      <PaginatedTable
+        fields={fields}
+        data={props.publishableDocuments}
+        buildOptionItems={buildOptionItems}
+        defaultOrderByProperty={orderByProperty}
+        defaultOrderDirection={orderDirection}
+        onOrderByPropertyChange={onOrderByPropertyChange}
+        onOrderDirectionChange={onOrderDirectionChange}
+      />
     </div>
   );
+
+  function onOrderByPropertyChange(newOrderByProperty: typeof publishableDocumentOrderByProperties[number]) {
+    localStorage.publishableDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
+  }
+
+  function onOrderDirectionChange(newOrderDirection: orderDirectionType) {
+    localStorage.publishableDocumentsStateHandler.setOrderDirection(newOrderDirection);
+  }
 
   function buildOptionItems(publishableDocument: apiRouteOutType<'get', 'publishableDocuments'>[number]) {
     const openAnonymizedDocumentOptionItem = {
@@ -73,12 +92,29 @@ function PublishableDocumentsTable(props: {
 }
 
 function buildPublishableDocumentsFields() {
-  const publishableDocumentsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'publishableDocuments'>[number]>> = [
+  const publishableDocumentsFields: Array<tableRowFieldType<
+    apiRouteOutType<'get', 'publishableDocuments'>[number],
+    typeof publishableDocumentOrderByProperties[number]
+  >> = [
     {
       id: 'documentNumber',
       title: wordings.publishableDocumentsPage.table.columnTitles.number,
       canBeSorted: true,
       extractor: (publishableDocument) => JSON.stringify(publishableDocument.documentNumber),
+      width: 10,
+    },
+    {
+      id: 'juridiction',
+      title: wordings.publishableDocumentsPage.table.columnTitles.juridiction,
+      canBeSorted: true,
+      extractor: (publishableDocument) => publishableDocument.juridiction,
+      width: 10,
+    },
+    {
+      id: 'chamberName',
+      title: wordings.publishableDocumentsPage.table.columnTitles.chamberName,
+      canBeSorted: true,
+      extractor: (publishableDocument) => publishableDocument.chamberName,
       width: 10,
     },
     {

@@ -7,7 +7,7 @@ import { PublishableDocumentsTable } from './PublishableDocumentsTable';
 
 export { PublishableDocuments };
 
-const TABLE_WIDTH = 500;
+const TABLE_WIDTH = 700;
 
 function PublishableDocuments() {
   const theme = useCustomTheme();

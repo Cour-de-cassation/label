@@ -1,6 +1,7 @@
 export {
   localStorage,
   adminViews,
+  publishableDocumentOrderByProperties,
   treatedDocumentOrderByProperties,
   untreatedDocumentOrderByProperties,
 } from './localStorage';

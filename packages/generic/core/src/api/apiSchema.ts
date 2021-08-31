@@ -230,6 +230,8 @@ const apiSchema = {
           kind: 'object',
           content: {
             _id: documentModule.fetchedModel.content._id,
+            juridiction: documentModule.fetchedModel.content.decisionMetadata.content.juridiction,
+            chamberName: documentModule.fetchedModel.content.decisionMetadata.content.chamberName,
             creationDate: documentModule.fetchedModel.content.creationDate,
             documentNumber: documentModule.fetchedModel.content.documentNumber,
             publicationCategory: documentModule.fetchedModel.content.publicationCategory,

@@ -8,6 +8,7 @@ import {
 import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
+  extractAppealNumber,
 } from './extractors';
 import { categoriesMapper } from './categoriesMapper';
 
@@ -25,8 +26,11 @@ function mapCourtDecisionToDocument(
   const readableJurisdictionName = extractReadableJurisdictionName(
     sderCourtDecision.jurisdictionName,
   );
+  const appealNumber = extractAppealNumber(sderCourtDecision.originalText);
+
   const title = computeTitleFromParsedCourtDecision({
     number: sderCourtDecision.sourceId,
+    appealNumber,
     readableChamberName,
     readableJurisdictionName,
     date: sderCourtDecision.dateDecision
@@ -54,6 +58,7 @@ function mapCourtDecisionToDocument(
     creationDate: new Date().getTime(),
     criticity,
     decisionMetadata: {
+      appealNumber: appealNumber || '',
       additionalTermsToAnnotate:
         sderCourtDecision.occultation?.additionalTerms || '',
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
@@ -77,19 +82,25 @@ function mapCourtDecisionToDocument(
 
 function computeTitleFromParsedCourtDecision({
   number,
+  appealNumber,
   readableChamberName,
   readableJurisdictionName,
   date,
 }: {
-  number?: number;
+  number: number;
+  appealNumber: string | undefined;
   readableChamberName: string;
   readableJurisdictionName: string;
   date?: Date;
 }) {
   const readableNumber = `Décision n°${number}`;
+  const readableAppealNumber = appealNumber
+    ? `pourvoi n°${appealNumber}`
+    : undefined;
   const readableDate = convertRawDateIntoReadableDate(date);
   const title = [
     readableNumber,
+    readableAppealNumber,
     readableJurisdictionName,
     readableChamberName,
     readableDate,

@@ -3,6 +3,7 @@ import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../../../modules/document';
 import { up, down } from '../migrations/11_611bc0b421f329ab25d1d814';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('add session, occultationBlock, solution in document model', () => {
   const documentsWithNewModel = [
     documentModule.generator.generate({
@@ -15,7 +16,7 @@ describe('add session, occultationBlock, solution in document model', () => {
         occultationBlock: undefined,
         session: '',
         solution: '',
-      },
+      } as any,
     }),
     documentModule.generator.generate({
       decisionMetadata: {
@@ -27,7 +28,7 @@ describe('add session, occultationBlock, solution in document model', () => {
         occultationBlock: undefined,
         session: '',
         solution: '',
-      },
+      } as any,
     }),
     documentModule.generator.generate({
       decisionMetadata: {
@@ -39,7 +40,7 @@ describe('add session, occultationBlock, solution in document model', () => {
         occultationBlock: undefined,
         session: '',
         solution: '',
-      },
+      } as any,
     }),
   ];
   const documentsWithOldModel = [

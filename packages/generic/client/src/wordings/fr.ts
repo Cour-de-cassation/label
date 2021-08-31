@@ -237,6 +237,7 @@ const fr = {
       columnTitles: {
         number: 'N° décision',
         chamberName: 'Chambre',
+        appealNumber: 'N° de pourvoi',
         juridiction: 'Juridiction',
         status: 'Statut',
         importDate: "Date d'import",

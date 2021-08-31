@@ -11,14 +11,15 @@ describe('fetchPublishableDocuments', () => {
         status: 'done' as const,
         publicationCategory: ['P'],
         decisionMetadata: {
-          juridiction: 'Cour de cassation',
-          chamberName: 'CIV. I',
           additionalTermsToAnnotate: '',
+          appealNumber: '08-16.486',
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],
+          chamberName: 'CIV. I',
+          juridiction: 'Cour de cassation',
+          occultationBlock: undefined,
           session: '',
           solution: '',
-          occultationBlock: undefined,
         },
       },
       { status: 'pending' as const, publicationCategory: [] },
@@ -39,6 +40,7 @@ describe('fetchPublishableDocuments', () => {
     expect(publishableDocuments).toEqual([
       {
         _id,
+        appealNumber: '08-16.486',
         status,
         creationDate,
         documentNumber,

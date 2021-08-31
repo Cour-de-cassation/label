@@ -11,6 +11,7 @@ const documentModelCommonFields = {
   decisionMetadata: {
     kind: 'object',
     content: {
+      appealNumber: { kind: 'primitive', content: 'string' },
       additionalTermsToAnnotate: { kind: 'primitive', content: 'string' },
       boundDecisionDocumentNumbers: { kind: 'array', content: { kind: 'primitive', content: 'number' } },
       categoriesToOmit: { kind: 'array', content: { kind: 'primitive', content: 'string' } },

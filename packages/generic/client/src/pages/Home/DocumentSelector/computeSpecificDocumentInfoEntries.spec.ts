@@ -6,6 +6,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
     const document = documentModule.generator.generate({
       documentNumber: 1234567,
       decisionMetadata: {
+        appealNumber: '',
         chamberName: 'Civile',
         juridiction: 'Cour de cassation',
         boundDecisionDocumentNumbers: [],

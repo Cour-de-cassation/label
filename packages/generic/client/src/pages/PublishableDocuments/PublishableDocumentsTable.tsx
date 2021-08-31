@@ -118,6 +118,13 @@ function buildPublishableDocumentsFields() {
       width: 10,
     },
     {
+      id: 'appealNumber',
+      title: wordings.publishableDocumentsPage.table.columnTitles.appealNumber,
+      canBeSorted: true,
+      extractor: (publishableDocument) => publishableDocument.appealNumber,
+      width: 10,
+    },
+    {
       id: 'status',
       title: wordings.publishableDocumentsPage.table.columnTitles.status,
       canBeSorted: true,

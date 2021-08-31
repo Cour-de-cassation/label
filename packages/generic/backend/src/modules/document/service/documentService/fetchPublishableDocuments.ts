@@ -26,6 +26,7 @@ async function fetchPublishableDocuments() {
       status,
     }) => ({
       _id,
+      appealNumber: decisionMetadata.appealNumber,
       chamberName: decisionMetadata.chamberName,
       juridiction: decisionMetadata.juridiction,
       publicationCategory,

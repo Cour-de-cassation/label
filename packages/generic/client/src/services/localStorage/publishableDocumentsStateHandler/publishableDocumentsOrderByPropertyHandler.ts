@@ -6,11 +6,12 @@ const PUBLISHABLE_DOCUMENTS_ORDER_BY_PROPERTY_STORAGE_KEY = 'PUBLISHABLE_DOCUMEN
 export { setOrderByProperty, getOrderByProperty, publishableDocumentOrderByProperties };
 
 const publishableDocumentOrderByProperties = [
+  'appealNumber',
+  'chamberName',
+  'creationDate',
   'documentNumber',
   'juridiction',
-  'chamberName',
   'status',
-  'creationDate',
 ] as const;
 
 function setOrderByProperty(newOrderByProperty: typeof publishableDocumentOrderByProperties[number]) {

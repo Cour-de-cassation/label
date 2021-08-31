@@ -28,6 +28,7 @@ const documentGenerator: generatorType<documentType> = {
       ? decisionMetadata
       : {
           additionalTermsToAnnotate: '',
+          appealNumber: '',
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],
           chamberName: '',

@@ -28,6 +28,7 @@ describe('computeAdditionalAnnotations', () => {
       text: documentText,
       decisionMetadata: {
         additionalTermsToAnnotate,
+        appealNumber: '',
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],
         chamberName: '',

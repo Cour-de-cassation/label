@@ -1,7 +1,6 @@
 import {
   annotationModule,
   annotationsDiffModule,
-  annotationReportModule,
   documentModule,
   monitoringEntryModule,
   problemReportModule,
@@ -49,15 +48,6 @@ const apiSchema = {
           total: { kind: 'primitive', content: 'number' },
         },
       } as const),
-    },
-    annotationReport: {
-      in: {
-        documentId: buildModel({
-          kind: 'primitive',
-          content: 'string',
-        } as const),
-      },
-      out: annotationReportModule.model,
     },
     annotations: {
       in: {

@@ -22,20 +22,5 @@ const buildFakeAnnotationReportRepository = buildFakeRepositoryBuilder<
         ),
       );
     },
-
-    async findByDocumentId(documentId) {
-      const annotationReport = await collection.find(
-        (anotherAnnotationReport) =>
-          idModule.lib.equalId(anotherAnnotationReport.documentId, documentId),
-      );
-
-      if (!annotationReport) {
-        throw new Error(
-          `No annotation report for the given document id ${documentId}`,
-        );
-      }
-
-      return annotationReport;
-    },
   }),
 });

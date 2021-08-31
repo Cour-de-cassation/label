@@ -63,17 +63,6 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
         },
       );
 
-      const { data: annotationReport } = await apiCaller.get<'annotationReport'>('annotationReport', {
-        documentId: document._id,
-      });
-
-      /* eslint-disable no-console */
-      console.log(document.title);
-      /* eslint-disable no-console */
-      annotationReport.checkList.map((item) => console.log(item));
-      /* eslint-disable no-console */
-      console.log('———————————————————————————————————');
-
       documentsForUser.push({
         document: {
           ...document,

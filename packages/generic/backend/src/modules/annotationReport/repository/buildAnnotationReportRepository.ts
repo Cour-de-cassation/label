@@ -14,19 +14,5 @@ const buildAnnotationReportRepository = buildRepositoryBuilder<
     async deleteByDocumentId(documentId) {
       await collection.deleteMany({ documentId });
     },
-
-    async findByDocumentId(documentId) {
-      const annotationReport = await collection.findOne({
-        documentId,
-      });
-
-      if (!annotationReport) {
-        throw new Error(
-          `No annotation report for the given document id ${documentId}`,
-        );
-      }
-
-      return annotationReport;
-    },
   }),
 });

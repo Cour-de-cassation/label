@@ -6,7 +6,6 @@ import { wordings } from '../../../../wordings';
 import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTable } from './CategoryTable';
 import { EmptyCategory } from './EmptyCategory';
-import { useEntityEntryHandler } from './useEntityEntryHandler';
 
 export { AnnotationsPanel };
 
@@ -17,7 +16,6 @@ function AnnotationsPanel(props: {
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const entityEntryHandler = useEntityEntryHandler(props.splittedTextByLine);
 
   return (
     <div style={styles.panel}>
@@ -52,7 +50,6 @@ function AnnotationsPanel(props: {
         categoryAnnotations={categoryAnnotations}
         category={category}
         categorySize={categorySize}
-        entityEntryHandler={entityEntryHandler}
         splittedTextByLine={props.splittedTextByLine}
       />
     ) : (

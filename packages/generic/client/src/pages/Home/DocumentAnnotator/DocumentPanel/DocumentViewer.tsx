@@ -1,11 +1,8 @@
 import React, { ReactElement } from 'react';
-import { annotationChunkType, textChunkType } from '@label/core';
-import { Text } from '../../../../components';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
 import { splittedTextByLineType } from '../lib';
-import { DocumentAnnotationText } from './DocumentAnnotationText';
-import { DocumentText } from './DocumentText';
+import { DocumentLine } from './DocumentLine';
 
 export { DocumentViewer };
 
@@ -23,52 +20,13 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     <div style={styles.container}>
       <table style={styles.table}>
         <tbody>
-          {documentText.map(({ line, content }) => (
-            <tr key={line} id={`line${line}`}>
-              <td style={styles.lineNumberCell}>
-                <Text variant="body2" color="textSecondary">
-                  {line}
-                </Text>
-              </td>
-              <td>
-                <span key={line}>
-                  <Text variant="body2" color={isLineHighlighted(line) ? 'textPrimary' : 'textSecondary'}>
-                    {content.map(renderChunk)}
-                  </Text>
-                </span>
-              </td>
-            </tr>
+          {documentText.map((splittedLine) => (
+            <DocumentLine splittedLine={splittedLine} />
           ))}
         </tbody>
       </table>
     </div>
   );
-
-  function isLineHighlighted(lineNumber: number) {
-    if (documentViewerModeHandler.documentViewerMode.kind !== 'occurrence') {
-      return true;
-    }
-
-    const selectedLine = props.splittedTextByLine.find(({ line }) => line === lineNumber);
-    if (!selectedLine) {
-      return false;
-    }
-    const { entityId } = documentViewerModeHandler.documentViewerMode;
-    const areAnnotationsLeft = selectedLine.content.some(
-      (chunk) => chunk.type === 'annotation' && chunk.annotation.entityId === entityId,
-    );
-    return areAnnotationsLeft;
-  }
-
-  function renderChunk(chunk: textChunkType | annotationChunkType) {
-    switch (chunk.type) {
-      case 'text':
-        const { before, after } = chunk;
-        return <DocumentText key={chunk.content.index} neighbours={{ before, after, current: chunk.content }} />;
-      case 'annotation':
-        return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} />;
-    }
-  }
 
   function computeDocumentText() {
     switch (documentViewerModeHandler.documentViewerMode.kind) {
@@ -99,11 +57,6 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
         borderSpacing: `0 ${lineVerticalPadding}px`,
         maxWidth: 900,
         padding: theme.spacing * 2,
-      },
-      lineNumberCell: {
-        display: 'flex',
-        flexDirection: 'row-reverse',
-        paddingRight: theme.spacing * 2,
       },
     } as const;
   }

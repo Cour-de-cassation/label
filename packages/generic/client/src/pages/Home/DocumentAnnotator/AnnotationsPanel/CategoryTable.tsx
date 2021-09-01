@@ -6,7 +6,6 @@ import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { annotationPerEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTableEntry } from './CategoryTableEntry';
-import { entityEntryHandlerType } from './useEntityEntryHandler';
 
 export { CategoryTable };
 
@@ -18,7 +17,6 @@ function CategoryTable(props: {
   category: string;
   categoryAnnotations: annotationPerEntityType;
   categorySize: number;
-  entityEntryHandler: entityEntryHandlerType;
   splittedTextByLine: splittedTextByLineType;
 }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
@@ -47,15 +45,15 @@ function CategoryTable(props: {
       }
       body={
         <Div_Body>
-          {props.categoryAnnotations.map(({ entityId, entityAnnotations }) => (
-            <CategoryTableEntry
-              entityAnnotations={entityAnnotations}
-              entityId={entityId}
-              entityEntryHandler={props.entityEntryHandler}
-              key={entityId}
-              splittedTextByLine={props.splittedTextByLine}
-            />
-          ))}
+          {isExpanded &&
+            props.categoryAnnotations.map(({ entityId, entityAnnotations }) => (
+              <CategoryTableEntry
+                entityAnnotations={entityAnnotations}
+                entityId={entityId}
+                key={entityId}
+                splittedTextByLine={props.splittedTextByLine}
+              />
+            ))}
         </Div_Body>
       }
       onChange={setIsExpanded}

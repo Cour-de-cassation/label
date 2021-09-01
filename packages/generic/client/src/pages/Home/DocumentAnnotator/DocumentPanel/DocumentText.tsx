@@ -3,7 +3,7 @@ import { positionType } from '../../../../types';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
 import { computeMultilineSelection, textNeighboursType } from '../lib';
 
-export { DocumentText };
+export { PureDocumentText as DocumentText };
 
 export type { textSelectionType };
 
@@ -12,7 +12,22 @@ type textSelectionType = Array<{
   text: string;
 }>;
 
-function DocumentText(props: { neighbours: textNeighboursType }): ReactElement {
+type propsType = { neighbours: textNeighboursType };
+
+class PureDocumentText extends React.PureComponent<propsType> {
+  shouldComponentUpdate(nextProps: propsType) {
+    return (
+      nextProps.neighbours.current.index !== this.props.neighbours.current.index ||
+      nextProps.neighbours.current.text !== this.props.neighbours.current.text
+    );
+  }
+
+  render() {
+    return <DocumentText neighbours={this.props.neighbours} />;
+  }
+}
+
+function DocumentText(props: propsType): ReactElement {
   const [textSelection, setTextSelection] = useState<textSelectionType>([]);
   const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>();
   return (

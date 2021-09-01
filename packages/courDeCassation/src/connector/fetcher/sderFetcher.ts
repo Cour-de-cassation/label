@@ -2,7 +2,7 @@ import { sderApi } from '../../sderApi';
 
 export { sderFetcher };
 
-const MAX_DOCUMENT_SIZE = 800000;
+const MAX_DOCUMENT_SIZE = 500000;
 
 const sderFetcher = {
   async fetchCourtDecisionBySourceIdAndSourceName({

@@ -9,9 +9,26 @@ import { getAnnotationTextDisplayStyle } from './lib';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
 import { useAnonymizerBuilder } from '../../../../services/anonymizer';
 
-export { DocumentAnnotationText };
+export { PureDocumentAnnotationText as DocumentAnnotationText };
 
-function DocumentAnnotationText(props: { annotation: annotationType }): ReactElement {
+type propsType = { annotation: annotationType };
+
+class PureDocumentAnnotationText extends React.PureComponent<propsType> {
+  shouldComponentUpdate(nextProps: propsType) {
+    return (
+      nextProps.annotation.category !== this.props.annotation.category ||
+      nextProps.annotation.entityId !== this.props.annotation.entityId ||
+      nextProps.annotation.start !== this.props.annotation.start ||
+      nextProps.annotation.text !== this.props.annotation.text
+    );
+  }
+
+  render() {
+    return <DocumentAnnotationText annotation={this.props.annotation} />;
+  }
+}
+
+function DocumentAnnotationText(props: propsType): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const anonymizerBuilder = useAnonymizerBuilder();
 

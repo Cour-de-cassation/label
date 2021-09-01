@@ -7,7 +7,7 @@ import { Text } from '../../../../../components';
 import { annotatorStateHandlerType, useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { customThemeType, emphasizeShadeColor, getColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { splittedTextByLineType } from '../../lib';
-import { entityEntryHandlerType } from '../useEntityEntryHandler';
+import { entityEntryHandlerType, useEntityEntryHandler } from '../useEntityEntryHandler';
 import { CategoryTableEntryActionButtons } from './CategoryTableEntryActionButtons';
 
 export { CategoryTableEntry };
@@ -23,13 +23,14 @@ const {
 
 function CategoryTableEntry(props: {
   entityAnnotations: annotationType[];
-  entityEntryHandler: entityEntryHandlerType;
   entityId: string;
   splittedTextByLine: splittedTextByLineType;
 }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const { displayMode } = useDisplayMode();
+  const entityEntryHandler = useEntityEntryHandler(props.splittedTextByLine);
+
   const entityAnnotation = props.entityAnnotations[0];
   const entityAnnotationTexts = uniq(props.entityAnnotations.map((annotation) => annotation.text));
   const numberOfEntities = props.entityAnnotations.length;
@@ -38,7 +39,7 @@ function CategoryTableEntry(props: {
     annotatorStateHandler,
     category: entityAnnotation.category,
     displayMode: displayMode,
-    entityEntryHandler: props.entityEntryHandler,
+    entityEntryHandler,
     entityId: props.entityId,
     theme: theme,
   };
@@ -65,10 +66,7 @@ function CategoryTableEntry(props: {
         <Text inline>{numberOfEntities}</Text>
       </Div_Occurences>
       <Div_ActionButtons styleProps={styleProps}>
-        <CategoryTableEntryActionButtons
-          entityAnnotation={entityAnnotation}
-          entityEntryHandler={props.entityEntryHandler}
-        />
+        <CategoryTableEntryActionButtons entityAnnotation={entityAnnotation} entityEntryHandler={entityEntryHandler} />
       </Div_ActionButtons>
     </Div_CategoryTableEntry>
   );
@@ -88,7 +86,7 @@ function CategoryTableEntry(props: {
   }
 
   function computeBracketLinkColor(category: string) {
-    if (props.entityEntryHandler.isSelected(props.entityId)) {
+    if (entityEntryHandler.isSelected(props.entityId)) {
       return theme.colors.line.level1;
     } else {
       return getColor(
@@ -98,9 +96,7 @@ function CategoryTableEntry(props: {
   }
 
   function selectEntity() {
-    props.entityEntryHandler.setSelected(
-      props.entityEntryHandler.isSelected(props.entityId) ? undefined : props.entityId,
-    );
+    entityEntryHandler.setSelected(entityEntryHandler.isSelected(props.entityId) ? undefined : props.entityId);
   }
 }
 

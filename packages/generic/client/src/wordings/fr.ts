@@ -151,6 +151,7 @@ const fr = {
     problemType: 'Type de problème',
     publishedDocument: 'Cette décision sera publiée',
     redo: 'Rétablir',
+    replacement: 'Remplacement',
     reportProblem: 'Signaler un problème',
     reset: 'Réinitialiser',
     send: 'Envoyer',

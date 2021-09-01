@@ -31,7 +31,6 @@ import {
   FavoriteRounded,
   FileCopyOutlined,
   FindInPageRounded,
-  GavelRounded,
   GetAppRounded,
   HomeRounded,
   HourglassEmptyRounded,
@@ -72,8 +71,8 @@ import {
   VisibilityRounded,
   VpnKeyRounded,
 } from '@material-ui/icons';
-import { categoryIconNameType } from '@label/core';
-import { Tooltip } from './Tooltip';
+import { Tooltip } from './../Tooltip';
+import { Judge } from './svgIcons';
 
 export { Icon };
 
@@ -88,10 +87,17 @@ const materialIconMapping = {
   arrowUp: ExpandLessRounded,
   assigned: HowToRegRounded,
   assignment: AssignmentIndRounded,
+  bank: AccountBalanceRounded,
+  book: BookRounded,
   bug: BugReportRounded,
+  cake: CakeRounded,
+  car: DirectionsCarRounded,
   check: DoneRounded,
+  child: ChildCareRounded,
+  city: LocationCityRounded,
   clock: AlarmOnRounded,
   close: CloseRounded,
+  cloud: CloudRounded,
   copy: FileCopyOutlined,
   delete: DeleteRounded,
   deleteOutline: DeleteOutlineRounded,
@@ -99,22 +105,30 @@ const materialIconMapping = {
   doubleArrow: SettingsEthernetRounded,
   edit: EditRounded,
   edited: BorderColorRounded,
+  email: EmailRounded,
   error: ErrorRounded,
   eye: VisibilityRounded,
   export: GetAppRounded,
   find: FindInPageRounded,
+  forbidden: BlockRounded,
+  heart: FavoriteRounded,
   home: HomeRounded,
   human: AccessibilityNewRounded,
   key: VpnKeyRounded,
+  location: RoomRounded,
   lightBulb: EmojiObjectsRounded,
   link: Link,
   lock: LockRounded,
   login: ExitToAppRounded,
   logout: PowerSettingsNewRounded,
   mail: MailRounded,
+  map: MapRounded,
   minus: RemoveCircleRounded,
   moreHoriz: MoreHorizRounded,
   moreVert: MoreVertRounded,
+  pencil: EditRounded,
+  person: PersonRounded,
+  phone: PhoneRounded,
   playlistPlay: PlaylistPlayRounded,
   playlistCheck: PlaylistAddCheckRounded,
   plus: AddCircleRounded,
@@ -127,6 +141,7 @@ const materialIconMapping = {
   send: SendRounded,
   settings: SettingsRounded,
   stop: BlockRounded,
+  store: StoreRounded,
   turnRight: SubdirectoryArrowRightRounded,
   undo: UndoRounded,
   unlink: LinkOff,
@@ -134,36 +149,20 @@ const materialIconMapping = {
   update: UpdateRounded,
   waiting: HourglassEmptyRounded,
   warning: ReportProblemRounded,
-};
-
-const categoryIconMapping: Record<categoryIconNameType, React.ElementType> = {
-  bank: AccountBalanceRounded,
-  book: BookRounded,
-  cake: CakeRounded,
-  car: DirectionsCarRounded,
-  city: LocationCityRounded,
-  child: ChildCareRounded,
-  cloud: CloudRounded,
-  email: EmailRounded,
-  forbidden: BlockRounded,
-  hammer: GavelRounded,
-  heart: FavoriteRounded,
-  location: RoomRounded,
-  map: MapRounded,
-  pencil: EditRounded,
-  person: PersonRounded,
-  phone: PhoneRounded,
-  store: StoreRounded,
   web: LanguageRounded,
   work: BusinessCenterRounded,
 };
 
-const iconMapping = {
-  ...materialIconMapping,
-  ...categoryIconMapping,
+const svgIconMapping = {
+  judge: Judge,
 };
 
-type iconNameType = keyof typeof materialIconMapping | keyof typeof categoryIconMapping;
+const iconMapping = {
+  ...materialIconMapping,
+  ...svgIconMapping,
+};
+
+type iconNameType = keyof typeof iconMapping;
 
 function Icon(props: { iconName: iconNameType; hint?: string; style?: CSSProperties }) {
   const IconComponent = iconMapping[props.iconName];

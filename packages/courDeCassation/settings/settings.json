@@ -10,25 +10,56 @@
     "order": 1,
     "text": "Personne physique"
   },
-  "adresse": {
-    "anonymization": "[Adresse %d]",
+  "dateNaissance": {
+    "anonymization": "[Date naissance %d]",
     "color": {
-      "lightMode": ["blue", 100],
-      "darkMode": ["blue", 800]
+      "lightMode": ["teal", 300],
+      "darkMode": ["teal", 800]
     },
-    "iconName": "location",
+    "iconName": "cake",
     "order": 2,
-    "text": "Adresse"
+    "text": "Date de naissance/anniversaire"
   },
-  "localite": {
-    "anonymization": "[Localité %d]",
+  "dateMariage": {
+    "anonymization": "[Date mariage %d]",
     "color": {
-      "lightMode": ["blue", 300],
-      "darkMode": ["blue", 900]
+      "lightMode": ["green", 300],
+      "darkMode": ["green", 800]
     },
-    "iconName": "city",
-    "order": 3,
-    "text": "Localité"
+    "iconName": "heart",
+    "order":3,
+    "text": "Date de mariage"
+  },
+  "dateDeces": {
+    "anonymization": "[Date décès %d]",
+    "color": {
+      "lightMode": ["lime", 300],
+      "darkMode": ["lime", 900]
+    },
+    "iconName": "cloud",
+    "order": 4,
+    "text": "Date de décès"
+  },
+  "insee": {
+    "anonymization": "XXXXXXXXXXXXX",
+    "color": {
+      "lightMode": ["indigo", 300],
+      "darkMode": ["indigo", 800]
+    },
+    "iconName": "book",
+    "order": 5,
+    "text": "N° INSEE"
+  },
+  "professionnelMagistratGreffier": {
+    "anonymization": "[professionnel %c]",
+    "color": {
+      "lightMode": ["brown", 200],
+      "darkMode": ["brown", 800]
+    },
+    "isAnonymized": false,
+    "iconName": "judge",
+    "order": 6,
+    "text": "Magistrat / membre du greffe"
   },
   "personneMorale": {
     "anonymization": "[Personne morale %d]",
@@ -39,19 +70,8 @@
     "couldBe": "personnePhysique",
     "iconName": "work",
     "isAnonymized": false,
-    "order": 4,
+    "order": 7,
     "text": "Personne morale"
-  },
-  "numeroSiretSiren": {
-    "anonymization": "[N° SIRET/SIREN %d]",
-    "color": {
-      "lightMode": ["deepPurple", 200],
-      "darkMode": ["deepPurple", 500]
-    },
-    "iconName": "work",
-    "isAnonymized": false,
-    "order": 5,
-    "text": "N° SIRET/SIREN"
   },
   "etablissement": {
     "anonymization": "[Établissement %d]",
@@ -60,82 +80,39 @@
       "darkMode": ["purple", 600]
     },
     "iconName": "store",
-    "order": 6,
+    "order": 8,
     "text": "Établissement"
   },
-  "professionnelAvocat": {
-    "anonymization": "",
+  "numeroSiretSiren": {
+    "anonymization": "[N° SIREN/SIRET %d]",
     "color": {
-      "lightMode": ["brown", 100],
-      "darkMode": ["brown", 500]
+      "lightMode": ["deepPurple", 200],
+      "darkMode": ["deepPurple", 500]
     },
-    "couldBe": "personnePhysique",
-    "iconName": "hammer",
+    "iconName": "work",
     "isAnonymized": false,
-    "order": 7,
-    "status": "alwaysVisible",
-    "text": "Avocat"
-  },
-  "professionnelMagistratGreffier": {
-    "anonymization": "[professionnel %c]",
-    "color": {
-      "lightMode": ["brown", 200],
-      "darkMode": ["brown", 800]
-    },
-    "isAnonymized": false,
-    "iconName": "hammer",
-    "order": 8,
-    "text": "Magistrat / membre du greffe"
-  },
-  "dateNaissance": {
-    "anonymization": "[Date naissance %d]",
-    "color": {
-      "lightMode": ["teal", 300],
-      "darkMode": ["teal", 800]
-    },
-    "iconName": "cake",
     "order": 9,
-    "text": "Date de naissance/anniversaire"
+    "text": "N° SIREN/SIRET"
   },
-  "dateMariage": {
-    "anonymization": "[Date mariage %d]",
+  "adresse": {
+    "anonymization": "[Adresse %d]",
     "color": {
-      "lightMode": ["green", 300],
-      "darkMode": ["green", 800]
+      "lightMode": ["blue", 100],
+      "darkMode": ["blue", 800]
     },
-    "iconName": "heart",
+    "iconName": "location",
     "order": 10,
-    "text": "Date de mariage"
+    "text": "Adresse"
   },
-  "dateDeces": {
-    "anonymization": "[Date décès %d]",
+  "localite": {
+    "anonymization": "[Localité %d]",
     "color": {
-      "lightMode": ["lime", 300],
-      "darkMode": ["lime", 900]
+      "lightMode": ["blue", 300],
+      "darkMode": ["blue", 900]
     },
-    "iconName": "cloud",
+    "iconName": "city",
     "order": 11,
-    "text": "Date de décès"
-  },
-  "cadastre": {
-    "anonymization": "[Cadastre %d]",
-    "color": {
-      "lightMode": ["cyan", 300],
-      "darkMode": ["cyan", 600]
-    },
-    "iconName": "map",
-    "order": 12,
-    "text": "Cadastre"
-  },
-  "insee": {
-    "anonymization": "XXXXXXXXXXXXX",
-    "color": {
-      "lightMode": ["indigo", 300],
-      "darkMode": ["indigo", 800]
-    },
-    "iconName": "book",
-    "order": 13,
-    "text": "N° INSEE"
+    "text": "Localité"
   },
   "telephoneFax": {
     "anonymization": "XXXXXXXXXX",
@@ -144,7 +121,7 @@
       "darkMode": ["lightBlue", 900]
     },
     "iconName": "phone",
-    "order": 14,
+    "order": 12,
     "text": "Téléphone/Fax"
   },
   "email": {
@@ -154,7 +131,7 @@
       "darkMode": ["lightBlue", 800]
     },
     "iconName": "email",
-    "order": 15,
+    "order": 13,
     "text": "Email"
   },
   "siteWebSensible": {
@@ -164,7 +141,7 @@
       "darkMode": ["lightBlue", 700]
     },
     "iconName": "web",
-    "order": 16,
+    "order": 14,
     "text": "Site web sensible"
   },
   "compteBancaire": {
@@ -174,8 +151,18 @@
       "darkMode": ["pink", 600]
     },
     "iconName": "bank",
-    "order": 17,
+    "order": 15,
     "text": "Compte bancaire"
+  },
+  "cadastre": {
+    "anonymization": "[Cadastre %d]",
+    "color": {
+      "lightMode": ["cyan", 300],
+      "darkMode": ["cyan", 600]
+    },
+    "iconName": "map",
+    "order": 16,
+    "text": "Cadastre"
   },
   "plaqueImmatriculation": {
     "anonymization": "[Immatriculation %d]",
@@ -184,7 +171,20 @@
       "darkMode": ["pink", 800]
     },
     "iconName": "car",
-    "order": 18,
+    "order": 17,
     "text": "Plaque d'immatriculation"
+  },
+  "professionnelAvocat": {
+    "anonymization": "",
+    "color": {
+      "lightMode": ["brown", 100],
+      "darkMode": ["brown", 500]
+    },
+    "couldBe": "personnePhysique",
+    "iconName": "judge",
+    "isAnonymized": false,
+    "order": 18,
+    "status": "alwaysVisible",
+    "text": "Avocat"
   }
 }

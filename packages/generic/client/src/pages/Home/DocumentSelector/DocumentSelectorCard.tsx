@@ -44,7 +44,11 @@ function DocumentSelectorCard(props: {
   return mustBePublished ? (
     <div style={styles.publishedDocumentCardContainer}>
       <div style={styles.publishedDocumentTitleContainer}>
-        <PublicationCategoryBadge publicationCategoryLetter={props.choice.document.publicationCategory[0]} />
+        {props.choice.document.publicationCategory.map((publicationCategoryLetter) => (
+          <div style={styles.publicationCategoryLetter}>
+            <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
+          </div>
+        ))}
         <Text variant="h2" weight="bold" style={styles.publishedDocumentTitle}>
           {wordings.homePage.documentSelector.publishedDocumentTitle}
         </Text>
@@ -211,6 +215,9 @@ function buildStyles(theme: customThemeType) {
     },
     publishedDocumentTitle: {
       paddingLeft: theme.spacing * 2,
+    },
+    publicationCategoryLetter: {
+      marginLeft: theme.spacing,
     },
     card: {
       borderRadius: theme.shape.borderRadius.m,

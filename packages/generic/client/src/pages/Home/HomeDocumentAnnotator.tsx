@@ -18,6 +18,7 @@ import { useMonitoring } from '../../services/monitoring';
 import { useAlert } from '../../services/alert';
 import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
+import { customThemeType, useCustomTheme } from '../../styles';
 
 export { HomeDocumentAnnotator };
 
@@ -30,11 +31,16 @@ function HomeDocumentAnnotator(props: {
 }) {
   const { resetMonitoringEntries, sendMonitoringEntries } = useMonitoring();
   const { displayAlert } = useAlert();
+  const theme = useCustomTheme();
 
-  const styles = buildStyles();
+  const styles = buildStyles(theme);
   const subtitle = documentModule.lib.publicationHandler.mustBePublished(props.document.publicationCategory) ? (
     <div style={styles.documentHeaderSubtitle}>
-      <PublicationCategoryBadge publicationCategoryLetter={props.document.publicationCategory[0]} />
+      {props.document.publicationCategory.map((publicationCategoryLetter) => (
+        <div style={styles.publicationCategoryLetter}>
+          <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
+        </div>
+      ))}
       <Text>{wordings.homePage.publishedDocument}</Text>
     </div>
   ) : undefined;
@@ -86,11 +92,14 @@ function HomeDocumentAnnotator(props: {
   }
 }
 
-function buildStyles() {
+function buildStyles(theme: customThemeType) {
   return {
     documentHeaderSubtitle: {
       display: 'flex',
       alignItems: 'center',
+    },
+    publicationCategoryLetter: {
+      marginRight: theme.spacing,
     },
   } as const;
 }

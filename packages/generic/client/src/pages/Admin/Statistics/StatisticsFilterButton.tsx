@@ -10,6 +10,7 @@ function StatisticsFilterButton(props: {
   availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
   users: Pick<userType, '_id' | 'name'>[];
   refetch: (ressourceFilter: ressourceFilterType) => void;
+  isLoading: boolean;
   ressourceFilter: ressourceFilterType;
 }) {
   const theme = useCustomTheme();
@@ -18,7 +19,7 @@ function StatisticsFilterButton(props: {
 
   return (
     <div style={styles.container}>
-      <FilterButton filters={filters} />
+      <FilterButton filters={filters} isLoading={props.isLoading} />
       <div style={styles.chipsContainer}>
         {filters.map((filter) => (
           <FilterChip filter={filter} />

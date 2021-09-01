@@ -9,6 +9,7 @@ function TreatedDocumentsDataFetcher(props: {
   children: (fetched: {
     treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
     refetch: () => void;
+    isLoading: boolean;
   }) => ReactElement;
 }) {
   const treatedDocumentsFetchInfo = useApi(buildFetchTreatedDocuments(), {});
@@ -16,7 +17,11 @@ function TreatedDocumentsDataFetcher(props: {
   return (
     <DataFetcher
       buildComponentWithData={(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) =>
-        props.children({ treatedDocuments, refetch: treatedDocumentsFetchInfo.refetch })
+        props.children({
+          treatedDocuments,
+          refetch: treatedDocumentsFetchInfo.refetch,
+          isLoading: !treatedDocumentsFetchInfo.isLoaded,
+        })
       }
       fetchInfo={treatedDocumentsFetchInfo}
     />

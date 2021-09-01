@@ -4,8 +4,8 @@ import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator } fr
 import {
   DocumentNumberTextInput,
   DocumentReviewStatusIcon,
-  IconButton,
   PublicationCategoryBadge,
+  RefreshButton,
   tableRowFieldType,
 } from '../../../components';
 import {
@@ -26,6 +26,7 @@ const TABLE_ICON_SIZE = 28;
 function TreatedDocuments(props: {
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
   refetch: () => void;
+  isLoading: boolean;
 }) {
   const theme = useCustomTheme();
   const INITIAL_FILTER_VALUES = localStorage.treatedDocumentsStateHandler.getFilters();
@@ -58,12 +59,7 @@ function TreatedDocuments(props: {
               <div style={styles.searchTextInputContainer}>
                 <DocumentNumberTextInput value={searchedDecisionNumber} onChange={setAndStoreSearchedDocumentNumber} />
               </div>
-              <IconButton
-                backgroundColor="primary"
-                onClick={props.refetch}
-                hint={wordings.shared.refresh}
-                iconName="reset"
-              />
+              <RefreshButton onClick={props.refetch} isLoading={props.isLoading} />
             </div>
           </div>
         </div>

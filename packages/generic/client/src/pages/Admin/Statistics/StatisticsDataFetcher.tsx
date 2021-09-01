@@ -10,6 +10,7 @@ function StatisticsDataFetcher(props: {
     availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
     aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
     refetch: (ressourceFilter: ressourceFilterType) => void;
+    isLoading: boolean;
     ressourceFilter: ressourceFilterType;
   }) => ReactElement;
 }) {
@@ -25,6 +26,7 @@ function StatisticsDataFetcher(props: {
           availableStatisticFilters,
           aggregatedStatistics,
           refetch: statisticsFetchInfo.refetch,
+          isLoading: !statisticsFetchInfo.isLoaded,
           ressourceFilter: statisticsFetchInfo.params,
         })
       }

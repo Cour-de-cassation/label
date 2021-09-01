@@ -10,7 +10,7 @@ export { FilterButton };
 
 const BUTTON_HEIGHT = 40;
 
-function FilterButton(props: { filters: filterType[] }) {
+function FilterButton(props: { filters: filterType[]; isLoading?: boolean }) {
   const theme = useCustomTheme();
   const styles = buildStyles();
   const [tooltipMenuRectPosition, setTooltipMenuRectPosition] = useState<rectPositionType | undefined>(undefined);
@@ -23,6 +23,7 @@ function FilterButton(props: { filters: filterType[] }) {
         <FilterTooltipMenu filters={props.filters} onClose={closeToolTip} rectPosition={tooltipMenuRectPosition} />
       )}
       <ButtonWithIcon
+        isLoading={props.isLoading}
         style={styles.button}
         onClick={openToolTip}
         iconName={!!tooltipMenuRectPosition ? 'minus' : 'plus'}

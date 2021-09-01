@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf, userType } from '@label/core';
-import { DocumentNumberTextInput, IconButton } from '../../../components';
+import { DocumentNumberTextInput, RefreshButton } from '../../../components';
 import { localStorage, untreatedDocumentFilterType } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
-import { wordings } from '../../../wordings';
 import { UntreatedDocumentsTable } from './UntreatedDocumentsTable';
 import { UntreatedDocumentsFilters } from './UntreatedDocumentsFilters';
 
@@ -14,6 +13,7 @@ function UntreatedDocuments(props: {
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
   users: Array<Pick<userType, '_id' | 'name'>>;
   refetch: () => void;
+  isLoading: boolean;
 }) {
   const INITIAL_FILTER_VALUES = localStorage.untreatedDocumentsStateHandler.getFilters();
   const INITIAL_SEARCHED_DOCUMENT_NUMBER = localStorage.untreatedDocumentsStateHandler.getSearchedDocumentNumber();
@@ -42,12 +42,7 @@ function UntreatedDocuments(props: {
             <div style={styles.searchTextInputContainer}>
               <DocumentNumberTextInput value={searchedDocumentNumber} onChange={setAndStoreSearchedDocumentNumber} />
             </div>
-            <IconButton
-              backgroundColor="primary"
-              onClick={props.refetch}
-              hint={wordings.shared.refresh}
-              iconName="reset"
-            />
+            <RefreshButton onClick={props.refetch} isLoading={props.isLoading} />
           </div>
         </div>
       </div>

@@ -1,15 +1,15 @@
 import React from 'react';
 import { apiRouteOutType } from '@label/core';
+import { RefreshButton } from '../../../components';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { ProblemReportsTable } from './ProblemReportsTable';
-import { wordings } from '../../../wordings';
-import { IconButton } from '../../../components';
 
 export { ProblemReports };
 
 function ProblemReports(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
   refetch: () => void;
+  isLoading: boolean;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -17,12 +17,7 @@ function ProblemReports(props: {
     <div style={styles.table}>
       <div style={styles.tableHeaderContainer}>
         <div style={styles.tableHeader}>
-          <IconButton
-            backgroundColor="primary"
-            onClick={props.refetch}
-            hint={wordings.shared.refresh}
-            iconName="reset"
-          />
+          <RefreshButton onClick={props.refetch} isLoading={props.isLoading} />
         </div>
       </div>
       <div style={styles.tableContentContainer}>

@@ -25,6 +25,13 @@ type refetchInfosType = {
   workingUsers: () => void;
 };
 
+type isLoadingInfosType = {
+  aggregatedStatistics: boolean;
+  treatedDocuments: boolean;
+  untreatedDocuments: boolean;
+  problemReports: boolean;
+};
+
 type ressourceFiltersType = {
   aggregatedStatistics: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter'];
 };
@@ -33,6 +40,7 @@ function AdminInfosDataFetcher(props: {
   children: (fetched: {
     adminInfos: adminInfosType;
     refetch: refetchInfosType;
+    isLoading: isLoadingInfosType;
     ressourceFilters: ressourceFiltersType;
   }) => ReactElement;
 }) {
@@ -40,18 +48,23 @@ function AdminInfosDataFetcher(props: {
     <WorkingUsersDataFetcher>
       {({ workingUsers, refetch: refetchWorkingUsers }) => (
         <TreatedDocumentsDataFetcher>
-          {({ treatedDocuments, refetch: refetchTreatedDocuments }) => (
+          {({ treatedDocuments, refetch: refetchTreatedDocuments, isLoading: isLoadingTreatedDocuments }) => (
             <UntreatedDocumentsDataFetcher>
-              {({ untreatedDocuments, refetch: refetchUntreatedDocuments }) => (
+              {({ untreatedDocuments, refetch: refetchUntreatedDocuments, isLoading: isLoadingUntreatedDocuments }) => (
                 <StatisticsDataFetcher>
                   {({
                     availableStatisticFilters,
                     aggregatedStatistics,
                     refetch: refetchAggregatedStatistics,
+                    isLoading: isLoadingAggregatedStatistics,
                     ressourceFilter: ressourceFilterAggregatedStatistics,
                   }) => (
                     <ProblemReportsDataFetcher>
-                      {({ problemReportsWithDetails, refetch: refetchProblemReportsWithDetails }) =>
+                      {({
+                        problemReportsWithDetails,
+                        refetch: refetchProblemReportsWithDetails,
+                        isLoading: isLoadingProblemReports,
+                      }) =>
                         props.children({
                           adminInfos: {
                             availableStatisticFilters,
@@ -67,6 +80,12 @@ function AdminInfosDataFetcher(props: {
                             treatedDocuments: refetchTreatedDocuments,
                             untreatedDocuments: refetchUntreatedDocuments,
                             workingUsers: refetchWorkingUsers,
+                          },
+                          isLoading: {
+                            aggregatedStatistics: isLoadingAggregatedStatistics,
+                            problemReports: isLoadingProblemReports,
+                            treatedDocuments: isLoadingTreatedDocuments,
+                            untreatedDocuments: isLoadingUntreatedDocuments,
                           },
                           ressourceFilters: {
                             aggregatedStatistics: ressourceFilterAggregatedStatistics,

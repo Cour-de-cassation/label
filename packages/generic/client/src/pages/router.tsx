@@ -36,7 +36,7 @@ function Router() {
           </AuthenticatedRoute>
           <AuthenticatedRoute path={routes.ADMIN_MAIN.getPath()}>
             <AdminInfosDataFetcher>
-              {({ adminInfos, refetch, ressourceFilters }) => {
+              {({ adminInfos, refetch, ressourceFilters, isLoading }) => {
                 const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
                   ({ problemReport }) => !problemReport.hasBeenRead,
                 ).length;
@@ -50,6 +50,7 @@ function Router() {
                         <Statistics
                           ressourceFilter={ressourceFilters.aggregatedStatistics}
                           refetch={refetch.aggregatedStatistics}
+                          isLoading={isLoading.aggregatedStatistics}
                           aggregatedStatistics={adminInfos.aggregatedStatistics}
                           availableStatisticFilters={adminInfos.availableStatisticFilters}
                           users={adminInfos.workingUsers.map(({ _id, name }) => ({ _id, name }))}
@@ -72,6 +73,7 @@ function Router() {
                         <ProblemReports
                           refetch={refetch.problemReportsWithDetails}
                           problemReportsWithDetails={adminInfos.problemReportsWithDetails}
+                          isLoading={isLoading.problemReports}
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
@@ -83,6 +85,7 @@ function Router() {
                         <TreatedDocuments
                           treatedDocuments={adminInfos.treatedDocuments}
                           refetch={refetch.treatedDocuments}
+                          isLoading={isLoading.treatedDocuments}
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
@@ -95,6 +98,7 @@ function Router() {
                           users={adminInfos.workingUsers.map(({ _id, name }) => ({ _id, name }))}
                           untreatedDocuments={adminInfos.untreatedDocuments}
                           refetch={refetch.untreatedDocuments}
+                          isLoading={isLoading.untreatedDocuments}
                         />
                       </AdminPage>
                     </AuthenticatedRoute>

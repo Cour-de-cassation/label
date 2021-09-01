@@ -15,6 +15,7 @@ function Statistics(props: {
   availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
   users: Pick<userType, '_id' | 'name'>[];
   refetch: (ressourceFilter: ressourceFilterType) => void;
+  isLoading: boolean;
   ressourceFilter: ressourceFilterType;
 }) {
   const theme = useCustomTheme();
@@ -30,6 +31,7 @@ function Statistics(props: {
             availableStatisticFilters={props.availableStatisticFilters}
             users={props.users}
             refetch={props.refetch}
+            isLoading={props.isLoading}
             ressourceFilter={props.ressourceFilter}
           />
         </div>

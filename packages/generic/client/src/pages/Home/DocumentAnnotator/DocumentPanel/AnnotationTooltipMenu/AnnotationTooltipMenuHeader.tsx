@@ -6,9 +6,29 @@ import { useAnonymizerBuilder } from '../../../../../services/anonymizer';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
 
-export { AnnotationTooltipMenuHeader };
+export { PureAnnotationTooltipMenuHeader as AnnotationTooltipMenuHeader };
 
-function AnnotationTooltipMenuHeader(props: { annotation: annotationType; isAnonymizedView: boolean }): ReactElement {
+type propsType = { annotation: annotationType; isAnonymizedView: boolean };
+
+class PureAnnotationTooltipMenuHeader extends React.Component<propsType> {
+  shouldComponentUpdate(nextProps: propsType) {
+    return (
+      nextProps.annotation.category !== this.props.annotation.category ||
+      nextProps.annotation.entityId !== this.props.annotation.entityId ||
+      nextProps.annotation.start !== this.props.annotation.start ||
+      nextProps.annotation.text !== this.props.annotation.text ||
+      nextProps.isAnonymizedView !== this.props.isAnonymizedView
+    );
+  }
+
+  render() {
+    return (
+      <AnnotationTooltipMenuHeader annotation={this.props.annotation} isAnonymizedView={this.props.isAnonymizedView} />
+    );
+  }
+}
+
+function AnnotationTooltipMenuHeader(props: propsType): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const anonymizerBuilder = useAnonymizerBuilder();
   const theme = useCustomTheme();

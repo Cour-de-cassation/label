@@ -37,7 +37,7 @@ function HomeDocumentAnnotator(props: {
   const subtitle = documentModule.lib.publicationHandler.mustBePublished(props.document.publicationCategory) ? (
     <div style={styles.documentHeaderSubtitle}>
       {props.document.publicationCategory.map((publicationCategoryLetter) => (
-        <div style={styles.publicationCategoryLetter}>
+        <div key={publicationCategoryLetter} style={styles.publicationCategoryLetter}>
           <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
         </div>
       ))}

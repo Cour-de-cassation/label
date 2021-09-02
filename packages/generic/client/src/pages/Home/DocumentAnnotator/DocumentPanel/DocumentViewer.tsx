@@ -21,7 +21,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
       <table style={styles.table}>
         <tbody>
           {documentText.map((splittedLine) => (
-            <DocumentLine splittedLine={splittedLine} />
+            <DocumentLine key={splittedLine.line} splittedLine={splittedLine} />
           ))}
         </tbody>
       </table>

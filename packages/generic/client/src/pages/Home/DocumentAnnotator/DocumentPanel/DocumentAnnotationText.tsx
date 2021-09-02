@@ -13,7 +13,7 @@ export { PureDocumentAnnotationText as DocumentAnnotationText };
 
 type propsType = { annotation: annotationType };
 
-class PureDocumentAnnotationText extends React.PureComponent<propsType> {
+class PureDocumentAnnotationText extends React.Component<propsType> {
   shouldComponentUpdate(nextProps: propsType) {
     return (
       nextProps.annotation.category !== this.props.annotation.category ||

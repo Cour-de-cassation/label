@@ -14,7 +14,7 @@ type textSelectionType = Array<{
 
 type propsType = { neighbours: textNeighboursType };
 
-class PureDocumentText extends React.PureComponent<propsType> {
+class PureDocumentText extends React.Component<propsType> {
   shouldComponentUpdate(nextProps: propsType) {
     return (
       nextProps.neighbours.current.index !== this.props.neighbours.current.index ||

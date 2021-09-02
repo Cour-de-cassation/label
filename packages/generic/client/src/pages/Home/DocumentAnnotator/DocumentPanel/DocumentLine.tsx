@@ -19,14 +19,14 @@ function DocumentLine(props: { splittedLine: splittedTextByLineType[number] }) {
   const textColor = isLineHighlighted() ? 'textPrimary' : 'textSecondary';
 
   return (
-    <tr key={line} id={`line${line}`}>
+    <tr id={`line${line}`}>
       <td style={styles.lineNumberCell}>
         <Text variant="body2" color="textSecondary">
           {line}
         </Text>
       </td>
       <td>
-        <span key={line}>
+        <span>
           <Text variant="body2" color={textColor}>
             {content.map(renderChunk)}
           </Text>

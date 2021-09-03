@@ -6,6 +6,7 @@ import {
   publishableDocumentsStateHandler,
 } from './publishableDocumentsStateHandler';
 import {
+  documentReviewFilterStatusType,
   treatedDocumentsStateHandler,
   treatedDocumentOrderByProperties,
   treatedDocumentFilterType,
@@ -25,7 +26,7 @@ export {
   localStorage,
 };
 
-export type { treatedDocumentFilterType, untreatedDocumentFilterType };
+export type { documentReviewFilterStatusType, treatedDocumentFilterType, untreatedDocumentFilterType };
 
 const localStorage = {
   adminViewHandler,

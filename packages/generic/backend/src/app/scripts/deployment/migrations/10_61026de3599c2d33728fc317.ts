@@ -3,6 +3,7 @@ import { logger } from '../../../../utils';
 
 export { up, down };
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function up() {
   logger.log('Up: ');
 
@@ -14,7 +15,7 @@ async function up() {
     documents.map((document) =>
       documentRepository.updateOne(document._id, {
         reviewStatus: 'none',
-      }),
+      } as any),
     ),
   );
 }

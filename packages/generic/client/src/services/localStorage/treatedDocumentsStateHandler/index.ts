@@ -1,4 +1,9 @@
-import { setFilters, getFilters, treatedDocumentFilterType } from './treatedDocumentsFiltersHandler';
+import {
+  setFilters,
+  getFilters,
+  documentReviewFilterStatusType,
+  treatedDocumentFilterType,
+} from './treatedDocumentsFiltersHandler';
 import {
   getOrderByProperty,
   setOrderByProperty,
@@ -9,7 +14,7 @@ import { getSearchedDocumentNumber, setSearchedDocumentNumber } from './treatedD
 
 export { treatedDocumentsStateHandler, treatedDocumentOrderByProperties };
 
-export type { treatedDocumentFilterType };
+export type { documentReviewFilterStatusType, treatedDocumentFilterType };
 
 const treatedDocumentsStateHandler = {
   getFilters,

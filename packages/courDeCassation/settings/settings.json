@@ -53,8 +53,8 @@
   "professionnelMagistratGreffier": {
     "anonymization": "[professionnel %c]",
     "color": {
-      "lightMode": ["brown", 200],
-      "darkMode": ["brown", 800]
+      "lightMode": ["brown", 100],
+      "darkMode": ["brown", 500]
     },
     "isAnonymized": false,
     "iconName": "judge",

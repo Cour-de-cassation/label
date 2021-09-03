@@ -484,19 +484,6 @@ const apiSchema = {
       },
       out: documentModule.fetchedModel,
     },
-    updateDocumentReviewStatus: {
-      in: {
-        documentId: buildModel({
-          kind: 'custom',
-          content: 'id',
-        } as const),
-        reviewStatus: { kind: 'constant', content: ['read', 'amended'] },
-      },
-      out: {
-        kind: 'primitive',
-        content: 'void',
-      },
-    },
     updateDocumentStatus: {
       in: {
         documentId: buildModel({

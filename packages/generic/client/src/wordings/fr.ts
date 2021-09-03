@@ -69,9 +69,9 @@ const fr = {
     confirmPassword: 'Confirmer le nouveau mot de passe',
     decisionNumberPlaceholder: 'Rechercher...',
     decisionNumberHint: 'Numéro de décision à rechercher',
-    documentReviewStatus: {
-      none: { iconTooltip: 'Non revue', filter: 'Décisions non revues' },
-      read: { iconTooltip: 'Revue', filter: 'Décisions revues' },
+    documentReviewFilterStatus: {
+      none: { filter: 'Décisions non revues' },
+      viewed: { iconTooltip: 'Vue par {viewerNames}', filter: 'Décisions revues' },
       amended: { iconTooltip: 'Revue et modifiée', filter: 'Décisions revues et modifiées' },
     },
     documentStatus: {
@@ -303,7 +303,7 @@ const fr = {
           endDate: 'Date fin',
           source: 'Source',
           publicationCategoryLetter: 'Diffusion',
-          documentReviewStatus: 'Statut de revue',
+          documentReviewFilterStatus: 'Statut de revue',
         },
       },
       columnTitles: {

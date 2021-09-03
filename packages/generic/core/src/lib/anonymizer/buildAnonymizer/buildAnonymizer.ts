@@ -19,7 +19,6 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
   annotations: annotationType[],
   seed: number,
 ): anonymizerType<documentT> {
-  console.log('ANONYMIZE BUILD');
   const mapper: { [key: string]: string | undefined } = buildEntityIdMapper(
     settings,
     annotations.map((annotation) => annotation.entityId),

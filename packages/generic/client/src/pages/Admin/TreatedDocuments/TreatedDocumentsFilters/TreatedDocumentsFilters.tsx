@@ -1,8 +1,8 @@
 import React from 'react';
 import format from 'string-template';
-import { documentModule, documentType } from '@label/core';
+import { documentModule } from '@label/core';
 import { FilterButton, FilterChip, filterType, Text } from '../../../../components';
-import { treatedDocumentFilterType } from '../../../../services/localStorage';
+import { documentReviewFilterStatusType, treatedDocumentFilterType } from '../../../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { treatedDocumentFilterInfoType } from './treatedDocumentFilterInfoType';
@@ -81,16 +81,16 @@ function TreatedDocumentsFilters(props: {
       },
       {
         kind: 'dropdown' as const,
-        name: 'documentReviewStatus',
-        label: wordings.treatedDocumentsPage.table.filter.fields.documentReviewStatus,
+        name: 'documentReviewFilterStatus',
+        label: wordings.treatedDocumentsPage.table.filter.fields.documentReviewFilterStatus,
         possibleValues: (documentModule.model.content.reviewStatus.content as unknown) as string[],
-        value: props.filterValues.documentReviewStatus,
+        value: props.filterValues.documentReviewFilterStatus,
         computeChipLabel: convertDocumentReviewStatusToReadable,
         computeReadableValue: convertDocumentReviewStatusToReadable,
-        onChange: (documentReviewStatus?: string) =>
+        onChange: (documentReviewFilterStatus?: string) =>
           props.setFilterValues({
             ...props.filterValues,
-            documentReviewStatus: documentReviewStatus as documentType['reviewStatus'],
+            documentReviewFilterStatus: documentReviewFilterStatus as documentReviewFilterStatusType | undefined,
           }),
       },
       {
@@ -121,8 +121,9 @@ function TreatedDocumentsFilters(props: {
   }
 }
 
-function convertDocumentReviewStatusToReadable(documentReviewStatus: string) {
-  return wordings.business.documentReviewStatus[documentReviewStatus as documentType['reviewStatus']].filter;
+function convertDocumentReviewStatusToReadable(documentReviewFilterStatus: string) {
+  return wordings.business.documentReviewFilterStatus[documentReviewFilterStatus as documentReviewFilterStatusType]
+    .filter;
 }
 
 function buildStyles(theme: customThemeType) {

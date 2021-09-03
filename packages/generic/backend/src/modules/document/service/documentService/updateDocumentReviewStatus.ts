@@ -5,11 +5,23 @@ export { updateDocumentReviewStatus };
 
 async function updateDocumentReviewStatus(
   _id: documentType['_id'],
-  reviewStatus: documentType['reviewStatus'],
+  update: { hasBeenAmended?: boolean; viewerNameToAdd?: string },
 ) {
   const documentRepository = buildDocumentRepository();
+  const document = await documentRepository.findById(_id);
+
+  const viewerNames =
+    !!update.viewerNameToAdd &&
+    !document.reviewStatus.viewerNames.includes(update.viewerNameToAdd)
+      ? [...document.reviewStatus.viewerNames, update.viewerNameToAdd]
+      : document.reviewStatus.viewerNames;
+  const hasBeenAmended =
+    update.hasBeenAmended !== undefined
+      ? update.hasBeenAmended
+      : document.reviewStatus.hasBeenAmended;
+
   const updatedDocument = await documentRepository.updateOne(_id, {
-    reviewStatus,
+    reviewStatus: { viewerNames, hasBeenAmended },
   });
 
   if (!updatedDocument) {

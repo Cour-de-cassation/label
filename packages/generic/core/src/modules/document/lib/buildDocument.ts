@@ -9,7 +9,7 @@ function buildDocument(
   return {
     ...documentFields,
     _id: idModule.lib.buildId(),
-    reviewStatus: 'none',
+    reviewStatus: { hasBeenAmended: false, viewerNames: [] },
     status: 'loaded',
     updateDate: new Date().getTime(),
   };

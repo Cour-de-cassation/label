@@ -62,8 +62,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
     document: buildAuthenticatedController({
       permissions: ['admin'],
-      controllerWithUser: async (_, { args: { documentId } }) =>
-        documentService.fetchDocument(idModule.lib.buildId(documentId)),
+      controllerWithUser: async (user, { args: { documentId } }) => {
+        await documentService.updateDocumentReviewStatus(
+          idModule.lib.buildId(documentId),
+          { viewerNameToAdd: user.name },
+        );
+        return documentService.fetchDocument(idModule.lib.buildId(documentId));
+      },
     }),
 
     documentsForUser: buildAuthenticatedController({
@@ -166,9 +171,8 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(documentId),
           'free',
         );
-        await documentService.updateDocumentReviewStatus(
+        await documentService.resetDocumentReviewStatus(
           idModule.lib.buildId(documentId),
-          'none',
         );
       },
     }),
@@ -252,16 +256,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         return assignationService.updateAssignationDocumentStatus(
           idModule.lib.buildId(assignationId),
           status,
-        );
-      },
-    }),
-
-    updateDocumentReviewStatus: buildAuthenticatedController({
-      permissions: ['admin'],
-      controllerWithUser: async (_, { args: { documentId, reviewStatus } }) => {
-        await documentService.updateDocumentReviewStatus(
-          idModule.lib.buildId(documentId),
-          reviewStatus,
         );
       },
     }),

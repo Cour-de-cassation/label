@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { flatten, uniq } from 'lodash';
-import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator } from '@label/core';
+import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator, documentType } from '@label/core';
 import {
   DocumentNumberTextInput,
   DocumentReviewStatusIcon,
@@ -12,6 +12,7 @@ import {
   localStorage,
   treatedDocumentOrderByProperties,
   treatedDocumentFilterType,
+  documentReviewFilterStatusType,
 } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -121,8 +122,12 @@ function TreatedDocuments(props: {
         if (currentFilterKey === 'userName' && !!filterValues.userName) {
           return accumulator && treatedDocument.userNames.includes(filterValues.userName);
         }
-        if (currentFilterKey === 'documentReviewStatus' && !!filterValues.documentReviewStatus) {
-          return accumulator && treatedDocument.document.reviewStatus === filterValues.documentReviewStatus;
+        if (currentFilterKey === 'documentReviewFilterStatus' && !!filterValues.documentReviewFilterStatus) {
+          return (
+            accumulator &&
+            convertDocumentReviewStatusToFilter(treatedDocument.document.reviewStatus) ===
+              filterValues.documentReviewFilterStatus
+          );
         }
         if (currentFilterKey === 'source' && !!filterValues.source) {
           return accumulator && treatedDocument.document.source === filterValues.source;
@@ -215,9 +220,9 @@ function TreatedDocuments(props: {
         title: wordings.treatedDocumentsPage.table.columnTitles.reviewStatus.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.reviewStatus.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.reviewStatus,
+        extractor: (treatedDocument) => convertDocumentReviewStatusToFilter(treatedDocument.document.reviewStatus),
         render: (treatedDocument) =>
-          treatedDocument.document.reviewStatus === 'none' ? undefined : (
+          convertDocumentReviewStatusToFilter(treatedDocument.document.reviewStatus) === 'none' ? undefined : (
             <DocumentReviewStatusIcon iconSize={TABLE_ICON_SIZE} reviewStatus={treatedDocument.document.reviewStatus} />
           ),
         width: 2,
@@ -281,6 +286,19 @@ function TreatedDocuments(props: {
     );
   }
 }
+
+function convertDocumentReviewStatusToFilter(
+  documentReviewStatus: documentType['reviewStatus'],
+): documentReviewFilterStatusType {
+  if (documentReviewStatus.hasBeenAmended) {
+    return 'amended';
+  }
+  if (documentReviewStatus.viewerNames.length > 0) {
+    return 'viewed';
+  }
+  return 'none';
+}
+
 function buildStyles(theme: customThemeType) {
   return {
     header: {

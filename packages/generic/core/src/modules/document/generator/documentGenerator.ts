@@ -43,7 +43,7 @@ const documentGenerator: generatorType<documentType> = {
     metadata: metadata ? metadata : `METADATA_${Math.random()}`,
     priority: priority ? priority : 'low',
     publicationCategory: publicationCategory ? publicationCategory : [],
-    reviewStatus: reviewStatus || 'none',
+    reviewStatus: reviewStatus || { hasBeenAmended: false, viewerNames: [] },
     source: source ? source : `SOURCE_${Math.random()}`,
     status: status ? status : 'free',
     title: title ? title : `TITLE_${Math.random()}`,

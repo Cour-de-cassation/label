@@ -31,7 +31,13 @@ const documentModelCommonFields = {
   documentNumber: { kind: 'primitive', content: 'number' },
   _id: { kind: 'custom', content: 'id' },
   publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
-  reviewStatus: { kind: 'constant', content: ['none', 'read', 'amended'] },
+  reviewStatus: {
+    kind: 'object',
+    content: {
+      viewerNames: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+      hasBeenAmended: { kind: 'primitive', content: 'boolean' },
+    },
+  },
   source: { kind: 'primitive', content: 'string' },
   status: {
     kind: 'constant',

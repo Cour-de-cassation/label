@@ -1,4 +1,3 @@
-import { documentType } from '@label/core';
 import { localStorageHandler } from '../localStorageHandler';
 import { localStorageMappers } from '../localStorageMappers';
 
@@ -14,12 +13,14 @@ const TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS_STORAGE_KEY = 'TREATED_DOCUMENTS_
 
 export { setFilters, getFilters };
 
-export type { treatedDocumentFilterType };
+export type { treatedDocumentFilterType, documentReviewFilterStatusType };
+
+type documentReviewFilterStatusType = 'none' | 'viewed' | 'amended';
 
 type treatedDocumentFilterType = {
   startDate: Date | undefined;
   endDate: Date | undefined;
-  documentReviewStatus: documentType['reviewStatus'] | undefined;
+  documentReviewFilterStatus: documentReviewFilterStatusType | undefined;
   userName: string | undefined;
   source: string | undefined;
   publicationCategoryLetter: string | undefined;
@@ -30,7 +31,7 @@ type treatedDocumentFilterType = {
 function setFilters({
   startDate,
   endDate,
-  documentReviewStatus,
+  documentReviewFilterStatus,
   userName,
   source,
   publicationCategoryLetter,
@@ -49,7 +50,7 @@ function setFilters({
   });
   localStorageHandler.set({
     key: TREATED_DOCUMENTS_FILTER_DOCUMENT_REVIEW_STATUS_STORAGE_KEY,
-    value: documentReviewStatus,
+    value: documentReviewFilterStatus,
     mapper: localStorageMappers.string,
   });
   localStorageHandler.set({
@@ -88,7 +89,7 @@ function getFilters(): treatedDocumentFilterType {
     key: TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY,
     mapper: localStorageMappers.date,
   });
-  const documentReviewStatus = localStorageHandler.get({
+  const documentReviewFilterStatus = localStorageHandler.get({
     key: TREATED_DOCUMENTS_FILTER_DOCUMENT_REVIEW_STATUS_STORAGE_KEY,
     mapper: localStorageMappers.string,
   });
@@ -116,7 +117,7 @@ function getFilters(): treatedDocumentFilterType {
   return {
     startDate: startDate || undefined,
     endDate: endDate || undefined,
-    documentReviewStatus: (documentReviewStatus as documentType['reviewStatus']) || undefined,
+    documentReviewFilterStatus: (documentReviewFilterStatus as documentReviewFilterStatusType) || undefined,
     source: source || undefined,
     userName: userName || undefined,
     publicationCategoryLetter: publicationCategoryLetter || undefined,

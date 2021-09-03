@@ -3,17 +3,18 @@ import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../../../modules/document';
 import { up, down } from '../migrations/10_61026de3599c2d33728fc317';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('add reviewStatus in document model', () => {
   const documentsWithNewModel = [
     documentModule.generator.generate({
       reviewStatus: 'none',
-    }),
+    } as any),
     documentModule.generator.generate({
       reviewStatus: 'none',
-    }),
+    } as any),
     documentModule.generator.generate({
       reviewStatus: 'none',
-    }),
+    } as any),
   ];
   const documentsWithOldModel = [
     omit(documentsWithNewModel[0], 'reviewStatus'),

@@ -1,10 +1,5 @@
 import { groupBy, maxBy, omit, sumBy } from 'lodash';
-import {
-  idModule,
-  statisticType,
-  treatmentType,
-  userType,
-} from '../../../../../../core/dist';
+import { idModule, statisticType, treatmentType, userType } from '@label/core';
 import { buildStatisticRepository } from '../../../../modules/statistic';
 import { logger } from '../../../../utils';
 

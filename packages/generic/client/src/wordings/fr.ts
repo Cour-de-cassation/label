@@ -85,6 +85,8 @@ const fr = {
       rejected: 'Bloqué',
     },
     errors: {
+      pendingDocumentsFreed:
+        'Les documents ont été libérés, ils ne vous sont maintenant plus réservés. Veuillez recharger la page.',
       noUserIdFound:
         'Une erreur est survenue lors de votre identification. Veuillez vous déconnecter et vous reconnecter.',
       assignDocumentFailed: 'La réassignation du document a échoué. Veuillez recharger la page.',

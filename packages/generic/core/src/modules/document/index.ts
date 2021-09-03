@@ -7,6 +7,7 @@ import {
   countWords,
   extractAdditionalAnnotationTerms,
   getNextStatus,
+  getMinutesBeforeFreeingPendingDocuments,
   publicationHandler,
 } from './lib';
 
@@ -25,6 +26,7 @@ const documentModule = {
     countWords,
     extractAdditionalAnnotationTerms,
     getNextStatus,
+    getMinutesBeforeFreeingPendingDocuments,
     publicationHandler,
   },
 };

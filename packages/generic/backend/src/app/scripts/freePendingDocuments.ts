@@ -1,4 +1,4 @@
-import { dateBuilder } from '@label/core';
+import { dateBuilder, documentModule } from '@label/core';
 import {
   buildDocumentRepository,
   documentService,
@@ -7,8 +7,8 @@ import { logger } from '../../utils';
 
 export { freePendingDocuments };
 
-async function freePendingDocuments(minutesBeforeFreeing: number) {
-  logger.log(`freePendingDocuments ${minutesBeforeFreeing}`);
+async function freePendingDocuments() {
+  logger.log(`freePendingDocuments`);
 
   const documentRepository = buildDocumentRepository();
 
@@ -18,6 +18,7 @@ async function freePendingDocuments(minutesBeforeFreeing: number) {
     ['_id', 'updateDate'],
   );
   logger.log(`${pendingDocuments.length} documents fetched`);
+  const minutesBeforeFreeing = documentModule.lib.getMinutesBeforeFreeingPendingDocuments();
   const pendingDocumentsToFree = pendingDocuments.filter(
     (document) =>
       document.updateDate <= dateBuilder.minutesAgo(minutesBeforeFreeing),

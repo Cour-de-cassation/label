@@ -3,11 +3,12 @@ import { Snackbar } from '../../components';
 
 export { AlertHandlerContext, AlertHandlerContextProvider };
 
-type alertHandlerType = { displayAlert: ({ text, variant }: alertType) => void };
+type alertHandlerType = { displayAlert: ({ text, variant, autoHide }: alertType) => void };
 
 type alertType = {
   variant: 'alert' | 'success';
   text: string;
+  autoHide: boolean;
 };
 
 const AlertHandlerContext = createContext<alertHandlerType>({
@@ -23,7 +24,13 @@ function AlertHandlerContextProvider(props: { children: ReactNode }): ReactEleme
   return (
     <AlertHandlerContext.Provider value={alertHandler}>
       {!!alert && (
-        <Snackbar variant={alert.variant} text={alert.text} isOpen={!!alert} onClose={() => setAlert(undefined)} />
+        <Snackbar
+          variant={alert.variant}
+          text={alert.text}
+          isOpen
+          autoHide={alert.autoHide}
+          onClose={() => setAlert(undefined)}
+        />
       )}
       {props.children}
     </AlertHandlerContext.Provider>

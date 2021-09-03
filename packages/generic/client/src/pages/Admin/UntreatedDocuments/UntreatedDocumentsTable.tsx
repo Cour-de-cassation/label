@@ -128,7 +128,7 @@ function UntreatedDocumentsTable(props: {
     setDocumentIdToUpdateStatus(undefined);
     const userId = localStorage.userHandler.getId();
     if (!userId) {
-      displayAlert({ text: wordings.business.errors.noUserIdFound, variant: 'alert' });
+      displayAlert({ text: wordings.business.errors.noUserIdFound, variant: 'alert', autoHide: true });
       return;
     }
     await releaseAndAssignDocumentToUser({ userId, documentId: documentIdToUpdateStatus });
@@ -147,7 +147,7 @@ function UntreatedDocumentsTable(props: {
         status: 'free',
       });
     } catch (error) {
-      displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert' });
+      displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert', autoHide: true });
       console.warn(error);
       return;
     }
@@ -157,7 +157,7 @@ function UntreatedDocumentsTable(props: {
         userId,
       });
     } catch (error) {
-      displayAlert({ text: wordings.business.errors.assignDocumentFailed, variant: 'alert' });
+      displayAlert({ text: wordings.business.errors.assignDocumentFailed, variant: 'alert', autoHide: true });
       console.warn(error);
       return;
     }

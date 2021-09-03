@@ -14,7 +14,7 @@ describe('freePendingDocuments', () => {
     ] as const).map(documentModule.generator.generate);
     await Promise.all(documents.map(documentRepository.insert));
 
-    await freePendingDocuments(15);
+    await freePendingDocuments();
 
     const updatedDocument0 = await documentRepository.findById(
       documents[0]._id,

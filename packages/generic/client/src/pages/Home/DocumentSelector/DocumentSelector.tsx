@@ -1,8 +1,9 @@
-import React from 'react';
-import { annotationType, fetchedDocumentType, settingsType } from '@label/core';
+import React, { useEffect } from 'react';
+import { annotationType, fetchedDocumentType, documentModule, idModule, settingsType } from '@label/core';
 import { Text } from '../../../components';
 import { wordings } from '../../../wordings';
 import { DocumentSelectorCard } from './DocumentSelectorCard';
+import { useAlert } from '../../../services/alert';
 
 export { DocumentSelector };
 
@@ -12,6 +13,19 @@ function DocumentSelector(props: {
   onSelectDocument: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => Promise<void>;
 }) {
   const styles = buildStyles();
+
+  const { displayAlert } = useAlert();
+
+  let autoFreeDocumentsTimeout: NodeJS.Timeout | null = null;
+
+  useEffect(() => {
+    const timeBeforeFreeingDocuments = documentModule.lib.getMinutesBeforeFreeingPendingDocuments() * 60 * 1000;
+    autoFreeDocumentsTimeout = setTimeout(displayRefreshAlert, timeBeforeFreeingDocuments);
+    return () => {
+      autoFreeDocumentsTimeout && clearTimeout(autoFreeDocumentsTimeout);
+    };
+  }, []);
+
   return <div style={styles.container}>{renderPage()}</div>;
 
   function renderPage() {
@@ -26,10 +40,19 @@ function DocumentSelector(props: {
     return (
       <div style={styles.cardsContainer}>
         {props.choices.map((choice) => (
-          <DocumentSelectorCard choice={choice} onSelect={props.onSelectDocument} settings={props.settings} />
+          <DocumentSelectorCard
+            key={idModule.lib.convertToString(choice.document._id)}
+            choice={choice}
+            onSelect={props.onSelectDocument}
+            settings={props.settings}
+          />
         ))}
       </div>
     );
+  }
+
+  function displayRefreshAlert() {
+    displayAlert({ text: wordings.business.errors.pendingDocumentsFreed, variant: 'alert', autoHide: false });
   }
 }
 

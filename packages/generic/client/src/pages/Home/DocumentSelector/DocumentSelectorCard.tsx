@@ -45,7 +45,7 @@ function DocumentSelectorCard(props: {
     <div style={styles.publishedDocumentCardContainer}>
       <div style={styles.publishedDocumentTitleContainer}>
         {props.choice.document.publicationCategory.map((publicationCategoryLetter) => (
-          <div style={styles.publicationCategoryLetter}>
+          <div style={styles.publicationCategoryLetter} key={publicationCategoryLetter}>
             <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
           </div>
         ))}

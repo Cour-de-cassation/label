@@ -74,7 +74,7 @@ function HomeDocumentAnnotator(props: {
         status,
       });
     } catch (error) {
-      displayAlert({ variant: 'alert', text: wordings.business.errors.updateDocumentStatusFailed });
+      displayAlert({ variant: 'alert', text: wordings.business.errors.updateDocumentStatusFailed, autoHide: true });
       console.warn(error);
     }
   }
@@ -86,7 +86,7 @@ function HomeDocumentAnnotator(props: {
         documentId,
       });
     } catch (error) {
-      displayAlert({ variant: 'alert', text: wordings.business.errors.updateTreatmentFailed });
+      displayAlert({ variant: 'alert', text: wordings.business.errors.updateTreatmentFailed, autoHide: true });
       console.warn(error);
     }
   }

@@ -4,6 +4,7 @@ import { computeCaseNumber } from './computeCaseNumber';
 import { countWords } from './countWords';
 import { extractAdditionalAnnotationTerms } from './extractAdditionalAnnotationTerms';
 import { getNextStatus } from './getNextStatus';
+import { getMinutesBeforeFreeingPendingDocuments } from './getMinutesBeforeFreeingPendingDocuments';
 import { publicationHandler } from './publicationHandler';
 
 export {
@@ -13,5 +14,6 @@ export {
   countWords,
   extractAdditionalAnnotationTerms,
   getNextStatus,
+  getMinutesBeforeFreeingPendingDocuments,
   publicationHandler,
 };

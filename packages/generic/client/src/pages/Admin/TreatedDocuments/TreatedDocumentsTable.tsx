@@ -73,7 +73,11 @@ function TreatedDocumentsTable(props: {
       });
       props.refetch();
     } catch (error) {
-      displayAlert({ text: wordings.business.errors.deleteHumanTreatmentsByDocumentIdFailed, variant: 'alert' });
+      displayAlert({
+        text: wordings.business.errors.deleteHumanTreatmentsByDocumentIdFailed,
+        variant: 'alert',
+        autoHide: true,
+      });
       console.warn(error);
     }
   }

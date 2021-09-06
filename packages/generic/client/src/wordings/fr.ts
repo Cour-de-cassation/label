@@ -119,6 +119,7 @@ const fr = {
     anonymisedView: 'Vue anonymisée',
     applyEveryWhere: 'Appliquer à tous',
     askedAnnotations: 'Annotations demandées',
+    annotationGuide: "Guide d'annotation",
     category: 'Catégorie',
     changeCategory: 'Changer de catégorie',
     close: 'Fermer',

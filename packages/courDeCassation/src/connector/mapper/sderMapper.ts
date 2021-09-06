@@ -10,7 +10,7 @@ import {
   extractReadableJurisdictionName,
   extractAppealNumber,
 } from './extractors';
-import { categoriesMapper } from './categoriesMapper';
+// import { categoriesMapper } from './categoriesMapper';
 
 export { sderMapper };
 
@@ -50,9 +50,10 @@ function mapCourtDecisionToDocument(
 
   const criticity = computeCriticity();
 
-  const categoriesToOmit = categoriesMapper.mapSderCategoriesToLabelCategories(
-    sderCourtDecision.occultation?.categoriesToOmit,
-  );
+  // const categoriesToOmit = categoriesMapper.mapSderCategoriesToLabelCategories(
+  //   sderCourtDecision.occultation?.categoriesToOmit,
+  // );
+  const categoriesToOmit: string[] = [];
 
   return documentModule.lib.buildDocument({
     creationDate: new Date().getTime(),

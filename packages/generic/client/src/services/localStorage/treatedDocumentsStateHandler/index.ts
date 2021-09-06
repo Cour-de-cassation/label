@@ -1,7 +1,7 @@
 import {
   setFilters,
   getFilters,
-  documentReviewFilterStatusType,
+  documentReviewFilterStatuses,
   treatedDocumentFilterType,
 } from './treatedDocumentsFiltersHandler';
 import {
@@ -12,9 +12,9 @@ import {
 import { getOrderDirection, setOrderDirection } from './treatedDocumentsOrderDirectionHandler';
 import { getSearchedDocumentNumber, setSearchedDocumentNumber } from './treatedDocumentsSearchedDocumentNumberHandler';
 
-export { treatedDocumentsStateHandler, treatedDocumentOrderByProperties };
+export { treatedDocumentsStateHandler, treatedDocumentOrderByProperties, documentReviewFilterStatuses };
 
-export type { documentReviewFilterStatusType, treatedDocumentFilterType };
+export type { treatedDocumentFilterType };
 
 const treatedDocumentsStateHandler = {
   getFilters,

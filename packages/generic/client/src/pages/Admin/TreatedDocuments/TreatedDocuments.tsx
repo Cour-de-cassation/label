@@ -12,7 +12,6 @@ import {
   localStorage,
   treatedDocumentOrderByProperties,
   treatedDocumentFilterType,
-  documentReviewFilterStatusType,
 } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
@@ -287,9 +286,7 @@ function TreatedDocuments(props: {
   }
 }
 
-function convertDocumentReviewStatusToFilter(
-  documentReviewStatus: documentType['reviewStatus'],
-): documentReviewFilterStatusType {
+function convertDocumentReviewStatusToFilter(documentReviewStatus: documentType['reviewStatus']) {
   if (documentReviewStatus.hasBeenAmended) {
     return 'amended';
   }

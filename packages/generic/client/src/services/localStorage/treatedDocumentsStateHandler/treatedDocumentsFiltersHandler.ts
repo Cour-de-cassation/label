@@ -11,16 +11,16 @@ const TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY =
 const TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS';
 const TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS';
 
-export { setFilters, getFilters };
+export { setFilters, getFilters, documentReviewFilterStatuses };
 
-export type { treatedDocumentFilterType, documentReviewFilterStatusType };
+export type { treatedDocumentFilterType };
 
-type documentReviewFilterStatusType = 'none' | 'viewed' | 'amended';
+const documentReviewFilterStatuses = ['none', 'viewed', 'amended'] as const;
 
 type treatedDocumentFilterType = {
   startDate: Date | undefined;
   endDate: Date | undefined;
-  documentReviewFilterStatus: documentReviewFilterStatusType | undefined;
+  documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined;
   userName: string | undefined;
   source: string | undefined;
   publicationCategoryLetter: string | undefined;
@@ -117,7 +117,8 @@ function getFilters(): treatedDocumentFilterType {
   return {
     startDate: startDate || undefined,
     endDate: endDate || undefined,
-    documentReviewFilterStatus: (documentReviewFilterStatus as documentReviewFilterStatusType) || undefined,
+    documentReviewFilterStatus:
+      (documentReviewFilterStatus as typeof documentReviewFilterStatuses[number]) || undefined,
     source: source || undefined,
     userName: userName || undefined,
     publicationCategoryLetter: publicationCategoryLetter || undefined,

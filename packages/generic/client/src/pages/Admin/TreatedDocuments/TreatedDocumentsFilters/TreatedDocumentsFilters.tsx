@@ -1,8 +1,7 @@
 import React from 'react';
 import format from 'string-template';
-import { documentModule } from '@label/core';
 import { FilterButton, FilterChip, filterType, Text } from '../../../../components';
-import { documentReviewFilterStatusType, treatedDocumentFilterType } from '../../../../services/localStorage';
+import { documentReviewFilterStatuses, treatedDocumentFilterType } from '../../../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { treatedDocumentFilterInfoType } from './treatedDocumentFilterInfoType';
@@ -83,14 +82,16 @@ function TreatedDocumentsFilters(props: {
         kind: 'dropdown' as const,
         name: 'documentReviewFilterStatus',
         label: wordings.treatedDocumentsPage.table.filter.fields.documentReviewFilterStatus,
-        possibleValues: (documentModule.model.content.reviewStatus.content as unknown) as string[],
+        possibleValues: (documentReviewFilterStatuses as unknown) as string[],
         value: props.filterValues.documentReviewFilterStatus,
         computeChipLabel: convertDocumentReviewStatusToReadable,
         computeReadableValue: convertDocumentReviewStatusToReadable,
         onChange: (documentReviewFilterStatus?: string) =>
           props.setFilterValues({
             ...props.filterValues,
-            documentReviewFilterStatus: documentReviewFilterStatus as documentReviewFilterStatusType | undefined,
+            documentReviewFilterStatus: documentReviewFilterStatus as
+              | typeof documentReviewFilterStatuses[number]
+              | undefined,
           }),
       },
       {
@@ -122,8 +123,9 @@ function TreatedDocumentsFilters(props: {
 }
 
 function convertDocumentReviewStatusToReadable(documentReviewFilterStatus: string) {
-  return wordings.business.documentReviewFilterStatus[documentReviewFilterStatus as documentReviewFilterStatusType]
-    .filter;
+  return wordings.business.documentReviewFilterStatus[
+    documentReviewFilterStatus as typeof documentReviewFilterStatuses[number]
+  ].filter;
 }
 
 function buildStyles(theme: customThemeType) {

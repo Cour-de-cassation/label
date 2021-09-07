@@ -28,12 +28,12 @@ function buildDocumentViewerModeHandler(
   function resetViewerMode() {
     setViewerMode({
       kind: 'annotation',
-      isAnonymized: documentViewerMode.isAnonymized,
+      isAnonymizedView: documentViewerMode.isAnonymizedView,
     });
   }
 
   function isAnonymizedView() {
-    return documentViewerMode.isAnonymized;
+    return documentViewerMode.isAnonymizedView;
   }
 
   function setOccurrenceMode(entityId: annotationType['entityId'], entityLineNumbers: number[]) {
@@ -41,11 +41,11 @@ function buildDocumentViewerModeHandler(
       kind: 'occurrence',
       entityId,
       entityLineNumbers,
-      isAnonymized: documentViewerMode.isAnonymized,
+      isAnonymizedView: documentViewerMode.isAnonymizedView,
     });
   }
 
   function switchAnonymizedView() {
-    setViewerMode({ ...documentViewerMode, isAnonymized: !documentViewerMode.isAnonymized });
+    setViewerMode({ ...documentViewerMode, isAnonymizedView: !documentViewerMode.isAnonymizedView });
   }
 }

@@ -6,13 +6,22 @@ export { SwitchButton };
 
 function SwitchButton(props: {
   checked: boolean;
+  disabled?: boolean;
   color: 'primary' | 'secondary' | 'default';
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }): ReactElement {
   const theme = useCustomTheme();
   const classes = buildSwitchButtonClasses(theme);
 
-  return <MUSwitch checked={props.checked} classes={{ ...classes }} color={props.color} onChange={props.onChange} />;
+  return (
+    <MUSwitch
+      disabled={props.disabled}
+      checked={props.checked}
+      classes={{ ...classes }}
+      color={props.color}
+      onChange={props.onChange}
+    />
+  );
 
   function buildSwitchButtonClasses(theme: customThemeType) {
     return makeStyles({

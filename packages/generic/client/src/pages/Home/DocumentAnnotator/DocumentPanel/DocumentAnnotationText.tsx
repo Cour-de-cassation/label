@@ -7,7 +7,7 @@ import { positionType } from '../../../../types';
 import { MouseMoveListener, useMousePosition } from '../../../../utils';
 import { getAnnotationTextDisplayStyle } from './lib';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
-import { useAnonymizerBuilder } from '../../../../services/anonymizer';
+import { DocumentAnonymizedAnnotationText } from './DocumentAnonymizedAnnotationText';
 
 export { PureDocumentAnnotationText as DocumentAnnotationText };
 
@@ -30,9 +30,6 @@ class PureDocumentAnnotationText extends React.Component<propsType> {
 
 function DocumentAnnotationText(props: propsType): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const anonymizerBuilder = useAnonymizerBuilder();
-
-  const anonymizer = anonymizerBuilder.get();
 
   const [isTooltipMenuVisible, setIsTooltipMenuVisible] = useState(false);
   const [isTooltipMenuExpanded, setIsTooltipMenuExpanded] = useState(false);
@@ -52,9 +49,11 @@ function DocumentAnnotationText(props: propsType): ReactElement {
         mouseMoveHandler={mouseMoveHandler}
       >
         <span style={style.annotationText}>
-          {documentViewerModeHandler.isAnonymizedView()
-            ? anonymizer.anonymize(props.annotation)
-            : props.annotation.text}
+          {!documentViewerModeHandler.isAnonymizedView() ? (
+            props.annotation.text
+          ) : (
+            <DocumentAnonymizedAnnotationText annotation={props.annotation} />
+          )}
         </span>
       </MouseMoveListener>
 

@@ -10,7 +10,7 @@ describe('getAnnotationTextDisplayStyle', () => {
 
   it('should return none', () => {
     const annotation = annotationModule.generator.generate({ category: 'prenom' });
-    const documentViewerMode = { kind: 'annotation' as const, isAnonymized: true };
+    const documentViewerMode = { kind: 'annotation' as const, isAnonymizedView: true };
     const displayStyle = getAnnotationTextDisplayStyle({ settings, annotation, documentViewerMode });
 
     expect(displayStyle).toBe('none');
@@ -18,7 +18,7 @@ describe('getAnnotationTextDisplayStyle', () => {
 
   it('should return underlined', () => {
     const annotation = annotationModule.generator.generate({ category: 'nom' });
-    const documentViewerMode = { kind: 'annotation' as const, isAnonymized: true };
+    const documentViewerMode = { kind: 'annotation' as const, isAnonymizedView: true };
     const displayStyle = getAnnotationTextDisplayStyle({ settings, annotation, documentViewerMode });
 
     expect(displayStyle).toBe('underlined');
@@ -29,7 +29,7 @@ describe('getAnnotationTextDisplayStyle', () => {
     const documentViewerMode = {
       kind: 'occurrence' as const,
       entityId: 'OTHER_ENTITY_ID',
-      isAnonymized: true,
+      isAnonymizedView: true,
       entityLineNumbers: [],
     };
     const displayStyle = getAnnotationTextDisplayStyle({ settings, annotation, documentViewerMode });
@@ -42,7 +42,7 @@ describe('getAnnotationTextDisplayStyle', () => {
     const documentViewerMode = {
       kind: 'occurrence' as const,
       entityId: annotation.entityId,
-      isAnonymized: true,
+      isAnonymizedView: true,
       entityLineNumbers: [],
     };
     const displayStyle = getAnnotationTextDisplayStyle({ settings, annotation, documentViewerMode });

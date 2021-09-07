@@ -5,15 +5,15 @@ export { DEFAULT_VIEWER_MODE };
 export type { viewerModeType };
 
 type viewerModeType =
-  | { kind: 'annotation'; isAnonymized: boolean }
+  | { kind: 'annotation'; isAnonymizedView: boolean }
   | {
       kind: 'occurrence';
       entityId: annotationType['entityId'];
       entityLineNumbers: number[];
-      isAnonymized: boolean;
+      isAnonymizedView: boolean;
     };
 
 const DEFAULT_VIEWER_MODE: viewerModeType = {
   kind: 'annotation',
-  isAnonymized: false,
+  isAnonymizedView: false,
 };

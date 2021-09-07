@@ -6,7 +6,7 @@ import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
-import { useAnonymizerBuilder } from '../../../services/anonymizer';
+import { CopyAnonymizedTextButton } from './CopyAnonymizedTextButton';
 
 export { DocumentAnnotatorFooter };
 
@@ -14,14 +14,11 @@ function DocumentAnnotatorFooter(props: {
   onStopAnnotatingDocument?: (status: documentType['status']) => Promise<void>;
 }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const anonymizerBuilder = useAnonymizerBuilder();
   const theme = useCustomTheme();
   const [isValidating, setIsValidating] = useState(false);
   const { addMonitoringEntry } = useMonitoring();
 
   const styles = buildStyles(theme);
-  const annotatorState = annotatorStateHandler.get();
-  const anonymizer = anonymizerBuilder.get();
 
   return (
     <div style={styles.footer}>
@@ -88,7 +85,7 @@ function DocumentAnnotatorFooter(props: {
     if (onStopAnnotatingDocument) {
       return [
         <ReportProblemButton onStopAnnotatingDocument={() => onStopAnnotatingDocument('rejected')} />,
-        <IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.shared.copyToClipboard} />,
+        <CopyAnonymizedTextButton />,
         <ButtonWithIcon
           isLoading={isValidating}
           color="primary"
@@ -98,12 +95,7 @@ function DocumentAnnotatorFooter(props: {
         />,
       ];
     }
-    return [<IconButton iconName="copy" onClick={copyToClipboard} hint={wordings.shared.copyToClipboard} />];
-  }
-
-  async function copyToClipboard() {
-    const anonymizedDocument = anonymizer.anonymizeDocument(annotatorState.document);
-    await navigator.clipboard.writeText(anonymizedDocument.text);
+    return [<CopyAnonymizedTextButton />];
   }
 
   async function validate() {

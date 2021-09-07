@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import { annotationHandler, annotationType, settingsModule } from '@label/core';
 import { CategoryIcon, Header, Text } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
-import { useAnonymizerBuilder } from '../../../../../services/anonymizer';
 import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
+import { DocumentAnonymizedAnnotationText } from '../DocumentAnonymizedAnnotationText';
 
 export { PureAnnotationTooltipMenuHeader as AnnotationTooltipMenuHeader };
 
@@ -30,12 +30,10 @@ class PureAnnotationTooltipMenuHeader extends React.Component<propsType> {
 
 function AnnotationTooltipMenuHeader(props: propsType): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const anonymizerBuilder = useAnonymizerBuilder();
   const theme = useCustomTheme();
   const style = buildStyle(theme);
   const annotatorState = annotatorStateHandler.get();
   const annotationIndex = annotationHandler.getAnnotationIndex(annotatorState.annotations, props.annotation);
-  const anonymizer = anonymizerBuilder.get();
 
   return (
     <>
@@ -55,9 +53,13 @@ function AnnotationTooltipMenuHeader(props: propsType): ReactElement {
         variant="mainLeft"
       />
       <Text variant="body1">
-        {`${props.isAnonymizedView ? wordings.homePage.originalText : wordings.homePage.replacement} : `}
+        {`${!props.isAnonymizedView ? wordings.homePage.replacement : wordings.homePage.originalText} : `}
         <Text inline variant="body2">
-          {props.isAnonymizedView ? props.annotation.text : anonymizer.anonymize(props.annotation)}
+          {!props.isAnonymizedView ? (
+            <DocumentAnonymizedAnnotationText annotation={props.annotation} />
+          ) : (
+            props.annotation.text
+          )}
         </Text>
       </Text>
     </>

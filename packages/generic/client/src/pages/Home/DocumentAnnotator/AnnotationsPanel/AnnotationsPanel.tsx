@@ -23,9 +23,6 @@ function AnnotationsPanel(props: {
         <Text variant="h2" weight="bold">
           {wordings.homePage.askedAnnotations}
         </Text>
-        <div style={styles.annotationGuideContainer} onClick={openLink}>
-          <Text variant="h3">{wordings.homePage.annotationGuide}</Text>
-        </div>
       </div>
       <div style={styles.categoriesContainer}>
         {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => {
@@ -46,11 +43,6 @@ function AnnotationsPanel(props: {
       </div>
     </div>
   );
-
-  function openLink() {
-    const url = 'https://edps.europa.eu/sites/default/files/publication/21-01-20_edps_brochures_fr.pdf';
-    window.open(url, '_blank');
-  }
 
   function renderCategory({ category, categorySize, categoryAnnotations }: annotationPerCategoryAndEntityType[number]) {
     return categorySize > 0 ? (
@@ -84,7 +76,6 @@ function AnnotationsPanel(props: {
         height: heights.annotatorPanelHeader,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
       },
       annotationGuideContainer: {
         paddingRight: theme.spacing * 2,

@@ -48,14 +48,16 @@ async function cleanLoadedDocuments() {
 
   const loadedDocumentsIds = loadedDocuments.map(({ _id }) => _id);
 
-  for (const loadedDocumentId of loadedDocumentsIds) {
+  for (let i = 0, length = loadedDocumentsIds.length; i < length; i++) {
     logger.log(
-      `Deleting assignations and related treatments and problemReports for ${idModule.lib.convertToString(
-        loadedDocumentId,
-      )}`,
+      `Deleting assignations, their treatments and all treatments : ${
+        i + 1 / length
+      }`,
     );
-    await assignationService.deleteAssignationsByDocumentId(loadedDocumentId);
-    await treatmentService.deleteTreatmentsByDocumentId(loadedDocumentId);
+    await assignationService.deleteAssignationsByDocumentId(
+      loadedDocumentsIds[i],
+    );
+    await treatmentService.deleteTreatmentsByDocumentId(loadedDocumentsIds[i]);
   }
 
   logger.log('Done');
@@ -74,13 +76,11 @@ async function cleanFreeDocuments() {
   const freeDocuments = await documentRepository.findAllProjection(['_id']);
 
   const freeDocumentIds = freeDocuments.map(({ _id }) => _id);
-  for (const freeDocumentId of freeDocumentIds) {
+  for (let i = 0, length = freeDocumentIds.length; i < length; i++) {
     logger.log(
-      `Deleting assignations and related treatments and problemReports for ${idModule.lib.convertToString(
-        freeDocumentId,
-      )}`,
+      `Deleting assignations and their treatments : ${i + 1 / length}`,
     );
-    await assignationService.deleteAssignationsByDocumentId(freeDocumentId);
+    await assignationService.deleteAssignationsByDocumentId(freeDocumentIds[i]);
   }
 
   logger.log('Done');
@@ -95,15 +95,12 @@ async function cleanTreatments() {
   );
   logger.log(`Cleaning ${documents.length} documents`);
   const documentIds = documents.map(({ _id }) => _id);
-  const treatmentsByDocumentIds = await treatmentService.fetchTreatmentsByDocumentIds(
-    documentIds,
-  );
   for (let i = 0, length = documents.length; i < length; i++) {
     logger.log(`Cleaning document n°${i + 1}/${length}`);
-
-    const treatments =
-      treatmentsByDocumentIds[idModule.lib.convertToString(documentIds[i])];
     try {
+      const treatments = await treatmentService.fetchTreatmentsByDocumentId(
+        documentIds[i],
+      );
       treatmentModule.lib.computeAnnotations(treatments);
     } catch (error) {
       logger.log(`Error while computing annotations`);

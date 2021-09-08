@@ -50,7 +50,6 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
     if (settings[annotation.category]?.isAnonymized === false) {
       return annotation.text;
     }
-    console.log('anonymize is called');
 
     const anonymizedText = mapper[annotation.entityId] || ANONYMIZATION_DEFAULT_TEXT;
 

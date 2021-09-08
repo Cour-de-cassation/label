@@ -2,7 +2,7 @@ import { countBy } from 'lodash';
 import { annotationModule } from '../../../modules/annotation';
 import { buildAvailableCharacters } from './buildAvailableCharacters';
 import { convertTextIntoCharCode } from './convertTextIntoCharCode';
-import { shuffle } from './shuffle';
+import { shuffleCharacterLists } from './shuffleCharacterLists';
 
 export { buildAvailableCharactersMapper };
 
@@ -18,7 +18,7 @@ function buildAvailableCharactersMapper(entityIds: string[], seed: number) {
     const compoundSeed = seed * convertTextIntoCharCode(category);
     return {
       ...accumulator,
-      [category]: shuffle(availableCharacters, compoundSeed),
+      [category]: shuffleCharacterLists(availableCharacters, compoundSeed),
     };
   }, {} as Record<string, string[]>);
 }

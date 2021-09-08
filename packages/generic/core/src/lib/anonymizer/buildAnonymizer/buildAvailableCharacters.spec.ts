@@ -1,10 +1,10 @@
-import { uniq } from 'lodash';
+import { flatten, uniq } from 'lodash';
 import { buildAvailableCharacters } from './buildAvailableCharacters';
 
 describe('buildAvailableCharacters', () => {
   it('should build a set of available characters distinct with one or two characters length', () => {
     const count = 100;
-    const availableCharacters = buildAvailableCharacters(count);
+    const availableCharacters = flatten(buildAvailableCharacters(count));
 
     const distinctAvailableCharacters = uniq(availableCharacters);
     expect(availableCharacters).toEqual(distinctAvailableCharacters);

@@ -1,8 +1,13 @@
-import { userService } from '../../modules/user';
+import { userService, buildUserRepository } from '../../modules/user';
 
 export { insertTestUsers };
 
 async function insertTestUsers() {
+  const userRepository = buildUserRepository();
+  const usersCount = await userRepository.findAllProjection(['_id']);
+  if (usersCount.length > 0) {
+    return;
+  }
   await userService.signUpUser({
     email: 'test.annotator@label.fr',
     name: 'Test Annotator',

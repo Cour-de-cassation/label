@@ -6,7 +6,7 @@ import { parametersHandler } from '../lib/parametersHandler';
   const backend = buildBackend(environment, settings);
 
   await backend.runScript(
-    backend.scripts.insertTestStatistics.run,
-    backend.scripts.insertTestStatistics.option,
+    backend.scripts.insertTestUsers.run,
+    backend.scripts.insertTestUsers.option,
   );
 })();

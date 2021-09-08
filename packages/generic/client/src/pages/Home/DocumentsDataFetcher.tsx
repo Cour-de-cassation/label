@@ -68,7 +68,7 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
           ...document,
           _id: idModule.lib.buildId(document._id),
         },
-        annotations: annotations,
+        annotations,
       });
       statusCodesAnnotations.push(statusCodeAnnotations);
     } catch (error) {

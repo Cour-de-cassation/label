@@ -18,6 +18,8 @@ async function cleanDocuments() {
   await cleanFreeDocuments();
 
   await cleanTreatments();
+
+  await cleanAssignations();
 }
 
 async function cleanLoadedDocuments() {
@@ -73,12 +75,15 @@ async function cleanFreeDocuments() {
   logger.log(
     `Deleting assignations and their treatments for free documents - should not happen`,
   );
-  const freeDocuments = await documentRepository.findAllProjection(['_id']);
+  const freeDocuments = await documentRepository.findAllByStatusProjection(
+    ['free'],
+    ['_id'],
+  );
 
   const freeDocumentIds = freeDocuments.map(({ _id }) => _id);
   for (let i = 0, length = freeDocumentIds.length; i < length; i++) {
     logger.log(
-      `Deleting assignations and their treatments : ${i + 1 / length}`,
+      `Deleting assignations and their treatments : ${i + 1}/${length}`,
     );
     await assignationService.deleteAssignationsByDocumentId(freeDocumentIds[i]);
   }
@@ -86,11 +91,57 @@ async function cleanFreeDocuments() {
   logger.log('Done');
 }
 
+async function cleanAssignations() {
+  logger.log(`cleanAssignations`);
+  const FORBIDDEN_STATUSES_FOR_ASSIGNATED_DOCUMENT: documentType['status'][] = [
+    'loaded',
+    'nlpAnnotating',
+    'free',
+  ];
+  const documentRepository = buildDocumentRepository();
+
+  const documents = await documentRepository.findAllProjection([
+    '_id',
+    'status',
+  ]);
+  const assignations = await assignationService.fetchAssignationsByDocumentIds(
+    documents.map(({ _id }) => _id),
+  );
+  logger.log(`Start checking all assignations`);
+
+  await Promise.all(
+    Object.keys(assignations).map(async (documentId) => {
+      const document = documents.find(({ _id }) =>
+        idModule.lib.equalId(_id, idModule.lib.buildId(documentId)),
+      );
+      if (!document) {
+        return;
+      }
+      if (
+        FORBIDDEN_STATUSES_FOR_ASSIGNATED_DOCUMENT.includes(document.status)
+      ) {
+        await assignationService.deleteAssignationsByDocumentId(document._id);
+      }
+      return;
+    }),
+  );
+  logger.log(`Done!`);
+}
+
 async function cleanTreatments() {
   logger.log(`cleanTreatments`);
   const documentRepository = buildDocumentRepository();
   const documents = await documentRepository.findAllByStatusProjection(
-    ['loaded', 'nlpAnnotating', 'free', 'pending', 'saved'],
+    [
+      'loaded',
+      'nlpAnnotating',
+      'free',
+      'pending',
+      'saved',
+      'rejected',
+      'done',
+      'toBePublished',
+    ],
     ['_id'],
   );
   logger.log(`Cleaning ${documents.length} documents`);

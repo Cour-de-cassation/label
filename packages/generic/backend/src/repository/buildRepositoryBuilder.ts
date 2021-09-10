@@ -128,7 +128,6 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     }
 
     async function setIndexes() {
-      await collection.dropIndexes();
       for (const { index, mustBeUnique } of indexes) {
         if (mustBeUnique) {
           await collection.createIndex(index, { unique: true });

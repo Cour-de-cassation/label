@@ -1,6 +1,7 @@
 import { documentType, errorHandlers, idModule } from '@label/core';
 import { assignationService } from '../../../assignation';
 import { buildDocumentRepository } from '../../repository';
+import { resetDocument } from './resetDocument';
 
 export { updateDocumentStatus };
 
@@ -22,6 +23,8 @@ async function updateDocumentStatus(
   }
   if (status === 'free') {
     await assignationService.deleteAssignationsByDocumentId(_id);
+  } else if (status === 'loaded') {
+    await resetDocument(_id);
   }
   return updatedDocument;
 }

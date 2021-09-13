@@ -1,0 +1,1 @@
+export { cleanDocuments } from './cleanDocuments';

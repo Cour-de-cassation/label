@@ -16,6 +16,7 @@ import { fetchFreeDocumentsIds } from './fetchFreeDocumentsIds';
 import { fetchPublishableDocuments } from './fetchPublishableDocuments';
 import { fetchTreatedDocuments } from './fetchTreatedDocuments';
 import { fetchUntreatedDocuments } from './fetchUntreatedDocuments';
+import { resetDocument } from './resetDocument';
 import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
 import { updateDocumentStatus } from './updateDocumentStatus';
@@ -52,6 +53,7 @@ function buildDocumentService() {
     fetchPublishableDocuments,
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
+    resetDocument,
     resetDocumentReviewStatus,
     updateDocumentReviewStatus,
     updateDocumentStatus,

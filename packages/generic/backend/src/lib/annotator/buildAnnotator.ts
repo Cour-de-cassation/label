@@ -10,8 +10,6 @@ import {
   documentModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
-import { annotationReportService } from '../../modules/annotationReport';
-import { assignationService } from '../../modules/assignation';
 import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
@@ -80,12 +78,6 @@ function buildAnnotator(
     const documentIds = await documentService.fetchFreeDocumentsIds();
 
     for (const documentId of documentIds) {
-      await annotationReportService.deleteAnnotationReportsByDocumentId(
-        documentId,
-      );
-      await assignationService.deleteAssignationsByDocumentId(documentId);
-      await treatmentService.deleteTreatmentsByDocumentId(documentId);
-
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
 
@@ -104,12 +96,11 @@ function buildAnnotator(
       document._id,
     );
     if (previousTreatments.length > 0) {
-      logger.log(
+      throw new Error(
         `Conflict of annotation on document ${idModule.lib.convertToString(
           document._id,
         )}. Skipping...`,
       );
-      return;
     }
     await createAnnotatorTreatment({ annotations, documentId });
     const additionalAnnotations = computeAdditionalAnnotations(

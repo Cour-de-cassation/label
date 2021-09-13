@@ -16,6 +16,8 @@ async function cleanDocuments() {
 
   await cleanLoadedDocuments();
 
+  await cleanAssignedDocuments();
+
   await cleanFreeDocuments();
 
   await cleanTreatments();
@@ -64,6 +66,39 @@ async function cleanLoadedDocuments() {
   }
 
   logger.log('Done');
+}
+
+async function cleanAssignedDocuments() {
+  logger.log(`cleanAssignedDocuments`);
+  const documentRepository = buildDocumentRepository();
+  const documents = await documentRepository.findAllByStatusProjection(
+    ['pending', 'saved', 'rejected', 'toBePublished', 'done'],
+    ['_id', 'status'],
+  );
+
+  const assignationRepository = buildAssignationRepository();
+  const assignations = await assignationRepository.findAllProjection([
+    '_id',
+    'documentId',
+  ]);
+
+  logger.log(`Start checking all assigned documents`);
+
+  await Promise.all(
+    documents.map(async (document, index) => {
+      logger.log(`Checking assignation ${index + 1}/${documents.length}`);
+      const assignation = assignations.find(({ documentId }) =>
+        idModule.lib.equalId(documentId, idModule.lib.buildId(document._id)),
+      );
+      if (!assignation) {
+        logger.log(
+          `Inconsistency: assignation not found for document status ${document.status}. Resetting the document to free...`,
+        );
+        await documentService.updateDocumentStatus(document._id, 'free');
+      }
+      return;
+    }),
+  );
 }
 
 async function cleanFreeDocuments() {

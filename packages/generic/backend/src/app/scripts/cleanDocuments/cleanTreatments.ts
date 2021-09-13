@@ -11,10 +11,7 @@ export { cleanTreatments };
 async function cleanTreatments() {
   logger.log(`cleanTreatments`);
   const documentRepository = buildDocumentRepository();
-  const documents = await documentRepository.findAllByStatusProjection(
-    ['free', 'pending', 'saved', 'rejected', 'done', 'toBePublished'],
-    ['_id'],
-  );
+  const documents = await documentRepository.findAllProjection(['_id']);
   logger.log(`Cleaning ${documents.length} documents`);
   const documentIds = documents.map(({ _id }) => _id);
   for (let i = 0, length = documents.length; i < length; i++) {

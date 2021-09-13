@@ -1,6 +1,7 @@
 import { assertDocumentIsAssignatedToUser } from './assertDocumentIsAssignatedToUser';
 import { createAssignation } from './createAssignation';
 import { deleteAssignationsByDocumentId } from './deleteAssignationsByDocumentId';
+import { deleteAssignation } from './deleteAssignation';
 import {
   fetchAllAssignationsById,
   fetchAssignationId,
@@ -16,6 +17,7 @@ export { assignationService };
 const assignationService = {
   assertDocumentIsAssignatedToUser,
   createAssignation,
+  deleteAssignation,
   deleteAssignationsByDocumentId,
   fetchAllAssignationsById,
   fetchAssignationId,

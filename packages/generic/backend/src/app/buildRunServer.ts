@@ -25,7 +25,7 @@ function buildRunServer(environment: environmentType, settings: settingsType) {
       }),
     );
 
-    app.use(bodyParser.json());
+    app.use(bodyParser.json({ limit: '1mb' }));
 
     buildApi(app);
 

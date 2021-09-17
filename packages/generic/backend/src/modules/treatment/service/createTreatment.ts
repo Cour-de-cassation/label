@@ -62,14 +62,24 @@ async function createTreatment(
     settingsForDocument,
   );
 
-  const actionToPerform = `create treatment for documentId ${idModule.lib.convertToString(
+  const actionToPerform = `create treatment "${source}" for documentId ${idModule.lib.convertToString(
     documentId,
   )}`;
+
   annotationsDiffModule.lib.assertAnnotationsDiffAreConsistent(
     annotationsDiff,
-    { settings: settingsForDocument, previousAnnotations },
+    {
+      settings: settingsForDocument,
+      previousAnnotations,
+      treatmentSource: source,
+    },
     actionToPerform,
   );
+
+  treatmentModule.lib.assertTreatmentsSourcesFollowRightOrder([
+    ...sortedTreatments,
+    treatment,
+  ]);
 
   await treatmentRepository.insert(treatment);
 

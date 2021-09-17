@@ -22,12 +22,18 @@ const nlpLocalApi: nlpApiType = {
       ),
     ) as nlpAnnotationsType;
 
+    const availableCategories = settingsModule.lib.getCategories(
+      filteredSettings,
+      {
+        status: ['alwaysVisible', 'annotable'],
+        canBeAnnotatedBy: 'NLP',
+      },
+    );
+
     return {
       ...annotations,
       entities: annotations.entities.filter((entity) =>
-        settingsModule.lib
-          .getCategories(filteredSettings, ['annotable', 'alwaysVisible'])
-          .includes(entity.label),
+        availableCategories.includes(entity.label),
       ),
     };
   },

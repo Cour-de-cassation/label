@@ -21,7 +21,7 @@ async function cleanTreatments() {
       );
       treatmentModule.lib.computeAnnotations(treatments);
     } catch (error) {
-      logger.log(`Error while computing annotations`);
+      logger.error(error);
       await documentService.updateDocumentStatus(documentIds[i], 'loaded');
     }
   }

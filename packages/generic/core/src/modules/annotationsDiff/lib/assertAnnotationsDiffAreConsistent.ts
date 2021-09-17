@@ -1,26 +1,51 @@
 import { annotationType } from '../../../modules/annotation';
-import { settingsType } from '../../../modules/settings';
+import { settingsModule, settingsType } from '../../../modules/settings';
+import { treatmentType } from '../../../modules/treatment';
 import { annotationsDiffType } from '../annotationsDiffType';
-import { areAnnotationsDiffCompatibleWithPreviousAnnotations } from './areAnnotationsDiffCompatibleWithPreviousAnnotations';
-import { areAnnotationsDiffCompatibleWithSettings } from './areAnnotationsDiffCompatibleWithSettings';
-import { areAnnotationsDiffAutoConsistent } from './areAnnotationsDiffAutoConsistent';
+import { assertAnnotationsDiffCompatibleWithPreviousAnnotations } from './assertAnnotationsDiffCompatibleWithPreviousAnnotations';
+import { assertAnnotationsDiffCompatibleWithAvailableCategories } from './assertAnnotationsDiffCompatibleWithAvailableCategories';
+import { assertAnnotationsDiffAutoConsistent } from './assertAnnotationsDiffAutoConsistent';
 
 export { assertAnnotationsDiffAreConsistent };
 
 function assertAnnotationsDiffAreConsistent(
   annotationsDiff: annotationsDiffType,
-  { previousAnnotations, settings }: { previousAnnotations: annotationType[]; settings: settingsType },
+  {
+    previousAnnotations,
+    settings,
+    treatmentSource,
+  }: { previousAnnotations: annotationType[]; settings: settingsType; treatmentSource: treatmentType['source'] },
   actionToPerform: string,
 ) {
-  if (!areAnnotationsDiffCompatibleWithPreviousAnnotations(previousAnnotations, annotationsDiff)) {
-    throw new Error(`Could not ${actionToPerform}: new annotations are inconsistent with the previous ones`);
-  }
+  assertAnnotationsDiffCompatibleWithPreviousAnnotations(previousAnnotations, annotationsDiff, actionToPerform);
 
-  if (!areAnnotationsDiffAutoConsistent(annotationsDiff)) {
-    throw new Error(`Could not ${actionToPerform}: new annotations overlap with themselves`);
-  }
+  assertAnnotationsDiffAutoConsistent(annotationsDiff, actionToPerform);
 
-  if (!areAnnotationsDiffCompatibleWithSettings(annotationsDiff, settings)) {
-    throw new Error(`Could not ${actionToPerform}: using a category that is not in the settings`);
+  const availableCategoriesFilter = computeAvailableCategoriesFilter(treatmentSource);
+  const availableCategories = settingsModule.lib.getCategories(settings, availableCategoriesFilter);
+
+  assertAnnotationsDiffCompatibleWithAvailableCategories(annotationsDiff, availableCategories, actionToPerform);
+}
+
+function computeAvailableCategoriesFilter(treatmentSource: treatmentType['source']) {
+  const status = ['alwaysVisible', 'annotable'] as settingsType[string]['status'][];
+  let canBeAnnotatedBy: 'human' | 'NLP';
+  switch (treatmentSource) {
+    case 'NLP':
+      canBeAnnotatedBy = 'NLP';
+      break;
+    case 'postProcess':
+      canBeAnnotatedBy = 'human';
+      break;
+    case 'admin':
+      canBeAnnotatedBy = 'human';
+      break;
+    case 'annotator':
+      canBeAnnotatedBy = 'human';
+      break;
+    case 'supplementaryAnnotations':
+      canBeAnnotatedBy = 'human';
+      break;
   }
+  return { status, canBeAnnotatedBy };
 }

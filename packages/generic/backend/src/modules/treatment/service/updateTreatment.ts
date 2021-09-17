@@ -58,13 +58,17 @@ async function updateTreatment(
   const previousAnnotations = treatmentModule.lib.computeAnnotations(
     sortedTreatments,
   );
+  const treatment = await treatmentRepository.findById(assignation.treatmentId);
   annotationsDiffModule.lib.assertAnnotationsDiffAreConsistent(
     annotationsDiff,
-    { settings: settingsForDocument, previousAnnotations },
+    {
+      settings: settingsForDocument,
+      previousAnnotations,
+      treatmentSource: treatment.source,
+    },
     actionToPerform,
   );
 
-  const treatment = await treatmentRepository.findById(assignation.treatmentId);
   const updatedTreatment = treatmentModule.lib.update(
     treatment,
     {

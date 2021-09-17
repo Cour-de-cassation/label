@@ -1,10 +1,10 @@
 import { range } from 'lodash';
 import { documentModule, treatmentModule } from '@label/core';
-import { fetchDocumentWithoutAnnotations } from './fetchDocumentWithoutAnnotations';
+import { fetchDocumentWithoutAnnotationsNotIn } from './fetchDocumentWithoutAnnotationsNotIn';
 import { buildTreatmentRepository } from '../../../treatment/repository';
 import { buildDocumentRepository } from '../../repository';
 
-describe('fetchDocumentWithoutAnnotations', () => {
+describe('fetchDocumentWithoutAnnotationsNotIn', () => {
   const documentRepository = buildDocumentRepository();
   const treatmentRepository = buildTreatmentRepository();
 
@@ -26,7 +26,9 @@ describe('fetchDocumentWithoutAnnotations', () => {
     );
     await Promise.all(treatments.map(treatmentRepository.insert));
 
-    const documentWithoutAnnotations = await fetchDocumentWithoutAnnotations();
+    const documentWithoutAnnotations = await fetchDocumentWithoutAnnotationsNotIn(
+      [],
+    );
 
     expect(documentWithoutAnnotations).toEqual(documentWithoutTreatments);
   });

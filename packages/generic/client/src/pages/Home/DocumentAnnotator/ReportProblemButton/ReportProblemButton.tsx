@@ -1,7 +1,7 @@
-import { positionType } from 'packages/generic/client/src/types';
 import React, { MouseEvent, useState } from 'react';
 import { IconButton } from '../../../../components';
 import { wordings } from '../../../../wordings';
+import { positionType } from '../../../../types';
 import { ReportProblemToolTipMenu } from './ReportProblemToolTipMenu';
 
 export { ReportProblemButton };

@@ -9,6 +9,7 @@ import {
   computeNearbyText,
   entityIdHandler,
   sortAnnotations,
+  stringify,
 } from './lib';
 
 export { annotationModule };
@@ -27,5 +28,6 @@ const annotationModule = {
     computeNearbyText,
     entityIdHandler,
     sortAnnotations,
+    stringify,
   },
 };

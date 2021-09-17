@@ -26,6 +26,7 @@ type categorySettingType = {
   order: number | undefined;
   status: 'hidden' | 'alwaysVisible' | 'annotable';
   text: string;
+  canBeAnnotatedBy: 'both' | 'NLP' | 'human';
 };
 
 type displayModeType = 'lightMode' | 'darkMode';

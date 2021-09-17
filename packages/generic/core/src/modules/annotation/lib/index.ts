@@ -6,6 +6,7 @@ import { comparator } from './comparator';
 import { computeNearbyText } from './computeNearbyText';
 import { entityIdHandler } from './entityIdHandler';
 import { sortAnnotations } from './sortAnnotations';
+import { stringify } from './stringify';
 
 export {
   annotationLinker,
@@ -16,4 +17,5 @@ export {
   computeNearbyText,
   entityIdHandler,
   sortAnnotations,
+  stringify,
 };

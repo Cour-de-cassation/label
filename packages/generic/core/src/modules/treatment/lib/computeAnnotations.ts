@@ -2,6 +2,7 @@ import { annotationType } from '../../annotation';
 import { annotationsDiffModule, annotationsDiffType } from '../../annotationsDiff';
 import { idModule } from '../../id';
 import { treatmentType } from '../treatmentType';
+import { assertTreatmentsSourcesFollowRightOrder } from './assertTreatmentsSourcesFollowRightOrder';
 import { sortInConsistentOrder } from './sortInConsistentOrder';
 
 export { computeAnnotations, computeAnnotationsDiff };
@@ -13,6 +14,7 @@ function computeAnnotations(treatments: treatmentType[]): annotationType[] {
   const sortedTreatments = sortInConsistentOrder(treatments);
 
   if (checkTreatmentsConsistency(sortedTreatments) && areAnnotationsInitiallyEmpty(treatments)) {
+    assertTreatmentsSourcesFollowRightOrder(treatments);
     const annotationsDiffs = sortedTreatments.map((treatment) => treatment.annotationsDiff);
     return annotationsDiffModule.lib.squash(annotationsDiffs).after;
   } else {

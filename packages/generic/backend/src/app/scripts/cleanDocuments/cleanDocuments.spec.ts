@@ -37,12 +37,16 @@ describe('cleanDocuments', () => {
       );
     }
     await Promise.all(
-      range(FREE_DOCUMENTS_COUNT).map((i) =>
-        treatmentService.createEmptyTreatment({
+      range(FREE_DOCUMENTS_COUNT).map(async (i) => {
+        await treatmentService.createEmptyTreatment({
           documentId: documentsToInsert[i]._id,
           source: 'NLP',
-        }),
-      ),
+        });
+        return treatmentService.createEmptyTreatment({
+          documentId: documentsToInsert[i]._id,
+          source: 'postProcess',
+        });
+      }),
     );
     for (let i = 0; i < DONE_DOCUMENTS_COUNT; i++) {
       await documentRepository.updateStatusById(
@@ -87,6 +91,8 @@ describe('cleanDocuments', () => {
     const assignations = await assignationRepository.findAll();
     const treatments = await treatmentRepository.findAll();
     expect(assignations.length).toBe(DONE_DOCUMENTS_COUNT);
-    expect(treatments.length).toBe(DONE_DOCUMENTS_COUNT + FREE_DOCUMENTS_COUNT);
+    expect(treatments.length).toBe(
+      DONE_DOCUMENTS_COUNT + FREE_DOCUMENTS_COUNT * 2,
+    );
   });
 });

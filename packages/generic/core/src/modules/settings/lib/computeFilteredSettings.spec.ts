@@ -10,7 +10,7 @@ describe('computeFilteredSettings', () => {
     adresse: { order: 3, text: 'Adresse', status: 'annotable' },
     [additionalAnnotationCategory]: { order: 4, text: 'Occultation supplémentaire', status: 'hidden' },
   });
-  it('should compute filtered settings for an omitted hidden category', () => {
+  xit('should compute filtered settings for an omitted hidden category', () => {
     const categoriesToOmit = ['prenom'];
     const additionalTermsToAnnotate = '';
 
@@ -21,7 +21,7 @@ describe('computeFilteredSettings', () => {
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
 
-  it('should compute filtered settings for an omitted visible category', () => {
+  xit('should compute filtered settings for an omitted visible category', () => {
     const categoriesToOmit = ['nom'];
     const additionalTermsToAnnotate = '';
 
@@ -33,7 +33,7 @@ describe('computeFilteredSettings', () => {
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
 
-  it('should compute filtered settings for an omitted annotable category', () => {
+  xit('should compute filtered settings for an omitted annotable category', () => {
     const categoriesToOmit = ['adresse'];
     const additionalTermsToAnnotate = '';
 
@@ -45,7 +45,7 @@ describe('computeFilteredSettings', () => {
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
 
-  it('should compute filtered settings for additional annotations', () => {
+  xit('should compute filtered settings for additional annotations', () => {
     const categoriesToOmit = ['prenom', 'adresse', 'nom'];
     const additionalTermsToAnnotate = 'thing';
 

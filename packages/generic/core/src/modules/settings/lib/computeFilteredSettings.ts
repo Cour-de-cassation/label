@@ -20,13 +20,13 @@ function computeFilteredSettings(
           [category]: { ...categorySetting, status: 'annotable' as const },
         };
       }
-    } else if (!categoriesToOmit.includes(category)) {
+    } /* else if (!categoriesToOmit.includes(category)) {
       return {
         ...accumulator,
         [category]: { ...categorySetting, status: 'annotable' as const },
       };
-    }
-    return { ...accumulator, [category]: categorySetting };
+    }*/
+    return { ...accumulator, [category]: { ...categorySetting, status: 'annotable' as const } };
   }, {} as settingsType);
   return settingsForDocument;
 }

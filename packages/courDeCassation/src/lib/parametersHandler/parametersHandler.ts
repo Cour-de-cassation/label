@@ -19,7 +19,12 @@ async function getParameters() {
     encoding: 'utf8',
   });
 
-  return { environment, settings: settingsModule.lib.parseFromJson(settings) };
+  const parsedSettings = settingsModule.lib.parseFromJson(settings);
+  const enhancedSettings = settingsModule.lib.additionalAnnotationCategoryHandler.addCategoryToSettings(
+    parsedSettings,
+  );
+
+  return { environment, settings: enhancedSettings };
 }
 
 function getCommandParameters() {

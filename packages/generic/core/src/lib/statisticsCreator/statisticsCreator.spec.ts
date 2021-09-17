@@ -41,8 +41,9 @@ describe('statisticsCreator', () => {
           ),
           documentId: document._id,
           order: 0,
+          source: 'NLP',
           lastUpdateDate: TREATMENT_DATE.getTime(),
-        },
+        } as const,
         {
           annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
             [
@@ -56,6 +57,7 @@ describe('statisticsCreator', () => {
               { start: 90, text: 'Gaston', category: 'personnePhysiquePrenom' },
             ].map(annotationModule.generator.generate),
           ),
+          source: 'postProcess',
           addedAnnotationsCount: { sensitive: 1, other: 0 },
           deletedAnnotationsCount: { anonymised: 1, other: 0 },
           modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
@@ -64,7 +66,7 @@ describe('statisticsCreator', () => {
           duration,
           order: 1,
           lastUpdateDate: TREATMENT_DATE.getTime(),
-        },
+        } as const,
       ].map(treatmentModule.generator.generate);
 
       const statistic = statisticsCreator.buildFromDocument({
@@ -106,6 +108,7 @@ describe('statisticsCreator', () => {
           ),
           documentId: document._id,
           order: 0,
+          source: 'NLP' as const,
           lastUpdateDate: TREATMENT_DATE.getTime(),
         },
         {
@@ -119,6 +122,7 @@ describe('statisticsCreator', () => {
           documentId: document._id,
           duration,
           order: 1,
+          source: 'postProcess' as const,
           lastUpdateDate: TREATMENT_DATE.getTime(),
         },
       ].map(treatmentModule.generator.generate);

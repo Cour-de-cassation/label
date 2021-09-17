@@ -2,6 +2,7 @@ import { treatmentGenerator } from './generator';
 import { treatmentModel, treatmentType } from './treatmentType';
 import {
   aggregate,
+  assertTreatmentsSourcesFollowRightOrder,
   build,
   buildEmpty,
   computeAnnotations,
@@ -23,6 +24,7 @@ const treatmentModule = {
   generator: treatmentGenerator,
   lib: {
     aggregate,
+    assertTreatmentsSourcesFollowRightOrder,
     build,
     buildEmpty,
     computeAnnotations,

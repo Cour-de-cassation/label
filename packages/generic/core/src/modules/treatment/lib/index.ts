@@ -1,4 +1,5 @@
 import { aggregate } from './aggregate';
+import { assertTreatmentsSourcesFollowRightOrder } from './assertTreatmentsSourcesFollowRightOrder';
 import { build } from './build';
 import { buildEmpty } from './buildEmpty';
 import { extractHumanTreatments } from './extractHumanTreatments';
@@ -10,6 +11,7 @@ import { update } from './update';
 
 export {
   aggregate,
+  assertTreatmentsSourcesFollowRightOrder,
   build,
   buildEmpty,
   computeAnnotations,

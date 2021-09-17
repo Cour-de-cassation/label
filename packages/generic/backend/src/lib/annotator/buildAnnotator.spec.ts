@@ -13,7 +13,9 @@ import { annotatorConfigType } from './annotatorConfigType';
 import { buildAnnotator } from './buildAnnotator';
 
 describe('buildAnnotator', () => {
-  const settings = settingsModule.lib.buildSettings({ prenom: {} });
+  const settings = settingsModule.lib.buildSettings({
+    prenom: { status: 'annotable' },
+  });
   describe('annotateDocumentsWithoutAnnotations', () => {
     it('should annotate all the documents without annotations', async () => {
       await insertNDocumentsWithoutAnnotationsInDb(5);
@@ -22,7 +24,9 @@ describe('buildAnnotator', () => {
 
       await annotator.annotateDocumentsWithoutAnnotations();
 
-      const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotations();
+      const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotationsNotIn(
+        [],
+      );
       expect(documentWithoutAnnotations).toEqual(undefined);
     });
   });
@@ -36,7 +40,9 @@ describe('buildAnnotator', () => {
 
       await annotator.reAnnotateFreeDocuments();
 
-      const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotations();
+      const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotationsNotIn(
+        [],
+      );
       expect(documentWithoutAnnotations).toEqual(undefined);
     });
   });
@@ -44,7 +50,7 @@ describe('buildAnnotator', () => {
 
 async function insertNDocumentsWithoutAnnotationsInDb(n: number) {
   const documents = [...Array(n).keys()].map(() =>
-    documentModule.generator.generate(),
+    documentModule.generator.generate({ status: 'loaded' }),
   );
 
   const documentRepository = buildDocumentRepository();

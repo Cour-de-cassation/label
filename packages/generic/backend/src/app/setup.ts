@@ -1,4 +1,4 @@
-import { settingsModule, settingsType } from '@label/core';
+import { settingsType } from '@label/core';
 import { environmentType } from '../lib/environment';
 import { settingsLoader } from '../lib/settingsLoader';
 import { logger, mongo } from '../utils';
@@ -7,10 +7,6 @@ import { setIndexesOnAllCollections } from './scripts';
 export { setup, setupMongo };
 
 async function setup(environment: environmentType, settings: settingsType) {
-  settings = settingsModule.lib.additionalAnnotationCategoryHandler.addCategoryToSettings(
-    settings,
-  );
-
   setupSettings(settings);
   await setupMongo(environment);
 }

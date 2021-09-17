@@ -19,7 +19,10 @@ function ChangeAnnotationCategoryDropdown(props: {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
   const annotatorState = annotatorStateHandler.get();
-  const categories = settingsModule.lib.getCategories(annotatorState.settings, ['annotable']);
+  const categories = settingsModule.lib.getCategories(annotatorState.settings, {
+    status: ['annotable'],
+    canBeAnnotatedBy: 'human',
+  });
 
   return (
     <IconDropdown

@@ -32,7 +32,10 @@ function AnnotationCreationTooltipMenu(props: {
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(annotationTextsAndIndices.length > 1);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const categories = settingsModule.lib.getCategories(annotatorState.settings, ['annotable']);
+  const categories = settingsModule.lib.getCategories(annotatorState.settings, {
+    status: ['annotable'],
+    canBeAnnotatedBy: 'human',
+  });
   const annotationText = computeAnnotationText();
   return (
     <FloatingTooltipMenu

@@ -37,6 +37,7 @@ describe('fetch', () => {
           }),
           documentId,
           order: 0,
+          source: 'NLP' as const,
         },
         {
           annotationsDiff: annotationsDiffModule.generator.generate({
@@ -45,6 +46,7 @@ describe('fetch', () => {
           }),
           documentId,
           order: 1,
+          source: 'postProcess' as const,
         },
         {
           annotationsDiff: annotationsDiffModule.generator.generate({
@@ -53,6 +55,7 @@ describe('fetch', () => {
           }),
           documentId,
           order: 2,
+          source: 'admin' as const,
         },
       ].map(treatmentModule.generator.generate);
       await Promise.all(treatments.map(treatmentRepository.insert));
@@ -79,12 +82,15 @@ describe('fetch', () => {
       const treatments = [
         {
           documentId: documentId1,
+          source: 'NLP' as const,
         },
         {
           documentId: documentId1,
+          source: 'postProcess' as const,
         },
         {
           documentId: documentId2,
+          source: 'admin' as const,
         },
       ].map(treatmentModule.generator.generate);
       await Promise.all(treatments.map(treatmentRepository.insert));
@@ -104,12 +110,15 @@ describe('fetch', () => {
       const treatments = [
         {
           documentId: documentId1,
+          source: 'NLP' as const,
         },
         {
           documentId: documentId1,
+          source: 'postProcess' as const,
         },
         {
           documentId: documentId2,
+          source: 'admin' as const,
         },
       ].map(treatmentModule.generator.generate);
       await Promise.all(treatments.map(treatmentRepository.insert));
@@ -130,14 +139,17 @@ describe('fetch', () => {
         {
           documentId: documentId1,
           order: 3,
+          source: 'NLP' as const,
         },
         {
           documentId: documentId1,
           order: 2,
+          source: 'postProcess' as const,
         },
         {
           documentId: documentId2,
           order: 1,
+          source: 'admin' as const,
         },
       ].map(treatmentModule.generator.generate);
       await Promise.all(treatments.map(treatmentRepository.insert));
@@ -171,16 +183,24 @@ describe('fetch', () => {
         { category: 'FIRST_NAME', start: 60, text: 'Nicolas' },
         { category: 'FIRST_NAME', start: 134, text: 'Benoit' },
       ].map(annotationModule.generator.generate);
-      const treatment = treatmentModule.generator.generate({
+      const previousTreatments = [
+        { order: 0, source: 'NLP' as const },
+        { order: 1, source: 'postProcess' as const },
+      ].map(treatmentModule.generator.generate);
+      const humanTreatment = treatmentModule.generator.generate({
         documentId: document._id,
         source: 'annotator',
+        order: 2,
         annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
           [annotations[0], annotations[4]],
           [annotations[1], annotations[2], annotations[3]],
         ),
       });
       await documentRepository.insert(document);
-      await treatmentRepository.insert(treatment);
+      await treatmentRepository.insertMany([
+        ...previousTreatments,
+        humanTreatment,
+      ]);
 
       const annotationsDiffDetails = await fetchAnnotationsDiffDetailsForDocument(
         document._id,

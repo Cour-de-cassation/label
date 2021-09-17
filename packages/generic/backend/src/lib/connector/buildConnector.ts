@@ -26,12 +26,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
     const documentRepository = buildDocumentRepository();
 
-    const freeDocuments = await documentRepository.findAllByStatusProjection(
-      ['free'],
+    const documentsToTreat = await documentRepository.findAllByStatusProjection(
+      ['loaded', 'nlpAnnotating', 'free'],
       ['_id'],
     );
 
-    if (freeDocuments.length > threshold) {
+    if (documentsToTreat.length > threshold) {
       return;
     }
     const daysStep = 30;

@@ -27,12 +27,15 @@ function buildAnnotator(
   async function annotateDocumentsWithoutAnnotations() {
     logger.log('annotateDocumentsWithoutAnnotations');
 
+    const failedDocumentIds: documentType['_id'][] = [];
     const documentsCountToAnnotate = await documentService.countDocumentsWithoutAnnotations();
     logger.log(`Found ${documentsCountToAnnotate} documents to annotate`);
     let currentDocumentToAnnotate: documentType | undefined;
     let documentsAnnotatedCount = 0;
     do {
-      currentDocumentToAnnotate = await documentService.fetchDocumentWithoutAnnotations();
+      currentDocumentToAnnotate = await documentService.fetchDocumentWithoutAnnotationsNotIn(
+        failedDocumentIds,
+      );
       if (currentDocumentToAnnotate) {
         documentsAnnotatedCount++;
         logger.log(`Found a document to annotate. Reserving...`);
@@ -52,6 +55,7 @@ function buildAnnotator(
           await annotateDocument(updatedDocument);
         } catch (error) {
           logger.error(error);
+          failedDocumentIds.push(updatedDocument._id);
           logger.log(
             `Error while annotating document ${idModule.lib.convertToString(
               currentDocumentToAnnotate._id,

@@ -19,6 +19,7 @@ describe('computeAnnotations', () => {
         }),
         documentId,
         order: 0,
+        source: 'NLP' as const,
       },
       {
         annotationsDiff: annotationsDiffModule.generator.generate({
@@ -27,6 +28,7 @@ describe('computeAnnotations', () => {
         }),
         documentId,
         order: 1,
+        source: 'postProcess' as const,
       },
       {
         annotationsDiff: annotationsDiffModule.generator.generate({
@@ -35,6 +37,7 @@ describe('computeAnnotations', () => {
         }),
         documentId,
         order: 2,
+        source: 'annotator' as const,
       },
     ].map(treatmentGenerator.generate);
 
@@ -54,6 +57,7 @@ describe('computeAnnotations', () => {
         }),
         documentId: idModule.lib.buildId(),
         order: 0,
+        source: 'NLP' as const,
       },
       {
         annotationsDiff: annotationsDiffModule.generator.generate({
@@ -62,6 +66,7 @@ describe('computeAnnotations', () => {
         }),
         documentId: idModule.lib.buildId(),
         order: 1,
+        source: 'postProcess' as const,
       },
     ].map(treatmentGenerator.generate);
 
@@ -81,6 +86,7 @@ describe('computeAnnotations', () => {
         }),
         documentId,
         order: 0,
+        source: 'NLP' as const,
       },
       {
         annotationsDiff: annotationsDiffModule.generator.generate({
@@ -89,6 +95,7 @@ describe('computeAnnotations', () => {
         }),
         documentId,
         order: 1,
+        source: 'postProcess' as const,
       },
     ].map(treatmentGenerator.generate);
 
@@ -108,6 +115,7 @@ describe('computeAnnotations', () => {
         }),
         documentId,
         order: 0,
+        source: 'NLP' as const,
       },
       {
         annotationsDiff: annotationsDiffModule.generator.generate({
@@ -116,6 +124,7 @@ describe('computeAnnotations', () => {
         }),
         documentId,
         order: 2,
+        source: 'postProcess' as const,
       },
     ].map(treatmentGenerator.generate);
 
@@ -142,6 +151,7 @@ describe('computeAnnotationsDiff', () => {
         }),
         documentId,
         order: 0,
+        source: 'NLP' as const,
       },
       {
         annotationsDiff: annotationsDiffModule.generator.generate({
@@ -150,6 +160,7 @@ describe('computeAnnotationsDiff', () => {
         }),
         documentId,
         order: 1,
+        source: 'postProcess' as const,
       },
       {
         annotationsDiff: annotationsDiffModule.generator.generate({
@@ -158,6 +169,7 @@ describe('computeAnnotationsDiff', () => {
         }),
         documentId,
         order: 2,
+        source: 'annotator' as const,
       },
     ].map(treatmentGenerator.generate);
 

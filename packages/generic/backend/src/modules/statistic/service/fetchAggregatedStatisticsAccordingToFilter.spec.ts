@@ -112,6 +112,7 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
           documentId: documents[0]._id,
           order: 0,
           duration: 0,
+          source: 'NLP' as const,
           annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
             [],
             [
@@ -123,6 +124,7 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
         },
         {
           documentId: documents[0]._id,
+          source: 'postProcess' as const,
           annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
             [
               { start: 29, text: 'Dupuis', category: 'personnePhysiqueNom' },

@@ -21,15 +21,17 @@ const nlpApi: nlpApiType = {
       document.decisionMetadata.categoriesToOmit,
       document.decisionMetadata.additionalTermsToAnnotate,
     );
+
+    const nlpCategories = settingsModule.lib.getCategories(filteredSettings, {
+      status: ['alwaysVisible', 'annotable'],
+      canBeAnnotatedBy: 'NLP',
+    });
     const nlpRequestParameters: nlpRequestParametersType = {
       idDocument: document.documentNumber,
       text: document.text,
       source: document.source,
       meta: document.metadata !== '' ? document.metadata : undefined,
-      categories: settingsModule.lib.getCategories(filteredSettings, [
-        'alwaysVisible',
-        'annotable',
-      ]),
+      categories: nlpCategories,
     };
 
     const response = await axios({

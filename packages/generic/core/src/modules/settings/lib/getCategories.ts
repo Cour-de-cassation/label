@@ -2,11 +2,17 @@ import { categorySettingType, settingsType } from '../settingsType';
 
 export { getCategories };
 
-function getCategories(settings: settingsType, status: categorySettingType['status'][]) {
+function getCategories(
+  settings: settingsType,
+  filter: { status: categorySettingType['status'][]; canBeAnnotatedBy: 'human' | 'NLP' },
+) {
   return Object.keys(settings)
     .filter((category) => {
       const categorySetting = settings[category];
-      return status.includes(categorySetting.status);
+      return (
+        filter.status.includes(categorySetting.status) &&
+        (categorySetting.canBeAnnotatedBy === 'both' || categorySetting.canBeAnnotatedBy === filter.canBeAnnotatedBy)
+      );
     })
     .sort((categoryA, categoryB) => {
       const orderA = settings[categoryA].order;

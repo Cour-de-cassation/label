@@ -2,6 +2,6 @@ import { documentType } from '../documentType';
 
 export { countWords };
 
-function countWords(document: documentType): number {
-  return document.text.split(' ').length;
+function countWords({ text }: { text: documentType['text'] }): number {
+  return text.split(' ').length;
 }

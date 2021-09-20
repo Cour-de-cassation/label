@@ -5,6 +5,7 @@ import {
   revertOneMigration,
   runNewMigrations,
 } from './deployment';
+import { extractComplexityInfoIntoCsv } from './extractComplexityInfoIntoCsv';
 import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestUsers } from './insertTestUsers';
@@ -16,6 +17,7 @@ export {
   cleanDocuments,
   clearDb,
   createMigrationFile,
+  extractComplexityInfoIntoCsv,
   extractMonitoringEntriesIntoCsv,
   freePendingDocuments,
   insertTestUsers,

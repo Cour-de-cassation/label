@@ -6,6 +6,7 @@ import {
   cleanDocuments,
   clearDb,
   createMigrationFile,
+  extractComplexityInfoIntoCsv,
   extractMonitoringEntriesIntoCsv,
   freePendingDocuments,
   insertTestUsers,
@@ -41,6 +42,10 @@ function buildBackend(environmentJson: string, settings: settingsType) {
       },
       extractMonitoringEntriesIntoCsv: {
         run: extractMonitoringEntriesIntoCsv,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      extractComplexityInfoIntoCsv: {
+        run: extractComplexityInfoIntoCsv,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       freePendingDocuments: {

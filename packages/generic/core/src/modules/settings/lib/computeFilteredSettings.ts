@@ -19,6 +19,11 @@ function computeFilteredSettings(
           ...accumulator,
           [category]: { ...categorySetting, status: 'annotable' as const },
         };
+      } else {
+        return {
+          ...accumulator,
+          [category]: categorySetting,
+        };
       }
     } /* else if (!categoriesToOmit.includes(category)) {
       return {

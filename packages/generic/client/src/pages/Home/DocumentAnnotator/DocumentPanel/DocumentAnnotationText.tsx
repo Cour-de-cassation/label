@@ -88,8 +88,9 @@ function DocumentAnnotationText(props: propsType): ReactElement {
         cursor: 'pointer',
         padding: '0px 2px',
         borderRadius: theme.shape.borderRadius.xxxs,
+        whiteSpace: 'break-spaces',
         ...viewerModeSpecificStyle,
-      },
+      } as const,
     };
 
     function buildViewerModeSpecificStyle() {

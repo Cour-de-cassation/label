@@ -30,9 +30,13 @@ class PureDocumentText extends React.Component<propsType> {
 function DocumentText(props: propsType): ReactElement {
   const [textSelection, setTextSelection] = useState<textSelectionType>([]);
   const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>();
+
+  const styles = buildStyles();
   return (
     <span>
-      <span onMouseUp={handleSelection}>{props.neighbours.current.text}</span>
+      <span onMouseUp={handleSelection} style={styles.text}>
+        {props.neighbours.current.text}
+      </span>
       {tooltipMenuOriginPosition && textSelection.length > 0 && (
         <AnnotationCreationTooltipMenu
           onClose={closeTooltipMenu}
@@ -87,4 +91,12 @@ function DocumentText(props: propsType): ReactElement {
   function computeSelectedTextIndex(selection: Selection) {
     return Math.min(selection.anchorOffset, selection.focusOffset) + props.neighbours.current.index;
   }
+}
+
+function buildStyles() {
+  return {
+    text: {
+      whiteSpace: 'break-spaces',
+    },
+  } as const;
 }

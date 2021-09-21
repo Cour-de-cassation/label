@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import { documentType, settingsModule } from '@label/core';
 import { heights, widths } from '../../../styles';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
@@ -10,6 +10,7 @@ import { useKeyboardShortcutsHandler } from './hooks';
 import { annotationPerCategoryAndEntityType, getSplittedTextByLine, groupByCategoryAndEntity } from './lib';
 import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
 import { AnonymizerBuilderContextProvider } from '../../../services/anonymizer';
+import { ViewerScrollerContextProvider } from '../../../services/viewerScroller';
 
 export { DocumentAnnotator };
 
@@ -22,8 +23,8 @@ function DocumentAnnotator(props: {
     { key: 'z', ctrlKey: true, action: onRevertState },
     { key: 'Z', ctrlKey: true, shiftKey: true, action: onRestoreState },
   ]);
+  const viewerRef = useRef(null);
   const annotatorState = annotatorStateHandler.get();
-
   const styles = buildStyles();
   const categories = settingsModule.lib.getCategories(annotatorState.settings, {
     status: ['annotable'],
@@ -33,7 +34,6 @@ function DocumentAnnotator(props: {
     sortAdditionalAnnotationsFirst,
   );
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
-
   return (
     <AnonymizerBuilderContextProvider
       annotations={annotatorState.annotations}
@@ -41,21 +41,23 @@ function DocumentAnnotator(props: {
       settings={annotatorState.settings}
     >
       <DocumentViewerModeHandlerContextProvider>
-        <>
-          <div style={styles.annotatorBody}>
-            <div style={styles.leftContainer}>
-              <AnnotationsPanel
-                document={annotatorState.document}
-                annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
-                splittedTextByLine={splittedTextByLine}
-              />
+        <ViewerScrollerContextProvider viewerRef={viewerRef}>
+          <>
+            <div style={styles.annotatorBody}>
+              <div style={styles.leftContainer}>
+                <AnnotationsPanel
+                  document={annotatorState.document}
+                  annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
+                  splittedTextByLine={splittedTextByLine}
+                />
+              </div>
+              <div style={styles.rightContainer}>
+                <DocumentPanel splittedTextByLine={splittedTextByLine} />
+              </div>
             </div>
-            <div style={styles.rightContainer}>
-              <DocumentPanel splittedTextByLine={splittedTextByLine} />
-            </div>
-          </div>
-          <DocumentAnnotatorFooter onStopAnnotatingDocument={props.onStopAnnotatingDocument} />
-        </>
+            <DocumentAnnotatorFooter onStopAnnotatingDocument={props.onStopAnnotatingDocument} />
+          </>
+        </ViewerScrollerContextProvider>
       </DocumentViewerModeHandlerContextProvider>
     </AnonymizerBuilderContextProvider>
   );

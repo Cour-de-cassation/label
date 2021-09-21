@@ -1,5 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
+import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
 import { splittedTextByLineType } from '../lib';
 import { DocumentLine } from './DocumentLine';
@@ -8,7 +9,13 @@ export { DocumentViewer };
 
 function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): ReactElement {
   const documentViewerModeHandler = useDocumentViewerModeHandler();
+  const viewerScrollerHandler = useViewerScrollerHandler();
   const theme = useCustomTheme();
+  useEffect(() => {
+    viewerScrollerHandler.scrollToStoredVerticalPosition();
+  }, [documentViewerModeHandler.documentViewerMode.kind]);
+
+  const viewerRef = viewerScrollerHandler.getViewerRef();
   const styles = buildStyle(
     theme,
     documentViewerModeHandler.documentViewerMode,
@@ -17,7 +24,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   const documentText = computeDocumentText();
 
   return (
-    <div style={styles.container}>
+    <div style={styles.container} ref={viewerRef}>
       <table style={styles.table}>
         <tbody>
           {documentText.map((splittedLine) => (

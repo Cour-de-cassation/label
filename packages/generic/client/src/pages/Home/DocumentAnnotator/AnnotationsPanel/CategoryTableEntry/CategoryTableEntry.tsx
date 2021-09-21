@@ -5,6 +5,7 @@ import { CategoryTableEntryBracketLink } from './CategoryTableEntryBracketLink';
 import { displayModeType, annotationType, settingsModule } from '@label/core';
 import { Text } from '../../../../../components';
 import { annotatorStateHandlerType, useAnnotatorStateHandler } from '../../../../../services/annotatorState';
+import { useViewerScrollerHandler } from '../../../../../services/viewerScroller';
 import { customThemeType, emphasizeShadeColor, getColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { splittedTextByLineType } from '../../lib';
 import { entityEntryHandlerType, useEntityEntryHandler } from '../useEntityEntryHandler';
@@ -30,7 +31,7 @@ function CategoryTableEntry(props: {
   const theme = useCustomTheme();
   const { displayMode } = useDisplayMode();
   const entityEntryHandler = useEntityEntryHandler(props.splittedTextByLine);
-
+  const viewerScrollerHandler = useViewerScrollerHandler();
   const entityAnnotation = props.entityAnnotations[0];
   const entityAnnotationTexts = uniq(props.entityAnnotations.map((annotation) => annotation.text));
   const numberOfEntities = props.entityAnnotations.length;
@@ -96,7 +97,13 @@ function CategoryTableEntry(props: {
   }
 
   function selectEntity() {
-    entityEntryHandler.setSelected(entityEntryHandler.isSelected(props.entityId) ? undefined : props.entityId);
+    const isEntitySelected = entityEntryHandler.isSelected(props.entityId);
+    if (isEntitySelected) {
+      entityEntryHandler.setSelected(undefined);
+    } else {
+      viewerScrollerHandler.storeCurrentVerticalPosition();
+      entityEntryHandler.setSelected(props.entityId);
+    }
   }
 }
 

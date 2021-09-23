@@ -11,7 +11,7 @@ const fontSizes = {
 const typography = {
   body1: {
     normal: { fontFamily: 'Luciole', fontSize: fontSizes.medium },
-    bold: { fontFamily: 'Luciole-Bold', fontWeight: 'bold', fontSize: fontSizes.medium },
+    bold: { fontFamily: 'Luciole', fontWeight: 'bold', fontSize: fontSizes.medium },
   },
   body2: {
     normal: { fontFamily: 'Courier New', fontSize: fontSizes.medium, lineHeight: '19px' },
@@ -19,15 +19,15 @@ const typography = {
   },
   h1: {
     normal: { fontFamily: 'Luciole', fontSize: fontSizes.large },
-    bold: { fontFamily: 'Luciole-Bold', fontWeight: 'bold', fontSize: fontSizes.large },
+    bold: { fontFamily: 'Luciole', fontWeight: 'bold', fontSize: fontSizes.large },
   },
   h2: {
     normal: { fontFamily: 'Luciole', fontSize: fontSizes.medium },
-    bold: { fontFamily: 'Luciole-Bold', fontWeight: 'bold', fontSize: fontSizes.medium },
+    bold: { fontFamily: 'Luciole', fontWeight: 'bold', fontSize: fontSizes.medium },
   },
   h3: {
     normal: { fontFamily: 'Luciole', fontSize: fontSizes.small },
-    bold: { fontFamily: 'Luciole-Bold', fontWeight: 'bold', fontSize: fontSizes.small },
+    bold: { fontFamily: 'Luciole', fontWeight: 'bold', fontSize: fontSizes.small },
   },
 } as const;
 

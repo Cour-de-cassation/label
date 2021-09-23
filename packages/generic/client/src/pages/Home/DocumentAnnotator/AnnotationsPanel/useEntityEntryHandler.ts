@@ -8,7 +8,15 @@ export type { entityEntryHandlerType };
 
 type entityEntryHandlerType = ReturnType<typeof useEntityEntryHandler>;
 
-function useEntityEntryHandler(splittedTextByLine: splittedTextByLineType) {
+function useEntityEntryHandler({
+  splittedTextByLine,
+  onLeaveAnnotationMode,
+  onResetViewerMode,
+}: {
+  splittedTextByLine: splittedTextByLineType;
+  onLeaveAnnotationMode: () => void;
+  onResetViewerMode: () => void;
+}) {
   const [entityFocused, setEntityFocused] = useState<string | undefined>(undefined);
   const documentViewerModeHandler = useDocumentViewerModeHandler();
 
@@ -21,9 +29,13 @@ function useEntityEntryHandler(splittedTextByLine: splittedTextByLineType) {
 
   function setSelected(entityId?: string) {
     if (entityId) {
+      if (documentViewerModeHandler.documentViewerMode.kind === 'annotation') {
+        onLeaveAnnotationMode();
+      }
       const entityLines = filterLineByEntityId(entityId, splittedTextByLine).map(({ line }) => line);
       documentViewerModeHandler.setOccurrenceMode(entityId, entityLines);
     } else {
+      onResetViewerMode();
       documentViewerModeHandler.resetViewerMode();
     }
   }

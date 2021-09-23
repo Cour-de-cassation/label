@@ -30,7 +30,11 @@ function CategoryTableEntry(props: {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const { displayMode } = useDisplayMode();
-  const entityEntryHandler = useEntityEntryHandler(props.splittedTextByLine);
+  const entityEntryHandler = useEntityEntryHandler({
+    splittedTextByLine: props.splittedTextByLine,
+    onResetViewerMode,
+    onLeaveAnnotationMode,
+  });
   const viewerScrollerHandler = useViewerScrollerHandler();
   const entityAnnotation = props.entityAnnotations[0];
   const entityAnnotationTexts = uniq(props.entityAnnotations.map((annotation) => annotation.text));
@@ -96,12 +100,19 @@ function CategoryTableEntry(props: {
     }
   }
 
+  function onLeaveAnnotationMode() {
+    viewerScrollerHandler.storeCurrentVerticalPosition();
+  }
+
+  function onResetViewerMode() {
+    viewerScrollerHandler.scrollToStoredVerticalPosition();
+  }
+
   function selectEntity() {
     const isEntitySelected = entityEntryHandler.isSelected(props.entityId);
     if (isEntitySelected) {
       entityEntryHandler.setSelected(undefined);
     } else {
-      viewerScrollerHandler.storeCurrentVerticalPosition();
       entityEntryHandler.setSelected(props.entityId);
     }
   }

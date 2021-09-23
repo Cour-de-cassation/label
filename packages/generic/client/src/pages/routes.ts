@@ -20,5 +20,6 @@ const routes = {
 const defaultRoutes = {
   admin: routes.STATISTICS.getPath(),
   annotator: routes.ANNOTATION.getPath(),
+  scrutator: routes.STATISTICS.getPath(),
   publicator: routes.PUBLISHABLE_DOCUMENTS.getPath(),
 };

@@ -40,10 +40,15 @@ function Router() {
                 const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
                   ({ problemReport }) => !problemReport.hasBeenRead,
                 ).length;
+                const userRole = localStorage.userHandler.getRole();
+                if (userRole !== 'admin' && userRole !== 'scrutator') {
+                  return <></>;
+                }
                 return (
                   <>
                     <AuthenticatedRoute path={routes.STATISTICS.getPath()}>
                       <AdminPage
+                        userRole={userRole}
                         header={wordings.statisticsPage.header}
                         unreadProblemReportsCount={unreadProblemReportsCount}
                       >
@@ -57,28 +62,35 @@ function Router() {
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
-                    <AuthenticatedRoute path={routes.WORKING_USERS.getPath()}>
-                      <AdminPage
-                        header={wordings.workingUsersPage.header}
-                        unreadProblemReportsCount={unreadProblemReportsCount}
-                      >
-                        <WorkingUsers workingUsers={adminInfos.workingUsers} refetch={refetch.workingUsers} />
-                      </AdminPage>
-                    </AuthenticatedRoute>
-                    <AuthenticatedRoute path={routes.PROBLEM_REPORTS.getPath()}>
-                      <AdminPage
-                        header={wordings.problemReportsPage.header}
-                        unreadProblemReportsCount={unreadProblemReportsCount}
-                      >
-                        <ProblemReports
-                          refetch={refetch.problemReportsWithDetails}
-                          problemReportsWithDetails={adminInfos.problemReportsWithDetails}
-                          isLoading={isLoading.problemReports}
-                        />
-                      </AdminPage>
-                    </AuthenticatedRoute>
+                    {userRole === 'admin' && (
+                      <AuthenticatedRoute path={routes.WORKING_USERS.getPath()}>
+                        <AdminPage
+                          userRole="admin"
+                          header={wordings.workingUsersPage.header}
+                          unreadProblemReportsCount={unreadProblemReportsCount}
+                        >
+                          <WorkingUsers workingUsers={adminInfos.workingUsers} refetch={refetch.workingUsers} />
+                        </AdminPage>
+                      </AuthenticatedRoute>
+                    )}
+                    {userRole === 'admin' && (
+                      <AuthenticatedRoute path={routes.PROBLEM_REPORTS.getPath()}>
+                        <AdminPage
+                          userRole={userRole}
+                          header={wordings.problemReportsPage.header}
+                          unreadProblemReportsCount={unreadProblemReportsCount}
+                        >
+                          <ProblemReports
+                            refetch={refetch.problemReportsWithDetails}
+                            problemReportsWithDetails={adminInfos.problemReportsWithDetails}
+                            isLoading={isLoading.problemReports}
+                          />
+                        </AdminPage>
+                      </AuthenticatedRoute>
+                    )}
                     <AuthenticatedRoute path={routes.TREATED_DOCUMENTS.getPath()}>
                       <AdminPage
+                        userRole={userRole}
                         header={wordings.treatedDocumentsPage.header}
                         unreadProblemReportsCount={unreadProblemReportsCount}
                       >
@@ -91,6 +103,7 @@ function Router() {
                     </AuthenticatedRoute>
                     <AuthenticatedRoute path={routes.UNTREATED_DOCUMENT.getPath()}>
                       <AdminPage
+                        userRole={userRole}
                         header={wordings.untreatedDocumentsPage.header}
                         unreadProblemReportsCount={unreadProblemReportsCount}
                       >
@@ -197,5 +210,5 @@ const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest
 );
 
 function isAuthenticated() {
-  return !!localStorage.bearerTokenHandler.get();
+  return !!localStorage.bearerTokenHandler.get() && !!localStorage.userHandler.getRole();
 }

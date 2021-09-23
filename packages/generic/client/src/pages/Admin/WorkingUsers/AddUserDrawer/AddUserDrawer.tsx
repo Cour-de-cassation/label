@@ -86,7 +86,7 @@ function AddWorkingUserDrawer(props: { isOpen: boolean; onClose: () => void; ref
                 label={wordings.workingUsersPage.createWorkingUserDrawer.fields.role}
                 error={!!formErrors.role}
                 items={userModule.models.user.content.role.content.map((role) => ({
-                  text: wordings.workingUsersPage.table.roles[role],
+                  text: wordings.business.userRoles[role],
                   value: role,
                 }))}
                 onChange={(role: userType['role']) => updateField('role', role)}

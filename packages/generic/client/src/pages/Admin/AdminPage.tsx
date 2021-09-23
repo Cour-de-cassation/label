@@ -5,18 +5,20 @@ import { heights } from '../../styles';
 export { AdminPage };
 
 function AdminPage(props: {
+  userRole: 'admin' | 'scrutator';
   header: { title: string; subtitle: string };
   unreadProblemReportsCount: number;
   children: ReactElement;
 }) {
   const styles = buildStyles();
+
   return (
     <>
       <div style={styles.header}>
         <MainHeader title={props.header.title} subtitle={<Text>{props.header.subtitle}</Text>} />
       </div>
       <div style={styles.contentContainer}>
-        <AdminMenu unreadProblemReportsCount={props.unreadProblemReportsCount} />
+        <AdminMenu unreadProblemReportsCount={props.unreadProblemReportsCount} userRole={props.userRole} />
         {props.children}
       </div>
     </>

@@ -45,7 +45,7 @@ function WorkingUsers(props: { workingUsers: apiRouteOutType<'get', 'workingUser
         id: 'role',
         title: wordings.workingUsersPage.table.columnTitles.role,
         canBeSorted: true,
-        extractor: (workingUser) => wordings.workingUsersPage.table.roles[workingUser.role],
+        extractor: (workingUser) => wordings.business.userRoles[workingUser.role],
         width: 10,
       },
     ];

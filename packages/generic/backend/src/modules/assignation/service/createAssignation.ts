@@ -21,11 +21,11 @@ async function createAssignation({
 
   const userRole = await userService.fetchUserRole(userId);
 
-  if (userRole === 'publicator') {
+  if (userRole === 'publicator' || userRole === 'scrutator') {
     throw errorHandlers.serverErrorHandler.build(
       `User ${idModule.lib.convertToString(
         userId,
-      )} is a publicator and is trying to create an assignation`,
+      )} is a ${userRole} and is trying to create an assignation`,
     );
   }
 

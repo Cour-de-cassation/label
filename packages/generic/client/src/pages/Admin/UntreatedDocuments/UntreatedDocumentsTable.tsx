@@ -93,25 +93,33 @@ function UntreatedDocumentsTable(props: {
       onSelect: buildOnSelectWorkingUserToAssignDocument(untreatedDocument.document._id),
     };
 
-    if (untreatedDocument.document.status !== 'pending') {
-      return [openAnonymizedDocumentOptionItem, resetAndAssignToMyselfOptionItem, assignToWorkingUserOptionItem];
+    const userRole = localStorage.userHandler.getRole();
+    switch (userRole) {
+      case 'scrutator':
+        return [openAnonymizedDocumentOptionItem];
+      case 'admin':
+        if (untreatedDocument.document.status !== 'pending') {
+          return [openAnonymizedDocumentOptionItem, resetAndAssignToMyselfOptionItem, assignToWorkingUserOptionItem];
+        }
+        return [
+          openAnonymizedDocumentOptionItem,
+          resetAndAssignToMyselfOptionItem,
+          {
+            kind: 'text' as const,
+            text: wordings.untreatedDocumentsPage.table.optionItems.freeDocument,
+            onClick: async () => {
+              await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+                documentId: untreatedDocument.document._id,
+                status: 'free',
+              });
+              props.refetch();
+            },
+            iconName: 'unlock' as const,
+          },
+        ];
+      default:
+        return [];
     }
-    return [
-      openAnonymizedDocumentOptionItem,
-      resetAndAssignToMyselfOptionItem,
-      {
-        kind: 'text' as const,
-        text: wordings.untreatedDocumentsPage.table.optionItems.freeDocument,
-        onClick: async () => {
-          await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-            documentId: untreatedDocument.document._id,
-            status: 'free',
-          });
-          props.refetch();
-        },
-        iconName: 'unlock' as const,
-      },
-    ];
   }
 
   function buildOnSelectWorkingUserToAssignDocument(documentId: documentType['_id']) {

@@ -23,7 +23,7 @@ const userModel = buildModel({
     passwordLastUpdateDate: { kind: 'primitive', content: 'number' },
     role: {
       kind: 'constant',
-      content: ['admin', 'annotator', 'publicator'] as const,
+      content: ['admin', 'annotator', 'publicator', 'scrutator'] as const,
     },
   },
 } as const);

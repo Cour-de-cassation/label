@@ -91,35 +91,45 @@ function TreatedDocumentsTable(props: {
   }
 
   function buildOptionItems(treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) {
-    return [
-      {
-        kind: 'text' as const,
-        text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
-        onClick: () => {
-          history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id)));
-        },
-        iconName: 'find' as const,
+    const openDocumentOption = {
+      kind: 'text' as const,
+      text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
+      onClick: () => {
+        history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id)));
       },
-      {
-        kind: 'text' as const,
-        text: wordings.treatedDocumentsPage.table.optionItems.displayAnnotationDiff,
-        onClick: () => {
-          setAnnotationDiffDocumentInfo({
-            _id: treatmentWithDetails.document._id,
-            documentNumber: treatmentWithDetails.document.documentNumber,
-            userName: treatmentWithDetails.userNames[0],
-          });
-        },
-        iconName: 'link' as const,
+      iconName: 'find' as const,
+    };
+
+    const displayAnnotationDiff = {
+      kind: 'text' as const,
+      text: wordings.treatedDocumentsPage.table.optionItems.displayAnnotationDiff,
+      onClick: () => {
+        setAnnotationDiffDocumentInfo({
+          _id: treatmentWithDetails.document._id,
+          documentNumber: treatmentWithDetails.document.documentNumber,
+          userName: treatmentWithDetails.userNames[0],
+        });
       },
-      {
-        kind: 'text' as const,
-        text: wordings.treatedDocumentsPage.table.optionItems.resetTheDocument,
-        onClick: () => {
-          setDocumentIdToReset(treatmentWithDetails.document._id);
-        },
-        iconName: 'restore' as const,
+      iconName: 'link' as const,
+    };
+
+    const resetDocument = {
+      kind: 'text' as const,
+      text: wordings.treatedDocumentsPage.table.optionItems.resetTheDocument,
+      onClick: () => {
+        setDocumentIdToReset(treatmentWithDetails.document._id);
       },
-    ];
+      iconName: 'restore' as const,
+    };
+
+    const userRole = localStorage.userHandler.getRole();
+    switch (userRole) {
+      case 'admin':
+        return [openDocumentOption, displayAnnotationDiff, resetDocument];
+      case 'scrutator':
+        return [openDocumentOption, displayAnnotationDiff];
+      default:
+        return [];
+    }
   }
 }

@@ -15,7 +15,7 @@ export { controllers };
 const controllers: controllersFromSchemaType<typeof apiSchema> = {
   get: {
     aggregatedStatistics: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async (_, { args: { ressourceFilter } }) => {
         const settings = settingsLoader.getSettings();
 
@@ -33,7 +33,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     annotationsDiffDetails: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
         treatmentService.fetchAnnotationsDiffDetailsForDocument(
           idModule.lib.buildId(documentId),
@@ -41,32 +41,34 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     annotations: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
         treatmentService.fetchAnnotationsOfDocument(
           idModule.lib.buildId(documentId),
         ),
     }),
 
-    async anonymizedDocumentText({ args: { documentId } }) {
+    anonymizedDocumentText({ args: { documentId } }) {
       return documentService.fetchAnonymizedDocumentText(
         idModule.lib.buildId(documentId),
       );
     },
 
     availableStatisticFilters: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async () =>
         statisticService.fetchAvailableStatisticFilters(),
     }),
 
     document: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async (user, { args: { documentId } }) => {
-        await documentService.updateDocumentReviewStatus(
-          idModule.lib.buildId(documentId),
-          { viewerNameToAdd: user.name },
-        );
+        if (user.role === 'admin') {
+          await documentService.updateDocumentReviewStatus(
+            idModule.lib.buildId(documentId),
+            { viewerNameToAdd: user.name },
+          );
+        }
         return documentService.fetchDocument(idModule.lib.buildId(documentId));
       },
     }),
@@ -78,13 +80,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     problemReportsWithDetails: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async () =>
         problemReportService.fetchProblemReportsWithDetails(),
     }),
 
     settings: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async () => ({
         json: JSON.stringify(settingsLoader.getSettings()),
       }),
@@ -97,7 +99,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     treatedDocuments: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => {
         const settings = settingsLoader.getSettings();
         return documentService.fetchTreatedDocuments(settings);
@@ -105,12 +107,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     untreatedDocuments: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => documentService.fetchUntreatedDocuments(),
     }),
 
     workingUsers: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => userService.fetchWorkingUsers(),
     }),
   },
@@ -146,7 +148,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     changePassword: buildAuthenticatedController({
-      permissions: ['admin', 'annotator', 'publicator'],
+      permissions: ['admin', 'annotator', 'publicator', 'scrutator'],
       controllerWithUser: async (
         user,
         { args: { previousPassword, newPassword } },

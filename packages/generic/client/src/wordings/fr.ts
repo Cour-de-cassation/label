@@ -48,11 +48,6 @@ const fr = {
         text:
           "Cette action supprimera l'ancien mot de passe et vous affichera un nouveau mot de passe que vous devrez transmettre à l'agent.",
       },
-      roles: {
-        admin: 'Administrateur',
-        annotator: 'Annotateur',
-        publicator: 'Publicateur',
-      },
     },
   },
   business: {
@@ -113,6 +108,12 @@ const fr = {
       'Le mot de passe doit contenir au moins 8 caractères dont 2 minuscules, 2 majuscules, 2 chiffres et 2 caractères spéciaux',
     previousPassword: 'Ancien mot de passe',
     update: 'Mettre à jour',
+    userRoles: {
+      admin: 'Administrateur',
+      annotator: 'Annotateur',
+      publicator: 'Publicateur',
+      scrutator: 'Scrutateur',
+    },
     wrongPassword: 'Le mot de passe est erroné',
   },
   homePage: {

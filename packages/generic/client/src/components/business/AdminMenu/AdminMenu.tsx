@@ -8,41 +8,61 @@ export { AdminMenu };
 
 const OFFSET_TOP = 80;
 
-function AdminMenu(props: { unreadProblemReportsCount: number }) {
+function AdminMenu(props: { unreadProblemReportsCount: number; userRole: 'admin' | 'scrutator' }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
+
+  const menuIcons = getMenuIcons(props.unreadProblemReportsCount);
+
   return (
     <div style={styles.container}>
-      <div style={styles.iconContainer}>
-        <MenuIcon
-          title={wordings.statisticsPage.header.subtitle}
-          pathname={routes.STATISTICS.getPath()}
-          iconName="home"
-        />
-        <MenuIcon
-          title={wordings.untreatedDocumentsPage.header.subtitle}
-          pathname={routes.UNTREATED_DOCUMENT.getPath()}
-          iconName="playlistPlay"
-        />
-        <MenuIcon
-          title={wordings.treatedDocumentsPage.header.subtitle}
-          pathname={routes.TREATED_DOCUMENTS.getPath()}
-          iconName="playlistCheck"
-        />
-        <MenuIcon
-          title={wordings.problemReportsPage.header.subtitle}
-          pathname={routes.PROBLEM_REPORTS.getPath()}
-          alertCount={props.unreadProblemReportsCount}
-          iconName="warning"
-        />
-        <MenuIcon
-          title={wordings.workingUsersPage.header.subtitle}
-          pathname={routes.WORKING_USERS.getPath()}
-          iconName="admin"
-        />
-      </div>
+      <div style={styles.iconContainer}>{menuIcons[props.userRole]}</div>
     </div>
   );
+}
+
+function getMenuIcons(unreadProblemReportsCount: number) {
+  const STATISTICS_ICON = (
+    <MenuIcon title={wordings.statisticsPage.header.subtitle} pathname={routes.STATISTICS.getPath()} iconName="home" />
+  );
+
+  const UNTREATED_DOCUMENT_ICON = (
+    <MenuIcon
+      title={wordings.untreatedDocumentsPage.header.subtitle}
+      pathname={routes.UNTREATED_DOCUMENT.getPath()}
+      iconName="playlistPlay"
+    />
+  );
+
+  const TREATED_DOCUMENTS_ICON = (
+    <MenuIcon
+      title={wordings.treatedDocumentsPage.header.subtitle}
+      pathname={routes.TREATED_DOCUMENTS.getPath()}
+      iconName="playlistCheck"
+    />
+  );
+
+  const PROBLEM_REPORTS_ICON = (
+    <MenuIcon
+      title={wordings.problemReportsPage.header.subtitle}
+      pathname={routes.PROBLEM_REPORTS.getPath()}
+      alertCount={unreadProblemReportsCount}
+      iconName="warning"
+    />
+  );
+
+  const WORKING_USERS_ICON = (
+    <MenuIcon
+      title={wordings.workingUsersPage.header.subtitle}
+      pathname={routes.WORKING_USERS.getPath()}
+      iconName="admin"
+    />
+  );
+
+  return {
+    admin: [STATISTICS_ICON, UNTREATED_DOCUMENT_ICON, TREATED_DOCUMENTS_ICON, PROBLEM_REPORTS_ICON, WORKING_USERS_ICON],
+    scrutator: [STATISTICS_ICON, UNTREATED_DOCUMENT_ICON, TREATED_DOCUMENTS_ICON],
+  };
 }
 
 function buildStyles(theme: customThemeType) {

@@ -11,9 +11,14 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const viewerScrollerHandler = useViewerScrollerHandler();
   const theme = useCustomTheme();
+  const { documentViewerMode } = documentViewerModeHandler;
   useEffect(() => {
-    viewerScrollerHandler.scrollToStoredVerticalPosition();
-  }, [documentViewerModeHandler.documentViewerMode.kind]);
+    if (documentViewerMode.kind === 'annotation') {
+      viewerScrollerHandler.scrollToStoredVerticalPosition();
+    } else {
+      viewerScrollerHandler.scrollToTop();
+    }
+  }, [documentViewerMode.kind, documentViewerMode.kind === 'occurrence' ? documentViewerMode.entityId : undefined]);
 
   const viewerRef = viewerScrollerHandler.getViewerRef();
   const styles = buildStyle(

@@ -8,6 +8,7 @@ const ViewerScrollerContext = createContext<viewerScrollerHandlerHandlerType>({
   getViewerRef: () => null as any,
   storeCurrentVerticalPosition: () => null,
   scrollToStoredVerticalPosition: () => null,
+  scrollToTop: () => null,
 });
 
 function ViewerScrollerContextProvider(props: {

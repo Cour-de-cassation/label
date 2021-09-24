@@ -8,6 +8,7 @@ type viewerScrollerHandlerHandlerType = {
   getViewerRef: () => React.MutableRefObject<HTMLDivElement | null>;
   storeCurrentVerticalPosition: () => void;
   scrollToStoredVerticalPosition: () => void;
+  scrollToTop: () => void;
 };
 
 function buildViewerScrollerHandler(
@@ -18,6 +19,7 @@ function buildViewerScrollerHandler(
     getViewerRef,
     storeCurrentVerticalPosition,
     scrollToStoredVerticalPosition,
+    scrollToTop,
   };
 
   function getViewerRef() {
@@ -35,6 +37,13 @@ function buildViewerScrollerHandler(
     const { current } = viewerRef;
     if (current) {
       current.scrollTo({ top: currentTopPosition });
+    }
+  }
+
+  function scrollToTop() {
+    const { current } = viewerRef;
+    if (current) {
+      current.scrollTo({ top: 0 });
     }
   }
 }

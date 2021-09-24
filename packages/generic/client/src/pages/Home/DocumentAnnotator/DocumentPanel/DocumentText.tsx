@@ -68,11 +68,11 @@ function DocumentText(props: propsType): ReactElement {
       return [];
     }
     if (anchorNodeValue === focusNodeValue) {
-      return [{ text: selectionText, index: computeSelectedTextIndex(selection) }];
+      return [{ text: selectionText.trim(), index: computeSelectedTextIndex(selection) }];
     }
 
     const multilineSelection = computeMultilineSelection(
-      selectionText,
+      selectionText.trim(),
       props.neighbours,
       anchorNodeValue,
       focusNodeValue,

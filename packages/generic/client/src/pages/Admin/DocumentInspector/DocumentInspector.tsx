@@ -10,6 +10,8 @@ import {
 } from '../../../services/annotatorState';
 import { MonitoringEntriesHandlerContextProvider } from '../../../services/monitoring';
 import { DocumentAnnotator } from '../../Home/DocumentAnnotator';
+import { useAlert } from '../../../services/alert';
+import { wordings } from '../../../wordings';
 import { AnnotationsDataFetcher } from './AnnotationsDataFetcher';
 import { DocumentDataFetcher } from './DocumentDataFetcher';
 
@@ -22,6 +24,7 @@ type DocumentInspectorParamsType = {
 function DocumentInspector(props: { settings: settingsType }) {
   const params = useParams<DocumentInspectorParamsType>();
   const history = useHistory();
+  const { displayAlert } = useAlert();
 
   return (
     <DocumentDataFetcher documentId={params.documentId}>
@@ -57,10 +60,14 @@ function DocumentInspector(props: { settings: settingsType }) {
   );
 
   async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {
-    await apiCaller.post<'updateTreatment'>('updateTreatment', {
-      annotationsDiff,
-      documentId,
-    });
-    return;
+    try {
+      await apiCaller.post<'updateTreatment'>('updateTreatment', {
+        annotationsDiff,
+        documentId,
+      });
+    } catch (error) {
+      displayAlert({ variant: 'alert', text: wordings.business.errors.updateTreatmentFailed, autoHide: true });
+      console.warn(error);
+    }
   }
 }

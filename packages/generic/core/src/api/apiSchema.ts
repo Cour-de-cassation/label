@@ -183,6 +183,12 @@ const apiSchema = {
       },
       out: buildModel({ kind: 'array', content: documentModule.fetchedModel }),
     },
+    health: {
+      out: buildModel({
+        kind: 'primitive',
+        content: 'boolean',
+      } as const),
+    },
     problemReportsWithDetails: {
       out: buildModel({
         kind: 'array',

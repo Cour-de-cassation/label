@@ -79,6 +79,11 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         documentService.fetchDocumentsForUser(user._id, documentsMaxCount),
     }),
 
+    async health() {
+      await userService.fetchUsers();
+      return true;
+    },
+
     problemReportsWithDetails: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async () =>

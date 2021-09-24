@@ -4,7 +4,7 @@ import {
   buildAutoAnnotator,
   documentType,
   idType,
-  settingsModule,
+  // settingsModule,
   idModule,
   settingsType,
   documentModule,
@@ -14,7 +14,7 @@ import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
-import { computeAdditionalAnnotations } from './computeAdditionalAnnotations';
+// import { computeAdditionalAnnotations } from './computeAdditionalAnnotations';
 
 export { buildAnnotator };
 
@@ -108,11 +108,12 @@ function buildAnnotator(
     }
     await createAnnotatorTreatment({ annotations, documentId });
     logger.log(`NLP treatment created in DB`);
-    const additionalAnnotations = computeAdditionalAnnotations(
-      document,
-      annotations,
-      settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
-    );
+    // const additionalAnnotations = computeAdditionalAnnotations(
+    //   document,
+    //   annotations,
+    //   settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
+    // );
+    const additionalAnnotations: annotationType[] = [];
     if (additionalAnnotations.length > 0) {
       logger.log(`Creating additional annotations treatment...`);
       await createAdditionalAnnotationsTreatment({

@@ -29,6 +29,7 @@ import {
   MenuBar,
   RadioButton,
   Snackbar,
+  snackbarVariantType,
   SvgImage,
   SwitchButton,
   TableSortLabel,
@@ -71,4 +72,4 @@ export {
   TooltipMenu,
 };
 
-export type { iconNameType, tableRowFieldType, orderDirectionType };
+export type { iconNameType, snackbarVariantType, tableRowFieldType, orderDirectionType };

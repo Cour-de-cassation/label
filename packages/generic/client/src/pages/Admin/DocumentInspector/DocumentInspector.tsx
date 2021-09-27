@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { annotationsDiffType, fetchedDocumentType, idModule, settingsModule, settingsType } from '@label/core';
 import { apiCaller } from '../../../api';
@@ -14,6 +14,7 @@ import { useAlert } from '../../../services/alert';
 import { wordings } from '../../../wordings';
 import { AnnotationsDataFetcher } from './AnnotationsDataFetcher';
 import { DocumentDataFetcher } from './DocumentDataFetcher';
+import { localStorage } from '../../../services/localStorage';
 
 export { DocumentInspector };
 
@@ -25,6 +26,13 @@ function DocumentInspector(props: { settings: settingsType }) {
   const params = useParams<DocumentInspectorParamsType>();
   const history = useHistory();
   const { displayAlert } = useAlert();
+
+  useEffect(() => {
+    const userRole = localStorage.userHandler.getRole();
+    if (userRole === 'scrutator') {
+      displayScrutatorInfo();
+    }
+  }, []);
 
   return (
     <DocumentDataFetcher documentId={params.documentId}>
@@ -58,6 +66,10 @@ function DocumentInspector(props: { settings: settingsType }) {
       )}
     </DocumentDataFetcher>
   );
+
+  function displayScrutatorInfo() {
+    displayAlert({ variant: 'info', text: wordings.homePage.scrutatorInfo, autoHide: true });
+  }
 
   async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {
     try {

@@ -39,6 +39,7 @@ import {
   RefreshButton,
   RichTextInput,
   Snackbar,
+  snackbarVariantType,
   SwitchButton,
   Table,
   TableSortLabel,
@@ -97,4 +98,4 @@ export {
   UnlinkAnnotationDropdown,
 };
 
-export type { filterType, tableRowFieldType, orderDirectionType };
+export type { filterType, snackbarVariantType, tableRowFieldType, orderDirectionType };

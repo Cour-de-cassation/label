@@ -1,12 +1,12 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
-import { Snackbar } from '../../components';
+import { Snackbar, snackbarVariantType } from '../../components';
 
 export { AlertHandlerContext, AlertHandlerContextProvider };
 
 type alertHandlerType = { displayAlert: ({ text, variant, autoHide }: alertType) => void };
 
 type alertType = {
-  variant: 'alert' | 'success';
+  variant: snackbarVariantType;
   text: string;
   autoHide: boolean;
 };

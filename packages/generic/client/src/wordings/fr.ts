@@ -159,6 +159,7 @@ const fr = {
     reportProblem: 'Signaler un problème',
     reset: 'Réinitialiser',
     send: 'Envoyer',
+    scrutatorInfo: 'Vous êtes en mode lecture seule. Les modifications que vous ferez ne seront pas sauvegardées.',
     undo: 'Annuler',
     unlink: 'Supprimer la liaison',
     unlinkOption: {

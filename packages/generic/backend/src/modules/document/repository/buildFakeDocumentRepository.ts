@@ -36,6 +36,18 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return publicationCategories;
     },
 
+    async findAllByPublicationCategoryLettersAndStatus(
+      publicationCategoryLetters,
+      statuses,
+    ) {
+      return collection.filter(
+        (document) =>
+          publicationCategoryLetters.some((publicationCategoryLetter) =>
+            document.publicationCategory.includes(publicationCategoryLetter),
+          ) && statuses.includes(document.status),
+      );
+    },
+
     async findAllByPublicationCategoryLettersProjection(
       publicationCategoryLetters,
       projections,

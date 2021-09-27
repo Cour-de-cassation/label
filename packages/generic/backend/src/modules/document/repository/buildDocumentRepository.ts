@@ -70,6 +70,20 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
+    async findAllByPublicationCategoryLettersAndStatus(
+      publicationCategoryLetters,
+      statuses,
+    ) {
+      return collection
+        .find(
+          buildFindByPublicationCategoryLettersAndStatusRequest(
+            publicationCategoryLetters,
+            statuses,
+          ),
+        )
+        .toArray();
+    },
+
     async findAllByPublicationCategoryLettersProjection(
       publicationCategoryLetters,
       projections,
@@ -123,6 +137,18 @@ function buildFindByPublicationCategoryLettersRequest(
   publicationCategoryLetters: string[],
 ) {
   return {
+    $or: publicationCategoryLetters.map((publicationCategoryLetter) => ({
+      publicationCategory: { $in: [publicationCategoryLetter] },
+    })),
+  };
+}
+
+function buildFindByPublicationCategoryLettersAndStatusRequest(
+  publicationCategoryLetters: string[],
+  statuses: documentType['status'][],
+) {
+  return {
+    status: { $in: statuses },
     $or: publicationCategoryLetters.map((publicationCategoryLetter) => ({
       publicationCategory: { $in: [publicationCategoryLetter] },
     })),

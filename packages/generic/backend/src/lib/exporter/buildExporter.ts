@@ -1,6 +1,7 @@
 import {
   buildAnonymizer,
   documentModule,
+  documentType,
   settingsType,
   treatmentModule,
   treatmentType,
@@ -18,46 +19,72 @@ function buildExporter(
   exporterConfig: exporterConfigType,
 ) {
   return {
-    async exportTreatedDocumentsSince(days: number) {
-      logger.log('exportTreatedDocumentsSince');
-      logger.log(`Exportation to ${exporterConfig.name}`);
-
-      logger.log(`Fetching treated documents...`);
-      const documentsReadyToExport = await documentService.fetchDocumentsReadyToExport(
-        days,
-      );
-      logger.log(`${documentsReadyToExport.length} documents to export`);
-
-      logger.log(`Beginning exportation...`);
-      for (let index = 0; index < documentsReadyToExport.length; index++) {
-        logger.log(
-          `Exportation of document ${index + 1}/${
-            documentsReadyToExport.length
-          }`,
-        );
-        const document = documentsReadyToExport[index];
-
-        const treatments = await treatmentService.fetchTreatmentsByDocumentId(
-          document._id,
-        );
-        const annotations = treatmentModule.lib.computeAnnotations(treatments);
-        const seed = documentModule.lib.computeCaseNumber(document);
-        const anonymizer = buildAnonymizer(settings, annotations, seed);
-
-        await exporterConfig.sendDocumentPseudonymisationAndTreatments({
-          externalId: document.externalId,
-          pseudonymizationText: anonymizer.anonymizeDocument(document).text,
-          labelTreatments: buildLabelTreatments(treatments),
-        });
-
-        await statisticService.saveStatisticsOfDocument(document, settings);
-
-        await documentService.deleteDocument(document._id);
-      }
-
-      logger.log(`Exportation done!`);
-    },
+    exportTreatedDocumentsSince,
+    exportTreatedPublishableDocuments,
   };
+
+  async function exportTreatedDocumentsSince(days: number) {
+    logger.log('exportTreatedDocumentsSince');
+    logger.log(`Exportation to ${exporterConfig.name}`);
+
+    logger.log(`Fetching treated documents...`);
+    const documentsReadyToExport = await documentService.fetchDocumentsReadyToExport(
+      days,
+    );
+    logger.log(`${documentsReadyToExport.length} documents to export`);
+
+    logger.log(`Beginning exportation...`);
+    for (let index = 0; index < documentsReadyToExport.length; index++) {
+      logger.log(
+        `Exportation of document ${index + 1}/${documentsReadyToExport.length}`,
+      );
+      const document = documentsReadyToExport[index];
+
+      await exportDocument(document);
+    }
+
+    logger.log(`Exportation done!`);
+  }
+
+  async function exportTreatedPublishableDocuments() {
+    logger.log('exportPublishableDocumentsFromToday');
+    logger.log(`Exportation to ${exporterConfig.name}`);
+
+    logger.log(`Fetching treated documents from today...`);
+    const documentsReadyToExport = await documentService.fetchPublishableDocumentsToExport();
+    logger.log(`${documentsReadyToExport.length} documents to export`);
+
+    logger.log(`Beginning exportation...`);
+    for (let index = 0; index < documentsReadyToExport.length; index++) {
+      logger.log(
+        `Exportation of document ${index + 1}/${documentsReadyToExport.length}`,
+      );
+      const document = documentsReadyToExport[index];
+
+      await exportDocument(document);
+    }
+
+    logger.log(`Exportation done!`);
+  }
+
+  async function exportDocument(document: documentType) {
+    const treatments = await treatmentService.fetchTreatmentsByDocumentId(
+      document._id,
+    );
+    const annotations = treatmentModule.lib.computeAnnotations(treatments);
+    const seed = documentModule.lib.computeCaseNumber(document);
+    const anonymizer = buildAnonymizer(settings, annotations, seed);
+
+    await exporterConfig.sendDocumentPseudonymisationAndTreatments({
+      externalId: document.externalId,
+      pseudonymizationText: anonymizer.anonymizeDocument(document).text,
+      labelTreatments: buildLabelTreatments(treatments),
+    });
+
+    await statisticService.saveStatisticsOfDocument(document, settings);
+
+    await documentService.deleteDocument(document._id);
+  }
 }
 
 function buildLabelTreatments(

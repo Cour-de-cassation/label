@@ -11,6 +11,7 @@ LABELCRONLOGFILE=/home/label/packages/courDeCassation/cron.log.txt
 
 # Exportation to SDER
 0 23 * * * node $LABELPATH/dist/scripts/exportTreatedDocumentsSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 3 >> $LABELCRONLOGFILE 2>&1
+58 13 * * * node $LABELPATH/dist/scripts/exportTreatedPublishableDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS >> $LABELCRONLOGFILE 2>&1
 
 # Database maintenance
 */15 * * * * node $LABELPATH/dist/scripts/freePendingDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS >> $LABELCRONLOGFILE 2>&1

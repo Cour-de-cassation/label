@@ -13,8 +13,20 @@ describe('buildStatistic', () => {
     const documentSource = 'SOURCE';
     const duration = 1500;
     const linkedEntitiesCount = 2;
+    const jurisdiction = 'Cour de cassation';
     const userId = idModule.lib.buildId();
     const document = documentModule.generator.generate({
+      decisionMetadata: {
+        additionalTermsToAnnotate: '',
+        appealNumber: '',
+        boundDecisionDocumentNumbers: [],
+        categoriesToOmit: [],
+        chamberName: '',
+        jurisdiction,
+        occultationBlock: undefined,
+        session: '',
+        solution: '',
+      },
       externalId: documentExternalId,
       publicationCategory: documentPublicationCategory,
       source: documentSource,
@@ -45,6 +57,7 @@ describe('buildStatistic', () => {
       annotationsCount,
       deletedAnnotationsCount: { anonymised: 2, other: 1 },
       documentExternalId,
+      jurisdiction: 'Cour de cassation',
       linkedEntitiesCount,
       modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
       publicationCategory: documentPublicationCategory,

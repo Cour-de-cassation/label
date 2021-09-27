@@ -4,6 +4,9 @@ import { projectedType, repositoryType } from './repositoryType';
 
 export { buildFakeRepositoryBuilder, projectFakeObjects, updateFakeCollection };
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   buildCustomFakeRepository,
   collectionName,
@@ -19,6 +22,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     deleteById,
     deleteManyByIds,
     distinct,
+    distinctNested,
     findAll,
     findAllProjection,
     findAllByIds,
@@ -85,18 +89,45 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   async function distinct<fieldNameT extends keyof T>(fieldName: fieldNameT) {
     const distinctValues = [] as Array<T[fieldNameT]>;
 
-    collection.forEach((value) => {
+    collection.forEach((item) => {
       if (
         distinctValues.every(
           (anotherValue) =>
-            JSON.stringify(anotherValue) !== JSON.stringify(value[fieldName]),
+            JSON.stringify(anotherValue) !== JSON.stringify(item[fieldName]),
         )
       ) {
-        distinctValues.push(value[fieldName]);
+        distinctValues.push(item[fieldName]);
       }
     });
 
     return distinctValues;
+  }
+
+  async function distinctNested<fieldT>(fieldNameNested: string) {
+    const distinctValues = [] as Array<fieldT>;
+
+    collection.forEach((item) => {
+      const nestedValue = extractNestedField(item);
+      if (
+        !!nestedValue &&
+        distinctValues.every((anotherValue) => anotherValue !== nestedValue)
+      ) {
+        distinctValues.push(nestedValue);
+      }
+    });
+
+    return distinctValues;
+
+    function extractNestedField(item: T) {
+      const fieldNames = fieldNameNested.split('.');
+      return fieldNames.reduce((accumulator, fieldName) => {
+        const nestedItem = (accumulator as any)[fieldName];
+        if (!nestedItem) {
+          return undefined;
+        }
+        return nestedItem;
+      }, item as any) as fieldT | undefined;
+    }
   }
 
   async function findAll() {

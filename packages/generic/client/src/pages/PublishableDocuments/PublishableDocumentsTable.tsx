@@ -104,10 +104,10 @@ function buildPublishableDocumentsFields() {
       width: 10,
     },
     {
-      id: 'juridiction',
-      title: wordings.publishableDocumentsPage.table.columnTitles.juridiction,
+      id: 'jurisdiction',
+      title: wordings.publishableDocumentsPage.table.columnTitles.jurisdiction,
       canBeSorted: true,
-      extractor: (publishableDocument) => publishableDocument.juridiction,
+      extractor: (publishableDocument) => publishableDocument.jurisdiction,
       width: 10,
     },
     {

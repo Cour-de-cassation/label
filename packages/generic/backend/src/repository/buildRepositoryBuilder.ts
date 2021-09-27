@@ -35,6 +35,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       deleteById,
       deleteManyByIds,
       distinct,
+      distinctNested,
       findAll,
       findAllProjection,
       findAllByIds,
@@ -68,6 +69,14 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
 
     async function distinct<fieldNameT extends keyof T>(fieldName: fieldNameT) {
       return collection.distinct(fieldName as string, {});
+    }
+
+    async function distinctNested<fieldT>(fieldName: string) {
+      const distinctFields = (await collection.distinct(
+        fieldName,
+        {},
+      )) as fieldT[];
+      return distinctFields.filter(Boolean);
     }
 
     async function findAll() {

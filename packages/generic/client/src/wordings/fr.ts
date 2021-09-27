@@ -244,7 +244,7 @@ const fr = {
         number: 'N° décision',
         chamberName: 'Chambre',
         appealNumber: 'N° de pourvoi',
-        juridiction: 'Juridiction',
+        jurisdiction: 'Juridiction',
         status: 'Statut',
         importDate: "Date d'import",
       },
@@ -273,6 +273,7 @@ const fr = {
         mustHaveSurAnnotations: 'Avec sur-annotations',
         publicationCategory: 'Diffusion',
         source: 'Base de données source',
+        jurisdiction: 'Jurisdiction',
       },
     },
   },
@@ -307,6 +308,7 @@ const fr = {
           startDate: 'Date début',
           endDate: 'Date fin',
           source: 'Source',
+          jurisdiction: 'Juridiction',
           publicationCategoryLetter: 'Diffusion',
           documentReviewFilterStatus: 'Statut de revue',
         },
@@ -314,6 +316,7 @@ const fr = {
       columnTitles: {
         number: { title: 'N° décision', tooltipText: 'Numéro de la décision' },
         occultationBlock: { title: 'Bloc', tooltipText: "Bloc d'occultation" },
+        jurisdiction: { title: 'Cour', tooltipText: 'Juridiction de la décision' },
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
@@ -365,6 +368,7 @@ const fr = {
       columnTitles: {
         number: 'N° décision',
         occultationBlock: { title: 'Bloc', tooltipText: "Bloc d'occultation" },
+        jurisdiction: { title: 'Cour', tooltipText: 'Juridiction de la décision' },
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
@@ -391,6 +395,7 @@ const fr = {
         fields: {
           publicationCategoryLetter: 'Diffusion',
           source: 'Source',
+          jurisdiction: 'Juridiction',
         },
       },
     },

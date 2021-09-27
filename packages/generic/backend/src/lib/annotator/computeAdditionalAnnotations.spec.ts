@@ -32,7 +32,7 @@ describe('computeAdditionalAnnotations', () => {
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],
         chamberName: '',
-        juridiction: '',
+        jurisdiction: '',
         occultationBlock: undefined,
         session: '',
         solution: '',

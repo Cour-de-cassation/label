@@ -11,6 +11,7 @@ const statisticGenerator: generatorType<statisticType> = {
     annotationsCount,
     deletedAnnotationsCount,
     documentExternalId,
+    jurisdiction,
     linkedEntitiesCount,
     modifiedAnnotationsCount,
     publicationCategory,
@@ -26,6 +27,7 @@ const statisticGenerator: generatorType<statisticType> = {
     annotationsCount: annotationsCount ? annotationsCount : 0,
     deletedAnnotationsCount: deletedAnnotationsCount ? deletedAnnotationsCount : { anonymised: 0, other: 0 },
     documentExternalId: documentExternalId ? documentExternalId : idModule.lib.convertToString(idModule.lib.buildId()),
+    jurisdiction,
     linkedEntitiesCount: linkedEntitiesCount ? linkedEntitiesCount : 0,
     modifiedAnnotationsCount: modifiedAnnotationsCount
       ? modifiedAnnotationsCount

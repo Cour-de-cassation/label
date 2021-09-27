@@ -8,7 +8,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
       decisionMetadata: {
         appealNumber: '',
         chamberName: 'Civile',
-        juridiction: 'Cour de cassation',
+        jurisdiction: 'Cour de cassation',
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],
         additionalTermsToAnnotate: '',

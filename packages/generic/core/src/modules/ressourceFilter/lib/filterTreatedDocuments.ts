@@ -46,6 +46,10 @@ function filterTreatedDocuments({
       isInTheFilter = isInTheFilter && document.source === ressourceFilter.source;
     }
 
+    if (ressourceFilter.jurisdiction) {
+      isInTheFilter = isInTheFilter && document.decisionMetadata.jurisdiction === ressourceFilter.jurisdiction;
+    }
+
     if (ressourceFilter.startDate) {
       const { startDate } = ressourceFilter;
       isInTheFilter = isInTheFilter && humanTreatments.some(({ treatment }) => treatment.lastUpdateDate > startDate);

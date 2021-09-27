@@ -64,7 +64,7 @@ function mapCourtDecisionToDocument(
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
       chamberName: readableChamberName,
-      juridiction: readableJurisdictionName,
+      jurisdiction: readableJurisdictionName,
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session: sderCourtDecision.formation || '',
       solution: sderCourtDecision.solution,

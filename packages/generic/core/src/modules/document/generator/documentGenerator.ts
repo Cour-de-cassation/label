@@ -32,7 +32,7 @@ const documentGenerator: generatorType<documentType> = {
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],
           chamberName: '',
-          juridiction: '',
+          jurisdiction: '',
           occultationBlock: undefined,
           session: '',
           solution: '',

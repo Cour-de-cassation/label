@@ -66,6 +66,14 @@ function UntreatedDocumentsFilters(props: {
         value: props.filterValues.source,
         onChange: (source?: string) => props.setFilterValues({ ...props.filterValues, source }),
       },
+      {
+        kind: 'dropdown' as const,
+        name: 'jurisdiction',
+        label: wordings.untreatedDocumentsPage.table.filter.fields.jurisdiction,
+        possibleValues: props.filterInfo.jurisdictions,
+        value: props.filterValues.jurisdiction,
+        onChange: (jurisdiction?: string) => props.setFilterValues({ ...props.filterValues, jurisdiction }),
+      },
     ];
   }
 }

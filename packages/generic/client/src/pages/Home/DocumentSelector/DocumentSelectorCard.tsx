@@ -63,7 +63,7 @@ function DocumentSelectorCard(props: {
     return (
       <div style={styles.card}>
         <Text style={styles.title} variant="h2" weight="bold">
-          {props.choice.document.decisionMetadata.juridiction || wordings.homePage.documentSelector.unknownJuridiction}
+          {props.choice.document.decisionMetadata.jurisdiction || wordings.homePage.documentSelector.unknownJuridiction}
         </Text>
 
         <div style={styles.specificDocumentInfoEntryTable}>

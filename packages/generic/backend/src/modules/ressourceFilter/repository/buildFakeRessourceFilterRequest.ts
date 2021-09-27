@@ -6,15 +6,16 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
   return (item: {
     addedAnnotationsCount: { sensitive: number; other: number };
     deletedAnnotationsCount: { anonymised: number; other: number };
+    jurisdiction: statisticType['jurisdiction'];
     modifiedAnnotationsCount: {
       nonAnonymisedToSensitive: number;
       anonymisedToNonAnonymised: number;
       other: number;
     };
-    publicationCategory: string[];
+    publicationCategory: statisticType['publicationCategory'];
     resizedBiggerAnnotationsCount: { sensitive: number; other: number };
     resizedSmallerAnnotationsCount: { anonymised: number; other: number };
-    source: string;
+    source: statisticType['source'];
     treatmentsSummary: statisticType['treatmentsSummary'];
   }) => {
     let isValidAccordingToFilter = true;
@@ -44,6 +45,12 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
     if (ressourceFilter.source) {
       isValidAccordingToFilter =
         isValidAccordingToFilter && item.source === ressourceFilter.source;
+    }
+
+    if (ressourceFilter.jurisdiction) {
+      isValidAccordingToFilter =
+        isValidAccordingToFilter &&
+        item.jurisdiction === ressourceFilter.jurisdiction;
     }
 
     if (ressourceFilter.userId) {

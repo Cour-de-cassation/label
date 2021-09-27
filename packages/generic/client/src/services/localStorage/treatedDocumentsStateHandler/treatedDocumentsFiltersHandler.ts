@@ -4,6 +4,7 @@ import { localStorageMappers } from '../localStorageMappers';
 const TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_START_DATE';
 const TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_END_DATE';
 const TREATED_DOCUMENTS_FILTER_DOCUMENT_REVIEW_STATUS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_DOCUMENT_REVIEW_STATUS';
+const TREATED_DOCUMENTS_FILTER_JURISDICTION_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_JURISDICTION';
 const TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_USER_NAME';
 const TREATED_DOCUMENTS_FILTER_SOURCE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SOURCE';
 const TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY =
@@ -21,6 +22,7 @@ type treatedDocumentFilterType = {
   startDate: Date | undefined;
   endDate: Date | undefined;
   documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined;
+  jurisdiction: string | undefined;
   userName: string | undefined;
   source: string | undefined;
   publicationCategoryLetter: string | undefined;
@@ -32,6 +34,7 @@ function setFilters({
   startDate,
   endDate,
   documentReviewFilterStatus,
+  jurisdiction,
   userName,
   source,
   publicationCategoryLetter,
@@ -51,6 +54,11 @@ function setFilters({
   localStorageHandler.set({
     key: TREATED_DOCUMENTS_FILTER_DOCUMENT_REVIEW_STATUS_STORAGE_KEY,
     value: documentReviewFilterStatus,
+    mapper: localStorageMappers.string,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_JURISDICTION_STORAGE_KEY,
+    value: jurisdiction,
     mapper: localStorageMappers.string,
   });
   localStorageHandler.set({
@@ -93,6 +101,10 @@ function getFilters(): treatedDocumentFilterType {
     key: TREATED_DOCUMENTS_FILTER_DOCUMENT_REVIEW_STATUS_STORAGE_KEY,
     mapper: localStorageMappers.string,
   });
+  const jurisdiction = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_JURISDICTION_STORAGE_KEY,
+    mapper: localStorageMappers.string,
+  });
   const userName = localStorageHandler.get({
     key: TREATED_DOCUMENTS_FILTER_USER_NAME_STORAGE_KEY,
     mapper: localStorageMappers.string,
@@ -119,6 +131,7 @@ function getFilters(): treatedDocumentFilterType {
     endDate: endDate || undefined,
     documentReviewFilterStatus:
       (documentReviewFilterStatus as typeof documentReviewFilterStatuses[number]) || undefined,
+    jurisdiction: jurisdiction || undefined,
     source: source || undefined,
     userName: userName || undefined,
     publicationCategoryLetter: publicationCategoryLetter || undefined,

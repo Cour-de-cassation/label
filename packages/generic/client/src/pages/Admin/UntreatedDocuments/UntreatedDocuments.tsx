@@ -81,6 +81,9 @@ function UntreatedDocuments(props: {
         if (currentFilterKey === 'source' && !!filterValues.source) {
           return accumulator && untreatedDocument.document.source === filterValues.source;
         }
+        if (currentFilterKey === 'jurisdiction' && !!filterValues.jurisdiction) {
+          return accumulator && untreatedDocument.document.jurisdiction === filterValues.jurisdiction;
+        }
         return accumulator;
       }, true as boolean);
     });
@@ -100,7 +103,8 @@ function UntreatedDocuments(props: {
       flatten(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.publicationCategory)),
     );
     const sources = uniq(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.source));
-    return { publicationCategoryLetters, sources };
+    const jurisdictions = uniq(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.jurisdiction));
+    return { publicationCategoryLetters, sources, jurisdictions };
   }
 
   function buildStyles(theme: customThemeType) {

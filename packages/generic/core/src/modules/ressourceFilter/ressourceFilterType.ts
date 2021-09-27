@@ -38,6 +38,13 @@ const ressourceFilterModel = buildModel({
         { kind: 'primitive', content: 'undefined' },
       ],
     },
+    jurisdiction: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'string' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     userId: {
       kind: 'or',
       content: [

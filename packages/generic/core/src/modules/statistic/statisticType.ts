@@ -25,6 +25,13 @@ const statisticModel = buildModel({
       },
     },
     documentExternalId: { kind: 'primitive', content: 'string' },
+    jurisdiction: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'string' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     linkedEntitiesCount: { kind: 'primitive', content: 'number' },
     modifiedAnnotationsCount: {
       kind: 'object',

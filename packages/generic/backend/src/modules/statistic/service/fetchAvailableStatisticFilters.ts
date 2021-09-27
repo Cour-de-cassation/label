@@ -11,9 +11,11 @@ async function fetchAvailableStatisticFilters() {
   const statisticFields = await statisticRepository.findAllProjection([
     'publicationCategory',
     'source',
+    'jurisdiction',
   ]);
 
   return {
+    jurisdictions: await fetchAvailableJurisdictionFilters(statisticFields),
     publicationCategories: await fetchAvailablePublicationCategoryFilters(
       statisticFields,
     ),
@@ -50,4 +52,19 @@ async function fetchAvailableSourceFilters(
   const documentSources = await documentService.fetchAllSources();
 
   return uniq([...statisticSources, ...documentSources]).sort();
+}
+
+async function fetchAvailableJurisdictionFilters(
+  statisticFields: Array<{
+    jurisdiction: statisticType['jurisdiction'];
+  }>,
+) {
+  const statisticJurisdictions = statisticFields.reduce(
+    (accumulator, { jurisdiction }) =>
+      jurisdiction ? [...accumulator, jurisdiction] : accumulator,
+    [] as string[],
+  );
+  const documentJurisdictions = await documentService.fetchAllJurisdictions();
+
+  return uniq([...statisticJurisdictions, ...documentJurisdictions]).sort();
 }

@@ -12,9 +12,21 @@ describe('statisticsCreator', () => {
   const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
   const documentPublicationCategory = ['P'];
   const documentSource = 'SOURCE';
+  const jurisdiction = 'Cour de cassation';
   const duration = 1500;
   const userId = idModule.lib.buildId();
   const document = documentModule.generator.generate({
+    decisionMetadata: {
+      additionalTermsToAnnotate: '',
+      appealNumber: '',
+      boundDecisionDocumentNumbers: [],
+      categoriesToOmit: [],
+      chamberName: '',
+      jurisdiction,
+      occultationBlock: undefined,
+      session: '',
+      solution: '',
+    },
     externalId: documentExternalId,
     publicationCategory: documentPublicationCategory,
     source: documentSource,
@@ -82,6 +94,7 @@ describe('statisticsCreator', () => {
         annotationsCount: 3,
         deletedAnnotationsCount: { anonymised: 1, other: 0 },
         documentExternalId,
+        jurisdiction: 'Cour de cassation',
         linkedEntitiesCount: 0,
         modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
         publicationCategory: documentPublicationCategory,
@@ -140,6 +153,7 @@ describe('statisticsCreator', () => {
         annotationsCount: 4,
         deletedAnnotationsCount: { anonymised: 0, other: 0 },
         documentExternalId,
+        jurisdiction: 'Cour de cassation',
         linkedEntitiesCount: 0,
         modifiedAnnotationsCount: { nonAnonymisedToSensitive: 1, anonymisedToNonAnonymised: 0, other: 0 },
         publicationCategory: documentPublicationCategory,

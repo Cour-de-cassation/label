@@ -71,6 +71,14 @@ function TreatedDocumentsFilters(props: {
       },
       {
         kind: 'dropdown' as const,
+        name: 'source',
+        label: wordings.treatedDocumentsPage.table.filter.fields.jurisdiction,
+        possibleValues: props.filterInfo.jurisdictions,
+        value: props.filterValues.jurisdiction,
+        onChange: (jurisdiction?: string) => props.setFilterValues({ ...props.filterValues, jurisdiction }),
+      },
+      {
+        kind: 'dropdown' as const,
         name: 'publicationCategoryLetter',
         label: wordings.treatedDocumentsPage.table.filter.fields.publicationCategoryLetter,
         possibleValues: props.filterInfo.publicationCategoryLetters,

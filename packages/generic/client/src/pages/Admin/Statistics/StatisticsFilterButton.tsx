@@ -34,11 +34,13 @@ function StatisticsFilterButton(props: {
     const publicationCategoryFilter = buildPublicationCategoryFilter();
     const dateIntervalFilter = buildDateIntervalFilter();
     const sourceFilter = buildSourceFilter();
+    const jurisdictionFilter = buildJurisdictionFilter();
     const userFilter = buildUserFilter();
 
     return [
       dateIntervalFilter,
       userFilter,
+      jurisdictionFilter,
       sourceFilter,
       publicationCategoryFilter,
       mustHaveSubAnnotationsFilter,
@@ -117,6 +119,19 @@ function StatisticsFilterButton(props: {
         value: props.ressourceFilter.source,
         onChange: (newSource: string | undefined) => {
           props.refetch({ ...props.ressourceFilter, source: newSource });
+        },
+      };
+    }
+
+    function buildJurisdictionFilter() {
+      return {
+        kind: 'dropdown' as const,
+        name: 'jurisdiction',
+        label: wordings.statisticsPage.filter.fields.jurisdiction,
+        possibleValues: props.availableStatisticFilters.jurisdictions,
+        value: props.ressourceFilter.jurisdiction,
+        onChange: (newJurisdiction: string | undefined) => {
+          props.refetch({ ...props.ressourceFilter, jurisdiction: newJurisdiction });
         },
       };
     }

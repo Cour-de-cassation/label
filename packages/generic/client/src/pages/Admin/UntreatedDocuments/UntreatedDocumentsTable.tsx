@@ -182,7 +182,7 @@ function UntreatedDocumentsTable(props: {
         title: wordings.untreatedDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
         extractor: (untreatedDocument) => untreatedDocument.document.documentNumber,
-        width: 3,
+        width: 2,
       },
       {
         id: 'occultationBlock',
@@ -191,7 +191,15 @@ function UntreatedDocumentsTable(props: {
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '',
         getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
-        width: 3,
+        width: 1,
+      },
+      {
+        id: 'jurisdiction',
+        title: wordings.untreatedDocumentsPage.table.columnTitles.jurisdiction.title,
+        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.jurisdiction.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '',
+        width: 4,
       },
       {
         id: 'publicationCategory',
@@ -252,7 +260,7 @@ function UntreatedDocumentsTable(props: {
         extractor: (untreatedDocument) =>
           timeOperator.convertTimestampToReadableDate(untreatedDocument.document.creationDate, true),
         getSortingValue: (untreatedDocument) => untreatedDocument.document.creationDate,
-        width: 5,
+        width: 3,
       },
     ];
     return untreatedDocumentsFields;

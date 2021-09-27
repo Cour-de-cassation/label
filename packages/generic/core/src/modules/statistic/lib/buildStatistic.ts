@@ -24,6 +24,7 @@ function buildStatistic({
     annotationsCount,
     deletedAnnotationsCount: treatment.deletedAnnotationsCount,
     documentExternalId: document.externalId,
+    jurisdiction: document.decisionMetadata.jurisdiction,
     linkedEntitiesCount,
     modifiedAnnotationsCount: treatment.modifiedAnnotationsCount,
     publicationCategory: document.publicationCategory,

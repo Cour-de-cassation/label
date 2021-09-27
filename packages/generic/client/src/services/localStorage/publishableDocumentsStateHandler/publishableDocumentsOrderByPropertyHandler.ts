@@ -10,7 +10,7 @@ const publishableDocumentOrderByProperties = [
   'chamberName',
   'creationDate',
   'documentNumber',
-  'juridiction',
+  'jurisdiction',
   'status',
 ] as const;
 

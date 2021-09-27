@@ -122,10 +122,42 @@ describe('filterTreatedDocuments', () => {
     ]);
   });
 
-  it('should filter all the given treated documents according to the source', () => {
+  it('should filter all the given treated documents according to the jurisdiction', () => {
     const documents = ([{ source: 'SOURCE1' }, { source: 'SOURCE2' }] as const).map(documentModule.generator.generate);
     const ressourceFilter = ressourceFilterGenerator.generate({
       source: 'SOURCE1',
+    });
+    const treatedDocuments = [
+      { document: documents[0], treatments: [], humanTreatments: [] },
+      { document: documents[1], treatments: [], humanTreatments: [] },
+    ];
+
+    const filteredTreatedDocuments = filterTreatedDocuments({
+      ressourceFilter,
+      treatedDocuments,
+    });
+
+    expect(filteredTreatedDocuments).toEqual([{ document: documents[0], treatments: [], humanTreatments: [] }]);
+  });
+
+  it('should filter all the given treated documents according to the jurisdiction', () => {
+    const documents = [{ jurisdiction: 'JURISDICTION1' }, { jurisdiction: 'JURISDICTION2' }].map(({ jurisdiction }) =>
+      documentModule.generator.generate({
+        decisionMetadata: {
+          jurisdiction,
+          solution: '',
+          session: '',
+          occultationBlock: undefined,
+          chamberName: '',
+          categoriesToOmit: [],
+          boundDecisionDocumentNumbers: [],
+          additionalTermsToAnnotate: '',
+          appealNumber: '',
+        },
+      }),
+    );
+    const ressourceFilter = ressourceFilterGenerator.generate({
+      jurisdiction: 'JURISDICTION1',
     });
     const treatedDocuments = [
       { document: documents[0], treatments: [], humanTreatments: [] },

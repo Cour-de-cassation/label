@@ -24,6 +24,7 @@ type ressourceFilterRequestType = {
   publicationCategory?: string[];
   treatmentDate?: { $gt?: number; $lte?: number };
   source?: ressourceFilterType['source'];
+  jurisdiction?: ressourceFilterType['jurisdiction'];
   'treatmentsSummary.userId'?: ressourceFilterType['userId'];
 };
 
@@ -85,6 +86,10 @@ function buildRessourceFilterRequest(
 
   if (ressourceFilter.source) {
     ressourceFilterRequest.source = ressourceFilter.source;
+  }
+
+  if (ressourceFilter.jurisdiction) {
+    ressourceFilterRequest.jurisdiction = ressourceFilter.jurisdiction;
   }
 
   if (ressourceFilter.userId) {

@@ -72,6 +72,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
       document: {
         _id: treatedDocument._id,
         documentNumber: treatedDocument.documentNumber,
+        jurisdiction: treatedDocument.decisionMetadata.jurisdiction,
         occultationBlock: treatedDocument.decisionMetadata.occultationBlock,
         publicationCategory: treatedDocument.publicationCategory,
         reviewStatus: treatedDocument.reviewStatus,

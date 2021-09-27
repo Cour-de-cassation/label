@@ -28,7 +28,7 @@ async function fetchPublishableDocuments() {
       _id,
       appealNumber: decisionMetadata.appealNumber,
       chamberName: decisionMetadata.chamberName,
-      juridiction: decisionMetadata.juridiction,
+      jurisdiction: decisionMetadata.jurisdiction,
       publicationCategory,
       creationDate,
       documentNumber,

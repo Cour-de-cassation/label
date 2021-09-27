@@ -7,6 +7,7 @@ export { ressourceFilterGenerator };
 const ressourceFilterGenerator: generatorType<ressourceFilterType> = {
   generate: ({
     endDate,
+    jurisdiction,
     mustHaveSubAnnotations,
     mustHaveSurAnnotations,
     publicationCategory,
@@ -15,6 +16,7 @@ const ressourceFilterGenerator: generatorType<ressourceFilterType> = {
     userId,
   } = {}) => ({
     endDate: endDate ? endDate : undefined,
+    jurisdiction: jurisdiction || jurisdiction,
     mustHaveSubAnnotations: mustHaveSubAnnotations ? mustHaveSubAnnotations : false,
     mustHaveSurAnnotations: mustHaveSurAnnotations ? mustHaveSurAnnotations : false,
     publicationCategory: publicationCategory ? publicationCategory : undefined,

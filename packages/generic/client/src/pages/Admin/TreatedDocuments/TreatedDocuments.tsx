@@ -112,6 +112,9 @@ function TreatedDocuments(props: {
           const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)];
           return accumulator && treatmentInfo.subAnnotationsSensitiveCount > 0;
         }
+        if (currentFilterKey === 'jurisdiction' && !!filterValues[currentFilterKey]) {
+          return accumulator && treatedDocument.document.jurisdiction === filterValues.jurisdiction;
+        }
         if (currentFilterKey === 'startDate' && !!filterValues.startDate) {
           return accumulator && treatedDocument.lastTreatmentDate >= filterValues.startDate.getTime();
         }
@@ -142,12 +145,13 @@ function TreatedDocuments(props: {
   }
 
   function extractFilterInfoFromTreatedDocuments(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
-    const userNames = uniq(flatten(treatedDocuments.map((treatedDocument) => treatedDocument.userNames)));
+    const jurisdictions = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.document.jurisdiction));
     const publicationCategoryLetters = uniq(
       flatten(treatedDocuments.map((treatedDocument) => treatedDocument.document.publicationCategory)),
     );
     const sources = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.document.source));
-    return { publicationCategoryLetters, userNames, sources };
+    const userNames = uniq(flatten(treatedDocuments.map((treatedDocument) => treatedDocument.userNames)));
+    return { jurisdictions, publicationCategoryLetters, userNames, sources };
   }
 
   function buildTreatedDocumentsFields(treatmentsInfo: Record<string, treatmentInfoType>) {
@@ -161,7 +165,7 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.number.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.documentNumber,
-        width: 3,
+        width: 2,
       },
       {
         id: 'occultationBlock',
@@ -170,7 +174,15 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '',
         getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
-        width: 3,
+        width: 1,
+      },
+      {
+        id: 'jurisdiction',
+        title: wordings.treatedDocumentsPage.table.columnTitles.jurisdiction.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.jurisdiction.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '',
+        width: 4,
       },
       {
         id: 'publicationCategory',
@@ -196,7 +208,7 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.session.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.session,
-        width: 3,
+        width: 2,
       },
       {
         id: 'source',
@@ -212,7 +224,7 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.workingUser.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.userNames.join(', '),
-        width: 10,
+        width: 8,
       },
       {
         id: 'reviewStatus',
@@ -233,7 +245,7 @@ function TreatedDocuments(props: {
         extractor: (treatedDocument) =>
           timeOperator.convertTimestampToReadableDate(treatedDocument.lastTreatmentDate, true),
         getSortingValue: (treatedDocument) => treatedDocument.lastTreatmentDate,
-        width: 5,
+        width: 3,
       },
       {
         id: 'surAnnotationsCount',
@@ -242,7 +254,7 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].surAnnotationsCount,
-        width: 2,
+        width: 1,
       },
       {
         id: 'subAnnotationsSensitiveCount',
@@ -251,7 +263,7 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].subAnnotationsSensitiveCount,
-        width: 2,
+        width: 1,
       },
       {
         id: 'subAnnotationsNonSensitiveCount',
@@ -260,7 +272,7 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].subAnnotationsNonSensitiveCount,
-        width: 2,
+        width: 1,
       },
       {
         id: 'duration',
@@ -270,7 +282,7 @@ function TreatedDocuments(props: {
         extractor: (treatedDocument) =>
           timeOperator.convertDurationToReadableDuration(treatedDocument.totalTreatmentDuration),
         getSortingValue: (treatedDocument) => treatedDocument.totalTreatmentDuration,
-        width: 3,
+        width: 1,
       },
     ];
     return treatedDocumentsFields;

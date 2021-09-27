@@ -9,6 +9,7 @@ type repositoryType<T extends { _id: idType }> = {
   distinct: <fieldNameT extends keyof T>(
     fieldName: fieldNameT,
   ) => Promise<Array<T[fieldNameT]>>;
+  distinctNested: <fieldT>(fieldNameNested: string) => Promise<Array<fieldT>>;
   findAll: () => Promise<T[]>;
   findAllProjection: <projectionT extends keyof T>(
     projection: Array<projectionT>,

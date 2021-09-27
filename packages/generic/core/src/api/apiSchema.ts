@@ -162,6 +162,13 @@ const apiSchema = {
               content: 'string',
             },
           },
+          jurisdictions: {
+            kind: 'array',
+            content: {
+              kind: 'primitive',
+              content: 'string',
+            },
+          },
         },
       } as const),
     },
@@ -230,7 +237,7 @@ const apiSchema = {
             chamberName: documentModule.fetchedModel.content.decisionMetadata.content.chamberName,
             creationDate: documentModule.fetchedModel.content.creationDate,
             documentNumber: documentModule.fetchedModel.content.documentNumber,
-            juridiction: documentModule.fetchedModel.content.decisionMetadata.content.juridiction,
+            jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
             publicationCategory: documentModule.fetchedModel.content.publicationCategory,
             status: documentModule.fetchedModel.content.status,
           },
@@ -248,6 +255,7 @@ const apiSchema = {
               content: {
                 _id: documentModule.fetchedModel.content._id,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
+                jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
                 occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
                 reviewStatus: documentModule.fetchedModel.content.reviewStatus,
@@ -295,6 +303,7 @@ const apiSchema = {
                 creationDate: documentModule.fetchedModel.content.creationDate,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
                 occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
+                jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
                 session: documentModule.fetchedModel.content.decisionMetadata.content.session,
                 source: documentModule.fetchedModel.content.source,

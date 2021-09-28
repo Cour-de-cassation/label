@@ -3,11 +3,13 @@ import { computeSpecificDocumentInfoEntries } from './computeSpecificDocumentInf
 
 describe('computeSpecificDocumentInfoEntries', () => {
   it('should return all the specific infos of a document', () => {
+    const decisionDate = new Date().getTime();
     const document = documentModule.generator.generate({
       documentNumber: 1234567,
       decisionMetadata: {
         appealNumber: '',
         chamberName: 'Civile',
+        date: decisionDate,
         jurisdiction: 'Cour de cassation',
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],

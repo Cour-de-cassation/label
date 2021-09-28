@@ -14,7 +14,7 @@ const untreatedDocumentOrderByProperties = [
   'source',
   'userName',
   'status',
-  'creationDate',
+  'decisionDate',
 ] as const;
 
 function setOrderByProperty(newOrderByProperty: typeof untreatedDocumentOrderByProperties[number]) {

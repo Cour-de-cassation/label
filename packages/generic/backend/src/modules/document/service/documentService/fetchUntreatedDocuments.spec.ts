@@ -85,10 +85,10 @@ function projectDocument(document: documentType) {
       'publicationCategory',
       'source',
       'status',
-      'creationDate',
     ]),
     session: document.decisionMetadata.session,
     occultationBlock: document.decisionMetadata.occultationBlock,
     jurisdiction: document.decisionMetadata.jurisdiction,
+    decisionDate: document.decisionMetadata.date,
   };
 }

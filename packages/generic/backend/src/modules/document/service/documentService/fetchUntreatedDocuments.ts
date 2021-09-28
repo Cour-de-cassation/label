@@ -49,7 +49,7 @@ async function fetchUntreatedDocuments() {
     return {
       document: {
         _id: untreatedDocument._id,
-        creationDate: untreatedDocument.creationDate,
+        decisionDate: untreatedDocument.decisionMetadata.date,
         documentNumber: untreatedDocument.documentNumber,
         occultationBlock: untreatedDocument.decisionMetadata.occultationBlock,
         jurisdiction: untreatedDocument.decisionMetadata.jurisdiction,

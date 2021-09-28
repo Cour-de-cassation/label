@@ -30,6 +30,14 @@ type customDocumentRepositoryType = {
     }: { status: documentType['status']; priority: documentType['priority'] },
     idsToSearchInFirst: documentType['_id'][],
   ) => Promise<documentType | undefined>;
+  findByStatusAndPriorityLimitAmong: (
+    {
+      status,
+      priority,
+    }: { status: documentType['status']; priority: documentType['priority'] },
+    limit: number,
+    idsToSearchInFirst: documentType['_id'][],
+  ) => Promise<documentType[]>;
   findOneByStatusAndPriorityNotIn: (
     {
       status,

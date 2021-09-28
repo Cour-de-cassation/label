@@ -50,12 +50,33 @@ const buildDocumentRepository = buildRepositoryBuilder<
       { status, priority },
       idsToSearchInFirst,
     ) {
-      const document = await collection.findOne({
-        priority,
-        status,
-        _id: { $in: idsToSearchInFirst },
-      });
-      return document || undefined;
+      const freeDocuments = await collection
+        .find({
+          priority,
+          status,
+          _id: { $in: idsToSearchInFirst },
+        })
+        .sort({ 'decisionMetadata.date': -1 })
+        .limit(1)
+        .toArray();
+      return freeDocuments[0];
+    },
+
+    async findByStatusAndPriorityLimitAmong(
+      { status, priority },
+      limit,
+      idsToSearchInFirst,
+    ) {
+      const documents = await collection
+        .find({
+          priority,
+          status,
+          _id: { $in: idsToSearchInFirst },
+        })
+        .sort({ 'decisionMetadata.date': -1 })
+        .limit(limit)
+        .toArray();
+      return documents;
     },
 
     async findOneByStatusAndPriorityNotIn(

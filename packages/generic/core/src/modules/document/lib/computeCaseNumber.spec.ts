@@ -5,6 +5,7 @@ describe('computeCaseNumber', () => {
   const documentNumber = 12345;
   const boundDocumentNumber = 54321;
   const otherBoundDocumentNumber = 98765;
+  const decisionDate = new Date().getTime();
   it('should return the first boundDocumentNumber', () => {
     const document = documentGenerator.generate({
       decisionMetadata: {
@@ -12,6 +13,7 @@ describe('computeCaseNumber', () => {
         appealNumber: '',
         boundDecisionDocumentNumbers: [boundDocumentNumber, otherBoundDocumentNumber],
         chamberName: '',
+        date: decisionDate,
         jurisdiction: '',
         solution: '',
         session: '',
@@ -32,6 +34,7 @@ describe('computeCaseNumber', () => {
         appealNumber: '',
         boundDecisionDocumentNumbers: [],
         chamberName: '',
+        date: decisionDate,
         jurisdiction: '',
         solution: '',
         session: '',

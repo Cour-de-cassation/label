@@ -254,12 +254,15 @@ function UntreatedDocumentsTable(props: {
         width: 1,
       },
       {
-        id: 'creationDate',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.importDate,
+        id: 'decisionDate',
+        title: wordings.untreatedDocumentsPage.table.columnTitles.decisionDate.title,
+        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.decisionDate.tooltipText,
         canBeSorted: true,
         extractor: (untreatedDocument) =>
-          timeOperator.convertTimestampToReadableDate(untreatedDocument.document.creationDate, true),
-        getSortingValue: (untreatedDocument) => untreatedDocument.document.creationDate,
+          untreatedDocument.document.decisionDate
+            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionDate, true)
+            : '-',
+        getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionDate || 0,
         width: 3,
       },
     ];

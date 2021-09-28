@@ -28,14 +28,14 @@ function mapCourtDecisionToDocument(
   );
   const appealNumber = extractAppealNumber(sderCourtDecision.originalText);
 
+  const decisionDate = convertToValidDate(sderCourtDecision.dateDecision);
+
   const title = computeTitleFromParsedCourtDecision({
     number: sderCourtDecision.sourceId,
     appealNumber,
     readableChamberName,
     readableJurisdictionName,
-    date: sderCourtDecision.dateDecision
-      ? new Date(sderCourtDecision.dateDecision)
-      : undefined,
+    date: decisionDate,
   });
 
   const publicationCategory = computePublicationCategory(
@@ -64,6 +64,7 @@ function mapCourtDecisionToDocument(
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
       chamberName: readableChamberName,
+      date: decisionDate?.getTime(),
       jurisdiction: readableJurisdictionName,
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session: sderCourtDecision.formation || '',
@@ -97,7 +98,9 @@ function computeTitleFromParsedCourtDecision({
   const readableAppealNumber = appealNumber
     ? `pourvoi n°${appealNumber}`
     : undefined;
-  const readableDate = convertRawDateIntoReadableDate(date);
+  const readableDate = date
+    ? timeOperator.convertTimestampToReadableDate(date.getTime())
+    : undefined;
   const title = [
     readableNumber,
     readableAppealNumber,
@@ -128,16 +131,6 @@ function computePublicationCategory(
   return publicationCategory;
 }
 
-function convertRawDateIntoReadableDate(rawDate: Date | undefined) {
-  if (!rawDate) {
-    return undefined;
-  }
-  if (isNaN(rawDate.getTime())) {
-    return undefined;
-  }
-  return timeOperator.convertTimestampToReadableDate(rawDate.getTime());
-}
-
 function computePriority(
   source: string,
   publicationCategory: string[],
@@ -153,4 +146,16 @@ function computePriority(
     default:
       return 'low';
   }
+}
+
+function convertToValidDate(date: string | undefined) {
+  if (!date) {
+    return undefined;
+  }
+
+  const convertedDate = new Date(date);
+  if (isNaN(convertedDate.valueOf())) {
+    return undefined;
+  }
+  return convertedDate;
 }

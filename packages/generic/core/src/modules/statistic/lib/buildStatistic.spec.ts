@@ -15,6 +15,7 @@ describe('buildStatistic', () => {
     const linkedEntitiesCount = 2;
     const jurisdiction = 'Cour de cassation';
     const userId = idModule.lib.buildId();
+    const decisionDate = new Date().getTime();
     const document = documentModule.generator.generate({
       decisionMetadata: {
         additionalTermsToAnnotate: '',
@@ -22,6 +23,7 @@ describe('buildStatistic', () => {
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],
         chamberName: '',
+        date: decisionDate,
         jurisdiction,
         occultationBlock: undefined,
         session: '',

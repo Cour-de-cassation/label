@@ -29,7 +29,7 @@ describe('replace juridiction with jurisdiction', () => {
       occultationBlock: undefined,
       session: '',
       solution: '',
-    },
+    } as any,
   });
 
   it('should test up', async () => {

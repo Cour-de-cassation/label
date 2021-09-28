@@ -273,7 +273,7 @@ const fr = {
         mustHaveSurAnnotations: 'Avec sur-annotations',
         publicationCategory: 'Diffusion',
         source: 'Base de données source',
-        jurisdiction: 'Jurisdiction',
+        jurisdiction: 'Juridiction',
       },
     },
   },
@@ -374,7 +374,7 @@ const fr = {
         source: { title: 'Source', tooltipText: 'Base de données source' },
         userName: 'Attribué à',
         status: 'Statut',
-        importDate: "Date d'import",
+        decisionDate: { title: 'Date décision', tooltipText: 'Date de rendu de la décision' },
       },
       optionItems: {
         assignToMyself: "M'assigner la décision",

@@ -18,6 +18,7 @@ describe('fetchAllJurisdictions', () => {
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],
           chamberName: '',
+          date: new Date().getTime(),
           occultationBlock: undefined,
           session: '',
           solution: '',

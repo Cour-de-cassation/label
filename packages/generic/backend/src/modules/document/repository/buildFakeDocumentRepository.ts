@@ -90,15 +90,44 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       { status, priority },
       idsToSearchInFirst,
     ) {
-      const freeDocument = collection.find(
-        (document) =>
-          document.priority === priority &&
-          document.status === status &&
-          idsToSearchInFirst.some((id) =>
-            idModule.lib.equalId(document._id, id),
-          ),
-      );
-      return freeDocument;
+      const freeDocuments = collection
+        .filter(
+          (document) =>
+            document.priority === priority &&
+            document.status === status &&
+            idsToSearchInFirst.some((id) =>
+              idModule.lib.equalId(document._id, id),
+            ),
+        )
+        .sort(
+          (documentA, documentB) =>
+            documentB.decisionMetadata.date ||
+            0 - (documentA.decisionMetadata.date || 0),
+        );
+      return freeDocuments[0];
+    },
+
+    async findByStatusAndPriorityLimitAmong(
+      { status, priority },
+      limit,
+      idsToSearchInFirst,
+    ) {
+      const documents = collection
+        .filter(
+          (document) =>
+            document.priority === priority &&
+            document.status === status &&
+            idsToSearchInFirst.some((id) =>
+              idModule.lib.equalId(document._id, id),
+            ),
+        )
+        .sort(
+          (documentA, documentB) =>
+            (documentB.decisionMetadata.date || 0) -
+            (documentA.decisionMetadata.date || 0),
+        )
+        .slice(0, limit);
+      return documents;
     },
 
     async updateStatusById(_id, status) {

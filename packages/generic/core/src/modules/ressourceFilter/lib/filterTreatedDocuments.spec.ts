@@ -141,6 +141,7 @@ describe('filterTreatedDocuments', () => {
   });
 
   it('should filter all the given treated documents according to the jurisdiction', () => {
+    const decisionDate = new Date().getTime();
     const documents = [{ jurisdiction: 'JURISDICTION1' }, { jurisdiction: 'JURISDICTION2' }].map(({ jurisdiction }) =>
       documentModule.generator.generate({
         decisionMetadata: {
@@ -149,6 +150,7 @@ describe('filterTreatedDocuments', () => {
           session: '',
           occultationBlock: undefined,
           chamberName: '',
+          date: decisionDate,
           categoriesToOmit: [],
           boundDecisionDocumentNumbers: [],
           additionalTermsToAnnotate: '',

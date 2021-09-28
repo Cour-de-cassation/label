@@ -41,7 +41,7 @@
     "text": "Date de décès"
   },
   "insee": {
-    "anonymization": "XXXXXXXXXXXXX",
+    "anonymization": "[XXXXXXXXXXX0%d]",
     "color": {
       "lightMode": ["indigo", 300],
       "darkMode": ["indigo", 800]
@@ -115,7 +115,7 @@
     "text": "Localité"
   },
   "telephoneFax": {
-    "anonymization": "XXXXXXXXXX",
+    "anonymization": "[XXXXXXXX0%d]",
     "color": {
       "lightMode": ["lightBlue", 300],
       "darkMode": ["lightBlue", 900]

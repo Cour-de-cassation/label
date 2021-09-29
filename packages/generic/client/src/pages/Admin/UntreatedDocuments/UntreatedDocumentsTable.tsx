@@ -260,7 +260,7 @@ function UntreatedDocumentsTable(props: {
         canBeSorted: true,
         extractor: (untreatedDocument) =>
           untreatedDocument.document.decisionDate
-            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionDate, true)
+            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionDate)
             : '-',
         getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionDate || 0,
         width: 3,

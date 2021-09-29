@@ -28,7 +28,7 @@ function assertAnnotationsDiffAreConsistent(
 }
 
 function computeAvailableCategoriesFilter(treatmentSource: treatmentType['source']) {
-  const status = ['alwaysVisible', 'annotable'] as settingsType[string]['status'][];
+  const status = ['visible', 'alwaysVisible', 'annotable'] as settingsType[string]['status'][];
   let canBeAnnotatedBy: 'human' | 'NLP';
   switch (treatmentSource) {
     case 'NLP':

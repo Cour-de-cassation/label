@@ -25,7 +25,7 @@ const nlpLocalApi: nlpApiType = {
     const availableCategories = settingsModule.lib.getCategories(
       filteredSettings,
       {
-        status: ['alwaysVisible', 'annotable'],
+        status: ['visible', 'alwaysVisible', 'annotable'],
         canBeAnnotatedBy: 'NLP',
       },
     );

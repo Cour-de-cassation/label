@@ -18,7 +18,7 @@ function buildAdditionalAnnotationCategoryHandler() {
     return {
       ...settings,
       [ADDITIONAL_ANNOTATION_CATEGORY]: {
-        anonymization: '[Occultation supplémentaire %d]',
+        anonymization: '[Identifiant %d]',
         color: {
           lightMode: ['red', 300],
           darkMode: ['red', 700],

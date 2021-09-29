@@ -19,6 +19,8 @@ function getAnnotationTextDisplayStyle({
       return 'none';
     case 'alwaysVisible':
       return 'underlined';
+    case 'visible':
+      return 'underlined';
     case 'annotable':
       switch (documentViewerMode.kind) {
         case 'annotation':

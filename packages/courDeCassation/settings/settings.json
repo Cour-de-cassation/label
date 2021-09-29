@@ -56,13 +56,13 @@
       "lightMode": ["brown", 100],
       "darkMode": ["brown", 500]
     },
-    "isAnonymized": false,
     "iconName": "judge",
     "order": 6,
+    "status": "visible",
     "text": "Magistrat / membre du greffe"
   },
   "personneMorale": {
-    "anonymization": "[Personne morale %d]",
+    "anonymization": "[%d]",
     "color": {
       "lightMode": ["deepPurple", 100],
       "darkMode": ["deepPurple", 400]
@@ -74,7 +74,7 @@
     "text": "Personne morale"
   },
   "etablissement": {
-    "anonymization": "[Établissement %d]",
+    "anonymization": "[%d]",
     "color": {
       "lightMode": ["purple", 200],
       "darkMode": ["purple", 600]
@@ -90,7 +90,6 @@
       "darkMode": ["deepPurple", 500]
     },
     "iconName": "work",
-    "isAnonymized": false,
     "order": 9,
     "text": "N° SIREN/SIRET"
   },
@@ -135,7 +134,7 @@
     "text": "Email"
   },
   "siteWebSensible": {
-    "anonymization": "[Site Web %d]",
+    "anonymization": "[www.0%d.xx]",
     "color": {
       "lightMode": ["lightBlue", 200],
       "darkMode": ["lightBlue", 700]
@@ -145,7 +144,7 @@
     "text": "Site web sensible"
   },
   "compteBancaire": {
-    "anonymization": "[Compte bancaire %d]",
+    "anonymization": "[XXXXXXXXXX0%d]",
     "color": {
       "lightMode": ["pink", 100],
       "darkMode": ["pink", 600]

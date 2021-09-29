@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { annotationType, fetchedDocumentType, documentModule, idModule, settingsType } from '@label/core';
+import {
+  annotationType,
+  fetchedDocumentType,
+  documentModule,
+  idModule,
+  settingsModule,
+  settingsType,
+} from '@label/core';
 import { Text } from '../../../components';
 import { wordings } from '../../../wordings';
 import { DocumentSelectorCard } from './DocumentSelectorCard';
@@ -39,14 +46,22 @@ function DocumentSelector(props: {
     }
     return (
       <div style={styles.cardsContainer}>
-        {props.choices.map((choice) => (
-          <DocumentSelectorCard
-            key={idModule.lib.convertToString(choice.document._id)}
-            choice={choice}
-            onSelect={props.onSelectDocument}
-            settings={props.settings}
-          />
-        ))}
+        {props.choices.map((choice) => {
+          const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+            props.settings,
+            choice.document.decisionMetadata.categoriesToOmit,
+            choice.document.decisionMetadata.additionalTermsToAnnotate,
+          );
+
+          return (
+            <DocumentSelectorCard
+              key={idModule.lib.convertToString(choice.document._id)}
+              choice={choice}
+              onSelect={props.onSelectDocument}
+              settings={settingsForDocument}
+            />
+          );
+        })}
       </div>
     );
   }

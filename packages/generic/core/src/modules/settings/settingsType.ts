@@ -24,7 +24,7 @@ type categorySettingType = {
   isAnonymized?: boolean;
   isSensitive?: boolean;
   order: number | undefined;
-  status: 'hidden' | 'alwaysVisible' | 'annotable';
+  status: 'hidden' | 'visible' | 'alwaysVisible' | 'annotable';
   text: string;
   canBeAnnotatedBy: 'both' | 'NLP' | 'human';
 };

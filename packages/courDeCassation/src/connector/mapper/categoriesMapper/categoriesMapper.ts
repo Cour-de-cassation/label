@@ -1,3 +1,5 @@
+import { uniq } from 'lodash';
+
 export { categoriesMapper };
 
 const categoriesMapper = {
@@ -45,6 +47,6 @@ const categoriesMapper = {
       categoriesToOmit = [...categoriesToOmit, 'numeroSiretSiren'];
     }
 
-    return categoriesToOmit;
+    return uniq(categoriesToOmit);
   },
 };

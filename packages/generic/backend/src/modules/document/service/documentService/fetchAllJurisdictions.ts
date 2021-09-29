@@ -1,4 +1,4 @@
-import { documentType } from '../../../../../../core/dist';
+import { documentType } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 
 export { fetchAllJurisdictions };

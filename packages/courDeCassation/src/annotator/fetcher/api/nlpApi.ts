@@ -23,7 +23,7 @@ const nlpApi: nlpApiType = {
     );
 
     const nlpCategories = settingsModule.lib.getCategories(filteredSettings, {
-      status: ['alwaysVisible', 'annotable'],
+      status: ['visible', 'alwaysVisible', 'annotable'],
       canBeAnnotatedBy: 'NLP',
     });
     const nlpRequestParameters: nlpRequestParametersType = {

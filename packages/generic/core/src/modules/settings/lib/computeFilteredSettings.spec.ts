@@ -2,12 +2,12 @@ import { additionalAnnotationCategoryHandler } from './additionalAnnotationCateg
 import { buildSettings } from './buildSettings';
 import { computeFilteredSettings } from './computeFilteredSettings';
 
-xdescribe('computeFilteredSettings', () => {
+describe('computeFilteredSettings', () => {
   const additionalAnnotationCategory = additionalAnnotationCategoryHandler.getCategoryName();
   const settings = buildSettings({
     prenom: { order: 1, text: 'Prénom', status: 'hidden' },
-    nom: { order: 2, text: 'Nom', status: 'alwaysVisible' },
-    adresse: { order: 3, text: 'Adresse', status: 'annotable' },
+    professionnelMagistratGreffier: { order: 2, text: 'Magistrat et membre du greffe', status: 'visible' },
+    professionnelAvocat: { order: 3, text: 'Avocat', status: 'alwaysVisible' },
     [additionalAnnotationCategory]: { order: 4, text: 'Occultation supplémentaire', status: 'hidden' },
   });
   it('should compute filtered settings for an omitted hidden category', () => {
@@ -16,44 +16,44 @@ xdescribe('computeFilteredSettings', () => {
 
     const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate);
     expect(filteredSettings['prenom'].status).toBe('hidden');
-    expect(filteredSettings['nom'].status).toBe('alwaysVisible');
-    expect(filteredSettings['adresse'].status).toBe('annotable');
+    expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('annotable');
+    expect(filteredSettings['professionnelAvocat'].status).toBe('alwaysVisible');
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
 
   it('should compute filtered settings for an omitted visible category', () => {
-    const categoriesToOmit = ['nom'];
+    const categoriesToOmit = ['professionnelMagistratGreffier'];
     const additionalTermsToAnnotate = '';
 
     const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate);
 
     expect(filteredSettings['prenom'].status).toBe('annotable');
-    expect(filteredSettings['nom'].status).toBe('alwaysVisible');
-    expect(filteredSettings['adresse'].status).toBe('annotable');
+    expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('visible');
+    expect(filteredSettings['professionnelAvocat'].status).toBe('alwaysVisible');
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
 
-  it('should compute filtered settings for an omitted annotable category', () => {
-    const categoriesToOmit = ['adresse'];
+  it('should compute filtered settings for an omitted alwaysVisible category', () => {
+    const categoriesToOmit = ['professionnelAvocat'];
     const additionalTermsToAnnotate = '';
 
     const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate);
 
     expect(filteredSettings['prenom'].status).toBe('annotable');
-    expect(filteredSettings['nom'].status).toBe('alwaysVisible');
-    expect(filteredSettings['adresse'].status).toBe('annotable');
+    expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('annotable');
+    expect(filteredSettings['professionnelAvocat'].status).toBe('alwaysVisible');
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('hidden');
   });
 
   it('should compute filtered settings for additional annotations', () => {
-    const categoriesToOmit = ['prenom', 'adresse', 'nom'];
+    const categoriesToOmit = ['prenom', 'professionnelAvocat', 'professionnelMagistratGreffier'];
     const additionalTermsToAnnotate = 'thing';
 
     const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate);
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
-    expect(filteredSettings['nom'].status).toBe('alwaysVisible');
-    expect(filteredSettings['adresse'].status).toBe('annotable');
+    expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('visible');
+    expect(filteredSettings['professionnelAvocat'].status).toBe('alwaysVisible');
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('annotable');
   });
 });

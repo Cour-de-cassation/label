@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { groupBy, orderBy, sumBy } from 'lodash';
-import { annotationType, documentModule, fetchedDocumentType, settingsType } from '@label/core';
+import { annotationType, documentModule, fetchedDocumentType, settingsModule, settingsType } from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import {
   ButtonWithIcon,
@@ -37,7 +37,15 @@ function DocumentSelectorCard(props: {
     props.choice.annotations,
   );
 
-  const categoryIconsByAnnotation = computeCategoryIconNamesByEntitiesCount(props.choice.annotations);
+  const annotableCategories = settingsModule.lib.getCategories(props.settings, {
+    status: ['annotable'],
+    canBeAnnotatedBy: 'human',
+  });
+
+  const categoryIconsByAnnotation = computeCategoryIconNamesByEntitiesCount(
+    props.choice.annotations,
+    annotableCategories,
+  );
   const mustBePublished = documentModule.lib.publicationHandler.mustBePublished(
     props.choice.document.publicationCategory,
   );
@@ -182,19 +190,19 @@ function DocumentSelectorCard(props: {
       }
     }
   }
+}
 
-  function computeCategoryIconNamesByEntitiesCount(annotations: annotationType[]) {
-    return orderBy(
-      Object.entries(groupBy(annotations, (annotation) => annotation.category)).map(
-        ([category, grouppedAnnotations]) => ({
-          entitiesCount: Object.keys(groupBy(grouppedAnnotations, (annotation) => annotation.entityId)).length,
-          category,
-        }),
-      ),
-      'entitiesCount',
-      'desc',
-    );
-  }
+function computeCategoryIconNamesByEntitiesCount(annotations: annotationType[], availableCategories: string[]) {
+  return orderBy(
+    Object.entries(groupBy(annotations, (annotation) => annotation.category))
+      .map(([category, grouppedAnnotations]) => ({
+        entitiesCount: Object.keys(groupBy(grouppedAnnotations, (annotation) => annotation.entityId)).length,
+        category,
+      }))
+      .filter(({ category }) => availableCategories.includes(category)),
+    'entitiesCount',
+    'desc',
+  );
 }
 
 function buildStyles(theme: customThemeType) {

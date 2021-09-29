@@ -19,6 +19,7 @@ function buildExporter(
   exporterConfig: exporterConfigType,
 ) {
   return {
+    exportSpecificDocument,
     exportTreatedDocumentsSince,
     exportTreatedPublishableDocuments,
   };
@@ -47,7 +48,7 @@ function buildExporter(
   }
 
   async function exportTreatedPublishableDocuments() {
-    logger.log('exportPublishableDocumentsFromToday');
+    logger.log('exportTreatedPublishableDocuments');
     logger.log(`Exportation to ${exporterConfig.name}`);
 
     logger.log(`Fetching treated documents from today...`);
@@ -63,6 +64,41 @@ function buildExporter(
 
       await exportDocument(document);
     }
+
+    logger.log(`Exportation done!`);
+  }
+
+  async function exportSpecificDocument({
+    documentNumber,
+    source,
+  }: {
+    documentNumber: number;
+    source: string;
+  }) {
+    logger.log(
+      `exportSpecificDocument: documentNumber ${documentNumber} - source ${source}`,
+    );
+    const document = await documentService.fetchDocumentBySourceAndDocumentNumber(
+      { documentNumber, source },
+    );
+
+    if (!document) {
+      logger.error(
+        `The document you specified (documentNumber ${documentNumber} - source ${source}) does not exist in the database`,
+      );
+      return;
+    }
+
+    if (document.status !== 'toBePublished' && document.status !== 'done') {
+      logger.error(
+        `The document you specified has been found, but is not ready to be exported (status: ${document.status})`,
+      );
+      return;
+    }
+
+    logger.log(`Document found. Exporting...`);
+
+    await exportDocument(document);
 
     logger.log(`Exportation done!`);
   }

@@ -10,6 +10,7 @@ import { fetchAllSources } from './fetchAllSources';
 import { fetchAnonymizedDocumentText } from './fetchAnonymizedDocumentText';
 import { fetchDocument } from './fetchDocument';
 import { buildFetchDocumentsForUser } from './fetchDocumentsForUser';
+import { fetchDocumentBySourceAndDocumentNumber } from './fetchDocumentBySourceAndDocumentNumber';
 import { fetchDocumentsReadyToExport } from './fetchDocumentsReadyToExport';
 import { fetchDocumentWithoutAnnotationsNotIn } from './fetchDocumentWithoutAnnotationsNotIn';
 import { fetchDoneDocuments } from './fetchDoneDocuments';
@@ -48,6 +49,7 @@ function buildDocumentService() {
     fetchAllSources,
     fetchAnonymizedDocumentText,
     fetchDocument,
+    fetchDocumentBySourceAndDocumentNumber,
     fetchDocumentsForUser: buildFetchDocumentsForUser(checkCallAttempts),
     fetchDocumentsReadyToExport,
     fetchDocumentWithoutAnnotationsNotIn,

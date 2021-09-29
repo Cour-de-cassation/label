@@ -86,6 +86,14 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return document || undefined;
     },
 
+    async findOneByDocumentNumberAndSource({ documentNumber, source }) {
+      return collection.find(
+        (document) =>
+          document.source === source &&
+          document.documentNumber === documentNumber,
+      );
+    },
+
     async findOneByStatusAndPriorityAmong(
       { status, priority },
       idsToSearchInFirst,

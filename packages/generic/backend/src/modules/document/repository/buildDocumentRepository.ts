@@ -46,6 +46,11 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return uniq(publicationCategories);
     },
 
+    async findOneByDocumentNumberAndSource({ documentNumber, source }) {
+      const document = await collection.findOne({ source, documentNumber });
+      return document || undefined;
+    },
+
     async findOneByStatusAndPriorityAmong(
       { status, priority },
       idsToSearchInFirst,

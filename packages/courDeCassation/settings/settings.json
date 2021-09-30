@@ -80,7 +80,6 @@
       "lightMode": ["purple", 200],
       "darkMode": ["purple", 600]
     },
-    "isAnonymized": false,
     "iconName": "store",
     "order": 8,
     "text": "Établissement"

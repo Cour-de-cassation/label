@@ -58,6 +58,7 @@
     },
     "iconName": "judge",
     "order": 6,
+    "isAnonymized": false,
     "status": "visible",
     "text": "Magistrat / membre du greffe"
   },

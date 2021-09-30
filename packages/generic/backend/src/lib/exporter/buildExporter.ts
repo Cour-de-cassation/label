@@ -2,6 +2,7 @@ import {
   buildAnonymizer,
   documentModule,
   documentType,
+  settingsModule,
   settingsType,
   treatmentModule,
   treatmentType,
@@ -109,7 +110,12 @@ function buildExporter(
     );
     const annotations = treatmentModule.lib.computeAnnotations(treatments);
     const seed = documentModule.lib.computeCaseNumber(document);
-    const anonymizer = buildAnonymizer(settings, annotations, seed);
+    const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+      settings,
+      document.decisionMetadata.categoriesToOmit,
+      document.decisionMetadata.additionalTermsToAnnotate,
+    );
+    const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
     await exporterConfig.sendDocumentPseudonymisationAndTreatments({
       externalId: document.externalId,

@@ -47,7 +47,11 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
     };
   }
   function anonymize(annotation: annotationType): string {
-    if (settings[annotation.category]?.isAnonymized === false) {
+    if (
+      settings[annotation.category]?.isAnonymized === false ||
+      settings[annotation.category]?.status === 'visible' ||
+      settings[annotation.category]?.status === 'alwaysVisible'
+    ) {
       return annotation.text;
     }
 

@@ -67,6 +67,7 @@
       "lightMode": ["deepPurple", 100],
       "darkMode": ["deepPurple", 400]
     },
+    "isAnonymized": false,
     "couldBe": "personnePhysique",
     "iconName": "work",
     "order": 7,
@@ -78,6 +79,7 @@
       "lightMode": ["purple", 200],
       "darkMode": ["purple", 600]
     },
+    "isAnonymized": false,
     "iconName": "store",
     "order": 8,
     "text": "Établissement"
@@ -88,6 +90,7 @@
       "lightMode": ["deepPurple", 200],
       "darkMode": ["deepPurple", 500]
     },
+    "isAnonymized": false,
     "iconName": "work",
     "order": 9,
     "text": "N° SIREN/SIRET"

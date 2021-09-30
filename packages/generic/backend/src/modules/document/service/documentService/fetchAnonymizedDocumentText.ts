@@ -1,4 +1,9 @@
-import { buildAnonymizer, documentModule, documentType } from '@label/core';
+import {
+  buildAnonymizer,
+  documentModule,
+  documentType,
+  settingsModule,
+} from '@label/core';
 import { settingsLoader } from '../../../../lib/settingsLoader';
 import { treatmentService } from '../../../treatment';
 import { buildDocumentRepository } from '../../repository';
@@ -13,8 +18,13 @@ async function fetchAnonymizedDocumentText(documentId: documentType['_id']) {
     documentId,
   );
   const settings = settingsLoader.getSettings();
+  const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+    settings,
+    document.decisionMetadata.categoriesToOmit,
+    document.decisionMetadata.additionalTermsToAnnotate,
+  );
   const seed = documentModule.lib.computeCaseNumber(document);
-  const anonymizer = buildAnonymizer(settings, annotations, seed);
+  const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
   const anonymizedDocument = anonymizer.anonymizeDocument(document);
   return anonymizedDocument.text;

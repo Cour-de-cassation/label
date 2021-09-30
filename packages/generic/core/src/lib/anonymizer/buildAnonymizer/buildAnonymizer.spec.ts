@@ -5,8 +5,10 @@ import { buildAnonymizer } from './buildAnonymizer';
 
 describe('buildAnonymizer', () => {
   const settings = settingsModule.lib.buildSettings({
-    firstName: { anonymization: '[FIRST_NAME %d]' },
-    lastName: { anonymization: '[LAST_NAME %d]' },
+    firstName: { anonymization: '[FIRST_NAME %d]', status: 'annotable' },
+    lastName: { anonymization: '[LAST_NAME %d]', status: 'annotable' },
+    adresse: { anonymization: '[ADRESSE %d]', status: 'alwaysVisible' },
+    dateNaissance: { anonymization: '[BIRTHDATE %d]', status: 'visible' },
   });
   const annotations = [
     { category: 'firstName', text: 'Benoit', start: 0 },

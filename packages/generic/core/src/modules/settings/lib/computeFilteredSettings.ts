@@ -4,6 +4,7 @@ import { additionalAnnotationCategoryHandler } from './additionalAnnotationCateg
 
 export { computeFilteredSettings };
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 function computeFilteredSettings(
   settings: settingsType,
   categoriesToOmit: documentType['decisionMetadata']['categoriesToOmit'],
@@ -14,19 +15,18 @@ function computeFilteredSettings(
       return { ...accumulator, [category]: categorySetting };
     }
     if (category === additionalAnnotationCategoryHandler.getCategoryName()) {
-      if (!!additionalTermsToAnnotate) {
-        return {
-          ...accumulator,
-          [category]: { ...categorySetting, status: 'annotable' as const },
-        };
-      }
-    } else if (!categoriesToOmit.includes(category)) {
       return {
         ...accumulator,
-        [category]: { ...categorySetting, status: 'annotable' as const },
+        [category]: categorySetting,
       };
     }
-    return { ...accumulator, [category]: categorySetting };
+    // else if (!categoriesToOmit.includes(category)) {
+    //   return {
+    //     ...accumulator,
+    //     [category]: { ...categorySetting, status: 'annotable' as const },
+    //   };
+    // }
+    return { ...accumulator, [category]: { ...categorySetting, status: 'annotable' as const } };
   }, {} as settingsType);
   return settingsForDocument;
 }

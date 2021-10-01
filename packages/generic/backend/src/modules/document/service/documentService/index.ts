@@ -4,6 +4,7 @@ import { assertDocumentStatus } from './assertDocumentStatus';
 import { countDocumentsWithoutAnnotations } from './countDocumentsWithoutAnnotations';
 import { deleteDocument } from './deleteDocument';
 import { fetchAllDocumentsByIds } from './fetchAllDocumentsByIds';
+import { fetchAllExportableDocuments } from './fetchAllExportableDocuments';
 import { fetchAllJurisdictions } from './fetchAllJurisdictions';
 import { fetchAllPublicationCategories } from './fetchAllPublicationCategories';
 import { fetchAllSources } from './fetchAllSources';
@@ -44,6 +45,7 @@ function buildDocumentService() {
     countDocumentsWithoutAnnotations,
     deleteDocument,
     fetchAllDocumentsByIds,
+    fetchAllExportableDocuments,
     fetchAllJurisdictions,
     fetchAllPublicationCategories,
     fetchAllSources,

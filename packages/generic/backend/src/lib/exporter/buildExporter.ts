@@ -20,6 +20,7 @@ function buildExporter(
   exporterConfig: exporterConfigType,
 ) {
   return {
+    exportAllTreatedDocuments,
     exportSpecificDocument,
     exportTreatedDocumentsSince,
     exportTreatedPublishableDocuments,
@@ -100,6 +101,27 @@ function buildExporter(
     logger.log(`Document found. Exporting...`);
 
     await exportDocument(document);
+
+    logger.log(`Exportation done!`);
+  }
+
+  async function exportAllTreatedDocuments() {
+    logger.log('exportAllTreatedDocuments');
+    logger.log(`Exportation to ${exporterConfig.name}`);
+
+    logger.log(`Fetching all treated documents...`);
+    const documentsToExport = await documentService.fetchAllExportableDocuments();
+    logger.log(`${documentsToExport.length} documents to export`);
+
+    logger.log(`Beginning exportation...`);
+    for (let index = 0; index < documentsToExport.length; index++) {
+      logger.log(
+        `Exportation of document ${index + 1}/${documentsToExport.length}`,
+      );
+      const document = documentsToExport[index];
+
+      await exportDocument(document);
+    }
 
     logger.log(`Exportation done!`);
   }

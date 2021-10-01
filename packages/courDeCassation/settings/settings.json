@@ -58,7 +58,6 @@
     },
     "iconName": "judge",
     "order": 6,
-    "isAnonymized": false,
     "status": "visible",
     "text": "Magistrat / membre du greffe"
   },
@@ -68,7 +67,6 @@
       "lightMode": ["deepPurple", 100],
       "darkMode": ["deepPurple", 400]
     },
-    "isAnonymized": false,
     "couldBe": "personnePhysique",
     "iconName": "work",
     "order": 7,
@@ -90,7 +88,6 @@
       "lightMode": ["deepPurple", 200],
       "darkMode": ["deepPurple", 500]
     },
-    "isAnonymized": false,
     "iconName": "work",
     "order": 9,
     "text": "N° SIREN/SIRET"

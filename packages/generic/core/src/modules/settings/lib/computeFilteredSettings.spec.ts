@@ -2,7 +2,7 @@ import { additionalAnnotationCategoryHandler } from './additionalAnnotationCateg
 import { buildSettings } from './buildSettings';
 import { computeFilteredSettings } from './computeFilteredSettings';
 
-xdescribe('computeFilteredSettings', () => {
+describe('computeFilteredSettings', () => {
   const additionalAnnotationCategory = additionalAnnotationCategoryHandler.getCategoryName();
   const settings = buildSettings({
     prenom: { order: 1, text: 'Prénom', status: 'hidden' },

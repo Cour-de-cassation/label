@@ -1,3 +1,4 @@
+import { uniq } from 'lodash';
 import { documentService } from '../../../modules/document';
 import { buildDocumentRepository } from '../../../modules/document';
 import { logger } from '../../../utils';
@@ -35,6 +36,23 @@ async function cleanLoadedDocuments() {
 
   for (let i = 0, length = loadedDocumentsIds.length; i < length; i++) {
     await documentService.resetDocument(loadedDocumentsIds[i]);
+  }
+
+  logger.log(`"loaded" documents reset. Fetching non-treated documents...`);
+  const notTreatedDocuments = await documentService.fetchDocumentsWithoutAnnotations();
+  logger.log(
+    `${
+      notTreatedDocuments.length
+    } not treated documents found. Status are [${uniq(
+      notTreatedDocuments.map(({ status }) => status),
+    ).join(', ')}]. Setting status to loaded...`,
+  );
+
+  for (let i = 0, length = notTreatedDocuments.length; i < length; i++) {
+    await documentService.updateDocumentStatus(
+      notTreatedDocuments[i]._id,
+      'loaded',
+    );
   }
 
   logger.log(`cleanLoadedDocuments done!`);

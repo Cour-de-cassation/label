@@ -5,6 +5,9 @@ export type { customDocumentRepositoryType };
 
 type customDocumentRepositoryType = {
   countNotIn: (idsNotToSearchIn: documentType['_id'][]) => Promise<number>;
+  findNotIn: (
+    idsNotToSearchIn: documentType['_id'][],
+  ) => Promise<documentType[]>;
   findAllPublicationCategories: () => Promise<Array<string>>;
   findAllByStatus: (
     status: documentType['status'][],

@@ -20,6 +20,7 @@ import { fetchPublishableDocuments } from './fetchPublishableDocuments';
 import { fetchPublishableDocumentsToExport } from './fetchPublishableDocumentsToExport';
 import { fetchTreatedDocuments } from './fetchTreatedDocuments';
 import { fetchUntreatedDocuments } from './fetchUntreatedDocuments';
+import { fetchDocumentsWithoutAnnotations } from './fetchDocumentsWithoutAnnotations';
 import { resetDocument } from './resetDocument';
 import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
@@ -61,6 +62,7 @@ function buildDocumentService() {
     fetchPublishableDocumentsToExport,
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
+    fetchDocumentsWithoutAnnotations,
     resetDocument,
     resetDocumentReviewStatus,
     updateDocumentReviewStatus,

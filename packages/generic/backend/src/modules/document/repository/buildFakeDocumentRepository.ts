@@ -24,6 +24,15 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       ).length;
     },
 
+    async findNotIn(idsNotToSearchIn) {
+      return collection.filter(
+        (document) =>
+          !idsNotToSearchIn.some((id) =>
+            idModule.lib.equalId(document._id, id),
+          ),
+      );
+    },
+
     async findAllPublicationCategories() {
       let publicationCategories: string[] = [];
       collection.forEach(

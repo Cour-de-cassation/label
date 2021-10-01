@@ -37,6 +37,14 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return count;
     },
 
+    async findNotIn(idsNotToSearchIn) {
+      return collection
+        .find({
+          _id: { $nin: idsNotToSearchIn },
+        })
+        .toArray();
+    },
+
     async findAllPublicationCategories() {
       const publicationCategories = await collection.distinct(
         'publicationCategory',

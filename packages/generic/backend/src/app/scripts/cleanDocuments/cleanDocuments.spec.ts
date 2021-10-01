@@ -56,7 +56,7 @@ describe('cleanDocuments', () => {
     }
     await Promise.all(
       range(DONE_DOCUMENTS_COUNT).map((i) =>
-        treatmentService.updateTreatment(
+        treatmentService.updateTreatmentForDocumentIdAndUserId(
           {
             documentId: documentsToInsert[i]._id,
             userId: user._id,

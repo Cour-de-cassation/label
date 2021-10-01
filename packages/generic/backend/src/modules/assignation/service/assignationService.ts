@@ -4,6 +4,7 @@ import { deleteAssignationsByDocumentId } from './deleteAssignationsByDocumentId
 import { deleteAssignation } from './deleteAssignation';
 import {
   fetchAllAssignationsById,
+  fetchAssignation,
   fetchAssignationId,
   fetchAssignationsByDocumentIds,
   fetchAssignationsOfDocumentId,
@@ -20,6 +21,7 @@ const assignationService = {
   deleteAssignation,
   deleteAssignationsByDocumentId,
   fetchAllAssignationsById,
+  fetchAssignation,
   fetchAssignationId,
   fetchAssignationsByDocumentIds,
   fetchAssignationsOfDocumentId,

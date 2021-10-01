@@ -4,6 +4,7 @@ import { build } from './build';
 import { buildEmpty } from './buildEmpty';
 import { extractHumanTreatments } from './extractHumanTreatments';
 import { getLastTreatment } from './getLastTreatment';
+import { incrementTreatmentDuration } from './incrementTreatmentDuration';
 import { computeAnnotations, computeAnnotationsDiff } from './computeAnnotations';
 import { computeTreatmentInfo, treatmentInfoType } from './computeTreatmentInfo';
 import { sortInConsistentOrder } from './sortInConsistentOrder';
@@ -19,6 +20,7 @@ export {
   computeTreatmentInfo,
   extractHumanTreatments,
   getLastTreatment,
+  incrementTreatmentDuration,
   sortInConsistentOrder,
   update,
 };

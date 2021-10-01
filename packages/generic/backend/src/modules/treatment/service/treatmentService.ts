@@ -9,7 +9,10 @@ import {
   fetchTreatmentsByDocumentIds,
 } from './fetch';
 import { countTreatmentsByDocumentId } from './count';
+import { resetTreatmentLastUpdateDate } from './resetTreatmentLastUpdateDate';
 import { updateTreatment } from './updateTreatment';
+import { updateTreatmentDuration } from './updateTreatmentDuration';
+import { updateTreatmentForDocumentIdAndUserId } from './updateTreatmentForDocumentIdAndUserId';
 
 export { treatmentService };
 
@@ -23,5 +26,8 @@ const treatmentService = {
   fetchTreatedDocumentIds,
   fetchTreatmentsByDocumentId,
   fetchTreatmentsByDocumentIds,
+  resetTreatmentLastUpdateDate,
   updateTreatment,
+  updateTreatmentDuration,
+  updateTreatmentForDocumentIdAndUserId,
 };

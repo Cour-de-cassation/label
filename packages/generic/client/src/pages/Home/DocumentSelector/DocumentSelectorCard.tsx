@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { groupBy, orderBy, sumBy } from 'lodash';
-import { annotationType, documentModule, fetchedDocumentType, settingsModule, settingsType } from '@label/core';
+import {
+  annotationType,
+  assignationType,
+  documentModule,
+  fetchedDocumentType,
+  settingsType,
+  settingsModule,
+} from '@label/core';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import {
   ButtonWithIcon,
@@ -24,8 +31,12 @@ const MAX_CATEGORIES_PER_LINE = 6;
 const ICONS_CONTAINER_HEIGHT = 140;
 
 function DocumentSelectorCard(props: {
-  choice: { annotations: annotationType[]; document: fetchedDocumentType };
-  onSelect: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => Promise<void>;
+  choice: { annotations: annotationType[]; document: fetchedDocumentType; assignationId: assignationType['_id'] };
+  onSelect: (choice: {
+    document: fetchedDocumentType;
+    annotations: annotationType[];
+    assignationId: assignationType['_id'];
+  }) => Promise<void>;
   settings: settingsType;
 }) {
   const theme = useCustomTheme();

@@ -1,4 +1,4 @@
-import { apiSchema, idModule } from '@label/core';
+import { apiSchema, errorHandlers, idModule } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
 import { documentService } from '../modules/document';
@@ -184,6 +184,27 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    incrementTreatmentDuration: buildAuthenticatedController({
+      permissions: ['admin', 'annotator'],
+      controllerWithUser: async (user, { args: { assignationId } }) => {
+        const assignation = await assignationService.fetchAssignation(
+          idModule.lib.buildId(assignationId),
+        );
+
+        if (!idModule.lib.equalId(user._id, assignation.userId)) {
+          throw errorHandlers.permissionErrorHandler.build(
+            `User ${idModule.lib.convertToString(
+              user._id,
+            )} is trying to update a treatment that is not assigned to him/her`,
+          );
+        }
+
+        return treatmentService.updateTreatmentDuration(
+          assignation.treatmentId,
+        );
+      },
+    }),
+
     async login({ args: { email, password } }) {
       const {
         _id,
@@ -242,6 +263,27 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         userService.resetPassword(idModule.lib.buildId(userId)),
     }),
 
+    resetTreatmentLastUpdateDate: buildAuthenticatedController({
+      permissions: ['admin', 'annotator'],
+      controllerWithUser: async (user, { args: { assignationId } }) => {
+        const assignation = await assignationService.fetchAssignation(
+          idModule.lib.buildId(assignationId),
+        );
+
+        if (!idModule.lib.equalId(user._id, assignation.userId)) {
+          throw errorHandlers.permissionErrorHandler.build(
+            `User ${idModule.lib.convertToString(
+              user._id,
+            )} is trying to update a treatment that is not assigned to him/her`,
+          );
+        }
+
+        return treatmentService.resetTreatmentLastUpdateDate(
+          assignation.treatmentId,
+        );
+      },
+    }),
+
     setDeletionDateForUser: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { userId } }) =>
@@ -276,6 +318,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             userId: user._id,
           });
         }
+
         return documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
           status,
@@ -309,14 +352,40 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    updateTreatment: buildAuthenticatedController({
+    updateTreatmentForAssignationId: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
+      controllerWithUser: async (
+        user,
+        { args: { annotationsDiff, assignationId } },
+      ) => {
+        const assignation = await assignationService.fetchAssignation(
+          idModule.lib.buildId(assignationId),
+        );
+        if (!idModule.lib.equalId(user._id, assignation.userId)) {
+          throw errorHandlers.permissionErrorHandler.build(
+            `User ${idModule.lib.convertToString(
+              user._id,
+            )} is trying to update a treatment that is not assigned to him/her`,
+          );
+        }
+        const settings = settingsLoader.getSettings();
+
+        return treatmentService.updateTreatment({
+          annotationsDiff,
+          assignation,
+          settings,
+        });
+      },
+    }),
+
+    updateTreatmentForDocumentId: buildAuthenticatedController({
+      permissions: ['admin'],
       controllerWithUser: async (
         user,
         { args: { annotationsDiff, documentId } },
       ) => {
         const settings = settingsLoader.getSettings();
-        return treatmentService.updateTreatment(
+        return treatmentService.updateTreatmentForDocumentIdAndUserId(
           {
             annotationsDiff,
             documentId: idModule.lib.buildId(documentId),

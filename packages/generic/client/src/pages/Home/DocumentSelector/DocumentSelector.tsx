@@ -6,6 +6,7 @@ import {
   idModule,
   settingsModule,
   settingsType,
+  assignationType,
 } from '@label/core';
 import { Text } from '../../../components';
 import { wordings } from '../../../wordings';
@@ -15,9 +16,17 @@ import { useAlert } from '../../../services/alert';
 export { DocumentSelector };
 
 function DocumentSelector(props: {
-  choices: Array<{ annotations: annotationType[]; document: fetchedDocumentType }>;
+  choices: Array<{
+    annotations: annotationType[];
+    document: fetchedDocumentType;
+    assignationId: assignationType['_id'];
+  }>;
   settings: settingsType;
-  onSelectDocument: (choice: { document: fetchedDocumentType; annotations: annotationType[] }) => Promise<void>;
+  onSelectDocument: (choice: {
+    document: fetchedDocumentType;
+    annotations: annotationType[];
+    assignationId: assignationType['_id'];
+  }) => Promise<void>;
 }) {
   const styles = buildStyles();
 

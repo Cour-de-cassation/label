@@ -2,6 +2,7 @@ import React from 'react';
 import {
   annotationsDiffType,
   annotationType,
+  assignationType,
   documentModule,
   documentType,
   fetchedDocumentType,
@@ -24,6 +25,7 @@ export { HomeDocumentAnnotator };
 
 function HomeDocumentAnnotator(props: {
   annotations: annotationType[];
+  assignationId: assignationType['_id'];
   committer: annotationsCommitterType;
   document: fetchedDocumentType;
   fetchNewDocumentsForUser: () => void;
@@ -46,7 +48,7 @@ function HomeDocumentAnnotator(props: {
   ) : undefined;
   return (
     <AnnotatorStateHandlerContextProvider
-      autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: props.document._id })}
+      autoSaver={buildAutoSaver({ applySave: applyAutoSave })}
       committer={props.committer}
       initialAnnotatorState={{
         annotations: props.annotations,
@@ -55,12 +57,24 @@ function HomeDocumentAnnotator(props: {
       }}
     >
       <MainHeader title={props.document.title} subtitle={subtitle} />
-      <DocumentAnnotator onStopAnnotatingDocument={(status) => onStopAnnotatingDocument(props.document._id, status)} />
+      <DocumentAnnotator
+        onStopAnnotatingDocument={(status) =>
+          onStopAnnotatingDocument({ assignationId: props.assignationId, documentId: props.document._id, status })
+        }
+      />
     </AnnotatorStateHandlerContextProvider>
   );
 
-  async function onStopAnnotatingDocument(documentId: documentType['_id'], status: documentType['status']) {
-    await applyAutoSave(documentId, { before: [], after: [] });
+  async function onStopAnnotatingDocument({
+    documentId,
+    status,
+    assignationId,
+  }: {
+    assignationId: assignationType['_id'];
+    documentId: documentType['_id'];
+    status: documentType['status'];
+  }) {
+    await apiCaller.post<'incrementTreatmentDuration'>('incrementTreatmentDuration', { assignationId });
     await sendMonitoringEntries();
     await setDocumentStatus(documentId, status);
     resetMonitoringEntries();
@@ -79,11 +93,11 @@ function HomeDocumentAnnotator(props: {
     }
   }
 
-  async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {
+  async function applyAutoSave(annotationsDiff: annotationsDiffType) {
     try {
-      await apiCaller.post<'updateTreatment'>('updateTreatment', {
+      await apiCaller.post<'updateTreatmentForAssignationId'>('updateTreatmentForAssignationId', {
         annotationsDiff,
-        documentId,
+        assignationId: props.assignationId,
       });
     } catch (error) {
       displayAlert({ variant: 'alert', text: wordings.business.errors.updateTreatmentFailed, autoHide: true });

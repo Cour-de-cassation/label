@@ -1,4 +1,5 @@
 import {
+  assignationType,
   documentModule,
   documentType,
   idModule,
@@ -21,33 +22,38 @@ function buildFetchDocumentsForUser(
     userId: idType,
     documentsMaxCount: number,
   ) {
-    const documents: documentType[] = [];
+    const documents: Array<{
+      document: documentType;
+      assignationId: assignationType['_id'];
+    }> = [];
     const documentIdsToExclude: documentType['_id'][] = [];
     const documentIdsWithAnnotations = await treatmentService.fetchTreatedDocumentIds();
-    const documentsAssignated = await fetchAlreadyAssignatedDocuments(userId);
+    const alreadyAssignatedDocuments = await fetchAlreadyAssignatedDocuments(
+      userId,
+    );
     for (
       let i = 0;
-      i < documentsAssignated.length && i < documentsMaxCount;
+      i < alreadyAssignatedDocuments.length && i < documentsMaxCount;
       i++
     ) {
       checkCallAttempts(idModule.lib.convertToString(userId));
-      const assignatedDocument = documentsAssignated[i];
-      documents.push(assignatedDocument);
-      documentIdsToExclude.push(assignatedDocument._id);
+      const alreadyAssignatedDocument = alreadyAssignatedDocuments[i];
+      documents.push(alreadyAssignatedDocument);
+      documentIdsToExclude.push(alreadyAssignatedDocument.document._id);
     }
 
-    if (documents.some(({ status }) => status === 'saved')) {
+    if (documents.some(({ document }) => document.status === 'saved')) {
       return documents;
     }
 
     for (let i = documents.length; i < documentsMaxCount; i++) {
       try {
-        const document = await fetchDocumentForUser(
+        const assignatedDocument = await fetchDocumentForUser(
           userId,
           documentIdsWithAnnotations,
         );
-        documents.push(document);
-        documentIdsToExclude.push(document._id);
+        documents.push(assignatedDocument);
+        documentIdsToExclude.push(assignatedDocument.document._id);
       } catch (error) {
         logger.log(error);
       }
@@ -58,14 +64,20 @@ function buildFetchDocumentsForUser(
   async function fetchDocumentForUser(
     userId: idType,
     documentIdsToSearchIn: documentType['_id'][],
-  ): Promise<documentType> {
+  ): Promise<{
+    document: documentType;
+    assignationId: assignationType['_id'];
+  }> {
     checkCallAttempts(idModule.lib.convertToString(userId));
 
     return assignNewDocument(documentIdsToSearchIn);
 
     async function assignNewDocument(
       documentIdsToSearchIn: documentType['_id'][],
-    ) {
+    ): Promise<{
+      document: documentType;
+      assignationId: assignationType['_id'];
+    }> {
       let document: documentType | undefined;
 
       document = await assignDocumentByPriority('high', documentIdsToSearchIn);
@@ -82,12 +94,12 @@ function buildFetchDocumentsForUser(
         throw new Error(`No free document available`);
       }
 
-      await assignationService.createAssignation({
+      const assignation = await assignationService.createAssignation({
         userId,
         documentId: document._id,
       });
 
-      return document;
+      return { document, assignationId: assignation._id };
     }
   }
 
@@ -123,21 +135,32 @@ function buildFetchDocumentsForUser(
     return updatedDocument;
   }
 
-  async function fetchAlreadyAssignatedDocuments(userId: userType['_id']) {
+  async function fetchAlreadyAssignatedDocuments(
+    userId: userType['_id'],
+  ): Promise<
+    Array<{
+      document: documentType;
+      assignationId: assignationType['_id'];
+    }>
+  > {
     const documentRepository = buildDocumentRepository();
     const documentIdsAssignated = await assignationService.fetchDocumentIdsAssignatedToUserId(
       userId,
     );
 
     const documentsById = await documentRepository.findAllByIds(
-      documentIdsAssignated,
+      documentIdsAssignated.map(({ documentId }) => documentId),
     );
-    return Object.values(documentsById)
+    return documentIdsAssignated
+      .map(({ documentId, assignationId }) => ({
+        document: documentsById[idModule.lib.convertToString(documentId)],
+        assignationId,
+      }))
       .filter(
-        (document) =>
+        ({ document }) =>
           document.status === 'pending' || document.status === 'saved',
       )
-      .sort((document1, document2) =>
+      .sort(({ document: document1 }, { document: document2 }) =>
         document1.status === 'saved'
           ? -1
           : document2.status === 'saved'

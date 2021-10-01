@@ -45,10 +45,12 @@ function DocumentInspector(props: { settings: settingsType }) {
               document.decisionMetadata.additionalTermsToAnnotate,
             );
 
+            const applyAutoSave = buildApplyAutoSave(document._id);
+
             return (
               <MonitoringEntriesHandlerContextProvider documentId={idModule.lib.buildId(params.documentId)}>
                 <AnnotatorStateHandlerContextProvider
-                  autoSaver={buildAutoSaver({ applySave: applyAutoSave, documentId: document._id })}
+                  autoSaver={buildAutoSaver({ applySave: applyAutoSave })}
                   committer={buildAnnotationsCommitter()}
                   initialAnnotatorState={{
                     annotations: annotations,
@@ -71,15 +73,19 @@ function DocumentInspector(props: { settings: settingsType }) {
     displayAlert({ variant: 'info', text: wordings.homePage.scrutatorInfo, autoHide: true });
   }
 
-  async function applyAutoSave(documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) {
-    try {
-      await apiCaller.post<'updateTreatment'>('updateTreatment', {
-        annotationsDiff,
-        documentId,
-      });
-    } catch (error) {
-      displayAlert({ variant: 'alert', text: wordings.business.errors.updateTreatmentFailed, autoHide: true });
-      console.warn(error);
+  function buildApplyAutoSave(documentId: fetchedDocumentType['_id']) {
+    return applyAutoSave;
+
+    async function applyAutoSave(annotationsDiff: annotationsDiffType) {
+      try {
+        await apiCaller.post<'updateTreatmentForDocumentId'>('updateTreatmentForDocumentId', {
+          annotationsDiff,
+          documentId,
+        });
+      } catch (error) {
+        displayAlert({ variant: 'alert', text: wordings.business.errors.updateTreatmentFailed, autoHide: true });
+        console.warn(error);
+      }
     }
   }
 }

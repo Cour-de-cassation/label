@@ -1,4 +1,4 @@
-import { annotationsDiffModule, annotationsDiffType, fetchedDocumentType } from '@label/core';
+import { annotationsDiffModule, annotationsDiffType } from '@label/core';
 
 export { buildAutoSaver };
 
@@ -10,11 +10,9 @@ type autoSaverType = {
 };
 
 function buildAutoSaver({
-  documentId,
   applySave = async () => {},
 }: {
-  documentId: fetchedDocumentType['_id'];
-  applySave?: (documentId: fetchedDocumentType['_id'], annotationsDiff: annotationsDiffType) => Promise<void>;
+  applySave?: (annotationsDiff: annotationsDiffType) => Promise<void>;
 }): autoSaverType {
   let commitsToSave = [] as annotationsDiffType[];
 
@@ -28,7 +26,7 @@ function buildAutoSaver({
     const annotationsDiffToSave = annotationsDiffModule.lib.squash(commitsToSave);
     commitsToSave = [];
     try {
-      await applySave(documentId, annotationsDiffToSave);
+      await applySave(annotationsDiffToSave);
     } catch (error) {
       commitsToSave = [...cachedCommitsToSave, ...commitsToSave];
       console.warn(error);

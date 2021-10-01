@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { annotationType, fetchedDocumentType, httpStatusCodeHandler, idModule } from '@label/core';
+import { annotationType, assignationType, fetchedDocumentType, httpStatusCodeHandler, idModule } from '@label/core';
 import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
 
@@ -8,6 +8,7 @@ export { DocumentsDataFetcher };
 function DocumentsDataFetcher(props: {
   children: (fetched: {
     documentsForUser: {
+      assignationId: assignationType['_id'];
       document: fetchedDocumentType;
       annotations: annotationType[];
     }[];
@@ -23,6 +24,7 @@ function DocumentsDataFetcher(props: {
     <DataFetcher
       buildComponentWithData={(
         documentsForUser: {
+          assignationId: assignationType['_id'];
           document: fetchedDocumentType;
           annotations: annotationType[];
         }[],
@@ -42,32 +44,37 @@ function buildFetchDocumentsForUser() {
 }
 
 async function fetchDocumentsForUser(documentsMaxCount: number) {
-  const documentsForUser = [];
+  const documentsForUser: Array<{
+    document: fetchedDocumentType;
+    assignationId: assignationType['_id'];
+    annotations: annotationType[];
+  }> = [];
   const statusCodesAnnotations = [];
 
-  const { data: documents, statusCode: statusCodeDocuments } = await apiCaller.get<'documentsForUser'>(
+  const { data: assignatedDocuments, statusCode: statusCodeDocuments } = await apiCaller.get<'documentsForUser'>(
     'documentsForUser',
     {
       documentsMaxCount,
     },
   );
 
-  for (let i = 0; i < documents.length; i++) {
-    const document = documents[i];
+  for (let i = 0; i < assignatedDocuments.length; i++) {
+    const assignatedDocument = assignatedDocuments[i];
 
     try {
       const { data: annotations, statusCode: statusCodeAnnotations } = await apiCaller.get<'annotations'>(
         'annotations',
         {
-          documentId: document._id,
+          documentId: assignatedDocument.document._id,
         },
       );
 
       documentsForUser.push({
         document: {
-          ...document,
-          _id: idModule.lib.buildId(document._id),
+          ...assignatedDocument.document,
+          _id: idModule.lib.buildId(assignatedDocument.document._id),
         },
+        assignationId: idModule.lib.buildId(assignatedDocument.assignationId),
         annotations,
       });
       statusCodesAnnotations.push(statusCodeAnnotations);

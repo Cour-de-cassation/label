@@ -1,51 +1,43 @@
 import {
   annotationsDiffModule,
   annotationsDiffType,
+  assignationType,
   idModule,
-  idType,
   settingsModule,
   settingsType,
   treatmentModule,
 } from '@label/core';
-import { assignationService } from '../../assignation';
 import { documentService } from '../../document';
 import { userService } from '../../user';
 import { buildTreatmentRepository } from '../repository';
 
 export { updateTreatment };
 
-async function updateTreatment(
-  {
-    annotationsDiff,
-    documentId,
-    userId,
-  }: {
-    annotationsDiff: annotationsDiffType;
-    documentId: idType;
-    userId: idType;
-  },
-  settings: settingsType,
-) {
+async function updateTreatment({
+  annotationsDiff,
+  assignation,
+  settings,
+}: {
+  annotationsDiff: annotationsDiffType;
+  assignation: assignationType;
+  settings: settingsType;
+}) {
   const treatmentRepository = buildTreatmentRepository();
 
-  const DURATION_THRESHOLD_BETWEEN_TIMESTAMPS = 15 * 60 * 1000;
-  const currentDate = new Date().getTime();
-
-  const assignation = await assignationService.findOrCreateByDocumentIdAndUserId(
-    { documentId, userId },
-  );
-  const userRole = await userService.fetchUserRole(userId);
+  const userRole = await userService.fetchUserRole(assignation.userId);
   if (userRole === 'admin') {
-    await documentService.updateDocumentReviewStatus(documentId, {
+    await documentService.updateDocumentReviewStatus(assignation.documentId, {
       hasBeenAmended: true,
     });
   }
-  const treatments = await treatmentRepository.findAllByDocumentId(documentId);
+  const treatments = await treatmentRepository.findAllByDocumentId(
+    assignation.documentId,
+  );
   const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
     treatments,
   );
 
-  const document = await documentService.fetchDocument(documentId);
+  const document = await documentService.fetchDocument(assignation.documentId);
   const settingsForDocument = settingsModule.lib.computeFilteredSettings(
     settings,
     document.decisionMetadata.categoriesToOmit,
@@ -53,7 +45,7 @@ async function updateTreatment(
   );
 
   const actionToPerform = `update treatment for documentId ${idModule.lib.convertToString(
-    documentId,
+    assignation.documentId,
   )}`;
   const previousAnnotations = treatmentModule.lib.computeAnnotations(
     sortedTreatments,
@@ -69,6 +61,11 @@ async function updateTreatment(
     actionToPerform,
   );
 
+  const duration = treatmentModule.lib.incrementTreatmentDuration({
+    lastUpdateDate: treatment.lastUpdateDate,
+    previousTreatmentDuration: treatment.duration,
+  });
+
   const updatedTreatment = treatmentModule.lib.update(
     treatment,
     {
@@ -76,11 +73,7 @@ async function updateTreatment(
         treatment.annotationsDiff,
         annotationsDiff,
       ]),
-      duration:
-        currentDate - treatment.lastUpdateDate <
-        DURATION_THRESHOLD_BETWEEN_TIMESTAMPS
-          ? currentDate - treatment.lastUpdateDate + treatment.duration
-          : treatment.duration,
+      duration,
     },
     settingsForDocument,
   );

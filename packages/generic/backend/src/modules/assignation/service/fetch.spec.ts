@@ -85,21 +85,29 @@ describe('fetch', () => {
     const userId2 = idModule.lib.buildId();
 
     it('should fetch all the document id assignated to the given userId', async () => {
-      const assignements = ([
+      const assignations = ([
         { userId: userId1 },
         { userId: userId1 },
         { userId: userId2 },
       ] as const).map(assignationModule.generator.generate);
-      await Promise.all(assignements.map(assignationRepository.insert));
+      await Promise.all(assignations.map(assignationRepository.insert));
 
       const documentIdAssignatedToUserId = await fetchDocumentIdsAssignatedToUserId(
         userId1,
       );
 
-      expect(documentIdAssignatedToUserId).toEqual([
-        assignements[0].documentId,
-        assignements[1].documentId,
-      ]);
+      expect(documentIdAssignatedToUserId.sort()).toEqual(
+        [
+          {
+            documentId: assignations[0].documentId,
+            assignationId: assignations[0]._id,
+          },
+          {
+            documentId: assignations[1].documentId,
+            assignationId: assignations[1]._id,
+          },
+        ].sort(),
+      );
     });
     it('should return an empty array if there is no document id assignated to the given userId', async () => {
       const assignements = ([{ userId: userId1 }] as const).map(

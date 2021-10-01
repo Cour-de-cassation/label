@@ -6,6 +6,7 @@ import {
   idModule,
   settingsModule,
   documentModule,
+  assignationType,
 } from '@label/core';
 import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
@@ -17,11 +18,18 @@ import { HomeDocumentAnnotator } from './HomeDocumentAnnotator';
 export { DocumentSwitcher };
 
 type documentStateType =
-  | { kind: 'annotating'; choice: { document: fetchedDocumentType; annotations: annotationType[] } }
+  | {
+      kind: 'annotating';
+      choice: { document: fetchedDocumentType; annotations: annotationType[]; assignationId: assignationType['_id'] };
+    }
   | { kind: 'selecting' };
 
 function DocumentSwitcher(props: {
-  choices: Array<{ document: fetchedDocumentType; annotations: annotationType[] }>;
+  choices: Array<{
+    document: fetchedDocumentType;
+    annotations: annotationType[];
+    assignationId: assignationType['_id'];
+  }>;
   fetchNewDocumentsForUser: () => void;
   settings: settingsType;
 }) {
@@ -41,6 +49,7 @@ function DocumentSwitcher(props: {
         return (
           <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
             <HomeDocumentAnnotator
+              assignationId={documentState.choice.assignationId}
               committer={buildAnnotationsCommitter()}
               settings={settingsForDocument}
               document={documentState.choice.document}
@@ -80,7 +89,11 @@ function DocumentSwitcher(props: {
     }
   }
 
-  async function onSelectDocument(choice: { document: fetchedDocumentType; annotations: annotationType[] }) {
+  async function onSelectDocument(choice: {
+    document: fetchedDocumentType;
+    annotations: annotationType[];
+    assignationId: assignationType['_id'];
+  }) {
     try {
       await Promise.all(
         props.choices.map((currentChoice) => {
@@ -93,6 +106,10 @@ function DocumentSwitcher(props: {
         }),
       );
       try {
+        await apiCaller.post<'resetTreatmentLastUpdateDate'>('resetTreatmentLastUpdateDate', {
+          assignationId: choice.assignationId,
+        });
+
         const nextStatus = documentModule.lib.getNextStatus({
           status: choice.document.status,
           publicationCategory: choice.document.publicationCategory,

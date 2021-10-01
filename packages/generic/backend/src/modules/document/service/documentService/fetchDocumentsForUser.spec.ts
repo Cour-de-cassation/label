@@ -26,13 +26,12 @@ describe('fetchDocumentsForUser', () => {
       status: 'pending',
       text: 'lili',
     });
+    const assignation = assignationModule.generator.generate({
+      userId,
+      documentId: document._id,
+    });
     await documentRepository.insert(document);
-    await assignationRepository.insert(
-      assignationModule.generator.generate({
-        userId,
-        documentId: document._id,
-      }),
-    );
+    await assignationRepository.insert(assignation);
     await userRepository.insert(user);
 
     const documentsForUser = await documentService.fetchDocumentsForUser(
@@ -40,7 +39,10 @@ describe('fetchDocumentsForUser', () => {
       1,
     );
 
-    expect(documentsForUser[0]).toEqual(document);
+    expect(documentsForUser[0]).toEqual({
+      document,
+      assignationId: assignation._id,
+    });
   });
 
   it('should fetch a document assignated to nobody if there are no assignation for this user', async () => {
@@ -50,18 +52,17 @@ describe('fetchDocumentsForUser', () => {
       text: 'lolo',
       status: 'free',
     });
-    await documentRepository.insert(documentofUser1);
     const documentOfUser2 = documentModule.generator.generate({
       text: 'lala',
       status: 'pending',
     });
+    const assignation2 = assignationModule.generator.generate({
+      userId: user2._id,
+      documentId: documentOfUser2._id,
+    });
+    await documentRepository.insert(documentofUser1);
     await documentRepository.insert(documentOfUser2);
-    await assignationRepository.insert(
-      assignationModule.generator.generate({
-        userId: user2._id,
-        documentId: documentOfUser2._id,
-      }),
-    );
+    await assignationRepository.insert(assignation2);
     await userRepository.insert(user1);
     await userRepository.insert(user2);
     const treatment1 = treatmentModule.generator.generate({
@@ -80,7 +81,7 @@ describe('fetchDocumentsForUser', () => {
     const updatedDocument = await documentRepository.findById(
       documentofUser1._id,
     );
-    expect(documentsForUser[0]).toEqual(updatedDocument);
+    expect(documentsForUser[0].document).toEqual(updatedDocument);
   });
 
   it('should fetch a document with the highest priority assignated to nobody if there are no assignation for this user', async () => {
@@ -122,7 +123,7 @@ describe('fetchDocumentsForUser', () => {
     );
 
     const updatedDocument = await documentRepository.findById(documents[1]._id);
-    expect(documentsForUser[0]).toEqual(updatedDocument);
+    expect(documentsForUser[0].document).toEqual(updatedDocument);
   });
 
   it('should fetch a document with treatment first', async () => {
@@ -145,7 +146,7 @@ describe('fetchDocumentsForUser', () => {
     );
 
     const updatedDocument = await documentRepository.findById(documents[1]._id);
-    expect(documentsForUser[0]).toEqual(updatedDocument);
+    expect(documentsForUser[0].document).toEqual(updatedDocument);
   });
 
   it('should not assign more document if one is already saved', async () => {
@@ -182,7 +183,10 @@ describe('fetchDocumentsForUser', () => {
     );
 
     expect(documentsForUser.sort()).toEqual(
-      [documents[0], documents[1]].sort(),
+      [
+        { assignationId: assignations[0]._id, document: documents[0] },
+        { assignationId: assignations[1]._id, document: documents[1] },
+      ].sort(),
     );
   });
 

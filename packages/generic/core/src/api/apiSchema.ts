@@ -188,7 +188,19 @@ const apiSchema = {
           content: 'number',
         } as const),
       },
-      out: buildModel({ kind: 'array', content: documentModule.fetchedModel }),
+      out: buildModel({
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            document: documentModule.fetchedModel,
+            assignationId: buildModel({
+              kind: 'custom',
+              content: 'id',
+            } as const),
+          },
+        },
+      }),
     },
     health: {
       out: buildModel({
@@ -400,6 +412,18 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
+    incrementTreatmentDuration: {
+      in: {
+        assignationId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     login: {
       in: {
         email: buildModel({
@@ -462,6 +486,18 @@ const apiSchema = {
       out: buildModel({
         kind: 'primitive',
         content: 'string',
+      } as const),
+    },
+    resetTreatmentLastUpdateDate: {
+      in: {
+        assignationId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
       } as const),
     },
     setDeletionDateForUser: {
@@ -538,7 +574,20 @@ const apiSchema = {
         content: 'void',
       },
     },
-    updateTreatment: {
+    updateTreatmentForAssignationId: {
+      in: {
+        annotationsDiff: annotationsDiffModule.model,
+        assignationId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
+    updateTreatmentForDocumentId: {
       in: {
         annotationsDiff: annotationsDiffModule.model,
         documentId: buildModel({

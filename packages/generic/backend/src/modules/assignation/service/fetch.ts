@@ -3,11 +3,18 @@ import { buildAssignationRepository } from '../repository';
 
 export {
   fetchAllAssignationsById,
+  fetchAssignation,
   fetchAssignationId,
   fetchAssignationsByDocumentIds,
   fetchAssignationsOfDocumentId,
   fetchDocumentIdsAssignatedToUserId,
 };
+
+async function fetchAssignation(assignationId: assignationType['_id']) {
+  const assignationRepository = buildAssignationRepository();
+
+  return assignationRepository.findById(assignationId);
+}
 
 async function fetchAllAssignationsById(
   assignationIds?: assignationType['_id'][],
@@ -74,5 +81,8 @@ async function fetchDocumentIdsAssignatedToUserId(userId: idType) {
   const assignationRepository = buildAssignationRepository();
   const assignations = await assignationRepository.findAllByUserId(userId);
 
-  return assignations.map((assignation) => assignation.documentId);
+  return assignations.map((assignation) => ({
+    documentId: assignation.documentId,
+    assignationId: assignation._id,
+  }));
 }

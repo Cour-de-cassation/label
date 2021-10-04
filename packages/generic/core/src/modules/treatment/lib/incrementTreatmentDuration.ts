@@ -1,6 +1,6 @@
 export { incrementTreatmentDuration };
 
-const DURATION_THRESHOLD_BETWEEN_TIMESTAMPS = 15 * 60 * 1000;
+const DURATION_THRESHOLD_BETWEEN_TIMESTAMPS = 20 * 60 * 1000;
 
 function incrementTreatmentDuration({
   previousTreatmentDuration,

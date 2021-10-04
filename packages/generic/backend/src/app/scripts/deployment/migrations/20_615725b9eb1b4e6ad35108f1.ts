@@ -55,5 +55,7 @@ function computeNewPriority(priority: 'low' | 'medium' | 'high') {
       return 2;
     case 'low':
       return 0;
+    default:
+      return 0;
   }
 }

@@ -6,6 +6,7 @@ LABELCRONLOGFILE=/home/label/packages/courDeCassation/cron.log.txt
 
 # Importation from SDER
 0 19 * * * node $LABELPATH/dist/scripts/autoImportDocumentsFromSder.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --count 1400 --threshold 700>> $LABELCRONLOGFILE 2>&1
+0 9 * * * node $LABELPATH/dist/scripts/importTestDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 4 --threshold 700>> $LABELCRONLOGFILE 2>&1
 */5 * * * * node $LABELPATH/dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7 >> $LABELCRONLOGFILE 2>&1
 */15 * * * * node $LABELPATH/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS >> $LABELCRONLOGFILE 2>&1
 

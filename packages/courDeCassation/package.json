@@ -5,7 +5,7 @@
     "axios": "^0.21.4",
     "fast-xml-parser": "^3.17.4",
     "lodash": "^4.17.21",
-    "sder": "https://github.com/Cour-de-cassation/sder#c95d305e99168793eec89979e05eb0ba0fb1e9fd",
+    "sder": "https://github.com/Cour-de-cassation/sder#76fedd2f557bfb26114c6bcdc838c0ac3a772d09",
     "string-template": "^1.0.0",
     "yargs": "16.2.0"
   },

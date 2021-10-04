@@ -14,6 +14,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     importSpecificDocument,
     importNewDocuments,
     importDocumentsSince,
+    importTestDocumentsSince,
     resetAllDocumentsSince,
     deleteJuricaDocumentsFromLabelDb,
   };
@@ -103,8 +104,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
           endDate.getTime(),
         )}!`,
       );
-      const documents = newCourtDecisions.map(
-        connectorConfig.mapCourtDecisionToDocument,
+      const documents = newCourtDecisions.map((courtDecision) =>
+        connectorConfig.mapCourtDecisionToDocument(courtDecision),
       );
       newDocuments.push(...documents);
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
@@ -134,8 +135,41 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(
       `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
     );
-    const documents = newCourtDecisions.map(
-      connectorConfig.mapCourtDecisionToDocument,
+    const documents = newCourtDecisions.map((courtDecision) =>
+      connectorConfig.mapCourtDecisionToDocument(courtDecision),
+    );
+
+    logger.log(`Insertion ${documents.length} documents into the database...`);
+    await insertDocuments(documents);
+    logger.log(`Insertion done!`);
+
+    logger.log(`Send documents have been loaded...`);
+    await connectorConfig.updateDocumentsLoadedStatus(documents);
+    logger.log(`DONE`);
+  }
+
+  async function importTestDocumentsSince(days: number) {
+    logger.log(`importTestDocumentsSince ${days}`);
+
+    const jurisdictionsToImport = [
+      "Cour d'appel de Dijon",
+      "Cour d'appel de Bordeaux",
+    ];
+
+    logger.log(`Fetching ${connectorConfig.name} documents...`);
+    const newCourtDecisions = await connectorConfig.fetchPublicDecisionsBySourceAndJurisdictionsBetween(
+      {
+        source: 'jurica',
+        jurisdictions: jurisdictionsToImport,
+        startDate: new Date(dateBuilder.daysAgo(days)),
+        endDate: new Date(),
+      },
+    );
+    logger.log(
+      `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
+    );
+    const documents = newCourtDecisions.map((courtDecision) =>
+      connectorConfig.mapCourtDecisionToDocument(courtDecision),
     );
 
     logger.log(`Insertion ${documents.length} documents into the database...`);

@@ -65,7 +65,7 @@ const documentModel = buildModel({
     ...documentModelCommonFields,
     externalId: { kind: 'primitive', content: 'string' },
     metadata: { kind: 'primitive', content: 'string' },
-    priority: { kind: 'constant', content: ['low', 'medium', 'high'] as const },
+    priority: { kind: 'primitive', content: 'number' as const },
     updateDate: { kind: 'primitive', content: 'number' },
   },
 } as const);

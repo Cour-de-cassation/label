@@ -13,7 +13,7 @@ describe('fetchDocumentWithoutAnnotationsNotIn', () => {
       documentModule.generator.generate(),
     );
     const documentWithoutTreatments = documentModule.generator.generate({
-      priority: 'high',
+      priority: 4,
       status: 'loaded',
     });
     const treatments = documentsWithTreatments.map((document) =>

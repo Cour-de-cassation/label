@@ -138,13 +138,13 @@ function computePriority(
   if (
     documentModule.lib.publicationHandler.mustBePublished(publicationCategory)
   ) {
-    return 'high';
+    return 4;
   }
   switch (source) {
     case 'jurinet':
-      return 'medium';
+      return 2;
     default:
-      return 'low';
+      return 0;
   }
 }
 

@@ -43,4 +43,32 @@ const sderFetcher = {
         courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,
     );
   },
+
+  async fetchPublicDecisionsBySourceAndJurisdictionsBetween({
+    startDate,
+    endDate = new Date(),
+    source,
+    jurisdictions,
+  }: {
+    startDate: Date;
+    endDate?: Date;
+    source: string;
+    jurisdictions: string[];
+  }) {
+    const courtDecisions = await sderApi.fetchPublicDecisionsBySourceAndJurisdictionsBetween(
+      {
+        startDate,
+        endDate,
+        source,
+        jurisdictions,
+      },
+    );
+
+    return courtDecisions.filter(
+      (courtDecision) =>
+        courtDecision &&
+        courtDecision.originalText &&
+        courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,
+    );
+  },
 };

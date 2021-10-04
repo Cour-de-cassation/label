@@ -5,6 +5,12 @@ export type { connectorConfigType };
 
 type connectorConfigType = {
   name: string;
+  fetchPublicDecisionsBySourceAndJurisdictionsBetween: (param: {
+    startDate: Date;
+    endDate: Date;
+    source: string;
+    jurisdictions: string[];
+  }) => Promise<decisionType[]>;
   fetchCourtDecisionBySourceIdAndSourceName(params: {
     sourceId: number;
     sourceName: string;

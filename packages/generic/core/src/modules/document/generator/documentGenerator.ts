@@ -42,7 +42,7 @@ const documentGenerator: generatorType<documentType> = {
     externalId: externalId ? externalId : `EXTERNAL_ID_${Math.random()}`,
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     metadata: metadata ? metadata : `METADATA_${Math.random()}`,
-    priority: priority ? priority : 'low',
+    priority: priority !== undefined ? priority : 0,
     publicationCategory: publicationCategory ? publicationCategory : [],
     reviewStatus: reviewStatus || { hasBeenAmended: false, viewerNames: [] },
     source: source ? source : `SOURCE_${Math.random()}`,

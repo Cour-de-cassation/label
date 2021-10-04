@@ -90,12 +90,12 @@ describe('fetchDocumentsForUser', () => {
     const documents = ([
       {
         text: 'lolo',
-        priority: 'low',
+        priority: 0,
         status: 'free',
       },
       {
         text: 'lala',
-        priority: 'medium',
+        priority: 2,
         status: 'free',
       },
       {

@@ -29,7 +29,7 @@ const sderLocalApi: sderApiType = {
     });
   },
 
-  async fetchCourtDecisionsBetween() {
+  async fetchJurinetDecisionsToPseudonymiseBetween() {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,
     );
@@ -50,7 +50,28 @@ const sderLocalApi: sderApiType = {
     });
   },
 
-  async fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, sourceName) {
+  async fetchChainedJuricaDecisionsToPseudonymiseBetween() {
+    const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
+      pathToCourtDecisions,
+    );
+
+    const courtDecisions = await fileSystem.readFiles(
+      courtDecisionFileNames,
+      'utf8',
+      pathToCourtDecisions,
+    );
+
+    return courtDecisions.map(({ content }) => {
+      const parsedContent = JSON.parse(content) as decisionType;
+      return {
+        ...parsedContent,
+        _id: idModule.lib.buildId(),
+        dateDecision: parsedContent.dateDecision,
+      };
+    });
+  },
+
+  async fetchCourtDecisionBySourceIdAndSourceName(sourceId, sourceName) {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,
     );
@@ -69,9 +90,9 @@ const sderLocalApi: sderApiType = {
       };
     });
 
-    return mappedCourtDecisions.filter(
+    return mappedCourtDecisions.find(
       (courtDecision) =>
-        sourceIds.includes(courtDecision.sourceId) &&
+        courtDecision.sourceId === sourceId &&
         courtDecision.sourceName === sourceName,
     );
   },

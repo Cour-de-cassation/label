@@ -23,23 +23,37 @@ const sderApi: sderApiType = {
     return courtDecisions;
   },
 
-  async fetchCourtDecisionsBetween({
+  async fetchJurinetDecisionsToPseudonymiseBetween({
     startDate,
     endDate,
   }: {
     startDate: Date;
     endDate: Date;
   }) {
-    const courtDecisions = await decisionModule.service.fetchJurinetAndChainedJuricaDecisionsToPseudonymiseBetween(
+    const courtDecisions = await decisionModule.service.fetchDecisionsToPseudonymiseBetween(
+      { startDate, endDate, source: 'jurinet' },
+    );
+
+    return courtDecisions;
+  },
+
+  async fetchChainedJuricaDecisionsToPseudonymiseBetween({
+    startDate,
+    endDate,
+  }: {
+    startDate: Date;
+    endDate: Date;
+  }) {
+    const courtDecisions = await decisionModule.service.fetchChainedJuricaDecisionsToPseudonymiseBetween(
       { startDate, endDate },
     );
 
     return courtDecisions;
   },
 
-  async fetchCourtDecisionsBySourceIdsAndSourceName(sourceIds, sourceName) {
-    return decisionModule.service.fetchDecisionsBySourceIdsAndSourceName(
-      sourceIds,
+  async fetchCourtDecisionBySourceIdAndSourceName(sourceId, sourceName) {
+    return decisionModule.service.fetchDecisionBySourceIdAndSourceName(
+      sourceId,
       sourceName,
     );
   },

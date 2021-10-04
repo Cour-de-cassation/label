@@ -5,14 +5,18 @@ import { labelTreatmentsType } from '@label/backend';
 export type { sderApiType };
 
 type sderApiType = {
-  fetchCourtDecisionsBetween: (params: {
+  fetchChainedJuricaDecisionsToPseudonymiseBetween: (params: {
     startDate: Date;
     endDate: Date;
   }) => Promise<Array<decisionType>>;
-  fetchCourtDecisionsBySourceIdsAndSourceName: (
-    sourceIds: decisionType['sourceId'][],
+  fetchJurinetDecisionsToPseudonymiseBetween: (params: {
+    startDate: Date;
+    endDate: Date;
+  }) => Promise<Array<decisionType>>;
+  fetchCourtDecisionBySourceIdAndSourceName: (
+    sourceId: decisionType['sourceId'],
     sourceName: decisionType['sourceName'],
-  ) => Promise<decisionType[]>;
+  ) => Promise<decisionType | undefined>;
   fetchPublicDecisionsBySourceAndJurisdictionsBetween: (param: {
     startDate: Date;
     endDate: Date;

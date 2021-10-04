@@ -15,7 +15,11 @@ type connectorConfigType = {
     sourceId: number;
     sourceName: string;
   }): Promise<decisionType | undefined>;
-  fetchAllCourtDecisionsBetween(params: {
+  fetchChainedJuricaDecisionsToPseudonymiseBetween(params: {
+    startDate: Date;
+    endDate: Date;
+  }): Promise<decisionType[]>;
+  fetchJurinetDecisionsToPseudonymiseBetween(params: {
     startDate: Date;
     endDate: Date;
   }): Promise<decisionType[]>;

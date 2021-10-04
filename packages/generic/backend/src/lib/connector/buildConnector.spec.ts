@@ -18,7 +18,11 @@ describe('buildConnector', () => {
         sourceIds.map((sourceId, index) => {
           const dateCreation = new Date();
           dateCreation.setTime(dateBuilder.daysAgo(index * 7));
-          return { sourceId, dateCreation: dateCreation.toDateString() };
+          return {
+            sourceId,
+            dateCreation: dateCreation.toDateString(),
+            sourceName: 'jurinet',
+          };
         }),
       );
       const connector = buildConnector(fakeConnector);
@@ -44,7 +48,11 @@ describe('buildConnector', () => {
         sourceIds.map((sourceId, index) => {
           const dateCreation = new Date();
           dateCreation.setTime(dateBuilder.daysAgo(index * 7));
-          return { sourceId, dateCreation: dateCreation.toDateString() };
+          return {
+            sourceId,
+            dateCreation: dateCreation.toDateString(),
+            sourceName: 'jurica',
+          };
         }),
       );
       const connector = buildConnector(fakeConnector);
@@ -67,7 +75,7 @@ describe('buildConnector', () => {
     it('should not import documents', async () => {
       const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId) => ({ sourceId })),
+        sourceIds.map((sourceId) => ({ sourceId, sourceName: 'jurica' })),
       );
       const connector = buildConnector(fakeConnector);
       const initialCourtDecisions = await fakeConnector.fetchAllCourtDecisions();
@@ -91,7 +99,11 @@ describe('buildConnector', () => {
         sourceIds.map((sourceId, index) => {
           const dateCreation = new Date();
           dateCreation.setTime(dateBuilder.daysAgo(index * 31));
-          return { sourceId, dateCreation: dateCreation.toDateString() };
+          return {
+            sourceId,
+            dateCreation: dateCreation.toDateString(),
+            sourceName: 'jurica',
+          };
         }),
       );
       const connector = buildConnector(fakeConnector);

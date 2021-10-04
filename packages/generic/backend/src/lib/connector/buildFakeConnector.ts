@@ -63,7 +63,7 @@ async function buildFakeConnectorWithNDecisions(
           courtDecision.sourceName === sourceName,
       );
     },
-    async fetchAllCourtDecisionsBetween({
+    async fetchChainedJuricaDecisionsToPseudonymiseBetween({
       startDate,
       endDate,
     }: {
@@ -77,6 +77,27 @@ async function buildFakeConnectorWithNDecisions(
         const dateCreation = new Date(courtDecision.dateCreation);
 
         return (
+          courtDecision.sourceName === 'jurica' &&
+          dateCreation.getTime() >= startDate.getTime() &&
+          dateCreation.getTime() <= endDate.getTime()
+        );
+      });
+    },
+    async fetchJurinetDecisionsToPseudonymiseBetween({
+      startDate,
+      endDate,
+    }: {
+      startDate: Date;
+      endDate: Date;
+    }) {
+      return courtDecisions.filter((courtDecision) => {
+        if (!courtDecision.dateCreation) {
+          return false;
+        }
+        const dateCreation = new Date(courtDecision.dateCreation);
+
+        return (
+          courtDecision.sourceName === 'jurinet' &&
           dateCreation.getTime() >= startDate.getTime() &&
           dateCreation.getTime() <= endDate.getTime()
         );

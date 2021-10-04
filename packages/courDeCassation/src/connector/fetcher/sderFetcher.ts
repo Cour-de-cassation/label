@@ -2,8 +2,6 @@ import { sderApi } from '../../sderApi';
 
 export { sderFetcher };
 
-const MAX_DOCUMENT_SIZE = 500000;
-
 const sderFetcher = {
   async fetchCourtDecisionBySourceIdAndSourceName({
     sourceId,
@@ -12,36 +10,44 @@ const sderFetcher = {
     sourceId: number;
     sourceName: string;
   }) {
-    const courtDecisions = await sderApi.fetchCourtDecisionsBySourceIdsAndSourceName(
-      [sourceId],
+    return sderApi.fetchCourtDecisionBySourceIdAndSourceName(
+      sourceId,
       sourceName,
     );
-
-    if (courtDecisions.length === 0) {
-      return undefined;
-    }
-
-    return courtDecisions[0];
   },
 
-  async fetchAllCourtDecisionsBetween({
+  async fetchJurinetDecisionsToPseudonymiseBetween({
     startDate,
     endDate,
   }: {
     startDate: Date;
     endDate: Date;
   }) {
-    const courtDecisions = await sderApi.fetchCourtDecisionsBetween({
-      startDate,
-      endDate,
-    });
-
-    return courtDecisions.filter(
-      (courtDecision) =>
-        courtDecision &&
-        courtDecision.originalText &&
-        courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,
+    const courtDecisions = await sderApi.fetchJurinetDecisionsToPseudonymiseBetween(
+      {
+        startDate,
+        endDate,
+      },
     );
+
+    return courtDecisions;
+  },
+
+  async fetchChainedJuricaDecisionsToPseudonymiseBetween({
+    startDate,
+    endDate,
+  }: {
+    startDate: Date;
+    endDate: Date;
+  }) {
+    const courtDecisions = await sderApi.fetchChainedJuricaDecisionsToPseudonymiseBetween(
+      {
+        startDate,
+        endDate,
+      },
+    );
+
+    return courtDecisions;
   },
 
   async fetchPublicDecisionsBySourceAndJurisdictionsBetween({
@@ -64,11 +70,6 @@ const sderFetcher = {
       },
     );
 
-    return courtDecisions.filter(
-      (courtDecision) =>
-        courtDecision &&
-        courtDecision.originalText &&
-        courtDecision.originalText.length <= MAX_DOCUMENT_SIZE,
-    );
+    return courtDecisions;
   },
 };

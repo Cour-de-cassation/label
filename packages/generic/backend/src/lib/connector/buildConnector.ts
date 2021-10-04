@@ -77,19 +77,21 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
   async function importNewDocuments(documentCount: number, daysStep?: number) {
     const DEFAULT_DAYS_STEP = 30;
+    const MAX_STEP = 200;
     logger.log(
       `importNewDocuments: ${documentCount} - ${daysStep || DEFAULT_DAYS_STEP}`,
     );
 
     logger.log(`Fetching ${connectorConfig.name} documents...`);
     let daysAgo = 0;
+    let step = 0;
     const newDocuments: documentType[] = [];
-    while (newDocuments.length < documentCount) {
+    while (newDocuments.length < documentCount && step < MAX_STEP) {
       const startDate = new Date(
         dateBuilder.daysAgo(daysAgo + (daysStep || DEFAULT_DAYS_STEP)),
       );
       const endDate = new Date(dateBuilder.daysAgo(daysAgo));
-      const newCourtDecisions = await connectorConfig.fetchAllCourtDecisionsBetween(
+      const newCourtDecisions = await connectorConfig.fetchChainedJuricaDecisionsToPseudonymiseBetween(
         {
           startDate,
           endDate,
@@ -109,6 +111,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       newDocuments.push(...documents);
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
+      step++;
     }
 
     logger.log(
@@ -123,10 +126,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
   }
 
   async function importDocumentsSince(days: number) {
-    logger.log(`importAllDocumentsSince ${days}`);
+    logger.log(`importDocumentsSince ${days}`);
 
-    logger.log(`Fetching ${connectorConfig.name} documents...`);
-    const newCourtDecisions = await connectorConfig.fetchAllCourtDecisionsBetween(
+    logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
+    const newCourtDecisions = await connectorConfig.fetchJurinetDecisionsToPseudonymiseBetween(
       {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),

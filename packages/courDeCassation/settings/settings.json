@@ -133,7 +133,7 @@
     "text": "Email"
   },
   "siteWebSensible": {
-    "anonymization": "[www.0%d.xx]",
+    "anonymization": "[0%d]",
     "color": {
       "lightMode": ["lightBlue", 200],
       "darkMode": ["lightBlue", 700]

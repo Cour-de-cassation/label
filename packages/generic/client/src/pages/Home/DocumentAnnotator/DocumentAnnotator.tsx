@@ -24,6 +24,7 @@ function DocumentAnnotator(props: {
     { key: 'Z', ctrlKey: true, shiftKey: true, action: onRestoreState },
   ]);
   const viewerRef = useRef(null);
+
   const annotatorState = annotatorStateHandler.get();
   const styles = buildStyles();
   const categories = settingsModule.lib.getCategories(annotatorState.settings, {
@@ -34,6 +35,7 @@ function DocumentAnnotator(props: {
     sortAdditionalAnnotationsFirst,
   );
   const splittedTextByLine = getSplittedTextByLine(annotatorState.document.text, annotatorState.annotations);
+
   return (
     <AnonymizerBuilderContextProvider
       annotations={annotatorState.annotations}

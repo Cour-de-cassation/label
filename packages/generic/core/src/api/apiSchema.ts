@@ -412,18 +412,6 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
-    incrementTreatmentDuration: {
-      in: {
-        assignationId: buildModel({
-          kind: 'custom',
-          content: 'id',
-        } as const),
-      },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
-    },
     login: {
       in: {
         email: buildModel({
@@ -573,6 +561,18 @@ const apiSchema = {
         kind: 'primitive',
         content: 'void',
       },
+    },
+    updateTreatmentDuration: {
+      in: {
+        assignationId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
     },
     updateTreatmentForAssignationId: {
       in: {

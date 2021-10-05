@@ -51,6 +51,7 @@ function HomeDocumentAnnotator(props: {
       autoSaver={buildAutoSaver({ applySave: applyAutoSave })}
       committer={props.committer}
       initialAnnotatorState={{
+        assignationId: props.assignationId,
         annotations: props.annotations,
         document: props.document,
         settings: props.settings,
@@ -74,7 +75,7 @@ function HomeDocumentAnnotator(props: {
     documentId: documentType['_id'];
     status: documentType['status'];
   }) {
-    await apiCaller.post<'incrementTreatmentDuration'>('incrementTreatmentDuration', { assignationId });
+    await apiCaller.post<'updateTreatmentDuration'>('updateTreatmentDuration', { assignationId });
     await sendMonitoringEntries();
     await setDocumentStatus(documentId, status);
     resetMonitoringEntries();

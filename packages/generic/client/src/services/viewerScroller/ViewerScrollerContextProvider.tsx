@@ -6,6 +6,7 @@ export { ViewerScrollerContext, ViewerScrollerContextProvider };
 const ViewerScrollerContext = createContext<viewerScrollerHandlerHandlerType>({
   /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
   getViewerRef: () => null as any,
+  getCurrentVerticalPosition: () => 0,
   storeCurrentVerticalPosition: () => null,
   scrollToStoredVerticalPosition: () => null,
   scrollToTop: () => null,

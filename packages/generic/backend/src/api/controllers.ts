@@ -184,27 +184,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    incrementTreatmentDuration: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
-      controllerWithUser: async (user, { args: { assignationId } }) => {
-        const assignation = await assignationService.fetchAssignation(
-          idModule.lib.buildId(assignationId),
-        );
-
-        if (!idModule.lib.equalId(user._id, assignation.userId)) {
-          throw errorHandlers.permissionErrorHandler.build(
-            `User ${idModule.lib.convertToString(
-              user._id,
-            )} is trying to update a treatment that is not assigned to him/her`,
-          );
-        }
-
-        return treatmentService.updateTreatmentDuration(
-          assignation.treatmentId,
-        );
-      },
-    }),
-
     async login({ args: { email, password } }) {
       const {
         _id,
@@ -348,6 +327,27 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         await problemReportService.updateHasBeenRead(
           idModule.lib.buildId(problemReportId),
           hasBeenRead,
+        );
+      },
+    }),
+
+    updateTreatmentDuration: buildAuthenticatedController({
+      permissions: ['admin', 'annotator'],
+      controllerWithUser: async (user, { args: { assignationId } }) => {
+        const assignation = await assignationService.fetchAssignation(
+          idModule.lib.buildId(assignationId),
+        );
+
+        if (!idModule.lib.equalId(user._id, assignation.userId)) {
+          throw errorHandlers.permissionErrorHandler.build(
+            `User ${idModule.lib.convertToString(
+              user._id,
+            )} is trying to update a treatment that is not assigned to him/her`,
+          );
+        }
+
+        return treatmentService.updateTreatmentDuration(
+          assignation.treatmentId,
         );
       },
     }),

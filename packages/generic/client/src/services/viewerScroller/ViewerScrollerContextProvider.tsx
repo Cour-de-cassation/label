@@ -1,4 +1,4 @@
-import React, { createContext, ReactElement } from 'react';
+import React, { createContext, ReactElement, useMemo } from 'react';
 import { buildViewerScrollerHandler, viewerScrollerHandlerHandlerType } from './buildViewerScrollerHandler';
 
 export { ViewerScrollerContext, ViewerScrollerContextProvider };
@@ -15,7 +15,7 @@ function ViewerScrollerContextProvider(props: {
   viewerRef: React.MutableRefObject<HTMLDivElement | null>;
   children: ReactElement;
 }): ReactElement {
-  const viewerScrollerHandler = buildViewerScrollerHandler(props.viewerRef);
+  const viewerScrollerHandler = useMemo(() => buildViewerScrollerHandler(props.viewerRef), []);
 
   return (
     <ViewerScrollerContext.Provider value={viewerScrollerHandler}>{props.children}</ViewerScrollerContext.Provider>

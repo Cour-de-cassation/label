@@ -12,6 +12,7 @@ describe('statisticsCreator', () => {
   const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
   const documentPublicationCategory = ['P'];
   const documentSource = 'SOURCE';
+  const documentNumber = 123456;
   const jurisdiction = 'Cour de cassation';
   const duration = 1500;
   const userId = idModule.lib.buildId();
@@ -29,6 +30,7 @@ describe('statisticsCreator', () => {
       session: '',
       solution: '',
     },
+    documentNumber,
     externalId: documentExternalId,
     publicationCategory: documentPublicationCategory,
     source: documentSource,
@@ -94,8 +96,10 @@ describe('statisticsCreator', () => {
         _id: statistic._id,
         addedAnnotationsCount: { sensitive: 1, other: 0 },
         annotationsCount: 3,
+        decisionDate,
         deletedAnnotationsCount: { anonymised: 1, other: 0 },
         documentExternalId,
+        documentNumber,
         jurisdiction: 'Cour de cassation',
         linkedEntitiesCount: 0,
         modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
@@ -153,8 +157,10 @@ describe('statisticsCreator', () => {
         _id: statistic._id,
         addedAnnotationsCount: { sensitive: 0, other: 0 },
         annotationsCount: 4,
+        decisionDate,
         deletedAnnotationsCount: { anonymised: 0, other: 0 },
         documentExternalId,
+        documentNumber,
         jurisdiction: 'Cour de cassation',
         linkedEntitiesCount: 0,
         modifiedAnnotationsCount: { nonAnonymisedToSensitive: 1, anonymisedToNonAnonymised: 0, other: 0 },

@@ -8,6 +8,7 @@ const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
 describe('buildStatistic', () => {
   it('should build a new statistic', () => {
     const annotationsCount = 10;
+    const documentNumber = 123456;
     const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
     const documentPublicationCategory = ['P'];
     const documentSource = 'SOURCE';
@@ -29,6 +30,7 @@ describe('buildStatistic', () => {
         session: '',
         solution: '',
       },
+      documentNumber,
       externalId: documentExternalId,
       publicationCategory: documentPublicationCategory,
       source: documentSource,
@@ -57,8 +59,10 @@ describe('buildStatistic', () => {
       _id: statistic._id,
       addedAnnotationsCount: { sensitive: 1, other: 1 },
       annotationsCount,
+      decisionDate,
       deletedAnnotationsCount: { anonymised: 2, other: 1 },
       documentExternalId,
+      documentNumber,
       jurisdiction: 'Cour de cassation',
       linkedEntitiesCount,
       modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },

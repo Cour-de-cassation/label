@@ -1,3 +1,4 @@
+import { documentModel } from '../document/documentType';
 import { idType } from '../id';
 import { buildModel, buildType } from '../modelType';
 
@@ -17,6 +18,8 @@ const statisticModel = buildModel({
       },
     },
     annotationsCount: { kind: 'primitive', content: 'number' },
+    documentNumber: documentModel.content.documentNumber,
+    decisionDate: documentModel.content.decisionMetadata.content.date,
     deletedAnnotationsCount: {
       kind: 'object',
       content: {

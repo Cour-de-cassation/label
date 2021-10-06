@@ -9,6 +9,7 @@ function extractAppealNumber(text: string) {
   if (!!match1 && match1[1]) {
     return match1[1];
   }
+
   const match2 = text.match(REGEX_2);
   if (!!match2 && match2[0]) {
     return match2[0];

@@ -30,7 +30,9 @@ const sderFetcher = {
       },
     );
 
-    return courtDecisions;
+    return courtDecisions.filter(
+      (courtDecision) => !!courtDecision && !!courtDecision.originalText,
+    );
   },
 
   async fetchChainedJuricaDecisionsToPseudonymiseBetween({
@@ -47,7 +49,9 @@ const sderFetcher = {
       },
     );
 
-    return courtDecisions;
+    return courtDecisions.filter(
+      (courtDecision) => !!courtDecision && !!courtDecision.originalText,
+    );
   },
 
   async fetchPublicDecisionsBySourceAndJurisdictionsBetween({
@@ -70,6 +74,8 @@ const sderFetcher = {
       },
     );
 
-    return courtDecisions;
+    return courtDecisions.filter(
+      (courtDecision) => !!courtDecision && !!courtDecision.originalText,
+    );
   },
 };

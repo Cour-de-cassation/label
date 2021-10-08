@@ -26,6 +26,7 @@ describe('statisticsCreator', () => {
       chamberName: '',
       date: decisionDate,
       jurisdiction,
+      parties: [],
       occultationBlock: undefined,
       session: '',
       solution: '',

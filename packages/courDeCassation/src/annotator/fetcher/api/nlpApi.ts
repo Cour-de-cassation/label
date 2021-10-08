@@ -1,5 +1,5 @@
-import { settingsModule } from '@label/core';
 import axios from 'axios';
+import { settingsModule } from '@label/core';
 import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
 
 export { nlpApi };
@@ -10,7 +10,7 @@ type nlpRequestParametersType = {
   idDocument: number;
   text: string;
   source?: string;
-  meta?: string;
+  meta?: Array<any>;
   categories?: string[];
 };
 
@@ -30,7 +30,7 @@ const nlpApi: nlpApiType = {
       idDocument: document.documentNumber,
       text: document.text,
       source: document.source,
-      meta: document.metadata !== '' ? document.metadata : undefined,
+      meta: document.decisionMetadata.parties,
       categories: nlpCategories,
     };
 

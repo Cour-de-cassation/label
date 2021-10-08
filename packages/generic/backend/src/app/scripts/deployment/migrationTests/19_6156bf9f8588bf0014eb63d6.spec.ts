@@ -15,7 +15,7 @@ describe('add categories that must not be annotated', () => {
     occultationBlock: undefined,
     session: '',
     solution: '',
-  };
+  } as any;
   const documentWithNewModel = documentModule.generator.generate({
     decisionMetadata: {
       ...decisionMetadata,

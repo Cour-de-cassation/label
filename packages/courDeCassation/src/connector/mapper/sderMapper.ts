@@ -16,6 +16,7 @@ export { sderMapper };
 
 const sderMapper = { mapCourtDecisionToDocument };
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 function mapCourtDecisionToDocument(
   sderCourtDecision: decisionType,
 ): documentType {
@@ -48,15 +49,12 @@ function mapCourtDecisionToDocument(
     publicationCategory,
   );
 
-  const criticity = computeCriticity();
-
   const categoriesToOmit = categoriesMapper.mapSderCategoriesToLabelCategories(
     sderCourtDecision.occultation?.categoriesToOmit,
   );
 
   return documentModule.lib.buildDocument({
     creationDate: new Date().getTime(),
-    criticity,
     decisionMetadata: {
       appealNumber: appealNumber || '',
       additionalTermsToAnnotate:
@@ -66,13 +64,13 @@ function mapCourtDecisionToDocument(
       chamberName: readableChamberName,
       date: decisionDate?.getTime(),
       jurisdiction: readableJurisdictionName,
+      parties: sderCourtDecision.parties || [],
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session: sderCourtDecision.formation || '',
       solution: sderCourtDecision.solution,
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),
-    metadata: '',
     priority,
     publicationCategory,
     source: sderCourtDecision.sourceName,
@@ -111,10 +109,6 @@ function computeTitleFromParsedCourtDecision({
     .filter(Boolean)
     .join(' · ');
   return title;
-}
-
-function computeCriticity() {
-  return 1;
 }
 
 function computePublicationCategory(

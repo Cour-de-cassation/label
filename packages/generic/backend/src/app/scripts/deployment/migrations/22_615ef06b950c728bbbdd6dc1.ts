@@ -3,6 +3,7 @@ import { logger } from '../../../../utils';
 
 export { up, down };
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function up() {
   logger.log('Up: ');
 
@@ -10,11 +11,18 @@ async function up() {
 
   const documents = await documentRepository.findAll();
 
+  await documentRepository.deletePropertiesForMany({}, [
+    'metadata',
+    'criticity',
+  ]);
   await Promise.all(
     documents.map((document) =>
       documentRepository.updateOne(document._id, {
-        criticity: 1,
-      } as any),
+        decisionMetadata: {
+          ...document.decisionMetadata,
+          parties: [],
+        },
+      }),
     ),
   );
 }
@@ -24,5 +32,11 @@ async function down() {
 
   const documentRepository = buildDocumentRepository();
 
-  await documentRepository.deletePropertiesForMany({}, ['criticity']);
+  await documentRepository.deletePropertiesForMany({}, [
+    'decisionMetadata.parties',
+  ]);
+  await documentRepository.updateMany({}, {
+    metadata: '',
+    criticity: 1,
+  } as any);
 }

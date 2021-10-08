@@ -7,7 +7,6 @@ export type { documentType, fetchedDocumentType };
 
 const documentModelCommonFields = {
   creationDate: { kind: 'primitive', content: 'number' },
-  criticity: { kind: 'primitive', content: 'number' },
   decisionMetadata: {
     kind: 'object',
     content: {
@@ -31,6 +30,7 @@ const documentModelCommonFields = {
           { kind: 'primitive', content: 'undefined' },
         ],
       },
+      parties: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       session: { kind: 'primitive', content: 'string' },
       solution: { kind: 'primitive', content: 'string' },
     },
@@ -64,7 +64,6 @@ const documentModel = buildModel({
   content: {
     ...documentModelCommonFields,
     externalId: { kind: 'primitive', content: 'string' },
-    metadata: { kind: 'primitive', content: 'string' },
     priority: { kind: 'primitive', content: 'number' as const },
     updateDate: { kind: 'primitive', content: 'number' },
   },

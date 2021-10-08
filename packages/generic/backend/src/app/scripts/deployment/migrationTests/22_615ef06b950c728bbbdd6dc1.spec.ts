@@ -1,24 +1,53 @@
 import { omit } from 'lodash';
 import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../../../modules/document';
-import { up, down } from '../migrations/7_60e6c60ccf9f3a155cd6fc07';
+import { up, down } from '../migrations/22_615ef06b950c728bbbdd6dc1';
 
-xdescribe('add criticity in document model', () => {
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+describe('add parties in decisionMetadata in document model, delete criticity and metadata', () => {
+  const decisionMetadata = {
+    additionalTermsToAnnotate: '',
+    appealNumber: '',
+    boundDecisionDocumentNumbers: [],
+    categoriesToOmit: [],
+    chamberName: '',
+    date: undefined,
+    jurisdiction: '',
+    occultationBlock: undefined,
+    parties: [],
+    session: '',
+    solution: '',
+  };
   const documentsWithNewModel = [
     documentModule.generator.generate({
-      criticity: 1,
-    } as any),
+      documentNumber: 0,
+      decisionMetadata,
+    }),
     documentModule.generator.generate({
-      criticity: 1,
-    } as any),
+      documentNumber: 0,
+      decisionMetadata,
+    }),
     documentModule.generator.generate({
-      criticity: 1,
-    } as any),
+      documentNumber: 0,
+      decisionMetadata,
+    }),
   ];
   const documentsWithOldModel = [
-    omit(documentsWithNewModel[0], 'criticity'),
-    omit(documentsWithNewModel[1], 'criticity'),
-    omit(documentsWithNewModel[2], 'criticity'),
+    {
+      ...omit(documentsWithNewModel[0], ['decisionMetadata.parties']),
+      metadata: '',
+      criticity: 1,
+    },
+    {
+      ...omit(documentsWithNewModel[1], ['decisionMetadata.parties']),
+      metadata: '',
+      criticity: 1,
+    },
+    {
+      ...omit(documentsWithNewModel[2], ['decisionMetadata.parties']),
+      metadata: '',
+      criticity: 1,
+    },
   ];
 
   it('should test up', async () => {

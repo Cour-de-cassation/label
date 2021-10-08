@@ -154,6 +154,7 @@ describe('filterTreatedDocuments', () => {
           categoriesToOmit: [],
           boundDecisionDocumentNumbers: [],
           additionalTermsToAnnotate: '',
+          parties: [],
           appealNumber: '',
         },
       }),

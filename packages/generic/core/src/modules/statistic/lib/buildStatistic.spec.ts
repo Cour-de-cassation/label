@@ -27,6 +27,7 @@ describe('buildStatistic', () => {
         date: decisionDate,
         jurisdiction,
         occultationBlock: undefined,
+        parties: [],
         session: '',
         solution: '',
       },

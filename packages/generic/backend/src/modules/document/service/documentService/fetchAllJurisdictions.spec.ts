@@ -20,6 +20,7 @@ describe('fetchAllJurisdictions', () => {
           chamberName: '',
           date: new Date().getTime(),
           occultationBlock: undefined,
+          parties: [],
           session: '',
           solution: '',
           jurisdiction,

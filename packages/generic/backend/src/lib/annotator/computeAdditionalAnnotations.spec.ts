@@ -35,6 +35,7 @@ describe('computeAdditionalAnnotations', () => {
         date: new Date().getTime(),
         jurisdiction: '',
         occultationBlock: undefined,
+        parties: [],
         session: '',
         solution: '',
       },

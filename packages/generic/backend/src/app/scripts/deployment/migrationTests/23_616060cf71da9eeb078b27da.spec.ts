@@ -2,7 +2,7 @@ import { omit } from 'lodash';
 import { statisticModule, treatmentModule } from '@label/core';
 import { buildStatisticRepository } from '../../../../modules/statistic';
 import { buildTreatmentRepository } from '../../../../modules/treatment';
-import { up, down } from '../migrations/22_6160534f73f30dc8ef08a6d1';
+import { up, down } from '../migrations/23_616060cf71da9eeb078b27da';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('add annotationsCount in statistic and treatment model', () => {

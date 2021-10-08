@@ -9,4 +9,12 @@ describe('countWords', () => {
 
     expect(wordsCount).toEqual(5);
   });
+
+  it('should not count spaces', () => {
+    const document = documentGenerator.generate({ text: 'Some text with      five words' });
+
+    const wordsCount = countWords(document);
+
+    expect(wordsCount).toEqual(5);
+  });
 });

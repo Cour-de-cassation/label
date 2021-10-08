@@ -36,12 +36,10 @@ describe('update', () => {
       ...treatment,
       ...treatmentFields,
       _id: treatment._id,
-      addedAnnotationsCount: { sensitive: 1, other: 1 },
-      deletedAnnotationsCount: { anonymised: 2, other: 1 },
       lastUpdateDate: updatedTreatment.lastUpdateDate,
-      modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
-      resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
-      resizedSmallerAnnotationsCount: { anonymised: 0, other: 0 },
+      subAnnotationsNonSensitiveCount: 1,
+      surAnnotationsCount: 3,
+      subAnnotationsSensitiveCount: 1,
     });
   });
 });

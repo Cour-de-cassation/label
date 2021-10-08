@@ -4,6 +4,8 @@ import { logger } from '../../../../utils';
 
 export { up, down };
 
+/* eslint-disable @typescript-eslint/no-unsafe-member-access*/
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function up() {
   logger.log('Up: ');
 
@@ -15,26 +17,31 @@ async function up() {
       return statisticRepository.updateOne(statistic._id, {
         addedAnnotationsCount: {
           sensitive: 0,
-          other: (statistic.addedAnnotationsCount as unknown) as number,
+          other: ((statistic as any)
+            .addedAnnotationsCount as unknown) as number,
         },
         deletedAnnotationsCount: {
           anonymised: 0,
-          other: (statistic.deletedAnnotationsCount as unknown) as number,
+          other: ((statistic as any)
+            .deletedAnnotationsCount as unknown) as number,
         },
         modifiedAnnotationsCount: {
           anonymisedToNonAnonymised: 0,
           nonAnonymisedToSensitive: 0,
-          other: (statistic.modifiedAnnotationsCount as unknown) as number,
+          other: ((statistic as any)
+            .modifiedAnnotationsCount as unknown) as number,
         },
         resizedBiggerAnnotationsCount: {
           sensitive: 0,
-          other: (statistic.resizedBiggerAnnotationsCount as unknown) as number,
+          other: ((statistic as any)
+            .resizedBiggerAnnotationsCount as unknown) as number,
         },
         resizedSmallerAnnotationsCount: {
           anonymised: 0,
-          other: (statistic.resizedSmallerAnnotationsCount as unknown) as number,
+          other: ((statistic as any)
+            .resizedSmallerAnnotationsCount as unknown) as number,
         },
-      });
+      } as any);
     }),
   );
 
@@ -46,26 +53,31 @@ async function up() {
       return treatmentRepository.updateOne(treatment._id, {
         addedAnnotationsCount: {
           sensitive: 0,
-          other: (treatment.addedAnnotationsCount as unknown) as number,
+          other: ((treatment as any)
+            .addedAnnotationsCount as unknown) as number,
         },
         deletedAnnotationsCount: {
           anonymised: 0,
-          other: (treatment.deletedAnnotationsCount as unknown) as number,
+          other: ((treatment as any)
+            .deletedAnnotationsCount as unknown) as number,
         },
         modifiedAnnotationsCount: {
           anonymisedToNonAnonymised: 0,
           nonAnonymisedToSensitive: 0,
-          other: (treatment.modifiedAnnotationsCount as unknown) as number,
+          other: ((treatment as any)
+            .modifiedAnnotationsCount as unknown) as number,
         },
         resizedBiggerAnnotationsCount: {
           sensitive: 0,
-          other: (treatment.resizedBiggerAnnotationsCount as unknown) as number,
+          other: ((treatment as any)
+            .resizedBiggerAnnotationsCount as unknown) as number,
         },
         resizedSmallerAnnotationsCount: {
           anonymised: 0,
-          other: (treatment.resizedSmallerAnnotationsCount as unknown) as number,
+          other: ((treatment as any)
+            .resizedSmallerAnnotationsCount as unknown) as number,
         },
-      });
+      } as any);
     }),
   );
 }
@@ -80,21 +92,22 @@ async function down() {
     statistics.map((statistic) => {
       return statisticRepository.updateOne(statistic._id, {
         addedAnnotationsCount:
-          statistic.addedAnnotationsCount.sensitive +
-          statistic.addedAnnotationsCount.other,
+          (statistic as any).addedAnnotationsCount.sensitive +
+          (statistic as any).addedAnnotationsCount.other,
         deletedAnnotationsCount:
-          statistic.deletedAnnotationsCount.anonymised +
-          statistic.deletedAnnotationsCount.other,
+          (statistic as any).deletedAnnotationsCount.anonymised +
+          (statistic as any).deletedAnnotationsCount.other,
         resizedBiggerAnnotationsCount:
-          statistic.resizedBiggerAnnotationsCount.sensitive +
-          statistic.resizedBiggerAnnotationsCount.other,
+          (statistic as any).resizedBiggerAnnotationsCount.sensitive +
+          (statistic as any).resizedBiggerAnnotationsCount.other,
         resizedSmallerAnnotationsCount:
-          statistic.resizedSmallerAnnotationsCount.anonymised +
-          statistic.resizedSmallerAnnotationsCount.other,
+          (statistic as any).resizedSmallerAnnotationsCount.anonymised +
+          (statistic as any).resizedSmallerAnnotationsCount.other,
         modifiedAnnotationsCount:
-          statistic.modifiedAnnotationsCount.anonymisedToNonAnonymised +
-          statistic.modifiedAnnotationsCount.nonAnonymisedToSensitive +
-          statistic.modifiedAnnotationsCount.other,
+          (statistic as any).modifiedAnnotationsCount
+            .anonymisedToNonAnonymised +
+          (statistic as any).modifiedAnnotationsCount.nonAnonymisedToSensitive +
+          (statistic as any).modifiedAnnotationsCount.other,
       } as any);
     }),
   );
@@ -106,21 +119,22 @@ async function down() {
     treatments.map((treatment) => {
       return treatmentRepository.updateOne(treatment._id, {
         addedAnnotationsCount:
-          treatment.addedAnnotationsCount.sensitive +
-          treatment.addedAnnotationsCount.other,
+          (treatment as any).addedAnnotationsCount.sensitive +
+          (treatment as any).addedAnnotationsCount.other,
         deletedAnnotationsCount:
-          treatment.deletedAnnotationsCount.anonymised +
-          treatment.deletedAnnotationsCount.other,
+          (treatment as any).deletedAnnotationsCount.anonymised +
+          (treatment as any).deletedAnnotationsCount.other,
         resizedBiggerAnnotationsCount:
-          treatment.resizedBiggerAnnotationsCount.sensitive +
-          treatment.resizedBiggerAnnotationsCount.other,
+          (treatment as any).resizedBiggerAnnotationsCount.sensitive +
+          (treatment as any).resizedBiggerAnnotationsCount.other,
         resizedSmallerAnnotationsCount:
-          treatment.resizedSmallerAnnotationsCount.anonymised +
-          treatment.resizedSmallerAnnotationsCount.other,
+          (treatment as any).resizedSmallerAnnotationsCount.anonymised +
+          (treatment as any).resizedSmallerAnnotationsCount.other,
         modifiedAnnotationsCount:
-          treatment.modifiedAnnotationsCount.anonymisedToNonAnonymised +
-          treatment.modifiedAnnotationsCount.nonAnonymisedToSensitive +
-          treatment.modifiedAnnotationsCount.other,
+          (treatment as any).modifiedAnnotationsCount
+            .anonymisedToNonAnonymised +
+          (treatment as any).modifiedAnnotationsCount.nonAnonymisedToSensitive +
+          (treatment as any).modifiedAnnotationsCount.other,
       } as any);
     }),
   );

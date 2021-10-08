@@ -19,24 +19,8 @@ describe('buildRessourceFilterRequest', () => {
     const ressourceFilterRequest = buildRessourceFilterRequest(ressourceFilter);
 
     expect(ressourceFilterRequest).toEqual({
-      $and: [
-        {
-          $or: [
-            { 'addedAnnotationsCount.sensitive': { $gt: 0 } },
-            { 'modifiedAnnotationsCount.nonAnonymisedToSensitive': { $gt: 0 } },
-            { 'resizedBiggerAnnotationsCount.sensitive': { $gt: 0 } },
-          ],
-        },
-        {
-          $or: [
-            { 'deletedAnnotationsCount.anonymised': { $gt: 0 } },
-            {
-              'modifiedAnnotationsCount.anonymisedToNonAnonymised': { $gt: 0 },
-            },
-            { 'resizedSmallerAnnotationsCount.anonymised': { $gt: 0 } },
-          ],
-        },
-      ],
+      surAnnotationsCount: { $gt: 0 },
+      subAnnotationsSensitiveCount: { $gt: 0 },
       publicationCategory: [publicationCategory],
       source,
       jurisdiction,

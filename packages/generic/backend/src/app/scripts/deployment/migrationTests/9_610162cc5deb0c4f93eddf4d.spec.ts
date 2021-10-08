@@ -3,6 +3,7 @@ import { idModule, statisticModule, statisticType } from '@label/core';
 import { buildStatisticRepository } from '../../../../modules/statistic';
 import { up, down } from '../migrations/9_610162cc5deb0c4f93eddf4d';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 xdescribe('add treatmentsSummary and remove treatmentDuration and userId in statistic model', () => {
   const [userId1, userId2, userId3] = [undefined, undefined, undefined].map(
     idModule.lib.buildId,

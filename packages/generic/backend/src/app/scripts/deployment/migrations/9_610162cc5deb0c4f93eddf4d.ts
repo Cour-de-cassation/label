@@ -1,10 +1,14 @@
 import { groupBy, maxBy, omit, sumBy } from 'lodash';
-import { idModule, statisticType, treatmentType, userType } from '@label/core';
+import { idModule, treatmentType, userType } from '@label/core';
 import { buildStatisticRepository } from '../../../../modules/statistic';
 import { logger } from '../../../../utils';
 
 export { up, down };
 
+/* eslint-disable @typescript-eslint/no-unsafe-member-access*/
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 async function up() {
   logger.log('Up: ');
 
@@ -19,9 +23,7 @@ async function up() {
     aggregatedStatistics.map(async (statisticsOnOneDocument) => {
       const treatmentsSummary = statisticsOnOneDocument.map(
         (statistic: any) => ({
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           userId: statistic.userId as userType['_id'],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           treatmentDuration: statistic.treatmentDuration as treatmentType['duration'],
         }),
       );
@@ -30,57 +32,64 @@ async function up() {
         addedAnnotationsCount: {
           sensitive: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.addedAnnotationsCount.sensitive,
+            (statistic) => (statistic as any).addedAnnotationsCount.sensitive,
           ),
           other: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.addedAnnotationsCount.other,
+            (statistic) => (statistic as any).addedAnnotationsCount.other,
           ),
         },
         deletedAnnotationsCount: {
           anonymised: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.deletedAnnotationsCount.anonymised,
+            (statistic) =>
+              (statistic as any).deletedAnnotationsCount.anonymised,
           ),
           other: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.deletedAnnotationsCount.other,
+            (statistic) => (statistic as any).deletedAnnotationsCount.other,
           ),
         },
         modifiedAnnotationsCount: {
           nonAnonymisedToSensitive: sumBy(
             statisticsOnOneDocument,
             (statistic) =>
-              statistic.modifiedAnnotationsCount.nonAnonymisedToSensitive,
+              (statistic as any).modifiedAnnotationsCount
+                .nonAnonymisedToSensitive,
           ),
           anonymisedToNonAnonymised: sumBy(
             statisticsOnOneDocument,
             (statistic) =>
-              statistic.modifiedAnnotationsCount.anonymisedToNonAnonymised,
+              (statistic as any).modifiedAnnotationsCount
+                .anonymisedToNonAnonymised,
           ),
           other: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.modifiedAnnotationsCount.other,
+            (statistic) => (statistic as any).modifiedAnnotationsCount.other,
           ),
         },
         resizedBiggerAnnotationsCount: {
           sensitive: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.resizedBiggerAnnotationsCount.sensitive,
+            (statistic) =>
+              (statistic as any).resizedBiggerAnnotationsCount.sensitive,
           ),
           other: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.resizedBiggerAnnotationsCount.other,
+            (statistic) =>
+              (statistic as any).resizedBiggerAnnotationsCount.other,
           ),
         },
         resizedSmallerAnnotationsCount: {
           anonymised: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.resizedSmallerAnnotationsCount.anonymised,
+            (statistic) =>
+              (statistic as any).resizedSmallerAnnotationsCount.anonymised,
           ),
           other: sumBy(
             statisticsOnOneDocument,
-            (statistic) => statistic.resizedSmallerAnnotationsCount.other,
+            (statistic) =>
+              (statistic as any).resizedSmallerAnnotationsCount.other,
           ),
         },
         linkedEntitiesCount: sumBy(
@@ -96,7 +105,7 @@ async function up() {
         wordsCount: statisticsOnOneDocument[0].wordsCount,
         source: statisticsOnOneDocument[0].source,
         publicationCategory: statisticsOnOneDocument[0].publicationCategory,
-      } as statisticType;
+      } as any;
 
       await statisticRepository.insert(newStatistic);
       await statisticRepository.deleteManyByIds(
@@ -115,8 +124,8 @@ async function down() {
 
   await Promise.all(
     statistics.map(async (statistic) => {
-      const oldStatistics = statistic.treatmentsSummary.map(
-        (treatmentSummary) => {
+      const oldStatistics = (statistic as any).treatmentsSummary.map(
+        (treatmentSummary: any) => {
           const oldStatistic = {
             ...omit(statistic, ['treatmentsSummary']),
             _id: idModule.lib.buildId(),

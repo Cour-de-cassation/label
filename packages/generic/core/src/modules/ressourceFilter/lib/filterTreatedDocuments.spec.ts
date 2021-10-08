@@ -9,7 +9,7 @@ describe('filterTreatedDocuments', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
     const userId = idModule.lib.buildId();
     const treatments = [
-      { addedAnnotationsCount: { sensitive: 3, other: 5 }, documentId: documents[1]._id, order: 2 },
+      { subAnnotationsSensitiveCount: 5, documentId: documents[1]._id, order: 2 },
       { documentId: documents[1]._id, order: 0 },
       { documentId: documents[1]._id, order: 1 },
     ].map(treatmentModule.generator.generate);
@@ -39,7 +39,7 @@ describe('filterTreatedDocuments', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
     const userId = idModule.lib.buildId();
     const treatments = [
-      { deletedAnnotationsCount: { anonymised: 5, other: 1 }, documentId: documents[1]._id, order: 2 },
+      { surAnnotationsCount: 5, documentId: documents[1]._id, order: 2 },
       { documentId: documents[1]._id, order: 0 },
       { documentId: documents[1]._id, order: 1 },
     ].map(treatmentModule.generator.generate);

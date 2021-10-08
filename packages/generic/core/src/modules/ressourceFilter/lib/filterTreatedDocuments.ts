@@ -1,9 +1,8 @@
 import { documentType } from '../../document';
 import { idModule } from '../../id';
 import { treatmentType } from '../../treatment';
-import { statisticModule } from '../../statistic';
-import { ressourceFilterType } from '../ressourceFilterType';
 import { userType } from '../../user';
+import { ressourceFilterType } from '../ressourceFilterType';
 
 export { filterTreatedDocuments };
 
@@ -25,8 +24,7 @@ function filterTreatedDocuments({
       isInTheFilter =
         isInTheFilter &&
         humanTreatments.some(({ treatment }) => {
-          const simplifyedStatistic = statisticModule.lib.simplify(treatment);
-          return simplifyedStatistic.surAnnotationsCount > 0;
+          return treatment.surAnnotationsCount > 0;
         });
     }
 
@@ -34,8 +32,7 @@ function filterTreatedDocuments({
       isInTheFilter =
         isInTheFilter &&
         humanTreatments.some(({ treatment }) => {
-          const simplifyedStatistic = statisticModule.lib.simplify(treatment);
-          return simplifyedStatistic.subAnnotationsSensitiveCount > 0;
+          return treatment.subAnnotationsSensitiveCount > 0;
         });
     }
     if (ressourceFilter.publicationCategory) {

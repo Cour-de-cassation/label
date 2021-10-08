@@ -35,17 +35,11 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
       });
       const statistics = [
         {
-          addedAnnotationsCount: { sensitive: 3, other: 1 },
+          subAnnotationsSensitiveCount: 6,
+          subAnnotationsNonSensitiveCount: 1,
+          surAnnotationsCount: 6,
           annotationsCount: 9,
-          deletedAnnotationsCount: { anonymised: 3, other: 2 },
           linkedEntitiesCount: 3,
-          modifiedAnnotationsCount: {
-            nonAnonymisedToSensitive: 0,
-            anonymisedToNonAnonymised: 0,
-            other: 3,
-          },
-          resizedBiggerAnnotationsCount: { sensitive: 3, other: 0 },
-          resizedSmallerAnnotationsCount: { anonymised: 3, other: 0 },
           treatmentsSummary: [
             { userId: userId1, treatmentDuration: 3 },
             { userId: userId2, treatmentDuration: 10 },
@@ -53,17 +47,11 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
           wordsCount: 9,
         },
         {
-          addedAnnotationsCount: { sensitive: 3, other: 1 },
+          subAnnotationsSensitiveCount: 6,
+          subAnnotationsNonSensitiveCount: 1,
+          surAnnotationsCount: 6,
           annotationsCount: 9,
-          deletedAnnotationsCount: { anonymised: 3, other: 2 },
           linkedEntitiesCount: 3,
-          modifiedAnnotationsCount: {
-            nonAnonymisedToSensitive: 0,
-            anonymisedToNonAnonymised: 0,
-            other: 3,
-          },
-          resizedBiggerAnnotationsCount: { sensitive: 3, other: 0 },
-          resizedSmallerAnnotationsCount: { anonymised: 3, other: 0 },
           treatmentDuration: 3,
           treatmentsSummary: [{ userId: userId2, treatmentDuration: 50 }],
           wordsCount: 9,
@@ -141,14 +129,6 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
               { start: 90, text: 'Gaston', category: 'personnePhysiquePrenom' },
             ].map(annotationModule.generator.generate),
           ),
-          addedAnnotationsCount: { sensitive: 1, other: 0 },
-          deletedAnnotationsCount: { anonymised: 1, other: 0 },
-          modifiedAnnotationsCount: {
-            nonAnonymisedToSensitive: 0,
-            anonymisedToNonAnonymised: 0,
-            other: 1,
-          },
-          resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
           duration: 10,
           order: 1,
         },
@@ -177,9 +157,9 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
 
       expect(aggregatedStatistics).toEqual({
         cumulatedValue: {
-          subAnnotationsNonSensitiveCount: 1,
+          subAnnotationsNonSensitiveCount: 0,
           subAnnotationsSensitiveCount: 1,
-          surAnnotationsCount: 1,
+          surAnnotationsCount: 2,
           treatmentDuration: 10,
           annotationsCount: 3,
           wordsCount: 5,

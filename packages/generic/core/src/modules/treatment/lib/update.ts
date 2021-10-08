@@ -10,21 +10,16 @@ function update(
   settings: settingsType,
 ): treatmentType {
   const newTreatment = { ...treatment, ...treatmentFields };
-  const {
-    additionsCount,
-    deletionsCount,
-    modificationsCount,
-    resizedBiggerCount,
-    resizedSmallerCount,
-  } = computeTreatmentInfo(newTreatment, settings);
+  const { subAnnotationsSensitiveCount, surAnnotationsCount, subAnnotationsNonSensitiveCount } = computeTreatmentInfo(
+    newTreatment,
+    settings,
+  );
 
   return {
     ...newTreatment,
-    addedAnnotationsCount: additionsCount,
-    deletedAnnotationsCount: deletionsCount,
+    subAnnotationsNonSensitiveCount,
+    surAnnotationsCount,
+    subAnnotationsSensitiveCount,
     lastUpdateDate: new Date().getTime(),
-    modifiedAnnotationsCount: modificationsCount,
-    resizedBiggerAnnotationsCount: resizedBiggerCount,
-    resizedSmallerAnnotationsCount: resizedSmallerCount,
   };
 }

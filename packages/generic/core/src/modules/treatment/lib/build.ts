@@ -9,34 +9,27 @@ export { build };
 function build(
   treatmentFields: Omit<
     omitIdType<treatmentType>,
-    | 'addedAnnotationsCount'
-    | 'deletedAnnotationsCount'
     | 'duration'
     | 'lastUpdateDate'
-    | 'modifiedAnnotationsCount'
-    | 'resizedBiggerAnnotationsCount'
-    | 'resizedSmallerAnnotationsCount'
+    | 'subAnnotationsSensitiveCount'
+    | 'subAnnotationsNonSensitiveCount'
+    | 'surAnnotationsCount'
   >,
   settings: settingsType,
 ): treatmentType {
   const treatment = treatmentGenerator.generate(treatmentFields);
-  const {
-    additionsCount,
-    deletionsCount,
-    modificationsCount,
-    resizedBiggerCount,
-    resizedSmallerCount,
-  } = computeTreatmentInfo(treatment, settings);
+  const { subAnnotationsSensitiveCount, surAnnotationsCount, subAnnotationsNonSensitiveCount } = computeTreatmentInfo(
+    treatment,
+    settings,
+  );
 
   return {
     ...treatment,
     _id: idModule.lib.buildId(),
-    addedAnnotationsCount: additionsCount,
-    deletedAnnotationsCount: deletionsCount,
+    subAnnotationsNonSensitiveCount,
+    surAnnotationsCount,
+    subAnnotationsSensitiveCount,
     duration: 0,
     lastUpdateDate: new Date().getTime(),
-    modifiedAnnotationsCount: modificationsCount,
-    resizedBiggerAnnotationsCount: resizedBiggerCount,
-    resizedSmallerAnnotationsCount: resizedSmallerCount,
   };
 }

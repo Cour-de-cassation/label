@@ -10,13 +10,11 @@ describe('aggregate', () => {
   const statistics = [
     {
       annotationsCount: 10,
-      addedAnnotationsCount: { sensitive: 3, other: 1 },
-      deletedAnnotationsCount: { anonymised: 3, other: 1 },
       documentNumber: 0,
       linkedEntitiesCount: 3,
-      modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 3 },
-      resizedBiggerAnnotationsCount: { sensitive: 3, other: 0 },
-      resizedSmallerAnnotationsCount: { anonymised: 3, other: 0 },
+      subAnnotationsSensitiveCount: 5,
+      subAnnotationsNonSensitiveCount: 6,
+      surAnnotationsCount: 7,
       treatmentsSummary: [
         { userId: userId1, treatmentDuration: 15 },
         { userId: userId2, treatmentDuration: 12 },
@@ -25,13 +23,11 @@ describe('aggregate', () => {
     },
     {
       annotationsCount: 12,
-      addedAnnotationsCount: { sensitive: 1, other: 6 },
-      deletedAnnotationsCount: { anonymised: 6, other: 2 },
       documentNumber: 1,
       linkedEntitiesCount: 4,
-      modifiedAnnotationsCount: { nonAnonymisedToSensitive: 10, anonymisedToNonAnonymised: 0, other: 4 },
-      resizedBiggerAnnotationsCount: { sensitive: 4, other: 0 },
-      resizedSmallerAnnotationsCount: { anonymised: 4, other: 0 },
+      subAnnotationsSensitiveCount: 8,
+      subAnnotationsNonSensitiveCount: 9,
+      surAnnotationsCount: 10,
       treatmentsSummary: [
         { userId: userId1, treatmentDuration: 17 },
         { userId: userId2, treatmentDuration: 50 },
@@ -46,9 +42,9 @@ describe('aggregate', () => {
     expect(aggregatedStatistics).toEqual({
       cumulatedValue: {
         annotationsCount: 22,
-        subAnnotationsNonSensitiveCount: 7,
-        subAnnotationsSensitiveCount: 21,
-        surAnnotationsCount: 16,
+        subAnnotationsNonSensitiveCount: 15,
+        subAnnotationsSensitiveCount: 13,
+        surAnnotationsCount: 17,
         treatmentDuration: 94,
         wordsCount: 3,
       },
@@ -62,9 +58,9 @@ describe('aggregate', () => {
     expect(aggregatedStatistics).toEqual({
       cumulatedValue: {
         annotationsCount: 22,
-        subAnnotationsNonSensitiveCount: 7,
-        subAnnotationsSensitiveCount: 21,
-        surAnnotationsCount: 16,
+        subAnnotationsNonSensitiveCount: 15,
+        subAnnotationsSensitiveCount: 13,
+        surAnnotationsCount: 17,
         treatmentDuration: 32,
         wordsCount: 3,
       },

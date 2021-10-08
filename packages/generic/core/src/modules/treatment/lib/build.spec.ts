@@ -37,16 +37,14 @@ describe('build', () => {
 
     expect(treatment).toEqual({
       _id: treatment._id,
-      addedAnnotationsCount: { sensitive: 1, other: 1 },
+      subAnnotationsNonSensitiveCount: 1,
+      surAnnotationsCount: 3,
+      subAnnotationsSensitiveCount: 1,
       annotationsDiff: treatmentFields.annotationsDiff,
-      deletedAnnotationsCount: { anonymised: 2, other: 1 },
       documentId: treatmentFields.documentId,
       duration: 0,
       lastUpdateDate: treatment.lastUpdateDate,
-      modifiedAnnotationsCount: { nonAnonymisedToSensitive: 0, anonymisedToNonAnonymised: 0, other: 1 },
       order: treatmentFields.order,
-      resizedBiggerAnnotationsCount: { sensitive: 0, other: 1 },
-      resizedSmallerAnnotationsCount: { anonymised: 0, other: 0 },
       source: treatmentFields.source,
     });
   });

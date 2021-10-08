@@ -2,7 +2,6 @@ import { sum, sumBy } from 'lodash';
 import { idModule } from '../../id';
 import { ressourceFilterType } from '../../ressourceFilter';
 import { statisticType } from '../statisticType';
-import { simplify } from './simplify';
 
 export { aggregate };
 
@@ -10,7 +9,6 @@ function aggregate(statistics: statisticType[], filter: ressourceFilterType) {
   return {
     cumulatedValue: statistics.reduce(
       (aggregatedStatistics, statistic) => {
-        const simplifyedStatistic = simplify(statistic);
         const { userId: userIdToFilter } = filter;
         const treatmentDuration = userIdToFilter
           ? aggregatedStatistics.treatmentDuration +
@@ -24,11 +22,11 @@ function aggregate(statistics: statisticType[], filter: ressourceFilterType) {
         return {
           annotationsCount: aggregatedStatistics.annotationsCount + statistic.annotationsCount,
           wordsCount: aggregatedStatistics.wordsCount + statistic.wordsCount,
-          surAnnotationsCount: aggregatedStatistics.surAnnotationsCount + simplifyedStatistic.surAnnotationsCount,
+          surAnnotationsCount: aggregatedStatistics.surAnnotationsCount + statistic.surAnnotationsCount,
           subAnnotationsSensitiveCount:
-            aggregatedStatistics.subAnnotationsSensitiveCount + simplifyedStatistic.subAnnotationsSensitiveCount,
+            aggregatedStatistics.subAnnotationsSensitiveCount + statistic.subAnnotationsSensitiveCount,
           subAnnotationsNonSensitiveCount:
-            aggregatedStatistics.subAnnotationsNonSensitiveCount + simplifyedStatistic.subAnnotationsNonSensitiveCount,
+            aggregatedStatistics.subAnnotationsNonSensitiveCount + statistic.subAnnotationsNonSensitiveCount,
           treatmentDuration,
         };
       },

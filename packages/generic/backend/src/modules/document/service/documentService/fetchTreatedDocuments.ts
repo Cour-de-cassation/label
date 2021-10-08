@@ -3,7 +3,6 @@ import {
   errorHandlers,
   idModule,
   settingsType,
-  statisticModule,
   treatmentModule,
 } from '@label/core';
 import { assignationService } from '../../../assignation';
@@ -61,13 +60,16 @@ async function fetchTreatedDocuments(settings: settingsType) {
     );
     const lastTreatmentDate =
       humanTreatments[humanTreatments.length - 1].treatment.lastUpdateDate;
-    const statistic = statisticModule.lib.simplify(
-      treatmentModule.lib.aggregate(
-        humanTreatments.map(({ treatment }) => treatment),
-        'annotator',
-        settings,
-      ),
+    const {
+      subAnnotationsNonSensitiveCount,
+      surAnnotationsCount,
+      subAnnotationsSensitiveCount,
+    } = treatmentModule.lib.aggregate(
+      humanTreatments.map(({ treatment }) => treatment),
+      'annotator',
+      settings,
     );
+
     return {
       document: {
         _id: treatedDocument._id,
@@ -81,7 +83,11 @@ async function fetchTreatedDocuments(settings: settingsType) {
       },
       totalTreatmentDuration,
       lastTreatmentDate,
-      statistic,
+      statistic: {
+        subAnnotationsNonSensitiveCount,
+        surAnnotationsCount,
+        subAnnotationsSensitiveCount,
+      },
       userNames,
     };
   });

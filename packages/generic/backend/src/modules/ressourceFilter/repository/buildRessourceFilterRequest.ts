@@ -2,29 +2,13 @@ import { ressourceFilterType } from '@label/core';
 
 export { buildRessourceFilterRequest };
 
-type $andOperatorType = Array<
-  | {
-      $or: [
-        { 'addedAnnotationsCount.sensitive': { $gt: 0 } },
-        { 'modifiedAnnotationsCount.nonAnonymisedToSensitive': { $gt: 0 } },
-        { 'resizedBiggerAnnotationsCount.sensitive': { $gt: 0 } },
-      ];
-    }
-  | {
-      $or: [
-        { 'deletedAnnotationsCount.anonymised': { $gt: 0 } },
-        { 'modifiedAnnotationsCount.anonymisedToNonAnonymised': { $gt: 0 } },
-        { 'resizedSmallerAnnotationsCount.anonymised': { $gt: 0 } },
-      ];
-    }
->;
-
 type ressourceFilterRequestType = {
-  $and?: $andOperatorType;
   publicationCategory?: string[];
   treatmentDate?: { $gt?: number; $lte?: number };
   source?: ressourceFilterType['source'];
   jurisdiction?: ressourceFilterType['jurisdiction'];
+  subAnnotationsSensitiveCount?: { $gt?: number };
+  surAnnotationsCount?: { $gt?: number };
   'treatmentsSummary.userId'?: ressourceFilterType['userId'];
 };
 
@@ -33,35 +17,12 @@ function buildRessourceFilterRequest(
 ): ressourceFilterRequestType {
   const ressourceFilterRequest = {} as ressourceFilterRequestType;
 
-  let $andOperator = [] as $andOperatorType;
   if (ressourceFilter.mustHaveSubAnnotations) {
-    $andOperator = [
-      ...$andOperator,
-      {
-        $or: [
-          { 'addedAnnotationsCount.sensitive': { $gt: 0 } },
-          { 'modifiedAnnotationsCount.nonAnonymisedToSensitive': { $gt: 0 } },
-          { 'resizedBiggerAnnotationsCount.sensitive': { $gt: 0 } },
-        ],
-      },
-    ];
+    ressourceFilterRequest.subAnnotationsSensitiveCount = { $gt: 0 };
   }
 
   if (ressourceFilter.mustHaveSurAnnotations) {
-    $andOperator = [
-      ...$andOperator,
-      {
-        $or: [
-          { 'deletedAnnotationsCount.anonymised': { $gt: 0 } },
-          { 'modifiedAnnotationsCount.anonymisedToNonAnonymised': { $gt: 0 } },
-          { 'resizedSmallerAnnotationsCount.anonymised': { $gt: 0 } },
-        ],
-      },
-    ];
-  }
-
-  if ($andOperator.length > 0) {
-    ressourceFilterRequest.$and = $andOperator;
+    ressourceFilterRequest.surAnnotationsCount = { $gt: 0 };
   }
 
   if (ressourceFilter.publicationCategory) {

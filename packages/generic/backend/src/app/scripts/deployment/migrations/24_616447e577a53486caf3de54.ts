@@ -13,10 +13,9 @@ async function up() {
   await Promise.all(
     statistics.map((statistic) =>
       statisticRepository.updateOne(statistic._id, {
-        jurisdiction:
-          statistic.jurisdiction !== undefined
-            ? statistic.jurisdiction.toLowerCase()
-            : undefined,
+        jurisdiction: !!statistic.jurisdiction
+          ? statistic.jurisdiction.toLowerCase()
+          : undefined,
         chamberName: undefined,
         session: undefined,
       }),
@@ -34,10 +33,9 @@ async function down() {
   await Promise.all(
     statistics.map((statistic) =>
       statisticRepository.updateOne(statistic._id, {
-        jurisdiction:
-          statistic.jurisdiction !== undefined
-            ? statistic.jurisdiction.toLowerCase()
-            : undefined,
+        jurisdiction: !!statistic.jurisdiction
+          ? statistic.jurisdiction.toLowerCase()
+          : undefined,
       }),
     ),
   );

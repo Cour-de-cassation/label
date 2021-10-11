@@ -17,8 +17,9 @@ function getNextStatus({
     case 'pending':
       return 'saved';
     case 'saved':
-      const mustBePublished = publicationHandler.mustBePublished(publicationCategory);
-      return mustBePublished ? 'toBePublished' : 'done';
+      return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
+    case 'rejected':
+      return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
     case 'toBePublished':
       return 'done';
     default:

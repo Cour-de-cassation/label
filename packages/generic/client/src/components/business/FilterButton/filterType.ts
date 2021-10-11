@@ -22,6 +22,7 @@ type filterType =
   | {
       kind: 'dateInterval';
       name: string;
+      extremumAvailableDates: { min: number | undefined; max: number | undefined };
       value: { startDate: Date | undefined; endDate: Date | undefined };
       onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => void;
     };

@@ -40,6 +40,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       findAllProjection,
       findAllByIds,
       findById,
+      findExtremumField,
       deletePropertiesForMany,
       insert,
       insertMany,
@@ -117,6 +118,22 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       return result;
     }
 
+    async function findExtremumField(
+      filter: Partial<T>,
+      field: keyof T,
+      direction: 'min' | 'max',
+    ) {
+      const result = await collection
+        .find(filter)
+        .sort({ [field]: convertDirectionToSortValue(direction) })
+        .limit(1)
+        .toArray();
+      if (result.length === 0) {
+        return undefined;
+      }
+      return result[0];
+    }
+
     async function insert(newObject: T) {
       const insertResult = await collection.insertOne(newObject as any);
       return { success: !!insertResult.result.ok };
@@ -181,4 +198,13 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       };
     }
   };
+}
+
+function convertDirectionToSortValue(direction: 'max' | 'min') {
+  switch (direction) {
+    case 'max':
+      return -1;
+    case 'min':
+      return 1;
+  }
 }

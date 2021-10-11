@@ -27,6 +27,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     findAllProjection,
     findAllByIds,
     findById,
+    findExtremumField,
     deletePropertiesForMany,
     insert,
     insertMany,
@@ -169,6 +170,20 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     return result;
   }
 
+  async function findExtremumField(
+    filter: Partial<T>,
+    field: keyof T,
+    order: 'min' | 'max',
+  ) {
+    if (collection.length === 0) {
+      return undefined;
+    }
+    const sortedItems = [...collection].sort((item1, item2) =>
+      extractSortingValue(item1, item2, field, order),
+    );
+    return sortedItems[0];
+  }
+
   async function insert(newObject: T) {
     collection.push(newObject);
     return { success: true };
@@ -248,4 +263,30 @@ function projectFakeObjects<T, projectionT extends keyof T>(
   );
 
   return projectedObject;
+}
+
+function extractSortingValue<T>(
+  statistic1: T,
+  statistic2: T,
+  field: keyof T,
+  order: 'max' | 'min',
+) {
+  const field1 = statistic1[field];
+  const field2 = statistic2[field];
+  if (typeof field1 === 'number' && typeof field2 === 'number') {
+    return convertDirectionToSortValue(order) * (field1 - field2);
+  } else if (typeof field1 === 'string' && typeof field2 === 'string') {
+    return convertDirectionToSortValue(order) * field1.localeCompare(field2);
+  } else {
+    return 0;
+  }
+}
+
+function convertDirectionToSortValue(direction: 'max' | 'min') {
+  switch (direction) {
+    case 'max':
+      return -1;
+    case 'min':
+      return 1;
+  }
 }

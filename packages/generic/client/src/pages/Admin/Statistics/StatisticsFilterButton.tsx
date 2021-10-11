@@ -100,6 +100,10 @@ function StatisticsFilterButton(props: {
           startDate: props.ressourceFilter.startDate ? new Date(props.ressourceFilter.startDate) : undefined,
           endDate: props.ressourceFilter.endDate ? new Date(props.ressourceFilter.endDate) : undefined,
         },
+        extremumAvailableDates: {
+          min: props.availableStatisticFilters.minDate,
+          max: props.availableStatisticFilters.maxDate,
+        },
         onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => {
           props.refetch({
             ...props.ressourceFilter,

@@ -1,9 +1,11 @@
 import React from 'react';
+import { dateType } from '@label/core';
 import { TooltipMenu, LabelledDropdown, SwitchButton, Text, DatePicker, Icon } from '../../generic';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { rectPositionType } from '../../../types';
 import { wordings } from '../../../wordings';
 import { filterType } from './filterType';
+import { buildComputeIsDateAvailable } from './lib';
 
 export { FilterTooltipMenu };
 
@@ -57,28 +59,49 @@ function FilterTooltipMenu(props: { filters: filterType[]; onClose: () => void; 
         );
 
       case 'dateInterval':
+        const computeIsDateAvailable = buildComputeIsDateAvailable(filter.extremumAvailableDates);
         return (
           <div style={styles.dateIntervalContainer}>
             <DatePicker
-              momentOfTheDay="beginning"
-              onChange={(startDate) => filter.onChange({ endDate: filter.value.endDate, startDate })}
+              onChange={buildOnStartDateChange(filter.onChange, filter.value.endDate)}
               value={filter.value.startDate}
               width={DATE_DROPDOWN_WIDTH}
               label={wordings.business.filters.intervalDate.start}
               parentRectPosition={props.rectPosition}
+              computeIsDateAvailable={computeIsDateAvailable}
             />
             <Icon iconName="doubleArrow" />
             <DatePicker
-              momentOfTheDay="end"
-              onChange={(endDate) => filter.onChange({ startDate: filter.value.startDate, endDate })}
+              onChange={buildOnEndDateChange(filter.onChange, filter.value.startDate)}
               value={filter.value.endDate}
               width={DATE_DROPDOWN_WIDTH}
               label={wordings.business.filters.intervalDate.end}
               parentRectPosition={props.rectPosition}
+              computeIsDateAvailable={computeIsDateAvailable}
             />
           </div>
         );
     }
+  }
+
+  function buildOnEndDateChange(
+    onFilterChange: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) => void,
+    currentStartDate: Date | undefined,
+  ) {
+    return (date: dateType) => {
+      const endDate = new Date(date.year, date.month, date.dayOfMonth, 23, 59, 59);
+      onFilterChange({ endDate, startDate: currentStartDate });
+    };
+  }
+
+  function buildOnStartDateChange(
+    onFilterChange: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) => void,
+    currentEndDate: Date | undefined,
+  ) {
+    return (date: dateType) => {
+      const startDate = new Date(date.year, date.month, date.dayOfMonth, 0, 0, 1);
+      onFilterChange({ startDate, endDate: currentEndDate });
+    };
   }
 
   function buildStyles(theme: customThemeType) {

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { range } from 'lodash';
+import { dateType } from '@label/core';
+import { customThemeType, useCustomTheme } from '../../../../styles';
 import { rectPositionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { Icon, Text } from '../../materialUI';
@@ -9,22 +11,19 @@ import { createCalendarTable } from './lib/createCalendarTable';
 
 export { DatePickerTooltip };
 
-export type { momentOfTheDayType };
-
 const TOOLTIP_WIDTH = 300;
 
 const dayOfTheWeekKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 
-type momentOfTheDayType = 'beginning' | 'end';
-
 function DatePickerTooltip(props: {
   value: Date | undefined;
-  momentOfTheDay: momentOfTheDayType;
-  onChange: (value: Date) => void;
+  computeIsDateAvailable: (date: dateType) => boolean;
+  onChange: (value: dateType) => void;
   rectPosition: rectPositionType;
   onClose: () => void;
 }) {
-  const styles = buildStyles();
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
   const now = new Date();
   const [currentDate, setCurrentDate] = useState<Date>(
     props.value || new Date(now.getFullYear(), now.getMonth(), now.getDate()),
@@ -67,41 +66,38 @@ function DatePickerTooltip(props: {
     const calendarTable = createCalendarTable(year, month);
     const calendar = calendarTable.map((week) => (
       <tr>
-        {week.map((dayOfMonth) =>
-          dayOfMonth ? (
+        {week.map((dayOfMonth) => {
+          if (dayOfMonth === undefined) {
+            return <td />;
+          }
+          const isDateAvailable = props.computeIsDateAvailable({ year, month, dayOfMonth });
+          return (
             <td>
-              <div style={styles.dayContainer} onClick={() => changeDate({ year, month, dayOfMonth })}>
+              <div
+                style={{
+                  ...styles.dayContainer,
+                  ...(isDateAvailable ? undefined : styles.unavailableDayContainer),
+                }}
+                onClick={isDateAvailable ? () => changeDate({ year, month, dayOfMonth }) : undefined}
+              >
                 <Text>{dayOfMonth}</Text>
               </div>
             </td>
-          ) : (
-            <td />
-          ),
-        )}
+          );
+        })}
       </tr>
     ));
 
     return calendar;
   }
 
-  function changeDate({ year, month, dayOfMonth }: { year: number; month: number; dayOfMonth: number }) {
-    const { hours, minutes, seconds } = computeTimeFromMomentOfTheDay(props.momentOfTheDay);
-    const date = new Date(year, month, dayOfMonth, hours, minutes, seconds);
+  function changeDate(date: dateType) {
     props.onChange(date);
     props.onClose();
   }
 }
 
-function computeTimeFromMomentOfTheDay(momentOfTheDay: momentOfTheDayType) {
-  switch (momentOfTheDay) {
-    case 'beginning':
-      return { hours: 0, minutes: 0, seconds: 0 };
-    case 'end':
-      return { hours: 23, minutes: 59, seconds: 59 };
-  }
-}
-
-function buildStyles() {
+function buildStyles(theme: customThemeType) {
   return {
     header: {
       display: 'flex',
@@ -117,6 +113,10 @@ function buildStyles() {
     daysTable: { width: '100%' },
     dayContainer: {
       cursor: 'pointer',
+    },
+    unavailableDayContainer: {
+      color: theme.colors.disabled.color,
+      cursor: 'default',
     },
   } as const;
 }

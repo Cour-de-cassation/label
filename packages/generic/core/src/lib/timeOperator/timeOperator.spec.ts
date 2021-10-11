@@ -28,4 +28,38 @@ describe('timeOperator', () => {
       expect(regex.test(dateString)).toBe(true);
     });
   });
+
+  describe('compareDates', () => {
+    it('should return -1 if the date 1 is older than date2', () => {
+      const date1 = { year: 2021, month: 11, dayOfMonth: 1 };
+      const date2 = { year: 2021, month: 11, dayOfMonth: 2 };
+
+      expect(timeOperator.compareDates(date1, date2)).toBe(-1);
+    });
+
+    it('should return 0 if the date 1 is equal to date2', () => {
+      const date1 = { year: 2021, month: 11, dayOfMonth: 1 };
+      const date2 = { year: 2021, month: 11, dayOfMonth: 1 };
+
+      expect(timeOperator.compareDates(date1, date2)).toBe(0);
+    });
+
+    it('should return 1 if the date 1 is more recent than date2', () => {
+      const date1 = { year: 2021, month: 11, dayOfMonth: 2 };
+      const date2 = { year: 2021, month: 11, dayOfMonth: 1 };
+
+      expect(timeOperator.compareDates(date1, date2)).toBe(1);
+    });
+  });
+
+  describe('convertTimestampToDate', () => {
+    it('should convert the timestamp into date', () => {
+      // October 11th 2021
+      const timestamp = 1633946945874;
+
+      const date = timeOperator.convertTimestampToDate(timestamp);
+
+      expect(date).toEqual({ year: 2021, month: 9, dayOfMonth: 11 });
+    });
+  });
 });

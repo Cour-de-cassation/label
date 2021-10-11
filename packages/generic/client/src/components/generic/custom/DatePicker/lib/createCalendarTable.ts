@@ -9,8 +9,8 @@ function createCalendarTable(year: number, month: number) {
   const daysOfMonth: Date[] = [];
 
   // Create the array of the days of the month
-  const currentDateInMonth = new Date(year, month);
-  currentDateInMonth.setDate(1);
+  const currentDateInMonth = new Date(year, month, 1, 12, 0, 0);
+
   do {
     daysOfMonth.push(new Date(currentDateInMonth));
     currentDateInMonth.setTime(currentDateInMonth.getTime() + ONE_DAY);

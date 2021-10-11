@@ -1,14 +1,14 @@
 import React, { MouseEvent, useState } from 'react';
-import { timeOperator } from '@label/core';
+import { timeOperator, dateType } from '@label/core';
 import { rectPositionType } from '../../../../types';
 import { DropdownButton } from '../DropdownButton';
-import { DatePickerTooltip, momentOfTheDayType } from './DatePickerTooltip';
+import { DatePickerTooltip } from './DatePickerTooltip';
 
 export { DatePicker };
 
 function DatePicker(props: {
-  momentOfTheDay: momentOfTheDayType;
-  onChange: (date: Date) => void;
+  computeIsDateAvailable: (date: dateType) => boolean;
+  onChange: (date: dateType) => void;
   value: Date | undefined;
   label: string;
   width?: number;
@@ -34,7 +34,7 @@ function DatePicker(props: {
       />
       {!!tooltipMenuRectPosition && (
         <DatePickerTooltip
-          momentOfTheDay={props.momentOfTheDay}
+          computeIsDateAvailable={props.computeIsDateAvailable}
           value={props.value}
           onChange={props.onChange}
           rectPosition={tooltipMenuRectPosition}

@@ -155,6 +155,20 @@ const apiSchema = {
               content: 'string',
             },
           },
+          maxDate: {
+            kind: 'or',
+            content: [
+              { kind: 'primitive', content: 'number' },
+              { kind: 'primitive', content: 'undefined' },
+            ],
+          },
+          minDate: {
+            kind: 'or',
+            content: [
+              { kind: 'primitive', content: 'number' },
+              { kind: 'primitive', content: 'undefined' },
+            ],
+          },
           sources: {
             kind: 'array',
             content: {

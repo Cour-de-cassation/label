@@ -9,7 +9,7 @@ import { csvExtractor } from './csvExtractor';
 import { statisticsCreator } from './statisticsCreator';
 import { stringComparator } from './stringComparator';
 import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
-import { timeOperator } from './timeOperator';
+import { dateType, timeOperator } from './timeOperator';
 
 export {
   annotationHandler,
@@ -26,4 +26,4 @@ export {
   timeOperator,
 };
 
-export type { anonymizerType, annotationChunkType, textChunkType, textChunkContentType };
+export type { anonymizerType, annotationChunkType, dateType, textChunkType, textChunkContentType };

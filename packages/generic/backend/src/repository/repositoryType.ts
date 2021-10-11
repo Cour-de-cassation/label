@@ -16,6 +16,11 @@ type repositoryType<T extends { _id: idType }> = {
   ) => Promise<Array<projectedType<T, projectionT>>>;
   findAllByIds: (idsToSearchIn?: idType[]) => Promise<Record<string, T>>;
   findById: (id: idType) => Promise<T>;
+  findExtremumField: (
+    filter: Partial<T>,
+    field: keyof T,
+    direction: 'min' | 'max',
+  ) => Promise<T | undefined>;
   insert: (newObject: T) => Promise<{ success: boolean }>;
   insertMany: (newObjects: T[]) => Promise<void>;
   deletePropertiesForMany: (

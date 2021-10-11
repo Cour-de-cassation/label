@@ -151,7 +151,15 @@ function TreatedDocuments(props: {
     );
     const sources = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.document.source));
     const userNames = uniq(flatten(treatedDocuments.map((treatedDocument) => treatedDocument.userNames)));
-    return { jurisdictions, publicationCategoryLetters, userNames, sources };
+    const maxDate =
+      treatedDocuments.length > 0
+        ? Math.max(...treatedDocuments.map((treatedDocument) => treatedDocument.lastTreatmentDate))
+        : undefined;
+    const minDate =
+      treatedDocuments.length > 0
+        ? Math.min(...treatedDocuments.map((treatedDocument) => treatedDocument.lastTreatmentDate))
+        : undefined;
+    return { jurisdictions, publicationCategoryLetters, userNames, sources, maxDate, minDate };
   }
 
   function buildTreatedDocumentsFields(treatmentsInfo: Record<string, treatmentInfoType>) {

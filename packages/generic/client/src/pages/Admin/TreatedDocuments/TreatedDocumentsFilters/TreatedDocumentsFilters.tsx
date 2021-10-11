@@ -44,6 +44,10 @@ function TreatedDocumentsFilters(props: {
       {
         kind: 'dateInterval' as const,
         name: 'dateInterval',
+        extremumAvailableDates: {
+          min: props.filterInfo.minDate,
+          max: props.filterInfo.maxDate,
+        },
         value: { startDate: props.filterValues.startDate, endDate: props.filterValues.endDate },
         onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => {
           props.setFilterValues({ ...props.filterValues, startDate: value.startDate, endDate: value.endDate });

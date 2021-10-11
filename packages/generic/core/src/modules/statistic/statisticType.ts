@@ -14,6 +14,13 @@ const statisticModel = buildModel({
     documentNumber: documentModel.content.documentNumber,
     decisionDate: documentModel.content.decisionMetadata.content.date,
     documentExternalId: { kind: 'primitive', content: 'string' },
+    chamberName: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'string' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     jurisdiction: {
       kind: 'or',
       content: [
@@ -23,6 +30,13 @@ const statisticModel = buildModel({
     },
     linkedEntitiesCount: { kind: 'primitive', content: 'number' },
     publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+    session: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'string' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     source: { kind: 'primitive', content: 'string' },
     surAnnotationsCount: {
       kind: 'primitive',

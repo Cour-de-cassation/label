@@ -60,7 +60,7 @@ describe('comparator', () => {
     it('high should be less than low', () => {
       const document1 = documentGenerator.generate({ priority: 4 });
       const document2 = documentGenerator.generate({ priority: 0 });
-      console.log(document2.priority);
+
       const result = comparator.compareByPriority(document1, document2);
 
       expect(result).toBeLessThanOrEqual(-1);

@@ -21,11 +21,17 @@ function buildStatistic({
   return {
     _id: idModule.lib.buildId(),
     annotationsCount,
+    chamberName: document.decisionMetadata.chamberName
+      ? document.decisionMetadata.chamberName.toLowerCase()
+      : undefined,
     decisionDate: document.decisionMetadata.date,
     documentExternalId: document.externalId,
     documentNumber: document.documentNumber,
-    jurisdiction: document.decisionMetadata.jurisdiction,
+    jurisdiction: document.decisionMetadata.jurisdiction
+      ? document.decisionMetadata.jurisdiction.toLowerCase()
+      : undefined,
     linkedEntitiesCount,
+    session: document.decisionMetadata.session || undefined,
     publicationCategory: document.publicationCategory,
     source: document.source,
     surAnnotationsCount: treatment.surAnnotationsCount,

@@ -48,5 +48,24 @@ const buildTreatmentRepository = buildRepositoryBuilder<
         idModule.lib.convertToString(treatment.documentId),
       );
     },
+
+    async findExtremumLastUpdateDateBySources(sources) {
+      const minDateStatistics = await collection
+        .find({ source: { $in: sources } })
+        .sort({ lastUpdateDate: 1 })
+        .limit(1)
+        .toArray();
+
+      const maxDateStatistics = await collection
+        .find({ source: { $in: sources } })
+        .sort({ lastUpdateDate: -1 })
+        .limit(1)
+        .toArray();
+
+      return {
+        minDate: minDateStatistics[0]?.lastUpdateDate,
+        maxDate: maxDateStatistics[0]?.lastUpdateDate,
+      };
+    },
   }),
 });

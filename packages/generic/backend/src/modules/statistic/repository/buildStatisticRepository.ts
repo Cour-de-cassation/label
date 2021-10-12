@@ -28,5 +28,24 @@ const buildStatisticRepository = buildRepositoryBuilder<
 
       return statistics.map((statistic) => statistic._id);
     },
+
+    async findExtremumTreatmentDateBySources(sources) {
+      const minDateStatistics = await collection
+        .find({ source: { $in: sources } })
+        .sort({ treatmentDate: 1 })
+        .limit(1)
+        .toArray();
+
+      const maxDateStatistics = await collection
+        .find({ source: { $in: sources } })
+        .sort({ treatmentDate: -1 })
+        .limit(1)
+        .toArray();
+
+      return {
+        minDate: minDateStatistics[0]?.treatmentDate,
+        maxDate: maxDateStatistics[0]?.treatmentDate,
+      };
+    },
   }),
 });

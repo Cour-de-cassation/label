@@ -15,4 +15,7 @@ type customTreatmentRepositoryType = {
   findAllByDocumentIds: (
     documentIds: treatmentType['documentId'][],
   ) => Promise<Record<string, treatmentType[]>>;
+  findExtremumLastUpdateDateBySources: (
+    sources: treatmentType['source'][],
+  ) => Promise<{ minDate: number | undefined; maxDate: number | undefined }>;
 };

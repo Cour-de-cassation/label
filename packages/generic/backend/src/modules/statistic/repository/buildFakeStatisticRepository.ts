@@ -24,5 +24,18 @@ const buildFakeStatisticRepository = buildFakeRepositoryBuilder<
 
       return statistics.map((statistic) => statistic._id);
     },
+
+    async findExtremumTreatmentDateBySources(sources) {
+      if (collection.length === 0) {
+        return { minDate: undefined, maxDate: undefined };
+      }
+      const sortedItems = collection
+        .filter(({ source }) => sources.includes(source))
+        .sort((item1, item2) => item1.treatmentDate - item2.treatmentDate);
+      return {
+        minDate: sortedItems[0]?.treatmentDate,
+        maxDate: sortedItems[sortedItems.length - 1]?.treatmentDate,
+      };
+    },
   }),
 });

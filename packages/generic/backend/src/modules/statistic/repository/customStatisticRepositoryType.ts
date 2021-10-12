@@ -8,4 +8,7 @@ type customStatisticRepositoryType = {
     ressourceFilter: ressourceFilterType,
   ) => Promise<Array<statisticType>>;
   findAllIdsBefore: (date: number) => Promise<Array<idType>>;
+  findExtremumTreatmentDateBySources: (
+    sources: statisticType['source'][],
+  ) => Promise<{ minDate: number | undefined; maxDate: number | undefined }>;
 };

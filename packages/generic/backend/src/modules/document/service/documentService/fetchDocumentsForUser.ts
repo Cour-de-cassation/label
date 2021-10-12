@@ -118,6 +118,7 @@ function buildFetchDocumentsForUser(
     const nextStatus = documentModule.lib.getNextStatus({
       status: document.status,
       publicationCategory: document.publicationCategory,
+      route: document.route,
     });
 
     const updatedDocument = await documentRepository.updateOneStatusByIdAndStatus(

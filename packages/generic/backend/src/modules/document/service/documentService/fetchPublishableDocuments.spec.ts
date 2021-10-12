@@ -48,6 +48,7 @@ describe('fetchPublishableDocuments', () => {
         documentNumber,
         jurisdiction: 'Cour de cassation',
         chamberName: 'CIV. I',
+        route: 'exhaustive',
         publicationCategory,
       },
     ]);

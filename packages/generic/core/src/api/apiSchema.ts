@@ -234,8 +234,9 @@ const apiSchema = {
               content: {
                 _id: documentModule.fetchedModel.content._id,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
-                status: documentModule.fetchedModel.content.status,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+                route: documentModule.fetchedModel.content.route,
+                status: documentModule.fetchedModel.content.status,
               },
             },
             user: {
@@ -265,6 +266,7 @@ const apiSchema = {
             documentNumber: documentModule.fetchedModel.content.documentNumber,
             jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
             publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+            route: documentModule.fetchedModel.content.route,
             status: documentModule.fetchedModel.content.status,
           },
         },
@@ -285,6 +287,7 @@ const apiSchema = {
                 occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
                 reviewStatus: documentModule.fetchedModel.content.reviewStatus,
+                route: documentModule.fetchedModel.content.route,
                 session: documentModule.fetchedModel.content.decisionMetadata.content.session,
                 source: documentModule.fetchedModel.content.source,
               },

@@ -122,6 +122,7 @@ function projectTreatedDocumentDocument(document: documentType) {
       'publicationCategory',
       'reviewStatus',
       'source',
+      'route',
     ]),
     session: document.decisionMetadata.session,
     occultationBlock: document.decisionMetadata.occultationBlock,

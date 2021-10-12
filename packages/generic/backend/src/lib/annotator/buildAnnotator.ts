@@ -43,6 +43,7 @@ function buildAnnotator(
         const nextDocumentStatus = documentModule.lib.getNextStatus({
           status: currentDocumentToAnnotate.status,
           publicationCategory: currentDocumentToAnnotate.publicationCategory,
+          route: currentDocumentToAnnotate.route,
         });
         const updatedDocument = await documentService.updateDocumentStatus(
           currentDocumentToAnnotate._id,
@@ -141,6 +142,7 @@ function buildAnnotator(
     const nextDocumentStatus = documentModule.lib.getNextStatus({
       status: document.status,
       publicationCategory: document.publicationCategory,
+      route: document.route,
     });
     await documentService.updateDocumentStatus(
       document._id,

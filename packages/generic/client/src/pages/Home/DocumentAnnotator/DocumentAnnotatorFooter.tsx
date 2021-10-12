@@ -103,6 +103,7 @@ function DocumentAnnotatorFooter(props: {
     const nextStatus = documentModule.lib.getNextStatus({
       publicationCategory: document.publicationCategory,
       status: document.status,
+      route: document.route,
     });
     setIsValidating(true);
     try {

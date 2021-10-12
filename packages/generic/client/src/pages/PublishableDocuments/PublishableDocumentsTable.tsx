@@ -64,6 +64,7 @@ function PublishableDocumentsTable(props: {
                 status: documentModule.lib.getNextStatus({
                   status: publishableDocument.status,
                   publicationCategory: publishableDocument.publicationCategory,
+                  route: publishableDocument.route,
                 }) as 'done' | 'toBePublished',
               });
               props.refetch();

@@ -9,6 +9,7 @@ import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
   extractAppealNumber,
+  extractRoute,
 } from './extractors';
 import { categoriesMapper } from './categoriesMapper';
 
@@ -53,6 +54,8 @@ function mapCourtDecisionToDocument(
     sderCourtDecision.occultation?.categoriesToOmit,
   );
 
+  const route = extractRoute(sderCourtDecision);
+
   return documentModule.lib.buildDocument({
     creationDate: new Date().getTime(),
     decisionMetadata: {
@@ -73,6 +76,7 @@ function mapCourtDecisionToDocument(
     externalId: idModule.lib.convertToString(sderCourtDecision._id),
     priority,
     publicationCategory,
+    route,
     source: sderCourtDecision.sourceName,
     title,
     text: sderCourtDecision.originalText,

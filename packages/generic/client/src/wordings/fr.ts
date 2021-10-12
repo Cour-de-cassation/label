@@ -69,6 +69,10 @@ const fr = {
       viewed: { iconTooltip: 'Vue par {viewerNames}', filter: 'Décisions revues' },
       amended: { iconTooltip: 'Revue et modifiée', filter: 'Décisions revues et modifiées' },
     },
+    documentRoute: {
+      automatic: 'Automatique',
+      exhaustive: 'Exhaustif',
+    },
     documentStatus: {
       loaded: 'Chargé depuis la base SDER',
       nlpAnnotating: "En cours d'annotation par le moteur NLP",
@@ -322,6 +326,7 @@ const fr = {
         source: { title: 'Source', tooltipText: 'Base de données source' },
         workingUser: { title: 'Agent', tooltipText: 'Agent principal' },
         reviewStatus: { title: 'Relecture', tooltipText: 'Statut de relecture' },
+        route: { title: 'Circuit', tooltipText: 'Circuit de relecture' },
         date: 'Traité le',
         surAnnotationsCount: { title: 'Sur.', tooltipText: 'Nombre de sur-annotations' },
         subAnnotationsSensitiveCount: {

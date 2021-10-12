@@ -14,6 +14,7 @@ const treatedDocumentOrderByProperties = [
   'source',
   'userName',
   'reviewStatus',
+  'route',
   'date',
   'surAnnotationsCount',
   'subAnnotationsSensitiveCount',

@@ -43,6 +43,7 @@ function ProblemReportsTable(props: {
                 status: documentModule.lib.getNextStatus({
                   status: problemReportWithDetails.document.status,
                   publicationCategory: problemReportWithDetails.document.publicationCategory,
+                  route: problemReportWithDetails.document.route,
                 }),
               });
               props.refetch();
@@ -96,6 +97,7 @@ function ProblemReportsTable(props: {
           status: documentModule.lib.getNextStatus({
             status: 'pending',
             publicationCategory: problemReportWithDetails.document.publicationCategory,
+            route: problemReportWithDetails.document.route,
           }),
         });
         props.refetch();

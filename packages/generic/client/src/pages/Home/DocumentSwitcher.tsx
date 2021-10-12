@@ -113,6 +113,7 @@ function DocumentSwitcher(props: {
         const nextStatus = documentModule.lib.getNextStatus({
           status: choice.document.status,
           publicationCategory: choice.document.publicationCategory,
+          route: choice.document.route,
         });
         const { data: updatedDocument } = await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
           documentId: choice.document._id,

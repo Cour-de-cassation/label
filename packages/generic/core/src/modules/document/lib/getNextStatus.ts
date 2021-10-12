@@ -6,7 +6,7 @@ export { getNextStatus };
 function getNextStatus({
   publicationCategory,
   status,
-}: Pick<documentType, 'status' | 'publicationCategory'>): documentType['status'] {
+}: Pick<documentType, 'status' | 'publicationCategory' | 'route'>): documentType['status'] {
   switch (status) {
     case 'loaded':
       return 'nlpAnnotating';

@@ -247,6 +247,14 @@ function TreatedDocuments(props: {
         width: 2,
       },
       {
+        id: 'route',
+        title: wordings.treatedDocumentsPage.table.columnTitles.route.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.route.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => wordings.business.documentRoute[treatedDocument.document.route],
+        width: 2,
+      },
+      {
         id: 'date',
         title: wordings.treatedDocumentsPage.table.columnTitles.date,
         canBeSorted: true,

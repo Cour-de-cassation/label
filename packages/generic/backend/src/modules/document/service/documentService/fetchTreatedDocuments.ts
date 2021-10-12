@@ -24,6 +24,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
       'publicationCategory',
       'reviewStatus',
       'source',
+      'route',
     ],
   );
 
@@ -78,6 +79,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
         occultationBlock: treatedDocument.decisionMetadata.occultationBlock,
         publicationCategory: treatedDocument.publicationCategory,
         reviewStatus: treatedDocument.reviewStatus,
+        route: treatedDocument.route,
         session: treatedDocument.decisionMetadata.session,
         source: treatedDocument.source,
       },

@@ -13,6 +13,7 @@ async function fetchPublishableDocuments() {
       'decisionMetadata',
       'documentNumber',
       'publicationCategory',
+      'route',
       'status',
     ],
   );
@@ -23,15 +24,17 @@ async function fetchPublishableDocuments() {
       decisionMetadata,
       documentNumber,
       publicationCategory,
+      route,
       status,
     }) => ({
       _id,
       appealNumber: decisionMetadata.appealNumber,
       chamberName: decisionMetadata.chamberName,
       jurisdiction: decisionMetadata.jurisdiction,
-      publicationCategory,
       creationDate,
       documentNumber,
+      publicationCategory,
+      route,
       status,
     }),
   );

@@ -11,7 +11,7 @@ import { controllers } from './controllers';
 
 export { buildApi };
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = '/label/api';
 
 function buildApi(app: Express) {
   const methodNames = (Object.keys(

@@ -23,7 +23,7 @@ const apiCaller = {
   }> {
     const bearerToken = localStorage.bearerTokenHandler.get();
 
-    const response = await fetch(buildUrlWithParams(`${urlHandler.getApiUrl()}/api/${routeName}`, args), {
+    const response = await fetch(buildUrlWithParams(`${urlHandler.getApiUrl()}/label/api/${routeName}`, args), {
       cache: 'default',
       headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,
       method: 'get',
@@ -47,7 +47,7 @@ const apiCaller = {
   }> {
     const bearerToken = localStorage.bearerTokenHandler.get();
 
-    const response = await fetch(`${urlHandler.getApiUrl()}/api/${routeName}`, {
+    const response = await fetch(`${urlHandler.getApiUrl()}/label/api/${routeName}`, {
       body: JSON.stringify(args),
       cache: 'default',
       headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,

@@ -130,9 +130,10 @@ function Router() {
         <AuthenticatedRoute path={routes.ANNOTATION.getPath()}>
           <SettingsDataFetcher>{({ settings }) => <Home settings={settings} />}</SettingsDataFetcher>
         </AuthenticatedRoute>
-        <AuthenticatedRoute>
-          <HomeRoute path={routes.DEFAULT.getPath()} />
+        <AuthenticatedRoute path={routes.DEFAULT.getPath()}>
+          <HomeRoute />
         </AuthenticatedRoute>
+        <Redirect path="/" to={{ pathname: routes.DEFAULT.getPath() }} />
       </Switch>
     </BrowserRouter>
   );

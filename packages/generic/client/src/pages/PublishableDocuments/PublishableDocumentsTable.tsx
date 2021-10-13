@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { apiRouteOutType, documentModule, documentType, idModule, timeOperator } from '@label/core';
+import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { orderDirectionType, PaginatedTable, tableRowFieldType } from '../../components';
 import { localStorage, publishableDocumentOrderByProperties } from '../../services/localStorage';
 import { wordings } from '../../wordings';
@@ -129,7 +129,7 @@ function buildPublishableDocumentsFields() {
       id: 'status',
       title: wordings.publishableDocumentsPage.table.columnTitles.status,
       canBeSorted: true,
-      extractor: (publishableDocument) => computeStatusWording(publishableDocument.status),
+      extractor: (publishableDocument) => wordings.business.documentStatus[publishableDocument.status],
       width: 10,
     },
     {
@@ -143,17 +143,6 @@ function buildPublishableDocumentsFields() {
     },
   ];
   return publishableDocumentsFields;
-}
-
-function computeStatusWording(status: documentType['status']) {
-  switch (status) {
-    case 'done':
-      return wordings.publishableDocumentsPage.table.status.published;
-    case 'toBePublished':
-      return wordings.publishableDocumentsPage.table.status.toBePublished;
-    default:
-      return wordings.publishableDocumentsPage.table.status.notTreated;
-  }
 }
 
 function buildStyles() {

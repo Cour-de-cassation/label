@@ -79,8 +79,8 @@ const fr = {
       free: 'Disponible pour être annoté',
       pending: 'Assigné à un agent',
       saved: 'En cours de traitement par un agent',
-      toBePublished: 'Doit être publié',
-      done: 'Validé',
+      toBePublished: 'À publier',
+      done: 'Prêt à être exporté',
       rejected: 'Bloqué',
     },
     errors: {
@@ -251,11 +251,6 @@ const fr = {
         jurisdiction: 'Juridiction',
         status: 'Statut',
         importDate: "Date d'import",
-      },
-      status: {
-        notTreated: 'En traitement',
-        toBePublished: 'À publier',
-        published: 'Publié',
       },
       optionItems: {
         openAnonymizedDocument: 'Ouvrir la décision anonymisée...',

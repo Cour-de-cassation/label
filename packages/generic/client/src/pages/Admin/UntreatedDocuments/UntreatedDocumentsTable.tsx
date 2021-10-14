@@ -189,7 +189,7 @@ function UntreatedDocumentsTable(props: {
         title: wordings.untreatedDocumentsPage.table.columnTitles.occultationBlock.title,
         tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.occultationBlock.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '',
+        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
         getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
         width: 1,
       },
@@ -198,7 +198,7 @@ function UntreatedDocumentsTable(props: {
         title: wordings.untreatedDocumentsPage.table.columnTitles.jurisdiction.title,
         tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.jurisdiction.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '',
+        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
         width: 4,
       },
       {
@@ -208,24 +208,19 @@ function UntreatedDocumentsTable(props: {
         canBeSorted: true,
         getSortingValue: (untreatedDocument) => untreatedDocument.document.publicationCategory.length,
         extractor: (untreatedDocument) => untreatedDocument.document.publicationCategory.join(','),
-        render: (untreatedDocument) => (
-          <div style={styles.publicationCategoryBadgesContainer}>
-            {untreatedDocument.document.publicationCategory.map((publicationCategoryLetter) => (
-              <div style={styles.publicationCategoryBadgeContainer}>
-                <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
-              </div>
-            ))}
-          </div>
-        ),
+        render: (untreatedDocument) =>
+          untreatedDocument.document.publicationCategory.length > 0 ? (
+            <div style={styles.publicationCategoryBadgesContainer}>
+              {untreatedDocument.document.publicationCategory.map((publicationCategoryLetter) => (
+                <div style={styles.publicationCategoryBadgeContainer}>
+                  <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            '-'
+          ),
         width: 2,
-      },
-      {
-        id: 'session',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.session.title,
-        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.session.tooltipText,
-        canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.session,
-        width: 3,
       },
       {
         id: 'source',

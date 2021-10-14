@@ -16,6 +16,7 @@ import {
   RefreshButton,
   Table,
   tableRowFieldType,
+  optionItemType,
   orderDirectionType,
   TextInput,
   TooltipMenu,
@@ -72,4 +73,4 @@ export {
   TooltipMenu,
 };
 
-export type { iconNameType, snackbarVariantType, tableRowFieldType, orderDirectionType };
+export type { iconNameType, snackbarVariantType, tableRowFieldType, optionItemType, orderDirectionType };

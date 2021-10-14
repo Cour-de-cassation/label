@@ -124,7 +124,6 @@ function projectTreatedDocumentDocument(document: documentType) {
       'source',
       'route',
     ]),
-    session: document.decisionMetadata.session,
     occultationBlock: document.decisionMetadata.occultationBlock,
     jurisdiction: document.decisionMetadata.jurisdiction,
   };

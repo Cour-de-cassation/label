@@ -10,7 +10,14 @@ const buildStatisticRepository = buildRepositoryBuilder<
   customStatisticRepositoryType
 >({
   collectionName: 'statistics',
-  indexes: [],
+  indexes: [
+    { index: { source: 1 } },
+    { index: { subAnnotationsSensitiveCount: 1 } },
+    { index: { surAnnotationsCount: 1 } },
+    { index: { publicationCategory: 1 } },
+    { index: { treatmentDate: 1 } },
+    { index: { jurisdiction: 1 } },
+  ],
   buildCustomRepository: (collection) => ({
     async findAllByRessourceFilter(ressourceFilter) {
       const ressourceFilterRequest = buildRessourceFilterRequest(

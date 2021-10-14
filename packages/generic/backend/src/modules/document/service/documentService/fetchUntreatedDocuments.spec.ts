@@ -86,7 +86,6 @@ function projectDocument(document: documentType) {
       'source',
       'status',
     ]),
-    session: document.decisionMetadata.session,
     occultationBlock: document.decisionMetadata.occultationBlock,
     jurisdiction: document.decisionMetadata.jurisdiction,
     decisionDate: document.decisionMetadata.date,

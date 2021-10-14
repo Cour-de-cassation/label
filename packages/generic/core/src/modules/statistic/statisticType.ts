@@ -11,6 +11,13 @@ const statisticModel = buildModel({
   content: {
     _id: { kind: 'custom', content: 'id' },
     annotationsCount: { kind: 'primitive', content: 'number' },
+    appealNumber: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'string' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     documentNumber: documentModel.content.documentNumber,
     decisionDate: documentModel.content.decisionMetadata.content.date,
     documentExternalId: { kind: 'primitive', content: 'string' },

@@ -45,6 +45,7 @@ import {
   TableSortLabel,
   Text,
   tableRowFieldType,
+  optionItemType,
   orderDirectionType,
   TextInput,
   Tooltip,
@@ -98,4 +99,4 @@ export {
   UnlinkAnnotationDropdown,
 };
 
-export type { filterType, snackbarVariantType, tableRowFieldType, orderDirectionType };
+export type { filterType, snackbarVariantType, tableRowFieldType, optionItemType, orderDirectionType };

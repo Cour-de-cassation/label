@@ -21,14 +21,15 @@ function buildStatistic({
   return {
     _id: idModule.lib.buildId(),
     annotationsCount,
+    appealNumber: document.decisionMetadata.appealNumber || undefined,
     chamberName: document.decisionMetadata.chamberName
-      ? document.decisionMetadata.chamberName.toLowerCase()
+      ? document.decisionMetadata.chamberName.trim().toLowerCase()
       : undefined,
     decisionDate: document.decisionMetadata.date,
     documentExternalId: document.externalId,
     documentNumber: document.documentNumber,
     jurisdiction: document.decisionMetadata.jurisdiction
-      ? document.decisionMetadata.jurisdiction.toLowerCase()
+      ? document.decisionMetadata.jurisdiction.trim().toLowerCase()
       : undefined,
     linkedEntitiesCount,
     session: document.decisionMetadata.session || undefined,

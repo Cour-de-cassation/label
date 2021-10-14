@@ -80,7 +80,6 @@ async function fetchTreatedDocuments(settings: settingsType) {
         publicationCategory: treatedDocument.publicationCategory,
         reviewStatus: treatedDocument.reviewStatus,
         route: treatedDocument.route,
-        session: treatedDocument.decisionMetadata.session,
         source: treatedDocument.source,
       },
       totalTreatmentDuration,

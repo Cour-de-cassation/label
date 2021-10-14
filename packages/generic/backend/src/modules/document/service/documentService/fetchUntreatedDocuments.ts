@@ -54,7 +54,6 @@ async function fetchUntreatedDocuments() {
         occultationBlock: untreatedDocument.decisionMetadata.occultationBlock,
         jurisdiction: untreatedDocument.decisionMetadata.jurisdiction,
         publicationCategory: untreatedDocument.publicationCategory,
-        session: untreatedDocument.decisionMetadata.session,
         source: untreatedDocument.source,
         status: untreatedDocument.status,
       },

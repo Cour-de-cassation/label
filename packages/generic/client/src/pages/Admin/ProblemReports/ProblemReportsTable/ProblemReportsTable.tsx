@@ -3,7 +3,13 @@ import { useHistory } from 'react-router-dom';
 import format from 'string-template';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { DocumentStatusIcon, ProblemReportIcon, Table, tableRowFieldType } from '../../../../components';
+import {
+  DocumentStatusIcon,
+  ProblemReportIcon,
+  optionItemType,
+  Table,
+  tableRowFieldType,
+} from '../../../../components';
 import { sendMail } from '../../../../services/sendMail';
 import { wordings } from '../../../../wordings';
 import { routes } from '../../../routes';
@@ -32,25 +38,22 @@ function ProblemReportsTable(props: {
   );
 
   function buildOptionItems(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
-    const validateDocumentOptionItem =
-      problemReportWithDetails.document.status !== 'done'
-        ? {
-            kind: 'text' as const,
-            text: wordings.problemReportsPage.table.optionItems.validate,
-            onClick: async () => {
-              await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-                assignationId: problemReportWithDetails.problemReport.assignationId,
-                status: documentModule.lib.getNextStatus({
-                  status: problemReportWithDetails.document.status,
-                  publicationCategory: problemReportWithDetails.document.publicationCategory,
-                  route: problemReportWithDetails.document.route,
-                }),
-              });
-              props.refetch();
-            },
-            iconName: 'send' as const,
-          }
-        : undefined;
+    const validateDocumentOptionItem = {
+      kind: 'text' as const,
+      text: wordings.problemReportsPage.table.optionItems.validate,
+      onClick: async () => {
+        await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+          assignationId: problemReportWithDetails.problemReport.assignationId,
+          status: documentModule.lib.getNextStatus({
+            status: problemReportWithDetails.document.status,
+            publicationCategory: problemReportWithDetails.document.publicationCategory,
+            route: problemReportWithDetails.document.route,
+          }),
+        });
+        props.refetch();
+      },
+      iconName: 'send' as const,
+    };
 
     const answerByEmailOptionItem = {
       kind: 'text' as const,
@@ -104,14 +107,16 @@ function ProblemReportsTable(props: {
       },
       iconName: 'turnRight' as const,
     };
-    const optionItems = [
+    const optionItems: Array<optionItemType> = [
       answerByEmailOptionItem,
-      deleteProblemReportOptionItem,
       openDocumentOptionItem,
       reassignToWorkingUserOptionItem,
     ];
-    if (validateDocumentOptionItem) {
-      return [...optionItems, validateDocumentOptionItem];
+    if (problemReportWithDetails.document.status !== 'rejected') {
+      optionItems.push(deleteProblemReportOptionItem);
+    }
+    if (problemReportWithDetails.document.status !== 'done') {
+      optionItems.push(validateDocumentOptionItem);
     }
     return optionItems;
   }

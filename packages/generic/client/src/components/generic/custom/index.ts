@@ -15,7 +15,7 @@ import { Loader } from './Loader';
 import { PaginatedTable } from './PaginatedTable';
 import { PopUp } from './PopUp';
 import { RefreshButton } from './RefreshButton';
-import { Table, tableRowFieldType, orderDirectionType } from './Table';
+import { Table, tableRowFieldType, optionItemType, orderDirectionType } from './Table';
 import { TextInput } from './TextInput';
 import { TooltipMenu } from './TooltipMenu';
 
@@ -42,4 +42,4 @@ export {
   TooltipMenu,
 };
 
-export type { buttonColorType, orderDirectionType, tableRowFieldType };
+export type { buttonColorType, orderDirectionType, optionItemType, tableRowFieldType };

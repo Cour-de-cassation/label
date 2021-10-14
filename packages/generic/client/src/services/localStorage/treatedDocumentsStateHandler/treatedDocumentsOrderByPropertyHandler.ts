@@ -10,7 +10,6 @@ const treatedDocumentOrderByProperties = [
   'occultationBlock',
   'jurisdiction',
   'publicationCategory',
-  'session',
   'source',
   'userName',
   'reviewStatus',

@@ -180,7 +180,7 @@ function TreatedDocuments(props: {
         title: wordings.treatedDocumentsPage.table.columnTitles.occultationBlock.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.occultationBlock.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '',
+        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
         getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
         width: 1,
       },
@@ -189,7 +189,7 @@ function TreatedDocuments(props: {
         title: wordings.treatedDocumentsPage.table.columnTitles.jurisdiction.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.jurisdiction.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '',
+        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
         width: 4,
       },
       {
@@ -199,23 +199,18 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         getSortingValue: (treatedDocument) => treatedDocument.document.publicationCategory.length,
         extractor: (treatedDocument) => treatedDocument.document.publicationCategory.join(','),
-        render: (treatedDocument) => (
-          <div style={styles.publicationCategoryBadgesContainer}>
-            {treatedDocument.document.publicationCategory.map((publicationCategoryLetter) => (
-              <div style={styles.publicationCategoryBadgeContainer}>
-                <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
-              </div>
-            ))}
-          </div>
-        ),
-        width: 2,
-      },
-      {
-        id: 'session',
-        title: wordings.treatedDocumentsPage.table.columnTitles.session.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.session.tooltipText,
-        canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.session,
+        render: (treatedDocument) =>
+          treatedDocument.document.publicationCategory.length > 0 ? (
+            <div style={styles.publicationCategoryBadgesContainer}>
+              {treatedDocument.document.publicationCategory.map((publicationCategoryLetter) => (
+                <div style={styles.publicationCategoryBadgeContainer}>
+                  <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            '-'
+          ),
         width: 2,
       },
       {
@@ -241,10 +236,12 @@ function TreatedDocuments(props: {
         canBeSorted: true,
         extractor: (treatedDocument) => convertDocumentReviewStatusToFilter(treatedDocument.document.reviewStatus),
         render: (treatedDocument) =>
-          convertDocumentReviewStatusToFilter(treatedDocument.document.reviewStatus) === 'none' ? undefined : (
+          convertDocumentReviewStatusToFilter(treatedDocument.document.reviewStatus) === 'none' ? (
+            '-'
+          ) : (
             <DocumentReviewStatusIcon iconSize={TABLE_ICON_SIZE} reviewStatus={treatedDocument.document.reviewStatus} />
           ),
-        width: 2,
+        width: 1,
       },
       {
         id: 'route',

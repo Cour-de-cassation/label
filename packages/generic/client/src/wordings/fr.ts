@@ -81,7 +81,7 @@ const fr = {
       saved: 'En cours de traitement par un agent',
       toBePublished: 'À publier',
       done: 'Prêt à être exporté',
-      rejected: 'Bloqué',
+      rejected: 'En alerte',
     },
     errors: {
       pendingDocumentsFreed:
@@ -216,7 +216,7 @@ const fr = {
   problemReportsPage: {
     header: {
       title: 'Administration',
-      subtitle: 'Alertes',
+      subtitle: 'Signalements',
     },
     table: {
       columnTitles: {

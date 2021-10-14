@@ -8,6 +8,7 @@ const statisticGenerator: generatorType<statisticType> = {
   generate: ({
     _id,
     annotationsCount,
+    appealNumber,
     chamberName,
     decisionDate,
     documentExternalId,
@@ -26,6 +27,7 @@ const statisticGenerator: generatorType<statisticType> = {
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     annotationsCount: annotationsCount ? annotationsCount : 0,
+    appealNumber: appealNumber ? appealNumber : undefined,
     chamberName: chamberName || `SOURCE_${Math.random()}`,
     decisionDate: decisionDate,
     documentExternalId: documentExternalId ? documentExternalId : idModule.lib.convertToString(idModule.lib.buildId()),

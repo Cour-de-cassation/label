@@ -10,7 +10,7 @@ import { DocumentViewer } from './DocumentViewer';
 
 export { DocumentPanel };
 
-const SCROLL_CHECK_INTERVAL = 60 * 1000;
+const SCROLL_CHECK_INTERVAL = 2 * 60 * 1000;
 
 function DocumentPanel(props: { splittedTextByLine: splittedTextByLineType }): ReactElement {
   const theme = useCustomTheme();

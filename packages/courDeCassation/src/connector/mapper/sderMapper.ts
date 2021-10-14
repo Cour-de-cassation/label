@@ -54,6 +54,10 @@ function mapCourtDecisionToDocument(
     sderCourtDecision.occultation?.categoriesToOmit,
   );
 
+  const solution = sderCourtDecision.solution
+    ? sderCourtDecision.solution.trim()
+    : '';
+
   const route = extractRoute(sderCourtDecision);
 
   return documentModule.lib.buildDocument({
@@ -70,7 +74,7 @@ function mapCourtDecisionToDocument(
       parties: sderCourtDecision.parties || [],
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session: sderCourtDecision.formation || '',
-      solution: sderCourtDecision.solution,
+      solution,
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),

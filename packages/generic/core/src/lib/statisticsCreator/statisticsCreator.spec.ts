@@ -20,7 +20,7 @@ describe('statisticsCreator', () => {
   const document = documentModule.generator.generate({
     decisionMetadata: {
       additionalTermsToAnnotate: '',
-      appealNumber: '',
+      appealNumber: 'MACHIN',
       boundDecisionDocumentNumbers: [],
       categoriesToOmit: [],
       chamberName: 'Chambre criminelle',
@@ -92,6 +92,7 @@ describe('statisticsCreator', () => {
       expect(statistic).toEqual({
         _id: statistic._id,
         annotationsCount: 3,
+        appealNumber: 'MACHIN',
         chamberName: 'chambre criminelle',
         decisionDate,
         documentExternalId,
@@ -152,6 +153,7 @@ describe('statisticsCreator', () => {
       expect(statistic).toEqual({
         _id: statistic._id,
         annotationsCount: 4,
+        appealNumber: 'MACHIN',
         chamberName: 'chambre criminelle',
         decisionDate,
         documentExternalId,

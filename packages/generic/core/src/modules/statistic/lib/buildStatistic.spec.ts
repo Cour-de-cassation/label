@@ -20,7 +20,7 @@ describe('buildStatistic', () => {
     const document = documentModule.generator.generate({
       decisionMetadata: {
         additionalTermsToAnnotate: '',
-        appealNumber: '',
+        appealNumber: 'TRUC',
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],
         chamberName: 'Chambre criminelle',
@@ -57,6 +57,7 @@ describe('buildStatistic', () => {
     expect(statistic).toEqual({
       _id: statistic._id,
       annotationsCount,
+      appealNumber: 'TRUC',
       chamberName: 'chambre criminelle',
       decisionDate,
       documentExternalId,

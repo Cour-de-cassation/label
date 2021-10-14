@@ -64,7 +64,13 @@ function DocumentText(props: propsType): ReactElement {
     const anchorNodeValue = selection.anchorNode?.nodeValue;
     const focusNodeValue = selection.focusNode?.nodeValue;
     const selectionText = selection.toString();
-    if (!anchorNodeValue || !focusNodeValue || !selectionText || selection.anchorOffset === selection.focusOffset) {
+    if (
+      !anchorNodeValue ||
+      !focusNodeValue ||
+      !selectionText ||
+      !selectionText.trim() ||
+      selection.anchorOffset === selection.focusOffset
+    ) {
       return [];
     }
     if (anchorNodeValue === focusNodeValue) {

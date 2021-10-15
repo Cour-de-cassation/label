@@ -79,6 +79,7 @@ function TableRow<InputT>(props: {
     const items = optionItems.map((optionItem) => ({
       text: optionItem.text,
       value: optionItem.text,
+      isDisabled: optionItem.isDisabled,
       icon: optionItem.iconName ? <Icon iconName={optionItem.iconName} /> : undefined,
     }));
     const onSelect = (optionItemText: string) => {

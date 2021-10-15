@@ -9,7 +9,7 @@ export { fetchUntreatedDocuments };
 async function fetchUntreatedDocuments() {
   const documentRepository = buildDocumentRepository();
   const untreatedDocuments = await documentRepository.findAllByStatusProjection(
-    ['free', 'pending', 'saved'],
+    ['free', 'pending', 'saved', 'rejected'],
     [
       '_id',
       'creationDate',
@@ -21,9 +21,8 @@ async function fetchUntreatedDocuments() {
     ],
   );
   const assignedDocumentIds = untreatedDocuments
-    .filter(
-      (document) =>
-        document.status === 'pending' || document.status === 'saved',
+    .filter((document) =>
+      ['pending', 'saved', 'rejected'].includes(document.status),
     )
     .map((document) => document._id);
   const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(

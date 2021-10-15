@@ -1,3 +1,4 @@
+import { documentModule, documentType } from '@label/core';
 import React from 'react';
 import format from 'string-template';
 import { FilterButton, FilterChip, filterType, Text } from '../../../../components';
@@ -104,6 +105,21 @@ function TreatedDocumentsFilters(props: {
             documentReviewFilterStatus: documentReviewFilterStatus as
               | typeof documentReviewFilterStatuses[number]
               | undefined,
+          }),
+      },
+      {
+        kind: 'dropdown' as const,
+        name: 'route',
+        label: wordings.treatedDocumentsPage.table.filter.fields.route,
+        possibleValues: (documentModule.fetchedModel.content.route.content as unknown) as string[],
+        value: props.filterValues.route,
+        computeChipLabel: (route: string) =>
+          wordings.treatedDocumentsPage.table.filter.chips.routes[route as documentType['route']],
+        computeReadableValue: (route: string) => wordings.business.documentRoute[route as documentType['route']],
+        onChange: (route?: string) =>
+          props.setFilterValues({
+            ...props.filterValues,
+            route: route as documentType['route'] | undefined,
           }),
       },
       {

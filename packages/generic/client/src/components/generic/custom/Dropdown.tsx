@@ -10,7 +10,7 @@ function Dropdown<T extends string>(props: {
     onClick: (event: MouseEvent) => void;
   }) => ReactNode;
   defaultValue?: T;
-  items: Array<{ icon?: ReactElement; text: string; value: T }>;
+  items: Array<{ icon?: ReactElement; text: string; value: T; isDisabled?: boolean }>;
   onChange: (value: T) => void;
   onClose?: () => void;
   width?: number;

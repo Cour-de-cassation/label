@@ -65,6 +65,8 @@ function UntreatedDocumentsTable(props: {
   }
 
   function buildOptionItems(untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) {
+    const userRole = localStorage.userHandler.getRole();
+
     const openAnonymizedDocumentOptionItem = {
       kind: 'text' as const,
       text: wordings.untreatedDocumentsPage.table.optionItems.openAnonymizedDocument,
@@ -81,6 +83,7 @@ function UntreatedDocumentsTable(props: {
         setDocumentIdToUpdateStatus(untreatedDocument.document._id);
       },
       iconName: 'restore' as const,
+      isDisabled: userRole !== 'admin',
     };
 
     const assignToWorkingUserOptionItem = {
@@ -93,33 +96,26 @@ function UntreatedDocumentsTable(props: {
       onSelect: buildOnSelectWorkingUserToAssignDocument(untreatedDocument.document._id),
     };
 
-    const userRole = localStorage.userHandler.getRole();
-    switch (userRole) {
-      case 'scrutator':
-        return [openAnonymizedDocumentOptionItem];
-      case 'admin':
-        if (untreatedDocument.document.status !== 'pending') {
-          return [openAnonymizedDocumentOptionItem, resetAndAssignToMyselfOptionItem, assignToWorkingUserOptionItem];
-        }
-        return [
-          openAnonymizedDocumentOptionItem,
-          resetAndAssignToMyselfOptionItem,
-          {
-            kind: 'text' as const,
-            text: wordings.untreatedDocumentsPage.table.optionItems.freeDocument,
-            onClick: async () => {
-              await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-                documentId: untreatedDocument.document._id,
-                status: 'free',
-              });
-              props.refetch();
-            },
-            iconName: 'unlock' as const,
-          },
-        ];
-      default:
-        return [];
-    }
+    const freeDocumentOptionItem = {
+      kind: 'text' as const,
+      text: wordings.untreatedDocumentsPage.table.optionItems.freeDocument,
+      onClick: async () => {
+        await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+          documentId: untreatedDocument.document._id,
+          status: 'free',
+        });
+        props.refetch();
+      },
+      iconName: 'unlock' as const,
+      isDisabled: untreatedDocument.document.status !== 'pending',
+    };
+
+    return [
+      openAnonymizedDocumentOptionItem,
+      resetAndAssignToMyselfOptionItem,
+      assignToWorkingUserOptionItem,
+      freeDocumentOptionItem,
+    ];
   }
 
   function buildOnSelectWorkingUserToAssignDocument(documentId: documentType['_id']) {

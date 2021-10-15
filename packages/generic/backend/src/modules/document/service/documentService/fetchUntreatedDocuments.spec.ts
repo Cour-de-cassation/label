@@ -32,6 +32,9 @@ describe('fetchUntreatedDocuments', () => {
     const doneDocument = documentModule.generator.generate({
       status: 'done',
     });
+    const rejectedDocument = documentModule.generator.generate({
+      status: 'rejected',
+    });
     const pendingDocumentAssignation = assignationModule.generator.generate({
       documentId: pendingDocument._id,
       userId: user._id,
@@ -44,16 +47,25 @@ describe('fetchUntreatedDocuments', () => {
       documentId: doneDocument._id,
       userId: user._id,
     });
+    const rejectedDocumentAssignation = assignationModule.generator.generate({
+      documentId: rejectedDocument._id,
+      userId: user._id,
+    });
     await Promise.all(
-      [freeDocument, pendingDocument, savedDocument, doneDocument].map(
-        documentRepository.insert,
-      ),
+      [
+        freeDocument,
+        pendingDocument,
+        savedDocument,
+        doneDocument,
+        rejectedDocument,
+      ].map(documentRepository.insert),
     );
     await Promise.all(
       [
         pendingDocumentAssignation,
         savedDocumentAssignation,
         doneDocumentAssignation,
+        rejectedDocumentAssignation,
       ].map(assignationRepository.insert),
     );
     await userRepository.insert(user);
@@ -71,6 +83,10 @@ describe('fetchUntreatedDocuments', () => {
       },
       {
         document: projectDocument(savedDocument),
+        userNames: ['NAME'],
+      },
+      {
+        document: projectDocument(rejectedDocument),
         userNames: ['NAME'],
       },
     ]);

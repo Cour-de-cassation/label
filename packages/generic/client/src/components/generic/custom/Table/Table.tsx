@@ -17,6 +17,7 @@ type optionItemType =
       text: string;
       onClick: () => void;
       iconName?: iconNameType;
+      isDisabled?: boolean;
     }
   | {
       kind: 'selection';
@@ -26,6 +27,7 @@ type optionItemType =
       description: string;
       onSelect: (text: string) => Promise<void>;
       iconName?: iconNameType;
+      isDisabled?: boolean;
     };
 
 function Table<InputT, orderByPropertyT extends string = string>(props: {

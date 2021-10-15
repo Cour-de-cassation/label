@@ -221,6 +221,7 @@ const fr = {
     table: {
       columnTitles: {
         workingUser: 'Agent',
+        publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         date: 'Date',
         number: 'N° décision',
         status: 'Statut',
@@ -229,10 +230,10 @@ const fr = {
       },
       optionItems: {
         answerByEmail: 'Répondre par email...',
-        deleteProblemReport: "Supprimer l'alerte",
+        deleteProblemReport: 'Supprimer le signalement',
         openDocument: 'Ouvrir la décision...',
         reassignToWorkingUser: "Renvoyer à l'agent",
-        validate: 'Valider la décision',
+        validate: 'Débloquer et valider la décision',
       },
       mailSubject: 'Alerte sur le document {documentNumber}',
     },
@@ -299,6 +300,10 @@ const fr = {
           source: 'BDD {source}',
           startDate: '> {startDate}',
           endDate: '< {endDate}',
+          routes: {
+            exhaustive: 'Relecture exhaustive',
+            automatic: 'Sans relecture',
+          },
         },
         fields: {
           workingUser: 'Agent',
@@ -310,6 +315,7 @@ const fr = {
           jurisdiction: 'Juridiction',
           publicationCategoryLetter: 'Diffusion',
           documentReviewFilterStatus: 'Statut de revue',
+          route: 'Circuit de relecture',
         },
       },
       columnTitles: {

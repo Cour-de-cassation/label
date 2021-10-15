@@ -7,7 +7,7 @@ export { Menu };
 function Menu<T extends string>(props: {
   anchorElement: Element | undefined;
   dropdownPosition: 'bottom' | 'top';
-  items: Array<{ value: T; element: ReactNode }>;
+  items: Array<{ value: T; element: ReactNode; isDisabled?: boolean }>;
   onChange: (value: T) => void;
   onClose: (event: MouseEvent) => void;
   width?: number;
@@ -30,8 +30,9 @@ function Menu<T extends string>(props: {
       open={isOpen()}
       transformOrigin={dropdownMenuConfiguration.transformOrigin}
     >
-      {props.items.map(({ value, element }, ind) => (
+      {props.items.map(({ value, element, isDisabled }, ind) => (
         <MenuItem
+          disabled={isDisabled}
           classes={menuItemClasses}
           key={ind}
           value={value}

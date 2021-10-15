@@ -51,41 +51,39 @@ function PublishableDocumentsTable(props: {
       },
     };
 
+    const markAsPublished = {
+      kind: 'text' as const,
+      text: wordings.publishableDocumentsPage.table.optionItems.markAsPublished,
+      onClick: async () => {
+        await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {
+          documentId: publishableDocument._id,
+          status: documentModule.lib.getNextStatus({
+            status: publishableDocument.status,
+            publicationCategory: publishableDocument.publicationCategory,
+            route: publishableDocument.route,
+          }) as 'done' | 'toBePublished',
+        });
+        props.refetch();
+      },
+    };
+
+    const markAsUnpublished = {
+      kind: 'text' as const,
+      text: wordings.publishableDocumentsPage.table.optionItems.markAsUnPublished,
+      onClick: async () => {
+        await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {
+          documentId: publishableDocument._id,
+          status: 'toBePublished',
+        });
+        props.refetch();
+      },
+    };
+
     switch (publishableDocument.status) {
       case 'toBePublished':
-        return [
-          openAnonymizedDocumentOptionItem,
-          {
-            kind: 'text' as const,
-            text: wordings.publishableDocumentsPage.table.optionItems.markAsPublished,
-            onClick: async () => {
-              await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {
-                documentId: publishableDocument._id,
-                status: documentModule.lib.getNextStatus({
-                  status: publishableDocument.status,
-                  publicationCategory: publishableDocument.publicationCategory,
-                  route: publishableDocument.route,
-                }) as 'done' | 'toBePublished',
-              });
-              props.refetch();
-            },
-          },
-        ];
+        return [openAnonymizedDocumentOptionItem, markAsPublished];
       case 'done':
-        return [
-          openAnonymizedDocumentOptionItem,
-          {
-            kind: 'text' as const,
-            text: wordings.publishableDocumentsPage.table.optionItems.markAsUnPublished,
-            onClick: async () => {
-              await apiCaller.post<'updatePublishableDocumentStatus'>('updatePublishableDocumentStatus', {
-                documentId: publishableDocument._id,
-                status: 'toBePublished',
-              });
-              props.refetch();
-            },
-          },
-        ];
+        return [openAnonymizedDocumentOptionItem, markAsUnpublished];
       default:
         return [];
     }

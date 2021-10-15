@@ -8,7 +8,7 @@ export { DropdownMenu };
 function DropdownMenu<T extends string>(props: {
   anchorElement: Element | undefined;
   dropdownPosition: 'bottom' | 'top';
-  items: Array<{ icon?: ReactElement; text: string; value: T }>;
+  items: Array<{ icon?: ReactElement; text: string; value: T; isDisabled?: boolean }>;
   onChange: (value: T) => void;
   onClose: () => void;
   width?: number;
@@ -19,13 +19,17 @@ function DropdownMenu<T extends string>(props: {
     <Menu
       anchorElement={props.anchorElement}
       dropdownPosition={props.dropdownPosition}
-      items={props.items.map(({ icon, text, value }) => ({
+      items={props.items.map(({ icon, text, value, isDisabled }) => ({
         element: icon ? (
-          <ComponentsList components={[icon, <ItemText>{text}</ItemText>]} spaceBetweenComponents={theme.spacing} />
+          <ComponentsList
+            components={[icon, <ItemText isDisabled={isDisabled}>{text}</ItemText>]}
+            spaceBetweenComponents={theme.spacing}
+          />
         ) : (
-          <ItemText>{text}</ItemText>
+          <ItemText isDisabled={isDisabled}>{text}</ItemText>
         ),
         value,
+        isDisabled,
       }))}
       onChange={props.onChange}
       onClose={props.onClose}
@@ -34,7 +38,7 @@ function DropdownMenu<T extends string>(props: {
   );
 }
 
-function ItemText(props: { children: ReactNode }) {
+function ItemText(props: { children: ReactNode; isDisabled?: boolean }) {
   const styles = buildStyles();
   return (
     <Text variant="h3" style={styles.itemText}>

@@ -12,7 +12,7 @@ function IconDropdown<T extends string>(props: {
   disabled?: boolean;
   hint: string;
   iconName: iconNameType;
-  items: Array<{ icon?: ReactElement; text: string; value: T }>;
+  items: Array<{ icon?: ReactElement; text: string; value: T; isDisabled?: boolean }>;
   onChange: (value: T) => void;
   onClick?: () => void;
   onClose?: () => void;

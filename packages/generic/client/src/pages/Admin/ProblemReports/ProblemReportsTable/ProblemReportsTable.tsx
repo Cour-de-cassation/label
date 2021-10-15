@@ -9,8 +9,10 @@ import {
   optionItemType,
   Table,
   tableRowFieldType,
+  PublicationCategoryBadge,
 } from '../../../../components';
 import { sendMail } from '../../../../services/sendMail';
+import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { routes } from '../../../routes';
 
@@ -25,6 +27,9 @@ function ProblemReportsTable(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
   const history = useHistory();
+  const theme = useCustomTheme();
+  const styles = buildStyles(theme);
+  const problemReportsFields = buildProblemReportsFields();
   return (
     <Table
       data={props.problemReportsWithDetails}
@@ -36,6 +41,85 @@ function ProblemReportsTable(props: {
       defaultOrderDirection="desc"
     />
   );
+
+  function buildProblemReportsFields(): Array<
+    tableRowFieldType<apiRouteOutType<'get', 'problemReportsWithDetails'>[number]>
+  > {
+    return [
+      {
+        id: 'documentNumber',
+        title: wordings.problemReportsPage.table.columnTitles.number,
+        canBeSorted: true,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.document.documentNumber,
+        width: 2,
+      },
+      {
+        id: 'publicationCategory',
+        title: wordings.problemReportsPage.table.columnTitles.publicationCategory.title,
+        tooltipText: wordings.problemReportsPage.table.columnTitles.publicationCategory.tooltipText,
+        canBeSorted: true,
+        getSortingValue: (problemReport) => problemReport.document.publicationCategory.length,
+        extractor: (problemReport) => problemReport.document.publicationCategory.join(','),
+        render: (problemReport) =>
+          problemReport.document.publicationCategory.length > 0 ? (
+            <div style={styles.publicationCategoryBadgesContainer}>
+              {problemReport.document.publicationCategory.map((publicationCategoryLetter) => (
+                <div style={styles.publicationCategoryBadgeContainer}>
+                  <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            '-'
+          ),
+        width: 2,
+      },
+      {
+        id: 'userName',
+        title: wordings.problemReportsPage.table.columnTitles.workingUser,
+        canBeSorted: true,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.user.name,
+        width: 3,
+      },
+      {
+        id: 'type',
+        canBeSorted: true,
+        title: wordings.problemReportsPage.table.columnTitles.type,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.type,
+        render: (problemReportWithDetails) => (
+          <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={TABLE_ICON_SIZE} />
+        ),
+        width: 1,
+      },
+      {
+        id: 'status',
+        canBeSorted: true,
+        title: wordings.problemReportsPage.table.columnTitles.status,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.document.status,
+        render: (problemReportWithDetails) => (
+          <DocumentStatusIcon status={problemReportWithDetails.document.status} iconSize={TABLE_ICON_SIZE} />
+        ),
+        width: 1,
+      },
+      {
+        id: 'date',
+        title: wordings.problemReportsPage.table.columnTitles.date,
+        canBeSorted: true,
+        extractor: (problemReportWithDetails) =>
+          timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date, true),
+        getSortingValue: (problemReportWithDetails) => problemReportWithDetails.problemReport.date,
+        width: 4,
+      },
+      {
+        id: 'text',
+        canBeSorted: true,
+        title: wordings.problemReportsPage.table.columnTitles.text,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.text,
+        width: 10,
+        cellStyle: { maxWidth: `${PROBLEM_REPORT_TEXT_CELL_MAX_WIDTH}px`, overflow: 'hidden' },
+      },
+    ];
+  }
 
   function buildOptionItems(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
     const validateDocumentOptionItem = {
@@ -53,6 +137,9 @@ function ProblemReportsTable(props: {
         props.refetch();
       },
       iconName: 'send' as const,
+      isDisabled:
+        problemReportWithDetails.document.status === 'done' ||
+        problemReportWithDetails.document.status == 'toBePublished',
     };
 
     const answerByEmailOptionItem = {
@@ -79,6 +166,7 @@ function ProblemReportsTable(props: {
         props.refetch();
       },
       iconName: 'delete' as const,
+      isDisabled: problemReportWithDetails.document.status === 'rejected',
     };
 
     const openDocumentOptionItem = {
@@ -111,13 +199,10 @@ function ProblemReportsTable(props: {
       answerByEmailOptionItem,
       openDocumentOptionItem,
       reassignToWorkingUserOptionItem,
+      validateDocumentOptionItem,
+      deleteProblemReportOptionItem,
     ];
-    if (problemReportWithDetails.document.status !== 'rejected') {
-      optionItems.push(deleteProblemReportOptionItem);
-    }
-    if (problemReportWithDetails.document.status !== 'done') {
-      optionItems.push(validateDocumentOptionItem);
-    }
+
     return optionItems;
   }
 
@@ -134,56 +219,13 @@ function isRowHighlighted(problemReportWithDetails: apiRouteOutType<'get', 'prob
   return !problemReportWithDetails.problemReport.hasBeenRead;
 }
 
-const problemReportsFields: Array<tableRowFieldType<apiRouteOutType<'get', 'problemReportsWithDetails'>[number]>> = [
-  {
-    id: 'documentNumber',
-    title: wordings.problemReportsPage.table.columnTitles.number,
-    canBeSorted: true,
-    extractor: (problemReportWithDetails) => problemReportWithDetails.document.documentNumber,
-    width: 2,
-  },
-  {
-    id: 'userName',
-    title: wordings.problemReportsPage.table.columnTitles.workingUser,
-    canBeSorted: true,
-    extractor: (problemReportWithDetails) => problemReportWithDetails.user.name,
-    width: 3,
-  },
-  {
-    id: 'type',
-    canBeSorted: true,
-    title: wordings.problemReportsPage.table.columnTitles.type,
-    extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.type,
-    render: (problemReportWithDetails) => (
-      <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={TABLE_ICON_SIZE} />
-    ),
-    width: 1,
-  },
-  {
-    id: 'status',
-    canBeSorted: true,
-    title: wordings.problemReportsPage.table.columnTitles.status,
-    extractor: (problemReportWithDetails) => problemReportWithDetails.document.status,
-    render: (problemReportWithDetails) => (
-      <DocumentStatusIcon status={problemReportWithDetails.document.status} iconSize={TABLE_ICON_SIZE} />
-    ),
-    width: 1,
-  },
-  {
-    id: 'date',
-    title: wordings.problemReportsPage.table.columnTitles.date,
-    canBeSorted: true,
-    extractor: (problemReportWithDetails) =>
-      timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date, true),
-    getSortingValue: (problemReportWithDetails) => problemReportWithDetails.problemReport.date,
-    width: 4,
-  },
-  {
-    id: 'text',
-    canBeSorted: true,
-    title: wordings.problemReportsPage.table.columnTitles.text,
-    extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.text,
-    width: 10,
-    cellStyle: { maxWidth: `${PROBLEM_REPORT_TEXT_CELL_MAX_WIDTH}px`, overflow: 'hidden' },
-  },
-];
+function buildStyles(theme: customThemeType) {
+  return {
+    publicationCategoryBadgesContainer: {
+      display: 'flex',
+    },
+    publicationCategoryBadgeContainer: {
+      marginRight: theme.spacing,
+    },
+  };
+}

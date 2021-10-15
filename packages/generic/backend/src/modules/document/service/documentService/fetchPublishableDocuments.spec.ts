@@ -16,6 +16,8 @@ describe('fetchPublishableDocuments', () => {
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],
           chamberName: 'CIV. I',
+          criminalCaseCode: '',
+          civilCaseCode: '',
           date: new Date().getTime(),
           jurisdiction: 'Cour de cassation',
           parties: [],

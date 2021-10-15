@@ -11,6 +11,7 @@ import { buildProblemReportRepository } from '../../../../modules/problemReport'
 import { buildTreatmentRepository } from '../../../../modules/treatment';
 import { up } from '../migrations/26_61671296b1af2b8f48aa134c';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('add parties in decisionMetadata in document model, delete criticity and metadata', () => {
   const decisionMetadata = {
     additionalTermsToAnnotate: 'az',
@@ -33,14 +34,14 @@ describe('add parties in decisionMetadata in document model, delete criticity an
           'numeroSiretSiren',
           'professionnelMagistratGreffier',
         ],
-      },
+      } as any,
       status: 'loaded',
     }),
     documentModule.generator.generate({
       decisionMetadata: {
         ...decisionMetadata,
         categoriesToOmit: ['personneMorale'],
-      },
+      } as any,
       status: 'done',
     }),
   ];

@@ -1,18 +1,20 @@
 import { omit } from 'lodash';
 import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../../../modules/document';
-import { up, down } from '../migrations/22_615ef06b950c728bbbdd6dc1';
+import { up, down } from '../migrations/28_616952c63ce6293e43044f73';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-describe('add parties in decisionMetadata in document model, delete criticity and metadata', () => {
+describe('add  in document model', () => {
   const decisionMetadata = {
-    additionalTermsToAnnotate: '',
     appealNumber: '',
+    chamberName: 'Civile',
+    civilCaseCode: '',
+    criminalCaseCode: '',
+    date: new Date().getTime(),
+    jurisdiction: 'Cour de cassation',
     boundDecisionDocumentNumbers: [],
     categoriesToOmit: [],
-    chamberName: '',
-    date: undefined,
-    jurisdiction: '',
+    additionalTermsToAnnotate: '',
     occultationBlock: undefined,
     parties: [],
     session: '',
@@ -20,44 +22,47 @@ describe('add parties in decisionMetadata in document model, delete criticity an
   };
   const documentsWithNewModel = [
     documentModule.generator.generate({
-      documentNumber: 0,
-      decisionMetadata,
-    } as any),
+      decisionMetadata: {
+        ...decisionMetadata,
+        civilCaseCode: '',
+        criminalCaseCode: '',
+      },
+    }),
     documentModule.generator.generate({
-      documentNumber: 0,
-      decisionMetadata,
-    } as any),
+      decisionMetadata: {
+        ...decisionMetadata,
+        civilCaseCode: '',
+        criminalCaseCode: '',
+      },
+    }),
     documentModule.generator.generate({
-      documentNumber: 0,
-      decisionMetadata,
-    } as any),
+      decisionMetadata: {
+        ...decisionMetadata,
+        civilCaseCode: '',
+        criminalCaseCode: '',
+      },
+    }),
   ];
   const documentsWithOldModel = [
-    {
-      ...omit(documentsWithNewModel[0], ['decisionMetadata.parties']),
-      metadata: '',
-      criticity: 1,
-    },
-    {
-      ...omit(documentsWithNewModel[1], ['decisionMetadata.parties']),
-      metadata: '',
-      criticity: 1,
-    },
-    {
-      ...omit(documentsWithNewModel[2], ['decisionMetadata.parties']),
-      metadata: '',
-      criticity: 1,
-    },
+    omit(documentsWithNewModel[0], [
+      'decisionMetadata.civilCaseCode',
+      'decisionMetadata.criminalCaseCode',
+    ]),
+    omit(documentsWithNewModel[1], [
+      'decisionMetadata.civilCaseCode',
+      'decisionMetadata.criminalCaseCode',
+    ]),
+    omit(documentsWithNewModel[2], [
+      'decisionMetadata.civilCaseCode',
+      'decisionMetadata.criminalCaseCode',
+    ]),
   ];
 
   it('should test up', async () => {
     const documentRepository = buildDocumentRepository();
-    await Promise.all(
-      ((documentsWithOldModel as any) as documentType[]).map(
-        documentRepository.insert,
-      ),
+    await documentRepository.insertMany(
+      (documentsWithOldModel as any) as documentType[],
     );
-
     await up();
 
     const documentsAfterUpdateModel = await documentRepository.findAll();

@@ -30,6 +30,8 @@ const documentGenerator: generatorType<documentType> = {
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],
           chamberName: '',
+          civilCaseCode: '',
+          criminalCaseCode: '',
           date: new Date().getTime(),
           jurisdiction: '',
           occultationBlock: undefined,

@@ -68,6 +68,8 @@ function mapCourtDecisionToDocument(
         sderCourtDecision.occultation?.additionalTerms || '',
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
+      civilCaseCode: sderCourtDecision.natureAffaireCivil?.trim() || '',
+      criminalCaseCode: sderCourtDecision.natureAffairePenal?.trim() || '',
       chamberName: readableChamberName,
       date: decisionDate?.getTime(),
       jurisdiction: readableJurisdictionName,

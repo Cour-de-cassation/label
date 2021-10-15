@@ -4,7 +4,7 @@ import { up, down } from '../migrations/27_6168561c62c6bf3551b1d013';
 import { omit } from 'lodash';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-describe('add statisticNumber and decisionDate in statistic model', () => {
+describe('add appealNumber in statistic model', () => {
   const statisticsWithNewModel = [
     statisticModule.generator.generate({
       appealNumber: undefined,

@@ -15,6 +15,8 @@ const documentModelCommonFields = {
       boundDecisionDocumentNumbers: { kind: 'array', content: { kind: 'primitive', content: 'number' } },
       categoriesToOmit: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       chamberName: { kind: 'primitive', content: 'string' },
+      civilCaseCode: { kind: 'primitive', content: 'string' },
+      criminalCaseCode: { kind: 'primitive', content: 'string' },
       date: {
         kind: 'or',
         content: [

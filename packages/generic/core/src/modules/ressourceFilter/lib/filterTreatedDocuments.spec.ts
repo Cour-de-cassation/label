@@ -149,6 +149,8 @@ describe('filterTreatedDocuments', () => {
           solution: '',
           session: '',
           occultationBlock: undefined,
+          criminalCaseCode: '',
+          civilCaseCode: '',
           chamberName: '',
           date: decisionDate,
           categoriesToOmit: [],

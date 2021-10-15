@@ -24,6 +24,8 @@ describe('buildStatistic', () => {
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],
         chamberName: 'Chambre criminelle',
+        criminalCaseCode: '',
+        civilCaseCode: '',
         date: decisionDate,
         jurisdiction,
         occultationBlock: undefined,

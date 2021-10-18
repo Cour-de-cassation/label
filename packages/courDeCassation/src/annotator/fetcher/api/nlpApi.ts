@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { settingsModule } from '@label/core';
 import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
+import { logger } from '@label/backend';
 
 export { nlpApi };
 
@@ -21,6 +22,8 @@ const nlpApi: nlpApiType = {
       document.decisionMetadata.categoriesToOmit,
       document.decisionMetadata.additionalTermsToAnnotate,
     );
+    logger.log('document.decisionMetadata.parties');
+    logger.log(document.decisionMetadata.parties);
 
     const nlpCategories = settingsModule.lib.getCategories(filteredSettings, {
       status: ['visible', 'alwaysVisible', 'annotable'],

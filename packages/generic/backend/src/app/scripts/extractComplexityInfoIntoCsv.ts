@@ -1,3 +1,5 @@
+import { sumBy } from 'lodash';
+import { promises as fs } from 'fs';
 import {
   annotationLinkHandler,
   csvExtractor,
@@ -6,24 +8,24 @@ import {
   idModule,
   treatmentModule,
 } from '@label/core';
-import { promises as fs } from 'fs';
 import { assignationService } from '../../modules/assignation';
 import { treatmentService } from '../../modules/treatment';
 import { userService } from '../../modules/user';
 import { buildDocumentRepository } from '../../modules/document';
 import { logger } from '../../utils';
-import { sumBy } from 'lodash';
 
 export { extractComplexityInfoIntoCsv };
 
 type complexityInfoType = {
+  annotationsCount: number;
+  cadastreAnnotationsCount: number;
   documentId: documentType['_id'];
   documentNumber: documentType['documentNumber'];
   documentSource: documentType['source'];
+  isCourDeCassationDecision: boolean;
+  linkedEntitiesCount: number;
   totalTreatmentDuration: number;
   userNames: string[];
-  annotationsCount: number;
-  linkedEntitiesCount: number;
   wordsCount: number;
 };
 
@@ -36,7 +38,7 @@ async function extractComplexityInfoIntoCsv() {
 
   const treatedDocuments = await documentRepository.findAllByStatusProjection(
     ['done', 'toBePublished'],
-    ['_id', 'documentNumber', 'source', 'text'],
+    ['_id', 'documentNumber', 'source', 'text', 'decisionMetadata'],
   );
 
   const documentIds = treatedDocuments.map(({ _id }) => _id);
@@ -70,6 +72,14 @@ async function extractComplexityInfoIntoCsv() {
       nonHumanTreatments,
     );
 
+    const cadastreAnnotationsCount = nonHumanAnnotations.filter(
+      ({ category }) => category === 'cadastre',
+    ).length;
+
+    const isCourDeCassationDecision =
+      treatedDocument.decisionMetadata.jurisdiction.trim().toLowerCase() ===
+      'cour de cassation';
+
     const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(
       nonHumanAnnotations,
     );
@@ -87,9 +97,11 @@ async function extractComplexityInfoIntoCsv() {
     );
 
     return {
+      cadastreAnnotationsCount,
       documentId: treatedDocument._id,
       documentNumber: treatedDocument.documentNumber,
       documentSource: treatedDocument.source,
+      isCourDeCassationDecision,
       totalTreatmentDuration,
       userNames,
       annotationsCount: nonHumanAnnotations.length,
@@ -148,6 +160,16 @@ function convertComplexityInfosToCsvContent(
       title: 'Total duration',
       extractor: (complexityInfo) =>
         complexityInfo.totalTreatmentDuration.toString(),
+    },
+    {
+      title: 'Cadastre annotation count',
+      extractor: (complexityInfo) =>
+        complexityInfo.cadastreAnnotationsCount.toString(),
+    },
+    {
+      title: 'Is Cour de cassation',
+      extractor: (complexityInfo) =>
+        complexityInfo.isCourDeCassationDecision ? 'TRUE' : 'FALSE',
     },
   ];
   return csvExtractor.convertDataToCsv(

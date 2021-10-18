@@ -6,7 +6,7 @@ import {
   labelTreatmentsType,
 } from './lib/exporter';
 import { settingsLoader } from './lib/settingsLoader';
-import { buildMongo, dependencyManager, fileSystem } from './utils';
+import { buildMongo, dependencyManager, fileSystem, logger } from './utils';
 import { buildBackend } from './app';
 
 export {
@@ -17,6 +17,7 @@ export {
   buildMongo,
   dependencyManager,
   fileSystem,
+  logger,
   settingsLoader,
 };
 

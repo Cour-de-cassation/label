@@ -2,7 +2,7 @@
 
 cd packages/courDeCassation
 echo "Reset the DB except for users and migrations"
-RUN_MODE=LOCAL node dist/scripts/clearDbExceptUsersAndMigrations.js -e environments/localEnvironment.json -s settings/settings.json
+RUN_MODE=LOCAL node dist/scripts/clearDb.js -e environments/localEnvironment.json -s settings/settings.json
 echo "Import the documents from SDER database"
 RUN_MODE=LOCAL node dist/scripts/importAllDocumentsFromSderSince.js --days 2  -e environments/localEnvironment.json -s settings/settings.json
 echo "Annotate all the documents with the NLP engine"

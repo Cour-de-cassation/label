@@ -6,6 +6,11 @@ import { parametersHandler } from '../lib/parametersHandler';
   const backend = buildBackend(environment, settings);
 
   await backend.runScript(
+    () => backend.scripts.clearDb.run({}),
+    backend.scripts.clearDb.option,
+  );
+
+  await backend.runScript(
     backend.scripts.insertTestUsers.run,
     backend.scripts.insertTestUsers.option,
   );

@@ -103,6 +103,7 @@ function DocumentSwitcher(props: {
               status: 'free',
             });
           }
+          return;
         }),
       );
       try {

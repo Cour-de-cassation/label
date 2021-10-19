@@ -1,7 +1,7 @@
 import React from 'react';
-import { settingsModule, fetchedDocumentType } from '@label/core';
-import { Text } from '../../../../components';
-import { customThemeType, heights, useCustomTheme } from '../../../../styles';
+import { settingsModule, fetchedDocumentType, documentModule } from '@label/core';
+import { Icon, Text } from '../../../../components';
+import { customThemeType, getColor, heights, useCustomTheme, useDisplayMode } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTable } from './CategoryTable';
@@ -15,6 +15,7 @@ function AnnotationsPanel(props: {
   splittedTextByLine: splittedTextByLineType;
 }) {
   const theme = useCustomTheme();
+  const { displayMode } = useDisplayMode();
   const styles = buildStyles(theme);
 
   return (
@@ -28,15 +29,12 @@ function AnnotationsPanel(props: {
         {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => {
           const isCategoryAdditionalAnnotationCategory =
             category === settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName();
-          const categoryContainerStyle = isCategoryAdditionalAnnotationCategory
-            ? styles.additionalAnnotationCategoryContainer
-            : styles.categoryContainer;
 
           return (
-            <div key={category} style={categoryContainerStyle}>
-              {renderCategory({ category, categorySize, categoryAnnotations })}
+            <div key={category} style={styles.categoryContainer}>
               {isCategoryAdditionalAnnotationCategory &&
                 renderAdditionalAnnotationTerms(props.document.decisionMetadata.additionalTermsToAnnotate)}
+              <div>{renderCategory({ category, categorySize, categoryAnnotations })}</div>
             </div>
           );
         })}
@@ -58,9 +56,18 @@ function AnnotationsPanel(props: {
   }
 
   function renderAdditionalAnnotationTerms(additionalTermsToAnnotate: string) {
+    const annotationTerms = documentModule.lib.extractAdditionalAnnotationTerms(additionalTermsToAnnotate);
     return (
       <div style={styles.additionalAnnotationTermsContainer}>
-        <Text>{additionalTermsToAnnotate}</Text>
+        <div style={styles.additionalAnnotationTermsLeftContainer}>
+          <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
+        </div>
+        <div style={styles.additionalAnnotationTermsRightContainer}>
+          <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
+          {annotationTerms.map((annotationTerm) => (
+            <Text variant="body2">{annotationTerm}</Text>
+          ))}
+        </div>
       </div>
     );
   }
@@ -87,14 +94,21 @@ function AnnotationsPanel(props: {
         paddingRight: theme.spacing * 2,
       },
       additionalAnnotationTermsContainer: {
-        marginTop: theme.spacing,
-        marginRight: theme.spacing,
+        padding: theme.spacing * 2,
+        marginBottom: theme.spacing,
         display: 'flex',
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
+        borderRadius: theme.shape.borderRadius.l,
+        backgroundColor: getColor(settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryColor(displayMode)),
       },
-      additionalAnnotationCategoryContainer: {
-        marginBottom: theme.spacing * 3,
+      additionalAnnotationTermsLeftContainer: {
+        marginRight: theme.spacing * 3,
+      },
+      additionalAnnotationTermsRightContainer: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
       },
       categoryContainer: {
         marginBottom: theme.spacing,

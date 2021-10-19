@@ -139,7 +139,7 @@ function ProblemReportsTable(props: {
       iconName: 'send' as const,
       isDisabled:
         problemReportWithDetails.document.status === 'done' ||
-        problemReportWithDetails.document.status == 'toBePublished',
+        problemReportWithDetails.document.status === 'toBePublished',
     };
 
     const answerByEmailOptionItem = {

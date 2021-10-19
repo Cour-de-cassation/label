@@ -38,12 +38,19 @@ async function extractComplexityInfoIntoCsv() {
 
   const treatedDocuments = await documentRepository.findAllByStatusProjection(
     ['done', 'toBePublished'],
-    ['_id', 'documentNumber', 'source', 'text', 'decisionMetadata'],
+    ['_id', 'documentNumber', 'source', 'text', 'decisionMetadata', 'route'],
   );
 
-  const documentIds = treatedDocuments.map(({ _id }) => _id);
+  const exhaustiveTreatedDocuments = treatedDocuments.filter(
+    ({ route }) => route === 'exhaustive',
+  );
+
+  const documentIds = exhaustiveTreatedDocuments.map(({ _id }) => _id);
   const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
     documentIds,
+    {
+      assertEveryDocumentIsAssigned: true,
+    },
   );
 
   const usersByIds = await userService.fetchUsers();
@@ -68,6 +75,12 @@ async function extractComplexityInfoIntoCsv() {
       )
       .sort((treatment1, treatment2) => treatment1.order - treatment2.order);
 
+    if (humanTreatments.length === 0) {
+      throw new Error(
+        `No human treatment found for document ${documentIdString}`,
+      );
+    }
+
     const nonHumanAnnotations = treatmentModule.lib.computeAnnotations(
       nonHumanTreatments,
     );
@@ -83,11 +96,7 @@ async function extractComplexityInfoIntoCsv() {
     const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(
       nonHumanAnnotations,
     );
-    if (humanTreatments.length === 0) {
-      throw new Error(
-        `No human treatment found for document ${documentIdString}`,
-      );
-    }
+
     const userNames = humanTreatments.map(
       ({ userId }) => usersByIds[idModule.lib.convertToString(userId)].name,
     );

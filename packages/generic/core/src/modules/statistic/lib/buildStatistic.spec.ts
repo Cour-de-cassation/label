@@ -1,6 +1,5 @@
 import { documentModule } from '../../document';
 import { idModule } from '../../id';
-import { treatmentModule } from '../../treatment';
 import { buildStatistic } from './buildStatistic';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
@@ -12,7 +11,6 @@ describe('buildStatistic', () => {
     const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
     const documentPublicationCategory = ['P'];
     const documentSource = 'SOURCE';
-    const duration = 1500;
     const linkedEntitiesCount = 2;
     const jurisdiction = 'Cour de cassation';
     const userId = idModule.lib.buildId();
@@ -39,21 +37,20 @@ describe('buildStatistic', () => {
       source: documentSource,
       text: 'Some text with five words',
     });
-    const treatment = treatmentModule.generator.generate({
-      documentId: document._id,
-      duration,
-      lastUpdateDate: TREATMENT_DATE.getTime(),
+    const treatmentInfo = {
       subAnnotationsNonSensitiveCount: 1,
       subAnnotationsSensitiveCount: 2,
       surAnnotationsCount: 3,
-    });
+    };
+    const lastUpdateDate = TREATMENT_DATE.getTime();
 
     const statistic = buildStatistic({
       annotationsCount,
       document,
       linkedEntitiesCount,
-      treatment,
-      treatmentsSummary: [{ userId, treatmentDuration: 10 }],
+      lastUpdateDate,
+      treatmentInfo,
+      humanTreatmentsSummary: [{ userId, treatmentDuration: 10 }],
     });
 
     expect(statistic).toEqual({

@@ -53,10 +53,10 @@ describe('fetch', () => {
       await documentRepository.insertMany(documents);
       await assignationRepository.insertMany(assignations);
 
-      const assignationsByDocumentIds = await fetchAssignationsByDocumentIds([
-        documents[0]._id,
-        documents[1]._id,
-      ]);
+      const assignationsByDocumentIds = await fetchAssignationsByDocumentIds(
+        [documents[0]._id, documents[1]._id],
+        { assertEveryDocumentIsAssigned: true },
+      );
 
       expect(assignationsByDocumentIds).toEqual({
         [idModule.lib.convertToString(documents[0]._id)]: [assignations[0]],
@@ -69,7 +69,9 @@ describe('fetch', () => {
       await assignationRepository.insert(assignations[0]);
 
       expect(
-        fetchAssignationsByDocumentIds([documents[0]._id, documents[1]._id]),
+        fetchAssignationsByDocumentIds([documents[0]._id, documents[1]._id], {
+          assertEveryDocumentIsAssigned: true,
+        }),
       ).rejects.toThrowError(
         `The document ${idModule.lib.convertToString(
           documents[1]._id,

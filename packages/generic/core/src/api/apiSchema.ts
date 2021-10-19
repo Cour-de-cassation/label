@@ -292,19 +292,43 @@ const apiSchema = {
               },
             },
             totalTreatmentDuration: {
-              kind: 'primitive',
-              content: 'number',
+              kind: 'or',
+              content: [
+                { kind: 'primitive', content: 'number' },
+                { kind: 'primitive', content: 'undefined' },
+              ],
             },
             lastTreatmentDate: {
-              kind: 'primitive',
-              content: 'number',
+              kind: 'or',
+              content: [
+                { kind: 'primitive', content: 'number' },
+                { kind: 'primitive', content: 'undefined' },
+              ],
             },
             statistic: {
               kind: 'object',
               content: {
-                surAnnotationsCount: { kind: 'primitive', content: 'number' },
-                subAnnotationsSensitiveCount: { kind: 'primitive', content: 'number' },
-                subAnnotationsNonSensitiveCount: { kind: 'primitive', content: 'number' },
+                surAnnotationsCount: {
+                  kind: 'or',
+                  content: [
+                    { kind: 'primitive', content: 'number' },
+                    { kind: 'primitive', content: 'undefined' },
+                  ],
+                },
+                subAnnotationsSensitiveCount: {
+                  kind: 'or',
+                  content: [
+                    { kind: 'primitive', content: 'number' },
+                    { kind: 'primitive', content: 'undefined' },
+                  ],
+                },
+                subAnnotationsNonSensitiveCount: {
+                  kind: 'or',
+                  content: [
+                    { kind: 'primitive', content: 'number' },
+                    { kind: 'primitive', content: 'undefined' },
+                  ],
+                },
               },
             },
             userNames: {

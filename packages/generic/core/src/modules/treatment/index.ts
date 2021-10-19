@@ -1,7 +1,7 @@
 import { treatmentGenerator } from './generator';
 import { treatmentModel, treatmentType } from './treatmentType';
 import {
-  aggregate,
+  aggregateTreatmentInfo,
   assertTreatmentsSourcesFollowRightOrder,
   build,
   buildEmpty,
@@ -9,6 +9,7 @@ import {
   computeAnnotationsDiff,
   computeTreatmentInfo,
   extractHumanTreatments,
+  extractLastUpdateDate,
   getLastTreatment,
   incrementTreatmentDuration,
   treatmentInfoType,
@@ -24,7 +25,7 @@ const treatmentModule = {
   model: treatmentModel,
   generator: treatmentGenerator,
   lib: {
-    aggregate,
+    aggregateTreatmentInfo,
     assertTreatmentsSourcesFollowRightOrder,
     build,
     buildEmpty,
@@ -32,6 +33,7 @@ const treatmentModule = {
     computeAnnotationsDiff,
     computeTreatmentInfo,
     extractHumanTreatments,
+    extractLastUpdateDate,
     getLastTreatment,
     incrementTreatmentDuration,
     sortInConsistentOrder,

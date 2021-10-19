@@ -1,5 +1,6 @@
 import { sumBy } from 'lodash';
 import {
+  assignationType,
   errorHandlers,
   idModule,
   settingsType,
@@ -29,9 +30,12 @@ async function fetchTreatedDocuments(settings: settingsType) {
   );
 
   const documentIds = treatedDocuments.map(({ _id }) => _id);
-  const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
-    documentIds,
-  );
+  const assignationsByDocumentId: Record<
+    string,
+    assignationType[] | undefined
+  > = await assignationService.fetchAssignationsByDocumentIds(documentIds, {
+    assertEveryDocumentIsAssigned: false,
+  });
 
   const usersByIds = await userService.fetchUsers();
   const treatmentsByDocumentId = await treatmentService.fetchTreatmentsByDocumentIds(
@@ -41,35 +45,52 @@ async function fetchTreatedDocuments(settings: settingsType) {
   return treatedDocuments.map((treatedDocument) => {
     const documentIdString = idModule.lib.convertToString(treatedDocument._id);
     const assignations = assignationsByDocumentId[documentIdString];
-
-    const treatments = treatmentsByDocumentId[documentIdString];
-    const humanTreatments = treatmentModule.lib.extractHumanTreatments(
-      treatments,
-      assignations,
-    );
-    if (humanTreatments.length === 0) {
-      throw errorHandlers.serverErrorHandler.build(
-        `No human treatment found for document ${documentIdString}`,
+    let totalTreatmentDuration: number | undefined,
+      lastTreatmentDate: number | undefined,
+      subAnnotationsNonSensitiveCount: number | undefined,
+      surAnnotationsCount: number | undefined,
+      subAnnotationsSensitiveCount: number | undefined = undefined;
+    let userNames: string[] = [];
+    if (assignations !== undefined) {
+      const treatments = treatmentsByDocumentId[documentIdString];
+      const humanTreatments = treatmentModule.lib.extractHumanTreatments(
+        treatments,
+        assignations,
       );
+      if (humanTreatments.length === 0) {
+        throw errorHandlers.serverErrorHandler.build(
+          `No human treatment found for document ${documentIdString}`,
+        );
+      }
+      userNames = humanTreatments.map(
+        ({ userId }) => usersByIds[idModule.lib.convertToString(userId)].name,
+      );
+      totalTreatmentDuration = sumBy(
+        humanTreatments,
+        ({ treatment }) => treatment.duration,
+      );
+      lastTreatmentDate =
+        humanTreatments[humanTreatments.length - 1].treatment.lastUpdateDate;
+
+      if (humanTreatments.length === 1) {
+        const humanTreatment = humanTreatments[0];
+        subAnnotationsNonSensitiveCount =
+          humanTreatment.treatment.subAnnotationsNonSensitiveCount;
+        subAnnotationsSensitiveCount =
+          humanTreatment.treatment.subAnnotationsSensitiveCount;
+        surAnnotationsCount = humanTreatment.treatment.surAnnotationsCount;
+      } else {
+        const treatmentInfo = treatmentModule.lib.aggregateTreatmentInfo(
+          humanTreatments.map(({ treatment }) => treatment),
+          settings,
+        );
+        subAnnotationsNonSensitiveCount =
+          treatmentInfo.subAnnotationsNonSensitiveCount;
+        subAnnotationsSensitiveCount =
+          treatmentInfo.subAnnotationsSensitiveCount;
+        surAnnotationsCount = treatmentInfo.surAnnotationsCount;
+      }
     }
-    const userNames = humanTreatments.map(
-      ({ userId }) => usersByIds[idModule.lib.convertToString(userId)].name,
-    );
-    const totalTreatmentDuration = sumBy(
-      humanTreatments,
-      ({ treatment }) => treatment.duration,
-    );
-    const lastTreatmentDate =
-      humanTreatments[humanTreatments.length - 1].treatment.lastUpdateDate;
-    const {
-      subAnnotationsNonSensitiveCount,
-      surAnnotationsCount,
-      subAnnotationsSensitiveCount,
-    } = treatmentModule.lib.aggregate(
-      humanTreatments.map(({ treatment }) => treatment),
-      'annotator',
-      settings,
-    );
 
     return {
       document: {

@@ -11,7 +11,7 @@ function update(
 ): treatmentType {
   const newTreatment = { ...treatment, ...treatmentFields };
   const { subAnnotationsSensitiveCount, surAnnotationsCount, subAnnotationsNonSensitiveCount } = computeTreatmentInfo(
-    newTreatment,
+    newTreatment.annotationsDiff,
     settings,
   );
 

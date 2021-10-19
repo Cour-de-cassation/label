@@ -1,8 +1,9 @@
-import { aggregate } from './aggregate';
+import { aggregateTreatmentInfo } from './aggregateTreatmentInfo';
 import { assertTreatmentsSourcesFollowRightOrder } from './assertTreatmentsSourcesFollowRightOrder';
 import { build } from './build';
 import { buildEmpty } from './buildEmpty';
 import { extractHumanTreatments } from './extractHumanTreatments';
+import { extractLastUpdateDate } from './extractLastUpdateDate';
 import { getLastTreatment } from './getLastTreatment';
 import { incrementTreatmentDuration } from './incrementTreatmentDuration';
 import { computeAnnotations, computeAnnotationsDiff } from './computeAnnotations';
@@ -11,7 +12,7 @@ import { sortInConsistentOrder } from './sortInConsistentOrder';
 import { update } from './update';
 
 export {
-  aggregate,
+  aggregateTreatmentInfo,
   assertTreatmentsSourcesFollowRightOrder,
   build,
   buildEmpty,
@@ -19,6 +20,7 @@ export {
   computeAnnotationsDiff,
   computeTreatmentInfo,
   extractHumanTreatments,
+  extractLastUpdateDate,
   getLastTreatment,
   incrementTreatmentDuration,
   sortInConsistentOrder,

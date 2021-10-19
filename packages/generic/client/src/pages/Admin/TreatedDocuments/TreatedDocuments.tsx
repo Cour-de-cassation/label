@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { flatten, uniq } from 'lodash';
-import { apiRouteOutType, idModule, keysOf, treatmentInfoType, timeOperator, documentType } from '@label/core';
+import { apiRouteOutType, keysOf, timeOperator, documentType } from '@label/core';
 import {
   DocumentNumberTextInput,
   DocumentReviewStatusIcon,
@@ -38,11 +38,11 @@ function TreatedDocuments(props: {
   const styles = buildStyles(theme);
 
   const filterInfo = extractFilterInfoFromTreatedDocuments(props.treatedDocuments);
-  const treatmentsInfo = extractTreatmentsInfo(props.treatedDocuments);
-  const treatmentFields = buildTreatedDocumentsFields(treatmentsInfo);
+  // const treatmentsInfo = extractTreatmentsInfo(props.treatedDocuments);
+  const treatmentFields = buildTreatedDocumentsFields();
   const filteredTreatedDocuments = searchedDecisionNumber
     ? filterSearchedDocuments(props.treatedDocuments, searchedDecisionNumber)
-    : getFilteredTreatedDocuments(props.treatedDocuments, treatmentsInfo, filterValues);
+    : getFilteredTreatedDocuments(props.treatedDocuments, filterValues);
 
   return (
     <div style={styles.table}>
@@ -87,39 +87,52 @@ function TreatedDocuments(props: {
     setSearchedDocumentNumber(searchedDocumentNumber);
   }
 
-  function extractTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
-    return treatedDocuments.reduce(
-      (accumulator, treatedDocument) => ({
-        ...accumulator,
-        [idModule.lib.convertToString(treatedDocument.document._id)]: treatedDocument.statistic,
-      }),
-      {} as Record<string, treatmentInfoType>,
-    );
-  }
+  // function extractTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
+  //   return treatedDocuments.reduce(
+  //     (accumulator, treatedDocument) => ({
+  //       ...accumulator,
+  //       [idModule.lib.convertToString(treatedDocument.document._id)]: treatedDocument.statistic,
+  //     }),
+  //     {} as Record<string, treatmentInfoType>,
+  //   );
+  // }
 
   function getFilteredTreatedDocuments(
     treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>,
-    treatmentsInfo: Record<string, treatmentInfoType>,
     filterValues: treatedDocumentFilterType,
   ) {
     return treatedDocuments.filter((treatedDocument) => {
       return keysOf(filterValues).reduce((accumulator, currentFilterKey) => {
         if (currentFilterKey === 'mustHaveSurAnnotations' && !!filterValues[currentFilterKey]) {
-          const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)];
-          return accumulator && treatmentInfo.surAnnotationsCount > 0;
+          return (
+            accumulator &&
+            treatedDocument.statistic.surAnnotationsCount !== undefined &&
+            treatedDocument.statistic.surAnnotationsCount > 0
+          );
         }
         if (currentFilterKey === 'mustHaveSubAnnotations' && !!filterValues[currentFilterKey]) {
-          const treatmentInfo = treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)];
-          return accumulator && treatmentInfo.subAnnotationsSensitiveCount > 0;
+          return (
+            accumulator &&
+            treatedDocument.statistic.subAnnotationsSensitiveCount !== undefined &&
+            treatedDocument.statistic.subAnnotationsSensitiveCount > 0
+          );
         }
         if (currentFilterKey === 'jurisdiction' && !!filterValues[currentFilterKey]) {
           return accumulator && treatedDocument.document.jurisdiction === filterValues.jurisdiction;
         }
         if (currentFilterKey === 'startDate' && !!filterValues.startDate) {
-          return accumulator && treatedDocument.lastTreatmentDate >= filterValues.startDate.getTime();
+          return (
+            accumulator &&
+            treatedDocument.lastTreatmentDate !== undefined &&
+            treatedDocument.lastTreatmentDate >= filterValues.startDate.getTime()
+          );
         }
         if (currentFilterKey === 'endDate' && !!filterValues.endDate) {
-          return accumulator && treatedDocument.lastTreatmentDate <= filterValues.endDate.getTime();
+          return (
+            accumulator &&
+            treatedDocument.lastTreatmentDate !== undefined &&
+            treatedDocument.lastTreatmentDate <= filterValues.endDate.getTime()
+          );
         }
         if (currentFilterKey === 'userName' && !!filterValues.userName) {
           return accumulator && treatedDocument.userNames.includes(filterValues.userName);
@@ -156,16 +169,24 @@ function TreatedDocuments(props: {
     const userNames = uniq(flatten(treatedDocuments.map((treatedDocument) => treatedDocument.userNames)));
     const maxDate =
       treatedDocuments.length > 0
-        ? Math.max(...treatedDocuments.map((treatedDocument) => treatedDocument.lastTreatmentDate))
+        ? Math.max(
+            ...treatedDocuments
+              .filter(({ lastTreatmentDate }) => lastTreatmentDate !== undefined)
+              .map((treatedDocument) => treatedDocument.lastTreatmentDate as number),
+          )
         : undefined;
     const minDate =
       treatedDocuments.length > 0
-        ? Math.min(...treatedDocuments.map((treatedDocument) => treatedDocument.lastTreatmentDate))
+        ? Math.min(
+            ...treatedDocuments
+              .filter(({ lastTreatmentDate }) => lastTreatmentDate !== undefined)
+              .map((treatedDocument) => treatedDocument.lastTreatmentDate as number),
+          )
         : undefined;
     return { jurisdictions, publicationCategoryLetters, userNames, sources, maxDate, minDate };
   }
 
-  function buildTreatedDocumentsFields(treatmentsInfo: Record<string, treatmentInfoType>) {
+  function buildTreatedDocumentsFields() {
     const treatedDocumentsFields: Array<tableRowFieldType<
       apiRouteOutType<'get', 'treatedDocuments'>[number],
       typeof treatedDocumentOrderByProperties[number]
@@ -259,8 +280,10 @@ function TreatedDocuments(props: {
         title: wordings.treatedDocumentsPage.table.columnTitles.date,
         canBeSorted: true,
         extractor: (treatedDocument) =>
-          timeOperator.convertTimestampToReadableDate(treatedDocument.lastTreatmentDate, true),
-        getSortingValue: (treatedDocument) => treatedDocument.lastTreatmentDate,
+          treatedDocument.lastTreatmentDate !== undefined
+            ? timeOperator.convertTimestampToReadableDate(treatedDocument.lastTreatmentDate, true)
+            : '-',
+        getSortingValue: (treatedDocument) => treatedDocument.lastTreatmentDate || 0,
         width: 3,
       },
       {
@@ -269,7 +292,9 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.surAnnotationsCount.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
-          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].surAnnotationsCount,
+          treatedDocument.statistic.surAnnotationsCount !== undefined
+            ? treatedDocument.statistic.surAnnotationsCount
+            : '-',
         width: 1,
       },
       {
@@ -278,7 +303,9 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationsSensitiveCount.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
-          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].subAnnotationsSensitiveCount,
+          treatedDocument.statistic.subAnnotationsSensitiveCount !== undefined
+            ? treatedDocument.statistic.subAnnotationsSensitiveCount
+            : '-',
         width: 1,
       },
       {
@@ -287,7 +314,9 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationsNonSensitiveCount.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
-          treatmentsInfo[idModule.lib.convertToString(treatedDocument.document._id)].subAnnotationsNonSensitiveCount,
+          treatedDocument.statistic.subAnnotationsNonSensitiveCount !== undefined
+            ? treatedDocument.statistic.subAnnotationsNonSensitiveCount
+            : '-',
         width: 1,
       },
       {
@@ -296,8 +325,10 @@ function TreatedDocuments(props: {
         title: wordings.treatedDocumentsPage.table.columnTitles.duration.title,
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.duration.tooltipText,
         extractor: (treatedDocument) =>
-          timeOperator.convertDurationToReadableDuration(treatedDocument.totalTreatmentDuration),
-        getSortingValue: (treatedDocument) => treatedDocument.totalTreatmentDuration,
+          treatedDocument.totalTreatmentDuration !== undefined
+            ? timeOperator.convertDurationToReadableDuration(treatedDocument.totalTreatmentDuration)
+            : '-',
+        getSortingValue: (treatedDocument) => treatedDocument.totalTreatmentDuration || 0,
         width: 1,
       },
     ];

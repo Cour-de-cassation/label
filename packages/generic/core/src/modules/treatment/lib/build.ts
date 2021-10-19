@@ -19,7 +19,7 @@ function build(
 ): treatmentType {
   const treatment = treatmentGenerator.generate(treatmentFields);
   const { subAnnotationsSensitiveCount, surAnnotationsCount, subAnnotationsNonSensitiveCount } = computeTreatmentInfo(
-    treatment,
+    treatmentFields.annotationsDiff,
     settings,
   );
 

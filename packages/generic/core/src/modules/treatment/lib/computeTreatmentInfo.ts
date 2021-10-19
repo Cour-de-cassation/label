@@ -13,22 +13,25 @@ type treatmentInfoType = {
   subAnnotationsNonSensitiveCount: number;
 };
 
-function computeTreatmentInfo(treatment: treatmentType, settings: settingsType): treatmentInfoType {
+function computeTreatmentInfo(
+  annotationsDiff: treatmentType['annotationsDiff'],
+  settings: settingsType,
+): treatmentInfoType {
   const treatmentInfoEntities = {
     surAnnotationsEntities: [] as string[],
     subAnnotationsNonSensitiveEntities: [] as string[],
     subAnnotationsSensitiveEntities: [] as string[],
   };
 
-  treatment.annotationsDiff.before.forEach((beforeAnnotation) => {
+  annotationsDiff.before.forEach((beforeAnnotation) => {
     if (settings[beforeAnnotation.category]?.isAnonymized) {
-      const afterAnnotationContainingBeforeAnnotation = treatment.annotationsDiff.after.find((afterAnnotation) => {
+      const afterAnnotationContainingBeforeAnnotation = annotationsDiff.after.find((afterAnnotation) => {
         const inclusion = annotationModule.lib.areAnnotationsIncluded(beforeAnnotation, afterAnnotation);
         return inclusion !== undefined && inclusion <= 0;
       });
       if (
         (!afterAnnotationContainingBeforeAnnotation &&
-          !annotationModule.lib.isAnnotationTextInAnnotations(beforeAnnotation, treatment.annotationsDiff.after)) ||
+          !annotationModule.lib.isAnnotationTextInAnnotations(beforeAnnotation, annotationsDiff.after)) ||
         (afterAnnotationContainingBeforeAnnotation &&
           !settings[afterAnnotationContainingBeforeAnnotation.category]?.isAnonymized)
       ) {
@@ -37,15 +40,15 @@ function computeTreatmentInfo(treatment: treatmentType, settings: settingsType):
     }
   });
 
-  treatment.annotationsDiff.after.forEach((afterAnnotation) => {
-    const beforeAnnotationContainingAfterAnnotation = treatment.annotationsDiff.before.find((beforeAnnotation) => {
+  annotationsDiff.after.forEach((afterAnnotation) => {
+    const beforeAnnotationContainingAfterAnnotation = annotationsDiff.before.find((beforeAnnotation) => {
       const inclusion = annotationModule.lib.areAnnotationsIncluded(beforeAnnotation, afterAnnotation);
       return inclusion !== undefined && inclusion >= 0;
     });
     if (settings[afterAnnotation.category].isSensitive) {
       if (
         (!beforeAnnotationContainingAfterAnnotation &&
-          !annotationModule.lib.isAnnotationTextInAnnotations(afterAnnotation, treatment.annotationsDiff.before)) ||
+          !annotationModule.lib.isAnnotationTextInAnnotations(afterAnnotation, annotationsDiff.before)) ||
         (beforeAnnotationContainingAfterAnnotation &&
           !settings[beforeAnnotationContainingAfterAnnotation.category]?.isAnonymized)
       ) {

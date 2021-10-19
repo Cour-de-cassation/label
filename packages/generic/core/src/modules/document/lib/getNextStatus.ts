@@ -6,12 +6,17 @@ export { getNextStatus };
 function getNextStatus({
   publicationCategory,
   status,
+  route,
 }: Pick<documentType, 'status' | 'publicationCategory' | 'route'>): documentType['status'] {
   switch (status) {
     case 'loaded':
       return 'nlpAnnotating';
     case 'nlpAnnotating':
-      return 'free';
+      if (route === 'automatic') {
+        return 'done';
+      } else {
+        return 'free';
+      }
     case 'free':
       return 'pending';
     case 'pending':

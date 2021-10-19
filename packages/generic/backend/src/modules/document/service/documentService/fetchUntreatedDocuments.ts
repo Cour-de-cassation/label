@@ -27,6 +27,7 @@ async function fetchUntreatedDocuments() {
     .map((document) => document._id);
   const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
     assignedDocumentIds,
+    { assertEveryDocumentIsAssigned: true },
   );
   const allAssignations = flatten(Object.values(assignationsByDocumentId));
   const usersByAssignationId = await userService.fetchUsersByAssignations(

@@ -1,22 +1,24 @@
 import { documentModule, documentType } from '../../document';
 import { idModule } from '../../id';
-import { treatmentType } from '../../treatment';
+import { treatmentInfoType, treatmentType } from '../../treatment';
 import { statisticType } from '../statisticType';
 
 export { buildStatistic };
 
 function buildStatistic({
   annotationsCount,
-  treatmentsSummary,
+  humanTreatmentsSummary,
   document,
   linkedEntitiesCount,
-  treatment,
+  treatmentInfo,
+  lastUpdateDate,
 }: {
   annotationsCount: number;
-  treatmentsSummary: statisticType['treatmentsSummary'];
+  humanTreatmentsSummary: statisticType['treatmentsSummary'];
   document: documentType;
   linkedEntitiesCount: number;
-  treatment: treatmentType;
+  treatmentInfo: treatmentInfoType;
+  lastUpdateDate: treatmentType['lastUpdateDate'];
 }): statisticType {
   return {
     _id: idModule.lib.buildId(),
@@ -35,11 +37,11 @@ function buildStatistic({
     session: document.decisionMetadata.session || undefined,
     publicationCategory: document.publicationCategory,
     source: document.source,
-    surAnnotationsCount: treatment.surAnnotationsCount,
-    subAnnotationsSensitiveCount: treatment.subAnnotationsSensitiveCount,
-    subAnnotationsNonSensitiveCount: treatment.subAnnotationsNonSensitiveCount,
-    treatmentDate: treatment.lastUpdateDate,
-    treatmentsSummary,
+    surAnnotationsCount: treatmentInfo.surAnnotationsCount,
+    subAnnotationsSensitiveCount: treatmentInfo.subAnnotationsSensitiveCount,
+    subAnnotationsNonSensitiveCount: treatmentInfo.subAnnotationsNonSensitiveCount,
+    treatmentDate: lastUpdateDate,
+    treatmentsSummary: humanTreatmentsSummary,
     wordsCount: documentModule.lib.countWords(document),
   };
 }

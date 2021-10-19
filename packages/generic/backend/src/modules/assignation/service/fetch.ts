@@ -54,18 +54,23 @@ async function fetchAssignationId({
   return assignation?._id;
 }
 
-async function fetchAssignationsByDocumentIds(documentIdsToSearchIn: idType[]) {
+async function fetchAssignationsByDocumentIds(
+  documentIdsToSearchIn: idType[],
+  options: { assertEveryDocumentIsAssigned: boolean },
+) {
   const assignationRepository = buildAssignationRepository();
 
   const assignationsByDocumentIds = await assignationRepository.findAllByDocumentIds(
     documentIdsToSearchIn,
   );
 
-  indexer.assertEveryIdIsDefined(
-    documentIdsToSearchIn.map(idModule.lib.convertToString),
-    assignationsByDocumentIds,
-    (_id) => `The document ${_id} has no matching assignations`,
-  );
+  if (options?.assertEveryDocumentIsAssigned) {
+    indexer.assertEveryIdIsDefined(
+      documentIdsToSearchIn.map(idModule.lib.convertToString),
+      assignationsByDocumentIds,
+      (_id) => `The document ${_id} has no matching assignations`,
+    );
+  }
   return assignationsByDocumentIds;
 }
 

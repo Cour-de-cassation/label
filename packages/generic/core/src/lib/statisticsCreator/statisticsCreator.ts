@@ -23,21 +23,24 @@ function buildFromDocument({
   const annotations = treatmentModule.lib.computeAnnotations(treatments);
   const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(annotations);
 
-  const aggregatedTreatment = treatmentModule.lib.aggregate(
+  const treatmentInfo = treatmentModule.lib.aggregateTreatmentInfo(
     humanTreatments.map(({ treatment }) => treatment),
-    'annotator',
     settings,
   );
-  const treatmentsSummary = humanTreatments.map(({ treatment, userId }) => ({
+
+  const lastUpdateDate = treatmentModule.lib.extractLastUpdateDate(treatments);
+
+  const humanTreatmentsSummary = humanTreatments.map(({ treatment, userId }) => ({
     userId,
     treatmentDuration: treatment.duration,
   }));
 
   return statisticModule.lib.buildStatistic({
     annotationsCount: annotations.length,
-    treatmentsSummary,
+    humanTreatmentsSummary,
+    lastUpdateDate,
+    treatmentInfo,
     document,
     linkedEntitiesCount,
-    treatment: aggregatedTreatment,
   });
 }

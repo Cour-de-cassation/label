@@ -58,7 +58,7 @@ async function extractComplexityInfoIntoCsv() {
     documentIds,
   );
 
-  const complexityInfos = treatedDocuments.map((treatedDocument) => {
+  const complexityInfos = exhaustiveTreatedDocuments.map((treatedDocument) => {
     const documentIdString = idModule.lib.convertToString(treatedDocument._id);
     const assignations = assignationsByDocumentId[documentIdString];
 

@@ -87,6 +87,7 @@ const fr = {
       rejected: 'En alerte',
     },
     errors: {
+      deleteProblemReportFailed: 'La suppression du signalement a échoué. Veuillez recharger la page.',
       pendingDocumentsFreed:
         'Les documents ont été libérés, ils ne vous sont maintenant plus réservés. Veuillez recharger la page.',
       noUserIdFound:
@@ -96,6 +97,8 @@ const fr = {
         'La suppression des traitements manuels effectués sur ce document a échoué. Veuillez recharger la page.',
       updateDocumentStatusFailed: 'La mise à jour du statut du document a échoué. Veuillez recharger la page.',
       updateTreatmentFailed: 'La mise à jour des annotations pour ce traitement a échoué. Veuillez recharger la page.',
+      updateProblemReportHasBeenReadFailed:
+        'La mise à jour du statut de lecture du signalement a échoué. Veuillez recharger la page.',
     },
     filters: {
       button: 'Filtrer',
@@ -322,7 +325,7 @@ const fr = {
           jurisdiction: 'Juridiction',
           publicationCategoryLetter: 'Diffusion',
           documentReviewFilterStatus: 'Statut de revue',
-          route: 'Circuit de relecture',
+          route: 'Circuit de traitement',
         },
       },
       columnTitles: {
@@ -333,8 +336,8 @@ const fr = {
         session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
         workingUser: { title: 'Agent', tooltipText: 'Agent principal' },
-        reviewStatus: { title: 'Relecture', tooltipText: 'Statut de relecture' },
-        route: { title: 'Circuit', tooltipText: 'Circuit de relecture' },
+        reviewStatus: { title: 'Revue', tooltipText: 'Statut de revue' },
+        route: { title: 'Circuit', tooltipText: 'Circuit de traitement' },
         date: 'Traité le',
         surAnnotationsCount: { title: 'Sur.', tooltipText: 'Nombre de sur-annotations' },
         subAnnotationsSensitiveCount: {
@@ -404,6 +407,13 @@ const fr = {
         chips: {
           publicationCategoryLetter: 'Arrêts {publicationCategoryLetter}',
           source: 'BDD {source}',
+          routes: {
+            exhaustive: 'Relecture exhaustive',
+            automatic: 'Sans relecture',
+            simple: 'Relecture simple',
+            confirmation: 'Confirmation admin',
+            request: 'Demande',
+          },
         },
         fields: {
           publicationCategoryLetter: 'Diffusion',

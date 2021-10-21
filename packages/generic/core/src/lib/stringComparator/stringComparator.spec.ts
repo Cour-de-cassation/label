@@ -34,7 +34,7 @@ describe('stringComparator', () => {
       const str1 = 'LALAL';
       const str2 = 'LOLOL';
 
-      const result = stringComparator.similar(str1, str2);
+      const result = stringComparator.similar(str1, str2, 2);
 
       expect(result).toEqual(true);
     });
@@ -43,7 +43,7 @@ describe('stringComparator', () => {
       const str1 = 'LALAL';
       const str2 = 'LOCOL';
 
-      const result = stringComparator.similar(str1, str2);
+      const result = stringComparator.similar(str1, str2, 2);
 
       expect(result).toEqual(false);
     });
@@ -70,7 +70,7 @@ describe('stringComparator', () => {
       const str1 = 'lalaL';
       const str2 = 'LOLOL';
 
-      const result = stringComparator.similar(str1, str2);
+      const result = stringComparator.similar(str1, str2, 2);
 
       expect(result).toEqual(true);
     });
@@ -79,7 +79,7 @@ describe('stringComparator', () => {
       const str1 = 'Duponte';
       const str2 = 'Dûpond';
 
-      const result = stringComparator.similar(str1, str2);
+      const result = stringComparator.similar(str1, str2, 2);
 
       expect(result).toEqual(true);
     });

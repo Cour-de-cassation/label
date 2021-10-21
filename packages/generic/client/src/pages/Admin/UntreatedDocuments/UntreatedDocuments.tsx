@@ -81,6 +81,9 @@ function UntreatedDocuments(props: {
         if (currentFilterKey === 'source' && !!filterValues.source) {
           return accumulator && untreatedDocument.document.source === filterValues.source;
         }
+        if (currentFilterKey === 'route' && !!filterValues.route) {
+          return accumulator && untreatedDocument.document.route === filterValues.route;
+        }
         if (currentFilterKey === 'jurisdiction' && !!filterValues.jurisdiction) {
           return accumulator && untreatedDocument.document.jurisdiction === filterValues.jurisdiction;
         }

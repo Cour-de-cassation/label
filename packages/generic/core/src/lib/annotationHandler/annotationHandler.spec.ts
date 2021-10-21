@@ -1,8 +1,16 @@
+import { settingsModule } from '../../modules/settings';
 import { annotationModule } from '../../modules/annotation';
 import { annotationLinkHandler } from '../annotationLinkHandler';
 import { annotationHandler } from './annotationHandler';
 
 describe('annotationHandler', () => {
+  const settings = settingsModule.lib.buildSettings({
+    CATEGORY: {},
+    ANOTHER_CATEGORY: {},
+    CATEGORY2: {},
+    CATEGORY1: {},
+  });
+
   describe('createAll', () => {
     it('should create all the annotations for the given texts and indices', () => {
       const category = 'CATEGORY';
@@ -13,7 +21,7 @@ describe('annotationHandler', () => {
       ];
       const annotations = [{}].map(generateFetchedAnnotation);
 
-      const newAnnotations = annotationHandler.createAll(annotations, category, annotationTextsAndIndices);
+      const newAnnotations = annotationHandler.createAll(annotations, category, annotationTextsAndIndices, settings);
 
       expect(newAnnotations).toEqual([
         {
@@ -71,6 +79,7 @@ describe('annotationHandler', () => {
       const newAnnotations = annotationHandler.create(
         annotationHandler.deleteByTextAndCategory(annotations, annotation2),
         annotation2,
+        settings,
       );
 
       expect(annotationModule.lib.sortAnnotations(newAnnotations)).toEqual(
@@ -113,6 +122,7 @@ describe('annotationHandler', () => {
       const newAnnotations = annotationHandler.create(
         annotationHandler.deleteByTextAndStart(annotations, annotation2),
         annotation2,
+        settings,
       );
 
       expect(annotationModule.lib.sortAnnotations(newAnnotations)).toEqual(
@@ -135,6 +145,7 @@ describe('annotationHandler', () => {
         annotations,
         annotations[0].entityId,
         newCategory,
+        settings,
       );
 
       expect(updatedAnnotations.map((annotation) => annotation.category)).toEqual([
@@ -155,6 +166,7 @@ describe('annotationHandler', () => {
         annotations[0].text,
         annotations[0].start,
         newCategory,
+        settings,
       );
 
       expect(updatedAnnotations[0].category).toEqual(newCategory);
@@ -169,6 +181,7 @@ describe('annotationHandler', () => {
         annotations[0].text,
         annotations[0].start,
         newCategory,
+        settings,
       );
 
       expect(updatedAnnotations[0].entityId).toEqual(annotationModule.lib.entityIdHandler.compute(newCategory, text));

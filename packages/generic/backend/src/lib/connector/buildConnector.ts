@@ -67,7 +67,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     );
     const document = connectorConfig.mapCourtDecisionToDocument(courtDecision);
     logger.log(`Court decision converted. Inserting document into database...`);
-    await insertDocument(document);
+    await insertDocument({ ...document, route: 'request' });
     logger.log(`Insertion done`);
 
     logger.log(`Send document has been loaded...`);

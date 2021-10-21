@@ -8,7 +8,7 @@ export { buildAutoAnnotator };
 function buildAutoAnnotator(settings: settingsType) {
   return {
     annotate(annotations: annotationType[]) {
-      return autoLinker.autoLinkAll(resolveAllCouldBeAnotherCategory(annotations));
+      return autoLinker.autoLinkAll(resolveAllCouldBeAnotherCategory(annotations), settings);
     },
   };
 

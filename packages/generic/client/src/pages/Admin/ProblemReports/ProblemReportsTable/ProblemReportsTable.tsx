@@ -11,6 +11,8 @@ import {
   tableRowFieldType,
   PublicationCategoryBadge,
 } from '../../../../components';
+import { useAlert } from '../../../../services/alert';
+import { localStorage } from '../../../../services/localStorage';
 import { sendMail } from '../../../../services/sendMail';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -28,15 +30,19 @@ function ProblemReportsTable(props: {
 }) {
   const history = useHistory();
   const theme = useCustomTheme();
+  const { displayAlert } = useAlert();
+
   const styles = buildStyles(theme);
   const problemReportsFields = buildProblemReportsFields();
+  const userRole = localStorage.userHandler.getRole();
+
   return (
     <Table
       data={props.problemReportsWithDetails}
       isRowHighlighted={isRowHighlighted}
       fields={problemReportsFields}
       buildOptionItems={buildOptionItems}
-      onRowClick={onRowClick}
+      onRowClick={userRole === 'admin' ? onRowClick : undefined}
       defaultOrderByProperty="date"
       defaultOrderDirection="desc"
     />
@@ -122,22 +128,31 @@ function ProblemReportsTable(props: {
   }
 
   function buildOptionItems(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
+    const userRole = localStorage.userHandler.getRole();
+
     const validateDocumentOptionItem = {
       kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.validate,
       onClick: async () => {
-        await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-          assignationId: problemReportWithDetails.problemReport.assignationId,
-          status: documentModule.lib.getNextStatus({
-            status: problemReportWithDetails.document.status,
-            publicationCategory: problemReportWithDetails.document.publicationCategory,
-            route: problemReportWithDetails.document.route,
-          }),
-        });
+        try {
+          await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+            assignationId: problemReportWithDetails.problemReport.assignationId,
+            status: documentModule.lib.getNextStatus({
+              status: problemReportWithDetails.document.status,
+              publicationCategory: problemReportWithDetails.document.publicationCategory,
+              route: problemReportWithDetails.document.route,
+            }),
+          });
+        } catch (error) {
+          displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert', autoHide: true });
+          console.warn(error);
+          return;
+        }
         props.refetch();
       },
       iconName: 'send' as const,
       isDisabled:
+        userRole !== 'admin' ||
         problemReportWithDetails.document.status === 'done' ||
         problemReportWithDetails.document.status === 'toBePublished',
     };
@@ -160,13 +175,19 @@ function ProblemReportsTable(props: {
       kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.deleteProblemReport,
       onClick: async () => {
-        await apiCaller.post<'deleteProblemReport'>('deleteProblemReport', {
-          problemReportId: problemReportWithDetails.problemReport._id,
-        });
+        try {
+          await apiCaller.post<'deleteProblemReport'>('deleteProblemReport', {
+            problemReportId: problemReportWithDetails.problemReport._id,
+          });
+        } catch (error) {
+          displayAlert({ text: wordings.business.errors.deleteProblemReportFailed, variant: 'alert', autoHide: true });
+          console.warn(error);
+          return;
+        }
         props.refetch();
       },
       iconName: 'delete' as const,
-      isDisabled: problemReportWithDetails.document.status === 'rejected',
+      isDisabled: userRole !== 'admin' || problemReportWithDetails.document.status === 'rejected',
     };
 
     const openDocumentOptionItem = {
@@ -183,16 +204,23 @@ function ProblemReportsTable(props: {
       kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.reassignToWorkingUser,
       onClick: async () => {
-        await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-          assignationId: problemReportWithDetails.problemReport.assignationId,
-          status: documentModule.lib.getNextStatus({
-            status: 'pending',
-            publicationCategory: problemReportWithDetails.document.publicationCategory,
-            route: problemReportWithDetails.document.route,
-          }),
-        });
+        try {
+          await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
+            assignationId: problemReportWithDetails.problemReport.assignationId,
+            status: documentModule.lib.getNextStatus({
+              status: 'pending',
+              publicationCategory: problemReportWithDetails.document.publicationCategory,
+              route: problemReportWithDetails.document.route,
+            }),
+          });
+        } catch (error) {
+          displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert', autoHide: true });
+          console.warn(error);
+          return;
+        }
         props.refetch();
       },
+      isDisabled: userRole !== 'admin',
       iconName: 'turnRight' as const,
     };
     const optionItems: Array<optionItemType> = [
@@ -207,10 +235,20 @@ function ProblemReportsTable(props: {
   }
 
   async function onRowClick(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
-    await apiCaller.post<'updateProblemReportHasBeenRead'>('updateProblemReportHasBeenRead', {
-      hasBeenRead: !problemReportWithDetails.problemReport.hasBeenRead,
-      problemReportId: problemReportWithDetails.problemReport._id,
-    });
+    try {
+      await apiCaller.post<'updateProblemReportHasBeenRead'>('updateProblemReportHasBeenRead', {
+        hasBeenRead: !problemReportWithDetails.problemReport.hasBeenRead,
+        problemReportId: problemReportWithDetails.problemReport._id,
+      });
+    } catch (error) {
+      displayAlert({
+        text: wordings.business.errors.updateProblemReportHasBeenReadFailed,
+        variant: 'alert',
+        autoHide: true,
+      });
+      console.warn(error);
+      return;
+    }
     props.refetch();
   }
 }

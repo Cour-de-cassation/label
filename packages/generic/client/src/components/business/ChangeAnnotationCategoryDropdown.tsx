@@ -19,7 +19,8 @@ function ChangeAnnotationCategoryDropdown(props: {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
   const annotatorState = annotatorStateHandler.get();
-  const categories = settingsModule.lib.getCategories(annotatorState.settings, {
+  const { settings } = annotatorState;
+  const categories = settingsModule.lib.getCategories(settings, {
     status: ['annotable'],
     canBeAnnotatedBy: 'human',
   });
@@ -44,6 +45,7 @@ function ChangeAnnotationCategoryDropdown(props: {
       annotatorState.annotations,
       props.annotation.entityId,
       newCategory,
+      settings,
     );
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };

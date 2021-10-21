@@ -1,8 +1,10 @@
+import { settingsModule } from '../../modules/settings';
 import { annotationModule } from '../../modules/annotation';
 import { annotationLinkHandler } from '../annotationLinkHandler';
 import { autoLinker } from './autoLinker';
 
 describe('autoLinker', () => {
+  const settings = settingsModule.lib.buildSettings({ CATEGORY: {}, ANOTHER_CATEGORY: {} });
   describe('autoLink', () => {
     it('should link the given annotations', () => {
       const annotations = [
@@ -10,9 +12,23 @@ describe('autoLinker', () => {
         { category: 'CATEGORY', text: 'Dupond' },
       ].map(annotationModule.generator.generate);
 
-      const linkedAnnotations = autoLinker.autoLink([annotations[0]], annotations);
+      const linkedAnnotations = autoLinker.autoLink([annotations[0]], annotations, settings);
 
       expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
+    });
+
+    it('should not link the given annotations', () => {
+      const settings = settingsModule.lib.buildSettings({
+        CATEGORY: { autoLinkSensitivity: { kind: 'caseInsensitive' } },
+      });
+      const annotations = [
+        { category: 'CATEGORY', text: '12 rue de la grande Rue' },
+        { category: 'CATEGORY', text: '11 rue de la grande Rue' },
+      ].map(annotationModule.generator.generate);
+
+      const linkedAnnotations = autoLinker.autoLink([annotations[0]], annotations, settings);
+
+      expect(linkedAnnotations.sort()).toEqual([...annotations].sort());
     });
   });
 
@@ -23,7 +39,7 @@ describe('autoLinker', () => {
         { category: 'ANOTHER_CATEGORY', text: 'ANNOTATION' },
       ].map(annotationModule.generator.generate);
 
-      const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+      const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
       expect(linkedAnnotations).toEqual(annotations);
     });
@@ -36,7 +52,7 @@ describe('autoLinker', () => {
           { category: 'ANOTHER_CATEGORY', text: 'another_annotation' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
@@ -49,7 +65,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'annotation' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
@@ -59,7 +75,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'annotation' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
@@ -69,7 +85,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'annotation' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotations);
       });
@@ -82,7 +98,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'Pond' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
@@ -92,7 +108,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'POND' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
@@ -102,7 +118,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'Pomd' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotations);
       });
@@ -112,7 +128,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'Dupond' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
@@ -122,7 +138,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'DUPOND' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
       });
@@ -132,7 +148,7 @@ describe('autoLinker', () => {
           { category: 'CATEGORY', text: 'Dubomb' },
         ].map(annotationModule.generator.generate);
 
-        const linkedAnnotations = autoLinker.autoLinkAll(annotations);
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotations);
       });

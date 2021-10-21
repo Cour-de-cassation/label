@@ -1,5 +1,6 @@
 import React from 'react';
 import format from 'string-template';
+import { documentModule, documentType } from '@label/core';
 import { FilterButton, FilterChip, Text } from '../../../../components';
 import { untreatedDocumentFilterType } from '../../../../services/localStorage';
 import { customThemeType, useCustomTheme } from '../../../../styles';
@@ -65,6 +66,21 @@ function UntreatedDocumentsFilters(props: {
         possibleValues: props.filterInfo.sources,
         value: props.filterValues.source,
         onChange: (source?: string) => props.setFilterValues({ ...props.filterValues, source }),
+      },
+      {
+        kind: 'dropdown' as const,
+        name: 'route',
+        label: wordings.treatedDocumentsPage.table.filter.fields.route,
+        possibleValues: (documentModule.fetchedModel.content.route.content as unknown) as string[],
+        value: props.filterValues.route,
+        computeChipLabel: (route: string) =>
+          wordings.untreatedDocumentsPage.table.filter.chips.routes[route as documentType['route']],
+        computeReadableValue: (route: string) => wordings.business.documentRoute[route as documentType['route']],
+        onChange: (route?: string) =>
+          props.setFilterValues({
+            ...props.filterValues,
+            route: route as documentType['route'] | undefined,
+          }),
       },
       {
         kind: 'dropdown' as const,

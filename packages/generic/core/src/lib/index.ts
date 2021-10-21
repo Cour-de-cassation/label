@@ -7,7 +7,7 @@ import { annotationOverlapDetector } from './annotationOverlapDetector';
 import { annotationTextDetector } from './annotationTextDetector';
 import { csvExtractor } from './csvExtractor';
 import { statisticsCreator } from './statisticsCreator';
-import { stringComparator } from './stringComparator';
+import { stringComparator, stringComparisonSensitivity } from './stringComparator';
 import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
 import { dateType, timeOperator } from './timeOperator';
 
@@ -26,4 +26,11 @@ export {
   timeOperator,
 };
 
-export type { anonymizerType, annotationChunkType, dateType, textChunkType, textChunkContentType };
+export type {
+  anonymizerType,
+  annotationChunkType,
+  dateType,
+  stringComparisonSensitivity,
+  textChunkType,
+  textChunkContentType,
+};

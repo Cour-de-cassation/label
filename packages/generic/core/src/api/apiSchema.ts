@@ -357,6 +357,7 @@ const apiSchema = {
                 occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
                 jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+                route: documentModule.fetchedModel.content.route,
                 source: documentModule.fetchedModel.content.source,
                 status: documentModule.fetchedModel.content.status,
               },

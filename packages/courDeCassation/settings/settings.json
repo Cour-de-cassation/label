@@ -28,7 +28,7 @@
     },
     "iconName": "heart",
     "order":3,
-    "text": "Date de mariage"
+    "text": "Date de mariage / PACS"
   },
   "dateDeces": {
     "anonymization": "[Date décès %d]",
@@ -100,7 +100,8 @@
     },
     "iconName": "location",
     "order": 10,
-    "text": "Adresse"
+    "text": "Adresse",
+    "autoLinkSensitivity": {"kind": "caseInsensitive"}
   },
   "localite": {
     "anonymization": "[Localité %d]",
@@ -160,7 +161,8 @@
     },
     "iconName": "map",
     "order": 16,
-    "text": "Cadastre"
+    "text": "Cadastre",
+    "autoLinkSensitivity": {"kind": "caseInsensitive"}
   },
   "plaqueImmatriculation": {
     "anonymization": "[Immatriculation %d]",

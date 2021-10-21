@@ -31,6 +31,7 @@ function buildAdditionalAnnotationCategoryHandler() {
     return {
       ...settings,
       [ADDITIONAL_ANNOTATION_CATEGORY_NAME]: {
+        autoLinkSensitivity: { kind: 'levenshteinDistance', threshold: 2 },
         anonymization: '[Identifiant %d]',
         color: ADDITIONAL_ANNOTATION_CATEGORY_COLOR,
         iconName: ADDITIONAL_ANNOTATION_CATEGORY_ICON_NAME,

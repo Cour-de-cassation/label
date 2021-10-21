@@ -73,21 +73,19 @@ function Router() {
                         </AdminPage>
                       </AuthenticatedRoute>
                     )}
-                    {userRole === 'admin' && (
-                      <AuthenticatedRoute path={routes.PROBLEM_REPORTS.getPath()}>
-                        <AdminPage
-                          userRole={userRole}
-                          header={wordings.problemReportsPage.header}
-                          unreadProblemReportsCount={unreadProblemReportsCount}
-                        >
-                          <ProblemReports
-                            refetch={refetch.problemReportsWithDetails}
-                            problemReportsWithDetails={adminInfos.problemReportsWithDetails}
-                            isLoading={isLoading.problemReports}
-                          />
-                        </AdminPage>
-                      </AuthenticatedRoute>
-                    )}
+                    <AuthenticatedRoute path={routes.PROBLEM_REPORTS.getPath()}>
+                      <AdminPage
+                        userRole={userRole}
+                        header={wordings.problemReportsPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                      >
+                        <ProblemReports
+                          refetch={refetch.problemReportsWithDetails}
+                          problemReportsWithDetails={adminInfos.problemReportsWithDetails}
+                          isLoading={isLoading.problemReports}
+                        />
+                      </AdminPage>
+                    </AuthenticatedRoute>
                     <AuthenticatedRoute path={routes.TREATED_DOCUMENTS.getPath()}>
                       <AdminPage
                         userRole={userRole}

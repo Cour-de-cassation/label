@@ -17,6 +17,7 @@ async function fetchUntreatedDocuments() {
       'documentNumber',
       'publicationCategory',
       'source',
+      'route',
       'status',
     ],
   );
@@ -55,6 +56,7 @@ async function fetchUntreatedDocuments() {
         jurisdiction: untreatedDocument.decisionMetadata.jurisdiction,
         publicationCategory: untreatedDocument.publicationCategory,
         source: untreatedDocument.source,
+        route: untreatedDocument.route,
         status: untreatedDocument.status,
       },
       userNames,

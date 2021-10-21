@@ -10,6 +10,12 @@ async function insertTestUsers() {
     role: 'annotator',
   });
   await userService.signUpUser({
+    email: 'test.scrutator@label.fr',
+    name: 'Test Scrutator',
+    password: 'scrutator',
+    role: 'scrutator',
+  });
+  await userService.signUpUser({
     email: 'test.admin@label.fr',
     name: 'Test Admin',
     password: 'admin',

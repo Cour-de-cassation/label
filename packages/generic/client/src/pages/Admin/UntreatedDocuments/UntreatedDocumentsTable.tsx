@@ -94,6 +94,7 @@ function UntreatedDocumentsTable(props: {
       items: props.users.map(({ name }) => name),
       iconName: 'assignment' as const,
       onSelect: buildOnSelectWorkingUserToAssignDocument(untreatedDocument.document._id),
+      isDisabled: userRole !== 'admin',
     };
 
     const freeDocumentOptionItem = {

@@ -1,3 +1,4 @@
+import { settingsType } from '../../modules/settings';
 import { annotationType } from '../../modules/annotation';
 import { annotationLinkHandler } from '../annotationLinkHandler';
 import { stringComparator } from '../stringComparator';
@@ -9,13 +10,17 @@ const autoLinker = {
   autoLinkAll,
 };
 
-function autoLinkAll(annotations: annotationType[]): annotationType[] {
-  return autoLink(annotations, annotations);
+function autoLinkAll(annotations: annotationType[], settings: settingsType): annotationType[] {
+  return autoLink(annotations, annotations, settings);
 }
 
-function autoLink(annotationsToLink: annotationType[], annotations: annotationType[]): annotationType[] {
+function autoLink(
+  annotationsToLink: annotationType[],
+  annotations: annotationType[],
+  settings: settingsType,
+): annotationType[] {
   return annotationsToLink.reduce((linkedAnnotations, annotation) => {
-    const annotationsToLinkTo = computeAnnotationsToLinkTo(annotation, linkedAnnotations);
+    const annotationsToLinkTo = computeAnnotationsToLinkTo(annotation, linkedAnnotations, settings);
     return linkToAnnotations(annotation, annotationsToLinkTo, linkedAnnotations);
   }, annotations);
 }
@@ -30,16 +35,19 @@ function linkToAnnotations(
   }, annotations);
 }
 
-function computeAnnotationsToLinkTo(annotation: annotationType, annotations: annotationType[]) {
-  return annotations.filter(
-    (someAnnotation) =>
+function computeAnnotationsToLinkTo(annotation: annotationType, annotations: annotationType[], settings: settingsType) {
+  return annotations.filter((someAnnotation) => {
+    const { autoLinkSensitivity } = settings[annotation.category];
+    return (
       annotation.category === someAnnotation.category &&
       !annotationLinkHandler.isLinkedTo(annotation, someAnnotation) &&
       (stringComparator.insensitiveEqual(annotation.text, someAnnotation.text) ||
         isSubWord(annotation, someAnnotation) ||
         isSubWord(someAnnotation, annotation) ||
-        stringComparator.similar(someAnnotation.text, annotation.text)),
-  );
+        (autoLinkSensitivity?.kind === 'levenshteinDistance' &&
+          stringComparator.similar(someAnnotation.text, annotation.text, autoLinkSensitivity.threshold)))
+    );
+  });
 }
 
 function isSubWord(annotation1: annotationType, annotation2: annotationType): boolean {

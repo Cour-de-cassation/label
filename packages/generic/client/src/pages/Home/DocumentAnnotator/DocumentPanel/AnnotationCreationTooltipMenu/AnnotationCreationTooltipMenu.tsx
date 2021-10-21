@@ -27,12 +27,13 @@ function AnnotationCreationTooltipMenu(props: {
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const annotatorState = annotatorStateHandler.get();
+  const { settings } = annotatorState;
   const { addMonitoringEntry } = useMonitoring();
   const annotationTextsAndIndices = getAnnotationTextsAndIndices();
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(annotationTextsAndIndices.length > 1);
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const categories = settingsModule.lib.getCategories(annotatorState.settings, {
+  const categories = settingsModule.lib.getCategories(settings, {
     status: ['annotable'],
     canBeAnnotatedBy: 'human',
   });
@@ -108,15 +109,19 @@ function AnnotationCreationTooltipMenu(props: {
 
   function computeNewAnnotations(category: string) {
     if (shouldApplyEverywhere) {
-      return annotationHandler.createAll(annotatorState.annotations, category, annotationTextsAndIndices);
+      return annotationHandler.createAll(annotatorState.annotations, category, annotationTextsAndIndices, settings);
     }
 
     if (props.textSelection.length === 1) {
-      return annotationHandler.create(annotatorState.annotations, {
-        category,
-        start: props.textSelection[0].index,
-        text: props.textSelection[0].text,
-      });
+      return annotationHandler.create(
+        annotatorState.annotations,
+        {
+          category,
+          start: props.textSelection[0].index,
+          text: props.textSelection[0].text,
+        },
+        settings,
+      );
     }
 
     return annotationHandler.createManyLinked(

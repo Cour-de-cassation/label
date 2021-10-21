@@ -100,6 +100,7 @@ function projectDocument(document: documentType) {
       'documentNumber',
       'publicationCategory',
       'source',
+      'route',
       'status',
     ]),
     occultationBlock: document.decisionMetadata.occultationBlock,

@@ -26,6 +26,7 @@ describe('statisticsCreator', () => {
       chamberName: 'Chambre criminelle',
       criminalCaseCode: '',
       civilCaseCode: '',
+      civilMatterCode: '',
       date: decisionDate,
       jurisdiction,
       occultationBlock: undefined,

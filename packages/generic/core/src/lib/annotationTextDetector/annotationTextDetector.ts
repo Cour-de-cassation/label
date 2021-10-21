@@ -1,5 +1,6 @@
 import { annotationType } from '../../modules/annotation';
 import { annotationOverlapDetector } from '../annotationOverlapDetector';
+import { stringComparator } from '../stringComparator';
 
 export { annotationTextDetector };
 
@@ -46,8 +47,8 @@ function isAnnotationTextInsideLargerWord(documentText: string, annotationText: 
 }
 
 function computeAnnotationDetection(documentText: string, annotationText: string, currentIndex: number) {
-  const text = replaceAccents(annotationText);
-  const index = replaceAccents(documentText).indexOf(text, currentIndex + 1);
+  const text = stringComparator.normalizeString(annotationText);
+  const index = stringComparator.normalizeString(documentText).indexOf(text, currentIndex + 1);
   if (index !== -1) {
     return {
       index,
@@ -58,15 +59,4 @@ function computeAnnotationDetection(documentText: string, annotationText: string
     text: annotationText,
     index: -1,
   };
-}
-
-function replaceAccents(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/[àâ]/g, 'a')
-    .replace(/[éèêë]/g, 'e')
-    .replace(/[ïî]/g, 'i')
-    .replace(/[ô]/g, 'o')
-    .replace(/[ûùü]/g, 'u')
-    .replace(/[ÿ]/g, 'y');
 }

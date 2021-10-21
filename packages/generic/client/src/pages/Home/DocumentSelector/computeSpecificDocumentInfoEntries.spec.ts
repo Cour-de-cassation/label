@@ -11,6 +11,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
         chamberName: 'Civile',
         civilCaseCode: '',
         criminalCaseCode: '',
+        civilMatterCode: '',
         date: decisionDate,
         jurisdiction: 'Cour de cassation',
         boundDecisionDocumentNumbers: [],

@@ -16,6 +16,7 @@ const documentModelCommonFields = {
       categoriesToOmit: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       chamberName: { kind: 'primitive', content: 'string' },
       civilCaseCode: { kind: 'primitive', content: 'string' },
+      civilMatterCode: { kind: 'primitive', content: 'string' },
       criminalCaseCode: { kind: 'primitive', content: 'string' },
       date: {
         kind: 'or',
@@ -47,7 +48,7 @@ const documentModelCommonFields = {
       hasBeenAmended: { kind: 'primitive', content: 'boolean' },
     },
   },
-  route: { kind: 'constant', content: ['automatic', 'exhaustive'] as const },
+  route: { kind: 'constant', content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request'] as const },
   source: { kind: 'primitive', content: 'string' },
   status: {
     kind: 'constant',

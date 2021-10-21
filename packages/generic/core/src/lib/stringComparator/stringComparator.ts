@@ -1,4 +1,6 @@
 import { computeLevenshteinDistance } from './computeLevenshteinDistance';
+import { normalizeString } from './normalizeString';
+import { compareNormalizedStrings } from './compareNormalizedStrings';
 
 export { stringComparator };
 
@@ -11,6 +13,7 @@ const stringComparator = {
   },
 
   normalizeString,
+  compareNormalizedStrings,
 
   similar(str1: string, str2: string, threshold: number | undefined = 2): boolean {
     const normalizedStr1 = normalizeString(str1);
@@ -25,20 +28,3 @@ const stringComparator = {
     }
   },
 };
-
-function normalizeString(str: string) {
-  return str
-    .toLowerCase()
-    .replace(/é/gi, 'e')
-    .replace(/è/gi, 'e')
-    .replace(/ê/gi, 'e')
-    .replace(/ë/gi, 'e')
-    .replace(/à/gi, 'a')
-    .replace(/â/gi, 'a')
-    .replace(/ù/gi, 'u')
-    .replace(/û/gi, 'u')
-    .replace(/ü/gi, 'u')
-    .replace(/î/gi, 'i')
-    .replace(/ï/gi, 'i')
-    .replace(/ç/gi, 'c');
-}

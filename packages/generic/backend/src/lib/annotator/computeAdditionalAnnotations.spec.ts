@@ -34,6 +34,7 @@ describe('computeAdditionalAnnotations', () => {
         chamberName: '',
         criminalCaseCode: '',
         civilCaseCode: '',
+        civilMatterCode: '',
         date: new Date().getTime(),
         jurisdiction: '',
         occultationBlock: undefined,

@@ -151,6 +151,7 @@ describe('filterTreatedDocuments', () => {
           occultationBlock: undefined,
           criminalCaseCode: '',
           civilCaseCode: '',
+          civilMatterCode: '',
           chamberName: '',
           date: decisionDate,
           categoriesToOmit: [],

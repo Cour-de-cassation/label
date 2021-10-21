@@ -31,6 +31,7 @@ const documentGenerator: generatorType<documentType> = {
           categoriesToOmit: [],
           chamberName: '',
           civilCaseCode: '',
+          civilMatterCode: '',
           criminalCaseCode: '',
           date: new Date().getTime(),
           jurisdiction: '',

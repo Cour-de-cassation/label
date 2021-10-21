@@ -18,6 +18,7 @@ describe('fetchPublishableDocuments', () => {
           chamberName: 'CIV. I',
           criminalCaseCode: '',
           civilCaseCode: '',
+          civilMatterCode: '',
           date: new Date().getTime(),
           jurisdiction: 'Cour de cassation',
           parties: [],

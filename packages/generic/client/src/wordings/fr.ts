@@ -72,6 +72,9 @@ const fr = {
     documentRoute: {
       automatic: 'Automatique',
       exhaustive: 'Exhaustif',
+      simple: 'Simple',
+      confirmation: 'Confirmation',
+      request: 'Demande',
     },
     documentStatus: {
       loaded: 'Chargé depuis la base SDER',
@@ -304,6 +307,9 @@ const fr = {
           routes: {
             exhaustive: 'Relecture exhaustive',
             automatic: 'Sans relecture',
+            simple: 'Relecture simple',
+            confirmation: 'Confirmation admin',
+            request: 'Demande',
           },
         },
         fields: {

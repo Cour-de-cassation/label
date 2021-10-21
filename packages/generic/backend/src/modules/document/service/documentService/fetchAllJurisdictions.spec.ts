@@ -20,6 +20,7 @@ describe('fetchAllJurisdictions', () => {
           chamberName: '',
           criminalCaseCode: '',
           civilCaseCode: '',
+          civilMatterCode: '',
           date: new Date().getTime(),
           occultationBlock: undefined,
           parties: [],

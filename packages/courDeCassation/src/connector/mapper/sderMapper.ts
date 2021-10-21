@@ -58,7 +58,21 @@ function mapCourtDecisionToDocument(
     ? sderCourtDecision.solution.trim()
     : '';
 
-  const route = extractRoute(sderCourtDecision);
+  const session = sderCourtDecision.formation?.trim() || '';
+
+  const civilCaseCode = sderCourtDecision.natureAffaireCivil?.trim() || '';
+  const civilMatterCode = sderCourtDecision.codeMatiereCivil?.trim() || '';
+  const criminalCaseCode = sderCourtDecision.natureAffairePenal?.trim() || '';
+
+  const route = extractRoute({
+    solution,
+    publicationCategory,
+    chamberId: sderCourtDecision.chamberId,
+    civilMatterCode,
+    session,
+    civilCaseCode,
+    criminalCaseCode,
+  });
 
   return documentModule.lib.buildDocument({
     creationDate: new Date().getTime(),
@@ -68,14 +82,15 @@ function mapCourtDecisionToDocument(
         sderCourtDecision.occultation?.additionalTerms || '',
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
-      civilCaseCode: sderCourtDecision.natureAffaireCivil?.trim() || '',
-      criminalCaseCode: sderCourtDecision.natureAffairePenal?.trim() || '',
+      civilCaseCode,
+      civilMatterCode,
+      criminalCaseCode,
       chamberName: readableChamberName,
       date: decisionDate?.getTime(),
       jurisdiction: readableJurisdictionName,
       parties: sderCourtDecision.parties || [],
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
-      session: sderCourtDecision.formation || '',
+      session,
       solution,
     },
     documentNumber: sderCourtDecision.sourceId,

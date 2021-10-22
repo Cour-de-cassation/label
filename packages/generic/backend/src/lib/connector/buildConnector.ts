@@ -1,4 +1,6 @@
+import { promises as fs } from 'fs';
 import { dateBuilder, documentType, idModule, timeOperator } from '@label/core';
+import { buildTreatmentRepository } from '../../modules/treatment';
 import {
   buildDocumentRepository,
   documentService,
@@ -17,6 +19,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     importTestDocumentsSince,
     resetAllDocumentsSince,
     deleteJuricaDocumentsFromLabelDb,
+    extractDocumentAndNlpAnnotations,
   };
 
   async function autoImportDocumentsFromSder(
@@ -233,6 +236,71 @@ function buildConnector(connectorConfig: connectorConfigType) {
     await documentRepository.deleteManyByIds(
       freeJuricaDocuments.map(({ _id }) => _id),
     );
+  }
+
+  async function extractDocumentAndNlpAnnotations({
+    documentNumber,
+    source,
+  }: {
+    documentNumber: documentType['documentNumber'];
+    source: documentType['source'];
+  }) {
+    logger.log(
+      `extractDocumentAndNlpAnnotations ${documentNumber} - ${source}`,
+    );
+    const documentRepository = buildDocumentRepository();
+    const treatmentRepository = buildTreatmentRepository();
+
+    const document = await documentRepository.findOneByDocumentNumberAndSource({
+      source,
+      documentNumber,
+    });
+    if (!document) {
+      logger.log(
+        `Error: could not find document for documentNumber ${documentNumber} and source ${source}`,
+      );
+      return;
+    }
+    const decision = connectorConfig.mapDocumentToCourtDecision(document);
+    const treatments = await treatmentRepository.findAllByDocumentId(
+      document._id,
+    );
+    const nlpTreatments = treatments.filter(
+      (treatment) => treatment.source === 'NLP',
+    );
+    if (nlpTreatments.length !== 1) {
+      logger.error(
+        `Error: ${
+          nlpTreatments.length
+        } NLP treatment(s) found for document ${idModule.lib.convertToString(
+          document._id,
+        )}`,
+      );
+      return;
+    }
+    const { annotationsDiff } = nlpTreatments[0];
+    const nlpAnnotations = {
+      entities: annotationsDiff.after.map((annotation) => ({
+        text: annotation.text,
+        start: annotation.start,
+        end: annotation.start + annotation.text.length,
+        label: annotation.category,
+        source: 'NER',
+      })),
+      checklist: [],
+    };
+    try {
+      await fs.writeFile(
+        `./extractions/decisions/${documentNumber}.json`,
+        JSON.stringify(decision),
+      );
+      await fs.writeFile(
+        `./extractions/annotations/${documentNumber}.json`,
+        JSON.stringify(nlpAnnotations),
+      );
+    } catch (err) {
+      logger.error(err);
+    }
   }
 }
 

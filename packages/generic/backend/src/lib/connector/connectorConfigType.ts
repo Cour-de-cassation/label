@@ -28,4 +28,5 @@ type connectorConfigType = {
     documents: documentType[],
   ) => Promise<void>;
   mapCourtDecisionToDocument: (courtDecision: decisionType) => documentType;
+  mapDocumentToCourtDecision: (document: documentType) => decisionType;
 };

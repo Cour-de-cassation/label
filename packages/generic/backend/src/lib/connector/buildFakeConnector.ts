@@ -134,10 +134,19 @@ async function buildFakeConnectorWithNDecisions(
       });
     },
     mapCourtDecisionToDocument: fakeSderMapper.mapCourtDecisionToDocument,
+    mapDocumentToCourtDecision: fakeSderMapper.mapDocumentToCourtDecision,
   };
 }
 
 const fakeSderMapper = {
+  mapDocumentToCourtDecision(document: documentType): decisionType {
+    return decisionModule.lib.generateDecision({
+      labelStatus: 'loaded',
+      _id: idModule.lib.buildId(document.externalId),
+      sourceId: document.documentNumber,
+      sourceName: document.source,
+    });
+  },
   mapCourtDecisionToDocument(courtDecision: decisionType) {
     return documentModule.generator.generate({
       status: 'loaded',

@@ -11,24 +11,10 @@ async function cleanLoadedDocuments() {
   const documentRepository = buildDocumentRepository();
 
   logger.log('Fetching "nlpAnnotating" documents');
-  const nlpAnnotatingDocuments = await documentRepository.findAllByStatusProjection(
-    ['nlpAnnotating'],
-    ['_id'],
-  );
   const loadedDocuments = await documentRepository.findAllByStatusProjection(
     ['loaded'],
     ['_id'],
   );
-  logger.log(`${nlpAnnotatingDocuments.length} nlpAnnotating documents found`);
-
-  for (let i = 0, length = nlpAnnotatingDocuments.length; i < length; i++) {
-    await documentService.updateDocumentStatus(
-      nlpAnnotatingDocuments[i]._id,
-      'loaded',
-    );
-  }
-
-  logger.log(`"nlpAnnotating" documents status set to "loaded"`);
 
   logger.log(`${loadedDocuments.length} loaded documents found`);
 

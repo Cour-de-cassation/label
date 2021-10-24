@@ -28,7 +28,7 @@
     },
     "iconName": "heart",
     "order":3,
-    "text": "Date de mariage / PACS"
+    "text": "Date de mariage"
   },
   "dateDeces": {
     "anonymization": "[Date décès %d]",

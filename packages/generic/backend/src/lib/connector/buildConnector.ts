@@ -241,9 +241,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function extractDocumentAndNlpAnnotations({
     documentNumber,
     source,
+    folder,
   }: {
     documentNumber: documentType['documentNumber'];
     source: documentType['source'];
+    folder: string;
   }) {
     logger.log(
       `extractDocumentAndNlpAnnotations ${documentNumber} - ${source}`,
@@ -291,11 +293,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
     };
     try {
       await fs.writeFile(
-        `./extractions/decisions/${documentNumber}.json`,
+        `${folder}/decisions/${documentNumber}.json`,
         JSON.stringify(decision),
       );
       await fs.writeFile(
-        `./extractions/annotations/${documentNumber}.json`,
+        `${folder}/annotations/${documentNumber}.json`,
         JSON.stringify(nlpAnnotations),
       );
     } catch (err) {

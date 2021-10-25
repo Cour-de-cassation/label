@@ -26,6 +26,7 @@ async function extractDocumentAndNlpAnnotations({
   await sderConnector.extractDocumentAndNlpAnnotations({
     documentNumber,
     source,
+    folder: './extractions',
   });
 }
 

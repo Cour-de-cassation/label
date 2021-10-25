@@ -2,6 +2,6 @@
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": "src",
   "setupFilesAfterEnv": ["./test/setupTests.ts"],
-  "testRegex": ".e2e.ts$",
+  "testRegex": ".preProd.e2e.ts$",
   "testEnvironment": "node"
 }

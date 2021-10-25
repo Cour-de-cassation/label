@@ -6,6 +6,7 @@ import { annotationLinkHandler } from './annotationLinkHandler';
 import { annotationOverlapDetector } from './annotationOverlapDetector';
 import { annotationTextDetector } from './annotationTextDetector';
 import { csvExtractor } from './csvExtractor';
+import { environmentType } from './environment';
 import { statisticsCreator } from './statisticsCreator';
 import { stringComparator, stringComparisonSensitivity } from './stringComparator';
 import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
@@ -30,6 +31,7 @@ export type {
   anonymizerType,
   annotationChunkType,
   dateType,
+  environmentType,
   stringComparisonSensitivity,
   textChunkType,
   textChunkContentType,

@@ -21,4 +21,4 @@ echo "Run new migrations"
 
 echo "Run E2E test"
 cd packages/courDeCassation
-yarn testE2E
+yarn testE2EPreProd

@@ -10,6 +10,6 @@ const urlHandler = {
 
     const serverPort = environmentHandler.convertClientPortToServerPort(clientPort);
 
-    return `${clientProtocol}//${clientHostname}:${serverPort}`;
+    return serverPort ? `${clientProtocol}//${clientHostname}:${serverPort}` : `${clientProtocol}//${clientHostname}`;
   },
 };

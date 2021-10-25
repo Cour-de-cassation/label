@@ -1,5 +1,5 @@
 import { buildBackend } from '@label/backend';
-import { settingsType } from '@label/core';
+import { environmentType, settingsType } from '@label/core';
 import { buildNlpAnnotator } from '../annotator';
 import { parametersHandler } from '../lib/parametersHandler';
 
@@ -7,13 +7,19 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { environment, settings } = await parametersHandler.getParameters();
   const backend = buildBackend(environment, settings);
 
-  backend.runScript(() => reAnnotateFreeDocumentsWithNlp(settings), {
-    shouldLoadDb: true,
-  });
+  backend.runScript(
+    () => reAnnotateFreeDocumentsWithNlp(settings, environment),
+    {
+      shouldLoadDb: true,
+    },
+  );
 })();
 
-async function reAnnotateFreeDocumentsWithNlp(settings: settingsType) {
-  const nlpAnnotator = buildNlpAnnotator(settings);
+async function reAnnotateFreeDocumentsWithNlp(
+  settings: settingsType,
+  environment: environmentType,
+) {
+  const nlpAnnotator = buildNlpAnnotator(settings, environment);
 
   await nlpAnnotator.reAnnotateFreeDocuments();
 }

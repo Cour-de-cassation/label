@@ -1,23 +1,30 @@
 import { documentType, settingsType } from '@label/core';
-import { nlpApi } from './api';
+import { buildNlpApi } from './api';
 import { nlpMapper } from './mapper';
 
-export { nlpFetcher };
+export { buildNlpFetcher };
 
-const nlpFetcher = {
-  async fetchAnnotationOfDocument(
-    settings: settingsType,
-    document: documentType,
-  ) {
-    const nlpAnnotations = await nlpApi.fetchNlpAnnotations(settings, document);
+function buildNlpFetcher(nlpApiBaseUrl: string) {
+  const nlpApi = buildNlpApi(nlpApiBaseUrl);
 
-    return {
-      annotations: nlpMapper.mapNlpAnnotationsToAnnotations(
-        nlpAnnotations,
+  return {
+    async fetchAnnotationOfDocument(
+      settings: settingsType,
+      document: documentType,
+    ) {
+      const nlpAnnotations = await nlpApi.fetchNlpAnnotations(
+        settings,
         document,
-      ),
-      documentId: document._id,
-      report: nlpMapper.mapNlpAnnotationstoReport(nlpAnnotations, document),
-    };
-  },
-};
+      );
+
+      return {
+        annotations: nlpMapper.mapNlpAnnotationsToAnnotations(
+          nlpAnnotations,
+          document,
+        ),
+        documentId: document._id,
+        report: nlpMapper.mapNlpAnnotationstoReport(nlpAnnotations, document),
+      };
+    },
+  };
+}

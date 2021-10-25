@@ -1,10 +1,12 @@
 import { nlpFakeServer } from '../../test/server';
 import { nlpApiType } from './nlpApiType';
 
-export { nlpFakeApi };
+export { buildNlpFakeApi };
 
-const nlpFakeApi: nlpApiType = {
-  async fetchNlpAnnotations() {
-    return nlpFakeServer.getNlpAnnotations();
-  },
-};
+function buildNlpFakeApi(): nlpApiType {
+  return {
+    async fetchNlpAnnotations() {
+      return nlpFakeServer.getNlpAnnotations();
+    },
+  };
+}

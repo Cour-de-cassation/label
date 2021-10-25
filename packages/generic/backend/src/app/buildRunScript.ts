@@ -1,4 +1,4 @@
-import { environmentType } from '../lib/environment';
+import { environmentType } from '@label/core';
 import { logger, mongo } from '../utils';
 import { setupMongo } from './setup';
 

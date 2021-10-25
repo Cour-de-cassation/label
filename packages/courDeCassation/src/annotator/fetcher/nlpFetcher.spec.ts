@@ -1,8 +1,9 @@
 import { documentType, documentModule, settingsModule } from '@label/core';
 import { nlpFakeServer } from '../test/server';
-import { nlpFetcher } from './nlpFetcher';
+import { buildNlpFetcher } from './nlpFetcher';
 
 describe('nlpFetcher', () => {
+  const nlpFetcher = buildNlpFetcher('http://127.0.0.1:8081');
   beforeEach(() => {
     nlpFakeServer.reinitialize();
   });

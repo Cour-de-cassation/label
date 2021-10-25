@@ -1,15 +1,15 @@
 import { dependencyManager } from '@label/backend';
-import { nlpApi } from './nlpApi';
-import { nlpFakeApi } from './nlpFakeApi';
-import { nlpLocalApi } from './nlpLocalApi';
+import { buildNlpApi } from './nlpApi';
+import { buildNlpFakeApi } from './nlpFakeApi';
+import { buildNlpLocalApi } from './nlpLocalApi';
 import { nlpAnnotationsType } from './nlpApiType';
 
-export { api as nlpApi };
+export { buildApi as buildNlpApi };
 
 export type { nlpAnnotationsType };
 
-const api = dependencyManager.inject({
-  forLocal: nlpLocalApi,
-  forProd: nlpApi,
-  forTest: nlpFakeApi,
+const buildApi = dependencyManager.inject({
+  forLocal: buildNlpLocalApi,
+  forProd: buildNlpApi,
+  forTest: buildNlpFakeApi,
 });

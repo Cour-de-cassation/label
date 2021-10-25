@@ -1,10 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { environmentHandler, settingsType } from '@label/core';
+import { environmentHandler, environmentType, settingsType } from '@label/core';
 
 import { buildApi } from '../api';
-import { environmentType } from '../lib/environment';
 import { setup } from './setup';
 
 export { buildRunServer };

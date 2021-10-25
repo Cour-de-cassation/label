@@ -1,14 +1,18 @@
 import { buildAnnotator, annotatorConfigType } from '@label/backend';
-import { settingsType } from '@label/core';
-import { nlpFetcher } from './fetcher';
+import { environmentType, settingsType } from '@label/core';
+import { buildNlpFetcher } from './fetcher';
 
 export { buildNlpAnnotator };
 
-const nlpAnnotatorConfig: annotatorConfigType = {
-  name: 'NLP',
-  ...nlpFetcher,
-};
+function buildNlpAnnotator(
+  settings: settingsType,
+  environment: environmentType,
+) {
+  const nlpApiBaseUrl = `${environment.pathName.nlpApi}:${environment.port.nlpApi}`;
+  const nlpAnnotatorConfig: annotatorConfigType = {
+    name: 'NLP',
+    ...buildNlpFetcher(nlpApiBaseUrl),
+  };
 
-function buildNlpAnnotator(settings: settingsType) {
   return buildAnnotator(settings, nlpAnnotatorConfig);
 }

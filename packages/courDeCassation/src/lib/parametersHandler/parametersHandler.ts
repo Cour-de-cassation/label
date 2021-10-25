@@ -1,4 +1,4 @@
-import { settingsModule } from '@label/core';
+import { environmentType, settingsModule } from '@label/core';
 import { promises as fs } from 'fs';
 import yargs from 'yargs';
 
@@ -24,7 +24,10 @@ async function getParameters() {
     parsedSettings,
   );
 
-  return { environment, settings: enhancedSettings };
+  return {
+    environment: JSON.parse(environment) as environmentType,
+    settings: enhancedSettings,
+  };
 }
 
 function getCommandParameters() {

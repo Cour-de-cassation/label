@@ -1,3 +1,3 @@
-import { nlpFetcher } from './nlpFetcher';
+import { buildNlpFetcher } from './nlpFetcher';
 
-export { nlpFetcher };
+export { buildNlpFetcher };

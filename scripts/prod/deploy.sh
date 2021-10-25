@@ -2,13 +2,13 @@
 set -e
 
 echo "Update LABEL"
-yarn updateProd
+sudo -u label yarn updateProd
 
 echo "Stop LABEL service"
-systemctl stop LabelServerProd
+sudo systemctl stop LabelServerProd
 
 echo "Free port"
-fuser -k 55430/tcp
+sudo -u label fuser -k 55430/tcp
 
 echo "Start LABEL service"
-systemctl start LabelServerProd
+sudo systemctl start LabelServerProd

@@ -4,9 +4,12 @@ import { compareNormalizedStrings } from './compareNormalizedStrings';
 
 export { stringComparator };
 
-export type { stringComparisonSensitivity };
+export type { stringComparisonSensitivityType };
 
-type stringComparisonSensitivity = { kind: 'levenshteinDistance'; threshold: number } | { kind: 'caseInsensitive' };
+type stringComparisonSensitivityType =
+  | { kind: 'levenshteinDistance'; threshold: number }
+  | { kind: 'caseInsensitive' }
+  | { kind: 'inclusion' };
 
 const stringComparator = {
   insensitiveEqual(str1: string, str2: string): boolean {

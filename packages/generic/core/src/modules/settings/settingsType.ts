@@ -1,4 +1,4 @@
-import { stringComparisonSensitivity } from '../../lib';
+import { stringComparisonSensitivityType } from '../../lib';
 import { buildModel } from '../modelType';
 
 export { categoryIconNames, constantColors, settingsModel, shadeColors };
@@ -22,7 +22,7 @@ type categorySettingType = {
   color: { [displayMode in displayModeType]: colorType };
   couldBe?: string;
   iconName: categoryIconNameType;
-  autoLinkSensitivity?: stringComparisonSensitivity;
+  autoLinkSensitivity: stringComparisonSensitivityType[];
   isAnonymized?: boolean;
   isSensitive?: boolean;
   order: number | undefined;

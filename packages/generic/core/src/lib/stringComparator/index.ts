@@ -1,5 +1,5 @@
-import { stringComparator, stringComparisonSensitivity } from './stringComparator';
+import { stringComparator, stringComparisonSensitivityType } from './stringComparator';
 
 export { stringComparator };
 
-export type { stringComparisonSensitivity };
+export type { stringComparisonSensitivityType };

@@ -8,7 +8,11 @@
     "iconName": "person",
     "isSensitive": true,
     "order": 1,
-    "text": "Personne physique"
+    "text": "Personne physique",
+    "autoLinkSensitivity": [
+      { "kind": "caseInsensitive" },
+      { "kind": "levenshteinDistance", "threshold": 1 }
+    ]
   },
   "dateNaissance": {
     "anonymization": "[Date naissance %d]",
@@ -18,7 +22,11 @@
     },
     "iconName": "cake",
     "order": 2,
-    "text": "Date de naissance/anniversaire"
+    "text": "Date de naissance/anniversaire",
+    "autoLinkSensitivity": [
+      {"kind": "caseInsensitive"},
+      {"kind": "inclusion"}
+    ]
   },
   "dateMariage": {
     "anonymization": "[Date mariage %d]",
@@ -28,7 +36,11 @@
     },
     "iconName": "heart",
     "order":3,
-    "text": "Date de mariage"
+    "text": "Date de mariage",
+    "autoLinkSensitivity": [
+      {"kind": "caseInsensitive"},
+      {"kind": "inclusion"}
+    ]
   },
   "dateDeces": {
     "anonymization": "[Date décès %d]",
@@ -38,7 +50,11 @@
     },
     "iconName": "cloud",
     "order": 4,
-    "text": "Date de décès"
+    "text": "Date de décès",
+    "autoLinkSensitivity": [
+      {"kind": "caseInsensitive"},
+      {"kind": "inclusion"}
+    ]
   },
   "insee": {
     "anonymization": "[XXXXXXXXXXX0%d]",
@@ -101,7 +117,10 @@
     "iconName": "location",
     "order": 10,
     "text": "Adresse",
-    "autoLinkSensitivity": {"kind": "caseInsensitive"}
+    "autoLinkSensitivity": [
+      {"kind": "caseInsensitive"},
+      {"kind": "inclusion"}
+    ]
   },
   "localite": {
     "anonymization": "[Localité %d]",

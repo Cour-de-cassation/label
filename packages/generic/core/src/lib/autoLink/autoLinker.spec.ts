@@ -19,7 +19,7 @@ describe('autoLinker', () => {
 
     it('should not link the given annotations', () => {
       const settings = settingsModule.lib.buildSettings({
-        CATEGORY: { autoLinkSensitivity: { kind: 'caseInsensitive' } },
+        CATEGORY: { autoLinkSensitivity: [{ kind: 'caseInsensitive' }] },
       });
       const annotations = [
         { category: 'CATEGORY', text: '12 rue de la grande Rue' },
@@ -55,6 +55,23 @@ describe('autoLinker', () => {
         const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
 
         expect(linkedAnnotations).toEqual(annotationLinkHandler.link(annotations[0], annotations[1], annotations));
+      });
+    });
+
+    describe('do not link category if subword not included', () => {
+      const settings = settingsModule.lib.buildSettings({
+        CATEGORY: { autoLinkSensitivity: [{ kind: 'caseInsensitive' }, { kind: 'levenshteinDistance', threshold: 2 }] },
+      });
+      it('should not link the unrelated annotations', () => {
+        const annotations = ['Jean', 'Jean Henri', 'Jean Marie'].map((text, index) =>
+          annotationModule.lib.buildAnnotation({ text, start: index * 10, category: 'CATEGORY' }),
+        );
+
+        const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);
+
+        expect(linkedAnnotations[0].entityId).not.toBe(linkedAnnotations[1].entityId);
+        expect(linkedAnnotations[0].entityId).not.toBe(linkedAnnotations[2].entityId);
+        expect(linkedAnnotations[1].entityId).not.toBe(linkedAnnotations[2].entityId);
       });
     });
 

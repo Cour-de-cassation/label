@@ -41,11 +41,19 @@ function computeAnnotationsToLinkTo(annotation: annotationType, annotations: ann
     return (
       annotation.category === someAnnotation.category &&
       !annotationLinkHandler.isLinkedTo(annotation, someAnnotation) &&
-      (stringComparator.insensitiveEqual(annotation.text, someAnnotation.text) ||
-        isSubWord(annotation, someAnnotation) ||
-        isSubWord(someAnnotation, annotation) ||
-        (autoLinkSensitivity?.kind === 'levenshteinDistance' &&
-          stringComparator.similar(someAnnotation.text, annotation.text, autoLinkSensitivity.threshold)))
+      autoLinkSensitivity.reduce((accumulator, stringComparisonSensitivity) => {
+        switch (stringComparisonSensitivity.kind) {
+          case 'caseInsensitive':
+            return accumulator || stringComparator.insensitiveEqual(annotation.text, someAnnotation.text);
+          case 'levenshteinDistance':
+            return (
+              accumulator ||
+              stringComparator.similar(someAnnotation.text, annotation.text, stringComparisonSensitivity.threshold)
+            );
+          case 'inclusion':
+            return accumulator || isSubWord(annotation, someAnnotation) || isSubWord(someAnnotation, annotation);
+        }
+      }, false as boolean)
     );
   });
 }

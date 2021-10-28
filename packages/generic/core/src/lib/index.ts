@@ -8,7 +8,7 @@ import { annotationTextDetector } from './annotationTextDetector';
 import { csvExtractor } from './csvExtractor';
 import { environmentType } from './environment';
 import { statisticsCreator } from './statisticsCreator';
-import { stringComparator, stringComparisonSensitivity } from './stringComparator';
+import { stringComparator, stringComparisonSensitivityType } from './stringComparator';
 import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
 import { dateType, timeOperator } from './timeOperator';
 
@@ -32,7 +32,7 @@ export type {
   annotationChunkType,
   dateType,
   environmentType,
-  stringComparisonSensitivity,
+  stringComparisonSensitivityType,
   textChunkType,
   textChunkContentType,
 };

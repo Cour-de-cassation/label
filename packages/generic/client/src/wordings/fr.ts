@@ -75,6 +75,7 @@ const fr = {
       simple: 'Simple',
       confirmation: 'Confirmation',
       request: 'Demande',
+      default: 'N/A',
     },
     documentStatus: {
       loaded: 'Chargé depuis la base SDER',
@@ -313,6 +314,7 @@ const fr = {
             simple: 'Relecture simple',
             confirmation: 'Confirmation admin',
             request: 'Demande',
+            default: 'N/A',
           },
         },
         fields: {
@@ -389,6 +391,7 @@ const fr = {
         session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
         userName: 'Attribué à',
+        route: { title: 'Circuit', tooltipText: 'Circuit de traitement' },
         status: 'Statut',
         decisionDate: { title: 'Date décision', tooltipText: 'Date de rendu de la décision' },
       },
@@ -413,6 +416,7 @@ const fr = {
             simple: 'Relecture simple',
             confirmation: 'Confirmation admin',
             request: 'Demande',
+            default: 'N/A',
           },
         },
         fields: {

@@ -10,6 +10,7 @@ function extractRoute({
   civilMatterCode,
   civilCaseCode,
   criminalCaseCode,
+  source,
 }: {
   session: documentType['decisionMetadata']['session'];
   solution: documentType['decisionMetadata']['solution'];
@@ -18,7 +19,11 @@ function extractRoute({
   civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
   civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
   criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
+  source: documentType['source'];
 }): documentType['route'] {
+  if (source !== 'jurinet') {
+    return 'exhaustive';
+  }
   if (stringComparator.compareNormalizedStrings(solution, 'Non-admission')) {
     return 'automatic';
   }
@@ -59,7 +64,6 @@ function extractRoute({
       'ASSCC',
     ].includes(civilMatterCode)
   ) {
-    // A compléter !
     return 'exhaustive';
   }
 
@@ -79,5 +83,22 @@ function extractRoute({
     return 'automatic';
   }
 
-  return 'simple';
+  if (publicationCategory.includes('D')) {
+    return 'simple';
+  }
+
+  if (session === 'FRH' || session === 'FRR') {
+    return 'simple';
+  }
+
+  if (
+    stringComparator.compareNormalizedStrings(
+      'Rejet non spécialement motivé',
+      solution,
+    )
+  ) {
+    return 'simple';
+  }
+
+  return 'default';
 }

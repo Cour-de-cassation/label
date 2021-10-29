@@ -12,6 +12,7 @@ const untreatedDocumentOrderByProperties = [
   'publicationCategory',
   'source',
   'userName',
+  'route',
   'status',
   'decisionDate',
 ] as const;

@@ -30,6 +30,8 @@ function mapCourtDecisionToDocument(
 
   const decisionDate = convertToValidDate(sderCourtDecision.dateDecision);
 
+  const source = sderCourtDecision.sourceName;
+
   const title = computeTitleFromParsedCourtDecision({
     number: sderCourtDecision.sourceId,
     appealNumber,
@@ -70,6 +72,7 @@ function mapCourtDecisionToDocument(
     session,
     civilCaseCode,
     criminalCaseCode,
+    source,
   });
 
   return documentModule.lib.buildDocument({
@@ -96,7 +99,7 @@ function mapCourtDecisionToDocument(
     priority,
     publicationCategory,
     route,
-    source: sderCourtDecision.sourceName,
+    source,
     title,
     text: sderCourtDecision.originalText,
   });

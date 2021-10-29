@@ -1,6 +1,20 @@
 import { extractRoute } from './extractRoute';
 
 describe('extractRoute', () => {
+  it('should return exhaustive if jurica', () => {
+    const route = extractRoute({
+      solution: 'non-admission',
+      publicationCategory: ['W'],
+      chamberId: 'CR',
+      civilCaseCode: '',
+      civilMatterCode: '',
+      criminalCaseCode: '',
+      session: 'FHR',
+      source: 'jurica',
+    });
+
+    expect(route).toBe('exhaustive');
+  });
   it('should return automatic if NA', () => {
     const route = extractRoute({
       solution: 'non-admission',
@@ -9,6 +23,7 @@ describe('extractRoute', () => {
       civilCaseCode: '',
       civilMatterCode: '',
       criminalCaseCode: '',
+      source: 'jurinet',
       session: 'FHR',
     });
 
@@ -24,6 +39,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('confirmation');
@@ -38,6 +54,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('confirmation');
@@ -52,6 +69,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'PL',
+      source: 'jurinet',
     });
 
     expect(route).toBe('confirmation');
@@ -66,6 +84,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'MI',
+      source: 'jurinet',
     });
 
     expect(route).toBe('confirmation');
@@ -80,6 +99,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('exhaustive');
@@ -94,6 +114,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('exhaustive');
@@ -108,6 +129,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('exhaustive');
@@ -122,6 +144,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: 'QPC',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('exhaustive');
@@ -136,6 +159,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('exhaustive');
@@ -150,6 +174,7 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('automatic');
@@ -164,8 +189,39 @@ describe('extractRoute', () => {
       civilMatterCode: '',
       criminalCaseCode: '',
       session: 'FHR',
+      source: 'jurinet',
     });
 
     expect(route).toBe('automatic');
+  });
+
+  it('should return simple if formation restreinte', () => {
+    const route = extractRoute({
+      solution: 'Cassation partielle',
+      publicationCategory: ['W'],
+      chamberId: 'SOC',
+      civilCaseCode: '',
+      civilMatterCode: '',
+      criminalCaseCode: '',
+      session: 'FRH',
+      source: 'jurinet',
+    });
+
+    expect(route).toBe('simple');
+  });
+
+  it('should return simple if Rejet non spécialement motivé', () => {
+    const route = extractRoute({
+      solution: 'Rejet non spécialement motivé',
+      publicationCategory: ['W'],
+      chamberId: 'SOC',
+      civilCaseCode: '',
+      civilMatterCode: '',
+      criminalCaseCode: '',
+      session: '',
+      source: 'jurinet',
+    });
+
+    expect(route).toBe('simple');
   });
 });

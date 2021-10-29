@@ -228,6 +228,14 @@ function UntreatedDocumentsTable(props: {
         width: 2,
       },
       {
+        id: 'route',
+        title: wordings.untreatedDocumentsPage.table.columnTitles.route.title,
+        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.route.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) => wordings.business.documentRoute[treatedDocument.document.route],
+        width: 2,
+      },
+      {
         id: 'userName',
         title: wordings.untreatedDocumentsPage.table.columnTitles.userName,
         canBeSorted: true,

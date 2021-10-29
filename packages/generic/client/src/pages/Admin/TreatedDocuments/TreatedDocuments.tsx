@@ -38,7 +38,6 @@ function TreatedDocuments(props: {
   const styles = buildStyles(theme);
 
   const filterInfo = extractFilterInfoFromTreatedDocuments(props.treatedDocuments);
-  // const treatmentsInfo = extractTreatmentsInfo(props.treatedDocuments);
   const treatmentFields = buildTreatedDocumentsFields();
   const filteredTreatedDocuments = searchedDecisionNumber
     ? filterSearchedDocuments(props.treatedDocuments, searchedDecisionNumber)
@@ -86,16 +85,6 @@ function TreatedDocuments(props: {
     localStorage.treatedDocumentsStateHandler.setSearchedDocumentNumber(searchedDocumentNumber);
     setSearchedDocumentNumber(searchedDocumentNumber);
   }
-
-  // function extractTreatmentsInfo(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
-  //   return treatedDocuments.reduce(
-  //     (accumulator, treatedDocument) => ({
-  //       ...accumulator,
-  //       [idModule.lib.convertToString(treatedDocument.document._id)]: treatedDocument.statistic,
-  //     }),
-  //     {} as Record<string, treatmentInfoType>,
-  //   );
-  // }
 
   function getFilteredTreatedDocuments(
     treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>,

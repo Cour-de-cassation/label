@@ -1,1 +1,3 @@
-export { Judge } from './Judge';
+import { Judge } from './Judge';
+
+export { Judge };

@@ -48,7 +48,10 @@ const documentModelCommonFields = {
       hasBeenAmended: { kind: 'primitive', content: 'boolean' },
     },
   },
-  route: { kind: 'constant', content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request'] as const },
+  route: {
+    kind: 'constant',
+    content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request', 'default'] as const,
+  },
   source: { kind: 'primitive', content: 'string' },
   status: {
     kind: 'constant',

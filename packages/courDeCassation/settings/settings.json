@@ -181,7 +181,7 @@
     "iconName": "map",
     "order": 16,
     "text": "Cadastre",
-    "autoLinkSensitivity": {"kind": "caseInsensitive"}
+    "autoLinkSensitivity": [{"kind": "caseInsensitive"}]
   },
   "plaqueImmatriculation": {
     "anonymization": "[Immatriculation %d]",

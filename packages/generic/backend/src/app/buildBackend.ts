@@ -7,6 +7,7 @@ import {
   createMigrationFile,
   extractComplexityInfoIntoCsv,
   extractMonitoringEntriesIntoCsv,
+  extractRouteInfosIntoCsv,
   freePendingDocuments,
   insertTestUsers,
   insertUser,
@@ -43,6 +44,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       extractComplexityInfoIntoCsv: {
         run: extractComplexityInfoIntoCsv,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      extractRouteInfosIntoCsv: {
+        run: extractRouteInfosIntoCsv,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       freePendingDocuments: {

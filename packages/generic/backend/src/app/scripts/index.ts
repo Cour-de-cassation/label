@@ -7,6 +7,7 @@ import {
 } from './deployment';
 import { extractComplexityInfoIntoCsv } from './extractComplexityInfoIntoCsv';
 import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
+import { extractRouteInfosIntoCsv } from './extractRouteInfosIntoCsv';
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestUsers } from './insertTestUsers';
 import { insertUser } from './insertUser';
@@ -19,6 +20,7 @@ export {
   createMigrationFile,
   extractComplexityInfoIntoCsv,
   extractMonitoringEntriesIntoCsv,
+  extractRouteInfosIntoCsv,
   freePendingDocuments,
   insertTestUsers,
   insertUser,

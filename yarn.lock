@@ -12793,9 +12793,9 @@ schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.1, schema-utils@^2.6
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-"sder@https://github.com/Cour-de-cassation/sder#3acf1288cf80c9dbe085b2106381b774855207cc":
+"sder@https://github.com/Cour-de-cassation/sder#017d93762f3fbe5ea1a121be76491941ca29bfff":
   version "1.0.0"
-  resolved "https://github.com/Cour-de-cassation/sder#3acf1288cf80c9dbe085b2106381b774855207cc"
+  resolved "https://github.com/Cour-de-cassation/sder#017d93762f3fbe5ea1a121be76491941ca29bfff"
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"

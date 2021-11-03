@@ -298,6 +298,13 @@ const apiSchema = {
                 { kind: 'primitive', content: 'undefined' },
               ],
             },
+            totalIdleDuration: {
+              kind: 'or',
+              content: [
+                { kind: 'primitive', content: 'number' },
+                { kind: 'primitive', content: 'undefined' },
+              ],
+            },
             lastTreatmentDate: {
               kind: 'or',
               content: [

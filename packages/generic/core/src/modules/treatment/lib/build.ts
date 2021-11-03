@@ -10,6 +10,7 @@ function build(
   treatmentFields: Omit<
     omitIdType<treatmentType>,
     | 'duration'
+    | 'idleDuration'
     | 'lastUpdateDate'
     | 'subAnnotationsSensitiveCount'
     | 'subAnnotationsNonSensitiveCount'
@@ -30,6 +31,7 @@ function build(
     surAnnotationsCount,
     subAnnotationsSensitiveCount,
     duration: 0,
+    idleDuration: 0,
     lastUpdateDate: new Date().getTime(),
   };
 }

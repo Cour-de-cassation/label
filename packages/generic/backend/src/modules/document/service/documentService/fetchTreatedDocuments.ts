@@ -46,6 +46,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
     const documentIdString = idModule.lib.convertToString(treatedDocument._id);
     const assignations = assignationsByDocumentId[documentIdString];
     let totalTreatmentDuration: number | undefined,
+      totalIdleDuration: number | undefined,
       lastTreatmentDate: number | undefined,
       subAnnotationsNonSensitiveCount: number | undefined,
       surAnnotationsCount: number | undefined,
@@ -68,6 +69,10 @@ async function fetchTreatedDocuments(settings: settingsType) {
       totalTreatmentDuration = sumBy(
         humanTreatments,
         ({ treatment }) => treatment.duration,
+      );
+      totalIdleDuration = sumBy(
+        humanTreatments,
+        ({ treatment }) => treatment.idleDuration,
       );
       lastTreatmentDate =
         humanTreatments[humanTreatments.length - 1].treatment.lastUpdateDate;
@@ -104,6 +109,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
         source: treatedDocument.source,
       },
       totalTreatmentDuration,
+      totalIdleDuration,
       lastTreatmentDate,
       statistic: {
         subAnnotationsNonSensitiveCount,

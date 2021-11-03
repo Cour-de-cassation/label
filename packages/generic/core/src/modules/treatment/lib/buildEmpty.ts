@@ -8,6 +8,7 @@ function buildEmpty(
   treatmentFields: Omit<
     omitIdType<treatmentType>,
     | 'duration'
+    | 'idleDuration'
     | 'lastUpdateDate'
     | 'subAnnotationsSensitiveCount'
     | 'subAnnotationsNonSensitiveCount'
@@ -23,6 +24,7 @@ function buildEmpty(
     surAnnotationsCount: 0,
     subAnnotationsNonSensitiveCount: 0,
     duration: 0,
+    idleDuration: 0,
     lastUpdateDate: new Date().getTime(),
   };
 }

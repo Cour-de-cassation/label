@@ -19,6 +19,7 @@ const treatedDocumentOrderByProperties = [
   'subAnnotationsSensitiveCount',
   'subAnnotationsNonSensitiveCount',
   'duration',
+  'idleDuration',
 ] as const;
 
 function setOrderByProperty(newOrderByProperty: typeof treatedDocumentOrderByProperties[number]) {

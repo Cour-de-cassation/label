@@ -232,7 +232,7 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.source.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.source,
-        width: 2,
+        width: 1,
       },
       {
         id: 'userName',
@@ -240,7 +240,7 @@ function TreatedDocuments(props: {
         tooltipText: wordings.treatedDocumentsPage.table.columnTitles.workingUser.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.userNames.join(', '),
-        width: 8,
+        width: 6,
       },
       {
         id: 'reviewStatus',
@@ -318,6 +318,18 @@ function TreatedDocuments(props: {
             ? timeOperator.convertDurationToReadableDuration(treatedDocument.totalTreatmentDuration)
             : '-',
         getSortingValue: (treatedDocument) => treatedDocument.totalTreatmentDuration || 0,
+        width: 1,
+      },
+      {
+        id: 'idleDuration',
+        canBeSorted: true,
+        title: wordings.treatedDocumentsPage.table.columnTitles.idleDuration.title,
+        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.idleDuration.tooltipText,
+        extractor: (treatedDocument) =>
+          treatedDocument.totalIdleDuration !== undefined
+            ? timeOperator.convertDurationToReadableDuration(treatedDocument.totalIdleDuration)
+            : '-',
+        getSortingValue: (treatedDocument) => treatedDocument.totalIdleDuration || 0,
         width: 1,
       },
     ];

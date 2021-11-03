@@ -43,6 +43,7 @@ describe('build', () => {
       annotationsDiff: treatmentFields.annotationsDiff,
       documentId: treatmentFields.documentId,
       duration: 0,
+      idleDuration: 0,
       lastUpdateDate: treatment.lastUpdateDate,
       order: treatmentFields.order,
       source: treatmentFields.source,

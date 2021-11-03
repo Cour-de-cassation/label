@@ -24,10 +24,10 @@ function PublicationCategoryBadge(props: { publicationCategoryLetter: string }) 
 }
 
 function buildStyles(theme: customThemeType) {
-  const TOTAL_WIDTH = 19;
-  const TOTAL_HEIGHT = 24;
-  const LEFT_RECTANGLE_WIDTH = 12;
-  const RIGHT_BOTTOM_RECTANGLE_HEIGHT = 17;
+  const TOTAL_WIDTH = 21;
+  const TOTAL_HEIGHT = 26;
+  const LEFT_RECTANGLE_WIDTH = 14;
+  const RIGHT_BOTTOM_RECTANGLE_HEIGHT = 19;
   return {
     container: {
       width: TOTAL_WIDTH,
@@ -46,7 +46,7 @@ function buildStyles(theme: customThemeType) {
       borderBottomLeftRadius: theme.shape.borderRadius.xxxs,
     },
     letterText: {
-      paddingLeft: 2,
+      paddingLeft: 1,
     },
     rightRectangle: {
       display: 'flex',

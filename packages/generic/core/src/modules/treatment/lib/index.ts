@@ -5,7 +5,6 @@ import { buildEmpty } from './buildEmpty';
 import { extractHumanTreatments } from './extractHumanTreatments';
 import { extractLastUpdateDate } from './extractLastUpdateDate';
 import { getLastTreatment } from './getLastTreatment';
-import { incrementTreatmentDuration } from './incrementTreatmentDuration';
 import { computeAnnotations, computeAnnotationsDiff } from './computeAnnotations';
 import { computeTreatmentInfo, treatmentInfoType } from './computeTreatmentInfo';
 import { sortInConsistentOrder } from './sortInConsistentOrder';
@@ -22,7 +21,6 @@ export {
   extractHumanTreatments,
   extractLastUpdateDate,
   getLastTreatment,
-  incrementTreatmentDuration,
   sortInConsistentOrder,
   update,
 };

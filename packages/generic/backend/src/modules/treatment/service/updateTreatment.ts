@@ -61,10 +61,10 @@ async function updateTreatment({
     actionToPerform,
   );
 
-  const duration = treatmentModule.lib.incrementTreatmentDuration({
-    lastUpdateDate: treatment.lastUpdateDate,
-    previousTreatmentDuration: treatment.duration,
-  });
+  const now = new Date();
+
+  const duration =
+    now.getTime() - treatment.lastUpdateDate + treatment.duration;
 
   const updatedTreatment = treatmentModule.lib.update(
     treatment,

@@ -1,7 +1,6 @@
-import { sumBy } from 'lodash';
+import { sum, sumBy, uniq } from 'lodash';
 import { promises as fs } from 'fs';
 import {
-  annotationLinkHandler,
   csvExtractor,
   documentModule,
   documentType,
@@ -17,17 +16,38 @@ import { logger } from '../../utils';
 export { extractComplexityInfoIntoCsv };
 
 type complexityInfoType = {
-  annotationsCount: number;
-  cadastreAnnotationsCount: number;
+  annotationsCount: Record<typeof categories[number], number>;
   documentId: documentType['_id'];
   documentNumber: documentType['documentNumber'];
   documentSource: documentType['source'];
   isCourDeCassationDecision: boolean;
-  linkedEntitiesCount: number;
+  uniqueEntitiesCount: number;
+  occultationBlock: number;
   totalTreatmentDuration: number;
   userNames: string[];
   wordsCount: number;
 };
+
+const categories = [
+  'personnePhysique',
+  'dateNaissance',
+  'dateMariage',
+  'dateDeces',
+  'insee',
+  'professionnelMagistratGreffier',
+  'personneMorale',
+  'etablissement',
+  'numeroSiretSiren',
+  'adresse',
+  'localite',
+  'telephoneFax',
+  'email',
+  'siteWebSensible',
+  'compteBancaire',
+  'plaqueImmatriculation',
+  'cadastre',
+  'professionnelAvocat',
+] as const;
 
 async function extractComplexityInfoIntoCsv() {
   logger.log(`extractComplexityInfoIntoCsv`);
@@ -42,7 +62,7 @@ async function extractComplexityInfoIntoCsv() {
   );
 
   const exhaustiveTreatedDocuments = treatedDocuments.filter(
-    ({ route }) => route === 'exhaustive',
+    ({ route }) => route !== 'automatic',
   );
 
   const documentIds = exhaustiveTreatedDocuments.map(({ _id }) => _id);
@@ -84,6 +104,14 @@ async function extractComplexityInfoIntoCsv() {
     const nonHumanAnnotations = treatmentModule.lib.computeAnnotations(
       nonHumanTreatments,
     );
+    const annotationsCount = categories.reduce((accumulator, category) => {
+      return {
+        ...accumulator,
+        [category]: nonHumanAnnotations.filter(
+          (annotation) => annotation.category === category,
+        ).length,
+      };
+    }, {} as complexityInfoType['annotationsCount']);
 
     const cadastreAnnotationsCount = nonHumanAnnotations.filter(
       ({ category }) => category === 'cadastre',
@@ -93,9 +121,9 @@ async function extractComplexityInfoIntoCsv() {
       treatedDocument.decisionMetadata.jurisdiction.trim().toLowerCase() ===
       'cour de cassation';
 
-    const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(
-      nonHumanAnnotations,
-    );
+    const uniqueEntitiesCount = uniq(
+      nonHumanAnnotations.map(({ entityId }) => entityId),
+    ).length;
 
     const userNames = humanTreatments.map(
       ({ userId }) => usersByIds[idModule.lib.convertToString(userId)].name,
@@ -113,8 +141,9 @@ async function extractComplexityInfoIntoCsv() {
       isCourDeCassationDecision,
       totalTreatmentDuration,
       userNames,
-      annotationsCount: nonHumanAnnotations.length,
-      linkedEntitiesCount,
+      occultationBlock: treatedDocument.decisionMetadata.occultationBlock || 0,
+      annotationsCount,
+      uniqueEntitiesCount,
       wordsCount: documentModule.lib.countWords(treatedDocument),
     };
   });
@@ -158,12 +187,13 @@ function convertComplexityInfosToCsvContent(
     },
     {
       title: "Nombre d'annotations",
-      extractor: (complexityInfo) => complexityInfo.annotationsCount.toString(),
+      extractor: (complexityInfo) =>
+        sum(Object.values(complexityInfo.annotationsCount)).toString(),
     },
     {
       title: "Nombre d'entités",
       extractor: (complexityInfo) =>
-        complexityInfo.linkedEntitiesCount.toString(),
+        complexityInfo.uniqueEntitiesCount.toString(),
     },
     {
       title: 'Total duration',
@@ -171,15 +201,19 @@ function convertComplexityInfosToCsvContent(
         complexityInfo.totalTreatmentDuration.toString(),
     },
     {
-      title: 'Cadastre annotation count',
-      extractor: (complexityInfo) =>
-        complexityInfo.cadastreAnnotationsCount.toString(),
-    },
-    {
       title: 'Is Cour de cassation',
       extractor: (complexityInfo) =>
         complexityInfo.isCourDeCassationDecision ? 'TRUE' : 'FALSE',
     },
+    {
+      title: 'Occultation block',
+      extractor: (complexityInfo) => complexityInfo.occultationBlock.toString(),
+    },
+    ...categories.map((category) => ({
+      title: `${category} annotation count`,
+      extractor: (complexityInfo: complexityInfoType) =>
+        complexityInfo.annotationsCount[category].toString(),
+    })),
   ];
   return csvExtractor.convertDataToCsv(
     complexityInfos.filter(

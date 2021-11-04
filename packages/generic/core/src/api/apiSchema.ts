@@ -529,6 +529,10 @@ const apiSchema = {
           kind: 'custom',
           content: 'id',
         } as const),
+        mustIncrementIdleDuration: buildModel({
+          kind: 'primitive',
+          content: 'boolean',
+        } as const),
       },
       out: buildModel({
         kind: 'primitive',

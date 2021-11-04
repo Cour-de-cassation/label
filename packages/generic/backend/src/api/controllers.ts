@@ -244,7 +244,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
     resetTreatmentLastUpdateDate: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
-      controllerWithUser: async (user, { args: { assignationId } }) => {
+      controllerWithUser: async (
+        user,
+        { args: { assignationId, mustIncrementIdleDuration } },
+      ) => {
         const assignation = await assignationService.fetchAssignation(
           idModule.lib.buildId(assignationId),
         );
@@ -259,6 +262,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
         return treatmentService.resetTreatmentLastUpdateDate(
           assignation.treatmentId,
+          mustIncrementIdleDuration,
         );
       },
     }),

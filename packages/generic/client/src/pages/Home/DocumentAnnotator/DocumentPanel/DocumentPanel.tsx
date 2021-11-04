@@ -66,6 +66,7 @@ function DocumentPanel(props: { splittedTextByLine: splittedTextByLineType }): R
       } else {
         await apiCaller.post<'resetTreatmentLastUpdateDate'>('resetTreatmentLastUpdateDate', {
           assignationId,
+          mustIncrementIdleDuration: true,
         });
       }
       lastVerticalPosition = currentVerticalPosition;

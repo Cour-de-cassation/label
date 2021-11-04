@@ -1,5 +1,5 @@
 import { uniq } from 'lodash';
-import { buildCharacterList } from './buildCharacterList';
+import { buildCharacterList, FORBIDDEN_CHARACTERS } from './buildCharacterList';
 import { isCapitalLetterCharCode } from './isCapitalLetterCharCode';
 
 describe('buildCharacterList', () => {
@@ -8,7 +8,7 @@ describe('buildCharacterList', () => {
 
     const characterList = buildCharacterList(length);
 
-    expect(characterList.length).toBe(Math.pow(26, length));
+    expect(characterList.length).toBe(Math.pow(26 - FORBIDDEN_CHARACTERS.length, length));
     const uniqueCharacterList = uniq(characterList);
     expect(uniqueCharacterList).toEqual(characterList);
     expect(characterList.every(onlyContainsAZCharacters)).toBeTruthy();

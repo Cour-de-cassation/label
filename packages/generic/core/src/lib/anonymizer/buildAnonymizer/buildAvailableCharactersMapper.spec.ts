@@ -1,6 +1,7 @@
 import { range } from 'lodash';
 import { annotationModule } from '../../../modules/annotation';
 import { buildAvailableCharactersMapper } from './buildAvailableCharactersMapper';
+import { FORBIDDEN_CHARACTERS } from './buildCharacterList';
 
 describe('buildAvailableCharactersMapper', () => {
   const seed = 123;
@@ -17,12 +18,14 @@ describe('buildAvailableCharactersMapper', () => {
     expect(mapper['nom']).not.toEqual(mapper['prenom']);
   });
 
-  it('should build a mapper that priorite the one-letter replacements', () => {
-    const entityIds = range(27).map((value) => annotationModule.lib.entityIdHandler.compute('prenom', `${value}`));
+  it('should build a mapper that prioritize the one-letter replacements', () => {
+    const entityIds = range(26 - FORBIDDEN_CHARACTERS.length + 1).map((value) =>
+      annotationModule.lib.entityIdHandler.compute('prenom', `${value}`),
+    );
 
     const mapper = buildAvailableCharactersMapper(entityIds, seed);
 
-    expect([...mapper['prenom'].slice(0, 26)].sort()).toEqual([
+    expect([...mapper['prenom'].slice(0, 26 - FORBIDDEN_CHARACTERS.length)].sort()).toEqual([
       'A',
       'B',
       'C',
@@ -39,7 +42,6 @@ describe('buildAvailableCharactersMapper', () => {
       'N',
       'O',
       'P',
-      'Q',
       'R',
       'S',
       'T',

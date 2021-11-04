@@ -36,7 +36,7 @@
     },
     "iconName": "heart",
     "order":3,
-    "text": "Date de mariage",
+    "text": "Date de mariage/PACS",
     "autoLinkSensitivity": [
       {"kind": "caseInsensitive"},
       {"kind": "inclusion"}

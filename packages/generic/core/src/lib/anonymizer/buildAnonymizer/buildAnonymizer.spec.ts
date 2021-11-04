@@ -77,10 +77,10 @@ describe('buildAnonymizer', () => {
       const anonymizedDocument2 = anonymizer2.anonymizeDocument(document2);
 
       expect(anonymizedDocument1.text).toBe(
-        '[FIRST_NAME C] [LAST_NAME C] is software engineer. [FIRST_NAME J] [LAST_NAME O] is a software engineer. [FIRST_NAME Q] [LAST_NAME M] is a designer.',
+        '[FIRST_NAME C] [LAST_NAME C] is software engineer. [FIRST_NAME J] [LAST_NAME O] is a software engineer. [FIRST_NAME R] [LAST_NAME M] is a designer.',
       );
       expect(anonymizedDocument2.text).toBe(
-        'There are many people who work on this project, namely [FIRST_NAME J] [LAST_NAME O], [FIRST_NAME C] [LAST_NAME C], not to mention [FIRST_NAME Q] [LAST_NAME M], who works with [FIRST_NAME C] and [FIRST_NAME J].',
+        'There are many people who work on this project, namely [FIRST_NAME J] [LAST_NAME O], [FIRST_NAME C] [LAST_NAME C], not to mention [FIRST_NAME R] [LAST_NAME M], who works with [FIRST_NAME C] and [FIRST_NAME J].',
       );
     });
   });

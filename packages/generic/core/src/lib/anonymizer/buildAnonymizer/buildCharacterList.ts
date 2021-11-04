@@ -1,6 +1,9 @@
 import { range } from 'lodash';
 
-export { buildCharacterList };
+export { buildCharacterList, FORBIDDEN_CHARACTERS };
+
+const FORBIDDEN_CHARACTERS = ['Q'];
+
 function buildCharacterList(length: number) {
   const A_ASCII_CODE = 65;
   const characterListLength = Math.pow(26, length);
@@ -21,5 +24,7 @@ function buildCharacterList(length: number) {
     }
     return currentStringArray.join('');
   });
-  return characterList;
+  return characterList.filter((characters) =>
+    FORBIDDEN_CHARACTERS.every((forbiddenCharacter) => !characters.includes(forbiddenCharacter)),
+  );
 }

@@ -1,4 +1,4 @@
-import { buildCharacterList } from './buildCharacterList';
+import { buildCharacterList, FORBIDDEN_CHARACTERS } from './buildCharacterList';
 
 export { buildAvailableCharacters };
 
@@ -9,7 +9,7 @@ function buildAvailableCharacters(count: number) {
     power++;
     const characterList = buildCharacterList(power);
     availableCharacters = [...availableCharacters, characterList];
-  } while (Math.pow(26, power) < count);
+  } while (Math.pow(26 - FORBIDDEN_CHARACTERS.length, power) < count);
 
   return availableCharacters;
 }

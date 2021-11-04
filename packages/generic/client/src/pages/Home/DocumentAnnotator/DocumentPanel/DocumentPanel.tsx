@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
-import { assignationType } from '@label/core';
+import { assignationType, treatmentModule } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
@@ -10,8 +10,6 @@ import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';
 
 export { DocumentPanel };
-
-const SCROLL_CHECK_INTERVAL = 60 * 1000;
 
 function DocumentPanel(props: { splittedTextByLine: splittedTextByLineType }): ReactElement {
   const theme = useCustomTheme();
@@ -36,7 +34,7 @@ function DocumentPanel(props: { splittedTextByLine: splittedTextByLineType }): R
     }
     updateTreatementDurationsInterval = setInterval(
       buildUpdateTreatmentUpdateDate(assignationId),
-      SCROLL_CHECK_INTERVAL,
+      treatmentModule.lib.getTimeThresholdToUpdateDuration(),
     );
 
     return () => {

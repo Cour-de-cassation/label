@@ -1,4 +1,4 @@
-import { treatmentType } from '@label/core';
+import { treatmentType, treatmentModule } from '@label/core';
 import { buildTreatmentRepository } from '../repository';
 
 export { updateTreatmentDuration };
@@ -10,8 +10,13 @@ async function updateTreatmentDuration(treatmentId: treatmentType['_id']) {
 
   const now = new Date();
 
+  const elapsedTimeSinceLastUpdate = now.getTime() - treatment.lastUpdateDate;
+
   const duration =
-    now.getTime() - treatment.lastUpdateDate + treatment.duration;
+    elapsedTimeSinceLastUpdate <
+    treatmentModule.lib.getTimeThresholdToUpdateDuration()
+      ? elapsedTimeSinceLastUpdate + treatment.duration
+      : treatment.duration;
 
   await treatmentRepository.updateOne(treatmentId, {
     duration,

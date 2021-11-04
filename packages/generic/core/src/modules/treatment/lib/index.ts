@@ -5,6 +5,7 @@ import { buildEmpty } from './buildEmpty';
 import { extractHumanTreatments } from './extractHumanTreatments';
 import { extractLastUpdateDate } from './extractLastUpdateDate';
 import { getLastTreatment } from './getLastTreatment';
+import { getTimeThresholdToUpdateDuration } from './getTimeThresholdToUpdateDuration';
 import { computeAnnotations, computeAnnotationsDiff } from './computeAnnotations';
 import { computeTreatmentInfo, treatmentInfoType } from './computeTreatmentInfo';
 import { sortInConsistentOrder } from './sortInConsistentOrder';
@@ -21,6 +22,7 @@ export {
   extractHumanTreatments,
   extractLastUpdateDate,
   getLastTreatment,
+  getTimeThresholdToUpdateDuration,
   sortInConsistentOrder,
   update,
 };

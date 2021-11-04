@@ -18,28 +18,34 @@ function DocumentPanel(props: { splittedTextByLine: splittedTextByLineType }): R
   const viewerScrollerHandler = useViewerScrollerHandler();
   const annotatorStateHandler = useAnnotatorStateHandler();
   const { assignationId } = annotatorStateHandler.get();
+  const annotatorStateChecksum = annotatorStateHandler.getChecksum();
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const styles = buildStyles(theme);
 
-  let saveCursorPositionInterval: NodeJS.Timeout | null = null;
+  let updateTreatementDurationsInterval: NodeJS.Timeout | null = null;
 
   useEffect(() => {
-    if (!!assignationId) {
-      if (!!saveCursorPositionInterval) {
-        clearInterval(saveCursorPositionInterval);
-        apiCaller.post<'updateTreatmentDuration'>('updateTreatmentDuration', {
-          assignationId,
-        });
-      }
-      saveCursorPositionInterval = setInterval(buildUpdateTreatmentUpdateDate(assignationId), SCROLL_CHECK_INTERVAL);
-
-      return () => {
-        saveCursorPositionInterval && clearInterval(saveCursorPositionInterval);
-      };
+    if (!assignationId) {
+      return;
     }
+    if (!!updateTreatementDurationsInterval) {
+      clearInterval(updateTreatementDurationsInterval);
+      apiCaller.post<'updateTreatmentDuration'>('updateTreatmentDuration', {
+        assignationId,
+      });
+    }
+    updateTreatementDurationsInterval = setInterval(
+      buildUpdateTreatmentUpdateDate(assignationId),
+      SCROLL_CHECK_INTERVAL,
+    );
+
+    return () => {
+      updateTreatementDurationsInterval && clearInterval(updateTreatementDurationsInterval);
+    };
   }, [
     documentViewerModeHandler.documentViewerMode.kind === 'occurrence' &&
       documentViewerModeHandler.documentViewerMode.entityId,
+    annotatorStateChecksum,
   ]);
 
   return (

@@ -2,6 +2,7 @@ import { annotationsDiffType } from '@label/core';
 import { annotatorStateType } from './annotatorStateType';
 import { annotationsCommitterType } from './buildAnnotationsCommitter';
 import { autoSaverType } from './buildAutoSaver';
+import { computeAnnotatorStateChecksum } from './computeAnnotatorStateChecksum';
 
 export { buildAnnotatorStateHandler };
 
@@ -9,6 +10,7 @@ export type { annotatorStateHandlerType };
 
 type annotatorStateHandlerType = {
   get: () => annotatorStateType;
+  getChecksum: () => string;
   set: (nextAnnotatorState: annotatorStateType) => void;
   revert: () => void;
   restore: () => void;
@@ -33,6 +35,7 @@ function buildAnnotatorStateHandler({
   return {
     annotatorStateHandler: {
       get: () => annotatorState,
+      getChecksum: () => computeAnnotatorStateChecksum(annotatorState),
       set: setAnnotatorStateAndCommitChange,
       revert: revertAnnotatorState,
       restore: restoreAnnotatorState,

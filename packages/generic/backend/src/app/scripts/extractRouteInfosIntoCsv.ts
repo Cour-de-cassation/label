@@ -6,6 +6,7 @@ import { logger } from '../../utils';
 export { extractRouteInfosIntoCsv };
 
 type routeInfoType = {
+  route: documentType['route'];
   documentNumber: documentType['documentNumber'];
   session: documentType['decisionMetadata']['session'];
   solution: documentType['decisionMetadata']['solution'];
@@ -29,6 +30,7 @@ async function extractRouteInfosIntoCsv() {
     'publicationCategory',
     'source',
     'creationDate',
+    'route',
     'documentNumber',
   ]);
 
@@ -53,6 +55,7 @@ async function extractRouteInfosIntoCsv() {
       civilCaseCode: document.decisionMetadata.civilCaseCode,
       criminalCaseCode: document.decisionMetadata.criminalCaseCode,
       source: document.source,
+      route: document.route,
     };
   });
 
@@ -70,6 +73,10 @@ function convertRouteInfosToCsvContent(routeInfos: routeInfoType[]) {
     title: string;
     extractor: (routeInfo: routeInfoType) => string;
   }> = [
+    {
+      title: 'route',
+      extractor: (routeInfo) => routeInfo.route,
+    },
     {
       title: 'documentNumber',
       extractor: (routeInfo) => routeInfo.documentNumber.toString(),

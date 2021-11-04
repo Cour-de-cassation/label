@@ -7,9 +7,7 @@ type formatSpecifierType = {
   specifier: specifierType;
 };
 
-type specifierGeneratorType = Record<
-  specifierType,
-  {
-    generate: (entityId: string) => string;
-  }
->;
+type specifierGeneratorType = {
+  '%c': { generate: (entityId: string) => string };
+  '%d': { generate: () => string };
+};

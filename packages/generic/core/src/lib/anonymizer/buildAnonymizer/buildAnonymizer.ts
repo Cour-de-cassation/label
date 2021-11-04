@@ -24,7 +24,6 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
     annotations.map((annotation) => annotation.entityId),
     seed,
   );
-
   return {
     anonymizeDocument,
     anonymize,

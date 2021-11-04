@@ -1,5 +1,5 @@
 import { parseFormatSpecifiers } from './parseFormatSpecifiers';
-import { specifierGeneratorType } from './types';
+import { specifierGeneratorType, specifierType } from './types';
 
 export { buildAnonymizationTextGenerator };
 
@@ -13,10 +13,19 @@ function buildAnonymizationTextGenerator(printfString: string, specifierGenerato
   function generate(entityId: string) {
     return parsedFormatSpecifiers.reduce((printedString, parsedFormatSpecifier) => {
       const stringPrefix = printedString.slice(0, parsedFormatSpecifier.index);
-      const specifierValue = specifierGenerator[parsedFormatSpecifier.specifier].generate(entityId);
+      const specifierValue = computeSpecifierValue(specifierGenerator, parsedFormatSpecifier.specifier, entityId);
       const stringSuffix = printedString.slice(parsedFormatSpecifier.index + parsedFormatSpecifier.specifier.length);
 
       return `${stringPrefix}${specifierValue}${stringSuffix}`;
     }, printfString);
+  }
+}
+
+function computeSpecifierValue(specifierGenerator: specifierGeneratorType, specifier: specifierType, entityId: string) {
+  switch (specifier) {
+    case '%d':
+      return specifierGenerator[specifier].generate();
+    case '%c':
+      return specifierGenerator[specifier].generate(entityId);
   }
 }

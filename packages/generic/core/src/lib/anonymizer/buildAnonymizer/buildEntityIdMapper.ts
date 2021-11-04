@@ -13,7 +13,6 @@ function buildEntityIdMapper(settings: settingsType, entityIds: string[], seed: 
     const textB = annotationModule.lib.entityIdHandler.getText(entityIdB);
     return textA.localeCompare(textB);
   });
-
   const specifierGenerator = buildSpecifierGenerator(sortedEntityIds, seed);
 
   return sortedEntityIds.reduce((accumulator, entityId) => {

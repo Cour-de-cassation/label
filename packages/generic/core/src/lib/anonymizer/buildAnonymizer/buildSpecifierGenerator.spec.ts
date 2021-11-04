@@ -7,8 +7,8 @@ describe('buildSpecifierGenerator', () => {
 
     const generatedCharacter1 = specifierGenerator['%c'].generate(entityIds[0]);
     const generatedCharacter2 = specifierGenerator['%c'].generate(entityIds[1]);
-    const generatedNumber1 = specifierGenerator['%d'].generate(entityIds[2]);
-    const generatedNumber2 = specifierGenerator['%d'].generate(entityIds[3]);
+    const generatedNumber1 = specifierGenerator['%d'].generate();
+    const generatedNumber2 = specifierGenerator['%d'].generate();
 
     expect(generatedCharacter1.length).toBe(1);
     expect(generatedCharacter2.length).toBe(1);

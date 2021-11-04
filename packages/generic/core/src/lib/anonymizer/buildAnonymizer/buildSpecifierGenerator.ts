@@ -6,7 +6,7 @@ import { specifierGeneratorType } from './types';
 export { buildSpecifierGenerator };
 
 function buildSpecifierGenerator(entityIds: string[], seed: number) {
-  const numbers = {} as Record<string, number>;
+  let currentNumber = 1;
   const availableCharactersMapper = buildAvailableCharactersMapper(entityIds, seed);
   const entityIdOrderMapper = buildEntityIdOrderMapper(entityIds);
 
@@ -20,10 +20,9 @@ function buildSpecifierGenerator(entityIds: string[], seed: number) {
       },
     },
     '%d': {
-      generate: (entityId: string) => {
-        const category = annotationModule.lib.entityIdHandler.getCategory(entityId);
-        const specifierValue = numbers[category] || 1;
-        numbers[category] = specifierValue + 1;
+      generate: () => {
+        const specifierValue = currentNumber;
+        currentNumber++;
         return `${specifierValue}`;
       },
     },

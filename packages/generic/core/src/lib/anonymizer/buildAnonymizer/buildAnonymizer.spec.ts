@@ -31,7 +31,7 @@ describe('buildAnonymizer', () => {
       const anonymizedDocument = anonymizer.anonymizeDocument(document);
 
       expect(anonymizedDocument.text).toEqual(
-        '[FIRST_NAME 1] [LAST_NAME 3] is software engineer. [FIRST_NAME 2] [LAST_NAME 1] is a software engineer. [FIRST_NAME 3] [LAST_NAME 2] is a designer.',
+        '[FIRST_NAME 2] [LAST_NAME 6] is software engineer. [FIRST_NAME 4] [LAST_NAME 1] is a software engineer. [FIRST_NAME 5] [LAST_NAME 3] is a designer.',
       );
     });
 
@@ -91,12 +91,12 @@ describe('buildAnonymizer', () => {
     it('should anonymize a text with the given settings', () => {
       const anonymizedTexts = annotations.map(anonymizer.anonymize);
 
-      expect(anonymizedTexts[0]).toEqual('[FIRST_NAME 1]');
+      expect(anonymizedTexts[0]).toEqual('[FIRST_NAME 2]');
     });
     it('should anonymize a second text with the given settings', () => {
       const anonymizedTexts = annotations.map(anonymizer.anonymize);
 
-      expect(anonymizedTexts[1]).toEqual('[LAST_NAME 3]');
+      expect(anonymizedTexts[1]).toEqual('[LAST_NAME 6]');
     });
     it('should conserve the same anonymisation every time it is called', () => {
       const settings = settingsModule.lib.buildSettings({
@@ -121,7 +121,7 @@ describe('buildAnonymizer', () => {
     it('should loop over the anonymization text if not enough are provided in the settings', () => {
       const anonymizedTexts = annotations.map(anonymizer.anonymize);
 
-      expect(anonymizedTexts[2]).toEqual('[FIRST_NAME 2]');
+      expect(anonymizedTexts[2]).toEqual('[FIRST_NAME 4]');
     });
     it('should anonymize a text with a default string if the category is not in the settings', () => {
       const annotation = annotationModule.generator.generate({

@@ -22,8 +22,10 @@ type complexityInfoType = {
   documentSource: documentType['source'];
   isCourDeCassationDecision: boolean;
   uniqueEntitiesCount: number;
+  uniqueRepresentativesCount: number;
   occultationBlock: number;
-  totalTreatmentDuration: number;
+  treatmentDuration: number;
+  totalDuration: number;
   userNames: string[];
   wordsCount: number;
 };
@@ -125,12 +127,20 @@ async function extractComplexityInfoIntoCsv() {
       nonHumanAnnotations.map(({ entityId }) => entityId),
     ).length;
 
+    const uniqueRepresentativesCount = uniq(
+      nonHumanAnnotations.map(({ text, category }) => `${text}_${category}`),
+    ).length;
+
     const userNames = humanTreatments.map(
       ({ userId }) => usersByIds[idModule.lib.convertToString(userId)].name,
     );
-    const totalTreatmentDuration = sumBy(
+    const treatmentDuration = sumBy(
       humanTreatments,
       ({ treatment }) => treatment.duration,
+    );
+    const totalDuration = sumBy(
+      humanTreatments,
+      ({ treatment }) => treatment.duration + treatment.idleDuration,
     );
 
     return {
@@ -139,11 +149,13 @@ async function extractComplexityInfoIntoCsv() {
       documentNumber: treatedDocument.documentNumber,
       documentSource: treatedDocument.source,
       isCourDeCassationDecision,
-      totalTreatmentDuration,
+      treatmentDuration,
+      totalDuration,
       userNames,
       occultationBlock: treatedDocument.decisionMetadata.occultationBlock || 0,
       annotationsCount,
       uniqueEntitiesCount,
+      uniqueRepresentativesCount,
       wordsCount: documentModule.lib.countWords(treatedDocument),
     };
   });
@@ -196,9 +208,18 @@ function convertComplexityInfosToCsvContent(
         complexityInfo.uniqueEntitiesCount.toString(),
     },
     {
-      title: 'Total duration',
+      title: 'Nombre de représentants',
       extractor: (complexityInfo) =>
-        complexityInfo.totalTreatmentDuration.toString(),
+        complexityInfo.uniqueRepresentativesCount.toString(),
+    },
+    {
+      title: 'Treatment duration',
+      extractor: (complexityInfo) =>
+        complexityInfo.treatmentDuration.toString(),
+    },
+    {
+      title: 'Total idle+treatment duration',
+      extractor: (complexityInfo) => complexityInfo.totalDuration.toString(),
     },
     {
       title: 'Is Cour de cassation',

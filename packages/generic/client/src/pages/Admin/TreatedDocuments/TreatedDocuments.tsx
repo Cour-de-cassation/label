@@ -15,7 +15,6 @@ import {
 } from '../../../services/localStorage';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { ExportCSVButton } from './ExportCSVButton';
 import { TreatedDocumentsFilters } from './TreatedDocumentsFilters';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
 
@@ -69,9 +68,6 @@ function TreatedDocuments(props: {
           treatedDocuments={filteredTreatedDocuments}
           fields={treatmentFields}
         />
-      </div>
-      <div style={styles.csvButtonContainer}>
-        <ExportCSVButton data={filteredTreatedDocuments} fields={treatmentFields} />
       </div>
     </div>
   );
@@ -360,11 +356,6 @@ function buildStyles(theme: customThemeType) {
   return {
     header: {
       height: heights.header,
-    },
-    csvButtonContainer: {
-      position: 'fixed',
-      bottom: theme.spacing,
-      right: theme.spacing * 2,
     },
     contentContainer: {
       display: 'flex',

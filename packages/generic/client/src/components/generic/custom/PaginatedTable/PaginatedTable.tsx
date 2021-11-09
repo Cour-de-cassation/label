@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { optionItemType, Table, tableRowFieldType } from '../Table';
 import { footerCellType } from '../Table/TableFooter';
 import { orderDirectionType } from '../Table/TableHeader';
@@ -22,6 +22,9 @@ function PaginatedTable<InputT, orderByPropertyT extends string = string>(props:
   const [currentPage, setCurrentPage] = useState(0);
   const numberOfPages = computeNumberOfPages(props.data.length, ROWS_PER_PAGE);
   const pagination = computePagination(ROWS_PER_PAGE, currentPage);
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [numberOfPages]);
 
   return (
     <>

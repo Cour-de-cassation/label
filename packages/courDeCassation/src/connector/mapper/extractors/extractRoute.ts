@@ -49,6 +49,7 @@ function extractRoute({
   if (chamberId === 'CR') {
     return 'exhaustive';
   }
+
   if (
     [
       'ABSEN',
@@ -89,6 +90,72 @@ function extractRoute({
       'SUCCE',
       'SUREN',
       'TESTA',
+    ].includes(civilMatterCode)
+  ) {
+    return 'exhaustive';
+  }
+
+  if (
+    [
+      'COTEX',
+      'COTFO',
+      'TRARG',
+      'AGS',
+      'APPREN',
+      'CLAUSE',
+      'CONGES',
+      'CTMAND',
+      'CDD',
+      'CTAIDE',
+      'DEPART',
+      'DISCRI',
+      'DISCRS',
+      'DTDISC',
+      'DTIP',
+      'DTMAR',
+      'DTPUB',
+      'DTSYND',
+      'DURAUB',
+      'DUREE',
+      'ESSAI',
+      'EXIST',
+      'HARCEL',
+      'HYGIEN',
+      'IMPUTA',
+      'LICDIS',
+      'LICECO',
+      'LICECI',
+      'LICPER',
+      'MODIFS',
+      'MODIFC',
+      'MODIFE',
+      'REMUN',
+      'RETRAI',
+      'RUPTUR',
+      'SALSTA',
+      'SPORT',
+      'STATSA',
+      'TINTER',
+      'USAGES',
+      'VIPERS',
+      'V.R.P.',
+      'PROSOC',
+      'HANDI',
+      'DTEURO',
+      'CONGET',
+      'PARTI',
+      'ETSA',
+      'TPAR',
+      'EXPAT',
+      'FORFAI',
+      'FRAIPR',
+      'JOURN',
+      'PORTAG',
+      'REFERE',
+      'SMIC',
+      'SEPOUS',
+      'TRANSP',
+      'SALST2',
     ].includes(civilMatterCode)
   ) {
     return 'exhaustive';

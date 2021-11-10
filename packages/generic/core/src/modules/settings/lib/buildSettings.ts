@@ -71,7 +71,7 @@ function buildColor(color: colorType | undefined) {
   }
 
   function buildShadeColor(shadeColor: shadeColorType) {
-    if (shadeColors.includes(shadeColor[0]) && shadeColor[1] >= 100 && shadeColor[1] <= 900) {
+    if (shadeColors.includes(shadeColor[0])) {
       return shadeColor;
     } else {
       throw new Error(`Invalid shade color: ${shadeColor}`);

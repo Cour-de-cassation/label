@@ -82,7 +82,7 @@ const shadeColors = [
 
 type constantColorType = typeof constantColors[number];
 
-type shadeColorType = [typeof shadeColors[number], number];
+type shadeColorType = [typeof shadeColors[number], string];
 
 type colorType = constantColorType | shadeColorType;
 

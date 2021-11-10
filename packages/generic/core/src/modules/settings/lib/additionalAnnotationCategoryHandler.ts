@@ -8,8 +8,8 @@ function buildAdditionalAnnotationCategoryHandler() {
   const ADDITIONAL_ANNOTATION_CATEGORY_NAME = 'annotationSupplementaire';
   const ADDITIONAL_ANNOTATION_CATEGORY_ICON_NAME = 'pencil' as const;
   const ADDITIONAL_ANNOTATION_CATEGORY_COLOR = {
-    lightMode: ['red', 300] as colorType,
-    darkMode: ['red', 700] as colorType,
+    lightMode: ['red', '300'] as colorType,
+    darkMode: ['red', '700'] as colorType,
   };
 
   return { getCategoryName, getCategoryColor, getCategoryIconName, addCategoryToSettings };

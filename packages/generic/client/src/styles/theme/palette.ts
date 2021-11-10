@@ -25,7 +25,7 @@ const COLORS: { [color in constantColorType]: string } = {
   white: '#FFFFFF',
 };
 
-const shadeColors: { [color in shadeColorType[0]]: { [shade: number]: string } } = {
+const shadeColors: { [color in shadeColorType[0]]: { [shade: string]: string } } = {
   blue,
   blueGrey,
   brown,
@@ -59,9 +59,9 @@ function emphasizeShadeColor(color: colorType, displayMode: displayModeType): st
 
     switch (displayMode) {
       case 'darkMode':
-        return getShadeColor([tint, 100]);
+        return getShadeColor([tint, '100']);
       case 'lightMode':
-        return getShadeColor([tint, 900]);
+        return getShadeColor([tint, '900']);
     }
   }
 }

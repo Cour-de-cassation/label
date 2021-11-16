@@ -38,11 +38,15 @@ function detectAnnotationTextsAndIndices({
 }
 
 function isAnnotationTextInsideLargerWord(documentText: string, annotationText: string, index: number) {
-  const nonBoundaryCharacterRegex = /^[a-zA-Z0-9ÈÉÊÎÏÔÖÙÚÛÜèéêîïôöùû]/;
-  const isWordBeginningOnBoundary = index === 0 || !documentText[index - 1].match(nonBoundaryCharacterRegex);
+  const boundaryCharacterRegex = /^[a-zA-Z0-9ÈÉÊÎÏÔÖÙÚÛÜèéêîïôöùû]/;
+  const isWordBeginningOnBoundary =
+    index === 0 ||
+    !documentText[index].match(boundaryCharacterRegex) ||
+    !documentText[index - 1].match(boundaryCharacterRegex);
   const isWordEndingOnBoundary =
     index + annotationText.length === documentText.length ||
-    !documentText[index + annotationText.length].match(nonBoundaryCharacterRegex);
+    !documentText[index + annotationText.length - 1].match(boundaryCharacterRegex) ||
+    !documentText[index + annotationText.length].match(boundaryCharacterRegex);
   return !isWordBeginningOnBoundary || !isWordEndingOnBoundary;
 }
 

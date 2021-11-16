@@ -137,6 +137,23 @@ describe('annotationTextDetector', () => {
 
       expect(annotationTextsAndIndices).toEqual([]);
     });
+
+    it('should return text and indices when initials', () => {
+      const documentText = 'B.SERRANO and B.GLE';
+      const annotationText = 'B.';
+      const annotations = [] as annotationType[];
+
+      const annotationTextsAndIndices = annotationTextDetector.detectAnnotationTextsAndIndices({
+        documentText,
+        annotationText,
+        annotations,
+      });
+
+      expect(annotationTextsAndIndices).toEqual([
+        { index: 0, text: annotationText },
+        { index: 14, text: annotationText },
+      ]);
+    });
   });
 });
 

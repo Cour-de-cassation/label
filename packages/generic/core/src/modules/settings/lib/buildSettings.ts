@@ -24,7 +24,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
   Object.keys(partialSettings).forEach(
     (category) =>
       (settings[category] = {
-        anonymization: partialSettings[category]?.anonymization || `ANONYMIZATION_${Math.random()} %d`,
+        anonymization: partialSettings[category]?.anonymization || '',
         autoLinkSensitivity: partialSettings[category]?.autoLinkSensitivity || [
           {
             kind: 'levenshteinDistance',

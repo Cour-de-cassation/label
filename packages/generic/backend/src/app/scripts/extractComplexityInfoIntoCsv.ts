@@ -5,6 +5,7 @@ import {
   documentModule,
   documentType,
   idModule,
+  settingsType,
   treatmentModule,
 } from '@label/core';
 import { assignationService } from '../../modules/assignation';
@@ -24,6 +25,9 @@ type complexityInfoType = {
   uniqueEntitiesCount: number;
   uniqueRepresentativesCount: number;
   occultationBlock: number;
+  subAnnotationsSensitiveCount: number;
+  subAnnotationsNonSensitiveCount: number;
+  surAnnotationsCount: number;
   treatmentDuration: number;
   totalDuration: number;
   userNames: string[];
@@ -51,7 +55,7 @@ const categories = [
   'professionnelAvocat',
 ] as const;
 
-async function extractComplexityInfoIntoCsv() {
+async function extractComplexityInfoIntoCsv(settings: settingsType) {
   logger.log(`extractComplexityInfoIntoCsv`);
 
   const fileName = 'complexityInfo.csv';
@@ -143,6 +147,11 @@ async function extractComplexityInfoIntoCsv() {
       ({ treatment }) => treatment.duration + treatment.idleDuration,
     );
 
+    const statistic = treatmentModule.lib.aggregateTreatmentInfo(
+      humanTreatments.map((humanTreatment) => humanTreatment.treatment),
+      settings,
+    );
+
     return {
       cadastreAnnotationsCount,
       documentId: treatedDocument._id,
@@ -152,6 +161,10 @@ async function extractComplexityInfoIntoCsv() {
       treatmentDuration,
       totalDuration,
       userNames,
+      subAnnotationsSensitiveCount: statistic.subAnnotationsSensitiveCount,
+      surAnnotationsCount: statistic.surAnnotationsCount,
+      subAnnotationsNonSensitiveCount:
+        statistic.subAnnotationsNonSensitiveCount,
       occultationBlock: treatedDocument.decisionMetadata.occultationBlock || 0,
       annotationsCount,
       uniqueEntitiesCount,
@@ -225,6 +238,21 @@ function convertComplexityInfosToCsvContent(
       title: 'Is Cour de cassation',
       extractor: (complexityInfo) =>
         complexityInfo.isCourDeCassationDecision ? 'TRUE' : 'FALSE',
+    },
+    {
+      title: 'Sensitive sub annotations',
+      extractor: (complexityInfo) =>
+        complexityInfo.subAnnotationsSensitiveCount.toString(),
+    },
+    {
+      title: 'Non sensitive sub annotations',
+      extractor: (complexityInfo) =>
+        complexityInfo.subAnnotationsNonSensitiveCount.toString(),
+    },
+    {
+      title: 'Sur annotations',
+      extractor: (complexityInfo) =>
+        complexityInfo.surAnnotationsCount.toString(),
     },
     {
       title: 'Occultation block',

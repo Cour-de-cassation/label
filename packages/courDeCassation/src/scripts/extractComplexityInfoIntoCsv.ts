@@ -7,7 +7,7 @@ import { parametersHandler } from '../lib/parametersHandler';
   const backend = buildBackend(environment, settings);
 
   await backend.runScript(
-    () => backend.scripts.extractComplexityInfoIntoCsv.run(),
+    () => backend.scripts.extractComplexityInfoIntoCsv.run(settings),
     backend.scripts.extractComplexityInfoIntoCsv.option,
   );
 })();

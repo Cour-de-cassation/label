@@ -6,6 +6,7 @@ import { wordings } from '../../../../wordings';
 import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTable } from './CategoryTable';
 import { EmptyCategory } from './EmptyCategory';
+import { StrickenCategory } from './StrickenCategory';
 
 export { AnnotationsPanel };
 
@@ -13,6 +14,7 @@ function AnnotationsPanel(props: {
   document: fetchedDocumentType;
   annotationPerCategoryAndEntity: annotationPerCategoryAndEntityType;
   splittedTextByLine: splittedTextByLineType;
+  nonAnnotableCategories: string[];
 }) {
   const theme = useCustomTheme();
   const { displayMode } = useDisplayMode();
@@ -38,6 +40,11 @@ function AnnotationsPanel(props: {
             </div>
           );
         })}
+        {props.nonAnnotableCategories.map((category) => (
+          <div key={category} style={styles.categoryContainer}>
+            <StrickenCategory category={category} />
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -31,6 +31,10 @@ function DocumentAnnotator(props: {
     status: ['annotable'],
     canBeAnnotatedBy: 'human',
   });
+  const nonAnnotableCategories = settingsModule.lib.getCategories(annotatorState.settings, {
+    status: ['hidden', 'alwaysVisible', 'visible'],
+    canBeAnnotatedBy: 'NLP',
+  });
   const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories).sort(
     sortAdditionalAnnotationsFirst,
   );
@@ -51,6 +55,7 @@ function DocumentAnnotator(props: {
                   document={annotatorState.document}
                   annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
                   splittedTextByLine={splittedTextByLine}
+                  nonAnnotableCategories={nonAnnotableCategories}
                 />
               </div>
               <div style={styles.rightContainer}>

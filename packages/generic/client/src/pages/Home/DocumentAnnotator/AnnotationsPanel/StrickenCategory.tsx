@@ -4,9 +4,9 @@ import { customThemeType, useCustomTheme } from '../../../../styles';
 import { Text, CategoryIcon } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 
-export { EmptyCategory };
+export { StrickenCategory };
 
-function EmptyCategory(props: { category: string }) {
+function StrickenCategory(props: { category: string }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const iconSize = theme.shape.borderRadius.l;
@@ -18,10 +18,10 @@ function EmptyCategory(props: { category: string }) {
   return (
     <div style={styles.container}>
       <div style={styles.categoryIconContainer}>
-        <CategoryIcon category={props.category} iconSize={iconSize} settings={annotatorState.settings} />
+        <CategoryIcon isDisabled category={props.category} iconSize={iconSize} settings={annotatorState.settings} />
       </div>
       <div style={styles.categoryTextContainer}>
-        <Text>{`${categoryName} (0)`}</Text>
+        <Text style={styles.text}>{categoryName}</Text>
       </div>
     </div>
   );
@@ -37,6 +37,10 @@ function EmptyCategory(props: { category: string }) {
       },
       categoryTextContainer: {
         paddingLeft: theme.spacing,
+      },
+      text: {
+        textDecoration: 'line-through',
+        color: theme.colors.disabled.color,
       },
     } as const;
   }

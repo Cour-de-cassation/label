@@ -4,7 +4,13 @@ import { customThemeType, useCustomTheme } from '../../../styles';
 
 export { CircleIcon };
 
-function CircleIcon(props: { backgroundColor: string; iconSize: number; iconName: iconNameType; hint?: string }) {
+function CircleIcon(props: {
+  backgroundColor: string;
+  iconSize: number;
+  iconName: iconNameType;
+  hint?: string;
+  isDisabled?: boolean;
+}) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -21,6 +27,7 @@ function CircleIcon(props: { backgroundColor: string; iconSize: number; iconName
         height: props.iconSize,
         borderRadius: props.iconSize / 2,
         backgroundColor: props.backgroundColor,
+        opacity: props.isDisabled ? 0.5 : 1,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

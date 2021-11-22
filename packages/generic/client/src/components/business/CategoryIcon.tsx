@@ -5,7 +5,7 @@ import { CircleIcon } from '../generic';
 
 export { CategoryIcon };
 
-function CategoryIcon(props: { settings: settingsType; category: string; iconSize: number }) {
+function CategoryIcon(props: { settings: settingsType; category: string; iconSize: number; isDisabled?: boolean }) {
   const { displayMode } = useDisplayMode();
   const backgroundColor = getColor(
     settingsModule.lib.getAnnotationCategoryColor(props.category, props.settings, displayMode),
@@ -13,6 +13,7 @@ function CategoryIcon(props: { settings: settingsType; category: string; iconSiz
 
   return (
     <CircleIcon
+      isDisabled={props.isDisabled}
       backgroundColor={backgroundColor}
       iconSize={props.iconSize}
       iconName={settingsModule.lib.getAnnotationCategoryIconName(props.category, props.settings)}

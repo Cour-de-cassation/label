@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
-import { assignationType, treatmentModule } from '@label/core';
+import { assignationType } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
@@ -10,6 +10,8 @@ import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';
 
 export { DocumentPanel };
+
+const TIME_THRESHOLD_FOR_UPDATE = 1 * 60 * 1000;
 
 function DocumentPanel(props: { splittedTextByLine: splittedTextByLineType }): ReactElement {
   const theme = useCustomTheme();
@@ -34,7 +36,7 @@ function DocumentPanel(props: { splittedTextByLine: splittedTextByLineType }): R
     }
     updateTreatementDurationsInterval = setInterval(
       buildUpdateTreatmentUpdateDate(assignationId),
-      treatmentModule.lib.getTimeThresholdToUpdateDuration(),
+      TIME_THRESHOLD_FOR_UPDATE,
     );
 
     return () => {

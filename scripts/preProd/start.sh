@@ -3,7 +3,7 @@ set -e
 
 startStaticServer () {
   cd packages/generic/client
-  REACT_APP_RUN_MODE=PREPROD npx superstatic ./build --port 55432 &
+  REACT_APP_RUN_MODE=PREPROD npx superstatic ./build --port 55432 --host 0.0.0.0 &
   yarn_serve_pid=$!
   cd ../../..
 }

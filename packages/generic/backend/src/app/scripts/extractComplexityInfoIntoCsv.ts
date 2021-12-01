@@ -95,9 +95,10 @@ async function extractComplexityInfoIntoCsv(settings: settingsType) {
     );
 
     const nonHumanTreatments = treatments
-      .filter(
-        (treatment) =>
-          treatment.source === 'NLP' || treatment.source === 'postProcess',
+      .filter((treatment) =>
+        ['NLP', 'postProcess', 'supplementaryAnnotations'].includes(
+          treatment.source,
+        ),
       )
       .sort((treatment1, treatment2) => treatment1.order - treatment2.order);
 

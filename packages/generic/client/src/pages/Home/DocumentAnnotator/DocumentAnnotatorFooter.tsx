@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { documentModule, documentType } from '@label/core';
-import { ButtonWithIcon, ComponentsList, IconButton } from '../../../components';
+import { ButtonWithIcon, ComponentsList, IconButton, SwitchButton, Text } from '../../../components';
 import { useMonitoring } from '../../../services/monitoring';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
 import { CopyAnonymizedTextButton } from './CopyAnonymizedTextButton';
+import { useDocumentViewerModeHandler } from '../../../services/documentViewerMode';
 
 export { DocumentAnnotatorFooter };
 
@@ -17,24 +18,23 @@ function DocumentAnnotatorFooter(props: {
   const theme = useCustomTheme();
   const [isValidating, setIsValidating] = useState(false);
   const { addMonitoringEntry } = useMonitoring();
+  const documentViewerModeHandler = useDocumentViewerModeHandler();
 
   const styles = buildStyles(theme);
 
   return (
     <div style={styles.footer}>
       <div style={styles.leftContainer}>
-        <div style={styles.resetButtonContainer}>
-          <ButtonWithIcon
-            color="default"
-            iconName="reset"
-            onClick={annotatorStateHandler.reinitialize}
-            text={wordings.homePage.reset}
-          />
-        </div>
-      </div>
-      <div style={styles.rightContainer}>
         <ComponentsList
           components={[
+            <div style={styles.resetButtonContainer}>
+              <ButtonWithIcon
+                color="default"
+                iconName="reset"
+                onClick={annotatorStateHandler.reinitialize}
+                text={wordings.homePage.reset}
+              />
+            </div>,
             <IconButton
               disabled={!canRevertLastAction()}
               hint={wordings.homePage.undo}
@@ -50,7 +50,20 @@ function DocumentAnnotatorFooter(props: {
           ]}
           spaceBetweenComponents={theme.spacing * 2}
         />
-
+        <ComponentsList
+          components={[
+            <Text>{wordings.homePage.anonymisedView}</Text>,
+            <SwitchButton
+              checked={documentViewerModeHandler.isAnonymizedView()}
+              color="primary"
+              onChange={documentViewerModeHandler.switchAnonymizedView}
+            />,
+          ]}
+          spaceBetweenComponents={theme.spacing * 2}
+        />
+      </div>
+      <div style={styles.rightContainer}>
+        <ComponentsList components={[]} spaceBetweenComponents={theme.spacing * 2} />
         <ComponentsList components={buildRightComponents()} spaceBetweenComponents={theme.spacing * 2} />
       </div>
     </div>
@@ -129,6 +142,7 @@ function buildStyles(theme: customThemeType) {
     },
     leftContainer: {
       display: 'flex',
+      justifyContent: 'space-between',
       width: widths.annotationsPanel,
     },
     rightContainer: {

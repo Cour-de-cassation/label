@@ -2,7 +2,7 @@
   "personnePhysique": {
     "anonymization": "[%c]",
     "color": {
-      "lightMode": ["deepOrange", "300"],
+      "lightMode": ["deepOrange", "A200"],
       "darkMode": ["deepOrange", "800"]
     },
     "iconName": "person",
@@ -45,7 +45,7 @@
   "dateDeces": {
     "anonymization": "[Date décès %d]",
     "color": {
-      "lightMode": ["lime", "300"],
+      "lightMode": ["lime", "500"],
       "darkMode": ["lime", "900"]
     },
     "iconName": "cloud",
@@ -69,7 +69,7 @@
   "professionnelMagistratGreffier": {
     "anonymization": "[professionnel %c]",
     "color": {
-      "lightMode": ["brown", "100"],
+      "lightMode": ["brown", "200"],
       "darkMode": ["brown", "500"]
     },
     "iconName": "judge",
@@ -80,7 +80,7 @@
   "personneMorale": {
     "anonymization": "[%d]",
     "color": {
-      "lightMode": ["deepPurple", "100"],
+      "lightMode": ["deepPurple", "A100"],
       "darkMode": ["deepPurple", "400"]
     },
     "couldBe": "personnePhysique",
@@ -91,7 +91,7 @@
   "etablissement": {
     "anonymization": "[%d]",
     "color": {
-      "lightMode": ["purple", "200"],
+      "lightMode": ["purple", "A100"],
       "darkMode": ["purple", "600"]
     },
     "iconName": "store",
@@ -111,7 +111,7 @@
   "adresse": {
     "anonymization": "[Adresse %d]",
     "color": {
-      "lightMode": ["blue", "100"],
+      "lightMode": ["blue", "A100"],
       "darkMode": ["blue", "800"]
     },
     "iconName": "location",
@@ -145,7 +145,7 @@
   "email": {
     "anonymization": "[Courriel %d]",
     "color": {
-      "lightMode": ["lightBlue", "100"],
+      "lightMode": ["lightBlue", "A100"],
       "darkMode": ["lightBlue", "800"]
     },
     "iconName": "email",
@@ -155,8 +155,8 @@
   "siteWebSensible": {
     "anonymization": "[0%d]",
     "color": {
-      "lightMode": ["lightBlue", "200"],
-      "darkMode": ["lightBlue", "700"]
+      "lightMode": ["orange", "600"],
+      "darkMode": ["orange", "900"]
     },
     "iconName": "web",
     "order": 14,
@@ -165,7 +165,7 @@
   "compteBancaire": {
     "anonymization": "[XXXXXXXXXX0%d]",
     "color": {
-      "lightMode": ["pink", "100"],
+      "lightMode": ["pink", "A100"],
       "darkMode": ["pink", "600"]
     },
     "iconName": "bank",
@@ -196,7 +196,7 @@
   "professionnelAvocat": {
     "anonymization": "",
     "color": {
-      "lightMode": ["brown", "100"],
+      "lightMode": ["brown", "500"],
       "darkMode": ["brown", "500"]
     },
     "couldBe": "personnePhysique",

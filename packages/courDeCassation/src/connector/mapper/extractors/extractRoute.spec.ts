@@ -165,6 +165,21 @@ describe('extractRoute', () => {
     expect(route).toBe('exhaustive');
   });
 
+  it('should return exhaustive if QPC', () => {
+    const route = extractRoute({
+      solution: 'QPC incidente',
+      publicationCategory: ['W'],
+      chamberId: 'SOC',
+      civilCaseCode: '',
+      civilMatterCode: '',
+      criminalCaseCode: 'AROD',
+      session: 'FHR',
+      source: 'jurinet',
+    });
+
+    expect(route).toBe('exhaustive');
+  });
+
   it('should return automatic if Désistement', () => {
     const route = extractRoute({
       solution: 'Desistement par arret',

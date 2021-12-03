@@ -165,7 +165,11 @@ function extractRoute({
     return 'exhaustive';
   }
 
-  if (['QPC', 'QPCR'].includes(civilCaseCode) || criminalCaseCode === 'QPC') {
+  if (
+    ['QPC', 'QPCR'].includes(civilCaseCode) ||
+    criminalCaseCode === 'QPC' ||
+    stringComparator.normalizeString(solution).includes('qpc')
+  ) {
     return 'exhaustive';
   }
 

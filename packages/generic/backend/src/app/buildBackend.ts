@@ -12,6 +12,7 @@ import {
   insertTestUsers,
   insertUser,
   purgeDb,
+  resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
 } from './scripts';
@@ -68,6 +69,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       revertOneMigration: {
         run: revertOneMigration,
+        option: { shouldLoadDb: true, shouldExit: true },
+      },
+      resetUntreatedDocumentsForTest: {
+        run: resetUntreatedDocumentsForTest,
         option: { shouldLoadDb: true, shouldExit: true },
       },
       runNewMigrations: {

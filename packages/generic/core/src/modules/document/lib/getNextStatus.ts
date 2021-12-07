@@ -14,6 +14,8 @@ function getNextStatus({
     case 'nlpAnnotating':
       if (route === 'automatic') {
         return 'done';
+      } else if (route === 'request') {
+        return 'toBeConfirmed';
       } else {
         return 'free';
       }
@@ -22,8 +24,16 @@ function getNextStatus({
     case 'pending':
       return 'saved';
     case 'saved':
+      if (route === 'confirmation') {
+        return 'toBeConfirmed';
+      }
       return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
     case 'rejected':
+      if (route === 'confirmation') {
+        return 'toBeConfirmed';
+      }
+      return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
+    case 'toBeConfirmed':
       return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
     case 'toBePublished':
       return 'done';

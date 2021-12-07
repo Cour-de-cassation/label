@@ -1,9 +1,4 @@
-import {
-  setFilters,
-  getFilters,
-  documentReviewFilterStatuses,
-  treatedDocumentFilterType,
-} from './treatedDocumentsFiltersHandler';
+import { setFilters, getFilters, treatedDocumentFilterType } from './treatedDocumentsFiltersHandler';
 import {
   getOrderByProperty,
   setOrderByProperty,
@@ -12,7 +7,7 @@ import {
 import { getOrderDirection, setOrderDirection } from './treatedDocumentsOrderDirectionHandler';
 import { getSearchedDocumentNumber, setSearchedDocumentNumber } from './treatedDocumentsSearchedDocumentNumberHandler';
 
-export { treatedDocumentsStateHandler, treatedDocumentOrderByProperties, documentReviewFilterStatuses };
+export { treatedDocumentsStateHandler, treatedDocumentOrderByProperties };
 
 export type { treatedDocumentFilterType };
 

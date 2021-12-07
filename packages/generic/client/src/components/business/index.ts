@@ -3,8 +3,9 @@ import { CategoryIcon } from './CategoryIcon';
 import { DocumentNumberTextInput } from './DocumentNumberTextInput';
 import { DocumentReviewStatusIcon } from './DocumentReviewStatusIcon';
 import { DocumentStatusIcon } from './DocumentStatusIcon';
+import { DocumentsTableHeader } from './DocumentsTableHeader';
 import { ChangeAnnotationCategoryDropdown } from './ChangeAnnotationCategoryDropdown';
-import { FilterButton, filterType } from './FilterButton';
+import { FilterButton, filterType, DocumentFilterButton } from './FilterButton';
 import { FilterChip } from './FilterChip';
 import { LinkAnnotationDropdown } from './LinkAnnotationDropdown';
 import { Logo } from './Logo';
@@ -18,6 +19,8 @@ export {
   AdminMenu,
   CategoryIcon,
   ChangeAnnotationCategoryDropdown,
+  DocumentFilterButton,
+  DocumentsTableHeader,
   DocumentNumberTextInput,
   DocumentReviewStatusIcon,
   DocumentStatusIcon,

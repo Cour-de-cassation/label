@@ -1,10 +1,14 @@
 export {
   localStorage,
   adminViews,
-  documentReviewFilterStatuses,
   publishableDocumentOrderByProperties,
   treatedDocumentOrderByProperties,
   untreatedDocumentOrderByProperties,
+  toBeConfirmedDocumentOrderByProperties,
 } from './localStorage';
 
-export type { treatedDocumentFilterType, untreatedDocumentFilterType } from './localStorage';
+export type {
+  treatedDocumentFilterType,
+  untreatedDocumentFilterType,
+  toBeConfirmedDocumentFilterType,
+} from './localStorage';

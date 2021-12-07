@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
-import { apiRouteOutType, keysOf, userType } from '@label/core';
-import { DocumentNumberTextInput, RefreshButton } from '../../../components';
+import { apiRouteOutType, keysOf, userType, documentType } from '@label/core';
+import { DocumentsTableHeader } from '../../../components';
 import { localStorage, untreatedDocumentFilterType } from '../../../services/localStorage';
+import { filtersType } from '../../../services/filters';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { UntreatedDocumentsTable } from './UntreatedDocumentsTable';
-import { UntreatedDocumentsFilters } from './UntreatedDocumentsFilters';
 
 export { UntreatedDocuments };
 
@@ -28,24 +28,18 @@ function UntreatedDocuments(props: {
   const filteredUntreatedDocuments = searchedDocumentNumber
     ? filterSearchedDocuments(props.untreatedDocuments, searchedDocumentNumber)
     : getFilteredUntreatedDocuments(props.untreatedDocuments, filterValues);
+
+  const filters = buildFilters();
   return (
     <div style={styles.table}>
-      <div style={styles.tableHeaderContainer}>
-        <div style={styles.tableHeader}>
-          <UntreatedDocumentsFilters
-            filterInfo={filterInfo}
-            filterValues={filterValues}
-            setFilterValues={setAndStoreFilterValues}
-            resultsCount={filteredUntreatedDocuments.length}
-          />
-          <div style={styles.tableRightHeader}>
-            <div style={styles.searchTextInputContainer}>
-              <DocumentNumberTextInput value={searchedDocumentNumber} onChange={setAndStoreSearchedDocumentNumber} />
-            </div>
-            <RefreshButton onClick={props.refetch} isLoading={props.isLoading} />
-          </div>
-        </div>
-      </div>
+      <DocumentsTableHeader
+        filters={filters}
+        resultsCount={filteredUntreatedDocuments.length}
+        searchedDocumentNumber={searchedDocumentNumber}
+        setSearchedDocumentNumber={setAndStoreSearchedDocumentNumber}
+        refetch={props.refetch}
+        isLoading={props.isLoading}
+      />
       <div style={styles.tableContentContainer}>
         <UntreatedDocumentsTable
           users={props.users}
@@ -55,6 +49,32 @@ function UntreatedDocuments(props: {
       </div>
     </div>
   );
+
+  function buildFilters(): Partial<filtersType> {
+    return {
+      source: {
+        value: filterValues.source,
+        possibleValues: filterInfo.sources,
+        setValue: (source: documentType['source'] | undefined) => setAndStoreFilterValues({ ...filterValues, source }),
+      },
+      publicationCategoryLetter: {
+        value: filterValues.publicationCategoryLetter,
+        possibleValues: filterInfo.publicationCategoryLetters,
+        setValue: (publicationCategoryLetter: documentType['publicationCategory'][number] | undefined) =>
+          setAndStoreFilterValues({ ...filterValues, publicationCategoryLetter }),
+      },
+      route: {
+        value: filterValues.route,
+        setValue: (route: documentType['route'] | undefined) => setAndStoreFilterValues({ ...filterValues, route }),
+      },
+      jurisdiction: {
+        value: filterValues.jurisdiction,
+        possibleValues: filterInfo.jurisdictions,
+        setValue: (jurisdiction: documentType['decisionMetadata']['jurisdiction'] | undefined) =>
+          setAndStoreFilterValues({ ...filterValues, jurisdiction }),
+      },
+    };
+  }
 
   function setAndStoreFilterValues(filterValues: untreatedDocumentFilterType) {
     localStorage.untreatedDocumentsStateHandler.setFilters(filterValues);

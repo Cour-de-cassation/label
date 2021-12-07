@@ -8,6 +8,7 @@ function AdminPage(props: {
   userRole: 'admin' | 'scrutator';
   header: { title: string; subtitle: string };
   unreadProblemReportsCount: number;
+  toBeConfirmedDocumentsCount: number;
   children: ReactElement;
 }) {
   const styles = buildStyles();
@@ -18,7 +19,11 @@ function AdminPage(props: {
         <MainHeader title={props.header.title} subtitle={<Text>{props.header.subtitle}</Text>} />
       </div>
       <div style={styles.contentContainer}>
-        <AdminMenu unreadProblemReportsCount={props.unreadProblemReportsCount} userRole={props.userRole} />
+        <AdminMenu
+          toBeConfirmedDocumentsCount={props.toBeConfirmedDocumentsCount}
+          unreadProblemReportsCount={props.unreadProblemReportsCount}
+          userRole={props.userRole}
+        />
         {props.children}
       </div>
     </>

@@ -1,9 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
+import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
 import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
 import { heights, customThemeType, useCustomTheme } from '../../../../styles';
 import { splittedTextByLineType } from '../lib';
 import { DocumentLine } from './DocumentLine';
+import { SimpleReviewScreen } from './SimpleReviewScreen';
 
 export { DocumentViewer };
 
@@ -12,6 +14,8 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   const viewerScrollerHandler = useViewerScrollerHandler();
   const theme = useCustomTheme();
   const { documentViewerMode } = documentViewerModeHandler;
+  const annotatorStateHandler = useAnnotatorStateHandler();
+  const { document } = annotatorStateHandler.get();
   useEffect(() => {
     if (documentViewerMode.kind === 'annotation') {
       viewerScrollerHandler.scrollToStoredVerticalPosition();
@@ -26,27 +30,38 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     documentViewerModeHandler.documentViewerMode,
     documentViewerModeHandler.isAnonymizedView(),
   );
-  const documentText = computeDocumentText();
+  const displayedText = computeDisplayedText();
 
-  return (
+  return displayedText ? (
     <div style={styles.container} ref={viewerRef}>
       <table style={styles.table}>
         <tbody>
-          {documentText.map((splittedLine) => (
+          {displayedText.map((splittedLine) => (
             <DocumentLine key={splittedLine.line} splittedLine={splittedLine} />
           ))}
         </tbody>
       </table>
     </div>
+  ) : (
+    <div style={styles.simpleScreenContainer}>
+      <SimpleReviewScreen />
+    </div>
   );
 
-  function computeDocumentText() {
+  function computeDisplayedText() {
     switch (documentViewerModeHandler.documentViewerMode.kind) {
       case 'occurrence':
         const { entityLineNumbers } = documentViewerModeHandler.documentViewerMode;
         return props.splittedTextByLine.filter(({ line }) => entityLineNumbers.includes(line));
-      default:
-        return props.splittedTextByLine;
+      case 'annotation':
+        switch (document.route) {
+          case 'simple':
+            return undefined;
+          case 'default':
+            return undefined;
+          default:
+            return props.splittedTextByLine;
+        }
     }
   }
 
@@ -64,6 +79,9 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
         backgroundImage,
         height: heights.annotatorPanel,
         width: '100%',
+      },
+      simpleScreenContainer: {
+        height: heights.annotatorPanel,
       },
       table: {
         borderSpacing: `0 ${lineVerticalPadding}px`,

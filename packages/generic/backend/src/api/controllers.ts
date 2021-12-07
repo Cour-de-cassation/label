@@ -103,6 +103,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         documentService.fetchPublishableDocuments(),
     }),
 
+    toBeConfirmedDocuments: buildAuthenticatedController({
+      permissions: ['admin', 'scrutator'],
+      controllerWithUser: async () => {
+        return documentService.fetchToBeConfirmedDocuments();
+      },
+    }),
+
     treatedDocuments: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => {

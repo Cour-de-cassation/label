@@ -6,13 +6,20 @@ import { MenuIcon } from './MenuIcon';
 
 export { AdminMenu };
 
-const OFFSET_TOP = 80;
+const OFFSET_TOP = 15;
 
-function AdminMenu(props: { unreadProblemReportsCount: number; userRole: 'admin' | 'scrutator' }) {
+function AdminMenu(props: {
+  unreadProblemReportsCount: number;
+  toBeConfirmedDocumentsCount: number;
+  userRole: 'admin' | 'scrutator';
+}) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
-  const menuIcons = getMenuIcons(props.unreadProblemReportsCount);
+  const menuIcons = getMenuIcons({
+    unreadProblemReportsCount: props.unreadProblemReportsCount,
+    toBeConfirmedDocumentsCount: props.toBeConfirmedDocumentsCount,
+  });
 
   return (
     <div style={styles.container}>
@@ -21,7 +28,13 @@ function AdminMenu(props: { unreadProblemReportsCount: number; userRole: 'admin'
   );
 }
 
-function getMenuIcons(unreadProblemReportsCount: number) {
+function getMenuIcons({
+  unreadProblemReportsCount,
+  toBeConfirmedDocumentsCount,
+}: {
+  unreadProblemReportsCount: number;
+  toBeConfirmedDocumentsCount: number;
+}) {
   const STATISTICS_ICON = (
     <MenuIcon title={wordings.statisticsPage.header.subtitle} pathname={routes.STATISTICS.getPath()} iconName="home" />
   );
@@ -34,11 +47,20 @@ function getMenuIcons(unreadProblemReportsCount: number) {
     />
   );
 
+  const TO_BE_CONFIRMED_DOCUMENTS_ICON = (
+    <MenuIcon
+      title={wordings.toBeConfirmedDocumentsPage.header.subtitle}
+      pathname={routes.TO_BE_CONFIRMED_DOCUMENTS.getPath()}
+      alertCount={toBeConfirmedDocumentsCount}
+      iconName="checkBox"
+    />
+  );
+
   const TREATED_DOCUMENTS_ICON = (
     <MenuIcon
       title={wordings.treatedDocumentsPage.header.subtitle}
       pathname={routes.TREATED_DOCUMENTS.getPath()}
-      iconName="playlistCheck"
+      iconName="doubleCheck"
     />
   );
 
@@ -60,8 +82,21 @@ function getMenuIcons(unreadProblemReportsCount: number) {
   );
 
   return {
-    admin: [STATISTICS_ICON, UNTREATED_DOCUMENT_ICON, TREATED_DOCUMENTS_ICON, PROBLEM_REPORTS_ICON, WORKING_USERS_ICON],
-    scrutator: [STATISTICS_ICON, UNTREATED_DOCUMENT_ICON, TREATED_DOCUMENTS_ICON, PROBLEM_REPORTS_ICON],
+    admin: [
+      STATISTICS_ICON,
+      UNTREATED_DOCUMENT_ICON,
+      TO_BE_CONFIRMED_DOCUMENTS_ICON,
+      TREATED_DOCUMENTS_ICON,
+      PROBLEM_REPORTS_ICON,
+      WORKING_USERS_ICON,
+    ],
+    scrutator: [
+      STATISTICS_ICON,
+      UNTREATED_DOCUMENT_ICON,
+      TO_BE_CONFIRMED_DOCUMENTS_ICON,
+      TREATED_DOCUMENTS_ICON,
+      PROBLEM_REPORTS_ICON,
+    ],
   };
 }
 

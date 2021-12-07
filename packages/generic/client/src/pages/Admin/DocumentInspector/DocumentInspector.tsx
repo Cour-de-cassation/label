@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { annotationsDiffType, fetchedDocumentType, idModule, settingsModule, settingsType } from '@label/core';
+import {
+  annotationsDiffType,
+  fetchedDocumentType,
+  idModule,
+  settingsModule,
+  settingsType,
+  documentModule,
+  documentType,
+} from '@label/core';
 import { apiCaller } from '../../../api';
 import { MainHeader } from '../../../components';
 import {
@@ -59,7 +67,7 @@ function DocumentInspector(props: { settings: settingsType }) {
                   }}
                 >
                   <MainHeader title={document.title} onBackButtonPress={history.goBack} />
-                  <DocumentAnnotator />
+                  <DocumentAnnotator onStopAnnotatingDocument={buildOnStopAnnotatingDocument(document)} />
                 </AnnotatorStateHandlerContextProvider>
               </MonitoringEntriesHandlerContextProvider>
             );
@@ -68,6 +76,24 @@ function DocumentInspector(props: { settings: settingsType }) {
       )}
     </DocumentDataFetcher>
   );
+
+  function buildOnStopAnnotatingDocument(document: fetchedDocumentType) {
+    if (document.route !== 'confirmation' && document.route !== 'request') {
+      return undefined;
+    }
+
+    return async (status: documentType['status']) => {
+      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        documentId: document._id,
+        status: documentModule.lib.getNextStatus({
+          publicationCategory: document.publicationCategory,
+          route: document.route,
+          status,
+        }),
+      });
+      history.goBack();
+    };
+  }
 
   function displayScrutatorInfo() {
     displayAlert({ variant: 'info', text: wordings.homePage.scrutatorInfo, autoHide: true });

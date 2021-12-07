@@ -11,6 +11,7 @@ import {
   BugReportRounded,
   BusinessCenterRounded,
   CakeRounded,
+  CheckBoxRounded,
   ChevronLeftRounded,
   ChevronRightRounded,
   ChildCareRounded,
@@ -19,6 +20,7 @@ import {
   DeleteOutlineRounded,
   DeleteRounded,
   DirectionsCarRounded,
+  DoneAllRounded,
   DoneRounded,
   EditRounded,
   EmailRounded,
@@ -49,7 +51,6 @@ import {
   PersonAddRounded,
   PersonRounded,
   PhoneRounded,
-  PlaylistAddCheckRounded,
   PlaylistPlayRounded,
   PowerSettingsNewRounded,
   PublishRounded,
@@ -72,7 +73,7 @@ import {
   VpnKeyRounded,
 } from '@material-ui/icons';
 import { Tooltip } from './../Tooltip';
-import { Judge } from './svgIcons';
+import { Judge, Meditation } from './svgIcons';
 
 export { Icon };
 
@@ -93,6 +94,7 @@ const materialIconMapping = {
   cake: CakeRounded,
   car: DirectionsCarRounded,
   check: DoneRounded,
+  checkBox: CheckBoxRounded,
   child: ChildCareRounded,
   city: LocationCityRounded,
   clock: AlarmOnRounded,
@@ -103,6 +105,7 @@ const materialIconMapping = {
   deleteOutline: DeleteOutlineRounded,
   discussion: QuestionAnswerRounded,
   doubleArrow: SettingsEthernetRounded,
+  doubleCheck: DoneAllRounded,
   edit: EditRounded,
   edited: BorderColorRounded,
   email: EmailRounded,
@@ -130,7 +133,6 @@ const materialIconMapping = {
   person: PersonRounded,
   phone: PhoneRounded,
   playlistPlay: PlaylistPlayRounded,
-  playlistCheck: PlaylistAddCheckRounded,
   plus: AddCircleRounded,
   publish: PublishRounded,
   puzzle: ExtensionRounded,
@@ -155,6 +157,7 @@ const materialIconMapping = {
 
 const svgIconMapping = {
   judge: Judge,
+  meditation: Meditation,
 };
 
 const iconMapping = {

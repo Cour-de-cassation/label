@@ -11,6 +11,7 @@ import { extractRouteInfosIntoCsv } from './extractRouteInfosIntoCsv';
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestUsers } from './insertTestUsers';
 import { insertUser } from './insertUser';
+import { resetUntreatedDocumentsForTest } from './resetUntreatedDocumentsForTest';
 import { purgeDb } from './purgeDb';
 import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
 
@@ -25,6 +26,7 @@ export {
   insertTestUsers,
   insertUser,
   purgeDb,
+  resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
   setIndexesOnAllCollections,

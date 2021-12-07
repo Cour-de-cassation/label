@@ -15,6 +15,7 @@ const routes = {
   RESET_PASSWORD: { getPath: () => '/label/reset-password' },
   PUBLISHABLE_DOCUMENTS: { getPath: () => '/label/publishable-documents' },
   STATISTICS: { getPath: () => '/label/admin/main/statistics' },
+  TO_BE_CONFIRMED_DOCUMENTS: { getPath: () => '/label/admin/main/to-be-confirmed-documents' },
   TREATED_DOCUMENTS: { getPath: () => '/label/admin/main/treated-documents' },
   UNTREATED_DOCUMENT: { getPath: () => '/label/admin/main/untreated-documents' },
 };

@@ -1,14 +1,14 @@
-import { orderDirectionType } from '../../../components';
-import { localStorageHandler } from '../localStorageHandler';
-import { localStorageMappers } from '../localStorageMappers';
+import { orderDirectionType } from '../../../../components';
+import { localStorageHandler } from '../../localStorageHandler';
+import { localStorageMappers } from '../../localStorageMappers';
 
-const UNTREATED_DOCUMENTS_DIRECTION_STORAGE_KEY = 'UNTREATED_DOCUMENTS_DIRECTION_STORAGE_KEY';
+const TO_BE_CONFIRMED_DOCUMENTS_DIRECTION_STORAGE_KEY = 'TO_BE_CONFIRMED_DOCUMENTS_DIRECTION_STORAGE_KEY';
 
 export { setOrderDirection, getOrderDirection };
 
 function setOrderDirection(newOrderDirection: orderDirectionType) {
   localStorageHandler.set({
-    key: UNTREATED_DOCUMENTS_DIRECTION_STORAGE_KEY,
+    key: TO_BE_CONFIRMED_DOCUMENTS_DIRECTION_STORAGE_KEY,
     value: newOrderDirection,
     mapper: localStorageMappers.string,
   });
@@ -16,7 +16,7 @@ function setOrderDirection(newOrderDirection: orderDirectionType) {
 
 function getOrderDirection() {
   const orderByProperty = localStorageHandler.get({
-    key: UNTREATED_DOCUMENTS_DIRECTION_STORAGE_KEY,
+    key: TO_BE_CONFIRMED_DOCUMENTS_DIRECTION_STORAGE_KEY,
     mapper: localStorageMappers.string,
   }) as orderDirectionType | undefined;
   return orderByProperty;

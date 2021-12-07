@@ -4,30 +4,34 @@ import { displayModeHandler } from './displayModeHandler';
 import {
   publishableDocumentOrderByProperties,
   publishableDocumentsStateHandler,
-} from './publishableDocumentsStateHandler';
+} from './documentStateHandler/publishableDocumentsStateHandler';
 import {
-  documentReviewFilterStatuses,
   treatedDocumentsStateHandler,
   treatedDocumentOrderByProperties,
   treatedDocumentFilterType,
-} from './treatedDocumentsStateHandler';
+} from './documentStateHandler/treatedDocumentsStateHandler';
 import {
   untreatedDocumentsStateHandler,
   untreatedDocumentOrderByProperties,
   untreatedDocumentFilterType,
-} from './untreatedDocumentsStateHandler';
+} from './documentStateHandler/untreatedDocumentsStateHandler';
+import {
+  toBeConfirmedDocumentFilterType,
+  toBeConfirmedDocumentOrderByProperties,
+  toBeConfirmedDocumentsStateHandler,
+} from './documentStateHandler/toBeConfirmedDocumentsStateHandler';
 import { userHandler } from './userHandler';
 
 export {
-  documentReviewFilterStatuses,
   adminViews,
   publishableDocumentOrderByProperties,
   treatedDocumentOrderByProperties,
   untreatedDocumentOrderByProperties,
+  toBeConfirmedDocumentOrderByProperties,
   localStorage,
 };
 
-export type { treatedDocumentFilterType, untreatedDocumentFilterType };
+export type { treatedDocumentFilterType, untreatedDocumentFilterType, toBeConfirmedDocumentFilterType };
 
 const localStorage = {
   adminViewHandler,
@@ -36,5 +40,6 @@ const localStorage = {
   publishableDocumentsStateHandler,
   treatedDocumentsStateHandler,
   untreatedDocumentsStateHandler,
+  toBeConfirmedDocumentsStateHandler,
   userHandler,
 };

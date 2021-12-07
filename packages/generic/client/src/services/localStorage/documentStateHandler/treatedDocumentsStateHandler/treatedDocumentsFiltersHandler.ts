@@ -1,6 +1,7 @@
 import { documentType } from '@label/core';
-import { localStorageHandler } from '../localStorageHandler';
-import { localStorageMappers } from '../localStorageMappers';
+import { localStorageHandler } from '../../localStorageHandler';
+import { localStorageMappers } from '../../localStorageMappers';
+import { documentReviewFilterStatuses } from '../../../filters';
 
 const TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_START_DATE';
 const TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_END_DATE';
@@ -14,11 +15,9 @@ const TREATED_DOCUMENTS_FILTER_PUBLICATION_CATEGORY_LETTER_STORAGE_KEY =
 const TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SUR_ANNOTATIONS';
 const TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_SUB_ANNOTATIONS';
 
-export { setFilters, getFilters, documentReviewFilterStatuses };
+export { setFilters, getFilters };
 
 export type { treatedDocumentFilterType };
-
-const documentReviewFilterStatuses = ['none', 'viewed', 'amended'] as const;
 
 type treatedDocumentFilterType = {
   startDate: Date | undefined;

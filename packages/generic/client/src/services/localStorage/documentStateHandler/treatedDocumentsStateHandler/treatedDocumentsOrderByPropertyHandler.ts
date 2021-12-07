@@ -1,5 +1,5 @@
-import { localStorageHandler } from '../localStorageHandler';
-import { localStorageMappers } from '../localStorageMappers';
+import { localStorageHandler } from '../../localStorageHandler';
+import { localStorageMappers } from '../../localStorageMappers';
 
 const TREATED_DOCUMENTS_ORDER_BY_PROPERTY_STORAGE_KEY = 'TREATED_DOCUMENTS_ORDER_BY_PROPERTY_STORAGE_KEY';
 

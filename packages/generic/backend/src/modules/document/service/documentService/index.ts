@@ -18,6 +18,7 @@ import { fetchDoneDocuments } from './fetchDoneDocuments';
 import { fetchFreeDocumentsIds } from './fetchFreeDocumentsIds';
 import { fetchPublishableDocuments } from './fetchPublishableDocuments';
 import { fetchPublishableDocumentsToExport } from './fetchPublishableDocumentsToExport';
+import { fetchToBeConfirmedDocuments } from './fetchToBeConfirmedDocuments';
 import { fetchTreatedDocuments } from './fetchTreatedDocuments';
 import { fetchUntreatedDocuments } from './fetchUntreatedDocuments';
 import { fetchDocumentsWithoutAnnotations } from './fetchDocumentsWithoutAnnotations';
@@ -60,6 +61,7 @@ function buildDocumentService() {
     fetchFreeDocumentsIds,
     fetchPublishableDocuments,
     fetchPublishableDocumentsToExport,
+    fetchToBeConfirmedDocuments,
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
     fetchDocumentsWithoutAnnotations,

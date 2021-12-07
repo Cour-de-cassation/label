@@ -272,6 +272,49 @@ const apiSchema = {
         },
       } as const),
     },
+    toBeConfirmedDocuments: {
+      out: buildModel({
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            document: {
+              kind: 'object',
+              content: {
+                _id: documentModule.fetchedModel.content._id,
+                documentNumber: documentModule.fetchedModel.content.documentNumber,
+                jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
+                occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
+                reviewStatus: documentModule.fetchedModel.content.reviewStatus,
+                publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+                route: documentModule.fetchedModel.content.route,
+              },
+            },
+            totalTreatmentDuration: {
+              kind: 'or',
+              content: [
+                { kind: 'primitive', content: 'number' },
+                { kind: 'primitive', content: 'undefined' },
+              ],
+            },
+            lastTreatmentDate: {
+              kind: 'or',
+              content: [
+                { kind: 'primitive', content: 'number' },
+                { kind: 'primitive', content: 'undefined' },
+              ],
+            },
+            userNames: {
+              kind: 'array',
+              content: {
+                kind: 'primitive',
+                content: 'string',
+              },
+            },
+          },
+        },
+      } as const),
+    },
     treatedDocuments: {
       out: buildModel({
         kind: 'array',

@@ -1,6 +1,6 @@
-import { orderDirectionType } from '../../../components';
-import { localStorageHandler } from '../localStorageHandler';
-import { localStorageMappers } from '../localStorageMappers';
+import { orderDirectionType } from '../../../../components';
+import { localStorageHandler } from '../../localStorageHandler';
+import { localStorageMappers } from '../../localStorageMappers';
 
 const PUBLISHABLE_DOCUMENTS_DIRECTION_STORAGE_KEY = 'PUBLISHABLE_DOCUMENTS_DIRECTION_STORAGE_KEY';
 

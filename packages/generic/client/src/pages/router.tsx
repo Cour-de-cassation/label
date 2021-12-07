@@ -17,6 +17,7 @@ import { PublishableDocuments } from './PublishableDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { Statistics } from './Admin/Statistics';
 import { defaultRoutes, routes } from './routes';
+import { ToBeConfirmedDocuments } from './Admin/ToBeConfirmedDocuments';
 
 export { Router };
 
@@ -40,6 +41,7 @@ function Router() {
                 const unreadProblemReportsCount = adminInfos.problemReportsWithDetails.filter(
                   ({ problemReport }) => !problemReport.hasBeenRead,
                 ).length;
+                const toBeConfirmedDocumentsCount = adminInfos.toBeConfirmedDocuments.length;
                 const userRole = localStorage.userHandler.getRole();
                 if (userRole !== 'admin' && userRole !== 'scrutator') {
                   return <></>;
@@ -51,6 +53,7 @@ function Router() {
                         userRole={userRole}
                         header={wordings.statisticsPage.header}
                         unreadProblemReportsCount={unreadProblemReportsCount}
+                        toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
                       >
                         <Statistics
                           ressourceFilter={ressourceFilters.aggregatedStatistics}
@@ -68,6 +71,7 @@ function Router() {
                           userRole="admin"
                           header={wordings.workingUsersPage.header}
                           unreadProblemReportsCount={unreadProblemReportsCount}
+                          toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
                         >
                           <WorkingUsers workingUsers={adminInfos.workingUsers} refetch={refetch.workingUsers} />
                         </AdminPage>
@@ -78,6 +82,7 @@ function Router() {
                         userRole={userRole}
                         header={wordings.problemReportsPage.header}
                         unreadProblemReportsCount={unreadProblemReportsCount}
+                        toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
                       >
                         <ProblemReports
                           refetch={refetch.problemReportsWithDetails}
@@ -86,11 +91,27 @@ function Router() {
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
+                    <AuthenticatedRoute path={routes.TO_BE_CONFIRMED_DOCUMENTS.getPath()}>
+                      <AdminPage
+                        userRole={userRole}
+                        header={wordings.toBeConfirmedDocumentsPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                        toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
+                      >
+                        <ToBeConfirmedDocuments
+                          users={adminInfos.workingUsers.map(({ _id, name }) => ({ _id, name }))}
+                          toBeConfirmedDocuments={adminInfos.toBeConfirmedDocuments}
+                          refetch={refetch.toBeConfirmedDocuments}
+                          isLoading={isLoading.toBeConfirmedDocuments}
+                        />
+                      </AdminPage>
+                    </AuthenticatedRoute>
                     <AuthenticatedRoute path={routes.TREATED_DOCUMENTS.getPath()}>
                       <AdminPage
                         userRole={userRole}
                         header={wordings.treatedDocumentsPage.header}
                         unreadProblemReportsCount={unreadProblemReportsCount}
+                        toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
                       >
                         <TreatedDocuments
                           treatedDocuments={adminInfos.treatedDocuments}
@@ -104,6 +125,7 @@ function Router() {
                         userRole={userRole}
                         header={wordings.untreatedDocumentsPage.header}
                         unreadProblemReportsCount={unreadProblemReportsCount}
+                        toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
                       >
                         <UntreatedDocuments
                           users={adminInfos.workingUsers.map(({ _id, name }) => ({ _id, name }))}

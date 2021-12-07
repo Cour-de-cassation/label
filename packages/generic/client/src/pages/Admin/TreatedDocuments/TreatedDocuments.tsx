@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { flatten, uniq } from 'lodash';
-import { apiRouteOutType, keysOf, timeOperator, documentType } from '@label/core';
+import { apiRouteOutType, keysOf, timeOperator, documentType, userType } from '@label/core';
 import {
-  DocumentNumberTextInput,
   DocumentReviewStatusIcon,
+  DocumentsTableHeader,
   PublicationCategoryBadge,
-  RefreshButton,
   tableRowFieldType,
 } from '../../../components';
 import {
@@ -13,9 +12,13 @@ import {
   treatedDocumentOrderByProperties,
   treatedDocumentFilterType,
 } from '../../../services/localStorage';
+import {
+  filtersType,
+  documentReviewFilterStatuses,
+  convertDocumentReviewStatusToFilter,
+} from '../../../services/filters';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { TreatedDocumentsFilters } from './TreatedDocumentsFilters';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
 
 export { TreatedDocuments };
@@ -31,37 +34,29 @@ function TreatedDocuments(props: {
   const INITIAL_FILTER_VALUES = localStorage.treatedDocumentsStateHandler.getFilters();
   const INITIAL_SEARCHED_DOCUMENT_NUMBER = localStorage.treatedDocumentsStateHandler.getSearchedDocumentNumber();
   const [filterValues, setFilterValues] = useState<treatedDocumentFilterType>(INITIAL_FILTER_VALUES);
-  const [searchedDecisionNumber, setSearchedDocumentNumber] = useState<number | undefined>(
+  const [searchedDocumentNumber, setSearchedDocumentNumber] = useState<number | undefined>(
     INITIAL_SEARCHED_DOCUMENT_NUMBER,
   );
   const styles = buildStyles(theme);
 
   const filterInfo = extractFilterInfoFromTreatedDocuments(props.treatedDocuments);
   const treatmentFields = buildTreatedDocumentsFields();
-  const filteredTreatedDocuments = searchedDecisionNumber
-    ? filterSearchedDocuments(props.treatedDocuments, searchedDecisionNumber)
+  const filteredTreatedDocuments = searchedDocumentNumber
+    ? filterSearchedDocuments(props.treatedDocuments, searchedDocumentNumber)
     : getFilteredTreatedDocuments(props.treatedDocuments, filterValues);
+
+  const filters = buildFilters();
 
   return (
     <div style={styles.table}>
-      <div style={styles.tableHeaderContainer}>
-        <div style={styles.tableHeader}>
-          <div style={styles.headerContent}>
-            <TreatedDocumentsFilters
-              filterInfo={filterInfo}
-              filterValues={filterValues}
-              setFilterValues={setAndStoreFilterValues}
-              resultsCount={filteredTreatedDocuments.length}
-            />
-            <div style={styles.tableRightHeader}>
-              <div style={styles.searchTextInputContainer}>
-                <DocumentNumberTextInput value={searchedDecisionNumber} onChange={setAndStoreSearchedDocumentNumber} />
-              </div>
-              <RefreshButton onClick={props.refetch} isLoading={props.isLoading} />
-            </div>
-          </div>
-        </div>
-      </div>
+      <DocumentsTableHeader
+        filters={filters}
+        resultsCount={filteredTreatedDocuments.length}
+        searchedDocumentNumber={searchedDocumentNumber}
+        setSearchedDocumentNumber={setAndStoreSearchedDocumentNumber}
+        refetch={props.refetch}
+        isLoading={props.isLoading}
+      />
       <div style={styles.tableContentContainer}>
         <TreatedDocumentsTable
           refetch={props.refetch}
@@ -71,6 +66,58 @@ function TreatedDocuments(props: {
       </div>
     </div>
   );
+
+  function buildFilters(): Partial<filtersType> {
+    return {
+      source: {
+        value: filterValues.source,
+        possibleValues: filterInfo.sources,
+        setValue: (source: documentType['source'] | undefined) => setAndStoreFilterValues({ ...filterValues, source }),
+      },
+      userName: {
+        value: filterValues.userName,
+        possibleValues: filterInfo.userNames,
+        setValue: (userName: userType['name'] | undefined) => setAndStoreFilterValues({ ...filterValues, userName }),
+      },
+      publicationCategoryLetter: {
+        value: filterValues.publicationCategoryLetter,
+        possibleValues: filterInfo.publicationCategoryLetters,
+        setValue: (publicationCategoryLetter: documentType['publicationCategory'][number] | undefined) =>
+          setAndStoreFilterValues({ ...filterValues, publicationCategoryLetter }),
+      },
+      route: {
+        value: filterValues.route,
+        setValue: (route: documentType['route'] | undefined) => setAndStoreFilterValues({ ...filterValues, route }),
+      },
+      jurisdiction: {
+        value: filterValues.jurisdiction,
+        possibleValues: filterInfo.jurisdictions,
+        setValue: (jurisdiction: documentType['decisionMetadata']['jurisdiction'] | undefined) =>
+          setAndStoreFilterValues({ ...filterValues, jurisdiction }),
+      },
+      treatmentDate: {
+        value: { startDate: filterValues.startDate, endDate: filterValues.endDate },
+        extremumValues: { min: filterInfo.minDate, max: filterInfo.maxDate },
+        setValue: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) =>
+          setAndStoreFilterValues({ ...filterValues, startDate, endDate }),
+      },
+      documentReviewFilterStatus: {
+        value: filterValues.documentReviewFilterStatus,
+        setValue: (documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined) =>
+          setAndStoreFilterValues({ ...filterValues, documentReviewFilterStatus }),
+      },
+      mustHaveSubAnnotations: {
+        value: filterValues.mustHaveSubAnnotations,
+        setValue: (mustHaveSubAnnotations: boolean | undefined) =>
+          setAndStoreFilterValues({ ...filterValues, mustHaveSubAnnotations: !!mustHaveSubAnnotations }),
+      },
+      mustHaveSurAnnotations: {
+        value: filterValues.mustHaveSurAnnotations,
+        setValue: (mustHaveSurAnnotations: boolean | undefined) =>
+          setAndStoreFilterValues({ ...filterValues, mustHaveSurAnnotations: !!mustHaveSurAnnotations }),
+      },
+    };
+  }
 
   function setAndStoreFilterValues(filterValues: treatedDocumentFilterType) {
     localStorage.treatedDocumentsStateHandler.setFilters(filterValues);
@@ -334,22 +381,12 @@ function TreatedDocuments(props: {
 
   function filterSearchedDocuments(
     treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>,
-    searchedDecisionNumber: number,
+    searchedDocumentNumber: number,
   ) {
     return treatedDocuments.filter((treatedDocument) =>
-      treatedDocument.document.documentNumber.toString().includes(searchedDecisionNumber.toString()),
+      treatedDocument.document.documentNumber.toString().includes(searchedDocumentNumber.toString()),
     );
   }
-}
-
-function convertDocumentReviewStatusToFilter(documentReviewStatus: documentType['reviewStatus']) {
-  if (documentReviewStatus.hasBeenAmended) {
-    return 'amended';
-  }
-  if (documentReviewStatus.viewerNames.length > 0) {
-    return 'viewed';
-  }
-  return 'none';
 }
 
 function buildStyles(theme: customThemeType) {

@@ -85,6 +85,7 @@ const fr = {
       saved: 'En cours de traitement par un agent',
       toBePublished: 'À publier',
       done: 'Prêt à être exporté',
+      toBeConfirmed: 'A confirmer par un administrateur',
       rejected: 'En alerte',
     },
     errors: {
@@ -110,6 +111,13 @@ const fr = {
       intervalDate: {
         start: 'Date début',
         end: 'Date fin',
+      },
+      fields: {
+        publicationCategoryLetter: 'Diffusion',
+        source: 'Source',
+        jurisdiction: 'Juridiction',
+        userName: 'Agent',
+        route: 'Circuit de traitement',
       },
     },
     problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
@@ -172,6 +180,11 @@ const fr = {
     reset: 'Réinitialiser',
     send: 'Envoyer',
     scrutatorInfo: 'Vous êtes en mode lecture seule. Les modifications que vous ferez ne seront pas sauvegardées.',
+    simpleReviewScreen: {
+      title: 'Relecture simple',
+      subtitle:
+        'Ce document ne nécessite pas de relecture exhaustive de la décision. Vous pouvez effectuer la vérification par le panneau latéral.',
+    },
     undo: 'Annuler',
     unlink: 'Supprimer la liaison',
     unlinkOption: {
@@ -282,6 +295,41 @@ const fr = {
         publicationCategory: 'Diffusion',
         source: 'Base de données source',
         jurisdiction: 'Juridiction',
+      },
+    },
+  },
+  toBeConfirmedDocumentsPage: {
+    header: { title: 'Administration', subtitle: 'Décisions à confirmer' },
+    table: {
+      columnTitles: {
+        number: { title: 'N° décision', tooltipText: 'Numéro de la décision' },
+        occultationBlock: { title: 'Bloc', tooltipText: "Bloc d'occultation" },
+        jurisdiction: { title: 'Cour', tooltipText: 'Juridiction de la décision' },
+        publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
+        session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
+        source: { title: 'Source', tooltipText: 'Base de données source' },
+        workingUser: { title: 'Agent', tooltipText: 'Agent principal' },
+        reviewStatus: { title: 'Revue', tooltipText: 'Statut de revue' },
+        route: { title: 'Circuit', tooltipText: 'Circuit de traitement' },
+        date: 'Traité le',
+        duration: { title: 'Tps', tooltipText: 'Temps de traitement total' },
+      },
+      statistics: {
+        computation: {
+          total: 'Total',
+          average: 'Moyenne',
+        },
+        fields: {
+          annotationsCount: 'Annotations',
+          surAnnotationsCount: 'Sur.',
+          subAnnotationsSensitiveCount: 'Sous. (sens.)',
+          subAnnotationsNonSensitiveCount: 'Sous. (autres)',
+          treatmentDuration: 'Temps de traitement',
+          wordsCount: 'Mots',
+        },
+      },
+      optionItems: {
+        openDocument: 'Ouvrir la décision...',
       },
     },
   },

@@ -1,6 +1,6 @@
 import { documentType } from '@label/core';
-import { localStorageHandler } from '../localStorageHandler';
-import { localStorageMappers } from '../localStorageMappers';
+import { localStorageHandler } from '../../localStorageHandler';
+import { localStorageMappers } from '../../localStorageMappers';
 
 const UNTREATED_DOCUMENTS_FILTER_SOURCE_STORAGE_KEY = 'UNTREATED_DOCUMENTS_FILTER_SOURCE';
 const UNTREATED_DOCUMENTS_FILTER_JURISDICTION_STORAGE_KEY = 'UNTREATED_DOCUMENTS_FILTER_JURISDICTION';

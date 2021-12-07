@@ -17,6 +17,7 @@ const documentStatusIconNameMapping: Record<
   saved: { iconName: 'update', colorName: 'primary' },
   toBePublished: { iconName: 'publish', colorName: 'primary' },
   done: { iconName: 'check', colorName: 'primary' },
+  toBeConfirmed: { iconName: 'checkBox', colorName: 'primary' },
   rejected: { iconName: 'stop', colorName: 'alert' },
 };
 

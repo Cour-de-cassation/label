@@ -4,18 +4,37 @@ EIG 4 promotion
 
 URL of the challenge: https://entrepreneur-interet-general.etalab.gouv.fr/defis/2020/label.html
 
-## Docker Backend
+## Installation
 
-To run the backend, use the command associate yarn docker command:
+Install the backend with:
 
 ```sh
-# Build the container
 yarn buildLocalDevDocker
-# Run the container
+```
+
+Install the frontend with:
+
+```sh
+yarn
+```
+
+## Launch
+
+For the first launch, you may want to have example data. To do so, follow the `Add documents you want to annotate` step bellow.
+
+Run in two different terminals:
+
+```sh
 yarn startLocalDevDocker
 ```
 
+```sh
+yarn startLocalClientDev
+```
+
 The container will be started with a database with fresh data.
+
+Then, on your web browser, open http://localhost:55432
 
 ## Troubleshooting
 
@@ -57,15 +76,6 @@ The folder used by LABEL is `courDeCassation/storage`. If you want to reuse the 
   - `iconName`: the icon name in the `packages/generic/client/src/components/generic/materialUI/Icon.tsx` file. All the used icons are Material UI.
   - `order`: order the category is displayed in the annotator interface
   - `text`: name of the category displayed in the annotator interfaces
-
-### Run the project
-
-Run in two different terminals:
-
-- yarn dockerBackendBuild && yarn dockerBackendStart
-- yarn startLocalClientDev
-
-Then, on your web browser, open http://localhost:55432
 
 ### Use the tool to annotate your documents
 

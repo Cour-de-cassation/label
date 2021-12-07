@@ -32,7 +32,7 @@ function buildAdditionalAnnotationCategoryHandler() {
       ...settings,
       [ADDITIONAL_ANNOTATION_CATEGORY_NAME]: {
         autoLinkSensitivity: [{ kind: 'levenshteinDistance', threshold: 2 }, { kind: 'caseInsensitive' }],
-        anonymization: '[Identifiant %d]',
+        anonymization: '[...]',
         color: ADDITIONAL_ANNOTATION_CATEGORY_COLOR,
         iconName: ADDITIONAL_ANNOTATION_CATEGORY_ICON_NAME,
         order: order,

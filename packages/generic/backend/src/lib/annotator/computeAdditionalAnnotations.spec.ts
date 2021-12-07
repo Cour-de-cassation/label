@@ -41,6 +41,7 @@ describe('computeAdditionalAnnotations', () => {
         parties: [],
         session: '',
         solution: '',
+        NACCode: '',
       },
     });
 

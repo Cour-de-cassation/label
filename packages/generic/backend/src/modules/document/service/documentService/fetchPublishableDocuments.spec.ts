@@ -25,6 +25,7 @@ describe('fetchPublishableDocuments', () => {
           occultationBlock: undefined,
           session: '',
           solution: '',
+          NACCode: '',
         },
       },
       { status: 'pending' as const, publicationCategory: [] },

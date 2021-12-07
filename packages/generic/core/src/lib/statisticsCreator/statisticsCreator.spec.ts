@@ -29,6 +29,7 @@ describe('statisticsCreator', () => {
       civilMatterCode: '',
       date: decisionDate,
       jurisdiction,
+      NACCode: '',
       occultationBlock: undefined,
       parties: [],
       session: 'FRH',

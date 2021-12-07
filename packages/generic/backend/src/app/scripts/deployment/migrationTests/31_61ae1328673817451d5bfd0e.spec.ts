@@ -1,10 +1,10 @@
 import { omit } from 'lodash';
 import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../../../modules/document';
-import { up, down } from '../migrations/29_617030daf3651cbef0d7bbe2';
+import { up, down } from '../migrations/31_61ae1328673817451d5bfd0e';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-describe('add civil code matter in document model', () => {
+describe('add NACCode in document model', () => {
   const decisionMetadata = {
     appealNumber: '',
     chamberName: 'Civile',
@@ -20,32 +20,31 @@ describe('add civil code matter in document model', () => {
     parties: [],
     session: '',
     solution: '',
-    NACCode: '',
   };
   const documentsWithNewModel = [
     documentModule.generator.generate({
       decisionMetadata: {
         ...decisionMetadata,
-        civilMatterCode: '',
+        NACCode: '',
       },
     }),
     documentModule.generator.generate({
       decisionMetadata: {
         ...decisionMetadata,
-        civilMatterCode: '',
+        NACCode: '',
       },
     }),
     documentModule.generator.generate({
       decisionMetadata: {
         ...decisionMetadata,
-        civilMatterCode: '',
+        NACCode: '',
       },
     }),
   ];
   const documentsWithOldModel = [
-    omit(documentsWithNewModel[0], ['decisionMetadata.civilMatterCode']),
-    omit(documentsWithNewModel[1], ['decisionMetadata.civilMatterCode']),
-    omit(documentsWithNewModel[2], ['decisionMetadata.civilMatterCode']),
+    omit(documentsWithNewModel[0], ['decisionMetadata.NACCode']),
+    omit(documentsWithNewModel[1], ['decisionMetadata.NACCode']),
+    omit(documentsWithNewModel[2], ['decisionMetadata.NACCode']),
   ];
 
   it('should test up', async () => {
@@ -63,8 +62,7 @@ describe('add civil code matter in document model', () => {
 
   it('should test down', async () => {
     const documentRepository = buildDocumentRepository();
-    await Promise.all(documentsWithNewModel.map(documentRepository.insert));
-
+    await documentRepository.insertMany(documentsWithNewModel);
     await down();
 
     const documentsAfterUpdateModel = await documentRepository.findAll();

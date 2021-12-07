@@ -35,6 +35,7 @@ const documentGenerator: generatorType<documentType> = {
           criminalCaseCode: '',
           date: new Date().getTime(),
           jurisdiction: '',
+          NACCode: '',
           occultationBlock: undefined,
           parties: [],
           session: '',

@@ -63,6 +63,7 @@ function mapCourtDecisionToDocument(
   const civilCaseCode = sderCourtDecision.natureAffaireCivil?.trim() || '';
   const civilMatterCode = sderCourtDecision.codeMatiereCivil?.trim() || '';
   const criminalCaseCode = sderCourtDecision.natureAffairePenal?.trim() || '';
+  const NACCode = sderCourtDecision.NACCode || '';
 
   const route = extractRoute({
     solution,
@@ -89,6 +90,7 @@ function mapCourtDecisionToDocument(
       chamberName: readableChamberName,
       date: decisionDate?.getTime(),
       jurisdiction: readableJurisdictionName,
+      NACCode,
       parties: sderCourtDecision.parties || [],
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session,

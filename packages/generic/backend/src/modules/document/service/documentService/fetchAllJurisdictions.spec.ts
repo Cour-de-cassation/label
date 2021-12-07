@@ -27,6 +27,7 @@ describe('fetchAllJurisdictions', () => {
           session: '',
           solution: '',
           jurisdiction,
+          NACCode: '',
         },
       }),
     );

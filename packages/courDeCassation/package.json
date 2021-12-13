@@ -41,6 +41,7 @@
     "compile": "tsc -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
+    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "startLocal": "RUN_MODE=LOCAL node dist/labelServer.js -e environments/localEnvironment.json -s settings/settings.json",
     "startPreProd": "RUN_MODE=PREPROD node dist/labelServer.js -e environments/preProdEnvironment.json -s settings/settings.json",
     "startProd": "RUN_MODE=PROD node dist/labelServer.js -e environments/prodEnvironment.json -s settings/settings.json",

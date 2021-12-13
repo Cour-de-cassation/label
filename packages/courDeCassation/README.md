@@ -47,4 +47,8 @@ To annotate all the documents that have not been annotated by the NLP engine yet
   - `sudo su label`
   - navigate to `/home/label/label/packages/courDeCassation`
   - `./scripts/run[environment]Script.sh ./dist/scripts/importSpecificDocumentFromSder.js --documentNumber=JURINET_ID source="jurinet"`
-- `./scripts/run[environment]Script.sh ./dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js`
+  - `./scripts/run[environment]Script.sh ./dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js`
+- once the document is imported in LABEL, you can check its status with the following instructions:
+  - connect to `dbsder` via ssh and connect to the Mongo db
+  - `use labelDb`
+  - `db.documents.find({documentNumber: ID_JURINET, source: "jurinet"})`

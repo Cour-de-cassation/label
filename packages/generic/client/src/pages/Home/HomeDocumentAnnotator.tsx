@@ -4,7 +4,6 @@ import {
   annotationType,
   assignationType,
   documentModule,
-  documentType,
   fetchedDocumentType,
   settingsType,
 } from '@label/core';
@@ -59,39 +58,16 @@ function HomeDocumentAnnotator(props: {
     >
       <MainHeader title={props.document.title} subtitle={subtitle} />
       <DocumentAnnotator
-        onStopAnnotatingDocument={(status) =>
-          onStopAnnotatingDocument({ assignationId: props.assignationId, documentId: props.document._id, status })
-        }
+        onStopAnnotatingDocument={() => onStopAnnotatingDocument({ assignationId: props.assignationId })}
       />
     </AnnotatorStateHandlerContextProvider>
   );
 
-  async function onStopAnnotatingDocument({
-    documentId,
-    status,
-    assignationId,
-  }: {
-    assignationId: assignationType['_id'];
-    documentId: documentType['_id'];
-    status: documentType['status'];
-  }) {
+  async function onStopAnnotatingDocument({ assignationId }: { assignationId: assignationType['_id'] }) {
     await apiCaller.post<'updateTreatmentDuration'>('updateTreatmentDuration', { assignationId });
     await sendMonitoringEntries();
-    await setDocumentStatus(documentId, status);
     resetMonitoringEntries();
     props.fetchNewDocumentsForUser();
-  }
-
-  async function setDocumentStatus(documentId: documentType['_id'], status: documentType['status']) {
-    try {
-      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-        documentId,
-        status,
-      });
-    } catch (error) {
-      displayAlert({ variant: 'alert', text: wordings.business.errors.updateDocumentStatusFailed, autoHide: true });
-      console.warn(error);
-    }
   }
 
   async function applyAutoSave(annotationsDiff: annotationsDiffType) {

@@ -6,7 +6,7 @@ import { ReportProblemToolTipMenu } from './ReportProblemToolTipMenu';
 
 export { ReportProblemButton };
 
-function ReportProblemButton(props: { onStopAnnotatingDocument: () => Promise<void> }) {
+function ReportProblemButton(props: { onStopAnnotatingDocument?: () => Promise<void> }) {
   const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>(undefined);
   return (
     <div>

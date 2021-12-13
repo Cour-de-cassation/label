@@ -135,8 +135,8 @@ function ProblemReportsTable(props: {
       text: wordings.problemReportsPage.table.optionItems.validate,
       onClick: async () => {
         try {
-          await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-            assignationId: problemReportWithDetails.problemReport.assignationId,
+          await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+            documentId: problemReportWithDetails.problemReport.documentId,
             status: documentModule.lib.getNextStatus({
               status: problemReportWithDetails.document.status,
               publicationCategory: problemReportWithDetails.document.publicationCategory,
@@ -205,8 +205,8 @@ function ProblemReportsTable(props: {
       text: wordings.problemReportsPage.table.optionItems.reassignToWorkingUser,
       onClick: async () => {
         try {
-          await apiCaller.post<'updateAssignationDocumentStatus'>('updateAssignationDocumentStatus', {
-            assignationId: problemReportWithDetails.problemReport.assignationId,
+          await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+            documentId: problemReportWithDetails.problemReport.documentId,
             status: documentModule.lib.getNextStatus({
               status: 'pending',
               publicationCategory: problemReportWithDetails.document.publicationCategory,

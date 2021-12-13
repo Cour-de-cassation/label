@@ -5,9 +5,10 @@ import { problemReportType } from '../problemReportType';
 export { problemReportGenerator };
 
 const problemReportGenerator: generatorType<problemReportType> = {
-  generate: ({ assignationId, _id, date, hasBeenRead, text, type } = {}) => {
+  generate: ({ documentId, userId, _id, date, hasBeenRead, text, type } = {}) => {
     return {
-      assignationId: assignationId ? idModule.lib.buildId(assignationId) : idModule.lib.buildId(),
+      documentId: idModule.lib.buildId(documentId),
+      userId: idModule.lib.buildId(userId),
       date: date ? date : new Date().getTime(),
       hasBeenRead: hasBeenRead ? hasBeenRead : false,
       _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),

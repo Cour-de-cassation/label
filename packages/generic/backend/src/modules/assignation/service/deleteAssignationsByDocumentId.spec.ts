@@ -21,7 +21,7 @@ describe('deleteAssignationsByDocumentId', () => {
       documentId,
     });
     const problemReport = problemReportModule.generator.generate({
-      assignationId: assignation._id,
+      documentId,
     });
     await assignationRepository.insert(assignation);
     await problemReportRepository.insert(problemReport);
@@ -30,10 +30,8 @@ describe('deleteAssignationsByDocumentId', () => {
     await deleteAssignationsByDocumentId(documentId);
 
     const assignations = await assignationRepository.findAll();
-    const problemReports = await problemReportRepository.findAll();
     const treatments = await treatmentRepository.findAll();
     expect(assignations).toEqual([]);
-    expect(problemReports).toEqual([]);
     expect(treatments).toEqual([]);
   });
 });

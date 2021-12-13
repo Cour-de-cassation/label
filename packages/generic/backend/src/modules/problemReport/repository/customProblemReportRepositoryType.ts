@@ -3,7 +3,7 @@ import { problemReportType } from '@label/core';
 export type { customProblemReportRepositoryType };
 
 type customProblemReportRepositoryType = {
-  deleteByAssignationId: (
-    assignationId: problemReportType['assignationId'],
+  deleteByDocumentId: (
+    documentId: problemReportType['documentId'],
   ) => Promise<void>;
 };

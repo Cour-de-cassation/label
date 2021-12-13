@@ -1,10 +1,10 @@
 import {
+  documentType,
   idModule,
   idType,
   problemReportModule,
   problemReportType,
 } from '@label/core';
-import { assignationService } from '../../assignation';
 import { documentService } from '../../document';
 import { userService } from '../../user';
 import { buildProblemReportRepository } from '../repository';
@@ -24,20 +24,11 @@ const problemReportService = {
     problemType: problemReportType['type'];
   }) {
     const problemReportRepository = buildProblemReportRepository();
-    const assignationId = await assignationService.fetchAssignationId({
-      userId,
-      documentId,
-    });
-
-    if (!assignationId) {
-      throw new Error(
-        `No assignation for the given user ${userId} and document ${documentId}`,
-      );
-    }
 
     await problemReportRepository.insert(
       problemReportModule.lib.buildProblemReport({
-        assignationId,
+        userId,
+        documentId,
         date: new Date().getTime(),
         hasBeenRead: false,
         text: problemText,
@@ -51,40 +42,28 @@ const problemReportService = {
     await problemReportRepository.deleteById(problemReportId);
   },
 
-  async deleteProblemReportsByAssignationId(
-    assignationId: problemReportType['assignationId'],
-  ) {
+  async deleteProblemReportsByDocumentId(documentId: documentType['_id']) {
     const problemReportRepository = buildProblemReportRepository();
-    await problemReportRepository.deleteByAssignationId(assignationId);
+    await problemReportRepository.deleteByDocumentId(documentId);
   },
 
   async fetchProblemReportsWithDetails() {
     const problemReportRepository = buildProblemReportRepository();
     const problemReports = await problemReportRepository.findAll();
-    const assignationIds = problemReports.map(
-      (problemReport) => problemReport.assignationId,
-    );
-    const assignationsById = await assignationService.fetchAllAssignationsById(
-      assignationIds,
-    );
-    const assignations = Object.values(assignationsById);
 
     const documentsById = await documentService.fetchAllDocumentsByIds(
-      assignations.map(({ documentId }) => documentId),
+      problemReports.map(({ documentId }) => documentId),
     );
 
-    const usersByAssignationId = await userService.fetchUsersByAssignations(
-      assignations,
+    const usersByIds = await userService.fetchUsersByIds(
+      problemReports.map(({ userId }) => userId),
     );
 
     return problemReports.map((problemReport) => {
-      const assignationIdString = idModule.lib.convertToString(
-        problemReport.assignationId,
-      );
-      const { email, name } = usersByAssignationId[assignationIdString];
-      const assignation = assignationsById[assignationIdString];
+      const userIdString = idModule.lib.convertToString(problemReport.userId);
+      const { email, name } = usersByIds[userIdString];
       const document =
-        documentsById[idModule.lib.convertToString(assignation.documentId)];
+        documentsById[idModule.lib.convertToString(problemReport.documentId)];
 
       return {
         problemReport,

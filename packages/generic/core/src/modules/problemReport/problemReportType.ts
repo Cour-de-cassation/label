@@ -9,7 +9,8 @@ const problemReportModel = buildModel({
   kind: 'object',
   content: {
     _id: { kind: 'custom', content: 'id' },
-    assignationId: { kind: 'custom', content: 'id' },
+    documentId: { kind: 'custom', content: 'id' },
+    userId: { kind: 'custom', content: 'id' },
     date: { kind: 'primitive', content: 'number' },
     text: { kind: 'primitive', content: 'string' },
     hasBeenRead: { kind: 'primitive', content: 'boolean' },

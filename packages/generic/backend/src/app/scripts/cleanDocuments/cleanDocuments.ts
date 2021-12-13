@@ -4,7 +4,6 @@ import { cleanAssignedDocuments } from './cleanAssignedDocuments';
 import { cleanDoubledDocuments } from './cleanDoubledDocuments';
 import { cleanFreeDocuments } from './cleanFreeDocuments';
 import { cleanLoadedDocuments } from './cleanLoadedDocuments';
-import { cleanProblemReports } from './cleanProblemReports';
 import { cleanTreatments } from './cleanTreatments';
 
 export { cleanDocuments };
@@ -15,8 +14,6 @@ async function cleanDocuments() {
   await cleanDoubledDocuments();
 
   await cleanAssignedDocuments();
-
-  await cleanProblemReports();
 
   await cleanTreatments();
 

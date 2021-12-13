@@ -13,12 +13,12 @@ const buildFakeProblemReportRepository = buildFakeRepositoryBuilder<
 >({
   collectionName: 'problemReports',
   buildCustomFakeRepository: (collection) => ({
-    async deleteByAssignationId(assignationId) {
+    async deleteByDocumentId(documentId) {
       updateFakeCollection(
         collection,
         collection.filter(
           (problemReport) =>
-            !idModule.lib.equalId(problemReport.assignationId, assignationId),
+            !idModule.lib.equalId(problemReport.documentId, documentId),
         ),
       );
     },

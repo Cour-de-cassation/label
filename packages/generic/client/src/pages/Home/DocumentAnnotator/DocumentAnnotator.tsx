@@ -1,5 +1,5 @@
 import React, { ReactElement, useRef } from 'react';
-import { documentType, settingsModule } from '@label/core';
+import { settingsModule } from '@label/core';
 import { heights, widths } from '../../../styles';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
@@ -14,9 +14,7 @@ import { ViewerScrollerContextProvider } from '../../../services/viewerScroller'
 
 export { DocumentAnnotator };
 
-function DocumentAnnotator(props: {
-  onStopAnnotatingDocument?: (status: documentType['status']) => Promise<void>;
-}): ReactElement {
+function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<void> }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const { addMonitoringEntry } = useMonitoring();
   useKeyboardShortcutsHandler([

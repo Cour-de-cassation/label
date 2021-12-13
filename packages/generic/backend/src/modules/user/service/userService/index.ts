@@ -5,6 +5,7 @@ import { fetchAuthenticatedUserFromAuthorizationHeader } from './fetchAuthentica
 import { fetchUserRole } from './fetchUserRole';
 import { fetchUsers } from './fetchUsers';
 import { fetchUsersByAssignations } from './fetchUsersByAssignations';
+import { fetchUsersByIds } from './fetchUsersByIds';
 import { fetchWorkingUsers } from './fetchWorkingUsers';
 import { buildLogin } from './login';
 import { resetPassword } from './resetPassword';
@@ -30,6 +31,7 @@ function buildUserService() {
     createUser,
     fetchAuthenticatedUserFromAuthorizationHeader,
     fetchUsers,
+    fetchUsersByIds,
     fetchUsersByAssignations,
     fetchWorkingUsers,
     fetchUserRole,

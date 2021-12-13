@@ -229,7 +229,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     problemReport: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
+      permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (
         user,
         { args: { documentId, problemText, problemType } },

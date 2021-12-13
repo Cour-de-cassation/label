@@ -1,14 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import {
-  annotationsDiffType,
-  fetchedDocumentType,
-  idModule,
-  settingsModule,
-  settingsType,
-  documentModule,
-  documentType,
-} from '@label/core';
+import { annotationsDiffType, fetchedDocumentType, idModule, settingsModule, settingsType } from '@label/core';
 import { apiCaller } from '../../../api';
 import { MainHeader } from '../../../components';
 import {
@@ -82,15 +74,7 @@ function DocumentInspector(props: { settings: settingsType }) {
       return undefined;
     }
 
-    return async (status: documentType['status']) => {
-      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-        documentId: document._id,
-        status: documentModule.lib.getNextStatus({
-          publicationCategory: document.publicationCategory,
-          route: document.route,
-          status,
-        }),
-      });
+    return async () => {
       history.goBack();
     };
   }

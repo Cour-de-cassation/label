@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 import { documentModule, documentType } from '@label/core';
+import { apiCaller } from '../../../api';
 import { ButtonWithIcon, ComponentsList, IconButton, SwitchButton, Text } from '../../../components';
-import { useMonitoring } from '../../../services/monitoring';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
+import { useAlert } from '../../../services/alert';
+import { useDocumentViewerModeHandler } from '../../../services/documentViewerMode';
+import { useMonitoring } from '../../../services/monitoring';
 import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
 import { CopyAnonymizedTextButton } from './CopyAnonymizedTextButton';
-import { useDocumentViewerModeHandler } from '../../../services/documentViewerMode';
 
 export { DocumentAnnotatorFooter };
 
-function DocumentAnnotatorFooter(props: {
-  onStopAnnotatingDocument?: (status: documentType['status']) => Promise<void>;
-}) {
+function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promise<void> }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const [isValidating, setIsValidating] = useState(false);
   const { addMonitoringEntry } = useMonitoring();
+  const { displayAlert } = useAlert();
+
   const documentViewerModeHandler = useDocumentViewerModeHandler();
+  const { document } = annotatorStateHandler.get();
 
   const styles = buildStyles(theme);
 
@@ -95,38 +98,53 @@ function DocumentAnnotatorFooter(props: {
 
   function buildRightComponents() {
     const { onStopAnnotatingDocument } = props;
-    if (onStopAnnotatingDocument) {
-      return [
-        <ReportProblemButton onStopAnnotatingDocument={() => onStopAnnotatingDocument('rejected')} />,
-        <CopyAnonymizedTextButton />,
+    const { document } = annotatorStateHandler.get();
+
+    return [
+      <ReportProblemButton
+        onStopAnnotatingDocument={onStopAnnotatingDocument ? () => onStopAnnotatingDocument() : undefined}
+      />,
+      <CopyAnonymizedTextButton />,
+      document.status !== 'done' ? (
         <ButtonWithIcon
           isLoading={isValidating}
           color="primary"
           iconName="send"
           onClick={validate}
           text={wordings.homePage.validate}
-        />,
-      ];
-    }
-    return [<CopyAnonymizedTextButton />];
+        />
+      ) : undefined,
+    ];
   }
 
   async function validate() {
-    const { document } = annotatorStateHandler.get();
-    const nextStatus = documentModule.lib.getNextStatus({
-      publicationCategory: document.publicationCategory,
-      status: document.status,
-      route: document.route,
-    });
     setIsValidating(true);
     try {
       addMonitoringEntry({
         origin: 'footer',
         action: 'validate_document',
       });
-      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument(nextStatus));
+      const nextDocumentStatus = documentModule.lib.getNextStatus({
+        status: document.status,
+        publicationCategory: document.publicationCategory,
+        route: document.route,
+      });
+      await setDocumentStatus(document._id, nextDocumentStatus);
+      props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument());
     } finally {
       setIsValidating(false);
+    }
+  }
+
+  async function setDocumentStatus(documentId: documentType['_id'], status: documentType['status']) {
+    try {
+      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        documentId,
+        status,
+      });
+    } catch (error) {
+      displayAlert({ variant: 'alert', text: wordings.business.errors.updateDocumentStatusFailed, autoHide: true });
+      console.warn(error);
     }
   }
 }

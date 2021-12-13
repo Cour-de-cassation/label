@@ -11,8 +11,8 @@ const buildProblemReportRepository = buildRepositoryBuilder<
   collectionName: 'problemReports',
   indexes: [],
   buildCustomRepository: (collection) => ({
-    async deleteByAssignationId(assignationId) {
-      await collection.deleteMany({ assignationId });
+    async deleteByDocumentId(documentId) {
+      await collection.deleteMany({ documentId });
     },
   }),
 });

@@ -12,7 +12,7 @@ async function cleanAssignedDocuments() {
   logger.log(`cleanAssignedDocuments`);
   const documentRepository = buildDocumentRepository();
   const assignedDocuments = await documentRepository.findAllByStatusProjection(
-    ['pending', 'saved', 'rejected'],
+    ['pending', 'saved'],
     ['_id', 'status'],
   );
 

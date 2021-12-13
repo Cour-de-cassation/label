@@ -12,7 +12,7 @@ import { buildTreatmentRepository } from '../../../../modules/treatment';
 import { up } from '../migrations/26_61671296b1af2b8f48aa134c';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-describe('add parties in decisionMetadata in document model, delete criticity and metadata', () => {
+xdescribe('add parties in decisionMetadata in document model, delete criticity and metadata', () => {
   const decisionMetadata = {
     additionalTermsToAnnotate: 'az',
     appealNumber: 'z',
@@ -91,10 +91,10 @@ describe('add parties in decisionMetadata in document model, delete criticity an
   ].map(assignationModule.generator.generate);
   const problemReports = [
     {
-      assignationId: assignations[0]._id,
+      documentId: documentsWithOldModel[0]._id,
     },
     {
-      assignationId: assignations[1]._id,
+      documentId: documentsWithOldModel[1]._id,
     },
   ].map(problemReportModule.generator.generate);
 

@@ -1,11 +1,12 @@
 import React, { ReactElement, useState } from 'react';
-import { problemReportType } from '@label/core';
+import { documentType, problemReportType } from '@label/core';
 import { apiCaller } from '../../../../api';
 import { ButtonWithIcon, Checkbox, FloatingTooltipMenu, LabelledDropdown, RichTextInput } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { customThemeType, useCustomTheme } from '../../../../styles';
 import { positionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
+import { useAlert } from '../../../../services/alert';
 
 export { ReportProblemToolTipMenu };
 
@@ -14,7 +15,7 @@ const REPORT_PROBLEM_TOOLTIP_ELEMENT_WIDTH = 400;
 
 function ReportProblemToolTipMenu(props: {
   onClose: () => void;
-  onStopAnnotatingDocument: () => Promise<void>;
+  onStopAnnotatingDocument?: () => Promise<void>;
   originPosition: positionType;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
@@ -26,6 +27,7 @@ function ReportProblemToolTipMenu(props: {
   const [problemDescription, setProblemDescription] = useState<string>('');
   const [isBlocking, setIsBlocking] = useState<boolean>(false);
   const [isSentWithoutCategory, setIsSentWithoutCategory] = useState<boolean>(false);
+  const { displayAlert } = useAlert();
   const annotatorState = annotatorStateHandler.get();
 
   return (
@@ -85,6 +87,18 @@ function ReportProblemToolTipMenu(props: {
     </FloatingTooltipMenu>
   );
 
+  async function setDocumentStatus(documentId: documentType['_id'], status: documentType['status']) {
+    try {
+      await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+        documentId,
+        status,
+      });
+    } catch (error) {
+      displayAlert({ variant: 'alert', text: wordings.business.errors.updateDocumentStatusFailed, autoHide: true });
+      console.warn(error);
+    }
+  }
+
   function buildProblemCategories(): Array<problemReportType['type']> {
     return ['bug', 'annotationProblem', 'suggestion'];
   }
@@ -114,7 +128,8 @@ function ReportProblemToolTipMenu(props: {
         });
 
         if (isBlocking) {
-          await props.onStopAnnotatingDocument();
+          await setDocumentStatus(annotatorState.document._id, 'rejected');
+          props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument());
         }
 
         closeTooltipMenu();

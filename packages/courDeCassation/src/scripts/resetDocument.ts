@@ -1,20 +1,15 @@
 import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
-import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
+import { sderConnector } from '../connector';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { documentNumber, source, forceRequestRoute } = parseArgv();
+  const { documentNumber, source } = parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
-    () =>
-      sderConnector.importSpecificDocument({
-        documentNumber,
-        source,
-        forceRequestRoute,
-      }),
+    () => sderConnector.resetDocument({ documentNumber, source }),
     {
       shouldLoadDb: true,
     },
@@ -24,20 +19,15 @@ import { parametersHandler } from '../lib/parametersHandler';
 function parseArgv() {
   const argv = yargs
     .options({
-      forceRequestRoute: {
-        demandOption: false,
-        description: "should change the route to 'request'",
-        type: 'boolean',
-      },
       documentNumber: {
         demandOption: true,
-        description: 'number of the document you want to import',
+        description: 'number of the document you want to reset',
         type: 'number',
       },
       source: {
         demandOption: true,
         description:
-          'source (jurinet or jurica) of the document you want to import',
+          'source (jurinet or jurica) of the document you want to reset',
         type: 'string',
       },
     })
@@ -46,7 +36,6 @@ function parseArgv() {
 
   return {
     documentNumber: argv.documentNumber as number,
-    forceRequestRoute: !!argv.forceRequestRoute as boolean,
     source: argv.source as string,
   };
 }

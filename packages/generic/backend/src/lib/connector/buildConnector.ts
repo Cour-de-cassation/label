@@ -17,6 +17,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     importNewDocuments,
     importDocumentsSince,
     importTestDocumentsSince,
+    resetDocument,
     resetAllDocumentsSince,
     deleteJuricaDocumentsFromLabelDb,
     extractDocumentAndNlpAnnotations,
@@ -46,11 +47,15 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function importSpecificDocument({
     documentNumber,
     source,
+    forceRequestRoute,
   }: {
     documentNumber: number;
     source: string;
+    forceRequestRoute: boolean;
   }) {
-    logger.log(`importSpecificDocument: ${documentNumber} - ${source}`);
+    logger.log(
+      `importSpecificDocument: ${documentNumber} - ${source}, forceRequestRoute: ${forceRequestRoute}`,
+    );
 
     const courtDecision = await connectorConfig.fetchCourtDecisionBySourceIdAndSourceName(
       { sourceId: documentNumber, sourceName: source },
@@ -70,7 +75,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
     );
     const document = connectorConfig.mapCourtDecisionToDocument(courtDecision);
     logger.log(`Court decision converted. Inserting document into database...`);
-    await insertDocument({ ...document, route: 'request' });
+    if (forceRequestRoute) {
+      await insertDocument({ ...document, route: 'request' });
+    } else {
+      await insertDocument(document);
+    }
     logger.log(`Insertion done`);
 
     logger.log(`Send document has been loaded...`);
@@ -223,6 +232,50 @@ function buildConnector(connectorConfig: connectorConfigType) {
         logger.error(`An error happened while deleting the document`);
       }
     }
+  }
+
+  async function resetDocument({
+    documentNumber,
+    source,
+  }: {
+    documentNumber: documentType['documentNumber'];
+    source: documentType['source'];
+  }) {
+    const documentRepository = buildDocumentRepository();
+
+    const document = await documentRepository.findOneByDocumentNumberAndSource({
+      documentNumber,
+      source,
+    });
+    if (!document) {
+      logger.log(
+        `Could not find document ${documentNumber} from source "${source}"`,
+      );
+      return;
+    }
+    logger.log(
+      `Document found in the DB. Resetting the status to "toBeTreated"`,
+    );
+
+    await connectorConfig.updateDocumentsToBeTreatedStatus([document]);
+    logger.log(
+      'Documents status updated! Deleting the document in the Database...',
+    );
+
+    try {
+      await documentService.deleteDocument(document._id);
+    } catch (error) {
+      logger.error(`An error happened while deleting the document`);
+    }
+    logger.log(
+      `Document deleted. Importing the new version of the document...`,
+    );
+
+    await importSpecificDocument({
+      documentNumber,
+      source,
+      forceRequestRoute: false,
+    });
   }
 
   async function deleteJuricaDocumentsFromLabelDb() {

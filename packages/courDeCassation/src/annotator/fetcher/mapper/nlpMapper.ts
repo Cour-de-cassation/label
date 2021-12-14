@@ -22,6 +22,7 @@ function mapNlpAnnotationsToAnnotations(
     annotationModule.lib.buildAnnotation({
       category: nlpAnnotation.label,
       start: nlpAnnotation.start,
+      certaintyScore: nlpAnnotation.score,
       text: document.text.substring(nlpAnnotation.start, nlpAnnotation.end),
     }),
   );

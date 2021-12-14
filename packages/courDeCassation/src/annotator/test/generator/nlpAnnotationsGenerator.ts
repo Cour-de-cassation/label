@@ -21,6 +21,7 @@ function generateRandomNlpAnnotation() {
     text: `TEXT_${Math.random()}`,
     start: start,
     end: start + random(8),
+    score: Math.random(),
     label: `LABEL`,
     source: `NLP`,
   };

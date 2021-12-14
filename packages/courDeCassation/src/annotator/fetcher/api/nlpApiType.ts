@@ -20,4 +20,5 @@ type nlpAnnotationType = {
   end: number;
   label: string;
   source: string;
+  score: number;
 };

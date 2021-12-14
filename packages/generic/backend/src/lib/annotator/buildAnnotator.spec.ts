@@ -69,6 +69,7 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
           text: 'TEXT',
           start: index * 10,
           category,
+          certaintyScore: Math.random(),
         }),
       );
       const report = annotationReportModule.generator.generate({

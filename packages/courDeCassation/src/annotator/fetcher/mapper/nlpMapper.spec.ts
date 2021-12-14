@@ -10,6 +10,7 @@ const nlpAnnotations: nlpAnnotationsType = {
       end: 11,
       label: 'LABEL1',
       source: 'NLP',
+      score: 0.5,
     },
     {
       text: 'ANNOTATION2',
@@ -17,6 +18,7 @@ const nlpAnnotations: nlpAnnotationsType = {
       end: 23,
       label: 'LABEL2',
       source: 'NLP',
+      score: 0.6,
     },
   ],
   checklist: ['CHECK 1', 'CHECK 2'],
@@ -39,12 +41,14 @@ describe('nlpMapper', () => {
         entityId: 'LABEL1_ANNOTATION1',
         start: 0,
         text: 'ANNOTATION1',
+        certaintyScore: 0.5,
       });
       expect(annotations[1]).toEqual({
         category: 'LABEL2',
         entityId: 'LABEL2_ANNOTATION2',
         start: 12,
         text: 'ANNOTATION2',
+        certaintyScore: 0.6,
       });
     });
   });

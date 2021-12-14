@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import { documentModule, settingsModule } from '@label/core';
 import { buildNlpApi } from './nlpApi';
 
@@ -15,7 +16,9 @@ describe('nlpApi', () => {
 
     const nlpAnnotation = await nlpApi.fetchNlpAnnotations(settings, document);
 
-    expect(nlpAnnotation.entities).toEqual([
+    expect(
+      nlpAnnotation.entities.map((entity) => omit(entity, ['score'])),
+    ).toEqual([
       {
         text: 'François',
         start: 0,

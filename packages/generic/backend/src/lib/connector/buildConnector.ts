@@ -89,7 +89,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
   async function importNewDocuments(documentCount: number, daysStep?: number) {
     const DEFAULT_DAYS_STEP = 30;
-    const MAX_STEP = 200;
+    const MAX_STEP = 300;
     logger.log(
       `importNewDocuments: ${documentCount} - ${daysStep || DEFAULT_DAYS_STEP}`,
     );

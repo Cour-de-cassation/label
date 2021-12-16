@@ -45,13 +45,11 @@ describe('fetchTreatedDocuments', () => {
     const toBePublishedTreatment = treatmentModule.generator.generate({
       documentId: toBePublishedDocument._id,
       duration: 10,
-      idleDuration: 40,
       lastUpdateDate: TREATMENT_DATE,
     });
     const doneTreatment = treatmentModule.generator.generate({
       documentId: doneDocument._id,
       duration: 20,
-      idleDuration: 30,
       lastUpdateDate: TREATMENT_DATE,
     });
     const pendingDocumentAssignation = assignationModule.generator.generate({
@@ -93,7 +91,6 @@ describe('fetchTreatedDocuments', () => {
       {
         document: projectTreatedDocumentDocument(toBePublishedDocument),
         totalTreatmentDuration: 10,
-        totalIdleDuration: 40,
         lastTreatmentDate: TREATMENT_DATE,
         statistic: {
           subAnnotationsNonSensitiveCount: 0,
@@ -105,7 +102,6 @@ describe('fetchTreatedDocuments', () => {
       {
         document: projectTreatedDocumentDocument(doneDocument),
         totalTreatmentDuration: 20,
-        totalIdleDuration: 30,
         lastTreatmentDate: TREATMENT_DATE,
         statistic: {
           subAnnotationsNonSensitiveCount: 0,

@@ -1,25 +1,18 @@
-import { omit } from 'lodash';
 import { treatmentModule, treatmentType } from '@label/core';
 import { buildTreatmentRepository } from '../../../../modules/treatment';
-import { up, down } from '../migrations/30_618291a325bd9d1925913ed4';
+import { up, down } from '../migrations/33_61bb6505c66dda535d8a787d';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-xdescribe('add idleDuration in treatment model', () => {
+describe('add idleDuration in treatment model', () => {
   const treatmentsWithNewModel = [
-    treatmentModule.generator.generate({
-      idleDuration: 0,
-    } as any),
-    treatmentModule.generator.generate({
-      idleDuration: 0,
-    } as any),
-    treatmentModule.generator.generate({
-      idleDuration: 0,
-    } as any),
+    treatmentModule.generator.generate({}),
+    treatmentModule.generator.generate({}),
+    treatmentModule.generator.generate({}),
   ];
   const treatmentsWithOldModel = [
-    omit(treatmentsWithNewModel[0], ['idleDuration']),
-    omit(treatmentsWithNewModel[1], ['idleDuration']),
-    omit(treatmentsWithNewModel[2], ['idleDuration']),
+    { ...treatmentsWithNewModel[0], idleDuration: 0 },
+    { ...treatmentsWithNewModel[1], idleDuration: 0 },
+    { ...treatmentsWithNewModel[2], idleDuration: 0 },
   ];
 
   it('should test up', async () => {

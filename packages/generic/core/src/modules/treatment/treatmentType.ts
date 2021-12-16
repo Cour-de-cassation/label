@@ -13,7 +13,6 @@ const treatmentModel = buildModel({
     annotationsDiff: annotationsDiffModule.model,
     documentId: { kind: 'custom', content: 'id' },
     duration: { kind: 'primitive', content: 'number' },
-    idleDuration: { kind: 'primitive', content: 'number' },
     lastUpdateDate: { kind: 'primitive', content: 'number' },
     order: { kind: 'primitive', content: 'number' },
     surAnnotationsCount: {

@@ -399,7 +399,6 @@ const fr = {
           tooltipText: 'Nombre de sous-annotations non sensibles',
         },
         duration: { title: 'Tps', tooltipText: 'Temps de traitement total' },
-        idleDuration: { title: 'Inact.', tooltipText: "Temps d'inactivité total" },
       },
       statistics: {
         computation: {

@@ -29,7 +29,6 @@ type complexityInfoType = {
   subAnnotationsNonSensitiveCount: number;
   surAnnotationsCount: number;
   treatmentDuration: number;
-  totalDuration: number;
   userNames: string[];
   wordsCount: number;
 };
@@ -143,10 +142,6 @@ async function extractComplexityInfoIntoCsv(settings: settingsType) {
       humanTreatments,
       ({ treatment }) => treatment.duration,
     );
-    const totalDuration = sumBy(
-      humanTreatments,
-      ({ treatment }) => treatment.duration + treatment.idleDuration,
-    );
 
     const statistic = treatmentModule.lib.aggregateTreatmentInfo(
       humanTreatments.map((humanTreatment) => humanTreatment.treatment),
@@ -160,7 +155,6 @@ async function extractComplexityInfoIntoCsv(settings: settingsType) {
       documentSource: treatedDocument.source,
       isCourDeCassationDecision,
       treatmentDuration,
-      totalDuration,
       userNames,
       subAnnotationsSensitiveCount: statistic.subAnnotationsSensitiveCount,
       surAnnotationsCount: statistic.surAnnotationsCount,
@@ -230,10 +224,6 @@ function convertComplexityInfosToCsvContent(
       title: 'Treatment duration',
       extractor: (complexityInfo) =>
         complexityInfo.treatmentDuration.toString(),
-    },
-    {
-      title: 'Total idle+treatment duration',
-      extractor: (complexityInfo) => complexityInfo.totalDuration.toString(),
     },
     {
       title: 'Is Cour de cassation',

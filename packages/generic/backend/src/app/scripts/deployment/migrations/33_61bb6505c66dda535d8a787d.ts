@@ -9,6 +9,14 @@ async function up() {
 
   const treatmentRepository = buildTreatmentRepository();
 
+  await treatmentRepository.deletePropertiesForMany({}, ['idleDuration']);
+}
+
+async function down() {
+  logger.log('Down: ');
+
+  const treatmentRepository = buildTreatmentRepository();
+
   const treatments = await treatmentRepository.findAll();
 
   await Promise.all(
@@ -18,12 +26,4 @@ async function up() {
       } as any),
     ),
   );
-}
-
-async function down() {
-  logger.log('Down: ');
-
-  const treatmentRepository = buildTreatmentRepository();
-
-  await treatmentRepository.deletePropertiesForMany({}, ['idleDuration']);
 }

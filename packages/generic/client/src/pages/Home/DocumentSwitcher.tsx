@@ -109,7 +109,6 @@ function DocumentSwitcher(props: {
       try {
         await apiCaller.post<'resetTreatmentLastUpdateDate'>('resetTreatmentLastUpdateDate', {
           assignationId: choice.assignationId,
-          mustIncrementIdleDuration: false,
         });
 
         const nextStatus = documentModule.lib.getNextStatus({

@@ -40,6 +40,7 @@ function buildStyles(theme: customThemeType) {
     icon: {
       height: ICON_SIZE,
       width: ICON_SIZE,
+      color: theme.colors.icon,
     },
     title: {
       marginTop: theme.spacing * 3,

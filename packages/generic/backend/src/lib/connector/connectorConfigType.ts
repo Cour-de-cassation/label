@@ -19,9 +19,10 @@ type connectorConfigType = {
     startDate: Date;
     endDate: Date;
   }): Promise<decisionType[]>;
-  fetchJurinetDecisionsToPseudonymiseBetween(params: {
+  fetchDecisionsToPseudonymiseBetween(params: {
     startDate: Date;
     endDate: Date;
+    source: 'jurinet' | 'jurica';
   }): Promise<decisionType[]>;
   updateDocumentsLoadedStatus: (documents: documentType[]) => Promise<void>;
   updateDocumentsToBeTreatedStatus: (

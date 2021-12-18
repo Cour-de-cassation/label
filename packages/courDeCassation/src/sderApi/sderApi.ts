@@ -10,11 +10,6 @@ const sderApi: sderApiType = {
     endDate,
     source,
     jurisdictions,
-  }: {
-    startDate: Date;
-    endDate: Date;
-    source: string;
-    jurisdictions: string[];
   }) {
     const courtDecisions = await decisionModule.service.fetchPublicDecisionsBySourceAndJurisdictionsBetween(
       { startDate, endDate, jurisdictions, source },
@@ -23,15 +18,13 @@ const sderApi: sderApiType = {
     return courtDecisions;
   },
 
-  async fetchJurinetDecisionsToPseudonymiseBetween({
-    startDate,
-    endDate,
-  }: {
-    startDate: Date;
-    endDate: Date;
-  }) {
+  async fetchDecisionsToPseudonymiseBetween({ startDate, endDate, source }) {
     const courtDecisions = await decisionModule.service.fetchDecisionsToPseudonymiseBetween(
-      { startDate, endDate, source: 'jurinet' },
+      {
+        startDate,
+        endDate,
+        source,
+      },
     );
 
     return courtDecisions;
@@ -40,9 +33,6 @@ const sderApi: sderApiType = {
   async fetchChainedJuricaDecisionsToPseudonymiseBetween({
     startDate,
     endDate,
-  }: {
-    startDate: Date;
-    endDate: Date;
   }) {
     const courtDecisions = await decisionModule.service.fetchChainedJuricaDecisionsToPseudonymiseBetween(
       { startDate, endDate },

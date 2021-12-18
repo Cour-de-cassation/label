@@ -15,6 +15,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     autoImportDocumentsFromSder,
     importSpecificDocument,
     importNewDocuments,
+    importJuricaDocuments,
     importDocumentsSince,
     importTestDocumentsSince,
     resetDocument,
@@ -42,6 +43,54 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const daysStep = 30;
 
     await importNewDocuments(documentsCount, daysStep);
+  }
+
+  async function importJuricaDocuments(documentsCount: number) {
+    logger.log(`importJuricaDocuments: ${documentsCount}`);
+
+    logger.log(`Fetching ${connectorConfig.name} documents...`);
+    let daysAgo = 0;
+    let step = 0;
+    const daysStep = 30;
+    const MAX_STEP = 120;
+
+    const newDocuments: documentType[] = [];
+    while (newDocuments.length < documentsCount && step < MAX_STEP) {
+      const startDate = new Date(dateBuilder.daysAgo(daysAgo + daysStep));
+      const endDate = new Date(dateBuilder.daysAgo(daysAgo));
+      const newCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+        {
+          source: 'jurica',
+          startDate,
+          endDate,
+        },
+      );
+      logger.log(
+        `${newCourtDecisions.length} ${
+          connectorConfig.name
+        } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
+          startDate.getTime(),
+        )} and ${timeOperator.convertTimestampToReadableDate(
+          endDate.getTime(),
+        )}!`,
+      );
+      const documents = newCourtDecisions.map((courtDecision) =>
+        connectorConfig.mapCourtDecisionToDocument(courtDecision),
+      );
+      newDocuments.push(...documents);
+      daysAgo += daysStep;
+      step++;
+    }
+
+    logger.log(
+      `Insertion ${newDocuments.length} documents into the database...`,
+    );
+    await insertDocuments(newDocuments);
+    logger.log(`Insertion done!`);
+
+    logger.log(`Send documents have been loaded...`);
+    await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
+    logger.log(`DONE`);
   }
 
   async function importSpecificDocument({
@@ -141,10 +190,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`importDocumentsSince ${days}`);
 
     logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
-    const newCourtDecisions = await connectorConfig.fetchJurinetDecisionsToPseudonymiseBetween(
+    const newCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
       {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
+        source: 'jurinet',
       },
     );
     logger.log(

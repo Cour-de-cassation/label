@@ -29,7 +29,7 @@ const sderLocalApi: sderApiType = {
     });
   },
 
-  async fetchJurinetDecisionsToPseudonymiseBetween() {
+  async fetchDecisionsToPseudonymiseBetween() {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,
     );

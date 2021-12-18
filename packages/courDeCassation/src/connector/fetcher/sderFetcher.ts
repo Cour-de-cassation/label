@@ -16,19 +16,20 @@ const sderFetcher = {
     );
   },
 
-  async fetchJurinetDecisionsToPseudonymiseBetween({
+  async fetchDecisionsToPseudonymiseBetween({
     startDate,
     endDate,
+    source,
   }: {
     startDate: Date;
     endDate: Date;
+    source: 'jurinet' | 'jurica';
   }) {
-    const courtDecisions = await sderApi.fetchJurinetDecisionsToPseudonymiseBetween(
-      {
-        startDate,
-        endDate,
-      },
-    );
+    const courtDecisions = await sderApi.fetchDecisionsToPseudonymiseBetween({
+      startDate,
+      endDate,
+      source,
+    });
 
     return courtDecisions.filter(
       (courtDecision) => !!courtDecision && !!courtDecision.originalText,

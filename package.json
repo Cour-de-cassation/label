@@ -1,5 +1,6 @@
 {
   "description": "EIG 4 - LABEL Challenge",
+  "version": "0.1.0",
   "devDependencies": {
     "@lerna/filter-options": "^3.20.0",
     "lerna": "~3.22.0",
@@ -17,6 +18,7 @@
     "buildDev": "lerna run --ignore @label/client build --stream",
     "buildLocalDevDocker": "docker-compose -f docker-compose-dev.yml build",
     "build": "lerna run build --stream && cp -r packages/generic/client/build/ packages/generic/backend/",
+    "buildClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation build --stream",
     "buildLocalDocker": "docker-compose -f docker-compose.yml build",
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",

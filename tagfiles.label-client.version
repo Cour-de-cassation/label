@@ -1,0 +1,12 @@
+Dockerfile.label-client
+packages/generic/client/babel.config.json
+packages/generic/client/package.json
+packages/generic/client/public
+packages/generic/client/src
+packages/generic/client/tsconfig.json
+packages/generic/core/babel.config.json
+packages/generic/core/package.json
+packages/generic/core/package.json
+packages/generic/core/src
+packages/generic/core/tsconfig.json
+tagfiles.label-client.version

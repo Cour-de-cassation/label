@@ -7,6 +7,7 @@ export { injectedLogger as logger };
 
 const injectedLogger = dependencyManager.inject({
   forLocal: localLogger,
-  forProd: prodLogger,
+  forPreProd: prodLogger,
+  forProd: localLogger,
   forTest: testLogger,
 });

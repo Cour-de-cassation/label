@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: opendatajustice
 
     strategy:
       matrix:
@@ -20,7 +22,60 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install
+      - run: yarn install --
       - run: yarn compile
       - run: yarn test
       - run: yarn lint
+      - name: 🐋 Build docker image (backend)
+        if: matrix.node-version == '16.x'
+        run: |
+          export VERSION=$(./scripts/version.sh)
+          export DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+          if ! (docker manifest inspect ${DOCKER_IMAGE}); then
+            docker build -f Dockerfile.${APP_ID} . --target ${APP_ID} -t ${DOCKER_IMAGE} || exit 1;
+            if [ "${GITHUB_EVENT}" == "pull_request" ]; then
+              echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+              docker push ${DOCKER_IMAGE};
+              docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+              docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+              docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
+              docker push ${DOCKER_USERNAME}/${APP_ID}:latest
+            fi
+          fi
+        env:
+          APP_ID: label-backend
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          GITHUB_EVENT: ${{ github.event_name }}
+      - name: Build static client app
+        if: matrix.node-version == '16.x'
+        run: |
+          export VERSION=$(./scripts/version.sh)
+          export DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+          if ! (docker manifest inspect ${DOCKER_IMAGE}); then
+            yarn buildClient || echo "ugly worakound";
+          fi
+        env:
+          APP_ID: label-client
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+      - name: 🐋 Build docker image (client)
+        if: matrix.node-version == '16.x'
+        run: |
+          export VERSION=$(./scripts/version.sh)
+          export DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+          if ! (docker manifest inspect ${DOCKER_IMAGE}); then
+            docker build -f Dockerfile.${APP_ID} . --target ${APP_ID} -t ${DOCKER_IMAGE} || exit 1;
+            if [ "${GITHUB_EVENT}" == "pull_request" ]; then
+              echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+              docker push ${DOCKER_IMAGE};
+              docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+              docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+              docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
+              docker push ${DOCKER_USERNAME}/${APP_ID}:latest
+            fi
+          fi
+        env:
+          APP_ID: label-client
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          GITHUB_EVENT: ${{ github.event_name }}

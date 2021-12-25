@@ -2,19 +2,12 @@
 set -e
 
 echo "Check out prod version"
-git checkout prod
+sudo -u label git checkout prod
 
 echo "Pull last version"
-git pull
-
-echo "Install packages"
-yarn
-
-echo "Bootstrap"
-yarn bootstrap
-
-echo "Compile"
-yarn build
+sudo -u label git pull
+docker pull opendatajustice/label-backend:latest
+docker pull opendatajustice/label-client:latest
 
 echo "Run new migrations"
 ./scripts/prod/runNewMigrations.sh

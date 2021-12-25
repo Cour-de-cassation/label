@@ -30,7 +30,7 @@ RUN [ -z "${NPM_LATEST}" ] || yarn install yarn@latest -g
 FROM base as label-backend
 ARG NPM_FIX
 ARG NPM_VERBOSE
-ENV API_PORT=55432
+ENV API_PORT=55430
 ENV NPM_CONFIG_LOGLEVEL debug
 ENV LABEL_ENV=startProd
 

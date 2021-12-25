@@ -1,0 +1,15 @@
+[Unit]
+Description=Label Annotation NLP
+After=syslog.target
+
+[Service]
+User=label
+Type=simple
+ExecStart=/usr/bin/docker exec label-backend node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment environments/prodEnvironment.json --settings settings/settings.json
+WorkingDirectory=/home/label/label
+Restart=always
+RestartSec=300
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

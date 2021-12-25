@@ -1,21 +1,17 @@
-LABELPATH=/home/label/packages/courDeCassation
-LABELENVIRONMENT=/home/label/packages/courDeCassation/environments/prodEnvironment.json
-LABELSETTINGS=/home/label/packages/courDeCassation/settings/settings.json
-LABELCRONLOGFILE=/home/label/packages/courDeCassation/cron.log.txt
-
+LABELPATH=/home/label/label/packages/courDeCassation
+LABELENVIRONMENT=environments/prodEnvironment.json
+LABELSETTINGS=settings/settings.json
+LABELCRONLOGFILE=/home/label/label/packages/courDeCassation/cron.log.txt
 
 # Importation from SDER
-0 19 * * * node $LABELPATH/dist/scripts/autoImportDocumentsFromSder.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --count 1400 --threshold 700>> $LABELCRONLOGFILE 2>&1
-0 9 * * * node $LABELPATH/dist/scripts/importTestDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 4 --threshold 700>> $LABELCRONLOGFILE 2>&1
-*/5 * * * * node $LABELPATH/dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7 >> $LABELCRONLOGFILE 2>&1
-*/15 * * * * node $LABELPATH/dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS >> $LABELCRONLOGFILE 2>&1
+*/30 6-12 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7" >> $LABELCRONLOGFILE 2>&1
+# WARNING: annotation job moved as systemctl service LabelAnnotationNLPProd.service
+# this service is windowed in day hours with a crontab launched in sudo
 
+0 19 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/autoImportDocumentsFromSder.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --count 1000 --threshold 1000" >> $LABELCRONLOGFILE 2>&1
 # Exportation to SDER
-0 23 * * * node $LABELPATH/dist/scripts/exportTreatedDocumentsSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 3 >> $LABELCRONLOGFILE 2>&1
-58 13 * * * node $LABELPATH/dist/scripts/exportTreatedPublishableDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS >> $LABELCRONLOGFILE 2>&1
-
+30 19 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/exportTreatedDocumentsSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 4" >> $LABELCRONLOGFILE 2>&1
+58 13 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/exportTreatedPublishableDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS" >> $LABELCRONLOGFILE 2>&1
+#
 # Database maintenance
-*/15 * * * * node $LABELPATH/dist/scripts/freePendingDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS >> $LABELCRONLOGFILE 2>&1
-
-# Database purge
-0 1 * * * node $LABELPATH/dist/scripts/purgeDb.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --beforeMonths 6 >> $LABELCRONLOGFILE 2>&1
+*/17 4-19 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/freePendingDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --sinceMinutes 15" >> $LABELCRONLOGFILE 2>&1

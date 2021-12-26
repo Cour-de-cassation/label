@@ -33,7 +33,7 @@ jobs:
           export DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
           if ! (docker manifest inspect ${DOCKER_IMAGE}); then
             docker build -f Dockerfile.${APP_ID} . --target ${APP_ID} -t ${DOCKER_IMAGE} || exit 1;
-            if [ "${GITHUB_EVENT}" == "pull_request" ]; then
+            if [ "${GITHUB_EVENT}" == "push" ]; then
               echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
               docker push ${DOCKER_IMAGE};
               docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
@@ -44,7 +44,6 @@ jobs:
           fi
         env:
           APP_ID: label-backend
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
           GITHUB_EVENT: ${{ github.event_name }}
       - name: Build static client app
@@ -57,7 +56,6 @@ jobs:
           fi
         env:
           APP_ID: label-client
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
       - name: 🐋 Build docker image (client)
         if: matrix.node-version == '16.x'
         run: |
@@ -65,7 +63,7 @@ jobs:
           export DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
           if ! (docker manifest inspect ${DOCKER_IMAGE}); then
             docker build -f Dockerfile.${APP_ID} . --target ${APP_ID} -t ${DOCKER_IMAGE} || exit 1;
-            if [ "${GITHUB_EVENT}" == "pull_request" ]; then
+            if [ "${GITHUB_EVENT}" == "push" ]; then
               echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
               docker push ${DOCKER_IMAGE};
               docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
@@ -76,6 +74,5 @@ jobs:
           fi
         env:
           APP_ID: label-client
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
           GITHUB_EVENT: ${{ github.event_name }}

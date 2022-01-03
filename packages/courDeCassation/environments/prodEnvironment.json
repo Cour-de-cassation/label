@@ -1,12 +1,8 @@
 {
   "dbName": "labelDb",
-  "ip": {
-    "server": "10.5.0.6",
-    "db": "10.5.0.5"
-  },
   "pathName": {
     "nlpApi": "http://172.16.117.98",
-    "server": "http://shv7-cass",
+    "server": "https://label.cour-de-cassation.justice.fr",
     "db": "mongodb://172.16.118.100"
   },
   "port": {

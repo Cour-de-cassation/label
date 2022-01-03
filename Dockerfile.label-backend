@@ -70,4 +70,3 @@ USER node
 EXPOSE ${API_PORT}
 
 CMD ["sh", "-c", "npm run ${LABEL_ENV}"]
-

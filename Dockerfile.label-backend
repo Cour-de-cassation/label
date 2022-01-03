@@ -69,5 +69,5 @@ USER node
 # Expose the listening port of your app
 EXPOSE ${API_PORT}
 
-CMD ["sh", "-c", "yarn ${LABEL_ENV}"]
+CMD ["sh", "-c", "npm run ${LABEL_ENV}"]
 

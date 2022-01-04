@@ -158,6 +158,7 @@ describe('filterTreatedDocuments', () => {
           boundDecisionDocumentNumbers: [],
           additionalTermsToAnnotate: '',
           NACCode: '',
+          endCaseCode: '',
           parties: [],
           appealNumber: '',
         },

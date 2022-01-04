@@ -34,6 +34,7 @@ const documentModelCommonFields = {
         ],
       },
       NACCode: { kind: 'primitive', content: 'string' },
+      endCaseCode: { kind: 'primitive', content: 'string' },
       parties: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       session: { kind: 'primitive', content: 'string' },
       solution: { kind: 'primitive', content: 'string' },

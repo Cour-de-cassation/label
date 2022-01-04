@@ -1,10 +1,10 @@
 import { omit } from 'lodash';
 import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../../../modules/document';
-import { up, down } from '../migrations/31_61ae1328673817451d5bfd0e';
+import { up, down } from '../migrations/34_61c2f20f5f28c12d9b54c762';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-describe('add NACCode in document model', () => {
+describe('add endCaseCode in document model', () => {
   const decisionMetadata = {
     appealNumber: '',
     chamberName: 'Civile',
@@ -20,32 +20,32 @@ describe('add NACCode in document model', () => {
     parties: [],
     session: '',
     solution: '',
-    endCaseCode: '',
+    NACCode: '',
   };
   const documentsWithNewModel = [
     documentModule.generator.generate({
       decisionMetadata: {
         ...decisionMetadata,
-        NACCode: '',
+        endCaseCode: '',
       },
     }),
     documentModule.generator.generate({
       decisionMetadata: {
         ...decisionMetadata,
-        NACCode: '',
+        endCaseCode: '',
       },
     }),
     documentModule.generator.generate({
       decisionMetadata: {
         ...decisionMetadata,
-        NACCode: '',
+        endCaseCode: '',
       },
     }),
   ];
   const documentsWithOldModel = [
-    omit(documentsWithNewModel[0], ['decisionMetadata.NACCode']),
-    omit(documentsWithNewModel[1], ['decisionMetadata.NACCode']),
-    omit(documentsWithNewModel[2], ['decisionMetadata.NACCode']),
+    omit(documentsWithNewModel[0], ['decisionMetadata.endCaseCode']),
+    omit(documentsWithNewModel[1], ['decisionMetadata.endCaseCode']),
+    omit(documentsWithNewModel[2], ['decisionMetadata.endCaseCode']),
   ];
 
   it('should test up', async () => {

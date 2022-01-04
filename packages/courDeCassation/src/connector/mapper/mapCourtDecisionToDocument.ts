@@ -9,8 +9,8 @@ import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
   extractAppealNumber,
-  extractRoute,
 } from './extractors';
+import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
 
 export { mapCourtDecisionToDocument };
@@ -64,17 +64,22 @@ function mapCourtDecisionToDocument(
   const civilMatterCode = sderCourtDecision.codeMatiereCivil?.trim() || '';
   const criminalCaseCode = sderCourtDecision.natureAffairePenal?.trim() || '';
   const NACCode = sderCourtDecision.NACCode || '';
+  const endCaseCode = sderCourtDecision.endCaseCode || '';
 
-  const route = extractRoute({
-    solution,
-    publicationCategory,
-    chamberId: sderCourtDecision.chamberId,
-    civilMatterCode,
-    session,
-    civilCaseCode,
-    criminalCaseCode,
+  const route = extractRoute(
+    {
+      solution,
+      publicationCategory,
+      chamberId: sderCourtDecision.chamberId,
+      civilMatterCode,
+      session,
+      civilCaseCode,
+      criminalCaseCode,
+      NACCode,
+      endCaseCode,
+    },
     source,
-  });
+  );
 
   return documentModule.lib.buildDocument({
     creationDate: new Date().getTime(),
@@ -91,6 +96,7 @@ function mapCourtDecisionToDocument(
       date: decisionDate?.getTime(),
       jurisdiction: readableJurisdictionName,
       NACCode,
+      endCaseCode,
       parties: sderCourtDecision.parties || [],
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session,

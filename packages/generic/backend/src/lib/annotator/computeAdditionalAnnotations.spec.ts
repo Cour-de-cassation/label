@@ -42,6 +42,7 @@ describe('computeAdditionalAnnotations', () => {
         session: '',
         solution: '',
         NACCode: '',
+        endCaseCode: '',
       },
     });
 

@@ -1,8 +1,8 @@
 import { documentType, documentModule, stringComparator } from '@label/core';
 
-export { extractRoute };
+export { extractRouteForJurinet };
 
-function extractRoute({
+function extractRouteForJurinet({
   solution,
   session,
   publicationCategory,
@@ -10,7 +10,6 @@ function extractRoute({
   civilMatterCode,
   civilCaseCode,
   criminalCaseCode,
-  source,
 }: {
   session: documentType['decisionMetadata']['session'];
   solution: documentType['decisionMetadata']['solution'];
@@ -19,11 +18,9 @@ function extractRoute({
   civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
   civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
   criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
-  source: documentType['source'];
+  NACCode: documentType['decisionMetadata']['NACCode'];
+  endCaseCode: documentType['decisionMetadata']['endCaseCode'];
 }): documentType['route'] {
-  if (source !== 'jurinet') {
-    return 'exhaustive';
-  }
   if (stringComparator.compareNormalizedStrings(solution, 'Non-admission')) {
     return 'automatic';
   }

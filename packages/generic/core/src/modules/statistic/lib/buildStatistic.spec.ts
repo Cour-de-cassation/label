@@ -28,6 +28,7 @@ describe('buildStatistic', () => {
         date: decisionDate,
         jurisdiction,
         NACCode: '',
+        endCaseCode: '',
         occultationBlock: undefined,
         parties: [],
         session: 'FRH',

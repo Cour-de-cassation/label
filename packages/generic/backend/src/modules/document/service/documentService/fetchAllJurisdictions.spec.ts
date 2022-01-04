@@ -28,6 +28,7 @@ describe('fetchAllJurisdictions', () => {
           solution: '',
           jurisdiction,
           NACCode: '',
+          endCaseCode: '',
         },
       }),
     );

@@ -26,6 +26,7 @@ describe('fetchPublishableDocuments', () => {
           session: '',
           solution: '',
           NACCode: '',
+          endCaseCode: '',
         },
       },
       { status: 'pending' as const, publicationCategory: [] },

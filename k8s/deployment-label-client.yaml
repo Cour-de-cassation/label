@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_ID}-deployment
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APP_ID}
+  template:
+    metadata:
+      labels:
+        app: ${APP_ID}
+    spec:
+      containers:
+      - name: ${APP_ID}
+        image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+        ports:
+        - containerPort: ${API_PORT}
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/" | egrep -q '"htmls"'
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          failureThreshold: 3
+          timeoutSeconds: 5
+        securityContext:
+          runAsUser: 1000
+          capabilities:
+            drop:
+              - all
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+
+

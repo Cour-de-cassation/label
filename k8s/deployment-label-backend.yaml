@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_ID}-deployment
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APP_ID}
+  template:
+    metadata:
+      labels:
+        app: ${APP_ID}
+    spec:
+      containers:
+      - name: ${APP_ID}
+        image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+        ports:
+        - containerPort: ${API_PORT}
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/label/api/health" | egrep -q 'true'
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          timeoutSeconds: 2
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/label/api/health" | egrep -q 'true'
+          initialDelaySeconds: 15
+          periodSeconds: 15
+          failureThreshold: 10
+          timeoutSeconds: 2
+        securityContext:
+          runAsUser: 1000
+          capabilities:
+            drop:
+              - all
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - name: ${APP_ID}-config
+          mountPath: /home/node/packages/courDeCassation/environments
+          readOnly: true
+      volumes:
+      - name: ${APP_ID}-config
+        secret:
+          secretName: ${APP_ID}-config
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ${APP_ID}-config
+  namespace: ${KUBE_NAMESPACE}
+stringData:
+  prodEnvironment.json: |-
+    {
+      "dbName": "${MONGODB_NAME}",
+      "pathName": {
+        "nlpApi": "${NLP_API_HOST}",
+        "server": "${APP_HOST}",
+        "db": "${MONGODB_URI}"
+      },
+      "port": {
+        "nlpApi": ${NLP_API_PORT},
+        "server": ${API_PORT},
+        "db": ${MONGODB_PORT}
+      }
+    }
+
+

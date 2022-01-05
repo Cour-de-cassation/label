@@ -19,7 +19,7 @@ RUN if [ ! -z "$http_proxy" ] ; then \
   fi ; \
   [ -z "$npm_registry" ] || yarn config set registry=$npm_registry
 
-RUN [ -z "${NPM_LATEST}" ] || yarn install yarn@latest -g
+RUN [ -z "${NPM_LATEST}" ] || npm install npm@latest -g
 
 ################################
 # Step 2: "label-backend"      #

@@ -23,7 +23,7 @@ spec:
             command:
             - /bin/sh
             - -c
-            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/" | egrep -q '"htmls"'
+            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/" | egrep -q '${APP_KEYWORD}'
           initialDelaySeconds: 60
           periodSeconds: 15
           failureThreshold: 3

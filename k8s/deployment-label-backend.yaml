@@ -23,7 +23,7 @@ spec:
             command:
             - /bin/sh
             - -c
-            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/label/api/health" | egrep -q 'true'
+            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
           initialDelaySeconds: 15
           periodSeconds: 5
           timeoutSeconds: 2
@@ -32,7 +32,7 @@ spec:
             command:
             - /bin/sh
             - -c
-            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/label/api/health" | egrep -q 'true'
+            - curl -s -k --fail --max-time 2 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
           initialDelaySeconds: 15
           periodSeconds: 15
           failureThreshold: 10

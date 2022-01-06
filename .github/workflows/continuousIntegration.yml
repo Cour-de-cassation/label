@@ -93,6 +93,7 @@ jobs:
         env:
           APP_ID: label-backend
           API_PORT: 55430
+          APP_KEYWORD: "true"
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           ROOT_PATH: label/api
           VERSION: ${{ steps.backend_version.outputs.version }}
@@ -146,6 +147,7 @@ jobs:
         env:
           APP_ID: label-client
           API_PORT: 55432
+          APP_KEYWORD: html
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           ROOT_PATH: label
           VERSION: ${{ steps.client_version.outputs.version }}

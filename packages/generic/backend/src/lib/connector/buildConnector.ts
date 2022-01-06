@@ -51,7 +51,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Fetching ${connectorConfig.name} documents...`);
     let daysAgo = 0;
     let step = 0;
-    const daysStep = 30;
+    const daysStep = 10;
     const MAX_STEP = 120;
 
     const newDocuments: documentType[] = [];
@@ -107,7 +107,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     );
 
     const courtDecision = await connectorConfig.fetchCourtDecisionBySourceIdAndSourceName(
-      { sourceId: documentNumber, sourceName: source },
+      {
+        sourceId: documentNumber,
+        sourceName: source,
+      },
     );
 
     if (!courtDecision) {
@@ -190,7 +193,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`importDocumentsSince ${days}`);
 
     logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
-    const newCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+    const newJurinetCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
       {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
@@ -198,8 +201,22 @@ function buildConnector(connectorConfig: connectorConfigType) {
       },
     );
     logger.log(
-      `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
+      `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
     );
+    const newJuricaCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+      {
+        startDate: new Date(dateBuilder.daysAgo(days)),
+        endDate: new Date(),
+        source: 'jurica',
+      },
+    );
+    logger.log(
+      `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
+    );
+    const newCourtDecisions = [
+      ...newJurinetCourtDecisions,
+      ...newJuricaCourtDecisions,
+    ];
     const documents = newCourtDecisions.map((courtDecision) =>
       connectorConfig.mapCourtDecisionToDocument(courtDecision),
     );

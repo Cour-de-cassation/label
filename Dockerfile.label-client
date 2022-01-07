@@ -18,7 +18,7 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/gzip.conf /etc/nginx/gzip.conf
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
-ADD packages/generic/client/build/ /usr/share/nginx/html/
+ADD packages/generic/client/build/ /usr/share/nginx/html/label/
 
 EXPOSE 80
 

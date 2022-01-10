@@ -52,3 +52,62 @@ To annotate all the documents that have not been annotated by the NLP engine yet
   - connect to `dbsder` via ssh and connect to the Mongo db
   - `use labelDb`
   - `db.documents.find({documentNumber: ID_JURINET, source: "jurinet"})`
+
+
+## Note: adaptation to docker or kubernetes (k8s)
+
+Migration is running to go to kubernetes. First step is a dockerized env
+Status :
+- production: use docker (future: k8s)
+- pre-prod: neither docker or kubectl (future: k8s)
+
+### with docker
+#### run one of the Label scripts
+prepend command with :
+```
+docker exec -it label-backend -- [my-wonderful-command]
+```
+#### get running logs
+```
+docker logs -f label-backend
+```
+
+### go into the container
+```
+docker exec -it label-backend /bin/sh
+```
+
+### with kubectl (k8s)
+#### get the namespaces
+```
+kubectl get namespaces
+```
+#### get the pods
+```
+kubectl -n [namespace] get pods
+```
+
+#### run one of the Label scripts
+prepend command with :
+```
+kubectl -n [the-namespace] exec -it [pod/label-backend-...] -- [my-wonderful-command]
+```
+
+#### get running logs
+```
+kubectl -n [the-namespace] logs -f [pod/label-backend-...]
+```
+
+### go into the container
+```
+kubectl -n [the-namespace] logs -f [pod/label-backend-...] -- /bin/sh
+```
+### copy something from the container
+```
+kubectl cp [namespace]/[pod/label-backend-...]:[myfile] $pathto/myfile
+```
+### copy something to the container
+Note: the container is readonly, the only place to strore temporary things into it can be `/dev/shm/tmp`.
+```
+kubectl cp $pathto/myfile [namespace]/[pod/label-backend-...]:/dev/shm/tmp/[myfile]
+```

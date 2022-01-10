@@ -2,7 +2,7 @@ name: LABEL CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, "pre-prod", "prod"]
   pull_request:
     branches: [master]
 
@@ -111,18 +111,27 @@ jobs:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
           ROOT_PATH: label/api
       - name: 🔙🚀 Push docker image -- backend
-        if: (matrix.node-version == '16.x') && (steps.backend_check.outputs.status == 'build_needed') && (github.event_name == 'push')
+        if: (matrix.node-version == '16.x') && (github.event_name == 'push') && ( (steps.backend_check.outputs.status == 'build_needed' ) || (steps.extract_branch.outputs.branch == 'pre-prod') || (steps.extract_branch.outputs.branch == 'prod') )
         run: |
           echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
-          docker push ${DOCKER_IMAGE};
-          docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-          docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-          docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
-          docker push ${DOCKER_USERNAME}/${APP_ID}:latest
+          if [ "${GIT_BRANCH}" == "master" ]; then
+            docker push ${DOCKER_IMAGE};
+            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+            docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+          else
+            docker pull ${DOCKER_IMAGE}
+          fi;
+          docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
+          docker push ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
+          if [ "${GIT_BRANCH}" == "prod" ]; then
+            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
+            docker push ${DOCKER_USERNAME}/${APP_ID}:latest
+          fi
         env:
           APP_ID: label-backend
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           VERSION: ${{ steps.backend_version.outputs.version }}
       - name: 👤  Build static app -- client
         if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
@@ -165,15 +174,23 @@ jobs:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
           ROOT_PATH: label
       - name: 👤🚀 Push docker image -- client
-        if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed') && (github.event_name == 'push')
+        if: (matrix.node-version == '16.x') && (github.event_name == 'push') && ( (steps.client_check.outputs.status == 'build_needed' ) || (steps.client_branch.outputs.branch == 'pre-prod') || (steps.client_branch.outputs.branch == 'prod') )
         run: |
           echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
-          docker push ${DOCKER_IMAGE};
-          docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-          docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-          docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
-          docker push ${DOCKER_USERNAME}/${APP_ID}:latest
+          if [ "${GIT_BRANCH}" == "master" ]; then
+            docker push ${DOCKER_IMAGE};
+            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+            docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+          else
+            docker pull ${DOCKER_IMAGE}
+          fi;
+          docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
+          docker push ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
+          if [ "${GIT_BRANCH}" == "prod" ]; then
+            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
+            docker push ${DOCKER_USERNAME}/${APP_ID}:latest
+          fi
         env:
           APP_ID: label-client
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}

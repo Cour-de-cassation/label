@@ -194,4 +194,5 @@ jobs:
         env:
           APP_ID: label-client
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           VERSION: ${{ steps.client_version.outputs.version }}

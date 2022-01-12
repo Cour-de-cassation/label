@@ -174,7 +174,7 @@ jobs:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
           ROOT_PATH: label
       - name: 👤🚀 Push docker image -- client
-        if: (matrix.node-version == '16.x') && (github.event_name == 'push') && ( (steps.client_check.outputs.status == 'build_needed' ) || (steps.client_branch.outputs.branch == 'pre-prod') || (steps.client_branch.outputs.branch == 'prod') )
+        if: (matrix.node-version == '16.x') && (github.event_name == 'push') && ( (steps.client_check.outputs.status == 'build_needed' ) || (steps.extract_branch.outputs.branch == 'pre-prod') || (steps.extract_branch.outputs.branch == 'prod') )
         run: |
           echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}

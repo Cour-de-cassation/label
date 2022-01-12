@@ -1,12 +1,12 @@
 {
   "dbName": "labelDb",
   "pathName": {
-    "nlpApi": "http://172.16.117.98",
+    "nlpApi": "https://nlp-pseudonymisation-api.judilibre-prive.local",
     "server": "https://label.cour-de-cassation.justice.fr",
     "db": "mongodb://172.16.118.100"
   },
   "port": {
-    "nlpApi": 8081,
+    "nlpApi": 443,
     "server": 55430,
     "db": 27017
   }

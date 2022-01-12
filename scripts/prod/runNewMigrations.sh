@@ -2,4 +2,4 @@
 set -e
 
 echo "Run new migrations"
-docker run opendatajustice/label-backend ./scripts/runProdScript.sh dist/scripts/runNewMigrations.js
+docker run --rm opendatajustice/label-backend:latest ./scripts/runProdScript.sh dist/scripts/runNewMigrations.js

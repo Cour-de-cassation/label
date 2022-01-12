@@ -4,14 +4,14 @@ LABELSETTINGS=settings/settings.json
 LABELCRONLOGFILE=/home/label/label/packages/courDeCassation/cron.log.txt
 
 # Importation from SDER
-*/30 6-12 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7" >> $LABELCRONLOGFILE 2>&1
+*/30 6-12 * * * docker run --rm opendatajustice/label-backend:latest sh -c "export RUN_MODE=PROD; node dist/scripts/importAllDocumentsFromSderSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 7" >> $LABELCRONLOGFILE 2>&1
 # WARNING: annotation job moved as systemctl service LabelAnnotationNLPProd.service
 # this service is windowed in day hours with a crontab launched in sudo
 
-0 19 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/autoImportDocumentsFromSder.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --count 1000 --threshold 1000" >> $LABELCRONLOGFILE 2>&1
+0 19 * * * docker run --rm opendatajustice/label-backend:latest sh -c "export RUN_MODE=PROD; node dist/scripts/autoImportDocumentsFromSder.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --count 1000 --threshold 1000" >> $LABELCRONLOGFILE 2>&1
 # Exportation to SDER
-30 19 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/exportTreatedDocumentsSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 4" >> $LABELCRONLOGFILE 2>&1
-58 13 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/exportTreatedPublishableDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS" >> $LABELCRONLOGFILE 2>&1
+30 19 * * * docker run --rm opendatajustice/label-backend:latest sh -c "export RUN_MODE=PROD; node dist/scripts/exportTreatedDocumentsSince.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --days 4" >> $LABELCRONLOGFILE 2>&1
+58 13 * * * docker run --rm opendatajustice/label-backend:latest sh -c "export RUN_MODE=PROD; node dist/scripts/exportTreatedPublishableDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS" >> $LABELCRONLOGFILE 2>&1
 #
 # Database maintenance
-*/17 4-19 * * * docker exec label-backend sh -c "export RUN_MODE=PROD; node dist/scripts/freePendingDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --sinceMinutes 15" >> $LABELCRONLOGFILE 2>&1
+*/17 4-19 * * * docker run --rm opendatajustice/label-backend:latest sh -c "export RUN_MODE=PROD; node dist/scripts/freePendingDocuments.js --environment $LABELENVIRONMENT --settings $LABELSETTINGS --sinceMinutes 15" >> $LABELCRONLOGFILE 2>&1

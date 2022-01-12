@@ -5,7 +5,9 @@ echo "Update LABEL"
 yarn updateProd
 
 echo "Stop LABEL service"
-( docker stop label-backend label-client && docker container rm label-backend label-client ) || echo
+docker stop label-backend label-client || echo
+docker container rm label-backend label-client || echo
+
 
 echo "Start LABEL service"
 docker run -d -p 55432:55432 --restart always --name label-client opendatajustice/label-client:latest

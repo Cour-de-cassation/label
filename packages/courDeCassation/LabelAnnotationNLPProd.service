@@ -5,7 +5,7 @@ After=syslog.target
 [Service]
 User=label
 Type=simple
-ExecStart=/usr/bin/docker exec label-backend node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment environments/prodEnvironment.json --settings settings/settings.json
+ExecStart=/usr/bin/docker run --rm -e NODE_TLS_REJECT_UNAUTHORIZED=0 --add-host nlp-pseudonymisation-api.judilibre-prive.local:${NLP_API_IP} opendatajustice/label-backend:latest node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment environments/prodEnvironment.json --settings settings/settings.json
 WorkingDirectory=/home/label/label
 Restart=always
 RestartSec=300

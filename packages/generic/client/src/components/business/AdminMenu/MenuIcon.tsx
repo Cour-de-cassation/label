@@ -6,11 +6,11 @@ import { AlertBadge } from './AlertBadge';
 
 export { MenuIcon };
 
-const ICON_CONTAINER_HEIGHT = 72;
+const ICON_CONTAINER_HEIGHT = 50;
 
-const ICON_SIZE = 32;
+const ICON_SIZE = 28;
 
-const CORNER_HEIGHT = 16;
+const CORNER_HEIGHT = 10;
 
 function MenuIcon(props: { iconName: iconNameType; pathname: string; title: string; alertCount?: number }) {
   const theme = useCustomTheme();

@@ -18,7 +18,7 @@ fi;
 
 # scripts
 
-for file in check_install docker-check docker-build deploy_k8s_services wait_services_readiness; do
+for file in clean_old_replicas update_app check_install docker-check docker-build deploy_k8s_services wait_services_readiness; do
     if [ ! -f "./scripts/${file}.sh" ]; then
         ln -s ${SCRIPTS_SRC}/${file}.sh ./scripts/${file}.sh;
     fi;

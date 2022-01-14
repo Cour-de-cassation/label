@@ -7,6 +7,8 @@ judilibre-admin
 scripts/check_install.sh
 scripts/deploy_k8s_services.sh
 scripts/wait_services_readiness.sh
-scripts/docker-check
-scripts/docker-build
+scripts/docker-check.sh
+scripts/docker-build.sh
+scripts/update_app.sh
+scripts/clean_old_replicas.sh
 k8s*

@@ -1,13 +1,11 @@
-name: LABEL CI
+name: 🐋☸️ Build & Publish (master)
 
 on:
   push:
-    branches: [master, "pre-prod", "prod"]
-  pull_request:
     branches: [master]
 
 jobs:
-  build:
+  build-publish:
     runs-on: ubuntu-latest
     env:
       APP_ID: label-* # specific to backend or client

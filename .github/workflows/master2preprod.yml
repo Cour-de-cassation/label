@@ -1,4 +1,4 @@
-name: Automatic deployment on preprod branch
+name: Daily merge (master to pre-prod)
 
 on:
   workflow_dispatch:

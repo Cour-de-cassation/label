@@ -13,6 +13,25 @@ spec:
       labels:
         app: ${APP_ID}
     spec:
+      initContainers:
+      - name: run-new-migrations
+        image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+        command:
+        - /bin/sh
+        args:
+        - -c
+        - ./scripts/runProdScript.sh dist/scripts/runNewMigrations.js
+        securityContext:
+          runAsUser: 1000
+          capabilities:
+            drop:
+              - all
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - name: ${APP_ID}-config
+          mountPath: /home/node/packages/courDeCassation/environments
+          readOnly: true
       containers:
       - name: ${APP_ID}
         image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}

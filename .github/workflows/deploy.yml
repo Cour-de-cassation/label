@@ -1,0 +1,105 @@
+name: ☸️ Deploy (prod)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [prod]
+
+jobs:
+  deploy:
+    runs-on: [self-hosted]
+    env:
+      APP_ID: label-* # specific to backend or client
+      APP_GROUP: judilibre-prive
+      APP_HOST: label.judilibre-prive.local
+      APP_PORT: 443
+      APP_SCHEME: https
+      APP_SELF_SIGNED: "true"
+      APP_KEYWORD: specific # to backend or client
+      DOCKER_USERNAME: opendatajustice
+      KUBE_NAMESPACE: judilibre-prive-label
+      KUBE_TYPE: k3s
+      KUBE_ZONE: prive
+      NLP_API_HOST: https://nlp-pseudonymisation.judilibre-prive.local
+      NLP_API_PORT: 443
+      ROOT_PATH: label* # specific to backend or client
+      START_TIMEOUT: 240
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|^refs/heads/||;' | sed 's/[^a-zA-Z0-9]/-/g')"
+        id: extract_branch
+      - name: Init ops dependencies
+        run: ./scripts/init_deps.sh && ./scripts/check_install.sh
+        env:
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+      - name: 🔙  Get version -- backend
+        run: echo "##[set-output name=version;]$(./scripts/version.sh)"
+        id: backend_version
+        env:
+          APP_ID: label-backend
+      - name: 👤  Get version -- client
+        run: echo "##[set-output name=version;]$(./scripts/version.sh)"
+        id: client_version
+        env:
+          APP_ID: label-client
+      - name: 🔙☸️ Deploy k8s services -- backend
+        run: ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+        env:
+          APP_ID: label-backend
+          API_PORT: 55430
+          APP_KEYWORD: "true"
+          MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
+          NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
+          NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          ROOT_PATH: label/api
+          VERSION: ${{ steps.backend_version.outputs.version }}
+      - name: 🔙🚀 Update remote app ☸️ -- backend
+        run: |
+          ./scripts/update_app.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+          kubectl get pods --namespace=${KUBE_NAMESPACE}
+          kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
+        env:
+          APP_ID: label-backend
+          APP_KEYWORD: "true"
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          ROOT_PATH: label/api
+          START_TIMEOUT: 20
+          VERSION: ${{ steps.backend_version.outputs.version }}
+      - name: 🔙🧹 Clean old replicas ☸️ -- backend
+        run: ./scripts/clean_old_replicas.sh
+        env:
+          APP_ID: label-backend
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          VERSION: ${{ steps.backend_version.outputs.version }}
+      - name: 👤☸️ Deploy k8s services -- client
+        run: ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+        env:
+          APP_ID: label-client
+          API_PORT: 55432
+          APP_KEYWORD: html
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          ROOT_PATH: label
+          VERSION: ${{ steps.client_version.outputs.version }}
+      - name: 👤🚀 Update remote app ☸️ -- client
+        run: |
+          ./scripts/update_app.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+          kubectl get pods --namespace=${KUBE_NAMESPACE}
+          kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
+        env:
+          APP_ID: label-client
+          APP_KEYWORD: html
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          ROOT_PATH: label
+          START_TIMEOUT: 20
+          VERSION: ${{ steps.client_version.outputs.version }}
+      - name: 👤🧹 Clean old replicas ☸️ -- client
+        run: ./scripts/clean_old_replicas.sh
+        env:
+          APP_ID: label-client
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          VERSION: ${{ steps.client_version.outputs.version }}

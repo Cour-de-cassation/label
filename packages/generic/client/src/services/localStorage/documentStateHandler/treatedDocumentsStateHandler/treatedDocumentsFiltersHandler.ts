@@ -3,8 +3,12 @@ import { localStorageHandler } from '../../localStorageHandler';
 import { localStorageMappers } from '../../localStorageMappers';
 import { documentReviewFilterStatuses } from '../../../filters';
 
-const TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_START_DATE';
-const TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_END_DATE';
+const TREATED_DOCUMENTS_FILTER_TREATMENT_START_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_TREATMENT_START_DATE';
+const TREATED_DOCUMENTS_FILTER_TREATMENT_END_DATE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_TREATMENT_END_DATE';
+const TREATED_DOCUMENTS_FILTER_DOCUMENT_CREATION_START_DATE_STORAGE_KEY =
+  'TREATED_DOCUMENTS_FILTER_DOCUMENT_CREATION_START_DATE';
+const TREATED_DOCUMENTS_FILTER_DOCUMENT_CREATION_END_DATE_STORAGE_KEY =
+  'TREATED_DOCUMENTS_FILTER_DOCUMENT_CREATION_END_DATE';
 const TREATED_DOCUMENTS_FILTER_DOCUMENT_REVIEW_STATUS_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_DOCUMENT_REVIEW_STATUS';
 const TREATED_DOCUMENTS_FILTER_ROUTE_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_ROUTE';
 const TREATED_DOCUMENTS_FILTER_JURISDICTION_STORAGE_KEY = 'TREATED_DOCUMENTS_FILTER_JURISDICTION';
@@ -20,8 +24,10 @@ export { setFilters, getFilters };
 export type { treatedDocumentFilterType };
 
 type treatedDocumentFilterType = {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+  treatmentStartDate: Date | undefined;
+  treatmentEndDate: Date | undefined;
+  documentCreationStartDate: Date | undefined;
+  documentCreationEndDate: Date | undefined;
   documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined;
   jurisdiction: string | undefined;
   userName: string | undefined;
@@ -33,8 +39,10 @@ type treatedDocumentFilterType = {
 };
 
 function setFilters({
-  startDate,
-  endDate,
+  treatmentStartDate,
+  treatmentEndDate,
+  documentCreationStartDate,
+  documentCreationEndDate,
   documentReviewFilterStatus,
   jurisdiction,
   userName,
@@ -45,13 +53,23 @@ function setFilters({
   mustHaveSubAnnotations,
 }: treatedDocumentFilterType) {
   localStorageHandler.set({
-    key: TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY,
-    value: startDate,
+    key: TREATED_DOCUMENTS_FILTER_TREATMENT_START_DATE_STORAGE_KEY,
+    value: treatmentStartDate,
     mapper: localStorageMappers.date,
   });
   localStorageHandler.set({
-    key: TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY,
-    value: endDate,
+    key: TREATED_DOCUMENTS_FILTER_TREATMENT_END_DATE_STORAGE_KEY,
+    value: treatmentEndDate,
+    mapper: localStorageMappers.date,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_DOCUMENT_CREATION_START_DATE_STORAGE_KEY,
+    value: documentCreationStartDate,
+    mapper: localStorageMappers.date,
+  });
+  localStorageHandler.set({
+    key: TREATED_DOCUMENTS_FILTER_DOCUMENT_CREATION_END_DATE_STORAGE_KEY,
+    value: documentCreationEndDate,
     mapper: localStorageMappers.date,
   });
   localStorageHandler.set({
@@ -97,12 +115,20 @@ function setFilters({
 }
 
 function getFilters(): treatedDocumentFilterType {
-  const startDate = localStorageHandler.get({
-    key: TREATED_DOCUMENTS_FILTER_START_DATE_STORAGE_KEY,
+  const treatmentStartDate = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_TREATMENT_START_DATE_STORAGE_KEY,
     mapper: localStorageMappers.date,
   });
-  const endDate = localStorageHandler.get({
-    key: TREATED_DOCUMENTS_FILTER_END_DATE_STORAGE_KEY,
+  const treatmentEndDate = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_TREATMENT_END_DATE_STORAGE_KEY,
+    mapper: localStorageMappers.date,
+  });
+  const documentCreationStartDate = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_DOCUMENT_CREATION_START_DATE_STORAGE_KEY,
+    mapper: localStorageMappers.date,
+  });
+  const documentCreationEndDate = localStorageHandler.get({
+    key: TREATED_DOCUMENTS_FILTER_DOCUMENT_CREATION_END_DATE_STORAGE_KEY,
     mapper: localStorageMappers.date,
   });
   const documentReviewFilterStatus = localStorageHandler.get({
@@ -139,8 +165,10 @@ function getFilters(): treatedDocumentFilterType {
   });
 
   return {
-    startDate: startDate || undefined,
-    endDate: endDate || undefined,
+    treatmentStartDate: treatmentStartDate || undefined,
+    treatmentEndDate: treatmentEndDate || undefined,
+    documentCreationStartDate: documentCreationStartDate || undefined,
+    documentCreationEndDate: documentCreationEndDate || undefined,
     documentReviewFilterStatus:
       (documentReviewFilterStatus as typeof documentReviewFilterStatuses[number]) || undefined,
     jurisdiction: jurisdiction || undefined,

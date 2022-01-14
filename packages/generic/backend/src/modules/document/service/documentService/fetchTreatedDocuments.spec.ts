@@ -118,6 +118,7 @@ function projectTreatedDocumentDocument(document: documentType) {
   return {
     ...projectFakeObjects(document, [
       '_id',
+      'creationDate',
       'documentNumber',
       'publicationCategory',
       'reviewStatus',

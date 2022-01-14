@@ -53,16 +53,15 @@ function ToBeConfirmedDocumentsTable(props: {
     >> = [
       {
         id: 'documentNumber',
-        title: wordings.toBeConfirmedDocumentsPage.table.columnTitles.number.title,
-        tooltipText: wordings.toBeConfirmedDocumentsPage.table.columnTitles.number.tooltipText,
+        title: wordings.business.filters.columnTitles.documentNumber,
         canBeSorted: true,
         extractor: (toBeConfirmedDocument) => toBeConfirmedDocument.document.documentNumber,
         width: 2,
       },
       {
         id: 'occultationBlock',
-        title: wordings.toBeConfirmedDocumentsPage.table.columnTitles.occultationBlock.title,
-        tooltipText: wordings.toBeConfirmedDocumentsPage.table.columnTitles.occultationBlock.tooltipText,
+        title: wordings.business.filters.columnTitles.occultationBlock.title,
+        tooltipText: wordings.business.filters.columnTitles.occultationBlock.tooltipText,
         canBeSorted: true,
         extractor: (toBeConfirmedDocument) => toBeConfirmedDocument.document.occultationBlock || '-',
         getSortingValue: (toBeConfirmedDocument) => toBeConfirmedDocument.document.occultationBlock || 0,
@@ -70,16 +69,16 @@ function ToBeConfirmedDocumentsTable(props: {
       },
       {
         id: 'jurisdiction',
-        title: wordings.toBeConfirmedDocumentsPage.table.columnTitles.jurisdiction.title,
-        tooltipText: wordings.toBeConfirmedDocumentsPage.table.columnTitles.jurisdiction.tooltipText,
+        title: wordings.business.filters.columnTitles.jurisdiction.title,
+        tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
         canBeSorted: true,
         extractor: (toBeConfirmedDocument) => toBeConfirmedDocument.document.jurisdiction || '-',
         width: 4,
       },
       {
         id: 'publicationCategory',
-        title: wordings.toBeConfirmedDocumentsPage.table.columnTitles.publicationCategory.title,
-        tooltipText: wordings.toBeConfirmedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
+        title: wordings.business.filters.columnTitles.publicationCategory.title,
+        tooltipText: wordings.business.filters.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
         getSortingValue: (toBeConfirmedDocument) => toBeConfirmedDocument.document.publicationCategory.length,
         extractor: (toBeConfirmedDocument) => toBeConfirmedDocument.document.publicationCategory.join(','),
@@ -99,16 +98,16 @@ function ToBeConfirmedDocumentsTable(props: {
       },
       {
         id: 'userName',
-        title: wordings.toBeConfirmedDocumentsPage.table.columnTitles.workingUser.title,
-        tooltipText: wordings.toBeConfirmedDocumentsPage.table.columnTitles.workingUser.tooltipText,
+        title: wordings.business.filters.columnTitles.workingUser.title,
+        tooltipText: wordings.business.filters.columnTitles.workingUser.tooltipText,
         canBeSorted: true,
         extractor: (toBeConfirmedDocument) => toBeConfirmedDocument.userNames.join(', '),
         width: 6,
       },
       {
         id: 'reviewStatus',
-        title: wordings.toBeConfirmedDocumentsPage.table.columnTitles.reviewStatus.title,
-        tooltipText: wordings.toBeConfirmedDocumentsPage.table.columnTitles.reviewStatus.tooltipText,
+        title: wordings.business.filters.columnTitles.reviewStatus.title,
+        tooltipText: wordings.business.filters.columnTitles.reviewStatus.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => convertDocumentReviewStatusToFilter(treatedDocument.document.reviewStatus),
         render: (treatedDocument) =>
@@ -120,8 +119,8 @@ function ToBeConfirmedDocumentsTable(props: {
         width: 1,
       },
       {
-        id: 'date',
-        title: wordings.toBeConfirmedDocumentsPage.table.columnTitles.date,
+        id: 'treatmentDate',
+        title: wordings.business.filters.columnTitles.treatmentDate,
         canBeSorted: true,
         extractor: (toBeConfirmedDocument) =>
           toBeConfirmedDocument.lastTreatmentDate !== undefined
@@ -133,8 +132,8 @@ function ToBeConfirmedDocumentsTable(props: {
       {
         id: 'duration',
         canBeSorted: true,
-        title: wordings.toBeConfirmedDocumentsPage.table.columnTitles.duration.title,
-        tooltipText: wordings.toBeConfirmedDocumentsPage.table.columnTitles.duration.tooltipText,
+        title: wordings.business.filters.columnTitles.duration.title,
+        tooltipText: wordings.business.filters.columnTitles.duration.tooltipText,
         extractor: (toBeConfirmedDocument) =>
           toBeConfirmedDocument.totalTreatmentDuration !== undefined
             ? timeOperator.convertDurationToReadableDuration(toBeConfirmedDocument.totalTreatmentDuration)

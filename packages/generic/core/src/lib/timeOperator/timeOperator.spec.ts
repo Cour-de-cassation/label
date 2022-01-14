@@ -30,7 +30,14 @@ describe('timeOperator', () => {
   });
 
   describe('compareDates', () => {
-    it('should return -1 if the date 1 is older than date2', () => {
+    it('should return -1 if the date 1 is older than date2 by days', () => {
+      const date1 = { year: 2021, month: 11, dayOfMonth: 1 };
+      const date2 = { year: 2021, month: 11, dayOfMonth: 2 };
+
+      expect(timeOperator.compareDates(date1, date2)).toBe(-1);
+    });
+
+    it('should return -1 if the date 1 is older than date2 by days', () => {
       const date1 = { year: 2021, month: 11, dayOfMonth: 1 };
       const date2 = { year: 2021, month: 11, dayOfMonth: 2 };
 
@@ -44,9 +51,16 @@ describe('timeOperator', () => {
       expect(timeOperator.compareDates(date1, date2)).toBe(0);
     });
 
-    it('should return 1 if the date 1 is more recent than date2', () => {
+    it('should return 1 if the date 1 is more recent than date2 by days', () => {
       const date1 = { year: 2021, month: 11, dayOfMonth: 2 };
       const date2 = { year: 2021, month: 11, dayOfMonth: 1 };
+
+      expect(timeOperator.compareDates(date1, date2)).toBe(1);
+    });
+
+    it('should return 1 if the date 1 is more recent than date2 by year', () => {
+      const date1 = { year: 2022, month: 0, dayOfMonth: 30 };
+      const date2 = { year: 2021, month: 9, dayOfMonth: 28 };
 
       expect(timeOperator.compareDates(date1, date2)).toBe(1);
     });

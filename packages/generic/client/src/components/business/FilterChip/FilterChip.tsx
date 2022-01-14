@@ -35,7 +35,11 @@ function FilterChip(props: { filter: filterType }) {
         </div>
       );
     case 'dateInterval':
-      const dateIntervalLabel = computeDateIntervalChipLabel(filter.value.startDate, filter.value.endDate);
+      const dateIntervalLabel = computeDateIntervalChipLabel(
+        filter.chipLabelPrefix,
+        filter.value.startDate,
+        filter.value.endDate,
+      );
       if (!dateIntervalLabel) {
         return null;
       }
@@ -49,27 +53,43 @@ function FilterChip(props: { filter: filterType }) {
       );
   }
 
-  function computeDateIntervalChipLabel(startDate: Date | undefined, endDate: Date | undefined) {
+  function computeDateIntervalChipLabel(
+    chipLabelPrefix: string,
+    startDate: Date | undefined,
+    endDate: Date | undefined,
+  ) {
     if (!startDate && endDate) {
-      return format(wordings.shared.intervalDate.endDate, {
-        endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),
-      });
+      return (
+        chipLabelPrefix +
+        format(wordings.shared.intervalDate.endDate, {
+          endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),
+        })
+      );
     }
     if (startDate && !endDate) {
-      return format(wordings.shared.intervalDate.startDate, {
-        startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
-      });
+      return (
+        chipLabelPrefix +
+        format(wordings.shared.intervalDate.startDate, {
+          startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
+        })
+      );
     }
     if (startDate && endDate) {
       if (areSameDay(startDate, endDate)) {
-        return format(wordings.shared.intervalDate.sameDay, {
-          date: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
-        });
+        return (
+          chipLabelPrefix +
+          format(wordings.shared.intervalDate.sameDay, {
+            date: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
+          })
+        );
       }
-      return format(wordings.shared.intervalDate.both, {
-        startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
-        endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),
-      });
+      return (
+        chipLabelPrefix +
+        format(wordings.shared.intervalDate.both, {
+          startDate: timeOperator.convertTimestampToReadableDate(startDate.getTime(), false),
+          endDate: timeOperator.convertTimestampToReadableDate(endDate.getTime(), false),
+        })
+      );
     }
     return undefined;
   }

@@ -54,15 +54,15 @@ function ProblemReportsTable(props: {
     return [
       {
         id: 'documentNumber',
-        title: wordings.problemReportsPage.table.columnTitles.number,
+        title: wordings.business.filters.columnTitles.documentNumber,
         canBeSorted: true,
         extractor: (problemReportWithDetails) => problemReportWithDetails.document.documentNumber,
         width: 2,
       },
       {
         id: 'publicationCategory',
-        title: wordings.problemReportsPage.table.columnTitles.publicationCategory.title,
-        tooltipText: wordings.problemReportsPage.table.columnTitles.publicationCategory.tooltipText,
+        title: wordings.business.filters.columnTitles.publicationCategory.title,
+        tooltipText: wordings.business.filters.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
         getSortingValue: (problemReport) => problemReport.document.publicationCategory.length,
         extractor: (problemReport) => problemReport.document.publicationCategory.join(','),
@@ -82,7 +82,8 @@ function ProblemReportsTable(props: {
       },
       {
         id: 'userName',
-        title: wordings.problemReportsPage.table.columnTitles.workingUser,
+        title: wordings.business.filters.columnTitles.workingUser.title,
+        tooltipText: wordings.business.filters.columnTitles.workingUser.tooltipText,
         canBeSorted: true,
         extractor: (problemReportWithDetails) => problemReportWithDetails.user.name,
         width: 3,
@@ -90,7 +91,7 @@ function ProblemReportsTable(props: {
       {
         id: 'type',
         canBeSorted: true,
-        title: wordings.problemReportsPage.table.columnTitles.type,
+        title: wordings.business.filters.columnTitles.problemReportType,
         extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.type,
         render: (problemReportWithDetails) => (
           <ProblemReportIcon type={problemReportWithDetails.problemReport.type} iconSize={TABLE_ICON_SIZE} />
@@ -100,7 +101,7 @@ function ProblemReportsTable(props: {
       {
         id: 'status',
         canBeSorted: true,
-        title: wordings.problemReportsPage.table.columnTitles.status,
+        title: wordings.business.filters.columnTitles.status,
         extractor: (problemReportWithDetails) => problemReportWithDetails.document.status,
         render: (problemReportWithDetails) => (
           <DocumentStatusIcon status={problemReportWithDetails.document.status} iconSize={TABLE_ICON_SIZE} />
@@ -109,7 +110,7 @@ function ProblemReportsTable(props: {
       },
       {
         id: 'date',
-        title: wordings.problemReportsPage.table.columnTitles.date,
+        title: wordings.business.filters.columnTitles.problemReportDate,
         canBeSorted: true,
         extractor: (problemReportWithDetails) =>
           timeOperator.convertTimestampToReadableDate(problemReportWithDetails.problemReport.date, true),
@@ -119,7 +120,7 @@ function ProblemReportsTable(props: {
       {
         id: 'text',
         canBeSorted: true,
-        title: wordings.problemReportsPage.table.columnTitles.text,
+        title: wordings.business.filters.columnTitles.problemReportText,
         extractor: (problemReportWithDetails) => problemReportWithDetails.problemReport.text,
         width: 10,
         cellStyle: { maxWidth: `${PROBLEM_REPORT_TEXT_CELL_MAX_WIDTH}px`, overflow: 'hidden' },

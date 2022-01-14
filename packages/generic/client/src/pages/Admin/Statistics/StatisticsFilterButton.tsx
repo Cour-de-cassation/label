@@ -51,7 +51,7 @@ function StatisticsFilterButton(props: {
       return {
         kind: 'boolean' as const,
         name: 'mustHaveSubAnnotations',
-        label: wordings.statisticsPage.filter.fields.mustHaveSubAnnotations,
+        label: wordings.business.filters.fields.mustHaveSubAnnotations,
         checked: props.ressourceFilter.mustHaveSubAnnotations,
         chipLabel: wordings.business.filters.chips.mustHaveSubAnnotations,
         onToggle: () => {
@@ -67,7 +67,7 @@ function StatisticsFilterButton(props: {
       return {
         kind: 'boolean' as const,
         name: 'mustHaveSurAnnotations',
-        label: wordings.statisticsPage.filter.fields.mustHaveSurAnnotations,
+        label: wordings.business.filters.fields.mustHaveSurAnnotations,
         checked: props.ressourceFilter.mustHaveSurAnnotations,
         chipLabel: wordings.business.filters.chips.mustHaveSurAnnotations,
         onToggle: () => {
@@ -83,7 +83,7 @@ function StatisticsFilterButton(props: {
       return {
         kind: 'dropdown' as const,
         name: 'publicationCategory',
-        label: wordings.statisticsPage.filter.fields.publicationCategory,
+        label: wordings.business.filters.fields.publicationCategoryLetter,
         possibleValues: props.availableStatisticFilters.publicationCategories,
         value: props.ressourceFilter.publicationCategory,
         onChange: (newPublicationCategory: string | undefined) => {
@@ -95,11 +95,14 @@ function StatisticsFilterButton(props: {
     function buildDateIntervalFilter() {
       return {
         kind: 'dateInterval' as const,
-        name: 'dateInterval',
+        name: 'treatmentDate',
         value: {
           startDate: props.ressourceFilter.startDate ? new Date(props.ressourceFilter.startDate) : undefined,
           endDate: props.ressourceFilter.endDate ? new Date(props.ressourceFilter.endDate) : undefined,
         },
+        labelStart: wordings.business.filters.fields.treatmentDate.start,
+        labelEnd: wordings.business.filters.fields.treatmentDate.end,
+        chipLabelPrefix: wordings.business.filters.chips.treatmentDate,
         extremumAvailableDates: {
           min: props.availableStatisticFilters.minDate,
           max: props.availableStatisticFilters.maxDate,
@@ -118,7 +121,7 @@ function StatisticsFilterButton(props: {
       return {
         kind: 'dropdown' as const,
         name: 'source',
-        label: wordings.statisticsPage.filter.fields.source,
+        label: wordings.business.filters.fields.source,
         possibleValues: props.availableStatisticFilters.sources,
         value: props.ressourceFilter.source,
         onChange: (newSource: string | undefined) => {
@@ -131,7 +134,7 @@ function StatisticsFilterButton(props: {
       return {
         kind: 'dropdown' as const,
         name: 'jurisdiction',
-        label: wordings.statisticsPage.filter.fields.jurisdiction,
+        label: wordings.business.filters.fields.jurisdiction,
         possibleValues: props.availableStatisticFilters.jurisdictions,
         value: props.ressourceFilter.jurisdiction,
         onChange: (newJurisdiction: string | undefined) => {
@@ -146,7 +149,7 @@ function StatisticsFilterButton(props: {
       return {
         kind: 'dropdown' as const,
         name: 'user',
-        label: wordings.statisticsPage.filter.fields.workingUser,
+        label: wordings.business.filters.fields.userName,
         possibleValues: props.users.map(({ name }) => name),
         value: userName,
         onChange: (userName: string | undefined) => {

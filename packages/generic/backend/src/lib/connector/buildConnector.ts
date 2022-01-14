@@ -273,6 +273,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
     const documentsToReset = documents.filter(
       (document) =>
+        document.creationDate &&
         document.creationDate >= dateBuilder.daysAgo(days) &&
         document.status !== 'done' &&
         document.status !== 'toBePublished',

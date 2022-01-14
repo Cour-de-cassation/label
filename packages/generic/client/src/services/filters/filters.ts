@@ -10,6 +10,7 @@ export {
   buildPublicationCategoryLetterFilter,
   buildUserNameFilter,
   buildTreatmentDateFilter,
+  buildDocumentCreationDateFilter,
   buildDocumentReviewStatusFilter,
   buildMustHaveSubAnnotationsFilter,
   buildMustHaveSurAnnotationsFilter,
@@ -62,6 +63,14 @@ type filtersType = {
     setValue: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) => void;
     extremumValues: { min: number | undefined; max: number | undefined };
   };
+  documentCreationDate: {
+    value: {
+      startDate: Date | undefined;
+      endDate: Date | undefined;
+    };
+    setValue: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) => void;
+    extremumValues: { min: number | undefined; max: number | undefined };
+  };
 };
 
 function buildPublicationCategoryLetterFilter({
@@ -77,7 +86,7 @@ function buildPublicationCategoryLetterFilter({
     kind: 'dropdown' as const,
     name: 'publicationCategoryLetter',
     computeChipLabel: (publicationCategoryLetter: string) =>
-      format(wordings.untreatedDocumentsPage.table.filter.chips.publicationCategoryLetter, {
+      format(wordings.business.filters.chips.publicationCategoryLetter, {
         publicationCategoryLetter,
       }),
     label: wordings.business.filters.fields.publicationCategoryLetter,
@@ -100,7 +109,7 @@ function buildSourceFilter({
     kind: 'dropdown' as const,
     name: 'source',
     computeChipLabel: (source: string) =>
-      format(wordings.untreatedDocumentsPage.table.filter.chips.source, {
+      format(wordings.business.filters.chips.source, {
         source,
       }),
     label: wordings.business.filters.fields.source,
@@ -123,8 +132,7 @@ function buildRouteFilter({
     label: wordings.business.filters.fields.route,
     possibleValues: (documentModule.fetchedModel.content.route.content as unknown) as string[],
     value,
-    computeChipLabel: (route: string) =>
-      wordings.untreatedDocumentsPage.table.filter.chips.routes[route as documentType['route']],
+    computeChipLabel: (route: string) => wordings.business.documentRoute[route as documentType['route']],
     computeReadableValue: (route: string) => wordings.business.documentRoute[route as documentType['route']],
     onChange: (route?: string) => setValue(route as documentType['route'] | undefined),
   };
@@ -187,6 +195,38 @@ function buildTreatmentDateFilter({
       min: extremumValues.min,
       max: extremumValues.max,
     },
+    labelStart: wordings.business.filters.fields.treatmentDate.start,
+    labelEnd: wordings.business.filters.fields.treatmentDate.end,
+    chipLabelPrefix: wordings.business.filters.chips.treatmentDate,
+    value: { startDate: value.startDate, endDate: value.endDate },
+    onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => {
+      setValue({ startDate: value.startDate, endDate: value.endDate });
+    },
+  };
+}
+
+function buildDocumentCreationDateFilter({
+  value,
+  setValue,
+  extremumValues,
+}: {
+  value: {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  };
+  setValue: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) => void;
+  extremumValues: { min: number | undefined; max: number | undefined };
+}) {
+  return {
+    kind: 'dateInterval' as const,
+    name: 'dateInterval',
+    extremumAvailableDates: {
+      min: extremumValues.min,
+      max: extremumValues.max,
+    },
+    chipLabelPrefix: wordings.business.filters.chips.documentCreationDate,
+    labelStart: wordings.business.filters.fields.documentCreationDate.start,
+    labelEnd: wordings.business.filters.fields.documentCreationDate.end,
     value: { startDate: value.startDate, endDate: value.endDate },
     onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => {
       setValue({ startDate: value.startDate, endDate: value.endDate });
@@ -204,7 +244,7 @@ function buildDocumentReviewStatusFilter({
   return {
     kind: 'dropdown' as const,
     name: 'documentReviewFilterStatus',
-    label: wordings.treatedDocumentsPage.table.filter.fields.documentReviewFilterStatus,
+    label: wordings.business.filters.fields.documentReviewFilterStatus,
     possibleValues: (documentReviewFilterStatuses as unknown) as string[],
     value,
     computeChipLabel: convertDocumentReviewStatusToReadable,
@@ -224,8 +264,8 @@ function buildMustHaveSubAnnotationsFilter({
   return {
     kind: 'boolean' as const,
     name: 'mustHaveSubAnnotations',
-    chipLabel: wordings.treatedDocumentsPage.table.filter.chips.mustHaveSubAnnotations,
-    label: wordings.treatedDocumentsPage.table.filter.fields.mustHaveSubAnnotations,
+    chipLabel: wordings.business.filters.chips.mustHaveSubAnnotations,
+    label: wordings.business.filters.fields.mustHaveSubAnnotations,
     checked: !!value,
     onToggle: () => setValue(!value),
   };
@@ -241,8 +281,8 @@ function buildMustHaveSurAnnotationsFilter({
   return {
     kind: 'boolean' as const,
     name: 'mustHaveSurAnnotations',
-    chipLabel: wordings.treatedDocumentsPage.table.filter.chips.mustHaveSurAnnotations,
-    label: wordings.treatedDocumentsPage.table.filter.fields.mustHaveSurAnnotations,
+    chipLabel: wordings.business.filters.chips.mustHaveSurAnnotations,
+    label: wordings.business.filters.fields.mustHaveSurAnnotations,
     checked: !!value,
     onToggle: () => setValue(!value),
   };

@@ -6,7 +6,13 @@ export { documentModel, fetchedDocumentModel };
 export type { documentType, fetchedDocumentType };
 
 const documentModelCommonFields = {
-  creationDate: { kind: 'primitive', content: 'number' },
+  creationDate: {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'number' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
   decisionMetadata: {
     kind: 'object',
     content: {

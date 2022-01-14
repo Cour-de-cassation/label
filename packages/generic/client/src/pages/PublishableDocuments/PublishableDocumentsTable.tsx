@@ -97,46 +97,50 @@ function buildPublishableDocumentsFields() {
   >> = [
     {
       id: 'documentNumber',
-      title: wordings.publishableDocumentsPage.table.columnTitles.number,
+      title: wordings.business.filters.columnTitles.documentNumber,
       canBeSorted: true,
       extractor: (publishableDocument) => JSON.stringify(publishableDocument.documentNumber),
       width: 10,
     },
     {
       id: 'jurisdiction',
-      title: wordings.publishableDocumentsPage.table.columnTitles.jurisdiction,
+      title: wordings.business.filters.columnTitles.jurisdiction.title,
+      tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
       canBeSorted: true,
       extractor: (publishableDocument) => publishableDocument.jurisdiction,
       width: 10,
     },
     {
       id: 'chamberName',
-      title: wordings.publishableDocumentsPage.table.columnTitles.chamberName,
+      title: wordings.business.filters.columnTitles.chamberName,
       canBeSorted: true,
       extractor: (publishableDocument) => publishableDocument.chamberName,
       width: 10,
     },
     {
       id: 'appealNumber',
-      title: wordings.publishableDocumentsPage.table.columnTitles.appealNumber,
+      title: wordings.business.filters.columnTitles.appealNumber,
       canBeSorted: true,
       extractor: (publishableDocument) => publishableDocument.appealNumber,
       width: 10,
     },
     {
       id: 'status',
-      title: wordings.publishableDocumentsPage.table.columnTitles.status,
+      title: wordings.business.filters.columnTitles.status,
       canBeSorted: true,
       extractor: (publishableDocument) => wordings.business.documentStatus[publishableDocument.status],
       width: 10,
     },
     {
       id: 'creationDate',
-      title: wordings.publishableDocumentsPage.table.columnTitles.importDate,
+      title: wordings.business.filters.columnTitles.creationDate.title,
+      tooltipText: wordings.business.filters.columnTitles.creationDate.tooltipText,
       canBeSorted: true,
       extractor: (publishableDocument) =>
-        timeOperator.convertTimestampToReadableDate(publishableDocument.creationDate, true),
-      getSortingValue: (publishableDocument) => publishableDocument.creationDate,
+        publishableDocument.creationDate
+          ? timeOperator.convertTimestampToReadableDate(publishableDocument.creationDate, true)
+          : '-',
+      getSortingValue: (publishableDocument) => publishableDocument.creationDate || 0,
       width: 10,
     },
   ];

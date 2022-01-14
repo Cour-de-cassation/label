@@ -3,13 +3,13 @@ import { dateType } from '@label/core';
 import { TooltipMenu, LabelledDropdown, SwitchButton, Text, DatePicker, Icon } from '../../generic';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { rectPositionType } from '../../../types';
-import { wordings } from '../../../wordings';
 import { filterType } from './filterType';
 import { buildComputeIsDateAvailable } from './lib';
 
 export { FilterTooltipMenu };
 
 const TOOLTIP_MENU_WIDTH = 400;
+const TOOLTIP_MENU_MAX_HEIGHT = 500;
 
 const DROPDOWN_WIDTH = 280;
 
@@ -63,19 +63,21 @@ function FilterTooltipMenu(props: { filters: filterType[]; onClose: () => void; 
         return (
           <div style={styles.dateIntervalContainer}>
             <DatePicker
+              isDisabled={!filter.extremumAvailableDates.min}
               onChange={buildOnStartDateChange(filter.onChange, filter.value.endDate)}
               value={filter.value.startDate}
               width={DATE_DROPDOWN_WIDTH}
-              label={wordings.business.filters.intervalDate.start}
+              label={filter.labelStart}
               parentRectPosition={props.rectPosition}
               computeIsDateAvailable={computeIsDateAvailable}
             />
             <Icon iconName="doubleArrow" />
             <DatePicker
+              isDisabled={!filter.extremumAvailableDates.max}
               onChange={buildOnEndDateChange(filter.onChange, filter.value.startDate)}
               value={filter.value.endDate}
               width={DATE_DROPDOWN_WIDTH}
-              label={wordings.business.filters.intervalDate.end}
+              label={filter.labelEnd}
               parentRectPosition={props.rectPosition}
               computeIsDateAvailable={computeIsDateAvailable}
             />
@@ -108,6 +110,8 @@ function FilterTooltipMenu(props: { filters: filterType[]; onClose: () => void; 
     return {
       container: {
         display: 'flex',
+        maxHeight: TOOLTIP_MENU_MAX_HEIGHT,
+        overflowX: 'scroll',
         flexDirection: 'column',
       },
       button: {

@@ -48,27 +48,27 @@ function StatisticsBox(props: {
 
     return [
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.wordsCount,
+        label: wordings.statisticsPage.box.fields.wordsCount,
         value: getComputationValue(aggregatedStatistic.wordsCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.annotationsCount,
+        label: wordings.statisticsPage.box.fields.annotationsCount,
         value: getComputationValue(aggregatedStatistic.annotationsCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotationsSensitiveCount,
+        label: wordings.statisticsPage.box.fields.subAnnotationsSensitiveCount,
         value: getComputationValue(aggregatedStatistic.subAnnotationsSensitiveCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.subAnnotationsNonSensitiveCount,
+        label: wordings.statisticsPage.box.fields.subAnnotationsNonSensitiveCount,
         value: getComputationValue(aggregatedStatistic.subAnnotationsNonSensitiveCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.surAnnotationsCount,
+        label: wordings.statisticsPage.box.fields.surAnnotationsCount,
         value: getComputationValue(aggregatedStatistic.surAnnotationsCount),
       },
       {
-        label: wordings.treatedDocumentsPage.table.statistics.fields.treatmentDuration,
+        label: wordings.statisticsPage.box.fields.treatmentDuration,
         value: getReadableDuration(),
       },
     ];

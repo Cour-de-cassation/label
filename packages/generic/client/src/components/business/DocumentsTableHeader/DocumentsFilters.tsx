@@ -5,6 +5,7 @@ import { Text } from '../../generic';
 import { customThemeType, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import {
+  buildDocumentCreationDateFilter,
   buildDocumentReviewStatusFilter,
   buildJurisdictionFilter,
   buildMustHaveSubAnnotationsFilter,
@@ -32,9 +33,7 @@ function DocumentsFilters(props: { filters: Partial<filtersType>; resultsCount: 
           <FilterButton filters={filters} />
         </div>
         <div style={styles.resultsCountContainer}>
-          <Text>
-            {format(wordings.untreatedDocumentsPage.table.filter.resultsCount, { count: props.resultsCount })}
-          </Text>
+          <Text>{format(wordings.business.filters.resultsCount, { count: props.resultsCount })}</Text>
         </div>
       </div>
       <div style={styles.chipsContainer}>
@@ -49,6 +48,9 @@ function DocumentsFilters(props: { filters: Partial<filtersType>; resultsCount: 
     const filters = [];
     if (props.filters.treatmentDate) {
       filters.push(buildTreatmentDateFilter(props.filters.treatmentDate));
+    }
+    if (props.filters.documentCreationDate) {
+      filters.push(buildDocumentCreationDateFilter(props.filters.documentCreationDate));
     }
     if (props.filters.source) {
       filters.push(buildSourceFilter(props.filters.source));

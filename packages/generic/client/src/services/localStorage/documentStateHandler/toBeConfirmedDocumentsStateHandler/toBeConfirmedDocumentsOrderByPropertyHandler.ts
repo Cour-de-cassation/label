@@ -13,7 +13,7 @@ const toBeConfirmedDocumentOrderByProperties = [
   'publicationCategory',
   'userName',
   'reviewStatus',
-  'date',
+  'treatmentDate',
   'duration',
 ] as const;
 

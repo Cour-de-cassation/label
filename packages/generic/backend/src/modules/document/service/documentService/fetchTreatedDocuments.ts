@@ -21,6 +21,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
     [
       '_id',
       'decisionMetadata',
+      'creationDate',
       'documentNumber',
       'publicationCategory',
       'reviewStatus',
@@ -95,6 +96,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
     return {
       document: {
         _id: treatedDocument._id,
+        creationDate: treatedDocument.creationDate,
         documentNumber: treatedDocument.documentNumber,
         jurisdiction: treatedDocument.decisionMetadata.jurisdiction,
         occultationBlock: treatedDocument.decisionMetadata.occultationBlock,

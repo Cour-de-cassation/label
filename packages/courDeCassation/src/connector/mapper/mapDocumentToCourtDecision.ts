@@ -9,14 +9,17 @@ function mapDocumentToCourtDecision(document: documentType): decisionType {
     dateDecision = new Date();
     dateDecision.setTime(document.decisionMetadata.date);
   }
-  const dateCreation = new Date();
-  dateCreation.setTime(document.creationDate);
+  let dateCreation;
+  if (document.creationDate) {
+    dateCreation = new Date();
+    dateCreation.setTime(document.creationDate);
+  }
 
   return decisionModule.lib.generateDecision({
     _id: idModule.lib.buildId(document.externalId),
     blocOccultation: document.decisionMetadata.occultationBlock,
     chamberName: document.decisionMetadata.chamberName,
-    dateCreation: dateCreation.toISOString(),
+    dateCreation: dateCreation?.toISOString(),
     dateDecision: dateDecision?.toISOString(),
     decatt: document.decisionMetadata.boundDecisionDocumentNumbers,
     formation: document.decisionMetadata.session,

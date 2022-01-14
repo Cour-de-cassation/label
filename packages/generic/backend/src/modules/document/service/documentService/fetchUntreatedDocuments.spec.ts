@@ -98,6 +98,7 @@ function projectDocument(document: documentType) {
     ...projectFakeObjects(document, [
       '_id',
       'documentNumber',
+      'creationDate',
       'publicationCategory',
       'source',
       'route',

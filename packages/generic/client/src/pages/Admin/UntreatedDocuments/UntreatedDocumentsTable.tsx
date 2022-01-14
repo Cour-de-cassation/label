@@ -176,15 +176,15 @@ function UntreatedDocumentsTable(props: {
     >> = [
       {
         id: 'documentNumber',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.number,
+        title: wordings.business.filters.columnTitles.documentNumber,
         canBeSorted: true,
         extractor: (untreatedDocument) => untreatedDocument.document.documentNumber,
         width: 2,
       },
       {
         id: 'occultationBlock',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.occultationBlock.title,
-        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.occultationBlock.tooltipText,
+        title: wordings.business.filters.columnTitles.occultationBlock.title,
+        tooltipText: wordings.business.filters.columnTitles.occultationBlock.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
         getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
@@ -192,16 +192,16 @@ function UntreatedDocumentsTable(props: {
       },
       {
         id: 'jurisdiction',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.jurisdiction.title,
-        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.jurisdiction.tooltipText,
+        title: wordings.business.filters.columnTitles.jurisdiction.title,
+        tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
         width: 4,
       },
       {
         id: 'publicationCategory',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.title,
-        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
+        title: wordings.business.filters.columnTitles.publicationCategory.title,
+        tooltipText: wordings.business.filters.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
         getSortingValue: (untreatedDocument) => untreatedDocument.document.publicationCategory.length,
         extractor: (untreatedDocument) => untreatedDocument.document.publicationCategory.join(','),
@@ -221,23 +221,23 @@ function UntreatedDocumentsTable(props: {
       },
       {
         id: 'source',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.source.title,
-        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.source.tooltipText,
+        title: wordings.business.filters.columnTitles.source.title,
+        tooltipText: wordings.business.filters.columnTitles.source.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.source,
         width: 2,
       },
       {
         id: 'route',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.route.title,
-        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.route.tooltipText,
+        title: wordings.business.filters.columnTitles.route.title,
+        tooltipText: wordings.business.filters.columnTitles.route.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => wordings.business.documentRoute[treatedDocument.document.route],
         width: 2,
       },
       {
         id: 'userName',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.userName,
+        title: wordings.business.filters.columnTitles.userName,
         canBeSorted: true,
         width: 10,
         extractor: (untreatedDocument) =>
@@ -246,7 +246,7 @@ function UntreatedDocumentsTable(props: {
       {
         id: 'status',
         canBeSorted: true,
-        title: wordings.untreatedDocumentsPage.table.columnTitles.status,
+        title: wordings.business.filters.columnTitles.status,
         extractor: (untreatedDocument) => untreatedDocument.document.status,
         render: (untreatedDocument) => (
           <DocumentStatusIcon status={untreatedDocument.document.status} iconSize={TABLE_ICON_SIZE} />
@@ -255,15 +255,27 @@ function UntreatedDocumentsTable(props: {
       },
       {
         id: 'decisionDate',
-        title: wordings.untreatedDocumentsPage.table.columnTitles.decisionDate.title,
-        tooltipText: wordings.untreatedDocumentsPage.table.columnTitles.decisionDate.tooltipText,
+        title: wordings.business.filters.columnTitles.decisionDate.title,
+        tooltipText: wordings.business.filters.columnTitles.decisionDate.tooltipText,
         canBeSorted: true,
         extractor: (untreatedDocument) =>
           untreatedDocument.document.decisionDate
             ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionDate)
             : '-',
         getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionDate || 0,
-        width: 3,
+        width: 2,
+      },
+      {
+        id: 'creationDate',
+        title: wordings.business.filters.columnTitles.creationDate.title,
+        tooltipText: wordings.business.filters.columnTitles.creationDate.tooltipText,
+        canBeSorted: true,
+        extractor: (untreatedDocument) =>
+          untreatedDocument.document.creationDate
+            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.creationDate)
+            : '-',
+        getSortingValue: (untreatedDocument) => untreatedDocument.document.creationDate || 0,
+        width: 2,
       },
     ];
     return untreatedDocumentsFields;

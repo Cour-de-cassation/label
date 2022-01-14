@@ -5,11 +5,11 @@ function getNextMonthDate(date: Date) {
   const year = date.getFullYear();
   const nextMonthDate = new Date();
   if (month === 11) {
-    nextMonthDate.setFullYear(year + 1);
     nextMonthDate.setMonth(0);
+    nextMonthDate.setFullYear(year + 1);
   } else {
     nextMonthDate.setMonth(month + 1);
+    nextMonthDate.setFullYear(year);
   }
-
   return nextMonthDate;
 }

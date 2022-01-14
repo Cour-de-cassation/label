@@ -47,7 +47,7 @@ function convertDurationToReadableDuration(duration: number) {
 function compareDates(date1: dateType, date2: dateType) {
   if (date1.year < date2.year) {
     return -1;
-  } else if (date1.year > date1.year) {
+  } else if (date1.year > date2.year) {
     return 1;
   }
 

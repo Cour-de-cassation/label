@@ -18,10 +18,10 @@ function ComputationToggle(props: { value: computationType; onChange: (computati
   return (
     <div style={styles.toggle}>
       <div onClick={() => props.onChange('total')} style={buildToggleItemStyle('total')}>
-        <Text variant="h3">{wordings.treatedDocumentsPage.table.statistics.computation.total}</Text>
+        <Text variant="h3">{wordings.statisticsPage.box.computation.total}</Text>
       </div>
       <div onClick={() => props.onChange('average')} style={buildToggleItemStyle('average')}>
-        <Text variant="h3">{wordings.treatedDocumentsPage.table.statistics.computation.average}</Text>
+        <Text variant="h3">{wordings.statisticsPage.box.computation.average}</Text>
       </div>
     </div>
   );

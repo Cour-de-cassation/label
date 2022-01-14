@@ -325,6 +325,7 @@ const apiSchema = {
               kind: 'object',
               content: {
                 _id: documentModule.fetchedModel.content._id,
+                creationDate: documentModule.fetchedModel.content.creationDate,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
                 jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
                 occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
@@ -395,6 +396,7 @@ const apiSchema = {
               kind: 'object',
               content: {
                 _id: documentModule.fetchedModel.content._id,
+                creationDate: documentModule.fetchedModel.content.creationDate,
                 decisionDate: documentModule.fetchedModel.content.decisionMetadata.content.date,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
                 occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,

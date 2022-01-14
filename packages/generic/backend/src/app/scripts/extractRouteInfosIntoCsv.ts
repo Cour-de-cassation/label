@@ -41,7 +41,7 @@ async function extractRouteInfosIntoCsv() {
 
   const documentsToStore = documents.filter(
     ({ source, creationDate }) =>
-      source === 'jurinet' && creationDate > now.getTime(),
+      source === 'jurinet' && creationDate && creationDate > now.getTime(),
   );
 
   const routeInfos = documentsToStore.map((document) => {

@@ -28,6 +28,8 @@ function mapCourtDecisionToDocument(
   );
   const appealNumber = extractAppealNumber(sderCourtDecision.originalText);
 
+  const creationDate = convertToValidDate(sderCourtDecision.dateCreation);
+
   const decisionDate = convertToValidDate(sderCourtDecision.dateDecision);
 
   const source = sderCourtDecision.sourceName;
@@ -82,7 +84,7 @@ function mapCourtDecisionToDocument(
   );
 
   return documentModule.lib.buildDocument({
-    creationDate: new Date().getTime(),
+    creationDate: creationDate?.getTime(),
     decisionMetadata: {
       appealNumber: appealNumber || '',
       additionalTermsToAnnotate:

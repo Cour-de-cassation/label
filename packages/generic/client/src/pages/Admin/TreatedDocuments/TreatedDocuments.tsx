@@ -44,7 +44,6 @@ function TreatedDocuments(props: {
   const filteredTreatedDocuments = searchedDocumentNumber
     ? filterSearchedDocuments(props.treatedDocuments, searchedDocumentNumber)
     : getFilteredTreatedDocuments(props.treatedDocuments, filterValues);
-
   const filters = buildFilters();
 
   return (
@@ -96,10 +95,20 @@ function TreatedDocuments(props: {
           setAndStoreFilterValues({ ...filterValues, jurisdiction }),
       },
       treatmentDate: {
-        value: { startDate: filterValues.startDate, endDate: filterValues.endDate },
-        extremumValues: { min: filterInfo.minDate, max: filterInfo.maxDate },
+        value: { startDate: filterValues.treatmentStartDate, endDate: filterValues.treatmentEndDate },
+        extremumValues: { min: filterInfo.minTreatmentDate, max: filterInfo.maxTreatmentDate },
         setValue: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) =>
-          setAndStoreFilterValues({ ...filterValues, startDate, endDate }),
+          setAndStoreFilterValues({ ...filterValues, treatmentStartDate: startDate, treatmentEndDate: endDate }),
+      },
+      documentCreationDate: {
+        value: { startDate: filterValues.documentCreationStartDate, endDate: filterValues.documentCreationEndDate },
+        extremumValues: { min: filterInfo.minDocumentCreationDate, max: filterInfo.maxDocumentCreationDate },
+        setValue: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) =>
+          setAndStoreFilterValues({
+            ...filterValues,
+            documentCreationStartDate: startDate,
+            documentCreationEndDate: endDate,
+          }),
       },
       documentReviewFilterStatus: {
         value: filterValues.documentReviewFilterStatus,
@@ -152,18 +161,32 @@ function TreatedDocuments(props: {
         if (currentFilterKey === 'jurisdiction' && !!filterValues[currentFilterKey]) {
           return accumulator && treatedDocument.document.jurisdiction === filterValues.jurisdiction;
         }
-        if (currentFilterKey === 'startDate' && !!filterValues.startDate) {
+        if (currentFilterKey === 'treatmentStartDate' && !!filterValues.treatmentStartDate) {
           return (
             accumulator &&
-            treatedDocument.lastTreatmentDate !== undefined &&
-            treatedDocument.lastTreatmentDate >= filterValues.startDate.getTime()
+            !!treatedDocument.lastTreatmentDate &&
+            treatedDocument.lastTreatmentDate >= filterValues.treatmentStartDate.getTime()
           );
         }
-        if (currentFilterKey === 'endDate' && !!filterValues.endDate) {
+        if (currentFilterKey === 'treatmentEndDate' && !!filterValues.treatmentEndDate) {
           return (
             accumulator &&
-            treatedDocument.lastTreatmentDate !== undefined &&
-            treatedDocument.lastTreatmentDate <= filterValues.endDate.getTime()
+            !!treatedDocument.lastTreatmentDate &&
+            treatedDocument.lastTreatmentDate <= filterValues.treatmentEndDate.getTime()
+          );
+        }
+        if (currentFilterKey === 'documentCreationStartDate' && !!filterValues.documentCreationStartDate) {
+          return (
+            accumulator &&
+            !!treatedDocument.document.creationDate &&
+            treatedDocument.document.creationDate >= filterValues.documentCreationStartDate.getTime()
+          );
+        }
+        if (currentFilterKey === 'documentCreationEndDate' && !!filterValues.documentCreationEndDate) {
+          return (
+            accumulator &&
+            !!treatedDocument.document.creationDate &&
+            treatedDocument.document.creationDate <= filterValues.documentCreationEndDate.getTime()
           );
         }
         if (currentFilterKey === 'userName' && !!filterValues.userName) {
@@ -199,23 +222,26 @@ function TreatedDocuments(props: {
     );
     const sources = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.document.source));
     const userNames = uniq(flatten(treatedDocuments.map((treatedDocument) => treatedDocument.userNames)));
-    const maxDate =
-      treatedDocuments.length > 0
-        ? Math.max(
-            ...treatedDocuments
-              .filter(({ lastTreatmentDate }) => lastTreatmentDate !== undefined)
-              .map((treatedDocument) => treatedDocument.lastTreatmentDate as number),
-          )
-        : undefined;
-    const minDate =
-      treatedDocuments.length > 0
-        ? Math.min(
-            ...treatedDocuments
-              .filter(({ lastTreatmentDate }) => lastTreatmentDate !== undefined)
-              .map((treatedDocument) => treatedDocument.lastTreatmentDate as number),
-          )
-        : undefined;
-    return { jurisdictions, publicationCategoryLetters, userNames, sources, maxDate, minDate };
+    const lastTreatmentDates = treatedDocuments
+      .filter(({ lastTreatmentDate }) => !!lastTreatmentDate)
+      .map((treatedDocument) => treatedDocument.lastTreatmentDate as number);
+    const maxTreatmentDate = lastTreatmentDates.length > 0 ? Math.max(...lastTreatmentDates) : undefined;
+    const minTreatmentDate = lastTreatmentDates.length > 0 ? Math.min(...lastTreatmentDates) : undefined;
+    const creationDates = treatedDocuments
+      .filter(({ document }) => !!document.creationDate)
+      .map((treatedDocument) => treatedDocument.document.creationDate as number);
+    const maxDocumentCreationDate = creationDates.length > 0 ? Math.max(...creationDates) : undefined;
+    const minDocumentCreationDate = creationDates.length > 0 ? Math.min(...creationDates) : undefined;
+    return {
+      jurisdictions,
+      publicationCategoryLetters,
+      userNames,
+      sources,
+      maxTreatmentDate,
+      minTreatmentDate,
+      minDocumentCreationDate,
+      maxDocumentCreationDate,
+    };
   }
 
   function buildTreatedDocumentsFields() {
@@ -225,16 +251,15 @@ function TreatedDocuments(props: {
     >> = [
       {
         id: 'documentNumber',
-        title: wordings.treatedDocumentsPage.table.columnTitles.number.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.number.tooltipText,
+        title: wordings.business.filters.columnTitles.documentNumber,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.documentNumber,
         width: 2,
       },
       {
         id: 'occultationBlock',
-        title: wordings.treatedDocumentsPage.table.columnTitles.occultationBlock.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.occultationBlock.tooltipText,
+        title: wordings.business.filters.columnTitles.occultationBlock.title,
+        tooltipText: wordings.business.filters.columnTitles.occultationBlock.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
         getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
@@ -242,16 +267,16 @@ function TreatedDocuments(props: {
       },
       {
         id: 'jurisdiction',
-        title: wordings.treatedDocumentsPage.table.columnTitles.jurisdiction.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.jurisdiction.tooltipText,
+        title: wordings.business.filters.columnTitles.jurisdiction.title,
+        tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
         width: 4,
       },
       {
         id: 'publicationCategory',
-        title: wordings.treatedDocumentsPage.table.columnTitles.publicationCategory.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.publicationCategory.tooltipText,
+        title: wordings.business.filters.columnTitles.publicationCategory.title,
+        tooltipText: wordings.business.filters.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
         getSortingValue: (treatedDocument) => treatedDocument.document.publicationCategory.length,
         extractor: (treatedDocument) => treatedDocument.document.publicationCategory.join(','),
@@ -271,24 +296,24 @@ function TreatedDocuments(props: {
       },
       {
         id: 'source',
-        title: wordings.treatedDocumentsPage.table.columnTitles.source.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.source.tooltipText,
+        title: wordings.business.filters.columnTitles.source.title,
+        tooltipText: wordings.business.filters.columnTitles.source.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.document.source,
         width: 1,
       },
       {
         id: 'userName',
-        title: wordings.treatedDocumentsPage.table.columnTitles.workingUser.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.workingUser.tooltipText,
+        title: wordings.business.filters.columnTitles.workingUser.title,
+        tooltipText: wordings.business.filters.columnTitles.workingUser.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => treatedDocument.userNames.join(', '),
         width: 6,
       },
       {
         id: 'reviewStatus',
-        title: wordings.treatedDocumentsPage.table.columnTitles.reviewStatus.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.reviewStatus.tooltipText,
+        title: wordings.business.filters.columnTitles.reviewStatus.title,
+        tooltipText: wordings.business.filters.columnTitles.reviewStatus.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => convertDocumentReviewStatusToFilter(treatedDocument.document.reviewStatus),
         render: (treatedDocument) =>
@@ -301,15 +326,15 @@ function TreatedDocuments(props: {
       },
       {
         id: 'route',
-        title: wordings.treatedDocumentsPage.table.columnTitles.route.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.route.tooltipText,
+        title: wordings.business.filters.columnTitles.route.title,
+        tooltipText: wordings.business.filters.columnTitles.route.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) => wordings.business.documentRoute[treatedDocument.document.route],
         width: 2,
       },
       {
-        id: 'date',
-        title: wordings.treatedDocumentsPage.table.columnTitles.date,
+        id: 'lastTreatmentDate',
+        title: wordings.business.filters.columnTitles.treatmentDate,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatedDocument.lastTreatmentDate !== undefined
@@ -319,9 +344,21 @@ function TreatedDocuments(props: {
         width: 3,
       },
       {
+        id: 'creationDate',
+        title: wordings.business.filters.columnTitles.creationDate.title,
+        tooltipText: wordings.business.filters.columnTitles.creationDate.tooltipText,
+        canBeSorted: true,
+        extractor: (treatedDocument) =>
+          !!treatedDocument.document.creationDate
+            ? timeOperator.convertTimestampToReadableDate(treatedDocument.document.creationDate)
+            : '-',
+        getSortingValue: (treatedDocument) => treatedDocument.document.creationDate || 0,
+        width: 2,
+      },
+      {
         id: 'surAnnotationsCount',
-        title: wordings.treatedDocumentsPage.table.columnTitles.surAnnotationsCount.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.surAnnotationsCount.tooltipText,
+        title: wordings.business.filters.columnTitles.surAnnotationsCount.title,
+        tooltipText: wordings.business.filters.columnTitles.surAnnotationsCount.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatedDocument.statistic.surAnnotationsCount !== undefined
@@ -331,8 +368,8 @@ function TreatedDocuments(props: {
       },
       {
         id: 'subAnnotationsSensitiveCount',
-        title: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationsSensitiveCount.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationsSensitiveCount.tooltipText,
+        title: wordings.business.filters.columnTitles.subAnnotationsSensitiveCount.title,
+        tooltipText: wordings.business.filters.columnTitles.subAnnotationsSensitiveCount.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatedDocument.statistic.subAnnotationsSensitiveCount !== undefined
@@ -342,8 +379,8 @@ function TreatedDocuments(props: {
       },
       {
         id: 'subAnnotationsNonSensitiveCount',
-        title: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationsNonSensitiveCount.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.subAnnotationsNonSensitiveCount.tooltipText,
+        title: wordings.business.filters.columnTitles.subAnnotationsNonSensitiveCount.title,
+        tooltipText: wordings.business.filters.columnTitles.subAnnotationsNonSensitiveCount.tooltipText,
         canBeSorted: true,
         extractor: (treatedDocument) =>
           treatedDocument.statistic.subAnnotationsNonSensitiveCount !== undefined
@@ -354,8 +391,8 @@ function TreatedDocuments(props: {
       {
         id: 'duration',
         canBeSorted: true,
-        title: wordings.treatedDocumentsPage.table.columnTitles.duration.title,
-        tooltipText: wordings.treatedDocumentsPage.table.columnTitles.duration.tooltipText,
+        title: wordings.business.filters.columnTitles.duration.title,
+        tooltipText: wordings.business.filters.columnTitles.duration.tooltipText,
         extractor: (treatedDocument) =>
           treatedDocument.totalTreatmentDuration !== undefined
             ? timeOperator.convertDurationToReadableDuration(treatedDocument.totalTreatmentDuration)

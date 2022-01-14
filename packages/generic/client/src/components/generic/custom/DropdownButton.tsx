@@ -10,6 +10,7 @@ const LABELLED_DROPDOWN_BORDER_THICKNESS = 2;
 
 function DropdownButton<T extends string>(props: {
   error?: boolean;
+  isDisabled?: boolean;
   isOpen: boolean;
   item?: { icon?: ReactElement; text: string; value: T };
   label: string;
@@ -21,7 +22,7 @@ function DropdownButton<T extends string>(props: {
   const style = buildStyle(theme);
 
   return (
-    <Button disabledHover onClick={props.onClick} style={style.dropdown}>
+    <Button disabledHover disabled={props.isDisabled} onClick={props.onClick} style={style.dropdown}>
       <div style={style.dropdownContent}>
         <div style={style.dropdownText}>
           {props.item

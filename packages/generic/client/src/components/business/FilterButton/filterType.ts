@@ -22,6 +22,9 @@ type filterType =
   | {
       kind: 'dateInterval';
       name: string;
+      chipLabelPrefix: string;
+      labelStart: string;
+      labelEnd: string;
       extremumAvailableDates: { min: number | undefined; max: number | undefined };
       value: { startDate: Date | undefined; endDate: Date | undefined };
       onChange: (value: { startDate: Date | undefined; endDate: Date | undefined }) => void;

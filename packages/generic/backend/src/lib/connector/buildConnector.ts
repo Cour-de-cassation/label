@@ -20,7 +20,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     importTestDocumentsSince,
     resetDocument,
     resetAllDocumentsSince,
-    deleteJuricaDocumentsFromLabelDb,
+    deleteDocumentsOlderThan,
     extractDocumentAndNlpAnnotations,
   };
 
@@ -263,6 +263,42 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`DONE`);
   }
 
+  async function deleteDocumentsOlderThan({
+    days,
+    source,
+  }: {
+    days: number;
+    source: string;
+  }) {
+    logger.log(`deleteDocumentsOlderThan: days ${days}, source ${source}`);
+    const documentRepository = buildDocumentRepository();
+    const documents = await documentRepository.findAll();
+    logger.log(`Found ${documents.length} documents. Filtering...`);
+    const filteredDocuments = documents.filter(
+      (document) =>
+        document.source === source &&
+        document.creationDate &&
+        document.creationDate < dateBuilder.daysAgo(days),
+    );
+    logger.log(
+      `Found ${filteredDocuments} to reset. Resetting their status in SDER...`,
+    );
+    await connectorConfig.updateDocumentsToBeTreatedStatus(filteredDocuments);
+    logger.log(
+      'Documents status updated! Deleting the documents in the database...',
+    );
+    for (let i = 0, l = filteredDocuments.length; i < l; i++) {
+      logger.log(`Deleting document ${i + 1}/${l}...`);
+      try {
+        await documentService.deleteDocument(filteredDocuments[i]._id);
+      } catch (error) {
+        logger.error(`An error happened while deleting the document`);
+        logger.error(error);
+      }
+    }
+    logger.log(`DONE deleteDocumentsOlderThan`);
+  }
+
   async function resetAllDocumentsSince(days: number) {
     const documentRepository = buildDocumentRepository();
 
@@ -344,19 +380,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
       source,
       forceRequestRoute: false,
     });
-  }
-
-  async function deleteJuricaDocumentsFromLabelDb() {
-    const documentRepository = buildDocumentRepository();
-    const freeDocuments = await documentRepository.findAllByStatus(['free']);
-    const freeJuricaDocuments = freeDocuments.filter(
-      (document) => document.source === 'jurica',
-    );
-
-    await connectorConfig.updateDocumentsToBeTreatedStatus(freeJuricaDocuments);
-    await documentRepository.deleteManyByIds(
-      freeJuricaDocuments.map(({ _id }) => _id),
-    );
   }
 
   async function extractDocumentAndNlpAnnotations({

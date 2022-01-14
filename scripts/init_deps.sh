@@ -1,15 +1,16 @@
 #!/bin/bash
 
-export DEPS_SRC=$(pwd)/judilibre-admin
+export GIT_OPS=judilibre-ops
+export DEPS_SRC=$(pwd)/${GIT_OPS}
 export SCRIPTS_SRC=${DEPS_SRC}/scripts
 export KUBE_SRC=${DEPS_SRC}/k8s
 
 # clone
 if [ ! -d ${SCRIPTS_SRC} ];then
-    if ! (git clone https://oauth2:${GIT_TOKEN}@github.com/Cour-de-cassation/judilibre-admin > /dev/null 2>&1); then
-        echo -e "\e[31m❌ init failed, couldn't clone git judilibre-admin repository \e[0m" && exit 1;
+    if ! (git clone https://github.com/Cour-de-cassation/${GIT_OPS} > /dev/null 2>&1); then
+        echo -e "\e[31m❌ init failed, couldn't clone git ${GIT_OPS} repository \e[0m" && exit 1;
         if [ "${GIT_BRANCH}" == "master" ]; then
-            cd judilibre-admin;
+            cd ${GIT_OPS};
             git checkout master;
             cd ..;
         fi;

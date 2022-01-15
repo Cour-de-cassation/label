@@ -92,5 +92,227 @@ stringData:
         "db": ${MONGODB_PORT}
       }
     }
-
-
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-nlp-annotation
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "*/5 6-19 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 3600
+      template:
+        spec:
+          containers:
+          - name: ${APP_ID}-job-nlp-annotation
+            image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+            volumeMounts:
+            - name: ${APP_ID}-config
+              mountPath: /home/node/packages/courDeCassation/environments
+              readOnly: true
+            command:
+            - /bin/sh
+            args:
+            - -c
+            - node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment environments/prodEnvironment.json --settings settings/settings.json
+            env:
+            - name: RUN_MODE
+              value: PROD
+            - name: NODE_TLS_REJECT_UNAUTHORIZED
+              value: "0"
+          restartPolicy: Never
+          volumes:
+          - name: ${APP_ID}-config
+            secret:
+              secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-import-j-7
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "*/30 6-12 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+          - name: ${APP_ID}-job-import-j-7
+            image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+            volumeMounts:
+            - name: ${APP_ID}-config
+              mountPath: /home/node/packages/courDeCassation/environments
+              readOnly: true
+            command:
+            - /bin/sh
+            args:
+            - -c
+            - node dist/scripts/importAllDocumentsFromSderSince.js --days 7 --environment environments/prodEnvironment.json --settings settings/settings.json
+            env:
+            - name: RUN_MODE
+              value: PROD
+          restartPolicy: Never
+          volumes:
+          - name: ${APP_ID}-config
+            secret:
+              secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-import-1000
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "0 19 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+          - name: ${APP_ID}-job-import-1000
+            image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+            volumeMounts:
+            - name: ${APP_ID}-config
+              mountPath: /home/node/packages/courDeCassation/environments
+              readOnly: true
+            command:
+            - /bin/sh
+            args:
+            - -c
+            - node dist/scripts/autoImportDocumentsFromSder.js --count 1000 --threshold 1000 --environment environments/prodEnvironment.json --settings settings/settings.json
+            env:
+            - name: RUN_MODE
+              value: PROD
+          restartPolicy: Never
+          volumes:
+          - name: ${APP_ID}-config
+            secret:
+              secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-export-j-4
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "30 19 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+          - name: ${APP_ID}-job-export-j-4
+            image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+            volumeMounts:
+            - name: ${APP_ID}-config
+              mountPath: /home/node/packages/courDeCassation/environments
+              readOnly: true
+            command:
+            - /bin/sh
+            args:
+            - -c
+            - node dist/scripts/exportTreatedDocumentsSince.js --days 4 --environment environments/prodEnvironment.json --settings settings/settings.json
+            env:
+            - name: RUN_MODE
+              value: PROD
+          restartPolicy: Never
+          volumes:
+          - name: ${APP_ID}-config
+            secret:
+              secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-export-publishable
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "58 13 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+          - name: ${APP_ID}-job-export-publishable
+            image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+            volumeMounts:
+            - name: ${APP_ID}-config
+              mountPath: /home/node/packages/courDeCassation/environments
+              readOnly: true
+            command:
+            - /bin/sh
+            args:
+            - -c
+            - node dist/scripts/exportTreatedPublishableDocuments.js --environment environments/prodEnvironment.json --settings settings/settings.json
+            env:
+            - name: RUN_MODE
+              value: PROD
+          restartPolicy: Never
+          volumes:
+          - name: ${APP_ID}-config
+            secret:
+              secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-free-pending
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "*/17 4-19 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+          - name: ${APP_ID}-job-free-pending
+            image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+            volumeMounts:
+            - name: ${APP_ID}-config
+              mountPath: /home/node/packages/courDeCassation/environments
+              readOnly: true
+            command:
+            - /bin/sh
+            args:
+            - -c
+            - node dist/scripts/freePendingDocuments.js --sinceMinutes 18 --environment environments/prodEnvironment.json --settings settings/settings.json
+            env:
+            - name: RUN_MODE
+              value: PROD
+          restartPolicy: Never
+          volumes:
+          - name: ${APP_ID}-config
+            secret:
+              secretName: ${APP_ID}-config

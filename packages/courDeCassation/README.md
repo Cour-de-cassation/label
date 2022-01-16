@@ -56,9 +56,11 @@ To annotate all the documents that have not been annotated by the NLP engine yet
 
 ## Note: adaptation to docker or kubernetes (k8s)
 
+Ops doc for label can be read [here](https://github.com/Cour-de-cassation/Knowledge-base-ops/blob/master/plateforme-interne/integration-exploitation/apps-k8s/label.md).
+
 Migration is running to go to kubernetes. First step is a dockerized env
 Status :
-- production: use docker (future: k8s)
+- production: use kubectl (k8s)
 - pre-prod: neither docker or kubectl (future: k8s)
 
 ### with docker

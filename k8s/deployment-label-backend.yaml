@@ -99,7 +99,7 @@ metadata:
   name: ${APP_ID}-job-nlp-annotation
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "*/5 6-19 * * *"
+  schedule: "*/5 7-20 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -138,7 +138,7 @@ metadata:
   name: ${APP_ID}-job-import-j-7
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "*/30 6-12 * * *"
+  schedule: "*/30 7-13 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -175,7 +175,7 @@ metadata:
   name: ${APP_ID}-job-import-1000
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "0 19 * * *"
+  schedule: "0 20 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -212,7 +212,7 @@ metadata:
   name: ${APP_ID}-job-export-j-4
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "30 19 * * *"
+  schedule: "30 20 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -249,7 +249,7 @@ metadata:
   name: ${APP_ID}-job-export-publishable
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "58 13 * * *"
+  schedule: "58 14 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -286,7 +286,7 @@ metadata:
   name: ${APP_ID}-job-free-pending
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "*/17 4-19 * * *"
+  schedule: "*/17 7-20 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid

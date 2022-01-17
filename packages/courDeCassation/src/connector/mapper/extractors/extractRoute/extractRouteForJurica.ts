@@ -27,7 +27,7 @@ function extractRouteForJurica({
     const l = line.split(',');
     if (l[1]) {
       endCaseCodeData[
-        parseInt(l[0])
+        transformLetterCodeToDec({ code: l[0] })
       ] = l[1].toLowerCase() as documentType['route'];
     }
   });
@@ -40,7 +40,9 @@ function extractRouteForJurica({
   NACCodeCsv.split('\n').forEach((line) => {
     const l = line.split(',');
     if (l[1]) {
-      NACCodeData[parseInt(l[0])] = l[1].toLowerCase() as documentType['route'];
+      NACCodeData[
+        transformLetterCodeToDec({ code: l[0] })
+      ] = l[1].toLowerCase() as documentType['route'];
     }
   });
 
@@ -56,12 +58,14 @@ function extractRouteForJurica({
       decEndCaseCode <= 33.04 &&
       decEndCaseCode !== 33.03)
   ) {
-    if (endCaseCodeData[parseInt(endCaseCode)]) {
-      return endCaseCodeData[parseInt(endCaseCode)] as documentType['route'];
+    if (endCaseCodeData[decEndCaseCode]) {
+      return endCaseCodeData[decEndCaseCode] as documentType['route'];
     }
   }
 
   return (
-    (NACCodeData[parseInt(NACCode)] as documentType['route']) ?? 'exhaustive'
+    (NACCodeData[
+      transformLetterCodeToDec({ code: NACCode })
+    ] as documentType['route']) ?? 'exhaustive'
   );
 }

@@ -18,7 +18,6 @@ jobs:
       APP_KEYWORD: specific # to backend or client
       DOCKER_USERNAME: opendatajustice
       KUBE_NAMESPACE: judilibre-prive-label
-      KUBE_SERVICES_FORCE_UPDATE: deployment
       KUBE_TYPE: k3s
       KUBE_ZONE: prive
       NLP_API_HOST: https://nlp-pseudonymisation.judilibre-prive.local
@@ -51,12 +50,14 @@ jobs:
           APP_ID: label-backend
           API_PORT: 55430
           APP_KEYWORD: "true"
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          KUBE_SERVICES: service deployment jobs
+          KUBE_SERVICES_FORCE_UPDATE: deployment jobs
           MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
           MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
           NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
           NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           ROOT_PATH: label/api
           VERSION: ${{ steps.backend_version.outputs.version }}
       - name: 🔙🚀 Update remote app ☸️ -- backend
@@ -83,6 +84,7 @@ jobs:
           API_PORT: 55432
           APP_KEYWORD: html
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          KUBE_SERVICES_FORCE_UPDATE: deployment
           ROOT_PATH: label
           VERSION: ${{ steps.client_version.outputs.version }}
       - name: 👤🚀 Update remote app ☸️ -- client

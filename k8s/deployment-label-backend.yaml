@@ -38,20 +38,24 @@ spec:
         ports:
         - containerPort: ${API_PORT}
         readinessProbe:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
+          #exec:
+          #  command:
+          #  - /bin/sh
+          #  - -c
+          #  - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
+          tcpSocket:
+            port: ${API_PORT}
           initialDelaySeconds: 15
           periodSeconds: 15
           timeoutSeconds: 60
         livenessProbe:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
+          #exec:
+          #  command:
+          #  - /bin/sh
+          #  - -c
+          #  - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
+          tcpSocket:
+            port: ${API_PORT}
           initialDelaySeconds: 15
           periodSeconds: 15
           failureThreshold: 10

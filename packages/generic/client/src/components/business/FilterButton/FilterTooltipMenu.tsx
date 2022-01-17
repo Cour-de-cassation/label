@@ -111,7 +111,7 @@ function FilterTooltipMenu(props: { filters: filterType[]; onClose: () => void; 
       container: {
         display: 'flex',
         maxHeight: TOOLTIP_MENU_MAX_HEIGHT,
-        overflowX: 'scroll',
+        overflowY: 'auto',
         flexDirection: 'column',
       },
       button: {

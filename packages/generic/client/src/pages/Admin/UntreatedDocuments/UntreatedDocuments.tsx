@@ -63,6 +63,16 @@ function UntreatedDocuments(props: {
         setValue: (publicationCategoryLetter: documentType['publicationCategory'][number] | undefined) =>
           setAndStoreFilterValues({ ...filterValues, publicationCategoryLetter }),
       },
+      documentCreationDate: {
+        value: { startDate: filterValues.documentCreationStartDate, endDate: filterValues.documentCreationEndDate },
+        extremumValues: { min: filterInfo.minDocumentCreationDate, max: filterInfo.maxDocumentCreationDate },
+        setValue: ({ startDate, endDate }: { startDate: Date | undefined; endDate: Date | undefined }) =>
+          setAndStoreFilterValues({
+            ...filterValues,
+            documentCreationStartDate: startDate,
+            documentCreationEndDate: endDate,
+          }),
+      },
       route: {
         value: filterValues.route,
         setValue: (route: documentType['route'] | undefined) => setAndStoreFilterValues({ ...filterValues, route }),
@@ -107,6 +117,20 @@ function UntreatedDocuments(props: {
         if (currentFilterKey === 'jurisdiction' && !!filterValues.jurisdiction) {
           return accumulator && untreatedDocument.document.jurisdiction === filterValues.jurisdiction;
         }
+        if (currentFilterKey === 'documentCreationStartDate' && !!filterValues.documentCreationStartDate) {
+          return (
+            accumulator &&
+            !!untreatedDocument.document.creationDate &&
+            untreatedDocument.document.creationDate >= filterValues.documentCreationStartDate.getTime()
+          );
+        }
+        if (currentFilterKey === 'documentCreationEndDate' && !!filterValues.documentCreationEndDate) {
+          return (
+            accumulator &&
+            !!untreatedDocument.document.creationDate &&
+            untreatedDocument.document.creationDate <= filterValues.documentCreationEndDate.getTime()
+          );
+        }
         return accumulator;
       }, true as boolean);
     });
@@ -127,7 +151,18 @@ function UntreatedDocuments(props: {
     );
     const sources = uniq(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.source));
     const jurisdictions = uniq(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.jurisdiction));
-    return { publicationCategoryLetters, sources, jurisdictions };
+    const creationDates = untreatedDocuments
+      .filter(({ document }) => !!document.creationDate)
+      .map((untreatedDocument) => untreatedDocument.document.creationDate as number);
+    const maxDocumentCreationDate = creationDates.length > 0 ? Math.max(...creationDates) : undefined;
+    const minDocumentCreationDate = creationDates.length > 0 ? Math.min(...creationDates) : undefined;
+    return {
+      publicationCategoryLetters,
+      sources,
+      jurisdictions,
+      minDocumentCreationDate,
+      maxDocumentCreationDate,
+    };
   }
 
   function buildStyles(theme: customThemeType) {

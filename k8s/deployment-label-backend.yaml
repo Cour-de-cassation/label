@@ -40,25 +40,21 @@ spec:
         image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
         ports:
         - containerPort: ${API_PORT}
-        readinessProbe:
-          #exec:
-          #  command:
-          #  - /bin/sh
-          #  - -c
-          #  - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
-          tcpSocket:
-            port: ${API_PORT}
+        startupProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl -s --fail --max-time 2 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
           initialDelaySeconds: 15
-          periodSeconds: 15
-          timeoutSeconds: 60
+          periodSeconds: 5
+          failureThreshold: 20
         livenessProbe:
-          #exec:
-          #  command:
-          #  - /bin/sh
-          #  - -c
-          #  - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
-          tcpSocket:
-            port: ${API_PORT}
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:${API_PORT}/${ROOT_PATH}/health" | egrep -q '${APP_KEYWORD}'
           initialDelaySeconds: 15
           periodSeconds: 15
           failureThreshold: 10

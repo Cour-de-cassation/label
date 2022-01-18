@@ -12,6 +12,7 @@ import { IconButton } from './IconButton';
 import { IconDropdown } from './IconDropdown';
 import { LabelledDropdown } from './LabelledDropdown';
 import { Loader } from './Loader';
+import { LoginForm } from './LoginForm';
 import { PaginatedTable } from './PaginatedTable';
 import { PopUp } from './PopUp';
 import { RefreshButton } from './RefreshButton';
@@ -34,6 +35,7 @@ export {
   IconDropdown,
   LabelledDropdown,
   Loader,
+  LoginForm,
   PaginatedTable,
   PopUp,
   RefreshButton,

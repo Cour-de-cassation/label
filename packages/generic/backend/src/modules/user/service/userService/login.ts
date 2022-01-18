@@ -1,4 +1,4 @@
-import { userModule, userType } from '@label/core';
+import { errorHandlers, userModule, userType } from '@label/core';
 import { jwtSigner, logger } from '../../../../utils';
 import { buildUserRepository } from '../../repository';
 
@@ -41,7 +41,7 @@ function buildLogin(checkCallAttempts: (identifier: string) => void) {
       };
     } catch (err) {
       logger.error(err);
-      throw new Error('Login failed');
+      throw errorHandlers.authenticationErrorHandler.build(`Login failed`);
     }
   }
 }

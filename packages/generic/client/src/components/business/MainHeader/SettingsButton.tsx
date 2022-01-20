@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { IconButton } from 'pelta-design-system';
 import { wordings } from '../../../wordings';
-import { IconButton } from '../../generic';
 import { SettingsDrawer } from './SettingsDrawer';
 
 export { SettingsButton };

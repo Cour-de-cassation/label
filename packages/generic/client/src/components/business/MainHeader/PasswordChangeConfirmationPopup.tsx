@@ -1,7 +1,6 @@
 import React from 'react';
-import { customThemeType, useCustomTheme } from '../../../styles';
+import { customThemeType, useCustomTheme, ButtonWithIcon, PopUp, Text } from 'pelta-design-system';
 import { wordings } from '../../../wordings';
-import { ButtonWithIcon, PopUp, Text } from '../../generic';
 
 export { PasswordChangeConfirmationPopup };
 

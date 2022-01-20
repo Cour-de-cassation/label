@@ -1,6 +1,7 @@
 import React from 'react';
+import { customThemeType, heights, useCustomTheme } from 'pelta-design-system';
 import { routes } from '../../../pages';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { MenuIcon } from './MenuIcon';
 

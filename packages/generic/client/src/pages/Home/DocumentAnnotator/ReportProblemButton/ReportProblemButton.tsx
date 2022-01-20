@@ -1,7 +1,6 @@
 import React, { MouseEvent, useState } from 'react';
-import { IconButton } from '../../../../components';
+import { IconButton, positionType } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
-import { positionType } from '../../../../types';
 import { ReportProblemToolTipMenu } from './ReportProblemToolTipMenu';
 
 export { ReportProblemButton };

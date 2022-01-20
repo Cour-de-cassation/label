@@ -1,10 +1,11 @@
 import React from 'react';
 import { uniq } from 'lodash';
+import { customThemeType, useCustomTheme, Header, IconButton, Text } from 'pelta-design-system';
 import { annotationLinkHandler, annotationModule, settingsModule } from '@label/core';
-import { CategoryIcon, Header, IconButton, Text } from '../../../../../components';
+import { CategoryIcon } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../../services/documentViewerMode';
-import { customThemeType, heights, useCustomTheme } from '../../../../../styles';
+import { heights } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
 
 export { OccurrenceHeader };

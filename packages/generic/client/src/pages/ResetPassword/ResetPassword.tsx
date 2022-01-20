@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { ConfirmationPopup, ResetPasswordForm } from '../../components';
+import { customThemeType, useCustomTheme, ConfirmationPopup } from 'pelta-design-system';
+import { ResetPasswordForm } from '../../components';
 import { localStorage } from '../../services/localStorage';
-import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
 import { routes } from '../routes';
 

@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
-import { positionType } from '../../../../types';
+import { positionType } from 'pelta-design-system';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
 import { computeMultilineSelection, textNeighboursType } from '../lib';
 

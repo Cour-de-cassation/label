@@ -8,15 +8,8 @@ import {
   settingsType,
   settingsModule,
 } from '@label/core';
-import { customThemeType, useCustomTheme } from '../../../styles';
-import {
-  ButtonWithIcon,
-  CategoryIcon,
-  ComponentsList,
-  Icon,
-  PublicationCategoryBadge,
-  Text,
-} from '../../../components';
+import { customThemeType, useCustomTheme, ButtonWithIcon, ComponentsList, Icon, Text } from 'pelta-design-system';
+import { CategoryIcon, PublicationCategoryBadge } from '../../../components';
 import { wordings } from '../../../wordings';
 import { computeGenericDocumentInfoEntries } from './computeGenericDocumentInfoEntries';
 import { computeSpecificDocumentInfoEntries } from './computeSpecificDocumentInfoEntries';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { apiRouteOutType, userType } from '@label/core';
-import { ConfirmationPopup, Table, tableRowFieldType } from '../../../components';
+import { ConfirmationPopup, Table, tableRowFieldType } from 'pelta-design-system';
 import { wordings } from '../../../wordings';
 import { apiCaller } from '../../../api';
 import { PasswordResetSuccessPopup } from './PasswordResetSuccessPopup';

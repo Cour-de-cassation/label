@@ -1,8 +1,8 @@
 import React from 'react';
 import { settingsModule } from '@label/core';
-import { customThemeType, useCustomTheme } from '../../../../styles';
-import { Text, CategoryIcon } from '../../../../components';
+import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
+import { CategoryIcon } from '../../../../components';
 
 export { StrickenCategory };
 

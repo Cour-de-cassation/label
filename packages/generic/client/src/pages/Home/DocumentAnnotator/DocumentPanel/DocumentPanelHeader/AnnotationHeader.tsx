@@ -1,6 +1,6 @@
 import React from 'react';
-import { Header } from '../../../../../components';
-import { heights, useCustomTheme } from '../../../../../styles';
+import { useCustomTheme, Header } from 'pelta-design-system';
+import { heights } from '../../../../../styles';
 
 export { AnnotationHeader };
 

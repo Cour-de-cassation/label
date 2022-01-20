@@ -1,6 +1,5 @@
 import React from 'react';
-import { ButtonWithIcon, PopUp, Text } from '../../../../components';
-import { customThemeType, useCustomTheme } from '../../../../styles';
+import { customThemeType, useCustomTheme, ButtonWithIcon, PopUp, Text } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 
 export { WorkingUserCreatedPopUp };

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Header, IconButton, MenuBar, Text } from '../..';
+import { customThemeType, heights, useCustomTheme, Header, IconButton, MenuBar, Text } from 'pelta-design-system';
 import { localStorage } from '../../../services/localStorage';
-import { customThemeType, heights, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { AdminViewDropdown } from './AdminViewDropdown';
 import { SettingsButton } from './SettingsButton';

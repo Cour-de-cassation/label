@@ -1,8 +1,7 @@
-import { documentType, idModule } from '@label/core';
-import { useCustomTheme } from '../../../../styles';
+import { useCustomTheme, Drawer } from 'pelta-design-system';
 import React from 'react';
 import format from 'string-template';
-import { Drawer } from '../../../../components';
+import { documentType, idModule } from '@label/core';
 import { wordings } from '../../../../wordings';
 import { SettingsDataFetcher } from '../../../SettingsDataFetcher';
 import { AnnotationsDiffDetails } from './AnnotationsDiffDetails';

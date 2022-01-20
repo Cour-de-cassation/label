@@ -1,8 +1,7 @@
 import React from 'react';
 import { annotationChunkType, textChunkType } from '@label/core';
+import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { splittedTextByLineType } from '../lib';
-import { Text } from '../../../../components';
-import { customThemeType, useCustomTheme } from '../../../../styles';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { DocumentText } from './DocumentText';
 import { DocumentAnnotationText } from './DocumentAnnotationText';

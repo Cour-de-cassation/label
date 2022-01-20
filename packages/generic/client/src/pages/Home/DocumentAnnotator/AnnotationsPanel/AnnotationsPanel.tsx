@@ -1,7 +1,7 @@
 import React from 'react';
 import { settingsModule, fetchedDocumentType, documentModule } from '@label/core';
-import { Icon, Text } from '../../../../components';
-import { customThemeType, getColor, heights, useCustomTheme, useDisplayMode } from '../../../../styles';
+import { Icon, Text, customThemeType, getColor, useCustomTheme, useDisplayMode } from 'pelta-design-system';
+import { heights } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTable } from './CategoryTable';

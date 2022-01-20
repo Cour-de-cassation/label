@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+import { customThemeType, useCustomTheme, ButtonWithIcon, RichTextInput } from 'pelta-design-system';
 import { apiCaller } from '../../../api';
 import { localStorage } from '../../../services/localStorage';
-import { customThemeType, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { ButtonWithIcon, RichTextInput } from '../../generic';
 
 export { ResetPasswordForm };
 

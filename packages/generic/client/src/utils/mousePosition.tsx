@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactElement, useState } from 'react';
-import { positionType } from '../types';
+import { positionType } from 'pelta-design-system';
 
 export { useMousePosition, MouseMoveListener };
 

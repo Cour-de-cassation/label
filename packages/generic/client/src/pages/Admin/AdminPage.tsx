@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { AdminMenu, MainHeader, Text } from '../../components';
-import { heights } from '../../styles';
+import { heights, Text } from 'pelta-design-system';
+import { AdminMenu, MainHeader } from '../../components';
 
 export { AdminPage };
 

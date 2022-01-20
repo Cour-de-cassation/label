@@ -8,8 +8,8 @@ import {
   documentModule,
   assignationType,
 } from '@label/core';
-import { MainHeader } from '../../components';
 import { apiCaller } from '../../api';
+import { MainHeader } from '../../components';
 import { buildAnnotationsCommitter } from '../../services/annotatorState';
 import { MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
 import { DocumentSelector } from './DocumentSelector';

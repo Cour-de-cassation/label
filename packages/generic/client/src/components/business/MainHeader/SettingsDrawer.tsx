@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDisplayMode, ButtonWithIcon, Drawer, RadioButton, Text } from 'pelta-design-system';
 import { routes } from '../../../pages';
 import { localStorage } from '../../../services/localStorage';
-import { useDisplayMode } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { ButtonWithIcon, Drawer, RadioButton, Text } from '../../generic';
 import { ResetPasswordForm } from '../ResetPasswordForm';
 import { PasswordChangeConfirmationPopup } from './PasswordChangeConfirmationPopup';
 import { SettingsSection } from './SettingsSection';

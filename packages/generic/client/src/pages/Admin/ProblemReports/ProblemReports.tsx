@@ -1,7 +1,7 @@
 import React from 'react';
 import { apiRouteOutType } from '@label/core';
-import { RefreshButton } from '../../../components';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { customThemeType, useCustomTheme, RefreshButton } from 'pelta-design-system';
+import { heights, widths } from '../../../styles';
 import { ProblemReportsTable } from './ProblemReportsTable';
 
 export { ProblemReports };

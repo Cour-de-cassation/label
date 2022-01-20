@@ -1,4 +1,4 @@
-import { orderDirectionType } from '../../../../components';
+import { orderDirectionType } from 'pelta-design-system';
 import { localStorageHandler } from '../../localStorageHandler';
 import { localStorageMappers } from '../../localStorageMappers';
 

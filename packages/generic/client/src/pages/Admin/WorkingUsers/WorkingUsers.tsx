@@ -1,10 +1,10 @@
 import React from 'react';
 import { apiRouteOutType } from '@label/core';
-import { tableRowFieldType } from '../../../components';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { customThemeType, useCustomTheme, tableRowFieldType } from 'pelta-design-system';
+import { heights, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
-import { WorkingUsersTable } from './WorkingUsersTable';
 import { AddWorkingUserButton } from './AddUserDrawer/AddUserButton';
+import { WorkingUsersTable } from './WorkingUsersTable';
 
 export { WorkingUsers };
 

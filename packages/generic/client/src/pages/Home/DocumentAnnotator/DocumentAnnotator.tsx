@@ -1,16 +1,16 @@
 import React, { ReactElement, useRef } from 'react';
 import { settingsModule } from '@label/core';
-import { heights, widths } from '../../../styles';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
+import { AnonymizerBuilderContextProvider } from '../../../services/anonymizer';
 import { useMonitoring } from '../../../services/monitoring';
+import { ViewerScrollerContextProvider } from '../../../services/viewerScroller';
+import { heights, widths } from '../../../styles';
 import { AnnotationsPanel } from './AnnotationsPanel';
 import { DocumentPanel } from './DocumentPanel';
 import { useKeyboardShortcutsHandler } from './hooks';
 import { annotationPerCategoryAndEntityType, getSplittedTextByLine, groupByCategoryAndEntity } from './lib';
 import { DocumentAnnotatorFooter } from './DocumentAnnotatorFooter';
-import { AnonymizerBuilderContextProvider } from '../../../services/anonymizer';
-import { ViewerScrollerContextProvider } from '../../../services/viewerScroller';
 
 export { DocumentAnnotator };
 

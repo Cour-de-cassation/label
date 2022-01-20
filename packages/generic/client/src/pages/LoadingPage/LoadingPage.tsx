@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, Loader } from '../../components';
-import { customThemeType, useCustomTheme } from '../../styles';
+import { customThemeType, useCustomTheme, Text, Loader } from 'pelta-design-system';
 import { wordings } from '../../wordings';
 
 export { LoadingPage };

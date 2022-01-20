@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { documentModule, documentType } from '@label/core';
+import {
+  customThemeType,
+  useCustomTheme,
+  ButtonWithIcon,
+  ComponentsList,
+  IconButton,
+  SwitchButton,
+  Text,
+} from 'pelta-design-system';
 import { apiCaller } from '../../../api';
-import { ButtonWithIcon, ComponentsList, IconButton, SwitchButton, Text } from '../../../components';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { useAlert } from '../../../services/alert';
 import { useDocumentViewerModeHandler } from '../../../services/documentViewerMode';
 import { useMonitoring } from '../../../services/monitoring';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { widths, heights } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
 import { CopyAnonymizedTextButton } from './CopyAnonymizedTextButton';

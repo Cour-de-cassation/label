@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ButtonWithIcon } from '../../../../components';
+import { ButtonWithIcon } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 import { AddWorkingUserDrawer } from './AddUserDrawer';
 

@@ -7,8 +7,9 @@ import {
   fetchedDocumentType,
   settingsType,
 } from '@label/core';
+import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { apiCaller } from '../../api';
-import { MainHeader, PublicationCategoryBadge, Text } from '../../components';
+import { MainHeader, PublicationCategoryBadge } from '../../components';
 import {
   annotationsCommitterType,
   AnnotatorStateHandlerContextProvider,
@@ -18,7 +19,6 @@ import { useMonitoring } from '../../services/monitoring';
 import { useAlert } from '../../services/alert';
 import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
-import { customThemeType, useCustomTheme } from '../../styles';
 
 export { HomeDocumentAnnotator };
 

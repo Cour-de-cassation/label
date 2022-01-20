@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { uniq, flatten } from 'lodash';
 import { apiRouteOutType, keysOf, userType, documentType } from '@label/core';
+import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { DocumentsTableHeader } from '../../../components';
 import { localStorage, untreatedDocumentFilterType } from '../../../services/localStorage';
 import { filtersType } from '../../../services/filters';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { heights, widths } from '../../../styles';
 import { UntreatedDocumentsTable } from './UntreatedDocumentsTable';
 
 export { UntreatedDocuments };

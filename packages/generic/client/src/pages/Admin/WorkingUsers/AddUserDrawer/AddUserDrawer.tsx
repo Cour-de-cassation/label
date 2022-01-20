@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { userModule, userType } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { ButtonWithIcon, Drawer, LabelledDropdown, RichTextInput } from '../../../../components';
-import { customThemeType, useCustomTheme } from '../../../../styles';
+import {
+  customThemeType,
+  useCustomTheme,
+  ButtonWithIcon,
+  Drawer,
+  LabelledDropdown,
+  RichTextInput,
+} from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 import { WorkingUserCreatedPopUp } from './UserCreatedPopUp';
 

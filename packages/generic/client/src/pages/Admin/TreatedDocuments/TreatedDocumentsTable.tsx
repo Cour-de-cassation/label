@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiRouteOutType, documentType, idModule } from '@label/core';
 import { apiCaller } from '../../../api';
-import { PaginatedTable, tableRowFieldType, ConfirmationPopup, orderDirectionType } from '../../../components';
+import { PaginatedTable, tableRowFieldType, ConfirmationPopup, orderDirectionType } from 'pelta-design-system';
 import { wordings } from '../../../wordings';
 import { localStorage, treatedDocumentOrderByProperties } from '../../../services/localStorage';
 import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';

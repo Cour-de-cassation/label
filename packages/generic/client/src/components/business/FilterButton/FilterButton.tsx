@@ -1,8 +1,6 @@
 import React, { MouseEvent, useState } from 'react';
-import { useCustomTheme } from '../../../styles';
-import { rectPositionType } from '../../../types';
+import { useCustomTheme, ButtonWithIcon, rectPositionType } from 'pelta-design-system';
 import { wordings } from '../../../wordings';
-import { ButtonWithIcon } from '../../generic';
 import { FilterTooltipMenu } from './FilterTooltipMenu';
 import { filterType } from './filterType';
 

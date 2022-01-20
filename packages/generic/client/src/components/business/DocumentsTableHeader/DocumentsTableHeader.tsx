@@ -1,7 +1,8 @@
 import React from 'react';
-import { DocumentNumberTextInput, RefreshButton } from '../../../components';
-import { customThemeType, heights, useCustomTheme } from '../../../styles';
+import { customThemeType, useCustomTheme, RefreshButton } from 'pelta-design-system';
 import { filtersType } from '../../../services/filters';
+import { heights } from '../../../styles';
+import { DocumentNumberTextInput } from '../DocumentNumberTextInput';
 import { DocumentsFilters } from './DocumentsFilters';
 
 export { DocumentsTableHeader };

@@ -1,10 +1,10 @@
 import React, { ReactElement, useEffect } from 'react';
 import { assignationType } from '@label/core';
+import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { apiCaller } from '../../../../api';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
-import { customThemeType, useCustomTheme } from '../../../../styles';
 import { splittedTextByLineType } from '../lib';
 import { DocumentPanelHeader } from './DocumentPanelHeader';
 import { DocumentViewer } from './DocumentViewer';

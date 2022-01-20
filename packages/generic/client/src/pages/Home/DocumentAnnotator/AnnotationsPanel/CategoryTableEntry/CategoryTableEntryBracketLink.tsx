@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { customThemeType, useCustomTheme } from '../../../../../styles';
+import { customThemeType, useCustomTheme } from 'pelta-design-system';
 
 export { CategoryTableEntryBracketLink };
 

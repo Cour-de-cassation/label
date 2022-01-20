@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router';
-import { ButtonWithIcon, MainHeader, Text } from '../../components';
+import { customThemeType, useCustomTheme, ButtonWithIcon, Text } from 'pelta-design-system';
+import { MainHeader } from '../../components';
 import { lineSplitter } from '../../services/lineSplitter';
-import { customThemeType, heights, useCustomTheme } from '../../styles';
+import { heights } from '../../styles';
 import { wordings } from '../../wordings';
 import { AnonymizedDocumentTextDataFetcher } from './AnonymizedDocumentTextDataFetcher';
 

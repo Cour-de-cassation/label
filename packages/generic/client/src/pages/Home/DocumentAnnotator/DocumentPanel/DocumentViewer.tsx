@@ -1,8 +1,9 @@
 import React, { ReactElement, useEffect } from 'react';
+import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
 import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
-import { heights, customThemeType, useCustomTheme } from '../../../../styles';
+import { heights } from '../../../../styles';
 import { splittedTextByLineType } from '../lib';
 import { DocumentLine } from './DocumentLine';
 import { SimpleReviewScreen } from './SimpleReviewScreen';

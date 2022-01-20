@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { flatten, uniq } from 'lodash';
 import { apiRouteOutType, userType, documentType, keysOf } from '@label/core';
+import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { DocumentsTableHeader } from '../../../components';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
 import {
   convertDocumentReviewStatusToFilter,
   documentReviewFilterStatuses,
   filtersType,
 } from '../../../services/filters';
-import { ToBeConfirmedDocumentsTable } from './ToBeConfirmedDocumentsTable';
 import { localStorage, toBeConfirmedDocumentFilterType } from '../../../services/localStorage';
+import { heights, widths } from '../../../styles';
+import { ToBeConfirmedDocumentsTable } from './ToBeConfirmedDocumentsTable';
 
 export { ToBeConfirmedDocuments };
 

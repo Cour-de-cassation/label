@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
+import { IconDropdown } from 'pelta-design-system';
 import { annotationLinkHandler, annotationModule, annotationType } from '@label/core';
 import { useAnnotatorStateHandler } from '../../services/annotatorState';
 import { useMonitoring } from '../../services/monitoring';
 import { wordings } from '../../wordings';
-import { IconDropdown } from '../generic';
 
 export { LinkAnnotationDropdown };
 

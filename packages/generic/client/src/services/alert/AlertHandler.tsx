@@ -1,5 +1,5 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
-import { Snackbar, snackbarVariantType } from '../../components';
+import { Snackbar, snackbarVariantType } from 'pelta-design-system';
 
 export { AlertHandlerContext, AlertHandlerContextProvider };
 

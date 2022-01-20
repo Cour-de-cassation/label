@@ -1,7 +1,7 @@
 import React from 'react';
 import { settingsModule } from '@label/core';
-import { customThemeType, useCustomTheme } from '../../../../styles';
-import { Text, CategoryIcon } from '../../../../components';
+import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
+import { CategoryIcon } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 
 export { EmptyCategory };

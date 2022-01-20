@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { apiRouteOutType, documentType, idModule, timeOperator, userType } from '@label/core';
-import { apiCaller } from '../../../api';
 import {
+  customThemeType,
+  useCustomTheme,
   ConfirmationPopup,
-  DocumentStatusIcon,
   orderDirectionType,
   PaginatedTable,
-  PublicationCategoryBadge,
   tableRowFieldType,
-} from '../../../components';
+} from 'pelta-design-system';
+import { apiCaller } from '../../../api';
+import { PublicationCategoryBadge, DocumentStatusIcon } from '../../../components';
 import { useAlert } from '../../../services/alert';
 import { localStorage, untreatedDocumentOrderByProperties } from '../../../services/localStorage';
-import { customThemeType, useCustomTheme } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { routes } from '../../routes';
 

@@ -1,8 +1,16 @@
 import React from 'react';
 import { dateType } from '@label/core';
-import { TooltipMenu, LabelledDropdown, SwitchButton, Text, DatePicker, Icon } from '../../generic';
-import { customThemeType, useCustomTheme } from '../../../styles';
-import { rectPositionType } from '../../../types';
+import {
+  customThemeType,
+  useCustomTheme,
+  TooltipMenu,
+  LabelledDropdown,
+  SwitchButton,
+  Text,
+  DatePicker,
+  Icon,
+  rectPositionType,
+} from 'pelta-design-system';
 import { filterType } from './filterType';
 import { buildComputeIsDateAvailable } from './lib';
 

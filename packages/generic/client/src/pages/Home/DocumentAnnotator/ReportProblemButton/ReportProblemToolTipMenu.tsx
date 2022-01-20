@@ -1,10 +1,17 @@
 import React, { ReactElement, useState } from 'react';
 import { documentType, problemReportType } from '@label/core';
+import {
+  customThemeType,
+  useCustomTheme,
+  positionType,
+  ButtonWithIcon,
+  Checkbox,
+  FloatingTooltipMenu,
+  LabelledDropdown,
+  RichTextInput,
+} from 'pelta-design-system';
 import { apiCaller } from '../../../../api';
-import { ButtonWithIcon, Checkbox, FloatingTooltipMenu, LabelledDropdown, RichTextInput } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
-import { customThemeType, useCustomTheme } from '../../../../styles';
-import { positionType } from '../../../../types';
 import { wordings } from '../../../../wordings';
 import { useAlert } from '../../../../services/alert';
 

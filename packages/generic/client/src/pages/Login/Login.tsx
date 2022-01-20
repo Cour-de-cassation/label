@@ -1,11 +1,10 @@
 import { idModule } from '@label/core';
 import React, { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
+import { customThemeType, useCustomTheme, LoginForm } from 'pelta-design-system';
 import { apiCaller } from '../../api';
 import { Logo } from '../../components';
-import { LoginForm } from '../../components/generic';
 import { localStorage } from '../../services/localStorage';
-import { customThemeType, useCustomTheme } from '../../styles';
 import { routes } from '../routes';
 
 export { Login };

@@ -1,7 +1,6 @@
 import React, { FormEvent, useState } from 'react';
-import { IconButton, TextInput } from '../generic';
+import { customThemeType, useCustomTheme, IconButton, TextInput } from 'pelta-design-system';
 import { wordings } from '../../wordings';
-import { customThemeType, useCustomTheme } from '../../styles';
 
 export { DocumentNumberTextInput };
 

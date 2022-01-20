@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { annotationHandler, annotationType, settingsModule } from '@label/core';
-import { CategoryIcon, Header, Text } from '../../../../../components';
+import { customThemeType, useCustomTheme, Header, Text } from 'pelta-design-system';
+import { CategoryIcon } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
-import { customThemeType, useCustomTheme } from '../../../../../styles';
 import { wordings } from '../../../../../wordings';
 import { DocumentAnonymizedAnnotationText } from '../DocumentAnonymizedAnnotationText';
 

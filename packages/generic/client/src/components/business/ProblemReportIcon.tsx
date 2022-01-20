@@ -1,7 +1,6 @@
 import React from 'react';
 import { problemReportType } from '@label/core';
-import { CircleIcon, iconNameType } from '../generic';
-import { useCustomTheme } from '../../styles';
+import { useCustomTheme, CircleIcon, iconNameType } from 'pelta-design-system';
 import { wordings } from '../../wordings';
 
 export { ProblemReportIcon };

@@ -1,20 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import format from 'string-template';
+import { customThemeType, useCustomTheme, optionItemType, Table, tableRowFieldType } from 'pelta-design-system';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
-import {
-  DocumentStatusIcon,
-  ProblemReportIcon,
-  optionItemType,
-  Table,
-  tableRowFieldType,
-  PublicationCategoryBadge,
-} from '../../../../components';
+import { DocumentStatusIcon, ProblemReportIcon, PublicationCategoryBadge } from '../../../../components';
 import { useAlert } from '../../../../services/alert';
 import { localStorage } from '../../../../services/localStorage';
 import { sendMail } from '../../../../services/sendMail';
-import { customThemeType, useCustomTheme } from '../../../../styles';
 import { wordings } from '../../../../wordings';
 import { routes } from '../../../routes';
 

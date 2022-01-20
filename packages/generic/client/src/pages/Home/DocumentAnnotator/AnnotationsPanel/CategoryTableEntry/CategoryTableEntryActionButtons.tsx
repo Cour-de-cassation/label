@@ -2,11 +2,10 @@ import React from 'react';
 import { annotationType } from '@label/core';
 import {
   ChangeAnnotationCategoryDropdown,
-  ComponentsList,
   LinkAnnotationDropdown,
   UnlinkAnnotationDropdown,
 } from '../../../../../components';
-import { useCustomTheme } from '../../../../../styles';
+import { useCustomTheme, ComponentsList } from 'pelta-design-system';
 import { entityEntryHandlerType } from '../useEntityEntryHandler';
 import { CategoryTableEntryDeleteAnnotationDropdown } from './CategoryTableEntryDeleteAnnotationDropdown';
 

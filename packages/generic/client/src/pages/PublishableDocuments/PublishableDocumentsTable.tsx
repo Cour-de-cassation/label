@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
-import { orderDirectionType, PaginatedTable, tableRowFieldType } from '../../components';
+import { orderDirectionType, PaginatedTable, tableRowFieldType } from 'pelta-design-system';
 import { localStorage, publishableDocumentOrderByProperties } from '../../services/localStorage';
 import { wordings } from '../../wordings';
 import { apiCaller } from '../../api';

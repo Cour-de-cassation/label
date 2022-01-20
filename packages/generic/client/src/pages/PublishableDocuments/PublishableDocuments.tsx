@@ -1,6 +1,7 @@
 import React from 'react';
+import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { MainHeader } from '../../components';
-import { customThemeType, heights, useCustomTheme } from '../../styles';
+import { heights } from '../../styles';
 import { wordings } from '../../wordings';
 import { PublishableDocumentsDataFetcher } from './PublishableDocumentsDataFetcher';
 import { PublishableDocumentsTable } from './PublishableDocumentsTable';

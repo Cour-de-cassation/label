@@ -1,7 +1,6 @@
 import React from 'react';
 import { annotationType, apiRouteOutType, settingsModule, settingsType } from '@label/core';
-import { Text } from '../../../../components';
-import { customThemeType, useCustomTheme, getColor, useDisplayMode } from '../../../../styles';
+import { customThemeType, useCustomTheme, getColor, useDisplayMode, Text } from 'pelta-design-system';
 
 export { AnnotationsDiffDetails };
 

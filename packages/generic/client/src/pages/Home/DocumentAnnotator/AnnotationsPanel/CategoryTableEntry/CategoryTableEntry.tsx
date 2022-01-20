@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { uniq } from 'lodash';
+import {
+  customThemeType,
+  emphasizeShadeColor,
+  getColor,
+  useCustomTheme,
+  useDisplayMode,
+  Text,
+} from 'pelta-design-system';
 import { CategoryTableEntryBracketLink } from './CategoryTableEntryBracketLink';
 import { displayModeType, annotationType, settingsModule } from '@label/core';
-import { Text } from '../../../../../components';
 import { annotatorStateHandlerType, useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useViewerScrollerHandler } from '../../../../../services/viewerScroller';
-import { customThemeType, emphasizeShadeColor, getColor, useCustomTheme, useDisplayMode } from '../../../../../styles';
 import { splittedTextByLineType } from '../../lib';
 import { entityEntryHandlerType, useEntityEntryHandler } from '../useEntityEntryHandler';
 import { CategoryTableEntryActionButtons } from './CategoryTableEntryActionButtons';

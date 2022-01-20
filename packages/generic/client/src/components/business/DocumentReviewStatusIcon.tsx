@@ -1,9 +1,8 @@
 import React from 'react';
 import format from 'string-template';
 import { documentType } from '@label/core';
-import { useCustomTheme } from '../../styles';
+import { useCustomTheme, CircleIcon, iconNameType } from 'pelta-design-system';
 import { wordings } from '../../wordings';
-import { CircleIcon, iconNameType } from '../generic';
 
 export { DocumentReviewStatusIcon };
 

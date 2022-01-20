@@ -1,14 +1,17 @@
 import React, { ReactElement } from 'react';
-import { annotationType } from '@label/core';
 import {
+  customThemeType,
+  useCustomTheme,
   FloatingTooltipMenu,
   ComponentsList,
+  positionType,
+} from 'pelta-design-system';
+import { annotationType } from '@label/core';
+import {
   ChangeAnnotationCategoryDropdown,
   LinkAnnotationDropdown,
   UnlinkAnnotationDropdown,
 } from '../../../../../components';
-import { customThemeType, useCustomTheme } from '../../../../../styles';
-import { positionType } from '../../../../../types';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { DeleteAnnotationDropdown } from './DeleteAnnotationDropdown';
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { ButtonWithIcon, Icon, Text } from '../../components';
+import { customThemeType, useCustomTheme, ButtonWithIcon, Icon, Text } from 'pelta-design-system';
 import { localStorage } from '../../services/localStorage';
-import { customThemeType, useCustomTheme } from '../../styles';
 import { wordings } from '../../wordings';
 import { routes } from '../routes';
 

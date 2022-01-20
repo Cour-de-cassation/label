@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text } from '../../generic';
-import { customThemeType, useCustomTheme } from '../../../styles';
+import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 
 export { AlertBadge };
 

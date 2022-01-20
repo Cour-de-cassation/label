@@ -1,7 +1,7 @@
 import React from 'react';
 import { apiRouteOutType, ressourceFilterType, userType } from '@label/core';
-import { Text } from '../../../components';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
+import { heights, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { StatisticsBox } from './StatisticsBox';
 import { StatisticsFilterButton } from './StatisticsFilterButton';

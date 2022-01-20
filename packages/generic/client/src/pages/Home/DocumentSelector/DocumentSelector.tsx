@@ -8,7 +8,7 @@ import {
   settingsType,
   assignationType,
 } from '@label/core';
-import { Text } from '../../../components';
+import { Text } from 'pelta-design-system';
 import { wordings } from '../../../wordings';
 import { DocumentSelectorCard } from './DocumentSelectorCard';
 import { useAlert } from '../../../services/alert';

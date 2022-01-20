@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { settingsModule } from '@label/core';
-import { Accordion, Text, Icon, CategoryIcon } from '../../../../components';
+import { customThemeType, useCustomTheme, Accordion, Text, Icon } from 'pelta-design-system';
+import { CategoryIcon } from '../../../../components';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
-import { customThemeType, useCustomTheme } from '../../../../styles';
 import { annotationPerEntityType, splittedTextByLineType } from '../lib';
 import { CategoryTableEntry } from './CategoryTableEntry';
 

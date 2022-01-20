@@ -1,7 +1,7 @@
 import React from 'react';
+import { ThemeProvider } from 'pelta-design-system';
 import { Router } from './pages';
 import { AlertHandlerContextProvider } from './services/alert';
-import { ThemeProvider } from './styles';
 
 const App = () => (
   <ThemeProvider>

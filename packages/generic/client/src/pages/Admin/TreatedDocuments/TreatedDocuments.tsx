@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { flatten, uniq } from 'lodash';
+import { customThemeType, useCustomTheme, tableRowFieldType } from 'pelta-design-system';
 import { apiRouteOutType, keysOf, timeOperator, documentType, userType } from '@label/core';
-import {
-  DocumentReviewStatusIcon,
-  DocumentsTableHeader,
-  PublicationCategoryBadge,
-  tableRowFieldType,
-} from '../../../components';
+import { DocumentReviewStatusIcon, DocumentsTableHeader, PublicationCategoryBadge } from '../../../components';
 import {
   localStorage,
   treatedDocumentOrderByProperties,
@@ -17,7 +13,7 @@ import {
   documentReviewFilterStatuses,
   convertDocumentReviewStatusToFilter,
 } from '../../../services/filters';
-import { customThemeType, heights, useCustomTheme, widths } from '../../../styles';
+import { heights, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
 

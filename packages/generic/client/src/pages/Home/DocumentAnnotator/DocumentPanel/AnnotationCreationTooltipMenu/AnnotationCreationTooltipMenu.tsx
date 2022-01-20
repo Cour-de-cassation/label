@@ -1,17 +1,18 @@
 import React, { ReactElement, useState } from 'react';
-import { annotationHandler, annotationTextDetector, settingsModule } from '@label/core';
 import {
-  CategoryIcon,
+  customThemeType,
+  useCustomTheme,
   Checkbox,
   CircleIcon,
   FloatingTooltipMenu,
   LabelledDropdown,
   Text,
-} from '../../../../../components';
+  positionType,
+} from 'pelta-design-system';
+import { annotationHandler, annotationTextDetector, settingsModule } from '@label/core';
+import { CategoryIcon } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useMonitoring } from '../../../../../services/monitoring';
-import { customThemeType, useCustomTheme } from '../../../../../styles';
-import { positionType } from '../../../../../types';
 import { wordings } from '../../../../../wordings';
 import { textSelectionType } from '../DocumentText';
 

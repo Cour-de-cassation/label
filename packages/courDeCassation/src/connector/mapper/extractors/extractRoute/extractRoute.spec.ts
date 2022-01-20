@@ -1,6 +1,25 @@
 import { extractRoute } from '.';
 
 describe('extractRoute', () => {
+  it('should return exhaustive if no endCaseCode & no NACCode', () => {
+    const route = extractRoute(
+      {
+        solution: 'non-admission',
+        publicationCategory: ['W'],
+        chamberId: 'CR',
+        civilCaseCode: '',
+        civilMatterCode: '',
+        criminalCaseCode: '',
+        session: 'FHR',
+        NACCode: '',
+        endCaseCode: '',
+      },
+      'jurica',
+    );
+
+    expect(route).toBe('exhaustive');
+  });
+
   it('should return exhaustive if jurica with endCaseCode 44E & NACCode 10A', () => {
     const route = extractRoute(
       {
@@ -19,6 +38,7 @@ describe('extractRoute', () => {
 
     expect(route).toBe('exhaustive');
   });
+
   it('should return automatique if jurica with endCaseCode 11A', () => {
     const route = extractRoute(
       {
@@ -30,13 +50,52 @@ describe('extractRoute', () => {
         criminalCaseCode: '',
         session: 'FHR',
         NACCode: '',
-        endCaseCode: '11A',
+        endCaseCode: '11B',
       },
       'jurica',
     );
 
     expect(route).toBe('automatique');
   });
+
+  it('should return simple if jurica with NACCode 55L', () => {
+    const route = extractRoute(
+      {
+        solution: 'non-admission',
+        publicationCategory: ['W'],
+        chamberId: 'CR',
+        civilCaseCode: '',
+        civilMatterCode: '',
+        criminalCaseCode: '',
+        session: 'FHR',
+        NACCode: '55Z',
+        endCaseCode: '',
+      },
+      'jurica',
+    );
+
+    expect(route).toBe('simple');
+  });
+
+  it('should return exhaustive if jurica with endCaseCode 33G (not in csv)', () => {
+    const route = extractRoute(
+      {
+        solution: 'non-admission',
+        publicationCategory: ['W'],
+        chamberId: 'CR',
+        civilCaseCode: '',
+        civilMatterCode: '',
+        criminalCaseCode: '',
+        session: 'FHR',
+        NACCode: '',
+        endCaseCode: '33G',
+      },
+      'jurica',
+    );
+
+    expect(route).toBe('exhaustive');
+  });
+
   it('should return automatic if NA', () => {
     const route = extractRoute(
       {

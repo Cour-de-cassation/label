@@ -18,34 +18,6 @@ function extractRouteForJurica({
   NACCode: documentType['decisionMetadata']['NACCode'];
   endCaseCode: documentType['decisionMetadata']['endCaseCode'];
 }): documentType['route'] {
-  const endCaseCodeCsv = fs.readFileSync('./static/endCaseRoutes.csv', {
-    encoding: 'utf8',
-  }) as string;
-  const endCaseCodeData = {} as Array<any>;
-
-  endCaseCodeCsv.split('\n').forEach((line) => {
-    const l = line.split(',');
-    if (l[1]) {
-      endCaseCodeData[
-        transformLetterCodeToDec({ code: l[0] })
-      ] = l[1].toLowerCase() as documentType['route'];
-    }
-  });
-
-  const NACCodeCsv = fs.readFileSync('./static/NACCodeRoutes.csv', {
-    encoding: 'utf8',
-  }) as string;
-  const NACCodeData = {} as Array<any>;
-
-  NACCodeCsv.split('\n').forEach((line) => {
-    const l = line.split(',');
-    if (l[1]) {
-      NACCodeData[
-        transformLetterCodeToDec({ code: l[0] })
-      ] = l[1].toLowerCase() as documentType['route'];
-    }
-  });
-
   const decEndCaseCode: number = transformLetterCodeToDec({
     code: endCaseCode,
   });
@@ -54,14 +26,38 @@ function extractRouteForJurica({
   // Les codes NAC priment sur les codes de fin d'affaire à partir du code de fin d'affaire 33D
   if (
     (decEndCaseCode >= 11.01 && decEndCaseCode <= 22.24) ||
-    (decEndCaseCode >= 33.01 &&
-      decEndCaseCode <= 33.04 &&
-      decEndCaseCode !== 33.03)
+    (decEndCaseCode >= 33.01 && decEndCaseCode <= 33.03)
   ) {
+    const endCaseCodeCsv = fs.readFileSync('./static/endCaseRoutes.csv', {
+      encoding: 'utf8',
+    }) as string;
+    const endCaseCodeData = {} as Array<any>;
+    endCaseCodeCsv.split('\n').forEach((line) => {
+      const l = line.split(',');
+      if (l[1]) {
+        endCaseCodeData[
+          transformLetterCodeToDec({ code: l[0] })
+        ] = l[1].toLowerCase() as documentType['route'];
+      }
+    });
+
     if (endCaseCodeData[decEndCaseCode]) {
       return endCaseCodeData[decEndCaseCode] as documentType['route'];
     }
   }
+
+  const NACCodeCsv = fs.readFileSync('./static/NACCodeRoutes.csv', {
+    encoding: 'utf8',
+  }) as string;
+  const NACCodeData = {} as Array<any>;
+  NACCodeCsv.split('\n').forEach((line) => {
+    const l = line.split(',');
+    if (l[1]) {
+      NACCodeData[
+        transformLetterCodeToDec({ code: l[0] })
+      ] = l[1].toLowerCase() as documentType['route'];
+    }
+  });
 
   return (
     (NACCodeData[

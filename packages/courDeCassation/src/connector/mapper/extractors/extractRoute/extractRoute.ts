@@ -20,13 +20,17 @@ function extractRoute(
 ): documentType['route'] {
   switch (source) {
     case 'jurinet':
-      return extractRouteForJurinet({ ...routeInfos });
+      try {
+        return extractRouteForJurinet({ ...routeInfos });
+      } catch (e) {
+        return 'exhaustive';
+      }
       break;
     case 'jurica':
       try {
         return extractRouteForJurica({ ...routeInfos });
       } catch (e) {
-        return 'default';
+        return 'exhaustive';
       }
       break;
   }

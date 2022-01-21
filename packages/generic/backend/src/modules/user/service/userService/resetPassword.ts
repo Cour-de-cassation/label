@@ -1,4 +1,5 @@
-import { errorHandlers, userModule, userType } from '@label/core';
+import { errorHandlers } from 'sder';
+import { userModule, userType } from '@label/core';
 import { buildUserRepository } from '../../repository';
 
 export { resetPassword };

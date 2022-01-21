@@ -25,6 +25,7 @@
     "eslint-plugin-react": "^7.20.6",
     "jest": "24.9.0",
     "prettier": "^2.1.2",
+    "sder": "https://github.com/Cour-de-cassation/sder#73e2daab0cf90328cc3185d8e4e1d1398b7d9059",
     "rimraf": "~3.0.2",
     "typescript": "~4.0.0"
   },

@@ -1,8 +1,16 @@
-import { assertAuthorization } from './assertAuthorization';
 import { assertPermissions } from './assertPermissions';
+import { authenticator } from './authenticator';
 import { buildUser } from './buildUser';
-import { computeHashedPassword } from './computeHashedPassword';
-import { formatEmail } from './formatEmail';
-import { passwordHandler } from './passwordHandler';
 
-export { assertAuthorization, assertPermissions, buildUser, computeHashedPassword, formatEmail, passwordHandler };
+const userLib = {
+  assertAuthorization: authenticator.assertAuthorization,
+  assertPermissions,
+  buildUser,
+  computeHashedPassword: authenticator.computeHashedPassword,
+  extractUserIdFromAuthorizationHeader: authenticator.extractUserIdFromAuthorizationHeader,
+  formatEmail: authenticator.formatEmail,
+  getTokenForUser: authenticator.getTokenForUser,
+  passwordHandler: authenticator.passwordHandler,
+};
+
+export { userLib };

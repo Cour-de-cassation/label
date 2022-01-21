@@ -1,4 +1,5 @@
-import { documentModule, documentType, errorHandlers } from '@label/core';
+import { errorHandlers } from 'sder';
+import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 
 export { assertDocumentIsPublishable };

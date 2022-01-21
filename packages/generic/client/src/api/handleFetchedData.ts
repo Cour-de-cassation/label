@@ -1,4 +1,4 @@
-import { errorHandlers, httpStatusCodeHandler } from '@label/core';
+import { errorHandlers, httpStatusCodeHandler } from 'sder';
 
 export { handleFetchedData };
 

@@ -1,9 +1,5 @@
-import {
-  assignationModule,
-  errorHandlers,
-  idModule,
-  idType,
-} from '@label/core';
+import { errorHandlers } from 'sder';
+import { assignationModule, idModule, idType } from '@label/core';
 import { treatmentService } from '../../treatment';
 import { userService } from '../../user';
 import { buildAssignationRepository } from '../repository';

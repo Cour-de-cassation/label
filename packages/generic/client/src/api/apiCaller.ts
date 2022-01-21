@@ -1,11 +1,5 @@
-import {
-  apiSchema,
-  httpStatusCodeHandler,
-  apiRouteInType,
-  apiRouteOutType,
-  networkType,
-  throwFromStatusCode,
-} from '@label/core';
+import { errorHandlers, httpStatusCodeHandler } from 'sder';
+import { apiSchema, apiRouteInType, apiRouteOutType, networkType } from '@label/core';
 import { localStorage } from '../services/localStorage';
 import { urlHandler } from '../utils';
 
@@ -79,7 +73,7 @@ async function computeDataFromResponse(response: Response): Promise<any> {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   /* eslint-disable @typescript-eslint/no-unsafe-return */
   if (!httpStatusCodeHandler.isSuccess(response.status)) {
-    throwFromStatusCode(response.status);
+    errorHandlers.lib.throwFromStatusCode(response.status);
   }
   try {
     const textData = await response.text();
@@ -90,6 +84,6 @@ async function computeDataFromResponse(response: Response): Promise<any> {
       return textData;
     }
   } catch (error) {
-    throwFromStatusCode(response.status);
+    errorHandlers.lib.throwFromStatusCode(response.status);
   }
 }

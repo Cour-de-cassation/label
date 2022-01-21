@@ -1,5 +1,4 @@
-import { apiSchema, idModule } from '@label/core';
-import { errorHandlers } from 'sder';
+import { apiSchema, errorHandlers, idModule } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
 import { documentService } from '../modules/document';

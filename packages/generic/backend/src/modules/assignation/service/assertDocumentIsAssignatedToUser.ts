@@ -1,5 +1,4 @@
-import { errorHandlers } from 'sder';
-import { documentType, userType } from '@label/core';
+import { documentType, errorHandlers, userType } from '@label/core';
 import { buildAssignationRepository } from '../repository';
 
 export { assertDocumentIsAssignatedToUser };

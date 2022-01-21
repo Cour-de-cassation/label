@@ -1,4 +1,4 @@
-import { buildCallAttemptsRegulator } from 'sder';
+import { buildCallAttemptsRegulator } from '../../../../lib/callAttemptsRegulator';
 import { assertDocumentIsPublishable } from './assertDocumentIsPublishable';
 import { assertDocumentStatus } from './assertDocumentStatus';
 import { countDocumentsWithoutAnnotations } from './countDocumentsWithoutAnnotations';

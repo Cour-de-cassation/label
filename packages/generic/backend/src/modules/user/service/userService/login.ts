@@ -1,6 +1,5 @@
-import { errorHandlers } from 'sder';
-import { userModule, userType } from '@label/core';
-import { logger } from '../../../../utils';
+import { errorHandlers, userModule, userType } from '@label/core';
+import { jwtSigner, logger } from '../../../../utils';
 import { buildUserRepository } from '../../repository';
 
 export { buildLogin };
@@ -26,7 +25,7 @@ function buildLogin(checkCallAttempts: (identifier: string) => void) {
         );
       }
 
-      const token = await userModule.lib.getTokenForUser(user);
+      const token = jwtSigner.sign(user._id);
 
       const passwordTimeValidityStatus = userModule.lib.passwordHandler.getPasswordTimeValidityStatus(
         user,

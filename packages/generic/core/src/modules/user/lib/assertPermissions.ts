@@ -1,4 +1,4 @@
-import { errorHandlers } from 'sder';
+import { errorHandlers } from '../../../errors';
 import { userType } from '../userType';
 
 export { assertPermissions };

@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
-import { httpStatusCodeHandler } from 'sder';
-import { apiRouteOutType, ressourceFilterType } from '@label/core';
+import { apiRouteOutType, httpStatusCodeHandler, ressourceFilterType } from '@label/core';
 import { apiCaller, useApi } from '../../../api';
 import { DataFetcher } from '../../DataFetcher';
 

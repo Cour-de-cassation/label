@@ -1,4 +1,4 @@
-import { buildCallAttemptsRegulator } from 'sder';
+import { buildCallAttemptsRegulator } from '../../../../lib/callAttemptsRegulator';
 import { changePassword } from './changePassword';
 import { createUser } from './createUser';
 import { fetchAuthenticatedUserFromAuthorizationHeader } from './fetchAuthenticatedUserFromAuthorizationHeader';

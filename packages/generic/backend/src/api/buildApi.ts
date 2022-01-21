@@ -1,7 +1,11 @@
 import { Express } from 'express';
 import { mapValues } from 'lodash';
-import { CustomError, httpStatusCodeHandler } from 'sder';
-import { apiSchema, apiSchemaMethodNameType } from '@label/core';
+import {
+  apiSchema,
+  apiSchemaMethodNameType,
+  CustomError,
+  httpStatusCodeHandler,
+} from '@label/core';
 import { logger } from '../utils';
 import { controllers } from './controllers';
 

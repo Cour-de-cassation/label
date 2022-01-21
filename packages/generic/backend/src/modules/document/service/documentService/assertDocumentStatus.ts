@@ -1,5 +1,4 @@
-import { errorHandlers } from 'sder';
-import { documentType } from '@label/core';
+import { documentType, errorHandlers } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 
 export { assertDocumentStatus };

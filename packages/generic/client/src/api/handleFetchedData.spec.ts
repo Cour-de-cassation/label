@@ -1,4 +1,4 @@
-import { httpStatusCodeHandler } from 'sder';
+import { httpStatusCodeHandler } from '@label/core';
 import { handleFetchedData } from './handleFetchedData';
 
 describe('handleFetchedData', () => {

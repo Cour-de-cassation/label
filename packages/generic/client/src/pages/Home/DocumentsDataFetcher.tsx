@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
-import { httpStatusCodeHandler } from 'sder';
-import { annotationType, assignationType, fetchedDocumentType, idModule } from '@label/core';
+import { annotationType, assignationType, fetchedDocumentType, httpStatusCodeHandler, idModule } from '@label/core';
 import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
 

@@ -1,8 +1,8 @@
-name: 🐋☸️ Build (PR on master)
+name: 🐋☸️ Build (PR)
 
 on:
   pull_request:
-    branches: [master]
+    branches: [master, prod]
 
 jobs:
   build:

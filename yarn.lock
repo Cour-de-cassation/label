@@ -12738,15 +12738,16 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-"pelta-design-system@https://github.com/Cour-de-cassation/pelta-design-system#9e58e40419902ccbc90e58604262718d7d4eee62":
+"pelta-design-system@https://github.com/Cour-de-cassation/pelta-design-system#7b02114b0f260fc1333227757ce98ed31de70c31":
   version "0.0.1"
-  resolved "https://github.com/Cour-de-cassation/pelta-design-system#9e58e40419902ccbc90e58604262718d7d4eee62"
+  resolved "https://github.com/Cour-de-cassation/pelta-design-system#7b02114b0f260fc1333227757ce98ed31de70c31"
   dependencies:
     "@material-ui/core" "^4.12.3"
     "@material-ui/icons" "^4.11.2"
     lodash "^4.17.21"
     react "^17.0.2"
     styled-components "^5.3.3"
+    tsc "^2.0.4"
     typescript "^4.4.3"
 
 performance-now@^2.1.0:
@@ -16122,6 +16123,11 @@ ts-pnp@^1.1.6:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
+
+tsc@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/tsc/-/tsc-2.0.4.tgz#5f6499146abea5dca4420b451fa4f2f9345238f5"
+  integrity sha512-fzoSieZI5KKJVBYGvwbVZs/J5za84f2lSTLPYf6AGiIf43tZ3GNrI1QzTLcjtyDDP4aLxd46RTZq1nQxe7+k5Q==
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"

@@ -16,6 +16,8 @@ function AnnotationsPanel(props: {
   splittedTextByLine: splittedTextByLineType;
   nonAnnotableCategories: string[];
 }) {
+  const ICON_SIZE = 18;
+
   const theme = useCustomTheme();
   const { displayMode } = useDisplayMode();
   const styles = buildStyles(theme);
@@ -25,6 +27,17 @@ function AnnotationsPanel(props: {
       <div style={styles.panelHeader}>
         <Text variant="h2" weight="bold">
           {wordings.homePage.askedAnnotations}
+        </Text>
+        <Text variant="h3">
+          <a
+            href="file://nms81-cassation/Data/SDER-SCOM-SRI/2-SDER/1-Bureaux/8-BDN-CA/3-ANO/guide_annotation.pdf"
+            target="_blank"
+            rel="noreferrer"
+            style={styles.annotationGuideLink}
+          >
+            {wordings.homePage.annotationGuide}
+            <Icon iconName="help" style={styles.annotationGuideIcon} />
+          </a>
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
@@ -90,10 +103,19 @@ function AnnotationsPanel(props: {
         height: heights.annotatorPanelHeader,
         display: 'flex',
         alignItems: 'center',
+        flexDirect: 'row',
+        justifyContent: 'space-between',
       },
-      annotationGuideContainer: {
-        paddingRight: theme.spacing * 2,
+      annotationGuideLink: {
+        color: theme.colors.line.level2,
+        textDecoration: 'none',
         cursor: 'pointer',
+      },
+      annotationGuideIcon: {
+        fontSize: `${ICON_SIZE}px`,
+        position: 'relative',
+        top: `${ICON_SIZE / 4}px`,
+        paddingLeft: theme.spacing / 2,
       },
       categoriesContainer: {
         overflowY: 'auto',

@@ -1,4 +1,4 @@
-import { errorHandlers } from '../errors';
+import { errorHandlers } from 'sder-core';
 
 export { indexer };
 

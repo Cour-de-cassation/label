@@ -1,7 +1,7 @@
 import { sumBy } from 'lodash';
+import { errorHandlers } from 'sder-core';
 import {
   assignationType,
-  errorHandlers,
   idModule,
   settingsType,
   treatmentModule,

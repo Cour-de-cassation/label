@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CustomError } from '@label/core';
+import { CustomError } from 'sder-core';
 
 export { useApi };
 

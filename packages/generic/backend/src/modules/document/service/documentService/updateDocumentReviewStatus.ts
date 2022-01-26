@@ -1,4 +1,5 @@
-import { documentType, errorHandlers, idModule } from '@label/core';
+import { errorHandlers } from 'sder-core';
+import { documentType, idModule } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 
 export { updateDocumentReviewStatus };

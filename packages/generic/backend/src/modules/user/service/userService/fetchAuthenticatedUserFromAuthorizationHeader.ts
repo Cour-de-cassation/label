@@ -1,5 +1,5 @@
-import { errorHandlers, idModule } from '@label/core';
-import { jwtSigner } from '../../../../utils';
+import { errorHandlers } from 'sder-core';
+import { userModule, idModule } from '@label/core';
 import { buildUserRepository } from '../../repository';
 
 export { fetchAuthenticatedUserFromAuthorizationHeader };
@@ -7,22 +7,16 @@ export { fetchAuthenticatedUserFromAuthorizationHeader };
 async function fetchAuthenticatedUserFromAuthorizationHeader(
   authorization?: string,
 ) {
-  const userRepository = buildUserRepository();
+  const userId = userModule.lib.extractUserIdFromAuthorizationHeader(
+    authorization,
+  );
 
-  if (authorization) {
-    const token = authorization.split(' ')[1];
-    const userId = jwtSigner.verifyToken(token);
-
-    try {
-      return await userRepository.findById(idModule.lib.buildId(userId));
-    } catch (_error) {
-      throw errorHandlers.authenticationErrorHandler.build(
-        `No user for ${userId}`,
-      );
-    }
-  } else {
+  try {
+    const userRepository = buildUserRepository();
+    return await userRepository.findById(idModule.lib.buildId(userId));
+  } catch (_error) {
     throw errorHandlers.authenticationErrorHandler.build(
-      'No authorization value provided',
+      `No user for ${userId}`,
     );
   }
 }

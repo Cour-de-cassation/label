@@ -1,3 +1,4 @@
+import { passwordTimeValidityStatus } from 'sder-core';
 import { idType } from '../id';
 import { buildModel, buildType } from '../modelType';
 
@@ -28,7 +29,7 @@ const userModel = buildModel({
   },
 } as const);
 
-const passwordTimeValidityStatusModel = buildModel({ kind: 'constant', content: ['valid', 'outdated'] as const });
+const passwordTimeValidityStatusModel = buildModel({ kind: 'constant', content: passwordTimeValidityStatus });
 
 type userType = buildType<typeof userModel, { id: idType }>;
 type passwordTimeValidityStatusType = buildType<typeof passwordTimeValidityStatusModel>;

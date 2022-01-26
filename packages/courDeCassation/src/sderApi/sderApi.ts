@@ -5,6 +5,19 @@ import { sderApiType } from './sderApiType';
 export { sderApi };
 
 const sderApi: sderApiType = {
+  async fetchAllDecisionsBySourceAndJurisdictionsBetween({
+    startDate,
+    endDate,
+    source,
+    jurisdictions,
+  }) {
+    const courtDecisions = await decisionModule.service.fetchPublicDecisionsBySourceAndJurisdictionsBetween(
+      { startDate, endDate, jurisdictions, source },
+    );
+
+    return courtDecisions;
+  },
+
   async fetchPublicDecisionsBySourceAndJurisdictionsBetween({
     startDate,
     endDate,

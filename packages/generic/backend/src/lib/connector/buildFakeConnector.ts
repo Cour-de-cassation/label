@@ -25,6 +25,31 @@ async function buildFakeConnectorWithNDecisions(
     async fetchAllCourtDecisions() {
       return courtDecisions;
     },
+    async fetchAllDecisionsBySourceAndJurisdictionsBetween({
+      startDate,
+      endDate = new Date(),
+      source,
+      jurisdictions,
+    }: {
+      startDate: Date;
+      endDate?: Date;
+      source: string;
+      jurisdictions: string[];
+    }) {
+      return courtDecisions.filter((courtDecision) => {
+        if (!courtDecision.dateDecision) {
+          return false;
+        }
+        const dateDecision = new Date(courtDecision.dateDecision);
+
+        return (
+          dateDecision.getTime() >= startDate.getTime() &&
+          dateDecision.getTime() <= endDate.getTime() &&
+          jurisdictions.includes(courtDecision.jurisdictionName) &&
+          courtDecision.sourceName === source
+        );
+      });
+    },
     async fetchPublicDecisionsBySourceAndJurisdictionsBetween({
       startDate,
       endDate = new Date(),

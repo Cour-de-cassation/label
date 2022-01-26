@@ -16,6 +16,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     importSpecificDocument,
     importNewDocuments,
     importJuricaDocuments,
+    importDocumentsByJurisdictionBetween,
     importDocumentsSince,
     importTestDocumentsSince,
     resetDocument,
@@ -208,6 +209,53 @@ function buildConnector(connectorConfig: connectorConfigType) {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
         source: 'jurica',
+      },
+    );
+    logger.log(
+      `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
+    );
+    const newCourtDecisions = [
+      ...newJurinetCourtDecisions,
+      ...newJuricaCourtDecisions,
+    ];
+    const documents = newCourtDecisions.map((courtDecision) =>
+      connectorConfig.mapCourtDecisionToDocument(courtDecision),
+    );
+
+    logger.log(`Insertion ${documents.length} documents into the database...`);
+    await insertDocuments(documents);
+    logger.log(`Insertion done!`);
+
+    logger.log(`Send documents have been loaded...`);
+    await connectorConfig.updateDocumentsLoadedStatus(documents);
+    logger.log(`DONE`);
+  }
+
+  async function importDocumentsByJurisdictionBetween(
+    from: Date,
+    to: Date,
+    jurisdictions: string[],
+  ) {
+    logger.log(`importDocumentsByJurisdictionBetween from:${from} to:${to}`);
+
+    logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
+    const newJurinetCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsBetween(
+      {
+        startDate: from,
+        endDate: to,
+        source: 'jurinet',
+        jurisdictions,
+      },
+    );
+    logger.log(
+      `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
+    );
+    const newJuricaCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsBetween(
+      {
+        startDate: from,
+        endDate: to,
+        source: 'jurinet',
+        jurisdictions,
       },
     );
     logger.log(

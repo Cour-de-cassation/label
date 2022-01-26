@@ -8,6 +8,27 @@ export { sderLocalApi };
 const pathToCourtDecisions = './storage/documents/';
 
 const sderLocalApi: sderApiType = {
+  async fetchAllDecisionsBySourceAndJurisdictionsBetween() {
+    const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
+      pathToCourtDecisions,
+    );
+
+    const courtDecisions = await fileSystem.readFiles(
+      courtDecisionFileNames,
+      'utf8',
+      pathToCourtDecisions,
+    );
+
+    return courtDecisions.map(({ content }) => {
+      const parsedContent = JSON.parse(content) as decisionType;
+      return {
+        ...parsedContent,
+        _id: idModule.lib.buildId(),
+        dateDecision: parsedContent.dateDecision,
+      };
+    });
+  },
+
   async fetchPublicDecisionsBySourceAndJurisdictionsBetween() {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,

@@ -66,6 +66,31 @@ const sderFetcher = {
     );
   },
 
+  async fetchAllDecisionsBySourceAndJurisdictionsBetween({
+    startDate,
+    endDate = new Date(),
+    source,
+    jurisdictions,
+  }: {
+    startDate: Date;
+    endDate?: Date;
+    source: string;
+    jurisdictions: string[];
+  }) {
+    const courtDecisions = await sderApi.fetchAllDecisionsBySourceAndJurisdictionsBetween(
+      {
+        startDate,
+        endDate,
+        source,
+        jurisdictions,
+      },
+    );
+
+    return courtDecisions.filter(
+      (courtDecision) => !!courtDecision && !!courtDecision.originalText,
+    );
+  },
+
   async fetchPublicDecisionsBySourceAndJurisdictionsBetween({
     startDate,
     endDate = new Date(),

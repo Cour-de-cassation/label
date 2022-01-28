@@ -8,6 +8,10 @@ import { logger } from '../../../utils';
 
 export { cleanAssignations };
 
+/**
+ * Delete all the assignations linked to a document
+ * which is either loaded, being annotated by the NLP engine, or free
+ */
 async function cleanAssignations() {
   logger.log(`cleanAssignations`);
   const FORBIDDEN_STATUSES_FOR_ASSIGNATED_DOCUMENT: documentType['status'][] = [

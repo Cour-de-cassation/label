@@ -8,6 +8,10 @@ import { logger } from '../../../utils';
 
 export { cleanAssignedDocuments };
 
+/**
+ * Set the document status to free if no assignation found for
+ * pending or saved document
+ */
 async function cleanAssignedDocuments() {
   logger.log(`cleanAssignedDocuments`);
   const documentRepository = buildDocumentRepository();

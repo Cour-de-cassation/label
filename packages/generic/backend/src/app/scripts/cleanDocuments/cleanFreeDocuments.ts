@@ -4,6 +4,9 @@ import { logger } from '../../../utils';
 
 export { cleanFreeDocuments };
 
+/**
+ * Delete all assignations for free documents
+ */
 async function cleanFreeDocuments() {
   logger.log(`cleanFreeDocuments`);
 

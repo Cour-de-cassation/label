@@ -7,6 +7,9 @@ import { logger } from '../../../utils';
 
 export { cleanDoubledDocuments };
 
+/**
+ * Delete all doubled documents (same source, same documentNumber, same text)
+ */
 async function cleanDoubledDocuments() {
   logger.log(`cleanDoubledDocuments`);
 

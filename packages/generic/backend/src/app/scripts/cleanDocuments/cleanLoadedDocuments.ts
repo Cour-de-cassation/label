@@ -5,6 +5,9 @@ import { logger } from '../../../utils';
 
 export { cleanLoadedDocuments };
 
+/**
+ * Reset all documents that are either loaded or nlpAnnotating
+ */
 async function cleanLoadedDocuments() {
   logger.log(`cleanLoadedDocuments`);
 

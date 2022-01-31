@@ -272,7 +272,7 @@ jobs:
           APP_KEYWORD: "true"
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           ROOT_PATH: label/api
-          START_TIMEOUT: 40
+          START_TIMEOUT: 90
           VERSION: ${{ steps.backend_version.outputs.version }}
       - name: 🔙🧹 Clean old replicas ☸️ -- backend
         run: ./scripts/clean_old_replicas.sh
@@ -310,7 +310,7 @@ jobs:
           APP_KEYWORD: html
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           ROOT_PATH: label
-          START_TIMEOUT: 40
+          START_TIMEOUT: 90
           VERSION: ${{ steps.client_version.outputs.version }}
       - name: 👤🧹 Clean old replicas ☸️ -- client
         run: ./scripts/clean_old_replicas.sh

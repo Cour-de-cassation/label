@@ -44,6 +44,12 @@ To use mongo, you need to run in your terminal:
 sudo chmod 666 /var/run/docker.sock
 ```
 
+## Business logic index
+
+- List of document statuses : "./documentStatuses.md"
+- Annotations flow : "./annotationFlow.md"
+- Replacement terms : "./replacementTerms.md"
+
 ## How to reuse LABEL
 
 ### Philosophy

@@ -5,7 +5,6 @@ import {
   expressRequestHandlerType,
 } from './express';
 import { fileSystem } from './fileSystem';
-import { jwtSigner } from './jwtSigner';
 import { logger } from './logger';
 import { buildMongo, mongo, mongoCollectionType } from './mongo';
 
@@ -15,7 +14,6 @@ export {
   decoder,
   dependencyManager,
   fileSystem,
-  jwtSigner,
   logger,
   mongo,
 };

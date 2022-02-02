@@ -21,20 +21,19 @@ To run the local version of the annotator, you have to use node with the proper 
 
 To import _count_ new documents in the LABEL database:
 
-- connect to `label` via ssh
-- `sudo su label`
-- navigate to `/home/label/label/packages/courDeCassation`
-- `./scripts/run[environment]Script.sh ./dist/scripts/importNewDocumentsFromSder.js --count=[count]`
+- connect to Wallix and open a Cygwin term
+- preprod: `pp label script importNewDocumentsFromSder.js --count=[count]`
+- prod: `prod label script importNewDocumentsFromSder.js --count=[count]`
 
 To annotate all the documents that have not been annotated by the NLP engine yet in the database, run the following :
 
-- `./scripts/run[environment]Script.sh ./dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js`
+- `pp label script annotateDocumentsWithoutAnnotationsWithNlp.js` (resp `prod label script ...`)
 
 ## A jurinet decision should have been released in open data, but we cannot find it anywhere via the Judifiltre search engine
 
 - ask for the _jurinet ID_. If you're only provided with a _numéro de registre_, you won't be able to find it in the database.
 - search for it in the _SDER_ database, _rawJurinet_ table
-  - connect to `dbsder` via ssh and connect to the Mongo db
+  - connect to `dbsder-pp` (preprod, resp `dbsder`: prod) via ssh and connect to the Mongo db
   - `use SDER`
   - `db.rawJurinet.find({_id: ID_JURINET})`
 - => if the decision is not in the _rawJurinet_ table, ask Sébastien Courvoisier to import it
@@ -43,73 +42,44 @@ To annotate all the documents that have not been annotated by the NLP engine yet
 - => if the decision is not in the _decisions_ table, ask Sébastien Courvoisier to import it
 - => if the decision is in the _decisions_ table, if its `labelStatus` is `done` or `exported` and its `pseudoText` is not null, ask Sébastien Courvoisier why the decision has not been released to the Judifiltre API
 - => if the decision is in the _decisions_ table and its `labelStatus` is `toBeTreated` :
-  - connect to `label` via ssh
-  - `sudo su label`
-  - navigate to `/home/label/label/packages/courDeCassation`
-  - `./scripts/run[environment]Script.sh ./dist/scripts/importSpecificDocumentFromSder.js --documentNumber=JURINET_ID source="jurinet"`
-  - `./scripts/run[environment]Script.sh ./dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js`
+  - connect to Wallix and open a Cygwin term
+  - preprod:
+    - `pp label script importSpecificDocumentFromSder.js --documentNumber=JURINET_ID source="jurinet"`
+    - `pp label script annotateDocumentsWithoutAnnotationsWithNlp.js`
+  - prod:
+    - `prod label script importSpecificDocumentFromSder.js --documentNumber=JURINET_ID source="jurinet"`
+    - `prod label script annotateDocumentsWithoutAnnotationsWithNlp.js`
 - once the document is imported in LABEL, you can check its status with the following instructions:
-  - connect to `dbsder` via ssh and connect to the Mongo db
+  - connect to `dbsder-pp` (resp `dbsder` for prod) via ssh and connect to the Mongo db
   - `use labelDb`
   - `db.documents.find({documentNumber: ID_JURINET, source: "jurinet"})`
 
+## Logs and more things
 
-## Note: adaptation to docker or kubernetes (k8s)
+In order to accelerate use of shortcuts, scripts are included in Wallix/Cygwin shell: `pp` and `prod`. Both are shortcuts of the `kubectl` command, linked to correct kube config (thus kube cluster), and correct namespace
 
-Ops doc for label can be read [here](https://github.com/Cour-de-cassation/Knowledge-base-ops/blob/master/plateforme-interne/integration-exploitation/apps-k8s/label.md).
+#### Running logs
 
-Migration is running to go to kubernetes. First step is a dockerized env
-Status :
-- production: use kubectl (k8s)
-- pre-prod: neither docker or kubectl (future: k8s)
-
-### with docker
-#### run one of the Label scripts
-prepend command with :
-```
-docker exec -it label-backend -- [my-wonderful-command]
-```
-#### get running logs
-```
-docker logs -f label-backend
+```shell
+pp label logs -f deployment.apps/label-backend-deployment
 ```
 
-### go into the container
-```
-docker exec -it label-backend /bin/sh
+resp
+
+```shell
+prod label logs -f deployment.apps/label-backend-deployment
 ```
 
-### with kubectl (k8s)
-#### get the namespaces
-```
-kubectl get namespaces
-```
-#### get the pods
-```
-kubectl -n [namespace] get pods
+#### get the pods of label namespace
+
+```shell
+pp get pods
 ```
 
-#### run one of the Label scripts
-prepend command with :
-```
-kubectl -n [the-namespace] exec -it [pod/label-backend-...] -- [my-wonderful-command]
-```
-
-#### get running logs
-```
-kubectl -n [the-namespace] logs -f [pod/label-backend-...]
-```
+(resp `prod label ...`)
 
 ### go into the container
+
 ```
-kubectl -n [the-namespace] logs -f [pod/label-backend-...] -- /bin/sh
-```
-### copy something from the container
-```
-kubectl cp [namespace]/[pod/label-backend-...]:[myfile] $pathto/myfile
-```
-### copy something to the container
-Note: the container is readonly, the only place to strore temporary things into it can be `/dev/shm/tmp`.
-```
-kubectl cp $pathto/myfile [namespace]/[pod/label-backend-...]:/dev/shm/tmp/[myfile]
+pp label exec -i deployment.apps/label-backend-deployment -- /bin/sh
 ```

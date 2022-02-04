@@ -25,16 +25,18 @@ async function buildFakeConnectorWithNDecisions(
     async fetchAllCourtDecisions() {
       return courtDecisions;
     },
-    async fetchAllDecisionsBySourceAndJurisdictionsBetween({
+    async fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween({
       startDate,
       endDate = new Date(),
       source,
       jurisdictions,
+      chambers,
     }: {
       startDate: Date;
       endDate?: Date;
       source: string;
       jurisdictions: string[];
+      chambers: string[];
     }) {
       return courtDecisions.filter((courtDecision) => {
         if (!courtDecision.dateDecision) {
@@ -46,20 +48,23 @@ async function buildFakeConnectorWithNDecisions(
           dateDecision.getTime() >= startDate.getTime() &&
           dateDecision.getTime() <= endDate.getTime() &&
           jurisdictions.includes(courtDecision.jurisdictionName) &&
+          chambers.includes(courtDecision.chamberId) &&
           courtDecision.sourceName === source
         );
       });
     },
-    async fetchPublicDecisionsBySourceAndJurisdictionsBetween({
+    async fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween({
       startDate,
       endDate = new Date(),
       source,
       jurisdictions,
+      chambers,
     }: {
       startDate: Date;
       endDate?: Date;
       source: string;
       jurisdictions: string[];
+      chambers: string[];
     }) {
       return courtDecisions.filter((courtDecision) => {
         if (!courtDecision.dateDecision) {
@@ -71,6 +76,7 @@ async function buildFakeConnectorWithNDecisions(
           dateDecision.getTime() >= startDate.getTime() &&
           dateDecision.getTime() <= endDate.getTime() &&
           jurisdictions.includes(courtDecision.jurisdictionName) &&
+          chambers.includes(courtDecision.chamberId) &&
           courtDecision.sourceName === source
         );
       });

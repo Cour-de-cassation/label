@@ -235,27 +235,34 @@ function buildConnector(connectorConfig: connectorConfigType) {
     from: Date,
     to: Date,
     jurisdictions: string[],
+    chambers: string[],
   ) {
-    logger.log(`importDocumentsByJurisdictionBetween from:${from} to:${to}`);
+    logger.log(
+      `importDocumentsByJurisdictionBetween from:${from} to:${to} with jurisdiction=${jurisdictions.join(
+        ',',
+      )} & chambers=${chambers.join(',')}`,
+    );
 
     logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
-    const newJurinetCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsBetween(
+    const newJurinetCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
       {
         startDate: from,
         endDate: to,
         source: 'jurinet',
         jurisdictions,
+        chambers,
       },
     );
     logger.log(
       `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
     );
-    const newJuricaCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsBetween(
+    const newJuricaCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
       {
         startDate: from,
         endDate: to,
         source: 'jurinet',
         jurisdictions,
+        chambers,
       },
     );
     logger.log(
@@ -286,11 +293,14 @@ function buildConnector(connectorConfig: connectorConfigType) {
       "Cour d'appel de Bordeaux",
     ];
 
+    const chambersToImport = [''];
+
     logger.log(`Fetching ${connectorConfig.name} documents...`);
-    const newCourtDecisions = await connectorConfig.fetchPublicDecisionsBySourceAndJurisdictionsBetween(
+    const newCourtDecisions = await connectorConfig.fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween(
       {
         source: 'jurica',
         jurisdictions: jurisdictionsToImport,
+        chambers: chambersToImport,
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
       },

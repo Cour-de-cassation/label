@@ -18,17 +18,19 @@ type sderApiType = {
     sourceId: decisionType['sourceId'],
     sourceName: decisionType['sourceName'],
   ) => Promise<decisionType | undefined>;
-  fetchAllDecisionsBySourceAndJurisdictionsBetween: (param: {
+  fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
     startDate: Date;
     endDate: Date;
     source: string;
     jurisdictions: string[];
+    chambers: string[];
   }) => Promise<decisionType[]>;
-  fetchPublicDecisionsBySourceAndJurisdictionsBetween: (param: {
+  fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
     startDate: Date;
     endDate: Date;
     source: string;
     jurisdictions: string[];
+    chambers: string[];
   }) => Promise<decisionType[]>;
   setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
   setCourtDecisionsToBeTreated: (

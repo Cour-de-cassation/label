@@ -66,23 +66,26 @@ const sderFetcher = {
     );
   },
 
-  async fetchAllDecisionsBySourceAndJurisdictionsBetween({
+  async fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween({
     startDate,
     endDate = new Date(),
     source,
     jurisdictions,
+    chambers,
   }: {
     startDate: Date;
     endDate?: Date;
     source: string;
     jurisdictions: string[];
+    chambers: string[];
   }) {
-    const courtDecisions = await sderApi.fetchAllDecisionsBySourceAndJurisdictionsBetween(
+    const courtDecisions = await sderApi.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
       {
         startDate,
         endDate,
         source,
         jurisdictions,
+        chambers,
       },
     );
 
@@ -91,23 +94,26 @@ const sderFetcher = {
     );
   },
 
-  async fetchPublicDecisionsBySourceAndJurisdictionsBetween({
+  async fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween({
     startDate,
     endDate = new Date(),
     source,
     jurisdictions,
+    chambers,
   }: {
     startDate: Date;
     endDate?: Date;
     source: string;
     jurisdictions: string[];
+    chambers: string[];
   }) {
-    const courtDecisions = await sderApi.fetchPublicDecisionsBySourceAndJurisdictionsBetween(
+    const courtDecisions = await sderApi.fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween(
       {
         startDate,
         endDate,
         source,
         jurisdictions,
+        chambers,
       },
     );
 

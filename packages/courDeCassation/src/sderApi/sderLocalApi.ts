@@ -8,7 +8,7 @@ export { sderLocalApi };
 const pathToCourtDecisions = './storage/documents/';
 
 const sderLocalApi: sderApiType = {
-  async fetchAllDecisionsBySourceAndJurisdictionsBetween() {
+  async fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween() {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,
     );
@@ -29,7 +29,7 @@ const sderLocalApi: sderApiType = {
     });
   },
 
-  async fetchPublicDecisionsBySourceAndJurisdictionsBetween() {
+  async fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween() {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,
     );

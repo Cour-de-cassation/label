@@ -260,7 +260,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       {
         startDate: from,
         endDate: to,
-        source: 'jurinet',
+        source: 'jurica',
         jurisdictions,
         chambers,
       },

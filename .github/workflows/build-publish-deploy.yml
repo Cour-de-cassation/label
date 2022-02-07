@@ -2,7 +2,7 @@ name: 🐋☸️ Build, Publish, Deploy (push)
 
 on:
   push:
-    branches: [master, prod]
+    branches: [dev, master]
 
 jobs:
   build-publish:
@@ -109,23 +109,23 @@ jobs:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
           ROOT_PATH: label/api
       - name: 🔙🚀 Push docker image -- backend
-        if: (matrix.node-version == '16.x') && (github.event_name == 'push') && ( (steps.backend_check.outputs.status == 'build_needed' ) || (steps.extract_branch.outputs.branch == 'pre-prod') || (steps.extract_branch.outputs.branch == 'prod') )
+        if: (matrix.node-version == '16.x')
         run: |
           echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
-          if [ "${GIT_BRANCH}" == "master" ]; then
+          if (docker image inspect ${DOCKER_IMAGE}); then
             docker push ${DOCKER_IMAGE};
-            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-            docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
           else
-            docker pull ${DOCKER_IMAGE}
-          fi;
+            docker pull ${DOCKER_IMAGE};
+          fi
           docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
           docker push ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
-          if [ "${GIT_BRANCH}" == "prod" ]; then
+          if [ "${GIT_BRANCH}" == "master" ]; then
+            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+            docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
             docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
             docker push ${DOCKER_USERNAME}/${APP_ID}:latest
-          fi
+          fi;
         env:
           APP_ID: label-backend
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
@@ -176,19 +176,19 @@ jobs:
         run: |
           echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
-          if [ "${GIT_BRANCH}" == "master" ]; then
+          if (docker image inspect ${DOCKER_IMAGE}); then
             docker push ${DOCKER_IMAGE};
-            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-            docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
           else
-            docker pull ${DOCKER_IMAGE}
-          fi;
+            docker pull ${DOCKER_IMAGE};
+          fi
           docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
           docker push ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
-          if [ "${GIT_BRANCH}" == "prod" ]; then
+          if [ "${GIT_BRANCH}" == "master" ]; then
+            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+            docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
             docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
             docker push ${DOCKER_USERNAME}/${APP_ID}:latest
-          fi
+          fi;
         env:
           APP_ID: label-client
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}

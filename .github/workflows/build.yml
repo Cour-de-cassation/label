@@ -2,7 +2,7 @@ name: 🐋☸️ Build (PR)
 
 on:
   pull_request:
-    branches: [master, prod]
+    branches: [dev, master]
 
 jobs:
   build:

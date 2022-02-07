@@ -235,7 +235,7 @@ jobs:
           APP_ID: label-client
       - name: 🔙☸️ Deploy k8s services -- backend
         run: |
-          if [ "${GIT_BRANCH}" == "master" ];then
+          if [ "${GIT_BRANCH}" == "dev" ];then
             export APP_HOST=${APP_HOST/prive/prive-pp}
             export KUBECONFIG=$HOME/.kube/config-pp
             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
@@ -259,7 +259,7 @@ jobs:
           VERSION: ${{ steps.backend_version.outputs.version }}
       - name: 🔙🚀 Update remote app ☸️ -- backend
         run: |
-          if [ "${GIT_BRANCH}" == "master" ];then
+          if [ "${GIT_BRANCH}" == "dev" ];then
             export KUBECONFIG=$HOME/.kube/config-pp
             export APP_HOST=${APP_HOST/prive/prive-pp}
             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
@@ -281,7 +281,7 @@ jobs:
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
       - name: 👤☸️ Deploy k8s services -- client
         run: |
-          if [ "${GIT_BRANCH}" == "master" ];then
+          if [ "${GIT_BRANCH}" == "dev" ];then
             export KUBECONFIG=$HOME/.kube/config-pp
             export APP_HOST=${APP_HOST/prive/prive-pp}
             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
@@ -297,7 +297,7 @@ jobs:
           VERSION: ${{ steps.client_version.outputs.version }}
       - name: 👤🚀 Update remote app ☸️ -- client
         run: |
-          if [ "${GIT_BRANCH}" == "master" ];then
+          if [ "${GIT_BRANCH}" == "dev" ];then
             export KUBECONFIG=$HOME/.kube/config-pp
             export APP_HOST=${APP_HOST/prive/prive-pp}
             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}

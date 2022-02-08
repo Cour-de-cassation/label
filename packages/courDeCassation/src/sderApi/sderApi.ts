@@ -12,7 +12,7 @@ const sderApi: sderApiType = {
     jurisdictions,
     chambers,
   }) {
-    const courtDecisions = await decisionModule.service.fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween(
+    const courtDecisions = await decisionModule.service.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
       { startDate, endDate, jurisdictions, chambers, source },
     );
 

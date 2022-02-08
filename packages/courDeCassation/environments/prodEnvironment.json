@@ -3,7 +3,7 @@
   "pathName": {
     "nlpApi": "https://nlp-pseudonymisation-api.judilibre-prive.local",
     "server": "https://label.cour-de-cassation.justice.fr",
-    "db": "mongodb://172.16.118.100"
+    "db": "mongodb://dbsder.judilibre-prive.local"
   },
   "port": {
     "nlpApi": 443,

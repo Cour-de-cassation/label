@@ -1,10 +1,10 @@
 import { logger } from '../../utils';
 import { buildDocumentRepository } from '../../modules/document';
 
-export { displayMultipleAssignatedDocuemnts };
+export { displayMultipleAssignatedDocuments };
 
-async function displayMultipleAssignatedDocuemnts() {
-  logger.log(`displayMultipleAssignatedDocuemnts`);
+async function displayMultipleAssignatedDocuments() {
+  logger.log(`displayMultipleAssignatedDocuments`);
   const documentRepository = buildDocumentRepository();
   const documents = await documentRepository.findAll();
 
@@ -21,5 +21,5 @@ async function displayMultipleAssignatedDocuemnts() {
     }
   }
   logger.log(`${documentCount} documents found.`);
-  logger.log(`DONE displayMultipleAssignatedDocuemnts`);
+  logger.log(`DONE displayMultipleAssignatedDocuments`);
 }

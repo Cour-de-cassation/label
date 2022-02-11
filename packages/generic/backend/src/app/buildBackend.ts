@@ -6,6 +6,7 @@ import {
   clearDb,
   createMigrationFile,
   displayDocumentLinks,
+  displayMultipleAssignatedDocuments,
   extractComplexityInfoIntoCsv,
   extractMonitoringEntriesIntoCsv,
   extractRouteInfosIntoCsv,
@@ -42,6 +43,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       displayDocumentLinks: {
         run: displayDocumentLinks,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      displayMultipleAssignatedDocuments: {
+        run: displayMultipleAssignatedDocuments,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       extractMonitoringEntriesIntoCsv: {

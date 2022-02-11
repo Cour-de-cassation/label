@@ -6,6 +6,7 @@ import {
   runNewMigrations,
 } from './deployment';
 import { displayDocumentLinks } from './displayDocumentLinks';
+import { displayMultipleAssignatedDocuments } from './displayMultipleAssignatedDocuments';
 import { extractComplexityInfoIntoCsv } from './extractComplexityInfoIntoCsv';
 import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
 import { extractRouteInfosIntoCsv } from './extractRouteInfosIntoCsv';
@@ -21,6 +22,7 @@ export {
   clearDb,
   createMigrationFile,
   displayDocumentLinks,
+  displayMultipleAssignatedDocuments,
   extractComplexityInfoIntoCsv,
   extractMonitoringEntriesIntoCsv,
   extractRouteInfosIntoCsv,

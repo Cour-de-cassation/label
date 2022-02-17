@@ -41,12 +41,12 @@ function isAnnotationTextInsideLargerWord(documentText: string, annotationText: 
   const boundaryCharacterRegex = /^[a-zA-Z0-9ÈÉÊÎÏÔÖÙÚÛÜèéêîïôöùû]/;
   const isWordBeginningOnBoundary =
     index === 0 ||
-    !documentText[index]?.match(boundaryCharacterRegex) ||
-    !documentText[index - 1]?.match(boundaryCharacterRegex);
+    !documentText[index].match(boundaryCharacterRegex) ||
+    !documentText[index - 1].match(boundaryCharacterRegex);
   const isWordEndingOnBoundary =
     index + annotationText.length === documentText.length ||
-    !documentText[index + annotationText.length - 1]?.match(boundaryCharacterRegex) ||
-    !documentText[index + annotationText.length]?.match(boundaryCharacterRegex);
+    !documentText[index + annotationText.length - 1].match(boundaryCharacterRegex) ||
+    !documentText[index + annotationText.length].match(boundaryCharacterRegex);
   return !isWordBeginningOnBoundary || !isWordEndingOnBoundary;
 }
 

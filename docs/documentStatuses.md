@@ -1,3 +1,5 @@
+# Document statuses
+
 A `document` is supposed to follow a specific flow once it enters the label database. Its status will evolve accordingly.
 
 - `loaded`: the document has only been imported in LABEL. No treatment has been done on it.

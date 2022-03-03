@@ -1,10 +1,11 @@
+import { logger, treatmentService } from '@label/backend';
 import { documentType } from '@label/core';
 import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
 
 export { extractRoute };
 
-function extractRoute(
+async function extractRoute(
   routeInfos: {
     session: documentType['decisionMetadata']['session'];
     solution: documentType['decisionMetadata']['solution'];
@@ -16,24 +17,45 @@ function extractRoute(
     NACCode: documentType['decisionMetadata']['NACCode'];
     endCaseCode: documentType['decisionMetadata']['endCaseCode'];
   },
+  documentId: documentType['_id'],
   source: documentType['source'],
-): documentType['route'] {
+): Promise<documentType['route']> {
+  let route: documentType['route'] = 'default';
+
   switch (source) {
     case 'jurinet':
       try {
-        return extractRouteForJurinet({ ...routeInfos });
+        route = extractRouteForJurinet({ ...routeInfos });
       } catch (e) {
-        return 'exhaustive';
+        logger.log(e);
+        route = 'exhaustive';
       }
       break;
     case 'jurica':
       try {
-        return extractRouteForJurica({ ...routeInfos });
+        route = extractRouteForJurica({ ...routeInfos });
       } catch (e) {
-        return 'exhaustive';
+        logger.log(e);
+        route = 'exhaustive';
       }
       break;
   }
 
-  return 'default';
+  if (route == 'simple' || route == 'default') {
+    try {
+      const treatments = await treatmentService.fetchTreatmentsByDocumentId(
+        documentId,
+      );
+      for (const treatment of treatments) {
+        console.log(treatment);
+        if (treatment['source'] == 'supplementaryAnnotations') {
+          route = 'exhaustive';
+        }
+      }
+    } catch (e) {
+      logger.log(e);
+    }
+  }
+
+  return route;
 }

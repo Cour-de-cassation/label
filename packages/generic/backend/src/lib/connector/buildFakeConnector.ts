@@ -22,7 +22,7 @@ async function buildFakeConnectorWithNDecisions(
 
   return {
     name: 'FAKE_CONNECTOR',
-    async fetchAllCourtDecisions() {
+    fetchAllCourtDecisions() {
       return courtDecisions;
     },
     async fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween({
@@ -181,11 +181,15 @@ const fakeSderMapper = {
     });
   },
   mapCourtDecisionToDocument(courtDecision: decisionType) {
-    return documentModule.generator.generate({
-      status: 'loaded',
-      externalId: idModule.lib.convertToString(courtDecision._id),
-      documentNumber: courtDecision.sourceId,
-      source: courtDecision.sourceName,
-    });
+    return new Promise(function executor(resolve) {
+      resolve(
+        documentModule.generator.generate({
+          status: 'loaded',
+          externalId: idModule.lib.convertToString(courtDecision._id),
+          documentNumber: courtDecision.sourceId,
+          source: courtDecision.sourceName,
+        }),
+      );
+    }) as Promise<documentType>;
   },
 };

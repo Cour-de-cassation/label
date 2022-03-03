@@ -75,10 +75,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
           endDate.getTime(),
         )}!`,
       );
-      const documents = newCourtDecisions.map((courtDecision) =>
-        connectorConfig.mapCourtDecisionToDocument(courtDecision),
-      );
-      newDocuments.push(...documents);
+      for (const courtDecision of newCourtDecisions) {
+        newDocuments.push(
+          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        );
+      }
       daysAgo += daysStep;
       step++;
     }
@@ -126,7 +127,9 @@ function buildConnector(connectorConfig: connectorConfigType) {
         !!courtDecision.pseudoText ? 'already' : 'never'
       } pseudonymised`,
     );
-    const document = connectorConfig.mapCourtDecisionToDocument(courtDecision);
+    const document = await connectorConfig.mapCourtDecisionToDocument(
+      courtDecision,
+    );
     logger.log(`Court decision converted. Inserting document into database...`);
     if (forceRequestRoute) {
       await insertDocument({ ...document, route: 'request' });
@@ -171,10 +174,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
           endDate.getTime(),
         )}!`,
       );
-      const documents = newCourtDecisions.map((courtDecision) =>
-        connectorConfig.mapCourtDecisionToDocument(courtDecision),
-      );
-      newDocuments.push(...documents);
+      for (const courtDecision of newCourtDecisions) {
+        newDocuments.push(
+          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        );
+      }
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
       step++;
     }
@@ -218,9 +222,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
       ...newJurinetCourtDecisions,
       ...newJuricaCourtDecisions,
     ];
-    const documents = newCourtDecisions.map((courtDecision) =>
-      connectorConfig.mapCourtDecisionToDocument(courtDecision),
-    );
+    const documents = [] as documentType[];
+    for (const courtDecision of newCourtDecisions) {
+      documents.push(
+        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+      );
+    }
 
     logger.log(`Insertion ${documents.length} documents into the database...`);
     await insertDocuments(documents);
@@ -272,9 +279,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
       ...newJurinetCourtDecisions,
       ...newJuricaCourtDecisions,
     ];
-    const documents = newCourtDecisions.map((courtDecision) =>
-      connectorConfig.mapCourtDecisionToDocument(courtDecision),
-    );
+    const documents = [] as documentType[];
+    for (const courtDecision of newCourtDecisions) {
+      documents.push(
+        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+      );
+    }
 
     logger.log(`Insertion ${documents.length} documents into the database...`);
     await insertDocuments(documents);
@@ -308,9 +318,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(
       `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
     );
-    const documents = newCourtDecisions.map((courtDecision) =>
-      connectorConfig.mapCourtDecisionToDocument(courtDecision),
-    );
+    const documents = [] as documentType[];
+    for (const courtDecision of newCourtDecisions) {
+      documents.push(
+        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+      );
+    }
 
     logger.log(`Insertion ${documents.length} documents into the database...`);
     await insertDocuments(documents);

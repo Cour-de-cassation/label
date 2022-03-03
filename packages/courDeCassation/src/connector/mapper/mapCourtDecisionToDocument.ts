@@ -16,9 +16,9 @@ import { categoriesMapper } from './categoriesMapper';
 export { mapCourtDecisionToDocument };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-function mapCourtDecisionToDocument(
+async function mapCourtDecisionToDocument(
   sderCourtDecision: decisionType,
-): documentType {
+): Promise<documentType> {
   const readableChamberName = extractReadableChamberName({
     chamberName: sderCourtDecision.chamberName,
     chamberId: sderCourtDecision.chamberId,
@@ -68,7 +68,7 @@ function mapCourtDecisionToDocument(
   const NACCode = sderCourtDecision.NACCode || '';
   const endCaseCode = sderCourtDecision.endCaseCode || '';
 
-  const route = extractRoute(
+  const route = await extractRoute(
     {
       solution,
       publicationCategory,
@@ -80,6 +80,7 @@ function mapCourtDecisionToDocument(
       NACCode,
       endCaseCode,
     },
+    sderCourtDecision._id,
     source,
   );
 

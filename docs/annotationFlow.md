@@ -1,3 +1,5 @@
+# Annotation flow
+
 The annotations are stored in the Label database in a specific format :
 
 ```

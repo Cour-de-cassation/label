@@ -5,6 +5,7 @@ import {
   revertOneMigration,
   runNewMigrations,
 } from './deployment';
+import { deleteDocument } from './deleteDocument';
 import { displayDocumentLinks } from './displayDocumentLinks';
 import { displayMultipleAssignatedDocuments } from './displayMultipleAssignatedDocuments';
 import { dumpDocument } from './dumpDocument';
@@ -22,6 +23,7 @@ export {
   cleanDocuments,
   clearDb,
   createMigrationFile,
+  deleteDocument,
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,

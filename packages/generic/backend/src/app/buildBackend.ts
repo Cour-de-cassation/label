@@ -5,6 +5,7 @@ import {
   cleanDocuments,
   clearDb,
   createMigrationFile,
+  deleteDocument,
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,
@@ -41,6 +42,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       createMigrationFile: {
         run: createMigrationFile,
         option: { shouldLoadDb: false, shouldExit: true },
+      },
+      deleteDocument: {
+        run: deleteDocument,
+        option: { shouldLoadDb: true, shouldExit: false },
       },
       displayDocumentLinks: {
         run: displayDocumentLinks,

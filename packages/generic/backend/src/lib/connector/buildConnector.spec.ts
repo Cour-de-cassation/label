@@ -1,5 +1,5 @@
 import { range } from 'lodash';
-import { dateBuilder } from '@label/core';
+import { dateBuilder, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildConnector } from './buildConnector';
 import { buildFakeConnectorWithNDecisions } from './buildFakeConnector';
@@ -78,10 +78,13 @@ describe('buildConnector', () => {
         sourceIds.map((sourceId) => ({ sourceId, sourceName: 'jurica' })),
       );
       const connector = buildConnector(fakeConnector);
-      const initialCourtDecisions = await fakeConnector.fetchAllCourtDecisions();
-      const initialDocuments = initialCourtDecisions.map(
-        fakeConnector.mapCourtDecisionToDocument,
-      );
+      const initialCourtDecisions = fakeConnector.fetchAllCourtDecisions();
+      const initialDocuments = [] as documentType[];
+      for (const decision of initialCourtDecisions) {
+        initialDocuments.push(
+          await fakeConnector.mapCourtDecisionToDocument(decision),
+        );
+      }
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
@@ -93,7 +96,7 @@ describe('buildConnector', () => {
       );
     });
 
-    it('should import documents', async () => {
+    it('should import 9 documents', async () => {
       const sourceIds = range(10).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
         sourceIds.map((sourceId, index) => {
@@ -107,10 +110,15 @@ describe('buildConnector', () => {
         }),
       );
       const connector = buildConnector(fakeConnector);
-      const initialCourtDecisions = await fakeConnector.fetchAllCourtDecisions();
-      const initialDocuments = initialCourtDecisions
-        .slice(0, 5)
-        .map(fakeConnector.mapCourtDecisionToDocument);
+      const initialCourtDecisions = fakeConnector
+        .fetchAllCourtDecisions()
+        .slice(0, 5);
+      const initialDocuments = [] as documentType[];
+      for (const decision of initialCourtDecisions) {
+        initialDocuments.push(
+          await fakeConnector.mapCourtDecisionToDocument(decision),
+        );
+      }
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 

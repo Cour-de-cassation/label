@@ -1,8 +1,10 @@
+import { buildTreatmentRepository } from '@label/backend/dist/modules/treatment';
+import { documentModule, idModule, treatmentModule } from '@label/core';
 import { extractRoute } from '.';
 
-describe('extractRoute', () => {
-  it('should return exhaustive if no endCaseCode & no NACCode', () => {
-    const route = extractRoute(
+describe('await extractRoute', () => {
+  it('should return exhaustive if no endCaseCode & no NACCode', async () => {
+    const route = await extractRoute(
       {
         solution: 'non-admission',
         publicationCategory: ['W'],
@@ -14,14 +16,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurica',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return exhaustive if jurica with endCaseCode 44E & NACCode 10A', () => {
-    const route = extractRoute(
+  it('should return exhaustive if jurica with endCaseCode 44E & NACCode 10A', async () => {
+    const route = await extractRoute(
       {
         solution: 'non-admission',
         publicationCategory: ['W'],
@@ -33,14 +36,15 @@ describe('extractRoute', () => {
         NACCode: '10A',
         endCaseCode: '44E',
       },
+      idModule.lib.buildId(),
       'jurica',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return automatique if jurica with endCaseCode 11A', () => {
-    const route = extractRoute(
+  it('should return automatique if jurica with endCaseCode 11A', async () => {
+    const route = await extractRoute(
       {
         solution: 'non-admission',
         publicationCategory: ['W'],
@@ -52,14 +56,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '11B',
       },
+      idModule.lib.buildId(),
       'jurica',
     );
 
     expect(route).toBe('automatique');
   });
 
-  it('should return simple if jurica with NACCode 55L', () => {
-    const route = extractRoute(
+  it('should return simple if jurica with NACCode 55L', async () => {
+    const route = await extractRoute(
       {
         solution: 'non-admission',
         publicationCategory: ['W'],
@@ -71,14 +76,15 @@ describe('extractRoute', () => {
         NACCode: '55Z',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurica',
     );
 
     expect(route).toBe('simple');
   });
 
-  it('should return exhaustive if jurica with endCaseCode 33G (not in csv)', () => {
-    const route = extractRoute(
+  it('should return exhaustive if jurica with endCaseCode 33G (not in csv)', async () => {
+    const route = await extractRoute(
       {
         solution: 'non-admission',
         publicationCategory: ['W'],
@@ -90,14 +96,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '33G',
       },
+      idModule.lib.buildId(),
       'jurica',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return automatic if NA', () => {
-    const route = extractRoute(
+  it('should return automatic if NA', async () => {
+    const route = await extractRoute(
       {
         solution: 'non-admission',
         publicationCategory: ['W'],
@@ -109,14 +116,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('automatic');
   });
 
-  it('should return confirmation if C', () => {
-    const route = extractRoute(
+  it('should return confirmation if C', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W', 'C'],
@@ -128,14 +136,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('confirmation');
   });
 
-  it('should return confirmation if AVIS', () => {
-    const route = extractRoute(
+  it('should return confirmation if AVIS', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W'],
@@ -147,14 +156,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('confirmation');
   });
 
-  it('should return confirmation if Assemblée plénière', () => {
-    const route = extractRoute(
+  it('should return confirmation if Assemblée plénière', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W'],
@@ -166,14 +176,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('confirmation');
   });
 
-  it('should return confirmation if chambre mixte', () => {
-    const route = extractRoute(
+  it('should return confirmation if chambre mixte', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W'],
@@ -185,14 +196,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('confirmation');
   });
 
-  it('should return exhaustive if category published', () => {
-    const route = extractRoute(
+  it('should return exhaustive if category published', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W', 'L'],
@@ -204,14 +216,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return exhaustive if category published', () => {
-    const route = extractRoute(
+  it('should return exhaustive if category published', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W', 'P'],
@@ -223,14 +236,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return exhaustive if category published', () => {
-    const route = extractRoute(
+  it('should return exhaustive if category published', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W', 'B'],
@@ -242,14 +256,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return exhaustive if QPC', () => {
-    const route = extractRoute(
+  it('should return exhaustive if QPC', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W'],
@@ -261,14 +276,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return exhaustive if QPC', () => {
-    const route = extractRoute(
+  it('should return exhaustive if QPC', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W'],
@@ -280,14 +296,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return exhaustive if QPC', () => {
-    const route = extractRoute(
+  it('should return exhaustive if QPC', async () => {
+    const route = await extractRoute(
       {
         solution: 'QPC incidente',
         publicationCategory: ['W'],
@@ -299,14 +316,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('exhaustive');
   });
 
-  it('should return automatic if Désistement', () => {
-    const route = extractRoute(
+  it('should return automatic if Désistement', async () => {
+    const route = await extractRoute(
       {
         solution: 'Desistement par arret',
         publicationCategory: ['W'],
@@ -318,14 +336,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('automatic');
   });
 
-  it('should return automatic if Déchéance', () => {
-    const route = extractRoute(
+  it('should return automatic if Déchéance', async () => {
+    const route = await extractRoute(
       {
         solution: 'Decheance',
         publicationCategory: ['W'],
@@ -337,14 +356,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('automatic');
   });
 
-  it('should return simple if formation restreinte', () => {
-    const route = extractRoute(
+  it('should return simple if formation restreinte', async () => {
+    const route = await extractRoute(
       {
         solution: 'Cassation partielle',
         publicationCategory: ['W'],
@@ -356,14 +376,15 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('simple');
   });
 
-  it('should return simple if Rejet non spécialement motivé', () => {
-    const route = extractRoute(
+  it('should return simple if Rejet non spécialement motivé', async () => {
+    const route = await extractRoute(
       {
         solution: 'Rejet non spécialement motivé',
         publicationCategory: ['W'],
@@ -375,9 +396,68 @@ describe('extractRoute', () => {
         NACCode: '',
         endCaseCode: '',
       },
+      idModule.lib.buildId(),
       'jurinet',
     );
 
     expect(route).toBe('simple');
+  });
+
+  it('should return exhaustive if has supplementaryAnnotations', async () => {
+    const document = documentModule.generator.generate();
+    const treatmentRepository = buildTreatmentRepository();
+    await treatmentRepository.insert(
+      treatmentModule.generator.generate({
+        documentId: document._id,
+        source: 'supplementaryAnnotations',
+      }),
+    );
+
+    const route = await extractRoute(
+      {
+        solution: 'Rejet non spécialement motivé',
+        publicationCategory: ['W'],
+        chamberId: 'SOC',
+        civilCaseCode: '',
+        civilMatterCode: '',
+        criminalCaseCode: '',
+        session: '',
+        NACCode: '',
+        endCaseCode: '',
+      },
+      document._id,
+      'jurinet',
+    );
+
+    expect(route).toBe('exhaustive');
+  });
+
+  it('should return exhaustive even if Rejet non spécialement motivé because has supplementaryAnnotations', async () => {
+    const document = documentModule.generator.generate();
+    const treatmentRepository = buildTreatmentRepository();
+    await treatmentRepository.insert(
+      treatmentModule.generator.generate({
+        documentId: document._id,
+        source: 'supplementaryAnnotations',
+      }),
+    );
+
+    const route = await extractRoute(
+      {
+        solution: 'Rejet non spécialement motivé',
+        publicationCategory: ['W'],
+        chamberId: 'SOC',
+        civilCaseCode: '',
+        civilMatterCode: '',
+        criminalCaseCode: '',
+        session: '',
+        NACCode: '',
+        endCaseCode: '',
+      },
+      document._id,
+      'jurinet',
+    );
+
+    expect(route).toBe('exhaustive');
   });
 });

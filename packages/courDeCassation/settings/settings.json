@@ -67,7 +67,7 @@
     "text": "N° INSEE"
   },
   "professionnelMagistratGreffier": {
-    "anonymization": "[professionnel %c]",
+    "anonymization": "[%c]",
     "color": {
       "lightMode": ["brown", "200"],
       "darkMode": ["brown", "500"]

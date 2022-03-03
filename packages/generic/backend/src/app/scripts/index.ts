@@ -7,6 +7,7 @@ import {
 } from './deployment';
 import { displayDocumentLinks } from './displayDocumentLinks';
 import { displayMultipleAssignatedDocuments } from './displayMultipleAssignatedDocuments';
+import { dumpDocument } from './dumpDocument';
 import { extractComplexityInfoIntoCsv } from './extractComplexityInfoIntoCsv';
 import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
 import { extractRouteInfosIntoCsv } from './extractRouteInfosIntoCsv';
@@ -23,6 +24,7 @@ export {
   createMigrationFile,
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
+  dumpDocument,
   extractComplexityInfoIntoCsv,
   extractMonitoringEntriesIntoCsv,
   extractRouteInfosIntoCsv,

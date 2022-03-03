@@ -7,6 +7,7 @@ import {
   createMigrationFile,
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
+  dumpDocument,
   extractComplexityInfoIntoCsv,
   extractMonitoringEntriesIntoCsv,
   extractRouteInfosIntoCsv,
@@ -47,6 +48,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       displayMultipleAssignatedDocuments: {
         run: displayMultipleAssignatedDocuments,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      dumpDocument: {
+        run: dumpDocument,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       extractMonitoringEntriesIntoCsv: {

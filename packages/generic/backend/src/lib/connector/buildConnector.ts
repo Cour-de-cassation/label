@@ -159,12 +159,21 @@ function buildConnector(connectorConfig: connectorConfigType) {
         dateBuilder.daysAgo(daysAgo + (daysStep || DEFAULT_DAYS_STEP)),
       );
       const endDate = new Date(dateBuilder.daysAgo(daysAgo));
-      const newCourtDecisions = await connectorConfig.fetchChainedJuricaDecisionsToPseudonymiseBetween(
+      const newJurinetDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
         {
           startDate,
           endDate,
+          source: 'jurinet',
         },
       );
+      const newJuricaDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+        {
+          startDate,
+          endDate,
+          source: 'jurica',
+        },
+      );
+      const newCourtDecisions = [...newJurinetDecisions, ...newJuricaDecisions];
       logger.log(
         `${newCourtDecisions.length} ${
           connectorConfig.name

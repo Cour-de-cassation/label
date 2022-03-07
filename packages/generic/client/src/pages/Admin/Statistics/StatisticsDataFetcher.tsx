@@ -41,9 +41,31 @@ function buildFetchStatistics() {
     const { data: availableStatisticFilters, statusCode: statusCodeAvailableStatisticFilters } = await apiCaller.get<
       'availableStatisticFilters'
     >('availableStatisticFilters');
-    const { data: aggregatedStatistics, statusCode: statusCodeAggregatedStatistics } = await apiCaller.get<
-      'aggregatedStatistics'
-    >('aggregatedStatistics', { ressourceFilter });
+
+    let aggregatedStatistics = {
+      cumulatedValue: {
+        surAnnotationsCount: 0,
+        subAnnotationsSensitiveCount: 0,
+        subAnnotationsNonSensitiveCount: 0,
+        treatmentDuration: 0,
+        annotationsCount: 0,
+        wordsCount: 0,
+      },
+      total: -1,
+    };
+    let statusCodeAggregatedStatistics = 200;
+
+    if (
+      Object.values(ressourceFilter).some((e) => {
+        return !!e;
+      })
+    ) {
+      const { data: aggregatedStatisticsFetch, statusCode: statusCodeAggregatedStatisticsFetch } = await apiCaller.get<
+        'aggregatedStatistics'
+      >('aggregatedStatistics', { ressourceFilter });
+      aggregatedStatistics = aggregatedStatisticsFetch;
+      statusCodeAggregatedStatistics = statusCodeAggregatedStatisticsFetch;
+    }
 
     return {
       data: { availableStatisticFilters, aggregatedStatistics },

@@ -1,5 +1,8 @@
 import { logger } from '../../utils';
-import { buildDocumentRepository } from '../../modules/document';
+import {
+  buildDocumentRepository,
+  documentService,
+} from '../../modules/document';
 import { documentType } from '@label/core';
 
 export { deleteDocument };
@@ -15,8 +18,7 @@ async function deleteDocument(
     source,
   });
 
-  document && (await documentRepository.deleteById(document._id));
+  document && (await documentService.deleteDocument(document._id));
 
-  logger.log(document);
   logger.log(`DONE deleteDocument`);
 }

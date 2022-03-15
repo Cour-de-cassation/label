@@ -16,11 +16,11 @@ describe('buildConnector', () => {
       const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
         sourceIds.map((sourceId, index) => {
-          const dateCreation = new Date();
-          dateCreation.setTime(dateBuilder.daysAgo(index * 7));
+          const dateDecision = new Date();
+          dateDecision.setTime(dateBuilder.daysAgo(index * 7));
           return {
             sourceId,
-            dateCreation: dateCreation.toDateString(),
+            dateDecision: dateDecision.toDateString(),
             sourceName: 'jurinet',
           };
         }),
@@ -39,6 +39,37 @@ describe('buildConnector', () => {
         ),
       );
     });
+
+    describe('importAllDocumentsSinceDateCreation', () => {
+      it('should import all the document fetched by the connector', async () => {
+        const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+        const fakeConnector = await buildFakeConnectorWithNDecisions(
+          sourceIds.map((sourceId, index) => {
+            const dateCreation = new Date();
+            dateCreation.setTime(dateBuilder.daysAgo(index * 7));
+            return {
+              sourceId,
+              dateCreation: dateCreation.toDateString(),
+              sourceName: 'jurinet',
+            };
+          }),
+        );
+        const connector = buildConnector(fakeConnector);
+
+        await connector.importDocumentsSinceDateCreation(10);
+
+        const insertedDocuments = await documentRepository.findAll();
+        expect(insertedDocuments.length).toBe(2);
+        [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
+          expect(
+            insertedDocuments.some(
+              (insertedDocument) =>
+                insertedDocument.documentNumber === sourceId,
+            ),
+          ),
+        );
+      });
+    });
   });
 
   describe('importNewDocuments', () => {
@@ -46,11 +77,11 @@ describe('buildConnector', () => {
       const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
         sourceIds.map((sourceId, index) => {
-          const dateCreation = new Date();
-          dateCreation.setTime(dateBuilder.daysAgo(index * 7));
+          const dateDecision = new Date();
+          dateDecision.setTime(dateBuilder.daysAgo(index * 7));
           return {
             sourceId,
-            dateCreation: dateCreation.toDateString(),
+            dateDecision: dateDecision.toDateString(),
             sourceName: 'jurica',
           };
         }),
@@ -100,11 +131,11 @@ describe('buildConnector', () => {
       const sourceIds = range(10).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
         sourceIds.map((sourceId, index) => {
-          const dateCreation = new Date();
-          dateCreation.setTime(dateBuilder.daysAgo(index * 31));
+          const dateDecision = new Date();
+          dateDecision.setTime(dateBuilder.daysAgo(index * 31));
           return {
             sourceId,
-            dateCreation: dateCreation.toDateString(),
+            dateDecision: dateDecision.toDateString(),
             sourceName: 'jurica',
           };
         }),

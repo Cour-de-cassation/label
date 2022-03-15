@@ -18,6 +18,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     importJuricaDocuments,
     importDocumentsByJurisdictionBetween,
     importDocumentsSince,
+    importDocumentsSinceDateCreation,
     importTestDocumentsSince,
     resetDocument,
     resetAllDocumentsSince,
@@ -218,6 +219,50 @@ function buildConnector(connectorConfig: connectorConfigType) {
       `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
     );
     const newJuricaCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+      {
+        startDate: new Date(dateBuilder.daysAgo(days)),
+        endDate: new Date(),
+        source: 'jurica',
+      },
+    );
+    logger.log(
+      `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
+    );
+    const newCourtDecisions = [
+      ...newJurinetCourtDecisions,
+      ...newJuricaCourtDecisions,
+    ];
+    const documents = [] as documentType[];
+    for (const courtDecision of newCourtDecisions) {
+      documents.push(
+        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+      );
+    }
+
+    logger.log(`Insertion ${documents.length} documents into the database...`);
+    await insertDocuments(documents);
+    logger.log(`Insertion done!`);
+
+    logger.log(`Send documents have been loaded...`);
+    await connectorConfig.updateDocumentsLoadedStatus(documents);
+    logger.log(`DONE`);
+  }
+
+  async function importDocumentsSinceDateCreation(days: number) {
+    logger.log(`importDocumentsSinceDateCreation ${days}`);
+
+    logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
+    const newJurinetCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
+      {
+        startDate: new Date(dateBuilder.daysAgo(days)),
+        endDate: new Date(),
+        source: 'jurinet',
+      },
+    );
+    logger.log(
+      `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
+    );
+    const newJuricaCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
       {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),

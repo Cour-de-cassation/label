@@ -292,7 +292,7 @@ jobs:
           API_PORT: 55432
           APP_KEYWORD: html
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          KUBE_SERVICES_FORCE_UPDATE: deployment
+          # KUBE_SERVICES_FORCE_UPDATE: deployment
           ROOT_PATH: label
           VERSION: ${{ steps.client_version.outputs.version }}
       - name: 👤🚀 Update remote app ☸️ -- client

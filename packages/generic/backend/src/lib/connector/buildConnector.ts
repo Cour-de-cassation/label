@@ -44,7 +44,16 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
     const daysStep = 30;
 
-    await importNewDocuments(documentsCount, daysStep);
+    const count = await importNewDocuments(documentsCount, daysStep);
+
+    logger.log(`Saving CSV stats...`);
+    const fileName = 'autoImportDocumentsFromSder.csv';
+    const csvContent = Date.toString() + ';' + count + '\n';
+    try {
+      await fs.appendFile(`./${fileName}`, csvContent);
+    } catch (err) {
+      logger.error(err);
+    }
   }
 
   async function importJuricaDocuments(documentsCount: number) {
@@ -202,6 +211,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Send documents have been loaded...`);
     await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
     logger.log(`DONE`);
+    return newDocuments.length;
   }
 
   async function importDocumentsSince(days: number) {
@@ -289,6 +299,15 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
     logger.log(`Send documents have been loaded...`);
     await connectorConfig.updateDocumentsLoadedStatus(documents);
+
+    logger.log(`Saving CSV stats...`);
+    const fileName = 'importDocumentsSinceDateCreation.csv';
+    const csvContent = Date.toString() + ';' + documents.length + '\n';
+    try {
+      await fs.appendFile(`./${fileName}`, csvContent);
+    } catch (err) {
+      logger.error(err);
+    }
     logger.log(`DONE`);
   }
 

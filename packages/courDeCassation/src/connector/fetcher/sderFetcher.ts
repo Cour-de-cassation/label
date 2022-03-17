@@ -47,6 +47,38 @@ const sderFetcher = {
     });
   },
 
+  async fetchDecisionsToPseudonymiseBetweenDateCreation({
+    startDate,
+    endDate,
+    source,
+  }: {
+    startDate: Date;
+    endDate: Date;
+    source: 'jurinet' | 'jurica';
+  }) {
+    const courtDecisions = await sderApi.fetchDecisionsToPseudonymiseBetweenDateCreation(
+      {
+        startDate,
+        endDate,
+        source,
+      },
+    );
+
+    return courtDecisions.filter((courtDecision) => {
+      if (!courtDecision.originalText) {
+        return false;
+      }
+      if (
+        courtDecision.sourceName === 'jurica' &&
+        !!courtDecision.NACCode &&
+        NON_PUBLIC_NAC_CODES.includes(courtDecision.NACCode)
+      ) {
+        return false;
+      }
+      return true;
+    });
+  },
+
   async fetchChainedJuricaDecisionsToPseudonymiseBetween({
     startDate,
     endDate,

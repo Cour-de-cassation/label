@@ -45,6 +45,22 @@ const sderApi: sderApiType = {
     return courtDecisions;
   },
 
+  async fetchDecisionsToPseudonymiseBetweenDateCreation({
+    startDate,
+    endDate,
+    source,
+  }) {
+    const courtDecisions = await decisionModule.service.fetchDecisionsToPseudonymiseBetweenDateCreation(
+      {
+        startDate,
+        endDate,
+        source,
+      },
+    );
+
+    return courtDecisions;
+  },
+
   async fetchChainedJuricaDecisionsToPseudonymiseBetween({
     startDate,
     endDate,

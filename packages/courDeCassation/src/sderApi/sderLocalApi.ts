@@ -71,6 +71,27 @@ const sderLocalApi: sderApiType = {
     });
   },
 
+  async fetchDecisionsToPseudonymiseBetweenDateCreation() {
+    const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
+      pathToCourtDecisions,
+    );
+
+    const courtDecisions = await fileSystem.readFiles(
+      courtDecisionFileNames,
+      'utf8',
+      pathToCourtDecisions,
+    );
+
+    return courtDecisions.map(({ content }) => {
+      const parsedContent = JSON.parse(content) as decisionType;
+      return {
+        ...parsedContent,
+        _id: idModule.lib.buildId(),
+        dateCreation: parsedContent.dateCreation,
+      };
+    });
+  },
+
   async fetchChainedJuricaDecisionsToPseudonymiseBetween() {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,

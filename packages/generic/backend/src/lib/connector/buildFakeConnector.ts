@@ -4,17 +4,21 @@ import { documentModule, documentType, idModule } from '@label/core';
 export { buildFakeConnectorWithNDecisions };
 
 type partialDecisionType = Partial<
-  Pick<decisionType, 'labelStatus' | 'sourceName' | 'dateCreation' | 'sourceId'>
+  Pick<
+    decisionType,
+    'labelStatus' | 'sourceName' | 'dateDecision' | 'dateCreation' | 'sourceId'
+  >
 >;
 
 async function buildFakeConnectorWithNDecisions(
   courtDecisionFields: partialDecisionType[],
 ) {
   let courtDecisions = courtDecisionFields.map(
-    ({ sourceName, labelStatus, dateCreation, sourceId }) =>
+    ({ sourceName, labelStatus, dateDecision, dateCreation, sourceId }) =>
       decisionModule.lib.generateDecision({
         sourceName,
         labelStatus,
+        dateDecision,
         dateCreation,
         sourceId,
       }),
@@ -102,19 +106,41 @@ async function buildFakeConnectorWithNDecisions(
       endDate: Date;
     }) {
       return courtDecisions.filter((courtDecision) => {
-        if (!courtDecision.dateCreation) {
+        if (!courtDecision.dateDecision) {
           return false;
         }
-        const dateCreation = new Date(courtDecision.dateCreation);
+        const dateDecision = new Date(courtDecision.dateDecision);
 
         return (
           courtDecision.sourceName === 'jurica' &&
-          dateCreation.getTime() >= startDate.getTime() &&
-          dateCreation.getTime() <= endDate.getTime()
+          dateDecision.getTime() >= startDate.getTime() &&
+          dateDecision.getTime() <= endDate.getTime()
         );
       });
     },
     async fetchDecisionsToPseudonymiseBetween({
+      startDate,
+      endDate,
+      source,
+    }: {
+      startDate: Date;
+      endDate: Date;
+      source: 'jurinet' | 'jurica';
+    }) {
+      return courtDecisions.filter((courtDecision) => {
+        if (!courtDecision.dateDecision) {
+          return false;
+        }
+        const dateDecision = new Date(courtDecision.dateDecision);
+
+        return (
+          courtDecision.sourceName === source &&
+          dateDecision.getTime() >= startDate.getTime() &&
+          dateDecision.getTime() <= endDate.getTime()
+        );
+      });
+    },
+    async fetchDecisionsToPseudonymiseBetweenDateCreation({
       startDate,
       endDate,
       source,

@@ -1,12 +1,13 @@
-import { logger, treatmentService } from '@label/backend';
+import { logger } from '@label/backend';
 import { documentType } from '@label/core';
 import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
 
 export { extractRoute };
 
-async function extractRoute(
+function extractRoute(
   routeInfos: {
+    additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'];
     session: documentType['decisionMetadata']['session'];
     solution: documentType['decisionMetadata']['solution'];
     publicationCategory: documentType['publicationCategory'];
@@ -17,9 +18,8 @@ async function extractRoute(
     NACCode: documentType['decisionMetadata']['NACCode'];
     endCaseCode: documentType['decisionMetadata']['endCaseCode'];
   },
-  documentId: documentType['_id'],
   source: documentType['source'],
-): Promise<documentType['route']> {
+): documentType['route'] {
   let route: documentType['route'] = 'default';
 
   switch (source) {
@@ -41,20 +41,11 @@ async function extractRoute(
       break;
   }
 
-  if (route == 'simple' || route == 'default') {
-    try {
-      const treatments = await treatmentService.fetchTreatmentsByDocumentId(
-        documentId,
-      );
-      for (const treatment of treatments) {
-        console.log(treatment);
-        if (treatment['source'] == 'supplementaryAnnotations') {
-          route = 'exhaustive';
-        }
-      }
-    } catch (e) {
-      logger.log(e);
-    }
+  if (
+    !!routeInfos.additionalTermsToAnnotate &&
+    (route == 'simple' || route == 'default')
+  ) {
+    route = 'exhaustive';
   }
 
   return route;

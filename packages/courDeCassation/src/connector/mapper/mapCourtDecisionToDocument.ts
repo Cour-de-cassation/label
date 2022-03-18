@@ -62,14 +62,17 @@ async function mapCourtDecisionToDocument(
 
   const session = sderCourtDecision.formation?.trim() || '';
 
+  const additionalTermsToAnnotate =
+    sderCourtDecision.occultation?.additionalTerms || '';
   const civilCaseCode = sderCourtDecision.natureAffaireCivil?.trim() || '';
   const civilMatterCode = sderCourtDecision.codeMatiereCivil?.trim() || '';
   const criminalCaseCode = sderCourtDecision.natureAffairePenal?.trim() || '';
   const NACCode = sderCourtDecision.NACCode || '';
   const endCaseCode = sderCourtDecision.endCaseCode || '';
 
-  const route = await extractRoute(
+  const route = extractRoute(
     {
+      additionalTermsToAnnotate,
       solution,
       publicationCategory,
       chamberId: sderCourtDecision.chamberId,
@@ -80,7 +83,6 @@ async function mapCourtDecisionToDocument(
       NACCode,
       endCaseCode,
     },
-    sderCourtDecision._id,
     source,
   );
 
@@ -88,8 +90,7 @@ async function mapCourtDecisionToDocument(
     creationDate: creationDate?.getTime(),
     decisionMetadata: {
       appealNumber: appealNumber || '',
-      additionalTermsToAnnotate:
-        sderCourtDecision.occultation?.additionalTerms || '',
+      additionalTermsToAnnotate,
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
       civilCaseCode,

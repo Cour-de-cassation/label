@@ -5,7 +5,7 @@ metadata:
   name: ${APP_ID}-job-nlp-annotation
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "*/5 7-20 * * *"
+  schedule: "CRON_TZ=Europe/Paris */5 6-19 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -44,7 +44,7 @@ metadata:
   name: ${APP_ID}-job-import-j-7
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "*/30 7-13 * * *"
+  schedule: "CRON_TZ=Europe/Paris */30 6-12 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -81,7 +81,7 @@ metadata:
   name: ${APP_ID}-job-import-1000
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "0 20 * * *"
+  schedule: "CRON_TZ=Europe/Paris 0 19 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -118,7 +118,7 @@ metadata:
   name: ${APP_ID}-job-export-j-4
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "30 20 * * *"
+  schedule: "CRON_TZ=Europe/Paris 30 19 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -155,7 +155,7 @@ metadata:
   name: ${APP_ID}-job-export-publishable
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "58 14 * * *"
+  schedule: "CRON_TZ=Europe/Paris 58 13 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -192,7 +192,7 @@ metadata:
   name: ${APP_ID}-job-free-pending
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "*/17 7-20 * * *"
+  schedule: "CRON_TZ=Europe/Paris */17 6-19 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid

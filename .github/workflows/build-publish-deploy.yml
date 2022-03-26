@@ -248,7 +248,6 @@ jobs:
           API_PORT: 55430
           APP_KEYWORD: "true"
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          KUBE_SERVICES: service deployment jobs
           # KUBE_SERVICES_FORCE_UPDATE: deployment jobs # uncomment if redeploy needed
           MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
@@ -273,6 +272,30 @@ jobs:
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           ROOT_PATH: label/api
           START_TIMEOUT: 90
+          VERSION: ${{ steps.backend_version.outputs.version }}
+      - name: 🔙☸️ Deploy w/ force update of k8s jobs -- backend
+        run: |
+          if [ "${GIT_BRANCH}" == "dev" ];then
+            export APP_HOST=${APP_HOST/prive/prive-pp}
+            export KUBECONFIG=$HOME/.kube/config-pp
+            export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
+            export MONGODB_URI=${MONGODB_URI/6/7}
+            export NLP_API_HOST=${NLP_API_HOST/prive/prive-pp}
+          fi
+          ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+        env:
+          APP_ID: label-backend
+          API_PORT: 55430
+          APP_KEYWORD: "true"
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          KUBE_SERVICES: jobs
+          KUBE_SERVICES_FORCE_UPDATE: jobs
+          MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
+          NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
+          NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
+          ROOT_PATH: label/api
           VERSION: ${{ steps.backend_version.outputs.version }}
       - name: 🔙🧹 Clean old replicas ☸️ -- backend
         run: ./scripts/clean_old_replicas.sh

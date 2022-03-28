@@ -222,3 +222,40 @@ spec:
             - name: ${APP_ID}-config
               secret:
                 secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-purge-M-6
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "CRON_TZ=Europe/Paris 0 1 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+            - name: ${APP_ID}-job-purge-M-6
+              image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+              volumeMounts:
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
+              command:
+                - /bin/sh
+              args:
+                - -c
+                - node dist/scripts/purgeDb.js --beforeMonths 6 --environment environments/prodEnvironment.json --settings settings/settings.json
+              env:
+                - name: RUN_MODE
+                  value: PROD
+          restartPolicy: Never
+          volumes:
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config

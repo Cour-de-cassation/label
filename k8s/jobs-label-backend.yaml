@@ -226,7 +226,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: ${APP_ID}-job-purge-M-6
+  name: ${APP_ID}-job-purge-m-6
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris 0 21 * * *"

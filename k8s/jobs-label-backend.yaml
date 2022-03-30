@@ -229,7 +229,7 @@ metadata:
   name: ${APP_ID}-job-purge-M-6
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris 0 1 * * *"
+  schedule: "CRON_TZ=Europe/Paris 0 21 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -240,7 +240,7 @@ spec:
       template:
         spec:
           containers:
-            - name: ${APP_ID}-job-purge-M-6
+            - name: ${APP_ID}-job-purge-m-6
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
                 - name: ${APP_ID}-config

@@ -5,7 +5,9 @@ export type { projectedType, repositoryType };
 type repositoryType<T extends { _id: idType }> = {
   clear: () => Promise<void>;
   deleteById: (_id: idType) => Promise<void>;
-  deleteManyByIds: (ids: idType[]) => Promise<void>;
+  deleteManyByIds: (
+    ids: idType[],
+  ) => Promise<{ success: boolean; count: number }>;
   distinct: <fieldNameT extends keyof T>(
     fieldName: fieldNameT,
   ) => Promise<Array<T[fieldNameT]>>;

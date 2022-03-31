@@ -18,10 +18,12 @@ async function deleteStaticticsBefore({
     statisticsExpirationDate,
   );
 
-  await statisticRepository.deleteManyByIds(statisticToDeleteIds);
+  const { count } = await statisticRepository.deleteManyByIds(
+    statisticToDeleteIds,
+  );
 
   logger.log(
-    `deleteStaticticsBefore ${since}${unit}: ${statisticToDeleteIds.length} statistics deleted`,
+    `deleteStaticticsBefore ${since}${unit}: ${count} statistics deleted`,
   );
 
   function computeExpirationDate() {

@@ -68,4 +68,4 @@ USER node
 # Expose the listening port of your app
 EXPOSE ${API_PORT}
 
-CMD ["sh", "-c", "cat environments/prodEnvironment.json && RUN_MODE=PROD node dist/labelServer.js -e environments/prodEnvironment.json -s settings/settings.json"]
+CMD ["sh", "-c", "RUN_MODE=PROD node dist/labelServer.js -e environments/prodEnvironment.json -s settings/settings.json"]

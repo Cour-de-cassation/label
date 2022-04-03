@@ -30,6 +30,8 @@ spec:
               env:
                 - name: RUN_MODE
                   value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}
                 - name: NODE_TLS_REJECT_UNAUTHORIZED
                   value: "0"
           restartPolicy: Never
@@ -69,6 +71,8 @@ spec:
               env:
                 - name: RUN_MODE
                   value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -143,6 +147,8 @@ spec:
               env:
                 - name: RUN_MODE
                   value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -176,10 +182,12 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/exportTreatedDocumentsSince.js --days 4 -e environments/prodEnvironment.json -s settings/settings.json
+                - node dist/scripts/exportTreatedDocumentsSince.js -e environments/prodEnvironment.json -s settings/settings.json --days 4
               env:
                 - name: RUN_MODE
                   value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -217,6 +225,8 @@ spec:
               env:
                 - name: RUN_MODE
                   value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -254,6 +264,8 @@ spec:
               env:
                 - name: RUN_MODE
                   value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -291,6 +303,8 @@ spec:
               env:
                 - name: RUN_MODE
                   value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config

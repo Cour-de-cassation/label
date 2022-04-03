@@ -8,7 +8,6 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { days } = parseArgv();
   const backend = buildBackend(environment, settings);
   const sderExporter = buildSderExporter(settings);
-
   backend.runScript(() => sderExporter.exportTreatedDocumentsSince(days), {
     shouldLoadDb: true,
   });

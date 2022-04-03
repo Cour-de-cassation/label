@@ -40,6 +40,9 @@ spec:
         image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
         ports:
         - containerPort: ${API_PORT}
+        env:
+          - name: SDER_DB_URL
+            value: ${MONGODB_URI}
         startupProbe:
           exec:
             command:

@@ -22,7 +22,7 @@ function buildRunScript(
     }
 
     async function runScriptWithDb() {
-      logger.log(`Running script with ${environment}`);
+      logger.log(`Running script with ${JSON.stringify(environment)}`);
 
       await setupMongo(environment);
 

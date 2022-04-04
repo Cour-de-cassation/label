@@ -19,9 +19,9 @@ spec:
             - name: ${APP_ID}-job-nlp-annotation
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
-              - name: ${APP_ID}-config
-                mountPath: /home/node/packages/courDeCassation/environments
-                readOnly: true
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
               command:
                 - /bin/sh
               args:
@@ -34,9 +34,9 @@ spec:
                   value: "0"
           restartPolicy: Never
           volumes:
-          - name: ${APP_ID}-config
-            secret:
-              secretName: ${APP_ID}-config
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -58,9 +58,9 @@ spec:
             - name: ${APP_ID}-job-import-j-7
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
-              - name: ${APP_ID}-config
-                mountPath: /home/node/packages/courDeCassation/environments
-                readOnly: true
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
               command:
                 - /bin/sh
               args:
@@ -71,14 +71,14 @@ spec:
                   value: PROD
           restartPolicy: Never
           volumes:
-          - name: ${APP_ID}-config
-            secret:
-              secretName: ${APP_ID}-config
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
 ---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: ${APP_ID}-job-import-1000
+  name: ${APP_ID}-job-urgent-import
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris 0 19 * * *"
@@ -92,25 +92,25 @@ spec:
       template:
         spec:
           containers:
-            - name: ${APP_ID}-job-import-1000
+            - name: ${APP_ID}-job-urgent-import
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
-              - name: ${APP_ID}-config
-                mountPath: /home/node/packages/courDeCassation/environments
-                readOnly: true
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
               command:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/autoImportDocumentsFromSder.js --count 1000 --threshold 1000 -e environments/prodEnvironment.json -s settings/settings.json
+                - node dist/scripts/autoImportDocumentsFromSder.js --count 200 --threshold 200 -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD
           restartPolicy: Never
           volumes:
-          - name: ${APP_ID}-config
-            secret:
-              secretName: ${APP_ID}-config
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -132,9 +132,9 @@ spec:
             - name: ${APP_ID}-job-export-j-4
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
-              - name: ${APP_ID}-config
-                mountPath: /home/node/packages/courDeCassation/environments
-                readOnly: true
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
               command:
                 - /bin/sh
               args:
@@ -145,9 +145,9 @@ spec:
                   value: PROD
           restartPolicy: Never
           volumes:
-          - name: ${APP_ID}-config
-            secret:
-              secretName: ${APP_ID}-config
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -169,9 +169,9 @@ spec:
             - name: ${APP_ID}-job-export-publishable
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
-              - name: ${APP_ID}-config
-                mountPath: /home/node/packages/courDeCassation/environments
-                readOnly: true
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
               command:
                 - /bin/sh
               args:
@@ -182,9 +182,9 @@ spec:
                   value: PROD
           restartPolicy: Never
           volumes:
-          - name: ${APP_ID}-config
-            secret:
-              secretName: ${APP_ID}-config
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -206,9 +206,9 @@ spec:
             - name: ${APP_ID}-job-free-pending
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
-              - name: ${APP_ID}-config
-                mountPath: /home/node/packages/courDeCassation/environments
-                readOnly: true
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
               command:
                 - /bin/sh
               args:
@@ -219,9 +219,9 @@ spec:
                   value: PROD
           restartPolicy: Never
           volumes:
-          - name: ${APP_ID}-config
-            secret:
-              secretName: ${APP_ID}-config
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -243,9 +243,9 @@ spec:
             - name: ${APP_ID}-job-purge-m-6
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
-              - name: ${APP_ID}-config
-                mountPath: /home/node/packages/courDeCassation/environments
-                readOnly: true
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
               command:
                 - /bin/sh
               args:
@@ -256,6 +256,6 @@ spec:
                   value: PROD
           restartPolicy: Never
           volumes:
-          - name: ${APP_ID}-config
-            secret:
-              secretName: ${APP_ID}-config
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config

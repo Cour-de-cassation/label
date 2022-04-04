@@ -159,4 +159,62 @@ describe('buildConnector', () => {
       expect(finalDocuments.length).toBe(9);
     });
   });
+
+  describe('importChainedDocumentsFromSder', () => {
+    it('should not import documents', async () => {
+      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+      const fakeConnector = await buildFakeConnectorWithNDecisions(
+        sourceIds.map((sourceId) => ({ sourceId, sourceName: 'jurica' })),
+      );
+      const connector = buildConnector(fakeConnector);
+      const initialCourtDecisions = fakeConnector.fetchAllCourtDecisions();
+      const initialDocuments = [] as documentType[];
+      for (const decision of initialCourtDecisions) {
+        initialDocuments.push(
+          await fakeConnector.mapCourtDecisionToDocument(decision),
+        );
+      }
+      await documentRepository.insertMany(initialDocuments);
+      await documentRepository.updateMany({}, { status: 'free' });
+
+      await connector.importChainedDocumentsFromSder(4, 5);
+
+      const finalDocuments = await documentRepository.findAll();
+      expect(sourceIds.sort()).toEqual(
+        finalDocuments.map(({ documentNumber }) => documentNumber).sort(),
+      );
+    });
+
+    it('should import 9 documents', async () => {
+      const sourceIds = range(10).map(() => Math.floor(Math.random() * 10000));
+      const fakeConnector = await buildFakeConnectorWithNDecisions(
+        sourceIds.map((sourceId, index) => {
+          const dateDecision = new Date();
+          dateDecision.setTime(dateBuilder.daysAgo(index * 31));
+          return {
+            sourceId,
+            dateDecision: dateDecision.toDateString(),
+            sourceName: 'jurica',
+          };
+        }),
+      );
+      const connector = buildConnector(fakeConnector);
+      const initialCourtDecisions = fakeConnector
+        .fetchAllCourtDecisions()
+        .slice(0, 5);
+      const initialDocuments = [] as documentType[];
+      for (const decision of initialCourtDecisions) {
+        initialDocuments.push(
+          await fakeConnector.mapCourtDecisionToDocument(decision),
+        );
+      }
+      await documentRepository.insertMany(initialDocuments);
+      await documentRepository.updateMany({}, { status: 'free' });
+
+      await connector.importChainedDocumentsFromSder(6, 4);
+
+      const finalDocuments = await documentRepository.findAll();
+      expect(finalDocuments.length).toBe(9);
+    });
+  });
 });

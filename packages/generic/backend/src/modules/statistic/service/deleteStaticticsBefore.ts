@@ -1,4 +1,5 @@
 import { dateBuilder } from '@label/core';
+import { logger } from '../../../utils';
 import { buildStatisticRepository } from '../repository';
 
 export { deleteStaticticsBefore };
@@ -17,7 +18,13 @@ async function deleteStaticticsBefore({
     statisticsExpirationDate,
   );
 
-  await statisticRepository.deleteManyByIds(statisticToDeleteIds);
+  const { count } = await statisticRepository.deleteManyByIds(
+    statisticToDeleteIds,
+  );
+
+  logger.log(
+    `deleteStaticticsBefore ${since}${unit}: ${count} statistics deleted`,
+  );
 
   function computeExpirationDate() {
     switch (unit) {

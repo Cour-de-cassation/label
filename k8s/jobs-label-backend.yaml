@@ -26,7 +26,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js --environment environments/prodEnvironment.json --settings settings/settings.json
+                - node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD
@@ -65,7 +65,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/importAllDocumentsFromSderSince.js --days 7 --environment environments/prodEnvironment.json --settings settings/settings.json
+                - node dist/scripts/importAllDocumentsFromSderSince.js --days 7 -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD
@@ -78,7 +78,44 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: ${APP_ID}-job-import-1000
+  name: ${APP_ID}-job-urgent-import
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "CRON_TZ=Europe/Paris 0 20 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+            - name: ${APP_ID}-job-urgent-import
+              image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+              volumeMounts:
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
+              command:
+                - /bin/sh
+              args:
+                - -c
+                - node dist/scripts/autoImportDocumentsFromSder.js --count 200 --threshold 200 -e environments/prodEnvironment.json -s settings/settings.json
+              env:
+                - name: RUN_MODE
+                  value: PROD
+          restartPolicy: Never
+          volumes:
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-import-chained
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris 0 19 * * *"
@@ -92,7 +129,7 @@ spec:
       template:
         spec:
           containers:
-            - name: ${APP_ID}-job-import-1000
+            - name: ${APP_ID}-job-import-chained
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
                 - name: ${APP_ID}-config
@@ -102,7 +139,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/autoImportDocumentsFromSder.js --count 1000 --threshold 1000 --environment environments/prodEnvironment.json --settings settings/settings.json
+                - node dist/scripts/importChainedDocumentsFromSder.js --count 500 --threshold 200 -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD
@@ -139,7 +176,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/exportTreatedDocumentsSince.js --days 4 --environment environments/prodEnvironment.json --settings settings/settings.json
+                - node dist/scripts/exportTreatedDocumentsSince.js --days 4 -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD
@@ -176,7 +213,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/exportTreatedPublishableDocuments.js --environment environments/prodEnvironment.json --settings settings/settings.json
+                - node dist/scripts/exportTreatedPublishableDocuments.js -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD
@@ -214,6 +251,43 @@ spec:
               args:
                 - -c
                 - node dist/scripts/freePendingDocuments.js --sinceMinutes 18 --environment environments/prodEnvironment.json --settings settings/settings.json
+              env:
+                - name: RUN_MODE
+                  value: PROD
+          restartPolicy: Never
+          volumes:
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-purge-m-6
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "CRON_TZ=Europe/Paris 0 21 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+            - name: ${APP_ID}-job-purge-m-6
+              image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+              volumeMounts:
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
+              command:
+                - /bin/sh
+              args:
+                - -c
+                - node dist/scripts/purgeDb.js --beforeMonths 6 --environment environments/prodEnvironment.json --settings settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD

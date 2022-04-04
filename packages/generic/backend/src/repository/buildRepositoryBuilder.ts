@@ -64,7 +64,13 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     }
 
     async function deleteManyByIds(ids: idType[]) {
-      await collection.deleteMany({ _id: { $in: ids } } as any);
+      const deleteResult = await collection.deleteMany({
+        _id: { $in: ids },
+      } as any);
+      return {
+        success: !!deleteResult.result.ok,
+        count: deleteResult.result.n ?? 0,
+      };
     }
 
     async function distinct<fieldNameT extends keyof T>(fieldName: fieldNameT) {

@@ -38,20 +38,9 @@ function StatisticsDataFetcher(props: {
 
 function buildFetchStatistics() {
   return async (ressourceFilter: ressourceFilterType) => {
-    /*const { data: availableStatisticFilters, statusCode: statusCodeAvailableStatisticFilters } = await apiCaller.get<
+    const { data: availableStatisticFilters, statusCode: statusCodeAvailableStatisticFilters } = await apiCaller.get<
       'availableStatisticFilters'
-    >('availableStatisticFilters');*/
-
-    //Temporary hotfix
-
-    const availableStatisticFilters = {
-      publicationCategories: [],
-      maxDate: 0,
-      minDate: 0,
-      sources: [],
-      jurisdictions: [],
-    };
-    const statusCodeAvailableStatisticFilters = 200;
+    >('availableStatisticFilters');
 
     let aggregatedStatistics = {
       cumulatedValue: {

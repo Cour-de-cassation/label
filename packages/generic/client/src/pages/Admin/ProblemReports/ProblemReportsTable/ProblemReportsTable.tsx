@@ -49,7 +49,7 @@ function ProblemReportsTable(props: {
         id: 'documentNumber',
         title: wordings.business.filters.columnTitles.documentNumber,
         canBeSorted: true,
-        extractor: (problemReportWithDetails) => problemReportWithDetails.document.documentNumber,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.document?.documentNumber ?? '',
         width: 2,
       },
       {
@@ -57,10 +57,10 @@ function ProblemReportsTable(props: {
         title: wordings.business.filters.columnTitles.publicationCategory.title,
         tooltipText: wordings.business.filters.columnTitles.publicationCategory.tooltipText,
         canBeSorted: true,
-        getSortingValue: (problemReport) => problemReport.document.publicationCategory.length,
-        extractor: (problemReport) => problemReport.document.publicationCategory.join(','),
+        getSortingValue: (problemReport) => problemReport.document?.publicationCategory.length ?? 0,
+        extractor: (problemReport) => problemReport.document?.publicationCategory.join(',') ?? '',
         render: (problemReport) =>
-          problemReport.document.publicationCategory.length > 0 ? (
+          problemReport.document && problemReport.document.publicationCategory.length > 0 ? (
             <div style={styles.publicationCategoryBadgesContainer}>
               {problemReport.document.publicationCategory.map((publicationCategoryLetter) => (
                 <div style={styles.publicationCategoryBadgeContainer}>
@@ -95,9 +95,12 @@ function ProblemReportsTable(props: {
         id: 'status',
         canBeSorted: true,
         title: wordings.business.filters.columnTitles.status,
-        extractor: (problemReportWithDetails) => problemReportWithDetails.document.status,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.document?.status ?? 'rejected',
         render: (problemReportWithDetails) => (
-          <DocumentStatusIcon status={problemReportWithDetails.document.status} iconSize={TABLE_ICON_SIZE} />
+          <DocumentStatusIcon
+            status={problemReportWithDetails.document?.status ?? 'rejected'}
+            iconSize={TABLE_ICON_SIZE}
+          />
         ),
         width: 1,
       },
@@ -132,9 +135,9 @@ function ProblemReportsTable(props: {
           await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
             documentId: problemReportWithDetails.problemReport.documentId,
             status: documentModule.lib.getNextStatus({
-              status: problemReportWithDetails.document.status,
-              publicationCategory: problemReportWithDetails.document.publicationCategory,
-              route: problemReportWithDetails.document.route,
+              status: problemReportWithDetails.document?.status ?? 'rejected',
+              publicationCategory: problemReportWithDetails.document?.publicationCategory ?? [],
+              route: problemReportWithDetails.document?.route ?? 'default',
             }),
           });
         } catch (error) {
@@ -147,8 +150,8 @@ function ProblemReportsTable(props: {
       iconName: 'send' as const,
       isDisabled:
         userRole !== 'admin' ||
-        problemReportWithDetails.document.status === 'done' ||
-        problemReportWithDetails.document.status === 'toBePublished',
+        problemReportWithDetails.document?.status === 'done' ||
+        problemReportWithDetails.document?.status === 'toBePublished',
     };
 
     const answerByEmailOptionItem = {
@@ -156,7 +159,7 @@ function ProblemReportsTable(props: {
       text: wordings.problemReportsPage.table.optionItems.answerByEmail,
       onClick: () => {
         const subject = format(wordings.problemReportsPage.table.mailSubject, {
-          documentNumber: problemReportWithDetails.document.documentNumber,
+          documentNumber: problemReportWithDetails.document?.documentNumber,
         });
         const email = problemReportWithDetails.user.email;
         const body = problemReportWithDetails.problemReport.text;
@@ -181,14 +184,15 @@ function ProblemReportsTable(props: {
         props.refetch();
       },
       iconName: 'delete' as const,
-      isDisabled: userRole !== 'admin' || problemReportWithDetails.document.status === 'rejected',
+      isDisabled: userRole !== 'admin' || problemReportWithDetails.document?.status === 'rejected',
     };
 
     const openDocumentOptionItem = {
       kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.openDocument,
       onClick: () => {
-        history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(problemReportWithDetails.document._id)));
+        problemReportWithDetails.document &&
+          history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(problemReportWithDetails.document._id)));
         return;
       },
       iconName: 'find' as const,
@@ -203,8 +207,8 @@ function ProblemReportsTable(props: {
             documentId: problemReportWithDetails.problemReport.documentId,
             status: documentModule.lib.getNextStatus({
               status: 'pending',
-              publicationCategory: problemReportWithDetails.document.publicationCategory,
-              route: problemReportWithDetails.document.route,
+              publicationCategory: problemReportWithDetails.document?.publicationCategory ?? [],
+              route: problemReportWithDetails.document?.route ?? 'default',
             }),
           });
         } catch (error) {

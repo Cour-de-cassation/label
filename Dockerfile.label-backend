@@ -1,7 +1,7 @@
 #######################
 # Step 1: Base target #
 #######################
-FROM node:16-alpine3.15 as base
+FROM node:16.14-alpine3.15 as base
 ARG http_proxy
 ARG https_proxy
 ARG no_proxy
@@ -32,7 +32,6 @@ ARG NPM_FIX
 ARG NPM_VERBOSE
 ENV API_PORT=55430
 ENV NPM_CONFIG_LOGLEVEL debug
-ENV LABEL_ENV=startProd
 
 WORKDIR /home/node/
 
@@ -69,4 +68,4 @@ USER node
 # Expose the listening port of your app
 EXPOSE ${API_PORT}
 
-CMD ["sh", "-c", "npm run ${LABEL_ENV}"]
+CMD ["sh", "-c", "RUN_MODE=PROD node dist/labelServer.js -e environments/prodEnvironment.json -s settings/settings.json"]

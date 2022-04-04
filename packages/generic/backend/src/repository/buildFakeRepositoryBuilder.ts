@@ -65,6 +65,10 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
         (item) => !ids.some((id) => idModule.lib.equalId(id, item._id)),
       ),
     );
+    return {
+      success: true,
+      count: ids.length,
+    };
   }
 
   async function deletePropertiesForMany(

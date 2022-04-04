@@ -16,10 +16,11 @@ function setupSettings(settings: settingsType) {
 }
 
 async function setupMongo(environment: environmentType) {
-  logger.log(`Loading the Mongo database...`);
+  const url = `${environment.pathName.db}:${environment.port.db}`;
+  logger.log(`Loading the Mongo database, url ${url} ${environment.dbName}`);
   await mongo.initialize({
     dbName: environment.dbName,
-    url: `${environment.pathName.db}:${environment.port.db}`,
+    url: url,
   });
   logger.log(`MongoDB ready!`);
 

@@ -62,8 +62,18 @@ const problemReportService = {
     return problemReports.map((problemReport) => {
       const userIdString = idModule.lib.convertToString(problemReport.userId);
       const { email, name } = usersByIds[userIdString];
-      const document =
-        documentsById[idModule.lib.convertToString(problemReport.documentId)];
+      let document = undefined;
+      try {
+        document =
+          documentsById[idModule.lib.convertToString(problemReport.documentId)];
+        document = {
+          _id: document._id,
+          documentNumber: document.documentNumber,
+          publicationCategory: document.publicationCategory,
+          route: document.route,
+          status: document.status,
+        };
+      } catch (e) {}
 
       return {
         problemReport,
@@ -71,13 +81,7 @@ const problemReportService = {
           email,
           name,
         },
-        document: {
-          _id: document._id,
-          documentNumber: document.documentNumber,
-          publicationCategory: document.publicationCategory,
-          route: document.route,
-          status: document.status,
-        },
+        document,
       };
     });
   },

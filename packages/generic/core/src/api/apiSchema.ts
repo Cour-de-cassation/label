@@ -230,14 +230,20 @@ const apiSchema = {
           content: {
             problemReport: problemReportModule.model,
             document: {
-              kind: 'object',
-              content: {
-                _id: documentModule.fetchedModel.content._id,
-                documentNumber: documentModule.fetchedModel.content.documentNumber,
-                publicationCategory: documentModule.fetchedModel.content.publicationCategory,
-                route: documentModule.fetchedModel.content.route,
-                status: documentModule.fetchedModel.content.status,
-              },
+              kind: 'or',
+              content: [
+                {
+                  kind: 'object',
+                  content: {
+                    _id: documentModule.fetchedModel.content._id,
+                    documentNumber: documentModule.fetchedModel.content.documentNumber,
+                    publicationCategory: documentModule.fetchedModel.content.publicationCategory,
+                    route: documentModule.fetchedModel.content.route,
+                    status: documentModule.fetchedModel.content.status,
+                  },
+                },
+                { kind: 'primitive', content: 'undefined' },
+              ],
             },
             user: {
               kind: 'object',

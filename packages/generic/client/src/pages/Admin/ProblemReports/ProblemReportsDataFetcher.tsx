@@ -36,9 +36,9 @@ function buildFetchProblemReports() {
     return {
       data: problemReportsWithDetails.map((problemReportWithDetails) => ({
         ...problemReportWithDetails,
-        document: {
+        document: problemReportWithDetails.document && {
           ...problemReportWithDetails.document,
-          _id: idModule.lib.buildId(problemReportWithDetails.document._id),
+          _id: idModule.lib.buildId(problemReportWithDetails.document?._id),
         },
         problemReport: {
           ...problemReportWithDetails.problemReport,

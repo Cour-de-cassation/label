@@ -14,6 +14,10 @@ Import recent (7 days) documents from the source databases.
 
 Fill Label with old documents if Label is lacking of documents to treat.
 
+## import-chained
+
+Import chained decisions.
+
 ## export-j-4
 
 Export all treated documents 4 days after their treated date.

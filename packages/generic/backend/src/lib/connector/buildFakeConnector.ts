@@ -204,6 +204,7 @@ const fakeSderMapper = {
       _id: idModule.lib.buildId(document.externalId),
       sourceId: document.documentNumber,
       sourceName: document.source,
+      decatt: document.decisionMetadata.boundDecisionDocumentNumbers,
     });
   },
   mapCourtDecisionToDocument(courtDecision: decisionType) {

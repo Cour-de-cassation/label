@@ -13,6 +13,7 @@ export { buildConnector };
 function buildConnector(connectorConfig: connectorConfigType) {
   return {
     autoImportDocumentsFromSder,
+    importChainedDocumentsFromSder,
     importSpecificDocument,
     importNewDocuments,
     importJuricaDocuments,
@@ -45,6 +46,27 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const daysStep = 30;
 
     await importNewDocuments(documentsCount, daysStep);
+  }
+
+  async function importChainedDocumentsFromSder(
+    threshold: number,
+    documentsCount: number,
+  ) {
+    logger.log(`importChainedDocumentsFromSder: ${threshold}`);
+
+    const documentRepository = buildDocumentRepository();
+
+    const documentsToTreat = await documentRepository.findAllByStatusProjection(
+      ['loaded', 'nlpAnnotating', 'free'],
+      ['_id'],
+    );
+
+    if (documentsToTreat.length > threshold) {
+      return;
+    }
+    const daysStep = 30;
+
+    await importChainedDocuments(documentsCount, daysStep);
   }
 
   async function importJuricaDocuments(documentsCount: number) {
@@ -196,6 +218,65 @@ function buildConnector(connectorConfig: connectorConfigType) {
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
       step++;
     }
+
+    logger.log(
+      `Insertion ${newDocuments.length} documents into the database...`,
+    );
+    await insertDocuments(newDocuments);
+    logger.log(`Insertion done!`);
+
+    logger.log(`Send documents have been loaded...`);
+    await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
+    logger.log(`DONE`);
+    return newDocuments.length;
+  }
+
+  async function importChainedDocuments(
+    documentCount: number,
+    daysStep?: number,
+  ) {
+    const DEFAULT_DAYS_STEP = 30;
+    const MAX_STEP = 300;
+    logger.log(
+      `importChainedDocuments: ${documentCount} - ${
+        daysStep || DEFAULT_DAYS_STEP
+      }`,
+    );
+
+    logger.log(`Fetching ${connectorConfig.name} documents...`);
+    let daysAgo = 0;
+    let step = 0;
+    let newDocuments: documentType[] = [];
+    while (newDocuments.length < documentCount && step < MAX_STEP) {
+      const startDate = new Date(
+        dateBuilder.daysAgo(daysAgo + (daysStep || DEFAULT_DAYS_STEP)),
+      );
+      const endDate = new Date(dateBuilder.daysAgo(daysAgo));
+      const newCourtDecisions = await connectorConfig.fetchChainedJuricaDecisionsToPseudonymiseBetween(
+        {
+          startDate,
+          endDate,
+        },
+      );
+      logger.log(
+        `${newCourtDecisions.length} ${
+          connectorConfig.name
+        } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
+          startDate.getTime(),
+        )} and ${timeOperator.convertTimestampToReadableDate(
+          endDate.getTime(),
+        )}!`,
+      );
+      for (const courtDecision of newCourtDecisions) {
+        newDocuments.push(
+          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        );
+      }
+      daysAgo += daysStep || DEFAULT_DAYS_STEP;
+      step++;
+    }
+
+    newDocuments = newDocuments.slice(0, documentCount);
 
     logger.log(
       `Insertion ${newDocuments.length} documents into the database...`,

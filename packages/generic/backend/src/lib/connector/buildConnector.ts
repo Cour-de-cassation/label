@@ -176,7 +176,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Fetching ${connectorConfig.name} documents...`);
     let daysAgo = 0;
     let step = 0;
-    const newDocuments: documentType[] = [];
+    let newDocuments: documentType[] = [];
     while (newDocuments.length < documentCount && step < MAX_STEP) {
       const startDate = new Date(
         dateBuilder.daysAgo(daysAgo + (daysStep || DEFAULT_DAYS_STEP)),
@@ -196,10 +196,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           source: 'jurica',
         },
       );
-      const newCourtDecisions = [
-        ...newJurinetDecisions,
-        ...newJuricaDecisions,
-      ].slice(0, documentCount);
+      const newCourtDecisions = [...newJurinetDecisions, ...newJuricaDecisions];
 
       logger.log(
         `${newCourtDecisions.length} ${
@@ -218,6 +215,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
       step++;
     }
+
+    newDocuments = newDocuments.slice(0, documentCount);
 
     logger.log(
       `Insertion ${newDocuments.length} documents into the database...`,

@@ -31,7 +31,7 @@ spec:
                 - name: RUN_MODE
                   value: PROD
                 - name: SDER_DB_URL
-                  value: ${MONGODB_URI}
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
                 - name: NODE_TLS_REJECT_UNAUTHORIZED
                   value: "0"
           restartPolicy: Never
@@ -72,7 +72,7 @@ spec:
                 - name: RUN_MODE
                   value: PROD
                 - name: SDER_DB_URL
-                  value: ${MONGODB_URI}
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -148,7 +148,7 @@ spec:
                 - name: RUN_MODE
                   value: PROD
                 - name: SDER_DB_URL
-                  value: ${MONGODB_URI}
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -187,7 +187,7 @@ spec:
                 - name: RUN_MODE
                   value: PROD
                 - name: SDER_DB_URL
-                  value: ${MONGODB_URI}
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -226,7 +226,7 @@ spec:
                 - name: RUN_MODE
                   value: PROD
                 - name: SDER_DB_URL
-                  value: ${MONGODB_URI}
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -265,7 +265,7 @@ spec:
                 - name: RUN_MODE
                   value: PROD
                 - name: SDER_DB_URL
-                  value: ${MONGODB_URI}
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -304,7 +304,7 @@ spec:
                 - name: RUN_MODE
                   value: PROD
                 - name: SDER_DB_URL
-                  value: ${MONGODB_URI}
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config

@@ -229,7 +229,7 @@ metadata:
   name: ${APP_ID}-job-free-pending
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris */17 6-19 * * *"
+  schedule: "CRON_TZ=Europe/Paris */16 6-19 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -250,7 +250,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/freePendingDocuments.js --sinceMinutes 18 --environment environments/prodEnvironment.json --settings settings/settings.json
+                - node dist/scripts/freePendingDocuments.js --environment environments/prodEnvironment.json --settings settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD

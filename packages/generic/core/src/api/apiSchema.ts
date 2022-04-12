@@ -256,6 +256,15 @@ const apiSchema = {
         },
       } as const),
     },
+    documentStatus: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: documentModule.fetchedModel.content.status,
+    },
     settings: {
       out: settingsModule.model,
     },

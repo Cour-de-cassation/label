@@ -126,6 +126,55 @@ describe('fetchDocumentsForUser', () => {
     expect(documentsForUser[0].document).toEqual(updatedDocument);
   });
 
+  it('should not fetch any document because they are already assignated', async () => {
+    const user1 = userModule.generator.generate();
+    const user2 = userModule.generator.generate();
+    const documents = ([
+      {
+        text: 'lolo',
+        priority: 0,
+        status: 'free',
+      },
+      {
+        text: 'lala',
+        priority: 2,
+        status: 'free',
+      },
+      {
+        text: 'lala',
+        status: 'pending',
+      },
+    ] as const).map(documentModule.generator.generate);
+    const treatments = documents.map((document) =>
+      treatmentModule.generator.generate({ documentId: document._id }),
+    );
+    await Promise.all(documents.map(documentRepository.insert));
+    await Promise.all(treatments.map(treatmentRepository.insert));
+    await assignationRepository.insertMany([
+      assignationModule.generator.generate({
+        userId: user2._id,
+        documentId: documents[0]._id,
+      }),
+      assignationModule.generator.generate({
+        userId: user2._id,
+        documentId: documents[1]._id,
+      }),
+      assignationModule.generator.generate({
+        userId: user2._id,
+        documentId: documents[2]._id,
+      }),
+    ]);
+    await userRepository.insert(user1);
+    await userRepository.insert(user2);
+
+    const documentsForUser = await documentService.fetchDocumentsForUser(
+      user1._id,
+      3,
+    );
+
+    expect(documentsForUser.length).toEqual(0);
+  });
+
   it('should fetch a document with treatment first', async () => {
     const user = userModule.generator.generate();
     const documents = range(3).map(() =>

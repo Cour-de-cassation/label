@@ -24,6 +24,9 @@ spec:
           if [ "${KUBE_ZONE}" != "local" ]; then
             ./scripts/runProdScript.sh dist/scripts/runNewMigrations.js
           fi
+        env:
+          - name: SDER_DB_URL
+            value: ${MONGODB_URI}:${MONGODB_PORT}
         securityContext:
           runAsUser: 1000
           capabilities:
@@ -42,7 +45,7 @@ spec:
         - containerPort: ${API_PORT}
         env:
           - name: SDER_DB_URL
-            value: ${MONGODB_URI}
+            value: ${MONGODB_URI}:${MONGODB_PORT}
         startupProbe:
           exec:
             command:

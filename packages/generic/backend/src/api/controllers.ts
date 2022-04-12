@@ -74,6 +74,15 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    documentStatus: buildAuthenticatedController({
+      permissions: ['admin', 'annotator', 'publicator'],
+      controllerWithUser: async (_, { args: { documentId } }) => {
+        return (
+          await documentService.fetchDocument(idModule.lib.buildId(documentId))
+        ).status;
+      },
+    }),
+
     documentsForUser: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { documentsMaxCount } }) =>

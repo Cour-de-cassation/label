@@ -15,6 +15,7 @@ import {
   freePendingDocuments,
   insertTestUsers,
   insertUser,
+  listAllDocuments,
   purgeDb,
   resetUntreatedDocumentsForTest,
   revertOneMigration,
@@ -81,6 +82,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       insertUser: {
         run: insertUser,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      listAllDocuments: {
+        run: listAllDocuments,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       purgeDb: {

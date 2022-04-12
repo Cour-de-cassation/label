@@ -1,4 +1,11 @@
-import { assignationType, idModule, idType, indexer } from '@label/core';
+import {
+  assignationType,
+  documentType,
+  idModule,
+  idType,
+  indexer,
+  userType,
+} from '@label/core';
 import { buildAssignationRepository } from '../repository';
 
 export {
@@ -82,12 +89,19 @@ async function fetchAssignationsOfDocumentId(
   return assignationRepository.findAllByDocumentId(documentId);
 }
 
-async function fetchDocumentIdsAssignatedToUserId(userId: idType) {
+async function fetchDocumentIdsAssignatedToUserId(
+  userId: userType['_id'],
+): Promise<
+  Array<{
+    documentId: documentType['_id'];
+    assignationId: assignationType['_id'];
+  }>
+> {
   const assignationRepository = buildAssignationRepository();
   const assignations = await assignationRepository.findAllByUserId(userId);
 
   return assignations.map((assignation) => ({
-    documentId: assignation.documentId,
-    assignationId: assignation._id,
+    documentId: assignation.documentId as documentType['_id'],
+    assignationId: assignation._id as assignationType['_id'],
   }));
 }

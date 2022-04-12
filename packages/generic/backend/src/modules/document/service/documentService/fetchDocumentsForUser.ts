@@ -26,8 +26,11 @@ function buildFetchDocumentsForUser(
       document: documentType;
       assignationId: assignationType['_id'];
     }> = [];
-    const documentIdsToExclude: documentType['_id'][] = [];
+
+    // We get all documents that can be assigned
     const documentIdsWithAnnotations = await treatmentService.fetchTreatedDocumentIds();
+
+    // Documents already assignated to the user are fetched
     const alreadyAssignatedDocuments = await fetchAlreadyAssignatedDocuments(
       userId,
     );
@@ -39,13 +42,14 @@ function buildFetchDocumentsForUser(
       checkCallAttempts(idModule.lib.convertToString(userId));
       const alreadyAssignatedDocument = alreadyAssignatedDocuments[i];
       documents.push(alreadyAssignatedDocument);
-      documentIdsToExclude.push(alreadyAssignatedDocument.document._id);
     }
 
+    // If at least one document has the 'saved' status means that the anotator is currently annotating a document
     if (documents.some(({ document }) => document.status === 'saved')) {
       return documents;
     }
 
+    // We fill the pool of assignated documents with new ones
     for (let i = documents.length; i < documentsMaxCount; i++) {
       try {
         const assignatedDocument = await fetchDocumentForUser(
@@ -53,7 +57,6 @@ function buildFetchDocumentsForUser(
           documentIdsWithAnnotations,
         );
         documents.push(assignatedDocument);
-        documentIdsToExclude.push(assignatedDocument.document._id);
       } catch (error) {
         logger.log(error);
       }
@@ -80,6 +83,7 @@ function buildFetchDocumentsForUser(
     }> {
       let document: documentType | undefined;
 
+      // Get document by priority
       document = await assignDocumentByPriority(4, documentIdsToSearchIn);
       if (!document) {
         document = await assignDocumentByPriority(2, documentIdsToSearchIn);
@@ -102,17 +106,29 @@ function buildFetchDocumentsForUser(
 
   async function assignDocumentByPriority(
     priority: documentType['priority'],
-    documentIdsWithAnnotations: documentType['_id'][],
+    documentIdsToSearchIn: documentType['_id'][],
   ): Promise<documentType | undefined> {
     const documentRepository = buildDocumentRepository();
 
-    const document = await documentRepository.findOneByStatusAndPriorityAmong(
+    const document:
+      | documentType
+      | undefined = await documentRepository.findOneByStatusAndPriorityAmong(
       { priority, status: 'free' },
-      documentIdsWithAnnotations,
+      documentIdsToSearchIn,
     );
 
     if (!document) {
       return undefined;
+    }
+    if (
+      (await assignationService.fetchAssignationsOfDocumentId(document?._id))
+        .length != 0
+    ) {
+      // If the document is assignated, remove the document from the list
+      documentIdsToSearchIn = documentIdsToSearchIn.filter(
+        (documentId) => documentId !== document?._id,
+      );
+      return assignDocumentByPriority(priority, documentIdsToSearchIn);
     }
 
     const nextStatus = documentModule.lib.getNextStatus({
@@ -128,7 +144,7 @@ function buildFetchDocumentsForUser(
       },
     );
     if (updatedDocument?.status !== nextStatus) {
-      return assignDocumentByPriority(priority, documentIdsWithAnnotations);
+      return assignDocumentByPriority(priority, documentIdsToSearchIn);
     }
     return updatedDocument;
   }

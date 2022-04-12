@@ -95,24 +95,23 @@ function DocumentSwitcher(props: {
     assignationId: assignationType['_id'];
   }) {
     try {
-      await Promise.all(
-        props.choices.map((currentChoice) => {
-          if (!idModule.lib.equalId(currentChoice.document._id, choice.document._id)) {
-            return apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
-              documentId: currentChoice.document._id,
-              status: 'free',
-            });
-          }
-          return;
-        }),
-      );
+      const documentStatus = (
+        await apiCaller.get<'documentStatus'>('documentStatus', {
+          documentId: choice.document._id,
+        })
+      ).data;
+
+      if (documentStatus !== 'pending') {
+        return window.location.reload();
+      }
+
       try {
         await apiCaller.post<'resetTreatmentLastUpdateDate'>('resetTreatmentLastUpdateDate', {
           assignationId: choice.assignationId,
         });
 
         const nextStatus = documentModule.lib.getNextStatus({
-          status: choice.document.status,
+          status: documentStatus,
           publicationCategory: choice.document.publicationCategory,
           route: choice.document.route,
         });

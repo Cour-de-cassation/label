@@ -24,6 +24,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     resetDocument,
     resetAllDocumentsSince,
     deleteDocumentsOlderThan,
+    resetAllRejectedDocuments,
     extractDocumentAndNlpAnnotations,
   };
 
@@ -547,6 +548,28 @@ function buildConnector(connectorConfig: connectorConfigType) {
         logger.error(`An error happened while deleting the document`);
       }
     }
+  }
+
+  async function resetAllRejectedDocuments() {
+    logger.log(`resetAllRejectedDocuments`);
+
+    const documentRepository = buildDocumentRepository();
+    const rejectedDocuments = await documentRepository.findAllByStatusProjection(
+      ['rejected'],
+      ['_id'],
+    );
+
+    logger.log(`Reseting ${rejectedDocuments.length} rejected documents...`);
+
+    const rejectedDocumentIds = rejectedDocuments.map(({ _id }) => _id);
+    for (let i = 0, length = rejectedDocuments.length; i < length; i++) {
+      await documentService.updateDocumentStatus(
+        rejectedDocumentIds[i],
+        'loaded',
+      );
+    }
+
+    logger.log(`DONE resetAllRejectedDocuments`);
   }
 
   async function resetDocument({

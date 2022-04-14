@@ -13,7 +13,7 @@ async function cleanLoadedDocuments() {
 
   const documentRepository = buildDocumentRepository();
 
-  logger.log('Fetching "nlpAnnotating" documents');
+  logger.log('Fetching "loaded" documents');
   const loadedDocuments = await documentRepository.findAllByStatusProjection(
     ['loaded'],
     ['_id'],

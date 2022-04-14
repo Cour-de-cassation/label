@@ -5,7 +5,6 @@ import {
   buildDocumentRepository,
   documentService,
 } from '../../modules/document';
-import { buildProblemReportRepository } from '../../modules/problemReport';
 import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 
@@ -25,7 +24,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     resetDocument,
     resetAllDocumentsSince,
     deleteDocumentsOlderThan,
-    deleteAllProblemReportsAndResetRejectedDocuments,
+    resetAllRejectedDocuments,
     extractDocumentAndNlpAnnotations,
   };
 
@@ -551,14 +550,17 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
   }
 
-  async function deleteAllProblemReportsAndResetRejectedDocuments() {
-    logger.log(`deleteAllProblemReportsAndResetRejectedDocuments`);
+  async function resetAllRejectedDocuments() {
+    logger.log(`resetAllRejectedDocuments`);
 
     const documentRepository = buildDocumentRepository();
     const rejectedDocuments = await documentRepository.findAllByStatusProjection(
       ['rejected'],
       ['_id'],
     );
+
+    logger.log(`Reseting ${rejectedDocuments.length} rejected documents...`);
+
     const rejectedDocumentIds = rejectedDocuments.map(({ _id }) => _id);
     for (let i = 0, length = rejectedDocuments.length; i < length; i++) {
       await documentService.updateDocumentStatus(
@@ -567,10 +569,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
     }
 
-    const problemReportsRepository = buildProblemReportRepository();
-    problemReportsRepository.clear();
-
-    logger.log(`DONE deleteAllProblemReportsAndResetRejectedDocuments`);
+    logger.log(`DONE resetAllRejectedDocuments`);
   }
 
   async function resetDocument({

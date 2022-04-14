@@ -5,6 +5,7 @@ import {
   buildDocumentRepository,
   documentService,
 } from '../../modules/document';
+import { buildProblemReportRepository } from '../../modules/problemReport';
 import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 
@@ -24,6 +25,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     resetDocument,
     resetAllDocumentsSince,
     deleteDocumentsOlderThan,
+    deleteAllProblemReportsAndResetRejectedDocuments,
     extractDocumentAndNlpAnnotations,
   };
 
@@ -547,6 +549,28 @@ function buildConnector(connectorConfig: connectorConfigType) {
         logger.error(`An error happened while deleting the document`);
       }
     }
+  }
+
+  async function deleteAllProblemReportsAndResetRejectedDocuments() {
+    logger.log(`deleteAllProblemReportsAndResetRejectedDocuments`);
+
+    const documentRepository = buildDocumentRepository();
+    const rejectedDocuments = await documentRepository.findAllByStatusProjection(
+      ['rejected'],
+      ['_id'],
+    );
+    const rejectedDocumentIds = rejectedDocuments.map(({ _id }) => _id);
+    for (let i = 0, length = rejectedDocuments.length; i < length; i++) {
+      await documentService.updateDocumentStatus(
+        rejectedDocumentIds[i],
+        'loaded',
+      );
+    }
+
+    const problemReportsRepository = buildProblemReportRepository();
+    problemReportsRepository.clear();
+
+    logger.log(`DONE deleteAllProblemReportsAndResetRejectedDocuments`);
   }
 
   async function resetDocument({

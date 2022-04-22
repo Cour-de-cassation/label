@@ -16,6 +16,7 @@ import {
   insertTestUsers,
   insertUser,
   listAllDocuments,
+  listDocumentsWithProblemReports,
   purgeDb,
   resetUntreatedDocumentsForTest,
   revertOneMigration,
@@ -86,6 +87,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       listAllDocuments: {
         run: listAllDocuments,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      listDocumentsWithProblemReports: {
+        run: listDocumentsWithProblemReports,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       purgeDb: {

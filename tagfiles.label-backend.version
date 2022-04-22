@@ -15,3 +15,4 @@ packages/generic/core/package.json
 packages/generic/core/src
 packages/generic/core/tsconfig.json
 tagfiles.label-backend.version
+yarn.lock

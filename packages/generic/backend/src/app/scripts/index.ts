@@ -16,6 +16,7 @@ import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestUsers } from './insertTestUsers';
 import { insertUser } from './insertUser';
 import { listAllDocuments } from './listAllDocuments';
+import { listDocumentsWithProblemReports } from './listDocumentsWithProblemReports';
 import { resetUntreatedDocumentsForTest } from './resetUntreatedDocumentsForTest';
 import { purgeDb } from './purgeDb';
 import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
@@ -35,6 +36,7 @@ export {
   insertTestUsers,
   insertUser,
   listAllDocuments,
+  listDocumentsWithProblemReports,
   purgeDb,
   resetUntreatedDocumentsForTest,
   revertOneMigration,

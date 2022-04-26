@@ -44,6 +44,7 @@ const statisticModel = buildModel({
         { kind: 'primitive', content: 'undefined' },
       ],
     },
+    route: documentModel.content.route,
     source: { kind: 'primitive', content: 'string' },
     surAnnotationsCount: {
       kind: 'primitive',

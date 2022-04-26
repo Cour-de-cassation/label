@@ -17,6 +17,7 @@ const statisticGenerator: generatorType<statisticType> = {
     linkedEntitiesCount,
     publicationCategory,
     session,
+    route,
     source,
     subAnnotationsSensitiveCount,
     surAnnotationsCount,
@@ -36,7 +37,8 @@ const statisticGenerator: generatorType<statisticType> = {
     linkedEntitiesCount: linkedEntitiesCount ? linkedEntitiesCount : 0,
     publicationCategory: publicationCategory ? publicationCategory : [],
     session: session || undefined,
-    source: source ? source : `SOURCE_${Math.random()}`,
+    route: route ?? `default`,
+    source: source ?? `SOURCE_${Math.random()}`,
     subAnnotationsNonSensitiveCount:
       subAnnotationsNonSensitiveCount !== undefined ? subAnnotationsNonSensitiveCount : 0,
     subAnnotationsSensitiveCount: subAnnotationsSensitiveCount !== undefined ? subAnnotationsSensitiveCount : 0,

@@ -1,4 +1,4 @@
-import { documentModule, statisticModule } from '@label/core';
+import { documentModule, documentType, statisticModule } from '@label/core';
 import { buildDocumentRepository } from '../../document';
 import { buildStatisticRepository } from '../repository';
 import { fetchAvailableStatisticFilters } from './fetchAvailableStatisticFilters';
@@ -26,6 +26,28 @@ describe('fetchAvailableStatisticFilters', () => {
       'A',
       'P',
       'W',
+    ]);
+  });
+
+  it('should fetch all the routes available', async () => {
+    const documents = [{ route: 'automatic' as documentType['route'] }].map(
+      documentModule.generator.generate,
+    );
+    const statistics = [
+      {
+        route: 'exhaustive' as documentType['route'],
+      },
+      { route: 'simple' as documentType['route'] },
+    ].map(statisticModule.generator.generate);
+    await Promise.all(documents.map(documentRepository.insert));
+    await Promise.all(statistics.map(statisticRepository.insert));
+
+    const availableStatisticFilters = await fetchAvailableStatisticFilters();
+
+    expect(availableStatisticFilters.routes).toEqual([
+      'automatic',
+      'exhaustive',
+      'simple',
     ]);
   });
 

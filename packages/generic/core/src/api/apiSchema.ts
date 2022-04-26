@@ -169,6 +169,13 @@ const apiSchema = {
               { kind: 'primitive', content: 'undefined' },
             ],
           },
+          routes: {
+            kind: 'array',
+            content: {
+              kind: 'constant',
+              content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request', 'default'] as const,
+            },
+          },
           sources: {
             kind: 'array',
             content: {

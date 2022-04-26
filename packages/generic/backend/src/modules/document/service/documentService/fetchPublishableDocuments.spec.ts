@@ -1,4 +1,4 @@
-import { documentModule } from '@label/core';
+import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 import { fetchPublishableDocuments } from './fetchPublishableDocuments';
 
@@ -28,6 +28,7 @@ describe('fetchPublishableDocuments', () => {
           NACCode: '',
           endCaseCode: '',
         },
+        route: 'exhaustive' as documentType['route'],
       },
       { status: 'pending' as const, publicationCategory: [] },
       { status: 'done' as const, publicationCategory: ['I'] },

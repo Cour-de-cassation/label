@@ -31,6 +31,13 @@ const ressourceFilterModel = buildModel({
         { kind: 'primitive', content: 'undefined' },
       ],
     },
+    route: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'string' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     source: {
       kind: 'or',
       content: [

@@ -52,6 +52,7 @@ function DocumentSelectorCard(props: {
   );
   const mustBePublished = documentModule.lib.publicationHandler.mustBePublished(
     props.choice.document.publicationCategory,
+    props.choice.document.decisionMetadata.NACCode,
   );
   return mustBePublished ? (
     <div style={styles.publishedDocumentCardContainer}>

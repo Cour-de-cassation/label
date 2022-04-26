@@ -41,7 +41,7 @@ describe('extractRoute', () => {
     expect(route).toBe('exhaustive');
   });
 
-  it('should return automatique if jurica with endCaseCode 11A', async () => {
+  it('should return automatic if jurica with endCaseCode 11A', async () => {
     const route = extractRoute(
       {
         additionalTermsToAnnotate: '',
@@ -58,7 +58,7 @@ describe('extractRoute', () => {
       'jurica',
     );
 
-    expect(route).toBe('automatique');
+    expect(route).toBe('automatic');
   });
 
   it('should return simple if jurica with NACCode 55L', async () => {

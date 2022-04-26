@@ -7,6 +7,7 @@ import { fetchAllDocumentsByIds } from './fetchAllDocumentsByIds';
 import { fetchAllExportableDocuments } from './fetchAllExportableDocuments';
 import { fetchAllJurisdictions } from './fetchAllJurisdictions';
 import { fetchAllPublicationCategories } from './fetchAllPublicationCategories';
+import { fetchAllRoutes } from './fetchAllRoutes';
 import { fetchAllSources } from './fetchAllSources';
 import { fetchAnonymizedDocumentText } from './fetchAnonymizedDocumentText';
 import { fetchDocument } from './fetchDocument';
@@ -50,6 +51,7 @@ function buildDocumentService() {
     fetchAllExportableDocuments,
     fetchAllJurisdictions,
     fetchAllPublicationCategories,
+    fetchAllRoutes,
     fetchAllSources,
     fetchAnonymizedDocumentText,
     fetchDocument,

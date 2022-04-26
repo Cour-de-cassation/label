@@ -10,6 +10,7 @@ describe('buildStatistic', () => {
     const documentNumber = 123456;
     const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
     const documentPublicationCategory = ['P'];
+    const documentRoute = 'exhaustive';
     const documentSource = 'SOURCE';
     const linkedEntitiesCount = 2;
     const jurisdiction = 'Cour de cassation';
@@ -38,6 +39,7 @@ describe('buildStatistic', () => {
       externalId: documentExternalId,
       publicationCategory: documentPublicationCategory,
       source: documentSource,
+      route: documentRoute,
       text: 'Some text with five words',
     });
     const treatmentInfo = {
@@ -68,6 +70,7 @@ describe('buildStatistic', () => {
       linkedEntitiesCount,
       publicationCategory: documentPublicationCategory,
       session: 'FRH',
+      route: documentRoute,
       source: documentSource,
       subAnnotationsNonSensitiveCount: 1,
       subAnnotationsSensitiveCount: 2,

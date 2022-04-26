@@ -47,11 +47,6 @@ async function mapCourtDecisionToDocument(
     sderCourtDecision.publication,
   );
 
-  const priority = computePriority(
-    sderCourtDecision.sourceName,
-    publicationCategory,
-  );
-
   const categoriesToOmit = categoriesMapper.mapSderCategoriesToLabelCategories(
     sderCourtDecision.occultation?.categoriesToOmit,
   );
@@ -69,6 +64,12 @@ async function mapCourtDecisionToDocument(
   const criminalCaseCode = sderCourtDecision.natureAffairePenal?.trim() || '';
   const NACCode = sderCourtDecision.NACCode || '';
   const endCaseCode = sderCourtDecision.endCaseCode || '';
+
+  const priority = computePriority(
+    sderCourtDecision.sourceName,
+    publicationCategory,
+    NACCode,
+  );
 
   const route = extractRoute(
     {
@@ -166,9 +167,13 @@ function computePublicationCategory(
 function computePriority(
   source: string,
   publicationCategory: string[],
+  NACCode: string,
 ): documentType['priority'] {
   if (
-    documentModule.lib.publicationHandler.mustBePublished(publicationCategory)
+    documentModule.lib.publicationHandler.mustBePublished(
+      publicationCategory,
+      NACCode,
+    )
   ) {
     return 4;
   }

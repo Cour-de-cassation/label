@@ -36,6 +36,7 @@ function buildStatistic({
     linkedEntitiesCount,
     session: document.decisionMetadata.session || undefined,
     publicationCategory: document.publicationCategory,
+    route: document.route,
     source: document.source,
     surAnnotationsCount: treatmentInfo.surAnnotationsCount,
     subAnnotationsSensitiveCount: treatmentInfo.subAnnotationsSensitiveCount,

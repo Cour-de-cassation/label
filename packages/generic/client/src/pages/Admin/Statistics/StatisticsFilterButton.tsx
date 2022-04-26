@@ -33,6 +33,7 @@ function StatisticsFilterButton(props: {
     const mustHaveSurAnnotationsFilter = buildMustHaveSurAnnotationsFilter();
     const publicationCategoryFilter = buildPublicationCategoryFilter();
     const dateIntervalFilter = buildDateIntervalFilter();
+    const routeFilter = buildRouteFilter();
     const sourceFilter = buildSourceFilter();
     const jurisdictionFilter = buildJurisdictionFilter();
     const userFilter = buildUserFilter();
@@ -41,6 +42,7 @@ function StatisticsFilterButton(props: {
       dateIntervalFilter,
       userFilter,
       jurisdictionFilter,
+      routeFilter,
       sourceFilter,
       publicationCategoryFilter,
       mustHaveSubAnnotationsFilter,
@@ -113,6 +115,19 @@ function StatisticsFilterButton(props: {
             startDate: value.startDate ? value.startDate.getTime() : undefined,
             endDate: value.endDate ? value.endDate.getTime() : undefined,
           });
+        },
+      };
+    }
+
+    function buildRouteFilter() {
+      return {
+        kind: 'dropdown' as const,
+        name: 'route',
+        label: wordings.business.filters.fields.route,
+        possibleValues: props.availableStatisticFilters.routes,
+        value: props.ressourceFilter.route,
+        onChange: (newRoute: string | undefined) => {
+          props.refetch({ ...props.ressourceFilter, route: newRoute });
         },
       };
     }

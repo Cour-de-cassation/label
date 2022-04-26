@@ -48,7 +48,7 @@ const documentGenerator: generatorType<documentType> = {
     priority: priority !== undefined ? priority : 0,
     publicationCategory: publicationCategory ? publicationCategory : [],
     reviewStatus: reviewStatus || { hasBeenAmended: false, viewerNames: [] },
-    route: route || 'exhaustive',
+    route: route || 'default',
     source: source ? source : `SOURCE_${Math.random()}`,
     status: status ? status : 'free',
     title: title ? title : `TITLE_${Math.random()}`,

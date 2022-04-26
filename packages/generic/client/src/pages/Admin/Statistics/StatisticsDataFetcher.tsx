@@ -16,6 +16,7 @@ function StatisticsDataFetcher(props: {
   }) => ReactElement;
 }) {
   const statisticsFetchInfo = useApi(buildFetchStatistics(), {
+    route: undefined,
     source: undefined,
     userId: undefined,
   } as ressourceFilterType);

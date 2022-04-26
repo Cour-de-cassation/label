@@ -11,6 +11,7 @@ async function fetchAvailableStatisticFilters() {
 
   const statisticFields = await statisticRepository.findAllProjection([
     'publicationCategory',
+    'route',
     'source',
     'jurisdiction',
   ]);
@@ -24,6 +25,7 @@ async function fetchAvailableStatisticFilters() {
     publicationCategories: await fetchAvailablePublicationCategoryFilters(
       statisticFields,
     ),
+    routes: await fetchAvailableRouteFilters(statisticFields),
     sources: await fetchAvailableSourceFilters(statisticFields),
   };
 }
@@ -46,6 +48,17 @@ async function fetchAvailablePublicationCategoryFilters(
   return uniq(
     statisticPublicationCategories.concat(documentPublicationCategories),
   ).sort();
+}
+
+async function fetchAvailableRouteFilters(
+  statisticFields: Array<{
+    route: statisticType['route'];
+  }>,
+) {
+  const statisticRoutes = statisticFields.map(({ route }) => route);
+  const documentRoutes = await documentService.fetchAllRoutes();
+
+  return uniq([...statisticRoutes, ...documentRoutes]).sort();
 }
 
 async function fetchAvailableSourceFilters(

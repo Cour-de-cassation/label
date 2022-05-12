@@ -62,21 +62,32 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         const cache = (
           await cacheService.fetchAllByKey('availableStatisticFilters')
         )[0];
-        return JSON.parse(cache.content as string) as {
-          publicationCategories: string[];
-          maxDate: number | undefined;
-          minDate: number | undefined;
-          routes: (
-            | 'automatic'
-            | 'exhaustive'
-            | 'simple'
-            | 'confirmation'
-            | 'request'
-            | 'default'
-          )[];
-          sources: string[];
-          jurisdictions: string[];
-        };
+        if (cache) {
+          return JSON.parse(cache.content as string) as {
+            publicationCategories: string[];
+            maxDate: number | undefined;
+            minDate: number | undefined;
+            routes: (
+              | 'automatic'
+              | 'exhaustive'
+              | 'simple'
+              | 'confirmation'
+              | 'request'
+              | 'default'
+            )[];
+            sources: string[];
+            jurisdictions: string[];
+          };
+        } else {
+          return {
+            publicationCategories: [],
+            maxDate: undefined,
+            minDate: undefined,
+            routes: [],
+            sources: [],
+            jurisdictions: [],
+          };
+        }
       },
     }),
 

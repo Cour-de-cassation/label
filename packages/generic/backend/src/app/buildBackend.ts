@@ -18,6 +18,7 @@ import {
   listAllDocuments,
   listDocumentsWithProblemReports,
   purgeDb,
+  renewCache,
   resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
@@ -95,6 +96,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       purgeDb: {
         run: purgeDb,
+        option: { shouldLoadDb: true, shouldExit: true },
+      },
+      renewCache: {
+        run: renewCache,
         option: { shouldLoadDb: true, shouldExit: true },
       },
       revertOneMigration: {

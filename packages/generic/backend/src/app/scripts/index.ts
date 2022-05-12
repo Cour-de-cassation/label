@@ -19,6 +19,7 @@ import { listAllDocuments } from './listAllDocuments';
 import { listDocumentsWithProblemReports } from './listDocumentsWithProblemReports';
 import { resetUntreatedDocumentsForTest } from './resetUntreatedDocumentsForTest';
 import { purgeDb } from './purgeDb';
+import { renewCache } from './renewCache';
 import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
 
 export {
@@ -38,6 +39,7 @@ export {
   listAllDocuments,
   listDocumentsWithProblemReports,
   purgeDb,
+  renewCache,
   resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,

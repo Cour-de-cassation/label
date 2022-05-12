@@ -2,6 +2,7 @@ import { apiSchema, idModule } from '@label/core';
 import { errorHandlers } from 'sder-core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
+import { cacheService } from '../modules/cache';
 import { documentService } from '../modules/document';
 import { monitoringEntryService } from '../modules/monitoringEntry';
 import { problemReportService } from '../modules/problemReport';
@@ -57,8 +58,26 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
     availableStatisticFilters: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
-      controllerWithUser: async () =>
-        statisticService.fetchAvailableStatisticFilters(),
+      controllerWithUser: async () => {
+        const cache = (
+          await cacheService.fetchAllByKey('availableStatisticFilters')
+        )[0];
+        return JSON.parse(cache.content as string) as {
+          publicationCategories: string[];
+          maxDate: number | undefined;
+          minDate: number | undefined;
+          routes: (
+            | 'automatic'
+            | 'exhaustive'
+            | 'simple'
+            | 'confirmation'
+            | 'request'
+            | 'default'
+          )[];
+          sources: string[];
+          jurisdictions: string[];
+        };
+      },
     }),
 
     document: buildAuthenticatedController({

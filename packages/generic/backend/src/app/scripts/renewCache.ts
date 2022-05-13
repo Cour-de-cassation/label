@@ -1,20 +1,27 @@
 import { cacheType } from '@label/core';
 import { cacheService } from '../../modules/cache';
 import { statisticService } from '../../modules/statistic';
+import { logger } from '../../utils';
 
 export { renewCache };
 
 async function renewCache({ minutes }: { minutes: number }) {
+  logger.log(`renewCache`);
+
   const caches = await cacheService.fetchAllOlderThan(minutes);
   caches.forEach(async (cache: cacheType) => {
     await cacheService.deleteCache(cache._id);
-    switch (cache.key) {
-      case 'availableStatisticFilters':
-        await cacheService.createCache(
-          cache.key,
-          await statisticService.fetchAvailableStatisticFilters(),
-        );
-        break;
-    }
   });
+
+  const availableStatisticFiltersCaches = await cacheService.fetchAllByKey(
+    'availableStatisticFilters',
+  );
+  if (!availableStatisticFiltersCaches) {
+    await cacheService.createCache(
+      'availableStatisticFilters',
+      await statisticService.fetchAvailableStatisticFilters(),
+    );
+  }
+
+  logger.log('Done');
 }

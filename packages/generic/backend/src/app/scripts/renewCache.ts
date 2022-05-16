@@ -11,6 +11,7 @@ async function renewCache({ minutes }: { minutes: number }) {
   const caches = await cacheService.fetchAllOlderThan(minutes);
   caches.forEach(async (cache: cacheType) => {
     await cacheService.deleteCache(cache._id);
+    logger.log(`${cache.key} cache deleted.`);
   });
 
   const availableStatisticFiltersCaches = await cacheService.fetchAllByKey(
@@ -19,8 +20,9 @@ async function renewCache({ minutes }: { minutes: number }) {
   if (!availableStatisticFiltersCaches) {
     await cacheService.createCache(
       'availableStatisticFilters',
-      await statisticService.fetchAvailableStatisticFilters(),
+      JSON.stringify(await statisticService.fetchAvailableStatisticFilters()),
     );
+    logger.log(`availableStatisticFilters cache renewed.`);
   }
 
   logger.log('Done');

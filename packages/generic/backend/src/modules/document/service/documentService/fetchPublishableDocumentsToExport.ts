@@ -5,9 +5,13 @@ export { fetchPublishableDocumentsToExport };
 
 async function fetchPublishableDocumentsToExport() {
   const documentRepository = buildDocumentRepository();
-  const documents = await documentRepository.findAllByPublicationCategoryLettersAndStatus(
+  const lettersDocuments = await documentRepository.findAllByPublicationCategoryLettersAndStatus(
     documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
     ['toBePublished', 'done'],
   );
-  return documents;
+  const codesDocuments = await documentRepository.findAllByNACCodesAndStatus(
+    documentModule.lib.publicationHandler.getPrioritizedNACCodes(),
+    ['toBePublished', 'done'],
+  );
+  return [...lettersDocuments, ...codesDocuments];
 }

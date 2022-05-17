@@ -16,6 +16,10 @@ type customDocumentRepositoryType = {
     status: documentType['status'][],
     projection: Array<projectionT>,
   ) => Promise<Array<projectedType<documentType, projectionT>>>;
+  findAllByNACCodesAndStatus: (
+    publicationCategory: documentType['publicationCategory'],
+    statuses: documentType['status'][],
+  ) => Promise<Array<documentType>>;
   findAllByPublicationCategoryLettersAndStatus: (
     publicationCategory: documentType['publicationCategory'],
     statuses: documentType['status'][],

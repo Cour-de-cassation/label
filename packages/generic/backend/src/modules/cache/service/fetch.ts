@@ -37,7 +37,5 @@ async function fetchAllOlderThan(minutes: number): Promise<cacheType[]> {
 
   const caches = await cacheRepository.findAll();
 
-  return caches.filter(
-    (cache: cacheType) => (cache.updateDate as number) < minutesAgo,
-  );
+  return caches.filter((cache: cacheType) => cache.updateDate < minutesAgo);
 }

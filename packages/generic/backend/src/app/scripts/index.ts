@@ -15,6 +15,7 @@ import { extractRouteInfosIntoCsv } from './extractRouteInfosIntoCsv';
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestUsers } from './insertTestUsers';
 import { insertUser } from './insertUser';
+import { listAllCaches } from './listAllCaches';
 import { listAllDocuments } from './listAllDocuments';
 import { listDocumentsWithProblemReports } from './listDocumentsWithProblemReports';
 import { resetUntreatedDocumentsForTest } from './resetUntreatedDocumentsForTest';
@@ -36,6 +37,7 @@ export {
   freePendingDocuments,
   insertTestUsers,
   insertUser,
+  listAllCaches,
   listAllDocuments,
   listDocumentsWithProblemReports,
   purgeDb,

@@ -16,6 +16,7 @@ import {
   insertTestUsers,
   insertUser,
   listAllDocuments,
+  listAllCaches,
   listDocumentsWithProblemReports,
   purgeDb,
   renewCache,
@@ -84,6 +85,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       insertUser: {
         run: insertUser,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      listAllCaches: {
+        run: listAllCaches,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       listAllDocuments: {

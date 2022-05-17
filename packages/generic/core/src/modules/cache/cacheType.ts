@@ -9,9 +9,9 @@ const cacheModel = buildModel({
   kind: 'object',
   content: {
     _id: { kind: 'custom', content: 'id' },
-    key: { kind: 'custom', content: 'string' },
-    updateDate: { kind: 'custom', content: 'number' },
-    content: { kind: 'custom', content: 'string' },
+    key: { kind: 'primitive', content: 'string' },
+    updateDate: { kind: 'primitive', content: 'number' },
+    content: { kind: 'primitive', content: 'string' },
   },
 } as const);
 

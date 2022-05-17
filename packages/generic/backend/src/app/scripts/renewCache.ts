@@ -17,7 +17,7 @@ async function renewCache({ minutes }: { minutes: number }) {
   const availableStatisticFiltersCaches = await cacheService.fetchAllByKey(
     'availableStatisticFilters',
   );
-  if (!availableStatisticFiltersCaches) {
+  if (!availableStatisticFiltersCaches.length) {
     await cacheService.createCache(
       'availableStatisticFilters',
       JSON.stringify(await statisticService.fetchAvailableStatisticFilters()),

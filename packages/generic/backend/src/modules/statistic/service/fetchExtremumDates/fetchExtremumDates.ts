@@ -8,7 +8,7 @@ async function fetchExtremumDates() {
   const treatmentRepository = buildTreatmentRepository();
 
   const extremumDatesInStatistics = await statisticRepository.findExtremumTreatmentDateBySources(
-    ['annotator', 'admin'],
+    ['jurinet', 'jurica'],
   );
 
   const extremumDatesInTreatments = await treatmentRepository.findExtremumLastUpdateDateBySources(

@@ -8,11 +8,11 @@ describe('fetchExtremumDates', () => {
     const statisticRepository = buildStatisticRepository();
     const statistics = [
       {
-        source: 'annotator',
+        source: 'jurica',
         treatmentDate: 10,
       },
       {
-        source: 'admin',
+        source: 'jurinet',
         treatmentDate: 50,
       },
     ].map(statisticModule.generator.generate);
@@ -39,11 +39,11 @@ describe('fetchExtremumDates', () => {
     const statisticRepository = buildStatisticRepository();
     const statistics = [
       {
-        source: 'annotator',
+        source: 'jurica',
         treatmentDate: 20,
       },
       {
-        source: 'admin',
+        source: 'jurinet',
         treatmentDate: 40,
       },
     ].map(statisticModule.generator.generate);
@@ -89,11 +89,11 @@ describe('fetchExtremumDates', () => {
     const statisticRepository = buildStatisticRepository();
     const statistics = [
       {
-        source: 'annotator',
+        source: 'jurica',
         treatmentDate: 10,
       },
       {
-        source: 'admin',
+        source: 'jurinet',
         treatmentDate: 50,
       },
     ].map(statisticModule.generator.generate);
@@ -108,11 +108,11 @@ describe('fetchExtremumDates', () => {
     const statisticRepository = buildStatisticRepository();
     const statistics = [
       {
-        source: 'annotator',
+        source: 'jurica',
         treatmentDate: 10,
       },
       {
-        source: 'admin',
+        source: 'jurinet',
         treatmentDate: 40,
       },
     ].map(statisticModule.generator.generate);

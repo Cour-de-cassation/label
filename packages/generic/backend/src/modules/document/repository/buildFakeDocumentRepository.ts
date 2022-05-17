@@ -45,6 +45,18 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return publicationCategories;
     },
 
+    async findAllByNACCodesAndStatus(
+      NACCodes: documentType['decisionMetadata']['NACCode'][],
+      statuses: documentType['status'][],
+    ) {
+      return collection.filter(
+        (document) =>
+          NACCodes.some((NACCode) =>
+            document.publicationCategory.includes(NACCode),
+          ) && statuses.includes(document.status),
+      );
+    },
+
     async findAllByPublicationCategoryLettersAndStatus(
       publicationCategoryLetters,
       statuses,

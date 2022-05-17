@@ -16,8 +16,10 @@ import {
   insertTestUsers,
   insertUser,
   listAllDocuments,
+  listAllCaches,
   listDocumentsWithProblemReports,
   purgeDb,
+  renewCache,
   resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
@@ -85,6 +87,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
         run: insertUser,
         option: { shouldLoadDb: true, shouldExit: false },
       },
+      listAllCaches: {
+        run: listAllCaches,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
       listAllDocuments: {
         run: listAllDocuments,
         option: { shouldLoadDb: true, shouldExit: false },
@@ -95,6 +101,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       purgeDb: {
         run: purgeDb,
+        option: { shouldLoadDb: true, shouldExit: true },
+      },
+      renewCache: {
+        run: renewCache,
         option: { shouldLoadDb: true, shouldExit: true },
       },
       revertOneMigration: {

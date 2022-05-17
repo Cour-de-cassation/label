@@ -104,6 +104,15 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
+    async findAllByNACCodesAndStatus(
+      NACCodes: documentType['decisionMetadata']['NACCode'][],
+      statuses: documentType['status'][],
+    ) {
+      return collection
+        .find(buildFindAllByNACCodesAndStatusRequest(NACCodes, statuses))
+        .toArray();
+    },
+
     async findAllByPublicationCategoryLettersAndStatus(
       publicationCategoryLetters,
       statuses,
@@ -173,6 +182,18 @@ function buildFindByPublicationCategoryLettersRequest(
   return {
     $or: publicationCategoryLetters.map((publicationCategoryLetter) => ({
       publicationCategory: { $in: [publicationCategoryLetter] },
+    })),
+  };
+}
+
+function buildFindAllByNACCodesAndStatusRequest(
+  NACCodes: string[],
+  statuses: documentType['status'][],
+) {
+  return {
+    status: { $in: statuses },
+    $or: NACCodes.map((NACCode) => ({
+      NACCode: { $in: [NACCode] },
     })),
   };
 }

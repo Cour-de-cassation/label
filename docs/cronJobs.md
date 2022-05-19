@@ -33,3 +33,7 @@ Free documents assigagned to an annotator that is AFK after X minutes.
 ## purge-m-6
 
 Purge statistics data after 6 months due to GDPR laws/privacy policies.
+
+## renew-cache
+
+Asynchronously renew the cache.

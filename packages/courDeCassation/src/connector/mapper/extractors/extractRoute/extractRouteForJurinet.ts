@@ -171,9 +171,12 @@ function extractRouteForJurinet({
   }
 
   if (
-    ['Déchéance', 'Désistement', 'Désistement par arrêt'].some((text) =>
-      stringComparator.compareNormalizedStrings(text, solution),
-    )
+    [
+      'Déchéance',
+      'Déchéance par ordonnance',
+      'Désistement',
+      'Désistement par arrêt',
+    ].some((text) => stringComparator.compareNormalizedStrings(text, solution))
   ) {
     return 'automatic';
   }

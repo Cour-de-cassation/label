@@ -42,8 +42,8 @@ function extractRoute(
   }
 
   if (
-    route == 'default' ||
-    (!!routeInfos.additionalTermsToAnnotate && route == 'simple')
+    !!routeInfos.additionalTermsToAnnotate &&
+    (route == 'simple' || route == 'default')
   ) {
     route = 'exhaustive';
   }

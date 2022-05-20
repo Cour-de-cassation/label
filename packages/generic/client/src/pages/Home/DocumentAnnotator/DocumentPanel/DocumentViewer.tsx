@@ -58,8 +58,6 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
         switch (document.route) {
           case 'simple':
             return undefined;
-          case 'default':
-            return undefined;
           default:
             return props.splittedTextByLine;
         }

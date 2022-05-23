@@ -127,7 +127,17 @@ function StatisticsFilterButton(props: {
         possibleValues: props.availableStatisticFilters.routes,
         value: props.ressourceFilter.route,
         onChange: (newRoute: string | undefined) => {
-          props.refetch({ ...props.ressourceFilter, route: newRoute });
+          props.refetch({
+            ...props.ressourceFilter,
+            route: newRoute as
+              | 'automatic'
+              | 'exhaustive'
+              | 'simple'
+              | 'confirmation'
+              | 'request'
+              | 'default'
+              | undefined,
+          });
         },
       };
     }

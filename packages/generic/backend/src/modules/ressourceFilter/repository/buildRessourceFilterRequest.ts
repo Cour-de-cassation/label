@@ -5,6 +5,7 @@ export { buildRessourceFilterRequest };
 type ressourceFilterRequestType = {
   publicationCategory?: string[];
   treatmentDate?: { $gt?: number; $lte?: number };
+  route?: ressourceFilterType['route'];
   source?: ressourceFilterType['source'];
   jurisdiction?: ressourceFilterType['jurisdiction'];
   subAnnotationsSensitiveCount?: { $gt?: number };
@@ -43,6 +44,10 @@ function buildRessourceFilterRequest(
       ...ressourceFilterRequest.treatmentDate,
       $lte: ressourceFilter.endDate,
     };
+  }
+
+  if (ressourceFilter.route) {
+    ressourceFilterRequest.route = ressourceFilter.route;
   }
 
   if (ressourceFilter.source) {

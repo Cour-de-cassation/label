@@ -85,7 +85,7 @@ metadata:
   name: ${APP_ID}-job-urgent-import
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris 0 20 * * *"
+  schedule: "CRON_TZ=Europe/Paris 0 10,12,14,16 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid

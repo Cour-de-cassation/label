@@ -31,15 +31,41 @@ function buildAnnotator(
     const documentsCountToAnnotate = await documentService.countDocumentsWithoutAnnotations();
     logger.log(`Found ${documentsCountToAnnotate} documents to annotate`);
     let currentDocumentToAnnotate: documentType | undefined;
+    let previousDocumentStatus: documentType['status'] | undefined;
     let documentsAnnotatedCount = 0;
+
+    process.on('SIGINT', async function () {
+      logger.log('Stopping...');
+
+      if (currentDocumentToAnnotate) {
+        logger.log(
+          `Stopping annotating document ${formatDocumentInfos(
+            currentDocumentToAnnotate,
+          )}. Setting the document to its previous status...`,
+        );
+        await documentService.updateDocumentStatus(
+          currentDocumentToAnnotate._id,
+          previousDocumentStatus ?? 'free',
+        );
+        logger.log(
+          `Document ${formatDocumentInfos(currentDocumentToAnnotate)} free!`,
+        );
+      }
+
+      logger.log('STOPPED annotateDocumentsWithoutAnnotations');
+
+      process.exit();
+    });
+
     do {
+      previousDocumentStatus = undefined;
       currentDocumentToAnnotate = await documentService.fetchDocumentWithoutAnnotationsNotIn(
         failedDocumentIds,
       );
       if (currentDocumentToAnnotate) {
         documentsAnnotatedCount++;
         logger.log(`Found a document to annotate. Reserving...`);
-        const previousDocumentStatus = currentDocumentToAnnotate.status;
+        previousDocumentStatus = currentDocumentToAnnotate.status;
         const nextDocumentStatus = documentModule.lib.getNextStatus({
           status: currentDocumentToAnnotate.status,
           publicationCategory: currentDocumentToAnnotate.publicationCategory,
@@ -50,7 +76,11 @@ function buildAnnotator(
           nextDocumentStatus,
         );
         logger.log(
-          `Annotating with ${annotatorConfig.name} document ${documentsAnnotatedCount}/${documentsCountToAnnotate}...`,
+          `Annotating with ${
+            annotatorConfig.name
+          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+            currentDocumentToAnnotate,
+          )}`,
         );
         try {
           await annotateDocument(updatedDocument);
@@ -58,8 +88,8 @@ function buildAnnotator(
           logger.error(error);
           failedDocumentIds.push(updatedDocument._id);
           logger.log(
-            `Error while annotating document ${idModule.lib.convertToString(
-              currentDocumentToAnnotate._id,
+            `Error while annotating document ${formatDocumentInfos(
+              currentDocumentToAnnotate,
             )}. Setting the document to its previous status...`,
           );
           await documentService.updateDocumentStatus(
@@ -67,9 +97,7 @@ function buildAnnotator(
             previousDocumentStatus,
           );
           logger.log(
-            `Document ${idModule.lib.convertToString(
-              currentDocumentToAnnotate._id,
-            )} free!`,
+            `Document ${formatDocumentInfos(currentDocumentToAnnotate)} free!`,
           );
         }
       }
@@ -77,6 +105,8 @@ function buildAnnotator(
       currentDocumentToAnnotate !== undefined &&
       documentsAnnotatedCount < documentsCountToAnnotate
     );
+
+    logger.log('DONE annotateDocumentsWithoutAnnotations');
   }
 
   async function reAnnotateFreeDocuments() {
@@ -102,8 +132,8 @@ function buildAnnotator(
     );
     if (previousTreatments.length > 0) {
       throw new Error(
-        `Conflict of annotation on document ${idModule.lib.convertToString(
-          document._id,
+        `Conflict of annotation on document ${formatDocumentInfos(
+          document,
         )}. Skipping...`,
       );
     }
@@ -148,7 +178,9 @@ function buildAnnotator(
       document._id,
       nextDocumentStatus,
     );
-    logger.log(`Annotation done for document "${document.priority}"`);
+    logger.log(
+      `Annotation done for document "${formatDocumentInfos(document)}"`,
+    );
   }
 
   async function createAnnotatorTreatment({
@@ -210,5 +242,11 @@ function buildAnnotator(
   async function createReport(report: annotationReportType) {
     const annotationReportRepository = buildAnnotationReportRepository();
     await annotationReportRepository.insert(report);
+  }
+
+  function formatDocumentInfos(document: documentType) {
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
+      document.documentNumber
+    }]`;
   }
 }

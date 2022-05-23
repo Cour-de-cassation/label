@@ -76,7 +76,11 @@ function buildAnnotator(
           nextDocumentStatus,
         );
         logger.log(
-          `Annotating with ${annotatorConfig.name} : ${documentsAnnotatedCount}/${documentsCountToAnnotate}...`,
+          `Annotating with ${
+            annotatorConfig.name
+          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+            currentDocumentToAnnotate,
+          )}`,
         );
         try {
           await annotateDocument(updatedDocument);
@@ -240,7 +244,7 @@ function buildAnnotator(
     await annotationReportRepository.insert(report);
   }
 
-  async function formatDocumentInfos(document: documentType) {
+  function formatDocumentInfos(document: documentType) {
     return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
       document.documentNumber
     }]`;

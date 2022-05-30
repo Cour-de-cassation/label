@@ -47,8 +47,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris */30 6-12 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -86,8 +86,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris 0 10,12,14,16 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -123,8 +123,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris 0 19 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -162,8 +162,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris 30 19 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -201,8 +201,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris 58 13 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -240,8 +240,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris */16 6-19 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -279,8 +279,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris 0 21 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -318,8 +318,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "CRON_TZ=Europe/Paris */5 * * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:

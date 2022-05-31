@@ -5,7 +5,7 @@ metadata:
   name: ${APP_ID}-job-nlp-annotation
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris */5 6-19 * * *"
+  schedule: "*/5 4-17 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -46,7 +46,7 @@ metadata:
   name: ${APP_ID}-job-import-j-7
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris */30 6-12 * * *"
+  schedule: "*/30 4-10 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -85,7 +85,7 @@ metadata:
   name: ${APP_ID}-job-urgent-import
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris 0 10,12,14,16 * * *"
+  schedule: "0 8,10,12,14 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -122,7 +122,7 @@ metadata:
   name: ${APP_ID}-job-import-chained
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris 0 19 * * *"
+  schedule: "0 17 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -161,7 +161,7 @@ metadata:
   name: ${APP_ID}-job-export-j-4
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris 30 19 * * *"
+  schedule: "30 17 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -200,7 +200,7 @@ metadata:
   name: ${APP_ID}-job-export-publishable
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris 58 13 * * *"
+  schedule: "58 11 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -239,7 +239,7 @@ metadata:
   name: ${APP_ID}-job-free-pending
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris */16 6-19 * * *"
+  schedule: "*/16 4-17 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -278,7 +278,7 @@ metadata:
   name: ${APP_ID}-job-purge-m-6
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris 0 21 * * *"
+  schedule: "0 19 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -317,7 +317,7 @@ metadata:
   name: ${APP_ID}-job-renew-cache
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "CRON_TZ=Europe/Paris */5 * * * *"
+  schedule: "*/5 4-17 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid

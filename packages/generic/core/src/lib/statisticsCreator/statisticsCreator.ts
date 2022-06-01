@@ -17,20 +17,20 @@ function buildFromDocument({
 }: {
   document: documentType;
   treatments: treatmentType[];
-  humanTreatments: Array<{ treatment: treatmentType; userId: userType['_id'] }>;
+  humanTreatments: Array<{ treatment: treatmentType; userId: userType['_id'] }> | undefined;
   settings: settingsType;
 }): statisticType {
   const annotations = treatmentModule.lib.computeAnnotations(treatments);
   const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(annotations);
 
   const treatmentInfo = treatmentModule.lib.aggregateTreatmentInfo(
-    humanTreatments.map(({ treatment }) => treatment),
+    (humanTreatments ?? []).map(({ treatment }) => treatment),
     settings,
   );
 
   const lastUpdateDate = treatmentModule.lib.extractLastUpdateDate(treatments);
 
-  const humanTreatmentsSummary = humanTreatments.map(({ treatment, userId }) => ({
+  const humanTreatmentsSummary = (humanTreatments ?? []).map(({ treatment, userId }) => ({
     userId,
     treatmentDuration: treatment.duration,
   }));

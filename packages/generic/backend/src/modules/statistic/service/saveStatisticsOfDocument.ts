@@ -16,20 +16,20 @@ async function saveStatisticsOfDocument(
 ) {
   const statisticRepository = buildStatisticRepository();
 
-  const assignations = await assignationService.fetchAssignationsOfDocumentId(
-    document._id,
-  );
-  if (assignations.length === 0) {
-    return;
-  }
   const treatments = await treatmentService.fetchTreatmentsByDocumentId(
     document._id,
   );
 
-  const humanTreatments = treatmentModule.lib.extractHumanTreatments(
-    treatments,
-    assignations,
+  const assignations = await assignationService.fetchAssignationsOfDocumentId(
+    document._id,
   );
+  let humanTreatments;
+  if (assignations.length !== 0) {
+    humanTreatments = treatmentModule.lib.extractHumanTreatments(
+      treatments,
+      assignations,
+    );
+  }
 
   const statistic = statisticsCreator.buildFromDocument({
     document,

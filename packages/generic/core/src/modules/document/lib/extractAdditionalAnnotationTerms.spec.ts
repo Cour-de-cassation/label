@@ -2,7 +2,7 @@ import { extractAdditionalAnnotationTerms } from './extractAdditionalAnnotationT
 
 describe('extractAdditionalAnnotationTerms', () => {
   it('should extract the additional annotation terms', () => {
-    const additionalTermsToAnnotate = 'One term / the second term';
+    const additionalTermsToAnnotate = 'One term / the second term / ';
 
     const additionalAnnotationTerms = extractAdditionalAnnotationTerms(additionalTermsToAnnotate);
 

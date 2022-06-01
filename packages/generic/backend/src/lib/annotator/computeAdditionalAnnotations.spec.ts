@@ -5,7 +5,7 @@ describe('computeAdditionalAnnotations', () => {
   it('should compute the additional annotations', () => {
     const documentText =
       "Romain, Nicolas and Benoit are entrepreneurs for the Entrepreneurs d'Intérêt Général programme";
-    const additionalTermsToAnnotate = 'entrepreneurs';
+    const additionalTermsToAnnotate = 'entrepreneurs/';
     const previousAnnotations = [
       ...[
         { text: 'Romain', start: 0 },

@@ -91,7 +91,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 0
+      backoffLimit: 2
       activeDeadlineSeconds: 300
       template:
         spec:
@@ -128,7 +128,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 0
+      backoffLimit: 2
       activeDeadlineSeconds: 300
       template:
         spec:
@@ -167,7 +167,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 0
+      backoffLimit: 2
       activeDeadlineSeconds: 300
       template:
         spec:
@@ -206,7 +206,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 0
+      backoffLimit: 2
       activeDeadlineSeconds: 300
       template:
         spec:
@@ -284,7 +284,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 0
+      backoffLimit: 2
       activeDeadlineSeconds: 300
       template:
         spec:

@@ -39,6 +39,10 @@ function filterTreatedDocuments({
       isInTheFilter = isInTheFilter && document.publicationCategory.includes(ressourceFilter.publicationCategory);
     }
 
+    if (ressourceFilter.route) {
+      isInTheFilter = isInTheFilter && document.route === ressourceFilter.route;
+    }
+
     if (ressourceFilter.source) {
       isInTheFilter = isInTheFilter && document.source === ressourceFilter.source;
     }

@@ -23,9 +23,7 @@ async function fetchAggregatedStatisticsAccordingToFilter(
   const statisticRepository = buildStatisticRepository();
 
   const statistics = await statisticRepository.findAllByRessourceFilter(filter);
-
   const doneDocumentStatistics = await computeStatisticsFromDoneDocuments();
-
   return statisticModule.lib.aggregate(
     [...statistics, ...doneDocumentStatistics],
     filter,

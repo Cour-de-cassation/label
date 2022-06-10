@@ -85,7 +85,7 @@ metadata:
   name: ${APP_ID}-job-urgent-import
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "0 8,10,12,14 * * *"
+  schedule: "0,30 8-17 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -106,7 +106,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/autoImportDocumentsFromSder.js --count 500 --threshold 500 -e environments/prodEnvironment.json -s settings/settings.json
+                - node dist/scripts/autoImportDocumentsFromSder.js --count 500 --threshold 1000 -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD
@@ -339,6 +339,45 @@ spec:
               args:
                 - -c
                 - node dist/scripts/renewCache.js --beforeMinutes 5 --environment environments/prodEnvironment.json --settings settings/settings.json
+              env:
+                - name: RUN_MODE
+                  value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
+          restartPolicy: Never
+          volumes:
+            - name: ${APP_ID}-config
+              secret:
+                secretName: ${APP_ID}-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ${APP_ID}-job-renew-cache
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  schedule: "30 19 * * *"
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          containers:
+            - name: ${APP_ID}-job-cleanning
+              image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+              volumeMounts:
+                - name: ${APP_ID}-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
+              command:
+                - /bin/sh
+              args:
+                - -c
+                - node dist/scripts/cleanDocuments.js --environment environments/prodEnvironment.json --settings settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD

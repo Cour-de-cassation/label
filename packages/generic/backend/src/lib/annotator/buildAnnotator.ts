@@ -178,9 +178,7 @@ function buildAnnotator(
       document._id,
       nextDocumentStatus,
     );
-    logger.log(
-      `Annotation done for document "${formatDocumentInfos(document)}"`,
-    );
+    logger.log(`Annotation done for document ${formatDocumentInfos(document)}`);
   }
 
   async function createAnnotatorTreatment({

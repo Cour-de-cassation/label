@@ -200,7 +200,7 @@ metadata:
   name: ${APP_ID}-job-export-publishable
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "58 11 * * *"
+  schedule: "58 13 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid

@@ -21,18 +21,14 @@ To run the local version of the annotator, you have to use node with the proper 
 
 To import _count_ new documents in the LABEL database:
 
-- connect to Wallix and open a Cygwin term
-- preprod: `pp label script importNewDocumentsFromSder.js --count=[count]`
-- prod: `prod label script importNewDocumentsFromSder.js --count=[count]`
-
-To annotate all the documents that have not been annotated by the NLP engine yet in the database, run the following :
-
-- `pp label script annotateDocumentsWithoutAnnotationsWithNlp.js` (resp `prod label script ...`)
+- Connect to Wallix and open a Cygwin term
+- `prod label script importNewDocumentsFromSder --count=1000 --threshold=1000`
+- `prod label script annotateDocumentsWithoutAnnotationsWithNlp`
 
 ## A jurinet decision should have been released in open data, but we cannot find it anywhere via the Judifiltre search engine
 
-- ask for the _jurinet ID_. If you're only provided with a _numéro de registre_, you won't be able to find it in the database.
-- search for it in the _SDER_ database, _rawJurinet_ table
+- Ask for the _jurinet ID_. If you're only provided with a _numéro de registre_, you won't be able to find it in the database.
+- Search for it in the _SDER_ database, _rawJurinet_ table
   - connect to `dbsder-pp` (preprod, resp `dbsder`: prod) via ssh and connect to the Mongo db
   - `use SDER`
   - `db.rawJurinet.find({_id: ID_JURINET})`
@@ -49,7 +45,7 @@ To annotate all the documents that have not been annotated by the NLP engine yet
   - prod:
     - `prod label script importSpecificDocumentFromSder.js --documentNumber=JURINET_ID source="jurinet"`
     - `prod label script annotateDocumentsWithoutAnnotationsWithNlp.js`
-- once the document is imported in LABEL, you can check its status with the following instructions:
+- Once the document is imported in LABEL, you can check its status with the following instructions:
   - connect to `dbsder-pp` (resp `dbsder` for prod) via ssh and connect to the Mongo db
   - `use labelDb`
   - `db.documents.find({documentNumber: ID_JURINET, source: "jurinet"})`
@@ -61,25 +57,17 @@ In order to accelerate use of shortcuts, scripts are included in Wallix/Cygwin s
 #### Running logs
 
 ```shell
-pp label logs -f deployment.apps/label-backend-deployment
-```
-
-resp
-
-```shell
 prod label logs -f deployment.apps/label-backend-deployment
 ```
 
-#### get the pods of label namespace
+#### Get the pods of Label namespace
 
 ```shell
-pp get pods
+prod get pods
 ```
 
-(resp `prod label ...`)
+### Go into the container
 
-### go into the container
-
-```
+```shell
 pp label exec -i deployment.apps/label-backend-deployment -- /bin/sh
 ```

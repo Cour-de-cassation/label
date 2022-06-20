@@ -85,7 +85,7 @@ metadata:
   name: ${APP_ID}-job-urgent-import
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "0,30 8-17 * * *"
+  schedule: "15 8-17 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid

@@ -6,8 +6,8 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "*/5 4-17 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -48,7 +48,7 @@ metadata:
 spec:
   schedule: "*/30 4-10 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -85,9 +85,9 @@ metadata:
   name: ${APP_ID}-job-urgent-import
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "15 8-17 * * *"
+  schedule: "15 6-17 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -110,6 +110,8 @@ spec:
               env:
                 - name: RUN_MODE
                   value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
           restartPolicy: Never
           volumes:
             - name: ${APP_ID}-config
@@ -124,7 +126,7 @@ metadata:
 spec:
   schedule: "0 17 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -163,7 +165,7 @@ metadata:
 spec:
   schedule: "30 17 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -202,7 +204,7 @@ metadata:
 spec:
   schedule: "58 13 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -241,7 +243,7 @@ metadata:
 spec:
   schedule: "*/16 4-17 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -280,7 +282,7 @@ metadata:
 spec:
   schedule: "0 19 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -319,7 +321,7 @@ metadata:
 spec:
   schedule: "*/5 4-17 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -358,7 +360,7 @@ metadata:
 spec:
   schedule: "30 19 * * *"
   successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 0
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:

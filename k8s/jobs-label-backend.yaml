@@ -92,7 +92,7 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 2
-      activeDeadlineSeconds: 300
+      activeDeadlineSeconds: 1800
       template:
         spec:
           containers:

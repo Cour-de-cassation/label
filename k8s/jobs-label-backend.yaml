@@ -6,8 +6,10 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "*/5 4-17 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # support 288 successes, meaning 24h with no decision to handle = treatment of less than 5min
+  successfulJobsHistoryLimit: 288
+  # support 168 failure, meaning 168hours = 1 week if annotation is interrupted due to activeDeadlineSeconds = 1h
+  failedJobsHistoryLimit: 168
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -47,8 +49,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "*/30 4-10 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # support 12 treatments a day, keeping failure and success for a full week, meaning 84 iterations
+  successfulJobsHistoryLimit: 84
+  failedJobsHistoryLimit: 84
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -86,8 +89,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "15 6-17 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # support 12 treatments a day, keeping failure and success for a full week, meaning 84 iterations
+  successfulJobsHistoryLimit: 84
+  failedJobsHistoryLimit: 84
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -125,8 +129,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "0 17 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # supports one treatment per day, keeping logs for a full week
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -164,8 +169,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "30 17 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # keeping logs for 7 days, once a day
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -203,8 +209,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "58 13 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # keeping logs 7 days, once a day
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -242,8 +249,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "*/16 4-17 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # keeps only 24h for this minor job, meaning approx 50 jobs
+  successfulJobsHistoryLimit: 50
+  failedJobsHistoryLimit: 50
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -281,8 +289,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "0 19 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # keeps logs 7 days, once a day
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -320,8 +329,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "*/5 4-17 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # keeps logs 24h, minor and very frequent job
+  successfulJobsHistoryLimit: 168
+  failedJobsHistoryLimit: 168
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -359,8 +369,9 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "30 19 * * *"
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 0
+  # keeps logs 7 days, once a day
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:

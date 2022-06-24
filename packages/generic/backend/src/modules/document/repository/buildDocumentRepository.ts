@@ -193,7 +193,7 @@ function buildFindAllByNACCodesAndStatusRequest(
   return {
     status: { $in: statuses },
     $or: NACCodes.map((NACCode) => ({
-      NACCode: { $in: [NACCode] },
+      'decisionMetadata.NACCode': { $in: [NACCode] },
     })),
   };
 }

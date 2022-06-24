@@ -26,12 +26,13 @@ async function renewCache({ minutes }: { minutes: number }) {
       JSON.stringify(await statisticService.fetchAvailableStatisticFilters()),
     );
     logger.log(`availableStatisticFilters cache renewed.`);
-    cachesToRenew
-      .filter((cache) => cache.key == 'availableStatisticFilters')
-      .forEach(async (cache) => {
-        await cacheService.deleteCache(cache._id);
-        logger.log(`${cache._id} ${cache.key} cache deleted.`);
-      });
+    const cachesToDelete = cachesToRenew.filter(
+      (cache) => cache.key == 'availableStatisticFilters',
+    );
+    cachesToDelete.forEach(async (cache) => {
+      await cacheService.deleteCache(cache._id);
+      logger.log(`${cache._id} ${cache.key} cache deleted.`);
+    });
   }
 
   logger.log('Done');

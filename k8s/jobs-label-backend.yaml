@@ -365,7 +365,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: ${APP_ID}-job-renew-cache
+  name: ${APP_ID}-job-cleaning
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "30 19 * * *"
@@ -380,7 +380,7 @@ spec:
       template:
         spec:
           containers:
-            - name: ${APP_ID}-job-cleanning
+            - name: ${APP_ID}-job-cleaning
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
                 - name: ${APP_ID}-config

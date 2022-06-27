@@ -26,10 +26,10 @@ async function renewCache({ minutes }: { minutes: number }) {
     logger.log(`availableStatisticFilters cache renewed.`);
   }
 
-  cachesToRenew.forEach(async (cache) => {
+  for (const cache of cachesToRenew) {
     await cacheService.deleteCache(cache._id);
     logger.log(`${cache._id} ${cache.key} cache deleted.`);
-  });
+  }
 
   logger.log('Done');
 }

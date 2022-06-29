@@ -150,7 +150,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/importChainedDocumentsFromSder.js --count 500 --threshold 500 -e environments/prodEnvironment.json -s settings/settings.json
+                - node dist/scripts/importChainedDocumentsFromSder.js --count 500 --threshold 1500 -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD

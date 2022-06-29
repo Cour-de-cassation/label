@@ -14,12 +14,12 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0
-      activeDeadlineSeconds: 3600
       template:
         spec:
           containers:
             - name: ${APP_ID}-job-nlp-annotation
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+              activeDeadlineSeconds: 3600
               volumeMounts:
                 - name: ${APP_ID}-config
                   mountPath: /home/node/packages/courDeCassation/environments
@@ -28,7 +28,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js -e environments/prodEnvironment.json -s settings/settings.json
+                - /usr/bin/timeout 10 node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD

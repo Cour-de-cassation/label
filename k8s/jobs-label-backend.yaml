@@ -16,10 +16,10 @@ spec:
       backoffLimit: 0
       template:
         spec:
+          activeDeadlineSeconds: 3600
           containers:
             - name: ${APP_ID}-job-nlp-annotation
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
-              activeDeadlineSeconds: 3600
               volumeMounts:
                 - name: ${APP_ID}-config
                   mountPath: /home/node/packages/courDeCassation/environments

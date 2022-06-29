@@ -5,11 +5,11 @@ metadata:
   name: ${APP_ID}-job-nlp-annotation
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "*/5 4-17 * * *"
+  schedule: "*/5 2-20 * * *"
   # support 288 successes, meaning 24h with no decision to handle = treatment of less than 5min
   successfulJobsHistoryLimit: 288
-  # support 168 failure, meaning 168hours = 1 week if annotation is interrupted due to activeDeadlineSeconds = 1h
-  failedJobsHistoryLimit: 168
+  # support 134 failure, meaning 134 = 1 week if annotation is interrupted due to activeDeadlineSeconds = 1h
+  failedJobsHistoryLimit: 134
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:

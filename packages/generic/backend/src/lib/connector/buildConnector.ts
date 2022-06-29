@@ -247,7 +247,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
     let daysAgo = 0;
     let step = 0;
     let newDocuments: documentType[] = [];
-    while (newDocuments.length < documentCount && step < MAX_STEP) {
+    let importedDocuments: documentType[] = [];
+    while (importedDocuments.length < documentCount && step < MAX_STEP) {
       const startDate = new Date(
         dateBuilder.daysAgo(daysAgo + (daysStep || DEFAULT_DAYS_STEP)),
       );
@@ -272,22 +273,26 @@ function buildConnector(connectorConfig: connectorConfigType) {
           await connectorConfig.mapCourtDecisionToDocument(courtDecision),
         );
       }
+
+      newDocuments = newDocuments.slice(0, documentCount);
+
+      logger.log(
+        `Insertion ${newDocuments.length} documents into the database...`,
+      );
+      await insertDocuments(newDocuments);
+      logger.log(`Insertion done!`);
+
+      logger.log(`Send documents have been loaded...`);
+      await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
+
+      importedDocuments = [...importedDocuments, ...newDocuments];
+      newDocuments = [];
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
       step++;
     }
 
-    newDocuments = newDocuments.slice(0, documentCount);
-
-    logger.log(
-      `Insertion ${newDocuments.length} documents into the database...`,
-    );
-    await insertDocuments(newDocuments);
-    logger.log(`Insertion done!`);
-
-    logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
     logger.log(`DONE`);
-    return newDocuments.length;
+    return importedDocuments.length;
   }
 
   async function importDocumentsSince(days: number) {

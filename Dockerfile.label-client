@@ -4,7 +4,7 @@
 # run first outside container  #
 # e.g in Github Actions CI     #
 ################################
-FROM nginx:1.21.6-alpine as label-client
+FROM nginx:1.23.0-alpine as label-client
 ARG app_name
 ARG app_ver
 

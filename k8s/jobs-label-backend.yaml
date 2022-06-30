@@ -14,6 +14,7 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0
+      parallelism: 1
       template:
         spec:
           activeDeadlineSeconds: 3600
@@ -28,7 +29,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - /usr/bin/timeout 10 node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js -e environments/prodEnvironment.json -s settings/settings.json
+                - node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js -e environments/prodEnvironment.json -s settings/settings.json
               env:
                 - name: RUN_MODE
                   value: PROD
@@ -56,9 +57,11 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0
-      activeDeadlineSeconds: 300
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 300
+          restartPolicy: Never
           containers:
             - name: ${APP_ID}-job-import-j-7
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
@@ -95,10 +98,11 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 2
-      activeDeadlineSeconds: 1800
+      backoffLimit: 0
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 1800
           containers:
             - name: ${APP_ID}-job-urgent-import
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
@@ -136,9 +140,10 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 2
-      activeDeadlineSeconds: 300
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 300
           containers:
             - name: ${APP_ID}-job-import-chained
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
@@ -176,9 +181,10 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 2
-      activeDeadlineSeconds: 300
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 300
           containers:
             - name: ${APP_ID}-job-export-j-4
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
@@ -216,9 +222,10 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 2
-      activeDeadlineSeconds: 300
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 300
           containers:
             - name: ${APP_ID}-job-export-publishable
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
@@ -256,9 +263,10 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0
-      activeDeadlineSeconds: 300
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 300
           containers:
             - name: ${APP_ID}-job-free-pending
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
@@ -296,9 +304,10 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 2
-      activeDeadlineSeconds: 300
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 300
           containers:
             - name: ${APP_ID}-job-purge-m-6
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
@@ -336,9 +345,10 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0
-      activeDeadlineSeconds: 300
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 300
           containers:
             - name: ${APP_ID}-job-renew-cache
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
@@ -376,9 +386,10 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0
-      activeDeadlineSeconds: 300
+      parallelism: 1
       template:
         spec:
+          activeDeadlineSeconds: 300
           containers:
             - name: ${APP_ID}-job-cleaning
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}

@@ -57,7 +57,14 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
       case 'annotation':
         switch (document.route) {
           case 'simple':
-            return undefined;
+            if (
+              document.status != 'done' &&
+              document.status != 'rejected' &&
+              document.status != 'toBePublished' &&
+              document.status != 'toBeConfirmed'
+            ) {
+              return undefined;
+            }
           default:
             return props.splittedTextByLine;
         }

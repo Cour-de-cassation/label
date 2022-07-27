@@ -112,7 +112,7 @@ function buildFetchDocumentsForUser(
 
     const document:
       | documentType
-      | undefined = await documentRepository.findOneByStatusAndPriorityAmong(
+      | undefined = await documentRepository.findOneRandomByStatusAndPriorityAmong(
       { priority, status: 'free' },
       documentIdsToSearchIn,
     );

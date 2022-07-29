@@ -75,6 +75,24 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return freeDocuments[0];
     },
 
+    async findOneRandomByStatusAndPriorityAmong(
+      { status, priority },
+      idsToSearchInFirst,
+    ) {
+      const freeDocuments = await collection
+        .find({
+          priority,
+          status,
+          _id: { $in: idsToSearchInFirst },
+        })
+        .sort({ 'decisionMetadata.date': -1 })
+        .limit(50)
+        .toArray();
+      return freeDocuments[
+        Math.round(Math.random() * (freeDocuments.length - 1))
+      ];
+    },
+
     async findByStatusAndPriorityLimitAmong(
       { status, priority },
       limit,

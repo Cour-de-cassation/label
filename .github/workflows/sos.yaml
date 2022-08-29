@@ -1,0 +1,16 @@
+name: SOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sos:
+    name: SOS 
+    runs-on: [self-hosted]
+    env:
+      BASTION_URL: ${{ secrets.BASTION_URL }}
+      NG_MAIL: ${{ secrets.NG_MAIL }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: 
+        run: ngrok http ${BASTION_URL} --oauth=google --oauth-allow-email=${NG_MAIL}

@@ -7,7 +7,12 @@ import { SettingsButton } from './SettingsButton';
 
 export { MainHeader };
 
-function MainHeader(props: { subtitle?: JSX.Element; title?: string; onBackButtonPress?: () => void }) {
+function MainHeader(props: {
+  subtitle?: JSX.Element;
+  title?: string;
+  onBackButtonPress?: () => void;
+  updateAdminMenu?: () => void;
+}) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const leftHeaderComponents = buildLeftHeaders();
@@ -27,7 +32,7 @@ function MainHeader(props: { subtitle?: JSX.Element; title?: string; onBackButto
   function buildRightHeaderComponents() {
     const userRole = localStorage.userHandler.getRole();
     if (userRole === 'admin') {
-      return [<AdminViewDropdown />, <SettingsButton />];
+      return [<AdminViewDropdown updateAdminMenu={props.updateAdminMenu} />, <SettingsButton />];
     }
     return [<SettingsButton />];
   }

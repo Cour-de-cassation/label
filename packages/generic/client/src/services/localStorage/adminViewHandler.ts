@@ -5,7 +5,7 @@ const ADMIN_VIEW_STORAGE_KEY = 'ADMIN_VIEW';
 
 export { adminViewHandler, adminViews };
 
-const adminViews = ['admin', 'annotator', 'publicator'] as const;
+const adminViews = ['admin', 'annotator', 'publicator', 'scrutator'] as const;
 
 const adminViewHandler = {
   set,

@@ -1,6 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { heights, Text } from 'pelta-design-system';
 import { AdminMenu, MainHeader } from '../../components';
+import { localStorage } from '../../services/localStorage';
 
 export { AdminPage };
 
@@ -13,16 +14,24 @@ function AdminPage(props: {
 }) {
   const styles = buildStyles();
 
+  const [userRole, setUserRole] = useState<'admin' | 'scrutator'>(props.userRole);
+
   return (
     <>
       <div style={styles.header}>
-        <MainHeader title={props.header.title} subtitle={<Text>{props.header.subtitle}</Text>} />
+        <MainHeader
+          title={props.header.title}
+          subtitle={<Text>{props.header.subtitle}</Text>}
+          updateAdminMenu={() => {
+            setUserRole(localStorage.adminViewHandler.get() as 'admin' | 'scrutator');
+          }}
+        />
       </div>
       <div style={styles.contentContainer}>
         <AdminMenu
           toBeConfirmedDocumentsCount={props.toBeConfirmedDocumentsCount}
           unreadProblemReportsCount={props.unreadProblemReportsCount}
-          userRole={props.userRole}
+          userRole={userRole}
         />
         {props.children}
       </div>

@@ -92,6 +92,7 @@ function TreatedDocumentsTable(props: {
 
   function buildOptionItems(treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) {
     const userRole = localStorage.userHandler.getRole();
+    const adminView = localStorage.adminViewHandler.get();
 
     const openDocumentOption = {
       kind: 'text' as const,
@@ -118,7 +119,7 @@ function TreatedDocumentsTable(props: {
       text: wordings.treatedDocumentsPage.table.optionItems.resetTheDocument,
       onClick: () => setDocumentIdToReset(treatmentWithDetails.document._id),
       iconName: 'restore' as const,
-      isDisabled: userRole !== 'admin',
+      isDisabled: userRole !== 'admin' || adminView !== 'admin',
     };
     return [openDocumentOption, displayAnnotationDiff, resetDocument];
   }

@@ -7,7 +7,7 @@ import { wordings } from '../../../wordings';
 
 export { AdminViewDropdown };
 
-function AdminViewDropdown() {
+function AdminViewDropdown(props: { updateAdminMenu?: () => void }) {
   const history = useHistory();
   const defaultAdminView = localStorage.adminViewHandler.get() || 'admin';
   return (
@@ -25,5 +25,6 @@ function AdminViewDropdown() {
   function onChangeAdminView(adminView: typeof adminViews[number]) {
     localStorage.adminViewHandler.set(adminView);
     history.push(defaultRoutes[adminView]);
+    if (props.updateAdminMenu) props.updateAdminMenu();
   }
 }

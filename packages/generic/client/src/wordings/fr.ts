@@ -58,6 +58,7 @@ const fr = {
         admin: 'Vue administrateur',
         annotator: 'Vue annotateur',
         publicator: 'Vue publicateur',
+        scrutator: 'Vue scrutateur',
       },
     },
     changePassword: 'Modifier le mot de passe',

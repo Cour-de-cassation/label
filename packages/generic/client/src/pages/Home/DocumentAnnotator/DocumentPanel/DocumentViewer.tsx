@@ -53,7 +53,30 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     switch (documentViewerModeHandler.documentViewerMode.kind) {
       case 'occurrence':
         const { entityLineNumbers } = documentViewerModeHandler.documentViewerMode;
-        return props.splittedTextByLine.filter(({ line }) => entityLineNumbers.includes(line));
+        const detectedLines = props.splittedTextByLine.filter(({ line }) => entityLineNumbers.includes(line));
+        const displayedLines: splittedTextByLineType = [];
+        for (const detectedLine of detectedLines) {
+          const addedLinesNumber: number[] = [];
+          while (
+            getLinesLengthByLineNumbers([detectedLine.line, ...addedLinesNumber]) < 500 &&
+            addedLinesNumber.length < 10
+          ) {
+            addedLinesNumber.push(
+              detectedLine.line + (addedLinesNumber.length / 2 + 1),
+              detectedLine.line - (addedLinesNumber.length / 2 + 1),
+            );
+          }
+          displayedLines.push(detectedLine, ...getLinesByLineNumbers(addedLinesNumber));
+        }
+        const displayedUniqueLines: splittedTextByLineType = [];
+        displayedLines.forEach(function (displayedLine) {
+          const doubledLinesCount = displayedUniqueLines.findIndex((line) => line.line == displayedLine.line);
+          if (doubledLinesCount <= -1) {
+            displayedUniqueLines.push(displayedLine);
+          }
+        });
+        return displayedLines.sort((line1, line2) => line1.line - line2.line);
+
       case 'annotation':
         switch (document.route) {
           case 'simple':
@@ -71,8 +94,23 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     }
   }
 
+  function getLinesByLineNumbers(lineNumbers: number[]): splittedTextByLineType {
+    return props.splittedTextByLine.filter(({ line }) => lineNumbers.includes(line));
+  }
+
+  function getLinesLengthByLineNumbers(lineNumbers: number[]): number {
+    let linesLength = 0;
+    props.splittedTextByLine
+      .filter(({ line }) => lineNumbers.includes(line))
+      .forEach((line) => {
+        line.content.forEach((chunk) => {
+          if (chunk.type == 'text') linesLength += chunk.content.text.length;
+        });
+      });
+    return linesLength;
+  }
+
   function buildStyle(theme: customThemeType, viewerMode: viewerModeType, isAnonymizedView: boolean) {
-    const lineVerticalPadding = viewerMode.kind === 'occurrence' ? theme.spacing * 4 : 0;
     const backgroundImage = isAnonymizedView
       ? `repeating-linear-gradient(45deg, transparent, transparent 20px, ${theme.colors.line.level2}30 1px, ${theme.colors.line.level2}30 21px)`
       : undefined;
@@ -90,7 +128,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
         height: heights.annotatorPanel,
       },
       table: {
-        borderSpacing: `0 ${lineVerticalPadding}px`,
+        borderSpacing: 0,
         maxWidth: 900,
         padding: theme.spacing * 2,
       },

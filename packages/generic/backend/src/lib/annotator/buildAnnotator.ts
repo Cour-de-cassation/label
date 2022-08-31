@@ -22,7 +22,55 @@ function buildAnnotator(
   settings: settingsType,
   annotatorConfig: annotatorConfigType,
 ) {
-  return { annotateDocumentsWithoutAnnotations, reAnnotateFreeDocuments };
+  return {
+    annotateDocumentsWithoutAnnotations,
+    reAnnotateFreeDocuments,
+    fillLossOfAllTreatedDocuments,
+  };
+
+  async function fillLossOfAllTreatedDocuments() {
+    logger.log('fillLossOfAllTreatedDocuments');
+
+    const failedDocumentIds: documentType['_id'][] = [];
+    const documentsCountToFill = await documentService.countDoneDocumentsWithoutLossNotIn(
+      failedDocumentIds,
+    );
+    logger.log(`Found ${documentsCountToFill} documents to annotate`);
+    let currentDocumentToFillLoss: documentType | undefined;
+    let documentsFilledLossCount = 0;
+    do {
+      currentDocumentToFillLoss = await documentService.fetchDoneDocumentWithoutLossNotIn(
+        failedDocumentIds,
+      );
+      if (currentDocumentToFillLoss) {
+        documentsFilledLossCount++;
+        try {
+          const currentTreatmentsOfDocument = await treatmentService.fetchTreatmentsByDocumentId(
+            currentDocumentToFillLoss._id,
+          );
+          const loss = await annotatorConfig.fetchLossOfDocument(
+            currentDocumentToFillLoss,
+            currentTreatmentsOfDocument,
+          );
+          await documentService.updateDocumentLoss(
+            currentDocumentToFillLoss._id,
+            loss,
+          );
+        } catch (error) {
+          logger.error(error);
+          failedDocumentIds.push(currentDocumentToFillLoss._id);
+          logger.log(
+            `Error while filling loss of document ${idModule.lib.convertToString(
+              currentDocumentToFillLoss._id,
+            )}.`,
+          );
+        }
+      }
+    } while (
+      currentDocumentToFillLoss !== undefined &&
+      documentsFilledLossCount < documentsCountToFill
+    );
+  }
 
   async function annotateDocumentsWithoutAnnotations() {
     logger.log('annotateDocumentsWithoutAnnotations');

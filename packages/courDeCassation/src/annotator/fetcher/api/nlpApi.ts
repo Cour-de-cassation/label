@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { settingsModule } from '@label/core';
-import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
+import { nlpApiType, nlpAnnotationsType, nlpLossType } from './nlpApiType';
 
 export { buildNlpApi };
 
@@ -40,6 +40,16 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
       });
 
       return response.data as nlpAnnotationsType;
+    },
+    async fetchNlpLoss(document, treatments) {
+      const response = await axios({
+        data: { document, treatments },
+        headers: { 'Content-Type': 'application/json' },
+        method: 'post',
+        url: `${nlpApiBaseUrl}/loss`,
+      });
+
+      return response.data as nlpLossType;
     },
   };
 }

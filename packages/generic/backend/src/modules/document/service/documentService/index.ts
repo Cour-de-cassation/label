@@ -2,6 +2,7 @@ import { buildCallAttemptsRegulator } from 'sder-core';
 import { assertDocumentIsPublishable } from './assertDocumentIsPublishable';
 import { assertDocumentStatus } from './assertDocumentStatus';
 import { countDocumentsWithoutAnnotations } from './countDocumentsWithoutAnnotations';
+import { countDoneDocumentsWithoutLossNotIn } from './countDoneDocumentsWithoutLossNotIn';
 import { deleteDocument } from './deleteDocument';
 import { fetchAllDocumentsByIds } from './fetchAllDocumentsByIds';
 import { fetchAllExportableDocuments } from './fetchAllExportableDocuments';
@@ -16,6 +17,7 @@ import { fetchDocumentBySourceAndDocumentNumber } from './fetchDocumentBySourceA
 import { fetchDocumentsReadyToExport } from './fetchDocumentsReadyToExport';
 import { fetchDocumentWithoutAnnotationsNotIn } from './fetchDocumentWithoutAnnotationsNotIn';
 import { fetchDoneDocuments } from './fetchDoneDocuments';
+import { fetchDoneDocumentWithoutLossNotIn } from './fetchDoneDocumentWithoutLossNotIn';
 import { fetchFreeDocumentsIds } from './fetchFreeDocumentsIds';
 import { fetchPublishableDocuments } from './fetchPublishableDocuments';
 import { fetchPublishableDocumentsToExport } from './fetchPublishableDocumentsToExport';
@@ -25,6 +27,7 @@ import { fetchUntreatedDocuments } from './fetchUntreatedDocuments';
 import { fetchDocumentsWithoutAnnotations } from './fetchDocumentsWithoutAnnotations';
 import { resetDocument } from './resetDocument';
 import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
+import { updateDocumentLoss } from './updateDocumentLoss';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
 import { updateDocumentStatus } from './updateDocumentStatus';
 
@@ -46,6 +49,7 @@ function buildDocumentService() {
     assertDocumentIsPublishable,
     assertDocumentStatus,
     countDocumentsWithoutAnnotations,
+    countDoneDocumentsWithoutLossNotIn,
     deleteDocument,
     fetchAllDocumentsByIds,
     fetchAllExportableDocuments,
@@ -60,6 +64,7 @@ function buildDocumentService() {
     fetchDocumentsReadyToExport,
     fetchDocumentWithoutAnnotationsNotIn,
     fetchDoneDocuments,
+    fetchDoneDocumentWithoutLossNotIn,
     fetchFreeDocumentsIds,
     fetchPublishableDocuments,
     fetchPublishableDocumentsToExport,
@@ -69,6 +74,7 @@ function buildDocumentService() {
     fetchDocumentsWithoutAnnotations,
     resetDocument,
     resetDocumentReviewStatus,
+    updateDocumentLoss,
     updateDocumentReviewStatus,
     updateDocumentStatus,
   };

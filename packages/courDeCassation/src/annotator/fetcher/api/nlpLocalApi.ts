@@ -38,5 +38,8 @@ function buildNlpLocalApi(): nlpApiType {
         ),
       };
     },
+    async fetchNlpLoss() {
+      return 0;
+    },
   };
 }

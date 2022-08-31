@@ -109,6 +109,7 @@ async function mapCourtDecisionToDocument(
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),
+    loss: undefined,
     priority,
     publicationCategory,
     route,

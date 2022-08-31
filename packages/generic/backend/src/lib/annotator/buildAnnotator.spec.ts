@@ -78,5 +78,8 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
 
       return { annotations, documentId: document._id, report };
     },
+    async fetchLossOfDocument() {
+      return 0;
+    },
   };
 }

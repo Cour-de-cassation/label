@@ -107,6 +107,20 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return document || undefined;
     },
 
+    async findOneByStatusWithoutLossNotIn(statuses, idsNotToSearchIn) {
+      const document = await collection.find(
+        (document) =>
+          statuses.some(
+            (status: documentType['status']) => document.status === status,
+          ) &&
+          document.loss === undefined &&
+          !idsNotToSearchIn.some((id) =>
+            idModule.lib.equalId(document._id, id),
+          ),
+      );
+      return document || undefined;
+    },
+
     async findOneByDocumentNumberAndSource({ documentNumber, source }) {
       return collection.find(
         (document) =>
@@ -182,6 +196,24 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return documents;
     },
 
+    async updateLossById(_id, loss) {
+      updateFakeCollection(
+        collection,
+        collection.map((document) =>
+          idModule.lib.equalId(_id, document._id)
+            ? {
+                ...document,
+                loss,
+              }
+            : document,
+        ),
+      );
+      const updatedDocument = collection.find((document) =>
+        idModule.lib.equalId(_id, document._id),
+      );
+
+      return updatedDocument;
+    },
     async updateStatusById(_id, status) {
       updateFakeCollection(
         collection,

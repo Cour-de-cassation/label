@@ -34,7 +34,11 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   const displayedText = computeDisplayedText();
 
   return displayedText ? (
-    <div style={styles.container} ref={viewerRef}>
+    <div
+      style={styles.container}
+      ref={viewerRef}
+      key={documentViewerMode.kind === 'occurrence' ? documentViewerMode.entityId : documentViewerMode.kind}
+    >
       <table style={styles.table}>
         <tbody>
           {displayedText.map((splittedLine) => (
@@ -58,8 +62,8 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
         for (const detectedLine of detectedLines) {
           const addedLinesNumber: number[] = [];
           while (
-            getLinesLengthByLineNumbers([detectedLine.line, ...addedLinesNumber]) < 500 &&
-            addedLinesNumber.length < 10
+            getLinesLengthByLineNumbers([detectedLine.line, ...addedLinesNumber]) < 30 &&
+            addedLinesNumber.length < 5
           ) {
             addedLinesNumber.push(
               detectedLine.line + (addedLinesNumber.length / 2 + 1),

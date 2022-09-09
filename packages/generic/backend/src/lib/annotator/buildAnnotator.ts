@@ -35,7 +35,7 @@ function buildAnnotator(
     const documentsCountToFill = await documentService.countDoneDocumentsWithoutLossNotIn(
       failedDocumentIds,
     );
-    logger.log(`Found ${documentsCountToFill} documents to annotate`);
+    logger.log(`Found ${documentsCountToFill} documents without loss`);
     let currentDocumentToFillLoss: documentType | undefined;
     let documentsFilledLossCount = 0;
     do {

@@ -350,6 +350,7 @@ const apiSchema = {
                 creationDate: documentModule.fetchedModel.content.creationDate,
                 documentNumber: documentModule.fetchedModel.content.documentNumber,
                 jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
+                loss: documentModule.fetchedModel.content.loss,
                 occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
                 publicationCategory: documentModule.fetchedModel.content.publicationCategory,
                 reviewStatus: documentModule.fetchedModel.content.reviewStatus,

@@ -16,6 +16,7 @@ const treatedDocumentOrderByProperties = [
   'route',
   'creationDate',
   'lastTreatmentDate',
+  'loss',
   'surAnnotationsCount',
   'subAnnotationsSensitiveCount',
   'subAnnotationsNonSensitiveCount',

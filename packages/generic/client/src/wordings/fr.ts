@@ -58,6 +58,7 @@ const fr = {
         admin: 'Vue administrateur',
         annotator: 'Vue annotateur',
         publicator: 'Vue publicateur',
+        scrutator: 'Vue scrutateur',
       },
     },
     changePassword: 'Modifier le mot de passe',
@@ -151,6 +152,7 @@ const fr = {
         problemReportDate: 'Date du signalement',
         problemReportText: 'Message',
         reviewStatus: { title: 'Revue', tooltipText: 'Statut de revue' },
+        loss: { title: 'Loss', tooltipText: 'Complexité de la décision et du traitement' },
         surAnnotationsCount: { title: 'Sur.', tooltipText: 'Nombre de sur-annotations' },
         subAnnotationsSensitiveCount: {
           title: 'Sous. (sens.)',

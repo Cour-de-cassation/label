@@ -28,6 +28,7 @@ function ProblemReportsTable(props: {
   const styles = buildStyles(theme);
   const problemReportsFields = buildProblemReportsFields();
   const userRole = localStorage.userHandler.getRole();
+  const adminView = localStorage.adminViewHandler.get();
 
   return (
     <Table
@@ -35,7 +36,7 @@ function ProblemReportsTable(props: {
       isRowHighlighted={isRowHighlighted}
       fields={problemReportsFields}
       buildOptionItems={buildOptionItems}
-      onRowClick={userRole === 'admin' ? onRowClick : undefined}
+      onRowClick={userRole === 'admin' && adminView === 'admin' ? onRowClick : undefined}
       defaultOrderByProperty="date"
       defaultOrderDirection="desc"
     />
@@ -184,7 +185,8 @@ function ProblemReportsTable(props: {
         props.refetch();
       },
       iconName: 'delete' as const,
-      isDisabled: userRole !== 'admin' || problemReportWithDetails.document?.status === 'rejected',
+      isDisabled:
+        userRole !== 'admin' || adminView !== 'admin' || problemReportWithDetails.document?.status === 'rejected',
     };
 
     const openDocumentOptionItem = {
@@ -218,7 +220,7 @@ function ProblemReportsTable(props: {
         }
         props.refetch();
       },
-      isDisabled: userRole !== 'admin',
+      isDisabled: userRole !== 'admin' || adminView !== 'admin',
       iconName: 'turnRight' as const,
     };
     const optionItems: Array<optionItemType> = [

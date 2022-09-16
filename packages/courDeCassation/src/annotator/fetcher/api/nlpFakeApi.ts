@@ -8,5 +8,8 @@ function buildNlpFakeApi(): nlpApiType {
     async fetchNlpAnnotations() {
       return nlpFakeServer.getNlpAnnotations();
     },
+    async fetchNlpLoss() {
+      return 0;
+    },
   };
 }

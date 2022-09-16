@@ -4,6 +4,7 @@ import {
   documentType,
   idType,
   settingsType,
+  treatmentType,
 } from '@label/core';
 
 export type { annotatorConfigType };
@@ -18,4 +19,8 @@ type annotatorConfigType = {
     documentId: idType;
     report: annotationReportType;
   }>;
+  fetchLossOfDocument: (
+    document: documentType,
+    treatments: treatmentType[],
+  ) => Promise<number>;
 };

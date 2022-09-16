@@ -66,6 +66,14 @@ type customDocumentRepositoryType = {
     }: { status: documentType['status']; priority: documentType['priority'] },
     idsNotToSearchIn: documentType['_id'][],
   ) => Promise<documentType | undefined>;
+  findOneByStatusWithoutLossNotIn: (
+    statuses: documentType['status'][],
+    idsNotToSearchIn: documentType['_id'][],
+  ) => Promise<documentType | undefined>;
+  updateLossById: (
+    _id: idType,
+    loss: documentType['loss'],
+  ) => Promise<documentType | undefined>;
   updateStatusById: (
     _id: idType,
     status: documentType['status'],

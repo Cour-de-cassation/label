@@ -48,6 +48,13 @@ const documentModelCommonFields = {
   },
   documentNumber: { kind: 'primitive', content: 'number' },
   _id: { kind: 'custom', content: 'id' },
+  loss: {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'number' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
   publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
   reviewStatus: {
     kind: 'object',

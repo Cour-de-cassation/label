@@ -66,6 +66,7 @@ function UntreatedDocumentsTable(props: {
 
   function buildOptionItems(untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) {
     const userRole = localStorage.userHandler.getRole();
+    const adminView = localStorage.adminViewHandler.get();
 
     const openAnonymizedDocumentOptionItem = {
       kind: 'text' as const,
@@ -83,7 +84,7 @@ function UntreatedDocumentsTable(props: {
         setDocumentIdToUpdateStatus(untreatedDocument.document._id);
       },
       iconName: 'restore' as const,
-      isDisabled: userRole !== 'admin',
+      isDisabled: userRole !== 'admin' || adminView !== 'admin',
     };
 
     const assignToWorkingUserOptionItem = {
@@ -94,7 +95,7 @@ function UntreatedDocumentsTable(props: {
       items: props.users.map(({ name }) => name),
       iconName: 'assignment' as const,
       onSelect: buildOnSelectWorkingUserToAssignDocument(untreatedDocument.document._id),
-      isDisabled: userRole !== 'admin',
+      isDisabled: userRole !== 'admin' || adminView !== 'admin',
     };
 
     const freeDocumentOptionItem = {

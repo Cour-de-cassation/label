@@ -1,12 +1,16 @@
-import { documentType, settingsType } from '@label/core';
+import { documentType, settingsType, treatmentType } from '@label/core';
 
-export type { nlpApiType, nlpAnnotationsType };
+export type { nlpApiType, nlpAnnotationsType, nlpLossType };
 
 type nlpApiType = {
   fetchNlpAnnotations: (
     settings: settingsType,
     document: documentType,
   ) => Promise<nlpAnnotationsType>;
+  fetchNlpLoss: (
+    document: documentType,
+    treatments: treatmentType[],
+  ) => Promise<nlpLossType>;
 };
 
 type nlpAnnotationsType = {
@@ -22,3 +26,5 @@ type nlpAnnotationType = {
   source: string;
   score: number;
 };
+
+type nlpLossType = number;

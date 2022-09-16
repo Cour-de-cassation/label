@@ -122,6 +122,15 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
+    async findOneByStatusWithoutLossNotIn(statuses, idsNotToSearchIn) {
+      const document = await collection.findOne({
+        status: { $in: statuses },
+        loss: undefined,
+        _id: { $nin: idsNotToSearchIn },
+      });
+      return document || undefined;
+    },
+
     async findAllByNACCodesAndStatus(
       NACCodes: documentType['decisionMetadata']['NACCode'][],
       statuses: documentType['status'][],
@@ -168,6 +177,12 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .find({ status: { $in: status } })
         .project(buildProjection(projection))
         .toArray();
+    },
+
+    async updateLossById(_id, loss) {
+      await collection.updateOne({ _id }, { $set: { loss } });
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
     },
 
     async updateStatusById(_id, status) {

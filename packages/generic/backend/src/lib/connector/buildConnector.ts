@@ -156,9 +156,9 @@ function buildConnector(connectorConfig: connectorConfigType) {
     );
     logger.log(`Court decision converted. Inserting document into database...`);
     if (forceRequestRoute) {
-      await insertDocument({ ...document, route: 'request' });
+      await insertDocument({ ...document, route: 'request', priority: 4 });
     } else {
-      await insertDocument(document);
+      await insertDocument({ ...document, priority: 4 });
     }
     logger.log(`Insertion done`);
 

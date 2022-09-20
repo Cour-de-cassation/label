@@ -27,7 +27,7 @@ function extractRouteForJurinet({
   if (publicationCategory.includes('C')) {
     return 'confirmation';
   }
-  if (chamberId === 'AVIS') {
+  if (chamberId === 'AVIS' || solution === 'Avis sur saisine') {
     return 'confirmation';
   }
   if (['PL', 'MI'].includes(session)) {

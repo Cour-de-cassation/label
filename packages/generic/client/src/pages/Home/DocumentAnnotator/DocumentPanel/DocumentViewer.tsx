@@ -79,7 +79,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
             displayedUniqueLines.push(displayedLine);
           }
         });
-        return displayedLines.sort((line1, line2) => line1.line - line2.line);
+        return displayedUniqueLines.sort((line1, line2) => line1.line - line2.line);
 
       case 'annotation':
         switch (document.route) {

@@ -3,11 +3,12 @@ import {
   annotationReportType,
   buildAutoAnnotator,
   documentType,
+  documentModule,
   idType,
   settingsModule,
   idModule,
   settingsType,
-  documentModule,
+  treatmentModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
@@ -50,7 +51,7 @@ function buildAnnotator(
           );
           const loss = await annotatorConfig.fetchLossOfDocument(
             currentDocumentToFillLoss,
-            currentTreatmentsOfDocument,
+            treatmentModule.lib.concat(currentTreatmentsOfDocument),
           );
           await documentService.updateDocumentLoss(
             currentDocumentToFillLoss._id,

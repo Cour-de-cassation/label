@@ -42,20 +42,13 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
       return response.data as nlpAnnotationsType;
     },
     async fetchNlpLoss(document, treatments) {
-      try {
-        const response = await axios({
-          data: { document, treatments },
-          headers: { 'Content-Type': 'application/json' },
-          method: 'post',
-          url: `${nlpApiBaseUrl}/loss`,
-        });
-        return response.data as nlpLossType;
-      } catch (error) {
-        console.error(error);
-        console.log(`${nlpApiBaseUrl}/loss`);
-      }
-
-      return 0;
+      const response = await axios({
+        data: { document, treatments },
+        headers: { 'Content-Type': 'application/json' },
+        method: 'post',
+        url: `${nlpApiBaseUrl}/loss`,
+      });
+      return response.data as nlpLossType;
     },
   };
 }

@@ -5,13 +5,12 @@ import {
   settingsModule,
   settingsType,
   treatmentModule,
-  treatmentType,
 } from '@label/core';
 import { documentService } from '../../modules/document';
 import { statisticService } from '../../modules/statistic';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
-import { exporterConfigType, labelTreatmentsType } from './exporterConfigType';
+import { exporterConfigType } from './exporterConfigType';
 
 export { buildExporter };
 
@@ -142,45 +141,11 @@ function buildExporter(
     await exporterConfig.sendDocumentPseudonymisationAndTreatments({
       externalId: document.externalId,
       pseudonymizationText: anonymizer.anonymizeDocument(document).text,
-      labelTreatments: buildLabelTreatments(treatments),
+      labelTreatments: treatmentModule.lib.concat(treatments),
     });
 
     await statisticService.saveStatisticsOfDocument(document, settings);
 
     await documentService.deleteDocument(document._id);
-  }
-}
-
-function buildLabelTreatments(
-  treatments: treatmentType[],
-): labelTreatmentsType {
-  const labelTreatments = [];
-
-  const sortedTreatments = treatments.sort(
-    (treatment1, treatment2) => treatment1.order - treatment2.order,
-  );
-
-  while (sortedTreatments.length > 0) {
-    const order = sortedTreatments.length;
-
-    labelTreatments.unshift({
-      annotations: treatmentModule.lib.computeAnnotations(sortedTreatments),
-      source: computeSource(order),
-      order,
-    });
-    sortedTreatments.pop();
-  }
-
-  return labelTreatments;
-
-  function computeSource(order: number) {
-    switch (order) {
-      case 1:
-        return 'NLP';
-      case 2:
-        return 'LABEL_AUTO_TREATMENT';
-      default:
-        return 'LABEL_WORKING_USER_TREATMENT';
-    }
   }
 }

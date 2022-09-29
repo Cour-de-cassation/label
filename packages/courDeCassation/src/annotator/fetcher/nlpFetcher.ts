@@ -1,4 +1,5 @@
-import { documentType, settingsType, treatmentType } from '@label/core';
+import { labelTreatmentsType } from '@label/backend';
+import { documentType, settingsType } from '@label/core';
 import { buildNlpApi } from './api';
 import { nlpMapper } from './mapper';
 
@@ -28,7 +29,7 @@ function buildNlpFetcher(nlpApiBaseUrl: string) {
     },
     async fetchLossOfDocument(
       document: documentType,
-      treatments: treatmentType[],
+      treatments: labelTreatmentsType,
     ) {
       const nlpLoss = await nlpApi.fetchNlpLoss(document, treatments);
 

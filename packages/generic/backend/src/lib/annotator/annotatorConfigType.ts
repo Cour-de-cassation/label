@@ -4,8 +4,8 @@ import {
   documentType,
   idType,
   settingsType,
-  treatmentType,
 } from '@label/core';
+import { labelTreatmentsType } from 'sder';
 
 export type { annotatorConfigType };
 
@@ -21,6 +21,6 @@ type annotatorConfigType = {
   }>;
   fetchLossOfDocument: (
     document: documentType,
-    treatments: treatmentType[],
+    treatments: labelTreatmentsType,
   ) => Promise<number>;
 };

@@ -2,6 +2,7 @@ import { aggregateTreatmentInfo } from './aggregateTreatmentInfo';
 import { assertTreatmentsSourcesFollowRightOrder } from './assertTreatmentsSourcesFollowRightOrder';
 import { build } from './build';
 import { buildEmpty } from './buildEmpty';
+import { concat } from './concat';
 import { extractHumanTreatments } from './extractHumanTreatments';
 import { extractLastUpdateDate } from './extractLastUpdateDate';
 import { getLastTreatment } from './getLastTreatment';
@@ -16,6 +17,7 @@ export {
   assertTreatmentsSourcesFollowRightOrder,
   build,
   buildEmpty,
+  concat,
   computeAnnotations,
   computeAnnotationsDiff,
   computeTreatmentInfo,

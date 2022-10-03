@@ -277,6 +277,9 @@ const fr = {
       lightMode: 'Mode lumineux',
       title: 'Réglages',
     },
+    personalStatisticsDrawer: {
+      title: 'Statistiques personnelles',
+    },
   },
   loadingPage: 'Veuillez patienter...',
   problemReportsPage: {

@@ -6,7 +6,9 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
   return (item: {
     jurisdiction: statisticType['jurisdiction'];
     publicationCategory: statisticType['publicationCategory'];
+    route: statisticType['route'];
     source: statisticType['source'];
+    treatmentDate: statisticType['treatmentDate'];
     treatmentsSummary: statisticType['treatmentsSummary'];
     subAnnotationsSensitiveCount: statisticType['subAnnotationsSensitiveCount'];
     subAnnotationsNonSensitiveCount: statisticType['subAnnotationsNonSensitiveCount'];
@@ -28,6 +30,23 @@ function buildFakeRessourceFilterRequest(ressourceFilter: ressourceFilterType) {
       isValidAccordingToFilter =
         isValidAccordingToFilter &&
         item.publicationCategory.includes(ressourceFilter.publicationCategory);
+    }
+
+    if (ressourceFilter.startDate) {
+      isValidAccordingToFilter =
+        isValidAccordingToFilter &&
+        item.treatmentDate > ressourceFilter.startDate;
+    }
+
+    if (ressourceFilter.endDate) {
+      isValidAccordingToFilter =
+        isValidAccordingToFilter &&
+        item.treatmentDate < ressourceFilter.endDate;
+    }
+
+    if (ressourceFilter.route) {
+      isValidAccordingToFilter =
+        isValidAccordingToFilter && item.route === ressourceFilter.route;
     }
 
     if (ressourceFilter.source) {

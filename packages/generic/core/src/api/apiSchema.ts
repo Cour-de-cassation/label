@@ -409,6 +409,19 @@ const apiSchema = {
         },
       } as const),
     },
+    personalStatistics: {
+      out: buildModel({
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            day: { kind: 'primitive', content: 'number' },
+            simple: { kind: 'primitive', content: 'number' },
+            exhaustive: { kind: 'primitive', content: 'number' },
+          },
+        },
+      } as const),
+    },
     untreatedDocuments: {
       out: buildModel({
         kind: 'array',

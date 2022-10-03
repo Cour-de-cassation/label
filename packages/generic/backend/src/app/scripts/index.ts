@@ -13,6 +13,7 @@ import { extractComplexityInfoIntoCsv } from './extractComplexityInfoIntoCsv';
 import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
 import { extractRouteInfosIntoCsv } from './extractRouteInfosIntoCsv';
 import { freePendingDocuments } from './freePendingDocuments';
+import { insertTestStatistics } from './insertTestStatistics';
 import { insertTestUsers } from './insertTestUsers';
 import { insertUser } from './insertUser';
 import { listAllCaches } from './listAllCaches';
@@ -35,6 +36,7 @@ export {
   extractMonitoringEntriesIntoCsv,
   extractRouteInfosIntoCsv,
   freePendingDocuments,
+  insertTestStatistics,
   insertTestUsers,
   insertUser,
   listAllCaches,

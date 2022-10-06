@@ -76,6 +76,7 @@ const documentModelCommonFields = {
       'loaded',
       'nlpAnnotating',
       'pending',
+      'locked',
       'rejected',
       'saved',
       'toBePublished',

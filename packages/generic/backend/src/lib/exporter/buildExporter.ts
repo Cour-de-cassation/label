@@ -20,6 +20,7 @@ function buildExporter(
 ) {
   return {
     exportAllTreatedDocuments,
+    exportAllRejectedDocuments,
     exportSpecificDocument,
     exportTreatedDocumentsSince,
     exportTreatedPublishableDocuments,
@@ -142,6 +143,37 @@ function buildExporter(
       externalId: document.externalId,
       pseudonymizationText: anonymizer.anonymizeDocument(document).text,
       labelTreatments: treatmentModule.lib.concat(treatments),
+    });
+
+    await statisticService.saveStatisticsOfDocument(document, settings);
+
+    await documentService.deleteDocument(document._id);
+  }
+
+  async function exportAllRejectedDocuments() {
+    logger.log('exportAllRejectedDocuments');
+    logger.log(`Exportation to ${exporterConfig.name}`);
+
+    logger.log(`Fetching all treated documents...`);
+    const rejectedDocuments = await documentService.fetchRejectedDocuments();
+    logger.log(`${rejectedDocuments.length} rejected documents to export`);
+
+    logger.log(`Beginning exportation...`);
+    for (let index = 0; index < rejectedDocuments.length; index++) {
+      logger.log(
+        `Exportation of document ${index + 1}/${rejectedDocuments.length}`,
+      );
+      const document = rejectedDocuments[index];
+
+      await exportRejectedDocument(document);
+    }
+
+    logger.log(`Exportation done!`);
+  }
+
+  async function exportRejectedDocument(document: documentType) {
+    await exporterConfig.sendDocumentLockedStatus({
+      externalId: document.externalId,
     });
 
     await statisticService.saveStatisticsOfDocument(document, settings);

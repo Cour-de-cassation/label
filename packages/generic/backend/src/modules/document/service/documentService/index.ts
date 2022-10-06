@@ -24,7 +24,9 @@ import { fetchPublishableDocumentsToExport } from './fetchPublishableDocumentsTo
 import { fetchToBeConfirmedDocuments } from './fetchToBeConfirmedDocuments';
 import { fetchTreatedDocuments } from './fetchTreatedDocuments';
 import { fetchUntreatedDocuments } from './fetchUntreatedDocuments';
+import { fetchRejectedDocuments } from './fetchRejectedDocuments';
 import { fetchDocumentsWithoutAnnotations } from './fetchDocumentsWithoutAnnotations';
+import { rejectDocument } from './rejectDocument';
 import { resetDocument } from './resetDocument';
 import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentLoss } from './updateDocumentLoss';
@@ -71,7 +73,9 @@ function buildDocumentService() {
     fetchToBeConfirmedDocuments,
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
+    fetchRejectedDocuments,
     fetchDocumentsWithoutAnnotations,
+    rejectDocument,
     resetDocument,
     resetDocumentReviewStatus,
     updateDocumentLoss,

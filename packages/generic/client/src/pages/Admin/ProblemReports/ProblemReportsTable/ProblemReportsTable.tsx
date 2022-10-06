@@ -6,6 +6,7 @@ import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/
 import { apiCaller } from '../../../../api';
 import { DocumentStatusIcon, ProblemReportIcon, PublicationCategoryBadge } from '../../../../components';
 import { useAlert } from '../../../../services/alert';
+import { usePopup } from '../../../../services/popup';
 import { localStorage } from '../../../../services/localStorage';
 import { sendMail } from '../../../../services/sendMail';
 import { wordings } from '../../../../wordings';
@@ -24,6 +25,7 @@ function ProblemReportsTable(props: {
   const history = useHistory();
   const theme = useCustomTheme();
   const { displayAlert } = useAlert();
+  const { displayPopup } = usePopup();
 
   const styles = buildStyles(theme);
   const problemReportsFields = buildProblemReportsFields();
@@ -96,10 +98,10 @@ function ProblemReportsTable(props: {
         id: 'status',
         canBeSorted: true,
         title: wordings.business.filters.columnTitles.status,
-        extractor: (problemReportWithDetails) => problemReportWithDetails.document?.status ?? 'rejected',
+        extractor: (problemReportWithDetails) => problemReportWithDetails.document?.status ?? 'locked',
         render: (problemReportWithDetails) => (
           <DocumentStatusIcon
-            status={problemReportWithDetails.document?.status ?? 'rejected'}
+            status={problemReportWithDetails.document?.status ?? 'locked'}
             iconSize={TABLE_ICON_SIZE}
           />
         ),
@@ -136,7 +138,7 @@ function ProblemReportsTable(props: {
           await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
             documentId: problemReportWithDetails.problemReport.documentId,
             status: documentModule.lib.getNextStatus({
-              status: problemReportWithDetails.document?.status ?? 'rejected',
+              status: problemReportWithDetails.document?.status ?? 'locked',
               publicationCategory: problemReportWithDetails.document?.publicationCategory ?? [],
               route: problemReportWithDetails.document?.route ?? 'default',
             }),
@@ -169,6 +171,36 @@ function ProblemReportsTable(props: {
       iconName: 'mail' as const,
     };
 
+    const deleteDocument = {
+      kind: 'text' as const,
+      text: wordings.problemReportsPage.table.optionItems.deleteDocument,
+      onClick: async () => {
+        try {
+          displayPopup({
+            text: wordings.problemReportsPage.table.popupConfirmMessage,
+            onCancel: () => {},
+            onConfirm: () => {
+              problemReportWithDetails.document &&
+                apiCaller.post<'rejectDocument'>('rejectDocument', {
+                  documentId: problemReportWithDetails.document._id,
+                });
+              props.refetch();
+            },
+          });
+        } catch (error) {
+          displayAlert({ text: wordings.business.errors.deleteDocumentFailed, variant: 'alert', autoHide: true });
+          console.warn(error);
+          return;
+        }
+      },
+      iconName: 'deleteOutline' as const,
+      isDisabled:
+        userRole !== 'admin' ||
+        adminView !== 'admin' ||
+        !problemReportWithDetails.document ||
+        problemReportWithDetails.document?.status === 'rejected',
+    };
+
     const deleteProblemReportOptionItem = {
       kind: 'text' as const,
       text: wordings.problemReportsPage.table.optionItems.deleteProblemReport,
@@ -186,7 +218,7 @@ function ProblemReportsTable(props: {
       },
       iconName: 'delete' as const,
       isDisabled:
-        userRole !== 'admin' || adminView !== 'admin' || problemReportWithDetails.document?.status === 'rejected',
+        userRole !== 'admin' || adminView !== 'admin' || problemReportWithDetails.document?.status === 'locked',
     };
 
     const openDocumentOptionItem = {
@@ -229,6 +261,7 @@ function ProblemReportsTable(props: {
       reassignToWorkingUserOptionItem,
       validateDocumentOptionItem,
       deleteProblemReportOptionItem,
+      deleteDocument,
     ];
 
     return optionItems;

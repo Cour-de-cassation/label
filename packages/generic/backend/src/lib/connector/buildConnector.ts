@@ -24,7 +24,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     resetDocument,
     resetAllDocumentsSince,
     deleteDocumentsOlderThan,
-    resetAllRejectedDocuments,
+    resetAllLockedDocuments,
     extractDocumentAndNlpAnnotations,
   };
 
@@ -555,26 +555,26 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
   }
 
-  async function resetAllRejectedDocuments() {
-    logger.log(`resetAllRejectedDocuments`);
+  async function resetAllLockedDocuments() {
+    logger.log(`resetAllLockedDocuments`);
 
     const documentRepository = buildDocumentRepository();
-    const rejectedDocuments = await documentRepository.findAllByStatusProjection(
-      ['rejected'],
+    const lockedDocuments = await documentRepository.findAllByStatusProjection(
+      ['locked'],
       ['_id'],
     );
 
-    logger.log(`Reseting ${rejectedDocuments.length} rejected documents...`);
+    logger.log(`Reseting ${lockedDocuments.length} locked documents...`);
 
-    const rejectedDocumentIds = rejectedDocuments.map(({ _id }) => _id);
-    for (let i = 0, length = rejectedDocuments.length; i < length; i++) {
+    const lockedDocumentIds = lockedDocuments.map(({ _id }) => _id);
+    for (let i = 0, length = lockedDocuments.length; i < length; i++) {
       await documentService.updateDocumentStatus(
-        rejectedDocumentIds[i],
+        lockedDocumentIds[i],
         'loaded',
       );
     }
 
-    logger.log(`DONE resetAllRejectedDocuments`);
+    logger.log(`DONE resetAllLockedDocuments`);
   }
 
   async function resetDocument({

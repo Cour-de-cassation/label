@@ -104,6 +104,13 @@ const sderApi: sderApiType = {
     });
   },
 
+  async setCourtDecisionLocked(externalId) {
+    await decisionModule.service.updateDecisionsLabelStatus({
+      decisionIds: [idModule.lib.buildId(externalId)],
+      labelStatus: 'locked',
+    });
+  },
+
   async updateDecisionPseudonymisation({
     externalId,
     pseudonymizationText,

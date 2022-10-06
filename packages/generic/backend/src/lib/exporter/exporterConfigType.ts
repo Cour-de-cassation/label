@@ -9,6 +9,9 @@ type exporterConfigType = {
     pseudonymizationText: string;
     labelTreatments: labelTreatmentsType;
   }) => Promise<void>;
+  sendDocumentLockedStatus: (param: {
+    externalId: documentType['externalId'];
+  }) => Promise<void>;
 };
 
 type labelTreatmentsType = Array<{

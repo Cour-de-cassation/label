@@ -1,21 +1,15 @@
-import {
-  assignationModule,
-  documentModule,
-  documentType,
-  userModule,
-} from '@label/core';
-import { projectFakeObjects } from '../../../../repository';
+import { assignationModule, documentModule, userModule } from '@label/core';
 import { buildAssignationRepository } from '../../../assignation/repository';
 import { buildUserRepository } from '../../../user/repository';
 import { buildDocumentRepository } from '../../repository';
-import { fetchUntreatedDocuments } from './fetchUntreatedDocuments';
+import { fetchRejectedDocuments } from './fetchRejectedDocuments';
 
-describe('fetchUntreatedDocuments', () => {
+describe('fetchRejectedDocuments', () => {
   const documentRepository = buildDocumentRepository();
   const assignationRepository = buildAssignationRepository();
   const userRepository = buildUserRepository();
 
-  it('should return untreated documents', async () => {
+  it('should return rejected documents', async () => {
     const user = userModule.generator.generate({
       name: 'NAME',
       role: 'annotator',
@@ -32,8 +26,8 @@ describe('fetchUntreatedDocuments', () => {
     const doneDocument = documentModule.generator.generate({
       status: 'done',
     });
-    const lockedDocument = documentModule.generator.generate({
-      status: 'locked',
+    const rejectedDocument = documentModule.generator.generate({
+      status: 'rejected',
     });
     const pendingDocumentAssignation = assignationModule.generator.generate({
       documentId: pendingDocument._id,
@@ -47,8 +41,8 @@ describe('fetchUntreatedDocuments', () => {
       documentId: doneDocument._id,
       userId: user._id,
     });
-    const lockedDocumentAssignation = assignationModule.generator.generate({
-      documentId: lockedDocument._id,
+    const rejectedDocumentAssignation = assignationModule.generator.generate({
+      documentId: rejectedDocument._id,
       userId: user._id,
     });
     await Promise.all(
@@ -57,7 +51,7 @@ describe('fetchUntreatedDocuments', () => {
         pendingDocument,
         savedDocument,
         doneDocument,
-        lockedDocument,
+        rejectedDocument,
       ].map(documentRepository.insert),
     );
     await Promise.all(
@@ -65,47 +59,13 @@ describe('fetchUntreatedDocuments', () => {
         pendingDocumentAssignation,
         savedDocumentAssignation,
         doneDocumentAssignation,
-        lockedDocumentAssignation,
+        rejectedDocumentAssignation,
       ].map(assignationRepository.insert),
     );
     await userRepository.insert(user);
 
-    const untreatedDocuments = await fetchUntreatedDocuments();
+    const rejectedDocuments = await fetchRejectedDocuments();
 
-    expect(untreatedDocuments.sort()).toEqual([
-      {
-        document: projectDocument(freeDocument),
-        userNames: [],
-      },
-      {
-        document: projectDocument(pendingDocument),
-        userNames: ['NAME'],
-      },
-      {
-        document: projectDocument(savedDocument),
-        userNames: ['NAME'],
-      },
-      {
-        document: projectDocument(lockedDocument),
-        userNames: ['NAME'],
-      },
-    ]);
+    expect(rejectedDocuments.sort()).toEqual([rejectedDocument]);
   });
 });
-
-function projectDocument(document: documentType) {
-  return {
-    ...projectFakeObjects(document, [
-      '_id',
-      'documentNumber',
-      'creationDate',
-      'publicationCategory',
-      'source',
-      'route',
-      'status',
-    ]),
-    occultationBlock: document.decisionMetadata.occultationBlock,
-    jurisdiction: document.decisionMetadata.jurisdiction,
-    decisionDate: document.decisionMetadata.date,
-  };
-}

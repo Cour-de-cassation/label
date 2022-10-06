@@ -28,7 +28,7 @@ function getNextStatus({
         return 'toBeConfirmed';
       }
       return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
-    case 'rejected':
+    case 'locked':
       if (route === 'confirmation') {
         return 'toBeConfirmed';
       }

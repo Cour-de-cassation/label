@@ -585,6 +585,18 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
+    rejectDocument: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     resetPassword: {
       in: {
         userId: buildModel({

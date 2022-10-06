@@ -290,6 +290,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    rejectDocument: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { documentId } }) => {
+        await documentService.rejectDocument(idModule.lib.buildId(documentId));
+      },
+    }),
+
     resetPassword: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { userId } }) =>

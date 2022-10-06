@@ -44,6 +44,9 @@ type sderApiType = {
   setCourtDecisionDone: (
     externalId: documentType['externalId'],
   ) => Promise<void>;
+  setCourtDecisionLocked: (
+    externalId: documentType['externalId'],
+  ) => Promise<void>;
   updateDecisionPseudonymisation: (param: {
     externalId: documentType['externalId'];
     pseudonymizationText: string;

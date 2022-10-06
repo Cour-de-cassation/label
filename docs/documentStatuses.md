@@ -9,4 +9,5 @@ A `document` is supposed to follow a specific flow once it enters the label data
 - `saved`: the document is being annotated by a working user.
 - `toBePublished`: the document has been treated and is waiting for a publicator to declare it published
 - `done`: the document is ready to be released in open data
-- `rejected`: an alert has been raised for this document, and the working user has specified that he/she cannot proceed with the treatment. The document will stay in the database until its status changes.
+- `locked`: an alert has been raised for this document, and the working user has specified that he/she cannot proceed with the treatment. The document will stay in the database until its status changes.
+- `rejected`: an admin has confirmed that this document cannot be treated and that it needs to be deleted from Label.

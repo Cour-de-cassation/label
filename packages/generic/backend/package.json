@@ -10,7 +10,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
-    "sder": "https://github.com/Cour-de-cassation/sder#94b7639a60e9c964f4975b09e076194d900cb511",
+    "sder": "https://github.com/Cour-de-cassation/sder#4840e0989d382e5f14d3ac4d89f06f2ed37a33d5",
     "sder-core": "https://github.com/Cour-de-cassation/sder-core#f19400e5832d88b48d076b99bbea3e4cfd6803f4"
   },
   "devDependencies": {

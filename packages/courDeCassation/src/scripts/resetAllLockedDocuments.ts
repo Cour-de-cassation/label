@@ -6,7 +6,7 @@ import { sderConnector } from '../connector';
   const { environment, settings } = await parametersHandler.getParameters();
   const backend = buildBackend(environment, settings);
 
-  backend.runScript(() => sderConnector.resetAllRejectedDocuments(), {
+  backend.runScript(() => sderConnector.resetAllLockedDocuments(), {
     shouldLoadDb: true,
   });
 })();

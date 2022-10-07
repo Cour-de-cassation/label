@@ -137,6 +137,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       }),
     }),
 
+    personalStatistics: buildAuthenticatedController({
+      permissions: ['admin', 'annotator', 'scrutator'],
+      controllerWithUser: async (user) => {
+        return statisticService.fetchPersonalStatistics(user);
+      },
+    }),
+
     publishableDocuments: buildAuthenticatedController({
       permissions: ['admin', 'publicator'],
       controllerWithUser: async () =>
@@ -280,6 +287,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           problemText,
           problemType,
         });
+      },
+    }),
+
+    rejectDocument: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { documentId } }) => {
+        await documentService.rejectDocument(idModule.lib.buildId(documentId));
       },
     }),
 

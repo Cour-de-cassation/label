@@ -3,6 +3,7 @@ import { customThemeType, heights, useCustomTheme, Header, IconButton, MenuBar, 
 import { localStorage } from '../../../services/localStorage';
 import { wordings } from '../../../wordings';
 import { AdminViewDropdown } from './AdminViewDropdown';
+import { PersonalStatisticsButton } from './PersonalStatisticsButton';
 import { SettingsButton } from './SettingsButton';
 
 export { MainHeader };
@@ -32,9 +33,13 @@ function MainHeader(props: {
   function buildRightHeaderComponents() {
     const userRole = localStorage.userHandler.getRole();
     if (userRole === 'admin') {
-      return [<AdminViewDropdown updateAdminMenu={props.updateAdminMenu} />, <SettingsButton />];
+      return [
+        <AdminViewDropdown updateAdminMenu={props.updateAdminMenu} />,
+        <PersonalStatisticsButton />,
+        <SettingsButton />,
+      ];
     }
-    return [<SettingsButton />];
+    return [<PersonalStatisticsButton />, <SettingsButton />];
   }
 
   function buildStyles(theme: customThemeType) {

@@ -19,4 +19,8 @@ const exporterConfig: exporterConfigType = {
 
     await sderApi.setCourtDecisionDone(externalId);
   },
+
+  async sendDocumentLockedStatus({ externalId }) {
+    await sderApi.setCourtDecisionLocked(externalId);
+  },
 };

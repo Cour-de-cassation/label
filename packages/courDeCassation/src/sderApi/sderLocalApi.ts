@@ -145,5 +145,7 @@ const sderLocalApi: sderApiType = {
 
   async setCourtDecisionDone() {},
 
+  async setCourtDecisionLocked() {},
+
   async updateDecisionPseudonymisation() {},
 };

@@ -409,6 +409,19 @@ const apiSchema = {
         },
       } as const),
     },
+    personalStatistics: {
+      out: buildModel({
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            day: { kind: 'primitive', content: 'number' },
+            simple: { kind: 'primitive', content: 'number' },
+            exhaustive: { kind: 'primitive', content: 'number' },
+          },
+        },
+      } as const),
+    },
     untreatedDocuments: {
       out: buildModel({
         kind: 'array',
@@ -565,6 +578,18 @@ const apiSchema = {
         problemText: buildModel({
           kind: 'primitive',
           content: 'string',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
+    rejectDocument: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
         } as const),
       },
       out: buildModel({

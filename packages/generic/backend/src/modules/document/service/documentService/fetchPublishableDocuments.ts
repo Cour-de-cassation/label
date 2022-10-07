@@ -17,25 +17,27 @@ async function fetchPublishableDocuments() {
       'status',
     ],
   );
-  return documents.map(
-    ({
-      _id,
-      creationDate,
-      decisionMetadata,
-      documentNumber,
-      publicationCategory,
-      route,
-      status,
-    }) => ({
-      _id,
-      appealNumber: decisionMetadata.appealNumber,
-      chamberName: decisionMetadata.chamberName,
-      jurisdiction: decisionMetadata.jurisdiction,
-      creationDate,
-      documentNumber,
-      publicationCategory,
-      route,
-      status,
-    }),
-  );
+  return documents
+    .filter((document) => document.status !== 'rejected')
+    .map(
+      ({
+        _id,
+        creationDate,
+        decisionMetadata,
+        documentNumber,
+        publicationCategory,
+        route,
+        status,
+      }) => ({
+        _id,
+        appealNumber: decisionMetadata.appealNumber,
+        chamberName: decisionMetadata.chamberName,
+        jurisdiction: decisionMetadata.jurisdiction,
+        creationDate,
+        documentNumber,
+        publicationCategory,
+        route,
+        status,
+      }),
+    );
 }

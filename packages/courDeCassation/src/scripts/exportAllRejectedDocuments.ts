@@ -1,17 +1,12 @@
 import { buildBackend } from '@label/backend';
+import { buildSderExporter } from '../exporter';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
   const backend = buildBackend(environment, settings);
-
-  await backend.runScript(
-    backend.scripts.insertTestUsers.run,
-    backend.scripts.insertTestUsers.option,
-  );
-
-  await backend.runScript(
-    backend.scripts.insertTestStatistics.run,
-    backend.scripts.insertTestStatistics.option,
-  );
+  const sderExporter = buildSderExporter(settings);
+  backend.runScript(() => sderExporter.exportAllRejectedDocuments(), {
+    shouldLoadDb: true,
+  });
 })();

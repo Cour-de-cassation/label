@@ -86,7 +86,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
           case 'simple':
             if (
               document.status != 'done' &&
-              document.status != 'rejected' &&
+              document.status != 'locked' &&
               document.status != 'toBePublished' &&
               document.status != 'toBeConfirmed'
             ) {

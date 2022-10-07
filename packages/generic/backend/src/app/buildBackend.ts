@@ -13,6 +13,7 @@ import {
   extractMonitoringEntriesIntoCsv,
   extractRouteInfosIntoCsv,
   freePendingDocuments,
+  insertTestStatistics,
   insertTestUsers,
   insertUser,
   listAllDocuments,
@@ -79,6 +80,11 @@ function buildBackend(environment: environmentType, settings: settingsType) {
         run: freePendingDocuments,
         option: { shouldLoadDb: true, shouldExit: false },
       },
+      insertTestStatistics: {
+        run: insertTestStatistics,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+
       insertTestUsers: {
         run: insertTestUsers,
         option: { shouldLoadDb: true, shouldExit: false },

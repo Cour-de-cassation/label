@@ -87,10 +87,12 @@ const fr = {
       toBePublished: 'À publier',
       done: 'Prêt à être exporté',
       toBeConfirmed: 'A confirmer par un administrateur',
-      rejected: 'En alerte',
+      locked: 'En alerte',
+      rejected: 'Rejeté',
     },
     errors: {
       deleteProblemReportFailed: 'La suppression du signalement a échoué. Veuillez recharger la page.',
+      deleteDocumentFailed: 'La suppression du document a échoué. Veuillez recharger la page.',
       pendingDocumentsFreed:
         'Les documents ont été libérés, ils ne vous sont maintenant plus réservés. Veuillez recharger la page.',
       noUserIdFound:
@@ -277,6 +279,9 @@ const fr = {
       lightMode: 'Mode lumineux',
       title: 'Réglages',
     },
+    personalStatisticsDrawer: {
+      title: 'Statistiques personnelles',
+    },
   },
   loadingPage: 'Veuillez patienter...',
   problemReportsPage: {
@@ -288,11 +293,13 @@ const fr = {
       optionItems: {
         answerByEmail: 'Répondre par email...',
         deleteProblemReport: 'Supprimer le signalement',
+        deleteDocument: 'Supprimer définitivement le document',
         openDocument: 'Ouvrir la décision...',
         reassignToWorkingUser: "Renvoyer à l'agent",
         validate: 'Débloquer et valider la décision',
       },
       mailSubject: 'Alerte sur le document {documentNumber}',
+      popupConfirmMessage: 'Souhaitez-vous vraiment supprimer ce document ? Cette action est irréversible.',
     },
   },
   resetPasswordPage: {

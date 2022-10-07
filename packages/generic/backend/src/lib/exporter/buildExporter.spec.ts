@@ -123,10 +123,12 @@ function buildFakeExporterConfig(): exporterConfigType & {
   getExportedExternalIds: () => string[];
   getExportedPseudonymizationTexts: () => string[];
   getExportedLabelTreatments: () => labelTreatmentsType[];
+  getLockedExternalIds: () => string[];
 } {
   const exportedExternalIds: string[] = [];
   const exportedpseudonymizationTexts: string[] = [];
   const exportedlabelTreatments: labelTreatmentsType[] = [];
+  const lockedExternalIds: string[] = [];
 
   return {
     name: 'FAKE_EXPORTER',
@@ -151,6 +153,14 @@ function buildFakeExporterConfig(): exporterConfigType & {
 
     getExportedLabelTreatments() {
       return exportedlabelTreatments;
+    },
+
+    async sendDocumentLockedStatus({ externalId }) {
+      lockedExternalIds.push(externalId);
+    },
+
+    getLockedExternalIds() {
+      return lockedExternalIds;
     },
   };
 }

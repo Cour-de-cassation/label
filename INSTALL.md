@@ -1,5 +1,9 @@
 # Installation guide
 
+## Requirements
+
+- NodeJs v16
+
 ## Installation
 
 Install the backend with:

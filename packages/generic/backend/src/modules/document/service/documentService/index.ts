@@ -6,6 +6,7 @@ import { countDoneDocumentsWithoutLossNotIn } from './countDoneDocumentsWithoutL
 import { deleteDocument } from './deleteDocument';
 import { fetchAllDocumentsByIds } from './fetchAllDocumentsByIds';
 import { fetchAllExportableDocuments } from './fetchAllExportableDocuments';
+import { fetchAllImporters } from './fetchAllImporters';
 import { fetchAllJurisdictions } from './fetchAllJurisdictions';
 import { fetchAllPublicationCategories } from './fetchAllPublicationCategories';
 import { fetchAllRoutes } from './fetchAllRoutes';
@@ -31,6 +32,7 @@ import { resetDocument } from './resetDocument';
 import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentLoss } from './updateDocumentLoss';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
+import { updateDocumentRoute } from './updateDocumentRoute';
 import { updateDocumentStatus } from './updateDocumentStatus';
 
 export { buildDocumentService, documentService };
@@ -55,6 +57,7 @@ function buildDocumentService() {
     deleteDocument,
     fetchAllDocumentsByIds,
     fetchAllExportableDocuments,
+    fetchAllImporters,
     fetchAllJurisdictions,
     fetchAllPublicationCategories,
     fetchAllRoutes,
@@ -80,6 +83,7 @@ function buildDocumentService() {
     resetDocumentReviewStatus,
     updateDocumentLoss,
     updateDocumentReviewStatus,
+    updateDocumentRoute,
     updateDocumentStatus,
   };
 }

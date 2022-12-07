@@ -6,6 +6,7 @@ type ressourceFilterRequestType = {
   publicationCategory?: string[];
   treatmentDate?: { $gt?: number; $lte?: number };
   route?: ressourceFilterType['route'];
+  importer?: ressourceFilterType['importer'];
   source?: ressourceFilterType['source'];
   jurisdiction?: ressourceFilterType['jurisdiction'];
   subAnnotationsSensitiveCount?: { $gt?: number };
@@ -48,6 +49,10 @@ function buildRessourceFilterRequest(
 
   if (ressourceFilter.route) {
     ressourceFilterRequest.route = ressourceFilter.route;
+  }
+
+  if (ressourceFilter.importer) {
+    ressourceFilterRequest.importer = ressourceFilter.importer;
   }
 
   if (ressourceFilter.source) {

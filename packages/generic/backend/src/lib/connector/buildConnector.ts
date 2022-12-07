@@ -101,7 +101,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       for (const courtDecision of newCourtDecisions) {
         newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+          await connectorConfig.mapCourtDecisionToDocument(
+            courtDecision,
+            'recent',
+          ),
         );
       }
       daysAgo += daysStep;
@@ -122,14 +125,14 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function importSpecificDocument({
     documentNumber,
     source,
-    forceRequestRoute,
+    lowPriority,
   }: {
     documentNumber: number;
     source: string;
-    forceRequestRoute: boolean;
+    lowPriority: boolean;
   }) {
     logger.log(
-      `importSpecificDocument: ${documentNumber} - ${source}, forceRequestRoute: ${forceRequestRoute}`,
+      `importSpecificDocument: ${documentNumber} - ${source}, lowPriority: ${lowPriority}`,
     );
 
     const courtDecision = await connectorConfig.fetchCourtDecisionBySourceIdAndSourceName(
@@ -153,12 +156,13 @@ function buildConnector(connectorConfig: connectorConfigType) {
     );
     const document = await connectorConfig.mapCourtDecisionToDocument(
       courtDecision,
+      'manual',
     );
     logger.log(`Court decision converted. Inserting document into database...`);
-    if (forceRequestRoute) {
-      await insertDocument({ ...document, route: 'request', priority: 4 });
+    if (lowPriority) {
+      await insertDocument({ ...document });
     } else {
-      await insertDocument({ ...document, priority: 4 });
+      await insertDocument({ ...document, route: 'request', priority: 4 });
     }
     logger.log(`Insertion done`);
 
@@ -210,7 +214,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       for (const courtDecision of newCourtDecisions) {
         newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+          await connectorConfig.mapCourtDecisionToDocument(
+            courtDecision,
+            'filler',
+          ),
         );
       }
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
@@ -270,7 +277,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       for (const courtDecision of newCourtDecisions) {
         newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+          await connectorConfig.mapCourtDecisionToDocument(
+            courtDecision,
+            'chained',
+          ),
         );
       }
 
@@ -326,7 +336,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        await connectorConfig.mapCourtDecisionToDocument(
+          courtDecision,
+          'recent',
+        ),
       );
     }
 
@@ -370,7 +383,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        await connectorConfig.mapCourtDecisionToDocument(
+          courtDecision,
+          'recent',
+        ),
       );
     }
 
@@ -428,7 +444,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        await connectorConfig.mapCourtDecisionToDocument(
+          courtDecision,
+          'manual',
+        ),
       );
     }
 
@@ -467,7 +486,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        await connectorConfig.mapCourtDecisionToDocument(
+          courtDecision,
+          'manual',
+        ),
       );
     }
 
@@ -617,7 +639,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     await importSpecificDocument({
       documentNumber,
       source,
-      forceRequestRoute: false,
+      lowPriority: false,
     });
   }
 

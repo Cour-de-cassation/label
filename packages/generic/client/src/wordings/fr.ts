@@ -337,6 +337,25 @@ const fr = {
       },
     },
   },
+  summaryPage: {
+    header: {
+      title: 'Administration',
+      subtitle: 'Sommaire',
+    },
+    welcomeMessage: 'Bienvenue dans Label',
+    box: {
+      fields: {
+        loadedDocuments: 'Documents chargés',
+        nlpAnnotatingDocuments: 'Documents en annotation',
+        freeDocuments: 'Documents en attente',
+        pendingDocuments: 'Documents assignés',
+        savedDocuments: 'Documents en relecture',
+        doneDocuments: 'Documents traités',
+        lockedDocuments: 'Documents bloqués',
+        rejectedDocuments: 'Documents rejetés',
+      },
+    },
+  },
   toBeConfirmedDocumentsPage: {
     header: { title: 'Administration', subtitle: 'Décisions à confirmer' },
     table: {

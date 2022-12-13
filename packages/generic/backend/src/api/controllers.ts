@@ -137,6 +137,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       }),
     }),
 
+    summary: buildAuthenticatedController({
+      permissions: ['admin', 'scrutator'],
+      controllerWithUser: async () => {
+        return await statisticService.fetchSummary();
+      },
+    }),
+
     personalStatistics: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (user) => {

@@ -113,6 +113,30 @@ const sderLocalApi: sderApiType = {
     });
   },
 
+  async fetchCourtDecisionById(id) {
+    const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
+      pathToCourtDecisions,
+    );
+
+    const courtDecisions = await fileSystem.readFiles(
+      courtDecisionFileNames,
+      'utf8',
+      pathToCourtDecisions,
+    );
+
+    const mappedCourtDecisions = courtDecisions.map(({ content }) => {
+      const parsedContent = JSON.parse(content) as decisionType;
+      return {
+        ...parsedContent,
+        dateDecision: parsedContent.dateDecision,
+      };
+    });
+
+    return mappedCourtDecisions.find((courtDecision) =>
+      courtDecision._id.equals(id),
+    ) as decisionType;
+  },
+
   async fetchCourtDecisionBySourceIdAndSourceName(sourceId, sourceName) {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,
@@ -145,7 +169,7 @@ const sderLocalApi: sderApiType = {
 
   async setCourtDecisionDone() {},
 
-  async setCourtDecisionLocked() {},
+  async setCourtDecisionBlocked() {},
 
   async updateDecisionPseudonymisation() {},
 };

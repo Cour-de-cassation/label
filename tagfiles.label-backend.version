@@ -1,10 +1,10 @@
 Dockerfile.label-backend
-packages/courDeCassation/environments/
-packages/courDeCassation/package.json
-packages/courDeCassation/scripts
-packages/courDeCassation/settings/
-packages/courDeCassation/src/
-packages/courDeCassation/tsconfig.json
+packages/demo/environments/
+packages/demo/package.json
+packages/demo/scripts
+packages/demo/settings/
+packages/demo/src/
+packages/demo/tsconfig.json
 packages/generic/backend/babel.config.json
 packages/generic/backend/package.json
 packages/generic/backend/src

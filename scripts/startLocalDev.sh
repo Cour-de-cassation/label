@@ -4,4 +4,4 @@ DIR=`dirname "$0"`
 
 $DIR/initializeTestDb.sh
 
-lerna run --scope @label/cour-de-cassation startLocal --stream
+lerna run --scope @label/demo startLocal --stream

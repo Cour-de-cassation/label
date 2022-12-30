@@ -1,0 +1,28 @@
+{
+  "regex": {
+    "anonymization": "[%c]",
+    "color": {
+      "lightMode": [
+        "deepOrange",
+        "A200"
+      ],
+      "darkMode": [
+        "deepOrange",
+        "800"
+      ]
+    },
+    "iconName": "person",
+    "isSensitive": true,
+    "order": 1,
+    "text": "Element détecté",
+    "autoLinkSensitivity": [
+      {
+        "kind": "caseInsensitive"
+      },
+      {
+        "kind": "levenshteinDistance",
+        "threshold": 1
+      }
+    ]
+  }
+}

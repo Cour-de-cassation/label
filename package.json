@@ -14,16 +14,16 @@
     "**/@typescript-eslint/parser": "^4.4.1"
   },
   "scripts": {
-    "bootstrap": "lerna run compile && lerna run --scope @label/cour-de-cassation bootstrap --stream && ./scripts/bootstrap.sh",
+    "bootstrap": "lerna run compile && lerna run --scope @label/demo bootstrap --stream && ./scripts/bootstrap.sh",
     "buildDev": "lerna run --ignore @label/client build --stream",
     "buildLocalDevDocker": "docker-compose -f docker-compose-dev.yml build",
     "build": "lerna run build --stream && cp -r packages/generic/client/build/ packages/generic/backend/",
-    "buildClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation build --stream",
+    "buildClient": "lerna run --ignore @label/backend --ignore @label/demo build --stream",
     "buildLocalDocker": "docker-compose -f docker-compose.yml build",
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",
     "compile": "lerna run compile",
-    "compileClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation compile ",
+    "compileClient": "lerna run --ignore @label/backend --ignore @label/demo compile ",
     "lint": "lerna run lint",
     "fix": "lerna run fix",
     "migrationCreate": "scripts/createMigrationFile.sh",
@@ -43,6 +43,6 @@
   },
   "workspaces": [
     "packages/generic/*",
-    "packages/courDeCassation/"
+    "packages/demo/"
   ]
 }

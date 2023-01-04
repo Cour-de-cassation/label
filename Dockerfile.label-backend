@@ -42,7 +42,7 @@ RUN apk add git
 COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
-COPY packages/courDeCassation/package.json ./packages/courDeCassation/
+COPY packages/demo/package.json ./packages/demo/
 
 COPY tsconfig.json package.json lerna.json ./
 
@@ -57,9 +57,9 @@ RUN yarn install --production
 
 ADD packages/generic/core packages/generic/core
 ADD packages/generic/backend packages/generic/backend
-ADD packages/courDeCassation packages/courDeCassation
+ADD packages/demo packages/demo
 
-WORKDIR /home/node/packages/courDeCassation
+WORKDIR /home/node/packages/demo
 
 RUN chown node .
 

@@ -1,12 +1,12 @@
 #!/bin/sh
 
-cd packages/courDeCassation
+cd packages/demo
 echo "Reset the DB except for users and migrations"
 RUN_MODE=LOCAL node dist/scripts/clearDb.js -e environments/localEnvironment.json -s settings/settings.json
 echo "Import the documents from SDER database"
 RUN_MODE=LOCAL node dist/scripts/importAllDocumentsFromSderSince.js --days 2  -e environments/localEnvironment.json -s settings/settings.json
-echo "Annotate all the documents with the NLP engine"
-RUN_MODE=LOCAL node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js  -e environments/localEnvironment.json -s settings/settings.json
+echo "Annotate all the documents with the Regex engine"
+RUN_MODE=LOCAL node dist/scripts/annotateDocumentsWithoutAnnotationsWithRegex.js  -e environments/localEnvironment.json -s settings/settings.json
 echo "Insert mock values in DB"
 RUN_MODE=LOCAL node dist/scripts/initializeTestDb.js -e environments/localEnvironment.json -s settings/settings.json
 echo "Create initial cache"

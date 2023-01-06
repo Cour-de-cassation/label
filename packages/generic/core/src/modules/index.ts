@@ -6,7 +6,6 @@ import { cacheModule, cacheType } from './cache';
 import { documentModule, documentType, fetchedDocumentType } from './document';
 import { ressourceFilterModule, ressourceFilterType } from './ressourceFilter';
 import { idModule, idType } from './id';
-import { fetchedMonitoringEntryType, monitoringEntryModule, monitoringEntryType } from './monitoringEntry';
 import { problemReportModule, problemReportType } from './problemReport';
 import {
   colorType,
@@ -32,7 +31,6 @@ export {
   ressourceFilterModule,
   idModule,
   migrationModule,
-  monitoringEntryModule,
   problemReportModule,
   settingsModule,
   statisticModule,
@@ -56,9 +54,7 @@ export type {
   fetchedDocumentType,
   ressourceFilterType,
   idType,
-  fetchedMonitoringEntryType,
   migrationType,
-  monitoringEntryType,
   problemReportType,
   settingsType,
   statisticType,

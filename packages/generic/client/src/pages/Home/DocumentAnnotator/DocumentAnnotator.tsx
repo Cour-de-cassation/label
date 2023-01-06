@@ -3,7 +3,6 @@ import { settingsModule } from '@label/core';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { DocumentViewerModeHandlerContextProvider } from '../../../services/documentViewerMode';
 import { AnonymizerBuilderContextProvider } from '../../../services/anonymizer';
-import { useMonitoring } from '../../../services/monitoring';
 import { ViewerScrollerContextProvider } from '../../../services/viewerScroller';
 import { heights, widths } from '../../../styles';
 import { AnnotationsPanel } from './AnnotationsPanel';
@@ -16,7 +15,6 @@ export { DocumentAnnotator };
 
 function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<void> }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const { addMonitoringEntry } = useMonitoring();
   useKeyboardShortcutsHandler([
     { key: 'z', ctrlKey: true, action: onRevertState },
     { key: 'Z', ctrlKey: true, shiftKey: true, action: onRestoreState },
@@ -68,12 +66,10 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<voi
   );
 
   function onRevertState() {
-    addMonitoringEntry({ origin: 'shortcut', action: 'revert' });
     annotatorStateHandler.revert();
   }
 
   function onRestoreState() {
-    addMonitoringEntry({ origin: 'shortcut', action: 'restore' });
     annotatorStateHandler.restore();
   }
 

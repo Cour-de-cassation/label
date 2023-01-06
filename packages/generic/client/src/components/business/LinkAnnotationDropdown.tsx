@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { IconDropdown } from 'pelta-design-system';
 import { annotationLinkHandler, annotationModule, annotationType } from '@label/core';
 import { useAnnotatorStateHandler } from '../../services/annotatorState';
-import { useMonitoring } from '../../services/monitoring';
 import { wordings } from '../../wordings';
 
 export { LinkAnnotationDropdown };
@@ -17,7 +16,6 @@ function LinkAnnotationDropdown(props: {
   onClose?: () => void;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const { addMonitoringEntry } = useMonitoring();
   const annotatorState = annotatorStateHandler.get();
   const linkableAnnotations = annotationLinkHandler.getLinkableAnnotations(
     props.annotation,
@@ -51,10 +49,6 @@ function LinkAnnotationDropdown(props: {
       };
 
       annotatorStateHandler.set(newAnnotatorState);
-      addMonitoringEntry({
-        action: `link_category_${props.annotation.category}`,
-        origin: props.origin,
-      });
     }
   }
 }

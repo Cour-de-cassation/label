@@ -1,6 +1,6 @@
-export { NON_PUBLIC_NAC_CODES };
+export { NON_PUBLIC_NAC_CODES, NON_PUBLIC_NAO_CODES };
 
-const NON_PUBLIC_NAC_CODES = [
+const NON_PUBLIC_NAC_CODES: string[] = [
   '11A',
   '11B',
   '11D',
@@ -131,3 +131,5 @@ const NON_PUBLIC_NAC_CODES = [
   '97G',
   '97P',
 ];
+
+const NON_PUBLIC_NAO_CODES: string[] = [];

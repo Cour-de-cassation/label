@@ -63,6 +63,7 @@ async function mapCourtDecisionToDocument(
   const civilMatterCode = sderCourtDecision.codeMatiereCivil?.trim() || '';
   const criminalCaseCode = sderCourtDecision.natureAffairePenal?.trim() || '';
   const NACCode = sderCourtDecision.NACCode || '';
+  const NAOCode = sderCourtDecision.NAOCode || '';
   const endCaseCode = sderCourtDecision.endCaseCode || '';
 
   const priority = computePriority(
@@ -82,6 +83,7 @@ async function mapCourtDecisionToDocument(
       civilCaseCode,
       criminalCaseCode,
       NACCode,
+      NAOCode,
       endCaseCode,
     },
     source,
@@ -101,6 +103,7 @@ async function mapCourtDecisionToDocument(
       date: decisionDate?.getTime(),
       jurisdiction: readableJurisdictionName,
       NACCode,
+      NAOCode,
       endCaseCode,
       parties: sderCourtDecision.parties || [],
       occultationBlock: sderCourtDecision.blocOccultation || undefined,

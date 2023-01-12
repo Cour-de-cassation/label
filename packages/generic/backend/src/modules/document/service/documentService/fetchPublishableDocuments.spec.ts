@@ -26,6 +26,7 @@ describe('fetchPublishableDocuments', () => {
           session: '',
           solution: '',
           NACCode: '',
+          NAOCode: '',
           endCaseCode: '',
         },
         route: 'exhaustive' as documentType['route'],

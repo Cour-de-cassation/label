@@ -21,6 +21,7 @@ describe('add civil code matter in document model', () => {
     session: '',
     solution: '',
     NACCode: '',
+    NAOCode: '',
     endCaseCode: '',
   };
   const documentsWithNewModel = [

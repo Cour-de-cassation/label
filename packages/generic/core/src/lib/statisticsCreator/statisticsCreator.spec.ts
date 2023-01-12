@@ -30,6 +30,7 @@ describe('statisticsCreator', () => {
       date: decisionDate,
       jurisdiction,
       NACCode: '',
+      NAOCode: '',
       endCaseCode: '',
       occultationBlock: undefined,
       parties: [],

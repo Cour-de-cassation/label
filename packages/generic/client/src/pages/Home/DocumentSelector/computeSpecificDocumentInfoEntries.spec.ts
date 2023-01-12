@@ -15,6 +15,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
         date: decisionDate,
         jurisdiction: 'Cour de cassation',
         NACCode: '',
+        NAOCode: '',
         endCaseCode: '',
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],

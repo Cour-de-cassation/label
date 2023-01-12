@@ -1,5 +1,5 @@
 import { sderApi } from '../../sderApi';
-import { NON_PUBLIC_NAC_CODES } from './constants';
+import { NON_PUBLIC_NAC_CODES, NON_PUBLIC_NAO_CODES } from './constants';
 
 export { sderFetcher };
 
@@ -39,7 +39,9 @@ const sderFetcher = {
       if (
         courtDecision.sourceName === 'jurica' &&
         !!courtDecision.NACCode &&
-        NON_PUBLIC_NAC_CODES.includes(courtDecision.NACCode)
+        NON_PUBLIC_NAC_CODES.includes(courtDecision.NACCode) &&
+        !!courtDecision.NAOCode &&
+        NON_PUBLIC_NAO_CODES.includes(courtDecision.NAOCode)
       ) {
         return false;
       }

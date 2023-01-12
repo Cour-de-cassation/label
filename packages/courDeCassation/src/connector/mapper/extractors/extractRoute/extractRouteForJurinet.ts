@@ -19,6 +19,7 @@ function extractRouteForJurinet({
   civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
   criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
   NACCode: documentType['decisionMetadata']['NACCode'];
+  NAOCode: documentType['decisionMetadata']['NAOCode'];
   endCaseCode: documentType['decisionMetadata']['endCaseCode'];
 }): documentType['route'] {
   if (stringComparator.compareNormalizedStrings(solution, 'Non-admission')) {

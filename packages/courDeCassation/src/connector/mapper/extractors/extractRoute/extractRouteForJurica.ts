@@ -16,6 +16,7 @@ function extractRouteForJurica({
   civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
   criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
   NACCode: documentType['decisionMetadata']['NACCode'];
+  NAOCode: documentType['decisionMetadata']['NAOCode'];
   endCaseCode: documentType['decisionMetadata']['endCaseCode'];
 }): documentType['route'] {
   const decEndCaseCode: number = transformLetterCodeToDec({

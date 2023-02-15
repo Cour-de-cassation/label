@@ -72,6 +72,10 @@ const sderApi: sderApiType = {
     return courtDecisions;
   },
 
+  async fetchCourtDecisionById(externalId) {
+    return decisionModule.service.fetchCourtDecisionById(externalId);
+  },
+
   async fetchCourtDecisionBySourceIdAndSourceName(sourceId, sourceName) {
     return decisionModule.service.fetchDecisionBySourceIdAndSourceName(
       sourceId,
@@ -104,10 +108,10 @@ const sderApi: sderApiType = {
     });
   },
 
-  async setCourtDecisionLocked(externalId) {
+  async setCourtDecisionBlocked(externalId) {
     await decisionModule.service.updateDecisionsLabelStatus({
       decisionIds: [idModule.lib.buildId(externalId)],
-      labelStatus: 'locked',
+      labelStatus: 'blocked',
     });
   },
 

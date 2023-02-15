@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { annotationsDiffType, fetchedDocumentType, idModule, settingsModule, settingsType } from '@label/core';
+import { annotationsDiffType, fetchedDocumentType, settingsModule, settingsType } from '@label/core';
 import { apiCaller } from '../../../api';
 import { MainHeader } from '../../../components';
 import {
@@ -8,7 +8,6 @@ import {
   buildAnnotationsCommitter,
   buildAutoSaver,
 } from '../../../services/annotatorState';
-import { MonitoringEntriesHandlerContextProvider } from '../../../services/monitoring';
 import { DocumentAnnotator } from '../../Home/DocumentAnnotator';
 import { useAlert } from '../../../services/alert';
 import { wordings } from '../../../wordings';
@@ -48,20 +47,18 @@ function DocumentInspector(props: { settings: settingsType }) {
             const applyAutoSave = buildApplyAutoSave(document._id);
 
             return (
-              <MonitoringEntriesHandlerContextProvider documentId={idModule.lib.buildId(params.documentId)}>
-                <AnnotatorStateHandlerContextProvider
-                  autoSaver={buildAutoSaver({ applySave: applyAutoSave })}
-                  committer={buildAnnotationsCommitter()}
-                  initialAnnotatorState={{
-                    annotations: annotations,
-                    document: document,
-                    settings: settingsForDocument,
-                  }}
-                >
-                  <MainHeader title={document.title} onBackButtonPress={history.goBack} />
-                  <DocumentAnnotator onStopAnnotatingDocument={buildOnStopAnnotatingDocument(document)} />
-                </AnnotatorStateHandlerContextProvider>
-              </MonitoringEntriesHandlerContextProvider>
+              <AnnotatorStateHandlerContextProvider
+                autoSaver={buildAutoSaver({ applySave: applyAutoSave })}
+                committer={buildAnnotationsCommitter()}
+                initialAnnotatorState={{
+                  annotations: annotations,
+                  document: document,
+                  settings: settingsForDocument,
+                }}
+              >
+                <MainHeader title={document.title} onBackButtonPress={history.goBack} />
+                <DocumentAnnotator onStopAnnotatingDocument={buildOnStopAnnotatingDocument(document)} />
+              </AnnotatorStateHandlerContextProvider>
             );
           }}
         </AnnotationsDataFetcher>

@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { IconButton, IconDropdown } from 'pelta-design-system';
 import { annotationLinkHandler, annotationType } from '@label/core';
 import { useAnnotatorStateHandler } from '../../services/annotatorState';
-import { useMonitoring } from '../../services/monitoring';
 import { wordings } from '../../wordings';
 
 export { UnlinkAnnotationDropdown };
@@ -17,7 +16,6 @@ function UnlinkAnnotationDropdown(props: {
   onClose?: () => void;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const { addMonitoringEntry } = useMonitoring();
   const annotatorState = annotatorStateHandler.get();
   const linkedAnnotationRepresentatives = annotationLinkHandler.getLinkedAnnotationRepresentatives(
     props.annotation.entityId,
@@ -71,11 +69,6 @@ function UnlinkAnnotationDropdown(props: {
   }
 
   function unlinkAnnotation(text: string) {
-    addMonitoringEntry({
-      origin: props.origin,
-      action: `unlink_${text === UNLINK_ALL ? 'all' : 'one'}_category_${props.annotation.category}`,
-    });
-
     const newAnnotations =
       text === UNLINK_ALL
         ? annotationLinkHandler.unlink(props.annotation, annotatorState.annotations)

@@ -1,7 +1,6 @@
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
-import { buildMonitoringEntryRepository } from '../../modules/monitoringEntry';
 import { buildProblemReportRepository } from '../../modules/problemReport';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildUserRepository } from '../../modules/user';
@@ -13,7 +12,6 @@ async function setIndexesOnAllCollections() {
     buildAnnotationReportRepository,
     buildAssignationRepository,
     buildDocumentRepository,
-    buildMonitoringEntryRepository,
     buildProblemReportRepository,
     buildTreatmentRepository,
     buildUserRepository,

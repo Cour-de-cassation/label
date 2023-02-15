@@ -12,6 +12,7 @@ const assignationModel = buildModel({
     documentId: { kind: 'custom', content: 'id' },
     treatmentId: { kind: 'custom', content: 'id' },
     userId: { kind: 'custom', content: 'id' },
+    assignationDate: { kind: 'custom', content: 'number' },
   },
 } as const);
 

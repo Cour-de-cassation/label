@@ -12,7 +12,6 @@ import { parametersHandler } from '../lib/parametersHandler';
         assignation: false,
         document: false,
         migration: false,
-        monitoringEntry: false,
         statistic: false,
         treatment: false,
         user: false,

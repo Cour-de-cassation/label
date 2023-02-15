@@ -11,7 +11,6 @@ import {
 import { apiCaller } from '../../api';
 import { MainHeader } from '../../components';
 import { buildAnnotationsCommitter } from '../../services/annotatorState';
-import { MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
 import { DocumentSelector } from './DocumentSelector';
 import { HomeDocumentAnnotator } from './HomeDocumentAnnotator';
 
@@ -47,16 +46,14 @@ function DocumentSwitcher(props: {
           documentState.choice.document.decisionMetadata.additionalTermsToAnnotate,
         );
         return (
-          <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
-            <HomeDocumentAnnotator
-              assignationId={documentState.choice.assignationId}
-              committer={buildAnnotationsCommitter()}
-              settings={settingsForDocument}
-              document={documentState.choice.document}
-              annotations={documentState.choice.annotations}
-              fetchNewDocumentsForUser={props.fetchNewDocumentsForUser}
-            />
-          </MonitoringEntriesHandlerContextProvider>
+          <HomeDocumentAnnotator
+            assignationId={documentState.choice.assignationId}
+            committer={buildAnnotationsCommitter()}
+            settings={settingsForDocument}
+            document={documentState.choice.document}
+            annotations={documentState.choice.annotations}
+            fetchNewDocumentsForUser={props.fetchNewDocumentsForUser}
+          />
         );
       case 'selecting':
         return (

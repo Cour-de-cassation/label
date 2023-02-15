@@ -2,7 +2,6 @@ import {
   annotationModule,
   annotationsDiffModule,
   documentModule,
-  monitoringEntryModule,
   problemReportModule,
   settingsModule,
   userModule,
@@ -274,6 +273,46 @@ const apiSchema = {
     },
     settings: {
       out: settingsModule.model,
+    },
+    summary: {
+      in: {},
+      out: buildModel({
+        kind: 'object',
+        content: {
+          loadedDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          nlpAnnotatingDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          freeDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          pendingDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          savedDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          doneDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          lockedDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          rejectedDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+        },
+      } as const),
     },
     publishableDocuments: {
       out: buildModel({
@@ -554,18 +593,6 @@ const apiSchema = {
           token: { kind: 'primitive', content: 'string' },
           passwordTimeValidityStatus: userModule.models.passwordTimeValidityStatus,
         },
-      } as const),
-    },
-    monitoringEntries: {
-      in: {
-        newMonitoringEntries: buildModel({
-          kind: 'array',
-          content: monitoringEntryModule.fetchedModel,
-        } as const),
-      },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
       } as const),
     },
     problemReport: {

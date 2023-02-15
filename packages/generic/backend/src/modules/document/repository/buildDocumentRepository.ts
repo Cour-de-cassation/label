@@ -30,11 +30,16 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
+    async countByStatus(status) {
+      return await collection.countDocuments({
+        status: { $in: status },
+      });
+    },
+
     async countNotIn(idsNotToSearchIn) {
-      const count = await collection.countDocuments({
+      return await collection.countDocuments({
         _id: { $nin: idsNotToSearchIn },
       });
-      return count;
     },
 
     async findNotIn(idsNotToSearchIn) {

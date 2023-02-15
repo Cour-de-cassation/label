@@ -36,8 +36,16 @@ function getMenuIcons({
   unreadProblemReportsCount: number;
   toBeConfirmedDocumentsCount: number;
 }) {
+  const SUMMARY_ICON = (
+    <MenuIcon title={wordings.summaryPage.header.subtitle} pathname={routes.SUMMARY.getPath()} iconName="home" />
+  );
+
   const STATISTICS_ICON = (
-    <MenuIcon title={wordings.statisticsPage.header.subtitle} pathname={routes.STATISTICS.getPath()} iconName="home" />
+    <MenuIcon
+      title={wordings.statisticsPage.header.subtitle}
+      pathname={routes.STATISTICS.getPath()}
+      iconName="statistics"
+    />
   );
 
   const UNTREATED_DOCUMENT_ICON = (
@@ -84,6 +92,7 @@ function getMenuIcons({
 
   return {
     admin: [
+      SUMMARY_ICON,
       STATISTICS_ICON,
       UNTREATED_DOCUMENT_ICON,
       TO_BE_CONFIRMED_DOCUMENTS_ICON,
@@ -92,6 +101,7 @@ function getMenuIcons({
       WORKING_USERS_ICON,
     ],
     scrutator: [
+      SUMMARY_ICON,
       STATISTICS_ICON,
       UNTREATED_DOCUMENT_ICON,
       TO_BE_CONFIRMED_DOCUMENTS_ICON,

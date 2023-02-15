@@ -155,7 +155,7 @@ function buildFakeExporterConfig(): exporterConfigType & {
       return exportedlabelTreatments;
     },
 
-    async sendDocumentLockedStatus({ externalId }) {
+    async sendDocumentBlockedStatus(externalId) {
       lockedExternalIds.push(externalId);
     },
 

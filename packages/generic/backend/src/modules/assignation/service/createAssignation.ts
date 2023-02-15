@@ -34,6 +34,7 @@ async function createAssignation({
     userId,
     documentId,
     treatmentId,
+    assignationDate: new Date().getTime(),
   });
 
   await assignationRepository.insert(assignation);

@@ -3,7 +3,6 @@ import format from 'string-template';
 import { annotationHandler, annotationLinkHandler, annotationType } from '@label/core';
 import { IconButton, IconDropdown } from 'pelta-design-system';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
-import { useMonitoring } from '../../../../../services/monitoring';
 import { wordings } from '../../../../../wordings';
 
 export { DeleteAnnotationDropdown };
@@ -18,7 +17,6 @@ function DeleteAnnotationDropdown(props: {
   const annotatorStateHandler = useAnnotatorStateHandler();
 
   const annotatorState = annotatorStateHandler.get();
-  const { addMonitoringEntry } = useMonitoring();
   const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(
     props.annotation.entityId,
     annotatorState.annotations,
@@ -86,11 +84,6 @@ function DeleteAnnotationDropdown(props: {
     props.onClose();
 
     function computeNewAnnotations() {
-      addMonitoringEntry({
-        origin: 'document',
-        action: `delete_${deletionOption}_category_${props.annotation.category}`,
-      });
-
       switch (deletionOption) {
         case 'annotation':
           return annotationHandler.deleteByTextAndStart(annotatorState.annotations, props.annotation);

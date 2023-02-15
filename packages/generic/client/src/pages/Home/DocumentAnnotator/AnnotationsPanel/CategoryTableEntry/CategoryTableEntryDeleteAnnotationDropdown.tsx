@@ -2,7 +2,6 @@ import React from 'react';
 import { annotationHandler, annotationLinkHandler, annotationType } from '@label/core';
 import { IconDropdown, IconButton } from 'pelta-design-system';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
-import { useMonitoring } from '../../../../../services/monitoring';
 import { wordings } from '../../../../../wordings';
 
 const DELETE_ALL = '__all__';
@@ -11,7 +10,6 @@ export { CategoryTableEntryDeleteAnnotationDropdown };
 
 function CategoryTableEntryDeleteAnnotationDropdown(props: { buttonSize: number; entityAnnotation: annotationType }) {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const { addMonitoringEntry } = useMonitoring();
   const annotatorState = annotatorStateHandler.get();
   const linkedAnnotationRepresentatives = annotationLinkHandler.getLinkedAnnotationRepresentatives(
     props.entityAnnotation.entityId,
@@ -65,9 +63,5 @@ function CategoryTableEntryDeleteAnnotationDropdown(props: { buttonSize: number;
         : annotationHandler.deleteByTextAndCategory(annotatorState.annotations, props.entityAnnotation);
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     annotatorStateHandler.set(newAnnotatorState);
-    addMonitoringEntry({
-      origin: 'panel',
-      action: `delete_${text === DELETE_ALL ? 'all' : 'one'}_category_${props.entityAnnotation.category}`,
-    });
   }
 }

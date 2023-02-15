@@ -2,7 +2,6 @@ import {
   annotationReportModule,
   assignationModule,
   documentModule,
-  monitoringEntryModule,
   problemReportModule,
   statisticModule,
   treatmentModule,
@@ -11,7 +10,6 @@ import {
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
-import { buildMonitoringEntryRepository } from '../../modules/monitoringEntry';
 import { buildProblemReportRepository } from '../../modules/problemReport';
 import { buildStatisticRepository } from '../../modules/statistic';
 import { buildTreatmentRepository } from '../../modules/treatment';
@@ -22,7 +20,6 @@ describe('clearDb', () => {
   const annotationReportRepository = buildAnnotationReportRepository();
   const assignationRepository = buildAssignationRepository();
   const documentRepository = buildDocumentRepository();
-  const monitoringEntryRepository = buildMonitoringEntryRepository();
   const problemReportRepository = buildProblemReportRepository();
   const statisticRepository = buildStatisticRepository();
   const treatmentRepository = buildTreatmentRepository();
@@ -34,9 +31,6 @@ describe('clearDb', () => {
     );
     const assignations = [{}, {}, {}].map(assignationModule.generator.generate);
     const documents = [{}, {}, {}].map(documentModule.generator.generate);
-    const monitoringEntries = [{}, {}, {}].map(
-      monitoringEntryModule.generator.generate,
-    );
     const problemReports = [{}, {}, {}].map(
       problemReportModule.generator.generate,
     );
@@ -46,7 +40,6 @@ describe('clearDb', () => {
     await Promise.all(annotationReports.map(annotationReportRepository.insert));
     await Promise.all(assignations.map(assignationRepository.insert));
     await Promise.all(documents.map(documentRepository.insert));
-    await Promise.all(monitoringEntries.map(monitoringEntryRepository.insert));
     await Promise.all(problemReports.map(problemReportRepository.insert));
     await Promise.all(statistics.map(statisticRepository.insert));
     await Promise.all(treatments.map(treatmentRepository.insert));
@@ -57,7 +50,6 @@ describe('clearDb', () => {
     const annotationReportsAfterUpdate = await annotationReportRepository.findAll();
     const assignationsAfterUpdate = await assignationRepository.findAll();
     const documentsAfterUpdate = await documentRepository.findAll();
-    const monitoringEntriesAfterUpdate = await monitoringEntryRepository.findAll();
     const problemReportsAfterUpdate = await problemReportRepository.findAll();
     const statisticsAfterUpdate = await statisticRepository.findAll();
     const treatmentsAfterUpdate = await treatmentRepository.findAll();
@@ -65,7 +57,6 @@ describe('clearDb', () => {
     expect(annotationReportsAfterUpdate).toEqual([]);
     expect(assignationsAfterUpdate).toEqual([]);
     expect(documentsAfterUpdate).toEqual([]);
-    expect(monitoringEntriesAfterUpdate).toEqual([]);
     expect(problemReportsAfterUpdate).toEqual([]);
     expect(statisticsAfterUpdate).toEqual([]);
     expect(treatmentsAfterUpdate).toEqual([]);

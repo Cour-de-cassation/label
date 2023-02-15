@@ -15,7 +15,6 @@ import {
   AnnotatorStateHandlerContextProvider,
   buildAutoSaver,
 } from '../../services/annotatorState';
-import { useMonitoring } from '../../services/monitoring';
 import { useAlert } from '../../services/alert';
 import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
@@ -30,7 +29,6 @@ function HomeDocumentAnnotator(props: {
   fetchNewDocumentsForUser: () => void;
   settings: settingsType;
 }) {
-  const { resetMonitoringEntries, sendMonitoringEntries } = useMonitoring();
   const { displayAlert } = useAlert();
   const theme = useCustomTheme();
 
@@ -69,8 +67,6 @@ function HomeDocumentAnnotator(props: {
 
   async function onStopAnnotatingDocument({ assignationId }: { assignationId: assignationType['_id'] }) {
     await apiCaller.post<'updateTreatmentDuration'>('updateTreatmentDuration', { assignationId });
-    await sendMonitoringEntries();
-    resetMonitoringEntries();
     props.fetchNewDocumentsForUser();
   }
 

@@ -1,4 +1,5 @@
 import { exporterConfigType } from '@label/backend';
+import { idModule } from '@label/core';
 import { sderApi } from '../sderApi';
 
 export { exporterConfig };
@@ -20,7 +21,12 @@ const exporterConfig: exporterConfigType = {
     await sderApi.setCourtDecisionDone(externalId);
   },
 
-  async sendDocumentLockedStatus({ externalId }) {
-    await sderApi.setCourtDecisionLocked(externalId);
+  async sendDocumentBlockedStatus(externalId) {
+    const externalDecision = await sderApi.fetchCourtDecisionById(
+      idModule.lib.buildId(externalId),
+    );
+    if (externalDecision.labelStatus == 'loaded') {
+      await sderApi.setCourtDecisionBlocked(externalId);
+    }
   },
 };

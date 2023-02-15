@@ -10,7 +10,6 @@ import { displayDocumentLinks } from './displayDocumentLinks';
 import { displayMultipleAssignatedDocuments } from './displayMultipleAssignatedDocuments';
 import { dumpDocument } from './dumpDocument';
 import { extractComplexityInfoIntoCsv } from './extractComplexityInfoIntoCsv';
-import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
 import { extractRouteInfosIntoCsv } from './extractRouteInfosIntoCsv';
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestStatistics } from './insertTestStatistics';
@@ -33,7 +32,6 @@ export {
   displayMultipleAssignatedDocuments,
   dumpDocument,
   extractComplexityInfoIntoCsv,
-  extractMonitoringEntriesIntoCsv,
   extractRouteInfosIntoCsv,
   freePendingDocuments,
   insertTestStatistics,

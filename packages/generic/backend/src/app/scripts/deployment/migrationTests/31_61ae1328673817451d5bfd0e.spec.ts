@@ -20,6 +20,7 @@ describe('add NACCode in document model', () => {
     parties: [],
     session: '',
     solution: '',
+    NAOCode: '',
     endCaseCode: '',
   };
   const documentsWithNewModel = [

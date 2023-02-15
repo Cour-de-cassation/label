@@ -21,6 +21,7 @@ describe('add endCaseCode in document model', () => {
     session: '',
     solution: '',
     NACCode: '',
+    NAOCode: '',
   };
   const documentsWithNewModel = [
     documentModule.generator.generate({

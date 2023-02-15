@@ -29,6 +29,7 @@ describe('buildStatistic', () => {
         date: decisionDate,
         jurisdiction,
         NACCode: '',
+        NAOCode: '',
         endCaseCode: '',
         occultationBlock: undefined,
         parties: [],

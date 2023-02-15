@@ -16,6 +16,7 @@ function extractRoute(
     civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
     criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
     NACCode: documentType['decisionMetadata']['NACCode'];
+    NAOCode: documentType['decisionMetadata']['NAOCode'];
     endCaseCode: documentType['decisionMetadata']['endCaseCode'];
   },
   source: documentType['source'],

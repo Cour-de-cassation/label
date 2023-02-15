@@ -9,6 +9,9 @@ type sderApiType = {
     startDate: Date;
     endDate: Date;
   }) => Promise<Array<decisionType>>;
+  fetchCourtDecisionById: (
+    params: decisionType['_id'],
+  ) => Promise<decisionType>;
   fetchDecisionsToPseudonymiseBetween: (params: {
     startDate: Date;
     endDate: Date;
@@ -44,7 +47,7 @@ type sderApiType = {
   setCourtDecisionDone: (
     externalId: documentType['externalId'],
   ) => Promise<void>;
-  setCourtDecisionLocked: (
+  setCourtDecisionBlocked: (
     externalId: documentType['externalId'],
   ) => Promise<void>;
   updateDecisionPseudonymisation: (param: {

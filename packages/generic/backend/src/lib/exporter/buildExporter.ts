@@ -172,9 +172,7 @@ function buildExporter(
   }
 
   async function exportRejectedDocument(document: documentType) {
-    await exporterConfig.sendDocumentLockedStatus({
-      externalId: document.externalId,
-    });
+    await exporterConfig.sendDocumentBlockedStatus(document.externalId);
 
     await statisticService.saveStatisticsOfDocument(document, settings);
 

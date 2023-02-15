@@ -5,6 +5,7 @@ import { ProblemReportsDataFetcher } from './ProblemReports/ProblemReportsDataFe
 import { TreatedDocumentsDataFetcher } from './TreatedDocuments/TreatedDocumentsDataFetcher';
 import { UntreatedDocumentsDataFetcher } from './UntreatedDocuments/UntreatedDocumentsDataFetcher';
 import { StatisticsDataFetcher } from './Statistics/StatisticsDataFetcher';
+import { SummaryDataFetcher } from './Summary/SummaryDataFetcher';
 import { ToBeConfirmedDocumentsDataFetcher } from './ToBeConfirmedDocuments/ToBeConfirmedDocumentsDataFetcher';
 
 export { AdminInfosDataFetcher };
@@ -13,6 +14,7 @@ type adminInfosType = {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
   availableStatisticFilters: apiRouteOutType<'get', 'availableStatisticFilters'>;
   aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
+  summary: apiRouteOutType<'get', 'summary'>;
   toBeConfirmedDocuments: apiRouteOutType<'get', 'toBeConfirmedDocuments'>;
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
@@ -22,6 +24,7 @@ type adminInfosType = {
 type refetchInfosType = {
   aggregatedStatistics: (params: apiRouteInType<'get', 'aggregatedStatistics'>['ressourceFilter']) => void;
   problemReportsWithDetails: () => void;
+  summary: () => void;
   toBeConfirmedDocuments: () => void;
   treatedDocuments: () => void;
   untreatedDocuments: () => void;
@@ -30,6 +33,7 @@ type refetchInfosType = {
 
 type isLoadingInfosType = {
   aggregatedStatistics: boolean;
+  summary: boolean;
   toBeConfirmedDocuments: boolean;
   treatedDocuments: boolean;
   untreatedDocuments: boolean;
@@ -73,43 +77,50 @@ function AdminInfosDataFetcher(props: {
                         isLoading: isLoadingAggregatedStatistics,
                         ressourceFilter: ressourceFilterAggregatedStatistics,
                       }) => (
-                        <ProblemReportsDataFetcher>
-                          {({
-                            problemReportsWithDetails,
-                            refetch: refetchProblemReportsWithDetails,
-                            isLoading: isLoadingProblemReports,
-                          }) =>
-                            props.children({
-                              adminInfos: {
-                                availableStatisticFilters,
-                                aggregatedStatistics,
+                        <SummaryDataFetcher>
+                          {({ summary, refetch: refetchSummary, isLoading: isLoadingSummary }) => (
+                            <ProblemReportsDataFetcher>
+                              {({
                                 problemReportsWithDetails,
-                                toBeConfirmedDocuments,
-                                treatedDocuments,
-                                workingUsers,
-                                untreatedDocuments,
-                              },
-                              refetch: {
-                                aggregatedStatistics: refetchAggregatedStatistics,
-                                problemReportsWithDetails: refetchProblemReportsWithDetails,
-                                toBeConfirmedDocuments: refetchToBeConfirmedDocuments,
-                                treatedDocuments: refetchTreatedDocuments,
-                                untreatedDocuments: refetchUntreatedDocuments,
-                                workingUsers: refetchWorkingUsers,
-                              },
-                              isLoading: {
-                                aggregatedStatistics: isLoadingAggregatedStatistics,
-                                problemReports: isLoadingProblemReports,
-                                toBeConfirmedDocuments: isLoadindToBeConfirmedDocuments,
-                                treatedDocuments: isLoadingTreatedDocuments,
-                                untreatedDocuments: isLoadingUntreatedDocuments,
-                              },
-                              ressourceFilters: {
-                                aggregatedStatistics: ressourceFilterAggregatedStatistics,
-                              },
-                            })
-                          }
-                        </ProblemReportsDataFetcher>
+                                refetch: refetchProblemReportsWithDetails,
+                                isLoading: isLoadingProblemReports,
+                              }) =>
+                                props.children({
+                                  adminInfos: {
+                                    availableStatisticFilters,
+                                    aggregatedStatistics,
+                                    problemReportsWithDetails,
+                                    summary,
+                                    toBeConfirmedDocuments,
+                                    treatedDocuments,
+                                    workingUsers,
+                                    untreatedDocuments,
+                                  },
+                                  refetch: {
+                                    aggregatedStatistics: refetchAggregatedStatistics,
+                                    problemReportsWithDetails: refetchProblemReportsWithDetails,
+                                    summary: refetchSummary,
+                                    toBeConfirmedDocuments: refetchToBeConfirmedDocuments,
+                                    treatedDocuments: refetchTreatedDocuments,
+                                    untreatedDocuments: refetchUntreatedDocuments,
+                                    workingUsers: refetchWorkingUsers,
+                                  },
+                                  isLoading: {
+                                    aggregatedStatistics: isLoadingAggregatedStatistics,
+                                    summary: isLoadingSummary,
+                                    problemReports: isLoadingProblemReports,
+                                    toBeConfirmedDocuments: isLoadindToBeConfirmedDocuments,
+                                    treatedDocuments: isLoadingTreatedDocuments,
+                                    untreatedDocuments: isLoadingUntreatedDocuments,
+                                  },
+                                  ressourceFilters: {
+                                    aggregatedStatistics: ressourceFilterAggregatedStatistics,
+                                  },
+                                })
+                              }
+                            </ProblemReportsDataFetcher>
+                          )}
+                        </SummaryDataFetcher>
                       )}
                     </StatisticsDataFetcher>
                   )}

@@ -15,6 +15,11 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
 >({
   collectionName: 'documents',
   buildCustomFakeRepository: (collection) => ({
+    async countByStatus(status) {
+      return collection.filter((document) => status.includes(document.status))
+        .length;
+    },
+
     async countNotIn(idsNotToSearchIn) {
       return collection.filter(
         (document) =>

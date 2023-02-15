@@ -13,7 +13,6 @@ import { apiCaller } from '../../../api';
 import { useAnnotatorStateHandler } from '../../../services/annotatorState';
 import { useAlert } from '../../../services/alert';
 import { useDocumentViewerModeHandler } from '../../../services/documentViewerMode';
-import { useMonitoring } from '../../../services/monitoring';
 import { widths, heights } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { ReportProblemButton } from './ReportProblemButton';
@@ -25,7 +24,6 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promi
   const annotatorStateHandler = useAnnotatorStateHandler();
   const theme = useCustomTheme();
   const [isValidating, setIsValidating] = useState(false);
-  const { addMonitoringEntry } = useMonitoring();
   const { displayAlert } = useAlert();
 
   const documentViewerModeHandler = useDocumentViewerModeHandler();
@@ -81,18 +79,10 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promi
   );
 
   function revertLastAction() {
-    addMonitoringEntry({
-      action: 'revert',
-      origin: 'footer',
-    });
     annotatorStateHandler.revert();
   }
 
   function restoreLastAction() {
-    addMonitoringEntry({
-      action: 'restore',
-      origin: 'footer',
-    });
     annotatorStateHandler.restore();
   }
 
@@ -128,10 +118,6 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promi
   async function validate() {
     setIsValidating(true);
     try {
-      addMonitoringEntry({
-        origin: 'footer',
-        action: 'validate_document',
-      });
       const nextDocumentStatus = documentModule.lib.getNextStatus({
         status: document.status,
         publicationCategory: document.publicationCategory,

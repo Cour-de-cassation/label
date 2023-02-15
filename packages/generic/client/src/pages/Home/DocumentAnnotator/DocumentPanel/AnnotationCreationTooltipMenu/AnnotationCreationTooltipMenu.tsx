@@ -12,7 +12,6 @@ import {
 import { annotationHandler, annotationTextDetector, settingsModule } from '@label/core';
 import { CategoryIcon } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
-import { useMonitoring } from '../../../../../services/monitoring';
 import { wordings } from '../../../../../wordings';
 import { textSelectionType } from '../DocumentText';
 
@@ -29,7 +28,6 @@ function AnnotationCreationTooltipMenu(props: {
   const annotatorStateHandler = useAnnotatorStateHandler();
   const annotatorState = annotatorStateHandler.get();
   const { settings } = annotatorState;
-  const { addMonitoringEntry } = useMonitoring();
   const annotationTextsAndIndices = getAnnotationTextsAndIndices();
   const [shouldApplyEverywhere, setShouldApplyEverywhere] = useState(annotationTextsAndIndices.length > 1);
   const theme = useCustomTheme();
@@ -94,10 +92,6 @@ function AnnotationCreationTooltipMenu(props: {
   );
 
   function applyAnnotationCreation(category: string) {
-    addMonitoringEntry({
-      origin: 'document',
-      action: `create_${shouldApplyEverywhere ? 'all' : 'one'}_category_${category}`,
-    });
     const newAnnotations = computeNewAnnotations(category);
 
     annotatorStateHandler.set({

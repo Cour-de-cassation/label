@@ -4,7 +4,6 @@ import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
 import { cacheService } from '../modules/cache';
 import { documentService } from '../modules/document';
-import { monitoringEntryService } from '../modules/monitoringEntry';
 import { problemReportService } from '../modules/problemReport';
 import { statisticService } from '../modules/statistic';
 import { treatmentService } from '../modules/treatment';
@@ -266,21 +265,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         passwordTimeValidityStatus,
       };
     },
-
-    monitoringEntries: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
-      controllerWithUser: async (user, { args: { newMonitoringEntries } }) => {
-        const monitoringEntries = newMonitoringEntries.map(
-          (newMonitoringEntry) => ({
-            ...newMonitoringEntry,
-            documentId: idModule.lib.buildId(newMonitoringEntry.documentId),
-            _id: idModule.lib.buildId(newMonitoringEntry._id),
-            userId: user._id,
-          }),
-        );
-        await monitoringEntryService.createMany(monitoringEntries);
-      },
-    }),
 
     problemReport: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],

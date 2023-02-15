@@ -2,7 +2,6 @@ import {
   annotationModule,
   annotationsDiffModule,
   documentModule,
-  monitoringEntryModule,
   problemReportModule,
   settingsModule,
   userModule,
@@ -594,18 +593,6 @@ const apiSchema = {
           token: { kind: 'primitive', content: 'string' },
           passwordTimeValidityStatus: userModule.models.passwordTimeValidityStatus,
         },
-      } as const),
-    },
-    monitoringEntries: {
-      in: {
-        newMonitoringEntries: buildModel({
-          kind: 'array',
-          content: monitoringEntryModule.fetchedModel,
-        } as const),
-      },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
       } as const),
     },
     problemReport: {

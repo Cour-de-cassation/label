@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { IconDropdown } from 'pelta-design-system';
 import { annotationHandler, annotationType, settingsModule } from '@label/core';
 import { useAnnotatorStateHandler } from '../../services/annotatorState';
-import { useMonitoring } from '../../services/monitoring';
 import { wordings } from '../../wordings';
 import { CategoryIcon } from './CategoryIcon';
 
@@ -17,7 +16,6 @@ function ChangeAnnotationCategoryDropdown(props: {
   origin: 'document' | 'panel';
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
-  const { addMonitoringEntry } = useMonitoring();
   const annotatorState = annotatorStateHandler.get();
   const { settings } = annotatorState;
   const categories = settingsModule.lib.getCategories(settings, {
@@ -50,9 +48,5 @@ function ChangeAnnotationCategoryDropdown(props: {
 
     const newAnnotatorState = { ...annotatorState, annotations: newAnnotations };
     annotatorStateHandler.set(newAnnotatorState);
-    addMonitoringEntry({
-      action: `change_category_from_${props.annotation.category}_to_${newCategory}`,
-      origin: props.origin,
-    });
   }
 }

@@ -37,15 +37,23 @@ function Statistics(props: {
         </div>
       </div>
       <div style={styles.body}>
-        <div style={styles.numberOfDecisionContainer}>
-          <Text variant="h1">{wordings.statisticsPage.treatedDecisions}</Text>
-          <Text variant="h1">{props.aggregatedStatistics.total}</Text>
-        </div>
-        <StatisticsBox
-          aggregatedStatistic={aggregatedStatistics}
-          statisticsCount={props.aggregatedStatistics.total}
-          width={WIDTH}
-        />
+        {props.aggregatedStatistics.total == -1 ? (
+          <div style={styles.numberOfDecisionContainer}>
+            <Text variant="h1">{wordings.statisticsPage.alertMessage}</Text>
+          </div>
+        ) : (
+          <>
+            <div style={styles.numberOfDecisionContainer}>
+              <Text variant="h1">{wordings.statisticsPage.treatedDecisions}</Text>
+              <Text variant="h1">{props.aggregatedStatistics.total}</Text>
+            </div>
+            <StatisticsBox
+              aggregatedStatistic={aggregatedStatistics}
+              statisticsCount={props.aggregatedStatistics.total}
+              width={WIDTH}
+            />
+          </>
+        )}
       </div>
     </div>
   );

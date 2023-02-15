@@ -322,6 +322,7 @@ const fr = {
       subtitle: 'Statistiques',
     },
     treatedDecisions: 'Décisions traitées',
+    alertMessage: 'Veuillez sélectionner un filtre pour afficher les statistiques',
     box: {
       computation: {
         total: 'Total',

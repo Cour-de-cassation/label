@@ -43,7 +43,7 @@ function Router() {
                   ({ problemReport }) => !problemReport.hasBeenRead,
                 ).length;
                 const toBeConfirmedDocumentsCount = adminInfos.toBeConfirmedDocuments.length;
-                const userRole = localStorage.adminViewHandler.get();
+                const userRole = localStorage.adminViewHandler.get() || localStorage.userHandler.getRole();
                 if (userRole !== 'admin' && userRole !== 'scrutator') {
                   return <></>;
                 }

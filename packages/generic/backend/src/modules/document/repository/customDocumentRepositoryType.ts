@@ -75,6 +75,10 @@ type customDocumentRepositoryType = {
     _id: idType,
     loss: documentType['loss'],
   ) => Promise<documentType | undefined>;
+  updateRouteById: (
+    _id: idType,
+    route: documentType['route'],
+  ) => Promise<documentType | undefined>;
   updateStatusById: (
     _id: idType,
     status: documentType['status'],

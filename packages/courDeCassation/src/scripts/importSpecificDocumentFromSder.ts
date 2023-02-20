@@ -5,7 +5,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { documentNumber, source, forceRequestRoute } = parseArgv();
+  const { documentNumber, source, lowPriority } = parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
@@ -13,7 +13,7 @@ import { parametersHandler } from '../lib/parametersHandler';
       sderConnector.importSpecificDocument({
         documentNumber,
         source,
-        forceRequestRoute,
+        lowPriority,
       }),
     {
       shouldLoadDb: true,
@@ -24,9 +24,9 @@ import { parametersHandler } from '../lib/parametersHandler';
 function parseArgv() {
   const argv = yargs
     .options({
-      forceRequestRoute: {
+      lowPriority: {
         demandOption: false,
-        description: "should change the route to 'request'",
+        description: "import without 'request' route and priority 4",
         type: 'boolean',
       },
       documentNumber: {
@@ -46,7 +46,7 @@ function parseArgv() {
 
   return {
     documentNumber: argv.documentNumber as number,
-    forceRequestRoute: !!argv.forceRequestRoute as boolean,
+    lowPriority: !!argv.lowPriority as boolean,
     source: argv.source as string,
   };
 }

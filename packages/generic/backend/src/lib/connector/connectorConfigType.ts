@@ -43,6 +43,7 @@ type connectorConfigType = {
   ) => Promise<void>;
   mapCourtDecisionToDocument: (
     courtDecision: decisionType,
+    importer: documentType['importer'],
   ) => Promise<documentType>;
   mapDocumentToCourtDecision: (document: documentType) => decisionType;
 };

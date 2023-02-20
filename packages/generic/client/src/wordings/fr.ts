@@ -124,6 +124,7 @@ const fr = {
         jurisdiction: 'Juridiction',
         userName: 'Agent',
         route: 'Circuit de traitement',
+        importer: 'Importateur',
         documentReviewFilterStatus: 'Statut de revue',
         treatmentDate: {
           start: 'Début traitement',

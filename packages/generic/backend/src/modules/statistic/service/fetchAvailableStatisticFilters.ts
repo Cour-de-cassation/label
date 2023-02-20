@@ -12,6 +12,7 @@ async function fetchAvailableStatisticFilters() {
   const statisticFields = await statisticRepository.findAllProjection([
     'publicationCategory',
     'route',
+    'importer',
     'source',
     'jurisdiction',
   ]);
@@ -26,6 +27,7 @@ async function fetchAvailableStatisticFilters() {
       statisticFields,
     ),
     routes: await fetchAvailableRouteFilters(statisticFields),
+    importers: await fetchAvailableImporterFilters(statisticFields),
     sources: await fetchAvailableSourceFilters(statisticFields),
   };
 }
@@ -38,9 +40,9 @@ async function fetchAvailablePublicationCategoryFilters(
   let statisticPublicationCategories: string[] = [];
   statisticFields.forEach(
     ({ publicationCategory }) =>
-      (statisticPublicationCategories = uniq(
-        statisticPublicationCategories.concat(publicationCategory),
-      )),
+    (statisticPublicationCategories = uniq(
+      statisticPublicationCategories.concat(publicationCategory),
+    )),
   );
 
   const documentPublicationCategories = await documentService.fetchAllPublicationCategories();
@@ -59,6 +61,17 @@ async function fetchAvailableRouteFilters(
   const documentRoutes = await documentService.fetchAllRoutes();
 
   return uniq([...statisticRoutes, ...documentRoutes]).sort();
+}
+
+async function fetchAvailableImporterFilters(
+  statisticFields: Array<{
+    importer: statisticType['importer'];
+  }>,
+) {
+  const statisticImporters = statisticFields.map(({ importer }) => importer);
+  const documentImporters = await documentService.fetchAllImporters();
+
+  return uniq([...statisticImporters, ...documentImporters]).sort();
 }
 
 async function fetchAvailableSourceFilters(

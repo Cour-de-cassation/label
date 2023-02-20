@@ -169,13 +169,6 @@ function buildAnnotator(
   }
 
   async function annotateDocument(document: documentType) {
-    const {
-      annotations,
-      documentId,
-      report,
-    } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
-    logger.log(`NLP annotation succeeded!`);
-
     const previousTreatments = await treatmentService.fetchTreatmentsByDocumentId(
       document._id,
     );
@@ -186,6 +179,19 @@ function buildAnnotator(
         )}. Skipping...`,
       );
     }
+
+    const {
+      annotations,
+      documentId,
+      report,
+    } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
+    logger.log(`NLP annotation succeeded!`);
+
+    if (document.route == 'simple' && annotations.length == 0) {
+      await documentService.updateDocumentRoute(documentId, 'automatic');
+      logger.log(`Route switched to automatic`);
+    }
+
     await createAnnotatorTreatment({ annotations, documentId });
     logger.log(`NLP treatment created in DB`);
     const additionalAnnotations = computeAdditionalAnnotations(

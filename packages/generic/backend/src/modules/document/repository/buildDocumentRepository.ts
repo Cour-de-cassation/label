@@ -190,6 +190,12 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return updatedDocument || undefined;
     },
 
+    async updateRouteById(_id, route) {
+      await collection.updateOne({ _id }, { $set: { route } });
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
     async updateStatusById(_id, status) {
       await collection.updateOne(
         { _id },

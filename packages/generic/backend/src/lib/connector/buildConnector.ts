@@ -91,7 +91,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
         },
       );
       logger.log(
-        `${newCourtDecisions.length} ${connectorConfig.name
+        `${newCourtDecisions.length} ${
+          connectorConfig.name
         } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
           startDate.getTime(),
         )} and ${timeOperator.convertTimestampToReadableDate(
@@ -149,7 +150,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
 
     logger.log(
-      `Court decision found. labelStatus: ${courtDecision.labelStatus}, ${!!courtDecision.pseudoText ? 'already' : 'never'
+      `Court decision found. labelStatus: ${courtDecision.labelStatus}, ${
+        !!courtDecision.pseudoText ? 'already' : 'never'
       } pseudonymised`,
     );
     const document = await connectorConfig.mapCourtDecisionToDocument(
@@ -202,7 +204,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
       const newCourtDecisions = [...newJurinetDecisions, ...newJuricaDecisions];
 
       logger.log(
-        `${newCourtDecisions.length} ${connectorConfig.name
+        `${newCourtDecisions.length} ${
+          connectorConfig.name
         } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
           startDate.getTime(),
         )} and ${timeOperator.convertTimestampToReadableDate(
@@ -242,7 +245,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const DEFAULT_DAYS_STEP = 30;
     const MAX_STEP = 300;
     logger.log(
-      `importChainedDocuments: ${documentCount} - ${daysStep || DEFAULT_DAYS_STEP
+      `importChainedDocuments: ${documentCount} - ${
+        daysStep || DEFAULT_DAYS_STEP
       }`,
     );
 
@@ -263,7 +267,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
         },
       );
       logger.log(
-        `${newCourtDecisions.length} ${connectorConfig.name
+        `${newCourtDecisions.length} ${
+          connectorConfig.name
         } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
           startDate.getTime(),
         )} and ${timeOperator.convertTimestampToReadableDate(
@@ -672,7 +677,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
     );
     if (nlpTreatments.length !== 1) {
       logger.error(
-        `Error: ${nlpTreatments.length
+        `Error: ${
+          nlpTreatments.length
         } NLP treatment(s) found for document ${idModule.lib.convertToString(
           document._id,
         )}`,

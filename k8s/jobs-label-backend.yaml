@@ -214,7 +214,7 @@ metadata:
   name: ${APP_ID}-job-export-publishable
   namespace: ${KUBE_NAMESPACE}
 spec:
-  schedule: "58 13 * * *"
+  schedule: "30 13 * * *"
   # keeping logs 7 days, once a day
   successfulJobsHistoryLimit: 7
   failedJobsHistoryLimit: 7

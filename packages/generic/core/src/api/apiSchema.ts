@@ -175,6 +175,13 @@ const apiSchema = {
               content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request', 'default'] as const,
             },
           },
+          importers: {
+            kind: 'array',
+            content: {
+              kind: 'constant',
+              content: ['recent', 'chained', 'filler', 'manual', 'default'] as const,
+            },
+          },
           sources: {
             kind: 'array',
             content: {

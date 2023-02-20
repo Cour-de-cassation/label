@@ -140,7 +140,9 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     personalStatistics: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (user) => {
-        return statisticService.fetchPersonalStatistics(user);
+        const settings = settingsLoader.getSettings();
+
+        return statisticService.fetchPersonalStatistics(user, settings);
       },
     }),
 

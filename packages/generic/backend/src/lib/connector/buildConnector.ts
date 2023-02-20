@@ -125,14 +125,14 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function importSpecificDocument({
     documentNumber,
     source,
-    forceRequestRoute,
+    lowPriority,
   }: {
     documentNumber: number;
     source: string;
-    forceRequestRoute: boolean;
+    lowPriority: boolean;
   }) {
     logger.log(
-      `importSpecificDocument: ${documentNumber} - ${source}, forceRequestRoute: ${forceRequestRoute}`,
+      `importSpecificDocument: ${documentNumber} - ${source}, lowPriority: ${lowPriority}`,
     );
 
     const courtDecision = await connectorConfig.fetchCourtDecisionBySourceIdAndSourceName(
@@ -159,10 +159,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       'manual',
     );
     logger.log(`Court decision converted. Inserting document into database...`);
-    if (forceRequestRoute) {
-      await insertDocument({ ...document, route: 'request', priority: 4 });
+    if (lowPriority) {
+      await insertDocument({ ...document });
     } else {
-      await insertDocument({ ...document, priority: 4 });
+      await insertDocument({ ...document, route: 'request', priority: 4 });
     }
     logger.log(`Insertion done`);
 
@@ -639,7 +639,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     await importSpecificDocument({
       documentNumber,
       source,
-      forceRequestRoute: false,
+      lowPriority: true,
     });
   }
 

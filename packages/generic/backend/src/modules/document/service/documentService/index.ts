@@ -40,6 +40,7 @@ import { resetDocument } from './resetDocument';
 import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentLoss } from './updateDocumentLoss';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
+import { updateDocumentRoute } from './updateDocumentRoute';
 import { updateDocumentStatus } from './updateDocumentStatus';
 
 export { buildDocumentService, documentService };
@@ -98,6 +99,7 @@ function buildDocumentService() {
     resetDocumentReviewStatus,
     updateDocumentLoss,
     updateDocumentReviewStatus,
+    updateDocumentRoute,
     updateDocumentStatus,
   };
 }

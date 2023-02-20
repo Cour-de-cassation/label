@@ -101,7 +101,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       for (const courtDecision of newCourtDecisions) {
         newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+          await connectorConfig.mapCourtDecisionToDocument(
+            courtDecision,
+            'recent',
+          ),
         );
       }
       daysAgo += daysStep;
@@ -153,6 +156,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     );
     const document = await connectorConfig.mapCourtDecisionToDocument(
       courtDecision,
+      'manual',
     );
     logger.log(`Court decision converted. Inserting document into database...`);
     if (forceRequestRoute) {
@@ -210,7 +214,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       for (const courtDecision of newCourtDecisions) {
         newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+          await connectorConfig.mapCourtDecisionToDocument(
+            courtDecision,
+            'filler',
+          ),
         );
       }
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
@@ -270,7 +277,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       for (const courtDecision of newCourtDecisions) {
         newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+          await connectorConfig.mapCourtDecisionToDocument(
+            courtDecision,
+            'chained',
+          ),
         );
       }
 
@@ -326,7 +336,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        await connectorConfig.mapCourtDecisionToDocument(
+          courtDecision,
+          'recent',
+        ),
       );
     }
 
@@ -370,7 +383,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        await connectorConfig.mapCourtDecisionToDocument(
+          courtDecision,
+          'recent',
+        ),
       );
     }
 
@@ -428,7 +444,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        await connectorConfig.mapCourtDecisionToDocument(
+          courtDecision,
+          'manual',
+        ),
       );
     }
 
@@ -467,7 +486,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(courtDecision),
+        await connectorConfig.mapCourtDecisionToDocument(
+          courtDecision,
+          'manual',
+        ),
       );
     }
 

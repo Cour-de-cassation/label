@@ -48,6 +48,10 @@ const documentModelCommonFields = {
   },
   documentNumber: { kind: 'primitive', content: 'number' },
   _id: { kind: 'custom', content: 'id' },
+  importer: {
+    kind: 'constant',
+    content: ['recent', 'chained', 'filler', 'manual', 'default'] as const,
+  },
   loss: {
     kind: 'or',
     content: [

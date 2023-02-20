@@ -1,4 +1,4 @@
-import { apiSchema, idModule } from '@label/core';
+import { apiSchema, documentType, idModule } from '@label/core';
 import { errorHandlers } from 'sder-core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
@@ -66,14 +66,8 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             publicationCategories: string[];
             maxDate: number | undefined;
             minDate: number | undefined;
-            routes: (
-              | 'automatic'
-              | 'exhaustive'
-              | 'simple'
-              | 'confirmation'
-              | 'request'
-              | 'default'
-            )[];
+            routes: documentType['route'][];
+            importers: documentType['importer'][];
             sources: string[];
             jurisdictions: string[];
           };
@@ -83,6 +77,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             maxDate: undefined,
             minDate: undefined,
             routes: [],
+            importers: [],
             sources: [],
             jurisdictions: [],
           };
@@ -135,7 +130,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         json: JSON.stringify(settingsLoader.getSettings()),
       }),
     }),
-
     summary: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => {

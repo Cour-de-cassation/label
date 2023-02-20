@@ -28,6 +28,7 @@ const statisticModel = buildModel({
         { kind: 'primitive', content: 'undefined' },
       ],
     },
+    importer: documentModel.content.importer,
     jurisdiction: {
       kind: 'or',
       content: [

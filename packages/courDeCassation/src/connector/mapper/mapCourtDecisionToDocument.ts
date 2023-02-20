@@ -18,6 +18,7 @@ export { mapCourtDecisionToDocument };
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function mapCourtDecisionToDocument(
   sderCourtDecision: decisionType,
+  importer: documentType['importer'],
 ): Promise<documentType> {
   const readableChamberName = extractReadableChamberName({
     chamberName: sderCourtDecision.chamberName,
@@ -113,6 +114,7 @@ async function mapCourtDecisionToDocument(
     priority,
     publicationCategory,
     route,
+    importer,
     source,
     title,
     text: sderCourtDecision.originalText,

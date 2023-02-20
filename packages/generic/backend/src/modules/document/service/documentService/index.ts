@@ -3,17 +3,10 @@ import { assertDocumentIsPublishable } from './assertDocumentIsPublishable';
 import { assertDocumentStatus } from './assertDocumentStatus';
 import { countDocumentsWithoutAnnotations } from './countDocumentsWithoutAnnotations';
 import { countDoneDocumentsWithoutLossNotIn } from './countDoneDocumentsWithoutLossNotIn';
-import { countDoneDocuments } from './countDoneDocuments';
-import { countFreeDocuments } from './countFreeDocuments';
-import { countLoadedDocuments } from './countLoadedDocuments';
-import { countLockedDocuments } from './countLockedDocuments';
-import { countNlpAnnotatingDocuments } from './countNlpAnnotatingDocuments';
-import { countPendingDocuments } from './countPendingDocuments';
-import { countRejectedDocuments } from './countRejectedDocuments';
-import { countSavedDocuments } from './countSavedDocuments';
 import { deleteDocument } from './deleteDocument';
 import { fetchAllDocumentsByIds } from './fetchAllDocumentsByIds';
 import { fetchAllExportableDocuments } from './fetchAllExportableDocuments';
+import { fetchAllImporters } from './fetchAllImporters';
 import { fetchAllJurisdictions } from './fetchAllJurisdictions';
 import { fetchAllPublicationCategories } from './fetchAllPublicationCategories';
 import { fetchAllRoutes } from './fetchAllRoutes';
@@ -27,7 +20,6 @@ import { fetchDocumentWithoutAnnotationsNotIn } from './fetchDocumentWithoutAnno
 import { fetchDoneDocuments } from './fetchDoneDocuments';
 import { fetchDoneDocumentWithoutLossNotIn } from './fetchDoneDocumentWithoutLossNotIn';
 import { fetchFreeDocumentsIds } from './fetchFreeDocumentsIds';
-import { fetchLockedDocuments } from './fetchLockedDocuments';
 import { fetchPublishableDocuments } from './fetchPublishableDocuments';
 import { fetchPublishableDocumentsToExport } from './fetchPublishableDocumentsToExport';
 import { fetchToBeConfirmedDocuments } from './fetchToBeConfirmedDocuments';
@@ -40,6 +32,7 @@ import { resetDocument } from './resetDocument';
 import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentLoss } from './updateDocumentLoss';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
+import { updateDocumentRoute } from './updateDocumentRoute';
 import { updateDocumentStatus } from './updateDocumentStatus';
 
 export { buildDocumentService, documentService };
@@ -61,17 +54,10 @@ function buildDocumentService() {
     assertDocumentStatus,
     countDocumentsWithoutAnnotations,
     countDoneDocumentsWithoutLossNotIn,
-    countDoneDocuments,
-    countFreeDocuments,
-    countLoadedDocuments,
-    countLockedDocuments,
-    countNlpAnnotatingDocuments,
-    countPendingDocuments,
-    countRejectedDocuments,
-    countSavedDocuments,
     deleteDocument,
     fetchAllDocumentsByIds,
     fetchAllExportableDocuments,
+    fetchAllImporters,
     fetchAllJurisdictions,
     fetchAllPublicationCategories,
     fetchAllRoutes,
@@ -85,7 +71,6 @@ function buildDocumentService() {
     fetchDoneDocuments,
     fetchDoneDocumentWithoutLossNotIn,
     fetchFreeDocumentsIds,
-    fetchLockedDocuments,
     fetchPublishableDocuments,
     fetchPublishableDocumentsToExport,
     fetchToBeConfirmedDocuments,
@@ -98,6 +83,7 @@ function buildDocumentService() {
     resetDocumentReviewStatus,
     updateDocumentLoss,
     updateDocumentReviewStatus,
+    updateDocumentRoute,
     updateDocumentStatus,
   };
 }

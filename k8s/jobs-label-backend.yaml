@@ -88,7 +88,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: ${APP_ID}-job-urgent-import
+  name: ${APP_ID}-job-filler-import
   namespace: ${KUBE_NAMESPACE}
 spec:
   schedule: "15 6-17 * * *"
@@ -104,7 +104,7 @@ spec:
         spec:
           activeDeadlineSeconds: 1800
           containers:
-            - name: ${APP_ID}-job-urgent-import
+            - name: ${APP_ID}-job-filler-import
               image: ${DOCKER_USERNAME}/${APP_ID}:${VERSION}
               volumeMounts:
                 - name: ${APP_ID}-config

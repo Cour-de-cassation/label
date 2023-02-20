@@ -37,6 +37,7 @@ function buildStatistic({
     session: document.decisionMetadata.session || undefined,
     publicationCategory: document.publicationCategory,
     route: document.route,
+    importer: document.importer,
     source: document.source,
     surAnnotationsCount: treatmentInfo.surAnnotationsCount,
     subAnnotationsSensitiveCount: treatmentInfo.subAnnotationsSensitiveCount,

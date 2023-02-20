@@ -40,6 +40,7 @@ describe('statisticsCreator', () => {
     externalId: documentExternalId,
     publicationCategory: documentPublicationCategory,
     route: 'exhaustive',
+    importer: 'recent',
     source: documentSource,
     text: 'Some text with five words',
   });
@@ -108,6 +109,7 @@ describe('statisticsCreator', () => {
         publicationCategory: documentPublicationCategory,
         session: 'FRH',
         route: 'exhaustive',
+        importer: 'recent',
         source: documentSource,
         subAnnotationsNonSensitiveCount: 0,
         surAnnotationsCount: 2,
@@ -172,6 +174,7 @@ describe('statisticsCreator', () => {
         publicationCategory: documentPublicationCategory,
         session: 'FRH',
         route: 'exhaustive',
+        importer: 'recent',
         source: documentSource,
         subAnnotationsNonSensitiveCount: 0,
         surAnnotationsCount: 0,

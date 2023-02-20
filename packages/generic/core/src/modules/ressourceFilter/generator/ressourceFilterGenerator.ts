@@ -13,6 +13,7 @@ const ressourceFilterGenerator: generatorType<ressourceFilterType> = {
     publicationCategory,
     startDate,
     route,
+    importer,
     source,
     userId,
   } = {}) => ({
@@ -23,6 +24,7 @@ const ressourceFilterGenerator: generatorType<ressourceFilterType> = {
     publicationCategory: publicationCategory ?? undefined,
     startDate: startDate ?? undefined,
     route: route ?? undefined,
+    importer: importer ?? undefined,
     source: source ?? undefined,
     userId: userId ? idModule.lib.buildId(userId) : undefined,
   }),

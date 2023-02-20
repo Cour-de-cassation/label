@@ -12,6 +12,7 @@ async function fetchPersonalStatistics(user: userType) {
     startDate: dateBuilder.daysAgo(10),
     endDate: new Date().getTime(),
     route: undefined,
+    importer: undefined,
     source: undefined,
     jurisdiction: undefined,
   };

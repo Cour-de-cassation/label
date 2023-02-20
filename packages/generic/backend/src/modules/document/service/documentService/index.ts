@@ -42,6 +42,7 @@ import { updateDocumentLoss } from './updateDocumentLoss';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
 import { updateDocumentRoute } from './updateDocumentRoute';
 import { updateDocumentStatus } from './updateDocumentStatus';
+import { fetchAllImporters } from './fetchAllImporters';
 
 export { buildDocumentService, documentService };
 
@@ -73,6 +74,7 @@ function buildDocumentService() {
     deleteDocument,
     fetchAllDocumentsByIds,
     fetchAllExportableDocuments,
+    fetchAllImporters,
     fetchAllJurisdictions,
     fetchAllPublicationCategories,
     fetchAllRoutes,

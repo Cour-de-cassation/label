@@ -10,7 +10,7 @@ Send Label documents to the nlp annotation service.
 
 Import recent (7 days) documents from the source databases.
 
-## urgent-import
+## filler-import
 
 Fill Label with old documents if Label is lacking of documents to treat.
 

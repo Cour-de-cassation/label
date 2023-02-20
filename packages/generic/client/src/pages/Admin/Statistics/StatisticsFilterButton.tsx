@@ -3,6 +3,7 @@ import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { apiRouteOutType, idModule, ressourceFilterType, userType } from '@label/core';
 import { FilterButton, FilterChip } from '../../../components';
 import { wordings } from '../../../wordings';
+import { documentType } from 'packages/generic/core/dist';
 
 export { StatisticsFilterButton };
 
@@ -34,6 +35,7 @@ function StatisticsFilterButton(props: {
     const publicationCategoryFilter = buildPublicationCategoryFilter();
     const dateIntervalFilter = buildDateIntervalFilter();
     const routeFilter = buildRouteFilter();
+    const importerFilter = buildImporterFilter();
     const sourceFilter = buildSourceFilter();
     const jurisdictionFilter = buildJurisdictionFilter();
     const userFilter = buildUserFilter();
@@ -43,6 +45,7 @@ function StatisticsFilterButton(props: {
       userFilter,
       jurisdictionFilter,
       routeFilter,
+      importerFilter,
       sourceFilter,
       publicationCategoryFilter,
       mustHaveSubAnnotationsFilter,
@@ -129,14 +132,23 @@ function StatisticsFilterButton(props: {
         onChange: (newRoute: string | undefined) => {
           props.refetch({
             ...props.ressourceFilter,
-            route: newRoute as
-              | 'automatic'
-              | 'exhaustive'
-              | 'simple'
-              | 'confirmation'
-              | 'request'
-              | 'default'
-              | undefined,
+            route: newRoute as documentType['route'] | undefined,
+          });
+        },
+      };
+    }
+
+    function buildImporterFilter() {
+      return {
+        kind: 'dropdown' as const,
+        name: 'importer',
+        label: wordings.business.filters.fields.importer,
+        possibleValues: props.availableStatisticFilters.importers,
+        value: props.ressourceFilter.route,
+        onChange: (newImporter: string | undefined) => {
+          props.refetch({
+            ...props.ressourceFilter,
+            importer: newImporter as documentType['importer'] | undefined,
           });
         },
       };

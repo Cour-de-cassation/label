@@ -41,6 +41,16 @@ const ressourceFilterModel = buildModel({
         { kind: 'primitive', content: 'undefined' },
       ],
     },
+    importer: {
+      kind: 'or',
+      content: [
+        {
+          kind: 'constant',
+          content: ['recent', 'chained', 'filler', 'manual', 'default'] as const,
+        },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
     source: {
       kind: 'or',
       content: [

@@ -154,7 +154,7 @@ function buildExporter(
     logger.log('exportAllRejectedDocuments');
     logger.log(`Exportation to ${exporterConfig.name}`);
 
-    logger.log(`Fetching all treated documents...`);
+    logger.log(`Fetching all rejected documents...`);
     const rejectedDocuments = await documentService.fetchRejectedDocuments();
     logger.log(`${rejectedDocuments.length} rejected documents to export`);
 

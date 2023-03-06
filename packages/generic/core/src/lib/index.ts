@@ -5,7 +5,6 @@ import { annotationHandler } from './annotationHandler';
 import { annotationLinkHandler } from './annotationLinkHandler';
 import { annotationOverlapDetector } from './annotationOverlapDetector';
 import { annotationTextDetector } from './annotationTextDetector';
-import { csvExtractor } from './csvExtractor';
 import { environmentType } from './environment';
 import { statisticsCreator } from './statisticsCreator';
 import { stringComparator, stringComparisonSensitivityType } from './stringComparator';
@@ -20,7 +19,6 @@ export {
   autoLinker,
   buildAnonymizer,
   buildAutoAnnotator,
-  csvExtractor,
   statisticsCreator,
   stringComparator,
   textSplitter,

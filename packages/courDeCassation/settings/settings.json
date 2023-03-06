@@ -2,65 +2,112 @@
   "personnePhysique": {
     "anonymization": "[%c]",
     "color": {
-      "lightMode": ["deepOrange", "A200"],
-      "darkMode": ["deepOrange", "800"]
+      "lightMode": [
+        "deepOrange",
+        "A200"
+      ],
+      "darkMode": [
+        "deepOrange",
+        "800"
+      ]
     },
     "iconName": "person",
     "isSensitive": true,
     "order": 1,
     "text": "Personne physique",
     "autoLinkSensitivity": [
-      { "kind": "caseInsensitive" },
-      { "kind": "levenshteinDistance", "threshold": 1 }
+      {
+        "kind": "caseInsensitive"
+      },
+      {
+        "kind": "levenshteinDistance",
+        "threshold": 1
+      }
     ]
   },
   "dateNaissance": {
     "anonymization": "[Date naissance %d]",
     "color": {
-      "lightMode": ["teal", "300"],
-      "darkMode": ["teal", "800"]
+      "lightMode": [
+        "teal",
+        "300"
+      ],
+      "darkMode": [
+        "teal",
+        "800"
+      ]
     },
     "iconName": "cake",
     "order": 2,
     "text": "Date de naissance/anniversaire",
     "autoLinkSensitivity": [
-      {"kind": "caseInsensitive"},
-      {"kind": "inclusion"}
+      {
+        "kind": "caseInsensitive"
+      },
+      {
+        "kind": "inclusion"
+      }
     ]
   },
   "dateMariage": {
     "anonymization": "[Date mariage %d]",
     "color": {
-      "lightMode": ["green", "300"],
-      "darkMode": ["green", "800"]
+      "lightMode": [
+        "green",
+        "300"
+      ],
+      "darkMode": [
+        "green",
+        "800"
+      ]
     },
     "iconName": "heart",
-    "order":3,
+    "order": 3,
     "text": "Date de mariage/PACS",
     "autoLinkSensitivity": [
-      {"kind": "caseInsensitive"},
-      {"kind": "inclusion"}
+      {
+        "kind": "caseInsensitive"
+      },
+      {
+        "kind": "inclusion"
+      }
     ]
   },
   "dateDeces": {
     "anonymization": "[Date décès %d]",
     "color": {
-      "lightMode": ["lime", "500"],
-      "darkMode": ["lime", "900"]
+      "lightMode": [
+        "lime",
+        "500"
+      ],
+      "darkMode": [
+        "lime",
+        "900"
+      ]
     },
     "iconName": "cloud",
     "order": 4,
     "text": "Date de décès",
     "autoLinkSensitivity": [
-      {"kind": "caseInsensitive"},
-      {"kind": "inclusion"}
+      {
+        "kind": "caseInsensitive"
+      },
+      {
+        "kind": "inclusion"
+      }
     ]
   },
   "insee": {
     "anonymization": "[XXXXXXXXXXX0%d]",
     "color": {
-      "lightMode": ["indigo", "300"],
-      "darkMode": ["indigo", "800"]
+      "lightMode": [
+        "indigo",
+        "300"
+      ],
+      "darkMode": [
+        "indigo",
+        "800"
+      ]
     },
     "iconName": "book",
     "order": 5,
@@ -69,8 +116,14 @@
   "professionnelMagistratGreffier": {
     "anonymization": "[%c]",
     "color": {
-      "lightMode": ["brown", "200"],
-      "darkMode": ["brown", "500"]
+      "lightMode": [
+        "brown",
+        "200"
+      ],
+      "darkMode": [
+        "brown",
+        "500"
+      ]
     },
     "iconName": "judge",
     "order": 6,
@@ -80,10 +133,15 @@
   "personneMorale": {
     "anonymization": "[%d]",
     "color": {
-      "lightMode": ["deepPurple", "A100"],
-      "darkMode": ["deepPurple", "400"]
+      "lightMode": [
+        "deepPurple",
+        "A100"
+      ],
+      "darkMode": [
+        "deepPurple",
+        "400"
+      ]
     },
-    "couldBe": "personnePhysique",
     "iconName": "work",
     "order": 7,
     "text": "Personne morale"
@@ -91,8 +149,14 @@
   "etablissement": {
     "anonymization": "[%d]",
     "color": {
-      "lightMode": ["purple", "A100"],
-      "darkMode": ["purple", "600"]
+      "lightMode": [
+        "purple",
+        "A100"
+      ],
+      "darkMode": [
+        "purple",
+        "600"
+      ]
     },
     "iconName": "store",
     "order": 8,
@@ -101,8 +165,14 @@
   "numeroSiretSiren": {
     "anonymization": "[N° SIREN/SIRET %d]",
     "color": {
-      "lightMode": ["deepPurple", "200"],
-      "darkMode": ["deepPurple", "500"]
+      "lightMode": [
+        "deepPurple",
+        "200"
+      ],
+      "darkMode": [
+        "deepPurple",
+        "500"
+      ]
     },
     "iconName": "work",
     "order": 9,
@@ -111,22 +181,38 @@
   "adresse": {
     "anonymization": "[Adresse %d]",
     "color": {
-      "lightMode": ["blue", "A100"],
-      "darkMode": ["blue", "800"]
+      "lightMode": [
+        "blue",
+        "A100"
+      ],
+      "darkMode": [
+        "blue",
+        "800"
+      ]
     },
     "iconName": "location",
     "order": 10,
     "text": "Adresse",
     "autoLinkSensitivity": [
-      {"kind": "caseInsensitive"},
-      {"kind": "inclusion"}
+      {
+        "kind": "caseInsensitive"
+      },
+      {
+        "kind": "inclusion"
+      }
     ]
   },
   "localite": {
     "anonymization": "[Localité %d]",
     "color": {
-      "lightMode": ["blue", "300"],
-      "darkMode": ["blue", "900"]
+      "lightMode": [
+        "blue",
+        "300"
+      ],
+      "darkMode": [
+        "blue",
+        "900"
+      ]
     },
     "iconName": "city",
     "order": 11,
@@ -135,8 +221,14 @@
   "telephoneFax": {
     "anonymization": "[XXXXXXXX0%d]",
     "color": {
-      "lightMode": ["lightBlue", "300"],
-      "darkMode": ["lightBlue", "900"]
+      "lightMode": [
+        "lightBlue",
+        "300"
+      ],
+      "darkMode": [
+        "lightBlue",
+        "900"
+      ]
     },
     "iconName": "phone",
     "order": 12,
@@ -145,8 +237,14 @@
   "email": {
     "anonymization": "[Courriel %d]",
     "color": {
-      "lightMode": ["lightBlue", "A100"],
-      "darkMode": ["lightBlue", "800"]
+      "lightMode": [
+        "lightBlue",
+        "A100"
+      ],
+      "darkMode": [
+        "lightBlue",
+        "800"
+      ]
     },
     "iconName": "email",
     "order": 13,
@@ -155,8 +253,14 @@
   "siteWebSensible": {
     "anonymization": "[0%d]",
     "color": {
-      "lightMode": ["orange", "600"],
-      "darkMode": ["orange", "900"]
+      "lightMode": [
+        "orange",
+        "600"
+      ],
+      "darkMode": [
+        "orange",
+        "900"
+      ]
     },
     "iconName": "web",
     "order": 14,
@@ -165,8 +269,14 @@
   "compteBancaire": {
     "anonymization": "[XXXXXXXXXX0%d]",
     "color": {
-      "lightMode": ["pink", "A100"],
-      "darkMode": ["pink", "600"]
+      "lightMode": [
+        "pink",
+        "A100"
+      ],
+      "darkMode": [
+        "pink",
+        "600"
+      ]
     },
     "iconName": "bank",
     "order": 15,
@@ -175,19 +285,35 @@
   "cadastre": {
     "anonymization": "[Cadastre %d]",
     "color": {
-      "lightMode": ["cyan", "300"],
-      "darkMode": ["cyan", "600"]
+      "lightMode": [
+        "cyan",
+        "300"
+      ],
+      "darkMode": [
+        "cyan",
+        "600"
+      ]
     },
     "iconName": "map",
     "order": 16,
     "text": "Cadastre",
-    "autoLinkSensitivity": [{"kind": "caseInsensitive"}]
+    "autoLinkSensitivity": [
+      {
+        "kind": "caseInsensitive"
+      }
+    ]
   },
   "plaqueImmatriculation": {
     "anonymization": "[Immatriculation %d]",
     "color": {
-      "lightMode": ["pink", "300"],
-      "darkMode": ["pink", "800"]
+      "lightMode": [
+        "pink",
+        "300"
+      ],
+      "darkMode": [
+        "pink",
+        "800"
+      ]
     },
     "iconName": "car",
     "order": 17,
@@ -196,10 +322,15 @@
   "professionnelAvocat": {
     "anonymization": "",
     "color": {
-      "lightMode": ["brown", "500"],
-      "darkMode": ["brown", "500"]
+      "lightMode": [
+        "brown",
+        "500"
+      ],
+      "darkMode": [
+        "brown",
+        "500"
+      ]
     },
-    "couldBe": "personnePhysique",
     "iconName": "judge",
     "isAnonymized": false,
     "order": 18,

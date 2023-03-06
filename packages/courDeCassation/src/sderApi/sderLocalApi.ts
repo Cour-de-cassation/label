@@ -71,7 +71,7 @@ const sderLocalApi: sderApiType = {
     });
   },
 
-  async fetchDecisionsToPseudonymiseBetweenDateCreation() {
+  async fetchDecisionsToPseudonymiseBetweenDateCreation({ source }) {
     const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
       pathToCourtDecisions,
     );
@@ -82,14 +82,18 @@ const sderLocalApi: sderApiType = {
       pathToCourtDecisions,
     );
 
-    return courtDecisions.map(({ content }) => {
+    const mappedCourtDecisions = courtDecisions.map(({ content }) => {
       const parsedContent = JSON.parse(content) as decisionType;
       return {
         ...parsedContent,
         _id: idModule.lib.buildId(),
-        dateCreation: parsedContent.dateCreation,
+        dateDecision: parsedContent.dateDecision,
       };
     });
+
+    return mappedCourtDecisions.filter(
+      (courtDecision) => courtDecision.sourceName === source,
+    );
   },
 
   async fetchChainedJuricaDecisionsToPseudonymiseBetween() {

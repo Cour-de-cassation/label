@@ -9,8 +9,6 @@ import {
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,
-  extractComplexityInfoIntoCsv,
-  extractRouteInfosIntoCsv,
   freePendingDocuments,
   insertTestStatistics,
   insertTestUsers,
@@ -61,14 +59,6 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       dumpDocument: {
         run: dumpDocument,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      extractComplexityInfoIntoCsv: {
-        run: extractComplexityInfoIntoCsv,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      extractRouteInfosIntoCsv: {
-        run: extractRouteInfosIntoCsv,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       freePendingDocuments: {

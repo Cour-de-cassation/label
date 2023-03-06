@@ -6,16 +6,16 @@
 
 ## Installation
 
-Install the backend with:
-
-```sh
-yarn buildLocalDevDocker
-```
-
 Install the frontend with:
 
 ```sh
 yarn
+```
+
+Install the backend with:
+
+```sh
+yarn buildLocalDevDocker
 ```
 
 ## Launch

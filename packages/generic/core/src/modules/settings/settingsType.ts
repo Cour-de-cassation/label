@@ -20,7 +20,6 @@ type settingsType = {
 type categorySettingType = {
   anonymization: string;
   color: { [displayMode in displayModeType]: colorType };
-  couldBe?: string;
   iconName: categoryIconNameType;
   autoLinkSensitivity: stringComparisonSensitivityType[];
   isAnonymized?: boolean;

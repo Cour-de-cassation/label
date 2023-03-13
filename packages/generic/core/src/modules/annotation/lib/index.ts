@@ -6,6 +6,7 @@ import { buildAnnotation } from './buildAnnotation';
 import { comparator } from './comparator';
 import { computeNearbyText } from './computeNearbyText';
 import { entityIdHandler } from './entityIdHandler';
+import { removeOverlappingAnnotations } from './removeOverlappingAnnotations';
 import { isAnnotationTextInAnnotations } from './isAnnotationTextInAnnotations';
 import { sortAnnotations } from './sortAnnotations';
 import { stringify } from './stringify';
@@ -19,6 +20,7 @@ export {
   comparator,
   computeNearbyText,
   entityIdHandler,
+  removeOverlappingAnnotations,
   isAnnotationTextInAnnotations,
   sortAnnotations,
   stringify,

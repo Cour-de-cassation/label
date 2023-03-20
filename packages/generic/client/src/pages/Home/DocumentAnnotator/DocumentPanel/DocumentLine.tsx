@@ -3,6 +3,7 @@ import { annotationChunkType, textChunkType } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { splittedTextByLineType } from '../lib';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
+import { clientAnonymizerType } from '../../../../types';
 import { DocumentText } from './DocumentText';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 
@@ -11,6 +12,7 @@ export { DocumentLine };
 function DocumentLine(props: {
   line: splittedTextByLineType[number]['line'] | undefined;
   content: splittedTextByLineType[number]['content'] | undefined;
+  anonymizer: clientAnonymizerType;
 }) {
   const documentViewerModeHandler = useDocumentViewerModeHandler();
 
@@ -54,7 +56,7 @@ function DocumentLine(props: {
         const { before, after } = chunk;
         return <DocumentText key={chunk.content.index} neighbours={{ before, after, current: chunk.content }} />;
       case 'annotation':
-        return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} />;
+        return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} anonymizer={props.anonymizer} />;
     }
   }
 }

@@ -12,6 +12,7 @@ import {
   LinkAnnotationDropdown,
   UnlinkAnnotationDropdown,
 } from '../../../../../components';
+import { clientAnonymizerType } from '../../../../../types';
 import { AnnotationTooltipMenuHeader } from './AnnotationTooltipMenuHeader';
 import { DeleteAnnotationDropdown } from './DeleteAnnotationDropdown';
 
@@ -21,6 +22,7 @@ const ANNOTATION_TOOLTIP_SUMMARY_WIDTH = 300;
 
 function AnnotationTooltipMenu(props: {
   annotation: annotationType;
+  anonymizer: clientAnonymizerType;
   closesOnBackdropClick: boolean;
   isAnonymizedView: boolean;
   isExpanded: boolean;
@@ -38,7 +40,11 @@ function AnnotationTooltipMenu(props: {
       width={ANNOTATION_TOOLTIP_SUMMARY_WIDTH}
     >
       <>
-        <AnnotationTooltipMenuHeader annotation={props.annotation} isAnonymizedView={props.isAnonymizedView} />
+        <AnnotationTooltipMenuHeader
+          annotation={props.annotation}
+          anonymizer={props.anonymizer}
+          isAnonymizedView={props.isAnonymizedView}
+        />
         {renderAnnotationButtons()}
       </>
     </FloatingTooltipMenu>

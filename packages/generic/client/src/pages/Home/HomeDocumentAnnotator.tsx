@@ -56,6 +56,7 @@ function HomeDocumentAnnotator(props: {
         annotations: props.annotations,
         document: props.document,
         settings: props.settings,
+        mandatoryReplacementTerms: undefined,
       }}
     >
       <MainHeader title={props.document.title} subtitle={subtitle} />

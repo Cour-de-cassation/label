@@ -172,6 +172,11 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       controllerWithUser: async () => documentService.fetchUntreatedDocuments(),
     }),
 
+    mandatoryReplacementTerms: buildAuthenticatedController({
+      permissions: ['admin', 'annotator', 'scrutator'],
+      controllerWithUser: async () => undefined, //TO DO
+    }),
+
     workingUsers: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => userService.fetchWorkingUsers(),

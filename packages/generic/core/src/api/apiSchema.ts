@@ -8,6 +8,7 @@ import {
   ressourceFilterModule,
   statisticModule,
   treatmentModule,
+  replacementTermModule,
 } from '../modules';
 import { buildModel, modelType } from '../modules/modelType';
 
@@ -498,6 +499,24 @@ const apiSchema = {
             },
           },
         },
+      } as const),
+    },
+    mandatoryReplacementTerms: {
+      in: {
+        documentId: buildModel({
+          kind: 'primitive',
+          content: 'string',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'or',
+        content: [
+          {
+            kind: 'array',
+            content: replacementTermModule.model,
+          },
+          { kind: 'primitive', content: 'undefined' },
+        ],
       } as const),
     },
     workingUsers: {

@@ -18,6 +18,7 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations,
+      mandatoryReplacementTerms: undefined,
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState);
@@ -35,11 +36,13 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations1,
+      mandatoryReplacementTerms: undefined,
     };
     const annotatorState2 = {
       document,
       settings,
       annotations: annotations2,
+      mandatoryReplacementTerms: undefined,
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -64,11 +67,13 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations1,
+      mandatoryReplacementTerms: undefined,
     };
     const annotatorState2 = {
       document,
       settings,
       annotations: annotations2,
+      mandatoryReplacementTerms: undefined,
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -90,11 +95,13 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations1,
+      mandatoryReplacementTerms: undefined,
     };
     const annotatorState2 = {
       document,
       settings,
       annotations: annotations2,
+      mandatoryReplacementTerms: undefined,
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -115,6 +122,7 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations,
+      mandatoryReplacementTerms: undefined,
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState);

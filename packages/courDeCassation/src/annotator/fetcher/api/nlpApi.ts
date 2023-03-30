@@ -43,7 +43,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
     },
     async fetchNlpLoss(document, treatments) {
       const response = await axios({
-        data: { document, treatments },
+        data: { text: document.text, treatments },
         headers: { 'Content-Type': 'application/json' },
         method: 'post',
         url: `${nlpApiBaseUrl}/loss`,

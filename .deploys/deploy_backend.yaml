@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: label-backend-deployment
+  labels:
+    app: 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: label-backend
+  template:
+    metadata:
+      labels:
+        app: label-backend
+    spec:
+      containers:
+        - name: label-backend
+          image: $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
+          ports:
+            - containerPort: 55430
+          env:
+            - name: SDER_DB_URL
+              value: ${MONGODB_URI}:${MONGODB_PORT}
+          # startupProbe:
+          #   exec:
+          #     command:
+          #     - /bin/sh
+          #     - -c
+          #     - curl -s --fail --max-time 2 "http://localhost:55430/${ROOT_PATH}/health" | egrep -q 'true'
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 5
+          #   failureThreshold: 20
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #     - /bin/sh
+          #     - -c
+          #     - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:55430/${ROOT_PATH}/health" | egrep -q 'true'
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 15
+          #   failureThreshold: 10
+          #   timeoutSeconds: 60
+          securityContext:
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - all
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+        volumeMounts:
+        - name: label-backend-config
+          mountPath: /home/node/packages/courDeCassation/environments
+          readOnly: true
+      volumes:
+      - name: label-backend-config
+        secret:
+          secretName: label-backend-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: label-backend-service
+spec:
+  selector:
+    app: label-backend
+  ports:
+    - name: label-backend
+      port: 55430
+      targetPort: 55430
+  type: ClusterIP

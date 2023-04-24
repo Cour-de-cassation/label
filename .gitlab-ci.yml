@@ -1,0 +1,78 @@
+image: docker:20.10.22 # node:16-alpine
+services:
+  - docker:20.10.22-dind
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  services:
+  - docker:20.10.22
+  script:  # Créer un dockerfile pour les tests -> plutot utiliser celui du backend
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker build 
+        --build-arg http_proxy=$HTTP_PROXY
+        --build-arg https_proxy=$HTTPS_PROXY
+        --target test
+        -t label-test .
+    - docker run label-test yarn install
+    - docker run label-test yarn compile
+    - docker run label-test yarn test
+    - docker run label-test yarn lint
+  only:
+    - master
+
+build_label_backend:
+  stage: build
+  script: 
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker build
+        --build-arg http_proxy=$HTTP_PROXY
+        --build-arg https_proxy=$HTTPS_PROXY
+        --target label-backend
+        -f Dockerfile.label-backend
+        -t $CI_REGISTRY/cour-de-cassation/label-backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend .
+    - docker push $CI_REGISTRY/cour-de-cassation/label-backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
+  only:
+    - master
+
+build_label_client:
+  stage: build
+  script: 
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker build
+        --build-arg http_proxy=$HTTP_PROXY
+        --build-arg https_proxy=$HTTPS_PROXY
+        --target label-client
+        -f Dockerfile.label-client
+        -t $CI_REGISTRY/cour-de-cassation/label-client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
+    - docker push $CI_REGISTRY/cour-de-cassation/label-client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
+  only:
+    - master
+
+
+
+deploy_label_backend:
+  stage: deploy
+  variables:
+    APP_ID: label-backend
+    API_PORT: 55430
+    MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
+    MONGODB_URI: ${{ secrets.MONGODB_URI }}
+    MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
+    NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
+    NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
+    ROOT_PATH: label/api
+    VERSION: ${{ steps.backend_version.outputs.version }}
+  script:
+    - envsubst < .deploys/deploy_api.yaml | kubectl apply -f -
+    - envsubst < .deploys/deploy_bucket.yaml | kubectl apply -f -
+    - envsubst < .deploys/deploy_database.yaml | kubectl apply -f -
+  only:
+    - master
+  tags:
+    - shell
+  dependencies:
+    - build_label_backend

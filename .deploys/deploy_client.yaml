@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: label-client-deployment
+  labels:
+    app: label-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: label-client
+  template:
+    metadata:
+      labels:
+        app: label-client
+    spec:
+      containers:
+        - name: label-client
+          image: $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
+          ports:
+            - containerPort: 55432
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #     - /bin/sh
+          #     - -c
+          #     - curl -s -k --fail --max-time 2 "http://localhost:55432/" | egrep -q 'true'
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 15
+          #   failureThreshold: 3
+          #   timeoutSeconds: 5
+          securityContext:
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - all
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: label-client-service
+# spec:
+#   selector:
+#     app: label-client
+#   ports:
+#     - name: label-client
+#       port: 55430
+#       targetPort: 55430
+#   type: ClusterIP

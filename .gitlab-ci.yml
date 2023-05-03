@@ -10,13 +10,13 @@ test:
   stage: test
   services:
   - docker:20.10.22
-  script:  # Créer un dockerfile pour les tests -> plutot utiliser celui du backend
+  script:  # Créer un dockerfile pour les tests (chercher  labelServer.js '/home/node/packages/courDeCassation/dist/labelServer.js')
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker build 
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY
         --target test
-        -t label-test .
+        -t label-test 
     - docker run label-test yarn install
     - docker run label-test yarn compile
     - docker run label-test yarn test
@@ -52,27 +52,29 @@ build_label_client:
   only:
     - master
 
-
-
 deploy_label_backend:
   stage: deploy
   variables:
-    APP_ID: label-backend
-    API_PORT: 55430
     MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
     MONGODB_URI: ${{ secrets.MONGODB_URI }}
     MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
-    NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
-    NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
     ROOT_PATH: label/api
-    VERSION: ${{ steps.backend_version.outputs.version }}
   script:
-    - envsubst < .deploys/deploy_api.yaml | kubectl apply -f -
-    - envsubst < .deploys/deploy_bucket.yaml | kubectl apply -f -
-    - envsubst < .deploys/deploy_database.yaml | kubectl apply -f -
+    - envsubst < .deploys/deploy_backend.yaml | kubectl apply -f -
   only:
     - master
   tags:
     - shell
   dependencies:
     - build_label_backend
+
+deploy_label_client:
+  stage: deploy
+  script:
+    - envsubst < .deploys/deploy_client.yaml | kubectl apply -f -
+  only:
+    - master
+  tags:
+    - shell
+  dependencies:
+    - build_label_client

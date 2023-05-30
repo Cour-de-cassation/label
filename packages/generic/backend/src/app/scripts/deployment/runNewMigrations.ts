@@ -48,7 +48,7 @@ async function runNewMigrations() {
           await migrationService.createOne({ _id, order });
         } catch (error) {
           await migrationFile.down();
-          throw new Error(error);
+          throw new Error(error as string);
         }
         logger.log(
           `Migration ${idModule.lib.convertToString(

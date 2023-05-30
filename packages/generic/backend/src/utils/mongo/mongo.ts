@@ -31,9 +31,7 @@ function buildMongo() {
   }) {
     dbName = newDbName;
 
-    client = await new MongoClient(url, {
-      useUnifiedTopology: true,
-    }).connect();
+    client = await new MongoClient(url, {}).connect();
 
     return client;
   }

@@ -1,5 +1,5 @@
 import { idModule, idType, indexer } from '@label/core';
-import { mongo, mongoCollectionType } from '../utils';
+import { buildMongo, mongo, mongoCollectionType } from '../utils';
 import { projectedType, repositoryType } from './repositoryType';
 import { buildProjection } from './repositoryUtils';
 
@@ -26,7 +26,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
   buildCustomRepository: (collection: mongoCollectionType<T>) => U;
 }): () => repositoryType<T> & U {
   return () => {
-    const db = mongo.getDb();
+    const db = buildMongo().getDb();
     const collection = db.collection<T>(collectionName);
     const customRepository = buildCustomRepository(collection);
 

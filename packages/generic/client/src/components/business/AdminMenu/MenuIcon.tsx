@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { customThemeType, useCustomTheme, Icon, iconNameType, Tooltip } from 'pelta-design-system';
 import { widths } from '../../../styles';
 import { AlertBadge } from './AlertBadge';
@@ -15,7 +15,7 @@ const CORNER_HEIGHT = 10;
 function MenuIcon(props: { iconName: iconNameType; pathname: string; title: string; alertCount?: number }) {
   const theme = useCustomTheme();
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const styles = buildStyles(theme);
   return (
@@ -48,7 +48,7 @@ function MenuIcon(props: { iconName: iconNameType; pathname: string; title: stri
   }
 
   function onClick() {
-    history.replace(props.pathname);
+    navigate(props.pathname);
   }
 
   function buildStyles(theme: customThemeType) {

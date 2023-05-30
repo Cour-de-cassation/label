@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { customThemeType, useCustomTheme, ButtonWithIcon, Text } from 'pelta-design-system';
 import { MainHeader } from '../../components';
 import { lineSplitter } from '../../services/lineSplitter';
@@ -21,12 +21,12 @@ function AnonymizedDocument() {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
-      <MainHeader onBackButtonPress={history.goBack} />
-      <AnonymizedDocumentTextDataFetcher documentId={params.documentId}>
+      <MainHeader onBackButtonPress={() => navigate(-1)} />
+      <AnonymizedDocumentTextDataFetcher documentId={params.documentId as string}>
         {({ anonymizedDocumentText }) => {
           const splittedTextByLine = lineSplitter.splitTextAccordingToNewLine(anonymizedDocumentText);
 

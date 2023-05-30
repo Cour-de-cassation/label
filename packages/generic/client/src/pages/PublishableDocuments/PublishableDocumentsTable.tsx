@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { orderDirectionType, PaginatedTable, tableRowFieldType } from 'pelta-design-system';
 import { localStorage, publishableDocumentOrderByProperties } from '../../services/localStorage';
@@ -13,7 +13,7 @@ function PublishableDocumentsTable(props: {
   publishableDocuments: apiRouteOutType<'get', 'publishableDocuments'>;
   refetch: () => void;
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const fields = buildPublishableDocumentsFields();
   const styles = buildStyles();
   const orderByProperty = localStorage.publishableDocumentsStateHandler.getOrderByProperty();
@@ -46,7 +46,7 @@ function PublishableDocumentsTable(props: {
       kind: 'text' as const,
       text: wordings.publishableDocumentsPage.table.optionItems.openAnonymizedDocument,
       onClick: () => {
-        history.push(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(publishableDocument._id)));
+        navigate(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(publishableDocument._id)));
         return;
       },
     };
@@ -95,55 +95,55 @@ function buildPublishableDocumentsFields() {
     apiRouteOutType<'get', 'publishableDocuments'>[number],
     typeof publishableDocumentOrderByProperties[number]
   >> = [
-    {
-      id: 'documentNumber',
-      title: wordings.business.filters.columnTitles.documentNumber,
-      canBeSorted: true,
-      extractor: (publishableDocument) => JSON.stringify(publishableDocument.documentNumber),
-      width: 10,
-    },
-    {
-      id: 'jurisdiction',
-      title: wordings.business.filters.columnTitles.jurisdiction.title,
-      tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
-      canBeSorted: true,
-      extractor: (publishableDocument) => publishableDocument.jurisdiction,
-      width: 10,
-    },
-    {
-      id: 'chamberName',
-      title: wordings.business.filters.columnTitles.chamberName,
-      canBeSorted: true,
-      extractor: (publishableDocument) => publishableDocument.chamberName,
-      width: 10,
-    },
-    {
-      id: 'appealNumber',
-      title: wordings.business.filters.columnTitles.appealNumber,
-      canBeSorted: true,
-      extractor: (publishableDocument) => publishableDocument.appealNumber,
-      width: 10,
-    },
-    {
-      id: 'status',
-      title: wordings.business.filters.columnTitles.status,
-      canBeSorted: true,
-      extractor: (publishableDocument) => wordings.business.documentStatus[publishableDocument.status],
-      width: 10,
-    },
-    {
-      id: 'creationDate',
-      title: wordings.business.filters.columnTitles.creationDate.title,
-      tooltipText: wordings.business.filters.columnTitles.creationDate.tooltipText,
-      canBeSorted: true,
-      extractor: (publishableDocument) =>
-        publishableDocument.creationDate
-          ? timeOperator.convertTimestampToReadableDate(publishableDocument.creationDate, true)
-          : '-',
-      getSortingValue: (publishableDocument) => publishableDocument.creationDate || 0,
-      width: 10,
-    },
-  ];
+      {
+        id: 'documentNumber',
+        title: wordings.business.filters.columnTitles.documentNumber,
+        canBeSorted: true,
+        extractor: (publishableDocument) => JSON.stringify(publishableDocument.documentNumber),
+        width: 10,
+      },
+      {
+        id: 'jurisdiction',
+        title: wordings.business.filters.columnTitles.jurisdiction.title,
+        tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
+        canBeSorted: true,
+        extractor: (publishableDocument) => publishableDocument.jurisdiction,
+        width: 10,
+      },
+      {
+        id: 'chamberName',
+        title: wordings.business.filters.columnTitles.chamberName,
+        canBeSorted: true,
+        extractor: (publishableDocument) => publishableDocument.chamberName,
+        width: 10,
+      },
+      {
+        id: 'appealNumber',
+        title: wordings.business.filters.columnTitles.appealNumber,
+        canBeSorted: true,
+        extractor: (publishableDocument) => publishableDocument.appealNumber,
+        width: 10,
+      },
+      {
+        id: 'status',
+        title: wordings.business.filters.columnTitles.status,
+        canBeSorted: true,
+        extractor: (publishableDocument) => wordings.business.documentStatus[publishableDocument.status],
+        width: 10,
+      },
+      {
+        id: 'creationDate',
+        title: wordings.business.filters.columnTitles.creationDate.title,
+        tooltipText: wordings.business.filters.columnTitles.creationDate.tooltipText,
+        canBeSorted: true,
+        extractor: (publishableDocument) =>
+          publishableDocument.creationDate
+            ? timeOperator.convertTimestampToReadableDate(publishableDocument.creationDate, true)
+            : '-',
+        getSortingValue: (publishableDocument) => publishableDocument.creationDate || 0,
+        width: 10,
+      },
+    ];
   return publishableDocumentsFields;
 }
 

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 import { handleFetchedData } from '../api';
 import { localStorage } from '../services/localStorage';
 import { ErrorPage } from './ErrorPage';
@@ -41,14 +41,14 @@ function DataFetcher<dataT>(props: {
   function buildLoginRedirectionPage() {
     return (
       <Route
-        render={({ location }) => (
-          <Redirect
+        element={
+          <Navigate
             to={{
               pathname: '/login',
-              state: { from: location },
             }}
+            state={{ from: location }}
           />
-        )}
+        }
       />
     );
   }

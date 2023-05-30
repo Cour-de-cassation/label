@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDisplayMode, ButtonWithIcon, Drawer, RadioButton, Text } from 'pelta-design-system';
 import { routes } from '../../../pages';
 import { localStorage } from '../../../services/localStorage';
@@ -13,7 +13,7 @@ export { SettingsDrawer };
 function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
   const { displayMode, setDisplayMode } = useDisplayMode();
   const styles = buildStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [isPasswordConfirmationPopupShown, setIsPasswordConfirmationPopupShown] = useState(false);
 
@@ -76,7 +76,7 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
   function logout() {
     localStorage.bearerTokenHandler.remove();
     localStorage.userHandler.remove();
-    history.push(routes.DEFAULT.getPath());
+    navigate(routes.DEFAULT.getPath());
   }
 
   function buildStyles() {

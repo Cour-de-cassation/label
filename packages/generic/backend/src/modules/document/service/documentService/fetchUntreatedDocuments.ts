@@ -8,18 +8,8 @@ export { fetchUntreatedDocuments };
 
 async function fetchUntreatedDocuments() {
   const documentRepository = buildDocumentRepository();
-  const untreatedDocuments = await documentRepository.findAllByStatusProjection(
+  const untreatedDocuments = await documentRepository.findAllByStatus(
     ['free', 'pending', 'saved', 'locked'],
-    [
-      '_id',
-      'creationDate',
-      'decisionMetadata',
-      'documentNumber',
-      'publicationCategory',
-      'source',
-      'route',
-      'status',
-    ],
   );
   const assignedDocumentIds = untreatedDocuments
     .filter((document) =>
@@ -37,14 +27,14 @@ async function fetchUntreatedDocuments() {
   return untreatedDocuments.map((untreatedDocument) => {
     const assignationsForDocument =
       assignationsByDocumentId[
-        idModule.lib.convertToString(untreatedDocument._id)
+      idModule.lib.convertToString(untreatedDocument._id)
       ];
     const userNames = assignationsForDocument
       ? assignationsForDocument.map(
-          (assignation) =>
-            usersByAssignationId[idModule.lib.convertToString(assignation._id)]
-              .name,
-        )
+        (assignation) =>
+          usersByAssignationId[idModule.lib.convertToString(assignation._id)]
+            .name,
+      )
       : [];
 
     return {

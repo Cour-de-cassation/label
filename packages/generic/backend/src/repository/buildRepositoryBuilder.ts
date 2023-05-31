@@ -1,7 +1,7 @@
 import { idModule, idType, indexer } from '@label/core';
 import { buildMongo, mongo, mongoCollectionType } from '../utils';
-import { projectedType, repositoryType } from './repositoryType';
-import { buildProjection } from './repositoryUtils';
+import { repositoryType } from './repositoryType';
+import { IndexSpecification } from 'mongodb';
 
 export { buildRepositoryBuilder };
 
@@ -37,7 +37,6 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       distinct,
       distinctNested,
       findAll,
-      findAllProjection,
       findAllByIds,
       findById,
       deletePropertiesForMany,
@@ -89,15 +88,6 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       return collection.find().toArray();
     }
 
-    async function findAllProjection<projectionT extends keyof T>(
-      projection: Array<projectionT>,
-    ): Promise<Array<projectedType<T, projectionT>>> {
-      return (collection
-        .find()
-        .project(buildProjection(projection as string[]))
-        .toArray() as any) as Array<projectedType<T, projectionT>>;
-    }
-
     async function findAllByIds(idsToSearchIn?: idType[]) {
       let items = [] as T[];
       if (idsToSearchIn) {
@@ -145,9 +135,9 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     async function setIndexes() {
       for (const { index, mustBeUnique } of indexes) {
         if (mustBeUnique) {
-          await collection.createIndex(index, { unique: true });
+          await collection.createIndex(index as IndexSpecification, { unique: true });
         } else {
-          await collection.createIndex(index);
+          await collection.createIndex(index as IndexSpecification);
         }
       }
     }

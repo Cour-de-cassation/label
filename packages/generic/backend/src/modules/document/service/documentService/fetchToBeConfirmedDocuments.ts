@@ -10,16 +10,8 @@ export { fetchToBeConfirmedDocuments };
 async function fetchToBeConfirmedDocuments() {
   const documentRepository = buildDocumentRepository();
 
-  const toBeConfirmedDocuments = await documentRepository.findAllByStatusProjection(
+  const toBeConfirmedDocuments = await documentRepository.findAllByStatus(
     ['toBeConfirmed'],
-    [
-      '_id',
-      'decisionMetadata',
-      'documentNumber',
-      'publicationCategory',
-      'reviewStatus',
-      'route',
-    ],
   );
 
   const documentIds = toBeConfirmedDocuments.map(({ _id }) => _id);

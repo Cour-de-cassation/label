@@ -5,11 +5,9 @@ import {
 } from './buildFakeRepositoryBuilder';
 import { buildRepositoryBuilder } from './buildRepositoryBuilder';
 import { projectedType } from './repositoryType';
-import { buildProjection } from './repositoryUtils';
 
 export {
   buildFakeRepositoryBuilder,
-  buildProjection,
   buildRepositoryBuilder,
   projectFakeObjects,
   updateFakeCollection,

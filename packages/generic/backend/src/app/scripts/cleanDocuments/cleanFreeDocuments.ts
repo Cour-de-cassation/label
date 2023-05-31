@@ -12,9 +12,8 @@ async function cleanFreeDocuments() {
 
   const documentRepository = buildDocumentRepository();
 
-  const freeDocuments = await documentRepository.findAllByStatusProjection(
+  const freeDocuments = await documentRepository.findAllByStatus(
     ['free'],
-    ['_id'],
   );
   const freeDocumentIds = freeDocuments.map(({ _id }) => _id);
   logger.log(`Deleting assignations and their treatments for free documents`);

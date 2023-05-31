@@ -1,6 +1,6 @@
 import { idModule, idType, indexer, keysOf } from '@label/core';
 import { omit } from 'lodash';
-import { projectedType, repositoryType } from './repositoryType';
+import { repositoryType } from './repositoryType';
 
 export { buildFakeRepositoryBuilder, projectFakeObjects, updateFakeCollection };
 
@@ -24,7 +24,6 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     distinct,
     distinctNested,
     findAll,
-    findAllProjection,
     findAllByIds,
     findById,
     deletePropertiesForMany,
@@ -135,15 +134,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   }
 
   async function findAll() {
-    return collection;
-  }
-
-  async function findAllProjection<projectionT extends keyof T>(
-    projections: Array<projectionT>,
-  ): Promise<Array<projectedType<T, projectionT>>> {
-    return collection.map((document) =>
-      projectFakeObjects(document, projections),
-    );
+    return collection as T[];
   }
 
   async function findAllByIds(idsToSearchIn?: idType[]) {
@@ -182,7 +173,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     collection.push(...newObjects);
   }
 
-  async function setIndexes() {}
+  async function setIndexes() { }
 
   async function updateOne(id: idType, objectFields: Partial<T>) {
     updateFakeCollection(
@@ -238,18 +229,4 @@ function updateFakeCollection<T>(collection: T[], newCollection: T[]) {
   for (let index = 0; index < newCollection.length; index++) {
     collection.push(newCollection[index]);
   }
-}
-
-function projectFakeObjects<T, projectionT extends keyof T>(
-  object: T,
-  projections: Array<projectionT>,
-): projectedType<T, projectionT> {
-  const projectedObject = {} as projectedType<T, projectionT>;
-
-  projections.forEach(
-    /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-    (projection) => ((projectedObject as any)[projection] = object[projection]),
-  );
-
-  return projectedObject;
 }

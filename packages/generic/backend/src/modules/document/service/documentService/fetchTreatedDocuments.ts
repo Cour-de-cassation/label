@@ -16,19 +16,8 @@ export { fetchTreatedDocuments };
 async function fetchTreatedDocuments(settings: settingsType) {
   const documentRepository = buildDocumentRepository();
 
-  const treatedDocuments = await documentRepository.findAllByStatusProjection(
+  const treatedDocuments = await documentRepository.findAllByStatus(
     ['done', 'toBePublished'],
-    [
-      '_id',
-      'decisionMetadata',
-      'creationDate',
-      'documentNumber',
-      'loss',
-      'publicationCategory',
-      'reviewStatus',
-      'source',
-      'route',
-    ],
   );
 
   const documentIds = treatedDocuments.map(({ _id }) => _id);

@@ -13,10 +13,9 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
 >({
   collectionName: 'users',
   buildCustomFakeRepository: (collection) => ({
-    async findAllWithNoDeletionDateProjection(projection) {
+    async findAllWithNoDeletionDate() {
       return collection
-        .filter((user) => !user.deletionDate)
-        .map((user) => projectFakeObjects(user, projection));
+        .filter((user) => !user.deletionDate);
     },
     async findByEmail(email) {
       const formattedEmail = userModule.lib.formatEmail(email);

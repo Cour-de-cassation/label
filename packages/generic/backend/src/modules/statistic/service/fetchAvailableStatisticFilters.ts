@@ -9,13 +9,7 @@ export { fetchAvailableStatisticFilters };
 async function fetchAvailableStatisticFilters() {
   const statisticRepository = buildStatisticRepository();
 
-  const statisticFields = await statisticRepository.findAllProjection([
-    'publicationCategory',
-    'route',
-    'importer',
-    'source',
-    'jurisdiction',
-  ]);
+  const statisticFields = await statisticRepository.findAll();
 
   const { minDate, maxDate } = await fetchExtremumDates();
 
@@ -40,9 +34,9 @@ async function fetchAvailablePublicationCategoryFilters(
   let statisticPublicationCategories: string[] = [];
   statisticFields.forEach(
     ({ publicationCategory }) =>
-      (statisticPublicationCategories = uniq(
-        statisticPublicationCategories.concat(publicationCategory),
-      )),
+    (statisticPublicationCategories = uniq(
+      statisticPublicationCategories.concat(publicationCategory),
+    )),
   );
 
   const documentPublicationCategories = await documentService.fetchAllPublicationCategories();

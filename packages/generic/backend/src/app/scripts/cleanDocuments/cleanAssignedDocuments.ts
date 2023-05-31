@@ -15,16 +15,12 @@ export { cleanAssignedDocuments };
 async function cleanAssignedDocuments() {
   logger.log(`cleanAssignedDocuments`);
   const documentRepository = buildDocumentRepository();
-  const assignedDocuments = await documentRepository.findAllByStatusProjection(
+  const assignedDocuments = await documentRepository.findAllByStatus(
     ['pending', 'saved'],
-    ['_id', 'status'],
   );
 
   const assignationRepository = buildAssignationRepository();
-  const assignations = await assignationRepository.findAllProjection([
-    '_id',
-    'documentId',
-  ]);
+  const assignations = await assignationRepository.findAll();
 
   logger.log(`Start checking all assigned documents`);
 

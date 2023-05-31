@@ -10,17 +10,14 @@ async function up() {
   logger.log('Up: ');
 
   const userRepository = buildUserRepository();
-  const users = await userRepository.findAllProjection(['name', 'role']);
+  const users = await userRepository.findAll();
   const adminUser = users.find((user) => user.role === 'admin');
   if (!adminUser) {
     throw new Error('No user found with admin role');
   }
 
   const documentRepository = buildDocumentRepository();
-  const documents = await documentRepository.findAllProjection([
-    '_id',
-    'reviewStatus',
-  ]);
+  const documents = await documentRepository.findAll();
 
   await Promise.all(
     documents.map(async (document) => {
@@ -51,10 +48,7 @@ async function down() {
   logger.log('Down: ');
 
   const documentRepository = buildDocumentRepository();
-  const documents = await documentRepository.findAllProjection([
-    '_id',
-    'reviewStatus',
-  ]);
+  const documents = await documentRepository.findAll();
 
   await Promise.all(
     documents.map(async (document) => {

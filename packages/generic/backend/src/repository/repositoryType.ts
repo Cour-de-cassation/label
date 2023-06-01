@@ -1,4 +1,5 @@
 import { idType } from '@label/core';
+import { Filter, WithId } from 'mongodb';
 
 export type { projectedType, repositoryType };
 
@@ -12,17 +13,17 @@ type repositoryType<T> = {
     fieldName: fieldNameT,
   ) => Promise<Array<T[fieldNameT]>>;
   distinctNested: <fieldT>(fieldNameNested: string) => Promise<Array<fieldT>>;
-  findAll: () => Promise<T[]>;
-  findAllByIds: (idsToSearchIn?: idType[]) => Promise<Record<string, T>>;
-  findById: (id: idType) => Promise<T>;
+  findAll: () => Promise<WithId<T>[]>;
+  findAllByIds: (idsToSearchIn?: idType[]) => Promise<Record<string, WithId<T>>>;
+  findById: (id: idType) => Promise<WithId<T>>;
   insert: (newObject: T) => Promise<{ success: boolean }>;
   insertMany: (newObjects: T[]) => Promise<void>;
   deletePropertiesForMany: (
-    filter: Partial<T>,
+    filter: Filter<T>,
     fieldNames: Array<string>,
   ) => Promise<void>;
   setIndexes: () => Promise<void>;
-  updateOne: (id: idType, objectFields: Partial<T>) => Promise<T | undefined>;
+  updateOne: (id: idType, objectFields: Partial<T>) => Promise<WithId<T> | undefined>;
   updateMany: (filter: Partial<T>, objectFields: Partial<T>) => Promise<void>;
   upsert: (newObject: T) => Promise<void>;
 };

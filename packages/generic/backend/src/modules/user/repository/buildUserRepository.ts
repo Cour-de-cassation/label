@@ -32,12 +32,12 @@ const buildUserRepository = buildRepositoryBuilder<
       return result;
     },
     async updateHashedPassword(userId, hashedPassword) {
-      const { result } = await collection.updateOne(
+      const result = await collection.updateOne(
         { _id: userId },
         { $set: { hashedPassword, passwordLastUpdateDate: Date.now() } },
       );
       return {
-        success: result.ok === 1,
+        success: result.acknowledged,
       };
     },
   }),

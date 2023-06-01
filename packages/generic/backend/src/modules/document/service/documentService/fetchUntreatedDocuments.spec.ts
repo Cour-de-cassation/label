@@ -4,7 +4,6 @@ import {
   documentType,
   userModule,
 } from '@label/core';
-import { projectFakeObjects } from '../../../../repository';
 import { buildAssignationRepository } from '../../../assignation/repository';
 import { buildUserRepository } from '../../../user/repository';
 import { buildDocumentRepository } from '../../repository';
@@ -95,15 +94,7 @@ describe('fetchUntreatedDocuments', () => {
 
 function projectDocument(document: documentType) {
   return {
-    ...projectFakeObjects(document, [
-      '_id',
-      'documentNumber',
-      'creationDate',
-      'publicationCategory',
-      'source',
-      'route',
-      'status',
-    ]),
+    ...document,
     occultationBlock: document.decisionMetadata.occultationBlock,
     jurisdiction: document.decisionMetadata.jurisdiction,
     decisionDate: document.decisionMetadata.date,

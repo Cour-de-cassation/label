@@ -1,8 +1,9 @@
 import { idModule, idType, indexer, keysOf } from '@label/core';
 import { omit } from 'lodash';
 import { repositoryType } from './repositoryType';
+import { WithId } from 'mongodb';
 
-export { buildFakeRepositoryBuilder, projectFakeObjects, updateFakeCollection };
+export { buildFakeRepositoryBuilder, updateFakeCollection };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -134,7 +135,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   }
 
   async function findAll() {
-    return collection as T[];
+    return collection as WithId<T>[];
   }
 
   async function findAllByIds(idsToSearchIn?: idType[]) {

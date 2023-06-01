@@ -6,7 +6,6 @@ import {
   treatmentModule,
   userModule,
 } from '@label/core';
-import { projectFakeObjects } from '../../../../repository';
 import { buildAssignationRepository } from '../../../assignation';
 import { buildTreatmentRepository } from '../../../treatment';
 import { buildUserRepository } from '../../../user';
@@ -116,15 +115,7 @@ describe('fetchTreatedDocuments', () => {
 
 function projectTreatedDocumentDocument(document: documentType) {
   return {
-    ...projectFakeObjects(document, [
-      '_id',
-      'creationDate',
-      'documentNumber',
-      'publicationCategory',
-      'reviewStatus',
-      'source',
-      'route',
-    ]),
+    ...document,
     occultationBlock: document.decisionMetadata.occultationBlock,
     jurisdiction: document.decisionMetadata.jurisdiction,
   };

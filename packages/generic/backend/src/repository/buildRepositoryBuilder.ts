@@ -1,7 +1,7 @@
 import { idModule, idType, indexer } from '@label/core';
 import { buildMongo, mongo, mongoCollectionType } from '../utils';
 import { repositoryType } from './repositoryType';
-import { IndexSpecification } from 'mongodb';
+import { Document, Filter, IndexSpecification, WithId } from 'mongodb';
 
 export { buildRepositoryBuilder };
 
@@ -16,7 +16,7 @@ type indexType<T extends { [key: string]: any }> = Partial<
   }
 >;
 
-function buildRepositoryBuilder<T extends { _id: idType }, U>({
+function buildRepositoryBuilder<T extends Document, U>({
   collectionName,
   indexes,
   buildCustomRepository,
@@ -26,7 +26,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
   buildCustomRepository: (collection: mongoCollectionType<T>) => U;
 }): () => repositoryType<T> & U {
   return () => {
-    const db = buildMongo().getDb();
+    const db = mongo.getDb();
     const collection = db.collection<T>(collectionName);
     const customRepository = buildCustomRepository(collection);
 
@@ -67,8 +67,8 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
         _id: { $in: ids },
       } as any);
       return {
-        success: !!deleteResult.result.ok,
-        count: deleteResult.result.n ?? 0,
+        success: !!deleteResult.acknowledged,
+        count: deleteResult.deletedCount ?? 0,
       };
     }
 
@@ -89,7 +89,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     }
 
     async function findAllByIds(idsToSearchIn?: idType[]) {
-      let items = [] as T[];
+      let items = [] as WithId<T>[];
       if (idsToSearchIn) {
         items = await collection
           .find({ _id: { $in: idsToSearchIn } } as any)
@@ -115,7 +115,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
 
     async function insert(newObject: T) {
       const insertResult = await collection.insertOne(newObject as any);
-      return { success: !!insertResult.result.ok };
+      return { success: !!insertResult.acknowledged };
     }
 
     async function insertMany(newObjects: T[]) {
@@ -126,7 +126,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     }
 
     async function deletePropertiesForMany(
-      filter: Partial<T>,
+      filter: Filter<T>,
       fieldNames: Array<string>,
     ) {
       await collection.updateMany(filter, buildUnsetQuery(fieldNames));

@@ -2,7 +2,6 @@ import { uniq } from 'lodash';
 import { documentType, idModule } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
-  projectFakeObjects,
   updateFakeCollection,
 } from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';

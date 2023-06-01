@@ -1,10 +1,10 @@
-import { MongoClient, Collection, WithId } from 'mongodb';
+import { MongoClient, Collection, WithId, Document } from 'mongodb';
 
 export { buildMongo, mongo };
 
 export type { mongoCollectionType };
 
-type mongoCollectionType<T> = Collection<WithId<T>>;
+type mongoCollectionType<T extends Document> = Collection<T>;
 
 const mongo = buildMongo();
 

@@ -1,7 +1,6 @@
 import { userModule, userType } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
-  projectFakeObjects,
 } from '../../../repository';
 import { customUserRepositoryType } from './customUserRepositoryType';
 

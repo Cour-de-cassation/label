@@ -149,7 +149,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     publishableDocuments: buildAuthenticatedController({
       permissions: ['admin', 'publicator'],
       controllerWithUser: async () =>
-        documentService.fetchPublishableDocuments(),
+        (await documentService.fetchPublishableDocuments()).map((document) => {
+          return {
+            _id: document._id,
+            appealNumber: document.decisionMetadata.appealNumber,
+            chamberName: document.decisionMetadata.chamberName,
+            creationDate: document.creationDate,
+            documentNumber: document.documentNumber,
+            jurisdiction: document.decisionMetadata.jurisdiction,
+            publicationCategory: document.publicationCategory,
+            route: document.route,
+            status: document.status,
+          }
+        }),
     }),
 
     toBeConfirmedDocuments: buildAuthenticatedController({

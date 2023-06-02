@@ -10,7 +10,7 @@ const parametersHandler = {
 };
 
 async function getParameters() {
-  const { environmentFile, settingsFile } = getCommandParameters();
+  const { environmentFile, settingsFile } = await getCommandParameters();
 
   const environment = await fs.readFile(environmentFile, {
     encoding: 'utf8',
@@ -30,8 +30,8 @@ async function getParameters() {
   };
 }
 
-function getCommandParameters() {
-  const argv = yargs
+async function getCommandParameters() {
+  const argv = await yargs
     .options({
       environment: {
         alias: 'e',

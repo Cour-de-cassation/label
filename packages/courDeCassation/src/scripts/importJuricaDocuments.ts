@@ -5,7 +5,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { count } = parseArgv();
+  const { count } = await parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(() => sderConnector.importJuricaDocuments(count), {
@@ -13,8 +13,8 @@ import { parametersHandler } from '../lib/parametersHandler';
   });
 })();
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       count: {
         demandOption: true,

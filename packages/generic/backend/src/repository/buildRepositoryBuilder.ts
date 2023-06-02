@@ -72,7 +72,7 @@ function buildRepositoryBuilder<T extends Document, U>({
       };
     }
 
-    async function distinct<fieldNameT extends keyof T>(fieldName: fieldNameT) {
+    async function distinct<fieldNameT extends keyof WithId<T>>(fieldName: fieldNameT) {
       return collection.distinct(fieldName as string, {});
     }
 
@@ -113,12 +113,12 @@ function buildRepositoryBuilder<T extends Document, U>({
       return result;
     }
 
-    async function insert(newObject: T) {
+    async function insert(newObject: WithId<T>) {
       const insertResult = await collection.insertOne(newObject as any);
       return { success: !!insertResult.acknowledged };
     }
 
-    async function insertMany(newObjects: T[]) {
+    async function insertMany(newObjects: WithId<T>[]) {
       if (newObjects.length === 0) {
         return;
       }
@@ -150,17 +150,17 @@ function buildRepositoryBuilder<T extends Document, U>({
       return updatedItem || undefined;
     }
 
-    async function updateMany(filter: Partial<T>, objectFields: Partial<T>) {
+    async function updateMany(filter: Filter<T>, objectFields: Partial<T>) {
       await collection.updateMany({ filter } as any, {
         $set: objectFields,
       });
     }
 
-    async function upsert(newObject: T) {
+    async function upsert(newObject: WithId<T>) {
       await collection.updateOne(
         { _id: newObject._id } as any,
         {
-          $set: newObject,
+          $set: newObject as any,
         },
         {
           upsert: true,

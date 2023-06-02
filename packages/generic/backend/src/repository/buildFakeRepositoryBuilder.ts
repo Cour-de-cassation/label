@@ -176,7 +176,7 @@ function buildFakeRepositoryBuilder<T extends Document, U>({
 
   async function setIndexes() { }
 
-  async function updateOne(id: idType, objectFields: Partial<T> | WithId<T>) {
+  async function updateOne(id: idType, objectFields: Partial<T>) {
     updateFakeCollection(
       collection,
       collection.map((item) =>
@@ -193,7 +193,7 @@ function buildFakeRepositoryBuilder<T extends Document, U>({
     return updatedItem;
   }
 
-  async function updateMany(filter: Filter<T>, objectFields: Partial<T> | WithId<T>) {
+  async function updateMany(filter: Filter<T>, objectFields: Partial<T>) {
     updateFakeCollection(
       collection,
       collection.map((item) => {
@@ -215,7 +215,7 @@ function buildFakeRepositoryBuilder<T extends Document, U>({
         idModule.lib.equalId(object._id, newObject._id),
       )
     ) {
-      await updateOne(newObject._id, newObject);
+      await updateOne(newObject._id, newObject as Partial<T>);
     } else {
       await insert(newObject);
     }

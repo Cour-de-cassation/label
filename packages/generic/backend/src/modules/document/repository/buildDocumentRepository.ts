@@ -159,9 +159,7 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .toArray();
     },
 
-    async findAllByPublicationCategoryLetters(
-      publicationCategoryLetters,
-    ) {
+    async findAllByPublicationCategoryLetters(publicationCategoryLetters) {
       return collection
         .find(
           buildFindByPublicationCategoryLettersRequest(

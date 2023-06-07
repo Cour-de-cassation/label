@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "sder": "https://github.com/Cour-de-cassation/sder#56ce23301c20eb386cefccab1937158e252d0c5c",
-    "sder-core": "https://github.com/Cour-de-cassation/sder-core#936abba905f8832e51138b9fb387f7cd91b5db38",
     "@label/core": "*",
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
@@ -11,14 +9,11 @@
     "iconv-lite": "^0.6.3",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
-    "mongodb": "^5.5.0"
+    "mongodb": "^5.6.0",
+    "sder": "https://github.com/Cour-de-cassation/sder#56ce23301c20eb386cefccab1937158e252d0c5c",
+    "sder-core": "https://github.com/Cour-de-cassation/sder-core#936abba905f8832e51138b9fb387f7cd91b5db38"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
-    "@babel/core": "^7.21.8",
-    "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.21.5",
-    "@babel/preset-typescript": "^7.21.5",
     "@types/axios": "^0.14.0",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.13",
@@ -39,12 +34,16 @@
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",
     "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
     "typescript": "^5.0.4"
   },
   "files": [
     "dist"
   ],
   "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
     "moduleFileExtensions": [
       "js",
       "json",

@@ -39,9 +39,8 @@ function StatisticsDataFetcher(props: {
 
 function buildFetchStatistics() {
   return async (ressourceFilter: ressourceFilterType) => {
-    const { data: availableStatisticFilters, statusCode: statusCodeAvailableStatisticFilters } = await apiCaller.get<
-      'availableStatisticFilters'
-    >('availableStatisticFilters');
+    const { data: availableStatisticFilters, statusCode: statusCodeAvailableStatisticFilters } =
+      await apiCaller.get<'availableStatisticFilters'>('availableStatisticFilters');
 
     let aggregatedStatistics = {
       cumulatedValue: {
@@ -61,9 +60,8 @@ function buildFetchStatistics() {
         return !!e;
       })
     ) {
-      const { data: aggregatedStatisticsFetch, statusCode: statusCodeAggregatedStatisticsFetch } = await apiCaller.get<
-        'aggregatedStatistics'
-      >('aggregatedStatistics', { ressourceFilter });
+      const { data: aggregatedStatisticsFetch, statusCode: statusCodeAggregatedStatisticsFetch } =
+        await apiCaller.get<'aggregatedStatistics'>('aggregatedStatistics', { ressourceFilter });
       aggregatedStatistics = aggregatedStatisticsFetch;
       statusCodeAggregatedStatistics = statusCodeAggregatedStatisticsFetch;
     }

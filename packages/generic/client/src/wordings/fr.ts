@@ -35,8 +35,7 @@ const fr = {
         resetPassword: 'Réinitialiser le mot de passe',
       },
       deleteUserConfirmationPopup: {
-        text:
-          'Cette action supprimera cet utilisateur. Ses statistiques seront cependant toujours présentes en base de données. Cette action est irréversible, souhaitez-vous continuer ?',
+        text: 'Cette action supprimera cet utilisateur. Ses statistiques seront cependant toujours présentes en base de données. Cette action est irréversible, souhaitez-vous continuer ?',
       },
       passwordResetSuccessPopup: {
         passwordResetConfirmation: 'Le mot de passe a bien été réinitialisé',
@@ -45,8 +44,7 @@ const fr = {
         button: "C'est noté",
       },
       passwordResetConfirmationPopup: {
-        text:
-          "Cette action supprimera l'ancien mot de passe et vous affichera un nouveau mot de passe que vous devrez transmettre à l'agent.",
+        text: "Cette action supprimera l'ancien mot de passe et vous affichera un nouveau mot de passe que vous devrez transmettre à l'agent.",
       },
     },
   },
@@ -373,8 +371,7 @@ const fr = {
     },
     table: {
       resetDocumentConfirmationPopup: {
-        text:
-          'Cette action va supprimer toutes les corrections effectuées par les agents et renvoyer la décision dans le flux à traiter.\nÊtes-vous sûr de vouloir effectuer cette opération ?',
+        text: 'Cette action va supprimer toutes les corrections effectuées par les agents et renvoyer la décision dans le flux à traiter.\nÊtes-vous sûr de vouloir effectuer cette opération ?',
       },
       annotationDiffDrawer: {
         title: 'Modifications',
@@ -394,8 +391,7 @@ const fr = {
     },
     table: {
       assignDocumentConfirmationPopup: {
-        text:
-          "Cette action supprimera les annotations effectuées au préalable sur ce document, et vous assignera ensuite ce document pour traitement. Si l'utilisateur était en train d'annoter le document, il devra recharger la page. Souhaitez-vous continuer ?",
+        text: "Cette action supprimera les annotations effectuées au préalable sur ce document, et vous assignera ensuite ce document pour traitement. Si l'utilisateur était en train d'annoter le document, il devra recharger la page. Souhaitez-vous continuer ?",
       },
       optionItems: {
         assignToMyself: "M'assigner la décision",

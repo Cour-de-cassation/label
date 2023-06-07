@@ -15,7 +15,7 @@ function TreatedDocumentsTable(props: {
   fields: Array<
     tableRowFieldType<
       apiRouteOutType<'get', 'treatedDocuments'>[number],
-      typeof treatedDocumentOrderByProperties[number]
+      (typeof treatedDocumentOrderByProperties)[number]
     >
   >;
   refetch: () => void;
@@ -57,7 +57,7 @@ function TreatedDocumentsTable(props: {
     setAnnotationDiffDocumentInfo(undefined);
   }
 
-  function onOrderByPropertyChange(newOrderByProperty: typeof treatedDocumentOrderByProperties[number]) {
+  function onOrderByPropertyChange(newOrderByProperty: (typeof treatedDocumentOrderByProperties)[number]) {
     localStorage.treatedDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
   }
 
@@ -97,8 +97,7 @@ function TreatedDocumentsTable(props: {
     const openDocumentOption = {
       kind: 'text' as const,
       text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
-      onClick: () =>
-        navigate(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id))),
+      onClick: () => navigate(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id))),
       iconName: 'find' as const,
     };
 

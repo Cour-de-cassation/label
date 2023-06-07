@@ -27,7 +27,7 @@ describe('add order in migration model', () => {
   it('should test up', async () => {
     const migrationRepository = buildMigrationRepository();
     await Promise.all(
-      ((migrationsWithOldModel as any) as migrationType[]).map(
+      (migrationsWithOldModel as any as migrationType[]).map(
         migrationRepository.insert,
       ),
     );

@@ -69,21 +69,21 @@ describe('cleanDocuments', () => {
 
     await cleanDocuments();
 
-    const fetchedLoadedDocuments = await documentRepository.findAllByStatus(
-      ['loaded'],
-    );
+    const fetchedLoadedDocuments = await documentRepository.findAllByStatus([
+      'loaded',
+    ]);
     expect(fetchedLoadedDocuments.length).toBe(
       LOADED_DOCUMENTS_COUNT - FREE_DOCUMENTS_COUNT,
     );
-    const fetchedFreeDocuments = await documentRepository.findAllByStatus(
-      ['free'],
-    );
+    const fetchedFreeDocuments = await documentRepository.findAllByStatus([
+      'free',
+    ]);
     expect(fetchedFreeDocuments.length).toBe(
       FREE_DOCUMENTS_COUNT - DONE_DOCUMENTS_COUNT,
     );
-    const fetchedDoneDocuments = await documentRepository.findAllByStatus(
-      ['done'],
-    );
+    const fetchedDoneDocuments = await documentRepository.findAllByStatus([
+      'done',
+    ]);
     expect(fetchedDoneDocuments.length).toBe(DONE_DOCUMENTS_COUNT);
     const assignations = await assignationRepository.findAll();
     const treatments = await treatmentRepository.findAll();

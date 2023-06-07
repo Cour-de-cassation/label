@@ -1,5 +1,4 @@
 import { documentType, idType } from '@label/core';
-import { projectedType } from '../../../repository';
 
 export type { customDocumentRepositoryType };
 

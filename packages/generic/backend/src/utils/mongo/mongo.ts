@@ -1,4 +1,4 @@
-import { MongoClient, Collection, WithId, Document } from 'mongodb';
+import { MongoClient, Collection, Document } from 'mongodb';
 
 export { buildMongo, mongo };
 
@@ -9,7 +9,7 @@ type mongoCollectionType<T extends Document> = Collection<T>;
 const mongo = buildMongo();
 
 function buildMongo() {
-  let client = new MongoClient('');
+  let client: MongoClient | undefined;
   let dbName = '';
 
   return {
@@ -19,7 +19,7 @@ function buildMongo() {
   };
 
   async function close() {
-    await client.close();
+    await client?.close();
   }
 
   async function initialize({
@@ -37,6 +37,9 @@ function buildMongo() {
   }
 
   function getDb() {
+    if (!client) {
+      throw new Error('Mongo db is undefined');
+    }
     return client.db(dbName);
   }
 }

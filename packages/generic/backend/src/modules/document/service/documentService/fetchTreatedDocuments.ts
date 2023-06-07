@@ -16,9 +16,10 @@ export { fetchTreatedDocuments };
 async function fetchTreatedDocuments(settings: settingsType) {
   const documentRepository = buildDocumentRepository();
 
-  const treatedDocuments = await documentRepository.findAllByStatus(
-    ['done', 'toBePublished'],
-  );
+  const treatedDocuments = await documentRepository.findAllByStatus([
+    'done',
+    'toBePublished',
+  ]);
 
   const documentIds = treatedDocuments.map(({ _id }) => _id);
   const assignationsByDocumentId: Record<
@@ -29,9 +30,8 @@ async function fetchTreatedDocuments(settings: settingsType) {
   });
 
   const usersByIds = await userService.fetchUsers();
-  const treatmentsByDocumentId = await treatmentService.fetchTreatmentsByDocumentIds(
-    documentIds,
-  );
+  const treatmentsByDocumentId =
+    await treatmentService.fetchTreatmentsByDocumentIds(documentIds);
 
   return treatedDocuments.map((treatedDocument) => {
     const documentIdString = idModule.lib.convertToString(treatedDocument._id);
@@ -85,16 +85,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
 
     return {
       document: {
-        _id: treatedDocument._id,
-        creationDate: treatedDocument.creationDate,
-        documentNumber: treatedDocument.documentNumber,
-        jurisdiction: treatedDocument.decisionMetadata.jurisdiction,
-        loss: treatedDocument.loss,
-        occultationBlock: treatedDocument.decisionMetadata.occultationBlock,
-        publicationCategory: treatedDocument.publicationCategory,
-        reviewStatus: treatedDocument.reviewStatus,
-        route: treatedDocument.route,
-        source: treatedDocument.source,
+        ...treatedDocument,
       },
       totalTreatmentDuration,
       lastTreatmentDate,

@@ -15,9 +15,10 @@ export { cleanAssignedDocuments };
 async function cleanAssignedDocuments() {
   logger.log(`cleanAssignedDocuments`);
   const documentRepository = buildDocumentRepository();
-  const assignedDocuments = await documentRepository.findAllByStatus(
-    ['pending', 'saved'],
-  );
+  const assignedDocuments = await documentRepository.findAllByStatus([
+    'pending',
+    'saved',
+  ]);
 
   const assignationRepository = buildAssignationRepository();
   const assignations = await assignationRepository.findAll();

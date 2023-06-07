@@ -160,7 +160,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             publicationCategory: document.publicationCategory,
             route: document.route,
             status: document.status,
-          }
+          };
         }),
     }),
 

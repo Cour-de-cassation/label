@@ -90,7 +90,9 @@ function buildFakeRepositoryBuilder<T extends Document, U>({
     );
   }
 
-  async function distinct<fieldNameT extends keyof WithId<T>>(fieldName: fieldNameT) {
+  async function distinct<fieldNameT extends keyof WithId<T>>(
+    fieldName: fieldNameT,
+  ) {
     const distinctValues = [] as Array<WithId<T>[fieldNameT]>;
 
     collection.forEach((item) => {
@@ -174,7 +176,7 @@ function buildFakeRepositoryBuilder<T extends Document, U>({
     collection.push(...newObjects);
   }
 
-  async function setIndexes() { }
+  async function setIndexes() {}
 
   async function updateOne(id: idType, objectFields: Partial<T>) {
     updateFakeCollection(

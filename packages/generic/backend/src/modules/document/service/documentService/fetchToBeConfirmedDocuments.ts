@@ -10,9 +10,9 @@ export { fetchToBeConfirmedDocuments };
 async function fetchToBeConfirmedDocuments() {
   const documentRepository = buildDocumentRepository();
 
-  const toBeConfirmedDocuments = await documentRepository.findAllByStatus(
-    ['toBeConfirmed'],
-  );
+  const toBeConfirmedDocuments = await documentRepository.findAllByStatus([
+    'toBeConfirmed',
+  ]);
 
   const documentIds = toBeConfirmedDocuments.map(({ _id }) => _id);
   const assignationsByDocumentId: Record<
@@ -23,9 +23,8 @@ async function fetchToBeConfirmedDocuments() {
   });
 
   const usersByIds = await userService.fetchUsers();
-  const treatmentsByDocumentId = await treatmentService.fetchTreatmentsByDocumentIds(
-    documentIds,
-  );
+  const treatmentsByDocumentId =
+    await treatmentService.fetchTreatmentsByDocumentIds(documentIds);
 
   return toBeConfirmedDocuments.map((toBeConfirmedDocument) => {
     const documentIdString = idModule.lib.convertToString(

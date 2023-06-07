@@ -20,9 +20,8 @@ async function runNewMigrations() {
   logger.log(`${alreadyRunMigrations.length} migrations in the database`);
   logger.log(`${fileNames.length} migrations locally stored`);
   for (const fileName of sortedFileNames) {
-    const { _id, order } = migrationModule.lib.fileNameHandler.parseFileName(
-      fileName,
-    );
+    const { _id, order } =
+      migrationModule.lib.fileNameHandler.parseFileName(fileName);
 
     if (
       !alreadyRunMigrations.some((migration) =>

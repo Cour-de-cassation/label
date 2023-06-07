@@ -35,9 +35,8 @@ async function fetchFilteredStatistics(
     > = await assignationService.fetchAssignationsByDocumentIds(documentIds, {
       assertEveryDocumentIsAssigned: false,
     });
-    const treatmentsByDocumentId = await treatmentService.fetchTreatmentsByDocumentIds(
-      documentIds,
-    );
+    const treatmentsByDocumentId =
+      await treatmentService.fetchTreatmentsByDocumentIds(documentIds);
 
     const treatedDocuments = doneDocuments.map((document) => {
       const assignations =
@@ -55,12 +54,11 @@ async function fetchFilteredStatistics(
       };
     });
 
-    const filteredTreatedDocuments = ressourceFilterModule.lib.filterTreatedDocuments(
-      {
+    const filteredTreatedDocuments =
+      ressourceFilterModule.lib.filterTreatedDocuments({
         ressourceFilter: filter,
         treatedDocuments,
-      },
-    );
+      });
 
     return flatten(
       filteredTreatedDocuments.map(

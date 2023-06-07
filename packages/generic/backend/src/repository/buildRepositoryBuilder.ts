@@ -1,5 +1,5 @@
 import { idModule, idType, indexer } from '@label/core';
-import { buildMongo, mongo, mongoCollectionType } from '../utils';
+import { mongo, mongoCollectionType } from '../utils';
 import { repositoryType } from './repositoryType';
 import { Document, Filter, IndexSpecification, WithId } from 'mongodb';
 
@@ -10,11 +10,9 @@ type indexesType<T extends { [key: string]: any }> = Array<{
   mustBeUnique?: boolean;
 }>;
 
-type indexType<T extends { [key: string]: any }> = Partial<
-  {
-    [key in keyof T]: 1 | -1;
-  }
->;
+type indexType<T extends { [key: string]: any }> = Partial<{
+  [key in keyof T]: 1 | -1;
+}>;
 
 function buildRepositoryBuilder<T extends Document, U>({
   collectionName,
@@ -72,7 +70,9 @@ function buildRepositoryBuilder<T extends Document, U>({
       };
     }
 
-    async function distinct<fieldNameT extends keyof WithId<T>>(fieldName: fieldNameT) {
+    async function distinct<fieldNameT extends keyof WithId<T>>(
+      fieldName: fieldNameT,
+    ) {
       return collection.distinct(fieldName as string, {});
     }
 
@@ -135,7 +135,9 @@ function buildRepositoryBuilder<T extends Document, U>({
     async function setIndexes() {
       for (const { index, mustBeUnique } of indexes) {
         if (mustBeUnique) {
-          await collection.createIndex(index as IndexSpecification, { unique: true });
+          await collection.createIndex(index as IndexSpecification, {
+            unique: true,
+          });
         } else {
           await collection.createIndex(index as IndexSpecification);
         }
@@ -160,8 +162,8 @@ function buildRepositoryBuilder<T extends Document, U>({
       await collection.updateOne(
         { _id: newObject._id } as any,
         {
-          $set: newObject as any,
-        },
+          $set: newObject,
+        } as any,
         {
           upsert: true,
         },

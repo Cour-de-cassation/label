@@ -47,7 +47,8 @@ describe('clearDb', () => {
 
     await clearDb({ user: false });
 
-    const annotationReportsAfterUpdate = await annotationReportRepository.findAll();
+    const annotationReportsAfterUpdate =
+      await annotationReportRepository.findAll();
     const assignationsAfterUpdate = await assignationRepository.findAll();
     const documentsAfterUpdate = await documentRepository.findAll();
     const problemReportsAfterUpdate = await problemReportRepository.findAll();

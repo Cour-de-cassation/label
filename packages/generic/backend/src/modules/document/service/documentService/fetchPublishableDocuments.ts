@@ -5,9 +5,11 @@ export { fetchPublishableDocuments };
 
 async function fetchPublishableDocuments() {
   const documentRepository = buildDocumentRepository();
-  const documents = await documentRepository.findAllByPublicationCategoryLetters(
-    documentModule.lib.publicationHandler.getPublishedPublicationCategory()
+  const documents =
+    await documentRepository.findAllByPublicationCategoryLetters(
+      documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
+    );
+  return documents.filter(
+    (document: documentType) => document.status !== 'rejected',
   );
-  return documents
-    .filter((document: documentType) => document.status !== 'rejected');
 }

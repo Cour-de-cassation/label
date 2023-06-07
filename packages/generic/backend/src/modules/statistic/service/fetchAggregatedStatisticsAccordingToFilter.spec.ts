@@ -59,10 +59,11 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
       ].map(statisticModule.generator.generate);
       await Promise.all(statistics.map(statisticRepository.insert));
 
-      const aggregatedStatistics = await fetchAggregatedStatisticsAccordingToFilter(
-        ressourceFilter,
-        settings,
-      );
+      const aggregatedStatistics =
+        await fetchAggregatedStatisticsAccordingToFilter(
+          ressourceFilter,
+          settings,
+        );
 
       expect(aggregatedStatistics).toEqual({
         cumulatedValue: {
@@ -86,15 +87,17 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
         source: 'SOURCE1',
         userId: userId1,
       });
-      const documents = ([
-        {
-          source: 'SOURCE1',
-          status: 'done',
-          text: 'Some text with five words',
-        },
-        { status: 'done' },
-        { status: 'saved' },
-      ] as const).map(documentModule.generator.generate);
+      const documents = (
+        [
+          {
+            source: 'SOURCE1',
+            status: 'done',
+            text: 'Some text with five words',
+          },
+          { status: 'done' },
+          { status: 'saved' },
+        ] as const
+      ).map(documentModule.generator.generate);
       const treatments = [
         {
           documentId: documents[0]._id,
@@ -150,10 +153,11 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
       await Promise.all(documents.map(documentRepository.insert));
       await Promise.all(treatments.map(treatmentRepository.insert));
 
-      const aggregatedStatistics = await fetchAggregatedStatisticsAccordingToFilter(
-        ressourceFilter,
-        settings,
-      );
+      const aggregatedStatistics =
+        await fetchAggregatedStatisticsAccordingToFilter(
+          ressourceFilter,
+          settings,
+        );
 
       expect(aggregatedStatistics).toEqual({
         cumulatedValue: {

@@ -7,9 +7,8 @@ export { fetchAuthenticatedUserFromAuthorizationHeader };
 async function fetchAuthenticatedUserFromAuthorizationHeader(
   authorization?: string,
 ) {
-  const userId = userModule.lib.extractUserIdFromAuthorizationHeader(
-    authorization,
-  );
+  const userId =
+    userModule.lib.extractUserIdFromAuthorizationHeader(authorization);
 
   try {
     const userRepository = buildUserRepository();

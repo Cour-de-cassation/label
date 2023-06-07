@@ -27,7 +27,7 @@ describe('add categoriesToOmit and additionalTermsToAnnotate in document model',
   it('should test up', async () => {
     const documentRepository = buildDocumentRepository();
     await Promise.all(
-      ((documentsWithOldModel as any) as documentType[]).map(
+      (documentsWithOldModel as any as documentType[]).map(
         documentRepository.insert,
       ),
     );

@@ -1,7 +1,5 @@
 import { userModule, userType } from '@label/core';
-import {
-  buildFakeRepositoryBuilder,
-} from '../../../repository';
+import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customUserRepositoryType } from './customUserRepositoryType';
 
 export { buildFakeUserRepository };
@@ -13,8 +11,7 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
   collectionName: 'users',
   buildCustomFakeRepository: (collection) => ({
     async findAllWithNoDeletionDate() {
-      return collection
-        .filter((user) => !user.deletionDate);
+      return collection.filter((user) => !user.deletionDate);
     },
     async findByEmail(email) {
       const formattedEmail = userModule.lib.formatEmail(email);

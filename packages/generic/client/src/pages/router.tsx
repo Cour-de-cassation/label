@@ -236,7 +236,7 @@ const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest
       ) : (
         <Navigate
           to={{
-            pathname: routes.DEFAULT.getPath()
+            pathname: routes.DEFAULT.getPath(),
           }}
           state={{ from: location }}
           replace

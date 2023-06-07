@@ -19,9 +19,7 @@ const buildUserRepository = buildRepositoryBuilder<
   ],
   buildCustomRepository: (collection) => ({
     async findAllWithNoDeletionDate() {
-      return collection
-        .find({ deletionDate: undefined })
-        .toArray();
+      return collection.find({ deletionDate: undefined }).toArray();
     },
     async findByEmail(email) {
       const formattedEmail = userModule.lib.formatEmail(email);

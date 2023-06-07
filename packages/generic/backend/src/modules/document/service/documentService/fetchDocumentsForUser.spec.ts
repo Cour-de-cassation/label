@@ -87,22 +87,24 @@ describe('fetchDocumentsForUser', () => {
   it('should fetch a document with the highest priority assignated to nobody if there are no assignation for this user', async () => {
     const user1 = userModule.generator.generate();
     const user2 = userModule.generator.generate();
-    const documents = ([
-      {
-        text: 'lolo',
-        priority: 0,
-        status: 'free',
-      },
-      {
-        text: 'lala',
-        priority: 2,
-        status: 'free',
-      },
-      {
-        text: 'lala',
-        status: 'pending',
-      },
-    ] as const).map(documentModule.generator.generate);
+    const documents = (
+      [
+        {
+          text: 'lolo',
+          priority: 0,
+          status: 'free',
+        },
+        {
+          text: 'lala',
+          priority: 2,
+          status: 'free',
+        },
+        {
+          text: 'lala',
+          status: 'pending',
+        },
+      ] as const
+    ).map(documentModule.generator.generate);
     const treatments = documents.map((document) =>
       treatmentModule.generator.generate({ documentId: document._id }),
     );
@@ -129,22 +131,24 @@ describe('fetchDocumentsForUser', () => {
   it('should not fetch any document because they are already assignated', async () => {
     const user1 = userModule.generator.generate();
     const user2 = userModule.generator.generate();
-    const documents = ([
-      {
-        text: 'lolo',
-        priority: 0,
-        status: 'free',
-      },
-      {
-        text: 'lala',
-        priority: 2,
-        status: 'free',
-      },
-      {
-        text: 'lala',
-        status: 'pending',
-      },
-    ] as const).map(documentModule.generator.generate);
+    const documents = (
+      [
+        {
+          text: 'lolo',
+          priority: 0,
+          status: 'free',
+        },
+        {
+          text: 'lala',
+          priority: 2,
+          status: 'free',
+        },
+        {
+          text: 'lala',
+          status: 'pending',
+        },
+      ] as const
+    ).map(documentModule.generator.generate);
     const treatments = documents.map((document) =>
       treatmentModule.generator.generate({ documentId: document._id }),
     );

@@ -34,12 +34,13 @@ async function fetchAvailablePublicationCategoryFilters(
   let statisticPublicationCategories: string[] = [];
   statisticFields.forEach(
     ({ publicationCategory }) =>
-    (statisticPublicationCategories = uniq(
-      statisticPublicationCategories.concat(publicationCategory),
-    )),
+      (statisticPublicationCategories = uniq(
+        statisticPublicationCategories.concat(publicationCategory),
+      )),
   );
 
-  const documentPublicationCategories = await documentService.fetchAllPublicationCategories();
+  const documentPublicationCategories =
+    await documentService.fetchAllPublicationCategories();
 
   return uniq(
     statisticPublicationCategories.concat(documentPublicationCategories),

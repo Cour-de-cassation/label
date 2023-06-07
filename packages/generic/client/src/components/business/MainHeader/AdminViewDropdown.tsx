@@ -11,7 +11,7 @@ function AdminViewDropdown(props: { updateAdminMenu?: () => void }) {
   const navigate = useNavigate();
   const defaultAdminView = localStorage.adminViewHandler.get() || 'admin';
   return (
-    <LabelledDropdown<typeof adminViews[number]>
+    <LabelledDropdown<(typeof adminViews)[number]>
       label={wordings.business.adminViews.label}
       items={adminViews.map((adminView) => ({
         text: wordings.business.adminViews.values[adminView],
@@ -22,7 +22,7 @@ function AdminViewDropdown(props: { updateAdminMenu?: () => void }) {
     />
   );
 
-  function onChangeAdminView(adminView: typeof adminViews[number]) {
+  function onChangeAdminView(adminView: (typeof adminViews)[number]) {
     localStorage.adminViewHandler.set(adminView);
     navigate(defaultRoutes[adminView]);
     if (props.updateAdminMenu) props.updateAdminMenu();

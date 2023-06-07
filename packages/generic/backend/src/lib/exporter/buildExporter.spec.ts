@@ -19,20 +19,22 @@ describe('buildExporter', () => {
   describe('exportTreatedDocumentsSince', () => {
     it('should export all the ready document since the given days fetched by the exporter', async () => {
       const days = 4;
-      const documents = ([
-        {
-          text: 'Benoit est ingénieur',
-          status: 'done',
-          updateDate: dateBuilder.daysAgo(5),
-        },
-        { status: 'pending' },
-        {
-          text: 'Romain est designer',
-          status: 'done',
-          updateDate: dateBuilder.daysAgo(7),
-        },
-        { status: 'done', updateDate: dateBuilder.daysAgo(2) },
-      ] as const).map(documentModule.generator.generate);
+      const documents = (
+        [
+          {
+            text: 'Benoit est ingénieur',
+            status: 'done',
+            updateDate: dateBuilder.daysAgo(5),
+          },
+          { status: 'pending' },
+          {
+            text: 'Romain est designer',
+            status: 'done',
+            updateDate: dateBuilder.daysAgo(7),
+          },
+          { status: 'done', updateDate: dateBuilder.daysAgo(2) },
+        ] as const
+      ).map(documentModule.generator.generate);
       const treatments = [
         {
           annotationsDiff: {
@@ -75,8 +77,10 @@ describe('buildExporter', () => {
       await exporter.exportTreatedDocumentsSince(days);
 
       const exportedExternalIds = fakeExporterConfig.getExportedExternalIds();
-      const exportedPseudonymizationTexts = fakeExporterConfig.getExportedPseudonymizationTexts();
-      const exportedLabelTreatments = fakeExporterConfig.getExportedLabelTreatments();
+      const exportedPseudonymizationTexts =
+        fakeExporterConfig.getExportedPseudonymizationTexts();
+      const exportedLabelTreatments =
+        fakeExporterConfig.getExportedLabelTreatments();
       expect(exportedExternalIds.sort()).toEqual(
         [documents[0].externalId, documents[2].externalId].sort(),
       );

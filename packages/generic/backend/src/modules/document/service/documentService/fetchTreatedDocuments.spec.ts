@@ -1,7 +1,6 @@
 import {
   assignationModule,
   documentModule,
-  documentType,
   settingsModule,
   treatmentModule,
   userModule,
@@ -55,13 +54,12 @@ describe('fetchTreatedDocuments', () => {
       documentId: pendingDocument._id,
       userId: user._id,
     });
-    const toBePublishedDocumentAssignation = assignationModule.generator.generate(
-      {
+    const toBePublishedDocumentAssignation =
+      assignationModule.generator.generate({
         documentId: toBePublishedDocument._id,
         userId: user._id,
         treatmentId: toBePublishedTreatment._id,
-      },
-    );
+      });
     const doneDocumentAssignation = assignationModule.generator.generate({
       documentId: doneDocument._id,
       userId: user._id,
@@ -88,7 +86,7 @@ describe('fetchTreatedDocuments', () => {
 
     expect(treatedDocuments).toEqual([
       {
-        document: projectTreatedDocumentDocument(toBePublishedDocument),
+        document: toBePublishedDocument,
         totalTreatmentDuration: 10,
         lastTreatmentDate: TREATMENT_DATE,
         statistic: {
@@ -99,7 +97,7 @@ describe('fetchTreatedDocuments', () => {
         userNames: ['NAME'],
       },
       {
-        document: projectTreatedDocumentDocument(doneDocument),
+        document: doneDocument,
         totalTreatmentDuration: 20,
         lastTreatmentDate: TREATMENT_DATE,
         statistic: {
@@ -112,11 +110,3 @@ describe('fetchTreatedDocuments', () => {
     ]);
   });
 });
-
-function projectTreatedDocumentDocument(document: documentType) {
-  return {
-    ...document,
-    occultationBlock: document.decisionMetadata.occultationBlock,
-    jurisdiction: document.decisionMetadata.jurisdiction,
-  };
-}

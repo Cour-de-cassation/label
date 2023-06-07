@@ -13,26 +13,21 @@
     ]
   },
   "dependencies": {
-    "pelta-design-system": "https://github.com/Cour-de-cassation/pelta-design-system#0069aa0e780ef93db34a9f6f87e1b21e210d5d50",
-    "sder-core": "https://github.com/Cour-de-cassation/sder-core#f19400e5832d88b48d076b99bbea3e4cfd6803f4",
     "@label/core": "*",
     "axios": "^1.4.0",
     "dateformat": "^5.0.3",
     "http2": "^3.3.7",
+    "pelta-design-system": "https://github.com/Cour-de-cassation/pelta-design-system#0069aa0e780ef93db34a9f6f87e1b21e210d5d50",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
+    "sder-core": "https://github.com/Cour-de-cassation/sder-core#f19400e5832d88b48d076b99bbea3e4cfd6803f4",
     "string-template": "^1.0.0",
     "styled-components": "^5.3.11",
     "superstatic": "^9.0.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
-    "@babel/core": "^7.21.8",
-    "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.21.5",
-    "@babel/preset-typescript": "^7.21.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
@@ -55,12 +50,16 @@
     "prettier": "^2.8.8",
     "react-dev-utils": "^12.0.1",
     "rimraf": "^5.0.1",
+    "ts-jest": "^29.1.0",
     "typescript": "^5.0.4"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
     "moduleFileExtensions": [
       "js",
       "json",

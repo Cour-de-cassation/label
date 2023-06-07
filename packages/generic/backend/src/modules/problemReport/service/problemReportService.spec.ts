@@ -40,7 +40,8 @@ describe('problemReportService', () => {
       await documentRepository.insert(document1);
       await documentRepository.insert(document2);
 
-      const problemReports = await problemReportService.fetchProblemReportsWithDetails();
+      const problemReports =
+        await problemReportService.fetchProblemReportsWithDetails();
 
       expect(problemReports.length).toBe(2);
       expect(problemReports[0].problemReport.text).toBe(problemText1);

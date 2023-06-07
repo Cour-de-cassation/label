@@ -67,9 +67,8 @@ async function fetchAssignationsByDocumentIds(
 ) {
   const assignationRepository = buildAssignationRepository();
 
-  const assignationsByDocumentIds = await assignationRepository.findAllByDocumentIds(
-    documentIdsToSearchIn,
-  );
+  const assignationsByDocumentIds =
+    await assignationRepository.findAllByDocumentIds(documentIdsToSearchIn);
 
   if (options?.assertEveryDocumentIsAssigned) {
     indexer.assertEveryIdIsDefined(

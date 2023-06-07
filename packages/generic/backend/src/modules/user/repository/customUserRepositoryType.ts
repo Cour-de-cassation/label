@@ -1,5 +1,4 @@
 import { userType } from '@label/core';
-import { projectedType } from '../../../repository';
 
 export type { customUserRepositoryType };
 

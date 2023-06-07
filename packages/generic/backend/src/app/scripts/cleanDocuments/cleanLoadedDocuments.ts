@@ -14,9 +14,7 @@ async function cleanLoadedDocuments() {
   const documentRepository = buildDocumentRepository();
 
   logger.log('Fetching "loaded" documents');
-  const loadedDocuments = await documentRepository.findAllByStatus(
-    ['loaded'],
-  );
+  const loadedDocuments = await documentRepository.findAllByStatus(['loaded']);
 
   logger.log(`${loadedDocuments.length} loaded documents found`);
 
@@ -27,9 +25,11 @@ async function cleanLoadedDocuments() {
   }
 
   logger.log(`"loaded" documents reset. Fetching non-treated documents...`);
-  const notTreatedDocuments = await documentService.fetchDocumentsWithoutAnnotations();
+  const notTreatedDocuments =
+    await documentService.fetchDocumentsWithoutAnnotations();
   logger.log(
-    `${notTreatedDocuments.length
+    `${
+      notTreatedDocuments.length
     } not treated documents found. Status are [${uniq(
       notTreatedDocuments.map(({ status }) => status),
     ).join(', ')}]. Setting status to loaded...`,

@@ -1,4 +1,4 @@
-image: docker:20.10.22 # node:16-alpine
+image: docker:20.10.22 
 services:
   - docker:20.10.22-dind
 stages:
@@ -10,19 +10,23 @@ test:
   stage: test
   services:
   - docker:20.10.22
-  script:  # Créer un dockerfile pour les tests (chercher  labelServer.js '/home/node/packages/courDeCassation/dist/labelServer.js')
+  script: 
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker build 
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY
-        --target test
-        -t label-test 
+        #--target test
+        -t label-test
+    # docker run label-back-test /bin/sh -c "yarn install -- ; yarn compile ...." 
+    # -> ici on lance un conteneur un par un, donc les données générées par le yarn install ne sont pas sauvegardées.
     - docker run label-test yarn install
     - docker run label-test yarn compile
     - docker run label-test yarn test
     - docker run label-test yarn lint
   only:
     - master
+    - re7
+    - dev
 
 build_label_backend:
   stage: build
@@ -31,12 +35,14 @@ build_label_backend:
     - docker build
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY
-        --target label-backend
+        #--target label-backend
         -f Dockerfile.label-backend
         -t $CI_REGISTRY/cour-de-cassation/label-backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend .
     - docker push $CI_REGISTRY/cour-de-cassation/label-backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
   only:
     - master
+    - re7
+    - dev
 
 build_label_client:
   stage: build
@@ -51,6 +57,8 @@ build_label_client:
     - docker push $CI_REGISTRY/cour-de-cassation/label-client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
   only:
     - master
+    - re7
+    - dev
 
 deploy_label_backend:
   stage: deploy
@@ -60,9 +68,11 @@ deploy_label_backend:
     MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
     ROOT_PATH: label/api
   script:
-    - envsubst < .deploys/deploy_backend.yaml | kubectl apply -f -
+    - envsubst < .deploys/deploy_backend.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
   only:
     - master
+    - re7
+    - dev
   tags:
     - shell
   dependencies:
@@ -71,9 +81,11 @@ deploy_label_backend:
 deploy_label_client:
   stage: deploy
   script:
-    - envsubst < .deploys/deploy_client.yaml | kubectl apply -f -
+    - envsubst < .deploys/deploy_client.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
   only:
     - master
+    - re7
+    - dev
   tags:
     - shell
   dependencies:

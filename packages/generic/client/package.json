@@ -15,6 +15,7 @@
   "dependencies": {
     "@label/core": "*",
     "axios": "^1.4.0",
+    "crypto-browserify": "^3.12.0",
     "dateformat": "^5.0.3",
     "http2": "^3.3.7",
     "pelta-design-system": "https://github.com/Cour-de-cassation/pelta-design-system#0069aa0e780ef93db34a9f6f87e1b21e210d5d50",
@@ -23,6 +24,7 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
     "sder-core": "https://github.com/Cour-de-cassation/sder-core#f19400e5832d88b48d076b99bbea3e4cfd6803f4",
+    "stream-http": "^3.2.0",
     "string-template": "^1.0.0",
     "styled-components": "^5.3.11",
     "superstatic": "^9.0.3"
@@ -48,6 +50,7 @@
     "eslint-plugin-react": "^7.32.2",
     "jest": "^29.5.0",
     "prettier": "^2.8.8",
+    "react-app-rewired": "^2.2.1",
     "react-dev-utils": "^12.0.1",
     "rimraf": "^5.0.1",
     "ts-jest": "^29.1.0",
@@ -81,7 +84,7 @@
     "styled-components": "^5"
   },
   "scripts": {
-    "build": "yarn clean && react-scripts build",
+    "build": "yarn clean && react-app-rewired build",
     "clean": "rimraf -rf ./dist && rimraf -rf ./build",
     "cleanAll": "yarn clean && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",
@@ -90,7 +93,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "start": "PORT=55432 react-scripts start",
+    "start": "PORT=55432 react-app-rewired start",
     "test": "RUN_MODE=TEST jest --passWithNoTests"
   },
   "version": "1.0.0"

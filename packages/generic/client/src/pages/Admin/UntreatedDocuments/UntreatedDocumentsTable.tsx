@@ -189,8 +189,8 @@ function UntreatedDocumentsTable(props: {
         title: wordings.business.filters.columnTitles.occultationBlock.title,
         tooltipText: wordings.business.filters.columnTitles.occultationBlock.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
-        getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
+        extractor: (treatedDocument) => treatedDocument.document.decisionMetadata.occultationBlock || '-',
+        getSortingValue: (treatedDocument) => treatedDocument.document.decisionMetadata.occultationBlock || 0,
         width: 1,
       },
       {
@@ -198,7 +198,7 @@ function UntreatedDocumentsTable(props: {
         title: wordings.business.filters.columnTitles.jurisdiction.title,
         tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
+        extractor: (treatedDocument) => treatedDocument.document.decisionMetadata.jurisdiction || '-',
         width: 4,
       },
       {
@@ -262,10 +262,10 @@ function UntreatedDocumentsTable(props: {
         tooltipText: wordings.business.filters.columnTitles.decisionDate.tooltipText,
         canBeSorted: true,
         extractor: (untreatedDocument) =>
-          untreatedDocument.document.decisionDate
-            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionDate)
+          untreatedDocument.document.decisionMetadata.date
+            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionMetadata.date)
             : '-',
-        getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionDate || 0,
+        getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionMetadata.date || 0,
         width: 2,
       },
       {

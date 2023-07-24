@@ -44,5 +44,10 @@
   "workspaces": [
     "packages/generic/*",
     "packages/courDeCassation/"
-  ]
+  ],
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "zlib": "^1.0.5",
+    "zlibt2": "^0.6.1"
+  }
 }

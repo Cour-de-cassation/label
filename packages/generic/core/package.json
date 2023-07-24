@@ -2,9 +2,14 @@
   "dependencies": {
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
+    "browserify-zlib": "^0.2.0",
+    "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
     "mongodb": "^5.6.0",
-    "string-template": "^1.0.0"
+    "string-template": "^1.0.0",
+    "webpack-node-externals": "^3.0.0",
+    "zlib": "^1.0.5",
+    "zlibt2": "^0.6.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",

@@ -116,7 +116,7 @@ function UntreatedDocuments(props: {
           return accumulator && untreatedDocument.document.route === filterValues.route;
         }
         if (currentFilterKey === 'jurisdiction' && !!filterValues.jurisdiction) {
-          return accumulator && untreatedDocument.document.jurisdiction === filterValues.jurisdiction;
+          return accumulator && untreatedDocument.document.decisionMetadata.jurisdiction === filterValues.jurisdiction;
         }
         if (currentFilterKey === 'documentCreationStartDate' && !!filterValues.documentCreationStartDate) {
           return (
@@ -151,7 +151,9 @@ function UntreatedDocuments(props: {
       flatten(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.publicationCategory)),
     );
     const sources = uniq(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.source));
-    const jurisdictions = uniq(untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.jurisdiction));
+    const jurisdictions = uniq(
+      untreatedDocuments.map((untreatedDocument) => untreatedDocument.document.decisionMetadata.jurisdiction),
+    );
     const creationDates = untreatedDocuments
       .filter(({ document }) => !!document.creationDate)
       .map((untreatedDocument) => untreatedDocument.document.creationDate as number);

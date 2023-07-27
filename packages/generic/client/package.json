@@ -18,6 +18,7 @@
     "@label/core": "*",
     "axios": "^1.4.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
+    "babel-preset-es2015": "^6.24.1",
     "crypto-browserify": "^3.12.0",
     "dateformat": "^5.0.3",
     "fs": "^0.0.1-security",
@@ -26,6 +27,7 @@
     "invariant": "^2.2.4",
     "levenary": "^1.1.1",
     "net": "^1.0.2",
+    "next": "^13.4.12",
     "os-browserify": "^0.3.0",
     "path": "^0.12.7",
     "pelta-design-system": "https://github.com/Cour-de-cassation/pelta-design-system#0069aa0e780ef93db34a9f6f87e1b21e210d5d50",
@@ -73,7 +75,9 @@
     "react-dev-utils": "^12.0.1",
     "rimraf": "^5.0.1",
     "ts-jest": "^29.1.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -103,7 +107,7 @@
     "styled-components": "^5"
   },
   "scripts": {
-    "build": "yarn clean && react-app-rewired build",
+    "build": "yarn clean && next build",
     "clean": "rimraf -rf ./dist && rimraf -rf ./build",
     "cleanAll": "yarn clean && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",
@@ -112,7 +116,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "start": "PORT=55432 react-app-rewired start",
+    "start": "PORT=55432 next dev",
     "test": "RUN_MODE=TEST jest --passWithNoTests"
   },
   "version": "1.0.0"

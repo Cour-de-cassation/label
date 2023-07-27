@@ -13,3 +13,5 @@ scripts/update_app.sh
 scripts/clean_old_replicas.sh
 k8s*
 *yarn-error*
+*.next
+*.tsbuildinfo

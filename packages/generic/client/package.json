@@ -30,7 +30,7 @@
     "next": "^13.4.12",
     "os-browserify": "^0.3.0",
     "path": "^0.12.7",
-    "pelta-design-system": "https://github.com/Cour-de-cassation/pelta-design-system#0069aa0e780ef93db34a9f6f87e1b21e210d5d50",
+    "pelta-design-system": "https://github.com/Cour-de-cassation/pelta-design-system#fc95924619842c87bb07ae7689629877cefcbeeb",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
@@ -75,6 +75,7 @@
     "react-dev-utils": "^12.0.1",
     "rimraf": "^5.0.1",
     "ts-jest": "^29.1.0",
+    "ts-loader": "^9.4.4",
     "typescript": "^5.0.4",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"

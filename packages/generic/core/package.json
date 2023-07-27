@@ -50,7 +50,7 @@
   "main": "dist/index",
   "name": "@label/core",
   "scripts": {
-    "build": "yarn clean && next build",
+    "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",
     "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",

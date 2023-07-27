@@ -28,9 +28,8 @@ function buildLogin(checkCallAttempts: (identifier: string) => void) {
 
       const token = await userModule.lib.getTokenForUser(user);
 
-      const passwordTimeValidityStatus = userModule.lib.passwordHandler.getPasswordTimeValidityStatus(
-        user,
-      );
+      const passwordTimeValidityStatus =
+        userModule.lib.passwordHandler.getPasswordTimeValidityStatus(user);
 
       return {
         _id: user._id,

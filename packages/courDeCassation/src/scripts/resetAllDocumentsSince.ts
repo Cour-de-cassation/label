@@ -5,7 +5,7 @@ import { sderConnector } from '../connector';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { days } = parseArgv();
+  const { days } = await parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(() => resetAllDocumentsSince(days), {
@@ -17,8 +17,8 @@ async function resetAllDocumentsSince(days: number) {
   await sderConnector.resetAllDocumentsSince(days);
 }
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       days: {
         demandOption: true,

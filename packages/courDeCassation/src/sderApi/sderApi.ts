@@ -12,9 +12,10 @@ const sderApi: sderApiType = {
     jurisdictions,
     chambers,
   }) {
-    const courtDecisions = await decisionModule.service.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      { startDate, endDate, jurisdictions, chambers, source },
-    );
+    const courtDecisions =
+      await decisionModule.service.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
+        { startDate, endDate, jurisdictions, chambers, source },
+      );
 
     return courtDecisions;
   },
@@ -26,21 +27,21 @@ const sderApi: sderApiType = {
     jurisdictions,
     chambers,
   }) {
-    const courtDecisions = await decisionModule.service.fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      { startDate, endDate, jurisdictions, chambers, source },
-    );
+    const courtDecisions =
+      await decisionModule.service.fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween(
+        { startDate, endDate, jurisdictions, chambers, source },
+      );
 
     return courtDecisions;
   },
 
   async fetchDecisionsToPseudonymiseBetween({ startDate, endDate, source }) {
-    const courtDecisions = await decisionModule.service.fetchDecisionsToPseudonymiseBetween(
-      {
+    const courtDecisions =
+      await decisionModule.service.fetchDecisionsToPseudonymiseBetween({
         startDate,
         endDate,
         source,
-      },
-    );
+      });
 
     return courtDecisions;
   },
@@ -50,13 +51,14 @@ const sderApi: sderApiType = {
     endDate,
     source,
   }) {
-    const courtDecisions = await decisionModule.service.fetchDecisionsToPseudonymiseBetweenDateCreation(
-      {
-        startDate,
-        endDate,
-        source,
-      },
-    );
+    const courtDecisions =
+      await decisionModule.service.fetchDecisionsToPseudonymiseBetweenDateCreation(
+        {
+          startDate,
+          endDate,
+          source,
+        },
+      );
 
     return courtDecisions;
   },
@@ -65,9 +67,10 @@ const sderApi: sderApiType = {
     startDate,
     endDate,
   }) {
-    const courtDecisions = await decisionModule.service.fetchChainedJuricaDecisionsToPseudonymiseBetween(
-      { startDate, endDate },
-    );
+    const courtDecisions =
+      await decisionModule.service.fetchChainedJuricaDecisionsToPseudonymiseBetween(
+        { startDate, endDate },
+      );
 
     return courtDecisions;
   },

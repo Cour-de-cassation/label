@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "lib": [
       "dom",
       "dom.iterable",
@@ -19,7 +19,8 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es5"
+    "target": "es5",
+    "incremental": true
   },
   "exclude": [
     "node_modules",

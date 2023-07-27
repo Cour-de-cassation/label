@@ -5,7 +5,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { days } = parseArgv();
+  const { days } = await parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(() => importAllDocumentsFromSder(days), {
@@ -17,8 +17,8 @@ async function importAllDocumentsFromSder(days: number) {
   await sderConnector.importDocumentsSinceDateCreation(days);
 }
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       days: {
         demandOption: true,

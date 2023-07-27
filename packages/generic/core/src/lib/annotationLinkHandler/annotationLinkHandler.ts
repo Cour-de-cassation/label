@@ -61,10 +61,9 @@ function getLinkedAnnotationRepresentatives(
   entityId: annotationType['entityId'],
   annotations: annotationType[],
 ): annotationType[] {
-  return uniqBy(
-    getLinkedAnnotations(entityId, annotations),
-    (otherAnnotation) => otherAnnotation.text,
-  ).sort((annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text));
+  return uniqBy(getLinkedAnnotations(entityId, annotations), (otherAnnotation) => otherAnnotation.text).sort(
+    (annotation1, annotation2) => annotation1.text.localeCompare(annotation2.text),
+  );
 }
 
 function getRepresentatives(annotations: annotationType[]) {

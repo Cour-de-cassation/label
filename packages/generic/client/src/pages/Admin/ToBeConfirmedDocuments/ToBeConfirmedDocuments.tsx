@@ -84,7 +84,7 @@ function ToBeConfirmedDocuments(props: {
       },
       documentReviewFilterStatus: {
         value: filterValues.documentReviewFilterStatus,
-        setValue: (documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined) =>
+        setValue: (documentReviewFilterStatus: (typeof documentReviewFilterStatuses)[number] | undefined) =>
           setAndStoreFilterValues({ ...filterValues, documentReviewFilterStatus }),
       },
     };

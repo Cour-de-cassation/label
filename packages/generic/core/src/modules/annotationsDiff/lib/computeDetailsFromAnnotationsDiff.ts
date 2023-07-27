@@ -6,11 +6,8 @@ export { computeDetailsFromAnnotationsDiff };
 function computeDetailsFromAnnotationsDiff(annotationsDiff: annotationsDiffType) {
   const deletedAnnotations = computeDeletedAnnotations(annotationsDiff);
   const addedAnnotations = computeAddedAnnotations(annotationsDiff);
-  const {
-    categoryChangedAnnotations,
-    resizedBiggerAnnotations,
-    resizedSmallerAnnotations,
-  } = computeModifiedAnnotations(annotationsDiff);
+  const { categoryChangedAnnotations, resizedBiggerAnnotations, resizedSmallerAnnotations } =
+    computeModifiedAnnotations(annotationsDiff);
 
   return {
     addedAnnotations,
@@ -41,9 +38,7 @@ function computeAddedAnnotations(annotationsDiff: annotationsDiffType): annotati
   );
 }
 
-function computeModifiedAnnotations(
-  annotationsDiff: annotationsDiffType,
-): {
+function computeModifiedAnnotations(annotationsDiff: annotationsDiffType): {
   categoryChangedAnnotations: Array<[annotationType, annotationType]>;
   resizedBiggerAnnotations: Array<[annotationType, annotationType]>;
   resizedSmallerAnnotations: Array<[annotationType, annotationType]>;

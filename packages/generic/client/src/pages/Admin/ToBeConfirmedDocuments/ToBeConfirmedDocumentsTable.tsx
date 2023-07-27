@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { apiRouteOutType, timeOperator, idModule, userType } from '@label/core';
 import { customThemeType, useCustomTheme, PaginatedTable, tableRowFieldType } from 'pelta-design-system';
 import { DocumentReviewStatusIcon, PublicationCategoryBadge } from '../../../components';
@@ -18,7 +18,7 @@ function ToBeConfirmedDocumentsTable(props: {
   toBeConfirmedDocuments: apiRouteOutType<'get', 'toBeConfirmedDocuments'>;
 }) {
   const theme = useCustomTheme();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const styles = buildStyles(theme);
   const fields = buildToBeConfirmedDocumentsFields();
@@ -34,7 +34,7 @@ function ToBeConfirmedDocumentsTable(props: {
       kind: 'text' as const,
       text: wordings.toBeConfirmedDocumentsPage.table.optionItems.openDocument,
       onClick: () =>
-        history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(toBeConfirmedDocument.document._id))),
+        navigate(routes.DOCUMENT.getPath(idModule.lib.convertToString(toBeConfirmedDocument.document._id))),
       iconName: 'find' as const,
     };
 
@@ -42,10 +42,12 @@ function ToBeConfirmedDocumentsTable(props: {
   }
 
   function buildToBeConfirmedDocumentsFields() {
-    const toBeConfirmedDocumentsFields: Array<tableRowFieldType<
-      apiRouteOutType<'get', 'toBeConfirmedDocuments'>[number],
-      typeof toBeConfirmedDocumentOrderByProperties[number]
-    >> = [
+    const toBeConfirmedDocumentsFields: Array<
+      tableRowFieldType<
+        apiRouteOutType<'get', 'toBeConfirmedDocuments'>[number],
+        (typeof toBeConfirmedDocumentOrderByProperties)[number]
+      >
+    > = [
       {
         id: 'documentNumber',
         title: wordings.business.filters.columnTitles.documentNumber,

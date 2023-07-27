@@ -31,9 +31,8 @@ function buildExporter(
     logger.log(`Exportation to ${exporterConfig.name}`);
 
     logger.log(`Fetching treated documents...`);
-    const documentsReadyToExport = await documentService.fetchDocumentsReadyToExport(
-      days,
-    );
+    const documentsReadyToExport =
+      await documentService.fetchDocumentsReadyToExport(days);
     logger.log(`${documentsReadyToExport.length} documents to export`);
 
     logger.log(`Beginning exportation...`);
@@ -54,7 +53,8 @@ function buildExporter(
     logger.log(`Exportation to ${exporterConfig.name}`);
 
     logger.log(`Fetching treated documents from today...`);
-    const documentsReadyToExport = await documentService.fetchPublishableDocumentsToExport();
+    const documentsReadyToExport =
+      await documentService.fetchPublishableDocumentsToExport();
     logger.log(`${documentsReadyToExport.length} documents to export`);
 
     logger.log(`Beginning exportation...`);
@@ -80,9 +80,11 @@ function buildExporter(
     logger.log(
       `exportSpecificDocument: documentNumber ${documentNumber} - source ${source}`,
     );
-    const document = await documentService.fetchDocumentBySourceAndDocumentNumber(
-      { documentNumber, source },
-    );
+    const document =
+      await documentService.fetchDocumentBySourceAndDocumentNumber({
+        documentNumber,
+        source,
+      });
 
     if (!document) {
       logger.error(
@@ -110,7 +112,8 @@ function buildExporter(
     logger.log(`Exportation to ${exporterConfig.name}`);
 
     logger.log(`Fetching all treated documents...`);
-    const documentsToExport = await documentService.fetchAllExportableDocuments();
+    const documentsToExport =
+      await documentService.fetchAllExportableDocuments();
     logger.log(`${documentsToExport.length} documents to export`);
 
     logger.log(`Beginning exportation...`);

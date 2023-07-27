@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { customThemeType, useCustomTheme, ConfirmationPopup } from 'pelta-design-system';
 import { ResetPasswordForm } from '../../components';
 import { localStorage } from '../../services/localStorage';
@@ -12,7 +12,7 @@ const FORM_WIDTH = 400;
 
 function ResetPassword() {
   const theme = useCustomTheme();
-  const history = useHistory();
+  const navigate = useNavigate();
   const styles = buildStyles(theme);
   const [isInformationPopupOpen, setIsInformationPopupOpen] = useState(true);
 
@@ -34,11 +34,11 @@ function ResetPassword() {
   function logout() {
     localStorage.userHandler.remove();
     localStorage.bearerTokenHandler.remove();
-    history.push(routes.DEFAULT.getPath());
+    navigate(routes.DEFAULT.getPath());
   }
 
   function onUpdatePassword() {
-    history.push(routes.DEFAULT.getPath());
+    navigate(routes.DEFAULT.getPath());
   }
 }
 

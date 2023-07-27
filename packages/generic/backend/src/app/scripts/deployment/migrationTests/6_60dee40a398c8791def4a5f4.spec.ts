@@ -124,12 +124,12 @@ xdescribe('replace addedAnnotationsCount and deletedAnnotationsCount in statisti
     const statisticRepository = buildStatisticRepository();
     const treatmentRepository = buildTreatmentRepository();
     await Promise.all(
-      ((statisticsWithOldModel as any) as statisticType[]).map(
+      (statisticsWithOldModel as any as statisticType[]).map(
         statisticRepository.insert,
       ),
     );
     await Promise.all(
-      ((treatmentsWithOldModel as any) as treatmentType[]).map(
+      (treatmentsWithOldModel as any as treatmentType[]).map(
         treatmentRepository.insert,
       ),
     );

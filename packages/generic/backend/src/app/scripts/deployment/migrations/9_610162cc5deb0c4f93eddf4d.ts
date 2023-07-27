@@ -24,7 +24,8 @@ async function up() {
       const treatmentsSummary = statisticsOnOneDocument.map(
         (statistic: any) => ({
           userId: statistic.userId as userType['_id'],
-          treatmentDuration: statistic.treatmentDuration as treatmentType['duration'],
+          treatmentDuration:
+            statistic.treatmentDuration as treatmentType['duration'],
         }),
       );
       const newStatistic = {
@@ -135,7 +136,7 @@ async function down() {
           return oldStatistic;
         },
       );
-      await statisticRepository.insertMany((oldStatistics as unknown) as any);
+      await statisticRepository.insertMany(oldStatistics as unknown as any);
       await statisticRepository.deleteById(statistic._id);
     }),
   );

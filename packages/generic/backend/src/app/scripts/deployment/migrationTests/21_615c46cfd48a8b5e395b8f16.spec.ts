@@ -28,7 +28,7 @@ describe('add statisticNumber and decisionDate in statistic model', () => {
   it('should test up', async () => {
     const statisticRepository = buildStatisticRepository();
     await Promise.all(
-      ((statisticsWithOldModel as any) as statisticType[]).map(
+      (statisticsWithOldModel as any as statisticType[]).map(
         statisticRepository.insert,
       ),
     );

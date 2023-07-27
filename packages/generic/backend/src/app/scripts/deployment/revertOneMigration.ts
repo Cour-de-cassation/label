@@ -35,7 +35,7 @@ async function revertOneMigration() {
       await migrationService.deleteOne(_id);
     } catch (error) {
       await migrationFile.up();
-      throw new Error(error);
+      throw new Error(error as string);
     }
     logger.log(
       `Migration ${idModule.lib.convertToString(_id)} successfully reverted!`,

@@ -5,7 +5,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { documentNumber, source } = parseArgv();
+  const { documentNumber, source } = await parseArgv();
   const backend = buildBackend(environment, settings);
   const sderExporter = buildSderExporter(settings);
 
@@ -17,8 +17,8 @@ import { parametersHandler } from '../lib/parametersHandler';
   );
 })();
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       documentNumber: {
         demandOption: true,

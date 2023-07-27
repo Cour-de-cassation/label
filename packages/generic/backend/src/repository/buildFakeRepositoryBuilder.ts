@@ -1,20 +1,21 @@
 import { idModule, idType, indexer, keysOf } from '@label/core';
 import { omit } from 'lodash';
-import { projectedType, repositoryType } from './repositoryType';
+import { repositoryType } from './repositoryType';
+import { Document, Filter, WithId } from 'mongodb';
 
-export { buildFakeRepositoryBuilder, projectFakeObjects, updateFakeCollection };
+export { buildFakeRepositoryBuilder, updateFakeCollection };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
+function buildFakeRepositoryBuilder<T extends Document, U>({
   buildCustomFakeRepository,
   collectionName,
 }: {
-  buildCustomFakeRepository: (collection: T[]) => U;
+  buildCustomFakeRepository: (collection: WithId<T>[]) => U;
   collectionName: string;
 }): () => repositoryType<T> & U {
-  const collection: T[] = [];
+  const collection: WithId<T>[] = [];
   const customRepository = buildCustomFakeRepository(collection);
 
   return () => ({
@@ -24,7 +25,6 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     distinct,
     distinctNested,
     findAll,
-    findAllProjection,
     findAllByIds,
     findById,
     deletePropertiesForMany,
@@ -72,14 +72,14 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   }
 
   async function deletePropertiesForMany(
-    filter: Partial<T>,
+    filter: Filter<T>,
     fieldNames: Array<string>,
   ) {
     updateFakeCollection(
       collection,
       collection.map((item) => {
-        const mustBeUpdated = keysOf<keyof T>(
-          filter as Record<keyof T, any>,
+        const mustBeUpdated = keysOf<keyof WithId<T>>(
+          filter as Record<keyof WithId<T>, any>,
         ).every((key) => filter[key] === item[key]);
         if (mustBeUpdated) {
           return omit(item, fieldNames);
@@ -90,8 +90,10 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     );
   }
 
-  async function distinct<fieldNameT extends keyof T>(fieldName: fieldNameT) {
-    const distinctValues = [] as Array<T[fieldNameT]>;
+  async function distinct<fieldNameT extends keyof WithId<T>>(
+    fieldName: fieldNameT,
+  ) {
+    const distinctValues = [] as Array<WithId<T>[fieldNameT]>;
 
     collection.forEach((item) => {
       if (
@@ -122,7 +124,7 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
 
     return distinctValues;
 
-    function extractNestedField(item: T) {
+    function extractNestedField(item: WithId<T>) {
       const fieldNames = fieldNameNested.split('.');
       return fieldNames.reduce((accumulator, fieldName) => {
         const nestedItem = (accumulator as any)[fieldName];
@@ -135,19 +137,11 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
   }
 
   async function findAll() {
-    return collection;
-  }
-
-  async function findAllProjection<projectionT extends keyof T>(
-    projections: Array<projectionT>,
-  ): Promise<Array<projectedType<T, projectionT>>> {
-    return collection.map((document) =>
-      projectFakeObjects(document, projections),
-    );
+    return collection as WithId<T>[];
   }
 
   async function findAllByIds(idsToSearchIn?: idType[]) {
-    let items = [] as T[];
+    let items = [] as WithId<T>[];
     if (idsToSearchIn) {
       items = collection.filter((item) =>
         idsToSearchIn.some((id) => idModule.lib.equalId(id, item._id)),
@@ -173,12 +167,12 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     return result;
   }
 
-  async function insert(newObject: T) {
+  async function insert(newObject: WithId<T>) {
     collection.push(newObject);
     return { success: true };
   }
 
-  async function insertMany(newObjects: T[]) {
+  async function insertMany(newObjects: WithId<T>[]) {
     collection.push(...newObjects);
   }
 
@@ -201,12 +195,12 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     return updatedItem;
   }
 
-  async function updateMany(filter: Partial<T>, objectFields: Partial<T>) {
+  async function updateMany(filter: Filter<T>, objectFields: Partial<T>) {
     updateFakeCollection(
       collection,
       collection.map((item) => {
-        const mustBeUpdated = keysOf<keyof T>(
-          filter as Record<keyof T, any>,
+        const mustBeUpdated = keysOf<keyof WithId<T>>(
+          filter as Record<keyof WithId<T>, any>,
         ).every((key) => filter[key] === item[key]);
         if (mustBeUpdated) {
           return { ...item, ...objectFields };
@@ -217,13 +211,13 @@ function buildFakeRepositoryBuilder<T extends { _id: idType }, U>({
     );
   }
 
-  async function upsert(newObject: T) {
+  async function upsert(newObject: WithId<T>) {
     if (
       collection.some((object) =>
         idModule.lib.equalId(object._id, newObject._id),
       )
     ) {
-      await updateOne(newObject._id, newObject);
+      await updateOne(newObject._id, newObject as Partial<T>);
     } else {
       await insert(newObject);
     }
@@ -238,18 +232,4 @@ function updateFakeCollection<T>(collection: T[], newCollection: T[]) {
   for (let index = 0; index < newCollection.length; index++) {
     collection.push(newCollection[index]);
   }
-}
-
-function projectFakeObjects<T, projectionT extends keyof T>(
-  object: T,
-  projections: Array<projectionT>,
-): projectedType<T, projectionT> {
-  const projectedObject = {} as projectedType<T, projectionT>;
-
-  projections.forEach(
-    /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-    (projection) => ((projectedObject as any)[projection] = object[projection]),
-  );
-
-  return projectedObject;
 }

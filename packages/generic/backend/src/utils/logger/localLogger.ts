@@ -8,8 +8,8 @@ const localLogger: loggerType = {
     // eslint-disable-next-line no-console
     console.log(prettyLogFormatter.formatLog(value));
   },
-  error(errorText) {
+  error(error) {
     // eslint-disable-next-line no-console
-    console.error(prettyLogFormatter.formatErrorLog(errorText));
+    console.error(prettyLogFormatter.formatErrorLog(error));
   },
 };

@@ -43,13 +43,15 @@ describe('add categories that must not be annotated', () => {
       ...documentAfterUpdateModel,
       decisionMetadata: {
         ...documentAfterUpdateModel.decisionMetadata,
-        categoriesToOmit: documentAfterUpdateModel.decisionMetadata.categoriesToOmit.sort(),
+        categoriesToOmit:
+          documentAfterUpdateModel.decisionMetadata.categoriesToOmit.sort(),
       },
     }).toEqual({
       ...documentWithNewModel,
       decisionMetadata: {
         ...documentWithNewModel.decisionMetadata,
-        categoriesToOmit: documentWithNewModel.decisionMetadata.categoriesToOmit.sort(),
+        categoriesToOmit:
+          documentWithNewModel.decisionMetadata.categoriesToOmit.sort(),
       },
     });
   });
@@ -67,13 +69,15 @@ describe('add categories that must not be annotated', () => {
       ...documentAfterUpdateModel,
       decisionMetadata: {
         ...documentAfterUpdateModel.decisionMetadata,
-        categoriesToOmit: documentAfterUpdateModel.decisionMetadata.categoriesToOmit.sort(),
+        categoriesToOmit:
+          documentAfterUpdateModel.decisionMetadata.categoriesToOmit.sort(),
       },
     }).toEqual({
       ...documentWithOldModel,
       decisionMetadata: {
         ...documentWithOldModel.decisionMetadata,
-        categoriesToOmit: documentWithOldModel.decisionMetadata.categoriesToOmit.sort(),
+        categoriesToOmit:
+          documentWithOldModel.decisionMetadata.categoriesToOmit.sort(),
       },
     });
   });

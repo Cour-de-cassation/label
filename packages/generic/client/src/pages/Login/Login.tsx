@@ -1,6 +1,6 @@
 import { idModule } from '@label/core';
 import React, { FunctionComponent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { customThemeType, useCustomTheme, LoginForm } from 'pelta-design-system';
 import { apiCaller } from '../../api';
 import { Logo } from '../../components';
@@ -10,7 +10,7 @@ import { routes } from '../routes';
 export { Login };
 
 const Login: FunctionComponent = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
@@ -30,7 +30,7 @@ const Login: FunctionComponent = () => {
     localStorage.bearerTokenHandler.set(token);
     localStorage.userHandler.set({ _id: idModule.lib.buildId(_id), email: userEmail, name, role });
     localStorage.userHandler.setPasswordTimeValidityStatus(passwordTimeValidityStatus);
-    history.push(routes.DEFAULT.getPath());
+    navigate(routes.DEFAULT.getPath());
   }
 
   function buildStyles(theme: customThemeType) {

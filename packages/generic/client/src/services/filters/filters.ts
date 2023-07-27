@@ -44,8 +44,8 @@ type filtersType = {
     possibleValues: documentType['decisionMetadata']['jurisdiction'][number][];
   };
   documentReviewFilterStatus: {
-    value: typeof documentReviewFilterStatuses[number] | undefined;
-    setValue: (value: typeof documentReviewFilterStatuses[number] | undefined) => void;
+    value: (typeof documentReviewFilterStatuses)[number] | undefined;
+    setValue: (value: (typeof documentReviewFilterStatuses)[number] | undefined) => void;
   };
   mustHaveSubAnnotations: {
     value: boolean | undefined;
@@ -130,7 +130,7 @@ function buildRouteFilter({
     kind: 'dropdown' as const,
     name: 'route',
     label: wordings.business.filters.fields.route,
-    possibleValues: (documentModule.fetchedModel.content.route.content as unknown) as string[],
+    possibleValues: documentModule.fetchedModel.content.route.content as unknown as string[],
     value,
     computeChipLabel: (route: string) => wordings.business.documentRoute[route as documentType['route']],
     computeReadableValue: (route: string) => wordings.business.documentRoute[route as documentType['route']],
@@ -238,19 +238,19 @@ function buildDocumentReviewStatusFilter({
   value,
   setValue,
 }: {
-  value: typeof documentReviewFilterStatuses[number] | undefined;
-  setValue: (value: typeof documentReviewFilterStatuses[number] | undefined) => void;
+  value: (typeof documentReviewFilterStatuses)[number] | undefined;
+  setValue: (value: (typeof documentReviewFilterStatuses)[number] | undefined) => void;
 }) {
   return {
     kind: 'dropdown' as const,
     name: 'documentReviewFilterStatus',
     label: wordings.business.filters.fields.documentReviewFilterStatus,
-    possibleValues: (documentReviewFilterStatuses as unknown) as string[],
+    possibleValues: documentReviewFilterStatuses as unknown as string[],
     value,
     computeChipLabel: convertDocumentReviewStatusToReadable,
     computeReadableValue: convertDocumentReviewStatusToReadable,
     onChange: (documentReviewFilterStatus?: string) =>
-      setValue(documentReviewFilterStatus as typeof documentReviewFilterStatuses[number] | undefined),
+      setValue(documentReviewFilterStatus as (typeof documentReviewFilterStatuses)[number] | undefined),
   };
 }
 
@@ -290,6 +290,6 @@ function buildMustHaveSurAnnotationsFilter({
 
 function convertDocumentReviewStatusToReadable(documentReviewFilterStatus: string) {
   return wordings.business.documentReviewFilterStatus[
-    documentReviewFilterStatus as typeof documentReviewFilterStatuses[number]
+    documentReviewFilterStatus as (typeof documentReviewFilterStatuses)[number]
   ].filter;
 }

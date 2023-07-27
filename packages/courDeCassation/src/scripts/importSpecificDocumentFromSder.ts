@@ -5,7 +5,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { documentNumber, source, lowPriority } = parseArgv();
+  const { documentNumber, source, lowPriority } = await parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
@@ -21,8 +21,8 @@ import { parametersHandler } from '../lib/parametersHandler';
   );
 })();
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       lowPriority: {
         demandOption: false,

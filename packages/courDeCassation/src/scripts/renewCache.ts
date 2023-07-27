@@ -4,7 +4,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { beforeMinutes } = parseArgv();
+  const { beforeMinutes } = await parseArgv();
   const backend = buildBackend(environment, settings);
 
   await backend.runScript(
@@ -13,8 +13,8 @@ import { parametersHandler } from '../lib/parametersHandler';
   );
 })();
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       beforeMinutes: {
         demandOption: true,

@@ -108,7 +108,7 @@ function TreatedDocuments(props: {
       },
       documentReviewFilterStatus: {
         value: filterValues.documentReviewFilterStatus,
-        setValue: (documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined) =>
+        setValue: (documentReviewFilterStatus: (typeof documentReviewFilterStatuses)[number] | undefined) =>
           setAndStoreFilterValues({ ...filterValues, documentReviewFilterStatus }),
       },
       mustHaveSubAnnotations: {
@@ -155,7 +155,7 @@ function TreatedDocuments(props: {
           );
         }
         if (currentFilterKey === 'jurisdiction' && !!filterValues[currentFilterKey]) {
-          return accumulator && treatedDocument.document.jurisdiction === filterValues.jurisdiction;
+          return accumulator && treatedDocument.document.decisionMetadata.jurisdiction === filterValues.jurisdiction;
         }
         if (currentFilterKey === 'treatmentStartDate' && !!filterValues.treatmentStartDate) {
           return (
@@ -212,7 +212,9 @@ function TreatedDocuments(props: {
   }
 
   function extractFilterInfoFromTreatedDocuments(treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>) {
-    const jurisdictions = uniq(treatedDocuments.map((treatedDocument) => treatedDocument.document.jurisdiction));
+    const jurisdictions = uniq(
+      treatedDocuments.map((treatedDocument) => treatedDocument.document.decisionMetadata.jurisdiction),
+    );
     const publicationCategoryLetters = uniq(
       flatten(treatedDocuments.map((treatedDocument) => treatedDocument.document.publicationCategory)),
     );
@@ -241,10 +243,12 @@ function TreatedDocuments(props: {
   }
 
   function buildTreatedDocumentsFields() {
-    const treatedDocumentsFields: Array<tableRowFieldType<
-      apiRouteOutType<'get', 'treatedDocuments'>[number],
-      typeof treatedDocumentOrderByProperties[number]
-    >> = [
+    const treatedDocumentsFields: Array<
+      tableRowFieldType<
+        apiRouteOutType<'get', 'treatedDocuments'>[number],
+        (typeof treatedDocumentOrderByProperties)[number]
+      >
+    > = [
       {
         id: 'documentNumber',
         title: wordings.business.filters.columnTitles.documentNumber,
@@ -257,8 +261,8 @@ function TreatedDocuments(props: {
         title: wordings.business.filters.columnTitles.occultationBlock.title,
         tooltipText: wordings.business.filters.columnTitles.occultationBlock.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
-        getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
+        extractor: (treatedDocument) => treatedDocument.document.decisionMetadata.occultationBlock || '-',
+        getSortingValue: (treatedDocument) => treatedDocument.document.decisionMetadata.occultationBlock || 0,
         width: 1,
       },
       {
@@ -266,7 +270,7 @@ function TreatedDocuments(props: {
         title: wordings.business.filters.columnTitles.jurisdiction.title,
         tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
+        extractor: (treatedDocument) => treatedDocument.document.decisionMetadata.jurisdiction || '-',
         width: 4,
       },
       {

@@ -389,21 +389,7 @@ const apiSchema = {
         content: {
           kind: 'object',
           content: {
-            document: {
-              kind: 'object',
-              content: {
-                _id: documentModule.fetchedModel.content._id,
-                creationDate: documentModule.fetchedModel.content.creationDate,
-                documentNumber: documentModule.fetchedModel.content.documentNumber,
-                jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
-                loss: documentModule.fetchedModel.content.loss,
-                occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
-                publicationCategory: documentModule.fetchedModel.content.publicationCategory,
-                reviewStatus: documentModule.fetchedModel.content.reviewStatus,
-                route: documentModule.fetchedModel.content.route,
-                source: documentModule.fetchedModel.content.source,
-              },
-            },
+            document: documentModule.fetchedModel,
             totalTreatmentDuration: {
               kind: 'or',
               content: [
@@ -474,21 +460,7 @@ const apiSchema = {
         content: {
           kind: 'object',
           content: {
-            document: {
-              kind: 'object',
-              content: {
-                _id: documentModule.fetchedModel.content._id,
-                creationDate: documentModule.fetchedModel.content.creationDate,
-                decisionDate: documentModule.fetchedModel.content.decisionMetadata.content.date,
-                documentNumber: documentModule.fetchedModel.content.documentNumber,
-                occultationBlock: documentModule.fetchedModel.content.decisionMetadata.content.occultationBlock,
-                jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
-                publicationCategory: documentModule.fetchedModel.content.publicationCategory,
-                route: documentModule.fetchedModel.content.route,
-                source: documentModule.fetchedModel.content.source,
-                status: documentModule.fetchedModel.content.status,
-              },
-            },
+            document: documentModule.fetchedModel,
             userNames: {
               kind: 'array',
               content: {

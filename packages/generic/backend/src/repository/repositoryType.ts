@@ -1,33 +1,34 @@
 import { idType } from '@label/core';
+import { Filter, WithId } from 'mongodb';
 
-export type { projectedType, repositoryType };
+export type { repositoryType };
 
-type repositoryType<T extends { _id: idType }> = {
+type repositoryType<T> = {
   clear: () => Promise<void>;
   deleteById: (_id: idType) => Promise<void>;
   deleteManyByIds: (
     ids: idType[],
   ) => Promise<{ success: boolean; count: number }>;
-  distinct: <fieldNameT extends keyof T>(
+  distinct: <fieldNameT extends keyof WithId<T>>(
     fieldName: fieldNameT,
-  ) => Promise<Array<T[fieldNameT]>>;
+  ) => Promise<Array<WithId<T>[fieldNameT]>>;
   distinctNested: <fieldT>(fieldNameNested: string) => Promise<Array<fieldT>>;
-  findAll: () => Promise<T[]>;
-  findAllProjection: <projectionT extends keyof T>(
-    projection: Array<projectionT>,
-  ) => Promise<Array<projectedType<T, projectionT>>>;
-  findAllByIds: (idsToSearchIn?: idType[]) => Promise<Record<string, T>>;
-  findById: (id: idType) => Promise<T>;
-  insert: (newObject: T) => Promise<{ success: boolean }>;
-  insertMany: (newObjects: T[]) => Promise<void>;
+  findAll: () => Promise<WithId<T>[]>;
+  findAllByIds: (
+    idsToSearchIn?: idType[],
+  ) => Promise<Record<string, WithId<T>>>;
+  findById: (id: idType) => Promise<WithId<T>>;
+  insert: (newObject: WithId<T>) => Promise<{ success: boolean }>;
+  insertMany: (newObjects: WithId<T>[]) => Promise<void>;
   deletePropertiesForMany: (
-    filter: Partial<T>,
+    filter: Filter<T>,
     fieldNames: Array<string>,
   ) => Promise<void>;
   setIndexes: () => Promise<void>;
-  updateOne: (id: idType, objectFields: Partial<T>) => Promise<T | undefined>;
-  updateMany: (filter: Partial<T>, objectFields: Partial<T>) => Promise<void>;
-  upsert: (newObject: T) => Promise<void>;
+  updateOne: (
+    id: idType,
+    objectFields: Partial<T>,
+  ) => Promise<WithId<T> | undefined>;
+  updateMany: (filter: Filter<T>, objectFields: Partial<T>) => Promise<void>;
+  upsert: (newObject: WithId<T>) => Promise<void>;
 };
-
-type projectedType<T, U extends keyof T> = Pick<T, U>;

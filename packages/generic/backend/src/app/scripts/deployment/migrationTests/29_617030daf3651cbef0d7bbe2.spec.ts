@@ -52,7 +52,7 @@ describe('add civil code matter in document model', () => {
   it('should test up', async () => {
     const documentRepository = buildDocumentRepository();
     await documentRepository.insertMany(
-      (documentsWithOldModel as any) as documentType[],
+      documentsWithOldModel as any as documentType[],
     );
     await up();
 

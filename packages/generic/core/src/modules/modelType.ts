@@ -67,7 +67,7 @@ type modelObjectType = { [key in string]: modelType };
 /* eslint-disable @typescript-eslint/ban-types */
 type buildType<
   modelT extends modelType,
-  customMappingT extends customMappingType = {}
+  customMappingT extends customMappingType = {},
 > = modelT extends modelCasePrimitiveType
   ? buildPrimitiveType<modelT['content']>
   : modelT extends modelCaseConstantType
@@ -102,7 +102,7 @@ type buildConstantType<modelConstantT extends modelConstantType> = modelConstant
 
 type buildOrEntryType<
   modelOrEntryT extends modelOrEntryType,
-  customMappingT extends customMappingType = {}
+  customMappingT extends customMappingType = {},
 > = modelOrEntryT extends modelCasePrimitiveType
   ? buildPrimitiveType<modelOrEntryT['content']>
   : modelOrEntryT extends modelCaseConstantType

@@ -4,7 +4,10 @@
     "declaration": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "lib": ["dom", "dom.iterable"],
+    "lib": [
+      "dom",
+      "dom.iterable"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./dist",
@@ -14,7 +17,12 @@
     "strict": true,
     "target": "es5"
   },
-  "exclude": ["node_modules", "dist"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
   "extends": "../../../tsconfig.json",
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }

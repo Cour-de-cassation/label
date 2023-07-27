@@ -33,22 +33,25 @@ function buildAnnotator(
     logger.log('fillLossOfAllTreatedDocuments');
 
     const failedDocumentIds: documentType['_id'][] = [];
-    const documentsCountToFill = await documentService.countDoneDocumentsWithoutLossNotIn(
-      failedDocumentIds,
-    );
+    const documentsCountToFill =
+      await documentService.countDoneDocumentsWithoutLossNotIn(
+        failedDocumentIds,
+      );
     logger.log(`Found ${documentsCountToFill} documents without loss`);
     let currentDocumentToFillLoss: documentType | undefined;
     let documentsFilledLossCount = 0;
     do {
-      currentDocumentToFillLoss = await documentService.fetchDoneDocumentWithoutLossNotIn(
-        failedDocumentIds,
-      );
+      currentDocumentToFillLoss =
+        await documentService.fetchDoneDocumentWithoutLossNotIn(
+          failedDocumentIds,
+        );
       if (currentDocumentToFillLoss) {
         documentsFilledLossCount++;
         try {
-          const currentTreatmentsOfDocument = await treatmentService.fetchTreatmentsByDocumentId(
-            currentDocumentToFillLoss._id,
-          );
+          const currentTreatmentsOfDocument =
+            await treatmentService.fetchTreatmentsByDocumentId(
+              currentDocumentToFillLoss._id,
+            );
           const loss = await annotatorConfig.fetchLossOfDocument(
             currentDocumentToFillLoss,
             treatmentModule.lib.concat(currentTreatmentsOfDocument),
@@ -77,7 +80,8 @@ function buildAnnotator(
     logger.log('annotateDocumentsWithoutAnnotations');
 
     const failedDocumentIds: documentType['_id'][] = [];
-    const documentsCountToAnnotate = await documentService.countDocumentsWithoutAnnotations();
+    const documentsCountToAnnotate =
+      await documentService.countDocumentsWithoutAnnotations();
     logger.log(`Found ${documentsCountToAnnotate} documents to annotate`);
     let currentDocumentToAnnotate: documentType | undefined;
     let previousDocumentStatus: documentType['status'] | undefined;
@@ -108,9 +112,10 @@ function buildAnnotator(
 
     do {
       previousDocumentStatus = undefined;
-      currentDocumentToAnnotate = await documentService.fetchDocumentWithoutAnnotationsNotIn(
-        failedDocumentIds,
-      );
+      currentDocumentToAnnotate =
+        await documentService.fetchDocumentWithoutAnnotationsNotIn(
+          failedDocumentIds,
+        );
       if (currentDocumentToAnnotate) {
         documentsAnnotatedCount++;
         logger.log(`Found a document to annotate. Reserving...`);
@@ -169,9 +174,8 @@ function buildAnnotator(
   }
 
   async function annotateDocument(document: documentType) {
-    const previousTreatments = await treatmentService.fetchTreatmentsByDocumentId(
-      document._id,
-    );
+    const previousTreatments =
+      await treatmentService.fetchTreatmentsByDocumentId(document._id);
     if (previousTreatments.length > 0) {
       throw new Error(
         `Conflict of annotation on document ${formatDocumentInfos(
@@ -180,11 +184,8 @@ function buildAnnotator(
       );
     }
 
-    const {
-      annotations,
-      documentId,
-      report,
-    } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
+    const { annotations, documentId, report } =
+      await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log(`NLP annotation succeeded!`);
 
     if (document.route == 'simple' && annotations.length == 0) {

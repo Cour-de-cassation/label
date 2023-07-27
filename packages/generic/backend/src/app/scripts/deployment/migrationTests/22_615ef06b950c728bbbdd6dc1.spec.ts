@@ -53,7 +53,7 @@ describe('add parties in decisionMetadata in document model, delete criticity an
   it('should test up', async () => {
     const documentRepository = buildDocumentRepository();
     await Promise.all(
-      ((documentsWithOldModel as any) as documentType[]).map(
+      (documentsWithOldModel as any as documentType[]).map(
         documentRepository.insert,
       ),
     );

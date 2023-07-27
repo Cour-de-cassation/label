@@ -13,7 +13,7 @@ const adminViewHandler = {
   get,
 };
 
-function set(adminView: typeof adminViews[number]) {
+function set(adminView: (typeof adminViews)[number]) {
   localStorageHandler.set({ key: ADMIN_VIEW_STORAGE_KEY, value: adminView, mapper: localStorageMappers.string });
 }
 
@@ -23,6 +23,6 @@ function remove() {
 
 function get() {
   return localStorageHandler.get({ key: ADMIN_VIEW_STORAGE_KEY, mapper: localStorageMappers.string }) as
-    | typeof adminViews[number]
+    | (typeof adminViews)[number]
     | undefined;
 }

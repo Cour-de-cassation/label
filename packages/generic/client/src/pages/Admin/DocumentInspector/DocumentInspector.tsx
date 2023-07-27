@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { annotationsDiffType, fetchedDocumentType, settingsModule, settingsType } from '@label/core';
 import { apiCaller } from '../../../api';
 import { MainHeader } from '../../../components';
@@ -23,7 +23,7 @@ type DocumentInspectorParamsType = {
 
 function DocumentInspector(props: { settings: settingsType }) {
   const params = useParams<DocumentInspectorParamsType>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { displayAlert } = useAlert();
 
   useEffect(() => {
@@ -34,9 +34,9 @@ function DocumentInspector(props: { settings: settingsType }) {
   }, []);
 
   return (
-    <DocumentDataFetcher documentId={params.documentId}>
+    <DocumentDataFetcher documentId={params.documentId as string}>
       {({ document }) => (
-        <AnnotationsDataFetcher documentId={params.documentId}>
+        <AnnotationsDataFetcher documentId={params.documentId as string}>
           {({ annotations }) => {
             const settingsForDocument = settingsModule.lib.computeFilteredSettings(
               props.settings,
@@ -56,7 +56,7 @@ function DocumentInspector(props: { settings: settingsType }) {
                   settings: settingsForDocument,
                 }}
               >
-                <MainHeader title={document.title} onBackButtonPress={history.goBack} />
+                <MainHeader title={document.title} onBackButtonPress={() => navigate(-1)} />
                 <DocumentAnnotator onStopAnnotatingDocument={buildOnStopAnnotatingDocument(document)} />
               </AnnotatorStateHandlerContextProvider>
             );
@@ -72,7 +72,7 @@ function DocumentInspector(props: { settings: settingsType }) {
     }
 
     return async () => {
-      history.goBack();
+      navigate(-1);
     };
   }
 

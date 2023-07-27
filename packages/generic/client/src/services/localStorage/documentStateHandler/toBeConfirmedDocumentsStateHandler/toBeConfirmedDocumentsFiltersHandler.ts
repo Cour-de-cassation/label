@@ -20,7 +20,7 @@ export type { toBeConfirmedDocumentFilterType };
 type toBeConfirmedDocumentFilterType = {
   startDate: Date | undefined;
   endDate: Date | undefined;
-  documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined;
+  documentReviewFilterStatus: (typeof documentReviewFilterStatuses)[number] | undefined;
   jurisdiction: string | undefined;
   userName: string | undefined;
   publicationCategoryLetter: string | undefined;
@@ -118,7 +118,7 @@ function getFilters(): toBeConfirmedDocumentFilterType {
     startDate: startDate || undefined,
     endDate: endDate || undefined,
     documentReviewFilterStatus:
-      (documentReviewFilterStatus as typeof documentReviewFilterStatuses[number]) || undefined,
+      (documentReviewFilterStatus as (typeof documentReviewFilterStatuses)[number]) || undefined,
     jurisdiction: jurisdiction || undefined,
     userName: userName || undefined,
     publicationCategoryLetter: publicationCategoryLetter || undefined,

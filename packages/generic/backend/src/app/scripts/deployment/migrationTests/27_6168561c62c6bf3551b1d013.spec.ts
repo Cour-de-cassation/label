@@ -25,7 +25,7 @@ describe('add appealNumber in statistic model', () => {
   it('should test up', async () => {
     const statisticRepository = buildStatisticRepository();
     await statisticRepository.insertMany(
-      (statisticsWithOldModel as any) as statisticType[],
+      statisticsWithOldModel as any as statisticType[],
     );
     await up();
 

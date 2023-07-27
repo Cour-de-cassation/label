@@ -1,6 +1,6 @@
 import { uniq } from 'lodash';
 import { documentType } from '@label/core';
-import { buildProjection, buildRepositoryBuilder } from '../../../repository';
+import { buildRepositoryBuilder } from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';
 
 export { buildDocumentRepository };
@@ -159,29 +159,18 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .toArray();
     },
 
-    async findAllByPublicationCategoryLettersProjection(
-      publicationCategoryLetters,
-      projections,
-    ) {
+    async findAllByPublicationCategoryLetters(publicationCategoryLetters) {
       return collection
         .find(
           buildFindByPublicationCategoryLettersRequest(
             publicationCategoryLetters,
           ),
         )
-        .project(buildProjection(projections))
         .toArray();
     },
 
     async findAllByStatus(status) {
       return collection.find({ status: { $in: status } }).toArray();
-    },
-
-    async findAllByStatusProjection(status, projection) {
-      return collection
-        .find({ status: { $in: status } })
-        .project(buildProjection(projection))
-        .toArray();
     },
 
     async updateLossById(_id, loss) {

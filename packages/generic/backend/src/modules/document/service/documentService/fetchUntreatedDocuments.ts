@@ -8,28 +8,22 @@ export { fetchUntreatedDocuments };
 
 async function fetchUntreatedDocuments() {
   const documentRepository = buildDocumentRepository();
-  const untreatedDocuments = await documentRepository.findAllByStatusProjection(
-    ['free', 'pending', 'saved', 'locked'],
-    [
-      '_id',
-      'creationDate',
-      'decisionMetadata',
-      'documentNumber',
-      'publicationCategory',
-      'source',
-      'route',
-      'status',
-    ],
-  );
+  const untreatedDocuments = await documentRepository.findAllByStatus([
+    'free',
+    'pending',
+    'saved',
+    'locked',
+  ]);
   const assignedDocumentIds = untreatedDocuments
     .filter((document) =>
       ['pending', 'saved', 'locked'].includes(document.status),
     )
     .map((document) => document._id);
-  const assignationsByDocumentId = await assignationService.fetchAssignationsByDocumentIds(
-    assignedDocumentIds,
-    { assertEveryDocumentIsAssigned: false },
-  );
+  const assignationsByDocumentId =
+    await assignationService.fetchAssignationsByDocumentIds(
+      assignedDocumentIds,
+      { assertEveryDocumentIsAssigned: false },
+    );
   const allAssignations = flatten(Object.values(assignationsByDocumentId));
   const usersByAssignationId = await userService.fetchUsersByAssignations(
     allAssignations,
@@ -49,16 +43,7 @@ async function fetchUntreatedDocuments() {
 
     return {
       document: {
-        _id: untreatedDocument._id,
-        creationDate: untreatedDocument.creationDate,
-        decisionDate: untreatedDocument.decisionMetadata.date,
-        documentNumber: untreatedDocument.documentNumber,
-        occultationBlock: untreatedDocument.decisionMetadata.occultationBlock,
-        jurisdiction: untreatedDocument.decisionMetadata.jurisdiction,
-        publicationCategory: untreatedDocument.publicationCategory,
-        source: untreatedDocument.source,
-        route: untreatedDocument.route,
-        status: untreatedDocument.status,
+        ...untreatedDocument,
       },
       userNames,
     };

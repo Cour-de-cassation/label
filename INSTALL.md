@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- NodeJs v16
+- NodeJs v18
 
 ## Installation
 

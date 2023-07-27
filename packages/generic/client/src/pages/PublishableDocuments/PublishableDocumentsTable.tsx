@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { orderDirectionType, PaginatedTable, tableRowFieldType } from 'pelta-design-system';
 import { localStorage, publishableDocumentOrderByProperties } from '../../services/localStorage';
@@ -13,7 +13,7 @@ function PublishableDocumentsTable(props: {
   publishableDocuments: apiRouteOutType<'get', 'publishableDocuments'>;
   refetch: () => void;
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const fields = buildPublishableDocumentsFields();
   const styles = buildStyles();
   const orderByProperty = localStorage.publishableDocumentsStateHandler.getOrderByProperty();
@@ -33,7 +33,7 @@ function PublishableDocumentsTable(props: {
     </div>
   );
 
-  function onOrderByPropertyChange(newOrderByProperty: typeof publishableDocumentOrderByProperties[number]) {
+  function onOrderByPropertyChange(newOrderByProperty: (typeof publishableDocumentOrderByProperties)[number]) {
     localStorage.publishableDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
   }
 
@@ -46,7 +46,7 @@ function PublishableDocumentsTable(props: {
       kind: 'text' as const,
       text: wordings.publishableDocumentsPage.table.optionItems.openAnonymizedDocument,
       onClick: () => {
-        history.push(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(publishableDocument._id)));
+        navigate(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(publishableDocument._id)));
         return;
       },
     };
@@ -91,10 +91,12 @@ function PublishableDocumentsTable(props: {
 }
 
 function buildPublishableDocumentsFields() {
-  const publishableDocumentsFields: Array<tableRowFieldType<
-    apiRouteOutType<'get', 'publishableDocuments'>[number],
-    typeof publishableDocumentOrderByProperties[number]
-  >> = [
+  const publishableDocumentsFields: Array<
+    tableRowFieldType<
+      apiRouteOutType<'get', 'publishableDocuments'>[number],
+      (typeof publishableDocumentOrderByProperties)[number]
+    >
+  > = [
     {
       id: 'documentNumber',
       title: wordings.business.filters.columnTitles.documentNumber,

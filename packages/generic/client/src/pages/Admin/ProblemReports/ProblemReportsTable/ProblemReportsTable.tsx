@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import format from 'string-template';
 import { customThemeType, useCustomTheme, optionItemType, Table, tableRowFieldType } from 'pelta-design-system';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
@@ -22,7 +22,7 @@ function ProblemReportsTable(props: {
   refetch: () => void;
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const theme = useCustomTheme();
   const { displayAlert } = useAlert();
   const { displayPopup } = usePopup();
@@ -226,7 +226,7 @@ function ProblemReportsTable(props: {
       text: wordings.problemReportsPage.table.optionItems.openDocument,
       onClick: () => {
         problemReportWithDetails.document &&
-          history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(problemReportWithDetails.document._id)));
+          navigate(routes.DOCUMENT.getPath(idModule.lib.convertToString(problemReportWithDetails.document._id)));
         return;
       },
       iconName: 'find' as const,

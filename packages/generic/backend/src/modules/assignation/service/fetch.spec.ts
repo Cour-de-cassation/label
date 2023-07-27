@@ -87,16 +87,13 @@ describe('fetch', () => {
     const userId2 = idModule.lib.buildId();
 
     it('should fetch all the document id assignated to the given userId', async () => {
-      const assignations = ([
-        { userId: userId1 },
-        { userId: userId1 },
-        { userId: userId2 },
-      ] as const).map(assignationModule.generator.generate);
+      const assignations = (
+        [{ userId: userId1 }, { userId: userId1 }, { userId: userId2 }] as const
+      ).map(assignationModule.generator.generate);
       await Promise.all(assignations.map(assignationRepository.insert));
 
-      const documentIdAssignatedToUserId = await fetchDocumentIdsAssignatedToUserId(
-        userId1,
-      );
+      const documentIdAssignatedToUserId =
+        await fetchDocumentIdsAssignatedToUserId(userId1);
 
       expect(documentIdAssignatedToUserId.sort()).toEqual(
         [
@@ -117,9 +114,8 @@ describe('fetch', () => {
       );
       await Promise.all(assignements.map(assignationRepository.insert));
 
-      const documentIdAssignatedToUserId = await fetchDocumentIdsAssignatedToUserId(
-        userId2,
-      );
+      const documentIdAssignatedToUserId =
+        await fetchDocumentIdsAssignatedToUserId(userId2);
 
       expect(documentIdAssignatedToUserId).toEqual([]);
     });

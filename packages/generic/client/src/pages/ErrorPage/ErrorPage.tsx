@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { customThemeType, useCustomTheme, ButtonWithIcon, Icon, Text } from 'pelta-design-system';
 import { localStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
@@ -10,7 +10,7 @@ export { ErrorPage };
 function ErrorPage() {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div style={styles.container}>
@@ -25,7 +25,7 @@ function ErrorPage() {
   function logout() {
     localStorage.bearerTokenHandler.remove();
     localStorage.userHandler.remove();
-    history.push(routes.LOGIN.getPath());
+    navigate(routes.LOGIN.getPath());
   }
 
   function buildStyles(theme: customThemeType) {

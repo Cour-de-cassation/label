@@ -10,9 +10,9 @@ export { buildApi };
 const API_BASE_URL = '/label/api';
 
 function buildApi(app: Express) {
-  const methodNames = (Object.keys(
+  const methodNames = Object.keys(
     apiSchema,
-  ) as any) as apiSchemaMethodNameType[];
+  ) as any as apiSchemaMethodNameType[];
 
   methodNames.map((methodName) => buildMethod(app, methodName));
 }
@@ -29,8 +29,8 @@ function buildMethod(app: Express, methodName: apiSchemaMethodNameType) {
 }
 
 function buildGetRoutes(app: Express) {
-  const getRoutes = (Object.keys(apiSchema.get) as any) as Array<
-    keyof typeof apiSchema['get']
+  const getRoutes = Object.keys(apiSchema.get) as any as Array<
+    keyof (typeof apiSchema)['get']
   >;
 
   getRoutes.forEach((getRoute) => {
@@ -42,8 +42,8 @@ function buildGetRoutes(app: Express) {
 }
 
 function buildPostRoutes(app: Express) {
-  const postRoutes = (Object.keys(apiSchema.post) as any) as Array<
-    keyof typeof apiSchema['post']
+  const postRoutes = Object.keys(apiSchema.post) as any as Array<
+    keyof (typeof apiSchema)['post']
   >;
 
   postRoutes.forEach((postRoute) => {

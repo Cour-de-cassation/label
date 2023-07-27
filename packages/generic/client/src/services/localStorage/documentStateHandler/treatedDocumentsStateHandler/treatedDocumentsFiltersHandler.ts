@@ -28,7 +28,7 @@ type treatedDocumentFilterType = {
   treatmentEndDate: Date | undefined;
   documentCreationStartDate: Date | undefined;
   documentCreationEndDate: Date | undefined;
-  documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined;
+  documentReviewFilterStatus: (typeof documentReviewFilterStatuses)[number] | undefined;
   jurisdiction: string | undefined;
   userName: string | undefined;
   source: string | undefined;
@@ -170,7 +170,7 @@ function getFilters(): treatedDocumentFilterType {
     documentCreationStartDate: documentCreationStartDate || undefined,
     documentCreationEndDate: documentCreationEndDate || undefined,
     documentReviewFilterStatus:
-      (documentReviewFilterStatus as typeof documentReviewFilterStatuses[number]) || undefined,
+      (documentReviewFilterStatus as (typeof documentReviewFilterStatuses)[number]) || undefined,
     jurisdiction: jurisdiction || undefined,
     source: source || undefined,
     route: (route as documentType['route']) || undefined,

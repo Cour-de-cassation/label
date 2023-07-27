@@ -22,14 +22,8 @@ async function cleanAssignations() {
   const documentRepository = buildDocumentRepository();
   const assignationRepository = buildAssignationRepository();
 
-  const documents = await documentRepository.findAllProjection([
-    '_id',
-    'status',
-  ]);
-  const assignations = await assignationRepository.findAllProjection([
-    '_id',
-    'documentId',
-  ]);
+  const documents = await documentRepository.findAll();
+  const assignations = await assignationRepository.findAll();
   logger.log(`Start checking all assignations`);
 
   await Promise.all(

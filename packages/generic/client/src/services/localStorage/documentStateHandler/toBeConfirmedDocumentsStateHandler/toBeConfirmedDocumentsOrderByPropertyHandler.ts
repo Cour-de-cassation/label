@@ -17,7 +17,7 @@ const toBeConfirmedDocumentOrderByProperties = [
   'duration',
 ] as const;
 
-function setOrderByProperty(newOrderByProperty: typeof toBeConfirmedDocumentOrderByProperties[number]) {
+function setOrderByProperty(newOrderByProperty: (typeof toBeConfirmedDocumentOrderByProperties)[number]) {
   localStorageHandler.set({
     key: TO_BE_CONFIRMED_DOCUMENTS_ORDER_BY_PROPERTY_STORAGE_KEY,
     value: newOrderByProperty,
@@ -29,6 +29,6 @@ function getOrderByProperty() {
   const orderByProperty = localStorageHandler.get({
     key: TO_BE_CONFIRMED_DOCUMENTS_ORDER_BY_PROPERTY_STORAGE_KEY,
     mapper: localStorageMappers.string,
-  }) as typeof toBeConfirmedDocumentOrderByProperties[number] | undefined;
+  }) as (typeof toBeConfirmedDocumentOrderByProperties)[number] | undefined;
   return orderByProperty;
 }

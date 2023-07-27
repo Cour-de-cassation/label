@@ -33,9 +33,8 @@ async function updateTreatment({
   const treatments = await treatmentRepository.findAllByDocumentId(
     assignation.documentId,
   );
-  const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
-    treatments,
-  );
+  const sortedTreatments =
+    treatmentModule.lib.sortInConsistentOrder(treatments);
 
   const document = await documentService.fetchDocument(assignation.documentId);
   const settingsForDocument = settingsModule.lib.computeFilteredSettings(
@@ -47,9 +46,8 @@ async function updateTreatment({
   const actionToPerform = `update treatment for documentId ${idModule.lib.convertToString(
     assignation.documentId,
   )}`;
-  const previousAnnotations = treatmentModule.lib.computeAnnotations(
-    sortedTreatments,
-  );
+  const previousAnnotations =
+    treatmentModule.lib.computeAnnotations(sortedTreatments);
   const treatment = await treatmentRepository.findById(assignation.treatmentId);
   annotationsDiffModule.lib.assertAnnotationsDiffAreConsistent(
     annotationsDiff,

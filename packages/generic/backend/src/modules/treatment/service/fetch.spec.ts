@@ -202,9 +202,8 @@ describe('fetch', () => {
         humanTreatment,
       ]);
 
-      const annotationsDiffDetails = await fetchAnnotationsDiffDetailsForDocument(
-        document._id,
-      );
+      const annotationsDiffDetails =
+        await fetchAnnotationsDiffDetailsForDocument(document._id);
 
       expect(annotationsDiffDetails).toEqual({
         addedAnnotations: [

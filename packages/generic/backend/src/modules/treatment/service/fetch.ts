@@ -38,25 +38,22 @@ async function fetchAnnotationsDiffDetailsForDocument(
     (treatment) =>
       treatment.source === 'admin' || treatment.source === 'annotator',
   );
-  const annotationsDiff = treatmentModule.lib.computeAnnotationsDiff(
-    humanTreatments,
-  );
+  const annotationsDiff =
+    treatmentModule.lib.computeAnnotationsDiff(humanTreatments);
   const {
     addedAnnotations,
     categoryChangedAnnotations,
     deletedAnnotations,
     resizedBiggerAnnotations,
     resizedSmallerAnnotations,
-  } = annotationsDiffModule.lib.computeDetailsFromAnnotationsDiff(
-    annotationsDiff,
-  );
+  } =
+    annotationsDiffModule.lib.computeDetailsFromAnnotationsDiff(
+      annotationsDiff,
+    );
   return {
     addedAnnotations: addedAnnotations.map((addedAnnotation) => {
-      const {
-        text,
-        textStart,
-        annotation,
-      } = mapAnnotationToAnnotationsDiffDetails(addedAnnotation);
+      const { text, textStart, annotation } =
+        mapAnnotationToAnnotationsDiffDetails(addedAnnotation);
       return {
         text,
         textStart,
@@ -64,11 +61,8 @@ async function fetchAnnotationsDiffDetailsForDocument(
       };
     }),
     deletedAnnotations: deletedAnnotations.map((deletedAnnotation) => {
-      const {
-        text,
-        textStart,
-        annotation,
-      } = mapAnnotationToAnnotationsDiffDetails(deletedAnnotation);
+      const { text, textStart, annotation } =
+        mapAnnotationToAnnotationsDiffDetails(deletedAnnotation);
 
       return {
         text,
@@ -144,9 +138,8 @@ async function fetchTreatmentsByDocumentId(documentId: idType) {
 
 async function fetchTreatmentsByDocumentIds(documentIds: idType[]) {
   const treatmentRepository = buildTreatmentRepository();
-  const treatmentsByDocumentIds = await treatmentRepository.findAllByDocumentIds(
-    documentIds,
-  );
+  const treatmentsByDocumentIds =
+    await treatmentRepository.findAllByDocumentIds(documentIds);
 
   indexer.assertEveryIdIsDefined(
     documentIds.map((documentId) => idModule.lib.convertToString(documentId)),

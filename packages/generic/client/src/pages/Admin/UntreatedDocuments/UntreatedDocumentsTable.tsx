@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { apiRouteOutType, documentType, idModule, timeOperator, userType } from '@label/core';
 import {
   customThemeType,
@@ -25,7 +25,7 @@ function UntreatedDocumentsTable(props: {
   users: Array<Pick<userType, '_id' | 'name'>>;
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const theme = useCustomTheme();
   const { displayAlert } = useAlert();
   const [documentIdToUpdateStatus, setDocumentIdToUpdateStatus] = useState<documentType['_id'] | undefined>(undefined);
@@ -56,7 +56,7 @@ function UntreatedDocumentsTable(props: {
     </div>
   );
 
-  function onOrderByPropertyChange(newOrderByProperty: typeof untreatedDocumentOrderByProperties[number]) {
+  function onOrderByPropertyChange(newOrderByProperty: (typeof untreatedDocumentOrderByProperties)[number]) {
     localStorage.untreatedDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
   }
 
@@ -72,7 +72,7 @@ function UntreatedDocumentsTable(props: {
       kind: 'text' as const,
       text: wordings.untreatedDocumentsPage.table.optionItems.openAnonymizedDocument,
       onClick: () => {
-        history.push(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(untreatedDocument.document._id)));
+        navigate(routes.ANONYMIZED_DOCUMENT.getPath(idModule.lib.convertToString(untreatedDocument.document._id)));
         return;
       },
       iconName: 'eye' as const,
@@ -171,10 +171,12 @@ function UntreatedDocumentsTable(props: {
   }
 
   function buildUntreatedDocumentsFields() {
-    const untreatedDocumentsFields: Array<tableRowFieldType<
-      apiRouteOutType<'get', 'untreatedDocuments'>[number],
-      typeof untreatedDocumentOrderByProperties[number]
-    >> = [
+    const untreatedDocumentsFields: Array<
+      tableRowFieldType<
+        apiRouteOutType<'get', 'untreatedDocuments'>[number],
+        (typeof untreatedDocumentOrderByProperties)[number]
+      >
+    > = [
       {
         id: 'documentNumber',
         title: wordings.business.filters.columnTitles.documentNumber,
@@ -187,8 +189,8 @@ function UntreatedDocumentsTable(props: {
         title: wordings.business.filters.columnTitles.occultationBlock.title,
         tooltipText: wordings.business.filters.columnTitles.occultationBlock.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
-        getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
+        extractor: (treatedDocument) => treatedDocument.document.decisionMetadata.occultationBlock || '-',
+        getSortingValue: (treatedDocument) => treatedDocument.document.decisionMetadata.occultationBlock || 0,
         width: 1,
       },
       {
@@ -196,7 +198,7 @@ function UntreatedDocumentsTable(props: {
         title: wordings.business.filters.columnTitles.jurisdiction.title,
         tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
         canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
+        extractor: (treatedDocument) => treatedDocument.document.decisionMetadata.jurisdiction || '-',
         width: 4,
       },
       {
@@ -260,10 +262,10 @@ function UntreatedDocumentsTable(props: {
         tooltipText: wordings.business.filters.columnTitles.decisionDate.tooltipText,
         canBeSorted: true,
         extractor: (untreatedDocument) =>
-          untreatedDocument.document.decisionDate
-            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionDate)
+          untreatedDocument.document.decisionMetadata.date
+            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionMetadata.date)
             : '-',
-        getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionDate || 0,
+        getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionMetadata.date || 0,
         width: 2,
       },
       {

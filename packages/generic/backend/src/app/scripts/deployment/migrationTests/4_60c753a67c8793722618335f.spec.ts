@@ -24,7 +24,7 @@ describe('add isActivated in user model', () => {
   it('should test up', async () => {
     const userRepository = buildUserRepository();
     await Promise.all(
-      ((usersWithOldModel as any) as userType[]).map(userRepository.insert),
+      (usersWithOldModel as any as userType[]).map(userRepository.insert),
     );
 
     await up();

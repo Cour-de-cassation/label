@@ -1,5 +1,5 @@
 import { userModule, userType } from '@label/core';
-import { buildProjection, buildRepositoryBuilder } from '../../../repository';
+import { buildRepositoryBuilder } from '../../../repository';
 import { customUserRepositoryType } from './customUserRepositoryType';
 
 export { buildUserRepository };
@@ -18,11 +18,8 @@ const buildUserRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
-    async findAllWithNoDeletionDateProjection(projection) {
-      return collection
-        .find({ deletionDate: undefined })
-        .project(buildProjection(projection as string[]))
-        .toArray();
+    async findAllWithNoDeletionDate() {
+      return collection.find({ deletionDate: undefined }).toArray();
     },
     async findByEmail(email) {
       const formattedEmail = userModule.lib.formatEmail(email);
@@ -33,12 +30,12 @@ const buildUserRepository = buildRepositoryBuilder<
       return result;
     },
     async updateHashedPassword(userId, hashedPassword) {
-      const { result } = await collection.updateOne(
+      const result = await collection.updateOne(
         { _id: userId },
         { $set: { hashedPassword, passwordLastUpdateDate: Date.now() } },
       );
       return {
-        success: result.ok === 1,
+        success: result.acknowledged,
       };
     },
   }),

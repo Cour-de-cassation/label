@@ -1,15 +1,15 @@
-import { MongoClient, Collection } from 'mongodb';
+import { MongoClient, Collection, Document } from 'mongodb';
 
 export { buildMongo, mongo };
 
 export type { mongoCollectionType };
 
-type mongoCollectionType<T> = Collection<T>;
+type mongoCollectionType<T extends Document> = Collection<T>;
 
 const mongo = buildMongo();
 
 function buildMongo() {
-  let client = new MongoClient('');
+  let client: MongoClient | undefined;
   let dbName = '';
 
   return {
@@ -19,7 +19,7 @@ function buildMongo() {
   };
 
   async function close() {
-    await client.close();
+    await client?.close();
   }
 
   async function initialize({
@@ -31,14 +31,15 @@ function buildMongo() {
   }) {
     dbName = newDbName;
 
-    client = await new MongoClient(url, {
-      useUnifiedTopology: true,
-    }).connect();
+    client = await new MongoClient(url, {}).connect();
 
     return client;
   }
 
   function getDb() {
+    if (!client) {
+      throw new Error('Mongo db is undefined');
+    }
     return client.db(dbName);
   }
 }

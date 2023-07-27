@@ -1,8 +1,8 @@
 export { prettyLogFormatter };
 
 const prettyLogFormatter = {
-  formatErrorLog(errorText: string) {
-    return `${new Date().toISOString()} - Error: ${errorText}`;
+  formatErrorLog(error: any) {
+    return `${new Date().toISOString()} - Error: ${error}`;
   },
 
   formatLog(value: any) {

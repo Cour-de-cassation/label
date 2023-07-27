@@ -22,7 +22,8 @@ describe('fetchUsersByAssignations', () => {
     await userRepository.insert(user2);
     await assignationRepository.insert(assignation1);
     await assignationRepository.insert(assignation2);
-    const assignationsById = await assignationService.fetchAllAssignationsById();
+    const assignationsById =
+      await assignationService.fetchAllAssignationsById();
 
     const userNamesByAssignationId = await userService.fetchUsersByAssignations(
       Object.values(assignationsById),

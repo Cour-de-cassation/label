@@ -14,6 +14,7 @@ const AnnotatorStateHandlerContext = createContext<annotatorStateHandlerType>({
     annotations: [],
     settings: {},
     document: documentModule.generator.generate(),
+    mandatoryReplacementTerms: undefined,
   }),
   getChecksum: () => '',
   reinitialize: () => null,

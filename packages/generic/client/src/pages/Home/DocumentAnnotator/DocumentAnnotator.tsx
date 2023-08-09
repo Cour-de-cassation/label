@@ -41,6 +41,7 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<voi
       annotations={annotatorState.annotations}
       document={annotatorState.document}
       settings={annotatorState.settings}
+      mandatoryReplacementTerms={annotatorState.mandatoryReplacementTerms}
     >
       <DocumentViewerModeHandlerContextProvider>
         <ViewerScrollerContextProvider viewerRef={viewerRef}>

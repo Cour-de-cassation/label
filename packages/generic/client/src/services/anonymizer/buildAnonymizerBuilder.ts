@@ -1,4 +1,11 @@
-import { annotationType, buildAnonymizer, documentModule, fetchedDocumentType, settingsType } from '@label/core';
+import {
+  annotationType,
+  buildAnonymizer,
+  documentModule,
+  fetchedDocumentType,
+  replacementTermType,
+  settingsType,
+} from '@label/core';
 import { clientAnonymizerType } from '../../types';
 
 export { buildAnonymizerBuilder };
@@ -17,6 +24,7 @@ function buildAnonymizerBuilder({
   annotations: annotationType[];
   document: fetchedDocumentType;
   settings: settingsType;
+  mandatoryReplacementTerms: replacementTermType[] | undefined;
 }): { anonymizerBuilder: anonymizerBuilderType } {
   return {
     anonymizerBuilder: {

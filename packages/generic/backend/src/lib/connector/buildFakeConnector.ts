@@ -125,7 +125,7 @@ async function buildFakeConnectorWithNDecisions(
     }: {
       startDate: Date;
       endDate: Date;
-      source: 'jurinet' | 'jurica';
+      source: 'jurinet' | 'jurica' | 'juritj';
     }) {
       return courtDecisions.filter((courtDecision) => {
         if (!courtDecision.dateDecision) {
@@ -147,7 +147,7 @@ async function buildFakeConnectorWithNDecisions(
     }: {
       startDate: Date;
       endDate: Date;
-      source: 'jurinet' | 'jurica';
+      source: 'jurinet' | 'jurica' | 'juritj';
     }) {
       return courtDecisions.filter((courtDecision) => {
         if (!courtDecision.dateCreation) {

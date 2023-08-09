@@ -1,6 +1,26 @@
 import { extractRoute } from '.';
 
 describe('extractRoute', () => {
+  it('should return exhaustive because it is juritj', async () => {
+    const route = extractRoute(
+      {
+        additionalTermsToAnnotate: '',
+        solution: '',
+        publicationCategory: ['W'],
+        chamberId: 'CR',
+        civilCaseCode: '',
+        civilMatterCode: '',
+        criminalCaseCode: '',
+        session: '',
+        NACCode: '',
+        endCaseCode: '',
+      },
+      'juritj',
+    );
+
+    expect(route).toBe('exhaustive');
+  });
+
   it('should return exhaustive if no endCaseCode & no NACCode', async () => {
     const route = extractRoute(
       {

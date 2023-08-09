@@ -98,6 +98,11 @@ Import from the SDER database JuriCA decisions to pseudonymise chained with Juri
 
 Import from the SDER database recent JuriCA decisions to pseudonymise.
 
+## importJuritjDocuments
+
+Import from the SDER database recent JuriTJ decisions to pseudonymise.
+
+
 ## importNewDocumentsFromSder
 
 Same as `autoImportDocumentsFromSder`, but without the `threshold` option.

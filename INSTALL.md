@@ -20,7 +20,7 @@ yarn buildLocalDevDocker
 
 ## Launch
 
-For the first launch, you may want to have example data. To do so, follow the `Add documents you want to annotate` step in the [reuser guide](reuserGuide.md).
+For the first launch, you need to have example data. To do so, follow the `Add documents you want to annotate` step in the [reuser guide](reuserGuide.md) or just rename the `storage-example` folder to `storage`.
 
 Run in two different terminals:
 

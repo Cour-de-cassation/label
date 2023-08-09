@@ -53,7 +53,6 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
     ) {
       return annotation.text;
     }
-
     const anonymizedText = mapper[annotation.entityId] || ANONYMIZATION_DEFAULT_TEXT;
 
     return anonymizedText;

@@ -1,12 +1,9 @@
-import { useAnonymizerBuilder } from '../../../../services/anonymizer';
+import { clientAnonymizerType } from '../../../../types';
 import React from 'react';
 import { annotationType } from '@label/core';
 
 export { DocumentAnonymizedAnnotationText };
 
-function DocumentAnonymizedAnnotationText(props: { annotation: annotationType }) {
-  const anonymizerBuilder = useAnonymizerBuilder();
-  const anonymizer = anonymizerBuilder.get();
-
-  return <span>{anonymizer.anonymize(props.annotation)}</span>;
+function DocumentAnonymizedAnnotationText(props: { anonymizer: clientAnonymizerType; annotation: annotationType }) {
+  return <span>{props.anonymizer.anonymize(props.annotation)}</span>;
 }

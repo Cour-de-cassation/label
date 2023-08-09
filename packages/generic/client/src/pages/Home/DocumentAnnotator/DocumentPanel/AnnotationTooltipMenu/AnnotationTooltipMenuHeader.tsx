@@ -2,13 +2,14 @@ import React, { ReactElement } from 'react';
 import { annotationHandler, annotationType, settingsModule } from '@label/core';
 import { customThemeType, useCustomTheme, Header, Text } from 'pelta-design-system';
 import { CategoryIcon } from '../../../../../components';
+import { clientAnonymizerType } from '../../../../../types';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
 import { DocumentAnonymizedAnnotationText } from '../DocumentAnonymizedAnnotationText';
 
 export { PureAnnotationTooltipMenuHeader as AnnotationTooltipMenuHeader };
 
-type propsType = { annotation: annotationType; isAnonymizedView: boolean };
+type propsType = { annotation: annotationType; anonymizer: clientAnonymizerType; isAnonymizedView: boolean };
 
 class PureAnnotationTooltipMenuHeader extends React.Component<propsType> {
   shouldComponentUpdate(nextProps: propsType) {
@@ -23,7 +24,11 @@ class PureAnnotationTooltipMenuHeader extends React.Component<propsType> {
 
   render() {
     return (
-      <AnnotationTooltipMenuHeader annotation={this.props.annotation} isAnonymizedView={this.props.isAnonymizedView} />
+      <AnnotationTooltipMenuHeader
+        annotation={this.props.annotation}
+        anonymizer={this.props.anonymizer}
+        isAnonymizedView={this.props.isAnonymizedView}
+      />
     );
   }
 }
@@ -56,7 +61,7 @@ function AnnotationTooltipMenuHeader(props: propsType): ReactElement {
         {`${!props.isAnonymizedView ? wordings.homePage.replacement : wordings.homePage.originalText} : `}
         <Text inline variant="body2">
           {!props.isAnonymizedView ? (
-            <DocumentAnonymizedAnnotationText annotation={props.annotation} />
+            <DocumentAnonymizedAnnotationText annotation={props.annotation} anonymizer={props.anonymizer} />
           ) : (
             props.annotation.text
           )}

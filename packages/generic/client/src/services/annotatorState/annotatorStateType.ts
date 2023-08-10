@@ -1,4 +1,4 @@
-import { annotationType, assignationType, fetchedDocumentType, replacementTermType, settingsType } from '@label/core';
+import { annotationReportType, annotationType, assignationType, fetchedDocumentType, replacementTermType, settingsType } from '@label/core';
 
 export type { annotatorStateType };
 
@@ -8,4 +8,5 @@ type annotatorStateType = {
   document: fetchedDocumentType;
   settings: settingsType;
   mandatoryReplacementTerms: replacementTermType[] | undefined;
+  annotationReport: annotationReportType | undefined;
 };

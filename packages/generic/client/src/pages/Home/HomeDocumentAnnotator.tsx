@@ -24,7 +24,7 @@ export { HomeDocumentAnnotator };
 
 function HomeDocumentAnnotator(props: {
   annotations: annotationType[];
-  annotationReport: annotationReportType;
+  checklist: annotationReportType['checkList'];
   assignationId: assignationType['_id'];
   committer: annotationsCommitterType;
   document: fetchedDocumentType;
@@ -56,10 +56,10 @@ function HomeDocumentAnnotator(props: {
       initialAnnotatorState={{
         assignationId: props.assignationId,
         annotations: props.annotations,
+        checklist: props.checklist,
         document: props.document,
         settings: props.settings,
         mandatoryReplacementTerms: undefined,
-        annotationReport: props.annotationReport,
       }}
     >
       <MainHeader title={props.document.title} subtitle={subtitle} />

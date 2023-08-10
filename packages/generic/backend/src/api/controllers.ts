@@ -42,10 +42,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         ),
     }),
 
-    annotationReport: buildAuthenticatedController({
+    checklist: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
-        annotationReportService.fetchAnnotationReportByDocumentId(
+        annotationReportService.fetchChecklistByDocumentId(
           idModule.lib.buildId(documentId),
         ),
     }),

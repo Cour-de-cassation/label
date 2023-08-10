@@ -18,9 +18,9 @@ export { DocumentSwitcher };
 
 type documentStateType =
   | {
-      kind: 'annotating';
-      choice: { document: fetchedDocumentType; annotations: annotationType[]; assignationId: assignationType['_id'] };
-    }
+    kind: 'annotating';
+    choice: { document: fetchedDocumentType; annotations: annotationType[]; assignationId: assignationType['_id'] };
+  }
   | { kind: 'selecting' };
 
 function DocumentSwitcher(props: {
@@ -48,6 +48,7 @@ function DocumentSwitcher(props: {
         return (
           <HomeDocumentAnnotator
             assignationId={documentState.choice.assignationId}
+            checklist={[]}
             committer={buildAnnotationsCommitter()}
             settings={settingsForDocument}
             document={documentState.choice.document}

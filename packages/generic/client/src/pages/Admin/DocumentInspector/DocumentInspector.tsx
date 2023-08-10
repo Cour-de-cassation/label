@@ -11,7 +11,7 @@ import {
 import { DocumentAnnotator } from '../../Home/DocumentAnnotator';
 import { useAlert } from '../../../services/alert';
 import { wordings } from '../../../wordings';
-import { AnnotationReportDataFetcher } from './AnnotationReportDataFetcher';
+import { ChecklistDataFetcher } from './ChecklistDataFetcher';
 import { AnnotationsDataFetcher } from './AnnotationsDataFetcher';
 import { DocumentDataFetcher } from './DocumentDataFetcher';
 import { localStorage } from '../../../services/localStorage';
@@ -40,8 +40,8 @@ function DocumentInspector(props: { settings: settingsType }) {
       {({ document }) => (
         <MandatoryReplacementTermsDataFetcher documentId={params.documentId}>
           {({ mandatoryReplacementTerms }) => (
-            <AnnotationReportDataFetcher documentId={params.documentId}>
-              {({ annotationReport }) => (
+            <ChecklistDataFetcher documentId={params.documentId}>
+              {({ checklist }) => (
                 <AnnotationsDataFetcher documentId={params.documentId}>
                   {({ annotations }) => {
 
@@ -58,8 +58,8 @@ function DocumentInspector(props: { settings: settingsType }) {
                         autoSaver={buildAutoSaver({ applySave: applyAutoSave })}
                         committer={buildAnnotationsCommitter()}
                         initialAnnotatorState={{
-                          annotationReport: annotationReport,
                           annotations: annotations,
+                          checklist: checklist,
                           document: document,
                           settings: settingsForDocument,
                           mandatoryReplacementTerms: mandatoryReplacementTerms,
@@ -72,7 +72,7 @@ function DocumentInspector(props: { settings: settingsType }) {
                   }}
                 </AnnotationsDataFetcher>
               )}
-            </AnnotationReportDataFetcher>
+            </ChecklistDataFetcher>
           )}
         </MandatoryReplacementTermsDataFetcher>
       )}

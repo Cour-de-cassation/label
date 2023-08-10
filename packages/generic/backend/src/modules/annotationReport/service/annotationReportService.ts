@@ -4,11 +4,13 @@ import { buildAnnotationReportRepository } from '../repository';
 export { annotationReportService };
 
 const annotationReportService = {
-  async fetchAnnotationReportByDocumentId(
+  async fetchChecklistByDocumentId(
     documentId: annotationReportType['documentId'],
   ) {
     const annotationReportRepository = buildAnnotationReportRepository();
-    return await annotationReportRepository.findByDocumentId(documentId);
+    const annotationReport = await annotationReportRepository.findByDocumentId(documentId);
+
+    return annotationReport?.checkList;
   },
 
   async deleteAnnotationReportsByDocumentId(

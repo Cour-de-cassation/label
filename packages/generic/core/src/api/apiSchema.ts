@@ -50,7 +50,7 @@ const apiSchema = {
         },
       } as const),
     },
-    annotationReport: {
+    checklist: {
       in: {
         documentId: buildModel({
           kind: 'primitive',
@@ -60,7 +60,7 @@ const apiSchema = {
       out: buildModel({
         kind: 'or',
         content: [
-          annotationReportModule.model,
+          annotationReportModule.model.content.checkList,
           { kind: 'primitive', content: 'undefined' },
         ],
       } as const),

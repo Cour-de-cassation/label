@@ -24,7 +24,7 @@ export { HomeDocumentAnnotator };
 
 function HomeDocumentAnnotator(props: {
   annotations: annotationType[];
-  checklist: annotationReportType['checkList'];
+  checklist: annotationReportType['checklist'] | undefined;
   assignationId: assignationType['_id'];
   committer: annotationsCommitterType;
   document: fetchedDocumentType;

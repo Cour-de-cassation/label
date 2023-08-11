@@ -60,7 +60,7 @@ describe('nlpMapper', () => {
       );
 
       expect(annotationReport).toEqual({
-        checkList: ['CHECK 1', 'CHECK 2'],
+        checklist: ['CHECK 1', 'CHECK 2'],
         documentId: document._id,
         _id: annotationReport._id,
       });

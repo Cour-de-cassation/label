@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { httpStatusCodeHandler } from 'sder-core';
-import { annotationType, assignationType, fetchedDocumentType, idModule } from '@label/core';
+import { annotationReportType, annotationType, assignationType, fetchedDocumentType, idModule } from '@label/core';
 import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
 
@@ -12,6 +12,7 @@ function DocumentsDataFetcher(props: {
       assignationId: assignationType['_id'];
       document: fetchedDocumentType;
       annotations: annotationType[];
+      checklist: annotationReportType['checklist'] | undefined;
     }[];
     fetchNewDocumentsForUser: () => void;
   }) => ReactElement;
@@ -28,6 +29,7 @@ function DocumentsDataFetcher(props: {
           assignationId: assignationType['_id'];
           document: fetchedDocumentType;
           annotations: annotationType[];
+          checklist: annotationReportType['checklist'] | undefined;
         }[],
       ) => props.children({ documentsForUser, fetchNewDocumentsForUser: () => documentsForUserFetchInfo.refetch() })}
       fetchInfo={documentsForUserFetchInfo}
@@ -49,8 +51,10 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
     document: fetchedDocumentType;
     assignationId: assignationType['_id'];
     annotations: annotationType[];
+    checklist: annotationReportType['checklist'] | undefined;
   }> = [];
   const statusCodesAnnotations = [];
+  const statusCodesChecklists = [];
 
   const { data: assignatedDocuments, statusCode: statusCodeDocuments } = await apiCaller.get<'documentsForUser'>(
     'documentsForUser',
@@ -70,6 +74,13 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
         },
       );
 
+      const { data: checklist, statusCode: statusCodeChecklist } = await apiCaller.get<'checklist'>(
+        'checklist',
+        {
+          documentId: assignatedDocument.document._id,
+        },
+      );
+
       documentsForUser.push({
         document: {
           ...assignatedDocument.document,
@@ -77,8 +88,10 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
         },
         assignationId: idModule.lib.buildId(assignatedDocument.assignationId),
         annotations,
+        checklist,
       });
       statusCodesAnnotations.push(statusCodeAnnotations);
+      statusCodesChecklists.push(statusCodeChecklist);
     } catch (error) {
       console.warn(error);
     }
@@ -86,6 +99,6 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
 
   return {
     documentsForUser,
-    statusCode: httpStatusCodeHandler.merge([statusCodeDocuments, ...statusCodesAnnotations]),
+    statusCode: httpStatusCodeHandler.merge([statusCodeDocuments, ...statusCodesAnnotations, ...statusCodesChecklists]),
   };
 }

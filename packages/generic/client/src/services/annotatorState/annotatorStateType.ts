@@ -8,5 +8,5 @@ type annotatorStateType = {
   document: fetchedDocumentType;
   settings: settingsType;
   mandatoryReplacementTerms: replacementTermType[] | undefined;
-  checklist: annotationReportType['checkList'] | undefined;
+  checklist: annotationReportType['checklist'] | undefined;
 };

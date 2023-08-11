@@ -10,7 +10,7 @@ const annotationReportService = {
     const annotationReportRepository = buildAnnotationReportRepository();
     const annotationReport = await annotationReportRepository.findByDocumentId(documentId);
 
-    return annotationReport?.checkList;
+    return annotationReport?.checklist;
   },
 
   async deleteAnnotationReportsByDocumentId(

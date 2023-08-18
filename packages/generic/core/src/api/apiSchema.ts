@@ -519,8 +519,8 @@ const apiSchema = {
         } as const),
       },
       out: buildModel({
-            kind: 'array',
-            content: replacementTermModule.model,
+        kind: 'array',
+        content: replacementTermModule.model,
       } as const),
     },
     workingUsers: {

@@ -74,12 +74,9 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
         },
       );
 
-      const { data: checklist, statusCode: statusCodeChecklist } = await apiCaller.get<'checklist'>(
-        'checklist',
-        {
-          documentId: assignatedDocument.document._id,
-        },
-      );
+      const { data: checklist, statusCode: statusCodeChecklist } = await apiCaller.get<'checklist'>('checklist', {
+        documentId: assignatedDocument.document._id,
+      });
 
       documentsForUser.push({
         document: {

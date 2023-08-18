@@ -1,4 +1,10 @@
-import { annotationModule, settingsModule, documentModule, annotationReportModule, replacementTermType } from '@label/core';
+import {
+  annotationModule,
+  settingsModule,
+  documentModule,
+  annotationReportModule,
+  replacementTermType,
+} from '@label/core';
 import { range } from 'lodash';
 import { computeAnnotatorStateChecksum } from './computeAnnotatorStateChecksum';
 

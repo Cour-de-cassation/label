@@ -44,7 +44,6 @@ function DocumentInspector(props: { settings: settingsType }) {
               {({ checklist }) => (
                 <AnnotationsDataFetcher documentId={params.documentId}>
                   {({ annotations }) => {
-
                     const settingsForDocument = settingsModule.lib.computeFilteredSettings(
                       props.settings,
                       document.decisionMetadata.categoriesToOmit,

@@ -42,12 +42,11 @@ function AnnotationsPanel(props: {
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
-        {
-          props.checklist && props.checklist.length > 0 &&
-          <div key={"checklist"} style={styles.categoryContainer}>
+        {props.checklist && props.checklist.length > 0 && (
+          <div key={'checklist'} style={styles.categoryContainer}>
             {renderChecklist(props.checklist)}
           </div>
-        }
+        )}
         {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => {
           const isCategoryAdditionalAnnotationCategory =
             category === settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName();
@@ -66,7 +65,7 @@ function AnnotationsPanel(props: {
           </div>
         ))}
       </div>
-    </div >
+    </div>
   );
 
   function renderCategory({ category, categorySize, categoryAnnotations }: annotationPerCategoryAndEntityType[number]) {
@@ -103,7 +102,7 @@ function AnnotationsPanel(props: {
     return (
       <div style={styles.checklistContainer}>
         <div style={styles.checklistLeftContainer}>
-          <Icon iconName={"help"} />
+          <Icon iconName={'help'} />
         </div>
         <div style={styles.checklistRightContainer}>
           <Text>{wordings.homePage.checklist}</Text>

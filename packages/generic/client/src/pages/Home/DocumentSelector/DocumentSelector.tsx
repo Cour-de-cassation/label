@@ -21,14 +21,14 @@ function DocumentSelector(props: {
     annotations: annotationType[];
     document: fetchedDocumentType;
     assignationId: assignationType['_id'];
-    checklist: annotationReportType['checklist'] | undefined;
+    checklist: annotationReportType['checklist'];
   }>;
   settings: settingsType;
   onSelectDocument: (choice: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
-    checklist: annotationReportType['checklist'] | undefined;
+    checklist: annotationReportType['checklist'];
   }) => Promise<void>;
 }) {
   const styles = buildStyles();

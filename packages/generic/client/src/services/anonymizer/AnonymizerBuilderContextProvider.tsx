@@ -19,7 +19,7 @@ function AnonymizerBuilderContextProvider({
   children: ReactNode;
   document: fetchedDocumentType;
   settings: settingsType;
-  mandatoryReplacementTerms: replacementTermType[] | undefined;
+  mandatoryReplacementTerms: replacementTermType[];
 }): ReactElement {
   const { anonymizerBuilder } = buildAnonymizerBuilder({
     settings,

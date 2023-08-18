@@ -10,7 +10,8 @@ import { treatmentService } from '../modules/treatment';
 import { userService } from '../modules/user';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
-import { annotationReportService } from 'src/modules/annotationReport';
+import { annotationReportService } from '../modules/annotationReport';
+import { replacementTermType } from '@label/core';
 
 export { controllers };
 
@@ -183,7 +184,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
     mandatoryReplacementTerms: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
-      controllerWithUser: async () => undefined, //TO DO
+      controllerWithUser: async () => [] as replacementTermType[], //TO DO
     }),
 
     workingUsers: buildAuthenticatedController({

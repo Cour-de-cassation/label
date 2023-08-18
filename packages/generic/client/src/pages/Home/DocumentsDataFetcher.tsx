@@ -12,7 +12,7 @@ function DocumentsDataFetcher(props: {
       assignationId: assignationType['_id'];
       document: fetchedDocumentType;
       annotations: annotationType[];
-      checklist: annotationReportType['checklist'] | undefined;
+      checklist: annotationReportType['checklist'];
     }[];
     fetchNewDocumentsForUser: () => void;
   }) => ReactElement;
@@ -29,7 +29,7 @@ function DocumentsDataFetcher(props: {
           assignationId: assignationType['_id'];
           document: fetchedDocumentType;
           annotations: annotationType[];
-          checklist: annotationReportType['checklist'] | undefined;
+          checklist: annotationReportType['checklist'];
         }[],
       ) => props.children({ documentsForUser, fetchNewDocumentsForUser: () => documentsForUserFetchInfo.refetch() })}
       fetchInfo={documentsForUserFetchInfo}
@@ -51,7 +51,7 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
     document: fetchedDocumentType;
     assignationId: assignationType['_id'];
     annotations: annotationType[];
-    checklist: annotationReportType['checklist'] | undefined;
+    checklist: annotationReportType['checklist'];
   }> = [];
   const statusCodesAnnotations = [];
   const statusCodesChecklists = [];

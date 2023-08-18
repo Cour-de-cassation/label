@@ -13,7 +13,7 @@ export { AnnotationsPanel };
 function AnnotationsPanel(props: {
   document: fetchedDocumentType;
   annotationPerCategoryAndEntity: annotationPerCategoryAndEntityType;
-  checklist: annotationReportType['checklist'] | undefined;
+  checklist: annotationReportType['checklist'];
   splittedTextByLine: splittedTextByLineType;
   nonAnnotableCategories: string[];
 }) {
@@ -108,7 +108,7 @@ function AnnotationsPanel(props: {
         <div style={styles.checklistRightContainer}>
           <Text>{wordings.homePage.checklist}</Text>
           {checklist.map((checklistElement) => (
-            <Text variant="body2">{checklistElement}</Text>
+            <Text variant="body2">- {checklistElement}</Text>
           ))}
         </div>
       </div>

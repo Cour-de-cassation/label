@@ -25,12 +25,12 @@ const MAX_CATEGORIES_PER_LINE = 6;
 const ICONS_CONTAINER_HEIGHT = 140;
 
 function DocumentSelectorCard(props: {
-  choice: { annotations: annotationType[]; document: fetchedDocumentType; assignationId: assignationType['_id']; checklist: annotationReportType['checklist'] | undefined; };
+  choice: { annotations: annotationType[]; document: fetchedDocumentType; assignationId: assignationType['_id']; checklist: annotationReportType['checklist']; };
   onSelect: (choice: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
-    checklist: annotationReportType['checklist'] | undefined;
+    checklist: annotationReportType['checklist'];
   }) => Promise<void>;
   settings: settingsType;
 }) {

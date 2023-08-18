@@ -57,13 +57,7 @@ const apiSchema = {
           content: 'string',
         } as const),
       },
-      out: buildModel({
-        kind: 'or',
-        content: [
-          annotationReportModule.model.content.checkList,
-          { kind: 'primitive', content: 'undefined' },
-        ],
-      } as const),
+      out: annotationReportModule.model.content.checklist,
     },
     annotations: {
       in: {
@@ -525,14 +519,8 @@ const apiSchema = {
         } as const),
       },
       out: buildModel({
-        kind: 'or',
-        content: [
-          {
             kind: 'array',
             content: replacementTermModule.model,
-          },
-          { kind: 'primitive', content: 'undefined' },
-        ],
       } as const),
     },
     workingUsers: {

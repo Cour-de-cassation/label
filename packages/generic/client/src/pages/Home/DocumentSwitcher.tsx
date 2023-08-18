@@ -20,7 +20,7 @@ export { DocumentSwitcher };
 type documentStateType =
   | {
     kind: 'annotating';
-    choice: { document: fetchedDocumentType; annotations: annotationType[]; assignationId: assignationType['_id']; checklist: annotationReportType['checklist'] | undefined };
+    choice: { document: fetchedDocumentType; annotations: annotationType[]; assignationId: assignationType['_id']; checklist: annotationReportType['checklist'] };
   }
   | { kind: 'selecting' };
 
@@ -29,7 +29,7 @@ function DocumentSwitcher(props: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
-    checklist: annotationReportType['checklist'] | undefined;
+    checklist: annotationReportType['checklist'];
   }>;
   fetchNewDocumentsForUser: () => void;
   settings: settingsType;
@@ -93,7 +93,7 @@ function DocumentSwitcher(props: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
-    checklist: annotationReportType['checklist'] | undefined;
+    checklist: annotationReportType['checklist'];
   }) {
     try {
       const documentStatus = (

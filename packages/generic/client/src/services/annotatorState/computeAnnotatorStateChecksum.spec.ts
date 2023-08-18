@@ -1,4 +1,4 @@
-import { annotationModule, settingsModule, documentModule, annotationReportModule } from '@label/core';
+import { annotationModule, settingsModule, documentModule, annotationReportModule, replacementTermType } from '@label/core';
 import { range } from 'lodash';
 import { computeAnnotatorStateChecksum } from './computeAnnotatorStateChecksum';
 
@@ -20,7 +20,7 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations,
-      mandatoryReplacementTerms: undefined,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState);
@@ -40,14 +40,14 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations1,
-      mandatoryReplacementTerms: undefined,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
     const annotatorState2 = {
       checklist,
       document,
       settings,
       annotations: annotations2,
-      mandatoryReplacementTerms: undefined,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -74,14 +74,14 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations1,
-      mandatoryReplacementTerms: undefined,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
     const annotatorState2 = {
       checklist,
       document,
       settings,
       annotations: annotations2,
-      mandatoryReplacementTerms: undefined,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -105,14 +105,14 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations1,
-      mandatoryReplacementTerms: undefined,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
     const annotatorState2 = {
       checklist,
       document,
       settings,
       annotations: annotations2,
-      mandatoryReplacementTerms: undefined,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -135,7 +135,7 @@ describe('computeAnnotatorStateChecksum', () => {
       document,
       settings,
       annotations: annotations,
-      mandatoryReplacementTerms: undefined,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState);

@@ -1,10 +1,12 @@
 import React from 'react';
 import {
+  annotationReportType,
   annotationsDiffType,
   annotationType,
   assignationType,
   documentModule,
   fetchedDocumentType,
+  replacementTermType,
   settingsType,
 } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
@@ -23,6 +25,7 @@ export { HomeDocumentAnnotator };
 
 function HomeDocumentAnnotator(props: {
   annotations: annotationType[];
+  checklist: annotationReportType['checklist'];
   assignationId: assignationType['_id'];
   committer: annotationsCommitterType;
   document: fetchedDocumentType;
@@ -54,9 +57,10 @@ function HomeDocumentAnnotator(props: {
       initialAnnotatorState={{
         assignationId: props.assignationId,
         annotations: props.annotations,
+        checklist: props.checklist,
         document: props.document,
         settings: props.settings,
-        mandatoryReplacementTerms: undefined,
+        mandatoryReplacementTerms: [] as replacementTermType[],
       }}
     >
       <MainHeader title={props.document.title} subtitle={subtitle} />

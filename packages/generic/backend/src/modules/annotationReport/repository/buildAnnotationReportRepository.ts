@@ -11,6 +11,15 @@ const buildAnnotationReportRepository = buildRepositoryBuilder<
   collectionName: 'annotationReports',
   indexes: [],
   buildCustomRepository: (collection) => ({
+    async findByDocumentId(documentId) {
+      const result = await collection.find({ documentId }).toArray();
+
+      if (result.length === 0) {
+        return undefined;
+      }
+
+      return result[0];
+    },
     async deleteByDocumentId(documentId) {
       await collection.deleteMany({ documentId });
     },

@@ -13,12 +13,18 @@ const buildFakeAnnotationReportRepository = buildFakeRepositoryBuilder<
 >({
   collectionName: 'annotationReports',
   buildCustomFakeRepository: (collection) => ({
+    async findByDocumentId(documentId) {
+      return collection.filter(
+        (annotationReport) =>
+          !idModule.lib.equalId(annotationReport.documentId, documentId),
+      )[0];
+    },
     async deleteByDocumentId(documentId) {
       updateFakeCollection(
         collection,
         collection.filter(
-          (annotationRerport) =>
-            !idModule.lib.equalId(annotationRerport.documentId, documentId),
+          (annotationReport) =>
+            !idModule.lib.equalId(annotationReport.documentId, documentId),
         ),
       );
     },

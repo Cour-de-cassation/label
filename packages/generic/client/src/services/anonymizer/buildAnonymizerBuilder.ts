@@ -24,7 +24,7 @@ function buildAnonymizerBuilder({
   annotations: annotationType[];
   document: fetchedDocumentType;
   settings: settingsType;
-  mandatoryReplacementTerms: replacementTermType[] | undefined;
+  mandatoryReplacementTerms: replacementTermType[];
 }): { anonymizerBuilder: anonymizerBuilderType } {
   return {
     anonymizerBuilder: {

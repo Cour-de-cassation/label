@@ -250,7 +250,11 @@ const fr = {
     pleaseTryAgain: 'Veuillez réessayer.',
     wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",
   },
-  errorPage: 'Une erreur est survenue...',
+  errorPage: {
+    title: 'Une erreur est survenue...',
+    errorCode: 'Erreur {code}',
+    onRequest: "L'erreur est apparue sur la requête {route}",
+  },
   shared: {
     daysOfWeek: {
       monday: 'L',
@@ -274,6 +278,7 @@ const fr = {
     logout: 'Se déconnecter',
     refresh: 'Rafraîchir',
     moreOptions: "Plus d'options",
+    or: 'ou',
     passwordChangedConfirmation: { text: 'Votre mot de passe a été modifié.', button: 'OK' },
     settingsDrawer: {
       displayMode: "Type d'affichage",

@@ -20,6 +20,7 @@ function MandatoryReplacementTermsDataFetcher(props: {
         props.children({ mandatoryReplacementTerms })
       }
       fetchInfo={mandatoryReplacementTermsFetchInfo}
+      route={'mandatoryReplacementTerms'}
     />
   );
 }

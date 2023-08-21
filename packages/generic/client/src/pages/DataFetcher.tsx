@@ -11,6 +11,7 @@ function DataFetcher<dataT>(props: {
   buildComponentWithData: (returnedData: dataT) => ReactElement;
   fetchInfo: { isLoaded: boolean; statusCode?: number; data?: dataT };
   showLoadingOnRefetch?: boolean;
+  route?: string;
 }) {
   const fetchedData = handleFetchedData(props.fetchInfo, props.showLoadingOnRefetch);
 
@@ -31,7 +32,7 @@ function DataFetcher<dataT>(props: {
   }
 
   function buildErrorPage() {
-    return <ErrorPage />;
+    return <ErrorPage route={props.route} errorCode={props.fetchInfo.statusCode} />;
   }
 
   function buildLoadingPage() {

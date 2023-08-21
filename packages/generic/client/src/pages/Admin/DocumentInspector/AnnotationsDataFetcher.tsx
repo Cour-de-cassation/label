@@ -15,6 +15,7 @@ function AnnotationsDataFetcher(props: {
     <DataFetcher
       buildComponentWithData={(annotations: apiRouteOutType<'get', 'annotations'>) => props.children({ annotations })}
       fetchInfo={annotationsFetchInfo}
+      route={'annotations'}
     />
   );
 }

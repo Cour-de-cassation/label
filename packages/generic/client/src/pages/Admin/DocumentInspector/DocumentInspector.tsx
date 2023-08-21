@@ -11,6 +11,7 @@ import {
 import { DocumentAnnotator } from '../../Home/DocumentAnnotator';
 import { useAlert } from '../../../services/alert';
 import { wordings } from '../../../wordings';
+import { ChecklistDataFetcher } from './ChecklistDataFetcher';
 import { AnnotationsDataFetcher } from './AnnotationsDataFetcher';
 import { DocumentDataFetcher } from './DocumentDataFetcher';
 import { localStorage } from '../../../services/localStorage';
@@ -39,33 +40,38 @@ function DocumentInspector(props: { settings: settingsType }) {
       {({ document }) => (
         <MandatoryReplacementTermsDataFetcher documentId={params.documentId}>
           {({ mandatoryReplacementTerms }) => (
-            <AnnotationsDataFetcher documentId={params.documentId}>
-              {({ annotations }) => {
-                const settingsForDocument = settingsModule.lib.computeFilteredSettings(
-                  props.settings,
-                  document.decisionMetadata.categoriesToOmit,
-                  document.decisionMetadata.additionalTermsToAnnotate,
-                );
+            <ChecklistDataFetcher documentId={params.documentId}>
+              {({ checklist }) => (
+                <AnnotationsDataFetcher documentId={params.documentId}>
+                  {({ annotations }) => {
+                    const settingsForDocument = settingsModule.lib.computeFilteredSettings(
+                      props.settings,
+                      document.decisionMetadata.categoriesToOmit,
+                      document.decisionMetadata.additionalTermsToAnnotate,
+                    );
 
-                const applyAutoSave = buildApplyAutoSave(document._id);
+                    const applyAutoSave = buildApplyAutoSave(document._id);
 
-                return (
-                  <AnnotatorStateHandlerContextProvider
-                    autoSaver={buildAutoSaver({ applySave: applyAutoSave })}
-                    committer={buildAnnotationsCommitter()}
-                    initialAnnotatorState={{
-                      annotations: annotations,
-                      document: document,
-                      settings: settingsForDocument,
-                      mandatoryReplacementTerms: mandatoryReplacementTerms,
-                    }}
-                  >
-                    <MainHeader title={document.title} onBackButtonPress={history.goBack} />
-                    <DocumentAnnotator onStopAnnotatingDocument={buildOnStopAnnotatingDocument(document)} />
-                  </AnnotatorStateHandlerContextProvider>
-                );
-              }}
-            </AnnotationsDataFetcher>
+                    return (
+                      <AnnotatorStateHandlerContextProvider
+                        autoSaver={buildAutoSaver({ applySave: applyAutoSave })}
+                        committer={buildAnnotationsCommitter()}
+                        initialAnnotatorState={{
+                          annotations: annotations,
+                          checklist: checklist,
+                          document: document,
+                          settings: settingsForDocument,
+                          mandatoryReplacementTerms: mandatoryReplacementTerms,
+                        }}
+                      >
+                        <MainHeader title={document.title} onBackButtonPress={history.goBack} />
+                        <DocumentAnnotator onStopAnnotatingDocument={buildOnStopAnnotatingDocument(document)} />
+                      </AnnotatorStateHandlerContextProvider>
+                    );
+                  }}
+                </AnnotationsDataFetcher>
+              )}
+            </ChecklistDataFetcher>
           )}
         </MandatoryReplacementTermsDataFetcher>
       )}

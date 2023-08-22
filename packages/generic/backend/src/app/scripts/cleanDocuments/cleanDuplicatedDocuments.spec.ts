@@ -1,9 +1,9 @@
 import { documentModule, idModule } from '@label/core';
 import { buildDocumentRepository } from '../../../modules/document';
-import { cleanDoubledDocuments } from './cleanDoubledDocuments';
+import { cleanDuplicatedDocuments } from './cleanDuplicatedDocuments';
 
-describe('cleanDoubledDocuments', () => {
-  it('should clean the doubledDocuments', async () => {
+describe('cleanDuplicatedDocuments', () => {
+  it('should clean the DuplicatedDocuments', async () => {
     const originalDocument = documentModule.generator.generate();
     const otherDocument = documentModule.generator.generate();
     const doubledDocument = documentModule.generator.generate({
@@ -17,7 +17,7 @@ describe('cleanDoubledDocuments', () => {
       doubledDocument,
     ]);
 
-    await cleanDoubledDocuments();
+    await cleanDuplicatedDocuments();
 
     const fetchedDocuments = await documentRepository.findAll();
 

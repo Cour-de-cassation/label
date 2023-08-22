@@ -22,8 +22,10 @@ describe('cleanDuplicatedDocuments', () => {
 
     const fetchedDocuments = await documentRepository.findAll();
 
-    const fetchedIds = fetchedDocuments.map((u) => u._id).sort()
-    const expectedIds = [firstDocument, secondDocumentWithHigherStatus].map((u) => u._id).sort()
+    const fetchedIds = fetchedDocuments.map((u) => u._id).sort();
+    const expectedIds = [firstDocument, secondDocumentWithHigherStatus]
+      .map((u) => u._id)
+      .sort();
     expect(fetchedIds).toEqual(expectedIds);
   });
 });

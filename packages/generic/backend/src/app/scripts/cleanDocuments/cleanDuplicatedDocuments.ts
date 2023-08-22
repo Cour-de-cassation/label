@@ -16,9 +16,11 @@ async function cleanDuplicatedDocuments() {
   const documentRepository = buildDocumentRepository();
 
   const documents = await documentRepository.findAll();
-  const sortedDocuments = documents.sort(compareDocumentsByStatus)
+  const sortedDocuments = documents.sort(compareDocumentsByStatus);
 
-  logger.log(`${documents.length} documents found. Searching for duplicates...`);
+  logger.log(
+    `${documents.length} documents found. Searching for duplicates...`,
+  );
 
   const documentsToDelete: documentType[] = [];
 
@@ -51,50 +53,54 @@ function areDocumentsIdentical(
   );
 }
 
-
 function compareDocumentsByStatus(
   document1: documentType,
   document2: documentType,
 ) {
-
   const statusToPriorities = {
-    "loaded": 0,
-    "nlpAnnotating": 1,
-    "free": 2,
-    "pending": 3,
-    "saved": 4,
-    "toBePublished": 5,
-    "done": 6,
-    "toBeConfirmed": 7,
-    "locked": 8,
-    "rejected": 9,
+    loaded: 0,
+    nlpAnnotating: 1,
+    free: 2,
+    pending: 3,
+    saved: 4,
+    toBePublished: 5,
+    done: 6,
+    toBeConfirmed: 7,
+    locked: 8,
+    rejected: 9,
   };
 
   // comparing source
   if (document1.source < document2.source) {
-    return -1
+    return -1;
   } else if (document1.source > document2.source) {
-    return 1
+    return 1;
   } else {
     // comparing documentNumber
     if (document1.documentNumber < document1.documentNumber) {
-      return -1
+      return -1;
     } else if (document1.documentNumber > document2.documentNumber) {
-      return 1
+      return 1;
     } else {
       //comparing text
       if (document1.text < document2.text) {
-        return -1
+        return -1;
       } else if (document1.text > document2.text) {
-        return 1
+        return 1;
       } else {
         // comparing statuses
-        if (statusToPriorities[document1.status] < statusToPriorities[document2.status]) {
-          return 1 // low priority
-        } else if (statusToPriorities[document1.status] > statusToPriorities[document2.status]) {
-          return -1 // high priority
+        if (
+          statusToPriorities[document1.status] <
+          statusToPriorities[document2.status]
+        ) {
+          return 1; // low priority
+        } else if (
+          statusToPriorities[document1.status] >
+          statusToPriorities[document2.status]
+        ) {
+          return -1; // high priority
         } else {
-          return 0
+          return 0;
         }
       }
     }

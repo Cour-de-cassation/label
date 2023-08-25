@@ -17,6 +17,7 @@ function AnnotationsDiffDetailsDataFetcher(props: {
         props.children({ annotationsDiffDetails })
       }
       fetchInfo={annotationsDiffDetailsFetchInfo}
+      route={'annotationsDiffDetails'}
     />
   );
 }

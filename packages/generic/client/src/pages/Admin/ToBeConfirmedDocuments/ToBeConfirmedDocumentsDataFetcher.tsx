@@ -24,6 +24,7 @@ function ToBeConfirmedDocumentsDataFetcher(props: {
         })
       }
       fetchInfo={toBeConfirmedDocumentsFetchInfo}
+      route={'toBeConfirmedDocuments'}
     />
   );
 }

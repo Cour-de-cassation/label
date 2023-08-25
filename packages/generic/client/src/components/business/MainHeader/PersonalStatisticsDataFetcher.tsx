@@ -19,6 +19,7 @@ function PersonalStatisticsDataFetcher(props: {
         props.children({ personalStatistics, refetch: () => personalStatisticsInfo.refetch({}) })
       }
       fetchInfo={personalStatisticsInfo}
+      route={'personalStatistics'}
     />
   );
 }

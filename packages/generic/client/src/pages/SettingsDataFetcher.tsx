@@ -11,6 +11,7 @@ function SettingsDataFetcher(props: { children: (fetched: { settings: settingsTy
     <DataFetcher
       buildComponentWithData={(settings: settingsType) => props.children({ settings })}
       fetchInfo={settingsFetchInfo}
+      route={'settings'}
     />
   );
 }

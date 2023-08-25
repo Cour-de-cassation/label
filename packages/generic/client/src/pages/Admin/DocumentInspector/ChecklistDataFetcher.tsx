@@ -15,6 +15,7 @@ function ChecklistDataFetcher(props: {
     <DataFetcher
       buildComponentWithData={(checklist: apiRouteOutType<'get', 'checklist'>) => props.children({ checklist })}
       fetchInfo={checklistFetchInfo}
+      route={'checklist'}
     />
   );
 }

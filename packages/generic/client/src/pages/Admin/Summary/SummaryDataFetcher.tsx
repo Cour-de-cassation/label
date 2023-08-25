@@ -24,6 +24,7 @@ function SummaryDataFetcher(props: {
         })
       }
       fetchInfo={summaryFetchInfo}
+      route={'summary'}
     />
   );
 }

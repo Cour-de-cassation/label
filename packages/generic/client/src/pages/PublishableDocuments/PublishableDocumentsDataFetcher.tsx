@@ -19,6 +19,7 @@ function PublishableDocumentsDataFetcher(props: {
         props.children({ publishableDocuments, refetch: publishableDocumentsFetchInfo.refetch })
       }
       fetchInfo={publishableDocumentsFetchInfo}
+      route={'publishableDocuments'}
     />
   );
 }

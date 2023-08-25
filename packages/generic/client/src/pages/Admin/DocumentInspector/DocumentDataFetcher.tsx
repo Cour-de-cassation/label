@@ -15,6 +15,7 @@ function DocumentDataFetcher(props: {
     <DataFetcher
       buildComponentWithData={(document: apiRouteOutType<'get', 'document'>) => props.children({ document })}
       fetchInfo={documentFetchInfo}
+      route={'document'}
     />
   );
 }

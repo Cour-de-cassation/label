@@ -33,6 +33,7 @@ function StatisticsDataFetcher(props: {
         })
       }
       fetchInfo={statisticsFetchInfo}
+      route={'statistics'}
     />
   );
 }

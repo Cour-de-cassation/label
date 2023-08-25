@@ -24,6 +24,7 @@ function UntreatedDocumentsDataFetcher(props: {
         })
       }
       fetchInfo={untreatedDocumentsFetchInfo}
+      route={'untreatedDocuments'}
     />
   );
 }

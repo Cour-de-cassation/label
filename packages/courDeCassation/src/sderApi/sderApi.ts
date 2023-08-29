@@ -1,6 +1,8 @@
 import { decisionModule } from 'sder';
 import { documentType, idModule } from '@label/core';
 import { sderApiType } from './sderApiType';
+import axios from 'axios';
+import { logger } from '@label/backend';
 
 export { sderApi };
 
@@ -115,15 +117,16 @@ const sderApi: sderApiType = {
     });
   },
 
-  async updateDecisionPseudonymisation({
-    externalId,
-    pseudonymizationText,
-    labelTreatments,
-  }) {
-    await decisionModule.service.updateDecisionPseudonymisation({
-      decisionId: idModule.lib.buildId(externalId),
-      decisionPseudonymisedText: pseudonymizationText,
-      labelTreatments,
-    });
+  async updateDecisionPseudonymisation({ externalId, labelTreatments }) {
+    // await decisionModule.service.updateDecisionPseudonymisation({
+    //   decisionId: idModule.lib.buildId(externalId),
+    //   decisionPseudonymisedText: pseudonymizationText,
+    //   labelTreatments,
+    // });
+    logger.log('updateDecisionPseudonymisation');
+    await axios.put(
+      `http://localhost:3000/v1/decisions/${externalId}/rapports-occultations`,
+      { labelTreatments },
+    );
   },
 };

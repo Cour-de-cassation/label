@@ -17,7 +17,7 @@ function AnonymizedDocumentTextDataFetcher(props: {
         props.children({ anonymizedDocumentText })
       }
       fetchInfo={anonymizedDocumentTextFetchInfo}
-      route={'anonymizedDocuementText'}
+      route={'anonymizedDocumentText'}
     />
   );
 }

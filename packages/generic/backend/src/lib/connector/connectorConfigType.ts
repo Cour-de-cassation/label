@@ -1,5 +1,5 @@
-import { documentType } from '@label/core';
-import { decisionType } from 'sder';
+import { documentType, treatmentType } from '@label/core';
+import { decisionType, labelTreatmentsType } from 'sder';
 
 export type { connectorConfigType };
 
@@ -46,4 +46,7 @@ type connectorConfigType = {
     importer: documentType['importer'],
   ) => Promise<documentType>;
   mapDocumentToCourtDecision: (document: documentType) => decisionType;
+  mapLabelTreatmentsToTreatments: (
+    labelTreatments: labelTreatmentsType,
+  ) => Promise<treatmentType[]>;
 };

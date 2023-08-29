@@ -70,6 +70,7 @@ async function mapCourtDecisionToDocument(
     sderCourtDecision.sourceName,
     publicationCategory,
     NACCode,
+    importer,
   );
 
   const route = extractRoute(
@@ -154,9 +155,9 @@ function computeTitleFromParsedCourtDecision({
 }
 
 function computePublicationCategory(
-  pubCategory: string | undefined,
-  publication: string[] | undefined,
-) {
+  pubCategory: decisionType['pubCategory'],
+  publication: decisionType['publication'],
+): documentType['publicationCategory'] {
   const publicationCategory: string[] = [];
   if (!!pubCategory) {
     publicationCategory.push(pubCategory);
@@ -168,9 +169,10 @@ function computePublicationCategory(
 }
 
 function computePriority(
-  source: string,
-  publicationCategory: string[],
-  NACCode: string,
+  source: decisionType['sourceName'],
+  publicationCategory: documentType['publicationCategory'],
+  NACCode: decisionType['NACCode'],
+  importer: documentType['importer'],
 ): documentType['priority'] {
   if (
     documentModule.lib.publicationHandler.mustBePublished(
@@ -179,6 +181,12 @@ function computePriority(
     )
   ) {
     return 4;
+  }
+  switch (importer) {
+    case 'chained':
+      return 1;
+    case 'filler':
+      return 0;
   }
   switch (source) {
     case 'jurinet':

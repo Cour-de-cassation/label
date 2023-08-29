@@ -1,3 +1,6 @@
+import { decisionType } from 'sder';
+import { documentType } from '../documentType';
+
 export { publicationHandler };
 
 const PUBLISHED_PUBLICATION_CATEGORY_LETTERS = ['P', 'B'];
@@ -18,7 +21,7 @@ function getPrioritizedNACCodes() {
   return PRIORITIZED_NAC_CODES;
 }
 
-function mustBePublished(publicationCategory: string[], NACCode?: string) {
+function mustBePublished(publicationCategory: documentType['publicationCategory'], NACCode?: decisionType['NACCode']) {
   return (
     PUBLISHED_PUBLICATION_CATEGORY_LETTERS.some((publicationCategoryLetter) =>
       publicationCategory.includes(publicationCategoryLetter),

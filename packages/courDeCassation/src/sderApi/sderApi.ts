@@ -123,10 +123,16 @@ const sderApi: sderApiType = {
     //   decisionPseudonymisedText: pseudonymizationText,
     //   labelTreatments,
     // });
-    logger.log('updateDecisionPseudonymisation');
-    await axios.put(
-      `http://localhost:3000/v1/decisions/${externalId}/rapports-occultations`,
-      { labelTreatments },
-    );
+    try {
+      logger.log('updateDecisionPseudonymisation PROD');
+      await axios.put(
+        `http://localhost:3000/v1/decisions/${externalId}/rapports-occultations`,
+        { labelTreatments },
+      );
+      console.log('STEUPLAIT');
+    } catch (e) {
+      logger.error('ERROR dans sderApi.ts');
+      throw Error("Can't connect to api");
+    }
   },
 };

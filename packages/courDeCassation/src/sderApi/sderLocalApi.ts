@@ -2,6 +2,8 @@ import { decisionType } from 'sder';
 import { idModule } from '@label/core';
 import { fileSystem } from '@label/backend';
 import { sderApiType } from './sderApiType';
+import axios from 'axios';
+import { logger } from '@label/backend';
 
 export { sderLocalApi };
 
@@ -175,5 +177,21 @@ const sderLocalApi: sderApiType = {
 
   async setCourtDecisionBlocked() {},
 
-  async updateDecisionPseudonymisation() {},
+  async updateDecisionPseudonymisation({ externalId, labelTreatments }) {
+    // await decisionModule.service.updateDecisionPseudonymisation({
+    //   decisionId: idModule.lib.buildId(externalId),
+    //   decisionPseudonymisedText: pseudonymizationText,
+    //   labelTreatments,
+    // });
+    logger.log('updateDecisionPseudonymisation LOCAL');
+    await axios
+      .put(
+        `http://localhost:3000/v1/decisions/${externalId}/rapports-occultations`,
+        { labelTreatments },
+      )
+      .catch((e) => {
+        logger.error(e);
+      });
+    console.log('STEUPLAIT');
+  },
 };

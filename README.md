@@ -93,14 +93,16 @@ LABEL allow you to link annotations. Sometimes names are written lowercase or in
 - October 2016: French law for a Digital Republic.
 - November 2017: Repport of Cadiet mission.
 - 23 march 2019: Programmatic justice law 2018-2022.
-- 29 june 2020 : Decree about the publishing of court .
-- September 2020 : The project is initiated by the [Entrepeneur d'Intérêt Général (EIG) program](https://eig.etalab.gouv.fr/defis/label/).
-- June 2021 : Production launch with supreme court decisions (Jurinet database).
+- 29 june 2020: Decree about the publishing of court decision.
+- September 2020: The project is initiated by the [Entrepeneur d'Intérêt Général (EIG) program](https://eig.etalab.gouv.fr/defis/label/).
+- June 2021: Production launch with supreme court decisions (Jurinet database).
+- April 2022: Addition of appeal court's decisions (JuriCA database).
 
 Next steps:
 
-- April 2022 : Addition of appeal court's decisions (JuriCA database).
-- June 2023 : Addition of industrial tribunals' decisions.
+- Decembre 2023: Addition of 9 first judicial courts' decisions.
+- December 2024: Addition of industrial courts' decisions.
+- Septembre 2025: Addition of labour courts' decisions and all first instance.
 
 Learn more with [the roadmap](ROADMAP.md).
 

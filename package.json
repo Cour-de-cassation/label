@@ -23,6 +23,7 @@
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",
     "compile": "lerna run compile",
+    "coverage": "lerna run coverage",
     "compileClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation compile ",
     "lint": "lerna run lint",
     "fix": "lerna run fix",

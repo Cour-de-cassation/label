@@ -7,10 +7,10 @@ export { buildNlpApi };
 type nlpRequestParametersType = {
   idLabel: string;
   idDecision: string;
-  idDocument: number;
+  sourceId: number;
+  sourceName: string;
   text: string;
-  source?: string;
-  meta?: Array<any>;
+  parties?: Array<any>;
   categories?: string[];
 };
 
@@ -29,10 +29,10 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
       const nlpRequestParameters: nlpRequestParametersType = {
         idLabel: idModule.lib.convertToString(document._id),
         idDecision: document.externalId,
-        idDocument: document.documentNumber,
+        sourceId: document.documentNumber,
+        sourceName: document.source,
         text: document.text,
-        source: document.source,
-        meta: document.decisionMetadata.parties,
+        parties: document.decisionMetadata.parties,
         categories: nlpCategories,
       };
 

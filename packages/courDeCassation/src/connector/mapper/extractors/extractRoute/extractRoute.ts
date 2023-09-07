@@ -11,6 +11,7 @@ function extractRoute(
     additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'];
     session: documentType['decisionMetadata']['session'];
     solution: documentType['decisionMetadata']['solution'];
+    parties: documentType['decisionMetadata']['parties'];
     publicationCategory: documentType['publicationCategory'];
     chamberName: documentType['decisionMetadata']['chamberName'];
     civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
@@ -51,7 +52,8 @@ function extractRoute(
   }
 
   if (
-    !!routeInfos.additionalTermsToAnnotate &&
+    (!!routeInfos.additionalTermsToAnnotate ||
+      routeInfos.parties.length > 50) &&
     (route == 'simple' || route == 'default')
   ) {
     route = 'exhaustive';

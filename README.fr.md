@@ -96,11 +96,14 @@ LABEL permet de lier des annotations. Parfois les noms sont écrits en minuscule
 - 29 juin 2020 : Décret n°2020-797 relatif à la mise à disposition du public des décisions des juridictions Judiciaires et administratives.
 - Septembre 2020 : Le projet est lancé par [le programme Entrepeneur d'Intérêt Général (EIG)](https://eig.etalab.gouv.fr/defis/label/).
 - Juin 2021 : Mise en production avec les décisions de la Cour de cassation (base de données Jurinet).
+- Avril 2022 : Ajout des décisions des Cours d'appel en matière civile, sociale et commerciale (base de données JuriCA).
+
 
 Prochaines étapes:
 
-- Avril 2022 : Ajout des décisions des Cours d'appel en matière civile, sociale et commerciale (base de données JuriCA).
-- Juin 2023 : Ajout des décisions des Conseils de prud'hommes.
+- Décembre 2023 : Ajout des décisions de 9 tribunaux judiciaires.
+- Décembre 2024 : Ajout des décisions des tribunaux de commerce.
+- Septembre 2025 : Ajout des décisions des conseils de prud'hommes et des décisions des l'ensemble des tribunaux judiciaires.
 
 Pour en savoir plus, [une roadmap est disponible](ROADMAP.md).
 

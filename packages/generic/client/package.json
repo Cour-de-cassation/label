@@ -89,6 +89,7 @@
     "clean": "rimraf -rf ./dist && rimraf -rf ./build",
     "cleanAll": "yarn clean && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",
+    "coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage",
     "dockerBuild": "docker-compose build",
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

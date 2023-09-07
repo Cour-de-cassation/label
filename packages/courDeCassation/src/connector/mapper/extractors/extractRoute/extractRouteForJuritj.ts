@@ -5,6 +5,7 @@ export { extractRouteForJuritj };
 function extractRouteForJuritj({}: {
   session: documentType['decisionMetadata']['session'];
   solution: documentType['decisionMetadata']['solution'];
+  parties: documentType['decisionMetadata']['parties'];
   publicationCategory: documentType['publicationCategory'];
   chamberId: string;
   civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];

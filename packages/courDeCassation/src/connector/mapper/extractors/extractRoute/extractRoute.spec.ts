@@ -6,6 +6,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: '',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'CR',
         civilCaseCode: '',
@@ -26,6 +27,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'CR',
         civilCaseCode: '',
@@ -46,6 +48,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'CR',
         civilCaseCode: '',
@@ -66,6 +69,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'CR',
         civilCaseCode: '',
@@ -86,6 +90,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'CR',
         civilCaseCode: '',
@@ -106,6 +111,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'CR',
         civilCaseCode: '',
@@ -126,6 +132,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'CR',
         civilCaseCode: '',
@@ -146,6 +153,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W', 'C'],
         chamberId: 'CR',
         civilCaseCode: '',
@@ -166,6 +174,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'AVIS',
         civilCaseCode: '',
@@ -186,6 +195,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -206,6 +216,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -226,6 +237,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W', 'L'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -246,6 +258,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W', 'P'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -266,6 +279,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W', 'B'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -286,6 +300,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -306,6 +321,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: 'QPCR',
@@ -326,6 +342,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'QPC incidente',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -346,6 +363,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Desistement par arret',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -366,6 +384,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Decheance',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -386,6 +405,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Cassation partielle',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -406,6 +426,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -426,6 +447,99 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: 'Something',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
+        publicationCategory: ['W'],
+        chamberId: 'SOC',
+        civilCaseCode: '',
+        civilMatterCode: '',
+        criminalCaseCode: '',
+        session: '',
+        NACCode: '',
+        endCaseCode: '',
+      },
+      'jurinet',
+    );
+
+    expect(route).toBe('exhaustive');
+  });
+
+  it('should return exhaustive if has more than 50 parties', async () => {
+    const route = extractRoute(
+      {
+        additionalTermsToAnnotate: '',
+        solution: 'Rejet non spécialement motivé',
+        parties: [
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+          'Partie',
+        ],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',
@@ -446,6 +560,7 @@ describe('extractRoute', () => {
       {
         additionalTermsToAnnotate: 'Something',
         solution: 'Rejet non spécialement motivé',
+        parties: [],
         publicationCategory: ['W'],
         chamberId: 'SOC',
         civilCaseCode: '',

@@ -6,6 +6,8 @@ export { assertTreatmentsSourcesFollowRightOrder };
 type documentStepType = { treatmentSource: treatmentType['source'][]; quantity: '0|1' | '1' | '1+' };
 
 const DOCUMENT_STEPS: documentStepType[] = [
+  { treatmentSource: ['NLPTagger'], quantity: '1' },
+  { treatmentSource: ['NLPPostProcess'], quantity: '1' },
   { treatmentSource: ['NLP'], quantity: '1' },
   { treatmentSource: ['supplementaryAnnotations'], quantity: '0|1' },
   { treatmentSource: ['postProcess'], quantity: '1' },

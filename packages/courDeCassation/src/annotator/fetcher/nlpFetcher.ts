@@ -18,6 +18,7 @@ function buildNlpFetcher(nlpApiBaseUrl: string) {
         document,
       );
 
+      //
       return {
         annotations: nlpMapper.mapNlpAnnotationsToAnnotations(
           nlpAnnotations,

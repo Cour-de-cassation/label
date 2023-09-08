@@ -184,7 +184,7 @@ function buildAnnotator(
       annotations,
       documentId,
       report,
-    } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
+    } = await annotatorConfig.fetchAnnotationOfDocument(settings, document); //
     logger.log(`NLP annotation succeeded!`);
 
     if (document.route == 'simple' && annotations.length == 0) {
@@ -196,7 +196,7 @@ function buildAnnotator(
     logger.log(`NLP treatment created in DB`);
     const additionalAnnotations = computeAdditionalAnnotations(
       document,
-      annotations,
+      annotations[annotations.length - 1],
       settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
     );
     if (additionalAnnotations.length > 0) {
@@ -209,13 +209,16 @@ function buildAnnotator(
         `Additional annotations treatment created in DB. Creating post-process treatment...`,
       );
       await createAutoTreatment({
-        annotations: [...annotations, ...additionalAnnotations],
+        annotations: [
+          ...annotations[annotations.length - 1],
+          ...additionalAnnotations,
+        ],
         documentId,
       });
     } else {
       logger.log(`Creating post-process treatment...`);
       await createAutoTreatment({
-        annotations,
+        annotations: [...annotations[annotations.length - 1]],
         documentId,
       });
     }
@@ -240,14 +243,32 @@ function buildAnnotator(
     annotations,
     documentId,
   }: {
-    annotations: annotationType[];
+    annotations: annotationType[][];
     documentId: idType;
   }) {
     await treatmentService.createTreatment(
       {
         documentId,
         previousAnnotations: [],
-        nextAnnotations: annotations,
+        nextAnnotations: annotations[0],
+        source: 'NLPTagger',
+      },
+      settings,
+    );
+    await treatmentService.createTreatment(
+      {
+        documentId,
+        previousAnnotations: annotations[0],
+        nextAnnotations: annotations[1],
+        source: 'NLPPostProcess',
+      },
+      settings,
+    );
+    await treatmentService.createTreatment(
+      {
+        documentId,
+        previousAnnotations: annotations[1],
+        nextAnnotations: annotations[annotations.length - 1],
         source: 'NLP',
       },
       settings,

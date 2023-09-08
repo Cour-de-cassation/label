@@ -15,7 +15,11 @@ type nlpApiType = {
 };
 
 type nlpAnnotationsType = {
-  entities: nlpAnnotationType[];
+  entities: {
+    tagger: nlpAnnotationType[];
+    postProcess: nlpAnnotationType[];
+    output: nlpAnnotationType[];
+  };
   checklist: string[];
 };
 

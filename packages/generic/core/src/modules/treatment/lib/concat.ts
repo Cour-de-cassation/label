@@ -25,8 +25,12 @@ function concat(treatments: treatmentType[]): labelTreatmentsType {
   function computeSource(order: number) {
     switch (order) {
       case 1:
-        return 'NLP';
+        return 'NLP_TAGGER';
       case 2:
+        return 'NLP_POSTPROCESS';
+      case 3:
+        return 'NLP';
+      case 4:
         return 'LABEL_AUTO_TREATMENT';
       default:
         return 'LABEL_WORKING_USER_TREATMENT';

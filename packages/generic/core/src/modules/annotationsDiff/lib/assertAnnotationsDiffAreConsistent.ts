@@ -31,6 +31,10 @@ function computeAvailableCategoriesFilter(treatmentSource: treatmentType['source
   const status = ['visible', 'alwaysVisible', 'annotable'] as settingsType[string]['status'][];
   let canBeAnnotatedBy: 'human' | 'NLP';
   switch (treatmentSource) {
+    case 'NLPTagger':
+      canBeAnnotatedBy = 'NLP';
+    case 'NLPPostProcess':
+      canBeAnnotatedBy = 'NLP';
     case 'NLP':
       canBeAnnotatedBy = 'NLP';
       break;

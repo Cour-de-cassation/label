@@ -3,24 +3,63 @@ import { nlpAnnotationsType } from '../api';
 import { nlpMapper } from './nlpMapper';
 
 const nlpAnnotations: nlpAnnotationsType = {
-  entities: [
-    {
-      text: 'ANNOTATION1',
-      start: 0,
-      end: 11,
-      label: 'LABEL1',
-      source: 'NLP',
-      score: 0.5,
+  entities: 
+    {tagger: [
+      {
+        text: 'ANNOTATION1',
+        start: 0,
+        end: 11,
+        label: 'LABEL1',
+        source: 'NLP',
+        score: 0.5,
+      },
+      {
+        text: 'ANNOTATION2',
+        start: 12,
+        end: 23,
+        label: 'LABEL2',
+        source: 'NLP',
+        score: 0.6,
+      },
+      ],
+    postProcess: [
+      {
+        text: 'ANNOTATION1',
+        start: 0,
+        end: 11,
+        label: 'LABEL1',
+        source: 'NLP',
+        score: 0.5,
+      },
+      {
+        text: 'ANNOTATION2',
+        start: 12,
+        end: 23,
+        label: 'LABEL2',
+        source: 'NLP',
+        score: 0.6,
+      },
+      ],
+    output: [
+      {
+        text: 'ANNOTATION1',
+        start: 0,
+        end: 11,
+        label: 'LABEL1',
+        source: 'NLP',
+        score: 0.5,
+      },
+      {
+        text: 'ANNOTATION2',
+        start: 12,
+        end: 23,
+        label: 'LABEL2',
+        source: 'NLP',
+        score: 0.6,
+      },
+      ]
     },
-    {
-      text: 'ANNOTATION2',
-      start: 12,
-      end: 23,
-      label: 'LABEL2',
-      source: 'NLP',
-      score: 0.6,
-    },
-  ],
+  
   checklist: ['CHECK 1', 'CHECK 2'],
 };
 
@@ -36,14 +75,14 @@ describe('nlpMapper', () => {
         document,
       );
 
-      expect(annotations[0]).toEqual({
+      expect(annotations[0][0]).toEqual({
         category: 'LABEL1',
         entityId: 'LABEL1_ANNOTATION1',
         start: 0,
         text: 'ANNOTATION1',
         certaintyScore: 0.5,
       });
-      expect(annotations[1]).toEqual({
+      expect(annotations[0][1]).toEqual({
         category: 'LABEL2',
         entityId: 'LABEL2_ANNOTATION2',
         start: 12,

@@ -15,7 +15,7 @@ type annotatorConfigType = {
     settings: settingsType,
     document: documentType,
   ): Promise<{
-    annotations: annotationType[];
+    annotations: annotationType[][];
     documentId: idType;
     report: annotationReportType;
   }>;

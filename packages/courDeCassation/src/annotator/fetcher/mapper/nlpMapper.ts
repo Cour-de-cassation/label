@@ -17,15 +17,21 @@ const nlpMapper = {
 function mapNlpAnnotationsToAnnotations(
   nlpAnnotations: nlpAnnotationsType,
   document: documentType,
-): annotationType[] {
-  return nlpAnnotations.entities.map((nlpAnnotation) =>
-    annotationModule.lib.buildAnnotation({
-      category: nlpAnnotation.label,
-      start: nlpAnnotation.start,
-      certaintyScore: nlpAnnotation.score,
-      text: document.text.substring(nlpAnnotation.start, nlpAnnotation.end),
-    }),
-  );
+): annotationType[][] {
+  let annotations = [];
+  for (const [_, value] of Object.entries(nlpAnnotations.entities)) {
+    annotations.push(
+      value.map((nlpAnnotation) =>
+        annotationModule.lib.buildAnnotation({
+          category: nlpAnnotation.label,
+          start: nlpAnnotation.start,
+          certaintyScore: nlpAnnotation.score,
+          text: document.text.substring(nlpAnnotation.start, nlpAnnotation.end),
+        }),
+      ),
+    );
+  }
+  return annotations;
 }
 
 function mapNlpAnnotationstoReport(

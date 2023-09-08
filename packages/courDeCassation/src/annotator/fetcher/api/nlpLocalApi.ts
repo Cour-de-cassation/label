@@ -31,13 +31,7 @@ function buildNlpLocalApi(): nlpApiType {
         },
       );
 
-      return {
-        ...annotations,
-        entities: annotations.entities.filter((entity) =>
-          availableCategories.includes(entity.label),
-        ),
-        checklist: annotations.checklist,
-      };
+      return annotations
     },
     async fetchNlpLoss() {
       return 0;

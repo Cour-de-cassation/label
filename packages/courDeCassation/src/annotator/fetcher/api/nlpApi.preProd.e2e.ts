@@ -17,7 +17,7 @@ describe('nlpApi', () => {
     const nlpAnnotation = await nlpApi.fetchNlpAnnotations(settings, document);
 
     expect(
-      nlpAnnotation.entities.map((entity) => omit(entity, ['score'])),
+      nlpAnnotation.entities.output.map((entity) => omit(entity, ['score'])),
     ).toEqual([
       {
         text: 'François',
@@ -55,7 +55,7 @@ describe('nlpApi', () => {
     const nlpAnnotation = await nlpApi.fetchNlpAnnotations(settings, document);
 
     expect(
-      nlpAnnotation.entities.map((entity) => omit(entity, ['score'])),
+      nlpAnnotation.entities.output.map((entity) => omit(entity, ['score'])),
     ).toEqual([
       {
         text: 'avenue des champs Élysée',

@@ -37,6 +37,24 @@ describe('fetch', () => {
           }),
           documentId,
           order: 0,
+          source: 'NLPTagger' as const,
+        },
+        {
+          annotationsDiff: annotationsDiffModule.generator.generate({
+            before: [],
+            after: [],
+          }),
+          documentId,
+          order: 1,
+          source: 'NLPPostProcess' as const,
+        },
+        {
+          annotationsDiff: annotationsDiffModule.generator.generate({
+            before: [],
+            after: [],
+          }),
+          documentId,
+          order: 2,
           source: 'NLP' as const,
         },
         {
@@ -45,7 +63,7 @@ describe('fetch', () => {
             after: [annotations[2]],
           }),
           documentId,
-          order: 1,
+          order: 3,
           source: 'postProcess' as const,
         },
         {
@@ -54,7 +72,7 @@ describe('fetch', () => {
             after: [annotations[3], annotations[4]],
           }),
           documentId,
-          order: 2,
+          order: 4,
           source: 'admin' as const,
         },
       ].map(treatmentModule.generator.generate);

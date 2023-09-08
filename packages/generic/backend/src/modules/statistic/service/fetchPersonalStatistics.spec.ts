@@ -72,7 +72,7 @@ describe('fetchPersonalStatistics', () => {
           documentId: documents[0]._id,
           order: 0,
           duration: 0,
-          source: 'NLP' as const,
+          source: 'NLPTagger' as const,
           annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
             [],
             [
@@ -80,6 +80,28 @@ describe('fetchPersonalStatistics', () => {
               { start: 41, text: 'his cat', category: 'personnePhysiqueNom' },
               { start: 90, text: 'Gaston', category: 'personnePhysiqueNom' },
             ].map(annotationModule.generator.generate),
+          ),
+          lastUpdateDate: date.getTime(),
+        },
+        {
+          documentId: documents[0]._id,
+          order: 1,
+          duration: 0,
+          source: 'NLPPostProcess' as const,
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
+            [],
+            [],
+          ),
+          lastUpdateDate: date.getTime(),
+        },
+        {
+          documentId: documents[0]._id,
+          order: 2,
+          duration: 0,
+          source: 'NLP' as const,
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
+            [],
+            [],
           ),
           lastUpdateDate: date.getTime(),
         },
@@ -103,7 +125,7 @@ describe('fetchPersonalStatistics', () => {
             ].map(annotationModule.generator.generate),
           ),
           duration: 10,
-          order: 1,
+          order: 3,
           lastUpdateDate: date.getTime(),
         },
         {
@@ -126,23 +148,37 @@ describe('fetchPersonalStatistics', () => {
             ].map(annotationModule.generator.generate),
           ),
           duration: 10,
-          order: 2,
+          order: 4,
           lastUpdateDate: date.getTime(),
         },
         {
           documentId: documents[1]._id,
           lastUpdateDate: date.getTime(),
+          source: 'NLPTagger' as const,
+          order: 0,
+        },
+        {
+          documentId: documents[1]._id,
+          lastUpdateDate: date.getTime(),
+          source: 'NLPPostProcess' as const,
+          order: 1
+        },
+        {
+          documentId: documents[1]._id,
+          lastUpdateDate: date.getTime(),
+          source: 'NLP' as const,
+          order: 2,
         },
       ].map(treatmentModule.generator.generate);
       const assignations = [
         {
           documentId: documents[0]._id,
-          treatmentId: treatments[1]._id,
+          treatmentId: treatments[3]._id,
           userId: user._id,
         },
         {
           documentId: documents[1]._id,
-          treatmentId: treatments[3]._id,
+          treatmentId: treatments[5]._id,
           userId: user._id,
         },
       ].map(assignationModule.generator.generate);

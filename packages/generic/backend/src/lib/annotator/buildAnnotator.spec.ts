@@ -64,15 +64,19 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
     name: 'FAKE_ANNOTATOR',
     async fetchAnnotationOfDocument(settings, document) {
       const category = Object.keys(settings)[0];
-      const annotations = []
-      annotations.push(range(5).map((_, index) =>
-        annotationModule.lib.buildAnnotation({
-          text: 'TEXT',
-          start: index * 10,
-          category,
-          certaintyScore: Math.random(),
-        }),
-      ));
+      const annotations = [];
+      for (const [_, value] of Object.entries(range(3))) {
+        annotations.push(
+          range(5).map((_, index) =>
+            annotationModule.lib.buildAnnotation({
+              text: 'TEXT',
+              start: index * 10,
+              category,
+              certaintyScore: Math.random(),
+            }),
+          ),
+        );
+      }
       const report = annotationReportModule.generator.generate({
         documentId: document._id,
       });

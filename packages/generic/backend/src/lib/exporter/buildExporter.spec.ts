@@ -49,6 +49,25 @@ describe('buildExporter', () => {
           },
           documentId: documents[0]._id,
           order: 0,
+          source: 'NLPTagger' as const,
+        },
+        {
+          annotationsDiff: {
+            before: [],
+            after: [],
+          },
+          documentId: documents[0]._id,
+          order: 1,
+          source: 'NLPPostProcess' as const,
+        },
+        {
+          annotationsDiff: {
+            before: [],
+            after: [],
+          },
+          documentId: documents[0]._id,
+          order: 2,
+          source: 'NLP' as const,
         },
         {
           annotationsDiff: {
@@ -65,6 +84,25 @@ describe('buildExporter', () => {
           },
           documentId: documents[2]._id,
           order: 0,
+          source: 'NLPTagger' as const,
+        },
+        {
+          annotationsDiff: {
+            before: [],
+            after: [],
+          },
+          documentId: documents[2]._id,
+          order: 1,
+          source: 'NLPPostProcess' as const,
+        },
+        {
+          annotationsDiff: {
+            before: [],
+            after: [],
+          },
+          documentId: documents[2]._id,
+          order: 2,
+          source: 'NLP' as const,
         },
       ].map(treatmentModule.generator.generate);
       await Promise.all(documents.map(documentRepository.insert));
@@ -77,6 +115,7 @@ describe('buildExporter', () => {
       const exportedExternalIds = fakeExporterConfig.getExportedExternalIds();
       const exportedPseudonymizationTexts = fakeExporterConfig.getExportedPseudonymizationTexts();
       const exportedLabelTreatments = fakeExporterConfig.getExportedLabelTreatments();
+      console.log(exportedLabelTreatments)
       expect(exportedExternalIds.sort()).toEqual(
         [documents[0].externalId, documents[2].externalId].sort(),
       );
@@ -95,8 +134,32 @@ describe('buildExporter', () => {
                   text: 'Benoit',
                 },
               ],
-              source: 'NLP',
+              source: 'NLP_TAGGER',
               order: 1,
+            },
+            {
+              annotations: [
+                {
+                  category: 'firstName',
+                  entityId: 'firstName_Benoit',
+                  start: 0,
+                  text: 'Benoit',
+                },
+              ],
+              source: 'NLP_POSTPROCESS',
+              order: 2,
+            },
+            {
+              annotations: [
+                {
+                  category: 'firstName',
+                  entityId: 'firstName_Benoit',
+                  start: 0,
+                  text: 'Benoit',
+                },
+              ],
+              source: 'NLP',
+              order: 3,
             },
           ],
           [
@@ -109,8 +172,32 @@ describe('buildExporter', () => {
                   text: 'Romain',
                 },
               ],
-              source: 'NLP',
+              source: 'NLP_TAGGER',
               order: 1,
+            },
+            {
+              annotations: [
+                {
+                  category: 'firstName',
+                  entityId: 'firstName_Romain',
+                  start: 0,
+                  text: 'Romain',
+                },
+              ],
+              source: 'NLP_POSTPROCESS',
+              order: 2,
+            },
+            {
+              annotations: [
+                {
+                  category: 'firstName',
+                  entityId: 'firstName_Romain',
+                  start: 0,
+                  text: 'Romain',
+                },
+              ],
+              source: 'NLP',
+              order: 3,
             },
           ],
         ].sort(),

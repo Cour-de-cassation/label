@@ -100,7 +100,7 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
           documentId: documents[0]._id,
           order: 0,
           duration: 0,
-          source: 'NLP' as const,
+          source: 'NLPTagger' as const,
           annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
             [],
             [
@@ -108,6 +108,26 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
               { start: 41, text: 'his cat', category: 'personnePhysiqueNom' },
               { start: 90, text: 'Gaston', category: 'personnePhysiqueNom' },
             ].map(annotationModule.generator.generate),
+          ),
+        },
+        {
+          documentId: documents[0]._id,
+          order: 1,
+          duration: 0,
+          source: 'NLPPostProcess' as const,
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
+            [],
+            []
+          ),
+        },
+        {
+          documentId: documents[0]._id,
+          order: 2,
+          duration: 0,
+          source: 'NLP' as const,
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
+            [],
+            [],
           ),
         },
         {
@@ -130,19 +150,19 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
             ].map(annotationModule.generator.generate),
           ),
           duration: 10,
-          order: 1,
+          order: 3,
         },
         { documentId: documents[1]._id },
       ].map(treatmentModule.generator.generate);
       const assignations = [
         {
           documentId: documents[0]._id,
-          treatmentId: treatments[1]._id,
+          treatmentId: treatments[3]._id,
           userId: userId1,
         },
         {
           documentId: documents[1]._id,
-          treatmentId: treatments[2]._id,
+          treatmentId: treatments[4]._id,
           userId: userId2,
         },
       ].map(assignationModule.generator.generate);

@@ -65,6 +65,20 @@ describe('statisticsCreator', () => {
           ),
           documentId: document._id,
           order: 0,
+          source: 'NLPTagger',
+          lastUpdateDate: TREATMENT_DATE.getTime(),
+        } as const,
+        {
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff([], []),
+          documentId: document._id,
+          order: 1,
+          source: 'NLPPostProcess',
+          lastUpdateDate: TREATMENT_DATE.getTime(),
+        } as const,
+        {
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff([], []),
+          documentId: document._id,
+          order: 2,
           source: 'NLP',
           lastUpdateDate: TREATMENT_DATE.getTime(),
         } as const,
@@ -84,13 +98,13 @@ describe('statisticsCreator', () => {
           source: 'postProcess',
           documentId: document._id,
           duration,
-          order: 1,
+          order: 3,
           lastUpdateDate: TREATMENT_DATE.getTime(),
         } as const,
       ].map(treatmentModule.generator.generate);
 
       const statistic = statisticsCreator.buildFromDocument({
-        humanTreatments: [{ treatment: treatments[1], userId }],
+        humanTreatments: [{ treatment: treatments[3], userId }],
         document,
         treatments: treatments,
         settings,
@@ -135,6 +149,22 @@ describe('statisticsCreator', () => {
           documentId: document._id,
           order: 0,
           route: 'exhaustive',
+          source: 'NLPTagger' as const,
+          lastUpdateDate: TREATMENT_DATE.getTime(),
+        },
+        {
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff([], []),
+          documentId: document._id,
+          order: 1,
+          route: 'exhaustive',
+          source: 'NLPPostProcess' as const,
+          lastUpdateDate: TREATMENT_DATE.getTime(),
+        },
+        {
+          annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff([], []),
+          documentId: document._id,
+          order: 2,
+          route: 'exhaustive',
           source: 'NLP' as const,
           lastUpdateDate: TREATMENT_DATE.getTime(),
         },
@@ -147,7 +177,7 @@ describe('statisticsCreator', () => {
           ),
           documentId: document._id,
           duration,
-          order: 1,
+          order: 3,
           route: 'exhaustive',
           source: 'postProcess' as const,
           lastUpdateDate: TREATMENT_DATE.getTime(),
@@ -157,7 +187,7 @@ describe('statisticsCreator', () => {
       const statistic = statisticsCreator.buildFromDocument({
         document,
         treatments: treatments,
-        humanTreatments: [{ treatment: treatments[1], userId }],
+        humanTreatments: [{ treatment: treatments[3], userId }],
         settings,
       });
 

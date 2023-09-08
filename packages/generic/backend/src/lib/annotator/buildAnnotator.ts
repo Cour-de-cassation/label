@@ -184,7 +184,7 @@ function buildAnnotator(
       annotations,
       documentId,
       report,
-    } = await annotatorConfig.fetchAnnotationOfDocument(settings, document); //
+    } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log(`NLP annotation succeeded!`);
 
     if (document.route == 'simple' && annotations.length == 0) {

@@ -40,6 +40,14 @@ describe('cleanDocuments', () => {
       range(FREE_DOCUMENTS_COUNT).map(async (i) => {
         await treatmentService.createEmptyTreatment({
           documentId: documentsToInsert[i]._id,
+          source: 'NLPTagger',
+        });
+        await treatmentService.createEmptyTreatment({
+          documentId: documentsToInsert[i]._id,
+          source: 'NLPPostProcess',
+        });
+        await treatmentService.createEmptyTreatment({
+          documentId: documentsToInsert[i]._id,
           source: 'NLP',
         });
         return treatmentService.createEmptyTreatment({
@@ -92,7 +100,7 @@ describe('cleanDocuments', () => {
     const treatments = await treatmentRepository.findAll();
     expect(assignations.length).toBe(DONE_DOCUMENTS_COUNT);
     expect(treatments.length).toBe(
-      DONE_DOCUMENTS_COUNT + FREE_DOCUMENTS_COUNT * 2,
+      DONE_DOCUMENTS_COUNT + FREE_DOCUMENTS_COUNT * 4,
     );
   });
 });

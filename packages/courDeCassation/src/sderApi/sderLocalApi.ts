@@ -184,19 +184,14 @@ const sderLocalApi: sderApiType = {
     //   labelTreatments,
     // });
     logger.log('updateDecisionPseudonymisation LOCAL');
-    await axios
-      .put(
-        `http://dbsder-api-api-1:3000/v1/decisions/${externalId}/rapports-occultations`,
-        { labelTreatments },
-        {
-          headers: {
-            'x-api-key': '94568b15-e2c5-4332-abcb-287640847864',
-          },
+    await axios.put(
+      `http://dbsder-api-dbsder-api-1:3000/v1/decisions/${externalId}/rapports-occultations`,
+      { labelTreatments },
+      {
+        headers: {
+          'x-api-key': '94568b15-e2c5-4332-abcb-287640847864',
         },
-      )
-      .catch((e) => {
-        console.log(externalId);
-        logger.error(e);
-      });
+      },
+    );
   },
 };

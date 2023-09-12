@@ -10,6 +10,8 @@ services:
       - 55431
     ports:
       - 55431:55431
+    networks:
+      - reseau_commun
   backend:
     build:
       context: ./
@@ -19,13 +21,18 @@ services:
     #    image: label-image
     ports:
       - 55430:55430
-      - 55432:55432
+      - 55433:55432
+    networks:
+      - reseau_commun
     depends_on:
       - labelDb
 
+#networks:
+#  default:
+#    name: label-network
 networks:
-  default:
-    name: label-network
+  reseau_commun:
+    external: true
 
 volumes:
   mongo-storage:

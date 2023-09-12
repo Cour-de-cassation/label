@@ -139,15 +139,23 @@ function buildExporter(
     );
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
-    await exporterConfig.sendDocumentPseudonymisationAndTreatments({
-      externalId: document.externalId,
-      pseudonymizationText: anonymizer.anonymizeDocument(document).text,
-      labelTreatments: treatmentModule.lib.concat(treatments),
-    });
+    // Doit throw une erreur, sans faire bug le script
+    try {
+      await exporterConfig.sendDocumentPseudonymisationAndTreatments({
+        externalId: document.externalId,
+        pseudonymizationText: anonymizer.anonymizeDocument(document).text,
+        labelTreatments: treatmentModule.lib.concat(treatments),
+      });
 
-    await statisticService.saveStatisticsOfDocument(document, settings);
+      await statisticService.saveStatisticsOfDocument(document, settings);
 
-    await documentService.deleteDocument(document._id);
+      await documentService.deleteDocument(document._id);
+    } catch (e) {
+      logger.log('NO EXPORT');
+      console.log(e.message);
+      console.log(e);
+      throw new Error('Bro what is this ?');
+    }
   }
 
   async function exportAllRejectedDocuments() {

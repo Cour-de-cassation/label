@@ -10,8 +10,6 @@ import { treatmentService } from '../modules/treatment';
 import { userService } from '../modules/user';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
-import { annotationReportService } from '../modules/annotationReport';
-import { replacementTermType } from '@label/core';
 
 export { controllers };
 
@@ -39,14 +37,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
         treatmentService.fetchAnnotationsDiffDetailsForDocument(
-          idModule.lib.buildId(documentId),
-        ),
-    }),
-
-    checklist: buildAuthenticatedController({
-      permissions: ['admin', 'annotator', 'scrutator'],
-      controllerWithUser: async (_, { args: { documentId } }) =>
-        annotationReportService.fetchChecklistByDocumentId(
           idModule.lib.buildId(documentId),
         ),
     }),
@@ -159,7 +149,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     publishableDocuments: buildAuthenticatedController({
       permissions: ['admin', 'publicator'],
       controllerWithUser: async () =>
-        documentService.fetchPublishableDocuments(),
+        (await documentService.fetchPublishableDocuments()).map((document) => {
+          return {
+            _id: document._id,
+            appealNumber: document.decisionMetadata.appealNumber,
+            chamberName: document.decisionMetadata.chamberName,
+            creationDate: document.creationDate,
+            documentNumber: document.documentNumber,
+            jurisdiction: document.decisionMetadata.jurisdiction,
+            publicationCategory: document.publicationCategory,
+            route: document.route,
+            status: document.status,
+          };
+        }),
     }),
 
     toBeConfirmedDocuments: buildAuthenticatedController({
@@ -180,11 +182,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     untreatedDocuments: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => documentService.fetchUntreatedDocuments(),
-    }),
-
-    mandatoryReplacementTerms: buildAuthenticatedController({
-      permissions: ['admin', 'annotator', 'scrutator'],
-      controllerWithUser: async () => [] as replacementTermType[], //TO DO
     }),
 
     workingUsers: buildAuthenticatedController({

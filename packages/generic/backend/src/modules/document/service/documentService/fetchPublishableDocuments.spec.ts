@@ -38,25 +38,6 @@ describe('fetchPublishableDocuments', () => {
 
     const publishableDocuments = await fetchPublishableDocuments();
 
-    const {
-      _id,
-      status,
-      creationDate,
-      documentNumber,
-      publicationCategory,
-    } = documents[0];
-    expect(publishableDocuments).toEqual([
-      {
-        _id,
-        appealNumber: '08-16.486',
-        status,
-        creationDate,
-        documentNumber,
-        jurisdiction: 'Cour de cassation',
-        chamberName: 'CIV. I',
-        route: 'exhaustive',
-        publicationCategory,
-      },
-    ]);
+    expect(publishableDocuments).toEqual([documents[0]]);
   });
 });

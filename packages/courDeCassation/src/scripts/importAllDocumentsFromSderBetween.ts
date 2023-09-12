@@ -5,7 +5,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { from, to, jurisdictions, chambers } = parseArgv();
+  const { from, to, jurisdictions, chambers } = await parseArgv();
   const backend = buildBackend(environment, settings);
 
   const fromDate = new Date(from);
@@ -41,8 +41,8 @@ async function importAllDocumentsFromSderBetween(
   );
 }
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       from: {
         demandOption: true,

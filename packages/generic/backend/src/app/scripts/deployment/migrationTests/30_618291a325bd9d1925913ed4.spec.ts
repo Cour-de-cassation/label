@@ -25,7 +25,7 @@ xdescribe('add idleDuration in treatment model', () => {
   it('should test up', async () => {
     const treatmentRepository = buildTreatmentRepository();
     await Promise.all(
-      ((treatmentsWithOldModel as any) as treatmentType[]).map(
+      (treatmentsWithOldModel as any as treatmentType[]).map(
         treatmentRepository.insert,
       ),
     );

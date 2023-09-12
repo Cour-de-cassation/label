@@ -28,7 +28,8 @@ function buildFetchDocumentsForUser(
     }> = [];
 
     // We get all documents that can be assigned
-    const documentIdsWithAnnotations = await treatmentService.fetchTreatedDocumentIds();
+    const documentIdsWithAnnotations =
+      await treatmentService.fetchTreatedDocumentIds();
 
     // Documents already assignated to the user are fetched
     const alreadyAssignatedDocuments = await fetchAlreadyAssignatedDocuments(
@@ -110,12 +111,11 @@ function buildFetchDocumentsForUser(
   ): Promise<documentType | undefined> {
     const documentRepository = buildDocumentRepository();
 
-    const document:
-      | documentType
-      | undefined = await documentRepository.findOneRandomByStatusAndPriorityAmong(
-      { priority, status: 'free' },
-      documentIdsToSearchIn,
-    );
+    const document: documentType | undefined =
+      await documentRepository.findOneRandomByStatusAndPriorityAmong(
+        { priority, status: 'free' },
+        documentIdsToSearchIn,
+      );
 
     if (!document) {
       return undefined;
@@ -137,12 +137,13 @@ function buildFetchDocumentsForUser(
       route: document.route,
     });
 
-    const updatedDocument = await documentRepository.updateOneStatusByIdAndStatus(
-      { _id: document._id, status: 'free' },
-      {
-        status: nextStatus,
-      },
-    );
+    const updatedDocument =
+      await documentRepository.updateOneStatusByIdAndStatus(
+        { _id: document._id, status: 'free' },
+        {
+          status: nextStatus,
+        },
+      );
     if (updatedDocument?.status !== nextStatus) {
       return assignDocumentByPriority(priority, documentIdsToSearchIn);
     }
@@ -158,9 +159,8 @@ function buildFetchDocumentsForUser(
     }>
   > {
     const documentRepository = buildDocumentRepository();
-    const documentIdsAssignated = await assignationService.fetchDocumentIdsAssignatedToUserId(
-      userId,
-    );
+    const documentIdsAssignated =
+      await assignationService.fetchDocumentIdsAssignatedToUserId(userId);
 
     const documentsById = await documentRepository.findAllByIds(
       documentIdsAssignated.map(({ documentId }) => documentId),

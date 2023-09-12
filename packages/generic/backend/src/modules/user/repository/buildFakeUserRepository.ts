@@ -1,8 +1,5 @@
 import { userModule, userType } from '@label/core';
-import {
-  buildFakeRepositoryBuilder,
-  projectFakeObjects,
-} from '../../../repository';
+import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customUserRepositoryType } from './customUserRepositoryType';
 
 export { buildFakeUserRepository };
@@ -13,10 +10,8 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
 >({
   collectionName: 'users',
   buildCustomFakeRepository: (collection) => ({
-    async findAllWithNoDeletionDateProjection(projection) {
-      return collection
-        .filter((user) => !user.deletionDate)
-        .map((user) => projectFakeObjects(user, projection));
+    async findAllWithNoDeletionDate() {
+      return collection.filter((user) => !user.deletionDate);
     },
     async findByEmail(email) {
       const formattedEmail = userModule.lib.formatEmail(email);

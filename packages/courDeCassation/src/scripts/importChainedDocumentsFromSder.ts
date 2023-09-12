@@ -5,7 +5,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { threshold, count } = parseArgv();
+  const { threshold, count } = await parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(() => importChainedDocumentsFromSder(threshold, count), {
@@ -20,8 +20,8 @@ async function importChainedDocumentsFromSder(
   await sderConnector.importChainedDocumentsFromSder(threshold, count);
 }
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       threshold: {
         demandOption: true,

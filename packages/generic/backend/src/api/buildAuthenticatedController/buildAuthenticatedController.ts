@@ -20,9 +20,10 @@ function buildAuthenticatedController<inT, outT>({
   ) => Promise<outT>;
 }): (req: { args: inT; headers: authorizationHeaderType }) => Promise<outT> {
   return async (req: { args: inT; headers: authorizationHeaderType }) => {
-    const user = await userService.fetchAuthenticatedUserFromAuthorizationHeader(
-      req.headers.authorization,
-    );
+    const user =
+      await userService.fetchAuthenticatedUserFromAuthorizationHeader(
+        req.headers.authorization,
+      );
     userModule.lib.assertAuthorization(user);
     userModule.lib.assertPermissions(user, permissions);
 

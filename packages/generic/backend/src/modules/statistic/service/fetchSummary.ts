@@ -4,7 +4,8 @@ export { fetchSummary };
 
 async function fetchSummary() {
   const loadedDocumentsCount = await documentService.countLoadedDocuments();
-  const nlpAnnotatingDocumentsCount = await documentService.countNlpAnnotatingDocuments();
+  const nlpAnnotatingDocumentsCount =
+    await documentService.countNlpAnnotatingDocuments();
   const freeDocumentsCount = await documentService.countFreeDocuments();
   const pendingDocumentsCount = await documentService.countPendingDocuments();
   const savedDocumentsCount = await documentService.countSavedDocuments();

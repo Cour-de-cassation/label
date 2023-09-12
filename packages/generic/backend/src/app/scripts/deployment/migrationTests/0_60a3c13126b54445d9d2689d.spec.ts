@@ -23,7 +23,7 @@ describe('replace document markedAsPublished with toBePublished / published.spec
   it('should test up', async () => {
     const documentRepository = buildDocumentRepository();
     await Promise.all(
-      ((documentsWithOldModel as any) as documentType[]).map(
+      (documentsWithOldModel as any as documentType[]).map(
         documentRepository.insert,
       ),
     );

@@ -5,9 +5,6 @@ export { fetchFreeDocumentsIds };
 async function fetchFreeDocumentsIds() {
   const documentRepository = buildDocumentRepository();
 
-  const documents = await documentRepository.findAllByStatusProjection(
-    ['free'],
-    ['_id'],
-  );
+  const documents = await documentRepository.findAllByStatus(['free']);
   return documents.map(({ _id }) => _id);
 }

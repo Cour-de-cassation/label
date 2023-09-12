@@ -5,7 +5,7 @@ import { sderConnector } from '../connector';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { documentNumber, source } = parseArgv();
+  const { documentNumber, source } = await parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
@@ -16,8 +16,8 @@ import { sderConnector } from '../connector';
   );
 })();
 
-function parseArgv() {
-  const argv = yargs
+async function parseArgv() {
+  const argv = await yargs
     .options({
       documentNumber: {
         demandOption: true,

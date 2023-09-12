@@ -17,29 +17,28 @@ async function up() {
       return statisticRepository.updateOne(statistic._id, {
         addedAnnotationsCount: {
           sensitive: 0,
-          other: ((statistic as any)
-            .addedAnnotationsCount as unknown) as number,
+          other: (statistic as any).addedAnnotationsCount as unknown as number,
         },
         deletedAnnotationsCount: {
           anonymised: 0,
-          other: ((statistic as any)
-            .deletedAnnotationsCount as unknown) as number,
+          other: (statistic as any)
+            .deletedAnnotationsCount as unknown as number,
         },
         modifiedAnnotationsCount: {
           anonymisedToNonAnonymised: 0,
           nonAnonymisedToSensitive: 0,
-          other: ((statistic as any)
-            .modifiedAnnotationsCount as unknown) as number,
+          other: (statistic as any)
+            .modifiedAnnotationsCount as unknown as number,
         },
         resizedBiggerAnnotationsCount: {
           sensitive: 0,
-          other: ((statistic as any)
-            .resizedBiggerAnnotationsCount as unknown) as number,
+          other: (statistic as any)
+            .resizedBiggerAnnotationsCount as unknown as number,
         },
         resizedSmallerAnnotationsCount: {
           anonymised: 0,
-          other: ((statistic as any)
-            .resizedSmallerAnnotationsCount as unknown) as number,
+          other: (statistic as any)
+            .resizedSmallerAnnotationsCount as unknown as number,
         },
       } as any);
     }),
@@ -53,29 +52,28 @@ async function up() {
       return treatmentRepository.updateOne(treatment._id, {
         addedAnnotationsCount: {
           sensitive: 0,
-          other: ((treatment as any)
-            .addedAnnotationsCount as unknown) as number,
+          other: (treatment as any).addedAnnotationsCount as unknown as number,
         },
         deletedAnnotationsCount: {
           anonymised: 0,
-          other: ((treatment as any)
-            .deletedAnnotationsCount as unknown) as number,
+          other: (treatment as any)
+            .deletedAnnotationsCount as unknown as number,
         },
         modifiedAnnotationsCount: {
           anonymisedToNonAnonymised: 0,
           nonAnonymisedToSensitive: 0,
-          other: ((treatment as any)
-            .modifiedAnnotationsCount as unknown) as number,
+          other: (treatment as any)
+            .modifiedAnnotationsCount as unknown as number,
         },
         resizedBiggerAnnotationsCount: {
           sensitive: 0,
-          other: ((treatment as any)
-            .resizedBiggerAnnotationsCount as unknown) as number,
+          other: (treatment as any)
+            .resizedBiggerAnnotationsCount as unknown as number,
         },
         resizedSmallerAnnotationsCount: {
           anonymised: 0,
-          other: ((treatment as any)
-            .resizedSmallerAnnotationsCount as unknown) as number,
+          other: (treatment as any)
+            .resizedSmallerAnnotationsCount as unknown as number,
         },
       } as any);
     }),

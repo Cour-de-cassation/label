@@ -18,7 +18,8 @@ describe('fetchPublishableDocumentsToExport', () => {
     ].map(documentModule.generator.generate);
     await Promise.all(documents.map(documentRepository.insert));
 
-    const publishableDocumentsToExport = await fetchPublishableDocumentsToExport();
+    const publishableDocumentsToExport =
+      await fetchPublishableDocumentsToExport();
 
     expect(publishableDocumentsToExport.sort()).toEqual([
       documents[0],

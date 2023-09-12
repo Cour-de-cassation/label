@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { idModule, settingsModule } from '@label/core';
+import { settingsModule } from '@label/core';
 import { nlpApiType, nlpAnnotationsType, nlpLossType } from './nlpApiType';
 
 export { buildNlpApi };
 
 type nlpRequestParametersType = {
-  idLabel: string;
-  idDecision: string;
-  sourceId: number;
-  sourceName: string;
+  idDocument: number;
   text: string;
-  parties?: Array<any>;
+  source?: string;
+  meta?: Array<any>;
   categories?: string[];
 };
 
@@ -27,12 +25,10 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         canBeAnnotatedBy: 'NLP',
       });
       const nlpRequestParameters: nlpRequestParametersType = {
-        idLabel: idModule.lib.convertToString(document._id),
-        idDecision: document.externalId,
-        sourceId: document.documentNumber,
-        sourceName: document.source,
+        idDocument: document.documentNumber,
         text: document.text,
-        parties: document.decisionMetadata.parties,
+        source: document.source,
+        meta: document.decisionMetadata.parties,
         categories: nlpCategories,
       };
 

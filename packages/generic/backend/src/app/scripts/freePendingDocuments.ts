@@ -13,12 +13,12 @@ async function freePendingDocuments() {
   const documentRepository = buildDocumentRepository();
 
   logger.log('Fetching pending documents');
-  const pendingDocuments = await documentRepository.findAllByStatusProjection(
-    ['pending'],
-    ['_id', 'updateDate'],
-  );
+  const pendingDocuments = await documentRepository.findAllByStatus([
+    'pending',
+  ]);
   logger.log(`${pendingDocuments.length} documents fetched`);
-  const minutesBeforeFreeing = documentModule.lib.getMinutesBeforeFreeingPendingDocuments();
+  const minutesBeforeFreeing =
+    documentModule.lib.getMinutesBeforeFreeingPendingDocuments();
   const pendingDocumentsToFree = pendingDocuments.filter(
     (document) =>
       document.updateDate <= dateBuilder.minutesAgo(minutesBeforeFreeing),

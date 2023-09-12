@@ -1,10 +1,4 @@
-import {
-  assignationModule,
-  documentModule,
-  documentType,
-  userModule,
-} from '@label/core';
-import { projectFakeObjects } from '../../../../repository';
+import { assignationModule, documentModule, userModule } from '@label/core';
 import { buildAssignationRepository } from '../../../assignation/repository';
 import { buildUserRepository } from '../../../user/repository';
 import { buildDocumentRepository } from '../../repository';
@@ -74,38 +68,21 @@ describe('fetchUntreatedDocuments', () => {
 
     expect(untreatedDocuments.sort()).toEqual([
       {
-        document: projectDocument(freeDocument),
+        document: freeDocument,
         userNames: [],
       },
       {
-        document: projectDocument(pendingDocument),
+        document: pendingDocument,
         userNames: ['NAME'],
       },
       {
-        document: projectDocument(savedDocument),
+        document: savedDocument,
         userNames: ['NAME'],
       },
       {
-        document: projectDocument(lockedDocument),
+        document: lockedDocument,
         userNames: ['NAME'],
       },
     ]);
   });
 });
-
-function projectDocument(document: documentType) {
-  return {
-    ...projectFakeObjects(document, [
-      '_id',
-      'documentNumber',
-      'creationDate',
-      'publicationCategory',
-      'source',
-      'route',
-      'status',
-    ]),
-    occultationBlock: document.decisionMetadata.occultationBlock,
-    jurisdiction: document.decisionMetadata.jurisdiction,
-    decisionDate: document.decisionMetadata.date,
-  };
-}

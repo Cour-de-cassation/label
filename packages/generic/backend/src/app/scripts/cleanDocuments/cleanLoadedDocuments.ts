@@ -14,10 +14,7 @@ async function cleanLoadedDocuments() {
   const documentRepository = buildDocumentRepository();
 
   logger.log('Fetching "loaded" documents');
-  const loadedDocuments = await documentRepository.findAllByStatusProjection(
-    ['loaded'],
-    ['_id'],
-  );
+  const loadedDocuments = await documentRepository.findAllByStatus(['loaded']);
 
   logger.log(`${loadedDocuments.length} loaded documents found`);
 
@@ -28,7 +25,8 @@ async function cleanLoadedDocuments() {
   }
 
   logger.log(`"loaded" documents reset. Fetching non-treated documents...`);
-  const notTreatedDocuments = await documentService.fetchDocumentsWithoutAnnotations();
+  const notTreatedDocuments =
+    await documentService.fetchDocumentsWithoutAnnotations();
   logger.log(
     `${
       notTreatedDocuments.length

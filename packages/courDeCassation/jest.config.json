@@ -1,10 +1,7 @@
 {
-  "coverageReporters": [
-    "json",
-    "lcov",
-    "text",
-    "html"
-  ],
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  },
   "moduleFileExtensions": [
     "js",
     "json",

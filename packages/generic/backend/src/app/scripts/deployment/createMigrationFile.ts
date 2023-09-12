@@ -21,9 +21,12 @@ async function createMigrationFile() {
       ? migrationModule.lib.fileNameHandler.parseFileName(sortedFileNames[0])
           .order + 1
       : 0;
-  const newMigrationFileName = migrationModule.lib.fileNameHandler.buildFileName(
-    { _id, order: newMigrationOrder, extension: 'ts' },
-  );
+  const newMigrationFileName =
+    migrationModule.lib.fileNameHandler.buildFileName({
+      _id,
+      order: newMigrationOrder,
+      extension: 'ts',
+    });
   const filePath = `${getPathToMigrationFolder()}/${newMigrationFileName}`;
 
   await fileSystem.createFile(filePath, emptyMigration);

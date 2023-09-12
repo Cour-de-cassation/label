@@ -8,7 +8,8 @@ async function assertDocumentIsPublishable(documentId: documentType['_id']) {
   const documentRepository = buildDocumentRepository();
 
   const document = await documentRepository.findById(documentId);
-  const publishedPublicationCategoryLetters = documentModule.lib.publicationHandler.getPublishedPublicationCategory();
+  const publishedPublicationCategoryLetters =
+    documentModule.lib.publicationHandler.getPublishedPublicationCategory();
   if (document.status !== 'done' && document.status !== 'toBePublished') {
     throw errorHandlers.permissionErrorHandler.build(
       `The document is not publishable, because its current status is "${document.status}"`,

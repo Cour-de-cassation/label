@@ -81,16 +81,21 @@ describe('remove assignatinId and add documentId & userId in reportProblem model
 
     await up();
 
-    const problemReportsAfterUpdateModel = await problemReportRepository.findAll();
+    const problemReportsAfterUpdateModel =
+      await problemReportRepository.findAll();
 
     expect(problemReportsAfterUpdateModel.length).toBe(2);
-    expect(problemReportsAfterUpdateModel[0].userId).toBe(user1._id);
-    expect(problemReportsAfterUpdateModel[0].documentId).toBe(document1._id);
+    expect(problemReportsAfterUpdateModel[0].userId).toStrictEqual(user1._id);
+    expect(problemReportsAfterUpdateModel[0].documentId).toStrictEqual(
+      document1._id,
+    );
     expect((problemReportsAfterUpdateModel[0] as any).assignationId).toBe(
       undefined,
     );
-    expect(problemReportsAfterUpdateModel[1].userId).toBe(user2._id);
-    expect(problemReportsAfterUpdateModel[1].documentId).toBe(document2._id);
+    expect(problemReportsAfterUpdateModel[1].userId).toStrictEqual(user2._id);
+    expect(problemReportsAfterUpdateModel[1].documentId).toStrictEqual(
+      document2._id,
+    );
     expect((problemReportsAfterUpdateModel[1] as any).assignationId).toBe(
       undefined,
     );
@@ -108,18 +113,19 @@ describe('remove assignatinId and add documentId & userId in reportProblem model
 
     await down();
 
-    const problemReportsAfterUpdateModel = await problemReportRepository.findAll();
+    const problemReportsAfterUpdateModel =
+      await problemReportRepository.findAll();
 
     expect(problemReportsAfterUpdateModel.length).toBe(2);
     expect(problemReportsAfterUpdateModel[0].userId).toBe(undefined);
     expect(problemReportsAfterUpdateModel[0].documentId).toBe(undefined);
-    expect((problemReportsAfterUpdateModel[0] as any).assignationId).toBe(
-      assignation1._id,
-    );
+    expect(
+      (problemReportsAfterUpdateModel[0] as any).assignationId,
+    ).toStrictEqual(assignation1._id);
     expect(problemReportsAfterUpdateModel[1].userId).toBe(undefined);
     expect(problemReportsAfterUpdateModel[1].documentId).toBe(undefined);
-    expect((problemReportsAfterUpdateModel[1] as any).assignationId).toBe(
-      assignation2._id,
-    );
+    expect(
+      (problemReportsAfterUpdateModel[1] as any).assignationId,
+    ).toStrictEqual(assignation2._id);
   });
 });

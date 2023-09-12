@@ -39,13 +39,11 @@ async function bootstrap() {
     }),
   ) as environmentFromFileType;
 
-  const localDevBootstrapEnvironment = buildBootstrapEnvironment(
-    localEnvironment,
-  );
+  const localDevBootstrapEnvironment =
+    buildBootstrapEnvironment(localEnvironment);
   const localBootstrapEnvironment = buildBootstrapEnvironment(localEnvironment);
-  const preProdBootstrapEnvironment = buildBootstrapEnvironment(
-    preProdEnvironment,
-  );
+  const preProdBootstrapEnvironment =
+    buildBootstrapEnvironment(preProdEnvironment);
   const prodBootstrapEnvironment = buildBootstrapEnvironment(prodEnvironment);
 
   const filesToBootstrapForLocalDev = [

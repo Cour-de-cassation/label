@@ -2,6 +2,7 @@ import { statisticType } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { buildRessourceFilterRequest } from '../../ressourceFilter';
 import { customStatisticRepositoryType } from './customStatisticRepositoryType';
+import { idType } from '@label/core';
 
 export { buildStatisticRepository };
 
@@ -20,9 +21,8 @@ const buildStatisticRepository = buildRepositoryBuilder<
   ],
   buildCustomRepository: (collection) => ({
     async findAllByRessourceFilter(ressourceFilter) {
-      const ressourceFilterRequest = buildRessourceFilterRequest(
-        ressourceFilter,
-      );
+      const ressourceFilterRequest =
+        buildRessourceFilterRequest(ressourceFilter);
 
       return collection.find(ressourceFilterRequest).toArray();
     },
@@ -33,7 +33,7 @@ const buildStatisticRepository = buildRepositoryBuilder<
         .project({ _id: 1 })
         .toArray();
 
-      return statistics.map((statistic) => statistic._id);
+      return statistics.map((statistic) => statistic._id as idType);
     },
 
     async findExtremumTreatmentDateBySources(sources) {

@@ -2,7 +2,6 @@ import { logger } from '@label/backend';
 import { documentType } from '@label/core';
 import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
-import { extractRouteForJuritj } from './extractRouteForJuritj';
 
 export { extractRoute };
 
@@ -35,14 +34,6 @@ function extractRoute(
     case 'jurica':
       try {
         route = extractRouteForJurica({ ...routeInfos });
-      } catch (e) {
-        logger.log(e);
-        route = 'exhaustive';
-      }
-      break;
-    case 'juritj':
-      try {
-        route = extractRouteForJuritj({ ...routeInfos });
       } catch (e) {
         logger.log(e);
         route = 'exhaustive';

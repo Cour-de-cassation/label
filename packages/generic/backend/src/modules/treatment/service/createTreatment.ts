@@ -32,9 +32,8 @@ async function createTreatment(
   const previousTreatments = await treatmentRepository.findAllByDocumentId(
     documentId,
   );
-  const sortedTreatments = treatmentModule.lib.sortInConsistentOrder(
-    previousTreatments,
-  );
+  const sortedTreatments =
+    treatmentModule.lib.sortInConsistentOrder(previousTreatments);
   const order =
     sortedTreatments.length > 0
       ? sortedTreatments[sortedTreatments.length - 1].order + 1

@@ -26,9 +26,8 @@ describe('fetchDocumentWithoutAnnotationsNotIn', () => {
     );
     await Promise.all(treatments.map(treatmentRepository.insert));
 
-    const documentWithoutAnnotations = await fetchDocumentWithoutAnnotationsNotIn(
-      [],
-    );
+    const documentWithoutAnnotations =
+      await fetchDocumentWithoutAnnotationsNotIn([]);
 
     expect(documentWithoutAnnotations).toEqual(documentWithoutTreatments);
   });

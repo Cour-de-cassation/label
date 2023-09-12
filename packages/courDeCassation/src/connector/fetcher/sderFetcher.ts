@@ -1,4 +1,5 @@
 import { sderApi } from '../../sderApi';
+import { NON_PUBLIC_NAC_CODES } from './constants';
 
 export { sderFetcher };
 
@@ -23,7 +24,7 @@ const sderFetcher = {
   }: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: 'jurinet' | 'jurica';
   }) {
     const courtDecisions = await sderApi.fetchDecisionsToPseudonymiseBetween({
       startDate,
@@ -33,6 +34,13 @@ const sderFetcher = {
 
     return courtDecisions.filter((courtDecision) => {
       if (!courtDecision.originalText) {
+        return false;
+      }
+      if (
+        courtDecision.sourceName === 'jurica' &&
+        !!courtDecision.NACCode &&
+        NON_PUBLIC_NAC_CODES.includes(courtDecision.NACCode)
+      ) {
         return false;
       }
       return true;
@@ -46,18 +54,24 @@ const sderFetcher = {
   }: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: 'jurinet' | 'jurica';
   }) {
-    const courtDecisions = await sderApi.fetchDecisionsToPseudonymiseBetweenDateCreation(
-      {
+    const courtDecisions =
+      await sderApi.fetchDecisionsToPseudonymiseBetweenDateCreation({
         startDate,
         endDate,
         source,
-      },
-    );
+      });
 
     return courtDecisions.filter((courtDecision) => {
       if (!courtDecision.originalText) {
+        return false;
+      }
+      if (
+        courtDecision.sourceName === 'jurica' &&
+        !!courtDecision.NACCode &&
+        NON_PUBLIC_NAC_CODES.includes(courtDecision.NACCode)
+      ) {
         return false;
       }
       return true;
@@ -71,12 +85,11 @@ const sderFetcher = {
     startDate: Date;
     endDate: Date;
   }) {
-    const courtDecisions = await sderApi.fetchChainedJuricaDecisionsToPseudonymiseBetween(
-      {
+    const courtDecisions =
+      await sderApi.fetchChainedJuricaDecisionsToPseudonymiseBetween({
         startDate,
         endDate,
-      },
-    );
+      });
 
     return courtDecisions.filter(
       (courtDecision) => !!courtDecision && !!courtDecision.originalText,
@@ -96,15 +109,16 @@ const sderFetcher = {
     jurisdictions: string[];
     chambers: string[];
   }) {
-    const courtDecisions = await sderApi.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      {
-        startDate,
-        endDate,
-        source,
-        jurisdictions,
-        chambers,
-      },
-    );
+    const courtDecisions =
+      await sderApi.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
+        {
+          startDate,
+          endDate,
+          source,
+          jurisdictions,
+          chambers,
+        },
+      );
 
     return courtDecisions.filter(
       (courtDecision) => !!courtDecision && !!courtDecision.originalText,
@@ -124,15 +138,16 @@ const sderFetcher = {
     jurisdictions: string[];
     chambers: string[];
   }) {
-    const courtDecisions = await sderApi.fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      {
-        startDate,
-        endDate,
-        source,
-        jurisdictions,
-        chambers,
-      },
-    );
+    const courtDecisions =
+      await sderApi.fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween(
+        {
+          startDate,
+          endDate,
+          source,
+          jurisdictions,
+          chambers,
+        },
+      );
 
     return courtDecisions.filter(
       (courtDecision) => !!courtDecision && !!courtDecision.originalText,

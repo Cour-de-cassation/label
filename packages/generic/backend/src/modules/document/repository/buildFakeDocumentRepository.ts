@@ -2,7 +2,6 @@ import { uniq } from 'lodash';
 import { documentType, idModule } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
-  projectFakeObjects,
   updateFakeCollection,
 } from '../../../repository';
 import { customDocumentRepositoryType } from './customDocumentRepositoryType';
@@ -74,27 +73,16 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       );
     },
 
-    async findAllByPublicationCategoryLettersProjection(
-      publicationCategoryLetters,
-      projections,
-    ) {
-      return collection
-        .filter((document) =>
-          publicationCategoryLetters.some((publicationCategoryLetter) =>
-            document.publicationCategory.includes(publicationCategoryLetter),
-          ),
-        )
-        .map((document) => projectFakeObjects(document, projections));
+    async findAllByPublicationCategoryLetters(publicationCategoryLetters) {
+      return collection.filter((document) =>
+        publicationCategoryLetters.some((publicationCategoryLetter) =>
+          document.publicationCategory.includes(publicationCategoryLetter),
+        ),
+      );
     },
 
     async findAllByStatus(status) {
       return collection.filter((document) => status.includes(document.status));
-    },
-
-    async findAllByStatusProjection(status, projections) {
-      return collection
-        .filter((document) => status.includes(document.status))
-        .map((document) => projectFakeObjects(document, projections));
     },
 
     async findOneByStatusAndPriorityNotIn(

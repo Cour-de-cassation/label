@@ -36,7 +36,6 @@ function buildNlpLocalApi(): nlpApiType {
         entities: annotations.entities.filter((entity) =>
           availableCategories.includes(entity.label),
         ),
-        checklist: annotations.checklist,
       };
     },
     async fetchNlpLoss() {

@@ -13,7 +13,7 @@ async function up() {
   await Promise.all(
     documents.map((document) => {
       const priority = computeNewPriority(
-        (document.priority as unknown) as 'low' | 'medium' | 'high',
+        document.priority as unknown as 'low' | 'medium' | 'high',
       );
 
       documentRepository.updateOne(document._id, { priority });

@@ -5,13 +5,15 @@ import { freePendingDocuments } from './freePendingDocuments';
 describe('freePendingDocuments', () => {
   it('should free all the document that are pending from more than the given minutes', async () => {
     const documentRepository = buildDocumentRepository();
-    const documents = ([
-      { status: 'pending', updateDate: dateBuilder.minutesAgo(16) },
-      { status: 'pending', updateDate: dateBuilder.minutesAgo(7) },
-      { status: 'pending', updateDate: dateBuilder.minutesAgo(30) },
-      { status: 'free' },
-      { status: 'saved' },
-    ] as const).map(documentModule.generator.generate);
+    const documents = (
+      [
+        { status: 'pending', updateDate: dateBuilder.minutesAgo(16) },
+        { status: 'pending', updateDate: dateBuilder.minutesAgo(7) },
+        { status: 'pending', updateDate: dateBuilder.minutesAgo(30) },
+        { status: 'free' },
+        { status: 'saved' },
+      ] as const
+    ).map(documentModule.generator.generate);
     await Promise.all(documents.map(documentRepository.insert));
 
     await freePendingDocuments();

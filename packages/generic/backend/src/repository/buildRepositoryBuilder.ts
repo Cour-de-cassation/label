@@ -1,7 +1,7 @@
 import { idModule, idType, indexer } from '@label/core';
 import { mongo, mongoCollectionType } from '../utils';
-import { projectedType, repositoryType } from './repositoryType';
-import { buildProjection } from './repositoryUtils';
+import { repositoryType } from './repositoryType';
+import { Document, Filter, IndexSpecification, WithId } from 'mongodb';
 
 export { buildRepositoryBuilder };
 
@@ -10,13 +10,11 @@ type indexesType<T extends { [key: string]: any }> = Array<{
   mustBeUnique?: boolean;
 }>;
 
-type indexType<T extends { [key: string]: any }> = Partial<
-  {
-    [key in keyof T]: 1 | -1;
-  }
->;
+type indexType<T extends { [key: string]: any }> = Partial<{
+  [key in keyof T]: 1 | -1;
+}>;
 
-function buildRepositoryBuilder<T extends { _id: idType }, U>({
+function buildRepositoryBuilder<T extends Document, U>({
   collectionName,
   indexes,
   buildCustomRepository,
@@ -37,7 +35,6 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       distinct,
       distinctNested,
       findAll,
-      findAllProjection,
       findAllByIds,
       findById,
       deletePropertiesForMany,
@@ -68,12 +65,14 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
         _id: { $in: ids },
       } as any);
       return {
-        success: !!deleteResult.result.ok,
-        count: deleteResult.result.n ?? 0,
+        success: !!deleteResult.acknowledged,
+        count: deleteResult.deletedCount ?? 0,
       };
     }
 
-    async function distinct<fieldNameT extends keyof T>(fieldName: fieldNameT) {
+    async function distinct<fieldNameT extends keyof WithId<T>>(
+      fieldName: fieldNameT,
+    ) {
       return collection.distinct(fieldName as string, {});
     }
 
@@ -89,17 +88,8 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       return collection.find().toArray();
     }
 
-    async function findAllProjection<projectionT extends keyof T>(
-      projection: Array<projectionT>,
-    ): Promise<Array<projectedType<T, projectionT>>> {
-      return (collection
-        .find()
-        .project(buildProjection(projection as string[]))
-        .toArray() as any) as Array<projectedType<T, projectionT>>;
-    }
-
     async function findAllByIds(idsToSearchIn?: idType[]) {
-      let items = [] as T[];
+      let items = [] as WithId<T>[];
       if (idsToSearchIn) {
         items = await collection
           .find({ _id: { $in: idsToSearchIn } } as any)
@@ -123,12 +113,12 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       return result;
     }
 
-    async function insert(newObject: T) {
+    async function insert(newObject: WithId<T>) {
       const insertResult = await collection.insertOne(newObject as any);
-      return { success: !!insertResult.result.ok };
+      return { success: !!insertResult.acknowledged };
     }
 
-    async function insertMany(newObjects: T[]) {
+    async function insertMany(newObjects: WithId<T>[]) {
       if (newObjects.length === 0) {
         return;
       }
@@ -136,7 +126,7 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     }
 
     async function deletePropertiesForMany(
-      filter: Partial<T>,
+      filter: Filter<T>,
       fieldNames: Array<string>,
     ) {
       await collection.updateMany(filter, buildUnsetQuery(fieldNames));
@@ -145,9 +135,11 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
     async function setIndexes() {
       for (const { index, mustBeUnique } of indexes) {
         if (mustBeUnique) {
-          await collection.createIndex(index, { unique: true });
+          await collection.createIndex(index as IndexSpecification, {
+            unique: true,
+          });
         } else {
-          await collection.createIndex(index);
+          await collection.createIndex(index as IndexSpecification);
         }
       }
     }
@@ -160,18 +152,18 @@ function buildRepositoryBuilder<T extends { _id: idType }, U>({
       return updatedItem || undefined;
     }
 
-    async function updateMany(filter: Partial<T>, objectFields: Partial<T>) {
+    async function updateMany(filter: Filter<T>, objectFields: Partial<T>) {
       await collection.updateMany({ filter } as any, {
         $set: objectFields,
       });
     }
 
-    async function upsert(newObject: T) {
+    async function upsert(newObject: WithId<T>) {
       await collection.updateOne(
         { _id: newObject._id } as any,
         {
           $set: newObject,
-        },
+        } as any,
         {
           upsert: true,
         },

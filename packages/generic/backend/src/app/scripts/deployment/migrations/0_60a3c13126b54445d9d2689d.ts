@@ -43,10 +43,10 @@ async function down() {
 
   const documentRepository = buildDocumentRepository();
 
-  const documentsToPublish = await documentRepository.findAllByPublicationCategoryLettersProjection(
-    documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
-    ['_id', 'creationDate', 'documentNumber', 'status'],
-  );
+  const documentsToPublish =
+    await documentRepository.findAllByPublicationCategoryLetters(
+      documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
+    );
 
   const publishedDocuments = documentsToPublish.filter(
     ({ status }) => status === 'done',

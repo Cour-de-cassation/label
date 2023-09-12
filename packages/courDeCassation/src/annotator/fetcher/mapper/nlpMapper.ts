@@ -18,8 +18,8 @@ function mapNlpAnnotationsToAnnotations(
   nlpAnnotations: nlpAnnotationsType,
   document: documentType,
 ): annotationType[][] {
-  let annotations = [];
-  for (const [_, value] of Object.entries(nlpAnnotations.entities)) {
+  const annotations: annotationType[][] = [];
+  Object.values(nlpAnnotations.entities).map((value) => {
     annotations.push(
       value.map((nlpAnnotation) =>
         annotationModule.lib.buildAnnotation({
@@ -30,7 +30,7 @@ function mapNlpAnnotationsToAnnotations(
         }),
       ),
     );
-  }
+  });
   return annotations;
 }
 

@@ -115,7 +115,6 @@ describe('buildExporter', () => {
       const exportedExternalIds = fakeExporterConfig.getExportedExternalIds();
       const exportedPseudonymizationTexts = fakeExporterConfig.getExportedPseudonymizationTexts();
       const exportedLabelTreatments = fakeExporterConfig.getExportedLabelTreatments();
-      console.log(exportedLabelTreatments)
       expect(exportedExternalIds.sort()).toEqual(
         [documents[0].externalId, documents[2].externalId].sort(),
       );

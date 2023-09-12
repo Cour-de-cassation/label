@@ -1,6 +1,7 @@
 import {
   annotationModule,
   annotationReportModule,
+  annotationType,
   documentModule,
   settingsModule,
 } from '@label/core';
@@ -64,8 +65,8 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
     name: 'FAKE_ANNOTATOR',
     async fetchAnnotationOfDocument(settings, document) {
       const category = Object.keys(settings)[0];
-      const annotations = [];
-      for (const [_, value] of Object.entries(range(3))) {
+      const annotations: annotationType[][] = [];
+      range(3).map(() =>
         annotations.push(
           range(5).map((_, index) =>
             annotationModule.lib.buildAnnotation({
@@ -75,8 +76,9 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
               certaintyScore: Math.random(),
             }),
           ),
-        );
-      }
+        ),
+      );
+
       const report = annotationReportModule.generator.generate({
         documentId: document._id,
       });

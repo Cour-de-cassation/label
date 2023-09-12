@@ -3,8 +3,8 @@ import { nlpAnnotationsType } from '../api';
 import { nlpMapper } from './nlpMapper';
 
 const nlpAnnotations: nlpAnnotationsType = {
-  entities: 
-    {tagger: [
+  entities: {
+    tagger: [
       {
         text: 'ANNOTATION1',
         start: 0,
@@ -21,7 +21,7 @@ const nlpAnnotations: nlpAnnotationsType = {
         source: 'NLP',
         score: 0.6,
       },
-      ],
+    ],
     postProcess: [
       {
         text: 'ANNOTATION1',
@@ -39,7 +39,7 @@ const nlpAnnotations: nlpAnnotationsType = {
         source: 'NLP',
         score: 0.6,
       },
-      ],
+    ],
     output: [
       {
         text: 'ANNOTATION1',
@@ -57,9 +57,9 @@ const nlpAnnotations: nlpAnnotationsType = {
         source: 'NLP',
         score: 0.6,
       },
-      ]
-    },
-  
+    ],
+  },
+
   checklist: ['CHECK 1', 'CHECK 2'],
 };
 

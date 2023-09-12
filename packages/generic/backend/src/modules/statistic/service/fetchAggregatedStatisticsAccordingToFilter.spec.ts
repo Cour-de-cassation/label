@@ -117,7 +117,7 @@ describe('fetchAggregatedStatisticsAccordingToFilter', () => {
           source: 'NLPPostProcess' as const,
           annotationsDiff: annotationsDiffModule.lib.computeAnnotationsDiff(
             [],
-            []
+            [],
           ),
         },
         {

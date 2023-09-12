@@ -1,5 +1,4 @@
 import { promises as fs } from 'fs';
-import { settingsModule } from '@label/core';
 import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
 
 export { buildNlpLocalApi };
@@ -8,12 +7,7 @@ const pathToNlpAnnotations = './storage/annotations/';
 
 function buildNlpLocalApi(): nlpApiType {
   return {
-    async fetchNlpAnnotations(settings, document) {
-      const filteredSettings = settingsModule.lib.computeFilteredSettings(
-        settings,
-        document.decisionMetadata.categoriesToOmit,
-        document.decisionMetadata.additionalTermsToAnnotate,
-      );
+    async fetchNlpAnnotations(document) {
       const annotations = JSON.parse(
         await fs.readFile(
           `${pathToNlpAnnotations}${document.documentNumber}.json`,
@@ -23,15 +17,7 @@ function buildNlpLocalApi(): nlpApiType {
         ),
       ) as nlpAnnotationsType;
 
-      const availableCategories = settingsModule.lib.getCategories(
-        filteredSettings,
-        {
-          status: ['visible', 'alwaysVisible', 'annotable'],
-          canBeAnnotatedBy: 'NLP',
-        },
-      );
-
-      return annotations
+      return annotations;
     },
     async fetchNlpLoss() {
       return 0;

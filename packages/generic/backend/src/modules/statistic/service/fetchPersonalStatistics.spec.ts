@@ -161,7 +161,7 @@ describe('fetchPersonalStatistics', () => {
           documentId: documents[1]._id,
           lastUpdateDate: date.getTime(),
           source: 'NLPPostProcess' as const,
-          order: 1
+          order: 1,
         },
         {
           documentId: documents[1]._id,

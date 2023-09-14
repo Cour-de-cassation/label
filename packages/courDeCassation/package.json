@@ -45,7 +45,7 @@
     "startLocal": "RUN_MODE=LOCAL node dist/labelServer.js -e environments/localEnvironment.json -s settings/settings.json",
     "startPreProd": "RUN_MODE=PREPROD node dist/labelServer.js -e environments/preProdEnvironment.json -s settings/settings.json",
     "startProd": "RUN_MODE=PROD node dist/labelServer.js -e environments/prodEnvironment.json -s settings/settings.json",
-    "test": "RUN_MODE=TEST jest --passWithNoTests -c jest.config.json",
+    "test": "RUN_MODE=TEST jest -c jest.config.json",
     "testE2EPreProd": "RUN_MODE=TEST jest --passWithNoTests -c jest.config.preProd.e2e.json",
     "testE2EProd": "RUN_MODE=TEST jest --passWithNoTests -c jest.config.prod.e2e.json",
     "type": "yarn build"

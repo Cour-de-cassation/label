@@ -183,7 +183,7 @@ const sderLocalApi: sderApiType = {
   async updateDecisionPseudonymisation({
     externalId,
     labelTreatments,
-    decisionPseudonymisedText,
+    pseudonymizationText,
   }) {
     // await decisionModule.service.updateDecisionPseudonymisation({
     //   decisionId: idModule.lib.buildId(externalId),
@@ -196,16 +196,16 @@ const sderLocalApi: sderApiType = {
       { labelTreatments },
       {
         headers: {
-          'x-api-key': process.env.LABEL_API_KEY,
+          'x-api-key': process.env.LABEL_API_KEY ?? '',
         },
       },
     );
     await axios.put(
-      `http://${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
-      { decisionPseudonymisedText },
+      `${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
+      { pseudonymizationText },
       {
         headers: {
-          'x-api-key': process.env.LABEL_API_KEY,
+          'x-api-key': process.env.LABEL_API_KEY ?? '',
         },
       },
     );

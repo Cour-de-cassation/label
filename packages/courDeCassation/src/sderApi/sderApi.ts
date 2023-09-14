@@ -129,7 +129,6 @@ const sderApi: sderApiType = {
         `http://localhost:3000/v1/decisions/${externalId}/rapports-occultations`,
         { labelTreatments },
       );
-      console.log('STEUPLAIT');
     } catch (e) {
       logger.error('ERROR dans sderApi.ts');
       throw Error("Can't connect to api");

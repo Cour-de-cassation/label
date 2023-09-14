@@ -4,6 +4,9 @@ import { fileSystem } from '@label/backend';
 import { sderApiType } from './sderApiType';
 import axios from 'axios';
 import { logger } from '@label/backend';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export { sderLocalApi };
 
@@ -177,7 +180,11 @@ const sderLocalApi: sderApiType = {
 
   async setCourtDecisionBlocked() {},
 
-  async updateDecisionPseudonymisation({ externalId, labelTreatments }) {
+  async updateDecisionPseudonymisation({
+    externalId,
+    labelTreatments,
+    decisionPseudonymisedText,
+  }) {
     // await decisionModule.service.updateDecisionPseudonymisation({
     //   decisionId: idModule.lib.buildId(externalId),
     //   decisionPseudonymisedText: pseudonymizationText,
@@ -185,11 +192,20 @@ const sderLocalApi: sderApiType = {
     // });
     logger.log('updateDecisionPseudonymisation LOCAL');
     await axios.put(
-      `http://dbsder-api-dbsder-api-1:3000/v1/decisions/${externalId}/rapports-occultations`,
+      `http://${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/rapports-occultations`,
       { labelTreatments },
       {
         headers: {
-          'x-api-key': '94568b15-e2c5-4332-abcb-287640847864',
+          'x-api-key': process.env.LABEL_API_KEY,
+        },
+      },
+    );
+    await axios.put(
+      `http://${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
+      { decisionPseudonymisedText },
+      {
+        headers: {
+          'x-api-key': process.env.LABEL_API_KEY,
         },
       },
     );

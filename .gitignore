@@ -15,3 +15,4 @@ k8s*
 /.idea
 package-lock.json
 /packages/courDeCassation/yarn-error.log
+.env

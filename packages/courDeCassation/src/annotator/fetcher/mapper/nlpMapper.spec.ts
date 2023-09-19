@@ -10,7 +10,7 @@ const nlpAnnotations: nlpAnnotationsType = {
         start: 0,
         end: 11,
         label: 'LABEL1',
-        source: 'NLP',
+        source: 'NLPTagger',
         score: 0.5,
       },
       {
@@ -18,7 +18,7 @@ const nlpAnnotations: nlpAnnotationsType = {
         start: 12,
         end: 23,
         label: 'LABEL2',
-        source: 'NLP',
+        source: 'NLPTagger',
         score: 0.6,
       },
     ],
@@ -28,7 +28,7 @@ const nlpAnnotations: nlpAnnotationsType = {
         start: 0,
         end: 11,
         label: 'LABEL1',
-        source: 'NLP',
+        source: 'NLPTagger',
         score: 0.5,
       },
       {
@@ -36,26 +36,34 @@ const nlpAnnotations: nlpAnnotationsType = {
         start: 12,
         end: 23,
         label: 'LABEL2',
-        source: 'NLP',
+        source: 'NLPTagger',
         score: 0.6,
+      },
+      {
+        text: 'ANNOTATION3',
+        start: 24,
+        end: 35,
+        label: 'LABEL2',
+        source: 'NLPPostProcess',
+        score: 0.9,
       },
     ],
     output: [
       {
-        text: 'ANNOTATION1',
-        start: 0,
-        end: 11,
-        label: 'LABEL1',
-        source: 'NLP',
-        score: 0.5,
-      },
-      {
         text: 'ANNOTATION2',
         start: 12,
         end: 23,
         label: 'LABEL2',
-        source: 'NLP',
+        source: 'NLPTagger',
         score: 0.6,
+      },
+      {
+        text: 'ANNOTATION3',
+        start: 24,
+        end: 35,
+        label: 'LABEL2',
+        source: 'NLPPostProcess',
+        score: 0.9,
       },
     ],
   },
@@ -88,6 +96,27 @@ describe('nlpMapper', () => {
         start: 12,
         text: 'ANNOTATION2',
         certaintyScore: 0.6,
+      });
+      expect(annotations[1][2]).toEqual({
+        category: 'LABEL2',
+        entityId: 'LABEL2_ANNOTATION3',
+        start: 24,
+        text: 'ANNOTATION3',
+        certaintyScore: 0.9,
+      });
+      expect(annotations[2][0]).toEqual({
+        category: 'LABEL2',
+        entityId: 'LABEL2_ANNOTATION2',
+        start: 12,
+        text: 'ANNOTATION2',
+        certaintyScore: 0.6,
+      });
+      expect(annotations[2][1]).toEqual({
+        category: 'LABEL2',
+        entityId: 'LABEL2_ANNOTATION3',
+        start: 24,
+        text: 'ANNOTATION3',
+        certaintyScore: 0.9,
       });
     });
   });

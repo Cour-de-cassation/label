@@ -72,7 +72,7 @@ const nlpAnnotations: nlpAnnotationsType = {
 };
 
 const document = documentModule.generator.generate({
-  text: 'ANNOTATION1 ANNOTATION2',
+  text: 'ANNOTATION1 ANNOTATION2 ANNOTATION3',
 });
 
 describe('nlpMapper', () => {
@@ -82,7 +82,7 @@ describe('nlpMapper', () => {
         nlpAnnotations,
         document,
       );
-
+      console.log(annotations)
       expect(annotations[0][0]).toEqual({
         category: 'LABEL1',
         entityId: 'LABEL1_ANNOTATION1',

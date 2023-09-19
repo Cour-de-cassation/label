@@ -18,20 +18,16 @@ function mapNlpAnnotationsToAnnotations(
   nlpAnnotations: nlpAnnotationsType,
   document: documentType,
 ): annotationType[][] {
-  const annotations: annotationType[][] = [];
-  Object.values(nlpAnnotations.entities).map((value) => {
-    annotations.push(
-      value.map((nlpAnnotation) =>
-        annotationModule.lib.buildAnnotation({
-          category: nlpAnnotation.label,
-          start: nlpAnnotation.start,
-          certaintyScore: nlpAnnotation.score,
-          text: document.text.substring(nlpAnnotation.start, nlpAnnotation.end),
-        }),
-      ),
-    );
-  });
-  return annotations;
+  return Object.values(nlpAnnotations.entities).map((value) =>
+    value.map((nlpAnnotation) =>
+      annotationModule.lib.buildAnnotation({
+        category: nlpAnnotation.label,
+        start: nlpAnnotation.start,
+        certaintyScore: nlpAnnotation.score,
+        text: document.text.substring(nlpAnnotation.start, nlpAnnotation.end),
+      }),
+    ),
+  );
 }
 
 function mapNlpAnnotationstoReport(

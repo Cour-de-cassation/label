@@ -6,14 +6,12 @@ export { nlpAnnotationsGenerator };
 
 const nlpAnnotationsGenerator: generatorType<nlpAnnotationsType> = {
   generate: ({ entities, checklist } = {}) => ({
-    entities: entities
-      ? entities
-      : {
-          tagger: generateRandomNlpAnnotations(),
-          postProcess: generateRandomNlpAnnotations(),
-          output: generateRandomNlpAnnotations(),
-        },
-    checklist: checklist ? checklist : [],
+    entities: entities ?? {
+      tagger: generateRandomNlpAnnotations(),
+      postProcess: generateRandomNlpAnnotations(),
+      output: generateRandomNlpAnnotations(),
+    },
+    checklist: checklist ?? [],
   }),
 };
 

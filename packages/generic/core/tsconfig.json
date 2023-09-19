@@ -4,17 +4,17 @@
     "declaration": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "lib": ["dom", "dom.iterable"],
-    "module": "commonjs",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
     "moduleResolution": "node",
     "outDir": "./dist",
     "removeComments": true,
     "rootDir": "src",
     "sourceMap": true,
     "strict": true,
-    "target": "es5"
+    "skipLibCheck": true,
   },
   "exclude": ["node_modules", "dist"],
   "extends": "../../../tsconfig.json",
-  "include": ["src/**/*"]
+  "include": ["src"]
 }

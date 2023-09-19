@@ -31,9 +31,8 @@ function ProblemReportsDataFetcher(props: {
 
 function buildFetchProblemReports() {
   return async () => {
-    const { data: problemReportsWithDetails, statusCode } = await apiCaller.get<'problemReportsWithDetails'>(
-      'problemReportsWithDetails',
-    );
+    const { data: problemReportsWithDetails, statusCode } =
+      await apiCaller.get<'problemReportsWithDetails'>('problemReportsWithDetails');
     return {
       data: problemReportsWithDetails.map((problemReportWithDetails) => ({
         ...problemReportWithDetails,

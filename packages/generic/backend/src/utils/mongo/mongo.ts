@@ -4,7 +4,7 @@ export { buildMongo, mongo };
 
 export type { mongoCollectionType };
 
-type mongoCollectionType<T> = Collection<T>;
+type mongoCollectionType<T extends { [key: string]: any; }> = Collection<T>;
 
 const mongo = buildMongo();
 

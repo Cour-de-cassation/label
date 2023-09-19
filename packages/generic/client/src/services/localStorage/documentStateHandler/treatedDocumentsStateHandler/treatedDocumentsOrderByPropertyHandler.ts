@@ -23,7 +23,7 @@ const treatedDocumentOrderByProperties = [
   'duration',
 ] as const;
 
-function setOrderByProperty(newOrderByProperty: typeof treatedDocumentOrderByProperties[number]) {
+function setOrderByProperty(newOrderByProperty: (typeof treatedDocumentOrderByProperties)[number]) {
   localStorageHandler.set({
     key: TREATED_DOCUMENTS_ORDER_BY_PROPERTY_STORAGE_KEY,
     value: newOrderByProperty,
@@ -35,6 +35,6 @@ function getOrderByProperty() {
   const orderByProperty = localStorageHandler.get({
     key: TREATED_DOCUMENTS_ORDER_BY_PROPERTY_STORAGE_KEY,
     mapper: localStorageMappers.string,
-  }) as typeof treatedDocumentOrderByProperties[number] | undefined;
+  }) as (typeof treatedDocumentOrderByProperties)[number] | undefined;
   return orderByProperty;
 }

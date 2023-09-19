@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { apiRouteOutType, documentType, idModule } from '@label/core';
 import { apiCaller } from '../../../api';
 import { PaginatedTable, tableRowFieldType, ConfirmationPopup, orderDirectionType } from 'pelta-design-system';
@@ -15,13 +15,13 @@ function TreatedDocumentsTable(props: {
   fields: Array<
     tableRowFieldType<
       apiRouteOutType<'get', 'treatedDocuments'>[number],
-      typeof treatedDocumentOrderByProperties[number]
+      (typeof treatedDocumentOrderByProperties)[number]
     >
   >;
   refetch: () => void;
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [documentIdToReset, setDocumentIdToReset] = useState<documentType['_id'] | undefined>(undefined);
   const { displayAlert } = useAlert();
   const [annotationDiffDocumentInfo, setAnnotationDiffDocumentInfo] = useState<
@@ -57,7 +57,7 @@ function TreatedDocumentsTable(props: {
     setAnnotationDiffDocumentInfo(undefined);
   }
 
-  function onOrderByPropertyChange(newOrderByProperty: typeof treatedDocumentOrderByProperties[number]) {
+  function onOrderByPropertyChange(newOrderByProperty: (typeof treatedDocumentOrderByProperties)[number]) {
     localStorage.treatedDocumentsStateHandler.setOrderByProperty(newOrderByProperty);
   }
 
@@ -97,8 +97,7 @@ function TreatedDocumentsTable(props: {
     const openDocumentOption = {
       kind: 'text' as const,
       text: wordings.treatedDocumentsPage.table.optionItems.openDocument,
-      onClick: () =>
-        history.push(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id))),
+      onClick: () => navigate(routes.DOCUMENT.getPath(idModule.lib.convertToString(treatmentWithDetails.document._id))),
       iconName: 'find' as const,
     };
 

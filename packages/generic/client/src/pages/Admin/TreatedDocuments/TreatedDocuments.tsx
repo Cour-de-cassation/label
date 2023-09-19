@@ -108,7 +108,7 @@ function TreatedDocuments(props: {
       },
       documentReviewFilterStatus: {
         value: filterValues.documentReviewFilterStatus,
-        setValue: (documentReviewFilterStatus: typeof documentReviewFilterStatuses[number] | undefined) =>
+        setValue: (documentReviewFilterStatus: (typeof documentReviewFilterStatuses)[number] | undefined) =>
           setAndStoreFilterValues({ ...filterValues, documentReviewFilterStatus }),
       },
       mustHaveSubAnnotations: {
@@ -241,10 +241,12 @@ function TreatedDocuments(props: {
   }
 
   function buildTreatedDocumentsFields() {
-    const treatedDocumentsFields: Array<tableRowFieldType<
-      apiRouteOutType<'get', 'treatedDocuments'>[number],
-      typeof treatedDocumentOrderByProperties[number]
-    >> = [
+    const treatedDocumentsFields: Array<
+      tableRowFieldType<
+        apiRouteOutType<'get', 'treatedDocuments'>[number],
+        (typeof treatedDocumentOrderByProperties)[number]
+      >
+    > = [
       {
         id: 'documentNumber',
         title: wordings.business.filters.columnTitles.documentNumber,

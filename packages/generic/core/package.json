@@ -1,33 +1,29 @@
 {
   "dependencies": {
-    "axios": "^0.24.0",
+    "axios": "^1.5.0",
     "bcryptjs": "^2.4.3",
     "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
     "string-template": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/core": "^7.11.6",
-    "@babel/polyfill": "^7.11.5",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-typescript": "^7.10.4",
-    "@types/bcryptjs": "^2.4.2",
-    "@types/jest": "^26.0.13",
-    "@types/lodash": "^4.14.161",
+    "@next/eslint-plugin-next": "^13.4.19",
+    "@types/bcryptjs": "^2.4.3",
+    "@types/jest": "^29.5.4",
+    "@types/lodash": "^4.14.198",
     "@types/mongodb": "^3.5.27",
     "@types/string-template": "^1.0.2",
-    "@typescript-eslint/eslint-plugin": "^4.4.1",
-    "@typescript-eslint/parser": "^4.4.1",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.6",
-    "jest": "24.9.0",
-    "prettier": "^2.1.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "jest": "29.7.0",
+    "prettier": "^3.0.3",
+    "rimraf": "~5.0.1",
     "sder-core": "https://github.com/Cour-de-cassation/sder-core#f19400e5832d88b48d076b99bbea3e4cfd6803f4",
-    "rimraf": "~3.0.2",
-    "typescript": "~4.0.0"
+    "typescript": "~5.2.2"
   },
   "files": [
     "dist"

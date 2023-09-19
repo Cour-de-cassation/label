@@ -11,15 +11,18 @@ const DEFAULT_MAX_DISTINCT_REPLACEMENT_CHARACTERS = 26 - FORBIDDEN_CHARACTERS.le
 
 function buildAvailableCharactersMapper(entityIds: string[], seed: number) {
   const entityIdsByCategoryCount = countBy(entityIds, annotationModule.lib.entityIdHandler.getCategory);
-  return Object.keys(entityIdsByCategoryCount).reduce((accumulator, category) => {
-    const entityIdsCount = entityIdsByCategoryCount[category];
-    const availableCharacters = buildAvailableCharacters(
-      Math.max(entityIdsCount, DEFAULT_MAX_DISTINCT_REPLACEMENT_CHARACTERS),
-    );
-    const compoundSeed = seed * convertTextIntoCharCode(category);
-    return {
-      ...accumulator,
-      [category]: shuffleCharacterLists(availableCharacters, compoundSeed),
-    };
-  }, {} as Record<string, string[]>);
+  return Object.keys(entityIdsByCategoryCount).reduce(
+    (accumulator, category) => {
+      const entityIdsCount = entityIdsByCategoryCount[category];
+      const availableCharacters = buildAvailableCharacters(
+        Math.max(entityIdsCount, DEFAULT_MAX_DISTINCT_REPLACEMENT_CHARACTERS),
+      );
+      const compoundSeed = seed * convertTextIntoCharCode(category);
+      return {
+        ...accumulator,
+        [category]: shuffleCharacterLists(availableCharacters, compoundSeed),
+      };
+    },
+    {} as Record<string, string[]>,
+  );
 }

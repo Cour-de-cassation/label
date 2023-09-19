@@ -9,8 +9,7 @@ describe('computeMultilineSelection', () => {
       'légalement justifié sa décision ;\n\n71\n\t\n\n72\n\t\n\nPAR CES MOTIFS :\n\n73\n\t\n\n74\n\t\n\nREJETTE le pourvoi';
     const current = {
       index: 5178,
-      text:
-        " \tEt attendu que le premier président, qui n'était pas tenu de s'expliquer sur chacun des critères de l'article 10 de la loi du 31 décembre 1971 ni de suivre les parties dans le détail de leur argumentation, faisant état des critères déterminants de son estimation, a souverainement fixé le montant des honoraires dûs et a ainsi légalement justifié sa décision ; ",
+      text: " \tEt attendu que le premier président, qui n'était pas tenu de s'expliquer sur chacun des critères de l'article 10 de la loi du 31 décembre 1971 ni de suivre les parties dans le détail de leur argumentation, faisant état des critères déterminants de son estimation, a souverainement fixé le montant des honoraires dûs et a ainsi légalement justifié sa décision ; ",
     };
     const after = [
       {
@@ -41,8 +40,7 @@ describe('computeMultilineSelection', () => {
     const before = [
       {
         index: 4941,
-        text:
-          " ne pouvait valablement s'engager pour le compte de son fils à régler un  honoraire de résultat, le premier président a, par ces seuls motifs, légalement justifié sa décision de ne pas accorder un honoraire conventionnel de résultat ;",
+        text: " ne pouvait valablement s'engager pour le compte de son fils à régler un  honoraire de résultat, le premier président a, par ces seuls motifs, légalement justifié sa décision de ne pas accorder un honoraire conventionnel de résultat ;",
       },
       {
         index: 5176,

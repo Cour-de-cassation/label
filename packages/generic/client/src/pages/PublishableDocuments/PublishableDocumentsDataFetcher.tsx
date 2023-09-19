@@ -26,9 +26,8 @@ function PublishableDocumentsDataFetcher(props: {
 
 function buildFetchPublishableDocuments() {
   return async () => {
-    const { data: publishableDocuments, statusCode } = await apiCaller.get<'publishableDocuments'>(
-      'publishableDocuments',
-    );
+    const { data: publishableDocuments, statusCode } =
+      await apiCaller.get<'publishableDocuments'>('publishableDocuments');
 
     return {
       data: publishableDocuments.map((publishableDocument) => ({

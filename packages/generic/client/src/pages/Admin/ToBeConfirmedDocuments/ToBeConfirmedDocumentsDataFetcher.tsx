@@ -31,9 +31,8 @@ function ToBeConfirmedDocumentsDataFetcher(props: {
 
 function buildFetchTreatedDocuments() {
   return async () => {
-    const { data: toBeConfirmedDocuments, statusCode } = await apiCaller.get<'toBeConfirmedDocuments'>(
-      'toBeConfirmedDocuments',
-    );
+    const { data: toBeConfirmedDocuments, statusCode } =
+      await apiCaller.get<'toBeConfirmedDocuments'>('toBeConfirmedDocuments');
 
     return {
       data: toBeConfirmedDocuments.map((treatedDocument) => ({

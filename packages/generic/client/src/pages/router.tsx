@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom';
+import { BrowserRouter, Navigate, Routes, Route, RouteProps } from 'react-router-dom';
 import { localStorage } from '../services/localStorage';
 import { wordings } from '../wordings';
 import { AdminPage } from './Admin/AdminPage';
@@ -25,7 +25,7 @@ export { Router };
 function Router() {
   return (
     <BrowserRouter>
-      <Switch>
+      <Routes>
         <UnauthenticatedRoute path={routes.LOGIN.getPath()}>
           <Login />
         </UnauthenticatedRoute>
@@ -164,8 +164,10 @@ function Router() {
         <AuthenticatedRoute path={routes.DEFAULT.getPath()}>
           <HomeRoute />
         </AuthenticatedRoute>
-        <Redirect path="/" to={{ pathname: routes.DEFAULT.getPath() }} />
-      </Switch>
+        <Route path="/">
+          <Navigate to={{ pathname: routes.DEFAULT.getPath() }} replace />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
@@ -173,15 +175,15 @@ function Router() {
 const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
   <Route
     {...rest}
-    render={({ location }) =>
+    element={
       isAuthenticated() ? (
         children
       ) : (
-        <Redirect
+        <Navigate
           to={{
             pathname: routes.LOGIN.getPath(),
-            state: { from: location },
           }}
+          state={{ from: location }}
         />
       )
     }
@@ -191,14 +193,14 @@ const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }
 const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => (
   <Route
     {...props}
-    render={({ location }) => (
-      <Redirect
+    element={
+      <Navigate
         to={{
           pathname: getRedirectionRoute(),
-          state: { from: location },
         }}
+        state={{ from: location }}
       />
-    )}
+    }
   />
 );
 
@@ -226,15 +228,15 @@ function getRedirectionRoute() {
 const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
   <Route
     {...rest}
-    render={({ location }) =>
+    element={
       !isAuthenticated() ? (
         children
       ) : (
-        <Redirect
+        <Navigate
           to={{
             pathname: routes.DEFAULT.getPath(),
-            state: { from: location },
           }}
+          state={{ from: location }}
         />
       )
     }

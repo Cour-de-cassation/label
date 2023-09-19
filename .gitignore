@@ -2,6 +2,7 @@
 *build
 *dist
 *node_modules
+*.next
 storage/
 judilibre-admin
 scripts/check_install.sh

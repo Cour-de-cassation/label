@@ -5,11 +5,11 @@ export type { apiRouteInType, apiRouteOutType, networkType };
 
 type apiRouteInType<
   methodNameT extends apiSchemaMethodNameType,
-  routeNameT extends keyof typeof apiSchema[methodNameT]
-> = Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT] extends { in: { [argName: string]: any } }
+  routeNameT extends keyof (typeof apiSchema)[methodNameT],
+> = Pick<(typeof apiSchema)[methodNameT], routeNameT>[routeNameT] extends { in: { [argName: string]: any } }
   ? {
-      [argName in keyof Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['in']]: buildType<
-        Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['in'][argName],
+      [argName in keyof Pick<(typeof apiSchema)[methodNameT], routeNameT>[routeNameT]['in']]: buildType<
+        Pick<(typeof apiSchema)[methodNameT], routeNameT>[routeNameT]['in'][argName],
         { id: idType }
       >;
     }
@@ -17,9 +17,9 @@ type apiRouteInType<
 
 type apiRouteOutType<
   methodNameT extends apiSchemaMethodNameType,
-  routeNameT extends keyof typeof apiSchema[methodNameT]
-> = Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT] extends { out: any }
-  ? buildType<Pick<typeof apiSchema[methodNameT], routeNameT>[routeNameT]['out'], { id: idType }>
+  routeNameT extends keyof (typeof apiSchema)[methodNameT],
+> = Pick<(typeof apiSchema)[methodNameT], routeNameT>[routeNameT] extends { out: any }
+  ? buildType<Pick<(typeof apiSchema)[methodNameT], routeNameT>[routeNameT]['out'], { id: idType }>
   : never;
 
 type networkType<T> = T extends { [key: string]: unknown }

@@ -3,18 +3,21 @@ import { flatten } from 'lodash';
 export { splitTextIntoWords };
 
 function splitTextIntoWords(text: string, start: number) {
-  return splitAccordingToSeparatingCharacters(text).reduce((accumulator, word) => {
-    return [
-      ...accumulator,
-      {
-        text: word,
-        start:
-          accumulator.length > 0
-            ? accumulator[accumulator.length - 1].start + accumulator[accumulator.length - 1].text.length + 1
-            : start,
-      },
-    ];
-  }, [] as Array<{ text: string; start: number }>);
+  return splitAccordingToSeparatingCharacters(text).reduce(
+    (accumulator, word) => {
+      return [
+        ...accumulator,
+        {
+          text: word,
+          start:
+            accumulator.length > 0
+              ? accumulator[accumulator.length - 1].start + accumulator[accumulator.length - 1].text.length + 1
+              : start,
+        },
+      ];
+    },
+    [] as Array<{ text: string; start: number }>,
+  );
 }
 
 function splitAccordingToSeparatingCharacters(text: string) {

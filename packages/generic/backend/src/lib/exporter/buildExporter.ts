@@ -139,7 +139,6 @@ function buildExporter(
     );
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
-    // Doit throw une erreur, sans faire bug le script
     try {
       await exporterConfig.sendDocumentPseudonymisationAndTreatments({
         externalId: document.externalId,
@@ -151,10 +150,7 @@ function buildExporter(
 
       await documentService.deleteDocument(document._id);
     } catch (e) {
-      logger.log('NO EXPORT');
-      console.log(e.message);
-      console.log(e);
-      throw new Error('Bro what is this ?');
+      logger.log(`Export failed for document [${document._id} ${document.source} ${document.documentNumber}] with error ${e.response.data.statusCode} (${e.response.data.message}): ${e.message}`);
     }
   }
 

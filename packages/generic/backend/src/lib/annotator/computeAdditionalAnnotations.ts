@@ -31,7 +31,12 @@ function computeAdditionalAnnotations(
   );
   return annotationModule.lib.removeOverlappingAnnotations(
     additionalAnnotationsTextAndIndices.map(({ text, index }) =>
-      annotationModule.lib.buildAnnotation({ start: index, text, category }),
+      annotationModule.lib.buildAnnotation({
+        start: index,
+        text,
+        category,
+        certaintyScore: 1,
+      }),
     ),
   );
 }

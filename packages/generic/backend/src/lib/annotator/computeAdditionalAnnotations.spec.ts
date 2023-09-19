@@ -16,12 +16,14 @@ describe('computeAdditionalAnnotations', () => {
           text,
           start,
           category: 'custom',
+          certaintyScore: 1,
         }),
       ),
       annotationModule.lib.buildAnnotation({
         text: "Entrepreneurs d'Intérêt Général",
         start: 53,
         category: 'personneMorale',
+        certaintyScore: 1,
       }),
     ];
     const document = documentModule.generator.generate({
@@ -57,6 +59,7 @@ describe('computeAdditionalAnnotations', () => {
         text: 'entrepreneurs',
         start: 31,
         category: 'custom',
+        certaintyScore: 1,
       }),
     ]);
   });

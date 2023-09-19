@@ -11,7 +11,7 @@ function buildAnnotation({
   category: string;
   start: number;
   text: string;
-  certaintyScore?: number;
+  certaintyScore: number;
 }) {
   return {
     category,

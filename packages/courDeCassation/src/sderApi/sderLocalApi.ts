@@ -1,4 +1,4 @@
-import { decisionType } from 'sder';
+import { decisionType, decisionModule } from 'sder';
 import { idModule } from '@label/core';
 import { fileSystem } from '@label/backend';
 import { sderApiType } from './sderApiType';
@@ -172,42 +172,44 @@ const sderLocalApi: sderApiType = {
     );
   },
 
-  async setCourtDecisionsLoaded() { },
+  async setCourtDecisionsLoaded() {},
 
-  async setCourtDecisionsToBeTreated() { },
+  async setCourtDecisionsToBeTreated() {},
 
-  async setCourtDecisionDone() { },
+  async setCourtDecisionDone() {},
 
-  async setCourtDecisionBlocked() { },
+  async setCourtDecisionBlocked() {},
 
   async updateDecisionPseudonymisation({
     externalId,
     labelTreatments,
     pseudonymizationText,
   }) {
-    // await decisionModule.service.updateDecisionPseudonymisation({
-    //   decisionId: idModule.lib.buildId(externalId),
-    //   decisionPseudonymisedText: pseudonymizationText,
-    //   labelTreatments,
-    // });
-    logger.log('updateDecisionPseudonymisation LOCAL');
-    await axios.put(
-      `http://${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/rapports-occultations`,
-      { rapportsOccultations: labelTreatments },
-      {
-        headers: {
-          'x-api-key': process.env.LABEL_API_KEY ?? '',
+    if (process.env.ENABLED_API_DBSDER_CALLS) {
+      await axios.put(
+        `http://${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/rapports-occultations`,
+        { rapportsOccultations: labelTreatments },
+        {
+          headers: {
+            'x-api-key': process.env.LABEL_API_KEY ?? '',
+          },
         },
-      },
-    );
-    await axios.put(
-      `${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
-      { decisionPseudonymisee: pseudonymizationText },
-      {
-        headers: {
-          'x-api-key': process.env.LABEL_API_KEY ?? '',
+      );
+      await axios.put(
+        `${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
+        { decisionPseudonymisee: pseudonymizationText },
+        {
+          headers: {
+            'x-api-key': process.env.LABEL_API_KEY ?? '',
+          },
         },
-      },
-    );
+      );
+    } else {
+      await decisionModule.service.updateDecisionPseudonymisation({
+        decisionId: idModule.lib.buildId(externalId),
+        decisionPseudonymisedText: pseudonymizationText,
+        labelTreatments,
+      });
+    }
   },
 };

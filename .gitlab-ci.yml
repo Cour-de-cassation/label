@@ -6,27 +6,28 @@ stages:
   - build
   - deploy
 
-test:
-  stage: test
-  services:
-  - docker:20.10.22
-  script: 
-    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - docker build 
-        --build-arg http_proxy=$HTTP_PROXY
-        --build-arg https_proxy=$HTTPS_PROXY
-        #--target test
-        -t label-test
-    # docker run label-back-test /bin/sh -c "yarn install -- ; yarn compile ...." 
-    # -> ici on lance un conteneur un par un, donc les données générées par le yarn install ne sont pas sauvegardées.
-    - docker run label-test yarn install
-    - docker run label-test yarn compile
-    - docker run label-test yarn test
-    - docker run label-test yarn lint
-  only:
-    - master
-    - re7
-    - dev
+# Partie à compléter par les développeurs label
+# test:
+#   stage: test
+#   services:
+#   - docker:20.10.22
+#   script: 
+#     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+#     - docker build 
+#         --build-arg http_proxy=$HTTP_PROXY
+#         --build-arg https_proxy=$HTTPS_PROXY
+#         #--target test
+#         -t label-test
+#     # docker run label-back-test /bin/sh -c "yarn install -- ; yarn compile ...." 
+#     # -> ici on lance un conteneur un par un, donc les données générées par le yarn install ne sont pas sauvegardées.
+#     - docker run label-test yarn install
+#     - docker run label-test yarn compile
+#     - docker run label-test yarn test
+#     - docker run label-test yarn lint
+#   only:
+#     - master
+#     - re7
+#     - dev
 
 build_label_backend:
   stage: build

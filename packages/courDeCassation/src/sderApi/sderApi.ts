@@ -1,7 +1,7 @@
+import axios from 'axios';
 import { decisionModule } from 'sder';
 import { documentType, idModule } from '@label/core';
 import { sderApiType } from './sderApiType';
-import axios from 'axios';
 
 export { sderApi };
 
@@ -123,8 +123,8 @@ const sderApi: sderApiType = {
   }) {
     if (process.env.ENABLED_API_DBSDER_CALLS) {
       await axios.put(
-        `${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/rapports-occultations`,
-        { labelTreatments },
+        `https://${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/rapports-occultations`,
+        { rapportsOccultations: labelTreatments },
         {
           headers: {
             'x-api-key': process.env.LABEL_API_KEY ?? '',
@@ -132,8 +132,8 @@ const sderApi: sderApiType = {
         },
       );
       await axios.put(
-        `${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
-        { pseudonymizationText },
+        `https://${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
+        { decisionPseudonymisee: pseudonymizationText },
         {
           headers: {
             'x-api-key': process.env.LABEL_API_KEY ?? '',

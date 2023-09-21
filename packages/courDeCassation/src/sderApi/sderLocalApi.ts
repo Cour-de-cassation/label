@@ -1,12 +1,8 @@
+import axios from 'axios';
 import { decisionType, decisionModule } from 'sder';
 import { idModule } from '@label/core';
 import { fileSystem } from '@label/backend';
 import { sderApiType } from './sderApiType';
-import axios from 'axios';
-import { logger } from '@label/backend';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 export { sderLocalApi };
 
@@ -172,13 +168,13 @@ const sderLocalApi: sderApiType = {
     );
   },
 
-  async setCourtDecisionsLoaded() {},
+  async setCourtDecisionsLoaded() { },
 
-  async setCourtDecisionsToBeTreated() {},
+  async setCourtDecisionsToBeTreated() { },
 
-  async setCourtDecisionDone() {},
+  async setCourtDecisionDone() { },
 
-  async setCourtDecisionBlocked() {},
+  async setCourtDecisionBlocked() { },
 
   async updateDecisionPseudonymisation({
     externalId,
@@ -187,7 +183,7 @@ const sderLocalApi: sderApiType = {
   }) {
     if (process.env.ENABLED_API_DBSDER_CALLS) {
       await axios.put(
-        `http://${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/rapports-occultations`,
+        `https://${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/rapports-occultations`,
         { rapportsOccultations: labelTreatments },
         {
           headers: {
@@ -196,7 +192,7 @@ const sderLocalApi: sderApiType = {
         },
       );
       await axios.put(
-        `${process.env.DBSDER_API_HOSTNAME}:${process.env.DBSDER_API_PORT}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
+        `https://${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}/decisions/${externalId}/decision-pseudonymisee`,
         { decisionPseudonymisee: pseudonymizationText },
         {
           headers: {
@@ -204,12 +200,6 @@ const sderLocalApi: sderApiType = {
           },
         },
       );
-    } else {
-      await decisionModule.service.updateDecisionPseudonymisation({
-        decisionId: idModule.lib.buildId(externalId),
-        decisionPseudonymisedText: pseudonymizationText,
-        labelTreatments,
-      });
     }
   },
 };

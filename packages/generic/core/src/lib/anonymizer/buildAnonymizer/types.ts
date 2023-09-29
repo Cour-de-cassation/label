@@ -1,3 +1,5 @@
+import { annotationType } from '../../../modules';
+
 export type { formatSpecifierType, specifierGeneratorType, specifierType };
 
 type specifierType = '%c' | '%d';
@@ -8,6 +10,6 @@ type formatSpecifierType = {
 };
 
 type specifierGeneratorType = {
-  '%c': { generate: (entityId: string) => string };
+  '%c': { generate: (annotation: annotationType) => string };
   '%d': { generate: () => string };
 };

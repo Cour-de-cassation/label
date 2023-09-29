@@ -12,7 +12,7 @@ function DocumentPanelHeader() {
     case 'annotation':
       return <AnnotationHeader />;
     case 'occurrence':
-      const { entityId } = documentViewerModeHandler.documentViewerMode;
-      return <OccurrenceHeader entityId={entityId} />;
+      const { entityId, category } = documentViewerModeHandler.documentViewerMode;
+      return <OccurrenceHeader entityId={entityId} category={category} />;
   }
 }

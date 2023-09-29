@@ -16,10 +16,7 @@ function assertAnnotationsDiffCompatibleWithAvailableCategories(
   return true;
 
   function isUncompatibleWithAvailableCategories(annotation: annotationType) {
-    return (
-      !availableCategories.includes(annotation.category) ||
-      !availableCategories.includes(annotationModule.lib.entityIdHandler.getCategory(annotation.entityId))
-    );
+    return !availableCategories.includes(annotation.category);
   }
 
   function computeErrorMessage(annotation: annotationType) {

@@ -1,3 +1,4 @@
+import { annotationType } from '../../../modules';
 import { parseFormatSpecifiers } from './parseFormatSpecifiers';
 import { specifierGeneratorType, specifierType } from './types';
 
@@ -10,10 +11,10 @@ function buildAnonymizationTextGenerator(printfString: string, specifierGenerato
     generate,
   };
 
-  function generate(entityId: string) {
+  function generate(annotation: annotationType) {
     return parsedFormatSpecifiers.reduce((printedString, parsedFormatSpecifier) => {
       const stringPrefix = printedString.slice(0, parsedFormatSpecifier.index);
-      const specifierValue = computeSpecifierValue(specifierGenerator, parsedFormatSpecifier.specifier, entityId);
+      const specifierValue = computeSpecifierValue(specifierGenerator, parsedFormatSpecifier.specifier, annotation);
       const stringSuffix = printedString.slice(parsedFormatSpecifier.index + parsedFormatSpecifier.specifier.length);
 
       return `${stringPrefix}${specifierValue}${stringSuffix}`;
@@ -21,11 +22,15 @@ function buildAnonymizationTextGenerator(printfString: string, specifierGenerato
   }
 }
 
-function computeSpecifierValue(specifierGenerator: specifierGeneratorType, specifier: specifierType, entityId: string) {
+function computeSpecifierValue(
+  specifierGenerator: specifierGeneratorType,
+  specifier: specifierType,
+  annotation: annotationType,
+) {
   switch (specifier) {
     case '%d':
       return specifierGenerator[specifier].generate();
     case '%c':
-      return specifierGenerator[specifier].generate(entityId);
+      return specifierGenerator[specifier].generate(annotation);
   }
 }

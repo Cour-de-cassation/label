@@ -15,11 +15,11 @@ function buildAnnotation({
   certaintyScore?: number;
   entityId?: string;
 }) {
-    return {
-      category,
-      entityId: entityId ?? entityIdHandler.compute(category, text),
-      start,
-      text,
-      certaintyScore,
-    };
-  }
+  return {
+    category,
+    entityId: entityId ?? entityIdHandler.compute(category, text),
+    start,
+    text,
+    certaintyScore,
+  };
+}

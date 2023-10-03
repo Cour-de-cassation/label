@@ -11,7 +11,7 @@ const nlpAnnotations: nlpAnnotationsType = {
       label: 'LABEL1',
       source: 'NLP',
       score: 0.5,
-      entityId: 'LABEL1_annotation1'
+      entityId: 'LABEL1_annotation1',
     },
     {
       text: 'ANNOTATION2',
@@ -20,7 +20,7 @@ const nlpAnnotations: nlpAnnotationsType = {
       label: 'LABEL2',
       source: 'NLP',
       score: 0.6,
-      entityId: 'LABEL2_annotation2'
+      entityId: 'LABEL2_annotation2',
     },
   ],
   checklist: ['CHECK 1', 'CHECK 2'],

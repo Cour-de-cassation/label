@@ -31,7 +31,7 @@ describe('assertAnnotationsDiffCompatibleWithAvailableCategories', () => {
       assertAnnotationsDiffCompatibleWithAvailableCategories(annotationsDiff, availableCategories);
 
     expect(functionCall).toThrowError(
-      '(nom / Benoit (nom_Benoit) / 0) category is not in availableCategories: [prenom]',
+      '(nom / Benoit (nom_benoit) / 0) category is not in availableCategories: [prenom]',
     );
   });
 });

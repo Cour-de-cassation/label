@@ -11,6 +11,7 @@ const nlpAnnotations: nlpAnnotationsType = {
       label: 'LABEL1',
       source: 'NLP',
       score: 0.5,
+      entityId: 'LABEL1_annotation1'
     },
     {
       text: 'ANNOTATION2',
@@ -19,6 +20,7 @@ const nlpAnnotations: nlpAnnotationsType = {
       label: 'LABEL2',
       source: 'NLP',
       score: 0.6,
+      entityId: 'LABEL2_annotation2'
     },
   ],
   checklist: ['CHECK 1', 'CHECK 2'],
@@ -38,14 +40,14 @@ describe('nlpMapper', () => {
 
       expect(annotations[0]).toEqual({
         category: 'LABEL1',
-        entityId: 'LABEL1_ANNOTATION1',
+        entityId: 'LABEL1_annotation1',
         start: 0,
         text: 'ANNOTATION1',
         certaintyScore: 0.5,
       });
       expect(annotations[1]).toEqual({
         category: 'LABEL2',
-        entityId: 'LABEL2_ANNOTATION2',
+        entityId: 'LABEL2_annotation2',
         start: 12,
         text: 'ANNOTATION2',
         certaintyScore: 0.6,

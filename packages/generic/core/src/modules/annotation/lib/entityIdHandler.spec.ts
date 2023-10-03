@@ -8,7 +8,7 @@ describe('entityIdHandler', () => {
 
       const entityId = entityIdHandler.compute(category, text);
 
-      expect(entityId).toEqual('CATEGORY_TEXT');
+      expect(entityId).toEqual('CATEGORY_text');
     });
   });
   describe('getCategory', () => {
@@ -30,7 +30,7 @@ describe('entityIdHandler', () => {
 
       const entityIdText = entityIdHandler.getText(entityId);
 
-      expect(entityIdText).toEqual(text);
+      expect(entityIdText).toEqual('text');
     });
   });
 });

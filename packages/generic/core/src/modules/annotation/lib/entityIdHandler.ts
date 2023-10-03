@@ -11,7 +11,7 @@ const entityIdHandler = {
 };
 
 function compute(category: string, text: string) {
-  return `${category}_${text}`;
+  return `${category}_${text.toLocaleLowerCase()}`;
 }
 
 function syncEntityId(annotation: annotationType): annotationType {

@@ -39,8 +39,8 @@ build_label_backend:
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY
         -f Dockerfile.label-backend
-        -t $CI_REGISTRY/cour-de-cassation/label-backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend .
-    - docker push $CI_REGISTRY/cour-de-cassation/label-backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
+        -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend .
+    - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
   only:
     - master
     - re7
@@ -55,8 +55,8 @@ build_label_client:
         --build-arg https_proxy=$HTTPS_PROXY
         --target label-client
         -f Dockerfile.label-client
-        -t $CI_REGISTRY/cour-de-cassation/label-client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
-    - docker push $CI_REGISTRY/cour-de-cassation/label-client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
+        -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
+    - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
   only:
     - master
     - re7

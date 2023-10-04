@@ -55,6 +55,8 @@ build_label_client:
     paths:
       - packages/generic/client/build/
   script:
+    - yarn config set proxy $HTTP_PROXY
+    - yarn config set https-proxy $HTTPS_PROXY
     - yarn install --
     - yarn compile
 

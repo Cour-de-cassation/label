@@ -4,6 +4,7 @@ services:
 stages:
   - test
   - build
+  - build_docker
   - deploy
 
 # Partie à compléter par les développeurs label
@@ -30,7 +31,7 @@ stages:
 #     - dev
 
 build_label_backend:
-  stage: build
+  stage: build_docker
   script: 
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "$HTTP_PROXY"
@@ -48,6 +49,22 @@ build_label_backend:
 
 build_label_client:
   stage: build
+  image: node:18
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - packages/generic/client/build/
+  script:
+    - yarn install --
+    - yarn compile
+
+build_label_client_docker_image:
+  stage: build_docker
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - packages/generic/client/build/
+    policy: pull
   script: 
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker build

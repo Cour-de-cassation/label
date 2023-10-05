@@ -70,6 +70,8 @@ build_label_client_docker_image:
         -f Dockerfile.label-client
         -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
     - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
+  dependencies:
+    - build_label_client
   only:
     - master
     - re7

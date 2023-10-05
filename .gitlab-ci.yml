@@ -58,6 +58,8 @@ build_label_client:
     - yarn config set https-proxy $HTTPS_PROXY
     - yarn install --
     - yarn compile
+    - yarn buildClient
+    - ls packages/generic/client/
 
 build_label_client_docker_image:
   stage: build_docker

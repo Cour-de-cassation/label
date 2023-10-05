@@ -50,8 +50,7 @@ build_label_backend:
 build_label_client:
   stage: build
   image: node:18
-  cache:
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+  artifacts:
     paths:
       - packages/generic/client/build/
   script:
@@ -62,11 +61,6 @@ build_label_client:
 
 build_label_client_docker_image:
   stage: build_docker
-  cache:
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
-    paths:
-      - packages/generic/client/build/
-    policy: pull
   script: 
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker build

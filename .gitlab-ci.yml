@@ -50,6 +50,7 @@ build_label_backend:
 build_label_client:
   stage: build
   script:
+    - apk update
     - apk add node
     - yarn config set proxy $HTTP_PROXY
     - yarn config set https-proxy $HTTPS_PROXY

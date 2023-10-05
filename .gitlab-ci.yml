@@ -31,7 +31,7 @@ stages:
 #     - dev
 
 build_label_backend:
-  stage: build_docker
+  stage: build
   script: 
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "$HTTP_PROXY"
@@ -49,22 +49,14 @@ build_label_backend:
 
 build_label_client:
   stage: build
-  image: node:14
-  artifacts:
-    paths:
-      - packages/generic/client/build/
   script:
+    - apk add node
     - yarn config set proxy $HTTP_PROXY
     - yarn config set https-proxy $HTTPS_PROXY
     - yarn install --
     - yarn compile
-    - yarn buildClient
-    - ls packages/generic/client/
-
-build_label_client_docker_image:
-  stage: build_docker
-  script: 
-    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - yarn test
+    - yarn lint
     - docker build
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY
@@ -72,12 +64,43 @@ build_label_client_docker_image:
         -f Dockerfile.label-client
         -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
     - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
-  dependencies:
-    - build_label_client
   only:
     - master
     - re7
     - dev
+
+
+# build_label_client:
+#   stage: build
+#   image: node:14
+#   artifacts:
+#     paths:
+#       - packages/generic/client/build/
+#   script:
+#     - yarn config set proxy $HTTP_PROXY
+#     - yarn config set https-proxy $HTTPS_PROXY
+#     - yarn install --
+#     - yarn compile
+#     - yarn buildClient
+#     - ls packages/generic/client/
+
+# build_label_client_docker_image:
+#   stage: build_docker
+#   script: 
+#     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+#     - docker build
+#         --build-arg http_proxy=$HTTP_PROXY
+#         --build-arg https_proxy=$HTTPS_PROXY
+#         --target label-client
+#         -f Dockerfile.label-client
+#         -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
+#     - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
+#   dependencies:
+#     - build_label_client
+#   only:
+#     - master
+#     - re7
+#     - dev
 
 deploy_label_backend:
   stage: deploy

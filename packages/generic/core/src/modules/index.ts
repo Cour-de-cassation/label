@@ -7,6 +7,7 @@ import { documentModule, documentType, fetchedDocumentType } from './document';
 import { ressourceFilterModule, ressourceFilterType } from './ressourceFilter';
 import { idModule, idType } from './id';
 import { problemReportModule, problemReportType } from './problemReport';
+import { replacementTermModule, replacementTermType } from './replacementTerm';
 import {
   colorType,
   constantColorType,
@@ -32,6 +33,7 @@ export {
   idModule,
   migrationModule,
   problemReportModule,
+  replacementTermModule,
   settingsModule,
   statisticModule,
   treatmentModule,
@@ -60,6 +62,7 @@ export type {
   statisticType,
   categoryIconNameType,
   userType,
+  replacementTermType,
   passwordTimeValidityStatusType,
   treatmentType,
   treatmentInfoType,

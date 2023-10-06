@@ -49,6 +49,7 @@
     "clean": "rimraf -rf ./dist",
     "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",
+    "coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",

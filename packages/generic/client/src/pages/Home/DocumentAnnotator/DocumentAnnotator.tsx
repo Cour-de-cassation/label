@@ -41,6 +41,7 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<voi
       annotations={annotatorState.annotations}
       document={annotatorState.document}
       settings={annotatorState.settings}
+      mandatoryReplacementTerms={annotatorState.mandatoryReplacementTerms}
     >
       <DocumentViewerModeHandlerContextProvider>
         <ViewerScrollerContextProvider viewerRef={viewerRef}>
@@ -50,6 +51,7 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<voi
                 <AnnotationsPanel
                   document={annotatorState.document}
                   annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
+                  checklist={annotatorState.checklist}
                   splittedTextByLine={splittedTextByLine}
                   nonAnnotableCategories={nonAnnotableCategories}
                 />

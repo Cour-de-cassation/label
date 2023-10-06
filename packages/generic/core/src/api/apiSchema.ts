@@ -1,5 +1,6 @@
 import {
   annotationModule,
+  annotationReportModule,
   annotationsDiffModule,
   documentModule,
   problemReportModule,
@@ -8,6 +9,7 @@ import {
   ressourceFilterModule,
   statisticModule,
   treatmentModule,
+  replacementTermModule,
 } from '../modules';
 import { buildModel, modelType } from '../modules/modelType';
 
@@ -47,6 +49,15 @@ const apiSchema = {
           total: { kind: 'primitive', content: 'number' },
         },
       } as const),
+    },
+    checklist: {
+      in: {
+        documentId: buildModel({
+          kind: 'primitive',
+          content: 'string',
+        } as const),
+      },
+      out: annotationReportModule.model.content.checklist,
     },
     annotations: {
       in: {
@@ -498,6 +509,18 @@ const apiSchema = {
             },
           },
         },
+      } as const),
+    },
+    mandatoryReplacementTerms: {
+      in: {
+        documentId: buildModel({
+          kind: 'primitive',
+          content: 'string',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'array',
+        content: replacementTermModule.model,
       } as const),
     },
     workingUsers: {

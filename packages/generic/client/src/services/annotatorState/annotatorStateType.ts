@@ -1,4 +1,11 @@
-import { annotationType, assignationType, fetchedDocumentType, settingsType } from '@label/core';
+import {
+  annotationReportType,
+  annotationType,
+  assignationType,
+  fetchedDocumentType,
+  replacementTermType,
+  settingsType,
+} from '@label/core';
 
 export type { annotatorStateType };
 
@@ -7,4 +14,6 @@ type annotatorStateType = {
   annotations: annotationType[];
   document: fetchedDocumentType;
   settings: settingsType;
+  mandatoryReplacementTerms: replacementTermType[];
+  checklist: annotationReportType['checklist'];
 };

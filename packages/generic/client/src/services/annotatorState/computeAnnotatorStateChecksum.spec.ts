@@ -1,8 +1,15 @@
-import { annotationModule, settingsModule, documentModule } from '@label/core';
+import {
+  annotationModule,
+  settingsModule,
+  documentModule,
+  annotationReportModule,
+  replacementTermType,
+} from '@label/core';
 import { range } from 'lodash';
 import { computeAnnotatorStateChecksum } from './computeAnnotatorStateChecksum';
 
 describe('computeAnnotatorStateChecksum', () => {
+  const { checklist } = annotationReportModule.generator.generate();
   const document = documentModule.generator.generate();
   const settings = settingsModule.lib.buildSettings({ prenom: {}, nom: {} });
 
@@ -15,9 +22,11 @@ describe('computeAnnotatorStateChecksum', () => {
       }),
     );
     const annotatorState = {
+      checklist,
       document,
       settings,
       annotations: annotations,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState);
@@ -27,19 +36,24 @@ describe('computeAnnotatorStateChecksum', () => {
   });
 
   it('should return the same checksum for reversed annotations', () => {
+    const { checklist } = annotationReportModule.generator.generate();
     const annotations1 = range(10).map((index) =>
       annotationModule.lib.buildAnnotation({ category: 'prenom', start: index * 10, text: 'TRUC' }),
     );
     const annotations2 = [...annotations1].reverse();
     const annotatorState1 = {
+      checklist,
       document,
       settings,
       annotations: annotations1,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
     const annotatorState2 = {
+      checklist,
       document,
       settings,
       annotations: annotations2,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -49,6 +63,7 @@ describe('computeAnnotatorStateChecksum', () => {
   });
 
   it('should return a different checksum for different categories of annotations', () => {
+    const { checklist } = annotationReportModule.generator.generate();
     const annotations1 = range(10).map((index) =>
       annotationModule.lib.buildAnnotation({
         category: 'prenom',
@@ -61,14 +76,18 @@ describe('computeAnnotatorStateChecksum', () => {
       category: index > 5 ? 'prenom' : 'nom',
     }));
     const annotatorState1 = {
+      checklist,
       document,
       settings,
       annotations: annotations1,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
     const annotatorState2 = {
+      checklist,
       document,
       settings,
       annotations: annotations2,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -78,6 +97,7 @@ describe('computeAnnotatorStateChecksum', () => {
   });
 
   it('should return a different checksum for missing annotations', () => {
+    const { checklist } = annotationReportModule.generator.generate();
     const annotations1 = range(10).map((index) =>
       annotationModule.lib.buildAnnotation({
         category: 'prenom',
@@ -87,14 +107,18 @@ describe('computeAnnotatorStateChecksum', () => {
     );
     const annotations2 = annotations1.filter((_, index) => index >= 5);
     const annotatorState1 = {
+      checklist,
       document,
       settings,
       annotations: annotations1,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
     const annotatorState2 = {
+      checklist,
       document,
       settings,
       annotations: annotations2,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState1);
@@ -104,6 +128,7 @@ describe('computeAnnotatorStateChecksum', () => {
   });
 
   it('should return the same checksum every time for the same array', () => {
+    const { checklist } = annotationReportModule.generator.generate();
     const annotations = range(10).map((index) =>
       annotationModule.lib.buildAnnotation({
         category: 'prenom',
@@ -112,9 +137,11 @@ describe('computeAnnotatorStateChecksum', () => {
       }),
     );
     const annotatorState = {
+      checklist,
       document,
       settings,
       annotations: annotations,
+      mandatoryReplacementTerms: [] as replacementTermType[],
     };
 
     const annotatorStateChecksum1 = computeAnnotatorStateChecksum(annotatorState);

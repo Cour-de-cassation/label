@@ -58,6 +58,9 @@ build_label_client:
     - yarn compile
     # - yarn test
     # - yarn lint
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - echo "$HTTP_PROXY"
+    - echo "$HTTPS_PROXY"
     - docker build
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY
@@ -69,6 +72,8 @@ build_label_client:
     - master
     - re7
     - dev
+  tags:
+    - docker
 
 
 # build_label_client:

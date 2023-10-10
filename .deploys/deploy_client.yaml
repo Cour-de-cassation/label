@@ -48,6 +48,6 @@ spec:
     app: label-client
   ports:
     - name: label-client-port
-      port: 55430
-      targetPort: 55430
+      port: 55432
+      targetPort: 55432
   type: ClusterIP

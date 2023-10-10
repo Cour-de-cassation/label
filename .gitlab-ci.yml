@@ -130,6 +130,7 @@ deploy_label_client:
   stage: deploy
   script:
     - envsubst < .deploys/deploy_client.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+    - envsubst < .deploys/deploy_ingress.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
   only:
     - master
     - re7

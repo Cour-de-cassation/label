@@ -1,0 +1,49 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingress-route
+  namespace: label
+spec:
+  entryPoints:
+    - web
+
+  routes:
+    - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label-client`)
+      kind: Rule
+      services:
+        - name: label-client
+          port: label-client-port
+      middlewares:
+        - name: label-client-stripprefix
+    - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label-backend`)
+      kind: Rule
+      services:
+        - name: label-backend
+          port: label-backend-port
+      middlewares:
+        - name: label-backend-stripprefix
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: label-client-stripprefix
+  namespace: label
+spec:
+  replacePathRegex:
+    regex: /label-client(/|$)(.*)
+    replacement: /$2
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: label-backend-stripprefix
+  namespace: label
+spec:
+  replacePathRegex:
+    regex: /label-backend(/|$)(.*)
+    replacement: /$2
+
+

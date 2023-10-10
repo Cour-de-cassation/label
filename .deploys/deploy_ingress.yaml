@@ -12,14 +12,14 @@ spec:
     - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label-client`)
       kind: Rule
       services:
-        - name: label-client
+        - name: label-client-service
           port: label-client-port
       middlewares:
         - name: label-client-stripprefix
     - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label-backend`)
       kind: Rule
       services:
-        - name: label-backend
+        - name: label-backend-service
           port: label-backend-port
       middlewares:
         - name: label-backend-stripprefix

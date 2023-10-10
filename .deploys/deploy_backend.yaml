@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: label-backend-deployment
+  namespace: label
   labels:
     app: 
 spec:
@@ -41,13 +42,13 @@ spec:
           #   periodSeconds: 15
           #   failureThreshold: 10
           #   timeoutSeconds: 60
-          securityContext:
-            runAsUser: 1000
-            capabilities:
-              drop:
-                - all
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+          # securityContext:
+          #   runAsUser: 1000
+          #   capabilities:
+          #     drop:
+          #       - all
+          #   allowPrivilegeEscalation: false
+          #   readOnlyRootFilesystem: true
         volumeMounts:
         - name: label-backend-config
           mountPath: /home/node/packages/courDeCassation/environments
@@ -62,11 +63,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: label-backend-service
+  namespace: label
 spec:
   selector:
     app: label-backend
   ports:
-    - name: label-backend
+    - name: label-backend-port
       port: 55430
       targetPort: 55430
   type: ClusterIP

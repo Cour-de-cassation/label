@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: label-client-deployment
+  namespace: label
   labels:
     app: label-client
 spec:
@@ -36,16 +37,17 @@ spec:
                 - all
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: label-client-service
-# spec:
-#   selector:
-#     app: label-client
-#   ports:
-#     - name: label-client
-#       port: 55430
-#       targetPort: 55430
-#   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: label-client-service
+  namespace: label
+spec:
+  selector:
+    app: label-client
+  ports:
+    - name: label-client-port
+      port: 55430
+      targetPort: 55430
+  type: ClusterIP

@@ -116,6 +116,7 @@ deploy_label_backend:
     MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
     ROOT_PATH: label/api
   script:
+    - envsubst < .deploys/deploy_namespace.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
     - envsubst < .deploys/deploy_backend.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
   only:
     - master
@@ -129,6 +130,7 @@ deploy_label_backend:
 deploy_label_client:
   stage: deploy
   script:
+    - envsubst < .deploys/deploy_namespace.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
     - envsubst < .deploys/deploy_client.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
     - envsubst < .deploys/deploy_ingress.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
   only:

@@ -17,7 +17,7 @@ function generateRandomNlpAnnotations() {
 
 function generateRandomNlpAnnotation() {
   const start = random(100);
-  const text = `TEXT_${Math.random()}`
+  const text = `TEXT_${Math.random()}`;
   const entity = {
     text: text,
     start: start,

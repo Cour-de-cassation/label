@@ -17,8 +17,9 @@ function generateRandomNlpAnnotations() {
 
 function generateRandomNlpAnnotation() {
   const start = random(100);
+  const text = `TEXT_${Math.random()}`
   const entity = {
-    text: `TEXT_${Math.random()}`,
+    text: text,
     start: start,
     end: start + random(8),
     score: Math.random(),
@@ -26,6 +27,6 @@ function generateRandomNlpAnnotation() {
     source: `NLP`,
     entityId: '',
   };
-  entity.entityId = `LABEL_${entity.text.toLowerCase()}`;
+  entity.entityId = `LABEL_${text.toLowerCase()}`;
   return entity;
 }

@@ -1,12 +1,36 @@
+import { buildAnnotation } from '../../../modules/annotation';
 import { buildSpecifierGenerator } from './buildSpecifierGenerator';
 
 describe('buildSpecifierGenerator', () => {
   it('should return correct generated specifier values', () => {
-    const entityIds = ['nom_gle', 'prenom_romain', 'adresse_13 rue', 'adresse_45 cour'];
-    const specifierGenerator = buildSpecifierGenerator(entityIds, 123);
+    const annotation1 = buildAnnotation({
+      category: 'nom',
+      start: 0,
+      text: `gle`,
+      certaintyScore: 1,
+    });
+    const annotation2 = buildAnnotation({
+      category: 'prenom',
+      start: 0,
+      text: `romain`,
+      certaintyScore: 1,
+    });
+    const annotation3 = buildAnnotation({
+      category: 'adresse',
+      start: 0,
+      text: `13 rue`,
+      certaintyScore: 1,
+    });
+    const annotation4 = buildAnnotation({
+      category: 'adresse',
+      start: 0,
+      text: `45 cour`,
+      certaintyScore: 1,
+    });
+    const specifierGenerator = buildSpecifierGenerator([annotation1, annotation2, annotation3, annotation4], 123);
 
-    const generatedCharacter1 = specifierGenerator['%c'].generate(entityIds[0]);
-    const generatedCharacter2 = specifierGenerator['%c'].generate(entityIds[1]);
+    const generatedCharacter1 = specifierGenerator['%c'].generate(annotation1);
+    const generatedCharacter2 = specifierGenerator['%c'].generate(annotation2);
     const generatedNumber1 = specifierGenerator['%d'].generate();
     const generatedNumber2 = specifierGenerator['%d'].generate();
 

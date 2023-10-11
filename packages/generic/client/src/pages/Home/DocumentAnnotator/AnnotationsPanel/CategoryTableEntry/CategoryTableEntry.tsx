@@ -119,7 +119,7 @@ function CategoryTableEntry(props: {
     if (isEntitySelected) {
       entityEntryHandler.setSelected(undefined);
     } else {
-      entityEntryHandler.setSelected(props.entityId);
+      entityEntryHandler.setSelected(entityAnnotation.category, props.entityId);
     }
   }
 }

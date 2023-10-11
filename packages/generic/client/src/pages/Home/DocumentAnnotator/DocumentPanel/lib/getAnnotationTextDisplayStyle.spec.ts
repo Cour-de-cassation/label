@@ -25,9 +25,10 @@ describe('getAnnotationTextDisplayStyle', () => {
   });
 
   it('should return outlined', () => {
-    const annotation = annotationModule.generator.generate({ category: 'adresse', entityId: 'OTHER_ENTITY_ID' });
+    const annotation = annotationModule.generator.generate({ category: 'adresse' });
     const documentViewerMode = {
       kind: 'occurrence' as const,
+      category: annotation.category,
       entityId: 'OTHER_ENTITY_ID',
       isAnonymizedView: true,
       entityLineNumbers: [],
@@ -41,6 +42,7 @@ describe('getAnnotationTextDisplayStyle', () => {
     const annotation = annotationModule.generator.generate({ category: 'adresse' });
     const documentViewerMode = {
       kind: 'occurrence' as const,
+      category: annotation.category,
       entityId: annotation.entityId,
       isAnonymizedView: true,
       entityLineNumbers: [],

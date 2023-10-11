@@ -1,7 +1,7 @@
 import React from 'react';
 import { uniq } from 'lodash';
 import { customThemeType, useCustomTheme, Header, IconButton, Text } from 'pelta-design-system';
-import { annotationLinkHandler, annotationModule, settingsModule } from '@label/core';
+import { annotationLinkHandler, settingsModule } from '@label/core';
 import { CategoryIcon } from '../../../../../components';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../../services/documentViewerMode';
@@ -12,15 +12,14 @@ export { OccurrenceHeader };
 
 const CATEGORY_ICON_SIZE = 40;
 
-function OccurrenceHeader(props: { entityId: string }) {
+function OccurrenceHeader(props: { entityId: string; category: string }) {
   const { resetViewerMode } = useDocumentViewerModeHandler();
   const theme = useCustomTheme();
   const annotatorStateHandler = useAnnotatorStateHandler();
 
   const styles = buildStyles(theme);
   const { annotations, settings } = annotatorStateHandler.get();
-  const category = annotationModule.lib.entityIdHandler.getCategory(props.entityId);
-  const categoryName = settingsModule.lib.getAnnotationCategoryText(category, settings);
+  const categoryName = settingsModule.lib.getAnnotationCategoryText(props.category, settings);
   const annotationTexts = uniq(
     annotationLinkHandler
       .getLinkedAnnotationRepresentatives(props.entityId, annotations)
@@ -31,7 +30,7 @@ function OccurrenceHeader(props: { entityId: string }) {
       leftHeaderComponents={[
         <div style={styles.leftHeader}>
           <div style={styles.categoryIconContainer}>
-            <CategoryIcon category={category} iconSize={CATEGORY_ICON_SIZE} settings={settings} />
+            <CategoryIcon category={props.category} iconSize={CATEGORY_ICON_SIZE} settings={settings} />
           </div>
           <div style={styles.categoryInfosContainer}>
             <Text>{categoryName}</Text>

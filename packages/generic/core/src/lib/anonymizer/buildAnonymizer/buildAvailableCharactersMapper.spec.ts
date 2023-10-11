@@ -1,16 +1,31 @@
 import { range } from 'lodash';
-import { annotationModule } from '../../../modules/annotation';
 import { buildAvailableCharactersMapper } from './buildAvailableCharactersMapper';
 import { FORBIDDEN_CHARACTERS } from './buildCharacterList';
+import { buildAnnotation } from '../../../modules/annotation/lib';
 
 describe('buildAvailableCharactersMapper', () => {
   const seed = 123;
   it('should build a mapper with 2 categories', () => {
-    const entityId1 = annotationModule.lib.entityIdHandler.compute('prenom', 'benoit');
-    const entityId2 = annotationModule.lib.entityIdHandler.compute('prenom', 'nicolas');
-    const entityId3 = annotationModule.lib.entityIdHandler.compute('nom', 'gle');
+    const annotation1 = buildAnnotation({
+      category: 'prenom',
+      start: 0,
+      text: `benoit`,
+      certaintyScore: 1,
+    });
+    const annotation2 = buildAnnotation({
+      category: 'prenom',
+      start: 0,
+      text: `nicolas`,
+      certaintyScore: 1,
+    });
+    const annotation3 = buildAnnotation({
+      category: 'nom',
+      start: 0,
+      text: `gle`,
+      certaintyScore: 1,
+    });
 
-    const mapper = buildAvailableCharactersMapper([entityId1, entityId2, entityId3], seed);
+    const mapper = buildAvailableCharactersMapper([annotation1, annotation2, annotation3], seed);
 
     expect(mapper['prenom']).toBeTruthy();
     expect(mapper['nom']).toBeTruthy();
@@ -19,11 +34,16 @@ describe('buildAvailableCharactersMapper', () => {
   });
 
   it('should build a mapper that prioritize the one-letter replacements', () => {
-    const entityIds = range(26 - FORBIDDEN_CHARACTERS.length + 1).map((value) =>
-      annotationModule.lib.entityIdHandler.compute('prenom', `${value}`),
+    const annotations = range(26 - FORBIDDEN_CHARACTERS.length + 1).map((value) =>
+      buildAnnotation({
+        category: 'prenom',
+        start: 0,
+        text: `${value}`,
+        certaintyScore: 1,
+      }),
     );
 
-    const mapper = buildAvailableCharactersMapper(entityIds, seed);
+    const mapper = buildAvailableCharactersMapper(annotations, seed);
 
     expect([...mapper['prenom'].slice(0, 26 - FORBIDDEN_CHARACTERS.length)].sort()).toEqual([
       'A',

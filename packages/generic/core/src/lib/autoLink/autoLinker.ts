@@ -41,7 +41,7 @@ function computeAnnotationsToLinkTo(annotation: annotationType, annotations: ann
     return (
       annotation.category === someAnnotation.category &&
       !annotationLinkHandler.isLinkedTo(annotation, someAnnotation) &&
-      autoLinkSensitivity.reduce((accumulator, stringComparisonSensitivity) => {
+      autoLinkSensitivity?.reduce((accumulator, stringComparisonSensitivity) => {
         switch (stringComparisonSensitivity.kind) {
           case 'caseInsensitive':
             return accumulator || stringComparator.insensitiveEqual(annotation.text, someAnnotation.text);

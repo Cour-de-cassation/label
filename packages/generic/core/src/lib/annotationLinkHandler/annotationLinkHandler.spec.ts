@@ -13,11 +13,13 @@ describe('annotationLinker', () => {
         { category: 'firstName', text: 'romain' },
         { category: 'firstName', text: 'Romain' },
         { category: 'firstName', text: 'Benoit' },
+        { category: 'firstName', text: 'Nicolaz' },
+        { category: 'firstName', text: 'Romaun' },
       ].map(annotationModule.generator.generate);
       const linkedAnnotations = annotationLinkHandler.link(
         annotations[0],
-        annotations[2],
-        annotationLinkHandler.link(annotations[3], annotations[5], annotations),
+        annotations[8],
+        annotationLinkHandler.link(annotations[3], annotations[9], annotations),
       );
 
       const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(linkedAnnotations);

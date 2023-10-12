@@ -7,15 +7,17 @@ function buildAnnotation({
   start,
   text,
   certaintyScore,
+  entityId,
 }: {
   category: string;
   start: number;
   text: string;
   certaintyScore?: number;
+  entityId?: string;
 }) {
   return {
     category,
-    entityId: entityIdHandler.compute(category, text),
+    entityId: entityId ?? entityIdHandler.compute(category, text),
     start,
     text,
     certaintyScore,

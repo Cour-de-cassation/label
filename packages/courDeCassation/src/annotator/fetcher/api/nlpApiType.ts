@@ -26,6 +26,7 @@ type nlpAnnotationType = {
   label: string;
   source: string;
   score: number;
+  entityId: string;
 };
 
 type nlpLossType = number;

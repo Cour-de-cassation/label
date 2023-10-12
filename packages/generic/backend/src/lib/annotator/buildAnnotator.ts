@@ -205,23 +205,18 @@ function buildAnnotator(
         annotations: additionalAnnotations,
         documentId: document._id,
       });
-      logger.log(
-        `Additional annotations treatment created in DB. Creating post-process treatment...`,
-      );
+      logger.log(`Additional annotations treatment created in DB.`);
+    }
+    if (JSON.stringify(settings).includes('autoLinkSensitivity')) {
+      logger.log(`Creating post-process treatment...`);
       await createAutoTreatment({
         annotations: [...annotations, ...additionalAnnotations],
         documentId,
       });
-    } else {
-      logger.log(`Creating post-process treatment...`);
-      await createAutoTreatment({
-        annotations,
-        documentId,
-      });
+      logger.log(
+        `Post-process treatment created. Creating report and updating document status...`,
+      );
     }
-    logger.log(
-      `Post-process treatment created. Creating report and updating document status...`,
-    );
 
     await createReport(report);
     const nextDocumentStatus = documentModule.lib.getNextStatus({

@@ -21,10 +21,8 @@ describe('annotationLinker', () => {
         annotations[8],
         annotationLinkHandler.link(annotations[3], annotations[9], annotations),
       );
-      console.log(linkedAnnotations);
 
       const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(linkedAnnotations);
-      console.log(linkedEntitiesCount);
 
       expect(linkedEntitiesCount).toEqual(2);
     });

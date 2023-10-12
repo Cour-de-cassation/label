@@ -56,6 +56,7 @@ build_label_client:
     - yarn config set https-proxy $HTTPS_PROXY
     - yarn install --
     - yarn compile
+    - yarn buildClient # from "ugly workaround" in github workflows
     # - yarn test
     # - yarn lint
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY

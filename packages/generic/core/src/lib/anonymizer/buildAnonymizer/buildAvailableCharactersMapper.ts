@@ -1,5 +1,5 @@
 import { countBy } from 'lodash';
-import { annotationModule } from '../../../modules/annotation';
+import { annotationType } from '../../../modules/annotation';
 import { buildAvailableCharacters } from './buildAvailableCharacters';
 import { FORBIDDEN_CHARACTERS } from './buildCharacterList';
 import { convertTextIntoCharCode } from './convertTextIntoCharCode';
@@ -9,8 +9,8 @@ export { buildAvailableCharactersMapper };
 
 const DEFAULT_MAX_DISTINCT_REPLACEMENT_CHARACTERS = 26 - FORBIDDEN_CHARACTERS.length;
 
-function buildAvailableCharactersMapper(entityIds: string[], seed: number) {
-  const entityIdsByCategoryCount = countBy(entityIds, annotationModule.lib.entityIdHandler.getCategory);
+function buildAvailableCharactersMapper(annotations: annotationType[], seed: number) {
+  const entityIdsByCategoryCount = countBy(annotations, 'category');
   return Object.keys(entityIdsByCategoryCount).reduce((accumulator, category) => {
     const entityIdsCount = entityIdsByCategoryCount[category];
     const availableCharacters = buildAvailableCharacters(

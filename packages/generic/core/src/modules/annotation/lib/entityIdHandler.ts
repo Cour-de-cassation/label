@@ -4,8 +4,6 @@ export { entityIdHandler };
 
 const entityIdHandler = {
   compute,
-  getCategory,
-  getText,
   syncEntityId,
   syncEntityIdWithCategory,
 };
@@ -24,24 +22,6 @@ function syncEntityId(annotation: annotationType): annotationType {
 function syncEntityIdWithCategory(annotation: annotationType): annotationType {
   return {
     ...annotation,
-    entityId: compute(annotation.category, getText(annotation.entityId)),
+    entityId: compute(annotation.category, annotation.text),
   };
-}
-
-function getCategory(entityId: string): string {
-  const { category } = parseEntityId(entityId);
-
-  return category;
-}
-
-function getText(entityId: string): string {
-  const { text } = parseEntityId(entityId);
-
-  return text;
-}
-
-function parseEntityId(entityId: string) {
-  const parsedEntityId = entityId.split('_');
-
-  return { category: parsedEntityId[0], text: parsedEntityId[1] };
 }

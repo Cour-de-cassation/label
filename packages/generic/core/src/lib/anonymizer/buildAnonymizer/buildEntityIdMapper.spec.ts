@@ -18,10 +18,9 @@ describe('buildEntityIdMapper', () => {
     { category: 'adresse', start: 40, text: '20 cour' },
   ].map(annotationModule.lib.buildAnnotation);
   const seed = 123;
-  const entityIds = annotations.map((annotation) => annotation.entityId);
 
   it('should build an entityId mapper', () => {
-    const entityIdMapper = buildEntityIdMapper(settings, entityIds, seed);
+    const entityIdMapper = buildEntityIdMapper(settings, annotations, seed);
 
     expect(isCapitalLetterCharCode(entityIdMapper[annotations[3].entityId].charCodeAt(1))).toBeTruthy();
     expect(isCapitalLetterCharCode(entityIdMapper[annotations[0].entityId].charCodeAt(1))).toBeTruthy();

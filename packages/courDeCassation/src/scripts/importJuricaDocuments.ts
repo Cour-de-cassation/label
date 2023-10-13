@@ -8,9 +8,12 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { count } = parseArgv();
   const backend = buildBackend(environment, settings);
 
-  backend.runScript(() => sderConnector.importJuricaDocuments(count), {
-    shouldLoadDb: true,
-  });
+  backend.runScript(
+    () => sderConnector.importJuricaDocuments(count, environment),
+    {
+      shouldLoadDb: true,
+    },
+  );
 })();
 
 function parseArgv() {

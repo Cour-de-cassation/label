@@ -19,7 +19,7 @@ services:
     #    image: label-image
     ports:
       - 55430:55430
-      - 55433:55432
+      - 55432:55432
     depends_on:
       - labelDb
 

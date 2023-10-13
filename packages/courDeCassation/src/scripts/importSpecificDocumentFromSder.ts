@@ -14,6 +14,7 @@ import { parametersHandler } from '../lib/parametersHandler';
         documentNumber,
         source,
         lowPriority,
+        environment,
       }),
     {
       shouldLoadDb: true,

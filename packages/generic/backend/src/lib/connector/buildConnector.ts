@@ -1,4 +1,10 @@
-import { dateBuilder, documentType, idModule, timeOperator } from '@label/core';
+import {
+  dateBuilder,
+  documentType,
+  environmentType,
+  idModule,
+  timeOperator,
+} from '@label/core';
 import {
   buildDocumentRepository,
   documentService,
@@ -19,7 +25,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
     importDocumentsByJurisdictionBetween,
     importDocumentsSince,
     importDocumentsSinceDateCreation,
-    importTestDocumentsSince,
     resetDocument,
     resetAllDocumentsSince,
     deleteDocumentsOlderThan,
@@ -29,6 +34,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function autoImportDocumentsFromSder(
     threshold: number,
     documentsCount: number,
+    environment: environmentType,
   ) {
     logger.log(`autoImportDocumentsFromSder: ${threshold}`);
 
@@ -44,12 +50,13 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
     const daysStep = 30;
 
-    await importNewDocuments(documentsCount, daysStep);
+    await importNewDocuments(documentsCount, environment, daysStep);
   }
 
   async function importChainedDocumentsFromSder(
     threshold: number,
     documentsCount: number,
+    environment: environmentType,
   ) {
     logger.log(`importChainedDocumentsFromSder: ${threshold}`);
 
@@ -65,10 +72,13 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
     const daysStep = 30;
 
-    await importChainedDocuments(documentsCount, daysStep);
+    await importChainedDocuments(documentsCount, environment, daysStep);
   }
 
-  async function importJuricaDocuments(documentsCount: number) {
+  async function importJuricaDocuments(
+    documentsCount: number,
+    environment: environmentType,
+  ) {
     logger.log(`importJuricaDocuments: ${documentsCount}`);
 
     logger.log(`Fetching ${connectorConfig.name} documents...`);
@@ -86,6 +96,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           source: 'jurica',
           startDate,
           endDate,
+          environment,
         },
       );
       logger.log(
@@ -116,11 +127,17 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Insertion done!`);
 
     logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
+    await connectorConfig.updateDocumentsLoadedStatus({
+      documents: newDocuments,
+      environment,
+    });
     logger.log(`DONE`);
   }
 
-  async function importJuritjDocuments(documentsCount: number) {
+  async function importJuritjDocuments(
+    documentsCount: number,
+    environment: environmentType,
+  ) {
     logger.log(`importJuritjDocuments: ${documentsCount}`);
 
     logger.log(`Fetching ${connectorConfig.name} documents...`);
@@ -138,6 +155,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           source: 'juritj',
           startDate,
           endDate,
+          environment,
         },
       );
       logger.log(
@@ -168,7 +186,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Insertion done!`);
 
     logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
+    await connectorConfig.updateDocumentsLoadedStatus({
+      documents: newDocuments,
+      environment,
+    });
     logger.log(`DONE`);
   }
 
@@ -176,10 +197,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
     documentNumber,
     source,
     lowPriority,
+    environment,
   }: {
     documentNumber: number;
     source: string;
     lowPriority: boolean;
+    environment: environmentType;
   }) {
     logger.log(
       `importSpecificDocument: ${documentNumber} - ${source}, lowPriority: ${lowPriority}`,
@@ -189,6 +212,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       {
         sourceId: documentNumber,
         sourceName: source,
+        environment,
       },
     );
 
@@ -217,11 +241,18 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Insertion done`);
 
     logger.log(`Send document has been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus([document]);
+    await connectorConfig.updateDocumentsLoadedStatus({
+      documents: [document],
+      environment,
+    });
     logger.log(`DONE`);
   }
 
-  async function importNewDocuments(documentCount: number, daysStep?: number) {
+  async function importNewDocuments(
+    documentCount: number,
+    environment: environmentType,
+    daysStep?: number,
+  ) {
     const DEFAULT_DAYS_STEP = 30;
     const MAX_STEP = 300;
     logger.log(
@@ -242,6 +273,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           startDate,
           endDate,
           source: 'jurinet',
+          environment,
         },
       );
       const newJuricaDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
@@ -249,6 +281,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           startDate,
           endDate,
           source: 'jurica',
+          environment,
         },
       );
       const newJuritjDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
@@ -256,6 +289,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           startDate,
           endDate,
           source: 'juritj',
+          environment,
         },
       );
       const newCourtDecisions = [
@@ -294,13 +328,17 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Insertion done!`);
 
     logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
+    await connectorConfig.updateDocumentsLoadedStatus({
+      documents: newDocuments,
+      environment,
+    });
     logger.log(`DONE`);
     return newDocuments.length;
   }
 
   async function importChainedDocuments(
     documentCount: number,
+    environment: environmentType,
     daysStep?: number,
   ) {
     const DEFAULT_DAYS_STEP = 30;
@@ -325,6 +363,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         {
           startDate,
           endDate,
+          environment,
         },
       );
       logger.log(
@@ -354,7 +393,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       logger.log(`Insertion done!`);
 
       logger.log(`Send documents have been loaded...`);
-      await connectorConfig.updateDocumentsLoadedStatus(newDocuments);
+      await connectorConfig.updateDocumentsLoadedStatus({
+        documents: newDocuments,
+        environment,
+      });
 
       importedDocuments = [...importedDocuments, ...newDocuments];
       newDocuments = [];
@@ -366,7 +408,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     return importedDocuments.length;
   }
 
-  async function importDocumentsSince(days: number) {
+  async function importDocumentsSince(
+    days: number,
+    environment: environmentType,
+  ) {
     logger.log(`importDocumentsSince ${days}`);
 
     logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
@@ -375,6 +420,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
         source: 'jurinet',
+        environment,
       },
     );
     logger.log(
@@ -385,6 +431,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
         source: 'jurica',
+        environment,
       },
     );
     logger.log(
@@ -395,6 +442,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
         source: 'juritj',
+        environment,
       },
     );
     logger.log(
@@ -420,11 +468,17 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Insertion done!`);
 
     logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus(documents);
+    await connectorConfig.updateDocumentsLoadedStatus({
+      documents,
+      environment,
+    });
     logger.log(`DONE`);
   }
 
-  async function importDocumentsSinceDateCreation(days: number) {
+  async function importDocumentsSinceDateCreation(
+    days: number,
+    environment: environmentType,
+  ) {
     logger.log(`importDocumentsSinceDateCreation ${days}`);
 
     logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
@@ -433,6 +487,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
         source: 'jurinet',
+        environment,
       },
     );
     logger.log(
@@ -443,6 +498,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
         source: 'jurica',
+        environment,
       },
     );
     logger.log(
@@ -453,6 +509,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         startDate: new Date(dateBuilder.daysAgo(days)),
         endDate: new Date(),
         source: 'juritj',
+        environment,
       },
     );
     logger.log(
@@ -478,7 +535,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Insertion done!`);
 
     logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus(documents);
+    await connectorConfig.updateDocumentsLoadedStatus({
+      documents,
+      environment,
+    });
 
     logger.log(`DONE`);
   }
@@ -488,6 +548,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     to: Date,
     jurisdictions: string[],
     chambers: string[],
+    environment: environmentType,
   ) {
     logger.log(
       `importDocumentsByJurisdictionBetween from:${from} to:${to} with jurisdiction=${jurisdictions.join(
@@ -503,6 +564,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         source: 'jurinet',
         jurisdictions,
         chambers,
+        environment,
       },
     );
     logger.log(
@@ -515,6 +577,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         source: 'jurica',
         jurisdictions,
         chambers,
+        environment,
       },
     );
     logger.log(
@@ -527,6 +590,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         source: 'juritj',
         jurisdictions,
         chambers,
+        environment,
       },
     );
     logger.log(
@@ -552,58 +616,21 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`Insertion done!`);
 
     logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus(documents);
-    logger.log(`DONE`);
-  }
-
-  async function importTestDocumentsSince(days: number) {
-    logger.log(`importTestDocumentsSince ${days}`);
-
-    const jurisdictionsToImport = [
-      "Cour d'appel de Dijon",
-      "Cour d'appel de Bordeaux",
-    ];
-
-    const chambersToImport = [''];
-
-    logger.log(`Fetching ${connectorConfig.name} documents...`);
-    const newCourtDecisions = await connectorConfig.fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      {
-        source: 'jurica',
-        jurisdictions: jurisdictionsToImport,
-        chambers: chambersToImport,
-        startDate: new Date(dateBuilder.daysAgo(days)),
-        endDate: new Date(),
-      },
-    );
-    logger.log(
-      `${newCourtDecisions.length} ${connectorConfig.name} court decisions fetched!`,
-    );
-    const documents = [] as documentType[];
-    for (const courtDecision of newCourtDecisions) {
-      documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(
-          courtDecision,
-          'manual',
-        ),
-      );
-    }
-
-    logger.log(`Insertion ${documents.length} documents into the database...`);
-    await insertDocuments(documents);
-    logger.log(`Insertion done!`);
-
-    logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus(documents);
+    await connectorConfig.updateDocumentsLoadedStatus({
+      documents,
+      environment,
+    });
     logger.log(`DONE`);
   }
 
   async function deleteDocumentsOlderThan({
     days,
     source,
+    environment,
   }: {
     days: number;
     source: string;
+    environment: environmentType;
   }) {
     logger.log(`deleteDocumentsOlderThan: days ${days}, source ${source}`);
     const documentRepository = buildDocumentRepository();
@@ -618,7 +645,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(
       `Found ${filteredDocuments} to reset. Resetting their status in SDER...`,
     );
-    await connectorConfig.updateDocumentsToBeTreatedStatus(filteredDocuments);
+    await connectorConfig.updateDocumentsToBeTreatedStatus({
+      documents: filteredDocuments,
+      environment,
+    });
     logger.log(
       'Documents status updated! Deleting the documents in the database...',
     );
@@ -634,7 +664,13 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log(`DONE deleteDocumentsOlderThan`);
   }
 
-  async function resetAllDocumentsSince(days: number) {
+  async function resetAllDocumentsSince({
+    days,
+    environment,
+  }: {
+    days: number;
+    environment: environmentType;
+  }) {
     const documentRepository = buildDocumentRepository();
 
     const documents = await documentRepository.findAll();
@@ -653,7 +689,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       `Found ${documentsToReset.length} in the DB. Updating their status to toBeTreated in SDER DB...`,
     );
 
-    await connectorConfig.updateDocumentsToBeTreatedStatus(documentsToReset);
+    await connectorConfig.updateDocumentsToBeTreatedStatus({
+      documents: documentsToReset,
+      environment,
+    });
     logger.log(
       'Documents status updated! Deleting the documents in the Database...',
     );
@@ -698,9 +737,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function resetDocument({
     documentNumber,
     source,
+    environment,
   }: {
     documentNumber: documentType['documentNumber'];
     source: documentType['source'];
+    environment: environmentType;
   }) {
     const documentRepository = buildDocumentRepository();
 
@@ -718,7 +759,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
       `Document found in the DB. Resetting the status to "toBeTreated"`,
     );
 
-    await connectorConfig.updateDocumentsToBeTreatedStatus([document]);
+    await connectorConfig.updateDocumentsToBeTreatedStatus({
+      documents: [document],
+      environment,
+    });
     logger.log(
       'Documents status updated! Deleting the document in the Database...',
     );
@@ -736,6 +780,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       documentNumber,
       source,
       lowPriority: true,
+      environment,
     });
   }
 }

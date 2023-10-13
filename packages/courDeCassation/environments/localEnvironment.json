@@ -2,10 +2,19 @@
   "dbName": "labelDb",
   "pathName": {
     "server": "http://localhost",
-    "db": "mongodb://labelDb"
+    "db": "mongodb://labelDb",
+    "db_api": "http://dbsder-api-dbsder-api-1"
   },
   "port": {
     "server": 55430,
-    "db": 55431
-  }
+    "db": 55431,
+    "db_api": 3000
+  },
+  "version": {
+    "db_api": "v1"
+  },
+  "api_key": {
+    "db_api": "6836f4f9-2b08-4524-93ba-8d73d9beb6f4"
+  },
+  "db_api_enabled": true
 }

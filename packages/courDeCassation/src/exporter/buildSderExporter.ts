@@ -1,9 +1,12 @@
 import { buildExporter } from '@label/backend';
-import { settingsType } from '@label/core';
+import { environmentType, settingsType } from '@label/core';
 import { exporterConfig } from './exporterConfig';
 
 export { buildSderExporter };
 
-function buildSderExporter(settings: settingsType) {
-  return buildExporter(settings, exporterConfig);
+function buildSderExporter(
+  environment: environmentType,
+  settings: settingsType,
+) {
+  return buildExporter(environment, exporterConfig, settings);
 }

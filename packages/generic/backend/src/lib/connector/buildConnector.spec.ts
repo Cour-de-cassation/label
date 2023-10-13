@@ -1,5 +1,5 @@
 import { range } from 'lodash';
-import { dateBuilder, documentType } from '@label/core';
+import { dateBuilder, documentType, environmentType } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildConnector } from './buildConnector';
 import { buildFakeConnectorWithNDecisions } from './buildFakeConnector';
@@ -27,7 +27,7 @@ describe('buildConnector', () => {
       );
       const connector = buildConnector(fakeConnector);
 
-      await connector.importDocumentsSince(10);
+      await connector.importDocumentsSince(10, {} as environmentType);
 
       const insertedDocuments = await documentRepository.findAll();
       expect(insertedDocuments.length).toBe(2);
@@ -56,7 +56,10 @@ describe('buildConnector', () => {
         );
         const connector = buildConnector(fakeConnector);
 
-        await connector.importDocumentsSinceDateCreation(10);
+        await connector.importDocumentsSinceDateCreation(
+          10,
+          {} as environmentType,
+        );
 
         const insertedDocuments = await documentRepository.findAll();
         expect(insertedDocuments.length).toBe(2);
@@ -88,7 +91,7 @@ describe('buildConnector', () => {
       );
       const connector = buildConnector(fakeConnector);
 
-      await connector.importNewDocuments(3, 5);
+      await connector.importNewDocuments(3, {} as environmentType, 5);
 
       const insertedDocuments = await documentRepository.findAll();
       expect(insertedDocuments.length).toBe(3);
@@ -119,7 +122,7 @@ describe('buildConnector', () => {
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
-      await connector.autoImportDocumentsFromSder(4, 5);
+      await connector.autoImportDocumentsFromSder(4, 5, {} as environmentType);
 
       const finalDocuments = await documentRepository.findAll();
       expect(sourceIds.sort()).toEqual(
@@ -153,7 +156,7 @@ describe('buildConnector', () => {
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
-      await connector.autoImportDocumentsFromSder(6, 4);
+      await connector.autoImportDocumentsFromSder(6, 4, {} as environmentType);
 
       const finalDocuments = await documentRepository.findAll();
       expect(finalDocuments.length).toBe(9);
@@ -177,7 +180,11 @@ describe('buildConnector', () => {
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
-      await connector.importChainedDocumentsFromSder(4, 5);
+      await connector.importChainedDocumentsFromSder(
+        4,
+        5,
+        {} as environmentType,
+      );
 
       const finalDocuments = await documentRepository.findAll();
       expect(sourceIds.sort()).toEqual(
@@ -211,7 +218,11 @@ describe('buildConnector', () => {
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
-      await connector.importChainedDocumentsFromSder(6, 4);
+      await connector.importChainedDocumentsFromSder(
+        6,
+        4,
+        {} as environmentType,
+      );
 
       const finalDocuments = await documentRepository.findAll();
       expect(finalDocuments.length).toBe(9);

@@ -1,5 +1,5 @@
 import { exporterConfigType } from '@label/backend';
-import { idModule } from '@label/core';
+import { documentType, environmentType, idModule } from '@label/core';
 import { sderApi } from '../sderApi';
 
 export { exporterConfig };
@@ -11,22 +11,31 @@ const exporterConfig: exporterConfigType = {
     externalId,
     pseudonymizationText,
     labelTreatments,
+    environment,
   }) {
     await sderApi.updateDecisionPseudonymisation({
       externalId,
       pseudonymizationText,
       labelTreatments,
+      environment,
     });
 
-    await sderApi.setCourtDecisionDone(externalId);
+    await sderApi.setCourtDecisionDone({ externalId, environment });
   },
 
-  async sendDocumentBlockedStatus(externalId) {
-    const externalDecision = await sderApi.fetchCourtDecisionById(
-      idModule.lib.buildId(externalId),
-    );
+  async sendDocumentBlockedStatus({
+    externalId,
+    environment,
+  }: {
+    externalId: documentType['externalId'];
+    environment: environmentType;
+  }) {
+    const externalDecision = await sderApi.fetchCourtDecisionById({
+      id: idModule.lib.buildId(externalId),
+      environment,
+    });
     if (externalDecision.labelStatus == 'loaded') {
-      await sderApi.setCourtDecisionBlocked(externalId);
+      await sderApi.setCourtDecisionBlocked({ externalId, environment });
     }
   },
 };

@@ -46,7 +46,5 @@
     "packages/generic/*",
     "packages/courDeCassation/"
   ],
-  "dependencies": {
-    "dotenv": "16.1.4"
-  }
+  "dependencies": {}
 }

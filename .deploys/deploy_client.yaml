@@ -20,6 +20,43 @@ spec:
           image: $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
           ports:
             - containerPort: 55432
+          env:
+            - name: GIT_BRANCH
+              value: "${LABEL_GIT_BRANCH}"
+            - name: API_PORT
+              value: "${LABEL_API_PORT}"
+            - name: APP_HOST
+              value: "${LABEL_APP_HOST}"
+            - name: APP_GROUP
+              value: "${LABEL_APP_GROUP}"
+            - name: APP_ID
+              value: "${LABEL_APP_ID}"
+            - name: APP_KEYWORD
+              value: "${LABEL_APP_KEYWORD}"
+            - name: APP_SCHEME
+              value: "${LABEL_APP_SCHEME}"
+            - name: APP_SELF_SIGNED
+              value: "${LABEL_APP_SELF_SIGNED}"
+            - name: APP_PORT
+              value: "${LABEL_APP_PORT}"
+            - name: DOCKER_USERNAME
+              value: "${LABEL_DOCKER_USERNAME}"
+            - name: DOCKER_TARGET
+              value: "${LABEL_DOCKER_TARGET}"
+            - name: KUBE_ZONE
+              value: "${LABEL_KUBE_ZONE}"
+            - name: KUBE_TYPE
+              value: "${LABEL_KUBE_TYPE}"
+            - name: KUBE_NAMESPACE
+              value: "${LABEL_KUBE_NAMESPACE}"
+            - name: ROOT_PATH
+              value: "${LABEL_ROOT_PATH}"
+            - name: PUBLIC_URL
+              value: "${LABEL_PUBLIC_URL}"
+            - name: START_TIMEOUT
+              value: "${LABEL_START_TIMEOUT}"
+            - name: KUBECONFIG
+              value: "${LABEL_KUBECONFIG}"
           # livenessProbe:
           #   exec:
           #     command:

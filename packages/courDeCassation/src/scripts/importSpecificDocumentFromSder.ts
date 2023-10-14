@@ -5,7 +5,7 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { documentNumber, source, lowPriority } = parseArgv();
+  const { documentNumber, source, lowPriority, withPreviousAnnotations } = parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
@@ -14,6 +14,7 @@ import { parametersHandler } from '../lib/parametersHandler';
         documentNumber,
         source,
         lowPriority,
+        withPreviousAnnotations,
       }),
     {
       shouldLoadDb: true,
@@ -27,6 +28,11 @@ function parseArgv() {
       lowPriority: {
         demandOption: false,
         description: "import without 'request' route and priority 4",
+        type: 'boolean',
+      },
+      withPreviousAnnotations: {
+        demandOption: false,
+        description: "import with previous annotations (if any)",
         type: 'boolean',
       },
       documentNumber: {
@@ -47,6 +53,7 @@ function parseArgv() {
   return {
     documentNumber: argv.documentNumber as number,
     lowPriority: !!argv.lowPriority as boolean,
+    withPreviousAnnotations: !!argv.withPreviousAnnotations as boolean,
     source: argv.source as string,
   };
 }

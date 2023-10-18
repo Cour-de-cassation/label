@@ -11,7 +11,7 @@ function extractRouteForJurica({
   session: documentType['decisionMetadata']['session'];
   solution: documentType['decisionMetadata']['solution'];
   publicationCategory: documentType['publicationCategory'];
-  chamberId: string;
+  chamberName: documentType['decisionMetadata']['chamberName'];
   civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
   civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
   criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];

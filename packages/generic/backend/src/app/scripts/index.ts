@@ -20,6 +20,7 @@ import { resetUntreatedDocumentsForTest } from './resetUntreatedDocumentsForTest
 import { purgeDb } from './purgeDb';
 import { renewCache } from './renewCache';
 import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
+import { updateRoute } from './updateRoute';
 
 export {
   cleanDocuments,
@@ -42,4 +43,5 @@ export {
   revertOneMigration,
   runNewMigrations,
   setIndexesOnAllCollections,
+  updateRoute,
 };

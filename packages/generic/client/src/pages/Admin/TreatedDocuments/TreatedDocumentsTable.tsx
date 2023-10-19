@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { apiRouteOutType, documentType, idModule } from '@label/core';
+import { apiRouteOutType, documentType, idModule, documentModule } from '@label/core';
 import { apiCaller } from '../../../api';
 import { PaginatedTable, tableRowFieldType, ConfirmationPopup, orderDirectionType } from 'pelta-design-system';
 import { wordings } from '../../../wordings';
@@ -121,6 +121,32 @@ function TreatedDocumentsTable(props: {
       iconName: 'restore' as const,
       isDisabled: userRole !== 'admin' || adminView !== 'admin',
     };
-    return [openDocumentOption, displayAnnotationDiff, resetDocument];
+
+    const reassignToWorkingUserOptionItem = {
+      kind: 'text' as const,
+      text: wordings.problemReportsPage.table.optionItems.reassignToWorkingUser,
+      onClick: async () => {
+        try {
+          await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
+            documentId: treatmentWithDetails.document._id,
+            status: documentModule.lib.getNextStatus({
+              status: 'pending',
+              publicationCategory: treatmentWithDetails.document?.publicationCategory ?? [],
+              route: treatmentWithDetails.document?.route ?? 'default',
+            }),
+          });
+        } catch (error) {
+          displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert', autoHide: true });
+          console.warn(error);
+          return;
+        }
+        props.refetch();
+      },
+      isDisabled: userRole !== 'admin' || adminView !== 'admin',
+      iconName: 'turnRight' as const,
+    };
+
+
+    return [openDocumentOption, displayAnnotationDiff, resetDocument, reassignToWorkingUserOptionItem];
   }
 }

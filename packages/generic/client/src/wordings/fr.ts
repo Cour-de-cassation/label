@@ -390,6 +390,7 @@ const fr = {
         openDocument: 'Ouvrir la décision...',
         displayAnnotationDiff: 'Afficher les modifications',
         resetTheDocument: 'Réinitialiser la décision',
+        reassignToWorkingUser: "Renvoyer à l'agent",
       },
     },
   },

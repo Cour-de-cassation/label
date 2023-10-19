@@ -21,7 +21,6 @@ import {
   resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
-  updateRoute,
 } from './scripts';
 
 export { buildBackend };
@@ -109,10 +108,6 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       runNewMigrations: {
         run: runNewMigrations,
-        option: { shouldLoadDb: true, shouldExit: true },
-      },
-      updateRoute: {
-        run: updateRoute,
         option: { shouldLoadDb: true, shouldExit: true },
       },
     },

@@ -18,7 +18,10 @@ async function importNewDocumentsFromSder(
   count: number,
   environment: environmentType,
 ) {
-  await sderConnector.importNewDocuments(count, environment);
+  await sderConnector.importNewDocuments({
+    documentsCount: count,
+    environment,
+  });
 }
 
 function parseArgv() {

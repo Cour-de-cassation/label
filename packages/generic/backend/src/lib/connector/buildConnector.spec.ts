@@ -20,7 +20,7 @@ describe('buildConnector', () => {
           dateDecision.setTime(dateBuilder.daysAgo(index * 7));
           return {
             sourceId,
-            dateDecision: dateDecision.toDateString(),
+            dateDecision: dateDecision.toISOString(),
             sourceName: 'jurinet',
           };
         }),
@@ -49,7 +49,7 @@ describe('buildConnector', () => {
             dateCreation.setTime(dateBuilder.daysAgo(index * 7));
             return {
               sourceId,
-              dateCreation: dateCreation.toDateString(),
+              dateCreation: dateCreation.toISOString(),
               sourceName: 'jurinet',
             };
           }),
@@ -84,14 +84,18 @@ describe('buildConnector', () => {
           dateDecision.setTime(dateBuilder.daysAgo(index * 7));
           return {
             sourceId,
-            dateDecision: dateDecision.toDateString(),
+            dateDecision: dateDecision.toISOString(),
             sourceName: 'jurica',
           };
         }),
       );
       const connector = buildConnector(fakeConnector);
 
-      await connector.importNewDocuments(3, {} as environmentType, 5);
+      await connector.importNewDocuments({
+        documentsCount: 3,
+        environment: {} as environmentType,
+        daysStep: 5,
+      });
 
       const insertedDocuments = await documentRepository.findAll();
       expect(insertedDocuments.length).toBe(3);
@@ -138,7 +142,7 @@ describe('buildConnector', () => {
           dateDecision.setTime(dateBuilder.daysAgo(index * 31));
           return {
             sourceId,
-            dateDecision: dateDecision.toDateString(),
+            dateDecision: dateDecision.toISOString(),
             sourceName: 'jurica',
           };
         }),
@@ -200,7 +204,7 @@ describe('buildConnector', () => {
           dateDecision.setTime(dateBuilder.daysAgo(index * 31));
           return {
             sourceId,
-            dateDecision: dateDecision.toDateString(),
+            dateDecision: dateDecision.toISOString(),
             sourceName: 'jurica',
           };
         }),

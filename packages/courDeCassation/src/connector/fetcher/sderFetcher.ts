@@ -39,7 +39,7 @@ const sderFetcher = {
       environment,
     });
 
-    return courtDecisions.filter((courtDecision) => {
+    return courtDecisions?.filter((courtDecision) => {
       if (!courtDecision.originalText) {
         return false;
       }
@@ -74,7 +74,7 @@ const sderFetcher = {
       },
     );
 
-    return courtDecisions.filter((courtDecision) => {
+    return courtDecisions?.filter((courtDecision) => {
       if (!courtDecision.originalText) {
         return false;
       }
@@ -106,7 +106,7 @@ const sderFetcher = {
       },
     );
 
-    return courtDecisions.filter(
+    return courtDecisions?.filter(
       (courtDecision) => !!courtDecision && !!courtDecision.originalText,
     );
   },
@@ -137,7 +137,7 @@ const sderFetcher = {
       },
     );
 
-    return courtDecisions.filter(
+    return courtDecisions?.filter(
       (courtDecision) => !!courtDecision && !!courtDecision.originalText,
     );
   },

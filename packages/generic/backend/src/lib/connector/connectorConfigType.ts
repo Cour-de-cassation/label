@@ -12,7 +12,7 @@ type connectorConfigType = {
     jurisdictions: string[];
     chambers: string[];
     environment: environmentType;
-  }) => Promise<decisionType[]>;
+  }) => Promise<decisionType[] | undefined>;
   fetchCourtDecisionBySourceIdAndSourceName(param: {
     sourceId: number;
     sourceName: string;
@@ -22,19 +22,19 @@ type connectorConfigType = {
     startDate: Date;
     endDate: Date;
     environment: environmentType;
-  }): Promise<decisionType[]>;
+  }): Promise<decisionType[] | undefined>;
   fetchDecisionsToPseudonymiseBetween(param: {
     startDate: Date;
     endDate: Date;
     source: 'jurinet' | 'jurica' | 'juritj';
     environment: environmentType;
-  }): Promise<decisionType[]>;
+  }): Promise<decisionType[] | undefined>;
   fetchDecisionsToPseudonymiseBetweenDateCreation(param: {
     startDate: Date;
     endDate: Date;
     source: 'jurinet' | 'jurica' | 'juritj';
     environment: environmentType;
-  }): Promise<decisionType[]>;
+  }): Promise<decisionType[] | undefined>;
   updateDocumentsLoadedStatus: (param: {
     documents: documentType[];
     environment: environmentType;

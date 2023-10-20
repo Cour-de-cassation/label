@@ -1,4 +1,4 @@
-import axios, { Method } from 'axios';
+import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { decisionModule, decisionType } from 'sder';
 import { environmentType, idModule } from '@label/core';
 import { sderApiType } from './sderApiType';
@@ -17,7 +17,7 @@ async function fetchApi({
   body: Record<string, unknown>;
   environment: environmentType;
 }) {
-  await axios({
+  return await axios({
     method: method,
     baseURL: `${environment.pathName.db_api}:${environment.port.db_api}/${environment.version.db_api}`,
     url: `/${path}`,
@@ -25,9 +25,22 @@ async function fetchApi({
     headers: {
       'x-api-key': environment.api_key.db_api ?? '',
     },
-  }).catch(({ response }) => {
-    throw new Error(response);
-  });
+  })
+    .then((response: AxiosResponse) => {
+      if (response.status != 200) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      } else {
+        return response.data as Record<string, unknown>;
+      }
+    })
+    .catch((error: AxiosError) => {
+      if (error.response) {
+        throw new Error(
+          `${error.response.status} ${error.response.statusText}`,
+        );
+      }
+      throw new Error(`${error.code ?? 'Unknown'} on /${path}`);
+    });
 }
 
 const sderApi: sderApiType = {
@@ -56,12 +69,30 @@ const sderApi: sderApiType = {
     environment,
   }) {
     if (environment.db_api_enabled) {
-      return (fetchApi({
+      const decisionList = ((await fetchApi({
         method: 'get',
-        path: `decisions?status=toBeTreated&source=${source}&startDate=${startDate}&endDate=${endDate}`,
+        path: `decisions?status=toBeTreated&source=${source}&startDate=${
+          startDate.toISOString().split('T')[0]
+        }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
         environment,
-      }) as unknown) as Promise<decisionType[]>;
+      })) as unknown) as {
+        _id: string;
+        status: string;
+        source: string;
+        dateCreation: string;
+      }[];
+      const decisions: decisionType[] = [];
+      for (const decisionRef of decisionList) {
+        const decision = (await fetchApi({
+          method: 'get',
+          path: `decisions/${decisionRef['_id']}`,
+          body: {},
+          environment,
+        })) as decisionType;
+        decisions.push(decision);
+      }
+      return decisions;
     } else {
       return await decisionModule.service.fetchDecisionsToPseudonymiseBetween({
         startDate,
@@ -79,12 +110,30 @@ const sderApi: sderApiType = {
     environment,
   }) {
     if (environment.db_api_enabled) {
-      return (fetchApi({
+      const decisionList = ((await fetchApi({
         method: 'get',
-        path: `decisions?status=toBeTreated&source=${source}&startDate=${startDate}&endDate=${endDate}`,
+        path: `decisions?status=toBeTreated&source=${source}&startDate=${
+          startDate.toISOString().split('T')[0]
+        }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
         environment,
-      }) as unknown) as Promise<decisionType[]>;
+      })) as unknown) as {
+        _id: string;
+        status: string;
+        source: string;
+        dateCreation: string;
+      }[];
+      const decisions: decisionType[] = [];
+      for (const decisionRef of decisionList) {
+        const decision = (await fetchApi({
+          method: 'get',
+          path: `decisions/${decisionRef['_id']}`,
+          body: {},
+          environment,
+        })) as decisionType;
+        decisions.push(decision);
+      }
+      return decisions;
     } else {
       return decisionModule.service.fetchDecisionsToPseudonymiseBetweenDateCreation(
         {
@@ -113,12 +162,12 @@ const sderApi: sderApiType = {
 
   async fetchCourtDecisionById({ id, environment }) {
     if (environment.db_api_enabled) {
-      return (fetchApi({
+      return ((await fetchApi({
         method: 'get',
         path: `decisions/${id}/`,
         body: {},
         environment,
-      }) as unknown) as Promise<decisionType>;
+      })) as unknown) as Promise<decisionType>;
     } else {
       return decisionModule.service.fetchCourtDecisionById(id);
     }
@@ -142,8 +191,8 @@ const sderApi: sderApiType = {
 
   async setCourtDecisionsLoaded({ documents, environment }) {
     if (environment.db_api_enabled) {
-      documents.forEach((document) => {
-        fetchApi({
+      documents.forEach(async (document) => {
+        await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/`,
           body: { statut: 'loaded' },
@@ -162,8 +211,8 @@ const sderApi: sderApiType = {
 
   async setCourtDecisionsToBeTreated({ documents, environment }) {
     if (environment.db_api_enabled) {
-      documents.forEach((document) => {
-        fetchApi({
+      documents.forEach(async (document) => {
+        await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/`,
           body: { statut: 'toBeTreated' },
@@ -182,7 +231,7 @@ const sderApi: sderApiType = {
 
   async setCourtDecisionDone({ externalId, environment }) {
     if (environment.db_api_enabled) {
-      fetchApi({
+      await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'done' },
@@ -198,7 +247,7 @@ const sderApi: sderApiType = {
 
   async setCourtDecisionBlocked({ externalId, environment }) {
     if (environment.db_api_enabled) {
-      fetchApi({
+      await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'blocked' },
@@ -219,13 +268,13 @@ const sderApi: sderApiType = {
     environment,
   }) {
     if (environment.db_api_enabled) {
-      fetchApi({
+      await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/rapports-occultations`,
         body: { rapportsOccultations: labelTreatments },
         environment,
       });
-      fetchApi({
+      await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/decision-pseudonymisee`,
         body: { decisionPseudonymisee: pseudonymizationText },

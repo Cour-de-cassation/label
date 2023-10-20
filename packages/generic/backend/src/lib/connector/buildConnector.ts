@@ -11,6 +11,7 @@ import {
 } from '../../modules/document';
 import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
+import { decisionType } from 'sder';
 
 export { buildConnector };
 
@@ -20,6 +21,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     importChainedDocumentsFromSder,
     importSpecificDocument,
     importNewDocuments,
+    importJurinetDocuments,
     importJuricaDocuments,
     importJuritjDocuments,
     importDocumentsByJurisdictionBetween,
@@ -50,7 +52,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
     const daysStep = 30;
 
-    await importNewDocuments(documentsCount, environment, daysStep);
+    await importNewDocuments({ documentsCount, environment, daysStep });
   }
 
   async function importChainedDocumentsFromSder(
@@ -75,61 +77,28 @@ function buildConnector(connectorConfig: connectorConfigType) {
     await importChainedDocuments(documentsCount, environment, daysStep);
   }
 
+  async function importJurinetDocuments(
+    documentsCount: number,
+    environment: environmentType,
+  ) {
+    logger.log(`importJurinetDocuments: ${documentsCount}`);
+    await importNewDocuments({
+      documentsCount,
+      environment,
+      sources: ['jurinet'],
+    });
+    logger.log(`DONE`);
+  }
+
   async function importJuricaDocuments(
     documentsCount: number,
     environment: environmentType,
   ) {
     logger.log(`importJuricaDocuments: ${documentsCount}`);
-
-    logger.log(`Fetching ${connectorConfig.name} documents...`);
-    let daysAgo = 0;
-    let step = 0;
-    const daysStep = 10;
-    const MAX_STEP = 120;
-
-    const newDocuments: documentType[] = [];
-    while (newDocuments.length < documentsCount && step < MAX_STEP) {
-      const startDate = new Date(dateBuilder.daysAgo(daysAgo + daysStep));
-      const endDate = new Date(dateBuilder.daysAgo(daysAgo));
-      const newCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-        {
-          source: 'jurica',
-          startDate,
-          endDate,
-          environment,
-        },
-      );
-      logger.log(
-        `${newCourtDecisions.length} ${
-          connectorConfig.name
-        } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
-          startDate.getTime(),
-        )} and ${timeOperator.convertTimestampToReadableDate(
-          endDate.getTime(),
-        )}!`,
-      );
-      for (const courtDecision of newCourtDecisions) {
-        newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(
-            courtDecision,
-            'recent',
-          ),
-        );
-      }
-      daysAgo += daysStep;
-      step++;
-    }
-
-    logger.log(
-      `Insertion ${newDocuments.length} documents into the database...`,
-    );
-    await insertDocuments(newDocuments);
-    logger.log(`Insertion done!`);
-
-    logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus({
-      documents: newDocuments,
+    await importNewDocuments({
+      documentsCount,
       environment,
+      sources: ['jurica'],
     });
     logger.log(`DONE`);
   }
@@ -139,56 +108,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     environment: environmentType,
   ) {
     logger.log(`importJuritjDocuments: ${documentsCount}`);
-
-    logger.log(`Fetching ${connectorConfig.name} documents...`);
-    let daysAgo = 0;
-    let step = 0;
-    const daysStep = 10;
-    const MAX_STEP = 120;
-
-    const newDocuments: documentType[] = [];
-    while (newDocuments.length < documentsCount && step < MAX_STEP) {
-      const startDate = new Date(dateBuilder.daysAgo(daysAgo + daysStep));
-      const endDate = new Date(dateBuilder.daysAgo(daysAgo));
-      const newCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-        {
-          source: 'juritj',
-          startDate,
-          endDate,
-          environment,
-        },
-      );
-      logger.log(
-        `${newCourtDecisions.length} ${
-          connectorConfig.name
-        } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
-          startDate.getTime(),
-        )} and ${timeOperator.convertTimestampToReadableDate(
-          endDate.getTime(),
-        )}!`,
-      );
-      for (const courtDecision of newCourtDecisions) {
-        newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(
-            courtDecision,
-            'recent',
-          ),
-        );
-      }
-      daysAgo += daysStep;
-      step++;
-    }
-
-    logger.log(
-      `Insertion ${newDocuments.length} documents into the database...`,
-    );
-    await insertDocuments(newDocuments);
-    logger.log(`Insertion done!`);
-
-    logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus({
-      documents: newDocuments,
+    await importNewDocuments({
+      documentsCount,
       environment,
+      sources: ['juritj'],
     });
     logger.log(`DONE`);
   }
@@ -208,118 +131,146 @@ function buildConnector(connectorConfig: connectorConfigType) {
       `importSpecificDocument: ${documentNumber} - ${source}, lowPriority: ${lowPriority}`,
     );
 
-    const courtDecision = await connectorConfig.fetchCourtDecisionBySourceIdAndSourceName(
-      {
-        sourceId: documentNumber,
-        sourceName: source,
-        environment,
-      },
-    );
-
-    if (!courtDecision) {
-      logger.log(
-        `No court decision found for specified documentNumber and source`,
+    try {
+      const courtDecision = await connectorConfig.fetchCourtDecisionBySourceIdAndSourceName(
+        {
+          sourceId: documentNumber,
+          sourceName: source,
+          environment,
+        },
       );
-      return;
-    }
 
-    logger.log(
-      `Court decision found. labelStatus: ${courtDecision.labelStatus}, ${
-        !!courtDecision.pseudoText ? 'already' : 'never'
-      } pseudonymised`,
-    );
-    const document = await connectorConfig.mapCourtDecisionToDocument(
-      courtDecision,
-      'manual',
-    );
-    logger.log(`Court decision converted. Inserting document into database...`);
-    if (lowPriority) {
-      await insertDocument({ ...document });
-    } else {
-      await insertDocument({ ...document, route: 'request', priority: 4 });
-    }
-    logger.log(`Insertion done`);
+      if (!courtDecision) {
+        logger.log(
+          `No court decision found for specified documentNumber and source`,
+        );
+        return;
+      }
 
-    logger.log(`Send document has been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus({
-      documents: [document],
-      environment,
-    });
-    logger.log(`DONE`);
+      logger.log(
+        `Court decision found. labelStatus: ${courtDecision.labelStatus}, ${
+          !!courtDecision.pseudoText ? 'already' : 'never'
+        } pseudonymised`,
+      );
+      const document = await connectorConfig.mapCourtDecisionToDocument(
+        courtDecision,
+        'manual',
+      );
+      logger.log(
+        `Court decision converted. Inserting document into database...`,
+      );
+      if (lowPriority) {
+        await insertDocument({ ...document });
+      } else {
+        await insertDocument({ ...document, route: 'request', priority: 4 });
+      }
+      logger.log(`Insertion done`);
+
+      logger.log(`Send document has been loaded...`);
+      await connectorConfig.updateDocumentsLoadedStatus({
+        documents: [document],
+        environment,
+      });
+      logger.log(`DONE`);
+    } catch (error) {
+      logger.log(`${error}`);
+    }
   }
 
-  async function importNewDocuments(
-    documentCount: number,
-    environment: environmentType,
-    daysStep?: number,
-  ) {
+  async function importNewDocuments({
+    documentsCount,
+    environment,
+    sources,
+    daysStep,
+  }: {
+    documentsCount: number;
+    environment: environmentType;
+    sources?: decisionType['sourceName'][];
+    daysStep?: number;
+  }) {
     const DEFAULT_DAYS_STEP = 30;
     const MAX_STEP = 300;
     logger.log(
-      `importNewDocuments: ${documentCount} - ${daysStep || DEFAULT_DAYS_STEP}`,
+      `importNewDocuments: ${documentsCount} - ${
+        sources?.join('/') ?? 'all sources'
+      } - ${daysStep || DEFAULT_DAYS_STEP}`,
     );
 
     logger.log(`Fetching ${connectorConfig.name} documents...`);
     let daysAgo = 0;
     let step = 0;
     let newDocuments: documentType[] = [];
-    while (newDocuments.length < documentCount && step < MAX_STEP) {
+    while (newDocuments.length < documentsCount && step < MAX_STEP) {
       const startDate = new Date(
         dateBuilder.daysAgo(daysAgo + (daysStep || DEFAULT_DAYS_STEP)),
       );
       const endDate = new Date(dateBuilder.daysAgo(daysAgo));
-      const newJurinetDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-        {
-          startDate,
-          endDate,
-          source: 'jurinet',
-          environment,
-        },
-      );
-      const newJuricaDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-        {
-          startDate,
-          endDate,
-          source: 'jurica',
-          environment,
-        },
-      );
-      const newJuritjDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-        {
-          startDate,
-          endDate,
-          source: 'juritj',
-          environment,
-        },
-      );
-      const newCourtDecisions = [
-        ...newJurinetDecisions,
-        ...newJuricaDecisions,
-        ...newJuritjDecisions,
-      ];
+      try {
+        const newCourtDecisions: decisionType[] = [];
+        if (!sources || sources.includes('jurinet')) {
+          const newJurinetDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+            {
+              startDate,
+              endDate,
+              source: 'jurinet',
+              environment,
+            },
+          );
+          newJurinetDecisions && newCourtDecisions.push(...newJurinetDecisions);
+        }
+        if (!sources || sources.includes('jurica')) {
+          const newJuricaDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+            {
+              startDate,
+              endDate,
+              source: 'jurica',
+              environment,
+            },
+          );
+          newJuricaDecisions && newCourtDecisions.push(...newJuricaDecisions);
+        }
+        if (!sources || sources.includes('juritj')) {
+          const newJuritjDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+            {
+              startDate,
+              endDate,
+              source: 'juritj',
+              environment,
+            },
+          );
+          newJuritjDecisions && newCourtDecisions.push(...newJuritjDecisions);
+        }
 
-      logger.log(
-        `${newCourtDecisions.length} ${
-          connectorConfig.name
-        } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
-          startDate.getTime(),
-        )} and ${timeOperator.convertTimestampToReadableDate(
-          endDate.getTime(),
-        )}!`,
-      );
-      for (const courtDecision of newCourtDecisions) {
-        newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(
-            courtDecision,
-            'filler',
-          ),
+        logger.log(
+          `${newCourtDecisions.length} ${
+            connectorConfig.name
+          } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
+            startDate.getTime(),
+          )} and ${timeOperator.convertTimestampToReadableDate(
+            endDate.getTime(),
+          )}!`,
         );
+        for (const courtDecision of newCourtDecisions) {
+          newDocuments.push(
+            await connectorConfig.mapCourtDecisionToDocument(
+              courtDecision,
+              'filler',
+            ),
+          );
+        }
+      } catch (error) {
+        if (newDocuments.length) {
+          logger.log(`Error ${error}, stopping import loop at this step`);
+          step = MAX_STEP;
+        } else {
+          throw new Error(`${error}`);
+        }
       }
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
       step++;
     }
 
-    newDocuments = newDocuments.slice(0, documentCount);
+    newDocuments = newDocuments.slice(0, documentsCount);
 
     logger.log(
       `Insertion ${newDocuments.length} documents into the database...`,
@@ -359,46 +310,51 @@ function buildConnector(connectorConfig: connectorConfigType) {
         dateBuilder.daysAgo(daysAgo + (daysStep || DEFAULT_DAYS_STEP)),
       );
       const endDate = new Date(dateBuilder.daysAgo(daysAgo));
-      const newCourtDecisions = await connectorConfig.fetchChainedJuricaDecisionsToPseudonymiseBetween(
-        {
-          startDate,
-          endDate,
-          environment,
-        },
-      );
-      logger.log(
-        `${newCourtDecisions.length} ${
-          connectorConfig.name
-        } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
-          startDate.getTime(),
-        )} and ${timeOperator.convertTimestampToReadableDate(
-          endDate.getTime(),
-        )}!`,
-      );
-      for (const courtDecision of newCourtDecisions) {
-        newDocuments.push(
-          await connectorConfig.mapCourtDecisionToDocument(
-            courtDecision,
-            'chained',
-          ),
+      try {
+        const newCourtDecisions =
+          (await connectorConfig.fetchChainedJuricaDecisionsToPseudonymiseBetween(
+            {
+              startDate,
+              endDate,
+              environment,
+            },
+          )) ?? [];
+        logger.log(
+          `${newCourtDecisions.length} ${
+            connectorConfig.name
+          } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
+            startDate.getTime(),
+          )} and ${timeOperator.convertTimestampToReadableDate(
+            endDate.getTime(),
+          )}!`,
         );
+        for (const courtDecision of newCourtDecisions) {
+          newDocuments.push(
+            await connectorConfig.mapCourtDecisionToDocument(
+              courtDecision,
+              'chained',
+            ),
+          );
+        }
+
+        newDocuments = newDocuments.slice(0, documentCount);
+
+        logger.log(
+          `Insertion ${newDocuments.length} documents into the database...`,
+        );
+        await insertDocuments(newDocuments);
+        logger.log(`Insertion done!`);
+
+        logger.log(`Send documents have been loaded...`);
+        await connectorConfig.updateDocumentsLoadedStatus({
+          documents: newDocuments,
+          environment,
+        });
+
+        importedDocuments = [...importedDocuments, ...newDocuments];
+      } catch (error) {
+        logger.log(error);
       }
-
-      newDocuments = newDocuments.slice(0, documentCount);
-
-      logger.log(
-        `Insertion ${newDocuments.length} documents into the database...`,
-      );
-      await insertDocuments(newDocuments);
-      logger.log(`Insertion done!`);
-
-      logger.log(`Send documents have been loaded...`);
-      await connectorConfig.updateDocumentsLoadedStatus({
-        documents: newDocuments,
-        environment,
-      });
-
-      importedDocuments = [...importedDocuments, ...newDocuments];
       newDocuments = [];
       daysAgo += daysStep || DEFAULT_DAYS_STEP;
       step++;
@@ -414,45 +370,55 @@ function buildConnector(connectorConfig: connectorConfigType) {
   ) {
     logger.log(`importDocumentsSince ${days}`);
 
-    logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
-    const newJurinetCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-      {
-        startDate: new Date(dateBuilder.daysAgo(days)),
-        endDate: new Date(),
-        source: 'jurinet',
-        environment,
-      },
-    );
-    logger.log(
-      `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
-    );
-    const newJuricaCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-      {
-        startDate: new Date(dateBuilder.daysAgo(days)),
-        endDate: new Date(),
-        source: 'jurica',
-        environment,
-      },
-    );
-    logger.log(
-      `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
-    );
-    const newJuritjCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-      {
-        startDate: new Date(dateBuilder.daysAgo(days)),
-        endDate: new Date(),
-        source: 'juritj',
-        environment,
-      },
-    );
-    logger.log(
-      `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
-    );
-    const newCourtDecisions = [
-      ...newJurinetCourtDecisions,
-      ...newJuricaCourtDecisions,
-      ...newJuritjCourtDecisions,
-    ];
+    const newCourtDecisions = [];
+    try {
+      logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
+      const newJurinetCourtDecisions =
+        (await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+          startDate: new Date(dateBuilder.daysAgo(days)),
+          endDate: new Date(),
+          source: 'jurinet',
+          environment,
+        })) ?? [];
+      logger.log(
+        `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
+      );
+      newCourtDecisions.push(...newJurinetCourtDecisions);
+    } catch (error) {
+      logger.log(error);
+    }
+    try {
+      logger.log(`Fetching ${connectorConfig.name} jurica documents...`);
+      const newJuricaCourtDecisions =
+        (await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+          startDate: new Date(dateBuilder.daysAgo(days)),
+          endDate: new Date(),
+          source: 'jurica',
+          environment,
+        })) ?? [];
+      logger.log(
+        `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
+      );
+      newCourtDecisions.push(...newJuricaCourtDecisions);
+    } catch (error) {
+      logger.log(error);
+    }
+    try {
+      logger.log(`Fetching ${connectorConfig.name} juritj documents...`);
+      const newJuritjCourtDecisions =
+        (await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+          startDate: new Date(dateBuilder.daysAgo(days)),
+          endDate: new Date(),
+          source: 'juritj',
+          environment,
+        })) ?? [];
+      logger.log(
+        `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
+      );
+      newCourtDecisions.push(...newJuritjCourtDecisions);
+    } catch (error) {
+      logger.log(error);
+    }
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
@@ -480,46 +446,55 @@ function buildConnector(connectorConfig: connectorConfigType) {
     environment: environmentType,
   ) {
     logger.log(`importDocumentsSinceDateCreation ${days}`);
-
-    logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
-    const newJurinetCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-      {
-        startDate: new Date(dateBuilder.daysAgo(days)),
-        endDate: new Date(),
-        source: 'jurinet',
-        environment,
-      },
-    );
-    logger.log(
-      `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
-    );
-    const newJuricaCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-      {
-        startDate: new Date(dateBuilder.daysAgo(days)),
-        endDate: new Date(),
-        source: 'jurica',
-        environment,
-      },
-    );
-    logger.log(
-      `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
-    );
-    const newJuritjCourtDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-      {
-        startDate: new Date(dateBuilder.daysAgo(days)),
-        endDate: new Date(),
-        source: 'juritj',
-        environment,
-      },
-    );
-    logger.log(
-      `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
-    );
-    const newCourtDecisions = [
-      ...newJurinetCourtDecisions,
-      ...newJuricaCourtDecisions,
-      ...newJuritjCourtDecisions,
-    ];
+    const newCourtDecisions = [];
+    try {
+      logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
+      const newJurinetCourtDecisions =
+        (await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation({
+          startDate: new Date(dateBuilder.daysAgo(days)),
+          endDate: new Date(),
+          source: 'jurinet',
+          environment,
+        })) ?? [];
+      logger.log(
+        `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
+      );
+      newCourtDecisions.push(...newJurinetCourtDecisions);
+    } catch (error) {
+      logger.log(error);
+    }
+    try {
+      logger.log(`Fetching ${connectorConfig.name} jurica documents...`);
+      const newJuricaCourtDecisions =
+        (await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation({
+          startDate: new Date(dateBuilder.daysAgo(days)),
+          endDate: new Date(),
+          source: 'jurica',
+          environment,
+        })) ?? [];
+      logger.log(
+        `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
+      );
+      newCourtDecisions.push(...newJuricaCourtDecisions);
+    } catch (error) {
+      logger.log(error);
+    }
+    try {
+      logger.log(`Fetching ${connectorConfig.name} jurica documents...`);
+      const newJuritjCourtDecisions =
+        (await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation({
+          startDate: new Date(dateBuilder.daysAgo(days)),
+          endDate: new Date(),
+          source: 'juritj',
+          environment,
+        })) ?? [];
+      logger.log(
+        `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
+      );
+      newCourtDecisions.push(...newJuritjCourtDecisions);
+    } catch (error) {
+      logger.log(error);
+    }
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
@@ -555,52 +530,67 @@ function buildConnector(connectorConfig: connectorConfigType) {
         ',',
       )} & chambers=${chambers.join(',')}`,
     );
-
-    logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
-    const newJurinetCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      {
-        startDate: from,
-        endDate: to,
-        source: 'jurinet',
-        jurisdictions,
-        chambers,
-        environment,
-      },
-    );
-    logger.log(
-      `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
-    );
-    const newJuricaCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      {
-        startDate: from,
-        endDate: to,
-        source: 'jurica',
-        jurisdictions,
-        chambers,
-        environment,
-      },
-    );
-    logger.log(
-      `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
-    );
-    const newJuritjCourtDecisions = await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      {
-        startDate: from,
-        endDate: to,
-        source: 'juritj',
-        jurisdictions,
-        chambers,
-        environment,
-      },
-    );
-    logger.log(
-      `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
-    );
-    const newCourtDecisions = [
-      ...newJurinetCourtDecisions,
-      ...newJuricaCourtDecisions,
-      ...newJuritjCourtDecisions,
-    ];
+    const newCourtDecisions = [];
+    try {
+      logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
+      const newJurinetCourtDecisions =
+        (await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
+          {
+            startDate: from,
+            endDate: to,
+            source: 'jurinet',
+            jurisdictions,
+            chambers,
+            environment,
+          },
+        )) ?? [];
+      logger.log(
+        `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
+      );
+      newCourtDecisions.push(...newJurinetCourtDecisions);
+    } catch (error) {
+      logger.log(error);
+    }
+    try {
+      logger.log(`Fetching ${connectorConfig.name} jurica documents...`);
+      const newJuricaCourtDecisions =
+        (await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
+          {
+            startDate: from,
+            endDate: to,
+            source: 'jurica',
+            jurisdictions,
+            chambers,
+            environment,
+          },
+        )) ?? [];
+      logger.log(
+        `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
+      );
+      newCourtDecisions.push(...newJuricaCourtDecisions);
+      logger.log(`Fetching ${connectorConfig.name} juritj documents...`);
+    } catch (error) {
+      logger.log(error);
+    }
+    try {
+      const newJuritjCourtDecisions =
+        (await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
+          {
+            startDate: from,
+            endDate: to,
+            source: 'juritj',
+            jurisdictions,
+            chambers,
+            environment,
+          },
+        )) ?? [];
+      logger.log(
+        `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
+      );
+      newCourtDecisions.push(...newJuritjCourtDecisions);
+    } catch (error) {
+      logger.log(error);
+    }
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(
@@ -636,7 +626,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const documentRepository = buildDocumentRepository();
     const documents = await documentRepository.findAll();
     logger.log(`Found ${documents.length} documents. Filtering...`);
-    const filteredDocuments = documents.filter(
+    const filteredDocuments = documents?.filter(
       (document) =>
         document.source === source &&
         document.creationDate &&
@@ -658,7 +648,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         await documentService.deleteDocument(filteredDocuments[i]._id);
       } catch (error) {
         logger.error(`An error happened while deleting the document`);
-        logger.error(error);
+        logger.error(`${error}`);
       }
     }
     logger.log(`DONE deleteDocumentsOlderThan`);
@@ -678,7 +668,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       `Found ${documents.length} in the DB. Filtering the documents to reset...`,
     );
 
-    const documentsToReset = documents.filter(
+    const documentsToReset = documents?.filter(
       (document) =>
         document.creationDate &&
         document.creationDate >= dateBuilder.daysAgo(days) &&

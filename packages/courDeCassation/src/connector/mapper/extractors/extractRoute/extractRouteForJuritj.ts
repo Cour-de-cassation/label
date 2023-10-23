@@ -2,7 +2,7 @@ import { documentType } from '@label/core';
 
 export { extractRouteForJuritj };
 
-function extractRouteForJuritj({ }: {
+function extractRouteForJuritj({}: {
   session: documentType['decisionMetadata']['session'];
   solution: documentType['decisionMetadata']['solution'];
   publicationCategory: documentType['publicationCategory'];

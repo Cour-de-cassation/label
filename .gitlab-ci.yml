@@ -186,3 +186,145 @@ deploy_label_client:
     - shell
   dependencies:
     - build_label_client
+
+
+deploy_job_annotation:
+  stage: deploy
+  variables:
+    JOB_NAME: nlp-annotation
+    JOB_SCHEDULE: "*/5 2-20 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 288
+    FAILED_JOBS_HISTORY_LIMIT: 134
+    BACKOFF_LIMIT: 0
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 3600
+    COMMAND: "dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_import_j_7:
+  stage: deploy
+  variables:
+    JOB_NAME: import-j-7
+    JOB_SCHEDULE: "*/30 6-12 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 84
+    FAILED_JOBS_HISTORY_LIMIT: 84
+    BACKOFF_LIMIT: 0
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 300
+    COMMAND: "dist/scripts/importAllDocumentsFromSderSince.js --days 7"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_filler_import:
+  stage: deploy
+  variables:
+    JOB_NAME: filler-import
+    JOB_SCHEDULE: "15 6-17 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 84
+    FAILED_JOBS_HISTORY_LIMIT: 84
+    BACKOFF_LIMIT: 0
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 1800
+    COMMAND: "dist/scripts/autoImportDocumentsFromSder.js --count 500 --threshold 1000"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_import_chained:
+  stage: deploy
+  variables:
+    JOB_NAME: import-chained
+    JOB_SCHEDULE: "0 17 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+    FAILED_JOBS_HISTORY_LIMIT: 7
+    BACKOFF_LIMIT: 2
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 300
+    COMMAND: "dist/scripts/importChainedDocumentsFromSder.js --count 500 --threshold 1500"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_export_j_4:
+  stage: deploy
+  variables:
+    JOB_NAME: export-j-4
+    JOB_SCHEDULE: "30 17 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+    FAILED_JOBS_HISTORY_LIMIT: 7
+    BACKOFF_LIMIT: 2
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 300
+    COMMAND: "dist/scripts/exportTreatedDocumentsSince.js"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_export_publishable:
+  stage: deploy
+  variables:
+    JOB_NAME: export-publishable
+    JOB_SCHEDULE: "50 13 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+    FAILED_JOBS_HISTORY_LIMIT: 7
+    BACKOFF_LIMIT: 2
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 300
+    COMMAND: "dist/scripts/exportTreatedPublishableDocuments.js"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_free_pending:
+  stage: deploy
+  variables:
+    JOB_NAME: free-pending
+    JOB_SCHEDULE: "*/16 4-17 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 50
+    FAILED_JOBS_HISTORY_LIMIT: 50
+    BACKOFF_LIMIT: 0
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 300
+    COMMAND: "dist/scripts/freePendingDocuments.js"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_purge_m_6:
+  stage: deploy
+  variables:
+    JOB_NAME: purge-m-6
+    JOB_SCHEDULE: "0 19 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+    FAILED_JOBS_HISTORY_LIMIT: 7
+    BACKOFF_LIMIT: 2
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 300
+    COMMAND: "dist/scripts/purgeDb.js --beforeMonths 6"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_renew_cache:
+  stage: deploy
+  variables:
+    JOB_NAME: renew-cache
+    JOB_SCHEDULE: "*/5 4-17 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 168
+    FAILED_JOBS_HISTORY_LIMIT: 168
+    BACKOFF_LIMIT: 0
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 300
+    COMMAND: "ist/scripts/renewCache.js --beforeMinutes 5"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+
+deploy_job_cleaning:
+  stage: deploy
+  variables:
+    JOB_NAME: cleaning
+    JOB_SCHEDULE: "30 19 * * *"
+    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+    FAILED_JOBS_HISTORY_LIMIT: 7
+    BACKOFF_LIMIT: 0
+    PARALLELISM: 1
+    ACTIVE_DEADLINE_SECONDS: 300
+    COMMAND: "dist/scripts/cleanDocuments.js"
+  script:
+    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+

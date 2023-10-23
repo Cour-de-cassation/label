@@ -1,0 +1,42 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: label-backend-job-${JOB_NAME}
+  namespace: label
+spec:
+  schedule: ${JOB_SCHEDULE}
+  successfulJobsHistoryLimit: ${SUCCESSFUL_JOBS_HISTORY_LIMIT}
+  failedJobsHistoryLimit: ${FAILED_JOBS_HISTORY_LIMIT}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: ${BACKOFF_LIMIT}
+      parallelism: ${PARALLELISM}
+      template:
+        spec:
+          activeDeadlineSeconds: ${ACTIVE_DEADLINE_SECONDS}
+          containers:
+            - name: label-backend-${JOB_NAME}
+              image: $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
+              volumeMounts:
+                - name: label-backend-config
+                  mountPath: /home/node/packages/courDeCassation/environments
+                  readOnly: true
+              command:
+                - /bin/sh
+              args:
+                - -c
+                - node ${COMMAND} -e environments/prodEnvironment.json -s settings/settings.json
+              env:
+                - name: RUN_MODE
+                  value: PROD
+                - name: SDER_DB_URL
+                  value: ${MONGODB_URI}:${MONGODB_PORT}
+                # - name: NODE_TLS_REJECT_UNAUTHORIZED
+                #   value: "0"
+          restartPolicy: Never
+          volumes:
+            - name: label-backend-config
+              secret:
+                secretName: label-backend-config

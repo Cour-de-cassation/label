@@ -115,6 +115,13 @@ In Wallix, with a Cygwin terminal:
 prod label script exportSpecificDocument --documentNumber=10000 --source=jurinet
 ```
 
+### We need to update the route of some documents after afer an update of route rules 
+
+In Wallix, with a Cygwin terminal:
+```
+prod label script updateRoute --status=free
+```
+
 
 ## Logs and pods
 

@@ -89,13 +89,15 @@ const sderLocalApi: sderApiType = {
       }[];
       const decisions: decisionType[] = [];
       for (const decisionRef of decisionList) {
-        const decision = (await fetchApi({
-          method: 'get',
-          path: `decisions/${decisionRef['_id']}`,
-          body: {},
-          environment,
-        })) as decisionType;
-        decisions.push(decision);
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = (await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+            environment,
+          })) as decisionType;
+          decisions.push(decision);
+        }
       }
       return decisions;
     } else {
@@ -142,13 +144,15 @@ const sderLocalApi: sderApiType = {
       }[];
       const decisions: decisionType[] = [];
       for (const decisionRef of decisionList) {
-        const decision = (await fetchApi({
-          method: 'get',
-          path: `decisions/${decisionRef['_id']}`,
-          body: {},
-          environment,
-        })) as decisionType;
-        decisions.push(decision);
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = (await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+            environment,
+          })) as decisionType;
+          decisions.push(decision);
+        }
       }
       return decisions;
     } else {
@@ -285,7 +289,7 @@ const sderLocalApi: sderApiType = {
 
   async setCourtDecisionDone({ externalId, environment }) {
     if (environment.db_api_enabled) {
-      return await fetchApi({
+      await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'done' },
@@ -296,7 +300,7 @@ const sderLocalApi: sderApiType = {
 
   async setCourtDecisionBlocked({ externalId, environment }) {
     if (environment.db_api_enabled) {
-      return await fetchApi({
+      await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'blocked' },

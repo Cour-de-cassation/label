@@ -17,49 +17,26 @@ export { buildConnector };
 
 function buildConnector(connectorConfig: connectorConfigType) {
   return {
-    autoImportDocumentsFromSder,
     importChainedDocumentsFromSder,
     importSpecificDocument,
     importNewDocuments,
-    importJurinetDocuments,
-    importJuricaDocuments,
-    importJuritjDocuments,
     importDocumentsByJurisdictionBetween,
     importDocumentsSince,
-    importDocumentsSinceDateCreation,
     resetDocument,
     resetAllDocumentsSince,
     deleteDocumentsOlderThan,
     resetAllLockedDocuments,
   };
 
-  async function autoImportDocumentsFromSder(
-    threshold: number,
-    documentsCount: number,
-    environment: environmentType,
-  ) {
-    logger.log(`autoImportDocumentsFromSder: ${threshold}`);
-
-    const documentRepository = buildDocumentRepository();
-
-    const documentsToTreat = await documentRepository.findAllByStatusProjection(
-      ['loaded', 'nlpAnnotating', 'free'],
-      ['_id'],
-    );
-
-    if (documentsToTreat.length > threshold) {
-      return;
-    }
-    const daysStep = 30;
-
-    await importNewDocuments({ documentsCount, environment, daysStep });
-  }
-
-  async function importChainedDocumentsFromSder(
-    threshold: number,
-    documentsCount: number,
-    environment: environmentType,
-  ) {
+  async function importChainedDocumentsFromSder({
+    documentsCount,
+    threshold,
+    environment,
+  }: {
+    documentsCount: number;
+    threshold: number;
+    environment: environmentType;
+  }) {
     logger.log(`importChainedDocumentsFromSder: ${threshold}`);
 
     const documentRepository = buildDocumentRepository();
@@ -75,45 +52,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const daysStep = 30;
 
     await importChainedDocuments(documentsCount, environment, daysStep);
-  }
-
-  async function importJurinetDocuments(
-    documentsCount: number,
-    environment: environmentType,
-  ) {
-    logger.log(`importJurinetDocuments: ${documentsCount}`);
-    await importNewDocuments({
-      documentsCount,
-      environment,
-      sources: ['jurinet'],
-    });
-    logger.log(`DONE`);
-  }
-
-  async function importJuricaDocuments(
-    documentsCount: number,
-    environment: environmentType,
-  ) {
-    logger.log(`importJuricaDocuments: ${documentsCount}`);
-    await importNewDocuments({
-      documentsCount,
-      environment,
-      sources: ['jurica'],
-    });
-    logger.log(`DONE`);
-  }
-
-  async function importJuritjDocuments(
-    documentsCount: number,
-    environment: environmentType,
-  ) {
-    logger.log(`importJuritjDocuments: ${documentsCount}`);
-    await importNewDocuments({
-      documentsCount,
-      environment,
-      sources: ['juritj'],
-    });
-    logger.log(`DONE`);
   }
 
   async function importSpecificDocument({
@@ -180,11 +118,13 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function importNewDocuments({
     documentsCount,
     environment,
+    threshold,
     sources,
     daysStep,
   }: {
     documentsCount: number;
     environment: environmentType;
+    threshold?: number;
     sources?: decisionType['sourceName'][];
     daysStep?: number;
   }) {
@@ -196,7 +136,21 @@ function buildConnector(connectorConfig: connectorConfigType) {
       } - ${daysStep || DEFAULT_DAYS_STEP}`,
     );
 
-    logger.log(`Fetching ${connectorConfig.name} documents...`);
+    if (threshold) {
+      const documentRepository = buildDocumentRepository();
+      const documentsToTreat = await documentRepository.findAllByStatusProjection(
+        ['loaded', 'nlpAnnotating', 'free'],
+        ['_id'],
+      );
+
+      if (documentsToTreat.length > threshold) {
+        logger.log(`Threshold not met`);
+        logger.log(`DONE`);
+        return 0;
+      }
+    }
+
+    logger.log(`Fetching ${connectorConfig.name} decisions...`);
     let daysAgo = 0;
     let step = 0;
     let newDocuments: documentType[] = [];
@@ -364,22 +318,36 @@ function buildConnector(connectorConfig: connectorConfigType) {
     return importedDocuments.length;
   }
 
-  async function importDocumentsSince(
-    days: number,
-    environment: environmentType,
-  ) {
+  async function importDocumentsSince({
+    days,
+    byDateCreation,
+    environment,
+  }: {
+    days: number;
+    byDateCreation: boolean;
+    environment: environmentType;
+  }) {
     logger.log(`importDocumentsSince ${days}`);
 
     const newCourtDecisions = [];
     try {
       logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
       const newJurinetCourtDecisions =
-        (await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-          startDate: new Date(dateBuilder.daysAgo(days)),
-          endDate: new Date(),
-          source: 'jurinet',
-          environment,
-        })) ?? [];
+        (byDateCreation
+          ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
+              {
+                startDate: new Date(dateBuilder.daysAgo(days)),
+                endDate: new Date(),
+                source: 'jurinet',
+                environment,
+              },
+            )
+          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+              startDate: new Date(dateBuilder.daysAgo(days)),
+              endDate: new Date(),
+              source: 'jurinet',
+              environment,
+            })) ?? [];
       logger.log(
         `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
       );
@@ -390,12 +358,21 @@ function buildConnector(connectorConfig: connectorConfigType) {
     try {
       logger.log(`Fetching ${connectorConfig.name} jurica documents...`);
       const newJuricaCourtDecisions =
-        (await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-          startDate: new Date(dateBuilder.daysAgo(days)),
-          endDate: new Date(),
-          source: 'jurica',
-          environment,
-        })) ?? [];
+        (byDateCreation
+          ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
+              {
+                startDate: new Date(dateBuilder.daysAgo(days)),
+                endDate: new Date(),
+                source: 'jurica',
+                environment,
+              },
+            )
+          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+              startDate: new Date(dateBuilder.daysAgo(days)),
+              endDate: new Date(),
+              source: 'jurica',
+              environment,
+            })) ?? [];
       logger.log(
         `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
       );
@@ -406,12 +383,21 @@ function buildConnector(connectorConfig: connectorConfigType) {
     try {
       logger.log(`Fetching ${connectorConfig.name} juritj documents...`);
       const newJuritjCourtDecisions =
-        (await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-          startDate: new Date(dateBuilder.daysAgo(days)),
-          endDate: new Date(),
-          source: 'juritj',
-          environment,
-        })) ?? [];
+        (byDateCreation
+          ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
+              {
+                startDate: new Date(dateBuilder.daysAgo(days)),
+                endDate: new Date(),
+                source: 'juritj',
+                environment,
+              },
+            )
+          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+              startDate: new Date(dateBuilder.daysAgo(days)),
+              endDate: new Date(),
+              source: 'juritj',
+              environment,
+            })) ?? [];
       logger.log(
         `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
       );
@@ -438,83 +424,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
       documents,
       environment,
     });
-    logger.log(`DONE`);
-  }
-
-  async function importDocumentsSinceDateCreation(
-    days: number,
-    environment: environmentType,
-  ) {
-    logger.log(`importDocumentsSinceDateCreation ${days}`);
-    const newCourtDecisions = [];
-    try {
-      logger.log(`Fetching ${connectorConfig.name} jurinet documents...`);
-      const newJurinetCourtDecisions =
-        (await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation({
-          startDate: new Date(dateBuilder.daysAgo(days)),
-          endDate: new Date(),
-          source: 'jurinet',
-          environment,
-        })) ?? [];
-      logger.log(
-        `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
-      );
-      newCourtDecisions.push(...newJurinetCourtDecisions);
-    } catch (error) {
-      logger.log(error);
-    }
-    try {
-      logger.log(`Fetching ${connectorConfig.name} jurica documents...`);
-      const newJuricaCourtDecisions =
-        (await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation({
-          startDate: new Date(dateBuilder.daysAgo(days)),
-          endDate: new Date(),
-          source: 'jurica',
-          environment,
-        })) ?? [];
-      logger.log(
-        `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
-      );
-      newCourtDecisions.push(...newJuricaCourtDecisions);
-    } catch (error) {
-      logger.log(error);
-    }
-    try {
-      logger.log(`Fetching ${connectorConfig.name} jurica documents...`);
-      const newJuritjCourtDecisions =
-        (await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation({
-          startDate: new Date(dateBuilder.daysAgo(days)),
-          endDate: new Date(),
-          source: 'juritj',
-          environment,
-        })) ?? [];
-      logger.log(
-        `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
-      );
-      newCourtDecisions.push(...newJuritjCourtDecisions);
-    } catch (error) {
-      logger.log(error);
-    }
-    const documents = [] as documentType[];
-    for (const courtDecision of newCourtDecisions) {
-      documents.push(
-        await connectorConfig.mapCourtDecisionToDocument(
-          courtDecision,
-          'recent',
-        ),
-      );
-    }
-
-    logger.log(`Insertion ${documents.length} documents into the database...`);
-    await insertDocuments(documents);
-    logger.log(`Insertion done!`);
-
-    logger.log(`Send documents have been loaded...`);
-    await connectorConfig.updateDocumentsLoadedStatus({
-      documents,
-      environment,
-    });
-
     logger.log(`DONE`);
   }
 

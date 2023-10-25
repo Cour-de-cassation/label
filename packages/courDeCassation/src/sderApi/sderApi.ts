@@ -84,13 +84,15 @@ const sderApi: sderApiType = {
       }[];
       const decisions: decisionType[] = [];
       for (const decisionRef of decisionList) {
-        const decision = (await fetchApi({
-          method: 'get',
-          path: `decisions/${decisionRef['_id']}`,
-          body: {},
-          environment,
-        })) as decisionType;
-        decisions.push(decision);
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = (await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+            environment,
+          })) as decisionType;
+          decisions.push(decision);
+        }
       }
       return decisions;
     } else {
@@ -125,13 +127,15 @@ const sderApi: sderApiType = {
       }[];
       const decisions: decisionType[] = [];
       for (const decisionRef of decisionList) {
-        const decision = (await fetchApi({
-          method: 'get',
-          path: `decisions/${decisionRef['_id']}`,
-          body: {},
-          environment,
-        })) as decisionType;
-        decisions.push(decision);
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = (await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+            environment,
+          })) as decisionType;
+          decisions.push(decision);
+        }
       }
       return decisions;
     } else {

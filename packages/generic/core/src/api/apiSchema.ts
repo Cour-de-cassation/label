@@ -723,6 +723,16 @@ const apiSchema = {
       },
       out: documentModule.fetchedModel,
     },
+    updateDocumentRoute: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+        route: documentModule.fetchedModel.content.route,
+      },
+      out: documentModule.fetchedModel
+    },
     updatePublishableDocumentStatus: {
       in: {
         documentId: buildModel({

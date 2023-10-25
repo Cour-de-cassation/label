@@ -140,12 +140,24 @@ function TreatedDocumentsTable(props: {
           console.warn(error);
           return;
         }
+
+        //if simple ?
+        try {
+          await apiCaller.post<'updateDocumentRoute'>('updateDocumentRoute', {
+            documentId: treatmentWithDetails.document._id,
+            route: "exhaustive",
+          });
+        } catch (error) {
+          displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert', autoHide: true });
+          console.warn(error);
+          return;
+        }
+
         props.refetch();
       },
       isDisabled: userRole !== 'admin' || adminView !== 'admin',
       iconName: 'turnRight' as const,
     };
-
 
     return [openDocumentOption, displayAnnotationDiff, resetDocument, reassignToWorkingUserOptionItem];
   }

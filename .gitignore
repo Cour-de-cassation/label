@@ -16,3 +16,4 @@ k8s*
 package-lock.json
 /packages/courDeCassation/yarn-error.log
 *.env
+*coverage

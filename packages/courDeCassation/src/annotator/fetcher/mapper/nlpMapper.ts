@@ -21,6 +21,7 @@ function mapNlpAnnotationsToAnnotations(
   return nlpAnnotations.entities.map((nlpAnnotation) =>
     annotationModule.lib.buildAnnotation({
       category: nlpAnnotation.label,
+      entityId: nlpAnnotation.entityId,
       start: nlpAnnotation.start,
       certaintyScore: nlpAnnotation.score,
       text: document.text.substring(nlpAnnotation.start, nlpAnnotation.end),

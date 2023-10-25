@@ -1,3 +1,0 @@
-export { nlpAnnotator };
-
-const nlpAnnotator = {};

@@ -1,6 +1,5 @@
 import { environmentType } from '@label/core';
 import { sderApi } from '../../sderApi';
-import { NON_PUBLIC_NAC_CODES } from './constants';
 
 export { sderFetcher };
 
@@ -43,13 +42,6 @@ const sderFetcher = {
       if (!courtDecision.originalText) {
         return false;
       }
-      if (
-        courtDecision.sourceName === 'jurica' &&
-        !!courtDecision.NACCode &&
-        NON_PUBLIC_NAC_CODES.includes(courtDecision.NACCode)
-      ) {
-        return false;
-      }
       return true;
     });
   },
@@ -76,13 +68,6 @@ const sderFetcher = {
 
     return courtDecisions?.filter((courtDecision) => {
       if (!courtDecision.originalText) {
-        return false;
-      }
-      if (
-        courtDecision.sourceName === 'jurica' &&
-        !!courtDecision.NACCode &&
-        NON_PUBLIC_NAC_CODES.includes(courtDecision.NACCode)
-      ) {
         return false;
       }
       return true;

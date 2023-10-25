@@ -1,6 +1,6 @@
 # Reuser guide
 
-If you are reusing Label, these instructions will be usefull.
+If you are reusing Label, these instructions will be usefull. Also have a look at the [project architecture](projectArchitecture.md).
 
 ## Add documents you want to annotate
 

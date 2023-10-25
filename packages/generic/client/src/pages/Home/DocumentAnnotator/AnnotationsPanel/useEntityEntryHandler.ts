@@ -27,13 +27,13 @@ function useEntityEntryHandler({
     setSelected,
   };
 
-  function setSelected(entityId?: string) {
-    if (entityId) {
+  function setSelected(category?: string, entityId?: string) {
+    if (category && entityId) {
       if (documentViewerModeHandler.documentViewerMode.kind === 'annotation') {
         onLeaveAnnotationMode();
       }
       const entityLines = filterLineByEntityId(entityId, splittedTextByLine).map(({ line }) => line);
-      documentViewerModeHandler.setOccurrenceMode(entityId, entityLines);
+      documentViewerModeHandler.setOccurrenceMode(category, entityId, entityLines);
     } else {
       onResetViewerMode();
       documentViewerModeHandler.resetViewerMode();

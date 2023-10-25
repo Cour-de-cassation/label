@@ -15,6 +15,6 @@ describe('stringify', () => {
 
     const stringifyedAnnotation = stringify(annotation, { displayEntityId: true });
 
-    expect(stringifyedAnnotation).toBe(`(nom / SERRANO (nom_SERRANO) / 12)`);
+    expect(stringifyedAnnotation).toBe(`(nom / SERRANO (nom_serrano) / 12)`);
   });
 });

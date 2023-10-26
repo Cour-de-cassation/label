@@ -9,6 +9,7 @@ import { settingsLoader } from './lib/settingsLoader';
 import { buildMongo, dependencyManager, fileSystem, logger } from './utils';
 import { buildBackend } from './app';
 import { treatmentService } from './modules/treatment';
+import { buildDocumentRepository } from './modules/document';
 
 export {
   buildAnnotator,
@@ -16,6 +17,7 @@ export {
   buildConnector,
   buildExporter,
   buildMongo,
+  buildDocumentRepository,
   dependencyManager,
   fileSystem,
   logger,

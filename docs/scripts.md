@@ -168,3 +168,7 @@ Revert a migration.
 ## runNewMigrations
 
 Run migrations.
+
+## updateRoute
+
+Reapply route rules for documents with a specific status.

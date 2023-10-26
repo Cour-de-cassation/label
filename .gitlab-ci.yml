@@ -32,7 +32,7 @@ stages:
 
 build_label_backend:
   stage: build
-    variables:
+  variables:
     #TODO: PUT INTO GITLAB
     # TODO: COMPLETE, THAT'S NOT ENOUGH (FOR EXAMPLE THERE ARE NO MONGODB VARS)
     LABEL_GIT_BRANCH: dev

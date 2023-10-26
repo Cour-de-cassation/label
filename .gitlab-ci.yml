@@ -32,9 +32,9 @@ stages:
 
 build_label_backend:
   stage: build
+  #TODO: PUT INTO GITLAB
+  # TODO: COMPLETE, THAT'S NOT ENOUGH (FOR EXAMPLE THERE ARE NO MONGODB VARS)
   variables:
-    #TODO: PUT INTO GITLAB
-    # TODO: COMPLETE, THAT'S NOT ENOUGH (FOR EXAMPLE THERE ARE NO MONGODB VARS)
     LABEL_GIT_BRANCH: dev
     LABEL_API_PORT: 55432
     LABEL_APP_HOST: label.judilibre-prive.local
@@ -71,8 +71,8 @@ build_label_backend:
 
 build_label_client:
   stage: build
+  #TODO: PUT INTO GITLAB
   variables:
-    #TODO: PUT INTO GITLAB
     LABEL_GIT_BRANCH: dev
     LABEL_API_PORT: 55432
     LABEL_APP_HOST: label.judilibre-prive.local

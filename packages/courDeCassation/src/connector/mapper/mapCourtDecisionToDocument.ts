@@ -78,7 +78,7 @@ async function mapCourtDecisionToDocument(
       additionalTermsToAnnotate,
       solution,
       publicationCategory,
-      chamberId: sderCourtDecision.chamberId,
+      chamberName: readableChamberName,
       civilMatterCode,
       session,
       civilCaseCode,

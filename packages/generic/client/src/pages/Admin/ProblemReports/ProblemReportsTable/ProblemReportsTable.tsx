@@ -258,7 +258,7 @@ function ProblemReportsTable(props: {
               route: "exhaustive",
             });
           } catch (error) {
-            displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert', autoHide: true });
+            displayAlert({ text: wordings.business.errors.updateDocumentRouteFailded, variant: 'alert', autoHide: true });
             console.warn(error);
             return;
           }

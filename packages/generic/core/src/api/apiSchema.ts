@@ -731,7 +731,7 @@ const apiSchema = {
         } as const),
         route: documentModule.fetchedModel.content.route,
       },
-      out: documentModule.fetchedModel
+      out: documentModule.fetchedModel,
     },
     updatePublishableDocumentStatus: {
       in: {

@@ -178,7 +178,7 @@ function ProblemReportsTable(props: {
         try {
           displayPopup({
             text: wordings.problemReportsPage.table.popupConfirmMessage,
-            onCancel: () => { },
+            onCancel: () => {},
             onConfirm: () => {
               problemReportWithDetails.document &&
                 apiCaller.post<'rejectDocument'>('rejectDocument', {
@@ -255,10 +255,14 @@ function ProblemReportsTable(props: {
           try {
             await apiCaller.post<'updateDocumentRoute'>('updateDocumentRoute', {
               documentId: problemReportWithDetails.problemReport.documentId,
-              route: "exhaustive",
+              route: 'exhaustive',
             });
           } catch (error) {
-            displayAlert({ text: wordings.business.errors.updateDocumentRouteFailded, variant: 'alert', autoHide: true });
+            displayAlert({
+              text: wordings.business.errors.updateDocumentRouteFailded,
+              variant: 'alert',
+              autoHide: true,
+            });
             console.warn(error);
             return;
           }

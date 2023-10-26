@@ -145,10 +145,14 @@ function TreatedDocumentsTable(props: {
           try {
             await apiCaller.post<'updateDocumentRoute'>('updateDocumentRoute', {
               documentId: treatmentWithDetails.document._id,
-              route: "exhaustive",
+              route: 'exhaustive',
             });
           } catch (error) {
-            displayAlert({ text: wordings.business.errors.updateDocumentRouteFailded, variant: 'alert', autoHide: true });
+            displayAlert({
+              text: wordings.business.errors.updateDocumentRouteFailded,
+              variant: 'alert',
+              autoHide: true,
+            });
             console.warn(error);
             return;
           }

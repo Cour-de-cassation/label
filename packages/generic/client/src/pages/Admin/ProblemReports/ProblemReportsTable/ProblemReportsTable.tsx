@@ -251,16 +251,17 @@ function ProblemReportsTable(props: {
           return;
         }
 
-        //if simple ?
-        try {
-          await apiCaller.post<'updateDocumentRoute'>('updateDocumentRoute', {
-            documentId: problemReportWithDetails.problemReport.documentId,
-            route: "exhaustive",
-          });
-        } catch (error) {
-          displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert', autoHide: true });
-          console.warn(error);
-          return;
+        if (problemReportWithDetails.document?.route ?? 'simple' == 'simple') {
+          try {
+            await apiCaller.post<'updateDocumentRoute'>('updateDocumentRoute', {
+              documentId: problemReportWithDetails.problemReport.documentId,
+              route: "exhaustive",
+            });
+          } catch (error) {
+            displayAlert({ text: wordings.business.errors.updateDocumentStatusFailed, variant: 'alert', autoHide: true });
+            console.warn(error);
+            return;
+          }
         }
 
         props.refetch();

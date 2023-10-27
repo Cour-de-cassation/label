@@ -368,6 +368,16 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    updateDocumentRoute: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (user, { args: { documentId, route } }) => {
+        return documentService.updateDocumentRoute(
+          idModule.lib.buildId(documentId),
+          route,
+        );
+      },
+    }),
+
     updatePublishableDocumentStatus: buildAuthenticatedController({
       permissions: ['admin', 'publicator'],
       controllerWithUser: async (_, { args: { documentId, status } }) => {

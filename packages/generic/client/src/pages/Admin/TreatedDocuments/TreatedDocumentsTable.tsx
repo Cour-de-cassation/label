@@ -141,7 +141,7 @@ function TreatedDocumentsTable(props: {
           return;
         }
 
-        if (treatmentWithDetails.document?.route ?? 'simple' == 'simple') {
+        if (treatmentWithDetails.document?.route == 'simple') {
           try {
             await apiCaller.post<'updateDocumentRoute'>('updateDocumentRoute', {
               documentId: treatmentWithDetails.document._id,

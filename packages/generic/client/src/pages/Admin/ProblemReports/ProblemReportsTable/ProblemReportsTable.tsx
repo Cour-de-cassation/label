@@ -178,7 +178,7 @@ function ProblemReportsTable(props: {
         try {
           displayPopup({
             text: wordings.problemReportsPage.table.popupConfirmMessage,
-            onCancel: () => {},
+            onCancel: () => { },
             onConfirm: () => {
               problemReportWithDetails.document &&
                 apiCaller.post<'rejectDocument'>('rejectDocument', {
@@ -251,7 +251,7 @@ function ProblemReportsTable(props: {
           return;
         }
 
-        if (problemReportWithDetails.document?.route ?? 'simple' == 'simple') {
+        if (problemReportWithDetails.document?.route == 'simple') {
           try {
             await apiCaller.post<'updateDocumentRoute'>('updateDocumentRoute', {
               documentId: problemReportWithDetails.problemReport.documentId,

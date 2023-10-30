@@ -61,6 +61,7 @@ build_label_backend:
     - docker build
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY
+        --target label-backend
         -f Dockerfile.label-backend
         -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend .
     - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend

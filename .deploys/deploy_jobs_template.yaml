@@ -36,7 +36,7 @@ spec:
                 # - name: NODE_TLS_REJECT_UNAUTHORIZED
                 #   value: "0"
           restartPolicy: Never
-          volumes:
-            - name: label-backend-config
-              secret:
-                secretName: label-backend-config
+          # volumes:
+          #   - name: label-backend-config
+          #     secret:
+          #       secretName: label-backend-config

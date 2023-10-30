@@ -19,10 +19,10 @@ spec:
           containers:
             - name: label-backend-${JOB_NAME}
               image: $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
-              volumeMounts:
-                - name: label-backend-config
-                  mountPath: /home/node/packages/courDeCassation/environments
-                  readOnly: true
+              # volumeMounts:
+              #   - name: label-backend-config
+              #     mountPath: /home/node/packages/courDeCassation/environments
+              #     readOnly: true
               command:
                 - /bin/sh
               args:

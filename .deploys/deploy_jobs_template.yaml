@@ -34,7 +34,7 @@ spec:
                 - name: SDER_DB_URL
                   value: ${MONGODB_URI}:${MONGODB_PORT}
                 - name: MONGODB_URL
-                  value: ${MONGODB_URL}
+                  value: "${MONGODB_URL}"
                 # - name: NODE_TLS_REJECT_UNAUTHORIZED
                 #   value: "0"
           restartPolicy: Never

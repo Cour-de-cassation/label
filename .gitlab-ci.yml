@@ -69,6 +69,8 @@ build_label_backend:
     - master
     - re7
     - dev
+  tags:
+    - shell
 
 # temporary disable label client because it's broken - force redeploy bc miroring seems broken
 

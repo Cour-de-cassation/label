@@ -5,7 +5,7 @@ metadata:
   name: label-backend-job-${JOB_NAME}
   namespace: label
 spec:
-  schedule: ${JOB_SCHEDULE}
+  schedule: "${JOB_SCHEDULE}"
   successfulJobsHistoryLimit: ${SUCCESSFUL_JOBS_HISTORY_LIMIT}
   failedJobsHistoryLimit: ${FAILED_JOBS_HISTORY_LIMIT}
   concurrencyPolicy: Forbid

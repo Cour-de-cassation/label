@@ -195,7 +195,7 @@ deploy_job_annotation:
   stage: deploy
   variables:
     JOB_NAME: "nlp-annotation"
-    JOB_SCHEDULE: "*/5 2-20 * * *"
+    JOB_SCHEDULE: "\*/5 2-20 * * *"
     SUCCESSFUL_JOBS_HISTORY_LIMIT: 288
     FAILED_JOBS_HISTORY_LIMIT: 134
     BACKOFF_LIMIT: 0
@@ -218,7 +218,7 @@ deploy_job_import_j_7:
   stage: deploy
   variables:
     JOB_NAME: "import-j-7"
-    JOB_SCHEDULE: "*/30 6-12 * * *"
+    JOB_SCHEDULE: "\*/30 6-12 * * *"
     SUCCESSFUL_JOBS_HISTORY_LIMIT: 84
     FAILED_JOBS_HISTORY_LIMIT: 84
     BACKOFF_LIMIT: 0
@@ -333,7 +333,7 @@ deploy_job_free_pending:
   stage: deploy
   variables:
     JOB_NAME: "free-pending"
-    JOB_SCHEDULE: "*/16 4-17 * * *"
+    JOB_SCHEDULE: "\*/16 4-17 * * *"
     SUCCESSFUL_JOBS_HISTORY_LIMIT: 50
     FAILED_JOBS_HISTORY_LIMIT: 50
     BACKOFF_LIMIT: 0
@@ -379,7 +379,7 @@ deploy_job_renew_cache:
   stage: deploy
   variables:
     JOB_NAME: "renew-cache"
-    JOB_SCHEDULE: "*/5 4-17 * * *"
+    JOB_SCHEDULE: "\*/5 4-17 * * *"
     SUCCESSFUL_JOBS_HISTORY_LIMIT: 168
     FAILED_JOBS_HISTORY_LIMIT: 168
     BACKOFF_LIMIT: 0

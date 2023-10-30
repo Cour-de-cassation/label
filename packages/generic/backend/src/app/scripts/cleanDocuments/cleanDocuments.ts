@@ -4,7 +4,7 @@ import { cleanAssignedDocuments } from './cleanAssignedDocuments';
 import { cleanDuplicatedDocuments } from './cleanDuplicatedDocuments';
 import { cleanFreeDocuments } from './cleanFreeDocuments';
 import { cleanLoadedDocuments } from './cleanLoadedDocuments';
-import { cleanTreatments } from './cleanTreatments';
+import { cleanUnconsistentTreatments } from './cleanUnconsistentTreatments';
 
 export { cleanDocuments };
 
@@ -15,7 +15,7 @@ async function cleanDocuments() {
 
   await cleanAssignedDocuments();
 
-  await cleanTreatments();
+  await cleanUnconsistentTreatments();
 
   await cleanAssignations();
 

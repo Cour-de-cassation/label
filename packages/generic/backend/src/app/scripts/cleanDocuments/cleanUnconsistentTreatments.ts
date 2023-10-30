@@ -6,13 +6,13 @@ import {
 import { treatmentService } from '../../../modules/treatment';
 import { logger } from '../../../utils';
 
-export { cleanTreatments };
+export { cleanUnconsistentTreatments };
 
 /**
  * Reset documents with unconsistent annotations
  */
-async function cleanTreatments() {
-  logger.log(`cleanTreatments`);
+async function cleanUnconsistentTreatments() {
+  logger.log(`cleanUnconsistentTreatments`);
   const documentRepository = buildDocumentRepository();
   const documents = await documentRepository.findAllProjection(['_id']);
   const documentIds = documents.map(({ _id }) => _id);
@@ -30,5 +30,5 @@ async function cleanTreatments() {
       await documentService.updateDocumentStatus(documentIds[i], 'loaded');
     }
   }
-  logger.log('cleanTreatments done!');
+  logger.log('cleanUnconsistentTreatments done!');
 }

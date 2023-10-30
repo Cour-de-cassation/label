@@ -58,6 +58,13 @@ build_label_backend:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "$HTTP_PROXY"
     - echo "$HTTPS_PROXY"
+    - apk update
+    - apk add nodejs yarn git
+    - yarn config set proxy $HTTP_PROXY
+    - yarn config set https-proxy $HTTPS_PROXY
+    - yarn install --
+    - yarn compile
+    - yarn buildClient # from "ugly workaround" in github workflows
     - docker build
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY

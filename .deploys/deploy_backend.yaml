@@ -23,6 +23,8 @@ spec:
           env:
             - name: SDER_DB_URL
               value: ${MONGODB_URI}:${MONGODB_PORT}
+            - name: MONGODB_URL
+              value: ${MONGODB_URL}
             - name: GIT_BRANCH
               value: "${LABEL_GIT_BRANCH}"
             - name: API_PORT

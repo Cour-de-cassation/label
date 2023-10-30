@@ -87,14 +87,14 @@ spec:
           #       - all
           #   allowPrivilegeEscalation: false
           #   readOnlyRootFilesystem: true
-          volumeMounts:
-            - name: label-backend-config
-              mountPath: /home/node/packages/courDeCassation/environments
-              readOnly: true
-      volumes:
-      - name: label-backend-config
-        secret:
-          secretName: label-backend-config
+      #     volumeMounts:
+      #       - name: label-backend-config
+      #         mountPath: /home/node/packages/courDeCassation/environments
+      #         readOnly: true
+      # volumes:
+      # - name: label-backend-config
+      #   secret:
+      #     secretName: label-backend-config
 
 ---
 apiVersion: v1

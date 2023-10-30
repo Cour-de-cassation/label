@@ -35,25 +35,25 @@ build_label_backend:
   #TODO: PUT INTO GITLAB
   # TODO: COMPLETE, THAT'S NOT ENOUGH (FOR EXAMPLE THERE ARE NO MONGODB VARS)
   variables:
-    LABEL_GIT_BRANCH: dev
+    LABEL_GIT_BRANCH: "dev"
     LABEL_API_PORT: 55432
-    LABEL_APP_HOST: label.judilibre-prive.local
-    LABEL_APP_GROUP: judilibre-prive
-    LABEL_APP_ID: label-backend
-    LABEL_APP_KEYWORD: html
-    LABEL_APP_SCHEME: https
-    LABEL_APP_SELF_SIGNED: true
-    LABEL_APP_PORT: 443
-    LABEL_DOCKER_USERNAME: opendatajustice
-    LABEL_DOCKER_TARGET: label-backend
-    LABEL_KUBE_ZONE: local
-    LABEL_KUBE_TYPE: k3s
-    LABEL_KUBE_NAMESPACE: judilibre-prive-local-dev
-    LABEL_ROOT_PATH: label/api
-    LABEL_NLP_API_HOST: https://nlp-pseudonymisaton.judilibre-prive.local
-    LABEL_NLP_API_PORT: 443
-    LABEL_START_TIMEOUT: 180
-    LABEL_KUBECONFIG: $HOME/.kube/config-local-k3s.yaml
+    LABEL_APP_HOST: "label.judilibre-prive.local"
+    LABEL_APP_GROUP: "judilibre-prive"
+    LABEL_APP_ID: "label-backend"
+    LABEL_APP_KEYWORD: "html"
+    LABEL_APP_SCHEME: "https"
+    LABEL_APP_SELF_SIGNED: "true"
+    LABEL_APP_PORT: "443"
+    LABEL_DOCKER_USERNAME: "opendatajustice"
+    LABEL_DOCKER_TARGET: "label-backend"
+    LABEL_KUBE_ZONE: "local"
+    LABEL_KUBE_TYPE: "k3s"
+    LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
+    LABEL_ROOT_PATH: "label/api"
+    LABEL_NLP_API_HOST: "https://nlp-pseudonymisaton.judilibre-prive.local"
+    LABEL_NLP_API_PORT: "443"
+    LABEL_START_TIMEOUT: "180"
+    LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
   script: 
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "$HTTP_PROXY"
@@ -73,24 +73,24 @@ build_label_client:
   stage: build
   #TODO: PUT INTO GITLAB
   variables:
-    LABEL_GIT_BRANCH: dev
+    LABEL_GIT_BRANCH: "dev"
     LABEL_API_PORT: 55432
-    LABEL_APP_HOST: label.judilibre-prive.local
-    LABEL_APP_GROUP: judilibre-prive
-    LABEL_APP_ID: label-client
-    LABEL_APP_KEYWORD: html
-    LABEL_APP_SCHEME: https
-    LABEL_APP_SELF_SIGNED: true
+    LABEL_APP_HOST: "label.judilibre-prive.local"
+    LABEL_APP_GROUP: "judilibre-prive"
+    LABEL_APP_ID: "label-client"
+    LABEL_APP_KEYWORD: "html"
+    LABEL_APP_SCHEME: "https"
+    LABEL_APP_SELF_SIGNED: "true"
     LABEL_APP_PORT: 443
-    LABEL_DOCKER_USERNAME: opendatajustice
-    LABEL_DOCKER_TARGET: label-client
-    LABEL_KUBE_ZONE: local
-    LABEL_KUBE_TYPE: k3s
-    LABEL_KUBE_NAMESPACE: judilibre-prive-local-dev
-    LABEL_ROOT_PATH: label
-    LABEL_PUBLIC_URL: /label
-    LABEL_START_TIMEOUT: 180
-    LABEL_KUBECONFIG: $HOME/.kube/config-local-k3s.yaml
+    LABEL_DOCKER_USERNAME: "opendatajustice"
+    LABEL_DOCKER_TARGET: "label-client"
+    LABEL_KUBE_ZONE: "local"
+    LABEL_KUBE_TYPE: "k3s"
+    LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
+    LABEL_ROOT_PATH: "label"
+    LABEL_PUBLIC_URL: "/label"
+    LABEL_START_TIMEOUT: "180"
+    LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
   script:
     - apk update
     - apk add nodejs yarn git
@@ -154,9 +154,10 @@ build_label_client:
 deploy_label_backend:
   stage: deploy
   variables:
-    MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
-    MONGODB_URI: ${{ secrets.MONGODB_URI }}
-    MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
+    MONGODB_NAME: ${{ MONGODB_NAME }}
+    MONGODB_URI: ${{ MONGODB_URI }}
+    MONGODB_PORT: ${{MONGODB_PORT }}
+    MONGODB_URL: ${{ MONGODB_URL }}
     ROOT_PATH: label/api
     JURITJ_DOC_LOGIN: $JURITJ_DOC_LOGIN
     JURITJ_DOC_PASSWORD: $JURITJ_DOC_PASSWORD

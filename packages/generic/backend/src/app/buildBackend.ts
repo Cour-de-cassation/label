@@ -21,6 +21,7 @@ import {
   resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
+  cleanOrphansTreatments,
 } from './scripts';
 
 export { buildBackend };
@@ -108,6 +109,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       runNewMigrations: {
         run: runNewMigrations,
+        option: { shouldLoadDb: true, shouldExit: true },
+      },
+      cleanOrphansTreatments: {
+        run: cleanOrphansTreatments,
         option: { shouldLoadDb: true, shouldExit: true },
       },
     },

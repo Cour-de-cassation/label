@@ -63,6 +63,8 @@ spec:
               value: "${LABEL_START_TIMEOUT}"
             - name: KUBECONFIG
               value: "${LABEL_KUBECONFIG}"
+            - name: NLP_API_URL # penser à injecter nlp api url et dollar dans gitlab
+              value: "http://${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_HOST):${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_PORT)"
           # startupProbe:
           #   exec:
           #     command:

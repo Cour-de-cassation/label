@@ -24,7 +24,7 @@ spec:
             - name: SDER_DB_URL
               value: ${MONGODB_URI}:${MONGODB_PORT}
             - name: MONGODB_URL
-              value: testaxel
+              value: ${MONGODB_URL} # ici quand je mets "testaxel" ça s'affiche bien
             - name: GIT_BRANCH
               value: "${LABEL_GIT_BRANCH}"
             - name: API_PORT

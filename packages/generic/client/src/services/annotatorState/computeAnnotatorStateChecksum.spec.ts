@@ -19,6 +19,7 @@ describe('computeAnnotatorStateChecksum', () => {
         category: 'prenom',
         start: index * 10,
         text: 'TRUC',
+        certaintyScore: 1,
       }),
     );
     const annotatorState = {
@@ -38,7 +39,7 @@ describe('computeAnnotatorStateChecksum', () => {
   it('should return the same checksum for reversed annotations', () => {
     const { checklist } = annotationReportModule.generator.generate();
     const annotations1 = range(10).map((index) =>
-      annotationModule.lib.buildAnnotation({ category: 'prenom', start: index * 10, text: 'TRUC' }),
+      annotationModule.lib.buildAnnotation({ category: 'prenom', start: index * 10, text: 'TRUC', certaintyScore: 1 }),
     );
     const annotations2 = [...annotations1].reverse();
     const annotatorState1 = {
@@ -69,6 +70,7 @@ describe('computeAnnotatorStateChecksum', () => {
         category: 'prenom',
         start: index * 10,
         text: 'TRUC',
+        certaintyScore: 1,
       }),
     );
     const annotations2 = [...annotations1].map((annotation, index) => ({
@@ -103,6 +105,7 @@ describe('computeAnnotatorStateChecksum', () => {
         category: 'prenom',
         start: index * 10,
         text: 'TRUC',
+        certaintyScore: 1,
       }),
     );
     const annotations2 = annotations1.filter((_, index) => index >= 5);
@@ -134,6 +137,7 @@ describe('computeAnnotatorStateChecksum', () => {
         category: 'prenom',
         start: index * 10,
         text: 'TRUC',
+        certaintyScore: 1,
       }),
     );
     const annotatorState = {

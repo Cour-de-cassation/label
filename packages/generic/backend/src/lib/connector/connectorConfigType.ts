@@ -1,4 +1,4 @@
-import { documentType } from '@label/core';
+import { documentType, environmentType } from '@label/core';
 import { decisionType } from 'sder';
 
 export type { connectorConfigType };
@@ -11,36 +11,38 @@ type connectorConfigType = {
     source: 'jurinet' | 'jurica' | 'juritj';
     jurisdictions: string[];
     chambers: string[];
-  }) => Promise<decisionType[]>;
-  fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
-    startDate: Date;
-    endDate: Date;
-    source: string;
-    jurisdictions: string[];
-    chambers: string[];
-  }) => Promise<decisionType[]>;
-  fetchCourtDecisionBySourceIdAndSourceName(params: {
+    environment: environmentType;
+  }) => Promise<decisionType[] | undefined>;
+  fetchCourtDecisionBySourceIdAndSourceName(param: {
     sourceId: number;
     sourceName: string;
+    environment: environmentType;
   }): Promise<decisionType | undefined>;
-  fetchChainedJuricaDecisionsToPseudonymiseBetween(params: {
+  fetchChainedJuricaDecisionsToPseudonymiseBetween(param: {
     startDate: Date;
     endDate: Date;
-  }): Promise<decisionType[]>;
-  fetchDecisionsToPseudonymiseBetween(params: {
-    startDate: Date;
-    endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
-  }): Promise<decisionType[]>;
-  fetchDecisionsToPseudonymiseBetweenDateCreation(params: {
+    environment: environmentType;
+  }): Promise<decisionType[] | undefined>;
+  fetchDecisionsToPseudonymiseBetween(param: {
     startDate: Date;
     endDate: Date;
     source: 'jurinet' | 'jurica' | 'juritj';
-  }): Promise<decisionType[]>;
-  updateDocumentsLoadedStatus: (documents: documentType[]) => Promise<void>;
-  updateDocumentsToBeTreatedStatus: (
-    documents: documentType[],
-  ) => Promise<void>;
+    environment: environmentType;
+  }): Promise<decisionType[] | undefined>;
+  fetchDecisionsToPseudonymiseBetweenDateCreation(param: {
+    startDate: Date;
+    endDate: Date;
+    source: 'jurinet' | 'jurica' | 'juritj';
+    environment: environmentType;
+  }): Promise<decisionType[] | undefined>;
+  updateDocumentsLoadedStatus: (param: {
+    documents: documentType[];
+    environment: environmentType;
+  }) => Promise<void>;
+  updateDocumentsToBeTreatedStatus: (param: {
+    documents: documentType[];
+    environment: environmentType;
+  }) => Promise<void>;
   mapCourtDecisionToDocument: (
     courtDecision: decisionType,
     importer: documentType['importer'],

@@ -27,11 +27,13 @@ describe('annotationHandler', () => {
         {
           category,
           start: 34,
+          certaintyScore: 1,
           entityId: annotationModule.lib.entityIdHandler.compute(category, annotationText),
           text: annotationText,
         },
         {
           category,
+          certaintyScore: 1,
           start: 66,
           entityId: annotationModule.lib.entityIdHandler.compute(category, annotationText),
           text: annotationText,

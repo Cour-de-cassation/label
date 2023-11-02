@@ -1,5 +1,5 @@
 import { range } from 'lodash';
-import { dateBuilder, documentType } from '@label/core';
+import { dateBuilder, documentType, environmentType } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildConnector } from './buildConnector';
 import { buildFakeConnectorWithNDecisions } from './buildFakeConnector';
@@ -11,8 +11,8 @@ describe('buildConnector', () => {
     documentRepository = buildDocumentRepository();
   });
 
-  describe('importAllDocumentsSince', () => {
-    it('should import all the document fetched by the connector', async () => {
+  describe('importDocumentsSince', () => {
+    it('should import all the document fetched by the connector (with dateDecision)', async () => {
       const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
         sourceIds.map((sourceId, index) => {
@@ -20,14 +20,18 @@ describe('buildConnector', () => {
           dateDecision.setTime(dateBuilder.daysAgo(index * 7));
           return {
             sourceId,
-            dateDecision: dateDecision.toDateString(),
+            dateDecision: dateDecision.toISOString(),
             sourceName: 'jurinet',
           };
         }),
       );
       const connector = buildConnector(fakeConnector);
 
-      await connector.importDocumentsSince(10);
+      await connector.importDocumentsSince({
+        days: 10,
+        byDateCreation: false,
+        environment: {} as environmentType,
+      });
 
       const insertedDocuments = await documentRepository.findAll();
       expect(insertedDocuments.length).toBe(2);
@@ -39,36 +43,36 @@ describe('buildConnector', () => {
         ),
       );
     });
+    it('should import all the document fetched by the connector (with dateCreation)', async () => {
+      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+      const fakeConnector = await buildFakeConnectorWithNDecisions(
+        sourceIds.map((sourceId, index) => {
+          const dateCreation = new Date();
+          dateCreation.setTime(dateBuilder.daysAgo(index * 7));
+          return {
+            sourceId,
+            dateCreation: dateCreation.toISOString(),
+            sourceName: 'jurinet',
+          };
+        }),
+      );
+      const connector = buildConnector(fakeConnector);
 
-    describe('importAllDocumentsSinceDateCreation', () => {
-      it('should import all the document fetched by the connector', async () => {
-        const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
-        const fakeConnector = await buildFakeConnectorWithNDecisions(
-          sourceIds.map((sourceId, index) => {
-            const dateCreation = new Date();
-            dateCreation.setTime(dateBuilder.daysAgo(index * 7));
-            return {
-              sourceId,
-              dateCreation: dateCreation.toDateString(),
-              sourceName: 'jurinet',
-            };
-          }),
-        );
-        const connector = buildConnector(fakeConnector);
-
-        await connector.importDocumentsSinceDateCreation(10);
-
-        const insertedDocuments = await documentRepository.findAll();
-        expect(insertedDocuments.length).toBe(2);
-        [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
-          expect(
-            insertedDocuments.some(
-              (insertedDocument) =>
-                insertedDocument.documentNumber === sourceId,
-            ),
-          ),
-        );
+      await connector.importDocumentsSince({
+        days: 10,
+        byDateCreation: true,
+        environment: {} as environmentType,
       });
+
+      const insertedDocuments = await documentRepository.findAll();
+      expect(insertedDocuments.length).toBe(2);
+      [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
+        expect(
+          insertedDocuments.some(
+            (insertedDocument) => insertedDocument.documentNumber === sourceId,
+          ),
+        ),
+      );
     });
   });
 
@@ -81,14 +85,18 @@ describe('buildConnector', () => {
           dateDecision.setTime(dateBuilder.daysAgo(index * 7));
           return {
             sourceId,
-            dateDecision: dateDecision.toDateString(),
+            dateDecision: dateDecision.toISOString(),
             sourceName: 'jurica',
           };
         }),
       );
       const connector = buildConnector(fakeConnector);
 
-      await connector.importNewDocuments(3, 5);
+      await connector.importNewDocuments({
+        documentsCount: 3,
+        environment: {} as environmentType,
+        daysStep: 5,
+      });
 
       const insertedDocuments = await documentRepository.findAll();
       expect(insertedDocuments.length).toBe(3);
@@ -102,7 +110,7 @@ describe('buildConnector', () => {
     });
   });
 
-  describe('autoImportDocuments', () => {
+  describe('importNewDocuments', () => {
     it('should not import documents', async () => {
       const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
@@ -119,7 +127,11 @@ describe('buildConnector', () => {
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
-      await connector.autoImportDocumentsFromSder(4, 5);
+      await connector.importNewDocuments({
+        documentsCount: 4,
+        threshold: 5,
+        environment: {} as environmentType,
+      });
 
       const finalDocuments = await documentRepository.findAll();
       expect(sourceIds.sort()).toEqual(
@@ -135,7 +147,7 @@ describe('buildConnector', () => {
           dateDecision.setTime(dateBuilder.daysAgo(index * 31));
           return {
             sourceId,
-            dateDecision: dateDecision.toDateString(),
+            dateDecision: dateDecision.toISOString(),
             sourceName: 'jurica',
           };
         }),
@@ -153,7 +165,11 @@ describe('buildConnector', () => {
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
-      await connector.autoImportDocumentsFromSder(6, 4);
+      await connector.importNewDocuments({
+        documentsCount: 4,
+        threshold: 6,
+        environment: {} as environmentType,
+      });
 
       const finalDocuments = await documentRepository.findAll();
       expect(finalDocuments.length).toBe(9);
@@ -177,7 +193,11 @@ describe('buildConnector', () => {
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
-      await connector.importChainedDocumentsFromSder(4, 5);
+      await connector.importChainedDocumentsFromSder({
+        documentsCount: 5,
+        threshold: 4,
+        environment: {} as environmentType,
+      });
 
       const finalDocuments = await documentRepository.findAll();
       expect(sourceIds.sort()).toEqual(
@@ -193,7 +213,7 @@ describe('buildConnector', () => {
           dateDecision.setTime(dateBuilder.daysAgo(index * 31));
           return {
             sourceId,
-            dateDecision: dateDecision.toDateString(),
+            dateDecision: dateDecision.toISOString(),
             sourceName: 'jurica',
           };
         }),
@@ -211,7 +231,11 @@ describe('buildConnector', () => {
       await documentRepository.insertMany(initialDocuments);
       await documentRepository.updateMany({}, { status: 'free' });
 
-      await connector.importChainedDocumentsFromSder(6, 4);
+      await connector.importChainedDocumentsFromSder({
+        documentsCount: 4,
+        threshold: 6,
+        environment: {} as environmentType,
+      });
 
       const finalDocuments = await documentRepository.findAll();
       expect(finalDocuments.length).toBe(9);

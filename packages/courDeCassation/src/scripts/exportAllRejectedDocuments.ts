@@ -5,8 +5,11 @@ import { parametersHandler } from '../lib/parametersHandler';
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
   const backend = buildBackend(environment, settings);
-  const sderExporter = buildSderExporter(settings);
-  backend.runScript(() => sderExporter.exportAllRejectedDocuments(), {
-    shouldLoadDb: true,
-  });
+  const sderExporter = buildSderExporter(environment, settings);
+  backend.runScript(
+    () => sderExporter.exportAllRejectedDocuments(environment),
+    {
+      shouldLoadDb: true,
+    },
+  );
 })();

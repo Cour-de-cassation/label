@@ -10,7 +10,7 @@ const annotationGenerator: generatorType<annotationType> = {
       category: category ? category : `CATEGORY_${Math.random()}`,
       start: start ? start : 0,
       text: text ? text : `TEXT_${Math.random()}`,
-      certaintyScore: certaintyScore ? certaintyScore : undefined,
+      certaintyScore: certaintyScore ?? 1,
     };
 
     return {

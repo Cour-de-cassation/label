@@ -7,10 +7,13 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { environment, settings } = await parametersHandler.getParameters();
   const { days } = parseArgv();
   const backend = buildBackend(environment, settings);
-  const sderExporter = buildSderExporter(settings);
-  backend.runScript(() => sderExporter.exportTreatedDocumentsSince(days), {
-    shouldLoadDb: true,
-  });
+  const sderExporter = buildSderExporter(environment, settings);
+  backend.runScript(
+    () => sderExporter.exportTreatedDocumentsSince(days, environment),
+    {
+      shouldLoadDb: true,
+    },
+  );
 })();
 
 function parseArgv() {

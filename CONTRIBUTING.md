@@ -16,4 +16,4 @@ If you find a vulnerability, please contact the main contributor privately.
 
 ## Contact
 
-David Libeau is the current main contributor of this software. You can contact him by email: david.libeau@justice.fr
+Antoine Jeanneney is the current main contributor of this software. You can contact him by email: antoine.jeanneney@justice.fr

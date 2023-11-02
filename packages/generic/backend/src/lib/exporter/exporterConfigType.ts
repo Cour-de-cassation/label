@@ -1,4 +1,4 @@
-import { documentType } from '@label/core';
+import { documentType, environmentType } from '@label/core';
 
 export type { exporterConfigType, labelTreatmentsType };
 
@@ -8,10 +8,12 @@ type exporterConfigType = {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
     labelTreatments: labelTreatmentsType;
+    environment: environmentType;
   }) => Promise<void>;
-  sendDocumentBlockedStatus: (
-    param: documentType['externalId'],
-  ) => Promise<void>;
+  sendDocumentBlockedStatus: (param: {
+    externalId: documentType['externalId'];
+    environment: environmentType;
+  }) => Promise<void>;
 };
 
 type labelTreatmentsType = Array<{

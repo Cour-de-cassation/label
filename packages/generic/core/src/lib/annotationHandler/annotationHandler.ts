@@ -23,7 +23,7 @@ function create(
   fields: { category: string; start: number; text: string },
   settings: settingsType,
 ): annotationType[] {
-  const createdAnnotation = annotationModule.lib.buildAnnotation(fields);
+  const createdAnnotation = annotationModule.lib.buildAnnotation({ certaintyScore: 1, ...fields });
   const newAnnotations = [createdAnnotation, ...annotations];
 
   return autoLinker.autoLink([createdAnnotation], newAnnotations, settings);
@@ -33,7 +33,9 @@ function createManyLinked(
   annotations: annotationType[],
   fieldsArray: Array<{ category: string; start: number; text: string }>,
 ): annotationType[] {
-  const createdAnnotations = fieldsArray.map((fields) => annotationModule.lib.buildAnnotation(fields));
+  const createdAnnotations = fieldsArray.map((fields) =>
+    annotationModule.lib.buildAnnotation({ certaintyScore: 1, ...fields }),
+  );
   const linkedAnnotations = createdAnnotations.map((annotation, index) => {
     if (index === 0) {
       return annotation;
@@ -52,7 +54,7 @@ function createAll(
   settings: settingsType,
 ): annotationType[] {
   const createdAnnotations = annotationTextsAndIndices.map(({ index, text }) =>
-    annotationModule.lib.buildAnnotation({ category, start: index, text }),
+    annotationModule.lib.buildAnnotation({ category, start: index, text, certaintyScore: 1 }),
   );
   const newAnnotations = createdAnnotations.concat(annotations);
 

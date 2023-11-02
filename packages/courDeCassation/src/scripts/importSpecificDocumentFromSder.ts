@@ -14,6 +14,7 @@ import { parametersHandler } from '../lib/parametersHandler';
         documentNumber,
         source,
         lowPriority,
+        environment,
       }),
     {
       shouldLoadDb: true,
@@ -37,7 +38,7 @@ function parseArgv() {
       source: {
         demandOption: true,
         description:
-          'source (jurinet or jurica) of the document you want to import',
+          'source (jurinet, jurica or juritj) of the document you want to import',
         type: 'string',
       },
     })

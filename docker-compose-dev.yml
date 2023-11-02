@@ -21,10 +21,15 @@ services:
       - "55430:55430"
     depends_on:
       - labelDb
+    networks:
+      - default
+      - dbsder-external-network
 
 networks:
   default:
     name: label-network
+  dbsder-external-network:
+    external: true
 
 volumes:
   mongo-storage:

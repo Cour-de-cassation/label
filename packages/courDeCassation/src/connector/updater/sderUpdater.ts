@@ -1,13 +1,25 @@
-import { documentType } from '@label/core';
+import { documentType, environmentType } from '@label/core';
 import { sderApi } from '../../sderApi';
 
 export { sderUpdater };
 
 const sderUpdater = {
-  async updateDocumentsToBeTreatedStatus(documents: documentType[]) {
-    await sderApi.setCourtDecisionsToBeTreated(documents);
+  async updateDocumentsToBeTreatedStatus({
+    documents,
+    environment,
+  }: {
+    documents: documentType[];
+    environment: environmentType;
+  }) {
+    await sderApi.setCourtDecisionsToBeTreated({ documents, environment });
   },
-  async updateDocumentsLoadedStatus(documents: documentType[]) {
-    await sderApi.setCourtDecisionsLoaded(documents);
+  async updateDocumentsLoadedStatus({
+    documents,
+    environment,
+  }: {
+    documents: documentType[];
+    environment: environmentType;
+  }) {
+    await sderApi.setCourtDecisionsLoaded({ documents, environment });
   },
 };

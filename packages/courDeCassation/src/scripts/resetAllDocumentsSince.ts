@@ -8,14 +8,13 @@ import { sderConnector } from '../connector';
   const { days } = parseArgv();
   const backend = buildBackend(environment, settings);
 
-  backend.runScript(() => resetAllDocumentsSince(days), {
-    shouldLoadDb: true,
-  });
+  backend.runScript(
+    () => sderConnector.resetAllDocumentsSince({ days, environment }),
+    {
+      shouldLoadDb: true,
+    },
+  );
 })();
-
-async function resetAllDocumentsSince(days: number) {
-  await sderConnector.resetAllDocumentsSince(days);
-}
 
 function parseArgv() {
   const argv = yargs

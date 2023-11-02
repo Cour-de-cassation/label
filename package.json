@@ -14,6 +14,7 @@
     "**/@typescript-eslint/parser": "^4.4.1"
   },
   "scripts": {
+    "bash": "yarn buildLocalDevDocker && yarn startLocalDevDocker",
     "bootstrap": "lerna run compile && lerna run --scope @label/cour-de-cassation bootstrap --stream && ./scripts/bootstrap.sh",
     "buildDev": "lerna run --ignore @label/client build --stream",
     "buildLocalDevDocker": "docker-compose -f docker-compose-dev.yml build",
@@ -45,5 +46,6 @@
   "workspaces": [
     "packages/generic/*",
     "packages/courDeCassation/"
-  ]
+  ],
+  "dependencies": {}
 }

@@ -67,5 +67,11 @@ const buildTreatmentRepository = buildRepositoryBuilder<
         maxDate: maxDateStatistics[0]?.lastUpdateDate,
       };
     },
+
+    async findAllByLastUpdateDateLessThan(lastUpdateDate) {
+      return collection
+        .find({ lastUpdateDate: { $lt: lastUpdateDate } })
+        .toArray();
+    },
   }),
 });

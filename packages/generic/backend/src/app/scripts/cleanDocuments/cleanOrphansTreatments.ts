@@ -34,5 +34,5 @@ async function cleanOrphansTreatments() {
     }
   }
 
-  logger.log(`cleanOrphansTreatments done !`)
+  logger.log(`cleanOrphansTreatments done !`);
 }

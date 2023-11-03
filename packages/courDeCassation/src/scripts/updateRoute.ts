@@ -29,6 +29,7 @@ async function updateRoute(status: documentType['status']) {
           documentsToUpdate[index].decisionMetadata.additionalTermsToAnnotate,
         session: documentsToUpdate[index].decisionMetadata.session,
         solution: documentsToUpdate[index].decisionMetadata.solution,
+        parties: documentsToUpdate[index].decisionMetadata.parties,
         publicationCategory: documentsToUpdate[index].publicationCategory,
         chamberName: documentsToUpdate[index].decisionMetadata.chamberName,
         civilMatterCode:

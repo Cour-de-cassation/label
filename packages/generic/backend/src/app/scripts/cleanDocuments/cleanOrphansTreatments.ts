@@ -1,6 +1,7 @@
-import { buildDocumentRepository } from '../../modules/document';
-import { buildTreatmentRepository } from '../../modules/treatment';
-import { logger } from '../../utils';
+import { dateBuilder } from '@label/core';
+import { buildDocumentRepository } from '../../../modules/document';
+import { buildTreatmentRepository } from '../../../modules/treatment';
+import { logger } from '../../../utils';
 
 export { cleanOrphansTreatments };
 
@@ -9,14 +10,14 @@ export { cleanOrphansTreatments };
 */
 
 async function cleanOrphansTreatments() {
+  logger.log(`cleanOrphansTreatments`);
   const treatmentRepository = buildTreatmentRepository();
   const documentRepository = buildDocumentRepository();
 
-  const date = new Date();
-  date.setMonth(date.getMonth() - 6);
+  const date = dateBuilder.monthsAgo(6);
 
   const treatments = await treatmentRepository.findAllByLastUpdateDateLessThan(
-    date.getTime(),
+    date,
   );
   logger.log(
     `Find ${treatments.length} treatments with lastUpdateDate more than 6 months ago.`,
@@ -32,4 +33,6 @@ async function cleanOrphansTreatments() {
       logger.log(`Treatment ${treatments[i]._id} deleted.`);
     }
   }
+
+  logger.log(`cleanOrphansTreatments done !`)
 }

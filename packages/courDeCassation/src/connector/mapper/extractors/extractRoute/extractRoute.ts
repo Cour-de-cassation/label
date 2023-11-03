@@ -53,7 +53,7 @@ function extractRoute(
 
   if (
     (!!routeInfos.additionalTermsToAnnotate ||
-      routeInfos.parties && routeInfos.parties.length > 50) &&
+      (routeInfos.parties && routeInfos.parties.length > 50)) &&
     (route == 'simple' || route == 'default')
   ) {
     route = 'exhaustive';

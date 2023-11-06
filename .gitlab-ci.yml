@@ -99,7 +99,7 @@ build_label_client:
     LABEL_KUBE_TYPE: "k3s"
     LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
     LABEL_ROOT_PATH: "label"
-    LABEL_PUBLIC_URL: "/label"
+    LABEL_PUBLIC_URL: "/label-client"
     LABEL_START_TIMEOUT: "180"
     LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
   script:

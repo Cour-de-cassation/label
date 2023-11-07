@@ -22,9 +22,10 @@ async function deleteStaticticsBefore({
     statisticToDeleteIds,
   );
 
-  logger.log(
-    `deleteStaticticsBefore ${since}${unit}: ${count} statistics deleted`,
-  );
+  logger.log({
+    operationName: 'deleteStaticticsBefore',
+    msg: `START: ${since}${unit}: ${count} statistics deleted`,
+  });
 
   function computeExpirationDate() {
     switch (unit) {

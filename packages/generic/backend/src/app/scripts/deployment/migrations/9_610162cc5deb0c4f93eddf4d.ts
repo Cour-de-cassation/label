@@ -10,7 +10,7 @@ export { up, down };
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 async function up() {
-  logger.log('Up: ');
+  logger.log({ operationName: 'migration', msg: 'Up: ' });
 
   const statisticRepository = buildStatisticRepository();
 
@@ -116,7 +116,7 @@ async function up() {
 }
 
 async function down() {
-  logger.log('Down: ');
+  logger.log({ operationName: 'migration', msg: 'Down: ' });
 
   const statisticRepository = buildStatisticRepository();
 

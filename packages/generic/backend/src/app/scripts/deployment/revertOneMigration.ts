@@ -8,7 +8,10 @@ async function revertOneMigration() {
   const lastMigration = await migrationService.fetchLastOne();
 
   if (!lastMigration) {
-    logger.log(`No migration to revert.`);
+    logger.error({
+      operationName: 'revertOneMigration',
+      msg: `No migration to revert`,
+    });
     return;
   }
   const { _id, order } = lastMigration;
@@ -37,9 +40,12 @@ async function revertOneMigration() {
       await migrationFile.up();
       throw new Error(error);
     }
-    logger.log(
-      `Migration ${idModule.lib.convertToString(_id)} successfully reverted!`,
-    );
+    logger.log({
+      operationName: 'revertOneMigration',
+      msg: `Migration ${idModule.lib.convertToString(
+        _id,
+      )} successfully reverted!`,
+    });
   } else {
     throw new Error(
       `Migration file ${fileName} exists, but up or down is not a function`,

@@ -11,16 +11,17 @@ export { cleanDuplicatedDocuments };
  * Delete all doubled documents (same source, same documentNumber, same text)
  */
 async function cleanDuplicatedDocuments() {
-  logger.log(`cleanDuplicatedDocuments`);
+  logger.log({ operationName: 'cleanDuplicatedDocuments', msg: 'START' });
 
   const documentRepository = buildDocumentRepository();
 
   const documents = await documentRepository.findAll();
   const sortedDocuments = documents.sort(compareDocumentsByStatus);
 
-  logger.log(
-    `${documents.length} documents found. Searching for duplicates...`,
-  );
+  logger.log({
+    operationName: 'cleanDuplicatedDocuments',
+    msg: `${documents.length} documents found. Searching for duplicates...`,
+  });
 
   const documentsToDelete: documentType[] = [];
 
@@ -32,14 +33,15 @@ async function cleanDuplicatedDocuments() {
     }
   }
 
-  logger.log(
-    `Found ${documentsToDelete.length} documents to delete. Deleting...`,
-  );
+  logger.log({
+    operationName: 'cleanDuplicatedDocuments',
+    msg: `Found ${documentsToDelete.length} documents to delete. Deleting...`,
+  });
 
   for (let index = 0, l = documentsToDelete.length; index < l; index++) {
     await documentService.deleteDocument(documentsToDelete[index]._id);
   }
-  logger.log('cleanDuplicatedDocuments done!');
+  logger.log({ operationName: 'cleanDuplicatedDocuments', msg: 'DONE' });
 }
 
 function areDocumentsIdentical(

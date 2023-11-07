@@ -6,11 +6,14 @@ import { logger } from '../../utils';
 export { renewCache };
 
 async function renewCache({ minutes }: { minutes: number }) {
-  logger.log(`renewCache`);
+  logger.log({ operationName: 'renewCache', msg: 'START' });
   const cachesToRenew: cacheType[] = await cacheService.fetchAllOlderThan(
     minutes,
   );
-  logger.log(`${cachesToRenew.length} caches to renew.`);
+  logger.log({
+    operationName: 'renewCache',
+    msg: `${cachesToRenew.length} caches to renew`,
+  });
 
   const availableStatisticFiltersCaches = await cacheService.fetchAllByKey(
     'availableStatisticFilters',
@@ -23,13 +26,19 @@ async function renewCache({ minutes }: { minutes: number }) {
       'availableStatisticFilters',
       JSON.stringify(await statisticService.fetchAvailableStatisticFilters()),
     );
-    logger.log(`availableStatisticFilters cache renewed.`);
+    logger.log({
+      operationName: 'renewCache',
+      msg: `availableStatisticFilters cache renewed`,
+    });
   }
 
   for (const cache of cachesToRenew) {
     await cacheService.deleteCache(cache._id);
-    logger.log(`${cache._id} ${cache.key} cache deleted.`);
+    logger.log({
+      operationName: 'renewCache',
+      msg: `${cache._id} ${cache.key} cache deleted`,
+    });
   }
 
-  logger.log('Done');
+  logger.log({ operationName: 'renewCache', msg: 'DONE' });
 }

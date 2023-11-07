@@ -5,12 +5,12 @@ const emptyMigration = `import { logger } from "../../../../utils"
 export { up, down }
 
 async function up() {
-  logger.log("Up: ")
+  logger.log({ operationName: "migration", msg: "Up: "})
 
 }
 
 async function down() {
-  logger.log("Down: ")
+  logger.log({ operationName: "migration", msg: "Down: "})
 
 }
 `;

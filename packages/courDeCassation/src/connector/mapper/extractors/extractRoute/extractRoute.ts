@@ -29,7 +29,7 @@ function extractRoute(
       try {
         route = extractRouteForJurinet({ ...routeInfos });
       } catch (e) {
-        logger.log(e);
+        logger.error({ operationName: 'extractRouteForJurinet', msg: `${e}` });
         route = 'exhaustive';
       }
       break;
@@ -37,7 +37,7 @@ function extractRoute(
       try {
         route = extractRouteForJurica({ ...routeInfos });
       } catch (e) {
-        logger.log(e);
+        logger.error({ operationName: 'extractRouteForJurica', msg: `${e}` });
         route = 'exhaustive';
       }
       break;
@@ -45,7 +45,7 @@ function extractRoute(
       try {
         route = extractRouteForJuritj({ ...routeInfos });
       } catch (e) {
-        logger.log(e);
+        logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });
         route = 'exhaustive';
       }
       break;

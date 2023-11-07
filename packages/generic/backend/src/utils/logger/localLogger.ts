@@ -4,12 +4,37 @@ import { prettyLogFormatter } from './prettyLogFormatter';
 export { localLogger };
 
 const localLogger: loggerType = {
-  log(value) {
+  async log({
+    operationName,
+    msg,
+    data,
+  }: {
+    operationName: string;
+    msg: string;
+    data?: Record<string, unknown>;
+  }) {
     // eslint-disable-next-line no-console
-    console.log(prettyLogFormatter.formatLog(value));
+    console.log(
+      prettyLogFormatter.formatLog({ level: 'info', operationName, msg, data }),
+    );
   },
-  error(errorText) {
+  async error({
+    operationName,
+    msg,
+    data,
+  }: {
+    operationName: string;
+    msg: string;
+    data?: Record<string, unknown>;
+  }) {
     // eslint-disable-next-line no-console
-    console.error(prettyLogFormatter.formatErrorLog(errorText));
+    console.error(
+      prettyLogFormatter.formatLog({
+        level: 'error',
+        operationName,
+        msg,
+        data,
+      }),
+    );
   },
 };

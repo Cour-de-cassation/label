@@ -68,7 +68,7 @@ function buildController(
       res.status(statusCode);
       res.send(data);
     } catch (error) {
-      logger.error(error);
+      logger.error({ operationName: 'buildController', msg: `${error}` });
 
       if (error instanceof CustomError) {
         res.status(error.statusCode);

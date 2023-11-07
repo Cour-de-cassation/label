@@ -13,7 +13,7 @@ export { cleanAssignedDocuments };
  * pending or saved document
  */
 async function cleanAssignedDocuments() {
-  logger.log(`cleanAssignedDocuments`);
+  logger.log({ operationName: 'cleanAssignedDocuments', msg: 'START' });
   const documentRepository = buildDocumentRepository();
   const assignedDocuments = await documentRepository.findAllByStatusProjection(
     ['pending', 'saved'],
@@ -26,7 +26,10 @@ async function cleanAssignedDocuments() {
     'documentId',
   ]);
 
-  logger.log(`Start checking all assigned documents`);
+  logger.log({
+    operationName: 'cleanAssignedDocuments',
+    msg: 'Start checking all assigned documents',
+  });
 
   await Promise.all(
     assignedDocuments.map(async (document) => {
@@ -34,13 +37,14 @@ async function cleanAssignedDocuments() {
         idModule.lib.equalId(documentId, idModule.lib.buildId(document._id)),
       );
       if (!assignation) {
-        logger.log(
-          `Inconsistency: assignation not found for document status ${document.status}. Resetting the document to free...`,
-        );
+        logger.log({
+          operationName: 'cleanAssignedDocuments',
+          msg: `Inconsistency: assignation not found for document status ${document.status}. Resetting the document to free...`,
+        });
         await documentService.updateDocumentStatus(document._id, 'free');
       }
       return;
     }),
   );
-  logger.log(`cleanAssignedDocuments done!`);
+  logger.log({ operationName: 'cleanAssignedDocuments', msg: 'DONE' });
 }

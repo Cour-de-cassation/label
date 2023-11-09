@@ -160,6 +160,8 @@ deploy_label_client:
     MONGODB_URI: ${{ MONGODB_URI }}
     MONGODB_PORT: ${{MONGODB_PORT }}
     MONGODB_URL: ${{MONGODB_URL }}
+    LABEL_ROOT_PATH: "label-client"
+    LABEL_PUBLIC_URL: "/label-client"
   script:
     - envsubst < .deploys/deploy_namespace.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
     - envsubst < .deploys/deploy_client.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -

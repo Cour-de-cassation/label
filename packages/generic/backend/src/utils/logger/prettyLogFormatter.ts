@@ -12,6 +12,12 @@ const prettyLogFormatter = {
     msg: string;
     data?: Record<string, unknown>;
   }) {
-    return `${JSON.stringify({ level, datetime: new Date().toISOString(), operationName, msg, data })}`;
+    return `${JSON.stringify({
+      level,
+      datetime: new Date().toISOString(),
+      operationName,
+      msg,
+      data,
+    })}`;
   },
 };

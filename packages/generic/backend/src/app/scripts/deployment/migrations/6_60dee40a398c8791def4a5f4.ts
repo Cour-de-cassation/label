@@ -7,7 +7,7 @@ export { up, down };
 /* eslint-disable @typescript-eslint/no-unsafe-member-access*/
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function up() {
-  logger.log('Up: ');
+  logger.log({ operationName: 'migration', msg: 'Up: ' });
 
   const statisticRepository = buildStatisticRepository();
   const statistics = await statisticRepository.findAll();
@@ -83,7 +83,7 @@ async function up() {
 }
 
 async function down() {
-  logger.log('Down: ');
+  logger.log({ operationName: 'migration', msg: 'Down: ' });
 
   const statisticRepository = buildStatisticRepository();
   const statistics = await statisticRepository.findAll();

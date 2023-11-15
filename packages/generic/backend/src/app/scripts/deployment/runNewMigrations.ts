@@ -17,8 +17,14 @@ async function runNewMigrations() {
   );
 
   const alreadyRunMigrations = await migrationService.fetchAll();
-  logger.log(`${alreadyRunMigrations.length} migrations in the database`);
-  logger.log(`${fileNames.length} migrations locally stored`);
+  logger.log({
+    operationName: 'runNewMigrations',
+    msg: `${alreadyRunMigrations.length} migrations in the database`,
+  });
+  logger.log({
+    operationName: 'runNewMigrations',
+    msg: `${fileNames.length} migrations locally stored`,
+  });
   for (const fileName of sortedFileNames) {
     const { _id, order } = migrationModule.lib.fileNameHandler.parseFileName(
       fileName,
@@ -29,7 +35,10 @@ async function runNewMigrations() {
         idModule.lib.equalId(migration._id, _id),
       )
     ) {
-      logger.log(`Executing migration ${idModule.lib.convertToString(_id)}...`);
+      logger.log({
+        operationName: 'runNewMigrations',
+        msg: `Executing migration ${idModule.lib.convertToString(_id)}...`,
+      });
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const migrationFile: {
@@ -50,11 +59,12 @@ async function runNewMigrations() {
           await migrationFile.down();
           throw new Error(error);
         }
-        logger.log(
-          `Migration ${idModule.lib.convertToString(
+        logger.log({
+          operationName: 'runNewMigrations',
+          msg: `Migration ${idModule.lib.convertToString(
             _id,
           )} successfully executed!`,
-        );
+        });
       } else {
         throw new Error(
           `Migration file ${fileName} exists, but up or down is not a function`,

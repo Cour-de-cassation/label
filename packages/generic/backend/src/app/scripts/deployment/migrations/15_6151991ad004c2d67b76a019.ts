@@ -7,7 +7,7 @@ export { up, down };
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 async function up() {
-  logger.log('Up: ');
+  logger.log({ operationName: 'migration', msg: 'Up: ' });
 
   const documentRepository = buildDocumentRepository();
 
@@ -26,7 +26,7 @@ async function up() {
 }
 
 async function down() {
-  logger.log('Down: ');
+  logger.log({ operationName: 'migration', msg: 'Down: ' });
 
   const documentRepository = buildDocumentRepository();
 

@@ -10,7 +10,7 @@ import { cleanOrphansTreatments } from './cleanOrphansTreatments';
 export { cleanDocuments };
 
 async function cleanDocuments() {
-  logger.log(`cleanDocuments`);
+  logger.log({ operationName: 'cleanDocuments', msg: 'START' });
 
   await cleanDuplicatedDocuments();
 
@@ -26,5 +26,5 @@ async function cleanDocuments() {
 
   await cleanOrphansTreatments();
 
-  logger.log(`cleanDocuments done!`);
+  logger.log({ operationName: 'cleanDocuments', msg: 'DONE' });
 }

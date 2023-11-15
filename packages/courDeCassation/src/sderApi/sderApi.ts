@@ -53,9 +53,12 @@ const sderApi: sderApiType = {
     environment,
   }) {
     if (environment.db_api_enabled) {
-      logger.log(
-        'Warning: The method fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween is not implemented for the db_api, switching to Mongo request',
-      );
+      logger.log({
+        operationName:
+          'fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween',
+        msg:
+          'Warning: The method fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween is not implemented for the db_api, switching to Mongo request',
+      });
     }
     return await decisionModule.service.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
       { startDate, endDate, jurisdictions, chambers, source },
@@ -155,9 +158,11 @@ const sderApi: sderApiType = {
     environment,
   }) {
     if (environment.db_api_enabled) {
-      logger.log(
-        'Warning: The method fetchChainedJuricaDecisionsToPseudonymiseBetween is not implemented for the db_api, switching to Mongo request',
-      );
+      logger.log({
+        operationName: 'fetchChainedJuricaDecisionsToPseudonymiseBetween',
+        msg:
+          'Warning: The method fetchChainedJuricaDecisionsToPseudonymiseBetween is not implemented for the db_api, switching to Mongo request',
+      });
     }
     return await decisionModule.service.fetchChainedJuricaDecisionsToPseudonymiseBetween(
       { startDate, endDate },
@@ -183,9 +188,11 @@ const sderApi: sderApiType = {
     environment,
   }) {
     if (environment.db_api_enabled) {
-      logger.log(
-        'Warning: The method fetchCourtDecisionBySourceIdAndSourceName is not implemented for the db_api, switching to Mongo request',
-      );
+      logger.log({
+        operationName: 'fetchCourtDecisionBySourceIdAndSourceName',
+        msg:
+          'Warning: The method fetchCourtDecisionBySourceIdAndSourceName is not implemented for the db_api, switching to Mongo request',
+      });
     }
     return decisionModule.service.fetchDecisionBySourceIdAndSourceName(
       sourceId,

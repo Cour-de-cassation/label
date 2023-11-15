@@ -15,12 +15,18 @@ import { extractRoute } from '../connector/mapper/extractors';
 })();
 
 async function updateRoute(status: documentType['status']) {
-  logger.log(`Update route of documents with status ${status}`);
+  logger.log({
+    operationName: 'updateRoute',
+    msg: `Update route of documents with status ${status}`,
+  });
 
   const documentRepository = buildDocumentRepository();
 
   const documentsToUpdate = await documentRepository.findAllByStatus([status]);
-  logger.log(`${documentsToUpdate.length} documents to update route`);
+  logger.log({
+    operationName: 'updateRoute',
+    msg: `${documentsToUpdate.length} documents to update route`,
+  });
 
   for (let index = 0; index < documentsToUpdate.length; index++) {
     const newRoute = extractRoute(
@@ -42,9 +48,10 @@ async function updateRoute(status: documentType['status']) {
       },
       documentsToUpdate[index].source,
     );
-    logger.log(
-      `New route for the document ${documentsToUpdate[index]._id} : ${newRoute}`,
-    );
+    logger.log({
+      operationName: 'updateRoute',
+      msg: `New route for the document ${documentsToUpdate[index]._id} : ${newRoute}`,
+    });
 
     await documentRepository.updateRouteById(
       documentsToUpdate[index]._id,

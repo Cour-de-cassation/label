@@ -30,13 +30,19 @@ function buildAnnotator(
   };
 
   async function fillLossOfAllTreatedDocuments() {
-    logger.log('fillLossOfAllTreatedDocuments');
+    logger.log({
+      operationName: 'fillLossOfAllTreatedDocuments',
+      msg: 'START',
+    });
 
     const failedDocumentIds: documentType['_id'][] = [];
     const documentsCountToFill = await documentService.countDoneDocumentsWithoutLossNotIn(
       failedDocumentIds,
     );
-    logger.log(`Found ${documentsCountToFill} documents without loss`);
+    logger.log({
+      operationName: 'fillLossOfAllTreatedDocuments',
+      msg: `Found ${documentsCountToFill} documents without loss`,
+    });
     let currentDocumentToFillLoss: documentType | undefined;
     let documentsFilledLossCount = 0;
     do {
@@ -60,11 +66,12 @@ function buildAnnotator(
         } catch (error) {
           logger.error(error);
           failedDocumentIds.push(currentDocumentToFillLoss._id);
-          logger.log(
-            `Error while filling loss of document ${idModule.lib.convertToString(
+          logger.log({
+            operationName: 'fillLossOfAllTreatedDocuments',
+            msg: `Error while filling loss of document ${idModule.lib.convertToString(
               currentDocumentToFillLoss._id,
-            )}.`,
-          );
+            )}`,
+          });
         }
       }
     } while (
@@ -74,37 +81,20 @@ function buildAnnotator(
   }
 
   async function annotateDocumentsWithoutAnnotations() {
-    logger.log('annotateDocumentsWithoutAnnotations');
+    logger.log({
+      operationName: 'annotateDocumentsWithoutAnnotations',
+      msg: 'START',
+    });
 
     const failedDocumentIds: documentType['_id'][] = [];
     const documentsCountToAnnotate = await documentService.countDocumentsWithoutAnnotations();
-    logger.log(`Found ${documentsCountToAnnotate} documents to annotate`);
+    logger.log({
+      operationName: 'annotateDocumentsWithoutAnnotations',
+      msg: `Found ${documentsCountToAnnotate} documents to annotate`,
+    });
     let currentDocumentToAnnotate: documentType | undefined;
     let previousDocumentStatus: documentType['status'] | undefined;
     let documentsAnnotatedCount = 0;
-
-    process.on('SIGINT', async function () {
-      logger.log('Stopping...');
-
-      if (currentDocumentToAnnotate) {
-        logger.log(
-          `Stopping annotating document ${formatDocumentInfos(
-            currentDocumentToAnnotate,
-          )}. Setting the document to its previous status...`,
-        );
-        await documentService.updateDocumentStatus(
-          currentDocumentToAnnotate._id,
-          previousDocumentStatus ?? 'free',
-        );
-        logger.log(
-          `Document ${formatDocumentInfos(currentDocumentToAnnotate)} free!`,
-        );
-      }
-
-      logger.log('STOPPED annotateDocumentsWithoutAnnotations');
-
-      process.exit();
-    });
 
     do {
       previousDocumentStatus = undefined;
@@ -113,7 +103,10 @@ function buildAnnotator(
       );
       if (currentDocumentToAnnotate) {
         documentsAnnotatedCount++;
-        logger.log(`Found a document to annotate. Reserving...`);
+        logger.log({
+          operationName: 'annotateDocumentsWithoutAnnotations',
+          msg: `Found a document to annotate. Reserving...`,
+        });
         previousDocumentStatus = currentDocumentToAnnotate.status;
         const nextDocumentStatus = documentModule.lib.getNextStatus({
           status: currentDocumentToAnnotate.status,
@@ -124,30 +117,35 @@ function buildAnnotator(
           currentDocumentToAnnotate._id,
           nextDocumentStatus,
         );
-        logger.log(
-          `Annotating with ${
+        logger.log({
+          operationName: 'annotateDocumentsWithoutAnnotations',
+          msg: `Annotating with ${
             annotatorConfig.name
           } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
             currentDocumentToAnnotate,
           )}`,
-        );
+        });
         try {
           await annotateDocument(updatedDocument);
         } catch (error) {
-          logger.error(error);
           failedDocumentIds.push(updatedDocument._id);
-          logger.log(
-            `Error while annotating document ${formatDocumentInfos(
+          logger.log({
+            operationName: 'annotateDocumentsWithoutAnnotations',
+            msg: `Error while annotating document ${formatDocumentInfos(
               currentDocumentToAnnotate,
             )}. Setting the document to its previous status...`,
-          );
+            data: error as Record<string, unknown>,
+          });
           await documentService.updateDocumentStatus(
             currentDocumentToAnnotate._id,
             previousDocumentStatus,
           );
-          logger.log(
-            `Document ${formatDocumentInfos(currentDocumentToAnnotate)} free!`,
-          );
+          logger.log({
+            operationName: 'annotateDocumentsWithoutAnnotations',
+            msg: `Document ${formatDocumentInfos(
+              currentDocumentToAnnotate,
+            )} free!`,
+          });
         }
       }
     } while (
@@ -155,7 +153,10 @@ function buildAnnotator(
       documentsAnnotatedCount < documentsCountToAnnotate
     );
 
-    logger.log('DONE annotateDocumentsWithoutAnnotations');
+    logger.log({
+      operationName: 'annotateDocumentsWithoutAnnotations',
+      msg: 'DONE',
+    });
   }
 
   async function reAnnotateFreeDocuments() {
@@ -185,37 +186,57 @@ function buildAnnotator(
       documentId,
       report,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
-    logger.log(`NLP annotation succeeded!`);
+    logger.log({
+      operationName: 'annotateDocument',
+      msg: 'NLP annotation succeeded',
+    });
 
     if (document.route == 'simple' && annotations.length == 0) {
       await documentService.updateDocumentRoute(documentId, 'automatic');
-      logger.log(`Route switched to automatic`);
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'Route switched to automatic',
+      });
     }
 
     await createAnnotatorTreatment({ annotations, documentId });
-    logger.log(`NLP treatment created in DB`);
+    logger.log({
+      operationName: 'annotateDocument',
+      msg: 'NLP treatment created in DB',
+    });
     const additionalAnnotations = computeAdditionalAnnotations(
       document,
       annotations,
       settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
     );
     if (additionalAnnotations.length > 0) {
-      logger.log(`Creating additional annotations treatment...`);
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'Creating additional annotations treatment...',
+      });
       await createAdditionalAnnotationsTreatment({
         annotations: additionalAnnotations,
         documentId: document._id,
       });
-      logger.log(`Additional annotations treatment created in DB.`);
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'Additional annotations treatment created in DB',
+      });
     }
     if (JSON.stringify(settings).includes('autoLinkSensitivity')) {
-      logger.log(`Creating post-process treatment...`);
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'Creating post-process treatment...',
+      });
       await createAutoTreatment({
         annotations: [...annotations, ...additionalAnnotations],
         documentId,
       });
-      logger.log(
-        `Post-process treatment created. Creating report and updating document status...`,
-      );
+      logger.log({
+        operationName: 'annotateDocument',
+        msg:
+          'Post-process treatment created. Creating report and updating document status...',
+      });
     }
 
     await createReport(report);
@@ -228,7 +249,10 @@ function buildAnnotator(
       document._id,
       nextDocumentStatus,
     );
-    logger.log(`Annotation done for document ${formatDocumentInfos(document)}`);
+    logger.log({
+      operationName: 'annotateDocument',
+      msg: `Annotation done for document ${formatDocumentInfos(document)}`,
+    });
   }
 
   async function createAnnotatorTreatment({

@@ -11,7 +11,7 @@ async function deleteDocument(
   documentNumber: documentType['documentNumber'],
   source: documentType['source'],
 ) {
-  logger.log(`deleteDocument`);
+  logger.log({ operationName: 'deleteDocument', msg: 'START' });
   const documentRepository = buildDocumentRepository();
   const document = await documentRepository.findOneByDocumentNumberAndSource({
     documentNumber,
@@ -20,5 +20,5 @@ async function deleteDocument(
 
   document && (await documentService.deleteDocument(document._id));
 
-  logger.log(`DONE deleteDocument`);
+  logger.log({ operationName: 'deleteDocument', msg: 'DONE' });
 }

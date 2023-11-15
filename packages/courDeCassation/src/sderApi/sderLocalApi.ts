@@ -271,6 +271,11 @@ const sderLocalApi: sderApiType = {
           environment,
         });
       });
+    } else {
+      logger.log({
+        operationName: 'setCourtDecisionsLoaded',
+        msg: 'Warning: API Dbsder is disabled, no action performed',
+      });
     }
   },
 
@@ -284,6 +289,11 @@ const sderLocalApi: sderApiType = {
           environment,
         });
       });
+    } else {
+      logger.log({
+        operationName: 'setCourtDecisionsToBeTreated',
+        msg: 'Warning: API Dbsder is disabled, no action performed',
+      });
     }
   },
 
@@ -295,6 +305,11 @@ const sderLocalApi: sderApiType = {
         body: { statut: 'done' },
         environment,
       });
+    } else {
+      logger.log({
+        operationName: 'setCourtDecisionDone',
+        msg: 'Warning: API Dbsder is disabled, no action performed',
+      });
     }
   },
 
@@ -305,6 +320,11 @@ const sderLocalApi: sderApiType = {
         path: `decisions/${externalId}/`,
         body: { statut: 'blocked' },
         environment,
+      });
+    } else {
+      logger.log({
+        operationName: 'setCourtDecisionBlocked',
+        msg: 'Warning: API Dbsder is disabled, no action performed',
       });
     }
   },
@@ -329,7 +349,10 @@ const sderLocalApi: sderApiType = {
         environment,
       });
     } else {
-      logger.log('Warning: API Dbsder is disabled, no export performed');
+      logger.log({
+        operationName: 'updateDecisionPseudonymisation',
+        msg: 'Warning: API Dbsder is disabled, no export performed',
+      });
     }
   },
 };

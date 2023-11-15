@@ -8,13 +8,17 @@ async function dumpDocument(
   documentNumber: documentType['documentNumber'],
   source: documentType['source'],
 ) {
-  logger.log(`dumpDocument`);
+  logger.log({ operationName: 'dumpDocument', msg: 'START' });
   const documentRepository = buildDocumentRepository();
   const document = await documentRepository.findOneByDocumentNumberAndSource({
     documentNumber,
     source,
   });
 
-  logger.log(document);
-  logger.log(`DONE dumpDocument`);
+  logger.log({
+    operationName: 'dumpDocument',
+    msg: 'Document:',
+    data: document,
+  });
+  logger.log({ operationName: 'dumpDocument', msg: 'DONE' });
 }

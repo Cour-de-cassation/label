@@ -12,7 +12,7 @@ export { cleanUnconsistentTreatments };
  * Reset documents with unconsistent annotations
  */
 async function cleanUnconsistentTreatments() {
-  logger.log(`cleanUnconsistentTreatments`);
+  logger.log({ operationName: 'cleanUnconsistentTreatments', msg: 'START' });
   const documentRepository = buildDocumentRepository();
   const documents = await documentRepository.findAllProjection(['_id']);
   const documentIds = documents.map(({ _id }) => _id);
@@ -23,12 +23,15 @@ async function cleanUnconsistentTreatments() {
       );
       treatmentModule.lib.computeAnnotations(treatments);
     } catch (error) {
-      logger.log(
-        `Resetting document ${idModule.lib.convertToString(documents[i]._id)}`,
-      );
-      logger.error(error);
+      logger.error({
+        operationName: 'cleanUnconsistentTreatments',
+        msg: `Resetting document ${idModule.lib.convertToString(
+          documents[i]._id,
+        )}`,
+        data: error as Record<string, unknown>,
+      });
       await documentService.updateDocumentStatus(documentIds[i], 'loaded');
     }
   }
-  logger.log('cleanUnconsistentTreatments done!');
+  logger.log({ operationName: 'cleanUnconsistentTreatments', msg: 'DONE' });
 }

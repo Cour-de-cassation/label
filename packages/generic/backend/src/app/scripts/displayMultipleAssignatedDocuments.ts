@@ -7,7 +7,10 @@ import { userService } from '../../modules/user';
 export { displayMultipleAssignatedDocuments };
 
 async function displayMultipleAssignatedDocuments() {
-  logger.log(`displayMultipleAssignatedDocuments`);
+  logger.log({
+    operationName: 'displayMultipleAssignatedDocuments',
+    msg: 'START',
+  });
   const documentRepository = buildDocumentRepository();
   const documents = await documentRepository.findAll();
 
@@ -28,13 +31,20 @@ async function displayMultipleAssignatedDocuments() {
       : [];
     if (userNames.length > 1) {
       documentCount++;
-      logger.log(
-        `${document.documentNumber} (${document.source}) has ${
+      logger.log({
+        operationName: 'displayMultipleAssignatedDocuments',
+        msg: `${document.documentNumber} (${document.source}) has ${
           userNames.length
         } assignated: [${userNames.join(', ')}]`,
-      );
+      });
     }
   }
-  logger.log(`${documentCount} documents found.`);
-  logger.log(`DONE displayMultipleAssignatedDocuments`);
+  logger.log({
+    operationName: 'displayMultipleAssignatedDocuments',
+    msg: `${documentCount} documents found`,
+  });
+  logger.log({
+    operationName: 'displayMultipleAssignatedDocuments',
+    msg: 'DONE',
+  });
 }

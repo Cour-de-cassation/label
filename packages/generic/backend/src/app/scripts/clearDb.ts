@@ -29,22 +29,20 @@ async function clearDb({
   treatment?: boolean;
   user?: boolean;
 }) {
-  logger.log(
-    `clearDb ${JSON.stringify(
-      {
-        annotation,
-        assignation,
-        document,
-        migration,
-        problemReport,
-        statistic,
-        treatment,
-        user,
-      },
-      null,
-      2,
-    )}`,
-  );
+  logger.log({
+    operationName: 'clearDb',
+    msg: 'Clearing db',
+    data: {
+      annotation,
+      assignation,
+      document,
+      migration,
+      problemReport,
+      statistic,
+      treatment,
+      user,
+    },
+  });
 
   const repositories = [
     {

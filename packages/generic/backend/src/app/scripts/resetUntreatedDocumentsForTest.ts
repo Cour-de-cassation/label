@@ -5,11 +5,14 @@ import { buildDocumentRepository } from '../../modules/document';
 export { resetUntreatedDocumentsForTest };
 
 async function resetUntreatedDocumentsForTest() {
-  logger.log('resetUntreatedDocumentsForTest');
+  logger.log({ operationName: 'resetUntreatedDocumentsForTest', msg: 'START' });
   const documentRepository = buildDocumentRepository();
 
   const untreatedDocuments = await documentRepository.findAllByStatus(['free']);
-  logger.log(`Found ${untreatedDocuments.length} untreated documents`);
+  logger.log({
+    operationName: 'resetUntreatedDocumentsForTest',
+    msg: `Found ${untreatedDocuments.length} untreated documents`,
+  });
 
   const updatedUntreatedDocuments = untreatedDocuments.map((document) => ({
     ...document,
@@ -25,7 +28,7 @@ async function resetUntreatedDocumentsForTest() {
     }),
   );
 
-  logger.log('resetUntreatedDocumentsForTest done!');
+  logger.log({ operationName: 'resetUntreatedDocumentsForTest', msg: 'DONE' });
 }
 
 function getRandomRoute(): documentType['route'] {

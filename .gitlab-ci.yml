@@ -159,13 +159,12 @@ deploy_label_client:
   image: alpine/ansible:latest
   # Branches / environments link definition
   variables:
-    BRANCHES_ENVIRONMENTS:
-      dev: "dev"
-      re7: "preprod"
-      master: "prod"
+    dev: "dev"
+    re7: "preprod"
+    master: "prod"
   script:
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
-    - ansible-playbook -i ${BRANCHES_ENVIRONMENTS['$CI_COMMIT_BRANCH']} ansible/deploy_client.yml --vault-password-file=vault-pass.txt
+    - ansible-playbook -i $$CI_COMMIT_BRANCH ansible/deploy_client.yml --vault-password-file=vault-pass.txt
   rules:
     when: manual
   only:

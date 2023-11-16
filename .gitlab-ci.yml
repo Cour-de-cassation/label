@@ -1,10 +1,3 @@
-# Branches / environments link definition
-variables:
-  BRANCHES_ENVIRONMENTS:
-    dev: "dev"
-    re7: "preprod"
-    master: "prod"
-
 image: docker:20.10.22 
 services:
   - docker:20.10.22-dind
@@ -141,6 +134,12 @@ build_label_client:
 deploy_label_backend:
   stage: deploy
   image: alpine/ansible:latest
+  # Branches / environments link definition
+  variables:
+    BRANCHES_ENVIRONMENTS:
+      dev: "dev"
+      re7: "preprod"
+      master: "prod"
   script:
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
     - ansible-playbook -i  ${BRANCHES_ENVIRONMENTS['$CI_COMMIT_BRANCH']} ansible/deploy_backend.yml --vault-password-file=vault-pass.txt
@@ -158,6 +157,12 @@ deploy_label_backend:
 deploy_label_client:
   stage: deploy
   image: alpine/ansible:latest
+  # Branches / environments link definition
+  variables:
+    BRANCHES_ENVIRONMENTS:
+      dev: "dev"
+      re7: "preprod"
+      master: "prod"
   script:
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
     - ansible-playbook -i ${BRANCHES_ENVIRONMENTS['$CI_COMMIT_BRANCH']} ansible/deploy_client.yml --vault-password-file=vault-pass.txt

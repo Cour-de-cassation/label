@@ -136,13 +136,12 @@ deploy_label_backend:
   image: alpine/ansible:latest
   # Branches / environments link definition
   variables:
-    BRANCHES_ENVIRONMENTS:
-      dev: "dev"
-      re7: "preprod"
-      master: "prod"
+      dev: "ansible/inventories/dev.yml"
+      re7: "ansible/inventories/preprod.yml"
+      master: "ansible/inventories/prod.yml"
   script:
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
-    - ansible-playbook -i  ${BRANCHES_ENVIRONMENTS['$CI_COMMIT_BRANCH']} ansible/deploy_backend.yml --vault-password-file=vault-pass.txt
+    - ansible-playbook -i  $$CI_COMMIT_BRANCH ansible/deploy_backend.yml --vault-password-file=vault-pass.txt
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
@@ -159,9 +158,9 @@ deploy_label_client:
   image: alpine/ansible:latest
   # Branches / environments link definition
   variables:
-    dev: "dev"
-    re7: "preprod"
-    master: "prod"
+      dev: "ansible/inventories/dev.yml"
+      re7: "ansible/inventories/preprod.yml"
+      master: "ansible/inventories/prod.yml"
   script:
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
     - ansible-playbook -i $$CI_COMMIT_BRANCH ansible/deploy_client.yml --vault-password-file=vault-pass.txt

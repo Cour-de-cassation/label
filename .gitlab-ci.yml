@@ -130,279 +130,352 @@ build_label_client:
   tags:
     - docker
 
-
+# TODO faire ça proprement
 deploy_label_backend:
   stage: deploy
-  variables:
-    MONGODB_NAME: ${{ MONGODB_NAME }}
-    MONGODB_URI: ${{ MONGODB_URI }}
-    MONGODB_PORT: ${{MONGODB_PORT }}
-    MONGODB_URL: ${{MONGODB_URL }}
-    ROOT_PATH: label/api
-    JURITJ_DOC_LOGIN: $JURITJ_DOC_LOGIN
-    JURITJ_DOC_PASSWORD: $JURITJ_DOC_PASSWORD
+  image: alpine/ansible:latest
   script:
-    - envsubst < .deploys/deploy_namespace.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-    - envsubst < .deploys/deploy_backend.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
+    - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
+    - |
+      case "$CI_COMMIT_BRANCH" in 
+        "master")
+          INVENTORY="ansible/inventories/prod.yaml"
+          ;;
+        "re7")
+          INVENTORY="ansible/inventories/preprod.yaml"
+          ;;
+        "dev")
+          INVENTORY="ansible/inventories/dev.yaml"
+          ;;
+        # Add more cases for additional environments as needed
+        *)
+          echo "No matching environment for branch $CI_COMMIT_BRANCH"
+          exit 1
+          ;;
+      esac
+
+    - ansible-playbook -i  "$INVENTORY" ansible/deploy_backend.yml --vault-password-file=vault-pass.txt
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "dev"
+      when: on_success
   tags:
-    - shell
+    - docker
   dependencies:
     - build_label_backend
 
+
 deploy_label_client:
   stage: deploy
-  variables:
-    MONGODB_NAME: ${{ MONGODB_NAME }}
-    MONGODB_URI: ${{ MONGODB_URI }}
-    MONGODB_PORT: ${{MONGODB_PORT }}
-    MONGODB_URL: ${{MONGODB_URL }}
-    LABEL_ROOT_PATH: "label-client"
-    LABEL_PUBLIC_URL: "/label-client"
+  image: alpine/ansible:latest
   script:
-    - envsubst < .deploys/deploy_namespace.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-    - envsubst < .deploys/deploy_client.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-    - envsubst < .deploys/deploy_ingress.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+    - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
+    - |
+      case "$CI_COMMIT_BRANCH" in 
+        "master")
+          INVENTORY="ansible/inventories/prod.yaml"
+          ;;
+        "re7")
+          INVENTORY="ansible/inventories/preprod.yaml"
+          ;;
+        "dev")
+          INVENTORY="ansible/inventories/dev.yaml"
+          ;;
+        # Add more cases for additional environments as needed
+        *)
+          echo "No matching environment for branch $CI_COMMIT_BRANCH"
+          exit 1
+          ;;
+      esac
+
+      ansible-playbook -i "$INVENTORY" playbook.yml
+    - ansible-playbook -i ansible/inventory/preprod.yml ansible/deploy_client.yml --vault-password-file=vault-pass.txt
+  rules:
+    when: manual
   only:
     - master
     - re7
     - dev
   tags:
-    - shell
+    - docker
   dependencies:
     - build_label_client
 
 
-deploy_job_annotation:
-  stage: deploy
-  variables:
-    JOB_NAME: "nlp-annotation"
-    JOB_SCHEDULE: "*/5 2-20 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 288
-    FAILED_JOBS_HISTORY_LIMIT: 134
-    BACKOFF_LIMIT: 0
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 3600
-    COMMAND: "dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
 
-deploy_job_import_j_7:
-  stage: deploy
-  variables:
-    JOB_NAME: "import-j-7"
-    JOB_SCHEDULE: "*/30 6-12 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 84
-    FAILED_JOBS_HISTORY_LIMIT: 84
-    BACKOFF_LIMIT: 0
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 300
-    COMMAND: "dist/scripts/importAllDocumentsFromSderSince.js --days 7"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
+# deploy_label_backend:
+#   stage: deploy
+#   variables:
+#     MONGODB_NAME: ${{ MONGODB_NAME }}
+#     MONGODB_URI: ${{ MONGODB_URI }}
+#     MONGODB_PORT: ${{MONGODB_PORT }}
+#     MONGODB_URL: ${{MONGODB_URL }}
+#     ROOT_PATH: label/api
+#     JURITJ_DOC_LOGIN: $JURITJ_DOC_LOGIN
+#     JURITJ_DOC_PASSWORD: $JURITJ_DOC_PASSWORD
+#   script:
+#     - envsubst < .deploys/deploy_namespace.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#     - envsubst < .deploys/deploy_backend.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
 
-deploy_job_filler_import:
-  stage: deploy
-  variables:
-    JOB_NAME: "filler-import"
-    JOB_SCHEDULE: "15 6-17 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 84
-    FAILED_JOBS_HISTORY_LIMIT: 84
-    BACKOFF_LIMIT: 0
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 1800
-    COMMAND: "dist/scripts/autoImportDocumentsFromSder.js --count 500 --threshold 1000"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
+# deploy_label_client:
+#   stage: deploy
+#   variables:
+#     MONGODB_NAME: ${{ MONGODB_NAME }}
+#     MONGODB_URI: ${{ MONGODB_URI }}
+#     MONGODB_PORT: ${{MONGODB_PORT }}
+#     MONGODB_URL: ${{MONGODB_URL }}
+#     LABEL_ROOT_PATH: "label-client"
+#     LABEL_PUBLIC_URL: "/label-client"
+#   script:
+#     - envsubst < .deploys/deploy_namespace.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#     - envsubst < .deploys/deploy_client.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#     - envsubst < .deploys/deploy_ingress.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_client
 
-deploy_job_import_chained:
-  stage: deploy
-  variables:
-    JOB_NAME: "import-chained"
-    JOB_SCHEDULE: "0 17 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
-    FAILED_JOBS_HISTORY_LIMIT: 7
-    BACKOFF_LIMIT: 2
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 300
-    COMMAND: "dist/scripts/importChainedDocumentsFromSder.js --count 500 --threshold 1500"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
 
-deploy_job_export_j_4:
-  stage: deploy
-  variables:
-    JOB_NAME: "export-j-4"
-    JOB_SCHEDULE: "30 17 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
-    FAILED_JOBS_HISTORY_LIMIT: 7
-    BACKOFF_LIMIT: 2
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 300
-    COMMAND: "dist/scripts/exportTreatedDocumentsSince.js"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
+# deploy_job_annotation:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "nlp-annotation"
+#     JOB_SCHEDULE: "*/5 2-20 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 288
+#     FAILED_JOBS_HISTORY_LIMIT: 134
+#     BACKOFF_LIMIT: 0
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 3600
+#     COMMAND: "dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
 
-deploy_job_export_publishable:
-  stage: deploy
-  variables:
-    JOB_NAME: "export-publishable"
-    JOB_SCHEDULE: "50 13 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
-    FAILED_JOBS_HISTORY_LIMIT: 7
-    BACKOFF_LIMIT: 2
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 300
-    COMMAND: "dist/scripts/exportTreatedPublishableDocuments.js"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
+# deploy_job_import_j_7:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "import-j-7"
+#     JOB_SCHEDULE: "*/30 6-12 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 84
+#     FAILED_JOBS_HISTORY_LIMIT: 84
+#     BACKOFF_LIMIT: 0
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 300
+#     COMMAND: "dist/scripts/importAllDocumentsFromSderSince.js --days 7"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
 
-deploy_job_free_pending:
-  stage: deploy
-  variables:
-    JOB_NAME: "free-pending"
-    JOB_SCHEDULE: "*/16 4-17 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 50
-    FAILED_JOBS_HISTORY_LIMIT: 50
-    BACKOFF_LIMIT: 0
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 300
-    COMMAND: "dist/scripts/freePendingDocuments.js"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
+# deploy_job_filler_import:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "filler-import"
+#     JOB_SCHEDULE: "15 6-17 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 84
+#     FAILED_JOBS_HISTORY_LIMIT: 84
+#     BACKOFF_LIMIT: 0
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 1800
+#     COMMAND: "dist/scripts/autoImportDocumentsFromSder.js --count 500 --threshold 1000"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
 
-deploy_job_purge_m_6:
-  stage: deploy
-  variables:
-    JOB_NAME: "purge-m-6"
-    JOB_SCHEDULE: "0 19 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
-    FAILED_JOBS_HISTORY_LIMIT: 7
-    BACKOFF_LIMIT: 2
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 300
-    COMMAND: "dist/scripts/purgeDb.js --beforeMonths 6"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
+# deploy_job_import_chained:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "import-chained"
+#     JOB_SCHEDULE: "0 17 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+#     FAILED_JOBS_HISTORY_LIMIT: 7
+#     BACKOFF_LIMIT: 2
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 300
+#     COMMAND: "dist/scripts/importChainedDocumentsFromSder.js --count 500 --threshold 1500"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
 
-deploy_job_renew_cache:
-  stage: deploy
-  variables:
-    JOB_NAME: "renew-cache"
-    JOB_SCHEDULE: "*/5 4-17 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 168
-    FAILED_JOBS_HISTORY_LIMIT: 168
-    BACKOFF_LIMIT: 0
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 300
-    COMMAND: "ist/scripts/renewCache.js --beforeMinutes 5"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
+# deploy_job_export_j_4:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "export-j-4"
+#     JOB_SCHEDULE: "30 17 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+#     FAILED_JOBS_HISTORY_LIMIT: 7
+#     BACKOFF_LIMIT: 2
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 300
+#     COMMAND: "dist/scripts/exportTreatedDocumentsSince.js"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
 
-deploy_job_cleaning:
-  stage: deploy
-  variables:
-    JOB_NAME: "cleaning"
-    JOB_SCHEDULE: "30 19 * * *"
-    SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
-    FAILED_JOBS_HISTORY_LIMIT: 7
-    BACKOFF_LIMIT: 0
-    PARALLELISM: 1
-    ACTIVE_DEADLINE_SECONDS: 300
-    COMMAND: "dist/scripts/cleanDocuments.js"
-    MONGODB_URL: ${{ MONGODB_URL }}
-  script:
-    - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - shell
-  dependencies:
-    - build_label_backend
+# deploy_job_export_publishable:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "export-publishable"
+#     JOB_SCHEDULE: "50 13 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+#     FAILED_JOBS_HISTORY_LIMIT: 7
+#     BACKOFF_LIMIT: 2
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 300
+#     COMMAND: "dist/scripts/exportTreatedPublishableDocuments.js"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
+
+# deploy_job_free_pending:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "free-pending"
+#     JOB_SCHEDULE: "*/16 4-17 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 50
+#     FAILED_JOBS_HISTORY_LIMIT: 50
+#     BACKOFF_LIMIT: 0
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 300
+#     COMMAND: "dist/scripts/freePendingDocuments.js"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
+
+# deploy_job_purge_m_6:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "purge-m-6"
+#     JOB_SCHEDULE: "0 19 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+#     FAILED_JOBS_HISTORY_LIMIT: 7
+#     BACKOFF_LIMIT: 2
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 300
+#     COMMAND: "dist/scripts/purgeDb.js --beforeMonths 6"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
+
+# deploy_job_renew_cache:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "renew-cache"
+#     JOB_SCHEDULE: "*/5 4-17 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 168
+#     FAILED_JOBS_HISTORY_LIMIT: 168
+#     BACKOFF_LIMIT: 0
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 300
+#     COMMAND: "ist/scripts/renewCache.js --beforeMinutes 5"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
+
+# deploy_job_cleaning:
+#   stage: deploy
+#   variables:
+#     JOB_NAME: "cleaning"
+#     JOB_SCHEDULE: "30 19 * * *"
+#     SUCCESSFUL_JOBS_HISTORY_LIMIT: 7
+#     FAILED_JOBS_HISTORY_LIMIT: 7
+#     BACKOFF_LIMIT: 0
+#     PARALLELISM: 1
+#     ACTIVE_DEADLINE_SECONDS: 300
+#     COMMAND: "dist/scripts/cleanDocuments.js"
+#     MONGODB_URL: ${{ MONGODB_URL }}
+#   script:
+#     - envsubst < .deploys/deploy_jobs_template.yaml | kubectl --kubeconfig=/home/gitlab-runner/.kube/$CI_COMMIT_BRANCH apply -f -
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - shell
+#   dependencies:
+#     - build_label_backend
 

@@ -1,0 +1,9 @@
+---
+label_backend_namespace: label
+label_backend_application: label-backend
+
+# api_app_selector: api
+# bucket_app_selector: bucket
+
+# api_stripprefix: api-stripprefix
+# bucket_stripprefix: bucket-stripprefix

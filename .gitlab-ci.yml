@@ -130,18 +130,28 @@ build_label_client:
   tags:
     - docker
 
-# TODO faire ça proprement
 deploy_label_backend:
   stage: deploy
   image: alpine/ansible:latest
-  # Branches / environments link definition
-  variables:
-      dev: "ansible/inventories/dev.yml"
-      re7: "ansible/inventories/preprod.yml"
-      master: "ansible/inventories/prod.yml"
   script:
+    - |
+        case "$CI_COMMIT_BRANCH" in
+          dev)
+            INVENTORY_FILE=ansible/inventories/dev.yml
+            ;;
+          re7)
+            INVENTORY_FILE=ansible/inventories/preprod.yml
+            ;;
+          master)
+            INVENTORY_FILE=ansible/inventories/prod.yml
+            ;;
+          *)
+            echo "Branch $CI_COMMIT_BRANCH not recognized, using default inventory"
+            INVENTORY_FILE="ansible/inventories/default.yml"
+            ;;
+        esac
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
-    - ansible-playbook -i  $$CI_COMMIT_BRANCH ansible/deploy_label_backend.yml --vault-password-file=vault-pass.txt
+    - ansible-playbook -i  $INVENTORY_FILE ansible/deploy_label_backend.yml --vault-password-file=vault-pass.txt
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
@@ -156,14 +166,25 @@ deploy_label_backend:
 deploy_label_client:
   stage: deploy
   image: alpine/ansible:latest
-  # Branches / environments link definition
-  variables:
-      dev: "ansible/inventories/dev.yml"
-      re7: "ansible/inventories/preprod.yml"
-      master: "ansible/inventories/prod.yml"
   script:
+    - |
+        case "$CI_COMMIT_BRANCH" in
+          dev)
+            INVENTORY_FILE=ansible/inventories/dev.yml
+            ;;
+          re7)
+            INVENTORY_FILE=ansible/inventories/preprod.yml
+            ;;
+          master)
+            INVENTORY_FILE=ansible/inventories/prod.yml
+            ;;
+          *)
+            echo "Branch $CI_COMMIT_BRANCH not recognized, using default inventory"
+            INVENTORY_FILE="ansible/inventories/default.yml"
+            ;;
+        esac
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
-    - ansible-playbook -i $$CI_COMMIT_BRANCH ansible/deploy_label_client.yml --vault-password-file=vault-pass.txt
+    - ansible-playbook -i $INVENTORY_FILE ansible/deploy_label_client.yml --vault-password-file=vault-pass.txt
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual

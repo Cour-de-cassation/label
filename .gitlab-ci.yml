@@ -3,7 +3,7 @@ services:
   - docker:20.10.22-dind
 stages:
   - test
- # - build #temporarily disable build part for testing purpose
+  - build
   - deploy
 
 # Partie à compléter par les développeurs label
@@ -29,105 +29,105 @@ stages:
 #     - re7
 #     - dev
 
-build_label_backend:
-  stage: build
-  #TODO: PUT INTO GITLAB
-  variables:
-    LABEL_GIT_BRANCH: "dev"
-    LABEL_API_PORT: 55432
-    LABEL_APP_HOST: "label.judilibre-prive.local"
-    LABEL_APP_GROUP: "judilibre-prive"
-    LABEL_APP_ID: "label-backend"
-    LABEL_APP_KEYWORD: "html"
-    LABEL_APP_SCHEME: "https"
-    LABEL_APP_SELF_SIGNED: "true"
-    LABEL_APP_PORT: "443"
-    LABEL_DOCKER_USERNAME: "opendatajustice"
-    LABEL_DOCKER_TARGET: "label-backend"
-    LABEL_KUBE_ZONE: "local"
-    LABEL_KUBE_TYPE: "k3s"
-    LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
-    LABEL_ROOT_PATH: "label/api"
-    LABEL_NLP_API_HOST: "https://nlp-pseudonymisaton.judilibre-prive.local"
-    LABEL_NLP_API_PORT: "443"
-    LABEL_START_TIMEOUT: "180"
-    LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
-  script: 
-    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - echo "$HTTP_PROXY"
-    - echo "$HTTPS_PROXY"
-    - export NODE_OPTIONS=--openssl-legacy-provider
-    - apk update
-    - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
-    - yarn install --
-    - yarn compile
-    - CI=false yarn buildClient # from "ugly workaround" in github workflows
-    - docker build
-        --build-arg http_proxy=$HTTP_PROXY
-        --build-arg https_proxy=$HTTPS_PROXY
-        --target label-backend
-        -f Dockerfile.label-backend
-        -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend .
-    - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - docker
+# build_label_backend:
+#   stage: build
+#   #TODO: PUT INTO GITLAB
+#   variables:
+#     LABEL_GIT_BRANCH: "dev"
+#     LABEL_API_PORT: 55432
+#     LABEL_APP_HOST: "label.judilibre-prive.local"
+#     LABEL_APP_GROUP: "judilibre-prive"
+#     LABEL_APP_ID: "label-backend"
+#     LABEL_APP_KEYWORD: "html"
+#     LABEL_APP_SCHEME: "https"
+#     LABEL_APP_SELF_SIGNED: "true"
+#     LABEL_APP_PORT: "443"
+#     LABEL_DOCKER_USERNAME: "opendatajustice"
+#     LABEL_DOCKER_TARGET: "label-backend"
+#     LABEL_KUBE_ZONE: "local"
+#     LABEL_KUBE_TYPE: "k3s"
+#     LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
+#     LABEL_ROOT_PATH: "label/api"
+#     LABEL_NLP_API_HOST: "https://nlp-pseudonymisaton.judilibre-prive.local"
+#     LABEL_NLP_API_PORT: "443"
+#     LABEL_START_TIMEOUT: "180"
+#     LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
+#   script: 
+#     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+#     - echo "$HTTP_PROXY"
+#     - echo "$HTTPS_PROXY"
+#     - export NODE_OPTIONS=--openssl-legacy-provider
+#     - apk update
+#     - apk add nodejs yarn git npm
+#     - yarn config set proxy $HTTP_PROXY
+#     - yarn config set https-proxy $HTTPS_PROXY
+#     - yarn install --
+#     - yarn compile
+#     - CI=false yarn buildClient # from "ugly workaround" in github workflows
+#     - docker build
+#         --build-arg http_proxy=$HTTP_PROXY
+#         --build-arg https_proxy=$HTTPS_PROXY
+#         --target label-backend
+#         -f Dockerfile.label-backend
+#         -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend .
+#     - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - docker
 
 
-build_label_client:
-  stage: build
-  #TODO: PUT INTO GITLAB
-  variables:
-    LABEL_GIT_BRANCH: "dev"
-    LABEL_API_PORT: 55432
-    LABEL_APP_HOST: "label.judilibre-prive.local"
-    LABEL_APP_GROUP: "judilibre-prive"
-    LABEL_APP_ID: "label-client"
-    LABEL_APP_KEYWORD: "html"
-    LABEL_APP_SCHEME: "https"
-    LABEL_APP_SELF_SIGNED: "true"
-    LABEL_APP_PORT: 443
-    LABEL_DOCKER_USERNAME: "opendatajustice"
-    LABEL_DOCKER_TARGET: "label-client"
-    LABEL_KUBE_ZONE: "local"
-    LABEL_KUBE_TYPE: "k3s"
-    LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
-    LABEL_ROOT_PATH: "label-client"
-    LABEL_PUBLIC_URL: "/label-client"
-    LABEL_START_TIMEOUT: "180"
-    LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
-  script:
-    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - echo "$HTTP_PROXY"
-    - echo "$HTTPS_PROXY"
-    - export NODE_OPTIONS=--openssl-legacy-provider
-    - apk update
-    - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
-    - yarn install --
-    - yarn compile
-    - CI=false yarn buildClient # from "ugly workaround" in github workflows
-    # - yarn test
-    # - yarn lint
-    - docker build
-        --build-arg http_proxy=$HTTP_PROXY
-        --build-arg https_proxy=$HTTPS_PROXY
-        --target label-client
-        -f Dockerfile.label-client
-        -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
-    - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
-  only:
-    - master
-    - re7
-    - dev
-  tags:
-    - docker
+# build_label_client:
+#   stage: build
+#   #TODO: PUT INTO GITLAB
+#   variables:
+#     LABEL_GIT_BRANCH: "dev"
+#     LABEL_API_PORT: 55432
+#     LABEL_APP_HOST: "label.judilibre-prive.local"
+#     LABEL_APP_GROUP: "judilibre-prive"
+#     LABEL_APP_ID: "label-client"
+#     LABEL_APP_KEYWORD: "html"
+#     LABEL_APP_SCHEME: "https"
+#     LABEL_APP_SELF_SIGNED: "true"
+#     LABEL_APP_PORT: 443
+#     LABEL_DOCKER_USERNAME: "opendatajustice"
+#     LABEL_DOCKER_TARGET: "label-client"
+#     LABEL_KUBE_ZONE: "local"
+#     LABEL_KUBE_TYPE: "k3s"
+#     LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
+#     LABEL_ROOT_PATH: "label-client"
+#     LABEL_PUBLIC_URL: "/label-client"
+#     LABEL_START_TIMEOUT: "180"
+#     LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
+#   script:
+#     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+#     - echo "$HTTP_PROXY"
+#     - echo "$HTTPS_PROXY"
+#     - export NODE_OPTIONS=--openssl-legacy-provider
+#     - apk update
+#     - apk add nodejs yarn git npm
+#     - yarn config set proxy $HTTP_PROXY
+#     - yarn config set https-proxy $HTTPS_PROXY
+#     - yarn install --
+#     - yarn compile
+#     - CI=false yarn buildClient # from "ugly workaround" in github workflows
+#     # - yarn test
+#     # - yarn lint
+#     - docker build
+#         --build-arg http_proxy=$HTTP_PROXY
+#         --build-arg https_proxy=$HTTPS_PROXY
+#         --target label-client
+#         -f Dockerfile.label-client
+#         -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
+#     - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
+#   only:
+#     - master
+#     - re7
+#     - dev
+#   tags:
+#     - docker
 
 deploy_label_backend:
   stage: deploy

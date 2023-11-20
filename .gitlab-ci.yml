@@ -141,7 +141,7 @@ deploy_label_backend:
       master: "ansible/inventories/prod.yml"
   script:
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
-    - ansible-playbook -i  $$CI_COMMIT_BRANCH ansible/deploy_backend.yml --vault-password-file=vault-pass.txt
+    - ansible-playbook -i  $$CI_COMMIT_BRANCH ansible/deploy_label_backend.yml --vault-password-file=vault-pass.txt
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
@@ -163,7 +163,7 @@ deploy_label_client:
       master: "ansible/inventories/prod.yml"
   script:
     - echo $ANSIBLE_VAULT_PASS > vault-pass.txt
-    - ansible-playbook -i $$CI_COMMIT_BRANCH ansible/deploy_client.yml --vault-password-file=vault-pass.txt
+    - ansible-playbook -i $$CI_COMMIT_BRANCH ansible/deploy_label_client.yml --vault-password-file=vault-pass.txt
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual

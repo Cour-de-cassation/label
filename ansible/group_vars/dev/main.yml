@@ -1,17 +1,2 @@
-# TODO COMPLETE WITH REAL VARS
-
----
-
-# Not yet in use 
-dbsder_api_key:
-
-# SDER database information 
-sder_mongodb_name: # ne sait pas
-sder_mongodb_port:
-sder_mongodb_uri:
-
-# Label database connection string
-mongodb_url:
-
-nlp_api_host:
-nlp_api_port:
+git_branch: dev
+label_kube_namespace: "judilibre-prive-local-dev"

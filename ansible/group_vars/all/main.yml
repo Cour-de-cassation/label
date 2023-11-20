@@ -4,3 +4,21 @@
 ansible_user: iliasaaguida
 ansible_python_interpreter: "/home/{{ ansible_user }}/ansible_venv/bin/python"
 
+
+label_api_port: 55432
+label_app_host: "label.judilibre-prive.local"
+label_app_group: "judilibre-prive"
+label_front_app_id: "label-client"
+label__back_app_id: "label-backend"
+label_app_keyword: "html"
+label_app_scheme: "https"
+label_app_self_signed: "true"
+label_app_port: 443
+label_docker_username: "opendatajustice"
+label_front_docker_target: "label-client"
+label_back_docker_target: "label-backend"
+label_kube_zone: "local"
+label_kube_type: "k3s"
+label_front_root_path: "label-client"
+label_back_root_path: "label/api"
+label_kubeconfig: "$home/.kube/config-local-k3s.yaml"

@@ -9,21 +9,21 @@ spec:
     - web
 
   routes:
-    - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label`)
+    - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label/api`)
       kind: Rule
       services:
-        - name: label-client-service
-          port: label-client-port
+        - name: label-backend-service
+          port: label-backend-port
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: label-client-stripprefix
+  name: label-backend-stripprefix
   namespace: label
 spec:
   replacePathRegex:
-    regex: /label-client(/|$)(.*)
+    regex: /label-backend(/|$)(.*)
     replacement: /$2
 
 

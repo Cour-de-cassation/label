@@ -3,8 +3,7 @@ services:
   - docker:20.10.22-dind
 stages:
   - test
-  - build
-  - build_docker
+ # - build #temporarily disable build part for testing purpose
   - deploy
 
 # Partie à compléter par les développeurs label

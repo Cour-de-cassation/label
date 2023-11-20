@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: label-client-service
+  namespace: label
+spec:
+  selector:
+    app: label-client
+  ports:
+    - name: label-client-port
+      port: 55432
+      targetPort: 55432
+  type: ClusterIP

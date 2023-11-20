@@ -4,20 +4,3 @@
 ansible_user: iliasaaguida
 ansible_python_interpreter: "/home/{{ ansible_user }}/ansible_venv/bin/python"
 
-api_service: "api-service"
-bucket_service: "bucket-service"
-juritj_private_name: "juritj.judilibre-prive.local"
-
-doc_login: "root"
-s3_url: "http://{{ bucket_service }}:9000"
-s3_region: "eu-west-paris-1"
-s3_bucket_name: "juritj-test-bucket"
-s3_bucket_name_normalized: "juritj-test-bucket-normalized"
-dbsder_api_url: "http://{{ api_service }}.dbsder:3000"
-no_color: "true"
-minio_root_user: "root"
-minio_browser_redirect_url: "https://{{ juritj_private_name }}/bucket"
-
-normalization_batch_schedule: "* * * * *"
-
-minio_root_password: "{{ vault_minio_root_password }}"

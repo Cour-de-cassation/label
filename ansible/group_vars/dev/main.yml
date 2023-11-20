@@ -1,7 +1,17 @@
 # TODO COMPLETE WITH REAL VARS
 
 ---
-s3_access_key: "{{ vault_s3_access_key }}"
-s3_secret_key: "{{ vault_s3_secret_key }}"
-dbsder_api_key: "{{ vault_dbsder_api_key }}"
-doc_password: "{{ vault_doc_password }}"
+
+# Not yet in use 
+dbsder_api_key:
+
+# SDER database information 
+sder_mongodb_name: # ne sait pas
+sder_mongodb_port:
+sder_mongodb_uri:
+
+# Label database connection string
+mongodb_url:
+
+nlp_api_host:
+nlp_api_port:

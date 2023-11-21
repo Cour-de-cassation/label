@@ -7,7 +7,7 @@ label_api_port: 55432
 label_app_host: "label.judilibre-prive.local"
 label_app_group: "judilibre-prive"
 label_client_app_id: "label-client"
-label__back_app_id: "label-backend"
+label_back_app_id: "label-backend"
 label_app_keyword: "html"
 label_app_scheme: "https"
 label_app_self_signed: "true"

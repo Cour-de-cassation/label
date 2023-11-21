@@ -11,13 +11,13 @@
         name: api-config
         namespace: "{{ label_kube_namespace }}"
         labels:
-          app: "{{ label__back_app_id }}"
+          app: "{{ label_back_app_id }}"
       data:
         GIT_BRANCH: "{{git_branch}}"
         API_PORT: "{{label_api_port}}"
         APP_HOST: "{{label_app_host}}"
         APP_GROUP: "{{label_app_group}}"
-        APP_ID: "{{label__back_app_id}}"
+        APP_ID: "{{label_back_app_id}}"
         APP_KEYWORD: "{{label_app_keyword}}"
         APP_SCHEME: "{{label_app_scheme}}"
         APP_SELF_SIGNED: "{{label_app_self_signed}}"
@@ -30,6 +30,7 @@
         ROOT_PATH: "{{label_back_root_path}}"
         START_TIMEOUT: "{{label_start_timeout}}"
         KUBECONFIG: "{{label_kubeconfig}}"
-        NLP_API_URL: "{{nlp_api_url}}"
+        NLP_API_URL: "test"
+        #NLP_API_URL: "{{nlp_api_url}}"
 
 ...

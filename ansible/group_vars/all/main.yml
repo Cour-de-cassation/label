@@ -24,6 +24,7 @@ label_back_root_path: "label/api"
 label_kubeconfig: "$home/.kube/config-local-k3s.yaml"
 label_start_timeout: 180
 label_client_public_url: "/label-client"
+nlp_api_url: "http://\$(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_HOST):\$(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_PORT)"
 
 # same namespace for all environments ?
 label_kube_namespace: "label"

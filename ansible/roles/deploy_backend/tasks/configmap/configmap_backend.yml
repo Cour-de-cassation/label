@@ -16,9 +16,7 @@
         DOC_LOGIN: "{{ doc_login }}"
         DBSDER_API_URL: "{{ dbsder_api_url }}"
         NO_COLOR: "{{ no_color }}"
-        SDER_DB_URL:  {{MONGODB_URI}}:{{MONGODB_PORT}} # JE DOIS ENCORE REMPLACER TOUS CEUX EN MAJ
-        MONGODB_URL: ${MONGODB_URL}
-        GIT_BRANCH: "${LABEL_GIT_BRANCH}"
+        GIT_BRANCH: "{{git_branch}}"
         API_PORT: "{{label_api_port}}"
         APP_HOST: "{{label_app_host}}"
         APP_GROUP: "{{label_app_group}}"
@@ -33,10 +31,8 @@
         KUBE_TYPE: "{{label_kube_type}}"
         KUBE_NAMESPACE: "{{label_kube_namespace}}"
         ROOT_PATH: "{{label_back_root_path}}"
-        NLP_API_HOST: "http://${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_HOST)"
-        NLP_API_PORT: "${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_PORT)"
         START_TIMEOUT: "{{label_start_timeout}}"
         KUBECONFIG: "{{label_kubeconfig}}"
-        NLP_API_URL: "http://${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_HOST):${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_PORT)"
+        NLP_API_URL: "{{nlp_api_url}}"
 
 ...

@@ -13,9 +13,6 @@
         labels:
           app: "{{ label_client_app_id }}"
       data:
-        DOC_LOGIN: "{{ doc_login }}"
-        DBSDER_API_URL: "{{ dbsder_api_url }}"
-        NO_COLOR: "{{ no_color }}"
         GIT_BRANCH: "{{git_branch}}"
         API_PORT: "{{label_api_port}}"
         APP_HOST: "{{label_app_host}}"

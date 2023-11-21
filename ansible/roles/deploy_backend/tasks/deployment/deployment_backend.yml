@@ -18,54 +18,9 @@ spec:
     spec:
       containers:
         - name: label-backend
-          image: $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
+          image: "{{ label_backend_image }}"
           ports:
             - containerPort: 55430
-          env:
-            - name: SDER_DB_URL
-              value: ${MONGODB_URI}:${MONGODB_PORT}
-            - name: MONGODB_URL
-              value: ${MONGODB_URL} # ici quand je mets "testaxel" ça s'affiche bien
-            - name: GIT_BRANCH
-              value: "${LABEL_GIT_BRANCH}"
-            - name: API_PORT
-              value: "${LABEL_API_PORT}"
-            - name: APP_HOST
-              value: "${LABEL_APP_HOST}"
-            - name: APP_GROUP
-              value: "${LABEL_APP_GROUP}"
-            - name: APP_ID
-              value: "${LABEL_APP_ID}"
-            - name: APP_KEYWORD
-              value: "${LABEL_APP_KEYWORD}"
-            - name: APP_SCHEME
-              value: "${LABEL_APP_SCHEME}"
-            - name: APP_SELF_SIGNED
-              value: "${LABEL_APP_SELF_SIGNED}"
-            - name: APP_PORT
-              value: "${LABEL_APP_PORT}"
-            - name: DOCKER_USERNAME
-              value: "${LABEL_DOCKER_USERNAME}"
-            - name: DOCKER_TARGET
-              value: "${LABEL_DOCKER_TARGET}"
-            - name: KUBE_ZONE
-              value: "${LABEL_KUBE_ZONE}"
-            - name: KUBE_TYPE
-              value: "${LABEL_KUBE_TYPE}"
-            - name: KUBE_NAMESPACE
-              value: "${LABEL_KUBE_NAMESPACE}"
-            - name: ROOT_PATH
-              value: "${LABEL_ROOT_PATH}"
-            - name: NLP_API_HOST
-              value: "http://${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_HOST)"
-            - name: NLP_API_PORT
-              value: "${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_PORT)"
-            - name: START_TIMEOUT
-              value: "${LABEL_START_TIMEOUT}"
-            - name: KUBECONFIG
-              value: "${LABEL_KUBECONFIG}"
-            - name: NLP_API_URL # penser à injecter nlp api url et dollar dans gitlab
-              value: "http://${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_HOST):${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_PORT)"
           # startupProbe:
           #   exec:
           #     command:
@@ -100,18 +55,3 @@ spec:
       # - name: label-backend-config
       #   secret:
       #     secretName: label-backend-config
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: label-backend-service
-  namespace: label
-spec:
-  selector:
-    app: label-backend
-  ports:
-    - name: label-backend-port
-      port: 55430
-      targetPort: 55430
-  type: ClusterIP

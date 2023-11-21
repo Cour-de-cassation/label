@@ -30,7 +30,6 @@
         ROOT_PATH: "{{label_back_root_path}}"
         START_TIMEOUT: "{{label_start_timeout}}"
         KUBECONFIG: "{{label_kubeconfig}}"
-        NLP_API_URL: "test"
-        #NLP_API_URL: "{{nlp_api_url}}"
+        NLP_API_URL: "{{nlp_api_url}}"
 
 ...

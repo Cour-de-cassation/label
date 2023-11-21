@@ -140,7 +140,7 @@ deploy_label_backend:
   image: alpine/ansible:latest
   script:
     - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - ansible-playbook -i ansible/inventory/$inventaire.yml ansible/deploy_label_backend.yml --vault-password-file=$ANSIBLE_VAULT_PASS
+    - ansible-playbook -i ansible/inventories/$inventaire.yml ansible/deploy_label_backend.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
@@ -157,7 +157,7 @@ deploy_label_client:
   image: alpine/ansible:latest
   script:
     - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - ansible-playbook -i ansible/inventory/$inventaire.yml ansible/deploy_label_client.yml --vault-password-file=$ANSIBLE_VAULT_PASS
+    - ansible-playbook -i ansible/inventories/$inventaire.yml ansible/deploy_label_client.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual

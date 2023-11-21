@@ -1,0 +1,42 @@
+---
+- name: Creation de la ConfigMap du backend
+  k8s:
+    apply: true
+    state: present
+    verify_ssl: true
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: api-config
+        namespace: "{{ label_namespace }}"
+        labels:
+          app: "{{ label_application }}"
+      data:
+        DOC_LOGIN: "{{ doc_login }}"
+        DBSDER_API_URL: "{{ dbsder_api_url }}"
+        NO_COLOR: "{{ no_color }}"
+        SDER_DB_URL:  {{MONGODB_URI}}:{{MONGODB_PORT}} # JE DOIS ENCORE REMPLACER TOUS CEUX EN MAJ
+        MONGODB_URL: ${MONGODB_URL}
+        GIT_BRANCH: "${LABEL_GIT_BRANCH}"
+        API_PORT: "{{label_api_port}}"
+        APP_HOST: "{{label_app_host}}"
+        APP_GROUP: "{{label_app_group}}"
+        APP_ID: "{{label__back_app_id}}"
+        APP_KEYWORD: "{{label_app_keyword}}"
+        APP_SCHEME: "{{label_app_scheme}}"
+        APP_SELF_SIGNED: "{{label_app_self_signed}}"
+        APP_PORT: "{{label_app_port}}"
+        DOCKER_USERNAME: "{{label_docker_username}}"
+        DOCKER_TARGET: "{{label_back_docker_target}}"
+        KUBE_ZONE: "{{label_kube_zone}}"
+        KUBE_TYPE: "{{label_kube_type}}"
+        KUBE_NAMESPACE: "{{label_kube_namespace}}"
+        ROOT_PATH: "{{label_back_root_path}}"
+        NLP_API_HOST: "http://${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_HOST)"
+        NLP_API_PORT: "${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_PORT)"
+        START_TIMEOUT: "{{label_start_timeout}}"
+        KUBECONFIG: "{{label_kubeconfig}}"
+        NLP_API_URL: "http://${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_HOST):${DOLLAR}(NLP_PSEUDONYMISATION_API_SERVICE_SERVICE_PORT)"
+
+...

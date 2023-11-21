@@ -22,6 +22,7 @@ label_kube_type: "k3s"
 label_client_root_path: "label-client"
 label_back_root_path: "label/api"
 label_kubeconfig: "$home/.kube/config-local-k3s.yaml"
+label_start_timeout: 180
 label_client_public_url: "/label-client"
 
 # same namespace for all environments ?

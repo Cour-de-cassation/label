@@ -1,5 +1,3 @@
-# TODO COMPLETE WITH REAL LABEL VARS
-
 ---
 ansible_user: iliasaaguida
 ansible_python_interpreter: "/home/{{ ansible_user }}/ansible_venv/bin/python"

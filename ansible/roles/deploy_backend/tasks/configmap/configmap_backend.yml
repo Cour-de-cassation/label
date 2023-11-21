@@ -9,7 +9,7 @@
       kind: ConfigMap
       metadata:
         name: api-config
-        namespace: "{{ label_namespace }}"
+        namespace: "{{ label_kube_namespace }}"
         labels:
           app: "{{ label__back_app_id }}"
       data:

@@ -9,5 +9,5 @@
       kind: Namespace
       metadata:
         name: label
-        namespace: "{{ label_namespace }}"
+        namespace: "{{ label_kube_namespace }}"
 ...

@@ -17,3 +17,6 @@
 - name: Deploy services
   include_tasks: '{{item}}'
   loop: "{{ lookup('fileglob', 'service/*.yml', wantlist=True ) }}"
+
+- name: Deploy ingress
+  import_tasks: ingress.yml

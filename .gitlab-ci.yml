@@ -6,8 +6,8 @@ variables:
   dev: dev
   re7: preprod
   master: prod
-  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-4f2fe76c-label-backend"
-  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-4f2fe76c-label-backend"
+  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend"
+  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client"
 
 stages:
   - test

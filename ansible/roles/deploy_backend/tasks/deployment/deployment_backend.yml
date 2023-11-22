@@ -27,6 +27,11 @@
                 image: "{{ label_backend_image }}"
                 ports:
                   - containerPort: 55430
+                envFrom:
+                  - configMapRef:
+                      name: "backend-config"
+                  - secretRef:
+                      name: "label-back-secret"
                 # startupProbe:
                 #   exec:
                 #     command:

@@ -17,7 +17,7 @@
   loop: "{{ lookup('fileglob', 'deployment/deployment_backend.yml', wantlist=True ) }}"
 
 - name: Deploy backend jobs
-  include_tasks: deployment_jobs_template.yml
+  include_tasks: deployment/deployment_jobs_template.yml
   loop: "{{ jobs | dict2items }}"
   loop_control:
     loop_var: job

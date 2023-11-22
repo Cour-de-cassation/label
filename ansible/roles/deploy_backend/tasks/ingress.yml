@@ -21,7 +21,6 @@
               - name: label-backend-service
                 port: label-backend-port
 
----
 - name: Creation middleware
   k8s:
     apply: true

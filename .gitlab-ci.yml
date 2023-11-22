@@ -6,8 +6,8 @@ variables:
   dev: dev
   re7: preprod
   master: prod
-  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend"
-  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client"
+  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
 
 stages:
   - test
@@ -76,8 +76,8 @@ build_label_backend:
         --build-arg https_proxy=$HTTPS_PROXY
         --target label-backend
         -f Dockerfile.label-backend
-        -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend .
-    - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-backend
+        -t $docker_backend_image .
+    - docker push $docker_backend_image
   only:
     - master
     - re7
@@ -127,8 +127,8 @@ build_label_client:
         --build-arg https_proxy=$HTTPS_PROXY
         --target label-client
         -f Dockerfile.label-client
-        -t $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client .
-    - docker push $CI_REGISTRY/cour-de-cassation/label:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-label-client
+        -t $docker_client_image .
+    - docker push $docker_client_image
   only:
     - master
     - re7

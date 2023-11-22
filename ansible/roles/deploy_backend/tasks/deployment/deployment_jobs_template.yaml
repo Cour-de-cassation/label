@@ -8,22 +8,22 @@
       apiVersion: batch/v1
       kind: CronJob
       metadata:
-        name: label-backend-job-{{job_name}}
+        name: "label-backend-job-{{job.value.name}}"
         namespace: label
       spec:
-        schedule: "{{job_schedule}}"
-        successfulJobsHistoryLimit: {{successful_jobs_history_limit}}
-        failedJobsHistoryLimit: {{failed_jobs_history_limit}}
+        schedule: "{{job.value.schedule}}"
+        successfulJobsHistoryLimit: "{{job.value.successful_jobs_history_limit}}"
+        failedJobsHistoryLimit: "{{job.value.failed_jobs_history_limit}}"
         concurrencyPolicy: Forbid
         jobTemplate:
           spec:
-            backoffLimit: {{backoff_limit}}
-            parallelism: ${{parallelism}}
+            backoffLimit: "{{job.value.backoff_limit}}"
+            parallelism: "{{job.value.parallelism}}"
             template:
               spec:
-                activeDeadlineSeconds: {{active_deadline_seconds}}
+                activeDeadlineSeconds: "{{job.value.active_deadline_seconds}}"
                 containers:
-                  - name: label-backend-{{job_name}}
+                  - name: "label-backend-{{job.value.name}}"
                     image: "{{ label_backend_image }}"
                     # volumeMounts:
                     #   - name: label-backend-config
@@ -33,7 +33,7 @@
                       - /bin/sh
                     args:
                       - -c
-                      - node "{{ command }}" -e environments/prodEnvironment.json -s settings/settings.json
+                      - node "{{ job.value.command }}" -e environments/prodEnvironment.json -s settings/settings.json
                     envFrom:
                       - configMapRef:
                           name: "backend-config"

@@ -16,31 +16,11 @@
   include_tasks: '{{item}}'
   loop: "{{ lookup('fileglob', 'deployment/deployment_backend.yml', wantlist=True ) }}"
 
-- name: Deploy job annotation
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'deployment/deployment_jobs_template.yml', wantlist=True ) }}"
-  vars:
-    job_name: "nlp-annotation"
-    job_schedule: "*/5 2-20 * * *"
-    successful_jobs_history_limit: "288"
-    failed_jobs_history_limit: "134"
-    backoff_limit: "0"
-    parallelism: "1"
-    active_deadline_seconds: "3600"
-    command: "dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js"
-
-- name: Deploy job import j 7
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'deployment/deployment_jobs_template.yml', wantlist=True ) }}"
-  vars:
-    job_name: "import-j-7"
-    job_schedule: "*/30 6-12 * * *"
-    successful_jobs_history_limit: "84"
-    failed_jobs_history_limit: "84"
-    backoff_limit: "0"
-    parallelism: "1"
-    active_deadline_seconds: "300"
-    command: "dist/scripts/importAllDocumentsFromSderSince.js --days 7"
+- name: Deploy backend jobs
+  include_tasks: deployment_jobs_template.yml
+  loop: "{{ jobs | dict2items }}"
+  loop_control:
+    loop_var: job
 
 - name: Deploy services
   include_tasks: '{{item}}'

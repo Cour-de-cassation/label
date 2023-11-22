@@ -3,7 +3,7 @@ label_backend_namespace: label
 label_backend_application: label-backend
 
 jobs:
-  annotation:
+  nlp-annotation:
     name: "nlp-annotation"
     schedule: "*/5 2-20 * * *"
     successful_jobs_history_limit: "288"

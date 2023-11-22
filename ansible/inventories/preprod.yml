@@ -1,5 +1,5 @@
 ---
-dev:
+preprod:
   children:
     k3s_master:
       hosts:

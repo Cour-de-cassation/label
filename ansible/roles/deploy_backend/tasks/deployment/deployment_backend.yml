@@ -1,5 +1,4 @@
 ---
----
 - name: Creation Deployment
   k8s:
     apply: true

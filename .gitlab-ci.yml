@@ -147,6 +147,7 @@ deploy_label_backend:
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
     - chmod 600 /root/.ssh/id_rsa
     - chmod 600 /root/.ssh/known_hosts
+    - echo $inventaire
     - ansible-playbook -e label_backend_image=$docker_backend_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_backend.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"

@@ -4,7 +4,7 @@
     state: present
     apply: true
     verify_ssl: true
-    definition: "{{ lookup('template', 'cronjob.yaml.j2') }}"
+    definition: "{{ lookup('template', 'cronjob.yml.j2') }}"
   vars:
     name: "{{ job.name }}"
     schedule: "{{ job.schedule }}"

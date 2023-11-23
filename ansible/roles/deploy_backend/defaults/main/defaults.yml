@@ -2,6 +2,8 @@
 label_backend_namespace: label
 label_backend_application: label-backend
 
+test_integer_value: 134
+
 jobs:
   nlp-annotation:
     name: "nlp-annotation"

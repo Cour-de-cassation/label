@@ -5,8 +5,7 @@ label_backend_application: label-backend
 test_integer_value: 134
 
 jobs:
-  nlp-annotation:
-    name: "nlp-annotation"
+  - name: "nlp-annotation"
     schedule: "*/5 2-20 * * *"
     successful_jobs_history_limit: "288"
     failed_jobs_history_limit: 134

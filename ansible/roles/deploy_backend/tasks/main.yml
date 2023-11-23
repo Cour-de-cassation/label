@@ -18,7 +18,7 @@
 
 - name: Deploy backend jobs
   include_tasks: deployment/deployment_jobs_template.yml
-  loop: "{{ jobs | dict2items }}"
+  loop: "{{ jobs }}"
   loop_control:
     loop_var: job
 

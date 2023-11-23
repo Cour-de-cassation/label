@@ -5,16 +5,16 @@ metadata:
   namespace: label
 spec:
   schedule: "{{ schedule }}"
-  successfulJobsHistoryLimit: "{{ successful_jobs_history_limit }}"
-  failedJobsHistoryLimit: "{{ failed_jobs_history_limit }}"
+  successfulJobsHistoryLimit: {{ successful_jobs_history_limit }}
+  failedJobsHistoryLimit: {{ failed_jobs_history_limit }}
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: "{{ backoff_limit }}"
-      parallelism: "{{ parallelism }}"
+      backoffLimit: {{ backoff_limit }}
+      parallelism: {{ parallelism }}
       template:
         spec:
-          activeDeadlineSeconds: "{{ active_deadline_seconds }}"
+          activeDeadlineSeconds: {{ active_deadline_seconds }}
           containers:
             - name: "label-backend-{{ name}}"
               image: "{{ label_backend_image }}"

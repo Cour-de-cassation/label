@@ -12,16 +12,16 @@
         namespace: label
       spec:
         schedule: "{{job.value.schedule}}"
-        successfulJobsHistoryLimit: {{job.value.successful_jobs_history_limit | int}}
-        failedJobsHistoryLimit: {{job.value.failed_jobs_history_limit | int}}
+        successfulJobsHistoryLimit: "{{job.value.successful_jobs_history_limit | int}}"
+        failedJobsHistoryLimit: "{{job.value.failed_jobs_history_limit}}"
         concurrencyPolicy: Forbid
         jobTemplate:
           spec:
-            backoffLimit: {{job.value.backoff_limit | int}}
-            parallelism: {{job.value.parallelism | int}}
+            backoffLimit: "{{job.value.backoff_limit | int}}"
+            parallelism: "{{job.value.parallelism | int}}"
             template:
               spec:
-                activeDeadlineSeconds: {{job.value.active_deadline_seconds | int}}
+                activeDeadlineSeconds: "{{job.value.active_deadline_seconds | int}}"
                 containers:
                   - name: "label-backend-{{job.value.name}}"
                     image: "{{ label_backend_image }}"

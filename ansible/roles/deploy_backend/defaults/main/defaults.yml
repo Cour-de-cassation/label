@@ -7,7 +7,7 @@ jobs:
     name: "nlp-annotation"
     schedule: "*/5 2-20 * * *"
     successful_jobs_history_limit: "288"
-    failed_jobs_history_limit: "134"
+    failed_jobs_history_limit: 134
     backoff_limit: "0"
     parallelism: "1"
     active_deadline_seconds: "3600"

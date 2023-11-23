@@ -22,7 +22,7 @@ label_back_root_path: "label/api"
 label_kubeconfig: "$home/.kube/config-local-k3s.yaml"
 label_start_timeout: "180"
 label_client_public_url: "/label-client"
-nlp_api_url: "http://nlp-pseudonymisation-api-service.nlp.svc.cluster.local:8081/"
+nlp_api_url: "http://nlp-pseudonymisation-api-service.nlp.svc.cluster.local:8081"
 
 # same namespace for all environments ?
 label_kube_namespace: "label"

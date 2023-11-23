@@ -13,7 +13,7 @@
       spec:
         schedule: "{{job.schedule}}"
         successfulJobsHistoryLimit: "{{job.successful_jobs_history_limit | int}}"
-        failedJobsHistoryLimit: "{{job.failed_jobs_history_limit }}"
+        failedJobsHistoryLimit: "{{job.failed_jobs_history_limit | int}}"
         #failedJobsHistoryLimit: "{{test_integer_value}}"
         concurrencyPolicy: Forbid
         jobTemplate:

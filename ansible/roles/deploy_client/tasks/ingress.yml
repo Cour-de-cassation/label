@@ -8,7 +8,7 @@
       apiVersion: traefik.containo.us/v1alpha1
       kind: IngressRoute
       metadata:
-        name: ingress-route
+        name: ingress-route-client
         namespace: label
       spec:
         entryPoints:

@@ -25,12 +25,12 @@ spec:
     #       port: label-backend-port
     #   middlewares:
     #     - name: label-backend-stripprefix
-    - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label`)
+    - match: Host(`label.judilibre-prive.local`) && PathPrefix(`/label`)
       kind: Rule
       services:
         - name: label-client-service
           port: label-client-port
-    - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label/api`)
+    - match: Host(`label.judilibre-prive.local`) && PathPrefix(`/label/api`)
       kind: Rule
       services:
         - name: label-backend-service

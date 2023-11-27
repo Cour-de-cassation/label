@@ -15,7 +15,7 @@
           - web
 
         routes:
-          - match: Host(`juritj.judilibre-prive.local`) && PathPrefix(`/label`)
+          - match: Host(`label.judilibre-prive.local`) && PathPrefix(`/label`)
             kind: Rule
             services:
               - name: label-client-service

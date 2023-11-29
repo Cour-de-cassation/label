@@ -78,7 +78,7 @@
     },
     "iconName": "book",
     "order": 5,
-    "text": "N° INSEE"
+    "text": "Numéro identifiant"
   },
   "professionnelMagistratGreffier": {
     "anonymization": "[%c]",

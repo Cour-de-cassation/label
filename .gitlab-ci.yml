@@ -1,0 +1,182 @@
+image: docker:20.10.22 
+services:
+  - docker:20.10.22-dind
+
+variables:
+  dev: dev
+  re7: preprod
+  master: prod
+  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+
+stages:
+  - test
+  - build
+  - deploy
+
+# Partie à compléter par les développeurs label
+# test:
+#   stage: test
+#   services:
+#   - docker:20.10.22
+#   script: 
+#     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+#     - docker build 
+#         --build-arg http_proxy=$HTTP_PROXY
+#         --build-arg https_proxy=$HTTPS_PROXY
+#         #--target test
+#         -t label-test
+#     # docker run label-back-test /bin/sh -c "yarn install -- ; yarn compile ...." 
+#     # -> ici on lance un conteneur un par un, donc les données générées par le yarn install ne sont pas sauvegardées.
+#     - docker run label-test yarn install
+#     - docker run label-test yarn compile
+#     - docker run label-test yarn test
+#     - docker run label-test yarn lint
+#   only:
+#     - master
+#     - re7
+#     - dev
+
+build_label_backend:
+  stage: build
+  variables:
+    LABEL_GIT_BRANCH: "dev"
+    LABEL_API_PORT: 55432
+    LABEL_APP_HOST: "label.judilibre-prive.local"
+    LABEL_APP_GROUP: "judilibre-prive"
+    LABEL_APP_ID: "label-backend"
+    LABEL_APP_KEYWORD: "html"
+    LABEL_APP_SCHEME: "https"
+    LABEL_APP_SELF_SIGNED: "true"
+    LABEL_APP_PORT: "443"
+    LABEL_DOCKER_USERNAME: "opendatajustice"
+    LABEL_DOCKER_TARGET: "label-backend"
+    LABEL_KUBE_ZONE: "local"
+    LABEL_KUBE_TYPE: "k3s"
+    LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
+    LABEL_ROOT_PATH: "label/api"
+    LABEL_NLP_API_HOST: "https://nlp-pseudonymisaton.judilibre-prive.local"
+    LABEL_NLP_API_PORT: "443"
+    LABEL_START_TIMEOUT: "180"
+    LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
+  script: 
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - echo "$HTTP_PROXY"
+    - echo "$HTTPS_PROXY"
+    - export NODE_OPTIONS=--openssl-legacy-provider
+    - apk update
+    - apk add nodejs yarn git npm
+    - yarn config set proxy $HTTP_PROXY
+    - yarn config set https-proxy $HTTPS_PROXY
+    - yarn install --
+    - yarn compile
+    - CI=false yarn buildClient # from "ugly workaround" in github workflows
+    - docker build
+        --build-arg http_proxy=$HTTP_PROXY
+        --build-arg https_proxy=$HTTPS_PROXY
+        --target label-backend
+        -f Dockerfile.label-backend
+        -t $docker_backend_image .
+    - docker push $docker_backend_image
+  only:
+    - master
+    - re7
+    - dev
+  tags:
+    - docker
+
+
+build_label_client:
+  stage: build
+  #TODO: PUT INTO GITLAB
+  variables:
+    LABEL_GIT_BRANCH: "dev"
+    LABEL_API_PORT: 55432
+    LABEL_APP_HOST: "label.judilibre-prive.local"
+    LABEL_APP_GROUP: "judilibre-prive"
+    LABEL_APP_ID: "label-client"
+    LABEL_APP_KEYWORD: "html"
+    LABEL_APP_SCHEME: "https"
+    LABEL_APP_SELF_SIGNED: "true"
+    LABEL_APP_PORT: 443
+    LABEL_DOCKER_USERNAME: "opendatajustice"
+    LABEL_DOCKER_TARGET: "label-client"
+    LABEL_KUBE_ZONE: "local"
+    LABEL_KUBE_TYPE: "k3s"
+    LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
+    LABEL_ROOT_PATH: "label"
+    LABEL_PUBLIC_URL: "/label"
+    LABEL_START_TIMEOUT: "180"
+    LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
+  script:
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - echo "$HTTP_PROXY"
+    - echo "$HTTPS_PROXY"
+    - export NODE_OPTIONS=--openssl-legacy-provider
+    - apk update
+    - apk add nodejs yarn git npm
+    - yarn config set proxy $HTTP_PROXY
+    - yarn config set https-proxy $HTTPS_PROXY
+    - yarn install --
+    - yarn compile
+    - CI=false yarn buildClient # from "ugly workaround" in github workflows
+    # - yarn test
+    # - yarn lint
+    - docker build
+        --build-arg http_proxy=$HTTP_PROXY
+        --build-arg https_proxy=$HTTPS_PROXY
+        --target label-client
+        -f Dockerfile.label-client
+        -t $docker_client_image .
+    - docker push $docker_client_image
+  only:
+    - master
+    - re7
+    - dev
+  tags:
+    - docker
+
+deploy_label_backend:
+  stage: deploy
+  image: alpine/ansible:latest
+  script:
+    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
+    - mkdir /root/.ssh
+    - cat $SSH_KEY > /root/.ssh/id_rsa
+    - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
+    - chmod 600 /root/.ssh/id_rsa
+    - chmod 600 /root/.ssh/known_hosts
+    - ansible-playbook -e label_backend_image=$docker_backend_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_backend.yml --vault-password-file=$ANSIBLE_VAULT_PASS
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "dev"
+      when: on_success
+  tags:
+    - docker
+  # dependencies:
+  #   - build_label_backend
+
+
+deploy_label_client:
+  stage: deploy
+  image: alpine/ansible:latest
+  script:
+    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
+    - mkdir /root/.ssh
+    - cat $SSH_KEY > /root/.ssh/id_rsa
+    - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
+    - chmod 600 /root/.ssh/id_rsa
+    - chmod 600 /root/.ssh/known_hosts
+    - ansible-playbook -e label_client_image=$docker_client_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_client.yml --vault-password-file=$ANSIBLE_VAULT_PASS
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "dev"
+      when: on_success
+  tags:
+    - docker
+  # dependencies:
+  #   - build_label_client
+
+

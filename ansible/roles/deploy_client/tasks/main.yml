@@ -1,0 +1,22 @@
+---
+- name: Deploy namespace
+  import_tasks: namespace.yml
+
+- name: Deploy configmap
+  include_tasks: '{{item}}'
+  loop: "{{ lookup('fileglob', 'configmap/*.yml', wantlist=True ) }}"
+
+- name: Deploy secrets
+  include_tasks: '{{item}}'
+  loop: "{{ lookup('fileglob', 'secret/*.yml', wantlist=True ) }}"
+
+- name: Deploy deployments
+  include_tasks: '{{item}}'
+  loop: "{{ lookup('fileglob', 'deployment/*.yml', wantlist=True ) }}"
+
+- name: Deploy services
+  include_tasks: '{{item}}'
+  loop: "{{ lookup('fileglob', 'service/*.yml', wantlist=True ) }}"
+
+- name: Deploy ingress
+  import_tasks: ingress.yml

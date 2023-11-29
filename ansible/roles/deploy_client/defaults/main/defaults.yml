@@ -1,0 +1,9 @@
+---
+label_client_namespace: label
+label_client_application: label-client
+
+# api_app_selector: api
+# bucket_app_selector: bucket
+
+# api_stripprefix: api-stripprefix
+# bucket_stripprefix: bucket-stripprefix

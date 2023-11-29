@@ -1,0 +1,51 @@
+---
+- name: Creation Deployment
+  k8s:
+    apply: true
+    state: present
+    verify_ssl: true
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: label-client-deployment
+        namespace: label
+        labels:
+          app: label-client
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: label-client
+        template:
+          metadata:
+            labels:
+              app: label-client
+          spec:
+            containers:
+              - name: label-client
+                image: "{{ label_client_image }}"
+                ports:
+                  - containerPort: 55432
+                envFrom:
+                  - configMapRef:
+                      name: "client-config"
+                  - secretRef:
+                      name: "label-client-secret"
+                # livenessProbe:
+                #   exec:
+                #     command:
+                #     - /bin/sh
+                #     - -c
+                #     - curl -s -k --fail --max-time 2 "http://localhost:55432/" | egrep -q 'true'
+                #   initialDelaySeconds: 60
+                #   periodSeconds: 15
+                #   failureThreshold: 3
+                #   timeoutSeconds: 5
+                securityContext:
+                  runAsUser: 1000
+                  capabilities:
+                    drop:
+                      - all
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true

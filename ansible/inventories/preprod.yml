@@ -1,0 +1,7 @@
+---
+preprod:
+  children:
+    k3s_master:
+      hosts:
+        k3s_master_host:
+          ansible_host: 10.227.10.202

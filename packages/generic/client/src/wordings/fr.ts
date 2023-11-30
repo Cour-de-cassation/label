@@ -101,6 +101,7 @@ const fr = {
       deleteHumanTreatmentsByDocumentIdFailed:
         'La suppression des traitements manuels effectués sur ce document a échoué. Veuillez recharger la page.',
       updateDocumentStatusFailed: 'La mise à jour du statut du document a échoué. Veuillez recharger la page.',
+      updateDocumentRouteFailded: 'La mise à jour du circuit de relecture a échoué. Veuillez recharger la page.',
       updateTreatmentFailed: 'La mise à jour des annotations pour ce traitement a échoué. Veuillez recharger la page.',
       updateProblemReportHasBeenReadFailed:
         'La mise à jour du statut de lecture du signalement a échoué. Veuillez recharger la page.',
@@ -390,6 +391,7 @@ const fr = {
         openDocument: 'Ouvrir la décision...',
         displayAnnotationDiff: 'Afficher les modifications',
         resetTheDocument: 'Réinitialiser la décision',
+        reassignToWorkingUser: "Renvoyer à l'agent",
       },
     },
   },

@@ -3,7 +3,7 @@ import { stringify } from './stringify';
 
 describe('stringify', () => {
   it('should stringify an annotation without the entityId', () => {
-    const annotation = buildAnnotation({ category: 'nom', start: 12, text: 'SERRANO' });
+    const annotation = buildAnnotation({ category: 'nom', start: 12, text: 'SERRANO', certaintyScore: 1 });
 
     const stringifyedAnnotation = stringify(annotation);
 
@@ -11,10 +11,10 @@ describe('stringify', () => {
   });
 
   it('should stringify an annotation with the entityId', () => {
-    const annotation = buildAnnotation({ category: 'nom', start: 12, text: 'SERRANO' });
+    const annotation = buildAnnotation({ category: 'nom', start: 12, text: 'SERRANO', certaintyScore: 1 });
 
     const stringifyedAnnotation = stringify(annotation, { displayEntityId: true });
 
-    expect(stringifyedAnnotation).toBe(`(nom / SERRANO (nom_SERRANO) / 12)`);
+    expect(stringifyedAnnotation).toBe(`(nom / SERRANO (nom_serrano) / 12)`);
   });
 });

@@ -17,12 +17,15 @@ function generateRandomNlpAnnotations() {
 
 function generateRandomNlpAnnotation() {
   const start = random(100);
-  return {
-    text: `TEXT_${Math.random()}`,
+  const text = `TEXT_${Math.random()}`;
+  const entity = {
+    text: text,
     start: start,
     end: start + random(8),
     score: Math.random(),
     label: `LABEL`,
     source: `NLP`,
+    entityId: `LABEL_${text.toLowerCase()}`,
   };
+  return entity;
 }

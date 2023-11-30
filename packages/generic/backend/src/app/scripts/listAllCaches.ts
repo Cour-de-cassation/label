@@ -5,21 +5,25 @@ import { logger } from '../../utils';
 export { listAllCaches };
 
 async function listAllCaches() {
-  logger.log(`listAllCaches`);
+  logger.log({ operationName: 'listAllCaches', msg: 'START' });
 
   const cacheRepository = buildCacheRepository();
 
   const caches = await cacheRepository.findAll();
-  logger.log(`${caches.length} caches found`);
+  logger.log({
+    operationName: 'listAllCaches',
+    msg: `${caches.length} caches found`,
+  });
   for (let index = 0; index < caches.length; index++) {
     const cache = caches[index] as cacheType;
-    logger.log(
-      `${index + 1} | ${cache['key']} | ${
+    logger.log({
+      operationName: 'listAllCaches',
+      msg: `${index + 1} | ${cache['key']} | ${
         cache['updateDate'] &&
         timeOperator.convertTimestampToReadableDate(cache['updateDate'])
       } | ${cache['content']}`,
-    );
+    });
   }
 
-  logger.log('Done');
+  logger.log({ operationName: 'listAllCaches', msg: 'DONE' });
 }

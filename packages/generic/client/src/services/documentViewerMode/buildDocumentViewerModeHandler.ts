@@ -8,7 +8,11 @@ export type { documentViewerModeHandlerType };
 type documentViewerModeHandlerType = {
   isAnonymizedView: () => boolean;
   resetViewerMode: () => void;
-  setOccurrenceMode: (entityId: annotationType['entityId'], entityLineNumbers: number[]) => void;
+  setOccurrenceMode: (
+    category: annotationType['category'],
+    entityId: annotationType['entityId'],
+    entityLineNumbers: number[],
+  ) => void;
   switchAnonymizedView: () => void;
   documentViewerMode: viewerModeType;
 };
@@ -36,9 +40,14 @@ function buildDocumentViewerModeHandler(
     return documentViewerMode.isAnonymizedView;
   }
 
-  function setOccurrenceMode(entityId: annotationType['entityId'], entityLineNumbers: number[]) {
+  function setOccurrenceMode(
+    category: annotationType['category'],
+    entityId: annotationType['entityId'],
+    entityLineNumbers: number[],
+  ) {
     setViewerMode({
       kind: 'occurrence',
+      category,
       entityId,
       entityLineNumbers,
       isAnonymizedView: documentViewerMode.isAnonymizedView,

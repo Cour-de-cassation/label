@@ -16,8 +16,10 @@ function isAnnotationTextOverlappedWithAnyAnnotations(
     annotationModule.lib.areOverlapping(
       annotationModule.lib.buildAnnotation({
         category: otherAnnotation.category,
+        entityId: otherAnnotation.entityId,
         start: annotationStart,
         text: annotationText,
+        certaintyScore: 1,
       }),
       otherAnnotation,
     ),
@@ -29,8 +31,10 @@ function findOverlappingAnnotation(annotations: annotationType[], annotationStar
     annotationModule.lib.areOverlapping(
       annotationModule.lib.buildAnnotation({
         category: otherAnnotation.category,
+        entityId: otherAnnotation.entityId,
         start: annotationStart,
         text: annotationText,
+        certaintyScore: 1,
       }),
       otherAnnotation,
     ),

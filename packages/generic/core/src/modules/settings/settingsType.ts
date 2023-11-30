@@ -21,7 +21,7 @@ type categorySettingType = {
   anonymization: string;
   color: { [displayMode in displayModeType]: colorType };
   iconName: categoryIconNameType;
-  autoLinkSensitivity: stringComparisonSensitivityType[];
+  autoLinkSensitivity?: stringComparisonSensitivityType[];
   isAnonymized?: boolean;
   isSensitive?: boolean;
   order: number | undefined;

@@ -211,7 +211,8 @@ describe('fetch', () => {
           {
             addedAnnotation: {
               category: 'FIRST_NAME',
-              entityId: 'FIRST_NAME_Nicolas',
+              certaintyScore: 1,
+              entityId: 'FIRST_NAME_nicolas',
               start: 60,
               text: 'Nicolas',
             },
@@ -224,7 +225,8 @@ describe('fetch', () => {
           {
             deletedAnnotation: {
               category: 'FIRST_NAME',
-              entityId: 'FIRST_NAME_Benoit',
+              certaintyScore: 1,
+              entityId: 'FIRST_NAME_benoit',
               start: 134,
               text: 'Benoit',
             },
@@ -237,13 +239,15 @@ describe('fetch', () => {
           {
             annotationAfter: {
               category: 'FIRST_NAME',
-              entityId: 'FIRST_NAME_Romain',
+              certaintyScore: 1,
+              entityId: 'FIRST_NAME_romain',
               start: 47,
               text: 'Romain',
             },
             annotationBefore: {
               category: 'FIRST_NAME',
-              entityId: 'FIRST_NAME_Romain Glé',
+              certaintyScore: 1,
+              entityId: 'FIRST_NAME_romain glé',
               start: 47,
               text: 'Romain Glé',
             },

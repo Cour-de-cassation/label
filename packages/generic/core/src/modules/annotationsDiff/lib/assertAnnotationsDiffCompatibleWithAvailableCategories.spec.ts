@@ -5,7 +5,7 @@ import { assertAnnotationsDiffCompatibleWithAvailableCategories } from './assert
 
 describe('assertAnnotationsDiffCompatibleWithAvailableCategories', () => {
   it('should return true', () => {
-    const afterAnnotations = [{ category: 'prenom', start: 0, text: 'Benoit' }].map(
+    const afterAnnotations = [{ category: 'prenom', start: 0, text: 'Benoit', certaintyScore: 1 }].map(
       annotationModule.lib.buildAnnotation,
     );
     const annotationsDiff = annotationsDiffGenerator.generate({ after: afterAnnotations });
@@ -16,12 +16,12 @@ describe('assertAnnotationsDiffCompatibleWithAvailableCategories', () => {
   });
 
   it('should throw', () => {
-    const beforeAnnotations = [{ category: 'prenom', start: 0, text: 'Benoit' }].map(
+    const beforeAnnotations = [{ category: 'prenom', start: 0, text: 'Benoit', certaintyScore: 1 }].map(
       annotationModule.lib.buildAnnotation,
     );
     const afterAnnotations = [
-      { category: 'nom', start: 0, text: 'Benoit' },
-      { category: 'prenom', start: 10, text: 'Benoit' },
+      { category: 'nom', start: 0, text: 'Benoit', certaintyScore: 1 },
+      { category: 'prenom', start: 10, text: 'Benoit', certaintyScore: 1 },
     ].map(annotationModule.lib.buildAnnotation);
     const annotationsDiff = annotationsDiffGenerator.generate({ before: beforeAnnotations, after: afterAnnotations });
     const settings = settingsModule.lib.buildSettings({ prenom: {} });
@@ -31,7 +31,7 @@ describe('assertAnnotationsDiffCompatibleWithAvailableCategories', () => {
       assertAnnotationsDiffCompatibleWithAvailableCategories(annotationsDiff, availableCategories);
 
     expect(functionCall).toThrowError(
-      '(nom / Benoit (nom_Benoit) / 0) category is not in availableCategories: [prenom]',
+      '(nom / Benoit (nom_benoit) / 0) category is not in availableCategories: [prenom]',
     );
   });
 });

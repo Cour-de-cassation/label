@@ -5,7 +5,7 @@ import { logger } from '../../../../utils';
 export { up, down };
 
 async function up() {
-  logger.log('Up: ');
+  logger.log({ operationName: 'migration', msg: 'Up: ' });
 
   const documentRepository = buildDocumentRepository();
 
@@ -26,7 +26,7 @@ async function up() {
 }
 
 async function down() {
-  logger.log('Down: ');
+  logger.log({ operationName: 'migration', msg: 'Down: ' });
 
   const documentRepository = buildDocumentRepository();
 

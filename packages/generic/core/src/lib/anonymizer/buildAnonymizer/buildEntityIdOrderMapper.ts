@@ -1,12 +1,12 @@
-import { groupBy } from 'lodash';
-import { annotationModule } from '../../../modules/annotation';
+import { groupBy, uniq } from 'lodash';
+import { annotationType } from '../../../modules/annotation';
 
 export { buildEntityIdOrderMapper };
 
-function buildEntityIdOrderMapper(entityIds: string[]): Record<string, number> {
-  const grouppedByCategoryEntityIds = groupBy(entityIds, annotationModule.lib.entityIdHandler.getCategory);
-  return Object.keys(grouppedByCategoryEntityIds).reduce((entityIdOrderMapper, category) => {
-    const grouppedEntityIds = grouppedByCategoryEntityIds[category];
+function buildEntityIdOrderMapper(annotations: annotationType[]): Record<string, number> {
+  const grouppedAnnotationsByCategory = groupBy(annotations, 'category');
+  return Object.keys(grouppedAnnotationsByCategory).reduce((entityIdOrderMapper, category) => {
+    const grouppedEntityIds = uniq(grouppedAnnotationsByCategory[category].map((annotation) => annotation.entityId));
     const spreadEntityIds = grouppedEntityIds.reduce((accumulator, entityId) => {
       const orderInCategory = [...grouppedEntityIds]
         .sort((entityIdA, entityIdB) => entityIdA.localeCompare(entityIdB))
@@ -18,7 +18,7 @@ function buildEntityIdOrderMapper(entityIds: string[]): Record<string, number> {
           )}"`,
         );
       }
-      return { ...accumulator, [entityId]: orderInCategory };
+      return { ...accumulator, [`${entityId}`]: orderInCategory };
     }, {} as Record<string, number>);
     return {
       ...entityIdOrderMapper,

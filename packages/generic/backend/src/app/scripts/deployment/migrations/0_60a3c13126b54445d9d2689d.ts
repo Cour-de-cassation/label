@@ -5,9 +5,11 @@ import { logger } from '../../../../utils';
 export { up, down };
 
 async function up() {
-  logger.log(
-    'Up: replace document markedAsPublished with toBePublished / published ',
-  );
+  logger.log({
+    operationName: 'migration',
+    msg:
+      'Up: replace document markedAsPublished with toBePublished / published ',
+  });
 
   const documentRepository = buildDocumentRepository();
 
@@ -37,9 +39,11 @@ async function up() {
 }
 
 async function down() {
-  logger.log(
-    'Down: replace document markedAsPublished with toBePublished / published ',
-  );
+  logger.log({
+    operationName: 'migration',
+    msg:
+      'Down: replace document markedAsPublished with toBePublished / published ',
+  });
 
   const documentRepository = buildDocumentRepository();
 

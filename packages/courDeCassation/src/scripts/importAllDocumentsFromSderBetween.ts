@@ -2,6 +2,7 @@ import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
 import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
+import { environmentType } from '@label/core';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
@@ -20,6 +21,7 @@ import { parametersHandler } from '../lib/parametersHandler';
         toDate,
         jurisdictionsArr,
         chambersArr,
+        environment,
       ),
     {
       shouldLoadDb: true,
@@ -32,12 +34,14 @@ async function importAllDocumentsFromSderBetween(
   to: Date,
   jurisdictions: string[],
   chambers: string[],
+  environment: environmentType,
 ) {
   await sderConnector.importDocumentsByJurisdictionBetween(
     from,
     to,
     jurisdictions,
     chambers,
+    environment,
   );
 }
 

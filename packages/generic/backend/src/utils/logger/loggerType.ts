@@ -1,6 +1,22 @@
 export type { loggerType };
 
 type loggerType = {
-  log: (value: any) => void;
-  error: (errorText: string) => void;
+  log: ({
+    operationName,
+    msg,
+    data,
+  }: {
+    operationName: string;
+    msg: string;
+    data?: Record<string, unknown>;
+  }) => Promise<void>;
+  error: ({
+    operationName,
+    msg,
+    data,
+  }: {
+    operationName: string;
+    msg: string;
+    data?: Record<string, unknown>;
+  }) => Promise<void>;
 };

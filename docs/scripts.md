@@ -102,7 +102,6 @@ Import from the SDER database recent JuriCA decisions to pseudonymise.
 
 Import from the SDER database recent JuriTJ decisions to pseudonymise.
 
-
 ## importNewDocumentsFromSder
 
 Same as `autoImportDocumentsFromSder`, but without the `threshold` option.
@@ -110,10 +109,6 @@ Same as `autoImportDocumentsFromSder`, but without the `threshold` option.
 ## importSpecificDocumentFromSder
 
 Manual import of a specific document.
-
-## importTestDocumentsFromSderSince
-
-Manual import of documents for testing.
 
 ## initializeTestDb
 
@@ -168,3 +163,7 @@ Revert a migration.
 ## runNewMigrations
 
 Run migrations.
+
+## updateRoute
+
+Reapply route rules for documents with a specific status.

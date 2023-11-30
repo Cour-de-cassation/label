@@ -250,6 +250,24 @@ function ProblemReportsTable(props: {
           console.warn(error);
           return;
         }
+
+        if (problemReportWithDetails.document?.route == 'simple') {
+          try {
+            await apiCaller.post<'updateDocumentRoute'>('updateDocumentRoute', {
+              documentId: problemReportWithDetails.problemReport.documentId,
+              route: 'exhaustive',
+            });
+          } catch (error) {
+            displayAlert({
+              text: wordings.business.errors.updateDocumentRouteFailded,
+              variant: 'alert',
+              autoHide: true,
+            });
+            console.warn(error);
+            return;
+          }
+        }
+
         props.refetch();
       },
       isDisabled: userRole !== 'admin' || adminView !== 'admin',

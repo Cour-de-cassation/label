@@ -6,15 +6,16 @@ function extractRouteForJurinet({
   solution,
   session,
   publicationCategory,
-  chamberId,
+  chamberName,
   civilMatterCode,
   civilCaseCode,
   criminalCaseCode,
 }: {
   session: documentType['decisionMetadata']['session'];
   solution: documentType['decisionMetadata']['solution'];
+  parties: documentType['decisionMetadata']['parties'];
   publicationCategory: documentType['publicationCategory'];
-  chamberId: string;
+  chamberName: documentType['decisionMetadata']['chamberName'];
   civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
   civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
   criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
@@ -27,7 +28,7 @@ function extractRouteForJurinet({
   if (publicationCategory.includes('C')) {
     return 'confirmation';
   }
-  if (chamberId === 'AVIS' || solution === 'Avis sur saisine') {
+  if (chamberName === 'Saisine pour avis' || solution === 'Avis sur saisine') {
     return 'confirmation';
   }
   if (['PL', 'MI'].includes(session)) {
@@ -43,7 +44,7 @@ function extractRouteForJurinet({
     return 'exhaustive';
   }
 
-  if (chamberId === 'CR') {
+  if (chamberName === 'Chambre criminelle') {
     return 'exhaustive';
   }
 

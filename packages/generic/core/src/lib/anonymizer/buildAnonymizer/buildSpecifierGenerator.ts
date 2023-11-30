@@ -1,21 +1,20 @@
-import { annotationModule } from '../../../modules/annotation';
+import { annotationType } from '../../../modules/annotation';
 import { buildAvailableCharactersMapper } from './buildAvailableCharactersMapper';
 import { buildEntityIdOrderMapper } from './buildEntityIdOrderMapper';
 import { specifierGeneratorType } from './types';
 
 export { buildSpecifierGenerator };
 
-function buildSpecifierGenerator(entityIds: string[], seed: number) {
+function buildSpecifierGenerator(annotations: annotationType[], seed: number) {
   let currentNumber = 1;
-  const availableCharactersMapper = buildAvailableCharactersMapper(entityIds, seed);
-  const entityIdOrderMapper = buildEntityIdOrderMapper(entityIds);
+  const availableCharactersMapper = buildAvailableCharactersMapper(annotations, seed);
+  const entityIdOrderMapper = buildEntityIdOrderMapper(annotations);
 
   return {
     '%c': {
-      generate: (entityId: string) => {
-        const category = annotationModule.lib.entityIdHandler.getCategory(entityId);
-        const orderInCategory = entityIdOrderMapper[entityId];
-        const specifierValue = availableCharactersMapper[category][orderInCategory];
+      generate: (annotation: annotationType) => {
+        const orderInCategory = entityIdOrderMapper[annotation.entityId];
+        const specifierValue = availableCharactersMapper[annotation.category][orderInCategory];
         return specifierValue;
       },
     },

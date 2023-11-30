@@ -1,7 +1,0 @@
----
-- hosts: k3s_master
-  roles:
-    - role: deploy_client
-      gather_facts: true
-
-...

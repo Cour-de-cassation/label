@@ -44,7 +44,7 @@ jobs:
     backoff_limit: 2
     parallelism: 1
     active_deadline_seconds: 300
-    command: "dist/scripts/exportTreatedDocumentsSince.js"
+    command: "dist/scripts/exportTreatedDocumentsSince.js --days 4"
   - name: "export-publishable"
     schedule: "50 13 * * *"
     successful_jobs_history_limit: 7

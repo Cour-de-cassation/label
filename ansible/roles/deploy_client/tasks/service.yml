@@ -8,13 +8,13 @@
       apiVersion: v1
       kind: Service
       metadata:
-        name: label-client-service
-        namespace: label
+        name: "{{ label_client_app_id }}-service"
+        namespace: "{{ label_kube_namespace }}"
       spec:
         selector:
-          app: label-client
+          app: "{{ label_client_app_id }}"
         ports:
           - name: label-client-port
-            port: 55432
-            targetPort: 55432
+            port: "{{ label_api_port }}"
+            targetPort: "{{ label_api_port }}"
         type: ClusterIP

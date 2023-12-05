@@ -9,16 +9,15 @@
       kind: IngressRoute
       metadata:
         name: ingress-route-backend
-        namespace: label
+        namespace: "{{ label_kube_namespace }}"
       spec:
         entryPoints:
           - web
-
         routes:
           - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/label/api`)
             kind: Rule
             services:
-              - name: label-backend-service
+              - name: "{{ label_back_app_id }}-service"
                 port: label-backend-port
 
 - name: Creation middleware
@@ -31,7 +30,7 @@
       kind: Middleware
       metadata:
         name: label-backend-stripprefix
-        namespace: label
+        namespace: "{{ label_kube_namespace }}"
       spec:
         replacePathRegex:
           regex: /label-backend(/|$)(.*)

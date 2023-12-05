@@ -3,20 +3,16 @@
   import_tasks: namespace.yml
 
 - name: Deploy configmap
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'configmap/*.yml', wantlist=True ) }}"
+  include_tasks: configmap.yml
 
-- name: Deploy secrets
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'secret/*.yml', wantlist=True ) }}"
+- name: Deploy secret
+  include_tasks: secret.yml
 
-- name: Deploy deployments
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'deployment/*.yml', wantlist=True ) }}"
+- name: Deploy client deployment
+  include_tasks: deployment.yml
 
-- name: Deploy services
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'service/*.yml', wantlist=True ) }}"
+- name: Deploy service
+  include_tasks: service.yml
 
 - name: Deploy ingress
   import_tasks: ingress.yml

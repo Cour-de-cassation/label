@@ -9,7 +9,7 @@
       kind: IngressRoute
       metadata:
         name: ingress-route-client
-        namespace: label
+        namespace: "{{ label_kube_namespace }}"
       spec:
         entryPoints:
           - web
@@ -18,7 +18,7 @@
           - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/label`)
             kind: Rule
             services:
-              - name: label-client-service
+              - name: "{{ label_client_app_id }}-service"
                 port: label-client-port
 
 - name: Creation middleware

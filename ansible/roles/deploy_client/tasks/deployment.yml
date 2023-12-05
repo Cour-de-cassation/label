@@ -8,30 +8,30 @@
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: label-client-deployment
-        namespace: label
+        name: "{{ label_client_app_id }}-deployment"
+        namespace: "{{ label_kube_namespace }}"
         labels:
-          app: label-client
+          app: "{{ label_client_app_id }}"
       spec:
         replicas: 1
         selector:
           matchLabels:
-            app: label-client
+            app: "{{ label_client_app_id }}"
         template:
           metadata:
             labels:
-              app: label-client
+              app: "{{ label_client_app_id }}"
           spec:
             containers:
-              - name: label-client
+              - name: "{{ label_client_app_id }}"
                 image: "{{ label_client_image }}"
                 ports:
-                  - containerPort: 55432
+                  - containerPort: "{{ label_api_port }}"
                 envFrom:
                   - configMapRef:
-                      name: "client-config"
+                      name: "{{ label_client_app_id }}-config"
                   - secretRef:
-                      name: "label-client-secret"
+                      name: "{{ label_client_app_id }}-secret"
                 # livenessProbe:
                 #   exec:
                 #     command:

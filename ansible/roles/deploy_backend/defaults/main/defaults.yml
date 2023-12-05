@@ -1,9 +1,4 @@
 ---
-label_backend_namespace: label
-label_backend_application: label-backend
-
-test_integer_value: 134
-
 jobs:
   - name: "nlp-annotation"
     schedule: "*/5 2-20 * * *"

@@ -8,30 +8,30 @@
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: label-backend-deployment
-        namespace: label
+        name: "{{ label_back_app_id }}-deployment"
+        namespace: "{{ label_kube_namespace }}"
         labels:
           app: 
       spec:
         replicas: 1
         selector:
           matchLabels:
-            app: label-backend
+            app: "{{ label_back_app_id }}"
         template:
           metadata:
             labels:
-              app: label-backend
+              app: "{{ label_back_app_id }}"
           spec:
             containers:
-              - name: label-backend
+              - name: "{{ label_back_app_id }}"
                 image: "{{ label_backend_image }}"
                 ports:
-                  - containerPort: 55430
+                  - containerPort: "{{ label_back_port }}"
                 envFrom:
                   - configMapRef:
-                      name: "backend-config"
+                      name: "{{ label_back_app_id }}-config"
                   - secretRef:
-                      name: "label-back-secret"
+                      name: "{{ label_back_app_id }}-secret"
                 # startupProbe:
                 #   exec:
                 #     command:

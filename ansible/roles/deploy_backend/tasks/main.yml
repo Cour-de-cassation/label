@@ -1,20 +1,15 @@
-# TODO : mettre la logique de templating des jobs et deploy les jobs 1 par 1 ici
-
 ---
 - name: Deploy namespace
   import_tasks: namespace.yml
 
 - name: Deploy configmap
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'configmap/*.yml', wantlist=True ) }}"
+  include_tasks: configmap.yml
 
-- name: Deploy secrets
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'secret/*.yml', wantlist=True ) }}"
+- name: Deploy secret
+  include_tasks: secret.yml
 
 - name: Deploy backend deployment
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'deployment/deployment_backend.yml', wantlist=True ) }}"
+  include_tasks: deployment.yml
 
 - name: Deploy backend jobs
   include_tasks: cronjob.yml
@@ -22,9 +17,8 @@
   loop_control:
     loop_var: job
 
-- name: Deploy services
-  include_tasks: '{{item}}'
-  loop: "{{ lookup('fileglob', 'service/*.yml', wantlist=True ) }}"
+- name: Deploy service
+  include_tasks: service.yml
 
 - name: Deploy ingress
   import_tasks: ingress.yml

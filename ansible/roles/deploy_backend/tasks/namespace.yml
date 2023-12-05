@@ -8,6 +8,6 @@
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: label
+        name: "{{ label_kube_namespace }}"
         namespace: "{{ label_kube_namespace }}"
 ...

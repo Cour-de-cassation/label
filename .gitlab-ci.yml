@@ -40,25 +40,8 @@ stages:
 build_label_backend:
   stage: build
   variables:
-    LABEL_GIT_BRANCH: "dev"
-    LABEL_API_PORT: 55432
-    LABEL_APP_HOST: "label.judilibre-prive.local"
-    LABEL_APP_GROUP: "judilibre-prive"
-    LABEL_APP_ID: "label-backend"
-    LABEL_APP_KEYWORD: "html"
-    LABEL_APP_SCHEME: "https"
-    LABEL_APP_SELF_SIGNED: "true"
-    LABEL_APP_PORT: "443"
-    LABEL_DOCKER_USERNAME: "opendatajustice"
-    LABEL_DOCKER_TARGET: "label-backend"
-    LABEL_KUBE_ZONE: "local"
-    LABEL_KUBE_TYPE: "k3s"
-    LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
-    LABEL_ROOT_PATH: "label/api"
-    LABEL_NLP_API_HOST: "https://nlp-pseudonymisaton.judilibre-prive.local"
-    LABEL_NLP_API_PORT: "443"
-    LABEL_START_TIMEOUT: "180"
-    LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
+    HTTP_PROXY: $HTTP_PROXY_DEV
+    HTTPS_PROXY: $HTTPS_PROXY_DEV
   script: 
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "$HTTP_PROXY"
@@ -88,26 +71,9 @@ build_label_backend:
 
 build_label_client:
   stage: build
-  #TODO: PUT INTO GITLAB
   variables:
-    LABEL_GIT_BRANCH: "dev"
-    LABEL_API_PORT: 55432
-    LABEL_APP_HOST: "label.judilibre-prive.local"
-    LABEL_APP_GROUP: "judilibre-prive"
-    LABEL_APP_ID: "label-client"
-    LABEL_APP_KEYWORD: "html"
-    LABEL_APP_SCHEME: "https"
-    LABEL_APP_SELF_SIGNED: "true"
-    LABEL_APP_PORT: 443
-    LABEL_DOCKER_USERNAME: "opendatajustice"
-    LABEL_DOCKER_TARGET: "label-client"
-    LABEL_KUBE_ZONE: "local"
-    LABEL_KUBE_TYPE: "k3s"
-    LABEL_KUBE_NAMESPACE: "judilibre-prive-local-dev"
-    LABEL_ROOT_PATH: "label"
-    LABEL_PUBLIC_URL: "/label"
-    LABEL_START_TIMEOUT: "180"
-    LABEL_KUBECONFIG: "$HOME/.kube/config-local-k3s.yaml"
+    HTTP_PROXY: $HTTP_PROXY_DEV
+    HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "$HTTP_PROXY"

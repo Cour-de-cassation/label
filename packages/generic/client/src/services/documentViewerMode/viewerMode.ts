@@ -8,6 +8,7 @@ type viewerModeType =
   | { kind: 'annotation'; isAnonymizedView: boolean }
   | {
       kind: 'occurrence';
+      category: annotationType['category'];
       entityId: annotationType['entityId'];
       entityLineNumbers: number[];
       isAnonymizedView: boolean;

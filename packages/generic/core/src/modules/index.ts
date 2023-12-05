@@ -6,8 +6,8 @@ import { cacheModule, cacheType } from './cache';
 import { documentModule, documentType, fetchedDocumentType } from './document';
 import { ressourceFilterModule, ressourceFilterType } from './ressourceFilter';
 import { idModule, idType } from './id';
-import { fetchedMonitoringEntryType, monitoringEntryModule, monitoringEntryType } from './monitoringEntry';
 import { problemReportModule, problemReportType } from './problemReport';
+import { replacementTermModule, replacementTermType } from './replacementTerm';
 import {
   colorType,
   constantColorType,
@@ -32,8 +32,8 @@ export {
   ressourceFilterModule,
   idModule,
   migrationModule,
-  monitoringEntryModule,
   problemReportModule,
+  replacementTermModule,
   settingsModule,
   statisticModule,
   treatmentModule,
@@ -56,14 +56,13 @@ export type {
   fetchedDocumentType,
   ressourceFilterType,
   idType,
-  fetchedMonitoringEntryType,
   migrationType,
-  monitoringEntryType,
   problemReportType,
   settingsType,
   statisticType,
   categoryIconNameType,
   userType,
+  replacementTermType,
   passwordTimeValidityStatusType,
   treatmentType,
   treatmentInfoType,

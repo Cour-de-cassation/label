@@ -1,21 +1,22 @@
 import { logger } from '../../../utils';
 import { cleanAssignations } from './cleanAssignations';
 import { cleanAssignedDocuments } from './cleanAssignedDocuments';
-import { cleanDoubledDocuments } from './cleanDoubledDocuments';
+import { cleanDuplicatedDocuments } from './cleanDuplicatedDocuments';
 import { cleanFreeDocuments } from './cleanFreeDocuments';
 import { cleanLoadedDocuments } from './cleanLoadedDocuments';
-import { cleanTreatments } from './cleanTreatments';
+import { cleanUnconsistentTreatments } from './cleanUnconsistentTreatments';
+import { cleanOrphansTreatments } from './cleanOrphansTreatments';
 
 export { cleanDocuments };
 
 async function cleanDocuments() {
-  logger.log(`cleanDocuments`);
+  logger.log({ operationName: 'cleanDocuments', msg: 'START' });
 
-  await cleanDoubledDocuments();
+  await cleanDuplicatedDocuments();
 
   await cleanAssignedDocuments();
 
-  await cleanTreatments();
+  await cleanUnconsistentTreatments();
 
   await cleanAssignations();
 
@@ -23,5 +24,7 @@ async function cleanDocuments() {
 
   await cleanLoadedDocuments();
 
-  logger.log(`cleanDocuments done!`);
+  await cleanOrphansTreatments();
+
+  logger.log({ operationName: 'cleanDocuments', msg: 'DONE' });
 }

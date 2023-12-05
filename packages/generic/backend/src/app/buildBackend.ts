@@ -9,9 +9,6 @@ import {
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,
-  extractComplexityInfoIntoCsv,
-  extractMonitoringEntriesIntoCsv,
-  extractRouteInfosIntoCsv,
   freePendingDocuments,
   insertTestStatistics,
   insertTestUsers,
@@ -24,6 +21,7 @@ import {
   resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
+  cleanOrphansTreatments,
 } from './scripts';
 
 export { buildBackend };
@@ -62,18 +60,6 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       dumpDocument: {
         run: dumpDocument,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      extractMonitoringEntriesIntoCsv: {
-        run: extractMonitoringEntriesIntoCsv,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      extractComplexityInfoIntoCsv: {
-        run: extractComplexityInfoIntoCsv,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      extractRouteInfosIntoCsv: {
-        run: extractRouteInfosIntoCsv,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       freePendingDocuments: {
@@ -123,6 +109,10 @@ function buildBackend(environment: environmentType, settings: settingsType) {
       },
       runNewMigrations: {
         run: runNewMigrations,
+        option: { shouldLoadDb: true, shouldExit: true },
+      },
+      cleanOrphansTreatments: {
+        run: cleanOrphansTreatments,
         option: { shouldLoadDb: true, shouldExit: true },
       },
     },

@@ -3,6 +3,7 @@ import { customThemeType, getColor, useCustomTheme, useDisplayMode, positionType
 import { annotationType, settingsModule } from '@label/core';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
+import { clientAnonymizerType } from '../../../../types';
 import { MouseMoveListener, useMousePosition } from '../../../../utils';
 import { getAnnotationTextDisplayStyle } from './lib';
 import { AnnotationTooltipMenu } from './AnnotationTooltipMenu';
@@ -10,7 +11,7 @@ import { DocumentAnonymizedAnnotationText } from './DocumentAnonymizedAnnotation
 
 export { PureDocumentAnnotationText as DocumentAnnotationText };
 
-type propsType = { annotation: annotationType };
+type propsType = { annotation: annotationType; anonymizer: clientAnonymizerType };
 
 class PureDocumentAnnotationText extends React.Component<propsType> {
   shouldComponentUpdate(nextProps: propsType) {
@@ -23,7 +24,7 @@ class PureDocumentAnnotationText extends React.Component<propsType> {
   }
 
   render() {
-    return <DocumentAnnotationText annotation={this.props.annotation} />;
+    return <DocumentAnnotationText annotation={this.props.annotation} anonymizer={this.props.anonymizer} />;
   }
 }
 
@@ -51,7 +52,7 @@ function DocumentAnnotationText(props: propsType): ReactElement {
           {!documentViewerModeHandler.isAnonymizedView() ? (
             props.annotation.text
           ) : (
-            <DocumentAnonymizedAnnotationText annotation={props.annotation} />
+            <DocumentAnonymizedAnnotationText annotation={props.annotation} anonymizer={props.anonymizer} />
           )}
         </span>
       </MouseMoveListener>
@@ -59,6 +60,7 @@ function DocumentAnnotationText(props: propsType): ReactElement {
       {isTooltipMenuVisible && (
         <AnnotationTooltipMenu
           annotation={props.annotation}
+          anonymizer={props.anonymizer}
           closesOnBackdropClick={!!tooltipMenuFixedPosition}
           originPosition={tooltipMenuFixedPosition || mouseMoveHandler.mousePosition}
           isAnonymizedView={documentViewerModeHandler.isAnonymizedView()}

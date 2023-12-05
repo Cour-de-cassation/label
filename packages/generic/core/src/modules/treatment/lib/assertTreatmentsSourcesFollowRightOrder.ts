@@ -8,7 +8,7 @@ type documentStepType = { treatmentSource: treatmentType['source'][]; quantity: 
 const DOCUMENT_STEPS: documentStepType[] = [
   { treatmentSource: ['NLP'], quantity: '1' },
   { treatmentSource: ['supplementaryAnnotations'], quantity: '0|1' },
-  { treatmentSource: ['postProcess'], quantity: '1' },
+  { treatmentSource: ['postProcess'], quantity: '0|1' },
   { treatmentSource: ['admin', 'annotator'], quantity: '1+' },
 ];
 

@@ -1,5 +1,10 @@
 import { decisionModule, decisionType } from 'sder';
-import { documentModule, documentType, idModule } from '@label/core';
+import {
+  documentModule,
+  documentType,
+  environmentType,
+  idModule,
+} from '@label/core';
 
 export { buildFakeConnectorWithNDecisions };
 
@@ -10,6 +15,7 @@ type partialDecisionType = Partial<
   >
 >;
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 async function buildFakeConnectorWithNDecisions(
   courtDecisionFields: partialDecisionType[],
 ) {
@@ -30,34 +36,6 @@ async function buildFakeConnectorWithNDecisions(
       return courtDecisions;
     },
     async fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween({
-      startDate,
-      endDate = new Date(),
-      source,
-      jurisdictions,
-      chambers,
-    }: {
-      startDate: Date;
-      endDate?: Date;
-      source: string;
-      jurisdictions: string[];
-      chambers: string[];
-    }) {
-      return courtDecisions.filter((courtDecision) => {
-        if (!courtDecision.dateDecision) {
-          return false;
-        }
-        const dateDecision = new Date(courtDecision.dateDecision);
-
-        return (
-          dateDecision.getTime() >= startDate.getTime() &&
-          dateDecision.getTime() <= endDate.getTime() &&
-          jurisdictions.includes(courtDecision.jurisdictionName) &&
-          chambers.includes(courtDecision.chamberId) &&
-          courtDecision.sourceName === source
-        );
-      });
-    },
-    async fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween({
       startDate,
       endDate = new Date(),
       source,
@@ -125,7 +103,7 @@ async function buildFakeConnectorWithNDecisions(
     }: {
       startDate: Date;
       endDate: Date;
-      source: 'jurinet' | 'jurica';
+      source: 'jurinet' | 'jurica' | 'juritj';
     }) {
       return courtDecisions.filter((courtDecision) => {
         if (!courtDecision.dateDecision) {
@@ -147,7 +125,7 @@ async function buildFakeConnectorWithNDecisions(
     }: {
       startDate: Date;
       endDate: Date;
-      source: 'jurinet' | 'jurica';
+      source: 'jurinet' | 'jurica' | 'juritj';
     }) {
       return courtDecisions.filter((courtDecision) => {
         if (!courtDecision.dateCreation) {
@@ -162,7 +140,13 @@ async function buildFakeConnectorWithNDecisions(
         );
       });
     },
-    async updateDocumentsLoadedStatus(documents: documentType[]) {
+    async updateDocumentsLoadedStatus({
+      documents,
+      environment,
+    }: {
+      documents: documentType[];
+      environment: environmentType;
+    }) {
       courtDecisions = courtDecisions.map((courtDecision) => {
         if (
           documents.some((document) =>
@@ -177,7 +161,13 @@ async function buildFakeConnectorWithNDecisions(
         return courtDecision;
       });
     },
-    async updateDocumentsToBeTreatedStatus(documents: documentType[]) {
+    async updateDocumentsToBeTreatedStatus({
+      documents,
+      environment,
+    }: {
+      documents: documentType[];
+      environment: environmentType;
+    }) {
       courtDecisions = courtDecisions.map((courtDecision) => {
         if (
           documents.some((document) =>

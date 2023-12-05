@@ -9,9 +9,6 @@ import { deleteDocument } from './deleteDocument';
 import { displayDocumentLinks } from './displayDocumentLinks';
 import { displayMultipleAssignatedDocuments } from './displayMultipleAssignatedDocuments';
 import { dumpDocument } from './dumpDocument';
-import { extractComplexityInfoIntoCsv } from './extractComplexityInfoIntoCsv';
-import { extractMonitoringEntriesIntoCsv } from './extractMonitoringEntriesIntoCsv';
-import { extractRouteInfosIntoCsv } from './extractRouteInfosIntoCsv';
 import { freePendingDocuments } from './freePendingDocuments';
 import { insertTestStatistics } from './insertTestStatistics';
 import { insertTestUsers } from './insertTestUsers';
@@ -23,6 +20,7 @@ import { resetUntreatedDocumentsForTest } from './resetUntreatedDocumentsForTest
 import { purgeDb } from './purgeDb';
 import { renewCache } from './renewCache';
 import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
+import { cleanOrphansTreatments } from './cleanDocuments/cleanOrphansTreatments';
 
 export {
   cleanDocuments,
@@ -32,9 +30,6 @@ export {
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,
-  extractComplexityInfoIntoCsv,
-  extractMonitoringEntriesIntoCsv,
-  extractRouteInfosIntoCsv,
   freePendingDocuments,
   insertTestStatistics,
   insertTestUsers,
@@ -48,4 +43,5 @@ export {
   revertOneMigration,
   runNewMigrations,
   setIndexesOnAllCollections,
+  cleanOrphansTreatments,
 };

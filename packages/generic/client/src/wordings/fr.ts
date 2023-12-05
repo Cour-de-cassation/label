@@ -79,11 +79,11 @@ const fr = {
       default: 'N/A',
     },
     documentStatus: {
-      loaded: 'Chargé depuis la base SDER',
+      loaded: "En attente d'annotation par le moteur NLP",
       nlpAnnotating: "En cours d'annotation par le moteur NLP",
-      free: 'Disponible pour être annoté',
+      free: 'Disponible pour être relu',
       pending: 'Assigné à un agent',
-      saved: 'En cours de traitement par un agent',
+      saved: 'En cours de relecture par un agent',
       toBePublished: 'À publier',
       done: 'Prêt à être exporté',
       toBeConfirmed: 'A confirmer par un administrateur',
@@ -101,6 +101,7 @@ const fr = {
       deleteHumanTreatmentsByDocumentIdFailed:
         'La suppression des traitements manuels effectués sur ce document a échoué. Veuillez recharger la page.',
       updateDocumentStatusFailed: 'La mise à jour du statut du document a échoué. Veuillez recharger la page.',
+      updateDocumentRouteFailded: 'La mise à jour du circuit de relecture a échoué. Veuillez recharger la page.',
       updateTreatmentFailed: 'La mise à jour des annotations pour ce traitement a échoué. Veuillez recharger la page.',
       updateProblemReportHasBeenReadFailed:
         'La mise à jour du statut de lecture du signalement a échoué. Veuillez recharger la page.',
@@ -124,6 +125,7 @@ const fr = {
         jurisdiction: 'Juridiction',
         userName: 'Agent',
         route: 'Circuit de traitement',
+        importer: 'Importateur',
         documentReviewFilterStatus: 'Statut de revue',
         treatmentDate: {
           start: 'Début traitement',
@@ -190,6 +192,7 @@ const fr = {
     annotationGuide: "Guide d'annotation",
     category: 'Catégorie',
     changeCategory: 'Changer de catégorie',
+    checklist: "Indications sur l'occultation",
     close: 'Fermer',
     describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
     delete: 'Supprimer',
@@ -248,7 +251,11 @@ const fr = {
     pleaseTryAgain: 'Veuillez réessayer.',
     wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",
   },
-  errorPage: 'Une erreur est survenue...',
+  errorPage: {
+    title: 'Une erreur est survenue...',
+    errorCode: 'Erreur {code}',
+    onRequest: "L'erreur est apparue sur la requête {route}",
+  },
   shared: {
     daysOfWeek: {
       monday: 'L',
@@ -272,6 +279,7 @@ const fr = {
     logout: 'Se déconnecter',
     refresh: 'Rafraîchir',
     moreOptions: "Plus d'options",
+    or: 'ou',
     passwordChangedConfirmation: { text: 'Votre mot de passe a été modifié.', button: 'OK' },
     settingsDrawer: {
       displayMode: "Type d'affichage",
@@ -322,6 +330,7 @@ const fr = {
       subtitle: 'Statistiques',
     },
     treatedDecisions: 'Décisions traitées',
+    alertMessage: 'Veuillez sélectionner un filtre pour afficher les statistiques',
     box: {
       computation: {
         total: 'Total',
@@ -334,6 +343,25 @@ const fr = {
         subAnnotationsNonSensitiveCount: 'Sous. (autres)',
         treatmentDuration: 'Temps de traitement',
         wordsCount: 'Mots',
+      },
+    },
+  },
+  summaryPage: {
+    header: {
+      title: 'Administration',
+      subtitle: 'Sommaire',
+    },
+    welcomeMessage: 'Bienvenue dans Label',
+    box: {
+      fields: {
+        loadedDocuments: 'Documents chargés',
+        nlpAnnotatingDocuments: 'Documents en annotation',
+        freeDocuments: 'Documents en attente',
+        pendingDocuments: 'Documents assignés',
+        savedDocuments: 'Documents en relecture',
+        doneDocuments: 'Documents traités',
+        lockedDocuments: 'Documents bloqués',
+        rejectedDocuments: 'Documents rejetés',
       },
     },
   },
@@ -363,6 +391,7 @@ const fr = {
         openDocument: 'Ouvrir la décision...',
         displayAnnotationDiff: 'Afficher les modifications',
         resetTheDocument: 'Réinitialiser la décision',
+        reassignToWorkingUser: "Renvoyer à l'agent",
       },
     },
   },

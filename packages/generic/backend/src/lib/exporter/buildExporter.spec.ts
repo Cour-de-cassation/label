@@ -1,6 +1,7 @@
 import {
   dateBuilder,
   documentModule,
+  environmentType,
   settingsModule,
   treatmentModule,
 } from '@label/core';
@@ -9,6 +10,7 @@ import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildExporter } from './buildExporter';
 import { exporterConfigType, labelTreatmentsType } from './exporterConfigType';
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 describe('buildExporter', () => {
   const documentRepository = buildDocumentRepository();
   const treatmentRepository = buildTreatmentRepository();
@@ -43,7 +45,7 @@ describe('buildExporter', () => {
                 entityId: 'firstName_Benoit',
                 start: 0,
                 text: 'Benoit',
-                certaintyScore: undefined,
+                certaintyScore: 1,
               },
             ],
           },
@@ -59,7 +61,7 @@ describe('buildExporter', () => {
                 entityId: 'firstName_Romain',
                 start: 0,
                 text: 'Romain',
-                certaintyScore: undefined,
+                certaintyScore: 1,
               },
             ],
           },
@@ -70,9 +72,13 @@ describe('buildExporter', () => {
       await Promise.all(documents.map(documentRepository.insert));
       await Promise.all(treatments.map(treatmentRepository.insert));
       const fakeExporterConfig = buildFakeExporterConfig();
-      const exporter = buildExporter(settings, fakeExporterConfig);
+      const exporter = buildExporter(
+        {} as environmentType,
+        fakeExporterConfig,
+        settings,
+      );
 
-      await exporter.exportTreatedDocumentsSince(days);
+      await exporter.exportTreatedDocumentsSince(days, {} as environmentType);
 
       const exportedExternalIds = fakeExporterConfig.getExportedExternalIds();
       const exportedPseudonymizationTexts = fakeExporterConfig.getExportedPseudonymizationTexts();
@@ -90,6 +96,7 @@ describe('buildExporter', () => {
               annotations: [
                 {
                   category: 'firstName',
+                  certaintyScore: 1,
                   entityId: 'firstName_Benoit',
                   start: 0,
                   text: 'Benoit',
@@ -104,6 +111,7 @@ describe('buildExporter', () => {
               annotations: [
                 {
                   category: 'firstName',
+                  certaintyScore: 1,
                   entityId: 'firstName_Romain',
                   start: 0,
                   text: 'Romain',
@@ -155,7 +163,7 @@ function buildFakeExporterConfig(): exporterConfigType & {
       return exportedlabelTreatments;
     },
 
-    async sendDocumentLockedStatus({ externalId }) {
+    async sendDocumentBlockedStatus({ externalId, environment }) {
       lockedExternalIds.push(externalId);
     },
 

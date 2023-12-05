@@ -29,7 +29,14 @@ function computeAdditionalAnnotations(
       }),
     ),
   );
-  return additionalAnnotationsTextAndIndices.map(({ text, index }) =>
-    annotationModule.lib.buildAnnotation({ start: index, text, category }),
+  return annotationModule.lib.removeOverlappingAnnotations(
+    additionalAnnotationsTextAndIndices.map(({ text, index }) =>
+      annotationModule.lib.buildAnnotation({
+        start: index,
+        text,
+        category,
+        certaintyScore: 1,
+      }),
+    ),
   );
 }

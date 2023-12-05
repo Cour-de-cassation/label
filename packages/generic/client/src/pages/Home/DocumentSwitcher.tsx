@@ -7,11 +7,11 @@ import {
   settingsModule,
   documentModule,
   assignationType,
+  annotationReportType,
 } from '@label/core';
 import { apiCaller } from '../../api';
 import { MainHeader } from '../../components';
 import { buildAnnotationsCommitter } from '../../services/annotatorState';
-import { MonitoringEntriesHandlerContextProvider } from '../../services/monitoring';
 import { DocumentSelector } from './DocumentSelector';
 import { HomeDocumentAnnotator } from './HomeDocumentAnnotator';
 
@@ -20,7 +20,12 @@ export { DocumentSwitcher };
 type documentStateType =
   | {
       kind: 'annotating';
-      choice: { document: fetchedDocumentType; annotations: annotationType[]; assignationId: assignationType['_id'] };
+      choice: {
+        document: fetchedDocumentType;
+        annotations: annotationType[];
+        assignationId: assignationType['_id'];
+        checklist: annotationReportType['checklist'];
+      };
     }
   | { kind: 'selecting' };
 
@@ -29,6 +34,7 @@ function DocumentSwitcher(props: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
+    checklist: annotationReportType['checklist'];
   }>;
   fetchNewDocumentsForUser: () => void;
   settings: settingsType;
@@ -47,16 +53,15 @@ function DocumentSwitcher(props: {
           documentState.choice.document.decisionMetadata.additionalTermsToAnnotate,
         );
         return (
-          <MonitoringEntriesHandlerContextProvider documentId={documentState.choice.document._id}>
-            <HomeDocumentAnnotator
-              assignationId={documentState.choice.assignationId}
-              committer={buildAnnotationsCommitter()}
-              settings={settingsForDocument}
-              document={documentState.choice.document}
-              annotations={documentState.choice.annotations}
-              fetchNewDocumentsForUser={props.fetchNewDocumentsForUser}
-            />
-          </MonitoringEntriesHandlerContextProvider>
+          <HomeDocumentAnnotator
+            assignationId={documentState.choice.assignationId}
+            checklist={documentState.choice.checklist}
+            committer={buildAnnotationsCommitter()}
+            settings={settingsForDocument}
+            document={documentState.choice.document}
+            annotations={documentState.choice.annotations}
+            fetchNewDocumentsForUser={props.fetchNewDocumentsForUser}
+          />
         );
       case 'selecting':
         return (
@@ -93,6 +98,7 @@ function DocumentSwitcher(props: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
+    checklist: annotationReportType['checklist'];
   }) {
     try {
       const documentStatus = (

@@ -1,16 +1,17 @@
-import { apiSchema, idModule } from '@label/core';
+import { apiSchema, documentType, idModule } from '@label/core';
 import { errorHandlers } from 'sder-core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
 import { cacheService } from '../modules/cache';
 import { documentService } from '../modules/document';
-import { monitoringEntryService } from '../modules/monitoringEntry';
 import { problemReportService } from '../modules/problemReport';
 import { statisticService } from '../modules/statistic';
 import { treatmentService } from '../modules/treatment';
 import { userService } from '../modules/user';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
+import { annotationReportService } from '../modules/annotationReport';
+import { replacementTermType } from '@label/core';
 
 export { controllers };
 
@@ -42,6 +43,14 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         ),
     }),
 
+    checklist: buildAuthenticatedController({
+      permissions: ['admin', 'annotator', 'scrutator'],
+      controllerWithUser: async (_, { args: { documentId } }) =>
+        annotationReportService.fetchChecklistByDocumentId(
+          idModule.lib.buildId(documentId),
+        ),
+    }),
+
     annotations: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
@@ -67,14 +76,8 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             publicationCategories: string[];
             maxDate: number | undefined;
             minDate: number | undefined;
-            routes: (
-              | 'automatic'
-              | 'exhaustive'
-              | 'simple'
-              | 'confirmation'
-              | 'request'
-              | 'default'
-            )[];
+            routes: documentType['route'][];
+            importers: documentType['importer'][];
             sources: string[];
             jurisdictions: string[];
           };
@@ -84,6 +87,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             maxDate: undefined,
             minDate: undefined,
             routes: [],
+            importers: [],
             sources: [],
             jurisdictions: [],
           };
@@ -136,11 +140,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         json: JSON.stringify(settingsLoader.getSettings()),
       }),
     }),
+    summary: buildAuthenticatedController({
+      permissions: ['admin', 'scrutator'],
+      controllerWithUser: async () => {
+        return await statisticService.fetchSummary();
+      },
+    }),
 
     personalStatistics: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (user) => {
-        return statisticService.fetchPersonalStatistics(user);
+        const settings = settingsLoader.getSettings();
+
+        return statisticService.fetchPersonalStatistics(user, settings);
       },
     }),
 
@@ -168,6 +180,11 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     untreatedDocuments: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => documentService.fetchUntreatedDocuments(),
+    }),
+
+    mandatoryReplacementTerms: buildAuthenticatedController({
+      permissions: ['admin', 'annotator', 'scrutator'],
+      controllerWithUser: async () => [] as replacementTermType[], //TO DO
     }),
 
     workingUsers: buildAuthenticatedController({
@@ -260,21 +277,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       };
     },
 
-    monitoringEntries: buildAuthenticatedController({
-      permissions: ['admin', 'annotator'],
-      controllerWithUser: async (user, { args: { newMonitoringEntries } }) => {
-        const monitoringEntries = newMonitoringEntries.map(
-          (newMonitoringEntry) => ({
-            ...newMonitoringEntry,
-            documentId: idModule.lib.buildId(newMonitoringEntry.documentId),
-            _id: idModule.lib.buildId(newMonitoringEntry._id),
-            userId: user._id,
-          }),
-        );
-        await monitoringEntryService.createMany(monitoringEntries);
-      },
-    }),
-
     problemReport: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (
@@ -362,6 +364,16 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         return documentService.updateDocumentStatus(
           idModule.lib.buildId(documentId),
           status,
+        );
+      },
+    }),
+
+    updateDocumentRoute: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (user, { args: { documentId, route } }) => {
+        return documentService.updateDocumentRoute(
+          idModule.lib.buildId(documentId),
+          route,
         );
       },
     }),

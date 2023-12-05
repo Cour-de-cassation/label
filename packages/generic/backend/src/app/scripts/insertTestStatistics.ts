@@ -15,6 +15,7 @@ async function insertTestStatistics() {
         statisticModule.generator.generate({
           treatmentsSummary: [{ userId: user._id, treatmentDuration: 10 }],
           route: 'simple',
+          importer: 'recent',
           treatmentDate: dateBuilder.daysAgo(i),
         }),
       );
@@ -23,6 +24,7 @@ async function insertTestStatistics() {
         statisticModule.generator.generate({
           treatmentsSummary: [{ userId: user._id, treatmentDuration: 20 }],
           route: 'exhaustive',
+          importer: 'recent',
           treatmentDate: dateBuilder.daysAgo(i),
         }),
       );
@@ -31,6 +33,7 @@ async function insertTestStatistics() {
         statisticModule.generator.generate({
           treatmentsSummary: [{ userId: user._id, treatmentDuration: 30 }],
           route: 'confirmation',
+          importer: 'recent',
           treatmentDate: dateBuilder.daysAgo(i),
         }),
       );

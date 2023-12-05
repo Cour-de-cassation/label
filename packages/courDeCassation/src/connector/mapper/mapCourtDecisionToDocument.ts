@@ -18,6 +18,7 @@ export { mapCourtDecisionToDocument };
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function mapCourtDecisionToDocument(
   sderCourtDecision: decisionType,
+  importer: documentType['importer'],
 ): Promise<documentType> {
   const readableChamberName = extractReadableChamberName({
     chamberName: sderCourtDecision.chamberName,
@@ -69,14 +70,16 @@ async function mapCourtDecisionToDocument(
     sderCourtDecision.sourceName,
     publicationCategory,
     NACCode,
+    importer,
   );
 
   const route = extractRoute(
     {
       additionalTermsToAnnotate,
       solution,
+      parties: sderCourtDecision.parties,
       publicationCategory,
-      chamberId: sderCourtDecision.chamberId,
+      chamberName: readableChamberName,
       civilMatterCode,
       session,
       civilCaseCode,
@@ -113,6 +116,7 @@ async function mapCourtDecisionToDocument(
     priority,
     publicationCategory,
     route,
+    importer,
     source,
     title,
     text: sderCourtDecision.originalText,
@@ -152,9 +156,9 @@ function computeTitleFromParsedCourtDecision({
 }
 
 function computePublicationCategory(
-  pubCategory: string | undefined,
-  publication: string[] | undefined,
-) {
+  pubCategory: decisionType['pubCategory'],
+  publication: decisionType['publication'],
+): documentType['publicationCategory'] {
   const publicationCategory: string[] = [];
   if (!!pubCategory) {
     publicationCategory.push(pubCategory);
@@ -166,9 +170,10 @@ function computePublicationCategory(
 }
 
 function computePriority(
-  source: string,
-  publicationCategory: string[],
-  NACCode: string,
+  source: decisionType['sourceName'],
+  publicationCategory: documentType['publicationCategory'],
+  NACCode: decisionType['NACCode'],
+  importer: documentType['importer'],
 ): documentType['priority'] {
   if (
     documentModule.lib.publicationHandler.mustBePublished(
@@ -177,6 +182,12 @@ function computePriority(
     )
   ) {
     return 4;
+  }
+  switch (importer) {
+    case 'chained':
+      return 1;
+    case 'filler':
+      return 0;
   }
   switch (source) {
     case 'jurinet':

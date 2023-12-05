@@ -3,14 +3,18 @@ import { annotationChunkType, textChunkType } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { splittedTextByLineType } from '../lib';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
+import { clientAnonymizerType } from '../../../../types';
 import { DocumentText } from './DocumentText';
 import { DocumentAnnotationText } from './DocumentAnnotationText';
 
 export { DocumentLine };
 
-function DocumentLine(props: { splittedLine: splittedTextByLineType[number] }) {
+function DocumentLine(props: {
+  line: splittedTextByLineType[number]['line'] | undefined;
+  content: splittedTextByLineType[number]['content'] | undefined;
+  anonymizer: clientAnonymizerType;
+}) {
   const documentViewerModeHandler = useDocumentViewerModeHandler();
-  const { line, content } = props.splittedLine;
 
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -18,16 +22,16 @@ function DocumentLine(props: { splittedLine: splittedTextByLineType[number] }) {
   const textColor = isLineHighlighted() ? 'textPrimary' : 'textSecondary';
 
   return (
-    <tr id={`line${line}`}>
+    <tr id={`line${props.line}`}>
       <td style={styles.lineNumberCell}>
         <Text variant="body2" color="textSecondary">
-          {line}
+          {props.line ?? '[…]'}
         </Text>
       </td>
       <td>
         <span>
           <Text variant="body2" color={textColor}>
-            {content.map(renderChunk)}
+            {props.content?.map(renderChunk) ?? ''}
           </Text>
         </span>
       </td>
@@ -40,7 +44,7 @@ function DocumentLine(props: { splittedLine: splittedTextByLineType[number] }) {
     }
 
     const { entityId } = documentViewerModeHandler.documentViewerMode;
-    const areAnnotationsLeft = content.some(
+    const areAnnotationsLeft = props.content?.some(
       (chunk) => chunk.type === 'annotation' && chunk.annotation.entityId === entityId,
     );
     return areAnnotationsLeft;
@@ -52,7 +56,7 @@ function DocumentLine(props: { splittedLine: splittedTextByLineType[number] }) {
         const { before, after } = chunk;
         return <DocumentText key={chunk.content.index} neighbours={{ before, after, current: chunk.content }} />;
       case 'annotation':
-        return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} />;
+        return <DocumentAnnotationText key={chunk.index} annotation={chunk.annotation} anonymizer={props.anonymizer} />;
     }
   }
 }

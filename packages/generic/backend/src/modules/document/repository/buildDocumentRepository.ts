@@ -30,11 +30,16 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
   ],
   buildCustomRepository: (collection) => ({
+    async countByStatus(status) {
+      return await collection.countDocuments({
+        status: { $in: status },
+      });
+    },
+
     async countNotIn(idsNotToSearchIn) {
-      const count = await collection.countDocuments({
+      return await collection.countDocuments({
         _id: { $nin: idsNotToSearchIn },
       });
-      return count;
     },
 
     async findNotIn(idsNotToSearchIn) {
@@ -181,6 +186,12 @@ const buildDocumentRepository = buildRepositoryBuilder<
 
     async updateLossById(_id, loss) {
       await collection.updateOne({ _id }, { $set: { loss } });
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
+    async updateRouteById(_id, route) {
+      await collection.updateOne({ _id }, { $set: { route } });
       const updatedDocument = await collection.findOne({ _id });
       return updatedDocument || undefined;
     },

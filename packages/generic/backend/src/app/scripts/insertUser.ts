@@ -15,17 +15,15 @@ async function insertUser({
   password: string;
   role: userType['role'];
 }) {
-  logger.log(
-    `insertUser ${JSON.stringify(
-      {
-        email,
-        name,
-        role,
-      },
-      null,
-      2,
-    )}`,
-  );
+  logger.log({
+    operationName: 'insertUser',
+    msg: 'START',
+    data: {
+      email,
+      name,
+      role,
+    },
+  });
 
   await userService.signUpUser({
     email,
@@ -33,4 +31,6 @@ async function insertUser({
     password,
     role,
   });
+
+  logger.log({ operationName: 'insertUser', msg: 'DONE' });
 }

@@ -59,5 +59,9 @@ const buildFakeTreatmentRepository = buildFakeRepositoryBuilder<
         maxDate: sortedItems[sortedItems.length - 1].lastUpdateDate,
       };
     },
+
+    async findAllByLastUpdateDateLessThan(date) {
+      return collection.filter(({ lastUpdateDate }) => date < lastUpdateDate);
+    },
   }),
 });

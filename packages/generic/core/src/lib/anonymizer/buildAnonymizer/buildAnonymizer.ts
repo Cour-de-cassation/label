@@ -19,11 +19,7 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
   annotations: annotationType[],
   seed: number,
 ): anonymizerType<documentT> {
-  const mapper: { [key: string]: string | undefined } = buildEntityIdMapper(
-    settings,
-    annotations.map((annotation) => annotation.entityId),
-    seed,
-  );
+  const mapper: { [key: string]: string | undefined } = buildEntityIdMapper(settings, annotations, seed);
   return {
     anonymizeDocument,
     anonymize,
@@ -53,7 +49,6 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
     ) {
       return annotation.text;
     }
-
     const anonymizedText = mapper[annotation.entityId] || ANONYMIZATION_DEFAULT_TEXT;
 
     return anonymizedText;

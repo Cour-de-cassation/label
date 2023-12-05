@@ -2,7 +2,6 @@ import { buildAnnotationReportRepository } from '../../modules/annotationReport'
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildMigrationRepository } from '../../modules/migration';
-import { buildMonitoringEntryRepository } from '../../modules/monitoringEntry';
 import { buildProblemReportRepository } from '../../modules/problemReport';
 import { buildStatisticRepository } from '../../modules/statistic';
 import { buildTreatmentRepository } from '../../modules/treatment';
@@ -16,7 +15,6 @@ async function clearDb({
   assignation = true,
   document = true,
   migration = true,
-  monitoringEntry = true,
   problemReport = true,
   statistic = true,
   treatment = true,
@@ -26,29 +24,25 @@ async function clearDb({
   assignation?: boolean;
   document?: boolean;
   migration?: boolean;
-  monitoringEntry?: boolean;
   problemReport?: boolean;
   statistic?: boolean;
   treatment?: boolean;
   user?: boolean;
 }) {
-  logger.log(
-    `clearDb ${JSON.stringify(
-      {
-        annotation,
-        assignation,
-        document,
-        migration,
-        monitoringEntry,
-        problemReport,
-        statistic,
-        treatment,
-        user,
-      },
-      null,
-      2,
-    )}`,
-  );
+  logger.log({
+    operationName: 'clearDb',
+    msg: 'Clearing db',
+    data: {
+      annotation,
+      assignation,
+      document,
+      migration,
+      problemReport,
+      statistic,
+      treatment,
+      user,
+    },
+  });
 
   const repositories = [
     {
@@ -66,10 +60,6 @@ async function clearDb({
     {
       shouldClear: migration,
       buildRepository: buildMigrationRepository,
-    },
-    {
-      shouldClear: monitoringEntry,
-      buildRepository: buildMonitoringEntryRepository,
     },
     {
       shouldClear: problemReport,

@@ -24,6 +24,7 @@ function ProblemReportsDataFetcher(props: {
         })
       }
       fetchInfo={problemReportsFetchInfo}
+      route={'problemReportsWithDetails'}
     />
   );
 }

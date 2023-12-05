@@ -1,9 +1,14 @@
-import { dateBuilder, statisticModule, userType } from '@label/core';
-import { buildStatisticRepository } from '../repository';
+import {
+  dateBuilder,
+  settingsType,
+  statisticModule,
+  userType,
+} from '@label/core';
+import { fetchFilteredStatistics } from './fetchFilteredStatistics';
 
 export { fetchPersonalStatistics };
 
-async function fetchPersonalStatistics(user: userType) {
+async function fetchPersonalStatistics(user: userType, settings: settingsType) {
   const filter = {
     userId: user._id,
     mustHaveSurAnnotations: false,
@@ -13,11 +18,11 @@ async function fetchPersonalStatistics(user: userType) {
     endDate: new Date().getTime(),
     route: undefined,
     source: undefined,
+    importer: undefined,
     jurisdiction: undefined,
   };
 
-  const statisticRepository = buildStatisticRepository();
-  const statistics = await statisticRepository.findAllByRessourceFilter(filter);
+  const statistics = await fetchFilteredStatistics(filter, settings);
   const personalStatistics = statisticModule.lib.dailyCount(statistics);
 
   return Object.values(personalStatistics);

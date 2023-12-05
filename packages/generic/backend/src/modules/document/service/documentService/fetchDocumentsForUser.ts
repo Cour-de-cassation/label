@@ -58,7 +58,11 @@ function buildFetchDocumentsForUser(
         );
         documents.push(assignatedDocument);
       } catch (error) {
-        logger.log(error);
+        logger.log({
+          operationName: 'fetchDocumentsForUser',
+          msg: 'Error',
+          data: error as Record<string, unknown>,
+        });
       }
     }
     return documents;

@@ -10,7 +10,7 @@ jobs:
     env:
       APP_ID: label-* # specific to backend or client
       APP_GROUP: judilibre-prive
-      APP_HOST: label.judilibre-prive.local
+      APP_HOST: lbl.judilibre-prive.local
       APP_PORT: 443
       APP_SCHEME: https
       APP_SELF_SIGNED: "true"

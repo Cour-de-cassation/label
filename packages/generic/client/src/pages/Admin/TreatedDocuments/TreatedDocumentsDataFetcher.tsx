@@ -24,6 +24,7 @@ function TreatedDocumentsDataFetcher(props: {
         })
       }
       fetchInfo={treatedDocumentsFetchInfo}
+      route={'treatedDocuments'}
     />
   );
 }

@@ -7,7 +7,7 @@ export { up, down };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function up() {
-  logger.log('Up: ');
+  logger.log({ operationName: 'migration', msg: 'Up: ' });
 
   const userRepository = buildUserRepository();
   const users = await userRepository.findAllProjection(['name', 'role']);
@@ -48,7 +48,7 @@ async function up() {
 }
 
 async function down() {
-  logger.log('Down: ');
+  logger.log({ operationName: 'migration', msg: 'Down: ' });
 
   const documentRepository = buildDocumentRepository();
   const documents = await documentRepository.findAllProjection([

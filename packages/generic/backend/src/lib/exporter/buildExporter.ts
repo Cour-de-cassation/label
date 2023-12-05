@@ -2,6 +2,7 @@ import {
   buildAnonymizer,
   documentModule,
   documentType,
+  environmentType,
   settingsModule,
   settingsType,
   treatmentModule,
@@ -15,8 +16,9 @@ import { exporterConfigType } from './exporterConfigType';
 export { buildExporter };
 
 function buildExporter(
-  settings: settingsType,
+  environment: environmentType,
   exporterConfig: exporterConfigType,
+  settings: settingsType,
 ) {
   return {
     exportAllTreatedDocuments,
@@ -26,107 +28,166 @@ function buildExporter(
     exportTreatedPublishableDocuments,
   };
 
-  async function exportTreatedDocumentsSince(days: number) {
-    logger.log('exportTreatedDocumentsSince');
-    logger.log(`Exportation to ${exporterConfig.name}`);
+  async function exportTreatedDocumentsSince(
+    days: number,
+    environment: environmentType,
+  ) {
+    logger.log({
+      operationName: 'exportTreatedDocumentsSince',
+      msg: `START: Exportation to ${exporterConfig.name}`,
+    });
 
-    logger.log(`Fetching treated documents...`);
+    logger.log({
+      operationName: 'exportTreatedDocumentsSince',
+      msg: `Fetching treated documents...`,
+    });
     const documentsReadyToExport = await documentService.fetchDocumentsReadyToExport(
       days,
     );
-    logger.log(`${documentsReadyToExport.length} documents to export`);
+    logger.log({
+      operationName: 'exportTreatedDocumentsSince',
+      msg: `${documentsReadyToExport.length} documents to export`,
+    });
 
-    logger.log(`Beginning exportation...`);
+    logger.log({
+      operationName: 'exportTreatedDocumentsSince',
+      msg: `Beginning exportation...`,
+    });
     for (let index = 0; index < documentsReadyToExport.length; index++) {
-      logger.log(
-        `Exportation of document ${index + 1}/${documentsReadyToExport.length}`,
-      );
+      logger.log({
+        operationName: 'exportTreatedDocumentsSince',
+        msg: `Exportation of document ${index + 1}/${
+          documentsReadyToExport.length
+        }`,
+      });
       const document = documentsReadyToExport[index];
 
-      await exportDocument(document);
+      await exportDocument(document, environment);
     }
 
-    logger.log(`Exportation done!`);
+    logger.log({ operationName: 'exportTreatedDocumentsSince', msg: 'DONE' });
   }
 
-  async function exportTreatedPublishableDocuments() {
-    logger.log('exportTreatedPublishableDocuments');
-    logger.log(`Exportation to ${exporterConfig.name}`);
+  async function exportTreatedPublishableDocuments(
+    environment: environmentType,
+  ) {
+    logger.log({
+      operationName: 'exportTreatedPublishableDocuments',
+      msg: `START: Exportation to ${exporterConfig.name}`,
+    });
 
-    logger.log(`Fetching treated documents from today...`);
+    logger.log({
+      operationName: 'exportTreatedPublishableDocuments',
+      msg: `Fetching treated documents from today...`,
+    });
     const documentsReadyToExport = await documentService.fetchPublishableDocumentsToExport();
-    logger.log(`${documentsReadyToExport.length} documents to export`);
+    logger.log({
+      operationName: 'exportTreatedPublishableDocuments',
+      msg: `${documentsReadyToExport.length} documents to export`,
+    });
 
-    logger.log(`Beginning exportation...`);
+    logger.log({
+      operationName: 'exportTreatedPublishableDocuments',
+      msg: `Beginning exportation...`,
+    });
     for (let index = 0; index < documentsReadyToExport.length; index++) {
-      logger.log(
-        `Exportation of document ${index + 1}/${documentsReadyToExport.length}`,
-      );
+      logger.log({
+        operationName: 'exportTreatedPublishableDocuments',
+        msg: `Exportation of document ${index + 1}/${
+          documentsReadyToExport.length
+        }`,
+      });
       const document = documentsReadyToExport[index];
 
-      await exportDocument(document);
+      await exportDocument(document, environment);
     }
 
-    logger.log(`Exportation done!`);
+    logger.log({
+      operationName: 'exportTreatedPublishableDocuments',
+      msg: 'DONE',
+    });
   }
 
   async function exportSpecificDocument({
     documentNumber,
     source,
+    environment,
   }: {
     documentNumber: number;
     source: string;
+    environment: environmentType;
   }) {
-    logger.log(
-      `exportSpecificDocument: documentNumber ${documentNumber} - source ${source}`,
-    );
+    logger.log({
+      operationName: 'exportSpecificDocument',
+      msg: `START: documentNumber ${documentNumber} - source ${source}`,
+    });
     const document = await documentService.fetchDocumentBySourceAndDocumentNumber(
       { documentNumber, source },
     );
 
     if (!document) {
-      logger.error(
-        `The document you specified (documentNumber ${documentNumber} - source ${source}) does not exist in the database`,
-      );
+      logger.error({
+        operationName: 'exportSpecificDocument',
+        msg: `The document you specified (documentNumber ${documentNumber} - source ${source}) does not exist in the database`,
+      });
       return;
     }
 
     if (document.status !== 'toBePublished' && document.status !== 'done') {
-      logger.error(
-        `The document you specified has been found, but is not ready to be exported (status: ${document.status})`,
-      );
+      logger.error({
+        operationName: 'exportSpecificDocument',
+        msg: `The document you specified has been found, but is not ready to be exported (status: ${document.status})`,
+      });
       return;
     }
 
-    logger.log(`Document found. Exporting...`);
+    logger.log({
+      operationName: 'exportSpecificDocument',
+      msg: `Document found. Exporting...`,
+    });
 
-    await exportDocument(document);
+    await exportDocument(document, environment);
 
-    logger.log(`Exportation done!`);
+    logger.log({ operationName: 'exportSpecificDocument', msg: 'DONE' });
   }
 
-  async function exportAllTreatedDocuments() {
-    logger.log('exportAllTreatedDocuments');
-    logger.log(`Exportation to ${exporterConfig.name}`);
+  async function exportAllTreatedDocuments(environment: environmentType) {
+    logger.log({
+      operationName: 'exportAllTreatedDocuments',
+      msg: `START: Exportation to ${exporterConfig.name}`,
+    });
 
-    logger.log(`Fetching all treated documents...`);
+    logger.log({
+      operationName: 'exportAllTreatedDocuments',
+      msg: `Fetching all treated documents...`,
+    });
     const documentsToExport = await documentService.fetchAllExportableDocuments();
-    logger.log(`${documentsToExport.length} documents to export`);
+    logger.log({
+      operationName: 'exportAllTreatedDocuments',
+      msg: `${documentsToExport.length} documents to export`,
+    });
 
-    logger.log(`Beginning exportation...`);
+    logger.log({
+      operationName: 'exportAllTreatedDocuments',
+      msg: `Beginning exportation...`,
+    });
     for (let index = 0; index < documentsToExport.length; index++) {
-      logger.log(
-        `Exportation of document ${index + 1}/${documentsToExport.length}`,
-      );
+      logger.log({
+        operationName: 'exportAllTreatedDocuments',
+        msg: `Exportation of document ${index + 1}/${documentsToExport.length}`,
+      });
       const document = documentsToExport[index];
 
-      await exportDocument(document);
+      await exportDocument(document, environment);
     }
 
-    logger.log(`Exportation done!`);
+    logger.log({ operationName: 'exportAllTreatedDocuments', msg: 'DONE' });
   }
 
-  async function exportDocument(document: documentType) {
+  async function exportDocument(
+    document: documentType,
+    environment: environmentType,
+  ) {
     const treatments = await treatmentService.fetchTreatmentsByDocumentId(
       document._id,
     );
@@ -139,41 +200,66 @@ function buildExporter(
     );
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
-    await exporterConfig.sendDocumentPseudonymisationAndTreatments({
-      externalId: document.externalId,
-      pseudonymizationText: anonymizer.anonymizeDocument(document).text,
-      labelTreatments: treatmentModule.lib.concat(treatments),
+    try {
+      await exporterConfig.sendDocumentPseudonymisationAndTreatments({
+        externalId: document.externalId,
+        pseudonymizationText: anonymizer.anonymizeDocument(document).text,
+        labelTreatments: treatmentModule.lib.concat(treatments),
+        environment,
+      });
+
+      await statisticService.saveStatisticsOfDocument(document, settings);
+
+      await documentService.deleteDocument(document._id);
+    } catch (error) {
+      logger.error({
+        operationName: 'exportDocument',
+        msg: `Export failed for document [${document._id} ${document.source} ${document.documentNumber}]`,
+        data: error as Record<string, unknown>,
+      });
+    }
+  }
+
+  async function exportAllRejectedDocuments(environment: environmentType) {
+    logger.log({
+      operationName: 'exportAllRejectedDocuments',
+      msg: `START: Exportation to ${exporterConfig.name}`,
     });
 
-    await statisticService.saveStatisticsOfDocument(document, settings);
-
-    await documentService.deleteDocument(document._id);
-  }
-
-  async function exportAllRejectedDocuments() {
-    logger.log('exportAllRejectedDocuments');
-    logger.log(`Exportation to ${exporterConfig.name}`);
-
-    logger.log(`Fetching all treated documents...`);
+    logger.log({
+      operationName: 'exportAllRejectedDocuments',
+      msg: `Fetching all rejected documents...`,
+    });
     const rejectedDocuments = await documentService.fetchRejectedDocuments();
-    logger.log(`${rejectedDocuments.length} rejected documents to export`);
+    logger.log({
+      operationName: 'exportAllRejectedDocuments',
+      msg: `${rejectedDocuments.length} rejected documents to export`,
+    });
 
-    logger.log(`Beginning exportation...`);
+    logger.log({
+      operationName: 'exportAllRejectedDocuments',
+      msg: `Beginning exportation...`,
+    });
     for (let index = 0; index < rejectedDocuments.length; index++) {
-      logger.log(
-        `Exportation of document ${index + 1}/${rejectedDocuments.length}`,
-      );
+      logger.log({
+        operationName: 'exportAllRejectedDocuments',
+        msg: `Exportation of document ${index + 1}/${rejectedDocuments.length}`,
+      });
       const document = rejectedDocuments[index];
 
-      await exportRejectedDocument(document);
+      await exportRejectedDocument(document, environment);
     }
 
-    logger.log(`Exportation done!`);
+    logger.log({ operationName: 'exportAllRejectedDocuments', msg: 'DONE' });
   }
 
-  async function exportRejectedDocument(document: documentType) {
-    await exporterConfig.sendDocumentLockedStatus({
+  async function exportRejectedDocument(
+    document: documentType,
+    environment: environmentType,
+  ) {
+    await exporterConfig.sendDocumentBlockedStatus({
       externalId: document.externalId,
+      environment,
     });
 
     await statisticService.saveStatisticsOfDocument(document, settings);

@@ -1,14 +1,16 @@
 import axios from 'axios';
-import { settingsModule } from '@label/core';
+import { idModule, settingsModule } from '@label/core';
 import { nlpApiType, nlpAnnotationsType, nlpLossType } from './nlpApiType';
 
 export { buildNlpApi };
 
 type nlpRequestParametersType = {
-  idDocument: number;
+  idLabel: string;
+  idDecision: string;
+  sourceId: number;
+  sourceName: string;
   text: string;
-  source?: string;
-  meta?: Array<any>;
+  parties?: Array<any>;
   categories?: string[];
 };
 
@@ -25,10 +27,12 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         canBeAnnotatedBy: 'NLP',
       });
       const nlpRequestParameters: nlpRequestParametersType = {
-        idDocument: document.documentNumber,
+        idLabel: idModule.lib.convertToString(document._id),
+        idDecision: document.externalId,
+        sourceId: document.documentNumber,
+        sourceName: document.source,
         text: document.text,
-        source: document.source,
-        meta: document.decisionMetadata.parties,
+        parties: document.decisionMetadata.parties,
         categories: nlpCategories,
       };
 
@@ -43,7 +47,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
     },
     async fetchNlpLoss(document, treatments) {
       const response = await axios({
-        data: { document, treatments },
+        data: { text: document.text, treatments },
         headers: { 'Content-Type': 'application/json' },
         method: 'post',
         url: `${nlpApiBaseUrl}/loss`,

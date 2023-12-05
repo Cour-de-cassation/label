@@ -1,0 +1,27 @@
+---
+ansible_user: iliasaaguida
+ansible_python_interpreter: "/home/{{ ansible_user }}/ansible_venv/bin/python"
+
+
+label_api_port: "55432"
+label_app_host: "lbl.judilibre-prive.local"
+label_app_group: "judilibre-prive"
+label_client_app_id: "label-client"
+label_back_app_id: "label-backend"
+label_app_keyword: "html"
+label_app_scheme: "https"
+label_app_self_signed: "true"
+label_app_port: "443"
+label_docker_username: "opendatajustice"
+label_client_docker_target: "label-client"
+label_back_docker_target: "label-backend"
+label_kube_zone: "local"
+label_kube_type: "k3s"
+label_client_root_path: "label"
+label_back_root_path: "label/api"
+label_kubeconfig: "$home/.kube/config-local-k3s.yaml"
+label_start_timeout: "180"
+label_client_public_url: "/label-client"
+nlp_api_url: "http://nlp-pseudonymisation-api-service.nlp.svc.cluster.local:8081"
+
+label_kube_namespace: "label"

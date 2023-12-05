@@ -14,6 +14,7 @@
     "**/@typescript-eslint/parser": "^4.4.1"
   },
   "scripts": {
+    "bash": "yarn buildLocalDevDocker && yarn startLocalDevDocker",
     "bootstrap": "lerna run compile && lerna run --scope @label/cour-de-cassation bootstrap --stream && ./scripts/bootstrap.sh",
     "buildDev": "lerna run --ignore @label/client build --stream",
     "buildLocalDevDocker": "docker-compose -f docker-compose-dev.yml build",
@@ -23,6 +24,7 @@
     "clean": "lerna run clean",
     "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",
     "compile": "lerna run compile",
+    "coverage": "lerna run coverage",
     "compileClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation compile ",
     "lint": "lerna run lint",
     "fix": "lerna run fix",
@@ -44,5 +46,6 @@
   "workspaces": [
     "packages/generic/*",
     "packages/courDeCassation/"
-  ]
+  ],
+  "dependencies": {}
 }

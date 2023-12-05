@@ -9,7 +9,7 @@ import { sderConnector } from '../connector';
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
-    () => sderConnector.deleteDocumentsOlderThan({ days, source }),
+    () => sderConnector.deleteDocumentsOlderThan({ days, source, environment }),
     {
       shouldLoadDb: true,
     },

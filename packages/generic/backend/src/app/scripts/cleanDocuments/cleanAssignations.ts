@@ -13,7 +13,7 @@ export { cleanAssignations };
  * which is either loaded, being annotated by the NLP engine, or free
  */
 async function cleanAssignations() {
-  logger.log(`cleanAssignations`);
+  logger.log({ operationName: 'cleanAssignations', msg: 'START' });
   const FORBIDDEN_STATUSES_FOR_ASSIGNATED_DOCUMENT: documentType['status'][] = [
     'loaded',
     'nlpAnnotating',
@@ -30,7 +30,10 @@ async function cleanAssignations() {
     '_id',
     'documentId',
   ]);
-  logger.log(`Start checking all assignations`);
+  logger.log({
+    operationName: 'cleanAssignations',
+    msg: `Start checking all assignations`,
+  });
 
   await Promise.all(
     assignations.map(async (assignation) => {
@@ -41,13 +44,14 @@ async function cleanAssignations() {
         !document ||
         FORBIDDEN_STATUSES_FOR_ASSIGNATED_DOCUMENT.includes(document.status)
       ) {
-        logger.log(
-          `Inconsistency: document not found or status inconsistent. Deleting the assignation...`,
-        );
+        logger.log({
+          operationName: 'cleanAssignations',
+          msg: `Inconsistency: document not found or status inconsistent. Deleting the assignation...`,
+        });
         await assignationService.deleteAssignation(assignation._id);
       }
       return;
     }),
   );
-  logger.log(`cleanAssignations done!`);
+  logger.log({ operationName: 'cleanAssignations', msg: 'DONE' });
 }

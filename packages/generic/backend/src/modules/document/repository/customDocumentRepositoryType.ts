@@ -4,6 +4,7 @@ import { projectedType } from '../../../repository';
 export type { customDocumentRepositoryType };
 
 type customDocumentRepositoryType = {
+  countByStatus: (status: documentType['status'][]) => Promise<number>;
   countNotIn: (idsNotToSearchIn: documentType['_id'][]) => Promise<number>;
   findNotIn: (
     idsNotToSearchIn: documentType['_id'][],
@@ -73,6 +74,10 @@ type customDocumentRepositoryType = {
   updateLossById: (
     _id: idType,
     loss: documentType['loss'],
+  ) => Promise<documentType | undefined>;
+  updateRouteById: (
+    _id: idType,
+    route: documentType['route'],
   ) => Promise<documentType | undefined>;
   updateStatusById: (
     _id: idType,

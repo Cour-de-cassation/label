@@ -1,14 +1,15 @@
 import {
   annotationModule,
+  annotationReportModule,
   annotationsDiffModule,
   documentModule,
-  monitoringEntryModule,
   problemReportModule,
   settingsModule,
   userModule,
   ressourceFilterModule,
   statisticModule,
   treatmentModule,
+  replacementTermModule,
 } from '../modules';
 import { buildModel, modelType } from '../modules/modelType';
 
@@ -48,6 +49,15 @@ const apiSchema = {
           total: { kind: 'primitive', content: 'number' },
         },
       } as const),
+    },
+    checklist: {
+      in: {
+        documentId: buildModel({
+          kind: 'primitive',
+          content: 'string',
+        } as const),
+      },
+      out: annotationReportModule.model.content.checklist,
     },
     annotations: {
       in: {
@@ -176,6 +186,13 @@ const apiSchema = {
               content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request', 'default'] as const,
             },
           },
+          importers: {
+            kind: 'array',
+            content: {
+              kind: 'constant',
+              content: ['recent', 'chained', 'filler', 'manual', 'default'] as const,
+            },
+          },
           sources: {
             kind: 'array',
             content: {
@@ -274,6 +291,46 @@ const apiSchema = {
     },
     settings: {
       out: settingsModule.model,
+    },
+    summary: {
+      in: {},
+      out: buildModel({
+        kind: 'object',
+        content: {
+          loadedDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          nlpAnnotatingDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          freeDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          pendingDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          savedDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          doneDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          lockedDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+          rejectedDocuments: buildModel({
+            kind: 'primitive',
+            content: 'number',
+          } as const),
+        },
+      } as const),
     },
     publishableDocuments: {
       out: buildModel({
@@ -454,6 +511,18 @@ const apiSchema = {
         },
       } as const),
     },
+    mandatoryReplacementTerms: {
+      in: {
+        documentId: buildModel({
+          kind: 'primitive',
+          content: 'string',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'array',
+        content: replacementTermModule.model,
+      } as const),
+    },
     workingUsers: {
       out: buildModel({
         kind: 'array',
@@ -556,18 +625,6 @@ const apiSchema = {
         },
       } as const),
     },
-    monitoringEntries: {
-      in: {
-        newMonitoringEntries: buildModel({
-          kind: 'array',
-          content: monitoringEntryModule.fetchedModel,
-        } as const),
-      },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
-    },
     problemReport: {
       in: {
         documentId: buildModel({
@@ -663,6 +720,16 @@ const apiSchema = {
           content: 'id',
         } as const),
         status: documentModule.fetchedModel.content.status,
+      },
+      out: documentModule.fetchedModel,
+    },
+    updateDocumentRoute: {
+      in: {
+        documentId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+        route: documentModule.fetchedModel.content.route,
       },
       out: documentModule.fetchedModel,
     },

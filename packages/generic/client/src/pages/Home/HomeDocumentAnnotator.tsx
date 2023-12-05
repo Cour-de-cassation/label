@@ -1,10 +1,12 @@
 import React from 'react';
 import {
+  annotationReportType,
   annotationsDiffType,
   annotationType,
   assignationType,
   documentModule,
   fetchedDocumentType,
+  replacementTermType,
   settingsType,
 } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
@@ -15,7 +17,6 @@ import {
   AnnotatorStateHandlerContextProvider,
   buildAutoSaver,
 } from '../../services/annotatorState';
-import { useMonitoring } from '../../services/monitoring';
 import { useAlert } from '../../services/alert';
 import { wordings } from '../../wordings';
 import { DocumentAnnotator } from './DocumentAnnotator';
@@ -24,13 +25,13 @@ export { HomeDocumentAnnotator };
 
 function HomeDocumentAnnotator(props: {
   annotations: annotationType[];
+  checklist: annotationReportType['checklist'];
   assignationId: assignationType['_id'];
   committer: annotationsCommitterType;
   document: fetchedDocumentType;
   fetchNewDocumentsForUser: () => void;
   settings: settingsType;
 }) {
-  const { resetMonitoringEntries, sendMonitoringEntries } = useMonitoring();
   const { displayAlert } = useAlert();
   const theme = useCustomTheme();
 
@@ -56,8 +57,10 @@ function HomeDocumentAnnotator(props: {
       initialAnnotatorState={{
         assignationId: props.assignationId,
         annotations: props.annotations,
+        checklist: props.checklist,
         document: props.document,
         settings: props.settings,
+        mandatoryReplacementTerms: [] as replacementTermType[],
       }}
     >
       <MainHeader title={props.document.title} subtitle={subtitle} />
@@ -69,8 +72,6 @@ function HomeDocumentAnnotator(props: {
 
   async function onStopAnnotatingDocument({ assignationId }: { assignationId: assignationType['_id'] }) {
     await apiCaller.post<'updateTreatmentDuration'>('updateTreatmentDuration', { assignationId });
-    await sendMonitoringEntries();
-    resetMonitoringEntries();
     props.fetchNewDocumentsForUser();
   }
 

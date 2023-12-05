@@ -18,6 +18,7 @@ import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { Statistics } from './Admin/Statistics';
 import { defaultRoutes, routes } from './routes';
 import { ToBeConfirmedDocuments } from './Admin/ToBeConfirmedDocuments';
+import { Summary } from './Admin/Summary';
 
 export { Router };
 
@@ -42,12 +43,22 @@ function Router() {
                   ({ problemReport }) => !problemReport.hasBeenRead,
                 ).length;
                 const toBeConfirmedDocumentsCount = adminInfos.toBeConfirmedDocuments.length;
-                const userRole = localStorage.adminViewHandler.get();
+                const userRole = localStorage.adminViewHandler.get() || localStorage.userHandler.getRole();
                 if (userRole !== 'admin' && userRole !== 'scrutator') {
                   return <></>;
                 }
                 return (
                   <>
+                    <AuthenticatedRoute path={routes.SUMMARY.getPath()}>
+                      <AdminPage
+                        userRole={userRole}
+                        header={wordings.summaryPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                        toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
+                      >
+                        <Summary refetch={refetch.summary} isLoading={isLoading.summary} summary={adminInfos.summary} />
+                      </AdminPage>
+                    </AuthenticatedRoute>
                     <AuthenticatedRoute path={routes.STATISTICS.getPath()}>
                       <AdminPage
                         userRole={userRole}

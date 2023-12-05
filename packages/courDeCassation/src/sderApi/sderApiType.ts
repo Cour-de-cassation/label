@@ -1,55 +1,64 @@
 import { decisionType } from 'sder';
-import { documentType } from '@label/core';
+import { documentType, environmentType } from '@label/core';
 import { labelTreatmentsType } from '@label/backend';
 
 export type { sderApiType };
 
 type sderApiType = {
-  fetchChainedJuricaDecisionsToPseudonymiseBetween: (params: {
+  fetchChainedJuricaDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
+    environment: environmentType;
   }) => Promise<Array<decisionType>>;
-  fetchDecisionsToPseudonymiseBetween: (params: {
+  fetchCourtDecisionById: (param: {
+    id: decisionType['_id'];
+    environment: environmentType;
+  }) => Promise<decisionType>;
+  fetchDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica';
+    source: 'jurinet' | 'jurica' | 'juritj';
+    environment: environmentType;
   }) => Promise<Array<decisionType>>;
-  fetchDecisionsToPseudonymiseBetweenDateCreation: (params: {
+  fetchDecisionsToPseudonymiseBetweenDateCreation: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica';
+    source: 'jurinet' | 'jurica' | 'juritj';
+    environment: environmentType;
   }) => Promise<Array<decisionType>>;
-  fetchCourtDecisionBySourceIdAndSourceName: (
-    sourceId: decisionType['sourceId'],
-    sourceName: decisionType['sourceName'],
-  ) => Promise<decisionType | undefined>;
+  fetchCourtDecisionBySourceIdAndSourceName: (param: {
+    sourceId: decisionType['sourceId'];
+    sourceName: decisionType['sourceName'];
+    environment: environmentType;
+  }) => Promise<decisionType | undefined>;
   fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
     startDate: Date;
     endDate: Date;
     source: string;
     jurisdictions: string[];
     chambers: string[];
+    environment: environmentType;
   }) => Promise<decisionType[]>;
-  fetchPublicDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
-    startDate: Date;
-    endDate: Date;
-    source: string;
-    jurisdictions: string[];
-    chambers: string[];
-  }) => Promise<decisionType[]>;
-  setCourtDecisionsLoaded: (documents: Array<documentType>) => Promise<void>;
-  setCourtDecisionsToBeTreated: (
-    documents: Array<documentType>,
-  ) => Promise<void>;
-  setCourtDecisionDone: (
-    externalId: documentType['externalId'],
-  ) => Promise<void>;
-  setCourtDecisionLocked: (
-    externalId: documentType['externalId'],
-  ) => Promise<void>;
+  setCourtDecisionsLoaded: (param: {
+    documents: Array<documentType>;
+    environment: environmentType;
+  }) => Promise<void>;
+  setCourtDecisionsToBeTreated: (param: {
+    documents: Array<documentType>;
+    environment: environmentType;
+  }) => Promise<void>;
+  setCourtDecisionDone: (param: {
+    externalId: documentType['externalId'];
+    environment: environmentType;
+  }) => Promise<void>;
+  setCourtDecisionBlocked: (param: {
+    externalId: documentType['externalId'];
+    environment: environmentType;
+  }) => Promise<void>;
   updateDecisionPseudonymisation: (param: {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
     labelTreatments: labelTreatmentsType;
+    environment: environmentType;
   }) => Promise<void>;
 };

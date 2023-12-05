@@ -7,6 +7,7 @@ import {
   fetchedDocumentType,
   settingsType,
   settingsModule,
+  annotationReportType,
 } from '@label/core';
 import { customThemeType, useCustomTheme, ButtonWithIcon, ComponentsList, Icon, Text } from 'pelta-design-system';
 import { CategoryIcon, PublicationCategoryBadge } from '../../../components';
@@ -24,11 +25,17 @@ const MAX_CATEGORIES_PER_LINE = 6;
 const ICONS_CONTAINER_HEIGHT = 140;
 
 function DocumentSelectorCard(props: {
-  choice: { annotations: annotationType[]; document: fetchedDocumentType; assignationId: assignationType['_id'] };
+  choice: {
+    annotations: annotationType[];
+    document: fetchedDocumentType;
+    assignationId: assignationType['_id'];
+    checklist: annotationReportType['checklist'];
+  };
   onSelect: (choice: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
+    checklist: annotationReportType['checklist'];
   }) => Promise<void>;
   settings: settingsType;
 }) {

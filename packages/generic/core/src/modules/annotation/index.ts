@@ -9,12 +9,13 @@ import {
   comparator,
   computeNearbyText,
   entityIdHandler,
+  removeOverlappingAnnotations,
   isAnnotationTextInAnnotations,
   sortAnnotations,
   stringify,
 } from './lib';
 
-export { annotationModule };
+export { annotationModule, buildAnnotation };
 
 export type { annotationType };
 
@@ -30,6 +31,7 @@ const annotationModule = {
     comparator,
     computeNearbyText,
     entityIdHandler,
+    removeOverlappingAnnotations,
     isAnnotationTextInAnnotations,
     sortAnnotations,
     stringify,

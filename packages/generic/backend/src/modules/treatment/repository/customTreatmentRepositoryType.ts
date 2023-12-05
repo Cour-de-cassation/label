@@ -18,4 +18,7 @@ type customTreatmentRepositoryType = {
   findExtremumLastUpdateDateBySources: (
     sources: treatmentType['source'][],
   ) => Promise<{ minDate: number | undefined; maxDate: number | undefined }>;
+  findAllByLastUpdateDateLessThan: (
+    lastUpdateDate: treatmentType['lastUpdateDate'],
+  ) => Promise<treatmentType[]>;
 };

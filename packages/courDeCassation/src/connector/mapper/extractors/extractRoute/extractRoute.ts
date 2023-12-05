@@ -2,6 +2,7 @@ import { logger } from '@label/backend';
 import { documentType } from '@label/core';
 import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
+import { extractRouteForJuritj } from './extractRouteForJuritj';
 
 export { extractRoute };
 
@@ -10,8 +11,9 @@ function extractRoute(
     additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'];
     session: documentType['decisionMetadata']['session'];
     solution: documentType['decisionMetadata']['solution'];
+    parties: documentType['decisionMetadata']['parties'];
     publicationCategory: documentType['publicationCategory'];
-    chamberId: string;
+    chamberName: documentType['decisionMetadata']['chamberName'];
     civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
     civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
     criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
@@ -27,7 +29,7 @@ function extractRoute(
       try {
         route = extractRouteForJurinet({ ...routeInfos });
       } catch (e) {
-        logger.log(e);
+        logger.error({ operationName: 'extractRouteForJurinet', msg: `${e}` });
         route = 'exhaustive';
       }
       break;
@@ -35,14 +37,23 @@ function extractRoute(
       try {
         route = extractRouteForJurica({ ...routeInfos });
       } catch (e) {
-        logger.log(e);
+        logger.error({ operationName: 'extractRouteForJurica', msg: `${e}` });
+        route = 'exhaustive';
+      }
+      break;
+    case 'juritj':
+      try {
+        route = extractRouteForJuritj({ ...routeInfos });
+      } catch (e) {
+        logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });
         route = 'exhaustive';
       }
       break;
   }
 
   if (
-    !!routeInfos.additionalTermsToAnnotate &&
+    (!!routeInfos.additionalTermsToAnnotate ||
+      (routeInfos.parties && routeInfos.parties.length > 50)) &&
     (route == 'simple' || route == 'default')
   ) {
     route = 'exhaustive';

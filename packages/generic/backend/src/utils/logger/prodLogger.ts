@@ -5,8 +5,21 @@ import { prettyLogFormatter } from './prettyLogFormatter';
 export { prodLogger };
 
 const prodLogger: loggerType = {
-  async log(value) {
-    const prettyValue = prettyLogFormatter.formatLog(value);
+  async log({
+    operationName,
+    msg,
+    data,
+  }: {
+    operationName: string;
+    msg: string;
+    data?: Record<string, unknown>;
+  }) {
+    const prettyValue = prettyLogFormatter.formatLog({
+      level: 'info',
+      operationName,
+      msg,
+      data,
+    });
     // eslint-disable-next-line no-console
     console.log(prettyValue);
     try {
@@ -17,8 +30,21 @@ const prodLogger: loggerType = {
     }
   },
 
-  async error(errorText) {
-    const prettyError = prettyLogFormatter.formatErrorLog(errorText);
+  async error({
+    operationName,
+    msg,
+    data,
+  }: {
+    operationName: string;
+    msg: string;
+    data?: Record<string, unknown>;
+  }) {
+    const prettyError = prettyLogFormatter.formatLog({
+      level: 'error',
+      operationName,
+      msg,
+      data,
+    });
     // eslint-disable-next-line no-console
     console.error(prettyError);
     try {

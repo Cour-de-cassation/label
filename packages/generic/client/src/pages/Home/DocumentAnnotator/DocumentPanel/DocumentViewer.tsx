@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
+import { useAnonymizerBuilder } from '../../../../services/anonymizer';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
 import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
 import { heights } from '../../../../styles';
@@ -16,6 +17,8 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   const theme = useCustomTheme();
   const { documentViewerMode } = documentViewerModeHandler;
   const annotatorStateHandler = useAnnotatorStateHandler();
+  const anonymizerBuilder = useAnonymizerBuilder();
+  const anonymizer = anonymizerBuilder.get();
   const { document } = annotatorStateHandler.get();
   useEffect(() => {
     if (documentViewerMode.kind === 'annotation') {
@@ -32,6 +35,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     documentViewerModeHandler.isAnonymizedView(),
   );
   const displayedText = computeDisplayedText();
+  let expectedLine = 1;
 
   return displayedText ? (
     <div
@@ -41,9 +45,36 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     >
       <table style={styles.table}>
         <tbody>
-          {displayedText.map((splittedLine) => (
-            <DocumentLine key={splittedLine.line} splittedLine={splittedLine} />
-          ))}
+          {displayedText.map((splittedLine) => {
+            if (splittedLine.line != expectedLine) {
+              expectedLine = splittedLine.line + 1;
+              return (
+                <>
+                  <DocumentLine
+                    key={splittedLine.line + 'p'}
+                    line={undefined}
+                    content={undefined}
+                    anonymizer={anonymizer}
+                  />
+                  <DocumentLine
+                    key={splittedLine.line}
+                    line={splittedLine.line}
+                    content={splittedLine.content}
+                    anonymizer={anonymizer}
+                  />
+                </>
+              );
+            }
+            expectedLine = splittedLine.line + 1;
+            return (
+              <DocumentLine
+                key={splittedLine.line}
+                line={splittedLine.line}
+                content={splittedLine.content}
+                anonymizer={anonymizer}
+              />
+            );
+          })}
         </tbody>
       </table>
     </div>

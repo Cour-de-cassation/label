@@ -15,6 +15,6 @@
           app: "{{ label_client_app_id }}"
         ports:
           - name: label-client-port
-            port: "{{ label_api_port }}"
-            targetPort: "{{ label_api_port }}"
+            port: 55432
+            targetPort: 55432
         type: ClusterIP

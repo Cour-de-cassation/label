@@ -15,6 +15,6 @@
           app: "{{ label_back_app_id }}"
         ports:
           - name: label-backend-port
-            port: "{{ label_back_port }}"
-            targetPort: "{{ label_back_port }}"
+            port: 55430
+            targetPort: 55430
         type: ClusterIP

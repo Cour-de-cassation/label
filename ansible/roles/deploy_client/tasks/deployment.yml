@@ -26,7 +26,7 @@
               - name: "{{ label_client_app_id }}"
                 image: "{{ label_client_image }}"
                 ports:
-                  - containerPort: "{{ label_api_port }}"
+                  - containerPort: 55432
                 envFrom:
                   - configMapRef:
                       name: "{{ label_client_app_id }}-config"

@@ -26,7 +26,7 @@
               - name: "{{ label_back_app_id }}"
                 image: "{{ label_backend_image }}"
                 ports:
-                  - containerPort: "{{ label_back_port }}"
+                  - containerPort: 55430
                 envFrom:
                   - configMapRef:
                       name: "{{ label_back_app_id }}-config"

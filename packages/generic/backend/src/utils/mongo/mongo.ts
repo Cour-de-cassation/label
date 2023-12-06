@@ -33,6 +33,7 @@ function buildMongo() {
 
     client = await new MongoClient(url, {
       useUnifiedTopology: true,
+      useNewUrlParser: true,
     }).connect();
 
     return client;

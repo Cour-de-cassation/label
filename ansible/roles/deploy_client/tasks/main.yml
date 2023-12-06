@@ -1,0 +1,18 @@
+---
+- name: Deploy namespace
+  import_tasks: namespace.yml
+
+- name: Deploy configmap
+  include_tasks: configmap.yml
+
+- name: Deploy secret
+  include_tasks: secret.yml
+
+- name: Deploy client deployment
+  include_tasks: deployment.yml
+
+- name: Deploy service
+  include_tasks: service.yml
+
+- name: Deploy ingress
+  import_tasks: ingress.yml

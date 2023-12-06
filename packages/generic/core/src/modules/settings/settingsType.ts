@@ -34,7 +34,7 @@ type displayModeType = 'lightMode' | 'darkMode';
 
 const categoryIconNames = [
   'bank',
-  'book',
+  'assignment',
   'cake',
   'car',
   'child',

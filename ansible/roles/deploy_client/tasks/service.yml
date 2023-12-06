@@ -1,0 +1,20 @@
+---
+- name: Creation Service
+  k8s:
+    apply: true
+    state: present
+    verify_ssl: true
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: "{{ label_client_app_id }}-service"
+        namespace: "{{ label_kube_namespace }}"
+      spec:
+        selector:
+          app: "{{ label_client_app_id }}"
+        ports:
+          - name: label-client-port
+            port: 55432
+            targetPort: 55432
+        type: ClusterIP

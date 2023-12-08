@@ -16,5 +16,5 @@
   "api_key": {
     "db_api": "3d8767ff-ed2a-47bd-91c2-f5ebac712f2c"
   },
-  "db_api_enabled": true
+  "db_api_enabled": false
 }

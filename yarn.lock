@@ -587,7 +587,6 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.16.7.tgz#e8c602438c4a8195751243da9031d1607d247cad"
   integrity sha512-hsEnFemeiW4D08A5gUAZxLBTXpZ39P+a+DGDsHw1yxqyQ/jzFEnxf5uTEGp+3bzAbNOxU1paTgYS4ECU/IgfDw==
 
-
 "@babel/helper-validator-identifier@^7.22.20":
   version "7.22.20"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.22.20.tgz#c4ae002c61d2879e724581d96665583dbc1dc0e0"
@@ -12816,9 +12815,9 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-"pelta-design-system@https://github.com/Cour-de-cassation/pelta-design-system#4e66339b47987a54062718419ba3fc717a491048":
+"pelta-design-system@https://github.com/Cour-de-cassation/pelta-design-system#f33fe593261a4873b165a34466ba75cc2ee67e1c":
   version "0.0.1"
-  resolved "https://github.com/Cour-de-cassation/pelta-design-system#4e66339b47987a54062718419ba3fc717a491048"
+  resolved "https://github.com/Cour-de-cassation/pelta-design-system#f33fe593261a4873b165a34466ba75cc2ee67e1c"
   dependencies:
     "@material-ui/core" "^4.12.3"
     "@material-ui/icons" "^4.11.2"

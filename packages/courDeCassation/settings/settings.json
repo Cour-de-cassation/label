@@ -64,8 +64,8 @@
     "order": 4,
     "text": "Date de décès"
   },
-  "insee": {
-    "anonymization": "[XXXXXXXXXXX0%d]",
+  "numeroIdentifiant": {
+    "anonymization": "[Numéro identifiant %d]",
     "color": {
       "lightMode": [
         "indigo",
@@ -76,9 +76,9 @@
         "800"
       ]
     },
-    "iconName": "book",
+    "iconName": "assignment",
     "order": 5,
-    "text": "N° INSEE"
+    "text": "Numéro identifiant"
   },
   "professionnelMagistratGreffier": {
     "anonymization": "[%c]",

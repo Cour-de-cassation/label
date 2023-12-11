@@ -74,9 +74,8 @@ const sderApi: sderApiType = {
     if (environment.db_api_enabled) {
       const decisionList = ((await fetchApi({
         method: 'get',
-        path: `decisions?status=toBeTreated&source=${source}&startDate=${
-          startDate.toISOString().split('T')[0]
-        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        path: `decisions?status=toBeTreated&source=${source}&startDate=${startDate.toISOString().split('T')[0]
+          }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
         environment,
       })) as unknown) as {
@@ -117,9 +116,8 @@ const sderApi: sderApiType = {
     if (environment.db_api_enabled) {
       const decisionList = ((await fetchApi({
         method: 'get',
-        path: `decisions?status=toBeTreated&source=${source}&startDate=${
-          startDate.toISOString().split('T')[0]
-        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        path: `decisions?status=toBeTreated&source=${source}&startDate=${startDate.toISOString().split('T')[0]
+          }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
         environment,
       })) as unknown) as {
@@ -276,6 +274,7 @@ const sderApi: sderApiType = {
     externalId,
     labelTreatments,
     pseudonymizationText,
+    publishStatus,
     environment,
   }) {
     if (environment.db_api_enabled) {
@@ -296,6 +295,7 @@ const sderApi: sderApiType = {
         decisionId: idModule.lib.buildId(externalId),
         decisionPseudonymisedText: pseudonymizationText,
         labelTreatments,
+        publishStatus,
       });
     }
   },

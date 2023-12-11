@@ -12,12 +12,14 @@ const exporterConfig: exporterConfigType = {
     pseudonymizationText,
     labelTreatments,
     environment,
+    publishStatus,
   }) {
     await sderApi.updateDecisionPseudonymisation({
       externalId,
       pseudonymizationText,
       labelTreatments,
       environment,
+      publishStatus,
     });
 
     await sderApi.setCourtDecisionDone({ externalId, environment });

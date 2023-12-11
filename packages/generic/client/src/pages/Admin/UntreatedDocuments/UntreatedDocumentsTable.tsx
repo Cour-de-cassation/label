@@ -93,7 +93,7 @@ function UntreatedDocumentsTable(props: {
       dropdownLabel: wordings.untreatedDocumentsPage.table.optionItems.assignToWorkingUser.dropdownLabel,
       description: wordings.untreatedDocumentsPage.table.optionItems.assignToWorkingUser.description,
       items: props.users.map(({ name }) => name),
-      iconName: 'assignment' as const,
+      iconName: 'assignmentInd' as const,
       onSelect: buildOnSelectWorkingUserToAssignDocument(untreatedDocument.document._id),
       isDisabled: userRole !== 'admin' || adminView !== 'admin',
     };

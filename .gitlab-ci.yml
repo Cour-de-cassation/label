@@ -64,7 +64,7 @@ build_label_backend:
   only:
     - master
     - re7
-    - dev
+    # - dev
   tags:
     - docker
 
@@ -98,7 +98,7 @@ build_label_client:
   only:
     - master
     - re7
-    - dev
+    # - dev
   tags:
     - docker
 

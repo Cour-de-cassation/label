@@ -47,6 +47,14 @@ const categoriesMapper = {
       categoriesToOmit = [...categoriesToOmit, 'numeroSiretSiren'];
     }
 
+    // in case of reimport old decisions with deprecated insee category change to numeroIdentifiant
+    if (categoriesToOmit.includes('insee')) {
+      categoriesToOmit = [
+        ...categoriesToOmit.filter((category) => category !== 'insee'),
+        'numeroIdentifiant',
+      ];
+    }
+
     return uniq(categoriesToOmit);
   },
 };

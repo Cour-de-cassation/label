@@ -335,6 +335,7 @@ const sderLocalApi: sderApiType = {
     pseudonymizationText,
     environment,
   }) {
+    //TODO : include publishStatus to dbsder api call
     if (environment.db_api_enabled) {
       await fetchApi({
         method: 'put',

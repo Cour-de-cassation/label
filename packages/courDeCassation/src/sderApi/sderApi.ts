@@ -276,8 +276,10 @@ const sderApi: sderApiType = {
     externalId,
     labelTreatments,
     pseudonymizationText,
+    publishStatus,
     environment,
   }) {
+    //TODO : include publishStatus to dbsder api call
     if (environment.db_api_enabled) {
       await fetchApi({
         method: 'put',
@@ -296,6 +298,7 @@ const sderApi: sderApiType = {
         decisionId: idModule.lib.buildId(externalId),
         decisionPseudonymisedText: pseudonymizationText,
         labelTreatments,
+        publishStatus,
       });
     }
   },

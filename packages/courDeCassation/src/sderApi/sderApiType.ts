@@ -1,4 +1,4 @@
-import { decisionType } from 'sder';
+import { decisionType, publishStatusType } from 'sder';
 import { documentType, environmentType } from '@label/core';
 import { labelTreatmentsType } from '@label/backend';
 
@@ -59,6 +59,7 @@ type sderApiType = {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
     labelTreatments: labelTreatmentsType;
+    publishStatus: publishStatusType;
     environment: environmentType;
   }) => Promise<void>;
 };

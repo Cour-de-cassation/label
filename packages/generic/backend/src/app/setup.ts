@@ -16,7 +16,9 @@ function setupSettings(settings: settingsType) {
 }
 
 async function setupMongo(environment: environmentType) {
-  const url = process.env.MONGODB_URL ?? `${environment.pathName.db}:${environment.port.db}`;
+  const url =
+    process.env.MONGODB_URL ??
+    `${environment.pathName.db}:${environment.port.db}`;
   logger.log({
     operationName: 'setupMongo',
     msg: `Loading the Mongo database : ${environment.dbName}`,

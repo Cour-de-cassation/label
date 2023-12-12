@@ -76,8 +76,9 @@ const sderLocalApi: sderApiType = {
     if (environment.db_api_enabled) {
       const decisionList = ((await fetchApi({
         method: 'get',
-        path: `decisions?status=toBeTreated&source=${source}&startDate=${startDate.toISOString().split('T')[0]
-          }&endDate=${endDate.toISOString().split('T')[0]}`,
+        path: `decisions?status=toBeTreated&source=${source}&startDate=${
+          startDate.toISOString().split('T')[0]
+        }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
         environment,
       })) as unknown) as {
@@ -130,8 +131,9 @@ const sderLocalApi: sderApiType = {
     if (environment.db_api_enabled) {
       const decisionList = ((await fetchApi({
         method: 'get',
-        path: `decisions?status=toBeTreated&source=${source}&startDate=${startDate.toISOString().split('T')[0]
-          }&endDate=${endDate.toISOString().split('T')[0]}`,
+        path: `decisions?status=toBeTreated&source=${source}&startDate=${
+          startDate.toISOString().split('T')[0]
+        }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
         environment,
       })) as unknown) as {
@@ -332,8 +334,8 @@ const sderLocalApi: sderApiType = {
     labelTreatments,
     pseudonymizationText,
     environment,
-    publishStatus,
   }) {
+    //TODO : include publishStatus to dbsder api call
     if (environment.db_api_enabled) {
       await fetchApi({
         method: 'put',

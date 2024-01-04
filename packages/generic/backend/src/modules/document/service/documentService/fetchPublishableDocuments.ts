@@ -17,7 +17,13 @@ async function fetchPublishableDocuments() {
       'status',
     ],
   );
-  return documents
+
+  const documentsWereRouteEqualsToConfirmation = await (await documentRepository.findAll()).filter(
+    (document) => document.route == 'confirmation'
+  )
+  const allDocuments = documents.concat(documentsWereRouteEqualsToConfirmation)
+
+  return allDocuments
     .filter((document) => document.status !== 'rejected')
     .map(
       ({

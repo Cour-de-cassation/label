@@ -11,7 +11,9 @@ variables:
 
 stages:
   - test
-  - build
+  - build_modules
+  - build_application
+  - build_docker_image
   - deploy
 
 # Partie à compléter par les développeurs label
@@ -37,23 +39,74 @@ stages:
 #     - re7
 #     - dev
 
-build_label_backend:
-  stage: build
+build_label_node_modules:
+  stage: build_modules
+  image: node:16.15-alpine3.16
+  variables:
+    HTTP_PROXY: $HTTP_PROXY_DEV
+    HTTPS_PROXY: $HTTPS_PROXY_DEV
+  script:
+    - export NODE_OPTIONS=--openssl-legacy-provider
+    - RUN apk --no-cache add git
+    - yarn config set proxy $HTTP_PROXY
+    - yarn config set https-proxy $HTTPS_PROXY
+    - yarn install --
+    - yarn compile
+  artifacts:
+    paths:
+      - packages/generic/core/dist
+      - packages/generic/backend/dist
+      - packages/generic/client/dist
+      - packages/courDeCassationp/dist
+      - packages/generic/core/node_modules
+      - packages/generic/backend/node_modules
+      - packages/generic/client/node_modules
+      - packages/courDeCassation/node_modules
+  only:
+    - master
+    - re7
+    - refacto_gitlab_ci
+    # - dev
+  tags:
+    - docker
+
+build_label_backend_application:
+  stage: build_application
+  image: node:16.15-alpine3.16
+  variables:
+    HTTP_PROXY: $HTTP_PROXY_DEV
+    HTTPS_PROXY: $HTTPS_PROXY_DEV
+  script:
+    - export NODE_OPTIONS=--openssl-legacy-provider
+    - yarn config set proxy $HTTP_PROXY
+    - yarn config set https-proxy $HTTPS_PROXY
+    - CI=false yarn buildClient # from "ugly workaround" in github workflows
+  only:
+    - master
+    - re7
+    - refacto_gitlab_ci
+    # - dev
+  dependencies: build_label_node_modules
+  artifacts:
+    paths:
+      - packages/generic/core/dist
+      - packages/generic/backend/dist
+      - packages/generic/client/dist
+      - packages/courDeCassationp/dist
+      - packages/generic/core/node_modules
+      - packages/generic/backend/node_modules
+      - packages/generic/client/node_modules
+      - packages/courDeCassation/node_modules
+  tags:
+    - docker
+
+build_label_backend_docker_image:
+  stage: build_docker_image
   variables:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script: 
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - echo "$HTTP_PROXY"
-    - echo "$HTTPS_PROXY"
-    - export NODE_OPTIONS=--openssl-legacy-provider
-    - apk update
-    - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
-    - yarn install --
-    - yarn compile
-    - CI=false yarn buildClient # from "ugly workaround" in github workflows
     - docker build
         --build-arg http_proxy=$HTTP_PROXY
         --build-arg https_proxy=$HTTPS_PROXY
@@ -64,7 +117,9 @@ build_label_backend:
   only:
     - master
     - re7
+    - refacto_gitlab_ci
     # - dev
+  dependencies: build_label_backend_application
   tags:
     - docker
 

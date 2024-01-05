@@ -18,12 +18,24 @@ async function fetchPublishableDocuments() {
     ],
   );
 
-  const documentsWereRouteEqualsToConfirmation = await (await documentRepository.findAll()).filter(
-    (document) => document.route == 'confirmation'
-  )
-  const allDocuments = documents.concat(documentsWereRouteEqualsToConfirmation)
+  // get documents without change the last code !! en haut
+  const documentsWereRouteEqualsToConfirmation = (
+    await documentRepository.findAll()
+  ).filter((document) => document.route == 'confirmation');
+  // adding new document where route == confirmation and filter if duplicate elem
+  const allDocuments = documents.concat(documentsWereRouteEqualsToConfirmation);
+  // use a set to follow documents
+  const uniqueDocumentNumbers = new Set();
+  // Filter the elements to take not same documents
+  const filtredDocuments = allDocuments.filter((document) => {
+    const isUnique = !uniqueDocumentNumbers.has(document.documentNumber);
+    // adding documents
+    uniqueDocumentNumbers.add(document.documentNumber);
 
-  return allDocuments
+    return isUnique;
+  });
+
+  return filtredDocuments
     .filter((document) => document.status !== 'rejected')
     .map(
       ({

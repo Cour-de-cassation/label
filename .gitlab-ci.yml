@@ -96,7 +96,7 @@ build_label_backend_docker_image:
 
 
 build_label_client:
-  stage: build
+  stage: build_docker_image
   variables:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV

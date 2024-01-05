@@ -46,7 +46,7 @@ build_label_application:
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
     - export NODE_OPTIONS=--openssl-legacy-provider
-    - RUN apk --no-cache add git
+    - apk --no-cache add git
     - yarn config set proxy $HTTP_PROXY
     - yarn config set https-proxy $HTTPS_PROXY
     - yarn install --

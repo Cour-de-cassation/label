@@ -1,4 +1,5 @@
 import { annotationType } from '../annotationType';
+import { normalizeString } from '../../../lib/stringComparator/normalizeString';
 
 export { entityIdHandler };
 
@@ -9,7 +10,7 @@ const entityIdHandler = {
 };
 
 function compute(category: string, text: string) {
-  return `${category}_${text.toLocaleLowerCase()}`;
+  return `${category}_${normalizeString(text.toLocaleLowerCase())}`;
 }
 
 function syncEntityId(annotation: annotationType): annotationType {

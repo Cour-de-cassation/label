@@ -26,12 +26,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
       (settings[category] = {
         anonymization: partialSettings[category]?.anonymization || '',
         autoLinkSensitivity: partialSettings[category]?.autoLinkSensitivity || [
-          {
-            kind: 'levenshteinDistance',
-            threshold: 2,
-          },
           { kind: 'caseInsensitive' },
-          { kind: 'inclusion' },
         ],
         color: {
           lightMode: buildColor(partialSettings[category]?.color?.lightMode),

@@ -5,7 +5,14 @@ import { autoLinker } from './autoLinker';
 
 describe('autoLinker', () => {
   const settings = settingsModule.lib.buildSettings(
-    { CATEGORY: {autoLinkSensitivity: [{ kind: 'levenshteinDistance', threshold: 2 }]},
+    { CATEGORY: { autoLinkSensitivity: [
+      {
+        kind: 'levenshteinDistance',
+        threshold: 2,
+      },
+      { kind: 'caseInsensitive' },
+      { kind: 'inclusion' },
+    ], },
      ANOTHER_CATEGORY: {} });
   describe('autoLink', () => {
     it('should link the given annotations', () => {

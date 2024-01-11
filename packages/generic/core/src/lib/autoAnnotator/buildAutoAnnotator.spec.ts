@@ -10,7 +10,7 @@ describe('buildAutoAnnotator', () => {
         { text: 'TEXT_2', category: 'CATEGORY_1' },
       ].map(annotationModule.generator.generate);
       const settings = settingsModule.lib.buildSettings({
-        CATEGORY_1: {},
+        CATEGORY_1: {autoLinkSensitivity: [{ kind: 'levenshteinDistance', threshold: 2 }]},
         CATEGORY_2: {},
       });
       const autoAnnotator = buildAutoAnnotator(settings);

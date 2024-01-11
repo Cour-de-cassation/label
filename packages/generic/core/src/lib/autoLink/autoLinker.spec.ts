@@ -4,7 +4,9 @@ import { annotationLinkHandler } from '../annotationLinkHandler';
 import { autoLinker } from './autoLinker';
 
 describe('autoLinker', () => {
-  const settings = settingsModule.lib.buildSettings({ CATEGORY: {}, ANOTHER_CATEGORY: {} });
+  const settings = settingsModule.lib.buildSettings(
+    { CATEGORY: {autoLinkSensitivity: [{ kind: 'levenshteinDistance', threshold: 2 }]},
+     ANOTHER_CATEGORY: {} });
   describe('autoLink', () => {
     it('should link the given annotations', () => {
       const annotations = [

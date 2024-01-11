@@ -5,9 +5,10 @@ import { wordings } from '../../../wordings';
 import { AdminViewDropdown } from './AdminViewDropdown';
 import { PersonalStatisticsButton } from './PersonalStatisticsButton';
 import { SettingsButton } from './SettingsButton';
+import { PropTypes } from '@material-ui/core';
 
 export { MainHeader };
-
+let msg: string;
 function MainHeader(props: {
   subtitle?: JSX.Element;
   title?: string;
@@ -17,9 +18,18 @@ function MainHeader(props: {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const leftHeaderComponents = buildLeftHeaders();
+  let color: PropTypes.Color;
+
+  if (process.env.NODE_ENV === "production") {
+    color = "inherit";
+    msg = ""
+  } else {
+    color = (process.env.NODE_ENV === "test") ? "primary" : "secondary";
+    msg = "Vous êtes sur l'envirronnement de test"
+  }
 
   return (
-    <MenuBar color="inherit" isElevated={!!props.title}>
+    <MenuBar color={color} isElevated={!!props.title}>
       <Header
         leftHeaderComponents={leftHeaderComponents}
         rightHeaderComponents={buildRightHeaderComponents()}
@@ -61,11 +71,11 @@ function MainHeader(props: {
     }
     const textComponent = props.subtitle ? (
       <div style={styles.composedTitleContainer}>
-        <Text variant="h3">{props.title}</Text>
+        <Text variant="h3">{props.title + " | " + msg}</Text>
         <Text>{props.subtitle}</Text>
       </div>
     ) : (
-      <Text>{props.title}</Text>
+      <Text>{props.title + " | " + msg}</Text>
     );
     if (props.onBackButtonPress) {
       const backButton = (

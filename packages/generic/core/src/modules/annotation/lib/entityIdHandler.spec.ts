@@ -10,5 +10,13 @@ describe('entityIdHandler', () => {
 
       expect(entityId).toEqual('CATEGORY_text');
     });
+    it('should compute an annotation entity id normalizing the string', () => {
+      const category = 'CATEGORY';
+      const text = 'ÁñImåux';
+
+      const entityId = entityIdHandler.compute(category, text);
+
+      expect(entityId).toEqual('CATEGORY_animaux');
+    });
   });
 });

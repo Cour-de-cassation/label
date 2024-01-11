@@ -247,7 +247,7 @@ describe('fetch', () => {
             annotationBefore: {
               category: 'FIRST_NAME',
               certaintyScore: 1,
-              entityId: 'FIRST_NAME_romain glé',
+              entityId: 'FIRST_NAME_romain gle',
               start: 47,
               text: 'Romain Glé',
             },

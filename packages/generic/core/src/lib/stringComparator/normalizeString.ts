@@ -3,11 +3,12 @@ export { normalizeString };
 function normalizeString(text: string) {
   return text
     .toLowerCase()
-    .replace(/[àâ]/g, 'a')
+    .replace(/[àáâãäå]/g, 'a')
     .replace(/[éèêë]/g, 'e')
     .replace(/[ç]/g, 'c')
-    .replace(/[ïî]/g, 'i')
-    .replace(/[ô]/g, 'o')
-    .replace(/[ûùü]/g, 'u')
-    .replace(/[ÿ]/g, 'y');
+    .replace(/[ìíîï]/g, 'i')
+    .replace(/[ñ]/g, 'n')
+    .replace(/[òóôõö]/g, 'o')
+    .replace(/[ùúûüũ]/g, 'u')
+    .replace(/[ýŷÿ]/g, 'y');
 }

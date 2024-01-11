@@ -25,9 +25,7 @@ function buildSettings(partialSettings: partialSettingsType = {}) {
     (category) =>
       (settings[category] = {
         anonymization: partialSettings[category]?.anonymization || '',
-        autoLinkSensitivity: partialSettings[category]?.autoLinkSensitivity || [
-          { kind: 'caseInsensitive' },
-        ],
+        autoLinkSensitivity: partialSettings[category]?.autoLinkSensitivity || [{ kind: 'caseInsensitive' }],
         color: {
           lightMode: buildColor(partialSettings[category]?.color?.lightMode),
           darkMode: buildColor(partialSettings[category]?.color?.darkMode),

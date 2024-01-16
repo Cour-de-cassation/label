@@ -18,9 +18,9 @@ async function fetchPublishableDocuments() {
     ],
   );
 
-  const documentByConfirmationRoute = await documentRepository.findAllByRoutes(
-    ['confirmation'],
-  );
+  const documentByConfirmationRoute = await documentRepository.findAllByRoutes([
+    'confirmation',
+  ]);
   // adding new document where route == confirmation and filter if duplicate elem
   const allDocuments = documents.concat(documentByConfirmationRoute);
   // use a set to follow documents

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
+import { Text } from 'pelta-design-system';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { orderDirectionType, PaginatedTable, tableRowFieldType } from 'pelta-design-system';
 import { localStorage, publishableDocumentOrderByProperties } from '../../services/localStorage';
@@ -16,11 +17,22 @@ function PublishableDocumentsTable(props: {
   const history = useHistory();
   const fields = buildPublishableDocumentsFields();
   const styles = buildStyles();
+  const numberConfirmationDecision = props.publishableDocuments.filter((document) => document.route == 'confirmation')
+    .length;
   const orderByProperty = localStorage.publishableDocumentsStateHandler.getOrderByProperty();
   const orderDirection = localStorage.publishableDocumentsStateHandler.getOrderDirection();
-
   return (
     <div style={styles.container}>
+      <div>
+        {numberConfirmationDecision >= 1 ? (
+          <Text color="textPrimary">
+            {' '}
+            Vous avez {numberConfirmationDecision} décision(s) en attente de confirmation...{' '}
+          </Text>
+        ) : (
+          ''
+        )}
+      </div>
       <PaginatedTable
         fields={fields}
         data={props.publishableDocuments}

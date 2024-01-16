@@ -18,25 +18,23 @@ async function fetchPublishableDocuments() {
     ],
   );
 
-  // get documents without change the last code !! en haut
-  const documentsWereRouteEqualsToConfirmation = (
-    await documentRepository.findAll()
-  ).filter((document) => document.route == 'confirmation');
+  //get decisions by route
+  const documentByConfirmationRoute = await documentRepository.findAllByRoute(
+    'confirmation',
+  );
   // adding new document where route == confirmation and filter if duplicate elem
-  const allDocuments = documents.concat(documentsWereRouteEqualsToConfirmation);
+  const allDocuments = documents.concat(documentByConfirmationRoute);
   // use a set to follow documents
   const uniqueDocumentNumbers = new Set();
-  // Filter the elements to take not same documents
-  const filtredDocuments = allDocuments.filter((document) => {
-    const isUnique = !uniqueDocumentNumbers.has(document.documentNumber);
-    // adding documents
-    uniqueDocumentNumbers.add(document.documentNumber);
-
-    return isUnique;
-  });
-
-  return filtredDocuments
-    .filter((document) => document.status !== 'rejected')
+  return allDocuments
+    .filter((document) => {
+      if (document.status !== 'rejected') {
+        const isUnique = !uniqueDocumentNumbers.has(document.documentNumber);
+        // adding documents
+        uniqueDocumentNumbers.add(document.documentNumber);
+        return isUnique;
+      }
+    })
     .map(
       ({
         _id,

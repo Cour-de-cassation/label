@@ -18,6 +18,11 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
     {
       index: {
+        route: 1,
+      },
+    } as const,
+    {
+      index: {
         publicationCategory: 1,
         status: 1,
       },
@@ -156,6 +161,17 @@ const buildDocumentRepository = buildRepositoryBuilder<
             statuses,
           ),
         )
+        .toArray();
+    },
+
+    //find by route
+    async findAllByRoute(route: documentType['route']) {
+      return collection
+        .find({
+          route: {
+            $eq: route,
+          },
+        })
         .toArray();
     },
 

@@ -87,6 +87,10 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         .map((document) => projectFakeObjects(document, projections));
     },
 
+    async findAllByRoute(route) {
+      return collection.filter((document) => document.route === route);
+    },
+
     async findAllByStatus(status) {
       return collection.filter((document) => status.includes(document.status));
     },

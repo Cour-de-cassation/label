@@ -1,0 +1,527 @@
+{
+  "entities": [
+    {
+      "label": "localite",
+      "start": 37,
+      "end": 46,
+      "text": "Dunkerque",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "localite",
+      "start": 812,
+      "end": 821,
+      "text": "Dunkerque",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "localite",
+      "start": 5680,
+      "end": 5689,
+      "text": "Dunkerque",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "localite",
+      "start": 88,
+      "end": 98,
+      "text": "Loon-Plage",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 128,
+      "end": 134,
+      "text": "Xavier",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 5312,
+      "end": 5318,
+      "text": "Xavier",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 135,
+      "end": 143,
+      "text": "Bertrand",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 5319,
+      "end": 5327,
+      "text": "Bertrand",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 263,
+      "end": 269,
+      "text": "Franck",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 270,
+      "end": 276,
+      "text": "Gonsse",
+      "source": "Cour de cassation example",
+      "score": 1,
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 552,
+      "end": 558,
+      "text": "Gonsse",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1090,
+      "end": 1096,
+      "text": "Gonsse",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 5282,
+      "end": 5288,
+      "text": "Gonsse",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 366,
+      "end": 373,
+      "text": "Nicolas",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 374,
+      "end": 381,
+      "text": "Sarkozy",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1407,
+      "end": 1415,
+      "text": "Philippe",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 2247,
+      "end": 2255,
+      "text": "Philippe",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 8135,
+      "end": 8143,
+      "text": "Philippe",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1416,
+      "end": 1422,
+      "text": "Poutou",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1494,
+      "end": 1501,
+      "text": "Olivier",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 5844,
+      "end": 5851,
+      "text": "Olivier",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1502,
+      "end": 1512,
+      "text": "Besancenot",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1597,
+      "end": 1604,
+      "text": "Arlette",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1605,
+      "end": 1614,
+      "text": "Laguiller",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1831,
+      "end": 1841,
+      "text": "Christophe",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1842,
+      "end": 1851,
+      "text": "Prudhomme",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "localite",
+      "start": 1864,
+      "end": 1881,
+      "text": "Seine-Saint-Denis",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "localite",
+      "start": 2317,
+      "end": 2334,
+      "text": "Seine-Saint-Denis",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1883,
+      "end": 1889,
+      "text": "Pascal",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1890,
+      "end": 1899,
+      "text": "Le Manach",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1923,
+      "end": 1927,
+      "text": "Eric",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1928,
+      "end": 1936,
+      "text": "Pecqueur",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1981,
+      "end": 1990,
+      "text": "Sébastien",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 1991,
+      "end": 1998,
+      "text": "Pointet",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 2059,
+      "end": 2065,
+      "text": "Cécile",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 2066,
+      "end": 2073,
+      "text": "Cukierman",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 2256,
+      "end": 2264,
+      "text": "Martinez",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 8739,
+      "end": 8747,
+      "text": "Martinez",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 2853,
+      "end": 2858,
+      "text": "Cyril",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 2859,
+      "end": 2868,
+      "text": "Chabanier",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 3359,
+      "end": 3363,
+      "text": "Yvan",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 3364,
+      "end": 3373,
+      "text": "Ricordeau",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personneMorale",
+      "start": 288,
+      "end": 292,
+      "text": "CFDT",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personneMorale",
+      "start": 3401,
+      "end": 3405,
+      "text": "CFDT",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personneMorale",
+      "start": 5383,
+      "end": 5387,
+      "text": "CFDT",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 3817,
+      "end": 3825,
+      "text": "Isabelle",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 3826,
+      "end": 3833,
+      "text": "Chauvin",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 4618,
+      "end": 4626,
+      "text": "François",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 4627,
+      "end": 4635,
+      "text": "Hommeril",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 5254,
+      "end": 5262,
+      "text": "Hommeril",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 5977,
+      "end": 5986,
+      "text": "Jean-Yves",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 5987,
+      "end": 5995,
+      "text": "Le Drian",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personneMorale",
+      "start": 6055,
+      "end": 6058,
+      "text": "Gad",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 6367,
+      "end": 6371,
+      "text": "Yves",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 6372,
+      "end": 6379,
+      "text": "Veyrier",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 7011,
+      "end": 7019,
+      "text": "Stéphane",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 7020,
+      "end": 7028,
+      "text": "Blanchon",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 7613,
+      "end": 7621,
+      "text": "Blanchon",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 7883,
+      "end": 7891,
+      "text": "Blanchon",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 9030,
+      "end": 9038,
+      "text": "Blanchon",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 7350,
+      "end": 7357,
+      "text": "Doumont",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 7631,
+      "end": 7638,
+      "text": "Doumont",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "localite",
+      "start": 8880,
+      "end": 8888,
+      "text": "Nilvange",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 6796,
+      "end": 6799,
+      "text": "Yon",
+      "source": "Cour de cassation example",
+      "score": 1
+    },
+    {
+      "label": "personnePhysique",
+      "start": 9358,
+      "end": 9361,
+      "text": "Yon",
+      "source": "Cour de cassation example",
+      "score": 1
+    }
+  ],
+  "check_needed": false,
+  "checklist": []
+}

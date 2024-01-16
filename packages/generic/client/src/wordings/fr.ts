@@ -316,6 +316,7 @@ const fr = {
   },
   publishableDocumentsPage: {
     title: 'Arrêts P',
+    confirmationDocumentAlert: 'Pour information : Il y a {count} décision(s) en confirmation de lecture aujourd\'hui.',
     table: {
       optionItems: {
         openAnonymizedDocument: 'Ouvrir la décision anonymisée...',

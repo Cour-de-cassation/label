@@ -18,9 +18,8 @@ async function fetchPublishableDocuments() {
     ],
   );
 
-  //get decisions by route
-  const documentByConfirmationRoute = await documentRepository.findAllByRoute(
-    'confirmation',
+  const documentByConfirmationRoute = await documentRepository.findAllByRoutes(
+    ['confirmation'],
   );
   // adding new document where route == confirmation and filter if duplicate elem
   const allDocuments = documents.concat(documentByConfirmationRoute);

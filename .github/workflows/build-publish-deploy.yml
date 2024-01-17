@@ -1,342 +1,342 @@
-name: 🐋☸️ Build, Publish, Deploy (push)
+# name: 🐋☸️ Build, Publish, Deploy (push)
 
-on:
-  push:
-    branches: [dev, master]
+# on:
+#   push:
+#     branches: [dev, master]
 
-jobs:
-  build-publish:
-    runs-on: ubuntu-latest
-    env:
-      APP_ID: label-* # specific to backend or client
-      APP_GROUP: judilibre-prive
-      APP_HOST: lbl.judilibre-prive.local
-      APP_PORT: 443
-      APP_SCHEME: https
-      APP_SELF_SIGNED: "true"
-      APP_KEYWORD: specific # to backend or client
-      DOCKER_USERNAME: opendatajustice
-      KUBECONFIG: /home/runner/.kube/config-local-k3s.yaml
-      KUBE_NAMESPACE: judilibre-prive-local-dev
-      KUBE_TYPE: k3s
-      KUBE_ZONE: local
-      NLP_API_HOST: https://nlp-pseudonymisation.judilibre-prive.local
-      NLP_API_PORT: 443
-      ROOT_PATH: label* # specific to backend or client
-      START_TIMEOUT: 240
+# jobs:
+#   build-publish:
+#     runs-on: ubuntu-latest
+#     env:
+#       APP_ID: label-* # specific to backend or client
+#       APP_GROUP: judilibre-prive
+#       APP_HOST: lbl.judilibre-prive.local
+#       APP_PORT: 443
+#       APP_SCHEME: https
+#       APP_SELF_SIGNED: "true"
+#       APP_KEYWORD: specific # to backend or client
+#       DOCKER_USERNAME: opendatajustice
+#       KUBECONFIG: /home/runner/.kube/config-local-k3s.yaml
+#       KUBE_NAMESPACE: judilibre-prive-local-dev
+#       KUBE_TYPE: k3s
+#       KUBE_ZONE: local
+#       NLP_API_HOST: https://nlp-pseudonymisation.judilibre-prive.local
+#       NLP_API_PORT: 443
+#       ROOT_PATH: label* # specific to backend or client
+#       START_TIMEOUT: 240
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x]
+#     strategy:
+#       matrix:
+#         node-version: [14.x, 16.x]
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|^refs/heads/||;' | sed 's/[^a-zA-Z0-9]/-/g')"
-        id: extract_branch
-      - name: Init ops dependencies
-        run: ./scripts/init_deps.sh && ./scripts/check_install.sh
-        env:
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-      - name: 🔙  Get version -- backend
-        run: echo "##[set-output name=version;]$(./scripts/version.sh)"
-        id: backend_version
-        env:
-          APP_ID: label-backend
-      - name: 🔙🐋 Check if build is needed -- backend
-        run: |
-          echo "##[set-output name=status;]$(./scripts/docker-check.sh || echo build_needed)"
-        id: backend_check
-        env:
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          VERSION: ${{ steps.backend_version.outputs.version }}
-          APP_ID: label-backend
-      - name: 👤  Get version -- client
-        run: echo "##[set-output name=version;]$(./scripts/version.sh)"
-        id: client_version
-        env:
-          APP_ID: label-client
-      - name: 👤🐋 Check if build is needed -- client
-        run: |
-          echo "##[set-output name=status;]$(./scripts/docker-check.sh || echo build_needed)"
-        id: client_check
-        env:
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          VERSION: ${{ steps.client_version.outputs.version }}
-          APP_ID: label-client
-      - name: Use Node.js ${{ matrix.node-version }}
-        if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: yarn install --
-        if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
-      - run: yarn compile
-        if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
-      - run: yarn test
-        if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
-      - run: yarn lint
-        if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
-      - name: 🔙🐋 Build docker image -- backend
-        if: (matrix.node-version == '16.x') && (steps.backend_check.outputs.status == 'build_needed')
-        run: ./scripts/docker-build.sh
-        env:
-          APP_ID: label-backend
-          DOCKER_TARGET: label-backend
-          VERSION: ${{ steps.backend_version.outputs.version }}
-      - name: 🔙☸️ Deploy k8s services locally -- backend
-        if: (matrix.node-version == '16.x') && (steps.backend_check.outputs.status == 'build_needed')
-        run: ./scripts/deploy_k8s_services.sh
-        env:
-          APP_ID: label-backend
-          API_PORT: 55430
-          APP_KEYWORD: "true"
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          ROOT_PATH: label/api
-          VERSION: ${{ steps.backend_version.outputs.version }}
-      - name: 🔙✅ Execute minimal tests -- backend
-        if: (matrix.node-version == '16.x') && (steps.backend_check.outputs.status == 'build_needed')
-        run: |
-          echo "127.0.0.1 ${APP_HOST}" | sudo tee -a /etc/hosts
-          kubectl get pods --namespace=${KUBE_NAMESPACE}
-          kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
-          ./scripts/test_minimal.sh
-        env:
-          APP_ID: label-backend
-          APP_KEYWORD: "true"
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
-          ROOT_PATH: label/api
-      - name: 🔙🚀 Push docker image -- backend
-        if: (matrix.node-version == '16.x')
-        run: |
-          echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-          DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
-          if (docker image inspect ${DOCKER_IMAGE}); then
-            docker push ${DOCKER_IMAGE};
-          else
-            docker pull ${DOCKER_IMAGE};
-          fi
-          docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
-          docker push ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
-          if [ "${GIT_BRANCH}" == "master" ]; then
-            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-            docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
-            docker push ${DOCKER_USERNAME}/${APP_ID}:latest
-          fi;
-        env:
-          APP_ID: label-backend
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          VERSION: ${{ steps.backend_version.outputs.version }}
-      - name: 👤  Build static app -- client
-        if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
-        run: |
-          export VERSION=$(./scripts/version.sh)
-          export DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
-          if ! (docker manifest inspect ${DOCKER_IMAGE}); then
-            yarn buildClient || echo "ugly worakound";
-          fi
-        env:
-          APP_ID: label-client
-      - name: 👤🐋 Build docker image -- client
-        if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
-        run: ./scripts/docker-build.sh
-        env:
-          APP_ID: label-client
-          DOCKER_TARGET: label-client
-          VERSION: ${{ steps.client_version.outputs.version }}
-      - name: 👤☸️ Deploy k8s services locally -- client
-        if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
-        run: ./scripts/deploy_k8s_services.sh
-        env:
-          APP_ID: label-client
-          API_PORT: 55432
-          APP_KEYWORD: html
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          ROOT_PATH: label
-          VERSION: ${{ steps.client_version.outputs.version }}
-      - name: 👤✅ Execute minimal tests -- client
-        if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
-        run: |
-          echo "127.0.0.1 ${APP_HOST}" | sudo tee -a /etc/hosts
-          kubectl get pods --namespace=${KUBE_NAMESPACE}
-          kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
-          ./scripts/test_minimal.sh
-        env:
-          APP_ID: label-client
-          APP_KEYWORD: html
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
-          ROOT_PATH: label
-      - name: 👤🚀 Push docker image -- client
-        if: (matrix.node-version == '16.x') && (github.event_name == 'push') && ( (steps.client_check.outputs.status == 'build_needed' ) || (steps.extract_branch.outputs.branch == 'pre-prod') || (steps.extract_branch.outputs.branch == 'prod') )
-        run: |
-          echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-          DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
-          if (docker image inspect ${DOCKER_IMAGE}); then
-            docker push ${DOCKER_IMAGE};
-          else
-            docker pull ${DOCKER_IMAGE};
-          fi
-          docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
-          docker push ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
-          if [ "${GIT_BRANCH}" == "master" ]; then
-            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-            docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
-            docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
-            docker push ${DOCKER_USERNAME}/${APP_ID}:latest
-          fi;
-        env:
-          APP_ID: label-client
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          VERSION: ${{ steps.client_version.outputs.version }}
-  deploy:
-    runs-on: [self-hosted]
-    needs: build-publish
-    env:
-      APP_ID: label-* # specific to backend or client
-      APP_GROUP: judilibre-prive
-      APP_HOST: lbl.judilibre-prive.local
-      APP_PORT: 443
-      APP_SCHEME: https
-      APP_SELF_SIGNED: "true"
-      APP_KEYWORD: specific # to backend or client
-      DOCKER_USERNAME: opendatajustice
-      KUBE_NAMESPACE: judilibre-prive-label
-      KUBE_TYPE: k3s
-      KUBE_ZONE: prive
-      NLP_API_HOST: https://nlp-pseudonymisation.judilibre-prive.local
-      NLP_API_PORT: 443
-      ROOT_PATH: label* # specific to backend or client
-      START_TIMEOUT: 240
-    steps:
-      - uses: actions/checkout@v2
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|^refs/heads/||;' | sed 's/[^a-zA-Z0-9]/-/g')"
-        id: extract_branch
-      - name: Init ops dependencies
-        run: ./scripts/init_deps.sh && ./scripts/check_install.sh
-        env:
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-      - name: 🔙  Get version -- backend
-        run: echo "##[set-output name=version;]$(./scripts/version.sh)"
-        id: backend_version
-        env:
-          APP_ID: label-backend
-      - name: 👤  Get version -- client
-        run: echo "##[set-output name=version;]$(./scripts/version.sh)"
-        id: client_version
-        env:
-          APP_ID: label-client
-      - name: 🔙☸️ Deploy k8s services -- backend
-        run: |
-          if [ "${GIT_BRANCH}" == "dev" ];then
-            export APP_HOST=${APP_HOST/prive/prive-pp}
-            export KUBECONFIG=$HOME/.kube/config-pp
-            export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
-            export MONGODB_URI=${MONGODB_URI/6/7}
-            export NLP_API_HOST=${NLP_API_HOST/prive/prive-pp}
-          fi
-          ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
-        env:
-          APP_ID: label-backend
-          API_PORT: 55430
-          APP_KEYWORD: "true"
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          # KUBE_SERVICES_FORCE_UPDATE: deployment jobs # uncomment if redeploy needed
-          MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
-          NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
-          NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
-          ROOT_PATH: label/api
-          VERSION: ${{ steps.backend_version.outputs.version }}
-      - name: 🔙🚀 Update remote app ☸️ -- backend
-        run: |
-          if [ "${GIT_BRANCH}" == "dev" ];then
-            export KUBECONFIG=$HOME/.kube/config-pp
-            export APP_HOST=${APP_HOST/prive/prive-pp}
-            export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
-          fi
-          ./scripts/update_app.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
-          kubectl get pods --namespace=${KUBE_NAMESPACE}
-          kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
-        env:
-          APP_ID: label-backend
-          APP_KEYWORD: "true"
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          ROOT_PATH: label/api
-          START_TIMEOUT: 90
-          VERSION: ${{ steps.backend_version.outputs.version }}
-      - name: 🔙☸️ Deploy w/ force update of k8s jobs -- backend
-        run: |
-          if [ "${GIT_BRANCH}" == "dev" ];then
-            export APP_HOST=${APP_HOST/prive/prive-pp}
-            export KUBECONFIG=$HOME/.kube/config-pp
-            export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
-            export MONGODB_URI=${MONGODB_URI/6/7}
-            export NLP_API_HOST=${NLP_API_HOST/prive/prive-pp}
-          fi
-          ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
-        env:
-          APP_ID: label-backend
-          API_PORT: 55430
-          APP_KEYWORD: "true"
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          KUBE_SERVICES: jobs
-          KUBE_SERVICES_FORCE_UPDATE: jobs
-          MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
-          NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
-          NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
-          ROOT_PATH: label/api
-          VERSION: ${{ steps.backend_version.outputs.version }}
-      - name: 🔙🧹 Clean old replicas ☸️ -- backend
-        run: ./scripts/clean_old_replicas.sh
-        env:
-          APP_ID: label-backend
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-      - name: 👤☸️ Deploy k8s services -- client
-        run: |
-          if [ "${GIT_BRANCH}" == "dev" ];then
-            export KUBECONFIG=$HOME/.kube/config-pp
-            export APP_HOST=${APP_HOST/prive/prive-pp}
-            export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
-          fi
-          ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
-        env:
-          APP_ID: label-client
-          API_PORT: 55432
-          APP_KEYWORD: html
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          # KUBE_SERVICES_FORCE_UPDATE: deployment
-          ROOT_PATH: label
-          VERSION: ${{ steps.client_version.outputs.version }}
-      - name: 👤🚀 Update remote app ☸️ -- client
-        run: |
-          if [ "${GIT_BRANCH}" == "dev" ];then
-            export KUBECONFIG=$HOME/.kube/config-pp
-            export APP_HOST=${APP_HOST/prive/prive-pp}
-            export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
-          fi
-          ./scripts/update_app.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
-          kubectl get pods --namespace=${KUBE_NAMESPACE}
-          kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
-        env:
-          APP_ID: label-client
-          APP_KEYWORD: html
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-          ROOT_PATH: label
-          START_TIMEOUT: 90
-          VERSION: ${{ steps.client_version.outputs.version }}
-      - name: 👤🧹 Clean old replicas ☸️ -- client
-        run: ./scripts/clean_old_replicas.sh
-        env:
-          APP_ID: label-client
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Extract branch name
+#         shell: bash
+#         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|^refs/heads/||;' | sed 's/[^a-zA-Z0-9]/-/g')"
+#         id: extract_branch
+#       - name: Init ops dependencies
+#         run: ./scripts/init_deps.sh && ./scripts/check_install.sh
+#         env:
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#       - name: 🔙  Get version -- backend
+#         run: echo "##[set-output name=version;]$(./scripts/version.sh)"
+#         id: backend_version
+#         env:
+#           APP_ID: label-backend
+#       - name: 🔙🐋 Check if build is needed -- backend
+#         run: |
+#           echo "##[set-output name=status;]$(./scripts/docker-check.sh || echo build_needed)"
+#         id: backend_check
+#         env:
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           VERSION: ${{ steps.backend_version.outputs.version }}
+#           APP_ID: label-backend
+#       - name: 👤  Get version -- client
+#         run: echo "##[set-output name=version;]$(./scripts/version.sh)"
+#         id: client_version
+#         env:
+#           APP_ID: label-client
+#       - name: 👤🐋 Check if build is needed -- client
+#         run: |
+#           echo "##[set-output name=status;]$(./scripts/docker-check.sh || echo build_needed)"
+#         id: client_check
+#         env:
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           VERSION: ${{ steps.client_version.outputs.version }}
+#           APP_ID: label-client
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#       - run: yarn install --
+#         if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
+#       - run: yarn compile
+#         if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
+#       - run: yarn test
+#         if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
+#       - run: yarn lint
+#         if: (steps.client_check.outputs.status == 'build_needed') || (steps.backend_check.outputs.status == 'build_needed')
+#       - name: 🔙🐋 Build docker image -- backend
+#         if: (matrix.node-version == '16.x') && (steps.backend_check.outputs.status == 'build_needed')
+#         run: ./scripts/docker-build.sh
+#         env:
+#           APP_ID: label-backend
+#           DOCKER_TARGET: label-backend
+#           VERSION: ${{ steps.backend_version.outputs.version }}
+#       - name: 🔙☸️ Deploy k8s services locally -- backend
+#         if: (matrix.node-version == '16.x') && (steps.backend_check.outputs.status == 'build_needed')
+#         run: ./scripts/deploy_k8s_services.sh
+#         env:
+#           APP_ID: label-backend
+#           API_PORT: 55430
+#           APP_KEYWORD: "true"
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           ROOT_PATH: label/api
+#           VERSION: ${{ steps.backend_version.outputs.version }}
+#       - name: 🔙✅ Execute minimal tests -- backend
+#         if: (matrix.node-version == '16.x') && (steps.backend_check.outputs.status == 'build_needed')
+#         run: |
+#           echo "127.0.0.1 ${APP_HOST}" | sudo tee -a /etc/hosts
+#           kubectl get pods --namespace=${KUBE_NAMESPACE}
+#           kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
+#           ./scripts/test_minimal.sh
+#         env:
+#           APP_ID: label-backend
+#           APP_KEYWORD: "true"
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+#           ROOT_PATH: label/api
+#       - name: 🔙🚀 Push docker image -- backend
+#         if: (matrix.node-version == '16.x')
+#         run: |
+#           echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+#           DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+#           if (docker image inspect ${DOCKER_IMAGE}); then
+#             docker push ${DOCKER_IMAGE};
+#           else
+#             docker pull ${DOCKER_IMAGE};
+#           fi
+#           docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
+#           docker push ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
+#           if [ "${GIT_BRANCH}" == "master" ]; then
+#             docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+#             docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+#             docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
+#             docker push ${DOCKER_USERNAME}/${APP_ID}:latest
+#           fi;
+#         env:
+#           APP_ID: label-backend
+#           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           VERSION: ${{ steps.backend_version.outputs.version }}
+#       - name: 👤  Build static app -- client
+#         if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
+#         run: |
+#           export VERSION=$(./scripts/version.sh)
+#           export DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+#           if ! (docker manifest inspect ${DOCKER_IMAGE}); then
+#             yarn buildClient || echo "ugly worakound";
+#           fi
+#         env:
+#           APP_ID: label-client
+#       - name: 👤🐋 Build docker image -- client
+#         if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
+#         run: ./scripts/docker-build.sh
+#         env:
+#           APP_ID: label-client
+#           DOCKER_TARGET: label-client
+#           VERSION: ${{ steps.client_version.outputs.version }}
+#       - name: 👤☸️ Deploy k8s services locally -- client
+#         if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
+#         run: ./scripts/deploy_k8s_services.sh
+#         env:
+#           APP_ID: label-client
+#           API_PORT: 55432
+#           APP_KEYWORD: html
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           ROOT_PATH: label
+#           VERSION: ${{ steps.client_version.outputs.version }}
+#       - name: 👤✅ Execute minimal tests -- client
+#         if: (matrix.node-version == '16.x') && (steps.client_check.outputs.status == 'build_needed')
+#         run: |
+#           echo "127.0.0.1 ${APP_HOST}" | sudo tee -a /etc/hosts
+#           kubectl get pods --namespace=${KUBE_NAMESPACE}
+#           kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
+#           ./scripts/test_minimal.sh
+#         env:
+#           APP_ID: label-client
+#           APP_KEYWORD: html
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+#           ROOT_PATH: label
+#       - name: 👤🚀 Push docker image -- client
+#         if: (matrix.node-version == '16.x') && (github.event_name == 'push') && ( (steps.client_check.outputs.status == 'build_needed' ) || (steps.extract_branch.outputs.branch == 'pre-prod') || (steps.extract_branch.outputs.branch == 'prod') )
+#         run: |
+#           echo "${DOCKER_TOKEN}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+#           DOCKER_IMAGE=${DOCKER_USERNAME}/${APP_ID}:${VERSION}
+#           if (docker image inspect ${DOCKER_IMAGE}); then
+#             docker push ${DOCKER_IMAGE};
+#           else
+#             docker pull ${DOCKER_IMAGE};
+#           fi
+#           docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
+#           docker push ${DOCKER_USERNAME}/${APP_ID}:${GIT_BRANCH}
+#           if [ "${GIT_BRANCH}" == "master" ]; then
+#             docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+#             docker push ${DOCKER_USERNAME}/${APP_ID}:$(echo ${VERSION} | sed 's/-.*//')
+#             docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${APP_ID}:latest
+#             docker push ${DOCKER_USERNAME}/${APP_ID}:latest
+#           fi;
+#         env:
+#           APP_ID: label-client
+#           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           VERSION: ${{ steps.client_version.outputs.version }}
+#   deploy:
+#     runs-on: [self-hosted]
+#     needs: build-publish
+#     env:
+#       APP_ID: label-* # specific to backend or client
+#       APP_GROUP: judilibre-prive
+#       APP_HOST: lbl.judilibre-prive.local
+#       APP_PORT: 443
+#       APP_SCHEME: https
+#       APP_SELF_SIGNED: "true"
+#       APP_KEYWORD: specific # to backend or client
+#       DOCKER_USERNAME: opendatajustice
+#       KUBE_NAMESPACE: judilibre-prive-label
+#       KUBE_TYPE: k3s
+#       KUBE_ZONE: prive
+#       NLP_API_HOST: https://nlp-pseudonymisation.judilibre-prive.local
+#       NLP_API_PORT: 443
+#       ROOT_PATH: label* # specific to backend or client
+#       START_TIMEOUT: 240
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Extract branch name
+#         shell: bash
+#         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF} | sed 's|^refs/heads/||;' | sed 's/[^a-zA-Z0-9]/-/g')"
+#         id: extract_branch
+#       - name: Init ops dependencies
+#         run: ./scripts/init_deps.sh && ./scripts/check_install.sh
+#         env:
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#       - name: 🔙  Get version -- backend
+#         run: echo "##[set-output name=version;]$(./scripts/version.sh)"
+#         id: backend_version
+#         env:
+#           APP_ID: label-backend
+#       - name: 👤  Get version -- client
+#         run: echo "##[set-output name=version;]$(./scripts/version.sh)"
+#         id: client_version
+#         env:
+#           APP_ID: label-client
+#       - name: 🔙☸️ Deploy k8s services -- backend
+#         run: |
+#           if [ "${GIT_BRANCH}" == "dev" ];then
+#             export APP_HOST=${APP_HOST/prive/prive-pp}
+#             export KUBECONFIG=$HOME/.kube/config-pp
+#             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
+#             export MONGODB_URI=${MONGODB_URI/6/7}
+#             export NLP_API_HOST=${NLP_API_HOST/prive/prive-pp}
+#           fi
+#           ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+#         env:
+#           APP_ID: label-backend
+#           API_PORT: 55430
+#           APP_KEYWORD: "true"
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           # KUBE_SERVICES_FORCE_UPDATE: deployment jobs # uncomment if redeploy needed
+#           MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
+#           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+#           MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
+#           NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
+#           NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
+#           ROOT_PATH: label/api
+#           VERSION: ${{ steps.backend_version.outputs.version }}
+#       - name: 🔙🚀 Update remote app ☸️ -- backend
+#         run: |
+#           if [ "${GIT_BRANCH}" == "dev" ];then
+#             export KUBECONFIG=$HOME/.kube/config-pp
+#             export APP_HOST=${APP_HOST/prive/prive-pp}
+#             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
+#           fi
+#           ./scripts/update_app.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+#           kubectl get pods --namespace=${KUBE_NAMESPACE}
+#           kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
+#         env:
+#           APP_ID: label-backend
+#           APP_KEYWORD: "true"
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           ROOT_PATH: label/api
+#           START_TIMEOUT: 90
+#           VERSION: ${{ steps.backend_version.outputs.version }}
+#       - name: 🔙☸️ Deploy w/ force update of k8s jobs -- backend
+#         run: |
+#           if [ "${GIT_BRANCH}" == "dev" ];then
+#             export APP_HOST=${APP_HOST/prive/prive-pp}
+#             export KUBECONFIG=$HOME/.kube/config-pp
+#             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
+#             export MONGODB_URI=${MONGODB_URI/6/7}
+#             export NLP_API_HOST=${NLP_API_HOST/prive/prive-pp}
+#           fi
+#           ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+#         env:
+#           APP_ID: label-backend
+#           API_PORT: 55430
+#           APP_KEYWORD: "true"
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           KUBE_SERVICES: jobs
+#           KUBE_SERVICES_FORCE_UPDATE: jobs
+#           MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
+#           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+#           MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
+#           NLP_API_HOST: ${{ secrets.NLP_API_HOST }}
+#           NLP_API_PORT: ${{ secrets.NLP_API_PORT }}
+#           ROOT_PATH: label/api
+#           VERSION: ${{ steps.backend_version.outputs.version }}
+#       - name: 🔙🧹 Clean old replicas ☸️ -- backend
+#         run: ./scripts/clean_old_replicas.sh
+#         env:
+#           APP_ID: label-backend
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#       - name: 👤☸️ Deploy k8s services -- client
+#         run: |
+#           if [ "${GIT_BRANCH}" == "dev" ];then
+#             export KUBECONFIG=$HOME/.kube/config-pp
+#             export APP_HOST=${APP_HOST/prive/prive-pp}
+#             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
+#           fi
+#           ./scripts/deploy_k8s_services.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+#         env:
+#           APP_ID: label-client
+#           API_PORT: 55432
+#           APP_KEYWORD: html
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           # KUBE_SERVICES_FORCE_UPDATE: deployment
+#           ROOT_PATH: label
+#           VERSION: ${{ steps.client_version.outputs.version }}
+#       - name: 👤🚀 Update remote app ☸️ -- client
+#         run: |
+#           if [ "${GIT_BRANCH}" == "dev" ];then
+#             export KUBECONFIG=$HOME/.kube/config-pp
+#             export APP_HOST=${APP_HOST/prive/prive-pp}
+#             export KUBE_NAMESPACE=${KUBE_NAMESPACE/prive/prive-pp}
+#           fi
+#           ./scripts/update_app.sh || (echo K8S LOGS && cat $(ls -tr k8s*log | tail -1) && exit 1)
+#           kubectl get pods --namespace=${KUBE_NAMESPACE}
+#           kubectl logs service/${APP_ID}-svc --namespace=${KUBE_NAMESPACE}
+#         env:
+#           APP_ID: label-client
+#           APP_KEYWORD: html
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+#           ROOT_PATH: label
+#           START_TIMEOUT: 90
+#           VERSION: ${{ steps.client_version.outputs.version }}
+#       - name: 👤🧹 Clean old replicas ☸️ -- client
+#         run: ./scripts/clean_old_replicas.sh
+#         env:
+#           APP_ID: label-client
+#           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}

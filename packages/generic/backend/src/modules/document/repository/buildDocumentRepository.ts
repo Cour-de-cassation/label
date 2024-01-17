@@ -172,6 +172,22 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .toArray();
     },
 
+    async findAllByRoutesOrPublicationCategory(
+      routes,
+      publicationCategories,
+      projections,
+    ) {
+      return collection
+        .find({
+          $or: [
+            { route: { $in: routes } },
+            { publicationCategory: { $in: publicationCategories } },
+          ],
+        })
+        .project(buildProjection(projections))
+        .toArray();
+    },
+
     async findAllByPublicationCategoryLettersProjection(
       publicationCategoryLetters,
       projections,

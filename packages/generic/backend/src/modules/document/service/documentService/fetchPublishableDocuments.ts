@@ -5,7 +5,8 @@ export { fetchPublishableDocuments };
 
 async function fetchPublishableDocuments() {
   const documentRepository = buildDocumentRepository();
-  const documents = await documentRepository.findAllByPublicationCategoryLettersProjection(
+  const allDocuments = await documentRepository.findAllByRoutesOrPublicationCategory(
+    ['confirmation'],
     documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
     [
       '_id',
@@ -18,22 +19,8 @@ async function fetchPublishableDocuments() {
     ],
   );
 
-  const documentByConfirmationRoute = await documentRepository.findAllByRoutes([
-    'confirmation',
-  ]);
-  // adding new document where route == confirmation and filter if duplicate elem
-  const allDocuments = documents.concat(documentByConfirmationRoute);
-  // use a set to follow documents
-  const uniqueDocumentNumbers = new Set();
   return allDocuments
-    .filter((document) => {
-      if (document.status !== 'rejected') {
-        const isUnique = !uniqueDocumentNumbers.has(document.documentNumber);
-        // adding documents
-        uniqueDocumentNumbers.add(document.documentNumber);
-        return isUnique;
-      }
-    })
+    .filter((document) => document.status !== 'rejected')
     .map(
       ({
         _id,

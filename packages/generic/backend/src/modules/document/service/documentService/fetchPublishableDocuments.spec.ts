@@ -5,8 +5,9 @@ import { fetchPublishableDocuments } from './fetchPublishableDocuments';
 describe('fetchPublishableDocuments', () => {
   const documentRepository = buildDocumentRepository();
 
-  it('should fetch all the published documents', async () => {
-    const documents = [
+  it('should fetch documents with route and/or publication categories', async () => {
+    // Document 1: Positive scenarios (route: confirmation, various publicationCategories)
+    const document1 = [
       {
         status: 'done' as const,
         publicationCategory: ['P'],
@@ -28,35 +29,70 @@ describe('fetchPublishableDocuments', () => {
           NACCode: '',
           endCaseCode: '',
         },
-        route: 'exhaustive' as documentType['route'],
+        route: 'confirmation' as documentType['route'],
       },
-      { status: 'pending' as const, publicationCategory: [] },
-      { status: 'done' as const, publicationCategory: ['I'] },
-      { status: 'done' as const, publicationCategory: [] },
+      {
+        status: 'done' as const,
+        publicationCategory: ['B'],
+        route: 'confirmation' as documentType['route'],
+      },
+      {
+        status: 'done' as const,
+        publicationCategory: ['B', 'P'],
+        route: 'confirmation' as documentType['route'],
+      },
+      {
+        status: 'done' as const,
+        publicationCategory: [],
+        route: 'confirmation' as documentType['route'],
+      },
+      {
+        status: 'done' as const,
+        publicationCategory: ['P', 'B'],
+        route: 'default' as const,
+      },
     ].map(documentModule.generator.generate);
-    await Promise.all(documents.map(documentRepository.insert));
 
+    //Negative scenario
+    const document2 = documentModule.generator.generate({
+      status: 'pending' as const,
+      publicationCategory: [],
+      route: 'exhaustive' as documentType['route'],
+    });
+
+    const document3 = documentModule.generator.generate({
+      status: 'done' as const,
+      publicationCategory: ['I'],
+      route: 'default' as documentType['route'],
+    });
+
+    const document4 = documentModule.generator.generate({
+      status: 'done' as const,
+      publicationCategory: [],
+      route: 'exhaustive' as documentType['route'],
+    });
+
+    await documentRepository.insertMany([
+      ...document1,
+      document2,
+      document3,
+      document4,
+    ]);
     const publishableDocuments = await fetchPublishableDocuments();
 
-    const {
-      _id,
-      status,
-      creationDate,
-      documentNumber,
-      publicationCategory,
-    } = documents[0];
-    expect(publishableDocuments).toEqual([
-      {
-        _id,
-        appealNumber: '08-16.486',
-        status,
-        creationDate,
-        documentNumber,
-        jurisdiction: 'Cour de cassation',
-        chamberName: 'CIV. I',
-        route: 'exhaustive',
-        publicationCategory,
-      },
-    ]);
+    // Check if the expected documents are included in the result
+    const expectedDocuments = document1.map((doc) => ({
+      _id: doc._id,
+      appealNumber: doc.decisionMetadata.appealNumber,
+      status: doc.status,
+      creationDate: doc.creationDate,
+      documentNumber: doc.documentNumber,
+      jurisdiction: doc.decisionMetadata.jurisdiction,
+      chamberName: doc.decisionMetadata.chamberName,
+      route: doc.route,
+      publicationCategory: doc.publicationCategory,
+    }));
+
+    expect(publishableDocuments).toEqual(expectedDocuments);
   });
 });

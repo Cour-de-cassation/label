@@ -181,7 +181,9 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .find({
           $or: [
             { route: { $in: routes } },
-            { publicationCategory: { $in: publicationCategories } },
+            ...publicationCategories.map((publicationCategoryLetter) => ({
+              publicationCategory: { $in: [publicationCategoryLetter] },
+            })),
           ],
         })
         .project(buildProjection(projections))

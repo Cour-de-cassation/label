@@ -101,7 +101,7 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
           (document) =>
             publicationCategoryLetters.some((publicationCategoryLetter) =>
               document.publicationCategory.includes(publicationCategoryLetter),
-            ) && routes.includes(document.route),
+            ) || routes.includes(document.route),
         )
         .map((document) => projectFakeObjects(document, projections));
     },

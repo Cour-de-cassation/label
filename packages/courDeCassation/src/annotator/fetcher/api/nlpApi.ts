@@ -36,7 +36,6 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         categories: nlpCategories,
       };
 
-
       return await axios({
         data: nlpRequestParameters,
         headers: { 'Content-Type': 'application/json' },
@@ -58,10 +57,8 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
           }
           throw new Error(`${error.code ?? 'Unknown'} on /ner`);
         });
-
     },
     async fetchNlpLoss(document, treatments) {
-
       return await axios({
         data: { text: document.text, treatments },
         headers: { 'Content-Type': 'application/json' },

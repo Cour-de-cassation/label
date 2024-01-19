@@ -20,12 +20,12 @@ function MainHeader(props: {
   const leftHeaderComponents = buildLeftHeaders();
   let color: PropTypes.Color;
 
-  if (process.env.NODE_ENV === "production") {
-    color = "inherit";
-    msg = ""
+  if (process.env.NODE_ENV === 'production') {
+    color = 'inherit';
+    msg = '';
   } else {
-    color = (process.env.NODE_ENV === "test") ? "primary" : "secondary";
-    msg = "Vous êtes sur l'envirronnement de test"
+    color = process.env.NODE_ENV === 'test' ? 'primary' : 'secondary';
+    msg = "Vous êtes sur l'envirronnement de test";
   }
 
   return (
@@ -71,11 +71,11 @@ function MainHeader(props: {
     }
     const textComponent = props.subtitle ? (
       <div style={styles.composedTitleContainer}>
-        <Text variant="h3">{props.title + " | " + msg}</Text>
+        <Text variant="h3">{props.title + ' | ' + msg}</Text>
         <Text>{props.subtitle}</Text>
       </div>
     ) : (
-      <Text>{props.title + " | " + msg}</Text>
+      <Text>{props.title + ' | ' + msg}</Text>
     );
     if (props.onBackButtonPress) {
       const backButton = (

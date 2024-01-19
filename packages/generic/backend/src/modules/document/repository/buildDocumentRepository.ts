@@ -164,15 +164,7 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .toArray();
     },
 
-    async findAllByRoutes(routes: documentType['route'][]) {
-      return collection
-        .find({
-          route: { $in: routes },
-        })
-        .toArray();
-    },
-
-    async findAllByRoutesOrPublicationCategory(
+    async findAllByRoutesOrPublicationCategoryLettersProjection(
       routes,
       publicationCategories,
       projections,

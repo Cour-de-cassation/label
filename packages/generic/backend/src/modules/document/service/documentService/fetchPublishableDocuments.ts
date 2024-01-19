@@ -5,7 +5,7 @@ export { fetchPublishableDocuments };
 
 async function fetchPublishableDocuments() {
   const documentRepository = buildDocumentRepository();
-  const allDocuments = await documentRepository.findAllByRoutesOrPublicationCategory(
+  const allDocuments = await documentRepository.findAllByRoutesOrPublicationCategoryLettersProjection(
     ['confirmation'],
     documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
     [

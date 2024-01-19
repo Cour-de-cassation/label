@@ -42,9 +42,9 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       let publicationCategories: string[] = [];
       collection.forEach(
         (document) =>
-        (publicationCategories = uniq(
-          publicationCategories.concat(document.publicationCategory),
-        )),
+          (publicationCategories = uniq(
+            publicationCategories.concat(document.publicationCategory),
+          )),
       );
 
       return publicationCategories;
@@ -222,9 +222,9 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection.map((document) =>
           idModule.lib.equalId(_id, document._id)
             ? {
-              ...document,
-              loss,
-            }
+                ...document,
+                loss,
+              }
             : document,
         ),
       );
@@ -241,9 +241,9 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection.map((document) =>
           idModule.lib.equalId(_id, document._id)
             ? {
-              ...document,
-              route,
-            }
+                ...document,
+                route,
+              }
             : document,
         ),
       );
@@ -260,10 +260,10 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection.map((document) =>
           idModule.lib.equalId(_id, document._id)
             ? {
-              ...document,
-              status,
-              updateDate: new Date().getTime(),
-            }
+                ...document,
+                status,
+                updateDate: new Date().getTime(),
+              }
             : document,
         ),
       );
@@ -278,12 +278,12 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection,
         collection.map((document) =>
           idModule.lib.equalId(filter._id, document._id) &&
-            document.status === filter.status
+          document.status === filter.status
             ? {
-              ...document,
-              status: update.status,
-              updateDate: new Date().getTime(),
-            }
+                ...document,
+                status: update.status,
+                updateDate: new Date().getTime(),
+              }
             : document,
         ),
       );

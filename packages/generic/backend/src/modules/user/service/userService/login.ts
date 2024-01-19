@@ -41,8 +41,7 @@ function buildLogin(checkCallAttempts: (identifier: string) => void) {
         passwordTimeValidityStatus,
       };
     } catch (err) {
-      logger.error(err);
-      throw errorHandlers.authenticationErrorHandler.build(`Login failed`);
+      throw errorHandlers.authenticationErrorHandler.build(`Login failed using ${email} email.`);
     }
   }
 }

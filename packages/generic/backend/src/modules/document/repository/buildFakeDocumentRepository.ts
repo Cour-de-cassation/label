@@ -87,6 +87,21 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         .map((document) => projectFakeObjects(document, projections));
     },
 
+    async findAllByRoutesOrPublicationCategoryLettersProjection(
+      routes,
+      publicationCategoryLetters,
+      projections,
+    ) {
+      return collection
+        .filter(
+          (document) =>
+            publicationCategoryLetters.some((publicationCategoryLetter) =>
+              document.publicationCategory.includes(publicationCategoryLetter),
+            ) || routes.includes(document.route),
+        )
+        .map((document) => projectFakeObjects(document, projections));
+    },
+
     async findAllByStatus(status) {
       return collection.filter((document) => status.includes(document.status));
     },

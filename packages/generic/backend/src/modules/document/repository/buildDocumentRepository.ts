@@ -18,6 +18,11 @@ const buildDocumentRepository = buildRepositoryBuilder<
     } as const,
     {
       index: {
+        route: 1,
+      },
+    } as const,
+    {
+      index: {
         publicationCategory: 1,
         status: 1,
       },
@@ -156,6 +161,24 @@ const buildDocumentRepository = buildRepositoryBuilder<
             statuses,
           ),
         )
+        .toArray();
+    },
+
+    async findAllByRoutesOrPublicationCategoryLettersProjection(
+      routes,
+      publicationCategories,
+      projections,
+    ) {
+      return collection
+        .find({
+          $or: [
+            { route: { $in: routes } },
+            ...publicationCategories.map((publicationCategoryLetter) => ({
+              publicationCategory: { $in: [publicationCategoryLetter] },
+            })),
+          ],
+        })
+        .project(buildProjection(projections))
         .toArray();
     },
 

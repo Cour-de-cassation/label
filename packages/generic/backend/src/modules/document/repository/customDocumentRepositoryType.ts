@@ -21,6 +21,13 @@ type customDocumentRepositoryType = {
     publicationCategory: documentType['publicationCategory'],
     statuses: documentType['status'][],
   ) => Promise<Array<documentType>>;
+  findAllByRoutesOrPublicationCategoryLettersProjection: <
+    projectionT extends keyof documentType
+  >(
+    routes: documentType['route'][],
+    publicationCategory: documentType['publicationCategory'],
+    projections: Array<projectionT>,
+  ) => Promise<Array<projectedType<documentType, projectionT>>>;
   findAllByPublicationCategoryLettersAndStatus: (
     publicationCategory: documentType['publicationCategory'],
     statuses: documentType['status'][],

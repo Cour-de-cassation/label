@@ -5,7 +5,8 @@ export { fetchPublishableDocuments };
 
 async function fetchPublishableDocuments() {
   const documentRepository = buildDocumentRepository();
-  const documents = await documentRepository.findAllByPublicationCategoryLettersProjection(
+  const allDocuments = await documentRepository.findAllByRoutesOrPublicationCategoryLettersProjection(
+    ['confirmation'],
     documentModule.lib.publicationHandler.getPublishedPublicationCategory(),
     [
       '_id',
@@ -17,7 +18,8 @@ async function fetchPublishableDocuments() {
       'status',
     ],
   );
-  return documents
+
+  return allDocuments
     .filter((document) => document.status !== 'rejected')
     .map(
       ({

@@ -133,7 +133,6 @@ function buildAnnotator(
             msg: `Error while annotating document ${formatDocumentInfos(
               currentDocumentToAnnotate,
             )}. Setting the document to its previous status...`,
-            data: error as Record<string, unknown>,
           });
           await documentService.updateDocumentStatus(
             currentDocumentToAnnotate._id,

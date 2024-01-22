@@ -16,6 +16,7 @@ import {
 import { heights, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { TreatedDocumentsTable } from './TreatedDocumentsTable';
+import { processAndSort } from '../../../utils/processAndSortName';
 
 export { TreatedDocuments };
 
@@ -71,7 +72,7 @@ function TreatedDocuments(props: {
       },
       userName: {
         value: filterValues.userName,
-        possibleValues: filterInfo.userNames,
+        possibleValues: processAndSort(filterInfo.userNames),
         setValue: (userName: userType['name'] | undefined) => setAndStoreFilterValues({ ...filterValues, userName }),
       },
       publicationCategoryLetter: {

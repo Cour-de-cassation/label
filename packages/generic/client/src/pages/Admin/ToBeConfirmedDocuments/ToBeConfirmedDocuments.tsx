@@ -11,7 +11,7 @@ import {
 import { localStorage, toBeConfirmedDocumentFilterType } from '../../../services/localStorage';
 import { heights, widths } from '../../../styles';
 import { ToBeConfirmedDocumentsTable } from './ToBeConfirmedDocumentsTable';
-
+import { processAndSort } from '../../../utils/processAndSortName';
 export { ToBeConfirmedDocuments };
 
 function ToBeConfirmedDocuments(props: {
@@ -60,7 +60,7 @@ function ToBeConfirmedDocuments(props: {
     return {
       userName: {
         value: filterValues.userName,
-        possibleValues: filterInfo.userNames,
+        possibleValues: processAndSort(filterInfo.userNames),
         setValue: (userName: userType['name'] | undefined) => setAndStoreFilterValues({ ...filterValues, userName }),
       },
       publicationCategoryLetter: {

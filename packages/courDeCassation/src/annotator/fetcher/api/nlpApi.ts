@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { idModule, settingsModule } from '@label/core';
 import { nlpApiType, nlpAnnotationsType, nlpLossType } from './nlpApiType';
 
@@ -36,23 +36,50 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         categories: nlpCategories,
       };
 
-      const response = await axios({
+      return await axios({
         data: nlpRequestParameters,
         headers: { 'Content-Type': 'application/json' },
         method: 'post',
         url: `${nlpApiBaseUrl}/ner`,
-      });
-
-      return response.data as nlpAnnotationsType;
+      })
+        .then((response: AxiosResponse) => {
+          if (response.status != 200) {
+            throw new Error(`${response.status} ${response.statusText}`);
+          } else {
+            return response.data as nlpAnnotationsType;
+          }
+        })
+        .catch((error: AxiosError) => {
+          if (error.response) {
+            throw new Error(
+              `${error.response.status} ${error.response.statusText}`,
+            );
+          }
+          throw new Error(`${error.code ?? 'Unknown'} on /ner`);
+        });
     },
     async fetchNlpLoss(document, treatments) {
-      const response = await axios({
+      return await axios({
         data: { text: document.text, treatments },
         headers: { 'Content-Type': 'application/json' },
         method: 'post',
         url: `${nlpApiBaseUrl}/loss`,
-      });
-      return response.data as nlpLossType;
+      })
+        .then((response: AxiosResponse) => {
+          if (response.status != 200) {
+            throw new Error(`${response.status} ${response.statusText}`);
+          } else {
+            return response.data as nlpLossType;
+          }
+        })
+        .catch((error: AxiosError) => {
+          if (error.response) {
+            throw new Error(
+              `${error.response.status} ${error.response.statusText}`,
+            );
+          }
+          throw new Error(`${error.code ?? 'Unknown'} on /loss`);
+        });
     },
   };
 }

@@ -18,6 +18,9 @@ type annotatorConfigType = {
     annotations: annotationType[];
     documentId: idType;
     report: annotationReportType;
+    categories?: string[];
+    additionalTermsToAnnotate?: string[];
+    additionalTermsToUnAnnotate?: string[];
   }>;
   fetchLossOfDocument: (
     document: documentType,

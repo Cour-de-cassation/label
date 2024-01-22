@@ -13,6 +13,7 @@ type nlpRequestParametersType = {
   text: string;
   parties?: Array<any>;
   categories?: string[];
+  additionalTerms?: string;
 };
 
 function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
@@ -35,6 +36,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         text: document.text,
         parties: document.decisionMetadata.parties,
         categories: nlpCategories,
+        additionalTerms: document.decisionMetadata.additionalTermsToAnnotate,
       };
 
       return await axios({

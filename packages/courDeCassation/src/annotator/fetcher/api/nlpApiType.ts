@@ -17,6 +17,9 @@ type nlpApiType = {
 type nlpAnnotationsType = {
   entities: nlpAnnotationType[];
   checklist: string[];
+  categories?: string[];
+  additionalTermsToAnnotate?: string[];
+  additionalTermsToUnAnnotate?: string[];
 };
 
 type nlpAnnotationType = {

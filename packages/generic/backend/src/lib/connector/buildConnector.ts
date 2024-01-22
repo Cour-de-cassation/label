@@ -438,7 +438,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
             })) ?? [];
       logger.log({
         operationName: 'importDocumentsSince',
-        msg: `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
+        msg: `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
       });
       newCourtDecisions.push(...newJuricaCourtDecisions);
     } catch (error) {

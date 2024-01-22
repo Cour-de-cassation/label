@@ -64,7 +64,6 @@ function buildAnnotator(
             loss,
           );
         } catch (error) {
-          logger.error(error);
           failedDocumentIds.push(currentDocumentToFillLoss._id);
           logger.log({
             operationName: 'fillLossOfAllTreatedDocuments',

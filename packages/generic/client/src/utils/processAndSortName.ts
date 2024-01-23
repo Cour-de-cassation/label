@@ -1,6 +1,9 @@
 import { userType } from '@label/core';
 
-export const processAndSort = (users: (Pick<userType, '_id' | 'name'> | string)[]): string[] => {
+export { processAndSortNames }
+
+
+function processAndSortNames(users: (Pick<userType, '_id' | 'name'> | string)[]): string[] {
   return users
     .map((name) => {
       if (typeof name === 'string') {

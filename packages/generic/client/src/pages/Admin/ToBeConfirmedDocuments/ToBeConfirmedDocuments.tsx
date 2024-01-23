@@ -11,7 +11,7 @@ import {
 import { localStorage, toBeConfirmedDocumentFilterType } from '../../../services/localStorage';
 import { heights, widths } from '../../../styles';
 import { ToBeConfirmedDocumentsTable } from './ToBeConfirmedDocumentsTable';
-import { processAndSort } from '../../../utils/processAndSortName';
+import { processAndSortNames } from '../../../utils';
 export { ToBeConfirmedDocuments };
 
 function ToBeConfirmedDocuments(props: {
@@ -60,7 +60,7 @@ function ToBeConfirmedDocuments(props: {
     return {
       userName: {
         value: filterValues.userName,
-        possibleValues: processAndSort(filterInfo.userNames),
+        possibleValues: processAndSortNames(filterInfo.userNames),
         setValue: (userName: userType['name'] | undefined) => setAndStoreFilterValues({ ...filterValues, userName }),
       },
       publicationCategoryLetter: {
@@ -111,18 +111,18 @@ function ToBeConfirmedDocuments(props: {
     const maxDate =
       treatedDocuments.length > 0
         ? Math.max(
-            ...treatedDocuments
-              .filter(({ lastTreatmentDate }) => lastTreatmentDate !== undefined)
-              .map((treatedDocument) => treatedDocument.lastTreatmentDate as number),
-          )
+          ...treatedDocuments
+            .filter(({ lastTreatmentDate }) => lastTreatmentDate !== undefined)
+            .map((treatedDocument) => treatedDocument.lastTreatmentDate as number),
+        )
         : undefined;
     const minDate =
       treatedDocuments.length > 0
         ? Math.min(
-            ...treatedDocuments
-              .filter(({ lastTreatmentDate }) => lastTreatmentDate !== undefined)
-              .map((treatedDocument) => treatedDocument.lastTreatmentDate as number),
-          )
+          ...treatedDocuments
+            .filter(({ lastTreatmentDate }) => lastTreatmentDate !== undefined)
+            .map((treatedDocument) => treatedDocument.lastTreatmentDate as number),
+        )
         : undefined;
     return { jurisdictions, publicationCategoryLetters, userNames, maxDate, minDate };
   }
@@ -157,7 +157,7 @@ function ToBeConfirmedDocuments(props: {
           return (
             accumulator &&
             convertDocumentReviewStatusToFilter(toBeConfirmedDocument.document.reviewStatus) ===
-              filterValues.documentReviewFilterStatus
+            filterValues.documentReviewFilterStatus
           );
         }
         if (currentFilterKey === 'publicationCategoryLetter' && !!filterValues.publicationCategoryLetter) {

@@ -4,7 +4,7 @@ import { apiRouteOutType, idModule, ressourceFilterType, userType } from '@label
 import { FilterButton, FilterChip } from '../../../components';
 import { wordings } from '../../../wordings';
 import { documentType } from 'packages/generic/core/dist';
-import { processAndSort } from '../../../utils/processAndSortName';
+import { processAndSortNames } from '../../../utils';
 
 export { StatisticsFilterButton };
 
@@ -188,7 +188,7 @@ function StatisticsFilterButton(props: {
         kind: 'dropdown' as const,
         name: 'user',
         label: wordings.business.filters.fields.userName,
-        possibleValues: processAndSort(props.users),
+        possibleValues: processAndSortNames(props.users),
         value: userName,
         onChange: (userName: string | undefined) => {
           if (!userName) {

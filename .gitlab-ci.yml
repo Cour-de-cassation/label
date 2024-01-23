@@ -6,8 +6,8 @@ variables:
   dev: dev
   re7: preprod
   master: prod
-  docker_judilibre_explore_backend_image: "$CI_REGISTRY/cour-de-cassation/judilibre-explore/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
-  docker_judilibre_explore_client_image: "$CI_REGISTRY/cour-de-cassation/judilibre-explore/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  docker_label_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  docker_label_client_image: "$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
 
 stages:
   - test

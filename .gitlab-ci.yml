@@ -1,4 +1,4 @@
-image: docker:20.10.22 
+image: docker:20.10.22
 services:
   - docker:20.10.22-dind
 
@@ -6,60 +6,35 @@ variables:
   dev: dev
   re7: preprod
   master: prod
-  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
-  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  docker_judilibre_explore_backend_image: "$CI_REGISTRY/cour-de-cassation/judilibre-explore/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  docker_judilibre_explore_client_image: "$CI_REGISTRY/cour-de-cassation/judilibre-explore/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
 
 stages:
   - test
   - build
   - deploy
 
-# Partie à compléter par les développeurs label
-# test:
-#   stage: test
-#   services:
-#   - docker:20.10.22
-#   script: 
-#     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-#     - docker build 
-#         --build-arg http_proxy=$HTTP_PROXY
-#         --build-arg https_proxy=$HTTPS_PROXY
-#         #--target test
-#         -t label-test
-#     # docker run label-back-test /bin/sh -c "yarn install -- ; yarn compile ...." 
-#     # -> ici on lance un conteneur un par un, donc les données générées par le yarn install ne sont pas sauvegardées.
-#     - docker run label-test yarn install
-#     - docker run label-test yarn compile
-#     - docker run label-test yarn test
-#     - docker run label-test yarn lint
-#   only:
-#     - master
-#     - re7
-#     - dev
-
 build_label_backend:
   stage: build
   variables:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV
-  script: 
+  script:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - echo "$HTTP_PROXY"
-    - echo "$HTTPS_PROXY"
-    - export NODE_OPTIONS=--openssl-legacy-provider
-    - apk update
-    - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
-    - yarn install --
-    - yarn compile
-    - CI=false yarn buildClient # from "ugly workaround" in github workflows
+    # - export NODE_OPTIONS=--openssl-legacy-provider
+    # - apk update
+    # - apk add nodejs yarn git npm
+    # - yarn config set proxy $HTTP_PROXY
+    # - yarn config set https-proxy $HTTPS_PROXY
+    # - yarn install --
+    # - yarn compile
+    # - CI=false yarn buildClient # from "ugly workaround" in github workflows
     - docker build
-        --build-arg http_proxy=$HTTP_PROXY
-        --build-arg https_proxy=$HTTPS_PROXY
-        --target label-backend
-        -f Dockerfile.label-backend
-        -t $docker_backend_image .
+      --build-arg http_proxy=$HTTP_PROXY
+      --build-arg https_proxy=$HTTPS_PROXY
+      --target label-backend
+      -f Dockerfile.label-backend
+      -t $docker_backend_image .
     - docker push $docker_backend_image
   only:
     - master
@@ -68,7 +43,6 @@ build_label_backend:
   tags:
     - docker
 
-
 build_label_client:
   stage: build
   variables:
@@ -76,24 +50,24 @@ build_label_client:
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - echo "$HTTP_PROXY"
-    - echo "$HTTPS_PROXY"
-    - export NODE_OPTIONS=--openssl-legacy-provider
-    - apk update
-    - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
-    - yarn install --
-    - yarn compile
-    - CI=false yarn buildClient # from "ugly workaround" in github workflows
+    # - echo "$HTTP_PROXY"
+    # - echo "$HTTPS_PROXY"
+    # - export NODE_OPTIONS=--openssl-legacy-provider
+    # - apk update
+    # - apk add nodejs yarn git npm
+    # - yarn config set proxy $HTTP_PROXY
+    # - yarn config set https-proxy $HTTPS_PROXY
+    # - yarn install --
+    # - yarn compile
+    # - CI=false yarn buildClient # from "ugly workaround" in github workflows
     # - yarn test
     # - yarn lint
     - docker build
-        --build-arg http_proxy=$HTTP_PROXY
-        --build-arg https_proxy=$HTTPS_PROXY
-        --target label-client
-        -f Dockerfile.label-client
-        -t $docker_client_image .
+      --build-arg http_proxy=$HTTP_PROXY
+      --build-arg https_proxy=$HTTPS_PROXY
+      --target label-client
+      -f Dockerfile.label-client
+      -t $docker_client_image .
     - docker push $docker_client_image
   only:
     - master
@@ -123,7 +97,6 @@ deploy_label_backend:
   # dependencies:
   #   - build_label_backend
 
-
 deploy_label_client:
   stage: deploy
   image: alpine/ansible:latest
@@ -144,5 +117,3 @@ deploy_label_client:
     - docker
   # dependencies:
   #   - build_label_client
-
-

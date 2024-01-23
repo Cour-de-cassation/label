@@ -25,6 +25,9 @@ function buildNlpFetcher(nlpApiBaseUrl: string) {
         ),
         documentId: document._id,
         report: nlpMapper.mapNlpAnnotationstoReport(nlpAnnotations, document),
+        newCategoriesToOmit: nlpAnnotations.newCategoriesToOmit,
+        additionalTermsToAnnotate: nlpAnnotations.additionalTermsToAnnotate,
+        additionalTermsToUnAnnotate: nlpAnnotations.additionalTermsToUnAnnotate,
       };
     },
     async fetchLossOfDocument(

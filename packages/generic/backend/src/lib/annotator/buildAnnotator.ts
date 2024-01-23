@@ -118,11 +118,10 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${
-            annotatorConfig.name
-          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-            currentDocumentToAnnotate,
-          )}`,
+          msg: `Annotating with ${annotatorConfig.name
+            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+              currentDocumentToAnnotate,
+            )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -183,6 +182,9 @@ function buildAnnotator(
       annotations,
       documentId,
       report,
+      newCategoriesToOmit,
+      additionalTermsToAnnotate,
+      additionalTermsToUnAnnotate
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log({
       operationName: 'annotateDocument',
@@ -202,47 +204,57 @@ function buildAnnotator(
       operationName: 'annotateDocument',
       msg: 'NLP treatment created in DB',
     });
-    const additionalAnnotations = computeAdditionalAnnotations(
-      document,
-      annotations,
-      settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
-    );
-    if (additionalAnnotations.length > 0) {
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Creating additional annotations treatment...',
-      });
-      await createAdditionalAnnotationsTreatment({
-        annotations: additionalAnnotations,
-        documentId: document._id,
-      });
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Additional annotations treatment created in DB',
-      });
-    }
-    if (JSON.stringify(settings).includes('autoLinkSensitivity')) {
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Creating post-process treatment...',
-      });
-      await createAutoTreatment({
-        annotations: [...annotations, ...additionalAnnotations],
-        documentId,
-      });
-      logger.log({
-        operationName: 'annotateDocument',
-        msg:
-          'Post-process treatment created. Creating report and updating document status...',
-      });
-    }
 
+
+    // const additionalAnnotations = computeAdditionalAnnotations(
+    //   document,
+    //   annotations,
+    //   settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
+    // );
+    // if (additionalAnnotations.length > 0) {
+    //   logger.log({
+    //     operationName: 'annotateDocument',
+    //     msg: 'Creating additional annotations treatment...',
+    //   });
+    //   await createAdditionalAnnotationsTreatment({
+    //     annotations: additionalAnnotations,
+    //     documentId: document._id,
+    //   });
+    //   logger.log({
+    //     operationName: 'annotateDocument',
+    //     msg: 'Additional annotations treatment created in DB',
+    //   });
+    // }
+    // if (JSON.stringify(settings).includes('autoLinkSensitivity')) {
+    //   logger.log({
+    //     operationName: 'annotateDocument',
+    //     msg: 'Creating post-process treatment...',
+    //   });
+    //   await createAutoTreatment({
+    //     annotations: [...annotations, ...additionalAnnotations],
+    //     documentId,
+    //   });
+    //   logger.log({
+    //     operationName: 'annotateDocument',
+    //     msg:
+    //       'Post-process treatment created. Creating report and updating document status...',
+    //   });
+    // }
+
+    //Todo : create report only if report is not null
     await createReport(report);
     const nextDocumentStatus = documentModule.lib.getNextStatus({
       status: document.status,
       publicationCategory: document.publicationCategory,
       route: document.route,
     });
+    logger.log({ operationName: 'annotateDocument', msg: 'Annotation report created in DB' })
+
+    if (!!newCategoriesToOmit) {
+      logger.log({ operationName: 'annotateDocument', msg: 'New categories to omit found, updating...' })
+
+    }
+
     await documentService.updateDocumentStatus(
       document._id,
       nextDocumentStatus,
@@ -315,8 +327,7 @@ function buildAnnotator(
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
-      document.documentNumber
-    }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
+      }]`;
   }
 }

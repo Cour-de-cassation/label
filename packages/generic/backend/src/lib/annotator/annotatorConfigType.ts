@@ -18,7 +18,7 @@ type annotatorConfigType = {
     annotations: annotationType[];
     documentId: idType;
     report: annotationReportType;
-    categories?: string[];
+    newCategoriesToOmit?: string[];
     additionalTermsToAnnotate?: string[];
     additionalTermsToUnAnnotate?: string[];
   }>;

@@ -37,7 +37,7 @@ function buildNlpLocalApi(): nlpApiType {
           availableCategories.includes(entity.label),
         ),
         checklist: annotations.checklist,
-        categories: annotations.categories,
+        newCategoriesToOmit: annotations.newCategoriesToOmit,
         additionalTermsToAnnotate: annotations.additionalTermsToAnnotate,
         additionalTermsToUnAnnotate: annotations.additionalTermsToUnAnnotate,
       };

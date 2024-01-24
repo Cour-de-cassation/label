@@ -1,6 +1,6 @@
 import { documentModule } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
-import { updateDocumentCategoriesToOmit } from './updateDocumentCategoriesToOmit'
+import { updateDocumentCategoriesToOmit } from './updateDocumentCategoriesToOmit';
 
 describe('updateDocumentCategoriesToOmit', () => {
   const documentRepository = buildDocumentRepository();
@@ -8,28 +8,34 @@ describe('updateDocumentCategoriesToOmit', () => {
   it('should update document categoriesToOmit', async () => {
     const document = documentModule.generator.generate({
       decisionMetadata: {
-        appealNumber: "",
-        additionalTermsToAnnotate: "",
+        appealNumber: '',
+        additionalTermsToAnnotate: '',
         boundDecisionDocumentNumbers: [],
-        categoriesToOmit: ["categorie1", "categorie2"],
-        chamberName: "",
-        civilCaseCode: "",
-        civilMatterCode: "",
-        criminalCaseCode: "",
+        categoriesToOmit: ['categorie1', 'categorie2'],
+        chamberName: '',
+        civilCaseCode: '',
+        civilMatterCode: '',
+        criminalCaseCode: '',
         date: 0,
-        jurisdiction: "",
+        jurisdiction: '',
         occultationBlock: 0,
-        NACCode: "",
-        endCaseCode: "",
+        NACCode: '',
+        endCaseCode: '',
         parties: [],
-        session: "",
-        solution: "",
-      }
+        session: '',
+        solution: '',
+      },
     });
     await documentRepository.insert(document);
 
-    const updatedDocument = await updateDocumentCategoriesToOmit(document._id, ["categorie3", "category4"]);
+    const updatedDocument = await updateDocumentCategoriesToOmit(document._id, [
+      'categorie3',
+      'category4',
+    ]);
 
-    expect(updatedDocument.decisionMetadata.categoriesToOmit).toEqual(["categorie3", "category4"]);
+    expect(updatedDocument.decisionMetadata.categoriesToOmit).toEqual([
+      'categorie3',
+      'category4',
+    ]);
   });
 });

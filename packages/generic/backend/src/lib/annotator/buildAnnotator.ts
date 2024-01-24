@@ -118,10 +118,11 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${annotatorConfig.name
-            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-              currentDocumentToAnnotate,
-            )}`,
+          msg: `Annotating with ${
+            annotatorConfig.name
+          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+            currentDocumentToAnnotate,
+          )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -184,7 +185,7 @@ function buildAnnotator(
       report,
       newCategoriesToOmit,
       additionalTermsToAnnotate,
-      additionalTermsToUnAnnotate
+      additionalTermsToUnAnnotate,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log({
       operationName: 'annotateDocument',
@@ -204,7 +205,6 @@ function buildAnnotator(
       operationName: 'annotateDocument',
       msg: 'NLP treatment created in DB',
     });
-
 
     // const additionalAnnotations = computeAdditionalAnnotations(
     //   document,
@@ -248,11 +248,16 @@ function buildAnnotator(
       publicationCategory: document.publicationCategory,
       route: document.route,
     });
-    logger.log({ operationName: 'annotateDocument', msg: 'Annotation report created in DB' })
+    logger.log({
+      operationName: 'annotateDocument',
+      msg: 'Annotation report created in DB',
+    });
 
     if (!!newCategoriesToOmit) {
-      logger.log({ operationName: 'annotateDocument', msg: 'New categories to omit found, updating...' })
-
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'New categories to omit found, updating...',
+      });
     }
 
     await documentService.updateDocumentStatus(
@@ -327,7 +332,8 @@ function buildAnnotator(
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
-      }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
+      document.documentNumber
+    }]`;
   }
 }

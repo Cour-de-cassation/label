@@ -6,16 +6,19 @@ export { updateDocumentCategoriesToOmit };
 
 async function updateDocumentCategoriesToOmit(
   _id: documentType['_id'],
-  newCategoriesToOmit: documentType['decisionMetadata']['categoriesToOmit'],
+  categoriesToOmit: documentType['decisionMetadata']['categoriesToOmit'],
 ) {
   const documentRepository = buildDocumentRepository();
-  // const updatedDocument = await documentRepository.updateCategoriesToOmitById(_id, newCategoriesToOmit);
-  // if (!updatedDocument) {
-  //   throw errorHandlers.notFoundErrorHandler.build(
-  //     `The document ${idModule.lib.convertToString(
-  //       _id,
-  //     )} was not found in the document collection`,
-  //   );
-  // }
-  return await documentRepository.findById(_id);
+  const updatedDocument = await documentRepository.updateCategoriesToOmitById(
+    _id,
+    categoriesToOmit,
+  );
+  if (!updatedDocument) {
+    throw errorHandlers.notFoundErrorHandler.build(
+      `The document ${idModule.lib.convertToString(
+        _id,
+      )} was not found in the document collection`,
+    );
+  }
+  return updatedDocument;
 }

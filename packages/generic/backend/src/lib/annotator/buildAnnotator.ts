@@ -118,11 +118,10 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${
-            annotatorConfig.name
-          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-            currentDocumentToAnnotate,
-          )}`,
+          msg: `Annotating with ${annotatorConfig.name
+            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+              currentDocumentToAnnotate,
+            )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -243,23 +242,36 @@ function buildAnnotator(
 
     //Todo : create report only if report is not null
     await createReport(report);
-    const nextDocumentStatus = documentModule.lib.getNextStatus({
-      status: document.status,
-      publicationCategory: document.publicationCategory,
-      route: document.route,
-    });
     logger.log({
       operationName: 'annotateDocument',
       msg: 'Annotation report created in DB',
     });
+
 
     if (!!newCategoriesToOmit) {
       logger.log({
         operationName: 'annotateDocument',
         msg: 'New categories to omit found, updating...',
       });
+
+      await documentService.updateDocumentCategoriesToOmit(documentId, newCategoriesToOmit);
     }
 
+    if (!!additionalTermsToAnnotate || !!additionalTermsToUnAnnotate) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'Additionals terms to annotate or to unannotate found, adding to document...',
+      });
+
+      // await documentService.updateComputedAdditionalTermsToAnnotate(documentId, additionalTermsToAnnotate, additionalTermsToUnAnnotate)
+
+    }
+
+    const nextDocumentStatus = documentModule.lib.getNextStatus({
+      status: document.status,
+      publicationCategory: document.publicationCategory,
+      route: document.route,
+    });
     await documentService.updateDocumentStatus(
       document._id,
       nextDocumentStatus,
@@ -332,8 +344,7 @@ function buildAnnotator(
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
-      document.documentNumber
-    }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
+      }]`;
   }
 }

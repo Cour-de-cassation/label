@@ -10,6 +10,10 @@ describe('updateDocumentCategoriesToOmit', () => {
       decisionMetadata: {
         appealNumber: '',
         additionalTermsToAnnotate: '',
+        computedAdditionalTerms: {
+          additionalTermsToAnnotate: [],
+          additionalTermsToUnAnnotate: [],
+        },
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: ['categorie1', 'categorie2'],
         chamberName: '',

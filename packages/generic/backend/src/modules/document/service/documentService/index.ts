@@ -41,6 +41,7 @@ import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentLoss } from './updateDocumentLoss';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
 import { updateDocumentRoute } from './updateDocumentRoute';
+import { updateDocumentCategoriesToOmit } from './updateDocumentCategoriesToOmit';
 import { updateDocumentStatus } from './updateDocumentStatus';
 import { fetchAllImporters } from './fetchAllImporters';
 
@@ -103,5 +104,6 @@ function buildDocumentService() {
     updateDocumentReviewStatus,
     updateDocumentRoute,
     updateDocumentStatus,
+    updateDocumentCategoriesToOmit,
   };
 }

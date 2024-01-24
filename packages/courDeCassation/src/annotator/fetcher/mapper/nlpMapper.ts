@@ -38,3 +38,5 @@ function mapNlpAnnotationstoReport(
     documentId: document._id,
   });
 }
+
+//add nlp mapper for additionalTerms and for newCategoriesToOmit

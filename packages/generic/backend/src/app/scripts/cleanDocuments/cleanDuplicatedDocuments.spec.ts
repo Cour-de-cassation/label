@@ -6,7 +6,7 @@ describe('cleanDuplicatedDocuments', () => {
   it('should clean the DuplicatedDocuments', async () => {
     const firstDocument = documentModule.generator.generate();
     const secondDocument = documentModule.generator.generate({
-      creationDate: 1274657452000
+      creationDate: 1274657452000,
     });
     const secondDocumentWithHigherStatus = documentModule.generator.generate({
       ...secondDocument,
@@ -19,16 +19,18 @@ describe('cleanDuplicatedDocuments', () => {
     await documentRepository.insertMany([
       firstDocument,
       secondDocument,
-      secondDocumentWithHigherStatus
+      secondDocumentWithHigherStatus,
     ]);
 
     await cleanDuplicatedDocuments();
 
     const fetchedDocuments = await documentRepository.findAll();
 
-    const fetchedIds = fetchedDocuments.map((u) => {
-      return u._id;
-    }).sort();
+    const fetchedIds = fetchedDocuments
+      .map((u) => {
+        return u._id;
+      })
+      .sort();
     const expectedIds = [firstDocument, secondDocumentWithHigherStatus]
       .map((u) => {
         return u._id;

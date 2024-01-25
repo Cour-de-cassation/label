@@ -13,6 +13,7 @@ describe('fetchPublishableDocuments', () => {
         publicationCategory: ['P'],
         decisionMetadata: {
           additionalTermsToAnnotate: '',
+          computedAdditionalTerms: undefined,
           appealNumber: '08-16.486',
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],

@@ -30,6 +30,7 @@ describe('computeAdditionalAnnotations', () => {
       text: documentText,
       decisionMetadata: {
         additionalTermsToAnnotate,
+        computedAdditionalTerms: undefined,
         appealNumber: '',
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],

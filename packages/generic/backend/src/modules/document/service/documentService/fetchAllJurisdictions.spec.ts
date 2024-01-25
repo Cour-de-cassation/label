@@ -15,6 +15,7 @@ describe('fetchAllJurisdictions', () => {
         decisionMetadata: {
           appealNumber: '',
           additionalTermsToAnnotate: '',
+          computedAdditionalTerms: undefined,
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],
           chamberName: '',

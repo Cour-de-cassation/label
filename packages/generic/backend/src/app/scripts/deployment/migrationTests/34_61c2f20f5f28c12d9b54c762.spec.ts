@@ -16,6 +16,7 @@ describe('add endCaseCode in document model', () => {
     boundDecisionDocumentNumbers: [],
     categoriesToOmit: [],
     additionalTermsToAnnotate: '',
+    computedAdditionalTerms: undefined,
     occultationBlock: undefined,
     parties: [],
     session: '',

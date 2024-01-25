@@ -10,6 +10,7 @@ describe('computeCaseNumber', () => {
     const document = documentGenerator.generate({
       decisionMetadata: {
         additionalTermsToAnnotate: '',
+        computedAdditionalTerms: undefined,
         appealNumber: '',
         boundDecisionDocumentNumbers: [boundDocumentNumber, otherBoundDocumentNumber],
         chamberName: '',
@@ -37,6 +38,10 @@ describe('computeCaseNumber', () => {
     const document = documentGenerator.generate({
       decisionMetadata: {
         additionalTermsToAnnotate: '',
+        computedAdditionalTerms: {
+          additionalTermsToAnnotate: [],
+          additionalTermsToUnAnnotate: [],
+        },
         appealNumber: '',
         boundDecisionDocumentNumbers: [],
         chamberName: '',

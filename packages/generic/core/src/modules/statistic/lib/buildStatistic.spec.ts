@@ -20,6 +20,7 @@ describe('buildStatistic', () => {
     const document = documentModule.generator.generate({
       decisionMetadata: {
         additionalTermsToAnnotate: '',
+        computedAdditionalTerms: undefined,
         appealNumber: 'TRUC',
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],

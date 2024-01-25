@@ -20,6 +20,7 @@ describe('statisticsCreator', () => {
   const document = documentModule.generator.generate({
     decisionMetadata: {
       additionalTermsToAnnotate: '',
+      computedAdditionalTerms: undefined,
       appealNumber: 'MACHIN',
       boundDecisionDocumentNumbers: [],
       categoriesToOmit: [],

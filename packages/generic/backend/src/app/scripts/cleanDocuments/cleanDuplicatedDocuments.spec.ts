@@ -27,18 +27,10 @@ describe('cleanDuplicatedDocuments', () => {
     const fetchedDocuments = await documentRepository.findAll();
 
     const fetchedIds = fetchedDocuments.map((u) => {
-      if (u.creationDate !== undefined) {
-        console.log('log creation date', new Date(u.creationDate).getFullYear());
-        console.log('ids  --------', u._id)
-      }
       return u._id;
     }).sort();
     const expectedIds = [firstDocument, secondDocumentWithHigherStatus]
       .map((u) => {
-        if (u.creationDate !== undefined) {
-          console.log('log expectedIds', new Date(u.creationDate).getFullYear());
-          console.log('expectedIds  --------', u._id)
-        }
         return u._id;
       })
       .sort();

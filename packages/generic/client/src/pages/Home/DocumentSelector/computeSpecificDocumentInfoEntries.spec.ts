@@ -19,6 +19,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],
         additionalTermsToAnnotate: '',
+        computedAdditionalTerms: undefined,
         occultationBlock: undefined,
         parties: [],
         session: '',

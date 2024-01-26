@@ -1,11 +1,11 @@
 import { documentModule } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
-import { updateDocumentCategoriesToOmit } from './updateDocumentCategoriesToOmit';
+import { updateDocumentComputedAdditionalTerms } from './updateDocumentComputedAdditionalTerms';
 
-describe('updateDocumentCategoriesToOmit', () => {
+describe('updateDocumentComputedAdditionalTerms', () => {
   const documentRepository = buildDocumentRepository();
 
-  it('should update document categoriesToOmit', async () => {
+  it('should update document computedAdditionalTerms', async () => {
     const document = documentModule.generator.generate({
       decisionMetadata: {
         appealNumber: '',
@@ -29,14 +29,10 @@ describe('updateDocumentCategoriesToOmit', () => {
     });
     await documentRepository.insert(document);
 
-    const updatedDocument = await updateDocumentCategoriesToOmit(document._id, [
-      'categorie3',
-      'category4',
-    ]);
+    const updatedDocument = await updateDocumentComputedAdditionalTerms(
+      document._id,
+      { additionalTermsToAnnotate: ["Pierre", "Paul"], additionalTermsToUnAnnotate: ["Jacques"] });
 
-    expect(updatedDocument.decisionMetadata.categoriesToOmit).toEqual([
-      'categorie3',
-      'category4',
-    ]);
+    expect(document.decisionMetadata.computedAdditionalTerms).toEqual({ additionalTermsToAnnotate: ["Pierre", "Paul"], additionalTermsToUnAnnotate: ["Jacques"] });
   });
 });

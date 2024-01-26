@@ -1,11 +1,9 @@
 import {
   annotationType,
   annotationReportType,
-  buildAutoAnnotator,
   documentType,
   documentModule,
   idType,
-  settingsModule,
   idModule,
   settingsType,
   treatmentModule,
@@ -15,7 +13,6 @@ import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
-import { computeAdditionalAnnotations } from './computeAdditionalAnnotations';
 
 export { buildAnnotator };
 
@@ -204,41 +201,6 @@ function buildAnnotator(
       msg: 'NLP treatment created in DB',
     });
 
-    // const additionalAnnotations = computeAdditionalAnnotations(
-    //   document,
-    //   annotations,
-    //   settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
-    // );
-    // if (additionalAnnotations.length > 0) {
-    //   logger.log({
-    //     operationName: 'annotateDocument',
-    //     msg: 'Creating additional annotations treatment...',
-    //   });
-    //   await createAdditionalAnnotationsTreatment({
-    //     annotations: additionalAnnotations,
-    //     documentId: document._id,
-    //   });
-    //   logger.log({
-    //     operationName: 'annotateDocument',
-    //     msg: 'Additional annotations treatment created in DB',
-    //   });
-    // }
-    // if (JSON.stringify(settings).includes('autoLinkSensitivity')) {
-    //   logger.log({
-    //     operationName: 'annotateDocument',
-    //     msg: 'Creating post-process treatment...',
-    //   });
-    //   await createAutoTreatment({
-    //     annotations: [...annotations, ...additionalAnnotations],
-    //     documentId,
-    //   });
-    //   logger.log({
-    //     operationName: 'annotateDocument',
-    //     msg:
-    //       'Post-process treatment created. Creating report and updating document status...',
-    //   });
-    // }
-
     //Todo : create report only if report is not null
     await createReport(report);
     logger.log({
@@ -265,8 +227,10 @@ function buildAnnotator(
           'Additionals terms to annotate or to unannotate found, adding to document...',
       });
 
-      await documentService.updateDocumentComputedAdditionalTerms(documentId, computedAdditionalTerms);
-
+      await documentService.updateDocumentComputedAdditionalTerms(
+        documentId,
+        computedAdditionalTerms,
+      );
     }
 
     const nextDocumentStatus = documentModule.lib.getNextStatus({
@@ -297,44 +261,6 @@ function buildAnnotator(
         previousAnnotations: [],
         nextAnnotations: annotations,
         source: 'NLP',
-      },
-      settings,
-    );
-  }
-
-  async function createAdditionalAnnotationsTreatment({
-    annotations,
-    documentId,
-  }: {
-    annotations: annotationType[];
-    documentId: idType;
-  }) {
-    await treatmentService.createTreatment(
-      {
-        documentId,
-        previousAnnotations: [],
-        nextAnnotations: annotations,
-        source: 'supplementaryAnnotations',
-      },
-      settings,
-    );
-  }
-
-  async function createAutoTreatment({
-    annotations,
-    documentId,
-  }: {
-    annotations: annotationType[];
-    documentId: idType;
-  }) {
-    const autoAnnotator = buildAutoAnnotator(settings);
-    const autoTreatedAnnotations = autoAnnotator.annotate(annotations);
-    await treatmentService.createTreatment(
-      {
-        documentId,
-        previousAnnotations: annotations,
-        nextAnnotations: autoTreatedAnnotations,
-        source: 'postProcess',
       },
       settings,
     );

@@ -19,7 +19,7 @@ type annotatorConfigType = {
     documentId: idType;
     report: annotationReportType;
     newCategoriesToOmit?: documentType['decisionMetadata']['categoriesToOmit'];
-    computedAdditionalTerms?: documentType['decisionMetadata']['computedAdditionalTerms']
+    computedAdditionalTerms?: documentType['decisionMetadata']['computedAdditionalTerms'];
   }>;
   fetchLossOfDocument: (
     document: documentType,

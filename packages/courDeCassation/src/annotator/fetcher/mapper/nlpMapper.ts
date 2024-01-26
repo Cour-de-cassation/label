@@ -41,15 +41,24 @@ function mapNlpAnnotationstoReport(
 }
 
 function mapNlpAdditionalTerms(
-  nlpResponse: nlpResponseType
+  nlpResponse: nlpResponseType,
 ): documentType['decisionMetadata']['computedAdditionalTerms'] {
-  if (nlpResponse.additionalTermsToAnnotate !== undefined || nlpResponse.additionalTermsToUnAnnotate !== undefined) {
-    const additionalTermsToAnnotate = nlpResponse.additionalTermsToAnnotate == undefined ? [] : nlpResponse.additionalTermsToAnnotate;
-    const additionalTermsToUnAnnotate = nlpResponse.additionalTermsToUnAnnotate == undefined ? [] : nlpResponse.additionalTermsToUnAnnotate;
-    return ({
+  if (
+    nlpResponse.additionalTermsToAnnotate !== undefined ||
+    nlpResponse.additionalTermsToUnAnnotate !== undefined
+  ) {
+    const additionalTermsToAnnotate =
+      nlpResponse.additionalTermsToAnnotate == undefined
+        ? []
+        : nlpResponse.additionalTermsToAnnotate;
+    const additionalTermsToUnAnnotate =
+      nlpResponse.additionalTermsToUnAnnotate == undefined
+        ? []
+        : nlpResponse.additionalTermsToUnAnnotate;
+    return {
       additionalTermsToAnnotate,
       additionalTermsToUnAnnotate,
-    })
+    };
   } else {
     return;
   }

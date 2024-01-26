@@ -48,7 +48,7 @@ const nlpAnnotationsWithAdditionalTerms: nlpResponseType = {
     },
   ],
   checklist: ['CHECK 1', 'CHECK 2'],
-  additionalTermsToUnAnnotate: ["blabla", "toto"]
+  additionalTermsToUnAnnotate: ['blabla', 'toto'],
 };
 
 const document = documentModule.generator.generate({
@@ -95,9 +95,7 @@ describe('nlpMapper', () => {
   });
   describe('mapNlpAdditionalTerms', () => {
     it('should return undefined if there is no additionalTerms', () => {
-      const additionalTerms = nlpMapper.mapNlpAdditionalTerms(
-        nlpAnnotations,
-      );
+      const additionalTerms = nlpMapper.mapNlpAdditionalTerms(nlpAnnotations);
 
       expect(additionalTerms).toEqual(undefined);
     });
@@ -110,7 +108,7 @@ describe('nlpMapper', () => {
 
       expect(additionalTerms).toEqual({
         additionalTermsToAnnotate: [],
-        additionalTermsToUnAnnotate: ["blabla", "toto"]
+        additionalTermsToUnAnnotate: ['blabla', 'toto'],
       });
     });
   });

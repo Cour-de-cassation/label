@@ -258,6 +258,29 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return updatedDocument;
     },
 
+    async updateComputedAdditionalTerms(_id, computedAdditionalTerms) {
+      updateFakeCollection(
+        collection,
+        collection.map((document) =>
+          idModule.lib.equalId(_id, document._id)
+            ? {
+                ...document,
+                decisionMetadata: {
+                  ...document.decisionMetadata,
+                  computedAdditionalTerms,
+                },
+              }
+            : document,
+        ),
+      );
+
+      const updatedDocument = collection.find((document) =>
+        idModule.lib.equalId(_id, document._id),
+      );
+
+      return updatedDocument;
+    },
+
     async updateRouteById(_id, route) {
       updateFakeCollection(
         collection,

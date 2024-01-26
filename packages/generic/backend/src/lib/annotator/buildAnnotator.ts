@@ -118,10 +118,11 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${annotatorConfig.name
-            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-              currentDocumentToAnnotate,
-            )}`,
+          msg: `Annotating with ${
+            annotatorConfig.name
+          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+            currentDocumentToAnnotate,
+          )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -247,24 +248,26 @@ function buildAnnotator(
       msg: 'Annotation report created in DB',
     });
 
-
     if (!!newCategoriesToOmit) {
       logger.log({
         operationName: 'annotateDocument',
         msg: 'New categories to omit found, updating...',
       });
 
-      await documentService.updateDocumentCategoriesToOmit(documentId, newCategoriesToOmit);
+      await documentService.updateDocumentCategoriesToOmit(
+        documentId,
+        newCategoriesToOmit,
+      );
     }
 
     if (!!additionalTermsToAnnotate || !!additionalTermsToUnAnnotate) {
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'Additionals terms to annotate or to unannotate found, adding to document...',
+        msg:
+          'Additionals terms to annotate or to unannotate found, adding to document...',
       });
 
       // await documentService.updateComputedAdditionalTermsToAnnotate(documentId, additionalTermsToAnnotate, additionalTermsToUnAnnotate)
-
     }
 
     const nextDocumentStatus = documentModule.lib.getNextStatus({
@@ -344,7 +347,8 @@ function buildAnnotator(
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
-      }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
+      document.documentNumber
+    }]`;
   }
 }

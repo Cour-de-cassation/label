@@ -1,15 +1,25 @@
-import { documentType } from "@label/core";
-import { buildDocumentRepository } from "../../repository";
+import { errorHandlers } from 'sder-core';
+import { documentType, idModule } from '@label/core';
+import { buildDocumentRepository } from '../../repository';
 
-export { updateDocumentComputedAdditionalTerms }
+export { updateDocumentComputedAdditionalTerms };
 
 async function updateDocumentComputedAdditionalTerms(
   _id: documentType['_id'],
-  computedAdditionalTermsToAnnotate: documentType['decisionMetadata']['computedAdditionalTerms'],
+  computedAdditionalTerms: documentType['decisionMetadata']['computedAdditionalTerms'],
 ) {
   const documentRepository = buildDocumentRepository();
 
-  const document = await documentRepository.findById(_id);
-
-  return document;
+  const updatedDocument = await documentRepository.updateComputedAdditionalTerms(
+    _id,
+    computedAdditionalTerms,
+  );
+  if (!updatedDocument) {
+    throw errorHandlers.notFoundErrorHandler.build(
+      `The document ${idModule.lib.convertToString(
+        _id,
+      )} was not found in the document collection`,
+    );
+  }
+  return updatedDocument;
 }

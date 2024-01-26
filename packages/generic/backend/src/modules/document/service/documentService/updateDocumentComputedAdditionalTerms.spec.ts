@@ -31,8 +31,15 @@ describe('updateDocumentComputedAdditionalTerms', () => {
 
     const updatedDocument = await updateDocumentComputedAdditionalTerms(
       document._id,
-      { additionalTermsToAnnotate: ["Pierre", "Paul"], additionalTermsToUnAnnotate: ["Jacques"] });
+      {
+        additionalTermsToAnnotate: ['Pierre', 'Paul'],
+        additionalTermsToUnAnnotate: ['Jacques'],
+      },
+    );
 
-    expect(document.decisionMetadata.computedAdditionalTerms).toEqual({ additionalTermsToAnnotate: ["Pierre", "Paul"], additionalTermsToUnAnnotate: ["Jacques"] });
+    expect(updatedDocument.decisionMetadata.computedAdditionalTerms).toEqual({
+      additionalTermsToAnnotate: ['Pierre', 'Paul'],
+      additionalTermsToUnAnnotate: ['Jacques'],
+    });
   });
 });

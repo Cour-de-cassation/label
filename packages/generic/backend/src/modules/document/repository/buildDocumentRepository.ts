@@ -216,7 +216,20 @@ const buildDocumentRepository = buildRepositoryBuilder<
     async updateCategoriesToOmitById(_id, categoriesToOmit) {
       await collection.updateOne(
         { _id },
-        { $set: { 'decisionMetadata, categoriesToOmit': categoriesToOmit } },
+        { $set: { 'decisionMetadata.categoriesToOmit': categoriesToOmit } },
+      );
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
+    async updateComputedAdditionalTerms(_id, computedAdditionalTerms) {
+      await collection.updateOne(
+        { _id },
+        {
+          $set: {
+            'decisionMetadata.computedAdditionalTerms': computedAdditionalTerms,
+          },
+        },
       );
       const updatedDocument = await collection.findOne({ _id });
       return updatedDocument || undefined;

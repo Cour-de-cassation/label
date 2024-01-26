@@ -86,6 +86,10 @@ type customDocumentRepositoryType = {
     _id: idType,
     loss: documentType['decisionMetadata']['categoriesToOmit'],
   ) => Promise<documentType | undefined>;
+  updateComputedAdditionalTerms: (
+    _id: idType,
+    computedAdditionalTerms: documentType['decisionMetadata']['computedAdditionalTerms'],
+  ) => Promise<documentType | undefined>;
   updateRouteById: (
     _id: idType,
     route: documentType['route'],

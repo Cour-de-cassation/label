@@ -183,8 +183,7 @@ function buildAnnotator(
       documentId,
       report,
       newCategoriesToOmit,
-      additionalTermsToAnnotate,
-      additionalTermsToUnAnnotate,
+      computedAdditionalTerms,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log({
       operationName: 'annotateDocument',
@@ -259,14 +258,15 @@ function buildAnnotator(
       );
     }
 
-    if (!!additionalTermsToAnnotate || !!additionalTermsToUnAnnotate) {
+    if (!!computedAdditionalTerms) {
       logger.log({
         operationName: 'annotateDocument',
         msg:
           'Additionals terms to annotate or to unannotate found, adding to document...',
       });
 
-      // await documentService.updateDocumentComputedAdditionalTerms(documentId, { additionalTermsToAnnotate, additionalTermsToUnAnnotate })
+      await documentService.updateDocumentComputedAdditionalTerms(documentId, computedAdditionalTerms);
+
     }
 
     const nextDocumentStatus = documentModule.lib.getNextStatus({

@@ -1,8 +1,8 @@
 import { documentModule } from '@label/core';
-import { nlpAnnotationsType } from '../api';
+import { nlpResponseType } from '../api';
 import { nlpMapper } from './nlpMapper';
 
-const nlpAnnotations: nlpAnnotationsType = {
+const nlpAnnotations: nlpResponseType = {
   entities: [
     {
       text: 'ANNOTATION1',

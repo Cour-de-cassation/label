@@ -1,20 +1,20 @@
 import { labelTreatmentsType } from '@label/backend';
 import { documentType, settingsType } from '@label/core';
 
-export type { nlpApiType, nlpAnnotationsType, nlpLossType };
+export type { nlpApiType, nlpResponseType, nlpLossType };
 
 type nlpApiType = {
   fetchNlpAnnotations: (
     settings: settingsType,
     document: documentType,
-  ) => Promise<nlpAnnotationsType>;
+  ) => Promise<nlpResponseType>;
   fetchNlpLoss: (
     document: documentType,
     treatments: labelTreatmentsType,
   ) => Promise<nlpLossType>;
 };
 
-type nlpAnnotationsType = {
+type nlpResponseType = {
   entities: nlpAnnotationType[];
   checklist: string[];
   newCategoriesToOmit?: string[];

@@ -5,7 +5,7 @@ import {
   annotationReportType,
   annotationReportModule,
 } from '@label/core';
-import { nlpAnnotationsType } from '../api';
+import { nlpResponseType } from '../api';
 
 export { nlpMapper };
 
@@ -15,7 +15,7 @@ const nlpMapper = {
 };
 
 function mapNlpAnnotationsToAnnotations(
-  nlpAnnotations: nlpAnnotationsType,
+  nlpAnnotations: nlpResponseType,
   document: documentType,
 ): annotationType[] {
   return nlpAnnotations.entities.map((nlpAnnotation) =>
@@ -30,7 +30,7 @@ function mapNlpAnnotationsToAnnotations(
 }
 
 function mapNlpAnnotationstoReport(
-  nlpAnnotations: nlpAnnotationsType,
+  nlpAnnotations: nlpResponseType,
   document: documentType,
 ): annotationReportType {
   return annotationReportModule.lib.buildAnnotationReport({

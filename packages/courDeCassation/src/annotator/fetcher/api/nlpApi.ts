@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { idModule, settingsModule } from '@label/core';
-import { nlpApiType, nlpAnnotationsType, nlpLossType } from './nlpApiType';
+import { nlpApiType, nlpResponseType, nlpLossType } from './nlpApiType';
 import { logger } from '@label/backend';
 
 export { buildNlpApi };
@@ -53,7 +53,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
             });
             throw new Error(`${response.status} ${response.statusText}`);
           } else {
-            return response.data as nlpAnnotationsType;
+            return response.data as nlpResponseType;
           }
         })
         .catch((error: AxiosError) => {

@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import { settingsModule } from '@label/core';
-import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
+import { nlpApiType, nlpResponseType } from './nlpApiType';
 
 export { buildNlpLocalApi };
 
@@ -21,7 +21,7 @@ function buildNlpLocalApi(): nlpApiType {
             encoding: 'utf8',
           },
         ),
-      ) as nlpAnnotationsType;
+      ) as nlpResponseType;
 
       const availableCategories = settingsModule.lib.getCategories(
         filteredSettings,

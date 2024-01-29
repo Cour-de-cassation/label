@@ -1,5 +1,5 @@
 import React from 'react';
-import { settingsModule, fetchedDocumentType, documentModule, annotationReportType } from '@label/core';
+import { settingsModule, fetchedDocumentType, annotationReportType } from '@label/core';
 import { Icon, Text, customThemeType, getColor, useCustomTheme, useDisplayMode } from 'pelta-design-system';
 import { heights } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -56,7 +56,8 @@ function AnnotationsPanel(props: {
               {isCategoryAdditionalAnnotationCategory &&
                 renderAdditionalAnnotationTerms(
                   props.document.decisionMetadata.additionalTermsToAnnotate,
-                  props.document.decisionMetadata.computedAdditionalTerms)}
+                  props.document.decisionMetadata.computedAdditionalTerms,
+                )}
               <div>{renderCategory({ category, categorySize, categoryAnnotations })}</div>
             </div>
           );
@@ -85,14 +86,13 @@ function AnnotationsPanel(props: {
 
   function renderAdditionalAnnotationTerms(
     additionalTermsToAnnotate: string,
-    computedAdditionalTerms?: { additionalTermsToAnnotate: string[], additionalTermsToUnAnnotate: string[] }) {
-
+    computedAdditionalTerms?: { additionalTermsToAnnotate: string[]; additionalTermsToUnAnnotate: string[] },
+  ) {
     const isParsingFailedOnAdditionalTerms =
-      additionalTermsToAnnotate != "" &&
+      additionalTermsToAnnotate != '' &&
       (computedAdditionalTerms == undefined ||
-        computedAdditionalTerms?.additionalTermsToAnnotate.length == 0 &&
-        computedAdditionalTerms.additionalTermsToUnAnnotate.length == 0);
-
+        (computedAdditionalTerms?.additionalTermsToAnnotate.length == 0 &&
+          computedAdditionalTerms.additionalTermsToUnAnnotate.length == 0));
 
     return (
       <div style={styles.additionalAnnotationTermsContainer}>

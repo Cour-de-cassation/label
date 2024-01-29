@@ -14,6 +14,7 @@ describe('fetchPublishableDocuments', () => {
         decisionMetadata: {
           additionalTermsToAnnotate: '',
           computedAdditionalTerms: undefined,
+          additionalTermsParsingFailed: false,
           appealNumber: '08-16.486',
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],

@@ -88,11 +88,7 @@ function AnnotationsPanel(props: {
     additionalTermsToAnnotate: string,
     computedAdditionalTerms?: { additionalTermsToAnnotate: string[]; additionalTermsToUnAnnotate: string[] },
   ) {
-    const isParsingFailedOnAdditionalTerms =
-      additionalTermsToAnnotate != '' &&
-      (computedAdditionalTerms == undefined ||
-        (computedAdditionalTerms?.additionalTermsToAnnotate.length == 0 &&
-          computedAdditionalTerms.additionalTermsToUnAnnotate.length == 0));
+    const isParsingFailedOnAdditionalTerms = props.document.decisionMetadata.additionalTermsParsingFailed;
 
     return (
       <div style={styles.additionalAnnotationTermsContainer}>

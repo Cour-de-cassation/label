@@ -115,11 +115,10 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${
-            annotatorConfig.name
-          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-            currentDocumentToAnnotate,
-          )}`,
+          msg: `Annotating with ${annotatorConfig.name
+            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+              currentDocumentToAnnotate,
+            )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -209,16 +208,25 @@ function buildAnnotator(
       msg: 'Annotation report created in DB',
     });
 
-    if (!!newCategoriesToOmit) {
+    if (document.decisionMetadata.additionalTermsToAnnotate !== '' && !newCategoriesToOmit && !computedAdditionalTerms) {
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'New categories to omit found, updating...',
+        msg: 'Parsing error detected in additional terms',
       });
+      await documentService.updateDocumentAdditionalTermsParsingFailed(documentId, true);
 
-      await documentService.updateDocumentCategoriesToOmit(
-        documentId,
-        newCategoriesToOmit,
-      );
+    } else {
+      if (!!newCategoriesToOmit) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: 'New categories to omit found, updating...',
+        });
+
+        await documentService.updateDocumentCategoriesToOmit(
+          documentId,
+          newCategoriesToOmit,
+        );
+      }
     }
 
     if (!!computedAdditionalTerms) {
@@ -273,8 +281,7 @@ function buildAnnotator(
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
-      document.documentNumber
-    }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
+      }]`;
   }
 }

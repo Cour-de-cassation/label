@@ -11,6 +11,7 @@ describe('computeCaseNumber', () => {
       decisionMetadata: {
         additionalTermsToAnnotate: '',
         computedAdditionalTerms: undefined,
+        additionalTermsParsingFailed: false,
         appealNumber: '',
         boundDecisionDocumentNumbers: [boundDocumentNumber, otherBoundDocumentNumber],
         chamberName: '',
@@ -42,6 +43,7 @@ describe('computeCaseNumber', () => {
           additionalTermsToAnnotate: [],
           additionalTermsToUnAnnotate: [],
         },
+        additionalTermsParsingFailed: false,
         appealNumber: '',
         boundDecisionDocumentNumbers: [],
         chamberName: '',

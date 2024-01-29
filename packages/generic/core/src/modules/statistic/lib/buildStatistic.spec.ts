@@ -21,6 +21,7 @@ describe('buildStatistic', () => {
       decisionMetadata: {
         additionalTermsToAnnotate: '',
         computedAdditionalTerms: undefined,
+        additionalTermsParsingFailed: false,
         appealNumber: 'TRUC',
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: [],

@@ -1,11 +1,12 @@
 import { documentModule } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 import { updateDocumentCategoriesToOmit } from './updateDocumentCategoriesToOmit';
+import { updateDocumentAdditionalTermsParsingFailed } from './updateDocumentAdditionalTermsParsingFailed';
 
-describe('updateDocumentCategoriesToOmit', () => {
+describe('updateDocumentAdditionalTermsParsingFailed', () => {
   const documentRepository = buildDocumentRepository();
 
-  it('should update document categoriesToOmit', async () => {
+  it('should update document updateDocumentAdditionalTermsParsingFailed', async () => {
     const document = documentModule.generator.generate({
       decisionMetadata: {
         appealNumber: '',
@@ -13,7 +14,7 @@ describe('updateDocumentCategoriesToOmit', () => {
         computedAdditionalTerms: undefined,
         additionalTermsParsingFailed: false,
         boundDecisionDocumentNumbers: [],
-        categoriesToOmit: ['categorie1', 'categorie2'],
+        categoriesToOmit: [],
         chamberName: '',
         civilCaseCode: '',
         civilMatterCode: '',
@@ -30,14 +31,8 @@ describe('updateDocumentCategoriesToOmit', () => {
     });
     await documentRepository.insert(document);
 
-    const updatedDocument = await updateDocumentCategoriesToOmit(document._id, [
-      'categorie3',
-      'category4',
-    ]);
+    const updatedDocument = await updateDocumentAdditionalTermsParsingFailed(document._id, true);
 
-    expect(updatedDocument.decisionMetadata.categoriesToOmit).toEqual([
-      'categorie3',
-      'category4',
-    ]);
+    expect(updatedDocument.decisionMetadata.additionalTermsParsingFailed).toEqual(true);
   });
 });

@@ -42,9 +42,9 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       let publicationCategories: string[] = [];
       collection.forEach(
         (document) =>
-          (publicationCategories = uniq(
-            publicationCategories.concat(document.publicationCategory),
-          )),
+        (publicationCategories = uniq(
+          publicationCategories.concat(document.publicationCategory),
+        )),
       );
 
       return publicationCategories;
@@ -222,12 +222,35 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection.map((document) =>
           idModule.lib.equalId(_id, document._id)
             ? {
-                ...document,
-                loss,
-              }
+              ...document,
+              loss,
+            }
             : document,
         ),
       );
+      const updatedDocument = collection.find((document) =>
+        idModule.lib.equalId(_id, document._id),
+      );
+
+      return updatedDocument;
+    },
+
+    async updateAdditionalTermsParsingFailed(_id, additionalTermsParsingFailed) {
+      updateFakeCollection(
+        collection,
+        collection.map((document) =>
+          idModule.lib.equalId(_id, document._id)
+            ? {
+              ...document,
+              decisionMetadata: {
+                ...document.decisionMetadata,
+                additionalTermsParsingFailed,
+              },
+            }
+            : document,
+        ),
+      );
+
       const updatedDocument = collection.find((document) =>
         idModule.lib.equalId(_id, document._id),
       );
@@ -241,12 +264,12 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection.map((document) =>
           idModule.lib.equalId(_id, document._id)
             ? {
-                ...document,
-                decisionMetadata: {
-                  ...document.decisionMetadata,
-                  categoriesToOmit,
-                },
-              }
+              ...document,
+              decisionMetadata: {
+                ...document.decisionMetadata,
+                categoriesToOmit,
+              },
+            }
             : document,
         ),
       );
@@ -264,12 +287,12 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection.map((document) =>
           idModule.lib.equalId(_id, document._id)
             ? {
-                ...document,
-                decisionMetadata: {
-                  ...document.decisionMetadata,
-                  computedAdditionalTerms,
-                },
-              }
+              ...document,
+              decisionMetadata: {
+                ...document.decisionMetadata,
+                computedAdditionalTerms,
+              },
+            }
             : document,
         ),
       );
@@ -287,9 +310,9 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection.map((document) =>
           idModule.lib.equalId(_id, document._id)
             ? {
-                ...document,
-                route,
-              }
+              ...document,
+              route,
+            }
             : document,
         ),
       );
@@ -306,10 +329,10 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection.map((document) =>
           idModule.lib.equalId(_id, document._id)
             ? {
-                ...document,
-                status,
-                updateDate: new Date().getTime(),
-              }
+              ...document,
+              status,
+              updateDate: new Date().getTime(),
+            }
             : document,
         ),
       );
@@ -324,12 +347,12 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
         collection,
         collection.map((document) =>
           idModule.lib.equalId(filter._id, document._id) &&
-          document.status === filter.status
+            document.status === filter.status
             ? {
-                ...document,
-                status: update.status,
-                updateDate: new Date().getTime(),
-              }
+              ...document,
+              status: update.status,
+              updateDate: new Date().getTime(),
+            }
             : document,
         ),
       );

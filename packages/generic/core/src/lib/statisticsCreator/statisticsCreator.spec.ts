@@ -21,6 +21,7 @@ describe('statisticsCreator', () => {
     decisionMetadata: {
       additionalTermsToAnnotate: '',
       computedAdditionalTerms: undefined,
+      additionalTermsParsingFailed: false,
       appealNumber: 'MACHIN',
       boundDecisionDocumentNumbers: [],
       categoriesToOmit: [],

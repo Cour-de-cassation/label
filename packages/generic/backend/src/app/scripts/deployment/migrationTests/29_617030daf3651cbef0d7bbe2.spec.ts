@@ -17,6 +17,7 @@ describe('add civil code matter in document model', () => {
     categoriesToOmit: [],
     additionalTermsToAnnotate: '',
     computedAdditionalTerms: undefined,
+    additionalTermsParsingFailed: false,
     occultationBlock: undefined,
     parties: [],
     session: '',

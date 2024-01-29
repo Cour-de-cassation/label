@@ -213,6 +213,12 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return updatedDocument || undefined;
     },
 
+    async updateAdditionalTermsParsingFailed(_id, additionalTermsParsingFailed) {
+      await collection.updateOne({ _id }, { $set: { 'decisionMetadata.additionalTermsParsingFailed': additionalTermsParsingFailed } });
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
     async updateCategoriesToOmitById(_id, categoriesToOmit) {
       await collection.updateOne(
         { _id },

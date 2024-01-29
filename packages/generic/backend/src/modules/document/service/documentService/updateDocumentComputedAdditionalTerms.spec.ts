@@ -11,6 +11,7 @@ describe('updateDocumentComputedAdditionalTerms', () => {
         appealNumber: '',
         additionalTermsToAnnotate: '',
         computedAdditionalTerms: undefined,
+        additionalTermsParsingFailed: false,
         boundDecisionDocumentNumbers: [],
         categoriesToOmit: ['categorie1', 'categorie2'],
         chamberName: '',

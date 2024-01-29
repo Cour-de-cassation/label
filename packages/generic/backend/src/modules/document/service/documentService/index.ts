@@ -45,6 +45,7 @@ import { updateDocumentCategoriesToOmit } from './updateDocumentCategoriesToOmit
 import { updateDocumentComputedAdditionalTerms } from './updateDocumentComputedAdditionalTerms';
 import { updateDocumentStatus } from './updateDocumentStatus';
 import { fetchAllImporters } from './fetchAllImporters';
+import { updateDocumentAdditionalTermsParsingFailed } from './updateDocumentAdditionalTermsParsingFailed';
 
 export { buildDocumentService, documentService };
 
@@ -107,5 +108,6 @@ function buildDocumentService() {
     updateDocumentStatus,
     updateDocumentCategoriesToOmit,
     updateDocumentComputedAdditionalTerms,
+    updateDocumentAdditionalTermsParsingFailed,
   };
 }

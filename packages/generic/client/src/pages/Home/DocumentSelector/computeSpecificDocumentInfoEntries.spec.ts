@@ -20,6 +20,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
         categoriesToOmit: [],
         additionalTermsToAnnotate: '',
         computedAdditionalTerms: undefined,
+        additionalTermsParsingFailed: false,
         occultationBlock: undefined,
         parties: [],
         session: '',

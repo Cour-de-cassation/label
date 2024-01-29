@@ -11,6 +11,7 @@ import {
 } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 import { WorkingUserCreatedPopUp } from './UserCreatedPopUp';
+import { processAndNames } from '../../../../utils/processAndNames';
 
 export { AddWorkingUserDrawer };
 
@@ -136,7 +137,7 @@ function AddWorkingUserDrawer(props: { isOpen: boolean; onClose: () => void; ref
     try {
       const { data: temporaryPassword } = await apiCaller.post<'createUser'>('createUser', {
         email,
-        name: `${firstName} ${lastName}`,
+        name: processAndNames(firstName, lastName),
         role,
       });
       props.refetch();

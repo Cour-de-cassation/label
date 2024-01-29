@@ -89,7 +89,9 @@ function AnnotationsPanel(props: {
 
     const isParsingFailedOnAdditionalTerms =
       additionalTermsToAnnotate != "" &&
-      computedAdditionalTerms == undefined;
+      (computedAdditionalTerms == undefined ||
+        computedAdditionalTerms?.additionalTermsToAnnotate.length == 0 &&
+        computedAdditionalTerms.additionalTermsToUnAnnotate.length == 0);
 
 
     return (

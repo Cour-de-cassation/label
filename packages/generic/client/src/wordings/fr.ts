@@ -189,7 +189,7 @@ const fr = {
     applyEveryWhere: 'Appliquer à tous',
     askedAnnotations: 'Annotations demandées',
     askedAdditionalOccultations: 'Consignes d\'occultation spéciales',
-    additionalOccultationsParsingFailed: 'Les demandes d\'occultations spéciales n\'ont pas pu être traitées.',
+    additionalOccultationsParsingFailed: 'Les demandes d\'occultations spéciales n\'ont pas pu être traitées. Texte fourni par la jusridiction :',
     additionalTermsToAnnotate: 'Termes supplémentaires à annoter :',
     additionalTermsToUnAnnotate: 'Termes à NE PAS annoter :',
     annotationGuide: "Guide d'annotation",

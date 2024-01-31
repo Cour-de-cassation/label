@@ -29,6 +29,7 @@ function buildNlpFetcher(nlpApiBaseUrl: string) {
         computedAdditionalTerms: nlpMapper.mapNlpAdditionalTerms(
           nlpAnnotations,
         ),
+        additionalTermsParsingFailed: nlpAnnotations.additionalTermsParsingFailed,
       };
     },
     async fetchLossOfDocument(

@@ -20,6 +20,7 @@ type nlpResponseType = {
   newCategoriesToOmit?: string[];
   additionalTermsToAnnotate?: string[];
   additionalTermsToUnAnnotate?: string[];
+  additionalTermsParsingFailed?: boolean;
 };
 
 type nlpAnnotationType = {

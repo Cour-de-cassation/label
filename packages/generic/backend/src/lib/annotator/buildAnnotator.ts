@@ -181,6 +181,7 @@ function buildAnnotator(
       report,
       newCategoriesToOmit,
       computedAdditionalTerms,
+      additionalTermsParsingFailed,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log({
       operationName: 'annotateDocument',
@@ -208,12 +209,12 @@ function buildAnnotator(
       msg: 'Annotation report created in DB',
     });
 
-    if (document.decisionMetadata.additionalTermsToAnnotate !== '' && !newCategoriesToOmit && !computedAdditionalTerms) {
+    if (additionalTermsParsingFailed) {
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'Parsing error detected in additional terms',
+        msg: `additionalTermsParsingFailed found, updating with value ${additionalTermsParsingFailed}`,
       });
-      await documentService.updateDocumentAdditionalTermsParsingFailed(documentId, true);
+      await documentService.updateDocumentAdditionalTermsParsingFailed(documentId, additionalTermsParsingFailed);
 
     } else {
       if (!!newCategoriesToOmit) {
@@ -227,19 +228,18 @@ function buildAnnotator(
           newCategoriesToOmit,
         );
       }
-    }
+      if (!!computedAdditionalTerms) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg:
+            'Additionals terms to annotate or to unannotate found, adding to document...',
+        });
 
-    if (!!computedAdditionalTerms) {
-      logger.log({
-        operationName: 'annotateDocument',
-        msg:
-          'Additionals terms to annotate or to unannotate found, adding to document...',
-      });
-
-      await documentService.updateDocumentComputedAdditionalTerms(
-        documentId,
-        computedAdditionalTerms,
-      );
+        await documentService.updateDocumentComputedAdditionalTerms(
+          documentId,
+          computedAdditionalTerms,
+        );
+      }
     }
 
     const nextDocumentStatus = documentModule.lib.getNextStatus({

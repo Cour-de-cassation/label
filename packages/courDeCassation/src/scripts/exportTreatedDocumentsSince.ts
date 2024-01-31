@@ -7,6 +7,12 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { environment, settings } = await parametersHandler.getParameters();
   const { days } = parseArgv();
   const backend = buildBackend(environment, settings);
+
+  await backend.runScript(
+    () => backend.scripts.cleanDocuments.run(),
+    backend.scripts.cleanDocuments.option,
+  );
+
   const sderExporter = buildSderExporter(environment, settings);
   backend.runScript(
     () => sderExporter.exportTreatedDocumentsSince(days, environment),

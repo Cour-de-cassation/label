@@ -22,7 +22,7 @@ import {
   revertOneMigration,
   runNewMigrations,
 } from './scripts';
-import { cleanDuplicatedDocuments } from './scripts/cleanDocuments'
+import { cleanDuplicatedDocuments } from './scripts/cleanDocuments';
 
 export { buildBackend };
 

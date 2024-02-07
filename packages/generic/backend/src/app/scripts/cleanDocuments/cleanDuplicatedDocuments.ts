@@ -52,7 +52,6 @@ async function cleanDuplicatedDocuments() {
   logger.log({ operationName: 'cleanDuplicatedDocuments', msg: 'DONE' });
 }
 
-//
 function areDocumentsIdentical(
   document1: documentType,
   document2: documentType,

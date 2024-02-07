@@ -11,7 +11,7 @@ describe('buildConnector', () => {
     documentRepository = buildDocumentRepository();
   });
 
-  describe('importDocumentsSince', () => {
+  describe('importDocumentsSinceOrBetween', () => {
     it('should import all the document fetched by the connector (with dateDecision)', async () => {
       const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
@@ -27,7 +27,7 @@ describe('buildConnector', () => {
       );
       const connector = buildConnector(fakeConnector);
 
-      await connector.importDocumentsSince({
+      await connector.importDocumentsSinceOrBetween({
         days: 10,
         byDateCreation: false,
         environment: {} as environmentType,
@@ -58,7 +58,7 @@ describe('buildConnector', () => {
       );
       const connector = buildConnector(fakeConnector);
 
-      await connector.importDocumentsSince({
+      await connector.importDocumentsSinceOrBetween({
         days: 10,
         byDateCreation: true,
         environment: {} as environmentType,
@@ -66,6 +66,42 @@ describe('buildConnector', () => {
 
       const insertedDocuments = await documentRepository.findAll();
       expect(insertedDocuments.length).toBe(2);
+      [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
+        expect(
+          insertedDocuments.some(
+            (insertedDocument) => insertedDocument.documentNumber === sourceId,
+          ),
+        ),
+      );
+    });
+
+    it('should import all the document fetched by the connector by dateCreation (between two dates from --- to)', async () => {
+      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+      const fakeConnector = await buildFakeConnectorWithNDecisions(
+        sourceIds.map((sourceId, index) => {
+          const dateCreation = new Date();
+          dateCreation.setTime(dateBuilder.daysAgo(index * 7));
+          return {
+            sourceId,
+            dateCreation: dateCreation.toISOString(),
+            sourceName: 'jurinet',
+          };
+        }),
+      );
+
+      const connector = buildConnector(fakeConnector);
+
+      await connector.importDocumentsSinceOrBetween({
+        days: 20, // plus ancien
+        to: 8, // jusqu'à nos jours / plus proche
+        byDateCreation: true,
+        environment: {} as environmentType,
+      });
+
+      const insertedDocuments = await documentRepository.findAll();
+
+      expect(insertedDocuments.length).toBe(1);
+
       [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
         expect(
           insertedDocuments.some(

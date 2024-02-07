@@ -10,20 +10,22 @@ import { environmentType } from '@label/core';
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
-    () => importAllDocumentsFromSderSince(days, byDateCreation, environment),
+    () => importAllDocumentsFromSderSinceOrBetween(days, byDateCreation, environment),
     {
       shouldLoadDb: true,
     },
   );
 })();
 
-async function importAllDocumentsFromSderSince(
+async function importAllDocumentsFromSderSinceOrBetween(
   days: number,
   byDateCreation: boolean,
   environment: environmentType,
+  to?: number,
 ) {
-  await sderConnector.importDocumentsSince({
+  await sderConnector.importDocumentsSinceOrBetween({
     days,
+    to,
     byDateCreation,
     environment,
   });
@@ -37,6 +39,11 @@ function parseArgv() {
         description: 'created since days',
         type: 'number',
       },
+      to: {
+        demandOption: false,
+        description: 'to this day',
+        type: 'number',
+      },
       byDateCreation: {
         demandOption: false,
         description: 'search by date of creation',
@@ -48,6 +55,7 @@ function parseArgv() {
 
   return {
     days: argv.days as number,
+    to: argv.to as number,
     byDateCreation: !!argv.byDateCreation as boolean,
   };
 }

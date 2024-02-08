@@ -8,7 +8,7 @@ import { logger } from '../../../utils';
 export { cleanDuplicatedDocuments };
 
 /**
- * Delete all doubled documents (same source, same documentNumber, same text)
+ * Delete all doubled documents (same source, same documentNumber and same text) keep the most recent document by dateCreation
  */
 async function cleanDuplicatedDocuments() {
   logger.log({ operationName: 'cleanDuplicatedDocuments', msg: 'START' });
@@ -29,7 +29,15 @@ async function cleanDuplicatedDocuments() {
     const currentDocument = sortedDocuments[index];
     const nextDocument = sortedDocuments[index + 1];
     if (areDocumentsIdentical(currentDocument, nextDocument)) {
-      documentsToDelete.push(nextDocument);
+      if (
+        currentDocument.creationDate &&
+        nextDocument.creationDate &&
+        currentDocument.creationDate > nextDocument.creationDate
+      ) {
+        documentsToDelete.push(nextDocument);
+      } else {
+        documentsToDelete.push(currentDocument);
+      }
     }
   }
 

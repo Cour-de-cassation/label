@@ -20,7 +20,6 @@ import { resetUntreatedDocumentsForTest } from './resetUntreatedDocumentsForTest
 import { purgeDb } from './purgeDb';
 import { renewCache } from './renewCache';
 import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
-import { cleanOrphansTreatments } from './cleanDocuments/cleanOrphansTreatments';
 
 export {
   cleanDocuments,
@@ -43,5 +42,4 @@ export {
   revertOneMigration,
   runNewMigrations,
   setIndexesOnAllCollections,
-  cleanOrphansTreatments,
 };

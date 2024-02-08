@@ -10,7 +10,12 @@ import { environmentType } from '@label/core';
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
-    () => importAllDocumentsFromSderSinceOrBetween(days, byDateCreation, environment),
+    () =>
+      importAllDocumentsFromSderSinceOrBetween(
+        days,
+        byDateCreation,
+        environment,
+      ),
     {
       shouldLoadDb: true,
     },

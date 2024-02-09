@@ -111,7 +111,7 @@ const sderLocalApi: sderApiType = {
         pathToCourtDecisions,
       );
 
-      return courtDecisions.map(({ content }) => {
+      const mappedCourtDecisions = courtDecisions.map(({ content }) => {
         const parsedContent = JSON.parse(content) as decisionType;
         return {
           ...parsedContent,
@@ -119,6 +119,10 @@ const sderLocalApi: sderApiType = {
           dateDecision: parsedContent.dateDecision,
         };
       });
+
+      return mappedCourtDecisions.filter(
+        (courtDecision) => courtDecision.sourceName === source,
+      );
     }
   },
 

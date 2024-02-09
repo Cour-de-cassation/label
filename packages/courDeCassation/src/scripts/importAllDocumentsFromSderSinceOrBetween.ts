@@ -31,7 +31,6 @@ async function importAllDocumentsFromSderSinceOrBetween(
   toDaysAgo?: number,
 ) {
   if (toDaysAgo) {
-
     if (fromDaysAgo < toDaysAgo) {
       await sderConnector.importDocumentsSinceOrBetween({
         fromDaysAgo,
@@ -40,13 +39,13 @@ async function importAllDocumentsFromSderSinceOrBetween(
         environment,
       });
     } else {
-      logger.log({
+      logger.error({
         operationName: 'importAllDocumentsFromSderSinceOrBetween',
         msg: `importDocumentsSinceOrBetween ${fromDaysAgo} est inferieur à ${toDaysAgo}`,
       });
     }
-
-  } {
+  }
+  {
     // import documents since days
     await sderConnector.importDocumentsSinceOrBetween({
       fromDaysAgo,
@@ -54,7 +53,6 @@ async function importAllDocumentsFromSderSinceOrBetween(
       environment,
     });
   }
-
 }
 
 function parseArgv() {

@@ -28,7 +28,7 @@ describe('buildConnector', () => {
       const connector = buildConnector(fakeConnector);
 
       await connector.importDocumentsSinceOrBetween({
-        days: 10,
+        fromDaysAgo: 10,
         byDateCreation: false,
         environment: {} as environmentType,
       });
@@ -59,7 +59,7 @@ describe('buildConnector', () => {
       const connector = buildConnector(fakeConnector);
 
       await connector.importDocumentsSinceOrBetween({
-        days: 10,
+        fromDaysAgo: 10,
         byDateCreation: true,
         environment: {} as environmentType,
       });
@@ -92,8 +92,8 @@ describe('buildConnector', () => {
       const connector = buildConnector(fakeConnector);
 
       await connector.importDocumentsSinceOrBetween({
-        days: 20, // plus ancien
-        to: 8, // jusqu'à nos jours / plus proche
+        fromDaysAgo: 20, // plus ancien
+        toDaysAgo: 8, // jusqu'à nos jours / plus proche
         byDateCreation: true,
         environment: {} as environmentType,
       });

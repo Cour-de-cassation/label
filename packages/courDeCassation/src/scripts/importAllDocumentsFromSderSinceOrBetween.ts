@@ -3,18 +3,20 @@ import { buildBackend } from '@label/backend';
 import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
 import { environmentType } from '@label/core';
+import { logger } from '@label/backend';
 
 (async () => {
   const { environment, settings } = await parametersHandler.getParameters();
-  const { days, byDateCreation } = parseArgv();
+  const { fromDaysAgo, toDaysAgo, byDateCreation } = parseArgv();
   const backend = buildBackend(environment, settings);
 
   backend.runScript(
     () =>
       importAllDocumentsFromSderSinceOrBetween(
-        days,
+        fromDaysAgo,
         byDateCreation,
         environment,
+        toDaysAgo,
       ),
     {
       shouldLoadDb: true,
@@ -23,28 +25,47 @@ import { environmentType } from '@label/core';
 })();
 
 async function importAllDocumentsFromSderSinceOrBetween(
-  days: number,
+  fromDaysAgo: number,
   byDateCreation: boolean,
   environment: environmentType,
-  to?: number,
+  toDaysAgo?: number,
 ) {
-  await sderConnector.importDocumentsSinceOrBetween({
-    days,
-    to,
-    byDateCreation,
-    environment,
-  });
+  if (toDaysAgo) {
+
+    if (fromDaysAgo < toDaysAgo) {
+      await sderConnector.importDocumentsSinceOrBetween({
+        fromDaysAgo,
+        toDaysAgo,
+        byDateCreation,
+        environment,
+      });
+    } else {
+      logger.log({
+        operationName: 'importAllDocumentsFromSderSinceOrBetween',
+        msg: `importDocumentsSinceOrBetween ${fromDaysAgo} est inferieur à ${toDaysAgo}`,
+      });
+    }
+
+  } {
+    // import documents since days
+    await sderConnector.importDocumentsSinceOrBetween({
+      fromDaysAgo,
+      byDateCreation,
+      environment,
+    });
+  }
+
 }
 
 function parseArgv() {
   const argv = yargs
     .options({
-      days: {
+      fromDaysAgo: {
         demandOption: true,
         description: 'created since days',
         type: 'number',
       },
-      to: {
+      toDaysAgo: {
         demandOption: false,
         description: 'to this day',
         type: 'number',
@@ -59,8 +80,8 @@ function parseArgv() {
     .alias('help', 'h').argv;
 
   return {
-    days: argv.days as number,
-    to: argv.to as number,
+    fromDaysAgo: argv.days as number,
+    toDaysAgo: argv.to as number,
     byDateCreation: !!argv.byDateCreation as boolean,
   };
 }

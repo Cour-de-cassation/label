@@ -93,9 +93,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
       logger.log({
         operationName: 'importSpecificDocument',
-        msg: `Court decision found. labelStatus: ${
-          courtDecision.labelStatus
-        }, ${!!courtDecision.pseudoText ? 'already' : 'never'} pseudonymised`,
+        msg: `Court decision found. labelStatus: ${courtDecision.labelStatus
+          }, ${!!courtDecision.pseudoText ? 'already' : 'never'} pseudonymised`,
       });
       const document = await connectorConfig.mapCourtDecisionToDocument(
         courtDecision,
@@ -150,9 +149,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const MAX_STEP = 300;
     logger.log({
       operationName: 'importNewDocuments',
-      msg: `START: ${documentsCount} - ${
-        sources?.join('/') ?? 'all sources'
-      } - ${daysStep || DEFAULT_DAYS_STEP}`,
+      msg: `START: ${documentsCount} - ${sources?.join('/') ?? 'all sources'
+        } - ${daysStep || DEFAULT_DAYS_STEP}`,
     });
 
     if (threshold) {
@@ -222,13 +220,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
         logger.log({
           operationName: 'importNewDocuments',
-          msg: `${newCourtDecisions.length} ${
-            connectorConfig.name
-          } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
-            startDate.getTime(),
-          )} and ${timeOperator.convertTimestampToReadableDate(
-            endDate.getTime(),
-          )}!`,
+          msg: `${newCourtDecisions.length} ${connectorConfig.name
+            } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
+              startDate.getTime(),
+            )} and ${timeOperator.convertTimestampToReadableDate(
+              endDate.getTime(),
+            )}!`,
         });
         for (const courtDecision of newCourtDecisions) {
           newDocuments.push(
@@ -283,9 +280,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
     const MAX_STEP = 300;
     logger.log({
       operationName: 'importNewDocuments',
-      msg: `importChainedDocuments: ${documentCount} - ${
-        daysStep || DEFAULT_DAYS_STEP
-      }`,
+      msg: `importChainedDocuments: ${documentCount} - ${daysStep || DEFAULT_DAYS_STEP
+        }`,
     });
 
     logger.log({
@@ -312,13 +308,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
           )) ?? [];
         logger.log({
           operationName: 'importChainedDocuments',
-          msg: `${newCourtDecisions.length} ${
-            connectorConfig.name
-          } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
-            startDate.getTime(),
-          )} and ${timeOperator.convertTimestampToReadableDate(
-            endDate.getTime(),
-          )}!`,
+          msg: `${newCourtDecisions.length} ${connectorConfig.name
+            } court decisions fetched between ${timeOperator.convertTimestampToReadableDate(
+              startDate.getTime(),
+            )} and ${timeOperator.convertTimestampToReadableDate(
+              endDate.getTime(),
+            )}!`,
         });
         for (const courtDecision of newCourtDecisions) {
           newDocuments.push(
@@ -368,117 +363,117 @@ function buildConnector(connectorConfig: connectorConfigType) {
   }
 
   async function importDocumentsSinceOrBetween({
-    days,
-    to,
+    fromDaysAgo,
+    toDaysAgo,
     byDateCreation,
     environment,
   }: {
-    days: number;
-    to?: number;
+    fromDaysAgo: number;
+    toDaysAgo?: number;
     byDateCreation: boolean;
     environment: environmentType;
   }) {
     logger.log({
-      operationName: 'importDocumentsSince',
-      msg: `importDocumentsSince ${days}`,
+      operationName: 'importDocumentsSinceOrBetween',
+      msg: `importDocumentsSinceOrBetween ${fromDaysAgo}`,
     });
 
     const newCourtDecisions = [];
     try {
       logger.log({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: `Fetching ${connectorConfig.name} jurinet documents...`,
       });
       const newJurinetCourtDecisions =
         (byDateCreation
           ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-              {
-                startDate: new Date(dateBuilder.daysAgo(days)),
-                endDate: to ? new Date(dateBuilder.daysAgo(to)) : new Date(),
-                source: 'jurinet',
-                environment,
-              },
-            )
-          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-              startDate: new Date(dateBuilder.daysAgo(days)),
-              endDate: to ? new Date(dateBuilder.daysAgo(to)) : new Date(),
+            {
+              startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+              endDate: toDaysAgo ? new Date(dateBuilder.daysAgo(toDaysAgo)) : new Date(),
               source: 'jurinet',
               environment,
-            })) ?? [];
+            },
+          )
+          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+            startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+            endDate: toDaysAgo ? new Date(dateBuilder.daysAgo(toDaysAgo)) : new Date(),
+            source: 'jurinet',
+            environment,
+          })) ?? [];
       logger.log({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
       });
       newCourtDecisions.push(...newJurinetCourtDecisions);
     } catch (error) {
       logger.error({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: 'Error',
         data: error as Record<string, unknown>,
       });
     }
     try {
       logger.log({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: `Fetching ${connectorConfig.name} jurica documents...`,
       });
       const newJuricaCourtDecisions =
         (byDateCreation
           ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-              {
-                startDate: new Date(dateBuilder.daysAgo(days)),
-                endDate: to ? new Date(dateBuilder.daysAgo(to)) : new Date(),
-                source: 'jurica',
-                environment,
-              },
-            )
-          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-              startDate: new Date(dateBuilder.daysAgo(days)),
-              endDate: to ? new Date(dateBuilder.daysAgo(to)) : new Date(),
+            {
+              startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+              endDate: toDaysAgo ? new Date(dateBuilder.daysAgo(toDaysAgo)) : new Date(),
               source: 'jurica',
               environment,
-            })) ?? [];
+            },
+          )
+          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+            startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+            endDate: toDaysAgo ? new Date(dateBuilder.daysAgo(toDaysAgo)) : new Date(),
+            source: 'jurica',
+            environment,
+          })) ?? [];
       logger.log({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
       });
       newCourtDecisions.push(...newJuricaCourtDecisions);
     } catch (error) {
       logger.error({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: 'Error',
         data: error as Record<string, unknown>,
       });
     }
     try {
       logger.log({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: `Fetching ${connectorConfig.name} juritj documents...`,
       });
       const newJuritjCourtDecisions =
         (byDateCreation
           ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-              {
-                startDate: new Date(dateBuilder.daysAgo(days)),
-                endDate: to ? new Date(dateBuilder.daysAgo(to)) : new Date(),
-                source: 'juritj',
-                environment,
-              },
-            )
-          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-              startDate: new Date(dateBuilder.daysAgo(days)),
-              endDate: to ? new Date(dateBuilder.daysAgo(to)) : new Date(),
+            {
+              startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+              endDate: toDaysAgo ? new Date(dateBuilder.daysAgo(toDaysAgo)) : new Date(),
               source: 'juritj',
               environment,
-            })) ?? [];
+            },
+          )
+          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+            startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+            endDate: toDaysAgo ? new Date(dateBuilder.daysAgo(toDaysAgo)) : new Date(),
+            source: 'juritj',
+            environment,
+          })) ?? [];
       logger.log({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
       });
       newCourtDecisions.push(...newJuritjCourtDecisions);
     } catch (error) {
       logger.error({
-        operationName: 'importDocumentsSince',
+        operationName: 'importDocumentsSinceOrBetween',
         msg: 'Error',
         data: error as Record<string, unknown>,
       });
@@ -494,24 +489,24 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
 
     logger.log({
-      operationName: 'importDocumentsSince',
+      operationName: 'importDocumentsSinceOrBetween',
       msg: `Insertion ${documents.length} documents into the database...`,
     });
     await insertDocuments(documents);
     logger.log({
-      operationName: 'importDocumentsSince',
+      operationName: 'importDocumentsSinceOrBetween',
       msg: `Insertion done!`,
     });
 
     logger.log({
-      operationName: 'importDocumentsSince',
+      operationName: 'importDocumentsSinceOrBetween',
       msg: `Send documents have been loaded...`,
     });
     await connectorConfig.updateDocumentsLoadedStatus({
       documents,
       environment,
     });
-    logger.log({ operationName: 'importDocumentsSince', msg: 'DONE' });
+    logger.log({ operationName: 'importDocumentsSinceOrBetween', msg: 'DONE' });
   }
 
   async function importDocumentsByJurisdictionBetween(

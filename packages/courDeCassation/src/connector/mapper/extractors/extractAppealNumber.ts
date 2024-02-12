@@ -4,7 +4,21 @@ const REGEX_1 = /\D\s(\d{2}-\d{2}\.\d{3})/;
 
 const REGEX_2 = /\d{2}-\d{5}/;
 
-function extractAppealNumber(text: string) {
+const registreNumber = /N°\s*RG\s*\d{2}\/\d{5}/i;
+
+const pourvoie = /\D\s(\d{2}-\d{2}\.\d{3})/;
+
+// regex pour get registreNumber TJ && CA
+// regex pour get n° Pourvoi CC
+function extractAppealNumber(text: string, source?: string) {
+  if (source == "juritj" || source == "jurica") {
+    // console.log('juritj call')
+
+  }
+
+  if (source == "jurinet") {
+    // console.log('jurinet call')
+  }
   const match1 = text.match(REGEX_1);
   if (!!match1 && match1[1]) {
     return match1[1];

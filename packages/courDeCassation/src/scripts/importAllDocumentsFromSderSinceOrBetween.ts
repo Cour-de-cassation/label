@@ -30,8 +30,8 @@ async function importAllDocumentsFromSderSinceOrBetween(
   environment: environmentType,
   toDaysAgo?: number,
 ) {
-  if (toDaysAgo) {
-    if (fromDaysAgo > toDaysAgo) {
+  if (toDaysAgo && toDaysAgo != undefined) {
+    if (fromDaysAgo >= toDaysAgo) {
       await sderConnector.importDocumentsSinceOrBetween({
         fromDaysAgo,
         toDaysAgo,

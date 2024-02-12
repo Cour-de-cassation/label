@@ -15,7 +15,7 @@ jobs:
     backoff_limit: 0
     parallelism: 1
     active_deadline_seconds: 300
-    command: "dist/scripts/importAllDocumentsFromSderSinceOrBetween.js --fromDaysAgo 7"
+    command: "dist/scripts/importAllDocumentsFromSderSinceOrBetween.js --fromDaysAgo 7 --byDateCreation true"
   - name: "filler-import"
     schedule: "15 6-17 * * *"
     successful_jobs_history_limit: 7

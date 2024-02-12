@@ -378,14 +378,14 @@ function buildConnector(connectorConfig: connectorConfigType) {
     byDateCreation: boolean;
     environment: environmentType;
   }) {
-    toDaysAgo && toDaysAgo != undefined
+    toDaysAgo
       ? logger.log({
           operationName: 'importDocumentsSinceOrBetween',
-          msg: `Importation by scope fromDaysAgo : ${fromDaysAgo} <-----> toDaysAgo : ${toDaysAgo}`,
+          msg: `Importation by scope from ${fromDaysAgo} days ago to ${toDaysAgo} days ago - byDateCreation : ${byDateCreation}`,
         })
       : logger.log({
           operationName: 'importDocumentsSinceOrBetween',
-          msg: `Importation since ${fromDaysAgo} days`,
+          msg: `Importation since ${fromDaysAgo} days - byDateCreation : ${byDateCreation}`,
         });
 
     const newCourtDecisions = [];

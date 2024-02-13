@@ -18,7 +18,7 @@ async function fetchDocumentWithoutAnnotationsNotIn(
   for (const priority of priorities) {
     document = await documentRepository.findOneByStatusAndPriorityNotIn(
       { status: 'loaded', priority },
-      idsNotToSearchIn
+      idsNotToSearchIn,
     );
     if (document) {
       return document;

@@ -12,24 +12,17 @@ async function fetchDocumentWithoutAnnotationsNotIn(
   const treatedDocumentIds = await treatmentService.fetchTreatedDocumentIds();
   const idsNotToSearchIn = [...treatedDocumentIds, ...documentIdsToExclude];
   let document: documentType | undefined;
-  document = await documentRepository.findOneByStatusAndPriorityNotIn(
-    { status: 'loaded', priority: 4 },
-    idsNotToSearchIn,
-  );
-  if (document) {
-    return document;
-  }
-  document = await documentRepository.findOneByStatusAndPriorityNotIn(
-    { status: 'loaded', priority: 2 },
-    idsNotToSearchIn,
-  );
-  if (document) {
-    return document;
-  }
-  document = await documentRepository.findOneByStatusAndPriorityNotIn(
-    { status: 'loaded', priority: 0 },
-    idsNotToSearchIn,
-  );
 
-  return document;
+  const priorities = [4, 3, 2, 1, 0];
+
+  for (const priority of priorities) {
+    document = await documentRepository.findOneByStatusAndPriorityNotIn(
+      { status: 'loaded', priority },
+      idsNotToSearchIn
+    );
+    if (document) {
+      return document;
+    }
+  }
+  return undefined;
 }

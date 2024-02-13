@@ -97,10 +97,11 @@ LABEL allow you to link annotations. Sometimes names are written lowercase or in
 - September 2020: The project is initiated by the [Entrepeneur d'Intérêt Général (EIG) program](https://eig.etalab.gouv.fr/defis/label/).
 - June 2021: Production launch with supreme court decisions (Jurinet database).
 - April 2022: Addition of appeal court's decisions (JuriCA database).
+- December 2023: Addition of 9 first judicial courts' decisions.
 
 Next steps:
 
-- Decembre 2023: Addition of 9 first judicial courts' decisions.
+- During 2024: Addition of other judicial courts' decisions.
 - December 2024: Addition of industrial courts' decisions.
 - Septembre 2025: Addition of labour courts' decisions and all first instance.
 

@@ -17,10 +17,16 @@ function computeFilteredSettings(
     }
     if (category === additionalAnnotationCategoryHandler.getCategoryName()) {
       if (!!additionalTermsToAnnotate) {
-        return {
-          ...accumulator,
-          [category]: { ...categorySetting, status: 'annotable' as const },
-        };
+        if (
+          additionalTermsParsingFailed === undefined ||
+          additionalTermsParsingFailed ||
+          (!additionalTermsParsingFailed && computedAdditionalTerms?.additionalTermsToAnnotate.length != 0)
+        ) {
+          return {
+            ...accumulator,
+            [category]: { ...categorySetting, status: 'annotable' as const },
+          };
+        }
       }
     } else if (!categoriesToOmit.includes(category)) {
       return {

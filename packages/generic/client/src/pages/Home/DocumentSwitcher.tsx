@@ -19,14 +19,14 @@ export { DocumentSwitcher };
 
 type documentStateType =
   | {
-    kind: 'annotating';
-    choice: {
-      document: fetchedDocumentType;
-      annotations: annotationType[];
-      assignationId: assignationType['_id'];
-      checklist: annotationReportType['checklist'];
-    };
-  }
+      kind: 'annotating';
+      choice: {
+        document: fetchedDocumentType;
+        annotations: annotationType[];
+        assignationId: assignationType['_id'];
+        checklist: annotationReportType['checklist'];
+      };
+    }
   | { kind: 'selecting' };
 
 function DocumentSwitcher(props: {

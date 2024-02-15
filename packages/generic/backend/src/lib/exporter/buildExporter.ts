@@ -56,8 +56,9 @@ function buildExporter(
     for (let index = 0; index < documentsReadyToExport.length; index++) {
       logger.log({
         operationName: 'exportTreatedDocumentsSince',
-        msg: `Exportation of document ${index + 1}/${documentsReadyToExport.length
-          }`,
+        msg: `Exportation of document ${index + 1}/${
+          documentsReadyToExport.length
+        }`,
       });
       const document = documentsReadyToExport[index];
 
@@ -92,8 +93,9 @@ function buildExporter(
     for (let index = 0; index < documentsReadyToExport.length; index++) {
       logger.log({
         operationName: 'exportTreatedPublishableDocuments',
-        msg: `Exportation of document ${index + 1}/${documentsReadyToExport.length
-          }`,
+        msg: `Exportation of document ${index + 1}/${
+          documentsReadyToExport.length
+        }`,
       });
       const document = documentsReadyToExport[index];
 

@@ -32,10 +32,11 @@ const documentModelCommonFields = {
         ],
       },
       additionalTermsParsingFailed: {
-        kind: 'or', content: [
+        kind: 'or',
+        content: [
           { kind: 'primitive', content: 'boolean' },
           { kind: 'primitive', content: 'undefined' },
-        ]
+        ],
       },
       boundDecisionDocumentNumbers: { kind: 'array', content: { kind: 'primitive', content: 'number' } },
       categoriesToOmit: { kind: 'array', content: { kind: 'primitive', content: 'string' } },

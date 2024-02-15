@@ -1,6 +1,5 @@
 import { documentModule } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
-import { updateDocumentCategoriesToOmit } from './updateDocumentCategoriesToOmit';
 import { updateDocumentAdditionalTermsParsingFailed } from './updateDocumentAdditionalTermsParsingFailed';
 
 describe('updateDocumentAdditionalTermsParsingFailed', () => {
@@ -31,8 +30,13 @@ describe('updateDocumentAdditionalTermsParsingFailed', () => {
     });
     await documentRepository.insert(document);
 
-    const updatedDocument = await updateDocumentAdditionalTermsParsingFailed(document._id, true);
+    const updatedDocument = await updateDocumentAdditionalTermsParsingFailed(
+      document._id,
+      true,
+    );
 
-    expect(updatedDocument.decisionMetadata.additionalTermsParsingFailed).toEqual(true);
+    expect(
+      updatedDocument.decisionMetadata.additionalTermsParsingFailed,
+    ).toEqual(true);
   });
 });

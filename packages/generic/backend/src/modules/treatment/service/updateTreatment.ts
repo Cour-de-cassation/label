@@ -67,7 +67,7 @@ async function updateTreatment({
 
   const duration =
     now.getTime() - treatment.lastUpdateDate >
-      treatmentModule.lib.getTimeThresholdToUpdateDuration()
+    treatmentModule.lib.getTimeThresholdToUpdateDuration()
       ? treatment.duration
       : now.getTime() - treatment.lastUpdateDate + treatment.duration;
 

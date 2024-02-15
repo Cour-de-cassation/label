@@ -38,7 +38,10 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         text: document.text,
         parties: document.decisionMetadata.parties,
         categories: nlpCategories,
-        additionalTerms: document.decisionMetadata.additionalTermsToAnnotate === '' ? undefined : document.decisionMetadata.additionalTermsToAnnotate,
+        additionalTerms:
+          document.decisionMetadata.additionalTermsToAnnotate === ''
+            ? undefined
+            : document.decisionMetadata.additionalTermsToAnnotate,
       };
 
       return await axios({

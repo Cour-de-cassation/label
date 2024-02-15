@@ -16,7 +16,13 @@ describe('computeFilteredSettings', () => {
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = undefined;
 
-    const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate, computedAdditionalTerms, additionalTermsParsingFailed);
+    const filteredSettings = computeFilteredSettings(
+      settings,
+      categoriesToOmit,
+      additionalTermsToAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
+    );
     expect(filteredSettings['prenom'].status).toBe('hidden');
     expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('annotable');
     expect(filteredSettings['professionnelAvocat'].status).toBe('alwaysVisible');
@@ -29,7 +35,13 @@ describe('computeFilteredSettings', () => {
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = undefined;
 
-    const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate, computedAdditionalTerms, additionalTermsParsingFailed);
+    const filteredSettings = computeFilteredSettings(
+      settings,
+      categoriesToOmit,
+      additionalTermsToAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
+    );
 
     expect(filteredSettings['prenom'].status).toBe('annotable');
     expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('visible');
@@ -43,7 +55,13 @@ describe('computeFilteredSettings', () => {
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = undefined;
 
-    const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate, computedAdditionalTerms, additionalTermsParsingFailed);
+    const filteredSettings = computeFilteredSettings(
+      settings,
+      categoriesToOmit,
+      additionalTermsToAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
+    );
 
     expect(filteredSettings['prenom'].status).toBe('annotable');
     expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('annotable');
@@ -57,7 +75,13 @@ describe('computeFilteredSettings', () => {
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = undefined;
 
-    const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate, computedAdditionalTerms, additionalTermsParsingFailed);
+    const filteredSettings = computeFilteredSettings(
+      settings,
+      categoriesToOmit,
+      additionalTermsToAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
+    );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
     expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('visible');
@@ -71,7 +95,13 @@ describe('computeFilteredSettings', () => {
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = true;
 
-    const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate, computedAdditionalTerms, additionalTermsParsingFailed);
+    const filteredSettings = computeFilteredSettings(
+      settings,
+      categoriesToOmit,
+      additionalTermsToAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
+    );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
     expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('visible');
@@ -82,10 +112,16 @@ describe('computeFilteredSettings', () => {
   it('should compute filtered settings for additional annotations when parsing succeed but no additional terms to annotate after parsing', () => {
     const categoriesToOmit = ['prenom', 'professionnelAvocat', 'professionnelMagistratGreffier'];
     const additionalTermsToAnnotate = 'thing';
-    const computedAdditionalTerms = { additionalTermsToAnnotate: [], additionalTermsToUnAnnotate: ["toUnanotate"] };
+    const computedAdditionalTerms = { additionalTermsToAnnotate: [], additionalTermsToUnAnnotate: ['toUnanotate'] };
     const additionalTermsParsingFailed = false;
 
-    const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate, computedAdditionalTerms, additionalTermsParsingFailed);
+    const filteredSettings = computeFilteredSettings(
+      settings,
+      categoriesToOmit,
+      additionalTermsToAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
+    );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
     expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('visible');
@@ -96,10 +132,19 @@ describe('computeFilteredSettings', () => {
   it('should compute filtered settings for additional annotations when parsing succeed AND there is additional terms to annotate after parsing', () => {
     const categoriesToOmit = ['prenom', 'professionnelAvocat', 'professionnelMagistratGreffier'];
     const additionalTermsToAnnotate = 'thing';
-    const computedAdditionalTerms = { additionalTermsToAnnotate: ["toAnnotate", "another"], additionalTermsToUnAnnotate: ["toUnanotate"] };
+    const computedAdditionalTerms = {
+      additionalTermsToAnnotate: ['toAnnotate', 'another'],
+      additionalTermsToUnAnnotate: ['toUnanotate'],
+    };
     const additionalTermsParsingFailed = false;
 
-    const filteredSettings = computeFilteredSettings(settings, categoriesToOmit, additionalTermsToAnnotate, computedAdditionalTerms, additionalTermsParsingFailed);
+    const filteredSettings = computeFilteredSettings(
+      settings,
+      categoriesToOmit,
+      additionalTermsToAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
+    );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
     expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('visible');

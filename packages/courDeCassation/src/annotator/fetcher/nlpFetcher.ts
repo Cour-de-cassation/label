@@ -29,7 +29,8 @@ function buildNlpFetcher(nlpApiBaseUrl: string) {
         computedAdditionalTerms: nlpMapper.mapNlpAdditionalTerms(
           nlpAnnotations,
         ),
-        additionalTermsParsingFailed: nlpAnnotations.additionalTermsParsingFailed,
+        additionalTermsParsingFailed:
+          nlpAnnotations.additionalTermsParsingFailed,
       };
     },
     async fetchLossOfDocument(

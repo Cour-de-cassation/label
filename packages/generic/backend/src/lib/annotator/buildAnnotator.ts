@@ -115,10 +115,11 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${annotatorConfig.name
-            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-              currentDocumentToAnnotate,
-            )}`,
+          msg: `Annotating with ${
+            annotatorConfig.name
+          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+            currentDocumentToAnnotate,
+          )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -214,8 +215,10 @@ function buildAnnotator(
         operationName: 'annotateDocument',
         msg: `additionalTermsParsingFailed found, updating with value ${additionalTermsParsingFailed}`,
       });
-      await documentService.updateDocumentAdditionalTermsParsingFailed(documentId, additionalTermsParsingFailed);
-
+      await documentService.updateDocumentAdditionalTermsParsingFailed(
+        documentId,
+        additionalTermsParsingFailed,
+      );
     } else {
       if (!!newCategoriesToOmit) {
         logger.log({
@@ -281,7 +284,8 @@ function buildAnnotator(
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
-      }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
+      document.documentNumber
+    }]`;
   }
 }

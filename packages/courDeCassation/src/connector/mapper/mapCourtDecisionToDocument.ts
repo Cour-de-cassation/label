@@ -96,7 +96,7 @@ async function mapCourtDecisionToDocument(
       appealNumber: appealNumber || '',
       additionalTermsToAnnotate,
       computedAdditionalTerms: undefined,
-      additionalTermsParsingFailed: false,
+      additionalTermsParsingFailed: undefined,
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
       civilCaseCode,

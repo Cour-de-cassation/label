@@ -42,6 +42,8 @@ async function updateTreatment({
     settings,
     document.decisionMetadata.categoriesToOmit,
     document.decisionMetadata.additionalTermsToAnnotate,
+    document.decisionMetadata.computedAdditionalTerms,
+    document.decisionMetadata.additionalTermsParsingFailed,
   );
 
   const actionToPerform = `update treatment for documentId ${idModule.lib.convertToString(
@@ -65,7 +67,7 @@ async function updateTreatment({
 
   const duration =
     now.getTime() - treatment.lastUpdateDate >
-    treatmentModule.lib.getTimeThresholdToUpdateDuration()
+      treatmentModule.lib.getTimeThresholdToUpdateDuration()
       ? treatment.duration
       : now.getTime() - treatment.lastUpdateDate + treatment.duration;
 

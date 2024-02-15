@@ -8,6 +8,8 @@ function computeFilteredSettings(
   settings: settingsType,
   categoriesToOmit: documentType['decisionMetadata']['categoriesToOmit'],
   additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'],
+  computedAdditionalTerms: documentType['decisionMetadata']['computedAdditionalTerms'],
+  additionalTermsParsingFailed: documentType['decisionMetadata']['additionalTermsParsingFailed'],
 ) {
   const settingsForDocument = Object.entries(settings).reduce((accumulator, [category, categorySetting]) => {
     if (categorySetting.status === 'alwaysVisible') {

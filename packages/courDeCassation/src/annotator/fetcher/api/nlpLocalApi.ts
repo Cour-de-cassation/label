@@ -13,6 +13,8 @@ function buildNlpLocalApi(): nlpApiType {
         settings,
         document.decisionMetadata.categoriesToOmit,
         document.decisionMetadata.additionalTermsToAnnotate,
+        document.decisionMetadata.computedAdditionalTerms,
+        document.decisionMetadata.additionalTermsParsingFailed,
       );
       const annotations = JSON.parse(
         await fs.readFile(

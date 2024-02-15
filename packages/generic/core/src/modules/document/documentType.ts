@@ -31,7 +31,12 @@ const documentModelCommonFields = {
           { kind: 'primitive', content: 'undefined' },
         ],
       },
-      additionalTermsParsingFailed: { kind: 'primitive', content: 'boolean' },
+      additionalTermsParsingFailed: {
+        kind: 'or', content: [
+          { kind: 'primitive', content: 'boolean' },
+          { kind: 'primitive', content: 'undefined' },
+        ]
+      },
       boundDecisionDocumentNumbers: { kind: 'array', content: { kind: 'primitive', content: 'number' } },
       categoriesToOmit: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       chamberName: { kind: 'primitive', content: 'string' },

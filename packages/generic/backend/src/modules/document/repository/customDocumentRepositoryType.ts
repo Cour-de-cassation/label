@@ -84,7 +84,7 @@ type customDocumentRepositoryType = {
   ) => Promise<documentType | undefined>;
   updateAdditionalTermsParsingFailed: (
     _id: idType,
-    additionalTermsParsingFailed: boolean,
+    additionalTermsParsingFailed: documentType['decisionMetadata']['additionalTermsParsingFailed'],
   ) => Promise<documentType | undefined>;
   updateCategoriesToOmitById: (
     _id: idType,

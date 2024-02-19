@@ -27,7 +27,7 @@ const statisticGenerator: generatorType<statisticType> = {
     treatmentsSummary,
     wordsCount,
     endCaseCode,
-    NACCode
+    NACCode,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     annotationsCount: annotationsCount ? annotationsCount : 0,

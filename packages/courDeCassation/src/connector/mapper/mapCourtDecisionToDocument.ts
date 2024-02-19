@@ -184,6 +184,8 @@ function computePriority(
     return 4;
   }
   switch (importer) {
+    case 'manual':
+      return 3;
     case 'chained':
       return 1;
     case 'filler':

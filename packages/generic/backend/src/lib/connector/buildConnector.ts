@@ -615,7 +615,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       documents.push(
         await connectorConfig.mapCourtDecisionToDocument(
           courtDecision,
-          'manual',
+          'recent',
         ),
       );
     }

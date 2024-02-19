@@ -86,7 +86,7 @@ function buildAnnotator(
     });
 
     const failedDocumentIds: documentType['_id'][] = [];
-    const documentsCountToAnnotate = await documentService.countDocumentsWithoutAnnotations();
+    const documentsCountToAnnotate = await documentService.countLoadedDocuments();
     logger.log({
       operationName: 'annotateDocumentsWithoutAnnotations',
       msg: `Found ${documentsCountToAnnotate} documents to annotate`,

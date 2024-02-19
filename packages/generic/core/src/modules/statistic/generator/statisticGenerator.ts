@@ -26,6 +26,8 @@ const statisticGenerator: generatorType<statisticType> = {
     treatmentDate,
     treatmentsSummary,
     wordsCount,
+    endCaseCode,
+    NACCode,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     annotationsCount: annotationsCount ? annotationsCount : 0,
@@ -38,6 +40,8 @@ const statisticGenerator: generatorType<statisticType> = {
     linkedEntitiesCount: linkedEntitiesCount ? linkedEntitiesCount : 0,
     publicationCategory: publicationCategory ? publicationCategory : [],
     session: session || undefined,
+    endCaseCode: endCaseCode || undefined,
+    NACCode: NACCode || undefined,
     route: route ?? `default`,
     importer: importer ?? `default`,
     source: source ?? `SOURCE_${Math.random()}`,

@@ -124,7 +124,6 @@ describe('extractRoute', () => {
       'jurica',
     );
 
-    //expect(route).toBe('exhaustive');
     expect(route).toBe('default');
   });
 

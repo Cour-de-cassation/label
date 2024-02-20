@@ -1,9 +1,45 @@
-import { generatorType } from '../../../types';
+import { generatorType, generatorDecisionMetadatType } from '../../../types';
 import { idModule } from '../../id';
 import { documentType } from '../documentType';
 
-export { documentGenerator };
-
+export { documentGenerator, decisionMetadataGenerator };
+const decisionMetadataGenerator: generatorDecisionMetadatType<documentType['decisionMetadata']> = {
+  generate: ({
+    additionalTermsToAnnotate,
+    appealNumber,
+    boundDecisionDocumentNumbers,
+    categoriesToOmit,
+    chamberName,
+    civilCaseCode,
+    civilMatterCode,
+    criminalCaseCode,
+    date,
+    jurisdiction,
+    NACCode,
+    endCaseCode,
+    occultationBlock,
+    parties,
+    session,
+    solution,
+  } = {}) => ({
+    additionalTermsToAnnotate: additionalTermsToAnnotate ?? '',
+    appealNumber: appealNumber ?? '',
+    boundDecisionDocumentNumbers: boundDecisionDocumentNumbers ?? [],
+    categoriesToOmit: categoriesToOmit ?? [],
+    chamberName: chamberName ?? '',
+    civilCaseCode: civilCaseCode ?? '',
+    civilMatterCode: civilMatterCode ?? '',
+    criminalCaseCode: criminalCaseCode ?? '',
+    date: date ?? new Date().getTime(),
+    jurisdiction: jurisdiction ?? '',
+    NACCode: NACCode ?? '',
+    endCaseCode: endCaseCode ?? '',
+    occultationBlock: occultationBlock ?? 10,
+    parties: parties ?? [],
+    session: session ?? '',
+    solution: solution ?? '',
+  }),
+};
 const documentGenerator: generatorType<documentType> = {
   generate: ({
     creationDate,

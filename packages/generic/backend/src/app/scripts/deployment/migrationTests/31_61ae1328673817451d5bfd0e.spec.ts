@@ -16,14 +16,12 @@ describe('add NACCode in document model', () => {
     boundDecisionDocumentNumbers: [],
     categoriesToOmit: [],
     additionalTermsToAnnotate: '',
-    computedAdditionalTerms: undefined,
-    additionalTermsParsingFailed: false,
     occultationBlock: undefined,
     parties: [],
     session: '',
     solution: '',
     endCaseCode: '',
-  };
+  } as any;
   const documentsWithNewModel = [
     documentModule.generator.generate({
       decisionMetadata: {

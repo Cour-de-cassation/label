@@ -1,6 +1,7 @@
 import { documentModule } from '@label/core';
 import { computeSpecificDocumentInfoEntries } from './computeSpecificDocumentInfoEntries';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('computeSpecificDocumentInfoEntries', () => {
   it('should return all the specific infos of a document', () => {
     const decisionDate = new Date().getTime();
@@ -17,15 +18,13 @@ describe('computeSpecificDocumentInfoEntries', () => {
         NACCode: '',
         endCaseCode: '',
         boundDecisionDocumentNumbers: [],
-        categoriesToOmit: [],
-        additionalTermsToAnnotate: '',
         computedAdditionalTerms: undefined,
         additionalTermsParsingFailed: false,
         occultationBlock: undefined,
         parties: [],
         session: '',
         solution: '',
-      },
+      } as any,
     });
 
     const specificDocumentInfoEntries = computeSpecificDocumentInfoEntries(document);

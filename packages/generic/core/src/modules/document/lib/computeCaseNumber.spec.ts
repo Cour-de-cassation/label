@@ -1,6 +1,7 @@
 import { documentGenerator } from '../generator';
 import { computeCaseNumber } from './computeCaseNumber';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('computeCaseNumber', () => {
   const documentNumber = 12345;
   const boundDocumentNumber = 54321;
@@ -10,8 +11,6 @@ describe('computeCaseNumber', () => {
     const document = documentGenerator.generate({
       decisionMetadata: {
         additionalTermsToAnnotate: '',
-        computedAdditionalTerms: undefined,
-        additionalTermsParsingFailed: false,
         appealNumber: '',
         boundDecisionDocumentNumbers: [boundDocumentNumber, otherBoundDocumentNumber],
         chamberName: '',
@@ -27,7 +26,7 @@ describe('computeCaseNumber', () => {
         categoriesToOmit: [],
         parties: [],
         occultationBlock: undefined,
-      },
+      } as any,
       documentNumber,
     });
 

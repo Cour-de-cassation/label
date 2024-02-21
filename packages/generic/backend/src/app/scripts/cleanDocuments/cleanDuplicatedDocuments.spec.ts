@@ -4,15 +4,12 @@ import { cleanDuplicatedDocuments } from './cleanDuplicatedDocuments';
 
 describe('cleanDuplicatedDocuments', () => {
   it('should clean the DuplicatedDocuments', async () => {
-    //example of using decisionMetadataGenerator in test
-    const decisionMetaData = documentModule.decisionMetadataGenerator.generate({
-      additionalTermsToAnnotate: '',
-    });
+
     const firstDocument = documentModule.generator.generate();
     const secondDocument = documentModule.generator.generate({
       creationDate: 1274657452000,
-      decisionMetadata: decisionMetaData,
     });
+
     const secondDocumentWithHigherStatus = documentModule.generator.generate({
       ...secondDocument,
       creationDate: 1674657452000,

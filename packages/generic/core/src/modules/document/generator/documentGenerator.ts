@@ -1,9 +1,9 @@
-import { generatorType, generatorDecisionMetadatType } from '../../../types';
+import { generatorType, generatorDecisionMetadataType } from '../../../types';
 import { idModule } from '../../id';
 import { documentType } from '../documentType';
 
 export { documentGenerator, decisionMetadataGenerator };
-const decisionMetadataGenerator: generatorDecisionMetadatType<documentType['decisionMetadata']> = {
+const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['decisionMetadata']> = {
   generate: ({
     additionalTermsToAnnotate,
     appealNumber,
@@ -22,24 +22,25 @@ const decisionMetadataGenerator: generatorDecisionMetadatType<documentType['deci
     session,
     solution,
   } = {}) => ({
-    additionalTermsToAnnotate: additionalTermsToAnnotate ?? '',
-    appealNumber: appealNumber ?? '',
+    additionalTermsToAnnotate: additionalTermsToAnnotate ?? `ADDITIONAL_TERMS_TO_ANNOTATE_${Math.random()}`,
+    appealNumber: appealNumber ?? `APPEAL_NUMBER_${Math.random()}`,
     boundDecisionDocumentNumbers: boundDecisionDocumentNumbers ?? [],
-    categoriesToOmit: categoriesToOmit ?? [],
-    chamberName: chamberName ?? '',
-    civilCaseCode: civilCaseCode ?? '',
-    civilMatterCode: civilMatterCode ?? '',
-    criminalCaseCode: criminalCaseCode ?? '',
+    categoriesToOmit: categoriesToOmit ?? [`CATEGORIES_TO_OMIT_${Math.random()}`],
+    chamberName: chamberName ?? `CHAMBRE_NAME_${Math.random()}`,
+    civilCaseCode: civilCaseCode ?? `CIVIL_CASE_CODE_${Math.random()}`,
+    civilMatterCode: civilMatterCode ?? `CIVIL_MATTER_CODE_${Math.random()}`,
+    criminalCaseCode: criminalCaseCode ?? `CRIMINAL_CASE_CODE_${Math.random()}`,
     date: date ?? new Date().getTime(),
-    jurisdiction: jurisdiction ?? '',
-    NACCode: NACCode ?? '',
-    endCaseCode: endCaseCode ?? '',
+    jurisdiction: jurisdiction ?? `JURISDICTION_${Math.random()}`,
+    NACCode: NACCode ?? `NAC_CODE_${Math.random()}`,
+    endCaseCode: endCaseCode ?? `END_CASE_CODE_${Math.random()}`,
     occultationBlock: occultationBlock ?? 10,
-    parties: parties ?? [],
-    session: session ?? '',
-    solution: solution ?? '',
+    parties: parties ?? [`PARTIES_${Math.random()}`],
+    session: session ?? `SESSION_${Math.random()}`,
+    solution: solution ?? `SOLUTION_${Math.random()}`,
   }),
 };
+
 const documentGenerator: generatorType<documentType> = {
   generate: ({
     creationDate,
@@ -62,24 +63,7 @@ const documentGenerator: generatorType<documentType> = {
     creationDate: creationDate ? creationDate : new Date().getTime(),
     decisionMetadata: decisionMetadata
       ? decisionMetadata
-      : {
-          additionalTermsToAnnotate: '',
-          appealNumber: '',
-          boundDecisionDocumentNumbers: [],
-          categoriesToOmit: [],
-          chamberName: '',
-          civilCaseCode: '',
-          civilMatterCode: '',
-          criminalCaseCode: '',
-          date: new Date().getTime(),
-          jurisdiction: '',
-          NACCode: '',
-          endCaseCode: '',
-          occultationBlock: undefined,
-          parties: [],
-          session: '',
-          solution: '',
-        },
+      : decisionMetadataGenerator.generate(),
     documentNumber: documentNumber ?? Math.floor(Math.random() * 1000000),
     externalId: externalId ?? `EXTERNAL_ID_${Math.random()}`,
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),

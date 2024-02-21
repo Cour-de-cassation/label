@@ -1,5 +1,5 @@
 import { filterNetworkKeysType } from './filterNetworkKeysType';
-import { generatorType, generatorDecisionMetadatType } from './generatorType';
+import { generatorType, generatorDecisionMetadataType } from './generatorType';
 import { filterKeysType, filterType, writeableType } from './utilityTypes';
 
 export type {
@@ -8,5 +8,5 @@ export type {
   filterKeysType,
   filterType,
   writeableType,
-  generatorDecisionMetadatType,
+  generatorDecisionMetadataType,
 };

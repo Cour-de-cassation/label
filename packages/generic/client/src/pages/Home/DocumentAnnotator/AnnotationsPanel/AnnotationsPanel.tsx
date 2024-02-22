@@ -90,43 +90,51 @@ function AnnotationsPanel(props: {
   ) {
     const isParsingFailedOnAdditionalTerms = props.document.decisionMetadata.additionalTermsParsingFailed;
 
-    return (
-      <div style={styles.additionalAnnotationTermsContainer}>
-        <div style={styles.additionalAnnotationTermsLeftContainer}>
-          <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
+    if (
+      isParsingFailedOnAdditionalTerms ||
+      (computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+        computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
+      (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+        computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0)
+    ) {
+      return (
+        <div style={styles.additionalAnnotationTermsContainer}>
+          <div style={styles.additionalAnnotationTermsLeftContainer}>
+            <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
+          </div>
+          <div style={styles.additionalAnnotationTermsRightContainer}>
+            {isParsingFailedOnAdditionalTerms ? (
+              <>
+                <Text>{wordings.homePage.additionalOccultationsParsingFailed}</Text>
+                <Text variant="body2">{additionalTermsToAnnotate}</Text>
+              </>
+            ) : (
+              <>
+                <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
+                {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+                  computedAdditionalTerms.additionalTermsToAnnotate.length > 0 && (
+                    <>
+                      <Text>{wordings.homePage.additionalTermsToAnnotate}</Text>
+                      {computedAdditionalTerms.additionalTermsToAnnotate.map((term) => (
+                        <Text variant="body2">- {term}</Text>
+                      ))}
+                    </>
+                  )}
+                {computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+                  computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0 && (
+                    <>
+                      <Text>{wordings.homePage.additionalTermsToUnAnnotate}</Text>
+                      {computedAdditionalTerms.additionalTermsToUnAnnotate.map((term) => (
+                        <Text variant="body2">- {term}</Text>
+                      ))}
+                    </>
+                  )}
+              </>
+            )}
+          </div>
         </div>
-        <div style={styles.additionalAnnotationTermsRightContainer}>
-          {isParsingFailedOnAdditionalTerms ? (
-            <>
-              <Text>{wordings.homePage.additionalOccultationsParsingFailed}</Text>
-              <Text variant="body2">{additionalTermsToAnnotate}</Text>
-            </>
-          ) : (
-            <>
-              <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
-              {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
-                computedAdditionalTerms.additionalTermsToAnnotate.length > 0 && (
-                  <>
-                    <Text>{wordings.homePage.additionalTermsToAnnotate}</Text>
-                    {computedAdditionalTerms.additionalTermsToAnnotate.map((term) => (
-                      <Text variant="body2">- {term}</Text>
-                    ))}
-                  </>
-                )}
-              {computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
-                computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0 && (
-                  <>
-                    <Text>{wordings.homePage.additionalTermsToUnAnnotate}</Text>
-                    {computedAdditionalTerms.additionalTermsToUnAnnotate.map((term) => (
-                      <Text variant="body2">- {term}</Text>
-                    ))}
-                  </>
-                )}
-            </>
-          )}
-        </div>
-      </div>
-    );
+      );
+    }
   }
 
   function renderChecklist(checklist: string[]) {

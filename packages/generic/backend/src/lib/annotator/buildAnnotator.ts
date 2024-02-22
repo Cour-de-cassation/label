@@ -210,7 +210,10 @@ function buildAnnotator(
       msg: 'Annotation report created in DB',
     });
 
-    if (additionalTermsParsingFailed) {
+    if (
+      additionalTermsParsingFailed !== null &&
+      additionalTermsParsingFailed !== undefined
+    ) {
       logger.log({
         operationName: 'annotateDocument',
         msg: `additionalTermsParsingFailed found, updating with value ${additionalTermsParsingFailed}`,
@@ -219,30 +222,30 @@ function buildAnnotator(
         documentId,
         additionalTermsParsingFailed,
       );
-    } else {
-      if (!!newCategoriesToOmit) {
-        logger.log({
-          operationName: 'annotateDocument',
-          msg: 'New categories to omit found, updating...',
-        });
+    }
+    if (!!newCategoriesToOmit) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'New categories to omit found, updating...',
+      });
 
-        await documentService.updateDocumentCategoriesToOmit(
-          documentId,
-          newCategoriesToOmit,
-        );
-      }
-      if (!!computedAdditionalTerms) {
-        logger.log({
-          operationName: 'annotateDocument',
-          msg:
-            'Additionals terms to annotate or to unannotate found, adding to document...',
-        });
+      await documentService.updateDocumentCategoriesToOmit(
+        documentId,
+        newCategoriesToOmit,
+      );
+    }
 
-        await documentService.updateDocumentComputedAdditionalTerms(
-          documentId,
-          computedAdditionalTerms,
-        );
-      }
+    if (!!computedAdditionalTerms) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg:
+          'Additionals terms to annotate or to unannotate found, adding to document...',
+      });
+
+      await documentService.updateDocumentComputedAdditionalTerms(
+        documentId,
+        computedAdditionalTerms,
+      );
     }
 
     const nextDocumentStatus = documentModule.lib.getNextStatus({

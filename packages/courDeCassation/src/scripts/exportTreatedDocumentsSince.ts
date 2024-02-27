@@ -7,6 +7,12 @@ import { parametersHandler } from '../lib/parametersHandler';
   const { environment, settings } = await parametersHandler.getParameters();
   const { days } = parseArgv();
   const backend = buildBackend(environment, settings);
+
+  await backend.runScript(
+    () => backend.scripts.cleanDuplicatedDocuments.run(),
+    backend.scripts.cleanDuplicatedDocuments.option,
+  );
+
   const sderExporter = buildSderExporter(environment, settings);
   backend.runScript(
     () => sderExporter.exportTreatedDocumentsSince(days, environment),

@@ -60,7 +60,7 @@ function ToBeConfirmedDocuments(props: {
     return {
       userName: {
         value: filterValues.userName,
-        possibleValues: filterInfo.userNames,
+        possibleValues: filterInfo.userNames.sort(),
         setValue: (userName: userType['name'] | undefined) => setAndStoreFilterValues({ ...filterValues, userName }),
       },
       publicationCategoryLetter: {

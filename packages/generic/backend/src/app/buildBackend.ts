@@ -21,8 +21,8 @@ import {
   resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
-  cleanOrphansTreatments,
 } from './scripts';
+import { cleanDuplicatedDocuments } from './scripts/cleanDocuments';
 
 export { buildBackend };
 
@@ -111,9 +111,9 @@ function buildBackend(environment: environmentType, settings: settingsType) {
         run: runNewMigrations,
         option: { shouldLoadDb: true, shouldExit: true },
       },
-      cleanOrphansTreatments: {
-        run: cleanOrphansTreatments,
-        option: { shouldLoadDb: true, shouldExit: true },
+      cleanDuplicatedDocuments: {
+        run: cleanDuplicatedDocuments,
+        option: { shouldLoadDb: true, shouldExit: false },
       },
     },
   };

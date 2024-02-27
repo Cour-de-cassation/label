@@ -5,9 +5,9 @@ import { logger } from '../../../utils';
 
 export { cleanOrphansTreatments };
 
-/*
-  Clean treatments with no document associated
-*/
+/**
+ * Clean treatments with no document associated
+ */
 
 async function cleanOrphansTreatments() {
   logger.log({ operationName: 'cleanOrphansTreatments', msg: 'START' });

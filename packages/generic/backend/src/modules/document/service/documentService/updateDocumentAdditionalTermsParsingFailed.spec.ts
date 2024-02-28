@@ -7,26 +7,9 @@ describe('updateDocumentAdditionalTermsParsingFailed', () => {
 
   it('should update document updateDocumentAdditionalTermsParsingFailed', async () => {
     const document = documentModule.generator.generate({
-      decisionMetadata: {
-        appealNumber: '',
-        additionalTermsToAnnotate: '',
-        computedAdditionalTerms: undefined,
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         additionalTermsParsingFailed: false,
-        boundDecisionDocumentNumbers: [],
-        categoriesToOmit: [],
-        chamberName: '',
-        civilCaseCode: '',
-        civilMatterCode: '',
-        criminalCaseCode: '',
-        date: 0,
-        jurisdiction: '',
-        occultationBlock: 0,
-        NACCode: '',
-        endCaseCode: '',
-        parties: [],
-        session: '',
-        solution: '',
-      },
+      }),
     });
     await documentRepository.insert(document);
 

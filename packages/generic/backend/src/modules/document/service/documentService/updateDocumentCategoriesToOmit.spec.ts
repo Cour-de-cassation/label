@@ -7,26 +7,9 @@ describe('updateDocumentCategoriesToOmit', () => {
 
   it('should update document categoriesToOmit', async () => {
     const document = documentModule.generator.generate({
-      decisionMetadata: {
-        appealNumber: '',
-        additionalTermsToAnnotate: '',
-        computedAdditionalTerms: undefined,
-        additionalTermsParsingFailed: false,
-        boundDecisionDocumentNumbers: [],
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         categoriesToOmit: ['categorie1', 'categorie2'],
-        chamberName: '',
-        civilCaseCode: '',
-        civilMatterCode: '',
-        criminalCaseCode: '',
-        date: 0,
-        jurisdiction: '',
-        occultationBlock: 0,
-        NACCode: '',
-        endCaseCode: '',
-        parties: [],
-        session: '',
-        solution: '',
-      },
+      }),
     });
     await documentRepository.insert(document);
 

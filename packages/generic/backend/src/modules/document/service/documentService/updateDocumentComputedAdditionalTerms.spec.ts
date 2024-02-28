@@ -7,26 +7,9 @@ describe('updateDocumentComputedAdditionalTerms', () => {
 
   it('should update document computedAdditionalTerms', async () => {
     const document = documentModule.generator.generate({
-      decisionMetadata: {
-        appealNumber: '',
-        additionalTermsToAnnotate: '',
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         computedAdditionalTerms: undefined,
-        additionalTermsParsingFailed: false,
-        boundDecisionDocumentNumbers: [],
-        categoriesToOmit: ['categorie1', 'categorie2'],
-        chamberName: '',
-        civilCaseCode: '',
-        civilMatterCode: '',
-        criminalCaseCode: '',
-        date: 0,
-        jurisdiction: '',
-        occultationBlock: 0,
-        NACCode: '',
-        endCaseCode: '',
-        parties: [],
-        session: '',
-        solution: '',
-      },
+      }),
     });
     await documentRepository.insert(document);
 

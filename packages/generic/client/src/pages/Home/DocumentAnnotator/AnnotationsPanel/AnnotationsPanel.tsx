@@ -57,6 +57,7 @@ function AnnotationsPanel(props: {
                 renderAdditionalAnnotationTerms(
                   props.document.decisionMetadata.additionalTermsToAnnotate,
                   props.document.decisionMetadata.computedAdditionalTerms,
+                  props.document.decisionMetadata.additionalTermsParsingFailed,
                 )}
               <div>{renderCategory({ category, categorySize, categoryAnnotations })}</div>
             </div>
@@ -87,11 +88,11 @@ function AnnotationsPanel(props: {
   function renderAdditionalAnnotationTerms(
     additionalTermsToAnnotate: string,
     computedAdditionalTerms?: { additionalTermsToAnnotate: string[]; additionalTermsToUnAnnotate: string[] },
+    isParsingFailedOnAdditionalTerms?: boolean,
   ) {
-    const isParsingFailedOnAdditionalTerms = props.document.decisionMetadata.additionalTermsParsingFailed;
-
     if (
       isParsingFailedOnAdditionalTerms ||
+      (isParsingFailedOnAdditionalTerms == undefined && additionalTermsToAnnotate !== '') ||
       (computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
         computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
       (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
@@ -103,7 +104,8 @@ function AnnotationsPanel(props: {
             <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
           </div>
           <div style={styles.additionalAnnotationTermsRightContainer}>
-            {isParsingFailedOnAdditionalTerms ? (
+            {isParsingFailedOnAdditionalTerms ||
+            (isParsingFailedOnAdditionalTerms == undefined && additionalTermsToAnnotate !== '') ? (
               <>
                 <Text>{wordings.homePage.additionalOccultationsParsingFailed}</Text>
                 <Text variant="body2">{additionalTermsToAnnotate}</Text>

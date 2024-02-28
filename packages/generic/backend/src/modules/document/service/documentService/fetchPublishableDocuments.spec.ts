@@ -14,8 +14,6 @@ describe('fetchPublishableDocuments', () => {
         publicationCategory: ['P'],
         decisionMetadata: {
           additionalTermsToAnnotate: '',
-          computedAdditionalTerms: undefined,
-          additionalTermsParsingFailed: false,
           appealNumber: '08-16.486',
           boundDecisionDocumentNumbers: [],
           categoriesToOmit: [],
@@ -31,7 +29,7 @@ describe('fetchPublishableDocuments', () => {
           solution: '',
           NACCode: '',
           endCaseCode: '',
-        },
+        } as any,
         route: 'confirmation' as documentType['route'],
       },
       {

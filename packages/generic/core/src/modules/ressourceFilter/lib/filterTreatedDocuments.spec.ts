@@ -157,7 +157,6 @@ describe('filterTreatedDocuments', () => {
           date: decisionDate,
           categoriesToOmit: [],
           boundDecisionDocumentNumbers: [],
-          additionalTermsParsingFailed: false,
           NACCode: '',
           endCaseCode: '',
           parties: [],

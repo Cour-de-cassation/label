@@ -1,8 +1,49 @@
-import { generatorType } from '../../../types';
+import { generatorType, generatorDecisionMetadataType } from '../../../types';
 import { idModule } from '../../id';
 import { documentType } from '../documentType';
 
-export { documentGenerator };
+export { documentGenerator, decisionMetadataGenerator };
+const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['decisionMetadata']> = {
+  generate: ({
+    additionalTermsToAnnotate,
+    additionalTermsParsingFailed,
+    computedAdditionalTerms,
+    appealNumber,
+    boundDecisionDocumentNumbers,
+    categoriesToOmit,
+    chamberName,
+    civilCaseCode,
+    civilMatterCode,
+    criminalCaseCode,
+    date,
+    jurisdiction,
+    NACCode,
+    endCaseCode,
+    occultationBlock,
+    parties,
+    session,
+    solution,
+  } = {}) => ({
+    additionalTermsToAnnotate: additionalTermsToAnnotate ?? '',
+    computedAdditionalTerms: computedAdditionalTerms ?? undefined,
+    additionalTermsParsingFailed: additionalTermsParsingFailed ?? undefined,
+    appealNumber: appealNumber ?? '',
+    boundDecisionDocumentNumbers: boundDecisionDocumentNumbers ?? [],
+    categoriesToOmit: categoriesToOmit ?? [],
+    chamberName: chamberName ?? '',
+    civilCaseCode: civilCaseCode ?? '',
+    civilMatterCode: civilMatterCode ?? '',
+    criminalCaseCode: criminalCaseCode ?? '',
+    date: date ?? new Date().getTime(),
+    jurisdiction: jurisdiction ?? '',
+    NACCode: NACCode ?? '',
+    endCaseCode: endCaseCode ?? '',
+    occultationBlock: occultationBlock ?? 0,
+    parties: parties ?? [],
+    session: session ?? '',
+    solution: solution ?? '',
+  }),
+};
 
 const documentGenerator: generatorType<documentType> = {
   generate: ({
@@ -24,31 +65,7 @@ const documentGenerator: generatorType<documentType> = {
     updateDate,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date().getTime(),
-    decisionMetadata: decisionMetadata
-      ? decisionMetadata
-      : {
-          additionalTermsToAnnotate: '',
-          computedAdditionalTerms: {
-            additionalTermsToAnnotate: [],
-            additionalTermsToUnAnnotate: [],
-          },
-          additionalTermsParsingFailed: false,
-          appealNumber: '',
-          boundDecisionDocumentNumbers: [],
-          categoriesToOmit: [],
-          chamberName: '',
-          civilCaseCode: '',
-          civilMatterCode: '',
-          criminalCaseCode: '',
-          date: new Date().getTime(),
-          jurisdiction: '',
-          NACCode: '',
-          endCaseCode: '',
-          occultationBlock: undefined,
-          parties: [],
-          session: '',
-          solution: '',
-        },
+    decisionMetadata: decisionMetadata ? decisionMetadata : decisionMetadataGenerator.generate(),
     documentNumber: documentNumber ?? Math.floor(Math.random() * 1000000),
     externalId: externalId ?? `EXTERNAL_ID_${Math.random()}`,
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),

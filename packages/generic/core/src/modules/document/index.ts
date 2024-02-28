@@ -1,4 +1,4 @@
-import { documentGenerator } from './generator';
+import { documentGenerator, decisionMetadataGenerator } from './generator';
 import { documentModel, documentType, fetchedDocumentModel, fetchedDocumentType } from './documentType';
 import {
   buildDocument,
@@ -18,6 +18,7 @@ const documentModule = {
   fetchedModel: fetchedDocumentModel,
   model: documentModel,
   generator: documentGenerator,
+  decisionMetadataGenerator: decisionMetadataGenerator,
   lib: {
     buildDocument,
     comparator,

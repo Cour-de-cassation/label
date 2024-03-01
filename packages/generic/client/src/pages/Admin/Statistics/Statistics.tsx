@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { apiRouteOutType, ressourceFilterType, userType } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { heights, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { StatisticsBox } from './StatisticsBox';
 import { StatisticsFilterButton } from './StatisticsFilterButton';
+import { DocumentsTableHeaderStatistics } from '../../../components/business/DocumentsTableHeaderStatistics';
 
 export { Statistics };
 
@@ -22,19 +23,24 @@ function Statistics(props: {
   const styles = buildStyles(theme);
 
   const aggregatedStatistics = buildAggregatedStatistics();
-
+  const [searchedDocumentNumber, setSearchedDocumentNumber] = useState<number | undefined>();
+  const searchDocumentNumber = (searchedDocumentNumber: number | undefined) => {
+    setSearchedDocumentNumber(searchedDocumentNumber)
+    return searchedDocumentNumber;
+  }
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <div style={styles.filtersContainer}>
-          <StatisticsFilterButton
-            availableStatisticFilters={props.availableStatisticFilters}
-            users={props.users}
-            refetch={props.refetch}
-            isLoading={props.isLoading}
-            ressourceFilter={props.ressourceFilter}
-          />
-        </div>
+    <div>
+      <div>
+        filer button
+        <DocumentsTableHeaderStatistics
+          availableStatisticFilters={props.availableStatisticFilters}
+          users={props.users}
+          refetch={props.refetch}
+          isLoading={props.isLoading}
+          ressourceFilter={props.ressourceFilter}
+          documentNumber={searchedDocumentNumber}
+          setSearchedDocumentNumber={searchDocumentNumber}
+        />
       </div>
       <div style={styles.body}>
         {props.aggregatedStatistics.total == -1 ? (

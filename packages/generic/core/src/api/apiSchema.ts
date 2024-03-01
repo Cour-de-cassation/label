@@ -50,6 +50,37 @@ const apiSchema = {
         },
       } as const),
     },
+    documentStatistics: {
+      in: {
+        documentNumber: documentModule.fetchedModel.content.documentNumber,
+      },
+      out: buildModel({
+        kind: 'object',
+        content: {
+          cumulatedValue: {
+            kind: 'object',
+            content: {
+              subAnnotationsSensitiveCount: buildModel({
+                kind: 'primitive',
+                content: 'number',
+              } as const),
+              subAnnotationsNonSensitiveCount: buildModel({
+                kind: 'primitive',
+                content: 'number',
+              } as const),
+              surAnnotationsCount: buildModel({
+                kind: 'primitive',
+                content: 'number',
+              } as const),
+              treatmentDuration: treatmentModule.model.content.duration,
+              annotationsCount: statisticModule.model.content.annotationsCount,
+              wordsCount: statisticModule.model.content.wordsCount,
+            },
+          },
+          total: { kind: 'primitive', content: 'number' },
+        },
+      } as const),
+    },
     checklist: {
       in: {
         documentId: buildModel({

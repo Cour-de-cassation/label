@@ -1,7 +1,8 @@
-import { statisticType } from '@label/core';
+import { documentType, statisticType } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { buildRessourceFilterRequest } from '../../ressourceFilter';
 import { customStatisticRepositoryType } from './customStatisticRepositoryType';
+import { logger } from '../../../utils';
 
 export { buildStatisticRepository };
 
@@ -19,6 +20,16 @@ const buildStatisticRepository = buildRepositoryBuilder<
     { index: { jurisdiction: 1 } },
   ],
   buildCustomRepository: (collection) => ({
+
+    //fetch statistics by documentNumber
+    async findAllStatisticsByDocumentNumber(documentNumber: documentType['documentNumber']) {
+      const statisticDocument = collection.find({
+        documentNumber: documentNumber
+      }).toArray();
+
+      logger.log({ operationName: "logStatisticDocument", msg: `les statistiques : ${statisticDocument}` })
+      return statisticDocument;
+    },
     async findAllByRessourceFilter(ressourceFilter) {
       const ressourceFilterRequest = buildRessourceFilterRequest(
         ressourceFilter,

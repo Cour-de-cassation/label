@@ -24,7 +24,7 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<voi
   const annotatorState = annotatorStateHandler.get();
   const styles = buildStyles();
   const categories = settingsModule.lib.getCategories(annotatorState.settings, {
-    status: ['annotable'],
+    status: ['annotable', 'alwaysAnnotable'],
     canBeAnnotatedBy: 'human',
   });
   const nonAnnotableCategories = settingsModule.lib.getCategories(annotatorState.settings, {

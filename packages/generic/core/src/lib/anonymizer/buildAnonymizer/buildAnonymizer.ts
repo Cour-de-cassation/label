@@ -19,7 +19,6 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
   annotations: annotationType[],
   seed: number,
 ): anonymizerType<documentT> {
-  console.log(settings);
   const mapper: { [key: string]: string | undefined } = buildEntityIdMapper(settings, annotations, seed);
   return {
     anonymizeDocument,
@@ -46,8 +45,7 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
     if (
       settings[annotation.category]?.isAnonymized === false ||
       settings[annotation.category]?.status === 'visible' ||
-      settings[annotation.category]?.status === 'alwaysVisible' ||
-      settings[annotation.category]?.status === 'alwaysAnnotable'
+      settings[annotation.category]?.status === 'alwaysVisible'
     ) {
       return annotation.text;
     }

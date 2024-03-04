@@ -270,7 +270,7 @@
     },
     "iconName": "judge",
     "order": 17,
-    "status": "alwaysAnnotable",
+    "status": "visible",
     "text": "Magistrat / membre du greffe"
   },
   "professionnelAvocat": {

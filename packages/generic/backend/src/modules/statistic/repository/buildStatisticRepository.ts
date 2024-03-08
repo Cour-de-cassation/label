@@ -3,6 +3,7 @@ import { buildRepositoryBuilder } from '../../../repository';
 import { buildRessourceFilterRequest } from '../../ressourceFilter';
 import { customStatisticRepositoryType } from './customStatisticRepositoryType';
 import { logger } from '../../../utils';
+import { dumpDocument } from 'src/app/scripts';
 
 export { buildStatisticRepository };
 
@@ -23,13 +24,12 @@ const buildStatisticRepository = buildRepositoryBuilder<
 
     //fetch statistics by documentNumber
     async findAllStatisticsByDocumentNumber(documentNumber: documentType['documentNumber']) {
-      const statisticDocument = collection.find({
-        documentNumber: documentNumber
-      }).toArray();
-
+      logger.log({ operationName: "doucmentNUmber", msg: `le documentNumber : ${documentNumber}` })
+      const statisticDocument = await collection.find({ documentNumber: { $eq: documentNumber } }).toArray();
       logger.log({ operationName: "logStatisticDocument", msg: `les statistiques : ${statisticDocument}` })
       return statisticDocument;
     },
+
     async findAllByRessourceFilter(ressourceFilter) {
       const ressourceFilterRequest = buildRessourceFilterRequest(
         ressourceFilter,

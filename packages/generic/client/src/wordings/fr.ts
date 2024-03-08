@@ -344,6 +344,13 @@ const fr = {
         subAnnotationsNonSensitiveCount: 'Sous. (autres)',
         treatmentDuration: 'Temps de traitement',
         wordsCount: 'Mots',
+        documentNumber: 'N° d.',
+        endCaseCode: 'Code F.',
+        NACCode: 'Code Nc',
+        chamberName: 'Chbr.',
+        documentTreatment: 'Tps traitement',
+        agent: 'Agent',
+
       },
     },
   },

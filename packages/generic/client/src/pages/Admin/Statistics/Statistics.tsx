@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { apiRouteOutType, ressourceFilterType, userType } from '@label/core';
+import { apiRouteOutType, ressourceFilterType, statisticType, userType } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { heights, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { StatisticsBox } from './StatisticsBox';
-import { StatisticsFilterButton } from './StatisticsFilterButton';
+import { DocumentStatisticsBox } from './StatisticsBox/DocumentStatisticsBox';
 import { DocumentsTableHeaderStatistics } from '../../../components/business/DocumentsTableHeaderStatistics';
 
 export { Statistics };
@@ -28,10 +28,15 @@ function Statistics(props: {
     setSearchedDocumentNumber(searchedDocumentNumber)
     return searchedDocumentNumber;
   }
+  // get documentStatistics
+  const [documentStatistics, setdocumentStatistics] = useState<Array<any>>();
+  const receivedocumentStatistics = (data: Array<any>) => {
+    setdocumentStatistics(data);
+  };
+  console.log('documentStatistics', documentStatistics)
   return (
     <div>
       <div>
-        filer button
         <DocumentsTableHeaderStatistics
           availableStatisticFilters={props.availableStatisticFilters}
           users={props.users}
@@ -40,26 +45,56 @@ function Statistics(props: {
           ressourceFilter={props.ressourceFilter}
           documentNumber={searchedDocumentNumber}
           setSearchedDocumentNumber={searchDocumentNumber}
+          documentStatistics={receivedocumentStatistics}
         />
       </div>
       <div style={styles.body}>
-        {props.aggregatedStatistics.total == -1 ? (
-          <div style={styles.numberOfDecisionContainer}>
-            <Text variant="h1">{wordings.statisticsPage.alertMessage}</Text>
-          </div>
-        ) : (
-          <>
+        <div style={styles.row}>
+          {props.aggregatedStatistics.total == -1 ? (
             <div style={styles.numberOfDecisionContainer}>
-              <Text variant="h1">{wordings.statisticsPage.treatedDecisions}</Text>
-              <Text variant="h1">{props.aggregatedStatistics.total}</Text>
+              <Text variant="h1">{wordings.statisticsPage.alertMessage}</Text>
             </div>
-            <StatisticsBox
-              aggregatedStatistic={aggregatedStatistics}
-              statisticsCount={props.aggregatedStatistics.total}
-              width={WIDTH}
-            />
-          </>
-        )}
+          ) : (
+            <>
+              <div style={styles.numberOfDecisionContainer}>
+                <Text variant="h1">{wordings.statisticsPage.treatedDecisions}</Text>
+                <Text variant="h1">{props.aggregatedStatistics.total}</Text>
+              </div>
+              <StatisticsBox
+                aggregatedStatistic={aggregatedStatistics}
+                statisticsCount={props.aggregatedStatistics.total}
+                width={WIDTH}
+              />
+            </>
+          )}
+        </div>
+        <hr style={styles.hrLine} />
+        <div style={styles.row}>
+          {documentStatistics?.length == 0 ? (
+            <div style={styles.numberOfDecisionContainer}>
+              <Text variant="h1">Il n'y a pas de statistique.</Text>
+            </div>
+          ) : (
+            <>
+              <div style={styles.numberOfDecisionContainer}>
+                <Text variant="h1">{`Veuillez chercher par numéro de décision`}</Text>
+              </div>
+              <div style={styles.rowBox}>
+                {
+                  documentStatistics?.map((val) => {
+                    return (
+                      <div>
+                        <DocumentStatisticsBox documentStatistic={val} width={WIDTH} />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+
+            </>
+          )}
+
+        </div>
       </div>
     </div>
   );
@@ -87,10 +122,18 @@ function buildStyles(theme: customThemeType) {
       width: widths.adminContent,
     },
     filtersContainer: {
-      paddingTop: theme.spacing * 4,
+      paddingTop: theme.spacing * 2,
       paddingLeft: theme.spacing * 3,
     },
     body: {
+      height: heights.statisticsBodyHeight,
+      width: widths.adminContent,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    row: {
       height: heights.statisticsBodyHeight,
       width: widths.adminContent,
       display: 'flex',
@@ -98,11 +141,24 @@ function buildStyles(theme: customThemeType) {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    rowBox: {
+      display: 'flex',
+      flexFlow: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      overflow: 'auto',
+    },
     numberOfDecisionContainer: {
       display: 'flex',
       justifyContent: 'space-between',
       paddingBottom: theme.spacing * 3,
       width: `${WIDTH}px`,
     },
+    hrLine: {
+      border: 'none',
+      borderLeft: '1px solid hsla(200, 10%, 50%,100)',
+      height: '70%',
+      width: ' 1px'
+    }
   } as const;
 }

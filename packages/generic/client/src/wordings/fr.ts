@@ -332,6 +332,8 @@ const fr = {
     },
     treatedDecisions: 'Décisions traitées',
     alertMessage: 'Veuillez sélectionner un filtre pour afficher les statistiques',
+    alertMessageStats: 'Veuillez chercher par numéro de décision pour afficher les statistiques',
+    alertMessagePasStats: "Il n'y a pas de statistiques",
     box: {
       computation: {
         total: 'Total',

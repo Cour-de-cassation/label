@@ -35,8 +35,6 @@ function DocumentsTableHeaderStatistics(props: {
           <div style={styles.searchTextInputContainer}>
             <DocumentNumberTextInput value={props.documentNumber} onChange={
               (e) => {
-                console.log('eeeeee', e)
-                console.log('props.setSearchedDocumentNumber', props.setSearchedDocumentNumber(e))
                 props.setSearchedDocumentNumber(e)
                 buildFetchDocumentStatistics(e ?? 0).then((val) => {
                   props.documentStatistics(val.data as any)

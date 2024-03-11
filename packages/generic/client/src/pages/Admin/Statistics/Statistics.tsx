@@ -33,7 +33,8 @@ function Statistics(props: {
   const receivedocumentStatistics = (data: Array<any>) => {
     setdocumentStatistics(data);
   };
-  console.log('documentStatistics', documentStatistics)
+
+  const titleAlert = searchDocumentNumber != undefined ? <p> {wordings.statisticsPage.alertMessageStats} </p> : <p> </p>;
   return (
     <div>
       <div>
@@ -70,29 +71,30 @@ function Statistics(props: {
         </div>
         <hr style={styles.hrLine} />
         <div style={styles.row}>
-          {documentStatistics?.length == 0 ? (
-            <div style={styles.numberOfDecisionContainer}>
-              <Text variant="h1">Il n'y a pas de statistique.</Text>
-            </div>
-          ) : (
-            <>
+          {
+            documentStatistics?.length == 0 ? (
               <div style={styles.numberOfDecisionContainer}>
-                <Text variant="h1">{`Veuillez chercher par numéro de décision`}</Text>
+                <Text variant="h1">{wordings.statisticsPage.alertMessagePasStats}</Text>
               </div>
-              <div style={styles.rowBox}>
-                {
-                  documentStatistics?.map((val) => {
-                    return (
-                      <div>
-                        <DocumentStatisticsBox documentStatistic={val} width={WIDTH} />
-                      </div>
-                    )
-                  })
-                }
-              </div>
+            ) : (
+              <>
+                <div style={styles.numberOfDecisionContainer}>
+                  <Text variant="h1">{titleAlert}</Text>
+                </div>
+                <div style={styles.rowBox}>
+                  {
+                    documentStatistics?.map((val) => {
+                      return (
+                        <div>
+                          <DocumentStatisticsBox documentStatistic={val} width={WIDTH} />
+                        </div>
+                      )
+                    })
+                  }
+                </div>
 
-            </>
-          )}
+              </>
+            )}
 
         </div>
       </div>
@@ -126,7 +128,8 @@ function buildStyles(theme: customThemeType) {
       paddingLeft: theme.spacing * 3,
     },
     body: {
-      height: heights.statisticsBodyHeight,
+      height: "70%", // à changer et à tester pour le problème d'espace blanc dans statistique/ admin onglet
+      //height: heights.statisticsBodyHeight,
       width: widths.adminContent,
       display: 'flex',
       flexDirection: 'row',
@@ -134,7 +137,7 @@ function buildStyles(theme: customThemeType) {
       alignItems: 'center',
     },
     row: {
-      height: heights.statisticsBodyHeight,
+      height: heights.statisticsBodyHeight, // à changer et à tester pour le problème d'espace blanc dans statistique/ admin onglet
       width: widths.adminContent,
       display: 'flex',
       flexDirection: 'column',

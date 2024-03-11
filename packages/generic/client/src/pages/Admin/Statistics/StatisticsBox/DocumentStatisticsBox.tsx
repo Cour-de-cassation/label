@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { timeOperator, statisticType, idType } from '@label/core';
+import React from 'react';
+import { timeOperator } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 
 
 export { DocumentStatisticsBox };
 type treatmentsSummaryType = {
-  value: {
-    email: string,
-    id: string,
-    name: string,
-  },
+  email: string,
+  id: string,
+  name: string,
   treatmentDuration: number
 };
 
@@ -49,15 +47,26 @@ function DocumentStatisticsBox(props: {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const DocumentStatisticsRows = buildDocumentStatisticRow();
+  const DocumentAgentRows = buildAgentDurationRow();
   return (
     <div style={styles.container}>
       <div style={styles.rowsContainer}>
-        {DocumentStatisticsRows.map((documentStatisticsRows) => (
-          <div style={styles.rowContainer}>
-            <Text weight='normal' >{documentStatisticsRows.label} </Text>
-            <Text weight='normal' color="textPrimary" >{documentStatisticsRows.value}</Text>
-          </div>
-        ))}
+        <div>
+          {DocumentStatisticsRows.map((documentStatisticsRows) => (
+            <div style={styles.rowContainer}>
+              <Text weight='normal' >{documentStatisticsRows.label} </Text>
+              <Text weight='normal' color="textPrimary" >{documentStatisticsRows.value}</Text>
+            </div>
+          ))}
+        </div>
+        <div>
+          {DocumentAgentRows.map((DocumentAgentRow) => (
+            <div style={styles.rowAgentContainer}>
+              <div> <Text weight='normal' > {DocumentAgentRow.label} </Text> </div>
+              <div> <Text weight='normal' color="textPrimary" >{DocumentAgentRow.value}</Text></div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -101,28 +110,54 @@ function DocumentStatisticsBox(props: {
       {
         label: wordings.statisticsPage.box.fields.chamberName,
         value: documentStatistic.chamberName,
-      },
-      {
-        label: wordings.statisticsPage.box.fields.agent,
-        value: getUser() + " " + getReadableDuration(),
-      },
+      }
     ];
   }
 
-  function getReadableDuration() {
-    return props.documentStatistic.treatmentsSummary.map((val) => {
-      return timeOperator.convertDurationToReadableDuration(
-        val?.treatmentDuration,
-      );
-    })
+  function buildAgentDurationRow() {
+    if (props.documentStatistic.treatmentsSummary != undefined) {
+      const treatments: any = removeNull(props.documentStatistic.treatmentsSummary);
+
+      const duration = treatments?.map((value: treatmentsSummaryType) => {
+        return " " + timeOperator.convertDurationToReadableDuration(
+          value.treatmentDuration,
+        ) + " ";
+      })
+
+      const agent = treatments?.map((value: treatmentsSummaryType) => {
+        return " " + value.email + " ";
+      })
+
+      return [
+        {
+          label: wordings.statisticsPage.box.fields.agent,
+          value: agent,
+        },
+        {
+          label: wordings.statisticsPage.box.fields.treatmentDuration,
+          value: duration,
+        }
+      ];
+
+    } else {
+      return [
+        {
+          label: wordings.statisticsPage.box.fields.agent,
+          value: "N/A",
+        },
+        {
+          label: wordings.statisticsPage.box.fields.treatmentDuration,
+          value: "N/A",
+        }
+      ];
+    }
   }
 
-  function getUser() {
-    console.log('treatmenntnn', props.documentStatistic.treatmentsSummary)
-    return props.documentStatistic.treatmentsSummary.map(({ value }) => value?.email)
+  function removeNull(arr: Array<treatmentsSummaryType>) {
+    if (arr != undefined && arr.length != 0) {
+      return arr.filter((val) => val != null);
+    }
   }
-
-
 
   function buildStyles(theme: customThemeType) {
     return {
@@ -135,7 +170,6 @@ function DocumentStatisticsBox(props: {
         justifyContent: 'space-between',
         alignItems: 'center',
         boxShadow: theme.boxShadow.minor.out,
-        marginBottum: '100px',
       },
       rowsContainer: {
         paddingTop: theme.spacing * 1,
@@ -143,6 +177,13 @@ function DocumentStatisticsBox(props: {
       },
       rowContainer: {
         display: 'flex',
+        justifyContent: 'space-between',
+        height: ROW_HEIGHT,
+        alignItems: 'right',
+      },
+      rowAgentContainer: {
+        display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'space-between',
         height: ROW_HEIGHT,
         alignItems: 'right',

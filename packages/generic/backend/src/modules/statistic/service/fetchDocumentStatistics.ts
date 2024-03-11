@@ -1,20 +1,15 @@
 import { buildStatisticRepository } from '../repository';
-import { logger } from '../../../utils';
 import { idModule, statisticType } from '@label/core';
 import { userService } from './../../../modules/user';
 import { ObjectId } from 'mongodb';
-// import { values } from 'lodash';
 
 export { fetchDocumentStatistics };
 
 async function fetchDocumentStatistics(documentNumber: statisticType['documentNumber']) {
   const documentStatisticsRepository = buildStatisticRepository();
   const documentStatistics = await documentStatisticsRepository.findAllStatisticsByDocumentNumber(documentNumber)
-  logger.log({ operationName: "fetchDocumentStatistics", msg: `the documentStatistics : ${documentStatistics}` })
 
   let userIdString: ObjectId[] = [];
-
-  // partinnoer les partis, 
   documentStatistics.map(({ treatmentsSummary }) => {
     return treatmentsSummary.map((val) => {
       if (val.userId != null) {
@@ -24,29 +19,24 @@ async function fetchDocumentStatistics(documentNumber: statisticType['documentNu
   });
 
   const result = await getStatisticsAndUsers(userIdString);
-  console.log('get all users', result)
 
   const getFinalStatistics = documentStatistics.map((val) => {
-    const p = result.map((value) => {
-      console.log("in result map", value)
-      return val.treatmentsSummary.map((val) => {
-        console.log("in treatmentsSummary map", val)
+    const p = val.treatmentsSummary.map((val) => {
+      return result.map((value) => {
         if (value.id == idModule.lib.convertToString(val.userId)) {
           return { ...value, "treatmentDuration": val.treatmentDuration };
         } else {
+          return null;
+        }
+      });
 
-        };
-      })
-    });
-
-    console.log('ppp======> ', p)
+    })
 
     return {
       ...val,
       "treatmentsSummary": p[0],
     }
   })
-  console.log('theGoodDoc', getFinalStatistics)
 
   return getFinalStatistics;
 }

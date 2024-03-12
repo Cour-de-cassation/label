@@ -12,13 +12,13 @@ function aggregate(statistics: statisticType[], filter: ressourceFilterType) {
         const { userId: userIdToFilter } = filter;
         const treatmentDuration = userIdToFilter
           ? aggregatedStatistics.treatmentDuration +
-          sum(
-            statistic.treatmentsSummary
-              .filter(({ userId }) => idModule.lib.equalId(userId, userIdToFilter))
-              .map(({ treatmentDuration }) => treatmentDuration),
-          )
+            sum(
+              statistic.treatmentsSummary
+                .filter(({ userId }) => idModule.lib.equalId(userId, userIdToFilter))
+                .map(({ treatmentDuration }) => treatmentDuration),
+            )
           : aggregatedStatistics.treatmentDuration +
-          sumBy(statistic.treatmentsSummary, ({ treatmentDuration }) => treatmentDuration);
+            sumBy(statistic.treatmentsSummary, ({ treatmentDuration }) => treatmentDuration);
         return {
           annotationsCount: aggregatedStatistics.annotationsCount + statistic.annotationsCount,
           wordsCount: aggregatedStatistics.wordsCount + statistic.wordsCount,

@@ -137,7 +137,7 @@ const apiSchema = {
             },
             wordsCount: { kind: 'primitive', content: 'number' },
           },
-        } as const)
+        } as const),
       },
     },
     checklist: {

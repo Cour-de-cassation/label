@@ -3,47 +3,46 @@ import { timeOperator } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 
-
 export { DocumentStatisticsBox };
 type treatmentsSummaryType = {
-  email: string,
-  id: string,
-  name: string,
-  treatmentDuration: number
+  email: string;
+  id: string;
+  name: string;
+  treatmentDuration: number;
 };
 
-interface statsType {
-  NACCode: string,
-  annotationsCount: number,
-  appealNumber: string | undefined,
-  chamberName: string | undefined,
-  decisionDate: number | undefined,
-  documentExternalId: string,
-  documentNumber: number,
-  endCaseCode: string | undefined,
-  importer: ['recent', 'chained', 'filler', 'manual', 'default'],
-  jurisdiction: string | undefined,
-  linkedEntitiesCount: number,
-  publicationCategory: Array<string>,
-  route: string | undefined,
-  session: string,
-  source: string,
-  subAnnotationsNonSensitiveCount: string,
-  subAnnotationsSensitiveCount: string,
-  surAnnotationsCount: string,
-  treatmentDate: string,
-  treatmentsSummary: Array<treatmentsSummaryType>,
-  wordsCount: number,
-  _id: string,
+type labelStat = {
+  label: string;
+  value: string[] | string | number | undefined;
+};
+export interface documentStatsType {
+  NACCode: string;
+  annotationsCount: number;
+  appealNumber: string | undefined;
+  chamberName: string | undefined;
+  decisionDate: number | undefined;
+  documentExternalId: string;
+  documentNumber: number;
+  endCaseCode: string | undefined;
+  importer: ['recent', 'chained', 'filler', 'manual', 'default'];
+  jurisdiction: string | undefined;
+  linkedEntitiesCount: number;
+  publicationCategory: Array<string>;
+  route: string | undefined;
+  session: string;
+  source: string;
+  subAnnotationsNonSensitiveCount: string;
+  subAnnotationsSensitiveCount: string;
+  surAnnotationsCount: string;
+  treatmentDate: string;
+  treatmentsSummary: Array<treatmentsSummaryType>;
+  wordsCount: number;
+  _id: string;
 }
 
 const ROW_HEIGHT = 25;
 
-
-function DocumentStatisticsBox(props: {
-  documentStatistic: statsType;
-  width: number;
-}) {
+function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; width: number }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const DocumentStatisticsRows = buildDocumentStatisticRow();
@@ -54,16 +53,26 @@ function DocumentStatisticsBox(props: {
         <div>
           {DocumentStatisticsRows.map((documentStatisticsRows) => (
             <div style={styles.rowContainer}>
-              <Text weight='normal' >{documentStatisticsRows.label} </Text>
-              <Text weight='normal' color="textPrimary" >{documentStatisticsRows.value}</Text>
+              <Text weight="normal">{documentStatisticsRows.label} </Text>
+              <Text weight="normal" color="textPrimary">
+                {documentStatisticsRows.value}
+              </Text>
             </div>
           ))}
         </div>
         <div>
-          {DocumentAgentRows.map((DocumentAgentRow) => (
+          {DocumentAgentRows.map((documentAgentRow) => (
             <div style={styles.rowAgentContainer}>
-              <div> <Text weight='normal' > {DocumentAgentRow.label} </Text> </div>
-              <div> <Text weight='normal' color="textPrimary" >{DocumentAgentRow.value}</Text></div>
+              <div>
+                {' '}
+                <Text weight="normal"> {documentAgentRow.label} </Text>{' '}
+              </div>
+              <div>
+                {' '}
+                <Text weight="normal" color="textPrimary">
+                  {documentAgentRow.value}
+                </Text>
+              </div>
             </div>
           ))}
         </div>
@@ -110,23 +119,21 @@ function DocumentStatisticsBox(props: {
       {
         label: wordings.statisticsPage.box.fields.chamberName,
         value: documentStatistic.chamberName,
-      }
+      },
     ];
   }
 
-  function buildAgentDurationRow() {
+  function buildAgentDurationRow(): Array<labelStat> {
     if (props.documentStatistic.treatmentsSummary != undefined) {
-      const treatments: any = removeNull(props.documentStatistic.treatmentsSummary);
+      const treatments = removeNull(props.documentStatistic.treatmentsSummary);
 
       const duration = treatments?.map((value: treatmentsSummaryType) => {
-        return " " + timeOperator.convertDurationToReadableDuration(
-          value.treatmentDuration,
-        ) + " ";
-      })
+        return ' ' + timeOperator.convertDurationToReadableDuration(value.treatmentDuration) + ' ';
+      });
 
       const agent = treatments?.map((value: treatmentsSummaryType) => {
-        return " " + value.email + " ";
-      })
+        return ' ' + value.email + ' ';
+      });
 
       return [
         {
@@ -136,19 +143,18 @@ function DocumentStatisticsBox(props: {
         {
           label: wordings.statisticsPage.box.fields.treatmentDuration,
           value: duration,
-        }
+        },
       ];
-
     } else {
       return [
         {
           label: wordings.statisticsPage.box.fields.agent,
-          value: "N/A",
+          value: 'N/A',
         },
         {
           label: wordings.statisticsPage.box.fields.treatmentDuration,
-          value: "N/A",
-        }
+          value: 'N/A',
+        },
       ];
     }
   }

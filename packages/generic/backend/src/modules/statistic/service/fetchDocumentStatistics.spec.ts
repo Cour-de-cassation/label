@@ -35,8 +35,8 @@ describe('fetchDocumentStatistic', () => {
             {
               userId: user[0]._id,
               treatmentDuration: 10,
-              email: "EMAIL",
-              name: "NAME",
+              email: 'EMAIL',
+              name: 'NAME',
             } as any,
           ],
         },
@@ -48,8 +48,8 @@ describe('fetchDocumentStatistic', () => {
             {
               userId: user[0]._id,
               treatmentDuration: 10,
-              email: "EMAIL",
-              name: "NAME",
+              email: 'EMAIL',
+              name: 'NAME',
             } as any,
           ],
         },
@@ -60,11 +60,11 @@ describe('fetchDocumentStatistic', () => {
             {
               userId: user[0]._id,
               treatmentDuration: 10,
-              email: "EMAIL",
-              name: "NAME",
+              email: 'EMAIL',
+              name: 'NAME',
             } as any,
           ],
-        }
+        },
       ].map(statisticModule.generator.generate);
       await Promise.all(statistics.map(statisticRepository.insert));
 

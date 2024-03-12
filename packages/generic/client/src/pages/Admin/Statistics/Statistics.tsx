@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { apiRouteOutType, ressourceFilterType, statisticType, userType } from '@label/core';
+import { apiRouteOutType, ressourceFilterType, userType } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
 import { heights, widths } from '../../../styles';
 import { wordings } from '../../../wordings';
 import { StatisticsBox } from './StatisticsBox';
-import { DocumentStatisticsBox } from './StatisticsBox/DocumentStatisticsBox';
+import { DocumentStatisticsBox, documentStatsType } from './StatisticsBox/DocumentStatisticsBox';
 import { DocumentsTableHeaderStatistics } from '../../../components/business/DocumentsTableHeaderStatistics';
 
 export { Statistics };
@@ -25,16 +25,17 @@ function Statistics(props: {
   const aggregatedStatistics = buildAggregatedStatistics();
   const [searchedDocumentNumber, setSearchedDocumentNumber] = useState<number | undefined>();
   const searchDocumentNumber = (searchedDocumentNumber: number | undefined) => {
-    setSearchedDocumentNumber(searchedDocumentNumber)
+    setSearchedDocumentNumber(searchedDocumentNumber);
     return searchedDocumentNumber;
-  }
+  };
   // get documentStatistics
-  const [documentStatistics, setdocumentStatistics] = useState<Array<any>>();
-  const receivedocumentStatistics = (data: Array<any>) => {
+  const [documentStatistics, setdocumentStatistics] = useState<Array<documentStatsType>>();
+  const receivedocumentStatistics = (data: Array<documentStatsType>) => {
     setdocumentStatistics(data);
   };
 
-  const titleAlert = searchDocumentNumber != undefined ? <p> {wordings.statisticsPage.alertMessageStats} </p> : <p> </p>;
+  const titleAlert =
+    searchDocumentNumber != undefined ? <p> {wordings.statisticsPage.alertMessageStats} </p> : <p> </p>;
   return (
     <div>
       <div>
@@ -71,31 +72,26 @@ function Statistics(props: {
         </div>
         <hr style={styles.hrLine} />
         <div style={styles.row}>
-          {
-            documentStatistics?.length == 0 ? (
+          {documentStatistics?.length == 0 ? (
+            <div style={styles.numberOfDecisionContainer}>
+              <Text variant="h1">{wordings.statisticsPage.alertMessagePasStats}</Text>
+            </div>
+          ) : (
+            <>
               <div style={styles.numberOfDecisionContainer}>
-                <Text variant="h1">{wordings.statisticsPage.alertMessagePasStats}</Text>
+                <Text variant="h1">{titleAlert}</Text>
               </div>
-            ) : (
-              <>
-                <div style={styles.numberOfDecisionContainer}>
-                  <Text variant="h1">{titleAlert}</Text>
-                </div>
-                <div style={styles.rowBox}>
-                  {
-                    documentStatistics?.map((val) => {
-                      return (
-                        <div>
-                          <DocumentStatisticsBox documentStatistic={val} width={WIDTH} />
-                        </div>
-                      )
-                    })
-                  }
-                </div>
-
-              </>
-            )}
-
+              <div style={styles.rowBox}>
+                {documentStatistics?.map((val) => {
+                  return (
+                    <div>
+                      <DocumentStatisticsBox documentStatistic={val} width={WIDTH} />
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -128,7 +124,7 @@ function buildStyles(theme: customThemeType) {
       paddingLeft: theme.spacing * 3,
     },
     body: {
-      height: "70%", // à changer et à tester pour le problème d'espace blanc dans statistique/ admin onglet
+      height: '70%', // à changer et à tester pour le problème d'espace blanc dans statistique/ admin onglet
       //height: heights.statisticsBodyHeight,
       width: widths.adminContent,
       display: 'flex',
@@ -161,7 +157,7 @@ function buildStyles(theme: customThemeType) {
       border: 'none',
       borderLeft: '1px solid hsla(200, 10%, 50%,100)',
       height: '70%',
-      width: ' 1px'
-    }
+      width: ' 1px',
+    },
   } as const;
 }

@@ -2,8 +2,6 @@ import { documentType, statisticType } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { buildRessourceFilterRequest } from '../../ressourceFilter';
 import { customStatisticRepositoryType } from './customStatisticRepositoryType';
-import { logger } from '../../../utils';
-import { dumpDocument } from 'src/app/scripts';
 
 export { buildStatisticRepository };
 
@@ -21,12 +19,12 @@ const buildStatisticRepository = buildRepositoryBuilder<
     { index: { jurisdiction: 1 } },
   ],
   buildCustomRepository: (collection) => ({
-
-    //fetch statistics by documentNumber
-    async findAllStatisticsByDocumentNumber(documentNumber: documentType['documentNumber']) {
-      logger.log({ operationName: "doucmentNUmber", msg: `le documentNumber : ${documentNumber}` })
-      const statisticDocument = await collection.find({ documentNumber: { $eq: documentNumber } }).toArray();
-      logger.log({ operationName: "logStatisticDocument", msg: `les statistiques : ${statisticDocument}` })
+    async findAllStatisticsByDocumentNumber(
+      documentNumber: documentType['documentNumber'],
+    ) {
+      const statisticDocument = await collection
+        .find({ documentNumber: { $eq: documentNumber } })
+        .toArray();
       return statisticDocument;
     },
 

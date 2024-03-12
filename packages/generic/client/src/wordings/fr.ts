@@ -352,7 +352,6 @@ const fr = {
         chamberName: 'Chbr.',
         documentTreatment: 'Tps traitement',
         agent: 'Agent',
-
       },
     },
   },

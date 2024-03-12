@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { heights } from '../../../styles';
 import { DocumentNumberTextInput } from '../DocumentNumberTextInput';
 import { StatisticsFilterButton } from '../../../pages/Admin/Statistics/StatisticsFilterButton';
-import { apiRouteOutType, documentType, ressourceFilterType, statisticType, userType } from '@label/core';
+import { apiRouteOutType, documentType, ressourceFilterType, userType } from '@label/core';
 import { apiCaller } from '../../../api';
+import { documentStatsType } from '../../../pages/Admin/Statistics/StatisticsBox/DocumentStatisticsBox';
 
 export { DocumentsTableHeaderStatistics };
 
@@ -16,7 +17,7 @@ function DocumentsTableHeaderStatistics(props: {
   ressourceFilter: ressourceFilterType;
   setSearchedDocumentNumber: (documentNumber: number | undefined) => void;
   documentNumber: number | undefined;
-  documentStatistics: (data: Array<statisticType>) => void;
+  documentStatistics: (data: Array<documentStatsType>) => void;
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -33,14 +34,15 @@ function DocumentsTableHeaderStatistics(props: {
         />
         <div style={styles.tableRightHeader}>
           <div style={styles.searchTextInputContainer}>
-            <DocumentNumberTextInput value={props.documentNumber} onChange={
-              (e) => {
-                props.setSearchedDocumentNumber(e)
+            <DocumentNumberTextInput
+              value={props.documentNumber}
+              onChange={(e) => {
+                props.setSearchedDocumentNumber(e);
                 buildFetchDocumentStatistics(e ?? 0).then((val) => {
-                  props.documentStatistics(val.data as any)
-                })
-              }
-            } />
+                  props.documentStatistics(val.data as any);
+                });
+              }}
+            />
           </div>
         </div>
       </div>
@@ -48,11 +50,10 @@ function DocumentsTableHeaderStatistics(props: {
   );
 }
 
-
 const buildFetchDocumentStatistics = async (documentNumber: documentType['documentNumber']) => {
   const data = await apiCaller.get<'documentStatistics'>('documentStatistics', { documentNumber });
   return data;
-}
+};
 
 function buildStyles(theme: customThemeType) {
   return {

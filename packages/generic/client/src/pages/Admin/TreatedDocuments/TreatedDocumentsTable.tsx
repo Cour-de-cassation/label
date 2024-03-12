@@ -21,7 +21,6 @@ function TreatedDocumentsTable(props: {
   refetch: () => void;
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
 }) {
-  console.log('treatedDocuments', props.treatedDocuments)
   const history = useHistory();
   const [documentIdToReset, setDocumentIdToReset] = useState<documentType['_id'] | undefined>(undefined);
   const { displayAlert } = useAlert();

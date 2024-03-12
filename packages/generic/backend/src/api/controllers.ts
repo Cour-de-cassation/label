@@ -35,10 +35,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    //fetch documentStatistics
     documentStatistics: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { documentNumber } }) => {
+        /* eslint-disable  @typescript-eslint/no-unsafe-return */
         return statisticService.fetchDocumentStatistics(documentNumber) as any;
       },
     }),

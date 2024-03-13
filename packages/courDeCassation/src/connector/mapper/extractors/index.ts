@@ -3,7 +3,7 @@ import { extractReadableJurisdictionName } from './extractReadableJurisdictionNa
 import {
   extractAppealRegisterRoleGeneralNumber,
   correctAppealValueFormat,
-  regexExtractAppealNumber
+  regexExtractAppealNumber,
 } from './extractAppealRegisterRoleGeneralNumber';
 import { extractRoute } from './extractRoute';
 

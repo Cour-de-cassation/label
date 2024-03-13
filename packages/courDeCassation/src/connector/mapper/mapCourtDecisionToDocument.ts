@@ -137,8 +137,10 @@ function getNumberPrefix(
   source: string,
   readableJurisdictionName: string,
 ) {
-
-  if (readableJurisdictionName?.includes('cassation') && source !== 'jurica' || 'juritj') {
+  if (
+    (readableJurisdictionName?.includes('cassation') && source !== 'jurica') ||
+    'juritj'
+  ) {
     return (appealNumber = `Pourvoi n° ${appealNumber}`);
   } else {
     return (appealNumber = `RG n° ${appealNumber}`);

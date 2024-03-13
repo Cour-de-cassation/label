@@ -8,7 +8,6 @@ function extractAppealRegisterRoleGeneralNumber(
   registerNumber?: string,
   numeroRoleGeneral?: string,
 ) {
-
   let response;
   let appealNumber;
   if (source === 'jurica' && registerNumber != '') {
@@ -17,10 +16,8 @@ function extractAppealRegisterRoleGeneralNumber(
         ? registerNumber?.split(' ')[0]
         : regexExtractAppealNumber(text) || '';
     return response;
-  }
-  else if (source === 'jurinet') {
+  } else if (source === 'jurinet') {
     if (jurisdictionName?.includes('cassation') && appeals) {
-
       appealNumber = appeals?.replace(/[A-Za-z]/g, '');
       const formattedAppeals =
         appealNumber.substring(0, 2) +
@@ -42,8 +39,7 @@ function extractAppealRegisterRoleGeneralNumber(
           : regexExtractAppealNumber(text) || '';
       return response;
     }
-  }
-  else if (source === 'juritj' && numeroRoleGeneral) {
+  } else if (source === 'juritj' && numeroRoleGeneral) {
     response =
       numeroRoleGeneral != undefined || ''
         ? numeroRoleGeneral

@@ -82,6 +82,8 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
 
   function buildDocumentStatisticRow() {
     const { documentStatistic } = props;
+    const ReadbleTreatmentDateTime = new Date(documentStatistic.treatmentDate);
+    const ReadbleDateDecision = new Date(documentStatistic.decisionDate || '');
 
     return [
       {
@@ -119,6 +121,14 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
       {
         label: wordings.statisticsPage.box.fields.chamberName,
         value: documentStatistic.chamberName,
+      },
+      {
+        label: wordings.statisticsPage.box.fields.decisionDate,
+        value: timeOperator.convertTimestampToReadableDate(ReadbleDateDecision.getDate()),
+      },
+      {
+        label: wordings.statisticsPage.box.fields.treatmentDate,
+        value: timeOperator.convertTimestampToReadableDate(ReadbleTreatmentDateTime.getDate()),
       },
     ];
   }

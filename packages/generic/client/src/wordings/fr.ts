@@ -352,6 +352,8 @@ const fr = {
         chamberName: 'Chbr.',
         documentTreatment: 'Tps traitement',
         agent: 'Agent',
+        decisionDate: 'date de décision',
+        treatmentDate: 'date de Traitement',
       },
     },
   },

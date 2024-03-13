@@ -1,4 +1,4 @@
-export { extractAppealRegisterRoleGeneralNumber, correctAppealValueFormat };
+export { extractAppealRegisterRoleGeneralNumber, getCorrectAppealFormat };
 
 function extractAppealRegisterRoleGeneralNumber(
   text: string,
@@ -67,7 +67,7 @@ export function regexExtractAppealNumber(text: string) {
   return undefined;
 }
 
-function correctAppealValueFormat(value: string | undefined) {
+function getCorrectAppealFormat(value: string | undefined) {
   const appealNumber = /^\d{2}-\d{2}\.\d{3}$/.test(value!) ? value : undefined;
   return appealNumber;
 }

@@ -9,7 +9,7 @@ import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
   extractAppealRegisterRoleGeneralNumber,
-  correctAppealValueFormat,
+  getCorrectAppealFormat,
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
@@ -103,7 +103,7 @@ async function mapCourtDecisionToDocument(
   return documentModule.lib.buildDocument({
     creationDate: creationDate?.getTime(),
     decisionMetadata: {
-      appealNumber: correctAppealValueFormat(appealNumber) || '',
+      appealNumber: getCorrectAppealFormat(appealNumber) || '',
       additionalTermsToAnnotate,
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,

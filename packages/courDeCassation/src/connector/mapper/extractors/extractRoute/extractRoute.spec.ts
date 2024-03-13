@@ -22,7 +22,7 @@ describe('extractRoute', () => {
     expect(route).toBe('exhaustive');
   });
 
-  it('should return exhaustive if no endCaseCode & no NACCode', async () => {
+  it('should return default if no endCaseCode & no NACCode', async () => {
     const route = extractRoute(
       {
         additionalTermsToAnnotate: '',
@@ -40,7 +40,7 @@ describe('extractRoute', () => {
       'jurica',
     );
 
-    expect(route).toBe('exhaustive');
+    expect(route).toBe('default');
   });
 
   it('should return exhaustive if jurica with endCaseCode 44E & NACCode 10A', async () => {
@@ -106,7 +106,7 @@ describe('extractRoute', () => {
     expect(route).toBe('simple');
   });
 
-  it('should return exhaustive if jurica with endCaseCode 33G (not in csv)', async () => {
+  it('should return default if jurica with endCaseCode 33G (not in csv)', async () => {
     const route = extractRoute(
       {
         additionalTermsToAnnotate: '',
@@ -124,7 +124,7 @@ describe('extractRoute', () => {
       'jurica',
     );
 
-    expect(route).toBe('exhaustive');
+    expect(route).toBe('default');
   });
 
   it('should return automatic if NA', async () => {

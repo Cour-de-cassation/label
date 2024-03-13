@@ -3,7 +3,7 @@ import { extractAppealRegisterRoleGeneralNumber } from './extractAppealRegisterR
 describe('extractAppealRegisterRoleGeneralNumber', () => {
   const text = 'Pourvoi n° K 08-16.486 de telle décision';
   it('should extract appeal number from text', () => {
-    const appealNumber = extractAppealRegisterRoleGeneralNumber(text);
+    const appealNumber = extractAppealRegisterRoleGeneralNumber(text, '');
     expect(appealNumber).toBe('08-16.486');
   });
 
@@ -49,7 +49,7 @@ describe('extractAppealRegisterRoleGeneralNumber', () => {
   it('should extract no appeal number', () => {
     const text = 'Pas de pourvoi';
 
-    const appealNumber = extractAppealRegisterRoleGeneralNumber(text);
+    const appealNumber = extractAppealRegisterRoleGeneralNumber(text, '');
 
     expect(appealNumber).toBe(undefined);
   });

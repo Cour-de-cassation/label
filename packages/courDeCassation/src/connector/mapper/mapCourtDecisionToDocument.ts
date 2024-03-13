@@ -9,7 +9,7 @@ import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
   extractAppealRegisterRoleGeneralNumber,
-  isCorrectAppeal,
+  correctAppealValueFormat,
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
@@ -33,13 +33,13 @@ async function mapCourtDecisionToDocument(
   const source = sderCourtDecision.sourceName;
 
   const registerNumber = sderCourtDecision.registerNumber;
-  const appeals = sderCourtDecision.appeals[0];
+  const appeal = sderCourtDecision.appeals[0];
   const numeroRoleGeneral = sderCourtDecision.numeroRoleGeneral || '';
   const appealNumber = extractAppealRegisterRoleGeneralNumber(
     sderCourtDecision.originalText,
     source,
     readableJurisdictionName,
-    appeals,
+    appeal,
     registerNumber,
     numeroRoleGeneral,
   );
@@ -103,7 +103,7 @@ async function mapCourtDecisionToDocument(
   return documentModule.lib.buildDocument({
     creationDate: creationDate?.getTime(),
     decisionMetadata: {
-      appealNumber: isCorrectAppeal(appealNumber) || '',
+      appealNumber: correctAppealValueFormat(appealNumber) || '',
       additionalTermsToAnnotate,
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
@@ -132,19 +132,16 @@ async function mapCourtDecisionToDocument(
     text: sderCourtDecision.originalText,
   });
 }
-function titleAppealNumber(
+function getNumberPrefix(
   appealNumber: string | undefined,
   source: string,
   readableJurisdictionName: string,
 ) {
-  if (source === 'jurica' || source === 'juritj') {
-    return (appealNumber = `RG n° ${appealNumber}`);
+
+  if (readableJurisdictionName?.includes('cassation') && source !== 'jurica' || 'juritj') {
+    return (appealNumber = `Pourvoi n° ${appealNumber}`);
   } else {
-    if (readableJurisdictionName?.includes('cassation')) {
-      return (appealNumber = `Pourvoi n° ${appealNumber}`);
-    } else {
-      return (appealNumber = `RG n° ${appealNumber}`);
-    }
+    return (appealNumber = `RG n° ${appealNumber}`);
   }
 }
 function computeTitleFromParsedCourtDecision({
@@ -163,12 +160,11 @@ function computeTitleFromParsedCourtDecision({
   date?: Date;
 }) {
   // appeal titrer RG ou Pourvoi
-  appealNumber = titleAppealNumber(
+  appealNumber = getNumberPrefix(
     appealNumber,
     source,
     readableJurisdictionName,
   );
-  2;
 
   // juridictionName accompagner de Tribunal j.. pour les tj
   source === 'juritj'

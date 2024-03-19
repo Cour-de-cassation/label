@@ -265,7 +265,7 @@
       ],
       "darkMode": [
         "brown",
-        "500"
+        "300"
       ]
     },
     "iconName": "judge",
@@ -278,11 +278,11 @@
     "color": {
       "lightMode": [
         "brown",
-        "200"
+        "700"
       ],
       "darkMode": [
         "brown",
-        "500"
+        "700"
       ]
     },
     "iconName": "judge",

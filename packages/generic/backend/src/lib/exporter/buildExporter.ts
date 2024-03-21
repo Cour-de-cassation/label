@@ -205,7 +205,6 @@ function buildExporter(
         externalId: document.externalId,
         pseudonymizationText: anonymizer.anonymizeDocument(document).text,
         labelTreatments: treatmentModule.lib.concat(treatments),
-        publishStatus: 'toBePublished',
         environment,
       });
 

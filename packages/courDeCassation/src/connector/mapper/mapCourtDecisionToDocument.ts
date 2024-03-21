@@ -90,6 +90,23 @@ async function mapCourtDecisionToDocument(
     source,
   );
 
+  const zoningZones = {
+    'introduction': sderCourtDecision.originalTextZoning?.zones?.introduction || undefined,
+    'moyens': sderCourtDecision.originalTextZoning?.zones?.moyens || undefined,
+    'expose du litige': sderCourtDecision.originalTextZoning?.zones?.['expose du litige'] || undefined,
+    'motivations': sderCourtDecision.originalTextZoning?.zones?.motivations || undefined,
+    'dispositif': sderCourtDecision.originalTextZoning?.zones?.dispositif || undefined,
+    'moyens annexes': sderCourtDecision.originalTextZoning?.zones?.['moyens annexes'] || undefined,
+  }
+
+  const zoning = {
+    zones: zoningZones || undefined,
+    visa: sderCourtDecision.originalTextZoning?.visa || undefined,
+    is_public: sderCourtDecision.originalTextZoning?.is_public || undefined,
+    is_public_text: sderCourtDecision.originalTextZoning?.is_public_text || undefined,
+    arret_id: 2,
+  }
+
   return documentModule.lib.buildDocument({
     creationDate: creationDate?.getTime(),
     decisionMetadata: {
@@ -120,6 +137,7 @@ async function mapCourtDecisionToDocument(
     source,
     title,
     text: sderCourtDecision.originalText,
+    zoning: zoning
   });
 }
 

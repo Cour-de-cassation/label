@@ -109,7 +109,7 @@ const zoning = {
         is_public: {
           kind: 'or',
           content: [
-            { kind: 'primitive', content: 'boolean' },
+            { kind: 'primitive', content: 'number' },
             { kind: 'primitive', content: 'undefined' },
           ],
         },

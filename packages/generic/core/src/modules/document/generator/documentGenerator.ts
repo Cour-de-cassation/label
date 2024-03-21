@@ -59,6 +59,7 @@ const documentGenerator: generatorType<documentType> = {
     title,
     text,
     updateDate,
+    zoning,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date().getTime(),
     decisionMetadata: decisionMetadata ? decisionMetadata : decisionMetadataGenerator.generate(),
@@ -76,5 +77,6 @@ const documentGenerator: generatorType<documentType> = {
     title: title ?? `TITLE_${Math.random()}`,
     text: text ?? `TEXT_${Math.random()}`,
     updateDate: updateDate ?? new Date().getTime(),
+    zoning: zoning ?? undefined,
   }),
 };

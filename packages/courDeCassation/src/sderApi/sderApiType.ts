@@ -59,7 +59,7 @@ type sderApiType = {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
     labelTreatments: labelTreatmentsType;
-    publishStatus: publishStatusType;
+    publishStatus?: publishStatusType;
     environment: environmentType;
   }) => Promise<void>;
 };

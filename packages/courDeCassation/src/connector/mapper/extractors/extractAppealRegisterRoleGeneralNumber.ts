@@ -1,53 +1,37 @@
-export { extractAppealRegisterRoleGeneralNumber, getCorrectAppealFormat };
+export { extractAppealRegisterRoleGeneralNumber };
 
 function extractAppealRegisterRoleGeneralNumber(
   text: string,
   source: string,
   jurisdictionName?: string,
-  appeals?: string,
+  appeal?: string,
   registerNumber?: string,
   numeroRoleGeneral?: string,
 ) {
-  let response;
-  let appealNumber;
-  if (source === 'jurica' && registerNumber != '') {
-    response =
-      registerNumber != undefined || ''
-        ? registerNumber?.split(' ')[0]
-        : regexExtractAppealNumber(text) || '';
-    return response;
+  if (source === 'jurica' && registerNumber != undefined) {
+    return registerNumber?.split(' ')[0];
   } else if (source === 'jurinet') {
-    if (jurisdictionName?.includes('cassation') && appeals) {
-      appealNumber = appeals?.replace(/[A-Za-z]/g, '');
-      const formattedAppeals =
-        appealNumber.substring(0, 2) +
+    const verifappeal = /^[A-Za-z]\d+$/;
+    if (
+      jurisdictionName?.includes('cassation') &&
+      appeal != undefined &&
+      verifappeal.test(appeal)
+    ) {
+      appeal = appeal?.replace(/[A-Za-z]/g, '');
+      const formattedappeal =
+        appeal.substring(0, 2) +
         '-' +
-        appealNumber.substring(2, 4) +
+        appeal.substring(2, 4) +
         '.' +
-        appealNumber.substring(4);
-      const verifAppeals = /^[A-Za-z]\d+$/;
-      response =
-        appeals != undefined || verifAppeals.test(appeals)
-          ? formattedAppeals
-          : regexExtractAppealNumber(text) || '';
-
-      return response;
+        appeal.substring(4);
+      return formattedappeal;
     } else {
-      response =
-        appeals != undefined || ''
-          ? appeals
-          : regexExtractAppealNumber(text) || '';
-      return response;
+      return appeal;
     }
-  } else if (source === 'juritj' && numeroRoleGeneral) {
-    response =
-      numeroRoleGeneral != undefined || ''
-        ? numeroRoleGeneral
-        : regexExtractAppealNumber(text) || '';
-    return response;
+  } else if (source === 'juritj' && numeroRoleGeneral != undefined) {
+    return numeroRoleGeneral;
   } else {
-    appealNumber = regexExtractAppealNumber(text);
-    return appealNumber;
+    return regexExtractAppealNumber(text);
   }
 }
 
@@ -65,9 +49,4 @@ export function regexExtractAppealNumber(text: string) {
     return match2[0];
   }
   return undefined;
-}
-
-function getCorrectAppealFormat(value: string | undefined) {
-  const appealNumber = /^\d{2}-\d{2}\.\d{3}$/.test(value!) ? value : undefined;
-  return appealNumber;
 }

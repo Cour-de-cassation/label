@@ -9,7 +9,6 @@ import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
   extractAppealRegisterRoleGeneralNumber,
-  getCorrectAppealFormat,
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
@@ -103,7 +102,7 @@ async function mapCourtDecisionToDocument(
   return documentModule.lib.buildDocument({
     creationDate: creationDate?.getTime(),
     decisionMetadata: {
-      appealNumber: getCorrectAppealFormat(appealNumber) || '',
+      appealNumber: appealNumber || '',
       additionalTermsToAnnotate,
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
@@ -139,7 +138,7 @@ function getNumberPrefix(
 ) {
   if (
     (readableJurisdictionName?.includes('cassation') && source !== 'jurica') ||
-    'juritj'
+    source !== 'juritj'
   ) {
     return (appealNumber = `Pourvoi n° ${appealNumber}`);
   } else {
@@ -169,9 +168,9 @@ function computeTitleFromParsedCourtDecision({
   );
 
   // juridictionName accompagner de Tribunal j.. pour les tj
-  source === 'juritj'
-    ? (readableJurisdictionName = `Tribunal judiciaire de ${readableJurisdictionName}`)
-    : readableJurisdictionName;
+  if (source === 'juritj') {
+    readableJurisdictionName = `Tribunal judiciaire de ${readableJurisdictionName}`;
+  }
 
   const readableNumber = `Décision n°${number}`;
   const readableAppealNumber = appealNumber ? appealNumber : undefined;

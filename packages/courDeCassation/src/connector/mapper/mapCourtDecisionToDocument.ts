@@ -99,10 +99,21 @@ async function mapCourtDecisionToDocument(
     'moyens annexes': sderCourtDecision.originalTextZoning?.zones?.['moyens annexes'] || undefined,
   }
 
+  const introduction_subzonage = {
+    'n_arret': sderCourtDecision.originalTextZoning?.introduction_subzonage?.n_arret || undefined,
+    'formation': sderCourtDecision.originalTextZoning?.introduction_subzonage?.formation || undefined,
+    'publication': sderCourtDecision.originalTextZoning?.introduction_subzonage?.publication || undefined,
+    'juridiction': sderCourtDecision.originalTextZoning?.introduction_subzonage?.juridiction || undefined,
+    'chambre': sderCourtDecision.originalTextZoning?.introduction_subzonage?.chambre || undefined,
+    'pourvoi': sderCourtDecision.originalTextZoning?.introduction_subzonage?.pourvoi || undefined,
+    'composition': sderCourtDecision.originalTextZoning?.introduction_subzonage?.composition || undefined,
+  }
+
   let zoning = undefined
   if (sderCourtDecision.originalTextZoning) {
     zoning = {
       zones: zoningZones || undefined,
+      introduction_subzonage: introduction_subzonage || undefined,
       visa: sderCourtDecision.originalTextZoning?.visa || undefined,
       is_public: sderCourtDecision.originalTextZoning?.is_public || undefined,
       is_public_text: sderCourtDecision.originalTextZoning?.is_public_text || undefined,

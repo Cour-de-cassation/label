@@ -86,6 +86,64 @@ const zoningZones = {
   },
 } as const;
 
+const introduction_subzonage = {
+  'n_arret': {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'string' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  'formation': {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'string' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  'publication': {
+    kind: 'or',
+    content: [
+      { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  'juridiction': {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'string' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  'chambre': {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'string' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  'pourvoi': {
+    kind: 'or',
+    content: [
+      { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  'composition': {
+    kind: 'or',
+    content: [
+      {
+        kind: 'object',
+        content: {
+          start: { kind: 'primitive', content: 'number' },
+          end: { kind: 'primitive', content: 'number' },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+} as const;
+
 const zoning = {
   kind: 'or',
   content: [
@@ -96,6 +154,13 @@ const zoning = {
           kind: 'or',
           content: [
             { kind: 'object', content: zoningZones },
+            { kind: 'primitive', content: 'undefined' },
+          ],
+        },
+        introduction_subzonage: {
+          kind: 'or',
+          content: [
+            { kind: 'object', content: introduction_subzonage },
             { kind: 'primitive', content: 'undefined' },
           ],
         },

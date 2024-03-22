@@ -1,30 +1,44 @@
-import yargs from 'yargs';
 import { buildBackend, buildDocumentRepository, logger } from '@label/backend';
 import { parametersHandler } from '../lib/parametersHandler';
-import { documentType } from '@label/core';
 import { extractRoute } from '../connector/mapper/extractors';
+import * as readline from 'readline';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
-  const { status } = parseArgv();
-  const backend = buildBackend(environment, settings);
-
-  backend.runScript(() => updateRoute(status), {
-    shouldLoadDb: true,
+  const prompt = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
   });
+  const { environment, settings } = await parametersHandler.getParameters();
+  prompt.question(
+    'Confirmez vous le lancement de ce script (yes/no)? ',
+    (answer: any) => {
+      if (answer == 'yes') {
+        const backend = buildBackend(environment, settings);
+        backend.runScript(() => updateRouteForFreeDocuments(), {
+          shouldLoadDb: true,
+        });
+      } else {
+        logger.log({
+          operationName: 'updateRouteForFreeDocuments',
+          msg: `updateRouteForFreeDocuments script is canceled`,
+        });
+      }
+      prompt.close();
+    },
+  );
 })();
 
-async function updateRoute(status: documentType['status']) {
+async function updateRouteForFreeDocuments() {
   logger.log({
-    operationName: 'updateRoute',
-    msg: `Update route of documents with status ${status}`,
+    operationName: 'updateRouteForFreeDocuments',
+    msg: `Update route of documents with status Free`,
   });
 
   const documentRepository = buildDocumentRepository();
 
-  const documentsToUpdate = await documentRepository.findAllByStatus([status]);
+  const documentsToUpdate = await documentRepository.findAllByStatus(['free']);
   logger.log({
-    operationName: 'updateRoute',
+    operationName: 'updateRouteForFreeDocuments',
     msg: `${documentsToUpdate.length} documents to update route`,
   });
 
@@ -49,7 +63,7 @@ async function updateRoute(status: documentType['status']) {
       documentsToUpdate[index].source,
     );
     logger.log({
-      operationName: 'updateRoute',
+      operationName: 'updateRouteForFreeDocuments',
       msg: `New route for the document ${documentsToUpdate[index]._id} : ${newRoute}`,
     });
 
@@ -58,21 +72,4 @@ async function updateRoute(status: documentType['status']) {
       newRoute,
     );
   }
-}
-
-function parseArgv() {
-  const argv = yargs
-    .option({
-      status: {
-        demandOption: true,
-        description: 'status of the document you want to update route',
-        type: 'string',
-      },
-    })
-    .help()
-    .alias('help', 'h').argv;
-
-  return {
-    status: argv.status as documentType['status'],
-  };
 }

@@ -165,6 +165,6 @@ Revert a migration.
 
 Run migrations.
 
-## updateRoute
+## updateRouteForFreeDocuments
 
 Reapply route rules for documents with a specific status.

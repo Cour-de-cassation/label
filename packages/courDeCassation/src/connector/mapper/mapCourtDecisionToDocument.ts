@@ -99,12 +99,15 @@ async function mapCourtDecisionToDocument(
     'moyens annexes': sderCourtDecision.originalTextZoning?.zones?.['moyens annexes'] || undefined,
   }
 
-  const zoning = {
-    zones: zoningZones || undefined,
-    visa: sderCourtDecision.originalTextZoning?.visa || undefined,
-    is_public: sderCourtDecision.originalTextZoning?.is_public || undefined,
-    is_public_text: sderCourtDecision.originalTextZoning?.is_public_text || undefined,
-    arret_id: 2,
+  let zoning = undefined
+  if (sderCourtDecision.originalTextZoning) {
+    zoning = {
+      zones: zoningZones || undefined,
+      visa: sderCourtDecision.originalTextZoning?.visa || undefined,
+      is_public: sderCourtDecision.originalTextZoning?.is_public || undefined,
+      is_public_text: sderCourtDecision.originalTextZoning?.is_public_text || undefined,
+      arret_id: sderCourtDecision.originalTextZoning?.arret_id,
+    }
   }
 
   return documentModule.lib.buildDocument({

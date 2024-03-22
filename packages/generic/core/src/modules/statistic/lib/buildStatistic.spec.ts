@@ -18,7 +18,7 @@ describe('buildStatistic', () => {
     const userId = idModule.lib.buildId();
     const decisionDate = new Date().getTime();
     const document = documentModule.generator.generate({
-      decisionMetadata: {
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         additionalTermsToAnnotate: '',
         appealNumber: 'TRUC',
         boundDecisionDocumentNumbers: [],
@@ -35,7 +35,7 @@ describe('buildStatistic', () => {
         parties: [],
         session: 'FRH',
         solution: '',
-      },
+      }),
       documentNumber,
       externalId: documentExternalId,
       publicationCategory: documentPublicationCategory,

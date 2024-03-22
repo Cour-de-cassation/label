@@ -144,7 +144,7 @@ describe('filterTreatedDocuments', () => {
     const decisionDate = new Date().getTime();
     const documents = [{ jurisdiction: 'JURISDICTION1' }, { jurisdiction: 'JURISDICTION2' }].map(({ jurisdiction }) =>
       documentModule.generator.generate({
-        decisionMetadata: {
+        decisionMetadata: documentModule.decisionMetadataGenerator.generate({
           jurisdiction,
           solution: '',
           session: '',
@@ -161,7 +161,7 @@ describe('filterTreatedDocuments', () => {
           endCaseCode: '',
           parties: [],
           appealNumber: '',
-        },
+        }),
       }),
     );
     const ressourceFilter = ressourceFilterGenerator.generate({

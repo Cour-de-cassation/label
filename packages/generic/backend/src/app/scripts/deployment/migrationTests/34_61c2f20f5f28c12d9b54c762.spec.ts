@@ -5,7 +5,7 @@ import { up, down } from '../migrations/34_61c2f20f5f28c12d9b54c762';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('add endCaseCode in document model', () => {
-  const decisionMetadata = {
+  const decisionMetadata = documentModule.decisionMetadataGenerator.generate({
     appealNumber: '',
     chamberName: 'Civile',
     civilMatterCode: '',
@@ -21,7 +21,7 @@ describe('add endCaseCode in document model', () => {
     session: '',
     solution: '',
     NACCode: '',
-  };
+  });
   const documentsWithNewModel = [
     documentModule.generator.generate({
       decisionMetadata: {

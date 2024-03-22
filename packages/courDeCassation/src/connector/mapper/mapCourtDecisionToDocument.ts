@@ -140,6 +140,7 @@ async function mapCourtDecisionToDocument(
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session,
       solution,
+      partiallyPublic: sderCourtDecision.partiallyPublic || false,
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),

@@ -21,6 +21,7 @@ const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['dec
     parties,
     session,
     solution,
+    partiallyPublic
   } = {}) => ({
     additionalTermsToAnnotate: additionalTermsToAnnotate ?? '',
     appealNumber: appealNumber ?? '',
@@ -38,6 +39,7 @@ const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['dec
     parties: parties ?? [],
     session: session ?? '',
     solution: solution ?? '',
+    partiallyPublic: partiallyPublic ?? false
   }),
 };
 

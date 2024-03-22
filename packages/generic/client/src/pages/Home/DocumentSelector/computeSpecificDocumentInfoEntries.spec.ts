@@ -6,7 +6,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
     const decisionDate = new Date().getTime();
     const document = documentModule.generator.generate({
       documentNumber: 1234567,
-      decisionMetadata: {
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         appealNumber: '',
         chamberName: 'Civile',
         civilCaseCode: '',
@@ -23,7 +23,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
         parties: [],
         session: '',
         solution: '',
-      },
+      }),
     });
 
     const specificDocumentInfoEntries = computeSpecificDocumentInfoEntries(document);

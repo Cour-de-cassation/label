@@ -1,3 +1,4 @@
+import { documentModule } from '..';
 import { documentGenerator } from '../generator';
 import { computeCaseNumber } from './computeCaseNumber';
 
@@ -8,7 +9,7 @@ describe('computeCaseNumber', () => {
   const decisionDate = new Date().getTime();
   it('should return the first boundDocumentNumber', () => {
     const document = documentGenerator.generate({
-      decisionMetadata: {
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         additionalTermsToAnnotate: '',
         appealNumber: '',
         boundDecisionDocumentNumbers: [boundDocumentNumber, otherBoundDocumentNumber],
@@ -25,7 +26,7 @@ describe('computeCaseNumber', () => {
         categoriesToOmit: [],
         parties: [],
         occultationBlock: undefined,
-      },
+      }),
       documentNumber,
     });
 
@@ -35,7 +36,7 @@ describe('computeCaseNumber', () => {
   });
   it('should return the documentNumber if no bound document number found', () => {
     const document = documentGenerator.generate({
-      decisionMetadata: {
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         additionalTermsToAnnotate: '',
         appealNumber: '',
         boundDecisionDocumentNumbers: [],
@@ -52,7 +53,7 @@ describe('computeCaseNumber', () => {
         categoriesToOmit: [],
         parties: [],
         occultationBlock: undefined,
-      },
+      }),
       documentNumber,
     });
 

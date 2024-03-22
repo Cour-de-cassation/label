@@ -28,7 +28,7 @@ describe('computeAdditionalAnnotations', () => {
     ];
     const document = documentModule.generator.generate({
       text: documentText,
-      decisionMetadata: {
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         additionalTermsToAnnotate,
         appealNumber: '',
         boundDecisionDocumentNumbers: [],
@@ -45,7 +45,7 @@ describe('computeAdditionalAnnotations', () => {
         solution: '',
         NACCode: '',
         endCaseCode: '',
-      },
+      }),
     });
 
     const additionalAnnotations = computeAdditionalAnnotations(

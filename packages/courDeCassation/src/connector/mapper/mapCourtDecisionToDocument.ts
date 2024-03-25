@@ -8,7 +8,7 @@ import {
 import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
-  extractAppealNumber,
+  extractAppealRegisterRoleGeneralNumber,
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
@@ -27,15 +27,24 @@ async function mapCourtDecisionToDocument(
   const readableJurisdictionName = extractReadableJurisdictionName(
     sderCourtDecision.jurisdictionName,
   );
-  const appealNumber = extractAppealNumber(sderCourtDecision.originalText);
-
   const creationDate = convertToValidDate(sderCourtDecision.dateCreation);
-
   const decisionDate = convertToValidDate(sderCourtDecision.dateDecision);
-
   const source = sderCourtDecision.sourceName;
 
+  const registerNumber = sderCourtDecision.registerNumber;
+  const appeal = sderCourtDecision.appeals[0];
+  const numeroRoleGeneral = sderCourtDecision.numeroRoleGeneral || '';
+  const appealNumber = extractAppealRegisterRoleGeneralNumber(
+    sderCourtDecision.originalText,
+    source,
+    readableJurisdictionName,
+    appeal,
+    registerNumber,
+    numeroRoleGeneral,
+  );
+
   const title = computeTitleFromParsedCourtDecision({
+    source: source,
     number: sderCourtDecision.sourceId,
     appealNumber,
     readableChamberName,
@@ -122,24 +131,47 @@ async function mapCourtDecisionToDocument(
     text: sderCourtDecision.originalText,
   });
 }
-
+function getNumberPrefix(
+  numberToPrefix: string | undefined,
+  source: string,
+  readableJurisdictionName: string,
+) {
+  if (numberToPrefix === undefined) {
+    return undefined;
+  }
+  if (source === 'jurinet' && readableJurisdictionName.includes('cassation')) {
+    return `Pourvoi n°${numberToPrefix}`;
+  } else {
+    return `RG n°${numberToPrefix}`;
+  }
+}
 function computeTitleFromParsedCourtDecision({
+  source,
   number,
   appealNumber,
   readableChamberName,
   readableJurisdictionName,
   date,
 }: {
+  source: string;
   number: number;
   appealNumber: string | undefined;
   readableChamberName: string;
   readableJurisdictionName: string;
   date?: Date;
 }) {
+  const prefixedNumber = getNumberPrefix(
+    appealNumber,
+    source,
+    readableJurisdictionName,
+  );
+
+  if (source === 'juritj') {
+    readableJurisdictionName = `Tribunal judiciaire de ${readableJurisdictionName}`;
+  }
+
   const readableNumber = `Décision n°${number}`;
-  const readableAppealNumber = appealNumber
-    ? `pourvoi n°${appealNumber}`
-    : undefined;
+  const readableAppealNumber = prefixedNumber ? prefixedNumber : undefined;
   const readableDate = date
     ? timeOperator.convertTimestampToReadableDate(date.getTime())
     : undefined;

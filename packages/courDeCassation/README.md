@@ -119,7 +119,7 @@ prod label script exportSpecificDocument --documentNumber=10000 --source=jurinet
 
 In Wallix, with a Cygwin terminal:
 ```
-prod label script updateRouteForFreeDocuments --status=free
+prod label script updateRouteForFreeDocuments
 ```
 
 

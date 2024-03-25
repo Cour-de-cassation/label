@@ -10,7 +10,7 @@ import * as readline from 'readline';
   });
   const { environment, settings } = await parametersHandler.getParameters();
   prompt.question(
-    'Confirmez vous le lancement de ce script (yes/no)? ',
+    'Voulez vous mettre a jour le circuit de relecture de tous les documents free (yes/no)?',
     (answer: any) => {
       if (answer == 'yes') {
         const backend = buildBackend(environment, settings);
@@ -62,6 +62,7 @@ async function updateRouteForFreeDocuments() {
       },
       documentsToUpdate[index].source,
     );
+
     logger.log({
       operationName: 'updateRouteForFreeDocuments',
       msg: `New route for the document ${documentsToUpdate[index]._id} : ${newRoute}`,
@@ -71,5 +72,9 @@ async function updateRouteForFreeDocuments() {
       documentsToUpdate[index]._id,
       newRoute,
     );
+
+    if (newRoute === 'automatic') {
+      documentRepository.updateStatusById(documentsToUpdate[index]._id, 'done');
+    }
   }
 }

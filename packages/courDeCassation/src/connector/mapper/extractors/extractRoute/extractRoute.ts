@@ -28,10 +28,6 @@ function extractRoute(
   switch (source) {
     case 'jurinet':
       try {
-        logger.error({
-          operationName: 'extractRouteForJurinet',
-          msg: `${routeInfos}`,
-        });
         route = extractRouteForJurinet({ ...routeInfos });
       } catch (e) {
         logger.error({ operationName: 'extractRouteForJurinet', msg: `${e}` });
@@ -40,10 +36,6 @@ function extractRoute(
       break;
     case 'jurica':
       try {
-        logger.error({
-          operationName: 'extractRouteForJurica',
-          msg: `${routeInfos}`,
-        });
         route = extractRouteForJurica({ ...routeInfos });
       } catch (e) {
         logger.error({ operationName: 'extractRouteForJurica', msg: `${e}` });
@@ -52,10 +44,6 @@ function extractRoute(
       break;
     case 'juritj':
       try {
-        logger.error({
-          operationName: 'extractRouteForJuritj',
-          msg: `${routeInfos}`,
-        });
         route = extractRouteForJuritj({ ...routeInfos });
       } catch (e) {
         logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });

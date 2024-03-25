@@ -216,9 +216,6 @@ const buildDocumentRepository = buildRepositoryBuilder<
     async updateRouteById(_id, route) {
       await collection.updateOne({ _id }, { $set: { route } });
       const updatedDocument = await collection.findOne({ _id });
-      if (updatedDocument?.route == 'automatic') {
-        await this.updateStatusById(_id, 'done');
-      }
       return updatedDocument || undefined;
     },
 

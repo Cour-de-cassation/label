@@ -4,6 +4,9 @@ export type { customStatisticRepositoryType };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type customStatisticRepositoryType = {
+  findAllStatisticsByDocumentNumber: (
+    documentNumber: statisticType['documentNumber'],
+  ) => Promise<Array<statisticType>>;
   findAllByRessourceFilter: (
     ressourceFilter: ressourceFilterType,
   ) => Promise<Array<statisticType>>;

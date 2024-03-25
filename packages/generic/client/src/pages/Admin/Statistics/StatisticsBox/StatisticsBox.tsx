@@ -117,7 +117,7 @@ function StatisticsBox(props: {
         display: 'flex',
         justifyContent: 'space-between',
         height: ROW_HEIGHT,
-        alignItems: 'center',
+        alignItems: 'left',
       },
     } as const;
   }

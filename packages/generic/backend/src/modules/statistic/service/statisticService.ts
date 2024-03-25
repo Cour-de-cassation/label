@@ -5,6 +5,7 @@ import { fetchFilteredStatistics } from './fetchFilteredStatistics';
 import { fetchPersonalStatistics } from './fetchPersonalStatistics';
 import { fetchSummary } from './fetchSummary';
 import { saveStatisticsOfDocument } from './saveStatisticsOfDocument';
+import { fetchDocumentStatistics } from './fetchDocumentStatistics';
 
 export { statisticService };
 
@@ -15,5 +16,6 @@ const statisticService = {
   fetchFilteredStatistics,
   fetchPersonalStatistics,
   fetchSummary,
+  fetchDocumentStatistics,
   saveStatisticsOfDocument,
 };

@@ -35,6 +35,14 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
+    documentStatistics: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { documentNumber } }) => {
+        /* eslint-disable  @typescript-eslint/no-unsafe-return */
+        return statisticService.fetchDocumentStatistics(documentNumber) as any;
+      },
+    }),
+
     annotationsDiffDetails: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async (_, { args: { documentId } }) =>

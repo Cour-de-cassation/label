@@ -33,7 +33,7 @@ function AnnotationCreationTooltipMenu(props: {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   const categories = settingsModule.lib.getCategories(settings, {
-    status: ['annotable'],
+    status: ['annotable', 'visible'],
     canBeAnnotatedBy: 'human',
   });
   const annotationText = computeAnnotationText();

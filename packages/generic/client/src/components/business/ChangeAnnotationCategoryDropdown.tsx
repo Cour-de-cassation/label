@@ -19,7 +19,7 @@ function ChangeAnnotationCategoryDropdown(props: {
   const annotatorState = annotatorStateHandler.get();
   const { settings } = annotatorState;
   const categories = settingsModule.lib.getCategories(settings, {
-    status: ['annotable'],
+    status: ['annotable', 'visible'],
     canBeAnnotatedBy: 'human',
   });
 

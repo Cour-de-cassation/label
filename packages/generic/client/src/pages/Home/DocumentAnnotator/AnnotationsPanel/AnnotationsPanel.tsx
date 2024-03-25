@@ -42,6 +42,13 @@ function AnnotationsPanel(props: {
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
+
+        {props.document.decisionMetadata.partiallyPublic && (
+          <div key={'partiallyPublic'} style={styles.categoryContainer}>
+            {renderPartiallyPublic()}
+          </div>
+        )}
+
         {props.checklist && props.checklist.length > 0 && (
           <div key={'checklist'} style={styles.categoryContainer}>
             {renderChecklist(props.checklist)}
@@ -114,6 +121,19 @@ function AnnotationsPanel(props: {
     );
   }
 
+  function renderPartiallyPublic() {
+    return (
+      <div style={styles.partiallyPublicContainer}>
+        <div style={styles.partiallyPublicLeftContainer}>
+          <Icon iconName={'eyeoff'} />
+        </div>
+        <div style={styles.partiallyPublicRightContainer}>
+          <Text>Cette décision est partiellement publique, les motifs seront occultés.</Text>
+        </div>
+      </div>
+    );
+  }
+
   function buildStyles(theme: customThemeType) {
     return {
       panel: {
@@ -143,6 +163,23 @@ function AnnotationsPanel(props: {
         overflowY: 'auto',
         height: heights.annotatorPanel,
         paddingRight: theme.spacing * 2,
+      },
+      partiallyPublicContainer: {
+        padding: theme.spacing * 2,
+        marginBottom: theme.spacing,
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'space-between',
+        borderRadius: theme.shape.borderRadius.l,
+        backgroundColor: "orange",
+      },
+      partiallyPublicLeftContainer: {
+        marginRight: theme.spacing * 3,
+      },
+      partiallyPublicRightContainer: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
       },
       additionalAnnotationTermsContainer: {
         padding: theme.spacing * 2,

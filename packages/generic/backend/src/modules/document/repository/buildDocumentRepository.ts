@@ -213,6 +213,44 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return updatedDocument || undefined;
     },
 
+    async updateAdditionalTermsParsingFailed(
+      _id,
+      additionalTermsParsingFailed,
+    ) {
+      await collection.updateOne(
+        { _id },
+        {
+          $set: {
+            'decisionMetadata.additionalTermsParsingFailed': additionalTermsParsingFailed,
+          },
+        },
+      );
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
+    async updateCategoriesToOmitById(_id, categoriesToOmit) {
+      await collection.updateOne(
+        { _id },
+        { $set: { 'decisionMetadata.categoriesToOmit': categoriesToOmit } },
+      );
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
+    async updateComputedAdditionalTerms(_id, computedAdditionalTerms) {
+      await collection.updateOne(
+        { _id },
+        {
+          $set: {
+            'decisionMetadata.computedAdditionalTerms': computedAdditionalTerms,
+          },
+        },
+      );
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
     async updateRouteById(_id, route) {
       await collection.updateOne({ _id }, { $set: { route } });
       const updatedDocument = await collection.findOne({ _id });

@@ -4,6 +4,7 @@ import { buildStatistic } from './buildStatistic';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('buildStatistic', () => {
   it('should build a new statistic', () => {
     const annotationsCount = 10;
@@ -35,7 +36,7 @@ describe('buildStatistic', () => {
         parties: [],
         session: 'FRH',
         solution: '',
-      },
+      } as any,
       documentNumber,
       externalId: documentExternalId,
       publicationCategory: documentPublicationCategory,

@@ -8,6 +8,7 @@ import { statisticsCreator } from './statisticsCreator';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('statisticsCreator', () => {
   const documentExternalId = 'DOCUMENT_EXTERNAL_ID';
   const documentPublicationCategory = ['P'];
@@ -35,7 +36,7 @@ describe('statisticsCreator', () => {
       parties: [],
       session: 'FRH',
       solution: '',
-    },
+    } as any,
     documentNumber,
     externalId: documentExternalId,
     publicationCategory: documentPublicationCategory,

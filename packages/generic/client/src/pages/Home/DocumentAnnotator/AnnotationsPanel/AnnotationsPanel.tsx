@@ -1,5 +1,5 @@
 import React from 'react';
-import { settingsModule, fetchedDocumentType, documentModule, annotationReportType } from '@label/core';
+import { settingsModule, fetchedDocumentType, annotationReportType } from '@label/core';
 import { Icon, Text, customThemeType, getColor, useCustomTheme, useDisplayMode } from 'pelta-design-system';
 import { heights } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -54,7 +54,11 @@ function AnnotationsPanel(props: {
           return (
             <div key={category} style={styles.categoryContainer}>
               {isCategoryAdditionalAnnotationCategory &&
-                renderAdditionalAnnotationTerms(props.document.decisionMetadata.additionalTermsToAnnotate)}
+                renderAdditionalAnnotationTerms(
+                  props.document.decisionMetadata.additionalTermsToAnnotate,
+                  props.document.decisionMetadata.computedAdditionalTerms,
+                  props.document.decisionMetadata.additionalTermsParsingFailed,
+                )}
               <div>{renderCategory({ category, categorySize, categoryAnnotations })}</div>
             </div>
           );
@@ -81,21 +85,58 @@ function AnnotationsPanel(props: {
     );
   }
 
-  function renderAdditionalAnnotationTerms(additionalTermsToAnnotate: string) {
-    const annotationTerms = documentModule.lib.extractAdditionalAnnotationTerms(additionalTermsToAnnotate);
-    return (
-      <div style={styles.additionalAnnotationTermsContainer}>
-        <div style={styles.additionalAnnotationTermsLeftContainer}>
-          <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
+  function renderAdditionalAnnotationTerms(
+    additionalTermsToAnnotate: string,
+    computedAdditionalTerms?: { additionalTermsToAnnotate: string[]; additionalTermsToUnAnnotate: string[] },
+    isParsingFailedOnAdditionalTerms?: boolean,
+  ) {
+    if (
+      isParsingFailedOnAdditionalTerms ||
+      (isParsingFailedOnAdditionalTerms == undefined && additionalTermsToAnnotate !== '') ||
+      (computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+        computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
+      (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+        computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0)
+    ) {
+      return (
+        <div style={styles.additionalAnnotationTermsContainer}>
+          <div style={styles.additionalAnnotationTermsLeftContainer}>
+            <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
+          </div>
+          <div style={styles.additionalAnnotationTermsRightContainer}>
+            {isParsingFailedOnAdditionalTerms ||
+            (isParsingFailedOnAdditionalTerms == undefined && additionalTermsToAnnotate !== '') ? (
+              <>
+                <Text>{wordings.homePage.additionalOccultationsParsingFailed}</Text>
+                <Text variant="body2">{additionalTermsToAnnotate}</Text>
+              </>
+            ) : (
+              <>
+                <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
+                {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+                  computedAdditionalTerms.additionalTermsToAnnotate.length > 0 && (
+                    <>
+                      <Text>{wordings.homePage.additionalTermsToAnnotate}</Text>
+                      {computedAdditionalTerms.additionalTermsToAnnotate.map((term) => (
+                        <Text variant="body2">- {term}</Text>
+                      ))}
+                    </>
+                  )}
+                {computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+                  computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0 && (
+                    <>
+                      <Text>{wordings.homePage.additionalTermsToUnAnnotate}</Text>
+                      {computedAdditionalTerms.additionalTermsToUnAnnotate.map((term) => (
+                        <Text variant="body2">- {term}</Text>
+                      ))}
+                    </>
+                  )}
+              </>
+            )}
+          </div>
         </div>
-        <div style={styles.additionalAnnotationTermsRightContainer}>
-          <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
-          {annotationTerms.map((annotationTerm) => (
-            <Text variant="body2">{annotationTerm}</Text>
-          ))}
-        </div>
-      </div>
-    );
+      );
+    }
   }
 
   function renderChecklist(checklist: string[]) {

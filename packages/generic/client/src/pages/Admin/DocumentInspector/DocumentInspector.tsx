@@ -48,6 +48,8 @@ function DocumentInspector(props: { settings: settingsType }) {
                       props.settings,
                       document.decisionMetadata.categoriesToOmit,
                       document.decisionMetadata.additionalTermsToAnnotate,
+                      document.decisionMetadata.computedAdditionalTerms,
+                      document.decisionMetadata.additionalTermsParsingFailed,
                     );
 
                     const applyAutoSave = buildApplyAutoSave(document._id);

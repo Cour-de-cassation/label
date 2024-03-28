@@ -8,6 +8,8 @@ function computeFilteredSettings(
   settings: settingsType,
   categoriesToOmit: documentType['decisionMetadata']['categoriesToOmit'],
   additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'],
+  computedAdditionalTerms: documentType['decisionMetadata']['computedAdditionalTerms'],
+  additionalTermsParsingFailed: documentType['decisionMetadata']['additionalTermsParsingFailed'],
 ) {
   const settingsForDocument = Object.entries(settings).reduce((accumulator, [category, categorySetting]) => {
     if (categorySetting.status === 'alwaysVisible') {
@@ -15,10 +17,16 @@ function computeFilteredSettings(
     }
     if (category === additionalAnnotationCategoryHandler.getCategoryName()) {
       if (!!additionalTermsToAnnotate) {
-        return {
-          ...accumulator,
-          [category]: { ...categorySetting, status: 'annotable' as const },
-        };
+        if (
+          additionalTermsParsingFailed === undefined ||
+          additionalTermsParsingFailed ||
+          (!additionalTermsParsingFailed && computedAdditionalTerms?.additionalTermsToAnnotate.length != 0)
+        ) {
+          return {
+            ...accumulator,
+            [category]: { ...categorySetting, status: 'annotable' as const },
+          };
+        }
       }
     } else if (!categoriesToOmit.includes(category)) {
       return {

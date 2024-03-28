@@ -6,6 +6,8 @@ export { documentGenerator, decisionMetadataGenerator };
 const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['decisionMetadata']> = {
   generate: ({
     additionalTermsToAnnotate,
+    additionalTermsParsingFailed,
+    computedAdditionalTerms,
     appealNumber,
     boundDecisionDocumentNumbers,
     categoriesToOmit,
@@ -23,6 +25,8 @@ const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['dec
     solution,
   } = {}) => ({
     additionalTermsToAnnotate: additionalTermsToAnnotate ?? '',
+    computedAdditionalTerms: computedAdditionalTerms ?? undefined,
+    additionalTermsParsingFailed: additionalTermsParsingFailed ?? undefined,
     appealNumber: appealNumber ?? '',
     boundDecisionDocumentNumbers: boundDecisionDocumentNumbers ?? [],
     categoriesToOmit: categoriesToOmit ?? [],

@@ -1,5 +1,4 @@
 import { buildAnonymizer, anonymizerType } from './anonymizer';
-import { buildAutoAnnotator } from './autoAnnotator';
 import { autoLinker } from './autoLink';
 import { annotationHandler } from './annotationHandler';
 import { annotationLinkHandler } from './annotationLinkHandler';
@@ -18,7 +17,6 @@ export {
   annotationTextDetector,
   autoLinker,
   buildAnonymizer,
-  buildAutoAnnotator,
   statisticsCreator,
   stringComparator,
   textSplitter,

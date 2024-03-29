@@ -22,7 +22,7 @@ describe('add civil code matter in document model', () => {
     solution: '',
     NACCode: '',
     endCaseCode: '',
-  };
+  } as any;
   const documentsWithNewModel = [
     documentModule.generator.generate({
       decisionMetadata: {

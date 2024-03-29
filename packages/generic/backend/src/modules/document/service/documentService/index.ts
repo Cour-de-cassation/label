@@ -41,8 +41,11 @@ import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentLoss } from './updateDocumentLoss';
 import { updateDocumentReviewStatus } from './updateDocumentReviewStatus';
 import { updateDocumentRoute } from './updateDocumentRoute';
+import { updateDocumentCategoriesToOmit } from './updateDocumentCategoriesToOmit';
+import { updateDocumentComputedAdditionalTerms } from './updateDocumentComputedAdditionalTerms';
 import { updateDocumentStatus } from './updateDocumentStatus';
 import { fetchAllImporters } from './fetchAllImporters';
+import { updateDocumentAdditionalTermsParsingFailed } from './updateDocumentAdditionalTermsParsingFailed';
 
 export { buildDocumentService, documentService };
 
@@ -103,5 +106,8 @@ function buildDocumentService() {
     updateDocumentReviewStatus,
     updateDocumentRoute,
     updateDocumentStatus,
+    updateDocumentCategoriesToOmit,
+    updateDocumentComputedAdditionalTerms,
+    updateDocumentAdditionalTermsParsingFailed,
   };
 }

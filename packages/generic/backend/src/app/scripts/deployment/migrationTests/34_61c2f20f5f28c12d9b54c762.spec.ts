@@ -21,7 +21,7 @@ describe('add endCaseCode in document model', () => {
     session: '',
     solution: '',
     NACCode: '',
-  };
+  } as any;
   const documentsWithNewModel = [
     documentModule.generator.generate({
       decisionMetadata: {

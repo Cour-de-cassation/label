@@ -18,6 +18,26 @@ const documentModelCommonFields = {
     content: {
       appealNumber: { kind: 'primitive', content: 'string' },
       additionalTermsToAnnotate: { kind: 'primitive', content: 'string' },
+      computedAdditionalTerms: {
+        kind: 'or',
+        content: [
+          {
+            kind: 'object',
+            content: {
+              additionalTermsToAnnotate: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+              additionalTermsToUnAnnotate: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+            },
+          },
+          { kind: 'primitive', content: 'undefined' },
+        ],
+      },
+      additionalTermsParsingFailed: {
+        kind: 'or',
+        content: [
+          { kind: 'primitive', content: 'boolean' },
+          { kind: 'primitive', content: 'undefined' },
+        ],
+      },
       boundDecisionDocumentNumbers: { kind: 'array', content: { kind: 'primitive', content: 'number' } },
       categoriesToOmit: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       chamberName: { kind: 'primitive', content: 'string' },

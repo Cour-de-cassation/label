@@ -50,6 +50,8 @@ async function createTreatment(
     settings,
     document.decisionMetadata.categoriesToOmit,
     document.decisionMetadata.additionalTermsToAnnotate,
+    document.decisionMetadata.computedAdditionalTerms,
+    document.decisionMetadata.additionalTermsParsingFailed,
   );
 
   const treatment = treatmentModule.lib.build(

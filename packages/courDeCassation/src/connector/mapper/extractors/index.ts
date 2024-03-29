@@ -1,11 +1,15 @@
 import { extractReadableChamberName } from './extractReadableChamberName';
 import { extractReadableJurisdictionName } from './extractReadableJurisdictionName';
-import { extractAppealNumber } from './extractAppealNumber';
+import {
+  extractAppealRegisterRoleGeneralNumber,
+  regexExtractAppealNumber,
+} from './extractAppealRegisterRoleGeneralNumber';
 import { extractRoute } from './extractRoute';
 
 export {
   extractReadableChamberName,
   extractReadableJurisdictionName,
-  extractAppealNumber,
+  extractAppealRegisterRoleGeneralNumber,
+  regexExtractAppealNumber,
   extractRoute,
 };

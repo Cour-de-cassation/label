@@ -106,15 +106,15 @@ function AnnotationsPanel(props: {
           <div style={styles.additionalAnnotationTermsRightContainer}>
             {(additionalTermsParsingFailed ||
               (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '')) && (
-                <>
-                  <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
-                </>
-              )}
+              <>
+                <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
+              </>
+            )}
 
-            {((computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+            {(computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
               computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
-              (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
-                computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0)) ? (
+            (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+              computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0) ? (
               <>
                 <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
                 {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&

@@ -188,9 +188,10 @@ const fr = {
     anonymisedView: 'Vue anonymisée',
     applyEveryWhere: 'Appliquer à tous',
     askedAnnotations: 'Annotations demandées',
-    askedAdditionalOccultations: "Demandes d'occultation particulières",
-    additionalOccultationsParsingFailed:
-      "Les demandes d'occultations particulières n'ont pas pu être traitées. Texte fourni par la juridiction :",
+    askedAdditionalOccultations: "Demandes d'occultation particulières :",
+    additionalTermsParsingFailed:
+      "Attention, les demandes d'occultations particulières n'ont pas pu être annotées automatiquement intégralement.",
+    promptRawAdditionalTermsText: 'Texte fourni par la juridiction :',
     additionalTermsToAnnotate: 'Termes supplémentaires à annoter :',
     additionalTermsToUnAnnotate: 'Termes à NE PAS annoter :',
     annotationGuide: "Guide d'annotation",

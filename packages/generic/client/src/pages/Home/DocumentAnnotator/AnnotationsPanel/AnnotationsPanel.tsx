@@ -88,11 +88,11 @@ function AnnotationsPanel(props: {
   function renderAdditionalAnnotationTerms(
     additionalTermsToAnnotate: string,
     computedAdditionalTerms?: { additionalTermsToAnnotate: string[]; additionalTermsToUnAnnotate: string[] },
-    isParsingFailedOnAdditionalTerms?: boolean,
+    additionalTermsParsingFailed?: boolean,
   ) {
     if (
-      isParsingFailedOnAdditionalTerms ||
-      (isParsingFailedOnAdditionalTerms == undefined && additionalTermsToAnnotate !== '') ||
+      additionalTermsParsingFailed ||
+      (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '') ||
       (computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
         computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
       (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
@@ -104,13 +104,17 @@ function AnnotationsPanel(props: {
             <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
           </div>
           <div style={styles.additionalAnnotationTermsRightContainer}>
-            {isParsingFailedOnAdditionalTerms ||
-            (isParsingFailedOnAdditionalTerms == undefined && additionalTermsToAnnotate !== '') ? (
-              <>
-                <Text>{wordings.homePage.additionalOccultationsParsingFailed}</Text>
-                <Text variant="body2">{additionalTermsToAnnotate}</Text>
-              </>
-            ) : (
+            {(additionalTermsParsingFailed ||
+              (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '')) && (
+                <>
+                  <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
+                </>
+              )}
+
+            {((computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+              computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
+              (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+                computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0)) ? (
               <>
                 <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
                 {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
@@ -131,6 +135,11 @@ function AnnotationsPanel(props: {
                       ))}
                     </>
                   )}
+              </>
+            ) : (
+              <>
+                <Text>{wordings.homePage.promptRawAdditionalTermsText}</Text>
+                <Text variant="body2">{additionalTermsToAnnotate}</Text>
               </>
             )}
           </div>

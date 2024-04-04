@@ -180,7 +180,8 @@ function buildAnnotator(
       annotations,
       documentId,
       report,
-      newCategoriesToOmit,
+      categoriesToAnnotate,
+      categoriesToUnAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
@@ -223,13 +224,34 @@ function buildAnnotator(
         additionalTermsParsingFailed,
       );
     }
-    if (!!newCategoriesToOmit) {
+
+    let newCategoriesToOmit = document.decisionMetadata.categoriesToOmit;
+    if (!!categoriesToUnAnnotate) {
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'New categories to omit found, updating...',
+        msg: `categoriesToUnAnnotate found, adding '${categoriesToUnAnnotate}' to categoriesToOmit if not already in`,
       });
+      newCategoriesToOmit = Array.from(
+        new Set(newCategoriesToOmit.concat(categoriesToUnAnnotate)),
+      );
+    }
 
-      await documentService.updateDocumentCategoriesToOmit(
+    if (!!categoriesToAnnotate) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `categoriesToAnnotate found, removing '${categoriesToAnnotate}' from categoriesToOmit if present`,
+      });
+      newCategoriesToOmit = newCategoriesToOmit.filter(
+        (category) => !categoriesToAnnotate.includes(category),
+      );
+    }
+
+    if (document.decisionMetadata.categoriesToOmit != newCategoriesToOmit) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `updating categoriesToOmit in database`,
+      });
+      documentService.updateDocumentCategoriesToOmit(
         documentId,
         newCategoriesToOmit,
       );

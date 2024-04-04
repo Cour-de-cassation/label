@@ -17,7 +17,8 @@ type nlpApiType = {
 type nlpResponseType = {
   entities: nlpAnnotationType[];
   checklist: string[];
-  newCategoriesToOmit?: string[];
+  categoriesToAnnotate?: string[];
+  categoriesToUnAnnotate?: string[];
   additionalTermsToAnnotate?: string[];
   additionalTermsToUnAnnotate?: string[];
   additionalTermsParsingFailed?: boolean;

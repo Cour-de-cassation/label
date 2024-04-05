@@ -157,7 +157,13 @@ function buildAnnotator(
   async function reAnnotateFreeDocuments() {
     const documentIds = await documentService.fetchFreeDocumentsIds();
 
+    logger.log({
+      operationName: 'reAnnotateFreeDocuments',
+      msg: `Found ${documentIds.length} free documents to reannotate, deleting their treatments`,
+    });
+
     for (const documentId of documentIds) {
+      await treatmentService.deleteTreatmentsByDocumentId(documentId);
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
 

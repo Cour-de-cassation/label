@@ -18,8 +18,8 @@ type annotatorConfigType = {
     annotations: annotationType[];
     documentId: idType;
     report: annotationReportType;
-    categoriesToAnnotate?: string[];
-    categoriesToUnAnnotate?: string[];
+    newCategoriesToAnnotate?: string[];
+    newCategoriesToUnAnnotate?: string[];
     computedAdditionalTerms?: documentType['decisionMetadata']['computedAdditionalTerms'];
     additionalTermsParsingFailed?: boolean;
   }>;

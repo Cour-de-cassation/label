@@ -25,8 +25,8 @@ function buildNlpFetcher(nlpApiBaseUrl: string) {
         ),
         documentId: document._id,
         report: nlpMapper.mapNlpAnnotationstoReport(nlpAnnotations, document),
-        categoriesToAnnotate: nlpAnnotations.categoriesToAnnotate,
-        categoriesToUnAnnotate: nlpAnnotations.categoriesToUnAnnotate,
+        newCategoriesToAnnotate: nlpAnnotations.newCategoriesToAnnotate,
+        newCategoriesToUnAnnotate: nlpAnnotations.newCategoriesToUnAnnotate,
         computedAdditionalTerms: nlpMapper.mapNlpAdditionalTerms(
           nlpAnnotations,
         ),

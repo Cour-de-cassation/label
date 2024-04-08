@@ -25,6 +25,13 @@ function buildNlpFetcher(nlpApiBaseUrl: string) {
         ),
         documentId: document._id,
         report: nlpMapper.mapNlpAnnotationstoReport(nlpAnnotations, document),
+        newCategoriesToAnnotate: nlpAnnotations.newCategoriesToAnnotate,
+        newCategoriesToUnAnnotate: nlpAnnotations.newCategoriesToUnAnnotate,
+        computedAdditionalTerms: nlpMapper.mapNlpAdditionalTerms(
+          nlpAnnotations,
+        ),
+        additionalTermsParsingFailed:
+          nlpAnnotations.additionalTermsParsingFailed,
       };
     },
     async fetchLossOfDocument(

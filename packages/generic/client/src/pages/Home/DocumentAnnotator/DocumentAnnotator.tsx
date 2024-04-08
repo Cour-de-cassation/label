@@ -24,11 +24,11 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<voi
   const annotatorState = annotatorStateHandler.get();
   const styles = buildStyles();
   const categories = settingsModule.lib.getCategories(annotatorState.settings, {
-    status: ['annotable'],
+    status: ['annotable', 'visible'],
     canBeAnnotatedBy: 'human',
   });
   const nonAnnotableCategories = settingsModule.lib.getCategories(annotatorState.settings, {
-    status: ['hidden', 'alwaysVisible', 'visible'],
+    status: ['hidden', 'alwaysVisible'],
     canBeAnnotatedBy: 'NLP',
   });
   const annotationPerCategoryAndEntity = groupByCategoryAndEntity(annotatorState.annotations, categories).sort(

@@ -2,6 +2,7 @@ import { documentModule } from '..';
 import { documentGenerator } from '../generator';
 import { computeCaseNumber } from './computeCaseNumber';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('computeCaseNumber', () => {
   const documentNumber = 12345;
   const boundDocumentNumber = 54321;

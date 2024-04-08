@@ -1,11 +1,9 @@
 import {
   annotationType,
   annotationReportType,
-  buildAutoAnnotator,
   documentType,
   documentModule,
   idType,
-  settingsModule,
   idModule,
   settingsType,
   treatmentModule,
@@ -15,7 +13,6 @@ import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
-import { computeAdditionalAnnotations } from './computeAdditionalAnnotations';
 
 export { buildAnnotator };
 
@@ -133,7 +130,6 @@ function buildAnnotator(
             msg: `Error while annotating document ${formatDocumentInfos(
               currentDocumentToAnnotate,
             )}. Setting the document to its previous status...`,
-            data: error as Record<string, unknown>,
           });
           await documentService.updateDocumentStatus(
             currentDocumentToAnnotate._id,
@@ -161,7 +157,15 @@ function buildAnnotator(
   async function reAnnotateFreeDocuments() {
     const documentIds = await documentService.fetchFreeDocumentsIds();
 
+    logger.log({
+      operationName: 'reAnnotateFreeDocuments',
+      msg: `Found ${documentIds.length} free documents to reannotate, deleting their treatments and annotation report.`,
+    });
+
     for (const documentId of documentIds) {
+      const annotationReportRepository = buildAnnotationReportRepository();
+      await annotationReportRepository.deleteByDocumentId(documentId);
+      await treatmentService.deleteTreatmentsByDocumentId(documentId);
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
 
@@ -184,6 +188,10 @@ function buildAnnotator(
       annotations,
       documentId,
       report,
+      newCategoriesToAnnotate,
+      newCategoriesToUnAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log({
       operationName: 'annotateDocument',
@@ -203,42 +211,73 @@ function buildAnnotator(
       operationName: 'annotateDocument',
       msg: 'NLP treatment created in DB',
     });
-    const additionalAnnotations = computeAdditionalAnnotations(
-      document,
-      annotations,
-      settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
-    );
-    if (additionalAnnotations.length > 0) {
+
+    //Todo : create report only if report is not null
+    await createReport(report);
+    logger.log({
+      operationName: 'annotateDocument',
+      msg: 'Annotation report created in DB',
+    });
+
+    if (
+      additionalTermsParsingFailed !== null &&
+      additionalTermsParsingFailed !== undefined
+    ) {
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'Creating additional annotations treatment...',
+        msg: `additionalTermsParsingFailed found, updating with value ${additionalTermsParsingFailed}`,
       });
-      await createAdditionalAnnotationsTreatment({
-        annotations: additionalAnnotations,
-        documentId: document._id,
-      });
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Additional annotations treatment created in DB',
-      });
-    }
-    if (JSON.stringify(settings).includes('autoLinkSensitivity')) {
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Creating post-process treatment...',
-      });
-      await createAutoTreatment({
-        annotations: [...annotations, ...additionalAnnotations],
+      await documentService.updateDocumentAdditionalTermsParsingFailed(
         documentId,
+        additionalTermsParsingFailed,
+      );
+    }
+
+    let newCategoriesToOmit = document.decisionMetadata.categoriesToOmit;
+    if (!!newCategoriesToUnAnnotate) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `categoriesToUnAnnotate found, adding '${newCategoriesToUnAnnotate}' to categoriesToOmit if not already in`,
       });
+      newCategoriesToOmit = Array.from(
+        new Set(newCategoriesToOmit.concat(newCategoriesToUnAnnotate)),
+      );
+    }
+
+    if (!!newCategoriesToAnnotate) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `categoriesToAnnotate found, removing '${newCategoriesToAnnotate}' from categoriesToOmit if present`,
+      });
+      newCategoriesToOmit = newCategoriesToOmit.filter(
+        (category) => !newCategoriesToAnnotate.includes(category),
+      );
+    }
+
+    if (document.decisionMetadata.categoriesToOmit != newCategoriesToOmit) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `updating categoriesToOmit in database`,
+      });
+      documentService.updateDocumentCategoriesToOmit(
+        documentId,
+        newCategoriesToOmit,
+      );
+    }
+
+    if (!!computedAdditionalTerms) {
       logger.log({
         operationName: 'annotateDocument',
         msg:
-          'Post-process treatment created. Creating report and updating document status...',
+          'Additionals terms to annotate or to unannotate found, adding to document...',
       });
+
+      await documentService.updateDocumentComputedAdditionalTerms(
+        documentId,
+        computedAdditionalTerms,
+      );
     }
 
-    await createReport(report);
     const nextDocumentStatus = documentModule.lib.getNextStatus({
       status: document.status,
       publicationCategory: document.publicationCategory,
@@ -267,44 +306,6 @@ function buildAnnotator(
         previousAnnotations: [],
         nextAnnotations: annotations,
         source: 'NLP',
-      },
-      settings,
-    );
-  }
-
-  async function createAdditionalAnnotationsTreatment({
-    annotations,
-    documentId,
-  }: {
-    annotations: annotationType[];
-    documentId: idType;
-  }) {
-    await treatmentService.createTreatment(
-      {
-        documentId,
-        previousAnnotations: [],
-        nextAnnotations: annotations,
-        source: 'supplementaryAnnotations',
-      },
-      settings,
-    );
-  }
-
-  async function createAutoTreatment({
-    annotations,
-    documentId,
-  }: {
-    annotations: annotationType[];
-    documentId: idType;
-  }) {
-    const autoAnnotator = buildAutoAnnotator(settings);
-    const autoTreatedAnnotations = autoAnnotator.annotate(annotations);
-    await treatmentService.createTreatment(
-      {
-        documentId,
-        previousAnnotations: annotations,
-        nextAnnotations: autoTreatedAnnotations,
-        source: 'postProcess',
       },
       settings,
     );

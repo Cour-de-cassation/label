@@ -197,6 +197,8 @@ function buildExporter(
       settings,
       document.decisionMetadata.categoriesToOmit,
       document.decisionMetadata.additionalTermsToAnnotate,
+      document.decisionMetadata.computedAdditionalTerms,
+      document.decisionMetadata.additionalTermsParsingFailed,
     );
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
@@ -205,7 +207,6 @@ function buildExporter(
         externalId: document.externalId,
         pseudonymizationText: anonymizer.anonymizeDocument(document).text,
         labelTreatments: treatmentModule.lib.concat(treatments),
-        publishStatus: 'toBePublished',
         environment,
       });
 

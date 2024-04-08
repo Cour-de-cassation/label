@@ -2,6 +2,7 @@ import { documentModule } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 import { fetchAllJurisdictions } from './fetchAllJurisdictions';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('fetchAllJurisdictions', () => {
   it('should fetch all the distinc jurisdictions', async () => {
     const documentRepository = buildDocumentRepository();

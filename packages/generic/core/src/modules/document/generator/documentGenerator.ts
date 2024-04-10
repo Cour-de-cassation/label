@@ -23,7 +23,7 @@ const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['dec
     parties,
     session,
     solution,
-    partiallyPublic
+    debatPublic,
   } = {}) => ({
     additionalTermsToAnnotate: additionalTermsToAnnotate ?? '',
     computedAdditionalTerms: computedAdditionalTerms ?? undefined,
@@ -43,7 +43,7 @@ const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['dec
     parties: parties ?? [],
     session: session ?? '',
     solution: solution ?? '',
-    partiallyPublic: partiallyPublic ?? false
+    debatPublic: debatPublic ?? undefined,
   }),
 };
 

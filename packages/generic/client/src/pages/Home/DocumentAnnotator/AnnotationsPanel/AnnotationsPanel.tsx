@@ -42,8 +42,7 @@ function AnnotationsPanel(props: {
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
-
-        {props.document.decisionMetadata.partiallyPublic && (
+        {props.document.decisionMetadata.debatPublic === false && (
           <div key={'partiallyPublic'} style={styles.categoryContainer}>
             {renderPartiallyPublic()}
           </div>
@@ -113,15 +112,15 @@ function AnnotationsPanel(props: {
           <div style={styles.additionalAnnotationTermsRightContainer}>
             {(additionalTermsParsingFailed ||
               (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '')) && (
-              <>
-                <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
-              </>
-            )}
+                <>
+                  <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
+                </>
+              )}
 
             {(computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
               computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
-            (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
-              computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0) ? (
+              (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+                computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0) ? (
               <>
                 <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
                 {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
@@ -175,7 +174,7 @@ function AnnotationsPanel(props: {
     return (
       <div style={styles.partiallyPublicContainer}>
         <div style={styles.partiallyPublicLeftContainer}>
-          <Icon iconName={'eyeoff'} />
+          <Icon iconName={settingsModule.lib.motivationCategoryHandler.getCategoryIconName()} />
         </div>
         <div style={styles.partiallyPublicRightContainer}>
           <Text>Cette décision est partiellement publique, les motifs seront occultés.</Text>
@@ -221,7 +220,7 @@ function AnnotationsPanel(props: {
         flex: 1,
         justifyContent: 'space-between',
         borderRadius: theme.shape.borderRadius.l,
-        backgroundColor: "orange",
+        backgroundColor: getColor(settingsModule.lib.motivationCategoryHandler.getCategoryColor(displayMode)),
       },
       partiallyPublicLeftContainer: {
         marginRight: theme.spacing * 3,

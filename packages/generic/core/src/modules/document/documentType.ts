@@ -87,49 +87,49 @@ const zoningZones = {
 } as const;
 
 const introduction_subzonage = {
-  'n_arret': {
+  n_arret: {
     kind: 'or',
     content: [
       { kind: 'primitive', content: 'string' },
       { kind: 'primitive', content: 'undefined' },
     ],
   },
-  'formation': {
+  formation: {
     kind: 'or',
     content: [
       { kind: 'primitive', content: 'string' },
       { kind: 'primitive', content: 'undefined' },
     ],
   },
-  'publication': {
+  publication: {
     kind: 'or',
     content: [
       { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       { kind: 'primitive', content: 'undefined' },
     ],
   },
-  'juridiction': {
+  juridiction: {
     kind: 'or',
     content: [
       { kind: 'primitive', content: 'string' },
       { kind: 'primitive', content: 'undefined' },
     ],
   },
-  'chambre': {
+  chambre: {
     kind: 'or',
     content: [
       { kind: 'primitive', content: 'string' },
       { kind: 'primitive', content: 'undefined' },
     ],
   },
-  'pourvoi': {
+  pourvoi: {
     kind: 'or',
     content: [
       { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       { kind: 'primitive', content: 'undefined' },
     ],
   },
-  'composition': {
+  composition: {
     kind: 'or',
     content: [
       {
@@ -251,7 +251,13 @@ const documentModelCommonFields = {
       parties: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       session: { kind: 'primitive', content: 'string' },
       solution: { kind: 'primitive', content: 'string' },
-      partiallyPublic: { kind: 'primitive', content: 'boolean' },
+      debatPublic: {
+        kind: 'or',
+        content: [
+          { kind: 'primitive', content: 'boolean' },
+          { kind: 'primitive', content: 'undefined' },
+        ],
+      },
     },
   },
   documentNumber: { kind: 'primitive', content: 'number' },

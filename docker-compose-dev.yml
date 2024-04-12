@@ -1,4 +1,4 @@
-version: "3.7"
+name: label
 
 services:
   labelDb:
@@ -27,7 +27,6 @@ services:
 
 networks:
   default:
-    name: label-network
   dbsder-external-network:
     external: true
 

@@ -56,6 +56,7 @@ function AnnotationsPanel(props: {
         {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => {
           const isCategoryAdditionalAnnotationCategory =
             category === settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName();
+          const isMotivationCategory = category === settingsModule.lib.motivationCategoryHandler.getCategoryName();
 
           return (
             <div key={category} style={styles.categoryContainer}>
@@ -65,7 +66,7 @@ function AnnotationsPanel(props: {
                   props.document.decisionMetadata.computedAdditionalTerms,
                   props.document.decisionMetadata.additionalTermsParsingFailed,
                 )}
-              <div>{renderCategory({ category, categorySize, categoryAnnotations })}</div>
+              <div>{!isMotivationCategory && renderCategory({ category, categorySize, categoryAnnotations })}</div>
             </div>
           );
         })}
@@ -112,15 +113,15 @@ function AnnotationsPanel(props: {
           <div style={styles.additionalAnnotationTermsRightContainer}>
             {(additionalTermsParsingFailed ||
               (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '')) && (
-                <>
-                  <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
-                </>
-              )}
+              <>
+                <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
+              </>
+            )}
 
             {(computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
               computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
-              (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
-                computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0) ? (
+            (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+              computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0) ? (
               <>
                 <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
                 {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&

@@ -228,8 +228,8 @@ function buildAnnotator(
 
         createMotivationOccultationTreatment(
           documentId,
-          document.zoning.zones.motivations.start,
-          document.zoning.zones.motivations.end,
+          document.zoning.zones.motivations.start + 1,
+          document.zoning.zones.motivations.end - 1,
           document.text,
           document.documentNumber,
           annotations,

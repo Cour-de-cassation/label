@@ -8,10 +8,15 @@ function removeOverlappingAnnotations(annotations: annotationType[]): annotation
   const cleanedAnnotations = [];
   cleanedAnnotations.push(sortedAnnotations[0]);
   for (let i = 1, l = sortedAnnotations.length; i < l; i++) {
-    const annotationA = sortedAnnotations[i - 1];
+    const annotationA = cleanedAnnotations[cleanedAnnotations.length - 1];
     const annotationB = sortedAnnotations[i];
-    if (!areOverlapping(annotationA, annotationB)) {
-      cleanedAnnotations.push(annotationB);
+    if (areOverlapping(annotationA, annotationB)) {
+      if (annotationA.text.length < annotationB.text.length) {
+        cleanedAnnotations.pop();
+        cleanedAnnotations.push(annotationB);
+      }
+    } else {
+      cleanedAnnotations.push(annotationB)
     }
   }
   return cleanedAnnotations;

@@ -16,7 +16,7 @@ function removeOverlappingAnnotations(annotations: annotationType[]): annotation
         cleanedAnnotations.push(annotationB);
       }
     } else {
-      cleanedAnnotations.push(annotationB)
+      cleanedAnnotations.push(annotationB);
     }
   }
   return cleanedAnnotations;

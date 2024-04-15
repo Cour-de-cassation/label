@@ -177,7 +177,7 @@ function AnnotationsPanel(props: {
           <Icon iconName={settingsModule.lib.motivationCategoryHandler.getCategoryIconName()} />
         </div>
         <div style={styles.partiallyPublicRightContainer}>
-          <Text>Cette décision est partiellement publique, les motifs seront occultés.</Text>
+          <Text>{wordings.homePage.debatNotPublic}</Text>
         </div>
       </div>
     );

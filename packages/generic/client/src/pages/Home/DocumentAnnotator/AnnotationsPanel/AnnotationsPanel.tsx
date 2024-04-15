@@ -56,7 +56,6 @@ function AnnotationsPanel(props: {
         {props.annotationPerCategoryAndEntity.map(({ category, categorySize, categoryAnnotations }) => {
           const isCategoryAdditionalAnnotationCategory =
             category === settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName();
-          const isMotivationCategory = category === settingsModule.lib.motivationCategoryHandler.getCategoryName();
 
           return (
             <div key={category} style={styles.categoryContainer}>
@@ -66,7 +65,7 @@ function AnnotationsPanel(props: {
                   props.document.decisionMetadata.computedAdditionalTerms,
                   props.document.decisionMetadata.additionalTermsParsingFailed,
                 )}
-              <div>{!isMotivationCategory && renderCategory({ category, categorySize, categoryAnnotations })}</div>
+              <div>{renderCategory({ category, categorySize, categoryAnnotations })}</div>
             </div>
           );
         })}

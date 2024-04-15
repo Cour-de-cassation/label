@@ -213,7 +213,7 @@ function buildAnnotator(
       msg: 'NLP treatment created in DB',
     });
 
-    if (!document.decisionMetadata.debatPublic) {
+    if (document.decisionMetadata.debatPublic === false) {
       if (
         document.zoning != undefined &&
         document.zoning.zones?.motivations != undefined &&

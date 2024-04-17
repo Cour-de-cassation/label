@@ -44,7 +44,7 @@ function AnnotationsPanel(props: {
       <div style={styles.categoriesContainer}>
         {props.document.decisionMetadata.debatPublic === false && (
           <div key={'partiallyPublic'} style={styles.categoryContainer}>
-            {renderPartiallyPublic()}
+            {renderPartiallyPublicWarning()}
           </div>
         )}
 
@@ -170,7 +170,7 @@ function AnnotationsPanel(props: {
     );
   }
 
-  function renderPartiallyPublic() {
+  function renderPartiallyPublicWarning() {
     return (
       <div style={styles.partiallyPublicContainer}>
         <div style={styles.partiallyPublicLeftContainer}>

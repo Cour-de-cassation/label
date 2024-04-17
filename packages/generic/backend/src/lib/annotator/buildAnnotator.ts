@@ -222,8 +222,7 @@ function buildAnnotator(
       ) {
         logger.log({
           operationName: 'annotateDocument',
-          msg:
-            'Annotate motivation zone because its a partially public decision',
+          msg: 'Annotate motivation zone because decision debat are not public',
         });
 
         createMotivationOccultationTreatment(
@@ -237,9 +236,15 @@ function buildAnnotator(
       } else {
         logger.error({
           operationName: 'annotateDocument',
-          msg:
-            'Annotate zone for partially public decision impossible because no zoning was found',
+          msg: `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
+            document,
+          )}`,
         });
+        throw new Error(
+          `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
+            document,
+          )}`,
+        );
       }
     }
 

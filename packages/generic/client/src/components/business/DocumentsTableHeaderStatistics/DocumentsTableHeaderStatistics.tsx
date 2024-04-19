@@ -61,7 +61,7 @@ function buildStyles(theme: customThemeType) {
       height: heights.adminTreatmentsTableHeader,
     },
     tableHeader: {
-      paddingTop: theme.spacing * 2,
+      paddingTop: theme.spacing * 4,
       paddingRight: theme.spacing * 2,
       display: 'flex',
       justifyContent: 'space-between',

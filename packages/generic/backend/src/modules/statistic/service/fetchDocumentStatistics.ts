@@ -13,44 +13,41 @@ async function fetchDocumentStatistics(
     documentNumber,
   );
 
-  const userIdString: ObjectId[] = [];
-  documentStatistics.map(({ treatmentsSummary }) => {
-    return treatmentsSummary.map((value) => {
-      if (value.userId != null) {
-        userIdString.push(value.userId);
-      }
-    });
-  });
+  const usersDocumentsStatistics = await Promise.all(
+    documentStatistics.map(async (val) => {
+      const treatmentsDetails = await getUsersAndDuration(
+        val.treatmentsSummary.map((treatment) => ({
+          userId: treatment.userId,
+          treatmentDuration: treatment.treatmentDuration,
+        })),
+        val._id,
+      );
 
-  const result = await getStatisticsAndUsers(userIdString);
+      return {
+        ...val,
+        treatmentsSummary: treatmentsDetails,
+      };
+    }),
+  );
 
-  const getFinalStatistics = documentStatistics.map((stat) => {
-    const user = stat.treatmentsSummary.map((treatment) => {
-      return result.map((value) => {
-        if (value.id == idModule.lib.convertToString(treatment.userId)) {
-          return { ...value, treatmentDuration: treatment.treatmentDuration };
-        } else {
-          return null;
-        }
-      });
-    });
+  return usersDocumentsStatistics;
+}
 
+async function getUsersAndDuration(
+  userTreatments: { userId: ObjectId; treatmentDuration: number }[],
+  statId: ObjectId,
+) {
+  const userIds = userTreatments.map((ut) => ut.userId);
+  const val = await userService.fetchUsersByIds(userIds);
+  return userTreatments.map((ut) => {
+    const userIdString = idModule.lib.convertToString(ut.userId);
+    const { email, name, _id } = val[userIdString];
     return {
-      ...stat,
-      treatmentsSummary: user[0],
+      email: email,
+      name: name,
+      id: _id,
+      statId: statId,
+      treatmentDuration: ut.treatmentDuration,
     };
   });
-
-  return getFinalStatistics;
 }
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-const getStatisticsAndUsers = async (userIds: ObjectId[]) => {
-  const reponse = await userService.fetchUsersByIds(userIds).then((val) => {
-    return userIds.map((vall) => {
-      const userIdString = idModule.lib.convertToString(vall);
-      const { email, name, _id } = val[userIdString] as any;
-      return { email: email, name: name, id: _id };
-    });
-  });
-  return reponse;
-};

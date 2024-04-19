@@ -1,13 +1,16 @@
 import React from 'react';
 import { timeOperator } from '@label/core';
 import { customThemeType, useCustomTheme, Text } from 'pelta-design-system';
+import { statisticType } from '@label/core';
 import { wordings } from '../../../../wordings';
 
 export { DocumentStatisticsBox };
+
 type treatmentsSummaryType = {
   email: string;
   id: string;
   name: string;
+  statId: string;
   treatmentDuration: number;
 };
 
@@ -15,28 +18,9 @@ type labelStat = {
   label: string;
   value: string[] | string | number | undefined;
 };
-export interface documentStatsType {
-  NACCode: string;
-  annotationsCount: number;
-  appealNumber: string | undefined;
-  chamberName: string | undefined;
-  decisionDate: number | undefined;
-  documentExternalId: string;
-  documentNumber: number;
-  endCaseCode: string | undefined;
-  importer: ['recent', 'chained', 'filler', 'manual', 'default'];
-  jurisdiction: string | undefined;
-  linkedEntitiesCount: number;
-  publicationCategory: Array<string>;
-  route: string | undefined;
-  session: string;
-  source: string;
-  subAnnotationsNonSensitiveCount: string;
-  subAnnotationsSensitiveCount: string;
-  surAnnotationsCount: string;
-  treatmentDate: string;
+
+export interface documentStatsType extends Omit<statisticType, '_id' | 'treatmentsSummary'> {
   treatmentsSummary: Array<treatmentsSummaryType>;
-  wordsCount: number;
   _id: string;
 }
 
@@ -82,10 +66,7 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
 
   function buildDocumentStatisticRow() {
     const { documentStatistic } = props;
-    const ReadbleTreatmentDateTime = new Date(documentStatistic.treatmentDate);
-    const ReadbleDateDecision = new Date(documentStatistic.decisionDate || '');
-
-    return [
+    const result = [
       {
         label: wordings.statisticsPage.box.fields.wordsCount,
         value: documentStatistic.wordsCount,
@@ -123,56 +104,73 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
         value: documentStatistic.chamberName,
       },
       {
+        label: wordings.statisticsPage.box.fields.circuit,
+        value: documentStatistic.route,
+      },
+      {
+        label: wordings.statisticsPage.box.fields.importer,
+        value: documentStatistic.importer,
+      },
+      {
+        label: wordings.statisticsPage.box.fields.juridiction,
+        value: documentStatistic.jurisdiction,
+      },
+      {
         label: wordings.statisticsPage.box.fields.decisionDate,
-        value: timeOperator.convertTimestampToReadableDate(ReadbleDateDecision.getDate()),
+        value: timeOperator.convertTimestampToReadableDate(documentStatistic.decisionDate ?? 0),
       },
       {
         label: wordings.statisticsPage.box.fields.treatmentDate,
-        value: timeOperator.convertTimestampToReadableDate(ReadbleTreatmentDateTime.getDate()),
+        value: timeOperator.convertTimestampToReadableDate(documentStatistic.treatmentDate),
+      },
+    ];
+    return result.filter((row) => row.value !== undefined && row.value !== null && row.value !== '');
+  }
+
+  function buildAgentDurationRow(): Array<labelStat> {
+    const { treatmentsSummary } = props.documentStatistic;
+
+    if (!treatmentsSummary || !treatmentsSummary.length) {
+      return [
+        {
+          label: wordings.statisticsPage.box.fields.agent,
+          value: 'N/A',
+        },
+        {
+          label: wordings.statisticsPage.box.fields.treatmentDuration,
+          value: 'N/A',
+        },
+      ];
+    }
+    const uniqueTreatments = removeNullAndDuplicatesTreatments(treatmentsSummary);
+    const duration = uniqueTreatments.map((treatment) => {
+      return ' ' + timeOperator.convertDurationToReadableDuration(treatment.treatmentDuration) + ' ';
+    });
+
+    const agent = uniqueTreatments.map((treatment) => {
+      return ' ' + treatment.name + ' ';
+    });
+
+    return [
+      {
+        label: wordings.statisticsPage.box.fields.agent,
+        value: agent,
+      },
+      {
+        label: wordings.statisticsPage.box.fields.treatmentDuration,
+        value: duration,
       },
     ];
   }
 
-  function buildAgentDurationRow(): Array<labelStat> {
-    if (props.documentStatistic.treatmentsSummary != undefined) {
-      const treatments = removeNull(props.documentStatistic.treatmentsSummary);
-
-      const duration = treatments?.map((value: treatmentsSummaryType) => {
-        return ' ' + timeOperator.convertDurationToReadableDuration(value.treatmentDuration) + ' ';
-      });
-
-      const agent = treatments?.map((value: treatmentsSummaryType) => {
-        return ' ' + value.email + ' ';
-      });
-
-      return [
-        {
-          label: wordings.statisticsPage.box.fields.agent,
-          value: agent,
-        },
-        {
-          label: wordings.statisticsPage.box.fields.treatmentDuration,
-          value: duration,
-        },
-      ];
-    } else {
-      return [
-        {
-          label: wordings.statisticsPage.box.fields.agent,
-          value: 'N/A',
-        },
-        {
-          label: wordings.statisticsPage.box.fields.treatmentDuration,
-          value: 'N/A',
-        },
-      ];
-    }
-  }
-
-  function removeNull(arr: Array<treatmentsSummaryType>) {
-    if (arr != undefined && arr.length != 0) {
-      return arr.filter((val) => val != null);
-    }
+  function removeNullAndDuplicatesTreatments(
+    treatmentsSummaries: Array<treatmentsSummaryType>,
+  ): Array<treatmentsSummaryType> {
+    const filteredArray = treatmentsSummaries.filter((val) => val !== null);
+    const uniqueArray = filteredArray.filter(
+      (item, index, self) => index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(item)),
+    );
+    return uniqueArray;
   }
 
   function buildStyles(theme: customThemeType) {
@@ -180,7 +178,8 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
       container: {
         width: `700px`,
         borderRadius: theme.shape.borderRadius.s,
-        padding: '10px',
+        padding: theme.spacing * 4,
+        margin: '10px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',

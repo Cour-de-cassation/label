@@ -21,7 +21,6 @@ function Statistics(props: {
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
-
   const aggregatedStatistics = buildAggregatedStatistics();
   const [searchedDocumentNumber, setSearchedDocumentNumber] = useState<number | undefined>();
   const searchDocumentNumber = (searchedDocumentNumber: number | undefined) => {
@@ -35,10 +34,10 @@ function Statistics(props: {
   };
 
   const titleAlert =
-    searchDocumentNumber != undefined ? <p> {wordings.statisticsPage.alertMessageStats} </p> : <p> </p>;
+    searchedDocumentNumber == undefined ? <p> {wordings.statisticsPage.specificStatisticsHintMessage} </p> : <p> </p>;
   return (
     <div>
-      <div>
+      <div style={styles.table}>
         <DocumentsTableHeaderStatistics
           availableStatisticFilters={props.availableStatisticFilters}
           users={props.users}
@@ -54,7 +53,7 @@ function Statistics(props: {
         <div style={styles.row}>
           {props.aggregatedStatistics.total == -1 ? (
             <div style={styles.numberOfDecisionContainer}>
-              <Text variant="h1">{wordings.statisticsPage.alertMessage}</Text>
+              <Text variant="h1">{wordings.statisticsPage.agregatedStatisticsHintMessage}</Text>
             </div>
           ) : (
             <>
@@ -74,12 +73,14 @@ function Statistics(props: {
         <div style={styles.row}>
           {documentStatistics?.length == 0 ? (
             <div style={styles.numberOfDecisionContainer}>
-              <Text variant="h1">{wordings.statisticsPage.alertMessagePasStats}</Text>
+              <Text variant="h1">{wordings.statisticsPage.specificStatisticsNotFound}</Text>
             </div>
           ) : (
             <>
               <div style={styles.numberOfDecisionContainer}>
-                <Text variant="h1">{titleAlert}</Text>
+                <Text variant="h1">
+                  <p>{titleAlert}</p>
+                </Text>
               </div>
               <div style={styles.rowBox}>
                 {documentStatistics?.map((val) => {
@@ -158,6 +159,10 @@ function buildStyles(theme: customThemeType) {
       borderLeft: '1px solid hsla(200, 10%, 50%,100)',
       height: '70%',
       width: ' 1px',
+    },
+    table: {
+      paddingLeft: theme.spacing * 3,
+      paddingRight: theme.spacing * 2,
     },
   } as const;
 }

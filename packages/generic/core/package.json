@@ -47,15 +47,13 @@
   "scripts": {
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",
-    "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",
+    "clean:all": "rimraf -rf ./dist && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",
-    "coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "start": "node dist/app.js",
     "test": "RUN_MODE=TEST jest --passWithNoTests",
-    "type": "yarn build"
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
   },
   "types": "dist/index",
   "version": "1.0.0"

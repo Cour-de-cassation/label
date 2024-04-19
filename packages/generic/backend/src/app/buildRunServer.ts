@@ -9,6 +9,9 @@ import { setup } from './setup';
 export { buildRunServer };
 
 function buildRunServer(environment: environmentType, settings: settingsType) {
+  if (process.env.NODE_ENV === 'development') {
+    require('dotenv').config();
+  }
   return () => {
     const app = express();
 

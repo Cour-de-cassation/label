@@ -36,22 +36,17 @@
   "main": "dist/index",
   "name": "@label/cour-de-cassation",
   "scripts": {
-    "bootstrap": "node ./dist/scripts/bootstrap.js",
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",
-    "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",
+    "clean:all": "rimraf -rf ./dist && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",
-    "coverage": "RUN_MODE=TEST jest --passWithNoTests -c jest.config.json --coverage",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "startLocal": "RUN_MODE=LOCAL nodemon --watch ../generic/backend  src/labelServer.ts --environment environments/localEnvironment.json --settings settings/settings.json",
-    "startPreProd": "RUN_MODE=PREPROD node dist/labelServer.js -e environments/preProdEnvironment.json -s settings/settings.json",
-    "startProd": "RUN_MODE=PROD node dist/labelServer.js -e environments/prodEnvironment.json -s settings/settings.json",
+    "start": "RUN_MODE=LOCAL node dist/labelServer.js --environment environments/localEnvironment.json --settings settings/settings.json",
+    "start:dev":"RUN_MODE=LOCAL nodemon",
     "test": "RUN_MODE=TEST jest -c jest.config.json",
-    "testE2EPreProd": "RUN_MODE=TEST jest --passWithNoTests -c jest.config.preProd.e2e.json",
-    "testE2EProd": "RUN_MODE=TEST jest --passWithNoTests -c jest.config.prod.e2e.json",
-    "type": "yarn build"
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests -c jest.config.json --coverage"
   },
   "types": "dist/index",
   "version": "0.0.0"

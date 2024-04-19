@@ -66,16 +66,15 @@
     "bootstrap": "node ./dist/scripts/bootstrap.js",
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist && rimraf -rf ./build",
-    "cleanAll": "yarn run clean && rimraf -rf ./node_modules",
+    "clean:all": "yarn run clean && rimraf -rf ./node_modules",
     "compile": "tsc -p tsconfig.json",
-    "coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage",
     "dockerBuild": "docker-compose build",
     "dockerStart": "docker-compose up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "RUN_MODE=TEST jest --passWithNoTests",
-    "type": "yarn build"
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
   },
   "types": "dist/index",
   "version": "1.0.0"

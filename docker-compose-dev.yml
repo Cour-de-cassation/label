@@ -16,14 +16,17 @@ services:
       dockerfile: DockerfileLocalDev
     environment:
       - RUN_MODE=LOCAL
-    #    image: label-image
     ports:
       - "55430:55430"
     depends_on:
       - labelDb
+    env_file:
+      - docker.env
     networks:
       - default
       - dbsder-external-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 networks:
   default:

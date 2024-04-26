@@ -18,8 +18,7 @@ COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 COPY . .
 
-RUN yarn buildDev
-RUN chmod +x ./scripts/*
+RUN yarn build:backend
 
 # Start the app
-CMD ["yarn", "startLocalDev"]
+CMD ["yarn", "start:backend"]

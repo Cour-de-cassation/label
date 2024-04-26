@@ -16,16 +16,18 @@ function setupSettings(settings: settingsType) {
 }
 
 async function setupMongo(environment: environmentType) {
-  const url =
-    process.env.MONGODB_URL ??
-    `${environment.pathName.db}:${environment.port.db}`;
+  const labelDbUrl = process.env.LABEL_DB_URL;
+  const labelDbName = process.env.LABEL_DB_NAME;
   logger.log({
     operationName: 'setupMongo',
-    msg: `Loading the Mongo database : ${environment.dbName}`,
+    msg: `Loading the Mongo database : ${labelDbName}`,
   });
+  if (labelDbUrl == undefined || labelDbName == undefined) {
+    throw new Error('You must provide a valid database URL and name.');
+  }
   await mongo.initialize({
-    dbName: environment.dbName,
-    url: url,
+    dbName: labelDbName,
+    url: labelDbUrl,
   });
   logger.log({ operationName: 'setupMongo', msg: `MongoDB ready!` });
 

@@ -21,11 +21,11 @@ async function fetchApi({
 }) {
   return await axios({
     method: method,
-    baseURL: `${environment.pathName.db_api}:${environment.port.db_api}/${environment.version.db_api}`,
+    baseURL: `${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}`,
     url: `/${path}`,
     data: body,
     headers: {
-      'x-api-key': environment.api_key.db_api ?? '',
+      'x-api-key': process.env.DBSDER_API_KEY ?? '',
     },
   })
     .then((response: AxiosResponse) => {
@@ -73,7 +73,7 @@ const sderLocalApi: sderApiType = {
     source,
     environment,
   }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       const decisionList = ((await fetchApi({
         method: 'get',
         path: `decisions?status=toBeTreated&source=${source}&startDate=${
@@ -132,7 +132,7 @@ const sderLocalApi: sderApiType = {
     source,
     environment,
   }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       const decisionList = ((await fetchApi({
         method: 'get',
         path: `decisions?status=toBeTreated&source=${source}&startDate=${
@@ -207,7 +207,7 @@ const sderLocalApi: sderApiType = {
   },
 
   async fetchCourtDecisionById({ id, environment }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       return ((await fetchApi({
         method: 'get',
         path: `decisions/${id}`,
@@ -266,7 +266,7 @@ const sderLocalApi: sderApiType = {
   },
 
   async setCourtDecisionsLoaded({ documents, environment }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
         return await fetchApi({
           method: 'put',
@@ -284,7 +284,7 @@ const sderLocalApi: sderApiType = {
   },
 
   async setCourtDecisionsToBeTreated({ documents, environment }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
         return await fetchApi({
           method: 'put',
@@ -302,7 +302,7 @@ const sderLocalApi: sderApiType = {
   },
 
   async setCourtDecisionDone({ externalId, environment }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
@@ -318,7 +318,7 @@ const sderLocalApi: sderApiType = {
   },
 
   async setCourtDecisionBlocked({ externalId, environment }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
@@ -340,7 +340,7 @@ const sderLocalApi: sderApiType = {
     environment,
   }) {
     //TODO : include publishStatus to dbsder api call
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/rapports-occultations`,

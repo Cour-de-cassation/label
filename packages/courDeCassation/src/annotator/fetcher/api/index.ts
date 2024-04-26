@@ -9,7 +9,10 @@ export { buildApi as buildNlpApi };
 export type { nlpResponseType };
 
 const buildApi = dependencyManager.inject({
-  forLocal: buildNlpLocalApi,
+  forLocal:
+    process.env.NLP_PSEUDONYMISATION_API_ENABLED === 'true'
+      ? buildNlpApi
+      : buildNlpLocalApi,
   forProd: buildNlpApi,
   forTest: buildNlpFakeApi,
 });

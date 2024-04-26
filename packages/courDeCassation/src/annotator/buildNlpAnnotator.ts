@@ -8,9 +8,7 @@ function buildNlpAnnotator(
   settings: settingsType,
   environment: environmentType,
 ) {
-  const nlpApiBaseUrl =
-    process.env.NLP_API_URL ??
-    `${environment.pathName.nlpApi}:${environment.port.nlpApi}`;
+  const nlpApiBaseUrl = process.env.NLP_PSEUDONYMISATION_API_URL;
   const nlpAnnotatorConfig: annotatorConfigType = {
     name: 'NLP',
     ...buildNlpFetcher(nlpApiBaseUrl),

@@ -9,21 +9,15 @@ import { setup } from './setup';
 export { buildRunServer };
 
 function buildRunServer(environment: environmentType, settings: settingsType) {
-  if (process.env.NODE_ENV === 'development') {
-    require('dotenv').config();
-  }
+  console.log(process.env.NODE_ENV);
+
+  console.log(`label client url : ${process.env.LABEL_CLIENT_URL}`);
   return () => {
     const app = express();
 
     app.use(
       cors({
-        origin: [
-          `${
-            environment.pathName.server
-          }:${environmentHandler.convertServerPortToClientPort(
-            environment.port.server,
-          )}`,
-        ],
+        origin: [`${process.env.LABEL_CLIENT_URL}`],
       }),
     );
 

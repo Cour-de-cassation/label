@@ -217,8 +217,7 @@ function buildAnnotator(
       if (
         document.zoning != undefined &&
         document.zoning.zones?.motivations != undefined &&
-        document.zoning.zones.motivations.start != undefined &&
-        document.zoning.zones.motivations.end != undefined
+        document.zoning.zones.motivations.length > 0
       ) {
         logger.log({
           operationName: 'annotateDocument',
@@ -227,8 +226,7 @@ function buildAnnotator(
 
         createMotivationOccultationTreatment(
           documentId,
-          document.zoning.zones.motivations.start + 1,
-          document.zoning.zones.motivations.end - 1,
+          document.zoning.zones.motivations,
           document.text,
           document.documentNumber,
           annotations,
@@ -349,22 +347,29 @@ function buildAnnotator(
 
   async function createMotivationOccultationTreatment(
     documentId: documentType['_id'],
-    motivationStart: number,
-    motivationEnd: number,
+    motivations: { start: number; end: number }[],
     documentText: string,
     documentNumber: number,
     previousAnnotations: annotationType[],
   ) {
-    const motivationAnnotation = annotationModule.lib.buildAnnotation({
-      start: motivationStart,
-      text: documentText.substring(motivationStart, motivationEnd),
-      category: 'motivations',
-      certaintyScore: 1,
-      entityId: `motivations_${documentNumber}`,
+    const motivationAnnotations: annotationType[] = [];
+    motivations.forEach((motivation, index) => {
+      motivationAnnotations.push(
+        annotationModule.lib.buildAnnotation({
+          start: motivation.start + 1,
+          text: documentText.substring(
+            motivation.start + 1,
+            motivation.end - 1,
+          ),
+          category: 'motivations',
+          certaintyScore: 1,
+          entityId: `motivations${index}_${documentNumber}`,
+        }),
+      );
     });
 
     const annotationWithoutOverlapping = annotationModule.lib.removeOverlappingAnnotations(
-      [...previousAnnotations, motivationAnnotation],
+      [...previousAnnotations, ...motivationAnnotations],
     );
 
     await treatmentService.createTreatment(

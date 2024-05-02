@@ -99,15 +99,46 @@ async function mapCourtDecisionToDocument(
     source,
   );
 
+  let moyens = undefined;
+  if (sderCourtDecision.originalTextZoning?.zones?.moyens) {
+    if (Array.isArray(sderCourtDecision.originalTextZoning.zones.moyens)) {
+      moyens = sderCourtDecision.originalTextZoning.zones.moyens;
+    } else {
+      moyens = [sderCourtDecision.originalTextZoning.zones.moyens];
+    }
+  }
+
+  let expose_du_litige = undefined;
+  if (sderCourtDecision.originalTextZoning?.zones?.['expose du litige']) {
+    if (
+      Array.isArray(
+        sderCourtDecision.originalTextZoning.zones['expose du litige'],
+      )
+    ) {
+      expose_du_litige =
+        sderCourtDecision.originalTextZoning.zones['expose du litige'];
+    } else {
+      expose_du_litige = [
+        sderCourtDecision.originalTextZoning.zones['expose du litige'],
+      ];
+    }
+  }
+
+  let motivations = undefined;
+  if (sderCourtDecision.originalTextZoning?.zones?.motivations) {
+    if (Array.isArray(sderCourtDecision.originalTextZoning.zones.motivations)) {
+      motivations = sderCourtDecision.originalTextZoning.zones.motivations;
+    } else {
+      motivations = [sderCourtDecision.originalTextZoning.zones.motivations];
+    }
+  }
+
   const zoningZones = {
     introduction:
       sderCourtDecision.originalTextZoning?.zones?.introduction || undefined,
-    moyens: sderCourtDecision.originalTextZoning?.zones?.moyens || undefined,
-    'expose du litige':
-      sderCourtDecision.originalTextZoning?.zones?.['expose du litige'] ||
-      undefined,
-    motivations:
-      sderCourtDecision.originalTextZoning?.zones?.motivations || undefined,
+    moyens: moyens,
+    'expose du litige': expose_du_litige,
+    motivations: motivations,
     dispositif:
       sderCourtDecision.originalTextZoning?.zones?.dispositif || undefined,
     'moyens annexes':

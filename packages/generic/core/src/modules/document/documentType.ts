@@ -23,10 +23,13 @@ const zoningZones = {
     kind: 'or',
     content: [
       {
-        kind: 'object',
+        kind: 'array',
         content: {
-          start: { kind: 'primitive', content: 'number' },
-          end: { kind: 'primitive', content: 'number' },
+          kind: 'object',
+          content: {
+            start: { kind: 'primitive', content: 'number' },
+            end: { kind: 'primitive', content: 'number' },
+          },
         },
       },
       { kind: 'primitive', content: 'undefined' },
@@ -36,10 +39,13 @@ const zoningZones = {
     kind: 'or',
     content: [
       {
-        kind: 'object',
+        kind: 'array',
         content: {
-          start: { kind: 'primitive', content: 'number' },
-          end: { kind: 'primitive', content: 'number' },
+          kind: 'object',
+          content: {
+            start: { kind: 'primitive', content: 'number' },
+            end: { kind: 'primitive', content: 'number' },
+          },
         },
       },
       { kind: 'primitive', content: 'undefined' },
@@ -49,10 +55,13 @@ const zoningZones = {
     kind: 'or',
     content: [
       {
-        kind: 'object',
+        kind: 'array',
         content: {
-          start: { kind: 'primitive', content: 'number' },
-          end: { kind: 'primitive', content: 'number' },
+          kind: 'object',
+          content: {
+            start: { kind: 'primitive', content: 'number' },
+            end: { kind: 'primitive', content: 'number' },
+          },
         },
       },
       { kind: 'primitive', content: 'undefined' },

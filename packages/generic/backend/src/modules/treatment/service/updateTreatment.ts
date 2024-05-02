@@ -44,6 +44,7 @@ async function updateTreatment({
     document.decisionMetadata.additionalTermsToAnnotate,
     document.decisionMetadata.computedAdditionalTerms,
     document.decisionMetadata.additionalTermsParsingFailed,
+    document.decisionMetadata.debatPublic,
   );
 
   const actionToPerform = `update treatment for documentId ${idModule.lib.convertToString(

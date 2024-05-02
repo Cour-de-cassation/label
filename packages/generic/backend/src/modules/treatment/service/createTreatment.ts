@@ -52,6 +52,7 @@ async function createTreatment(
     document.decisionMetadata.additionalTermsToAnnotate,
     document.decisionMetadata.computedAdditionalTerms,
     document.decisionMetadata.additionalTermsParsingFailed,
+    document.decisionMetadata.debatPublic,
   );
 
   const treatment = treatmentModule.lib.build(

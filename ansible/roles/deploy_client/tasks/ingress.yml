@@ -13,10 +13,11 @@
       spec:
         entryPoints:
           - web
-
         routes:
           - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/label`)
             kind: Rule
+            middlewares:
+              - name: label-client-stripprefix
             services:
               - name: "{{ label_client_app_id }}-service"
                 port: label-client-port
@@ -34,7 +35,7 @@
         namespace: label
       spec:
         replacePathRegex:
-          regex: /label-client(/|$)(.*)
+          regex: /label(/|$)(.*)
           replacement: /$2
 
 

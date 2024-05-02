@@ -12,7 +12,7 @@ describe('fetchPublishableDocuments', () => {
       {
         status: 'done' as const,
         publicationCategory: ['P'],
-        decisionMetadata: {
+        decisionMetadata: documentModule.decisionMetadataGenerator.generate({
           additionalTermsToAnnotate: '',
           appealNumber: '08-16.486',
           boundDecisionDocumentNumbers: [],
@@ -29,7 +29,7 @@ describe('fetchPublishableDocuments', () => {
           solution: '',
           NACCode: '',
           endCaseCode: '',
-        } as any,
+        }),
         route: 'confirmation' as documentType['route'],
       },
       {

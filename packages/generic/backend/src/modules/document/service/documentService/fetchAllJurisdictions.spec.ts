@@ -13,7 +13,7 @@ describe('fetchAllJurisdictions', () => {
       "cour d'appel de Bordeaux",
     ].map((jurisdiction) =>
       documentModule.generator.generate({
-        decisionMetadata: {
+        decisionMetadata: documentModule.decisionMetadataGenerator.generate({
           appealNumber: '',
           additionalTermsToAnnotate: '',
           boundDecisionDocumentNumbers: [],
@@ -30,7 +30,7 @@ describe('fetchAllJurisdictions', () => {
           jurisdiction,
           NACCode: '',
           endCaseCode: '',
-        } as any,
+        }),
       }),
     );
     await documentRepository.insertMany(documents);

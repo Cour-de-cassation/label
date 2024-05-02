@@ -7,6 +7,7 @@ import {
   idModule,
   settingsType,
   treatmentModule,
+  annotationModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
@@ -212,6 +213,39 @@ function buildAnnotator(
       msg: 'NLP treatment created in DB',
     });
 
+    if (document.decisionMetadata.debatPublic === false) {
+      if (
+        document.zoning != undefined &&
+        document.zoning.zones?.motivations != undefined &&
+        document.zoning.zones.motivations.length > 0
+      ) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: 'Annotate motivation zone because decision debat are not public',
+        });
+
+        createMotivationOccultationTreatment(
+          documentId,
+          document.zoning.zones.motivations,
+          document.text,
+          document.documentNumber,
+          annotations,
+        );
+      } else {
+        logger.error({
+          operationName: 'annotateDocument',
+          msg: `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
+            document,
+          )}`,
+        });
+        throw new Error(
+          `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
+            document,
+          )}`,
+        );
+      }
+    }
+
     //Todo : create report only if report is not null
     await createReport(report);
     logger.log({
@@ -306,6 +340,44 @@ function buildAnnotator(
         previousAnnotations: [],
         nextAnnotations: annotations,
         source: 'NLP',
+      },
+      settings,
+    );
+  }
+
+  async function createMotivationOccultationTreatment(
+    documentId: documentType['_id'],
+    motivations: { start: number; end: number }[],
+    documentText: string,
+    documentNumber: number,
+    previousAnnotations: annotationType[],
+  ) {
+    const motivationAnnotations: annotationType[] = [];
+    motivations.forEach((motivation, index) => {
+      motivationAnnotations.push(
+        annotationModule.lib.buildAnnotation({
+          start: motivation.start + 1,
+          text: documentText.substring(
+            motivation.start + 1,
+            motivation.end - 1,
+          ),
+          category: 'motivations',
+          certaintyScore: 1,
+          entityId: `motivations${index}_${documentNumber}`,
+        }),
+      );
+    });
+
+    const annotationWithoutOverlapping = annotationModule.lib.removeOverlappingAnnotations(
+      [...previousAnnotations, ...motivationAnnotations],
+    );
+
+    await treatmentService.createTreatment(
+      {
+        documentId,
+        previousAnnotations: previousAnnotations,
+        nextAnnotations: annotationWithoutOverlapping,
+        source: 'supplementaryAnnotations',
       },
       settings,
     );

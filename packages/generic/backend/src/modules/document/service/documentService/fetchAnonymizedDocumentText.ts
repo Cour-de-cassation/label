@@ -24,6 +24,7 @@ async function fetchAnonymizedDocumentText(documentId: documentType['_id']) {
     document.decisionMetadata.additionalTermsToAnnotate,
     document.decisionMetadata.computedAdditionalTerms,
     document.decisionMetadata.additionalTermsParsingFailed,
+    document.decisionMetadata.debatPublic,
   );
   const seed = documentModule.lib.computeCaseNumber(document);
   const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);

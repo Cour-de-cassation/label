@@ -199,6 +199,7 @@ function buildExporter(
       document.decisionMetadata.additionalTermsToAnnotate,
       document.decisionMetadata.computedAdditionalTerms,
       document.decisionMetadata.additionalTermsParsingFailed,
+      document.decisionMetadata.debatPublic,
     );
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 

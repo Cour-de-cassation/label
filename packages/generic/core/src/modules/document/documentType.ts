@@ -5,6 +5,202 @@ export { documentModel, fetchedDocumentModel };
 
 export type { documentType, fetchedDocumentType };
 
+const zoningZones = {
+  introduction: {
+    kind: 'or',
+    content: [
+      {
+        kind: 'object',
+        content: {
+          start: { kind: 'primitive', content: 'number' },
+          end: { kind: 'primitive', content: 'number' },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  moyens: {
+    kind: 'or',
+    content: [
+      {
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            start: { kind: 'primitive', content: 'number' },
+            end: { kind: 'primitive', content: 'number' },
+          },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  'expose du litige': {
+    kind: 'or',
+    content: [
+      {
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            start: { kind: 'primitive', content: 'number' },
+            end: { kind: 'primitive', content: 'number' },
+          },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  motivations: {
+    kind: 'or',
+    content: [
+      {
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            start: { kind: 'primitive', content: 'number' },
+            end: { kind: 'primitive', content: 'number' },
+          },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  dispositif: {
+    kind: 'or',
+    content: [
+      {
+        kind: 'object',
+        content: {
+          start: { kind: 'primitive', content: 'number' },
+          end: { kind: 'primitive', content: 'number' },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  'moyens annexes': {
+    kind: 'or',
+    content: [
+      {
+        kind: 'object',
+        content: {
+          start: { kind: 'primitive', content: 'number' },
+          end: { kind: 'primitive', content: 'number' },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+} as const;
+
+const introduction_subzonage = {
+  n_arret: {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'string' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  formation: {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'string' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  publication: {
+    kind: 'or',
+    content: [
+      { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  juridiction: {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'string' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  chambre: {
+    kind: 'or',
+    content: [
+      { kind: 'primitive', content: 'string' },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  pourvoi: {
+    kind: 'or',
+    content: [
+      { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+  composition: {
+    kind: 'or',
+    content: [
+      {
+        kind: 'object',
+        content: {
+          start: { kind: 'primitive', content: 'number' },
+          end: { kind: 'primitive', content: 'number' },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
+} as const;
+
+const zoning = {
+  kind: 'or',
+  content: [
+    {
+      kind: 'object',
+      content: {
+        zones: {
+          kind: 'or',
+          content: [
+            { kind: 'object', content: zoningZones },
+            { kind: 'primitive', content: 'undefined' },
+          ],
+        },
+        introduction_subzonage: {
+          kind: 'or',
+          content: [
+            { kind: 'object', content: introduction_subzonage },
+            { kind: 'primitive', content: 'undefined' },
+          ],
+        },
+        visa: {
+          kind: 'or',
+          content: [
+            { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+            { kind: 'primitive', content: 'undefined' },
+          ],
+        },
+        is_public: {
+          kind: 'or',
+          content: [
+            { kind: 'primitive', content: 'number' },
+            { kind: 'primitive', content: 'undefined' },
+          ],
+        },
+        is_public_text: {
+          kind: 'or',
+          content: [
+            { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+            { kind: 'primitive', content: 'undefined' },
+          ],
+        },
+        arret_id: { kind: 'primitive', content: 'number' },
+      },
+    },
+    { kind: 'primitive', content: 'undefined' },
+  ],
+} as const;
+
 const documentModelCommonFields = {
   creationDate: {
     kind: 'or',
@@ -64,6 +260,13 @@ const documentModelCommonFields = {
       parties: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       session: { kind: 'primitive', content: 'string' },
       solution: { kind: 'primitive', content: 'string' },
+      debatPublic: {
+        kind: 'or',
+        content: [
+          { kind: 'primitive', content: 'boolean' },
+          { kind: 'primitive', content: 'undefined' },
+        ],
+      },
     },
   },
   documentNumber: { kind: 'primitive', content: 'number' },
@@ -109,6 +312,7 @@ const documentModelCommonFields = {
   },
   title: { kind: 'primitive', content: 'string' },
   text: { kind: 'primitive', content: 'string' },
+  zoning: zoning,
 } as const;
 
 const fetchedDocumentModel = buildModel({

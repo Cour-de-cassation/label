@@ -42,6 +42,12 @@ function AnnotationsPanel(props: {
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
+        {props.document.decisionMetadata.debatPublic === false && (
+          <div key={'partiallyPublic'} style={styles.categoryContainer}>
+            {renderPartiallyPublicWarning()}
+          </div>
+        )}
+
         {props.checklist && props.checklist.length > 0 && (
           <div key={'checklist'} style={styles.categoryContainer}>
             {renderChecklist(props.checklist)}
@@ -164,6 +170,19 @@ function AnnotationsPanel(props: {
     );
   }
 
+  function renderPartiallyPublicWarning() {
+    return (
+      <div style={styles.partiallyPublicContainer}>
+        <div style={styles.partiallyPublicLeftContainer}>
+          <Icon iconName={settingsModule.lib.motivationCategoryHandler.getCategoryIconName()} />
+        </div>
+        <div style={styles.partiallyPublicRightContainer}>
+          <Text>{wordings.homePage.debatNotPublic}</Text>
+        </div>
+      </div>
+    );
+  }
+
   function buildStyles(theme: customThemeType) {
     return {
       panel: {
@@ -193,6 +212,23 @@ function AnnotationsPanel(props: {
         overflowY: 'auto',
         height: heights.annotatorPanel,
         paddingRight: theme.spacing * 2,
+      },
+      partiallyPublicContainer: {
+        padding: theme.spacing * 2,
+        marginBottom: theme.spacing,
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'space-between',
+        borderRadius: theme.shape.borderRadius.l,
+        backgroundColor: getColor(settingsModule.lib.motivationCategoryHandler.getCategoryColor(displayMode)),
+      },
+      partiallyPublicLeftContainer: {
+        marginRight: theme.spacing * 3,
+      },
+      partiallyPublicRightContainer: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
       },
       additionalAnnotationTermsContainer: {
         padding: theme.spacing * 2,

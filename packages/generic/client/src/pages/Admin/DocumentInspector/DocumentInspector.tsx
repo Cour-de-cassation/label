@@ -50,6 +50,7 @@ function DocumentInspector(props: { settings: settingsType }) {
                       document.decisionMetadata.additionalTermsToAnnotate,
                       document.decisionMetadata.computedAdditionalTerms,
                       document.decisionMetadata.additionalTermsParsingFailed,
+                      document.decisionMetadata.debatPublic,
                     );
 
                     const applyAutoSave = buildApplyAutoSave(document._id);

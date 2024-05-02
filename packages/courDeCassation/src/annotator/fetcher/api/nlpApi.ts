@@ -25,6 +25,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         document.decisionMetadata.additionalTermsToAnnotate,
         document.decisionMetadata.computedAdditionalTerms,
         document.decisionMetadata.additionalTermsParsingFailed,
+        document.decisionMetadata.debatPublic,
       );
       const nlpCategories = settingsModule.lib.getCategories(filteredSettings, {
         status: ['visible', 'alwaysVisible', 'annotable'],

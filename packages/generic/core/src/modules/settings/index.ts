@@ -8,6 +8,7 @@ import {
   getAnnotationCategoryStatus,
   getAnnotationCategoryText,
   getCategories,
+  motivationCategoryHandler,
 } from './lib';
 import {
   colorType,
@@ -35,5 +36,6 @@ const settingsModule = {
     getAnnotationCategoryStatus,
     getAnnotationCategoryText,
     getCategories,
+    motivationCategoryHandler,
   },
 };

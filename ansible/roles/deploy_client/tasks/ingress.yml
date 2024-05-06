@@ -14,10 +14,10 @@
         entryPoints:
           - web
         routes:
-          - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/label`)
+          - match: Host(`lbl.judilibre-prive.local`) # && PathPrefix(`/label`)
             kind: Rule
-            middlewares:
-              - name: label-client-stripprefix
+            #middlewares:
+            #  - name: label-client-stripprefix
             services:
               - name: "{{ label_client_app_id }}-service"
                 port: label-client-port

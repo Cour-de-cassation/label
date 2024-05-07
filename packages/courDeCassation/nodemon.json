@@ -1,5 +1,0 @@
-{
-  "watch": ["../generic/backend/src", "../generic/core/src", "src"],
-  "ext": "ts,json",
-  "exec": "cd ../ && yarn compile:backend && ts-node courDeCassation/src/labelServer.ts --environment courDeCassation/environments/localEnvironment.json --settings courDeCassation/settings/settings.json"
-}

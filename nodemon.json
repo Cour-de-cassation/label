@@ -1,0 +1,9 @@
+{
+  "watch": [
+    "packages/courDeCassation/src",
+    "packages/generic/backend/src",
+    "packages/generic/core/src"
+  ],
+  "ext": "ts,json",
+  "exec": "yarn compile:backend && node packages/courDeCassation/dist/labelServer.js --environment packages/courDeCassation/environments/localEnvironment.json --settings packages/courDeCassation/settings/settings.json"
+}

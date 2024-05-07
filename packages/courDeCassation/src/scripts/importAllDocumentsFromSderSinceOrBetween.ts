@@ -4,8 +4,12 @@ import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
 import { environmentType } from '@label/core';
 import { logger } from '@label/backend';
+import * as dotenv from 'dotenv';
 
 (async () => {
+  if (process.env.RUN_MODE === 'LOCAL') {
+    dotenv.config();
+  }
   const { environment, settings } = await parametersHandler.getParameters();
   const { fromDaysAgo, toDaysAgo, byDateCreation } = parseArgv();
   const backend = buildBackend(environment, settings);

@@ -9,9 +9,6 @@ import { setup } from './setup';
 export { buildRunServer };
 
 function buildRunServer(environment: environmentType, settings: settingsType) {
-  console.log(process.env.NODE_ENV);
-
-  console.log(`label client url : ${process.env.LABEL_CLIENT_URL}`);
   return () => {
     const app = express();
 

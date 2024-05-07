@@ -7,7 +7,8 @@
     "nodemon": "3.1.0",
     "rimraf": "~3.0.2",
     "ts-node": "10.9.2",
-    "typescript": "~4.0.0"
+    "typescript": "~4.0.0",
+    "dotenv": "^16.4.5"
   },
   "name": "label",
   "private": true,
@@ -36,7 +37,7 @@
     "type": "lerna run type",
     "start:backend": "lerna run --scope @label/cour-de-cassation start --stream",
     "start:client:dev": "yarn compile:client && cd packages/generic/client && yarn start",
-    "start:backend:dev": "NODE_ENV=development lerna run --scope @label/cour-de-cassation start:dev --stream"
+    "start:backend:dev": "RUN_MODE=LOCAL nodemon"
   },
   "workspaces": [
     "packages/generic/*",

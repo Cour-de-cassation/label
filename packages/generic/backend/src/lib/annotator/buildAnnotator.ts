@@ -354,13 +354,19 @@ function buildAnnotator(
   ) {
     const motivationAnnotations: annotationType[] = [];
     motivations.forEach((motivation, index) => {
+      const motivationText = documentText.substring(
+        motivation.start,
+        motivation.end,
+      );
+      // Pour retirer les espaces et les retours a la ligne présents au début et a la fin de l'annotation de la motivation
+      const trimmedMotivation = motivationText.replace(/^\s+|\s+$/g, '');
+
       motivationAnnotations.push(
         annotationModule.lib.buildAnnotation({
-          start: motivation.start + 1,
-          text: documentText.substring(
-            motivation.start + 1,
-            motivation.end - 1,
-          ),
+          start:
+            motivation.start +
+            (motivationText.length - trimmedMotivation.length),
+          text: trimmedMotivation,
           category: 'motivations',
           certaintyScore: 1,
           entityId: `motivations${index}_${documentNumber}`,

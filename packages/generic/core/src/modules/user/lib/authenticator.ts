@@ -1,6 +1,5 @@
 import { buildAuthenticator } from 'sder-core';
-import { privateKey } from './privateKey';
 
 export { authenticator };
 
-const authenticator = buildAuthenticator(privateKey);
+const authenticator = buildAuthenticator(process.env.JWT_PRIVATE_KEY ?? 'local_private_key');

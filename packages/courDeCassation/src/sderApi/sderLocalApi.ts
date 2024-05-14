@@ -6,7 +6,7 @@ import { sderApiType } from './sderApiType';
 
 export { sderLocalApi };
 
-const pathToCourtDecisions = './storage/documents/';
+const pathToCourtDecisions = 'packages/courDeCassation/storage/documents/';
 
 async function fetchApi({
   method,

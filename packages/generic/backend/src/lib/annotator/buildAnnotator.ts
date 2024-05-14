@@ -358,14 +358,22 @@ function buildAnnotator(
         motivation.start,
         motivation.end,
       );
-      // Pour retirer les espaces et les retours a la ligne présents au début et a la fin de l'annotation de la motivation
-      const trimmedMotivation = motivationText.replace(/^\s+|\s+$/g, '');
+
+      // Suppression des espaces et des sauts de ligne au début du texte
+      const trimmedStartMotivation = motivationText.replace(/^[\s\r\n]+/, '');
+      // Calcul du nombre de caractères retirés au début du texte
+      const removedCharactersAtStart =
+        motivationText.length - trimmedStartMotivation.length;
+
+      // Suppression des espaces et des sauts de ligne à la fin du texte
+      const trimmedMotivation = trimmedStartMotivation.replace(
+        /[\s\r\n]+$/,
+        '',
+      );
 
       motivationAnnotations.push(
         annotationModule.lib.buildAnnotation({
-          start:
-            motivation.start +
-            (motivationText.length - trimmedMotivation.length),
+          start: motivation.start + removedCharactersAtStart,
           text: trimmedMotivation,
           category: 'motivations',
           certaintyScore: 1,

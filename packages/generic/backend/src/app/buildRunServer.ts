@@ -22,7 +22,7 @@ function buildRunServer(environment: environmentType, settings: settingsType) {
 
     buildApi(app);
 
-    app.listen(environment.port.server, async () => {
+    app.listen(process.env.LABEL_SERVER_PORT, async () => {
       await setup(environment, settings);
     });
   };

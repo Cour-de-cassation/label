@@ -81,9 +81,9 @@ build_label_client:
     - export NODE_OPTIONS=--openssl-legacy-provider
     # - apk update
     - apk add nodejs yarn git npm
-    # - yarn config set proxy $HTTP_PROXY
-    # - yarn config set https-proxy $HTTPS_PROXY
-    # - yarn install --
+    - yarn config set proxy $HTTP_PROXY
+    - yarn config set https-proxy $HTTPS_PROXY
+    - yarn install --
     # - yarn compile
     - CI=false yarn build:client # from "ugly workaround" in github workflows
     # - yarn test

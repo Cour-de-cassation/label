@@ -22,5 +22,9 @@ label_kubeconfig: "$home/.kube/config-local-k3s.yaml" # UNUSED
 label_start_timeout: "180" # UNUSED
 label_client_public_url: "/label-client" # UNUSED AND NOT MAPPED
 nlp_pseudonymisation_api_url: "http://nlp-pseudonymisation-api-service.nlp.svc.cluster.local:8081"
-
+dbsder_api_url: "http://api-service.dbsder:3000" # url not tested
+dbsder_api_version: "v1"
+dbsder_api_enabled: "false"
+label_db_name: "labelDb"
+label_client_url: "https://label.cour-de-cassation.justice.fr:55432" # strange url
 label_kube_namespace: "label"

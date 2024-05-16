@@ -31,3 +31,8 @@
         START_TIMEOUT: "{{ label_start_timeout }}"
         KUBECONFIG: "{{ label_kubeconfig }}"
         NLP_PSEUDONYMISATION_API_URL: "{{ nlp_pseudonymisation_api_url }}"
+        DBSDER_API_URL: "{{ dbsder_api_url }}"
+        DBSDER_API_VERSION: "{{ dbsder_api_version }}"
+        DBSDER_API_ENABLED: "{{ dbsder_api_enabled }}"
+        LABEL_DB_NAME: "{{ label_db_name }}"
+        LABEL_CLIENT_URL: "{{ label_client_url }}"

@@ -80,7 +80,7 @@ build_label_client:
     - echo "$HTTPS_PROXY"
     - export NODE_OPTIONS=--openssl-legacy-provider
     # - apk update
-    # - apk add nodejs yarn git npm
+    - apk add nodejs yarn git npm
     # - yarn config set proxy $HTTP_PROXY
     # - yarn config set https-proxy $HTTPS_PROXY
     # - yarn install --

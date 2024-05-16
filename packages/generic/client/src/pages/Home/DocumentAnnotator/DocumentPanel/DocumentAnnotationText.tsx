@@ -13,15 +13,7 @@ export { PureDocumentAnnotationText as DocumentAnnotationText };
 
 type propsType = { annotation: annotationType; anonymizer: clientAnonymizerType };
 
-class PureDocumentAnnotationText extends React.Component<propsType> {
-  shouldComponentUpdate(nextProps: propsType) {
-    return (
-      nextProps.annotation.category !== this.props.annotation.category ||
-      nextProps.annotation.entityId !== this.props.annotation.entityId ||
-      nextProps.annotation.start !== this.props.annotation.start ||
-      nextProps.annotation.text !== this.props.annotation.text
-    );
-  }
+class PureDocumentAnnotationText extends React.PureComponent<propsType> {
 
   render() {
     return <DocumentAnnotationText annotation={this.props.annotation} anonymizer={this.props.anonymizer} />;

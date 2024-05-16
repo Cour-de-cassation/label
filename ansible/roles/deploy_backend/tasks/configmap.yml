@@ -14,7 +14,7 @@
           app: "{{ label_back_app_id }}"
       data:
         GIT_BRANCH: "{{ git_branch }}"
-        API_PORT: "{{ label_api_port }}"
+        LABEL_API_PORT: "{{ label_api_port }}"
         APP_HOST: "{{ label_app_host }}"
         APP_GROUP: "{{ label_app_group }}"
         APP_ID: "{{ label_back_app_id }}"
@@ -30,6 +30,4 @@
         ROOT_PATH: "{{ label_back_root_path }}"
         START_TIMEOUT: "{{ label_start_timeout }}"
         KUBECONFIG: "{{ label_kubeconfig }}"
-        NLP_API_URL: "{{ nlp_api_url }}"
-
-...
+        NLP_PSEUDONYMISATION_API_URL: "{{ nlp_pseudonymisation_api_url }}"

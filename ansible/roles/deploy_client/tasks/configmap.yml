@@ -30,6 +30,4 @@
         ROOT_PATH: "{{ label_client_root_path }}"
         START_TIMEOUT: "{{ label_start_timeout }}"
         KUBECONFIG: "{{ label_kubeconfig }}"
-        NLP_API_URL: "{{ nlp_api_url }}"
-
-...
+        NLP_PSEUDONYMISATION_API_URL: "{{ nlp_pseudonymisation_api_url }}"

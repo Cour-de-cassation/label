@@ -5,7 +5,6 @@ import { settingsType } from '@label/core';
 
 import { buildApi } from '../api';
 import { setup } from './setup';
-import * as dotenv from 'dotenv';
 import { envSchema } from './envSchema';
 
 export { buildRunServer };
@@ -14,9 +13,6 @@ function buildRunServer(settings: settingsType) {
   return () => {
     const app = express();
 
-    if (process.env.RUN_MODE === 'LOCAL') {
-      dotenv.config();
-    }
     const { error, value: envVars } = envSchema.validate(process.env, {
       abortEarly: false,
     });

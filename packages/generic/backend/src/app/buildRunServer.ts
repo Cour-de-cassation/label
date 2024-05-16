@@ -35,7 +35,7 @@ function buildRunServer(settings: settingsType) {
 
     buildApi(app);
 
-    app.listen(process.env.LABEL_SERVER_PORT, async () => {
+    app.listen(process.env.LABEL_API_PORT, async () => {
       await setup(settings);
     });
   };

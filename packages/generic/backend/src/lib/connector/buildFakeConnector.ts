@@ -1,10 +1,5 @@
 import { decisionModule, decisionType } from 'sder';
-import {
-  documentModule,
-  documentType,
-  environmentType,
-  idModule,
-} from '@label/core';
+import { documentModule, documentType, idModule } from '@label/core';
 
 export { buildFakeConnectorWithNDecisions };
 
@@ -142,10 +137,8 @@ async function buildFakeConnectorWithNDecisions(
     },
     async updateDocumentsLoadedStatus({
       documents,
-      environment,
     }: {
       documents: documentType[];
-      environment: environmentType;
     }) {
       courtDecisions = courtDecisions.map((courtDecision) => {
         if (
@@ -163,10 +156,8 @@ async function buildFakeConnectorWithNDecisions(
     },
     async updateDocumentsToBeTreatedStatus({
       documents,
-      environment,
     }: {
       documents: documentType[];
-      environment: environmentType;
     }) {
       courtDecisions = courtDecisions.map((courtDecision) => {
         if (

@@ -7,9 +7,9 @@ import * as dotenv from 'dotenv';
   if (process.env.RUN_MODE === 'LOCAL') {
     dotenv.config();
   }
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { beforeMinutes } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   await backend.runScript(
     () => backend.scripts.renewCache.run({ minutes: beforeMinutes }),

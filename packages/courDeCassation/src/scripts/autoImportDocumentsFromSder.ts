@@ -2,12 +2,11 @@ import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
 import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
-import { environmentType } from '@label/core';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { count, threshold, sources } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   const sourcesArr = sources ? sources.split(',') : undefined;
 
@@ -17,7 +16,6 @@ import { environmentType } from '@label/core';
         count,
         threshold,
         sourcesArr,
-        environment,
       }),
     {
       shouldLoadDb: true,
@@ -26,12 +24,10 @@ import { environmentType } from '@label/core';
 })();
 
 async function autoImportDocumentsFromSder({
-  environment,
   count,
   threshold,
   sourcesArr,
 }: {
-  environment: environmentType;
   count: number;
   threshold?: number;
   sourcesArr?: string[];
@@ -40,7 +36,6 @@ async function autoImportDocumentsFromSder({
     documentsCount: count,
     threshold,
     sources: sourcesArr,
-    environment,
   });
 }
 

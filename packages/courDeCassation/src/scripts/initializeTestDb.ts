@@ -6,8 +6,8 @@ import * as dotenv from 'dotenv';
   if (process.env.RUN_MODE === 'LOCAL') {
     dotenv.config();
   }
-  const { environment, settings } = await parametersHandler.getParameters();
-  const backend = buildBackend(environment, settings);
+  const { settings } = await parametersHandler.getParameters();
+  const backend = buildBackend(settings);
 
   await backend.runScript(
     backend.scripts.insertTestUsers.run,

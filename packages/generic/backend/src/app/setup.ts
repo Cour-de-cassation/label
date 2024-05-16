@@ -1,13 +1,13 @@
-import { environmentType, settingsType } from '@label/core';
+import { settingsType } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { logger, mongo } from '../utils';
 import { setIndexesOnAllCollections } from './scripts';
 
 export { setup, setupMongo };
 
-async function setup(environment: environmentType, settings: settingsType) {
+async function setup(settings: settingsType) {
   setupSettings(settings);
-  await setupMongo(environment);
+  await setupMongo();
 }
 
 function setupSettings(settings: settingsType) {
@@ -15,7 +15,7 @@ function setupSettings(settings: settingsType) {
   logger.log({ operationName: 'setupSettings', msg: `Settings ready!` });
 }
 
-async function setupMongo(environment: environmentType) {
+async function setupMongo() {
   const labelDbUrl = process.env.LABEL_DB_URL;
   const labelDbName = process.env.LABEL_DB_NAME;
   logger.log({

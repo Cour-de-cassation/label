@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { decisionModule, decisionType } from 'sder';
-import { environmentType, idModule } from '@label/core';
+import { idModule } from '@label/core';
 import { sderApiType } from './sderApiType';
 import { logger } from '@label/backend';
 
@@ -10,12 +10,10 @@ async function fetchApi({
   method,
   path,
   body,
-  environment,
 }: {
   method: Method;
   path: string;
   body: Record<string, unknown>;
-  environment: environmentType;
 }) {
   return await axios({
     method: method,
@@ -50,7 +48,6 @@ const sderApi: sderApiType = {
     source,
     jurisdictions,
     chambers,
-    environment,
   }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       logger.log({
@@ -65,12 +62,7 @@ const sderApi: sderApiType = {
     );
   },
 
-  async fetchDecisionsToPseudonymiseBetween({
-    startDate,
-    endDate,
-    source,
-    environment,
-  }) {
+  async fetchDecisionsToPseudonymiseBetween({ startDate, endDate, source }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       const decisionList = ((await fetchApi({
         method: 'get',
@@ -78,7 +70,6 @@ const sderApi: sderApiType = {
           startDate.toISOString().split('T')[0]
         }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
-        environment,
       })) as unknown) as {
         _id: string;
         status: string;
@@ -92,7 +83,6 @@ const sderApi: sderApiType = {
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-            environment,
           })) as decisionType;
           decisions.push(decision);
         }
@@ -112,7 +102,6 @@ const sderApi: sderApiType = {
     startDate,
     endDate,
     source,
-    environment,
   }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       const decisionList = ((await fetchApi({
@@ -121,7 +110,6 @@ const sderApi: sderApiType = {
           startDate.toISOString().split('T')[0]
         }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
-        environment,
       })) as unknown) as {
         _id: string;
         status: string;
@@ -135,7 +123,6 @@ const sderApi: sderApiType = {
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-            environment,
           })) as decisionType;
           decisions.push(decision);
         }
@@ -155,7 +142,6 @@ const sderApi: sderApiType = {
   async fetchChainedJuricaDecisionsToPseudonymiseBetween({
     startDate,
     endDate,
-    environment,
   }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       logger.log({
@@ -169,24 +155,19 @@ const sderApi: sderApiType = {
     );
   },
 
-  async fetchCourtDecisionById({ id, environment }) {
+  async fetchCourtDecisionById({ id }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       return ((await fetchApi({
         method: 'get',
         path: `decisions/${id}/`,
         body: {},
-        environment,
       })) as unknown) as Promise<decisionType>;
     } else {
       return decisionModule.service.fetchCourtDecisionById(id);
     }
   },
 
-  async fetchCourtDecisionBySourceIdAndSourceName({
-    sourceId,
-    sourceName,
-    environment,
-  }) {
+  async fetchCourtDecisionBySourceIdAndSourceName({ sourceId, sourceName }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       logger.log({
         operationName: 'fetchCourtDecisionBySourceIdAndSourceName',
@@ -200,14 +181,13 @@ const sderApi: sderApiType = {
     );
   },
 
-  async setCourtDecisionsLoaded({ documents, environment }) {
+  async setCourtDecisionsLoaded({ documents }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
         await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/`,
           body: { statut: 'loaded' },
-          environment,
         });
       });
     } else {
@@ -220,14 +200,13 @@ const sderApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionsToBeTreated({ documents, environment }) {
+  async setCourtDecisionsToBeTreated({ documents }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
         await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/`,
           body: { statut: 'toBeTreated' },
-          environment,
         });
       });
     } else {
@@ -240,13 +219,12 @@ const sderApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionDone({ externalId, environment }) {
+  async setCourtDecisionDone({ externalId }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'done' },
-        environment,
       });
     } else {
       await decisionModule.service.updateDecisionsLabelStatus({
@@ -256,13 +234,12 @@ const sderApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionBlocked({ externalId, environment }) {
+  async setCourtDecisionBlocked({ externalId }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'blocked' },
-        environment,
       });
     } else {
       await decisionModule.service.updateDecisionsLabelStatus({
@@ -277,7 +254,6 @@ const sderApi: sderApiType = {
     labelTreatments,
     pseudonymizationText,
     publishStatus,
-    environment,
   }) {
     //TODO : include publishStatus to dbsder api call
     if (process.env.DBSDER_API_ENABLED === 'true') {
@@ -285,13 +261,11 @@ const sderApi: sderApiType = {
         method: 'put',
         path: `decisions/${externalId}/rapports-occultations`,
         body: { rapportsOccultations: labelTreatments },
-        environment,
       });
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/decision-pseudonymisee`,
         body: { decisionPseudonymisee: pseudonymizationText },
-        environment,
       });
     } else {
       await decisionModule.service.updateDecisionPseudonymisation({

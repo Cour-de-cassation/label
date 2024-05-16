@@ -1,5 +1,5 @@
 import { buildBackend } from '@label/backend';
-import { environmentType, settingsType } from '@label/core';
+import { settingsType } from '@label/core';
 import { buildNlpAnnotator } from '../annotator';
 import { parametersHandler } from '../lib/parametersHandler';
 import * as dotenv from 'dotenv';
@@ -8,10 +8,10 @@ import * as dotenv from 'dotenv';
   if (process.env.RUN_MODE === 'LOCAL') {
     dotenv.config();
   }
-  const { environment, settings } = await parametersHandler.getParameters();
-  const backend = buildBackend(environment, settings);
+  const { settings } = await parametersHandler.getParameters();
+  const backend = buildBackend(settings);
   backend.runScript(
-    () => annotateDocumentsWithoutAnnotationsWithNlp(settings, environment),
+    () => annotateDocumentsWithoutAnnotationsWithNlp(settings),
     {
       shouldLoadDb: true,
     },
@@ -20,9 +20,8 @@ import * as dotenv from 'dotenv';
 
 async function annotateDocumentsWithoutAnnotationsWithNlp(
   settings: settingsType,
-  environment: environmentType,
 ) {
-  const nlpAnnotator = buildNlpAnnotator(settings, environment);
+  const nlpAnnotator = buildNlpAnnotator(settings);
 
   await nlpAnnotator.annotateDocumentsWithoutAnnotations();
 }

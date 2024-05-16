@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { environmentType, settingsType } from '@label/core';
+import { settingsType } from '@label/core';
 
 import { buildApi } from '../api';
 import { setup } from './setup';
@@ -10,7 +10,7 @@ import { envSchema } from './envSchema';
 
 export { buildRunServer };
 
-function buildRunServer(environment: environmentType, settings: settingsType) {
+function buildRunServer(settings: settingsType) {
   return () => {
     const app = express();
 
@@ -36,7 +36,7 @@ function buildRunServer(environment: environmentType, settings: settingsType) {
     buildApi(app);
 
     app.listen(process.env.LABEL_SERVER_PORT, async () => {
-      await setup(environment, settings);
+      await setup(settings);
     });
   };
 }

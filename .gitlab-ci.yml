@@ -85,7 +85,7 @@ build_label_client:
     # - yarn config set https-proxy $HTTPS_PROXY
     # - yarn install --
     # - yarn compile
-    # - CI=false yarn build:client # from "ugly workaround" in github workflows
+    - CI=false yarn build:client # from "ugly workaround" in github workflows
     # - yarn test
     # - yarn lint
     - docker build

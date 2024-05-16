@@ -15,6 +15,7 @@ type propsType = { annotation: annotationType; anonymizer: clientAnonymizerType 
 
 class PureDocumentAnnotationText extends React.PureComponent<propsType> {
 
+
   render() {
     return <DocumentAnnotationText annotation={this.props.annotation} anonymizer={this.props.anonymizer} />;
   }

@@ -15,6 +15,7 @@ function buildNlpLocalApi(): nlpApiType {
         document.decisionMetadata.additionalTermsToAnnotate,
         document.decisionMetadata.computedAdditionalTerms,
         document.decisionMetadata.additionalTermsParsingFailed,
+        document.decisionMetadata.debatPublic,
       );
       const annotations = JSON.parse(
         await fs.readFile(
@@ -39,7 +40,8 @@ function buildNlpLocalApi(): nlpApiType {
           availableCategories.includes(entity.label),
         ),
         checklist: annotations.checklist,
-        newCategoriesToOmit: annotations.newCategoriesToOmit,
+        newCategoriesToAnnotate: annotations.newCategoriesToAnnotate,
+        newCategoriesToUnAnnotate: annotations.newCategoriesToUnAnnotate,
         additionalTermsToAnnotate: annotations.additionalTermsToAnnotate,
         additionalTermsToUnAnnotate: annotations.additionalTermsToUnAnnotate,
       };

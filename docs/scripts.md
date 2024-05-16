@@ -137,7 +137,7 @@ Purge db (for now only the statistics after 6 months).
 
 ## reAnnotateFreeDocuments
 
-If the NLP API was outdated or buggy, reannotate free documents. Warning: this script has not been tested since a while (possible bug: treatments are not deleted).
+If the NLP API was outdated or buggy, reannotate free documents. Warning: suspend nlp-annotation job during this operation to avoid side effects.
 
 ## renewCache
 

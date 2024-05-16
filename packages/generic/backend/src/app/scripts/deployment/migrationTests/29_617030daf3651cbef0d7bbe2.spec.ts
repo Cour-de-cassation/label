@@ -5,7 +5,7 @@ import { up, down } from '../migrations/29_617030daf3651cbef0d7bbe2';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('add civil code matter in document model', () => {
-  const decisionMetadata = {
+  const decisionMetadata = documentModule.decisionMetadataGenerator.generate({
     appealNumber: '',
     chamberName: 'Civile',
     civilMatterCode: '',
@@ -22,7 +22,7 @@ describe('add civil code matter in document model', () => {
     solution: '',
     NACCode: '',
     endCaseCode: '',
-  } as any;
+  });
   const documentsWithNewModel = [
     documentModule.generator.generate({
       decisionMetadata: {

@@ -7,6 +7,7 @@ import {
   idModule,
   settingsType,
   treatmentModule,
+  annotationModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
@@ -157,7 +158,15 @@ function buildAnnotator(
   async function reAnnotateFreeDocuments() {
     const documentIds = await documentService.fetchFreeDocumentsIds();
 
+    logger.log({
+      operationName: 'reAnnotateFreeDocuments',
+      msg: `Found ${documentIds.length} free documents to reannotate, deleting their treatments and annotation report.`,
+    });
+
     for (const documentId of documentIds) {
+      const annotationReportRepository = buildAnnotationReportRepository();
+      await annotationReportRepository.deleteByDocumentId(documentId);
+      await treatmentService.deleteTreatmentsByDocumentId(documentId);
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
 
@@ -180,7 +189,8 @@ function buildAnnotator(
       annotations,
       documentId,
       report,
-      newCategoriesToOmit,
+      newCategoriesToAnnotate,
+      newCategoriesToUnAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
@@ -203,6 +213,39 @@ function buildAnnotator(
       msg: 'NLP treatment created in DB',
     });
 
+    if (document.decisionMetadata.debatPublic === false) {
+      if (
+        document.zoning != undefined &&
+        document.zoning.zones?.motivations != undefined &&
+        document.zoning.zones.motivations.length > 0
+      ) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: 'Annotate motivation zone because decision debat are not public',
+        });
+
+        createMotivationOccultationTreatment(
+          documentId,
+          document.zoning.zones.motivations,
+          document.text,
+          document.documentNumber,
+          annotations,
+        );
+      } else {
+        logger.error({
+          operationName: 'annotateDocument',
+          msg: `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
+            document,
+          )}`,
+        });
+        throw new Error(
+          `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
+            document,
+          )}`,
+        );
+      }
+    }
+
     //Todo : create report only if report is not null
     await createReport(report);
     logger.log({
@@ -223,13 +266,34 @@ function buildAnnotator(
         additionalTermsParsingFailed,
       );
     }
-    if (!!newCategoriesToOmit) {
+
+    let newCategoriesToOmit = document.decisionMetadata.categoriesToOmit;
+    if (!!newCategoriesToUnAnnotate) {
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'New categories to omit found, updating...',
+        msg: `categoriesToUnAnnotate found, adding '${newCategoriesToUnAnnotate}' to categoriesToOmit if not already in`,
       });
+      newCategoriesToOmit = Array.from(
+        new Set(newCategoriesToOmit.concat(newCategoriesToUnAnnotate)),
+      );
+    }
 
-      await documentService.updateDocumentCategoriesToOmit(
+    if (!!newCategoriesToAnnotate) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `categoriesToAnnotate found, removing '${newCategoriesToAnnotate}' from categoriesToOmit if present`,
+      });
+      newCategoriesToOmit = newCategoriesToOmit.filter(
+        (category) => !newCategoriesToAnnotate.includes(category),
+      );
+    }
+
+    if (document.decisionMetadata.categoriesToOmit != newCategoriesToOmit) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `updating categoriesToOmit in database`,
+      });
+      documentService.updateDocumentCategoriesToOmit(
         documentId,
         newCategoriesToOmit,
       );
@@ -276,6 +340,58 @@ function buildAnnotator(
         previousAnnotations: [],
         nextAnnotations: annotations,
         source: 'NLP',
+      },
+      settings,
+    );
+  }
+
+  async function createMotivationOccultationTreatment(
+    documentId: documentType['_id'],
+    motivations: { start: number; end: number }[],
+    documentText: string,
+    documentNumber: number,
+    previousAnnotations: annotationType[],
+  ) {
+    const motivationAnnotations: annotationType[] = [];
+    motivations.forEach((motivation, index) => {
+      const motivationText = documentText.substring(
+        motivation.start,
+        motivation.end,
+      );
+
+      // Suppression des espaces et des sauts de ligne au début du texte
+      const trimmedStartMotivation = motivationText.replace(/^[\s\r\n]+/, '');
+      // Calcul du nombre de caractères retirés au début du texte
+      const removedCharactersAtStart =
+        motivationText.length - trimmedStartMotivation.length;
+
+      // Suppression des espaces et des sauts de ligne à la fin du texte
+      const trimmedMotivation = trimmedStartMotivation.replace(
+        /[\s\r\n]+$/,
+        '',
+      );
+
+      motivationAnnotations.push(
+        annotationModule.lib.buildAnnotation({
+          start: motivation.start + removedCharactersAtStart,
+          text: trimmedMotivation,
+          category: 'motivations',
+          certaintyScore: 1,
+          entityId: `motivations${index}_${documentNumber}`,
+        }),
+      );
+    });
+
+    const annotationWithoutOverlapping = annotationModule.lib.removeOverlappingAnnotations(
+      [...previousAnnotations, ...motivationAnnotations],
+    );
+
+    await treatmentService.createTreatment(
+      {
+        documentId,
+        previousAnnotations: previousAnnotations,
+        nextAnnotations: annotationWithoutOverlapping,
+        source: 'supplementaryAnnotations',
       },
       settings,
     );

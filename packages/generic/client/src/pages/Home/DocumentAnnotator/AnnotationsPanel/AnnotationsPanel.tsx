@@ -42,6 +42,12 @@ function AnnotationsPanel(props: {
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
+        {props.document.decisionMetadata.debatPublic === false && (
+          <div key={'partiallyPublic'} style={styles.categoryContainer}>
+            {renderPartiallyPublicWarning()}
+          </div>
+        )}
+
         {props.checklist && props.checklist.length > 0 && (
           <div key={'checklist'} style={styles.categoryContainer}>
             {renderChecklist(props.checklist)}
@@ -88,11 +94,11 @@ function AnnotationsPanel(props: {
   function renderAdditionalAnnotationTerms(
     additionalTermsToAnnotate: string,
     computedAdditionalTerms?: { additionalTermsToAnnotate: string[]; additionalTermsToUnAnnotate: string[] },
-    isParsingFailedOnAdditionalTerms?: boolean,
+    additionalTermsParsingFailed?: boolean,
   ) {
     if (
-      isParsingFailedOnAdditionalTerms ||
-      (isParsingFailedOnAdditionalTerms == undefined && additionalTermsToAnnotate !== '') ||
+      additionalTermsParsingFailed ||
+      (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '') ||
       (computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
         computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
       (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
@@ -104,13 +110,17 @@ function AnnotationsPanel(props: {
             <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
           </div>
           <div style={styles.additionalAnnotationTermsRightContainer}>
-            {isParsingFailedOnAdditionalTerms ||
-            (isParsingFailedOnAdditionalTerms == undefined && additionalTermsToAnnotate !== '') ? (
+            {(additionalTermsParsingFailed ||
+              (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '')) && (
               <>
-                <Text>{wordings.homePage.additionalOccultationsParsingFailed}</Text>
-                <Text variant="body2">{additionalTermsToAnnotate}</Text>
+                <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
               </>
-            ) : (
+            )}
+
+            {(computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+              computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
+            (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+              computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0) ? (
               <>
                 <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
                 {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
@@ -132,6 +142,11 @@ function AnnotationsPanel(props: {
                     </>
                   )}
               </>
+            ) : (
+              <>
+                <Text>{wordings.homePage.promptRawAdditionalTermsText}</Text>
+                <Text variant="body2">{additionalTermsToAnnotate}</Text>
+              </>
             )}
           </div>
         </div>
@@ -150,6 +165,19 @@ function AnnotationsPanel(props: {
           {checklist.map((checklistElement) => (
             <Text variant="body2">- {checklistElement}</Text>
           ))}
+        </div>
+      </div>
+    );
+  }
+
+  function renderPartiallyPublicWarning() {
+    return (
+      <div style={styles.partiallyPublicContainer}>
+        <div style={styles.partiallyPublicLeftContainer}>
+          <Icon iconName={settingsModule.lib.motivationCategoryHandler.getCategoryIconName()} />
+        </div>
+        <div style={styles.partiallyPublicRightContainer}>
+          <Text>{wordings.homePage.debatNotPublic}</Text>
         </div>
       </div>
     );
@@ -184,6 +212,23 @@ function AnnotationsPanel(props: {
         overflowY: 'auto',
         height: heights.annotatorPanel,
         paddingRight: theme.spacing * 2,
+      },
+      partiallyPublicContainer: {
+        padding: theme.spacing * 2,
+        marginBottom: theme.spacing,
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'space-between',
+        borderRadius: theme.shape.borderRadius.l,
+        backgroundColor: getColor(settingsModule.lib.motivationCategoryHandler.getCategoryColor(displayMode)),
+      },
+      partiallyPublicLeftContainer: {
+        marginRight: theme.spacing * 3,
+      },
+      partiallyPublicRightContainer: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
       },
       additionalAnnotationTermsContainer: {
         padding: theme.spacing * 2,

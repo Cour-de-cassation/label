@@ -17,8 +17,10 @@ async function getParameters() {
   });
 
   const parsedSettings = settingsModule.lib.parseFromJson(settings);
-  const enhancedSettings = settingsModule.lib.additionalAnnotationCategoryHandler.addCategoryToSettings(
-    parsedSettings,
+  const enhancedSettings = settingsModule.lib.motivationCategoryHandler.addCategoryToSettings(
+    settingsModule.lib.additionalAnnotationCategoryHandler.addCategoryToSettings(
+      parsedSettings,
+    ),
   );
 
   return {

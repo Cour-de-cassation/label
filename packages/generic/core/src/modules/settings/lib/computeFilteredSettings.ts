@@ -1,6 +1,7 @@
 import { documentType } from '../../document';
 import { settingsType } from '../settingsType';
 import { additionalAnnotationCategoryHandler } from './additionalAnnotationCategoryHandler';
+import { motivationCategoryHandler } from './motivationCategoryHandler';
 
 export { computeFilteredSettings };
 
@@ -10,6 +11,7 @@ function computeFilteredSettings(
   additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'],
   computedAdditionalTerms: documentType['decisionMetadata']['computedAdditionalTerms'],
   additionalTermsParsingFailed: documentType['decisionMetadata']['additionalTermsParsingFailed'],
+  debatPublic: documentType['decisionMetadata']['debatPublic'],
 ) {
   const settingsForDocument = Object.entries(settings).reduce((accumulator, [category, categorySetting]) => {
     if (categorySetting.status === 'alwaysVisible') {
@@ -27,6 +29,15 @@ function computeFilteredSettings(
             [category]: { ...categorySetting, status: 'annotable' as const },
           };
         }
+      }
+    } else if (category === motivationCategoryHandler.getCategoryName()) {
+      if (debatPublic === false) {
+        return {
+          ...accumulator,
+          [category]: { ...categorySetting, status: 'annotable' as const },
+        };
+      } else {
+        return { ...accumulator, [category]: categorySetting };
       }
     } else if (!categoriesToOmit.includes(category)) {
       return {

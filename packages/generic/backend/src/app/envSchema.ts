@@ -10,5 +10,5 @@ export const envSchema = Joi.object({
   DBSDER_API_VERSION: Joi.string().required(),
   DBSDER_API_ENABLED: Joi.boolean().required(),
   NLP_PSEUDONYMISATION_API_URL: Joi.string().uri().required(),
-  NLP_PSEUDONYMISATION_API_ENABLED: Joi.boolean().default('true').required(),
+  NLP_PSEUDONYMISATION_API_ENABLED: Joi.boolean().required(),
 }).unknown();

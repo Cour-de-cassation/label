@@ -47,13 +47,13 @@ build_label_backend:
     - echo "$HTTP_PROXY"
     - echo "$HTTPS_PROXY"
     - export NODE_OPTIONS=--openssl-legacy-provider
-    - apk update
-    - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
-    - yarn install --
-    - yarn compile
-    - CI=false yarn build:client # from "ugly workaround" in github workflows
+    # - apk update
+    # - apk add nodejs yarn git npm
+    # - yarn config set proxy $HTTP_PROXY
+    # - yarn config set https-proxy $HTTPS_PROXY
+    # - yarn install --
+    # - yarn compile
+    # - CI=false yarn build:client # from "ugly workaround" in github workflows
     - docker build
       --build-arg http_proxy=$HTTP_PROXY
       --build-arg https_proxy=$HTTPS_PROXY
@@ -79,13 +79,13 @@ build_label_client:
     - echo "$HTTP_PROXY"
     - echo "$HTTPS_PROXY"
     - export NODE_OPTIONS=--openssl-legacy-provider
-    - apk update
-    - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
-    - yarn install --
-    - yarn compile
-    - CI=false yarn build:client # from "ugly workaround" in github workflows
+    # - apk update
+    # - apk add nodejs yarn git npm
+    # - yarn config set proxy $HTTP_PROXY
+    # - yarn config set https-proxy $HTTPS_PROXY
+    # - yarn install --
+    # - yarn compile
+    # - CI=false yarn build:client # from "ugly workaround" in github workflows
     # - yarn test
     # - yarn lint
     - docker build

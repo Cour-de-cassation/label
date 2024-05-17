@@ -1,13 +1,44 @@
-################################
-# Step-1: "label-client"       #
-# yarn compile must have been  #
-# run first outside container  #
-# e.g in Github Actions CI     #
-################################
+# Step 1 : build label frontend
+FROM node:16-alpine as builder
+ARG http_proxy
+ARG https_proxy
+
+# Use proxy
+RUN yarn config set proxy $http_proxy; \
+  yarn config set https-proxy $https_proxy;
+
+WORKDIR /home/node/
+
+# need git installation for pelta design system ?
+RUN apk add git
+
+# Copy context files
+COPY ./package.json ./
+COPY packages/generic/core/package.json ./packages/generic/core/
+COPY packages/generic/backend/package.json ./packages/generic/backend/
+
+COPY package.json lerna.json ./
+COPY . .
+
+# Do not bring backend dependencies to frontend prod
+RUN for file in lerna.json package.json; do \
+  cat $file | sed 's|"packages/generic/\*"|"packages/generic/client", "packages/generic/core"|' > $file.new; \
+  mv $file.new $file; \
+  done
+
+# Install dependencies
+RUN yarn install --production
+
+# Compile project without lerna
+RUN cd /home/node/packages/generic/core && yarn compile && \
+  cd /home/node/packages/generic/client && yarn compile
+
+# Setup nginx server to serve app
 FROM nginx:1.23.0-alpine as label-client
 ARG app_name
 ARG app_ver
 
+# is this usefull ?
 RUN for dir in client proxy fastcgi uwsgi scgi;do\
   mkdir /var/cache/nginx/${dir}_temp;\
   done
@@ -18,7 +49,8 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/gzip.conf /etc/nginx/gzip.conf
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
-ADD packages/generic/client/build /usr/share/nginx/html/label/
+COPY --from=builder /home/node/packages/generic/client/build /usr/share/nginx/html/label/
+# ADD packages/generic/client/build /usr/share/nginx/html/label/
 
 EXPOSE 80
 

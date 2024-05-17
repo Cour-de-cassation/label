@@ -44,8 +44,6 @@ build_label_backend:
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - echo "$HTTP_PROXY"
-    - echo "$HTTPS_PROXY"
     - docker build
       --build-arg http_proxy=$HTTP_PROXY
       --build-arg https_proxy=$HTTPS_PROXY
@@ -68,16 +66,14 @@ build_label_client:
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - echo "$HTTP_PROXY"
-    - echo "$HTTPS_PROXY"
     - export NODE_OPTIONS=--openssl-legacy-provider
     # - apk update
-    - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
-    - yarn install --
+    # - apk add nodejs yarn git npm
+    # - yarn config set proxy $HTTP_PROXY
+    # - yarn config set https-proxy $HTTPS_PROXY
+    # - yarn install --
     # - yarn compile
-    - CI=false yarn build:client # from "ugly workaround" in github workflows
+    # - CI=false yarn build:client # from "ugly workaround" in github workflows
     # - yarn test
     # - yarn lint
     - docker build

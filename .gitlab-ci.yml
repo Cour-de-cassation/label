@@ -49,8 +49,8 @@ build_label_backend:
     # - export NODE_OPTIONS=--openssl-legacy-provider
     # - apk update
     # - apk add nodejs yarn git npm
-    - yarn config set proxy $HTTP_PROXY
-    - yarn config set https-proxy $HTTPS_PROXY
+    # - yarn config set proxy $HTTP_PROXY
+    # - yarn config set https-proxy $HTTPS_PROXY
     # - yarn install --
     # - yarn build:backend
     # - yarn compile

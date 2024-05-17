@@ -3,7 +3,7 @@ ARG http_proxy
 ARG https_proxy
 ENV API_PORT=55430
 
-# use proxy
+# Use proxy
 RUN yarn config set proxy $http_proxy; \
   yarn config set https-proxy $https_proxy;
 
@@ -21,7 +21,7 @@ COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 COPY package.json lerna.json ./
 COPY . .
 
-# patch lerna package method to avoid bringing all react dev deps to backend prod
+# Patch lerna package method to avoid bringing all react dev deps to backend prod
 RUN for file in lerna.json package.json; do\
   cat $file | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > $file.new ;\
   mv $file.new $file;\
@@ -29,8 +29,8 @@ RUN for file in lerna.json package.json; do\
 
 # Install dependencies
 RUN yarn install --production
-# RUN yarn build:backend
-# RUN cd packages/courDeCassation && yarn build
+
+# Compile project without lerna
 RUN cd /home/node/packages/generic/core && yarn compile && \
   cd /home/node/packages/generic/backend && yarn compile && \
   cd /home/node/packages/courDeCassation && yarn compile

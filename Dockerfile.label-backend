@@ -54,6 +54,7 @@ RUN for file in lerna.json package.json; do\
 
 # Install dependencies
 RUN yarn install --production
+RUN yarn build:backend
 
 ADD packages/generic/core packages/generic/core
 ADD packages/generic/backend packages/generic/backend

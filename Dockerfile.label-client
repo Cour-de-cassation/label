@@ -26,6 +26,11 @@ RUN for file in lerna.json package.json; do \
   mv $file.new $file; \
   done
 
+RUN for file in lerna.json package.json; do \
+  cat $file | sed '/"packages\/courDeCassation"/d' > $file.new; \
+  mv $file.new $file; \
+  done
+
 # Install dependencies
 RUN yarn install --production
 

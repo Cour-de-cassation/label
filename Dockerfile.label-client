@@ -21,19 +21,13 @@ COPY package.json lerna.json ./
 COPY . .
 
 # Do not bring backend dependencies to frontend prod
-# RUN for file in lerna.json package.json; do \
-#   cat $file | sed 's|"packages/generic/\*"|"packages/generic/client", "packages/generic/core"|' > $file.new; \
-#   mv $file.new $file; \
+# RUN for file in lerna.json package.json; do\
+#   cat $file | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > $file.new ;\
+#   mv $file.new $file;\
 #   done
 
-# RUN for file in lerna.json package.json; do \
-#   cat $file | sed '/"packages\/courDeCassation"/d' > $file.new; \
-#   mv $file.new $file; \
-#   done
-RUN sed -i 's/"workspaces": \[ "packages\/generic\/*", "packages\/courDeCassation\/" \]/"workspaces": \[ "packages\/generic\/core\/", "packages\/generic\/client\/" \]/g' package.json
 
-
-RUN cat package.json && cat lerna.json
+# RUN cat package.json && cat lerna.json
 
 # Install dependencies
 RUN yarn install --production

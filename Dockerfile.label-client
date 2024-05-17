@@ -31,6 +31,8 @@ RUN for file in lerna.json package.json; do \
   mv $file.new $file; \
   done
 
+RUN cat package.json && cat lerna.json
+
 # Install dependencies
 RUN yarn install --production
 

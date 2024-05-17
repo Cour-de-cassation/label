@@ -1,22 +1,11 @@
-#######################
-# Step 1: Base target #
-#######################
-FROM node:16-alpine as base
+FROM node:16-alpine as label-backend
 ARG http_proxy
 ARG https_proxy
+ENV API_PORT=55430
 
 # use proxy
 RUN yarn config set proxy $http_proxy; \
   yarn config set https-proxy $https_proxy;
-
-################################
-# Step 2: "label-backend"      #
-# yarn compile must have been  #
-# run first outside container  #
-# e.g in Github Actions CI     #
-################################
-FROM base as label-backend
-ENV API_PORT=55430
 
 WORKDIR /home/node/
 

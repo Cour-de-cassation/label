@@ -45,6 +45,7 @@ COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 
 COPY package.json lerna.json ./
+COPY . .
 
 # patch lerna package method to avoid bringing all react dev deps to backend prod
 RUN for file in lerna.json package.json; do\

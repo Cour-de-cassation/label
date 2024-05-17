@@ -16,10 +16,7 @@ RUN yarn config set proxy $http_proxy; \
 # e.g in Github Actions CI     #
 ################################
 FROM base as label-backend
-ARG NPM_FIX
-ARG NPM_VERBOSE
 ENV API_PORT=55430
-ENV NPM_CONFIG_LOGLEVEL debug
 
 WORKDIR /home/node/
 

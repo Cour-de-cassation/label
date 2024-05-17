@@ -54,9 +54,12 @@ RUN for file in lerna.json package.json; do\
   done
 
 # Install dependencies
-RUN yarn install --
+RUN yarn install --production
 RUN yarn build:backend
-RUN cd packages/courDeCassation && yarn build
+# RUN cd packages/courDeCassation && yarn build
+RUN cd /home/node/packages/courDeCassation && yarn build
+RUN cd /home/node/packages/generic/core && yarn build
+RUN cd /home/node/packages/generic/backend && yarn build
 
 ADD packages/generic/core packages/generic/core
 ADD packages/generic/backend packages/generic/backend

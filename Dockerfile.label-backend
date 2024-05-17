@@ -57,9 +57,9 @@ RUN for file in lerna.json package.json; do\
 RUN yarn install --production
 # RUN yarn build:backend
 # RUN cd packages/courDeCassation && yarn build
-RUN cd /home/node/packages/courDeCassation && yarn compile
 RUN cd /home/node/packages/generic/core && yarn compile
 RUN cd /home/node/packages/generic/backend && yarn compile
+RUN cd /home/node/packages/courDeCassation && yarn compile
 
 ADD packages/generic/core packages/generic/core
 ADD packages/generic/backend packages/generic/backend

@@ -47,11 +47,12 @@ build_label_backend:
     - echo "$HTTP_PROXY"
     - echo "$HTTPS_PROXY"
     - export NODE_OPTIONS=--openssl-legacy-provider
-    # - apk update
-    # - apk add nodejs yarn git npm
-    # - yarn config set proxy $HTTP_PROXY
-    # - yarn config set https-proxy $HTTPS_PROXY
-    # - yarn install --
+    - apk update
+    - apk add nodejs yarn git npm
+    - yarn config set proxy $HTTP_PROXY
+    - yarn config set https-proxy $HTTPS_PROXY
+    - yarn install --
+    - yarn build:backend
     # - yarn compile
     # - CI=false yarn build:client # from "ugly workaround" in github workflows
     - docker build

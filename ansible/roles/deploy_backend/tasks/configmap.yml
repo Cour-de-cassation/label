@@ -14,7 +14,6 @@
           app: "{{ label_back_app_id }}"
       data:
         GIT_BRANCH: "{{ git_branch }}"
-        API_PORT: "{{ label_api_port }}"
         APP_ID: "{{ label_back_app_id }}"
         KUBE_NAMESPACE: "{{ label_kube_namespace }}"
         ROOT_PATH: "{{ label_back_root_path }}"
@@ -23,5 +22,6 @@
         DBSDER_API_URL: "{{ dbsder_api_url }}"
         DBSDER_API_VERSION: "{{ dbsder_api_version }}"
         DBSDER_API_ENABLED: "{{ dbsder_api_enabled }}"
+        LABEL_API_PORT: "{{ label_api_port }}"
         LABEL_DB_NAME: "{{ label_db_name }}"
         LABEL_CLIENT_URL: "{{ label_client_url }}"

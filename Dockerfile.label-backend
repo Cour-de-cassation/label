@@ -21,7 +21,7 @@ COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 COPY package.json lerna.json ./
 COPY . .
 
-# Patch lerna package method to avoid bringing all react dev deps to backend prod
+# Do not bring client dependencies to backend prod
 RUN for file in lerna.json package.json; do\
   cat $file | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > $file.new ;\
   mv $file.new $file;\

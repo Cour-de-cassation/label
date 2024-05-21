@@ -18,7 +18,6 @@ COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 
-COPY package.json lerna.json ./
 COPY . .
 
 # Do not bring client dependencies to backend prod

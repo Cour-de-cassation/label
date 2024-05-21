@@ -31,8 +31,8 @@ COPY . .
 RUN yarn install --production
 
 # Compile project without lerna
-RUN cd /home/node/packages/generic/core && yarn compile && \
-  cd /home/node/packages/generic/client && yarn build
+RUN cd ./packages/generic/core && yarn compile && \
+  cd ./packages/generic/client && yarn build
 
 # Setup nginx server to serve app
 FROM nginx:1.23.0-alpine as label-client

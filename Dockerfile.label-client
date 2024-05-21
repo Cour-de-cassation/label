@@ -36,6 +36,9 @@ RUN yarn install --production
 RUN cd /home/node/packages/generic/core && yarn compile && \
   cd /home/node/packages/generic/client && yarn compile
 
+ADD packages/generic/core packages/generic/core
+ADD packages/generic/client packages/generic/client
+
 # Setup nginx server to serve app
 FROM nginx:1.23.0-alpine as label-client
 ARG app_name

@@ -37,8 +37,6 @@ RUN cd home/node/packages/generic/core && yarn compile && \
 
 # Setup nginx server to serve app
 FROM nginx:1.23.0-alpine as label-client
-ARG app_name
-ARG app_ver
 
 # is this usefull ?
 RUN for dir in client proxy fastcgi uwsgi scgi;do\

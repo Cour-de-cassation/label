@@ -30,21 +30,14 @@ COPY . .
 # RUN cat package.json && cat lerna.json
 
 # Install dependencies
-# RUN yarn install --production
-
-RUN yarn install
-RUN yarn build:client
-
-COPY . .
+RUN yarn install --production
 
 # Compile project without lerna
-# RUN cd /home/node/packages/generic/core && yarn compile && \
-#   cd /home/node/packages/generic/client && yarn compile
+RUN cd /home/node/packages/generic/core && yarn compile && \
+  cd /home/node/packages/generic/client && yarn compile
 
-# ADD packages/generic/core packages/generic/core/build
-# ADD packages/generic/client packages/generic/client/build
-
-# COPY . .
+ADD packages/generic/core/build packages/generic/core/build
+ADD packages/generic/client/build packages/generic/client/build
 
 # Setup nginx server to serve app
 FROM nginx:1.23.0-alpine as label-client

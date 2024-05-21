@@ -9,8 +9,7 @@ RUN yarn config set proxy $http_proxy; \
 
 WORKDIR /home/node/
 
-# need git installation for pelta design system ?
-# RUN apk add git
+RUN apk add git
 
 # Copy context files
 COPY ./package.json ./

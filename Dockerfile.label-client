@@ -30,13 +30,16 @@ COPY . .
 # RUN cat package.json && cat lerna.json
 
 # Install dependencies
-RUN yarn install --production
+# RUN yarn install --production
+
+RUN yarn install
+RUN yarn build:client
 
 COPY . .
 
 # Compile project without lerna
-RUN cd /home/node/packages/generic/core && yarn compile && \
-  cd /home/node/packages/generic/client && yarn compile
+# RUN cd /home/node/packages/generic/core && yarn compile && \
+#   cd /home/node/packages/generic/client && yarn compile
 
 # ADD packages/generic/core packages/generic/core/build
 # ADD packages/generic/client packages/generic/client/build

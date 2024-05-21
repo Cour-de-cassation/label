@@ -17,8 +17,8 @@ COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 
-COPY package.json lerna.json ./
-COPY . .
+# COPY package.json lerna.json ./
+# COPY . .
 
 # Do not bring backend dependencies to frontend prod
 # RUN for file in lerna.json package.json; do\
@@ -32,6 +32,8 @@ COPY . .
 # Install dependencies
 RUN yarn install --production
 
+COPY . .
+
 # Compile project without lerna
 RUN cd /home/node/packages/generic/core && yarn compile && \
   cd /home/node/packages/generic/client && yarn compile
@@ -39,7 +41,7 @@ RUN cd /home/node/packages/generic/core && yarn compile && \
 # ADD packages/generic/core packages/generic/core/build
 # ADD packages/generic/client packages/generic/client/build
 
-COPY . .
+# COPY . .
 
 # Setup nginx server to serve app
 FROM nginx:1.23.0-alpine as label-client

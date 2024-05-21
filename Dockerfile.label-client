@@ -34,7 +34,7 @@ RUN yarn install --production
 
 # Compile project without lerna
 RUN cd /home/node/packages/generic/core && yarn compile && \
-  cd /home/node/packages/generic/client && yarn compile
+  cd /home/node/packages/generic/client && yarn build
 
 ADD packages/generic/core packages/generic/core/build
 ADD packages/generic/client packages/generic/client/build

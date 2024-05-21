@@ -30,9 +30,9 @@ RUN for file in lerna.json package.json; do\
 RUN yarn install --production
 
 # Compile project without lerna
-RUN cd ./packages/generic/core && yarn compile && \
-  cd ./packages/generic/backend && yarn compile && \
-  cd ./packages/courDeCassation && yarn compile
+RUN cd home/node/packages/generic/core && yarn compile && \
+  cd home/node/packages/generic/backend && yarn compile && \
+  cd home/node/packages/courDeCassation && yarn compile
 
 WORKDIR /home/node/packages/courDeCassation
 

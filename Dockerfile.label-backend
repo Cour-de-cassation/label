@@ -9,7 +9,7 @@ RUN yarn config set proxy $http_proxy; \
 
 WORKDIR /home/node/
 
-# Install git for sder package
+# Install git for sder and sder-core package
 RUN apk add git
 
 # Copy context files

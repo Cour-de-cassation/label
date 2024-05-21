@@ -17,8 +17,8 @@ COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 
-# COPY package.json lerna.json ./
-# COPY . .
+COPY package.json lerna.json ./
+COPY . .
 
 # Do not bring backend dependencies to frontend prod
 # RUN for file in lerna.json package.json; do\

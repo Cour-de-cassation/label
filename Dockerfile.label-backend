@@ -21,6 +21,7 @@ COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 COPY . .
 
 # Do not bring client dependencies to backend prod
+# Workaround to rewrite 'workspaces' in packages.json file to not run 'yarn install' in all packages
 RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > package.json.new && \
   mv package.json.new package.json
 

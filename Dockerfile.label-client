@@ -20,6 +20,7 @@ COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY . .
 
 # Do not bring backend dependencies to frontend prod
+# Workaround to rewrite 'workspaces' in packages.json file to not run 'yarn install' in all packages
 RUN sed -e 's|"packages/generic/\*"|"packages/generic/core"|' \
   -e 's|"packages/courDeCassation/"|"packages/generic/client"|' \
   package.json > package.json.new && \

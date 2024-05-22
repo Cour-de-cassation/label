@@ -1,6 +1,47 @@
 {
+  "name": "@label/backend",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "bootstrap": "node ./dist/scripts/bootstrap.js",
+    "build": "yarn clean && yarn compile",
+    "clean": "rimraf -rf ./dist && rimraf -rf ./build",
+    "clean:all": "yarn run clean && rimraf -rf ./node_modules",
+    "compile": "tsc -p tsconfig.json",
+    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
+    "test": "RUN_MODE=TEST jest --passWithNoTests",
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src/",
+    "setupFiles": [
+      "core-js"
+    ],
+    "setupFilesAfterEnv": [
+      "./tests/setupTests.ts"
+    ],
+    "testEnvironment": "node",
+    "testRegex": ".spec.ts$"
+  },
   "dependencies": {
     "@label/core": "*",
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.8",
+    "@types/jest": "^26.0.13",
+    "@types/lodash": "^4.14.161",
+    "@types/mongodb": "^3.5.27",
+    "@types/node": "^14.6.4",
     "axios": "^0.24.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -12,13 +53,7 @@
     "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
     "sder-core": "https://github.com/Cour-de-cassation/sder-core#f19400e5832d88b48d076b99bbea3e4cfd6803f4",
-    "typescript": "~4.0.0",
-    "@types/node": "^14.6.4",
-    "@types/mongodb": "^3.5.27",
-    "@types/jest": "^26.0.13",
-    "@types/lodash": "^4.14.161",
-    "@types/express": "^4.17.8",
-    "@types/cors": "^2.8.7"
+    "typescript": "~4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -40,40 +75,5 @@
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2"
-  },
-  "files": [
-    "dist"
-  ],
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src/",
-    "setupFiles": [
-      "core-js"
-    ],
-    "setupFilesAfterEnv": [
-      "./tests/setupTests.ts"
-    ],
-    "testRegex": ".spec.ts$",
-    "testEnvironment": "node"
-  },
-  "main": "dist/index",
-  "name": "@label/backend",
-  "scripts": {
-    "bootstrap": "node ./dist/scripts/bootstrap.js",
-    "build": "yarn clean && yarn compile",
-    "clean": "rimraf -rf ./dist && rimraf -rf ./build",
-    "clean:all": "yarn run clean && rimraf -rf ./node_modules",
-    "compile": "tsc -p tsconfig.json",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
-    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "RUN_MODE=TEST jest --passWithNoTests",
-    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
-  },
-  "types": "dist/index",
-  "version": "1.0.0"
+  }
 }

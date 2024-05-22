@@ -1,16 +1,44 @@
 {
+  "name": "@label/core",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn compile",
+    "clean": "rimraf -rf ./dist",
+    "clean:all": "rimraf -rf ./dist && rimraf -rf ./node_modules",
+    "compile": "tsc -p tsconfig.json",
+    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
+    "test": "RUN_MODE=TEST jest --passWithNoTests",
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testEnvironment": "node",
+    "testRegex": ".spec.ts$"
+  },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "^26.0.13",
+    "@types/lodash": "^4.14.161",
+    "@types/mongodb": "^3.5.27",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
+    "sder": "https://github.com/Cour-de-cassation/sder#760b00baa45633387f4bc359fd220aff5147bd4f",
     "string-template": "^1.0.0",
-    "typescript": "~4.0.0",
-    "@types/mongodb": "^3.5.27",
-    "@types/jest": "^26.0.13",
-    "@types/lodash": "^4.14.161",
-    "@types/bcryptjs": "^2.4.2",
-    "sder": "https://github.com/Cour-de-cassation/sder#760b00baa45633387f4bc359fd220aff5147bd4f"
+    "typescript": "~4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -27,35 +55,7 @@
     "eslint-plugin-react": "^7.20.6",
     "jest": "24.9.0",
     "prettier": "^2.1.2",
-    "sder-core": "https://github.com/Cour-de-cassation/sder-core#f19400e5832d88b48d076b99bbea3e4cfd6803f4",
-    "rimraf": "~3.0.2"
-  },
-  "files": [
-    "dist"
-  ],
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
-    "testEnvironment": "node"
-  },
-  "main": "dist/index",
-  "name": "@label/core",
-  "scripts": {
-    "build": "yarn clean && yarn compile",
-    "clean": "rimraf -rf ./dist",
-    "clean:all": "rimraf -rf ./dist && rimraf -rf ./node_modules",
-    "compile": "tsc -p tsconfig.json",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
-    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "RUN_MODE=TEST jest --passWithNoTests",
-    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
-  },
-  "types": "dist/index",
-  "version": "1.0.0"
+    "rimraf": "~3.0.2",
+    "sder-core": "https://github.com/Cour-de-cassation/sder-core#f19400e5832d88b48d076b99bbea3e4cfd6803f4"
+  }
 }

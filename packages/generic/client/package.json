@@ -1,5 +1,20 @@
 {
+  "name": "@label/client",
+  "version": "1.0.0",
+  "private": true,
   "homepage": "/label",
+  "scripts": {
+    "build": "yarn clean && react-scripts build",
+    "clean": "rimraf -rf ./dist && rimraf -rf ./build",
+    "clean:all": "yarn clean && rimraf -rf ./node_modules",
+    "compile": "tsc -p tsconfig.json",
+    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
+    "start": "PORT=55432 react-scripts start",
+    "test": "RUN_MODE=TEST jest --passWithNoTests",
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -12,10 +27,39 @@
       "last 1 safari version"
     ]
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src/",
+    "setupFiles": [
+      "core-js"
+    ],
+    "setupFilesAfterEnv": [
+      "./tests/setupTests.ts"
+    ],
+    "testEnvironment": "node",
+    "testRegex": ".spec.ts$"
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  },
   "dependencies": {
     "@label/core": "*",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@types/dateformat": "^5.0.0",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.55",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/string-template": "^1.0.2",
+    "@types/styled-components": "4.0.3",
     "axios": "^0.24.0",
     "dateformat": "^5.0.3",
     "http2": "^3.3.7",
@@ -28,14 +72,7 @@
     "string-template": "^1.0.0",
     "styled-components": "4.0.3",
     "superstatic": "^7.1.0",
-    "typescript": "~4.0.0",
-    "@types/node": "^12.12.55",
-    "@types/jest": "^24.9.1",
-    "@types/react-router-dom": "^5.1.5",
-    "@types/string-template": "^1.0.2",
-    "@types/dateformat": "^5.0.0",
-    "@types/styled-components": "4.0.3",
-    "@types/react-dom": "^16.9.8"
+    "typescript": "~4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -59,42 +96,5 @@
     "prettier": "^2.1.2",
     "react-dev-utils": "^10.2.1",
     "rimraf": "^3.0.2"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src/",
-    "setupFiles": [
-      "core-js"
-    ],
-    "setupFilesAfterEnv": [
-      "./tests/setupTests.ts"
-    ],
-    "testRegex": ".spec.ts$",
-    "testEnvironment": "node"
-  },
-  "name": "@label/client",
-  "private": true,
-  "resolutions": {
-    "styled-components": "^5"
-  },
-  "scripts": {
-    "build": "yarn clean && react-scripts build",
-    "clean": "rimraf -rf ./dist && rimraf -rf ./build",
-    "clean:all": "yarn clean && rimraf -rf ./node_modules",
-    "compile": "tsc -p tsconfig.json",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
-    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "start": "PORT=55432 react-scripts start",
-    "test": "RUN_MODE=TEST jest --passWithNoTests",
-    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
-  },
-  "version": "1.0.0"
+  }
 }

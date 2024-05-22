@@ -20,9 +20,9 @@ COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY . .
 
 # Do not bring backend dependencies to frontend prod
-RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/core"|' > package.json.new && \
-  mv package.json.new package.json
-RUN cat package.json | sed 's|"packages/courDeCassation/"|"packages/generic/client"|' > package.json.new && \
+RUN sed -e 's|"packages/generic/\*"|"packages/generic/core"|' \
+  -e 's|"packages/courDeCassation/"|"packages/generic/client"|' \
+  package.json > package.json.new && \
   mv package.json.new package.json
 
 RUN cat package.json

@@ -21,10 +21,8 @@ COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 COPY . .
 
 # Do not bring client dependencies to backend prod
-RUN for file in lerna.json package.json; do\
-  cat $file | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > $file.new ;\
-  mv $file.new $file;\
-  done
+RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > package.json.new && \
+  mv package.json.new package.json
 
 # Install dependencies
 RUN yarn install --production

@@ -31,8 +31,8 @@ RUN yarn install --production
 
 # Compile project without lerna
 RUN cd home/node/packages/generic/core && yarn compile && \
-  cd home/node/packages/generic/backend && yarn compile && \
-  cd home/node/packages/courDeCassation && yarn compile
+  cd /home/node/packages/generic/backend && yarn compile && \
+  cd /home/node/packages/courDeCassation && yarn compile
 
 WORKDIR /home/node/packages/courDeCassation
 

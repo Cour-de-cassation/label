@@ -34,6 +34,10 @@ RUN cd home/node/packages/generic/core && yarn compile && \
   cd /home/node/packages/generic/backend && yarn compile && \
   cd /home/node/packages/courDeCassation && yarn compile
 
+ADD packages/generic/core packages/generic/core
+ADD packages/generic/backend packages/generic/backend
+ADD packages/courDeCassation packages/courDeCassation
+
 WORKDIR /home/node/packages/courDeCassation
 
 RUN chown node .

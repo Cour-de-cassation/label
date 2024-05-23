@@ -2,6 +2,7 @@ import { annotationModule, annotationType } from './annotation';
 import { annotationReportModule, annotationReportType } from './annotationReport';
 import { annotationsDiffModule, annotationsDiffType } from './annotationsDiff';
 import { assignationModule, assignationType } from './assignation';
+import { preAssignationModule, preAssignationType } from './preAssignation';
 import { cacheModule, cacheType } from './cache';
 import { documentModule, documentType, fetchedDocumentType } from './document';
 import { ressourceFilterModule, ressourceFilterType } from './ressourceFilter';
@@ -27,6 +28,7 @@ export {
   annotationReportModule,
   annotationsDiffModule,
   assignationModule,
+  preAssignationModule,
   cacheModule,
   documentModule,
   ressourceFilterModule,
@@ -47,6 +49,7 @@ export type {
   annotationReportType,
   annotationsDiffType,
   assignationType,
+  preAssignationType,
   cacheType,
   colorType,
   constantColorType,

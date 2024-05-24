@@ -8,12 +8,15 @@ import {
   settingsType,
   treatmentModule,
   annotationModule,
+  preAssignationType,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
+import { preAssignationService } from '../../modules/preAssignation';
+import { assignationService } from '../../modules/assignation';
 
 export { buildAnnotator };
 
@@ -317,14 +320,48 @@ function buildAnnotator(
       publicationCategory: document.publicationCategory,
       route: document.route,
     });
-    await documentService.updateDocumentStatus(
-      document._id,
-      nextDocumentStatus,
+
+    const preAssignationForDocument = await preAssignationService.fetchPreAssignationBySourceAndDocumentNumber(
+      document.documentNumber,
+      document.source,
     );
+    if (
+      nextDocumentStatus === 'free' &&
+      preAssignationForDocument != undefined
+    ) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `Pre-assignation found for document ${formatDocumentInfos(
+          document,
+        )}, creating assignation...`,
+      });
+      await createAssignation(preAssignationForDocument, document);
+    } else {
+      await documentService.updateDocumentStatus(
+        document._id,
+        nextDocumentStatus,
+      );
+    }
+
     logger.log({
       operationName: 'annotateDocument',
       msg: `Annotation done for document ${formatDocumentInfos(document)}`,
     });
+  }
+
+  async function createAssignation(
+    preAssignation: preAssignationType,
+    document: documentType,
+  ) {
+    await assignationService.createAssignation({
+      documentId: idModule.lib.buildId(document._id),
+      userId: idModule.lib.buildId(preAssignation.userId),
+    });
+    await preAssignationService.deletePreAssignation(preAssignation._id);
+    await documentService.updateDocumentStatus(
+      idModule.lib.buildId(document._id),
+      'saved',
+    );
   }
 
   async function createAnnotatorTreatment({

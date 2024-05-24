@@ -11,6 +11,7 @@ import { userService } from '../modules/user';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
 import { annotationReportService } from '../modules/annotationReport';
+import { preAssignationService } from 'src/modules/preAssignation';
 import { replacementTermType } from '@label/core';
 
 export { controllers };
@@ -190,6 +191,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     workingUsers: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => userService.fetchWorkingUsers(),
+    }),
+
+    preAssignations: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async () =>
+        preAssignationService.fetchAllPreAssignation(),
     }),
   },
 
@@ -466,6 +473,20 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           },
           settings,
         );
+      },
+    }),
+
+    createPreAssignation: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (
+        _,
+        { args: { userId, source, documentNumber } },
+      ) => {
+        preAssignationService.createPreAssignation({
+          userId: idModule.lib.buildId(userId),
+          source,
+          documentNumber,
+        });
       },
     }),
   },

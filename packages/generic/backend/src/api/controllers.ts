@@ -11,7 +11,7 @@ import { userService } from '../modules/user';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
 import { annotationReportService } from '../modules/annotationReport';
-import { preAssignationService } from 'src/modules/preAssignation';
+import { preAssignationService } from '../modules/preAssignation';
 import { replacementTermType } from '@label/core';
 
 export { controllers };

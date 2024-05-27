@@ -316,6 +316,21 @@ const fr = {
       popupConfirmMessage: 'Souhaitez-vous vraiment supprimer ce document ? Cette action est irréversible.',
     },
   },
+  preAssignDocumentsPage: {
+    header: {
+      title: 'Administration',
+      subtitle: 'Pré-assignation des décisions',
+    },
+    table: {
+      columnTitles: {
+        source: 'Source',
+        documentNumber: 'N° de décision',
+        agent: 'Agent',
+        creationDate: 'Date de création',
+      },
+      optionItems: {},
+    },
+  },
   resetPasswordPage: {
     popup:
       "Votre mot de passe n'a pas été mis à jour depuis plus de 6 mois. Pour des raisons de sécurité, il vous est demandé d'en renseigner un nouveau respectant les règles du PSSI.",

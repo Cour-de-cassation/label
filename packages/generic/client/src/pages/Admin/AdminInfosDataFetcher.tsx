@@ -7,6 +7,7 @@ import { UntreatedDocumentsDataFetcher } from './UntreatedDocuments/UntreatedDoc
 import { StatisticsDataFetcher } from './Statistics/StatisticsDataFetcher';
 import { SummaryDataFetcher } from './Summary/SummaryDataFetcher';
 import { ToBeConfirmedDocumentsDataFetcher } from './ToBeConfirmedDocuments/ToBeConfirmedDocumentsDataFetcher';
+import { PreAssignDocumentsDataFetcher } from './PreAssignDocuments/PreAssignDocumentsDataFetcher';
 
 export { AdminInfosDataFetcher };
 
@@ -19,6 +20,7 @@ type adminInfosType = {
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
   untreatedDocuments: apiRouteOutType<'get', 'untreatedDocuments'>;
   workingUsers: apiRouteOutType<'get', 'workingUsers'>;
+  preAssignations: apiRouteOutType<'get', 'preAssignations'>;
 };
 
 type refetchInfosType = {
@@ -29,6 +31,7 @@ type refetchInfosType = {
   treatedDocuments: () => void;
   untreatedDocuments: () => void;
   workingUsers: () => void;
+  preAssignDocuments: () => void;
 };
 
 type isLoadingInfosType = {
@@ -38,6 +41,7 @@ type isLoadingInfosType = {
   treatedDocuments: boolean;
   untreatedDocuments: boolean;
   problemReports: boolean;
+  preAssignDocuments: boolean;
 };
 
 type ressourceFiltersType = {
@@ -77,6 +81,8 @@ function AdminInfosDataFetcher(props: {
                         isLoading: isLoadingAggregatedStatistics,
                         ressourceFilter: ressourceFilterAggregatedStatistics,
                       }) => (
+                        <PreAssignDocumentsDataFetcher>
+                          {({preAssignations, isLoading:isLoadingPreAssignDocuments, refetch:refetchPreAssignDocuments})=>(
                         <SummaryDataFetcher>
                           {({ summary, refetch: refetchSummary, isLoading: isLoadingSummary }) => (
                             <ProblemReportsDataFetcher>
@@ -95,6 +101,7 @@ function AdminInfosDataFetcher(props: {
                                     treatedDocuments,
                                     workingUsers,
                                     untreatedDocuments,
+                                    preAssignations
                                   },
                                   refetch: {
                                     aggregatedStatistics: refetchAggregatedStatistics,
@@ -104,6 +111,7 @@ function AdminInfosDataFetcher(props: {
                                     treatedDocuments: refetchTreatedDocuments,
                                     untreatedDocuments: refetchUntreatedDocuments,
                                     workingUsers: refetchWorkingUsers,
+                                    preAssignDocuments:refetchPreAssignDocuments,
                                   },
                                   isLoading: {
                                     aggregatedStatistics: isLoadingAggregatedStatistics,
@@ -112,6 +120,7 @@ function AdminInfosDataFetcher(props: {
                                     toBeConfirmedDocuments: isLoadindToBeConfirmedDocuments,
                                     treatedDocuments: isLoadingTreatedDocuments,
                                     untreatedDocuments: isLoadingUntreatedDocuments,
+                                    preAssignDocuments: isLoadingPreAssignDocuments,
                                   },
                                   ressourceFilters: {
                                     aggregatedStatistics: ressourceFilterAggregatedStatistics,
@@ -121,6 +130,8 @@ function AdminInfosDataFetcher(props: {
                             </ProblemReportsDataFetcher>
                           )}
                         </SummaryDataFetcher>
+                        )}
+                        </PreAssignDocumentsDataFetcher>
                       )}
                     </StatisticsDataFetcher>
                   )}

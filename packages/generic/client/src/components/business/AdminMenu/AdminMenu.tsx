@@ -82,6 +82,15 @@ function getMenuIcons({
     />
   );
 
+  const PRE_ASSIGN_DOCUMENTS_ICON = (
+    <MenuIcon
+      title={wordings.problemReportsPage.header.subtitle}
+      pathname={routes.PRE_ASSIGN_DOCUMENTS.getPath()}
+      alertCount={unreadProblemReportsCount}
+      iconName="edit"
+    />
+  );
+
   const WORKING_USERS_ICON = (
     <MenuIcon
       title={wordings.workingUsersPage.header.subtitle}
@@ -98,6 +107,7 @@ function getMenuIcons({
       TO_BE_CONFIRMED_DOCUMENTS_ICON,
       TREATED_DOCUMENTS_ICON,
       PROBLEM_REPORTS_ICON,
+      PRE_ASSIGN_DOCUMENTS_ICON,
       WORKING_USERS_ICON,
     ],
     scrutator: [

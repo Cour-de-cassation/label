@@ -8,6 +8,7 @@ import { WorkingUsers } from './Admin/WorkingUsers';
 import { DocumentInspector } from './Admin/DocumentInspector';
 import { TreatedDocuments } from './Admin/TreatedDocuments';
 import { ProblemReports } from './Admin/ProblemReports';
+import { PreAssignDocuments } from './Admin/PreAssignDocuments';
 import { UntreatedDocuments } from './Admin/UntreatedDocuments';
 import { AnonymizedDocument } from './AnonymizedDocument';
 import { Home } from './Home';
@@ -99,6 +100,20 @@ function Router() {
                           refetch={refetch.problemReportsWithDetails}
                           problemReportsWithDetails={adminInfos.problemReportsWithDetails}
                           isLoading={isLoading.problemReports}
+                        />
+                      </AdminPage>
+                    </AuthenticatedRoute>
+                    <AuthenticatedRoute path={routes.PRE_ASSIGN_DOCUMENTS.getPath()}>
+                      <AdminPage
+                        userRole={userRole}
+                        header={wordings.preAssignDocumentsPage.header}
+                        unreadProblemReportsCount={unreadProblemReportsCount}
+                        toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
+                      >
+                        <PreAssignDocuments
+                          refetch={refetch.preAssignDocuments}
+                          preAssignations={adminInfos.preAssignations}
+                          isLoading={isLoading.preAssignDocuments}
                         />
                       </AdminPage>
                     </AuthenticatedRoute>

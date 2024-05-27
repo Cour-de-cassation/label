@@ -12,7 +12,7 @@ const preAssignationModel = buildModel({
     userId: { kind: 'custom', content: 'id' },
     documentNumber: { kind: 'primitive', content: 'number' },
     source: { kind: 'primitive', content: 'string' },
-    creationDate: { kind: 'custom', content: 'number' },
+    creationDate: { kind: 'primitive', content: 'number' },
   },
 } as const);
 

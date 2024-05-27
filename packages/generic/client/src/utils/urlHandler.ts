@@ -8,7 +8,6 @@ const urlHandler = {
 
     const serverPort = clientPort - 2;
 
-    console.log(`${clientProtocol}//${clientHostname}:${serverPort}`);
     return serverPort ? `${clientProtocol}//${clientHostname}:${serverPort}` : `${clientProtocol}//${clientHostname}`;
   },
 };

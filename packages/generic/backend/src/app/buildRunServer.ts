@@ -13,7 +13,7 @@ function buildRunServer(settings: settingsType) {
   return () => {
     const app = express();
 
-    const { error, value: envVars } = envSchema.validate(process.env, {
+    const { error } = envSchema.validate(process.env, {
       abortEarly: false,
     });
 

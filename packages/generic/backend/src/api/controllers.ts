@@ -245,7 +245,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(problemReportId),
         ),
     }),
-
+    deletePreAssignation: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { preAssignationId } }) =>
+        preAssignationService.deletePreAssignation(
+          idModule.lib.buildId(preAssignationId),
+        ),
+    }),
     deleteHumanTreatmentsForDocument: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { documentId } }) => {

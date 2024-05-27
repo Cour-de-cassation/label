@@ -606,6 +606,18 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
+    deletePreAssignation: {
+      in: {
+        preAssignationId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
     deleteHumanTreatmentsForDocument: {
       in: {
         documentId: buildModel({

@@ -204,7 +204,8 @@ async function mapCourtDecisionToDocument(
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session,
       solution,
-      debatPublic: sderCourtDecision.debatPublic ?? undefined,
+      motivationOccultation:
+        sderCourtDecision.occultation.motivationOccultation ?? undefined,
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),

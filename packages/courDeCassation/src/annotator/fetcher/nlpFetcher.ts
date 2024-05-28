@@ -5,7 +5,10 @@ import { nlpMapper } from './mapper';
 
 export { buildNlpFetcher };
 
-function buildNlpFetcher(nlpApiBaseUrl: string) {
+function buildNlpFetcher(nlpApiBaseUrl: string | undefined) {
+  if (nlpApiBaseUrl == undefined) {
+    throw new Error('You must provide a valid NLP api URL');
+  }
   const nlpApi = buildNlpApi(nlpApiBaseUrl);
 
   return {

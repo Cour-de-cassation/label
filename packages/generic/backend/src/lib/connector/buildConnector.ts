@@ -1,10 +1,4 @@
-import {
-  dateBuilder,
-  documentType,
-  environmentType,
-  idModule,
-  timeOperator,
-} from '@label/core';
+import { dateBuilder, documentType, idModule, timeOperator } from '@label/core';
 import {
   buildDocumentRepository,
   documentService,
@@ -31,11 +25,9 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function importChainedDocumentsFromSder({
     documentsCount,
     threshold,
-    environment,
   }: {
     documentsCount: number;
     threshold: number;
-    environment: environmentType;
   }) {
     logger.log({
       operationName: 'annotateDocument',
@@ -54,19 +46,17 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
     const daysStep = 30;
 
-    await importChainedDocuments(documentsCount, environment, daysStep);
+    await importChainedDocuments(documentsCount, daysStep);
   }
 
   async function importSpecificDocument({
     documentNumber,
     source,
     lowPriority,
-    environment,
   }: {
     documentNumber: number;
     source: string;
     lowPriority: boolean;
-    environment: environmentType;
   }) {
     logger.log({
       operationName: 'importSpecificDocument',
@@ -78,7 +68,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
         {
           sourceId: documentNumber,
           sourceName: source,
-          environment,
         },
       );
 
@@ -121,7 +110,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
       });
       await connectorConfig.updateDocumentsLoadedStatus({
         documents: [document],
-        environment,
       });
       logger.log({ operationName: 'importSpecificDocument', msg: 'DONE' });
     } catch (error) {
@@ -135,13 +123,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
   async function importNewDocuments({
     documentsCount,
-    environment,
     threshold,
     sources,
     daysStep,
   }: {
     documentsCount: number;
-    environment: environmentType;
     threshold?: number;
     sources?: decisionType['sourceName'][];
     daysStep?: number;
@@ -192,7 +178,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
               startDate,
               endDate,
               source: 'jurinet',
-              environment,
             },
           );
           newJurinetDecisions && newCourtDecisions.push(...newJurinetDecisions);
@@ -203,7 +188,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
               startDate,
               endDate,
               source: 'jurica',
-              environment,
             },
           );
           newJuricaDecisions && newCourtDecisions.push(...newJuricaDecisions);
@@ -214,7 +198,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
               startDate,
               endDate,
               source: 'juritj',
-              environment,
             },
           );
           newJuritjDecisions && newCourtDecisions.push(...newJuritjDecisions);
@@ -268,7 +251,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
     });
     await connectorConfig.updateDocumentsLoadedStatus({
       documents: newDocuments,
-      environment,
     });
     logger.log({ operationName: 'importNewDocuments', msg: 'DONE' });
     return newDocuments.length;
@@ -276,7 +258,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
   async function importChainedDocuments(
     documentCount: number,
-    environment: environmentType,
     daysStep?: number,
   ) {
     const DEFAULT_DAYS_STEP = 30;
@@ -307,7 +288,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
             {
               startDate,
               endDate,
-              environment,
             },
           )) ?? [];
         logger.log({
@@ -347,7 +327,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
         });
         await connectorConfig.updateDocumentsLoadedStatus({
           documents: newDocuments,
-          environment,
         });
 
         importedDocuments = [...importedDocuments, ...newDocuments];
@@ -371,12 +350,10 @@ function buildConnector(connectorConfig: connectorConfigType) {
     fromDaysAgo,
     toDaysAgo,
     byDateCreation,
-    environment,
   }: {
     fromDaysAgo: number;
     toDaysAgo?: number;
     byDateCreation: boolean;
-    environment: environmentType;
   }) {
     toDaysAgo
       ? logger.log({
@@ -403,7 +380,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
                   ? new Date(dateBuilder.daysAgo(toDaysAgo))
                   : new Date(),
                 source: 'jurinet',
-                environment,
               },
             )
           : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
@@ -412,7 +388,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
                 ? new Date(dateBuilder.daysAgo(toDaysAgo))
                 : new Date(),
               source: 'jurinet',
-              environment,
             })) ?? [];
       logger.log({
         operationName: 'importDocumentsSinceOrBetween',
@@ -440,7 +415,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
                   ? new Date(dateBuilder.daysAgo(toDaysAgo))
                   : new Date(),
                 source: 'jurica',
-                environment,
               },
             )
           : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
@@ -449,7 +423,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
                 ? new Date(dateBuilder.daysAgo(toDaysAgo))
                 : new Date(),
               source: 'jurica',
-              environment,
             })) ?? [];
       logger.log({
         operationName: 'importDocumentsSinceOrBetween',
@@ -477,7 +450,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
                   ? new Date(dateBuilder.daysAgo(toDaysAgo))
                   : new Date(),
                 source: 'juritj',
-                environment,
               },
             )
           : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
@@ -486,7 +458,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
                 ? new Date(dateBuilder.daysAgo(toDaysAgo))
                 : new Date(),
               source: 'juritj',
-              environment,
             })) ?? [];
       logger.log({
         operationName: 'importDocumentsSinceOrBetween',
@@ -526,7 +497,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
     });
     await connectorConfig.updateDocumentsLoadedStatus({
       documents,
-      environment,
     });
     logger.log({ operationName: 'importDocumentsSinceOrBetween', msg: 'DONE' });
   }
@@ -536,7 +506,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
     to: Date,
     jurisdictions: string[],
     chambers: string[],
-    environment: environmentType,
   ) {
     logger.log({
       operationName: 'importDocumentsByJurisdictionBetween',
@@ -558,7 +527,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
             source: 'jurinet',
             jurisdictions,
             chambers,
-            environment,
           },
         )) ?? [];
       logger.log({
@@ -586,7 +554,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
             source: 'jurica',
             jurisdictions,
             chambers,
-            environment,
           },
         )) ?? [];
       logger.log({
@@ -614,7 +581,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
             source: 'juritj',
             jurisdictions,
             chambers,
-            environment,
           },
         )) ?? [];
       logger.log({
@@ -655,7 +621,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
     });
     await connectorConfig.updateDocumentsLoadedStatus({
       documents,
-      environment,
     });
     logger.log({
       operationName: 'importDocumentsByJurisdictionBetween',
@@ -666,11 +631,9 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function deleteDocumentsOlderThan({
     days,
     source,
-    environment,
   }: {
     days: number;
     source: string;
-    environment: environmentType;
   }) {
     logger.log({
       operationName: 'deleteDocumentsOlderThan',
@@ -694,7 +657,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
     });
     await connectorConfig.updateDocumentsToBeTreatedStatus({
       documents: filteredDocuments,
-      environment,
     });
     logger.log({
       operationName: 'deleteDocumentsOlderThan',
@@ -719,13 +681,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     logger.log({ operationName: 'deleteDocumentsOlderThan', msg: 'DONE' });
   }
 
-  async function resetAllDocumentsSince({
-    days,
-    environment,
-  }: {
-    days: number;
-    environment: environmentType;
-  }) {
+  async function resetAllDocumentsSince({ days }: { days: number }) {
     const documentRepository = buildDocumentRepository();
 
     const documents = await documentRepository.findAll();
@@ -748,7 +704,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
     await connectorConfig.updateDocumentsToBeTreatedStatus({
       documents: documentsToReset,
-      environment,
     });
     logger.log({
       operationName: 'resetAllDocumentsSince',
@@ -803,11 +758,9 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function resetDocument({
     documentNumber,
     source,
-    environment,
   }: {
     documentNumber: documentType['documentNumber'];
     source: documentType['source'];
-    environment: environmentType;
   }) {
     const documentRepository = buildDocumentRepository();
 
@@ -829,7 +782,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
     await connectorConfig.updateDocumentsToBeTreatedStatus({
       documents: [document],
-      environment,
     });
     logger.log({
       operationName: 'resetDocument',
@@ -853,7 +805,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
       documentNumber,
       source,
       lowPriority: true,
-      environment,
     });
   }
 }

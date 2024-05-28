@@ -2,15 +2,14 @@ import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
 import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
-import { environmentType } from '@label/core';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { count, threshold } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   backend.runScript(
-    () => importChainedDocumentsFromSder({ count, threshold, environment }),
+    () => importChainedDocumentsFromSder({ count, threshold }),
     {
       shouldLoadDb: true,
     },
@@ -20,16 +19,13 @@ import { environmentType } from '@label/core';
 async function importChainedDocumentsFromSder({
   count,
   threshold,
-  environment,
 }: {
   count: number;
   threshold: number;
-  environment: environmentType;
 }) {
   await sderConnector.importChainedDocumentsFromSder({
     documentsCount: count,
     threshold,
-    environment,
   });
 }
 

@@ -216,7 +216,7 @@ function buildAnnotator(
       msg: 'NLP treatment created in DB',
     });
 
-    if (document.decisionMetadata.debatPublic === false) {
+    if (document.decisionMetadata.motivationOccultation === true) {
       if (
         document.zoning != undefined &&
         document.zoning.zones?.motivations != undefined &&
@@ -224,7 +224,7 @@ function buildAnnotator(
       ) {
         logger.log({
           operationName: 'annotateDocument',
-          msg: 'Annotate motivation zone because decision debat are not public',
+          msg: 'Annotate motivation zone because motivationOccultation is true',
         });
 
         createMotivationOccultationTreatment(
@@ -235,17 +235,12 @@ function buildAnnotator(
           annotations,
         );
       } else {
-        logger.error({
+        logger.log({
           operationName: 'annotateDocument',
-          msg: `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
+          msg: `Annotate decision motivation zone impossible because motication zone was not found for document ${formatDocumentInfos(
             document,
           )}`,
         });
-        throw new Error(
-          `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
-            document,
-          )}`,
-        );
       }
     }
 

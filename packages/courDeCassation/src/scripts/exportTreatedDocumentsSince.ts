@@ -4,22 +4,19 @@ import { buildSderExporter } from '../exporter';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { days } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   await backend.runScript(
     () => backend.scripts.cleanDuplicatedDocuments.run(),
     backend.scripts.cleanDuplicatedDocuments.option,
   );
 
-  const sderExporter = buildSderExporter(environment, settings);
-  backend.runScript(
-    () => sderExporter.exportTreatedDocumentsSince(days, environment),
-    {
-      shouldLoadDb: true,
-    },
-  );
+  const sderExporter = buildSderExporter(settings);
+  backend.runScript(() => sderExporter.exportTreatedDocumentsSince(days), {
+    shouldLoadDb: true,
+  });
 })();
 
 function parseArgv() {

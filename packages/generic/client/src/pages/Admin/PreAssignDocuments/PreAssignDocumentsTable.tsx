@@ -36,7 +36,7 @@ function PreAssignDocumentsTable(props: {
     <Table
       data={props.preAssignations}
       fields={preAssignationFields}
-      // buildOptionItems={buildOptionItems}
+      buildOptionItems={buildOptionItems}
       defaultOrderByProperty="date"
       defaultOrderDirection="desc"
     />
@@ -76,6 +76,27 @@ function PreAssignDocumentsTable(props: {
       },
     ];
 
+  }
+
+  function buildOptionItems(preAssignations: apiRouteOutType<'get', 'preAssignations'>[number]) {
+    return [
+      {
+        kind: 'text' as const,
+        text: wordings.preAssignDocumentsPage.table.optionItems.delete,
+        onClick: async () => {
+          try {
+            await apiCaller.post<'deletePreAssignation'>('deletePreAssignation', {
+              preAssignationId: preAssignations._id,
+            });
+          } catch (error) {
+            displayAlert({ text: wordings.business.errors.deletePreAssignationFailed, variant: 'alert', autoHide: true });
+            console.warn(error);
+            return;
+          }
+        },
+        iconName: 'delete' as const,
+      },
+    ];
   }
 }
 

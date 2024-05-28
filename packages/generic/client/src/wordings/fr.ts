@@ -92,6 +92,7 @@ const fr = {
     },
     errors: {
       deleteProblemReportFailed: 'La suppression du signalement a échoué. Veuillez recharger la page.',
+      deletePreAssignationFailed: 'La suppression de la pré-assignation a échoué. Veuillez recharger la page.',
       deleteDocumentFailed: 'La suppression du document a échoué. Veuillez recharger la page.',
       pendingDocumentsFreed:
         'Les documents ont été libérés, ils ne vous sont maintenant plus réservés. Veuillez recharger la page.',
@@ -328,7 +329,9 @@ const fr = {
         agent: 'Agent',
         creationDate: 'Date de création',
       },
-      optionItems: {},
+      optionItems: {
+        delete: 'Supprimer la pré-affectation',
+      },
     },
   },
   resetPasswordPage: {

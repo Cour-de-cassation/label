@@ -333,6 +333,7 @@ const fr = {
         delete: 'Supprimer la pré-affectation',
       },
     },
+    createPreAssignationDrawer: { title: 'Ajouter une pré-assignation' },
   },
   resetPasswordPage: {
     popup:

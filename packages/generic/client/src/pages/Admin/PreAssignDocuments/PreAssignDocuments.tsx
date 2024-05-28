@@ -3,6 +3,7 @@ import { apiRouteOutType } from '@label/core';
 import { customThemeType, useCustomTheme, RefreshButton, tableRowFieldType } from 'pelta-design-system';
 import { heights, widths } from '../../../styles';
 import { PreAssignDocumentsTable } from './PreAssignDocumentsTable';
+import { AddPreAssignationButton } from './AddPreAssignationDrawer/AddPreAssignationButton';
 
 export { PreAssignDocuments };
 
@@ -17,6 +18,9 @@ function PreAssignDocuments(props: {
     <div style={styles.table}>
       <div style={styles.tableHeaderContainer}>
         <div style={styles.tableHeader}>
+          <div style={styles.addPreAssignationButton}>
+            <AddPreAssignationButton refetch={props.refetch} />
+          </div>
           <RefreshButton onClick={props.refetch} isLoading={props.isLoading} />
         </div>
       </div>
@@ -47,6 +51,9 @@ function buildStyles(theme: customThemeType) {
       width: widths.adminContent,
       paddingLeft: theme.spacing * 3,
       paddingRight: theme.spacing * 2,
+    },
+    addPreAssignationButton:{
+      marginRight: theme.spacing * 2
     },
   } as const;
 }

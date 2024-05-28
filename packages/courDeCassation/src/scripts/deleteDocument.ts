@@ -3,9 +3,9 @@ import { buildBackend } from '@label/backend';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { documentNumber, source } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   backend.runScript(
     () => backend.scripts.deleteDocument.run(documentNumber, source),

@@ -4,12 +4,12 @@ import { parametersHandler } from '../lib/parametersHandler';
 import { sderConnector } from '../connector';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { days, source } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   backend.runScript(
-    () => sderConnector.deleteDocumentsOlderThan({ days, source, environment }),
+    () => sderConnector.deleteDocumentsOlderThan({ days, source }),
     {
       shouldLoadDb: true,
     },

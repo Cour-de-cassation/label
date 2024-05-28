@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { decisionModule, decisionType } from 'sder';
-import { environmentType, idModule } from '@label/core';
+import { idModule } from '@label/core';
 import { sderApiType } from './sderApiType';
 import { logger } from '@label/backend';
 
@@ -10,20 +10,18 @@ async function fetchApi({
   method,
   path,
   body,
-  environment,
 }: {
   method: Method;
   path: string;
   body: Record<string, unknown>;
-  environment: environmentType;
 }) {
   return await axios({
     method: method,
-    baseURL: `${environment.pathName.db_api}:${environment.port.db_api}/${environment.version.db_api}`,
+    baseURL: `${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}`,
     url: `/${path}`,
     data: body,
     headers: {
-      'x-api-key': environment.api_key.db_api ?? '',
+      'x-api-key': process.env.DBSDER_API_KEY ?? '',
     },
   })
     .then((response: AxiosResponse) => {
@@ -50,9 +48,8 @@ const sderApi: sderApiType = {
     source,
     jurisdictions,
     chambers,
-    environment,
   }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       logger.log({
         operationName:
           'fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween',
@@ -65,20 +62,14 @@ const sderApi: sderApiType = {
     );
   },
 
-  async fetchDecisionsToPseudonymiseBetween({
-    startDate,
-    endDate,
-    source,
-    environment,
-  }) {
-    if (environment.db_api_enabled) {
+  async fetchDecisionsToPseudonymiseBetween({ startDate, endDate, source }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       const decisionList = ((await fetchApi({
         method: 'get',
         path: `decisions?status=toBeTreated&source=${source}&startDate=${
           startDate.toISOString().split('T')[0]
         }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
-        environment,
       })) as unknown) as {
         _id: string;
         status: string;
@@ -92,7 +83,6 @@ const sderApi: sderApiType = {
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-            environment,
           })) as decisionType;
           decisions.push(decision);
         }
@@ -112,16 +102,14 @@ const sderApi: sderApiType = {
     startDate,
     endDate,
     source,
-    environment,
   }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       const decisionList = ((await fetchApi({
         method: 'get',
         path: `decisions?status=toBeTreated&source=${source}&startDate=${
           startDate.toISOString().split('T')[0]
         }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
-        environment,
       })) as unknown) as {
         _id: string;
         status: string;
@@ -135,7 +123,6 @@ const sderApi: sderApiType = {
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-            environment,
           })) as decisionType;
           decisions.push(decision);
         }
@@ -155,9 +142,8 @@ const sderApi: sderApiType = {
   async fetchChainedJuricaDecisionsToPseudonymiseBetween({
     startDate,
     endDate,
-    environment,
   }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       logger.log({
         operationName: 'fetchChainedJuricaDecisionsToPseudonymiseBetween',
         msg:
@@ -169,25 +155,20 @@ const sderApi: sderApiType = {
     );
   },
 
-  async fetchCourtDecisionById({ id, environment }) {
-    if (environment.db_api_enabled) {
+  async fetchCourtDecisionById({ id }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       return ((await fetchApi({
         method: 'get',
         path: `decisions/${id}/`,
         body: {},
-        environment,
       })) as unknown) as Promise<decisionType>;
     } else {
       return decisionModule.service.fetchCourtDecisionById(id);
     }
   },
 
-  async fetchCourtDecisionBySourceIdAndSourceName({
-    sourceId,
-    sourceName,
-    environment,
-  }) {
-    if (environment.db_api_enabled) {
+  async fetchCourtDecisionBySourceIdAndSourceName({ sourceId, sourceName }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       logger.log({
         operationName: 'fetchCourtDecisionBySourceIdAndSourceName',
         msg:
@@ -200,14 +181,13 @@ const sderApi: sderApiType = {
     );
   },
 
-  async setCourtDecisionsLoaded({ documents, environment }) {
-    if (environment.db_api_enabled) {
+  async setCourtDecisionsLoaded({ documents }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
         await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/`,
           body: { statut: 'loaded' },
-          environment,
         });
       });
     } else {
@@ -220,14 +200,13 @@ const sderApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionsToBeTreated({ documents, environment }) {
-    if (environment.db_api_enabled) {
+  async setCourtDecisionsToBeTreated({ documents }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
         await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/`,
           body: { statut: 'toBeTreated' },
-          environment,
         });
       });
     } else {
@@ -240,13 +219,12 @@ const sderApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionDone({ externalId, environment }) {
-    if (environment.db_api_enabled) {
+  async setCourtDecisionDone({ externalId }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'done' },
-        environment,
       });
     } else {
       await decisionModule.service.updateDecisionsLabelStatus({
@@ -256,13 +234,12 @@ const sderApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionBlocked({ externalId, environment }) {
-    if (environment.db_api_enabled) {
+  async setCourtDecisionBlocked({ externalId }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'blocked' },
-        environment,
       });
     } else {
       await decisionModule.service.updateDecisionsLabelStatus({
@@ -277,21 +254,18 @@ const sderApi: sderApiType = {
     labelTreatments,
     pseudonymizationText,
     publishStatus,
-    environment,
   }) {
     //TODO : include publishStatus to dbsder api call
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/rapports-occultations`,
         body: { rapportsOccultations: labelTreatments },
-        environment,
       });
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/decision-pseudonymisee`,
         body: { decisionPseudonymisee: pseudonymizationText },
-        environment,
       });
     } else {
       await decisionModule.service.updateDecisionPseudonymisation({

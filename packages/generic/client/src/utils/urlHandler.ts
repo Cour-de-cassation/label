@@ -1,5 +1,3 @@
-import { environmentHandler } from '@label/core';
-
 export { urlHandler };
 
 const urlHandler = {
@@ -8,7 +6,7 @@ const urlHandler = {
     const clientProtocol = window.location.protocol;
     const clientHostname = window.location.hostname;
 
-    const serverPort = environmentHandler.convertClientPortToServerPort(clientPort);
+    const serverPort = clientPort - 2;
 
     return serverPort ? `${clientProtocol}//${clientHostname}:${serverPort}` : `${clientProtocol}//${clientHostname}`;
   },

@@ -30,8 +30,6 @@
                 envFrom:
                   - configMapRef:
                       name: "{{ label_client_app_id }}-config"
-                  - secretRef:
-                      name: "{{ label_client_app_id }}-secret"
                 # livenessProbe:
                 #   exec:
                 #     command:

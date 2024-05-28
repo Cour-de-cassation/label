@@ -1,50 +1,48 @@
 {
-  "description": "EIG 4 - LABEL Challenge",
-  "version": "0.1.2",
-  "devDependencies": {
-    "@lerna/filter-options": "^3.20.0",
-    "lerna": "~3.22.0",
-    "rimraf": "~3.0.2",
-    "typescript": "~4.0.0"
-  },
   "name": "label",
+  "version": "0.1.2",
   "private": true,
+  "description": "Cour de cassation annotation tool.",
+  "workspaces": [
+    "packages/generic/*",
+    "packages/courDeCassation/"
+  ],
+  "scripts": {
+    "build": "lerna run build --stream && cp -r packages/generic/client/build/ packages/generic/backend/",
+    "build:backend": "lerna run --ignore @label/client build --stream",
+    "build:client": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation build --stream",
+    "clean": "lerna run clean",
+    "clean:all": "lerna run clean:all && rimraf -rf ./node_modules",
+    "compile": "lerna run compile",
+    "compile:backend": "lerna run --ignore @label/client compile",
+    "compile:client": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation compile ",
+    "coverage": "lerna run test:coverage",
+    "docker:build:backend": "docker compose -f docker-compose-dev.yml build",
+    "docker:start:backend": "docker compose -f docker-compose-dev.yml up",
+    "docker:start:db": "docker compose -f docker-compose-dev.yml up -d labelDb",
+    "docker:stop:db": "docker compose -f docker-compose-dev.yml down labelDb",
+    "fix": "lerna run fix",
+    "init:db": "scripts/initializeTestDb.sh",
+    "lint": "lerna run lint",
+    "migration:create": "scripts/createMigrationFile.sh",
+    "start:backend:dev": "RUN_MODE=LOCAL nodemon",
+    "start:client:dev": "yarn compile:client && cd packages/generic/client && yarn start",
+    "test": "lerna run test",
+    "type": "lerna run type"
+  },
   "resolutions": {
     "**/@typescript-eslint/eslint-plugin": "^4.4.1",
     "**/@typescript-eslint/parser": "^4.4.1"
   },
-  "scripts": {
-    "bash": "yarn buildLocalDevDocker && yarn startLocalDevDocker",
-    "bootstrap": "lerna run compile && lerna run --scope @label/cour-de-cassation bootstrap --stream && ./scripts/bootstrap.sh",
-    "buildDev": "lerna run --ignore @label/client build --stream",
-    "buildLocalDevDocker": "docker-compose -f docker-compose-dev.yml build",
-    "build": "lerna run build --stream && cp -r packages/generic/client/build/ packages/generic/backend/",
-    "buildClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation build --stream",
-    "buildLocalDocker": "docker-compose -f docker-compose.yml build",
-    "clean": "lerna run clean",
-    "cleanAll": "lerna run cleanAll && rimraf -rf ./node_modules",
-    "compile": "lerna run compile",
-    "coverage": "lerna run coverage",
-    "compileClient": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation compile ",
-    "lint": "lerna run lint",
-    "fix": "lerna run fix",
-    "migrationCreate": "scripts/createMigrationFile.sh",
-    "startLocalDev": "scripts/startLocalDev.sh",
-    "startLocalClientDev": "yarn compileClient && cd packages/generic/client && yarn start",
-    "startLocalDevDocker": "docker-compose -f docker-compose-dev.yml up",
-    "startLocal": "scripts/startLocal.sh",
-    "startLocalDocker": "docker-compose -f docker-compose.yml up",
-    "startPreProd": "scripts/preProd/start.sh",
-    "startProd": "scripts/prod/start.sh",
-    "test": "lerna run test",
-    "testE2E": "lerna run testE2E",
-    "type": "lerna run type",
-    "up": "git pull && yarn && yarn bootstrap && yarn buildLocalDocker && yarn startLocalDocker",
-    "updatePreProd": "scripts/preProd/update.sh",
-    "updateProd": "scripts/prod/update.sh"
+  "dependencies": {
+    "@lerna/filter-options": "^3.20.0",
+    "lerna": "~3.22.0"
   },
-  "workspaces": [
-    "packages/generic/*",
-    "packages/courDeCassation/"
-  ]
+  "devDependencies": {
+    "@lerna/filter-options": "^3.20.0",
+    "lerna": "~3.22.0",
+    "nodemon": "3.1.0",
+    "rimraf": "~3.0.2",
+    "typescript": "~4.0.0"
+  }
 }

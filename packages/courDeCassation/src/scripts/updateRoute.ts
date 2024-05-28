@@ -8,12 +8,12 @@ import * as readline from 'readline';
     input: process.stdin,
     output: process.stdout,
   });
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   prompt.question(
     'Voulez vous mettre a jour le circuit de relecture de tous les documents free (yes/no)?',
     (answer: any) => {
       if (answer == 'yes') {
-        const backend = buildBackend(environment, settings);
+        const backend = buildBackend(settings);
         backend.runScript(() => updateRouteForFreeDocuments(), {
           shouldLoadDb: true,
         });

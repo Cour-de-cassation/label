@@ -1,41 +1,15 @@
-#######################
-# Step 1: Base target #
-#######################
-FROM node:16.15-alpine3.16 as base
+FROM node:16-alpine as label-backend
 ARG http_proxy
 ARG https_proxy
-ARG no_proxy
-ARG npm_registry
-ARG NPM_LATEST
-
-RUN apk add curl
-
-# use proxy & private npm registry
-RUN if [ ! -z "$http_proxy" ] ; then \
-  yarn config delete proxy; \
-  yarn config set proxy $http_proxy; \
-  yarn config set https-proxy $https_proxy; \
-  yarn config set no-proxy $no_proxy; \
-  fi ; \
-  [ -z "$npm_registry" ] || yarn config set registry=$npm_registry
-
-RUN [ -z "${NPM_LATEST}" ] || npm install npm@latest -g
-
-################################
-# Step 2: "label-backend"      #
-# yarn compile must have been  #
-# run first outside container  #
-# e.g in Github Actions CI     #
-################################
-FROM base as label-backend
-ARG NPM_FIX
-ARG NPM_VERBOSE
 ENV API_PORT=55430
-ENV NPM_CONFIG_LOGLEVEL debug
+
+# Use proxy
+RUN yarn config set proxy $http_proxy; \
+  yarn config set https-proxy $https_proxy;
 
 WORKDIR /home/node/
 
-# Install git for sder package
+# Install git for sder and sder-core package
 RUN apk add git
 
 # Copy context files
@@ -44,16 +18,20 @@ COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 
-COPY tsconfig.json package.json lerna.json ./
+COPY . .
 
-# patch lerna package method to avoid bringing all react dev deps to backend prod
-RUN for file in lerna.json package.json; do\
-  cat $file | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > $file.new ;\
-  mv $file.new $file;\
-  done
+# Do not bring client dependencies to backend prod
+# Workaround to rewrite 'workspaces' in packages.json file to not run 'yarn install' in all packages
+RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > package.json.new && \
+  mv package.json.new package.json
 
 # Install dependencies
 RUN yarn install --production
+
+# Compile project without lerna
+RUN cd /home/node/packages/generic/core && yarn compile && \
+  cd /home/node/packages/generic/backend && yarn compile && \
+  cd /home/node/packages/courDeCassation && yarn compile
 
 ADD packages/generic/core packages/generic/core
 ADD packages/generic/backend packages/generic/backend
@@ -68,4 +46,4 @@ USER node
 # Expose the listening port of your app
 EXPOSE ${API_PORT}
 
-CMD ["sh", "-c", "RUN_MODE=PROD node dist/labelServer.js -e environments/prodEnvironment.json -s settings/settings.json"]
+CMD ["sh", "-c", "RUN_MODE=PROD node dist/labelServer.js -s settings/settings.json"]

@@ -2,7 +2,6 @@ import {
   buildAnonymizer,
   documentModule,
   documentType,
-  environmentType,
   settingsModule,
   settingsType,
   treatmentModule,
@@ -16,7 +15,6 @@ import { exporterConfigType } from './exporterConfigType';
 export { buildExporter };
 
 function buildExporter(
-  environment: environmentType,
   exporterConfig: exporterConfigType,
   settings: settingsType,
 ) {
@@ -28,10 +26,7 @@ function buildExporter(
     exportTreatedPublishableDocuments,
   };
 
-  async function exportTreatedDocumentsSince(
-    days: number,
-    environment: environmentType,
-  ) {
+  async function exportTreatedDocumentsSince(days: number) {
     logger.log({
       operationName: 'exportTreatedDocumentsSince',
       msg: `START: Exportation to ${exporterConfig.name}`,
@@ -62,15 +57,13 @@ function buildExporter(
       });
       const document = documentsReadyToExport[index];
 
-      await exportDocument(document, environment);
+      await exportDocument(document);
     }
 
     logger.log({ operationName: 'exportTreatedDocumentsSince', msg: 'DONE' });
   }
 
-  async function exportTreatedPublishableDocuments(
-    environment: environmentType,
-  ) {
+  async function exportTreatedPublishableDocuments() {
     logger.log({
       operationName: 'exportTreatedPublishableDocuments',
       msg: `START: Exportation to ${exporterConfig.name}`,
@@ -99,7 +92,7 @@ function buildExporter(
       });
       const document = documentsReadyToExport[index];
 
-      await exportDocument(document, environment);
+      await exportDocument(document);
     }
 
     logger.log({
@@ -111,11 +104,9 @@ function buildExporter(
   async function exportSpecificDocument({
     documentNumber,
     source,
-    environment,
   }: {
     documentNumber: number;
     source: string;
-    environment: environmentType;
   }) {
     logger.log({
       operationName: 'exportSpecificDocument',
@@ -146,12 +137,12 @@ function buildExporter(
       msg: `Document found. Exporting...`,
     });
 
-    await exportDocument(document, environment);
+    await exportDocument(document);
 
     logger.log({ operationName: 'exportSpecificDocument', msg: 'DONE' });
   }
 
-  async function exportAllTreatedDocuments(environment: environmentType) {
+  async function exportAllTreatedDocuments() {
     logger.log({
       operationName: 'exportAllTreatedDocuments',
       msg: `START: Exportation to ${exporterConfig.name}`,
@@ -178,16 +169,13 @@ function buildExporter(
       });
       const document = documentsToExport[index];
 
-      await exportDocument(document, environment);
+      await exportDocument(document);
     }
 
     logger.log({ operationName: 'exportAllTreatedDocuments', msg: 'DONE' });
   }
 
-  async function exportDocument(
-    document: documentType,
-    environment: environmentType,
-  ) {
+  async function exportDocument(document: documentType) {
     const treatments = await treatmentService.fetchTreatmentsByDocumentId(
       document._id,
     );
@@ -208,7 +196,6 @@ function buildExporter(
         externalId: document.externalId,
         pseudonymizationText: anonymizer.anonymizeDocument(document).text,
         labelTreatments: treatmentModule.lib.concat(treatments),
-        environment,
       });
 
       await statisticService.saveStatisticsOfDocument(document, settings);
@@ -223,7 +210,7 @@ function buildExporter(
     }
   }
 
-  async function exportAllRejectedDocuments(environment: environmentType) {
+  async function exportAllRejectedDocuments() {
     logger.log({
       operationName: 'exportAllRejectedDocuments',
       msg: `START: Exportation to ${exporterConfig.name}`,
@@ -250,19 +237,15 @@ function buildExporter(
       });
       const document = rejectedDocuments[index];
 
-      await exportRejectedDocument(document, environment);
+      await exportRejectedDocument(document);
     }
 
     logger.log({ operationName: 'exportAllRejectedDocuments', msg: 'DONE' });
   }
 
-  async function exportRejectedDocument(
-    document: documentType,
-    environment: environmentType,
-  ) {
+  async function exportRejectedDocument(document: documentType) {
     await exporterConfig.sendDocumentBlockedStatus({
       externalId: document.externalId,
-      environment,
     });
 
     await statisticService.saveStatisticsOfDocument(document, settings);

@@ -2,20 +2,22 @@ import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
 import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
-import { environmentType } from '@label/core';
 import { logger } from '@label/backend';
+import * as dotenv from 'dotenv';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  if (process.env.RUN_MODE === 'LOCAL') {
+    dotenv.config();
+  }
+  const { settings } = await parametersHandler.getParameters();
   const { fromDaysAgo, toDaysAgo, byDateCreation } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   backend.runScript(
     () =>
       importAllDocumentsFromSderSinceOrBetween(
         fromDaysAgo,
         byDateCreation,
-        environment,
         toDaysAgo,
       ),
     {
@@ -27,7 +29,6 @@ import { logger } from '@label/backend';
 async function importAllDocumentsFromSderSinceOrBetween(
   fromDaysAgo: number,
   byDateCreation: boolean,
-  environment: environmentType,
   toDaysAgo?: number,
 ) {
   if (toDaysAgo) {
@@ -36,7 +37,6 @@ async function importAllDocumentsFromSderSinceOrBetween(
         fromDaysAgo,
         toDaysAgo,
         byDateCreation,
-        environment,
       });
     } else {
       logger.error({
@@ -48,7 +48,6 @@ async function importAllDocumentsFromSderSinceOrBetween(
     await sderConnector.importDocumentsSinceOrBetween({
       fromDaysAgo,
       byDateCreation,
-      environment,
     });
   }
 }

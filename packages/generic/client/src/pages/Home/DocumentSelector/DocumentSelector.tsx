@@ -65,7 +65,7 @@ function DocumentSelector(props: {
             choice.document.decisionMetadata.additionalTermsToAnnotate,
             choice.document.decisionMetadata.computedAdditionalTerms,
             choice.document.decisionMetadata.additionalTermsParsingFailed,
-            choice.document.decisionMetadata.debatPublic,
+            choice.document.decisionMetadata.motivationOccultation,
           );
 
           return (

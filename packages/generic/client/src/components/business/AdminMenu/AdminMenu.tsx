@@ -84,10 +84,10 @@ function getMenuIcons({
 
   const PRE_ASSIGN_DOCUMENTS_ICON = (
     <MenuIcon
-      title={wordings.problemReportsPage.header.subtitle}
+      title={wordings.preAssignDocumentsPage.header.subtitle}
       pathname={routes.PRE_ASSIGN_DOCUMENTS.getPath()}
       alertCount={unreadProblemReportsCount}
-      iconName="edit"
+      iconName="assignmentInd"
     />
   );
 

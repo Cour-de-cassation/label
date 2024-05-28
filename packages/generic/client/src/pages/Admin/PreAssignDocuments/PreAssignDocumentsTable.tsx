@@ -50,28 +50,28 @@ function PreAssignDocumentsTable(props: {
         id: 'source',
         title: wordings.preAssignDocumentsPage.table.columnTitles.source,
         canBeSorted: true,
-        extractor: (preAssignation) => preAssignation.source,
+        extractor: (preAssignation) => preAssignation.preAssignation.source,
         width: 10,
       },
       {
         id: 'documentNumber',
         title: wordings.preAssignDocumentsPage.table.columnTitles.documentNumber,
         canBeSorted: true,
-        extractor: (preAssignation) => preAssignation.documentNumber,
+        extractor: (preAssignation) => preAssignation.preAssignation.documentNumber,
         width: 10,
       },
       {
         id: 'userName',
         title: wordings.preAssignDocumentsPage.table.columnTitles.agent,
         canBeSorted: true,
-        extractor: (preAssignation) => preAssignation.userId.toHexString(),
+        extractor: (preAssignation) => preAssignation.userName,
         width: 10,
       },
       {
         id: 'creationDate',
         title: wordings.preAssignDocumentsPage.table.columnTitles.creationDate,
         canBeSorted: true,
-        extractor: (preAssignation) => preAssignation.creationDate? timeOperator.convertTimestampToReadableDate(preAssignation.creationDate): '-',
+        extractor: (preAssignation) => preAssignation.preAssignation.creationDate? timeOperator.convertTimestampToReadableDate(preAssignation.preAssignation.creationDate): '-',
         width: 10,
       },
     ];
@@ -86,7 +86,7 @@ function PreAssignDocumentsTable(props: {
         onClick: async () => {
           try {
             await apiCaller.post<'deletePreAssignation'>('deletePreAssignation', {
-              preAssignationId: preAssignations._id,
+              preAssignationId: preAssignations.preAssignation._id,
             });
           } catch (error) {
             displayAlert({ text: wordings.business.errors.deletePreAssignationFailed, variant: 'alert', autoHide: true });

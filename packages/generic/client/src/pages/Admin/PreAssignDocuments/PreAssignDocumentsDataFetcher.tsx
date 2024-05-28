@@ -36,9 +36,12 @@ function buildFetchPreAssignations() {
     );
     return {
       data: preAssignations.map((preAssignation) => ({
-        ...preAssignation,
-        _id: idModule.lib.buildId(preAssignation._id),
-        userId: idModule.lib.buildId(preAssignation.userId),
+        preAssignation: {
+          ...preAssignation.preAssignation,
+          _id: idModule.lib.buildId(preAssignation.preAssignation._id),
+          userId: idModule.lib.buildId(preAssignation.preAssignation.userId),
+        },
+        userName: preAssignation.userName
       })),
       statusCode,
     };

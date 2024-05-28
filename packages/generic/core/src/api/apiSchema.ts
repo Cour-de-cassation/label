@@ -545,11 +545,8 @@ const apiSchema = {
         content: {
           kind: 'object',
           content: {
-            _id: preAssignationModule.model.content._id,
-            userId: preAssignationModule.model.content.userId,
-            documentNumber: preAssignationModule.model.content.documentNumber,
-            source: preAssignationModule.model.content.source,
-            creationDate: preAssignationModule.model.content.creationDate,
+            preAssignation: preAssignationModule.model,
+            userName: userModule.models.user.content.name,
           },
         },
       } as const),

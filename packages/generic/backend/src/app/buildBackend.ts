@@ -1,4 +1,4 @@
-import { environmentType, settingsType } from '@label/core';
+import { settingsType } from '@label/core';
 import { buildRunScript } from './buildRunScript';
 import { buildRunServer } from './buildRunServer';
 import {
@@ -26,9 +26,9 @@ import { cleanDuplicatedDocuments } from './scripts/cleanDocuments';
 
 export { buildBackend };
 
-function buildBackend(environment: environmentType, settings: settingsType) {
-  const runServer = buildRunServer(environment, settings);
-  const runScript = buildRunScript(environment);
+function buildBackend(settings: settingsType) {
+  const runServer = buildRunServer(settings);
+  const runScript = buildRunScript();
 
   return {
     runServer,

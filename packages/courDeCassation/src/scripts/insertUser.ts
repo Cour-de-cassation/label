@@ -3,9 +3,9 @@ import { buildBackend } from '@label/backend';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { email, name, password, role } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   await backend.runScript(
     () => backend.scripts.insertUser.run({ email, name, password, role }),

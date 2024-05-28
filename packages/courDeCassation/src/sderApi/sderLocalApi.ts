@@ -1,31 +1,29 @@
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { decisionType } from 'sder';
-import { environmentType, idModule } from '@label/core';
+import { idModule } from '@label/core';
 import { fileSystem, logger } from '@label/backend';
 import { sderApiType } from './sderApiType';
 
 export { sderLocalApi };
 
-const pathToCourtDecisions = './storage/documents/';
+const pathToCourtDecisions = 'packages/courDeCassation/storage/documents/';
 
 async function fetchApi({
   method,
   path,
   body,
-  environment,
 }: {
   method: Method;
   path: string;
   body: Record<string, unknown>;
-  environment: environmentType;
 }) {
   return await axios({
     method: method,
-    baseURL: `${environment.pathName.db_api}:${environment.port.db_api}/${environment.version.db_api}`,
+    baseURL: `${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}`,
     url: `/${path}`,
     data: body,
     headers: {
-      'x-api-key': environment.api_key.db_api ?? '',
+      'x-api-key': process.env.DBSDER_API_KEY ?? '',
     },
   })
     .then((response: AxiosResponse) => {
@@ -67,20 +65,14 @@ const sderLocalApi: sderApiType = {
     });
   },
 
-  async fetchDecisionsToPseudonymiseBetween({
-    startDate,
-    endDate,
-    source,
-    environment,
-  }) {
-    if (environment.db_api_enabled) {
+  async fetchDecisionsToPseudonymiseBetween({ startDate, endDate, source }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       const decisionList = ((await fetchApi({
         method: 'get',
         path: `decisions?status=toBeTreated&source=${source}&startDate=${
           startDate.toISOString().split('T')[0]
         }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
-        environment,
       })) as unknown) as {
         _id: string;
         status: string;
@@ -94,7 +86,6 @@ const sderLocalApi: sderApiType = {
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-            environment,
           })) as decisionType;
           decisions.push(decision);
         }
@@ -130,16 +121,14 @@ const sderLocalApi: sderApiType = {
     startDate,
     endDate,
     source,
-    environment,
   }) {
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       const decisionList = ((await fetchApi({
         method: 'get',
         path: `decisions?status=toBeTreated&source=${source}&startDate=${
           startDate.toISOString().split('T')[0]
         }&endDate=${endDate.toISOString().split('T')[0]}`,
         body: {},
-        environment,
       })) as unknown) as {
         _id: string;
         status: string;
@@ -153,7 +142,6 @@ const sderLocalApi: sderApiType = {
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-            environment,
           })) as decisionType;
           decisions.push(decision);
         }
@@ -206,13 +194,12 @@ const sderLocalApi: sderApiType = {
     });
   },
 
-  async fetchCourtDecisionById({ id, environment }) {
-    if (environment.db_api_enabled) {
+  async fetchCourtDecisionById({ id }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       return ((await fetchApi({
         method: 'get',
         path: `decisions/${id}`,
         body: {},
-        environment,
       })) as unknown) as Promise<decisionType>;
     } else {
       const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
@@ -265,14 +252,13 @@ const sderLocalApi: sderApiType = {
     );
   },
 
-  async setCourtDecisionsLoaded({ documents, environment }) {
-    if (environment.db_api_enabled) {
+  async setCourtDecisionsLoaded({ documents }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
         return await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/`,
           body: { statut: 'loaded' },
-          environment,
         });
       });
     } else {
@@ -283,14 +269,13 @@ const sderLocalApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionsToBeTreated({ documents, environment }) {
-    if (environment.db_api_enabled) {
+  async setCourtDecisionsToBeTreated({ documents }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
         return await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/`,
           body: { statut: 'toBeTreated' },
-          environment,
         });
       });
     } else {
@@ -301,13 +286,12 @@ const sderLocalApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionDone({ externalId, environment }) {
-    if (environment.db_api_enabled) {
+  async setCourtDecisionDone({ externalId }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'done' },
-        environment,
       });
     } else {
       logger.log({
@@ -317,13 +301,12 @@ const sderLocalApi: sderApiType = {
     }
   },
 
-  async setCourtDecisionBlocked({ externalId, environment }) {
-    if (environment.db_api_enabled) {
+  async setCourtDecisionBlocked({ externalId }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/`,
         body: { statut: 'blocked' },
-        environment,
       });
     } else {
       logger.log({
@@ -337,21 +320,18 @@ const sderLocalApi: sderApiType = {
     externalId,
     labelTreatments,
     pseudonymizationText,
-    environment,
   }) {
     //TODO : include publishStatus to dbsder api call
-    if (environment.db_api_enabled) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/rapports-occultations`,
         body: { rapportsOccultations: labelTreatments },
-        environment,
       });
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/decision-pseudonymisee`,
         body: { decisionPseudonymisee: pseudonymizationText },
-        environment,
       });
     } else {
       logger.log({

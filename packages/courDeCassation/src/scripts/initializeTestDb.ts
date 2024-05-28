@@ -1,9 +1,13 @@
 import { buildBackend } from '@label/backend';
 import { parametersHandler } from '../lib/parametersHandler';
+import * as dotenv from 'dotenv';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
-  const backend = buildBackend(environment, settings);
+  if (process.env.RUN_MODE === 'LOCAL') {
+    dotenv.config();
+  }
+  const { settings } = await parametersHandler.getParameters();
+  const backend = buildBackend(settings);
 
   await backend.runScript(
     backend.scripts.insertTestUsers.run,

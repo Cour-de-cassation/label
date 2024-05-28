@@ -4,17 +4,16 @@ import { buildSderExporter } from '../exporter';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { documentNumber, source } = parseArgv();
-  const backend = buildBackend(environment, settings);
-  const sderExporter = buildSderExporter(environment, settings);
+  const backend = buildBackend(settings);
+  const sderExporter = buildSderExporter(settings);
 
   backend.runScript(
     () =>
       sderExporter.exportSpecificDocument({
         source,
         documentNumber,
-        environment,
       }),
     {
       shouldLoadDb: true,

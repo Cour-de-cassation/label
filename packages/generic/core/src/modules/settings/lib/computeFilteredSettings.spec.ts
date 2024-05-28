@@ -18,7 +18,7 @@ describe('computeFilteredSettings', () => {
     const additionalTermsToAnnotate = '';
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = undefined;
-    const debatPublic = undefined;
+    const motivationOccultation = undefined;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -26,7 +26,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
     expect(filteredSettings['prenom'].status).toBe('hidden');
     expect(filteredSettings['professionnelMagistratGreffier'].status).toBe('annotable');
@@ -39,7 +39,7 @@ describe('computeFilteredSettings', () => {
     const additionalTermsToAnnotate = '';
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = undefined;
-    const debatPublic = undefined;
+    const motivationOccultation = undefined;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -47,7 +47,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
 
     expect(filteredSettings['prenom'].status).toBe('annotable');
@@ -61,7 +61,7 @@ describe('computeFilteredSettings', () => {
     const additionalTermsToAnnotate = '';
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = undefined;
-    const debatPublic = undefined;
+    const motivationOccultation = undefined;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -69,7 +69,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
 
     expect(filteredSettings['prenom'].status).toBe('annotable');
@@ -83,7 +83,7 @@ describe('computeFilteredSettings', () => {
     const additionalTermsToAnnotate = 'thing';
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = undefined;
-    const debatPublic = undefined;
+    const motivationOccultation = undefined;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -91,7 +91,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
@@ -105,7 +105,7 @@ describe('computeFilteredSettings', () => {
     const additionalTermsToAnnotate = 'thing';
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = true;
-    const debatPublic = undefined;
+    const motivationOccultation = undefined;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -113,7 +113,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
@@ -127,7 +127,7 @@ describe('computeFilteredSettings', () => {
     const additionalTermsToAnnotate = 'thing';
     const computedAdditionalTerms = { additionalTermsToAnnotate: [], additionalTermsToUnAnnotate: ['toUnanotate'] };
     const additionalTermsParsingFailed = false;
-    const debatPublic = undefined;
+    const motivationOccultation = undefined;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -135,7 +135,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
@@ -152,7 +152,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToUnAnnotate: ['toUnanotate'],
     };
     const additionalTermsParsingFailed = false;
-    const debatPublic = undefined;
+    const motivationOccultation = undefined;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -160,7 +160,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
@@ -169,12 +169,12 @@ describe('computeFilteredSettings', () => {
     expect(filteredSettings[additionalAnnotationCategory].status).toBe('annotable');
   });
 
-  it('should compute filtered settings for motivation when decision debat is not public', () => {
+  it('should compute filtered settings for motivation when motivationOccultation is true', () => {
     const categoriesToOmit = ['prenom', 'professionnelAvocat', 'professionnelMagistratGreffier'];
     const additionalTermsToAnnotate = 'thing';
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = false;
-    const debatPublic = false;
+    const motivationOccultation = true;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -182,7 +182,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');
@@ -191,12 +191,12 @@ describe('computeFilteredSettings', () => {
     expect(filteredSettings['motivations'].status).toBe('annotable');
   });
 
-  it('should compute filtered settings for motivation when decision debat is public', () => {
+  it('should compute filtered settings for motivation when motivationOccultation is false', () => {
     const categoriesToOmit = ['prenom', 'professionnelAvocat', 'professionnelMagistratGreffier'];
     const additionalTermsToAnnotate = 'thing';
     const computedAdditionalTerms = undefined;
     const additionalTermsParsingFailed = false;
-    const debatPublic = true;
+    const motivationOccultation = false;
 
     const filteredSettings = computeFilteredSettings(
       settings,
@@ -204,7 +204,7 @@ describe('computeFilteredSettings', () => {
       additionalTermsToAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
-      debatPublic,
+      motivationOccultation,
     );
 
     expect(filteredSettings['prenom'].status).toBe('hidden');

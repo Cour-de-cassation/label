@@ -11,7 +11,7 @@ function computeFilteredSettings(
   additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'],
   computedAdditionalTerms: documentType['decisionMetadata']['computedAdditionalTerms'],
   additionalTermsParsingFailed: documentType['decisionMetadata']['additionalTermsParsingFailed'],
-  debatPublic: documentType['decisionMetadata']['debatPublic'],
+  motivationOccultation: documentType['decisionMetadata']['motivationOccultation'],
 ) {
   const settingsForDocument = Object.entries(settings).reduce((accumulator, [category, categorySetting]) => {
     if (categorySetting.status === 'alwaysVisible') {
@@ -31,7 +31,7 @@ function computeFilteredSettings(
         }
       }
     } else if (category === motivationCategoryHandler.getCategoryName()) {
-      if (debatPublic === false) {
+      if (motivationOccultation === true) {
         return {
           ...accumulator,
           [category]: { ...categorySetting, status: 'annotable' as const },

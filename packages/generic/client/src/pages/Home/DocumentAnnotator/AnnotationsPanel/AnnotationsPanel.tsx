@@ -42,7 +42,7 @@ function AnnotationsPanel(props: {
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
-        {props.document.decisionMetadata.debatPublic === false && (
+        {props.document.decisionMetadata.motivationOccultation === true && (
           <div key={'partiallyPublic'} style={styles.categoryContainer}>
             {renderPartiallyPublicWarning()}
           </div>
@@ -177,7 +177,7 @@ function AnnotationsPanel(props: {
           <Icon iconName={settingsModule.lib.motivationCategoryHandler.getCategoryIconName()} />
         </div>
         <div style={styles.partiallyPublicRightContainer}>
-          <Text>{wordings.homePage.debatNotPublic}</Text>
+          <Text>{wordings.homePage.motivationOccultation}</Text>
         </div>
       </div>
     );

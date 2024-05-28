@@ -260,7 +260,7 @@ const documentModelCommonFields = {
       parties: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
       session: { kind: 'primitive', content: 'string' },
       solution: { kind: 'primitive', content: 'string' },
-      debatPublic: {
+      motivationOccultation: {
         kind: 'or',
         content: [
           { kind: 'primitive', content: 'boolean' },

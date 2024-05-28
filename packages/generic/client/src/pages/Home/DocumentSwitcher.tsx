@@ -53,7 +53,7 @@ function DocumentSwitcher(props: {
           documentState.choice.document.decisionMetadata.additionalTermsToAnnotate,
           documentState.choice.document.decisionMetadata.computedAdditionalTerms,
           documentState.choice.document.decisionMetadata.additionalTermsParsingFailed,
-          documentState.choice.document.decisionMetadata.debatPublic,
+          documentState.choice.document.decisionMetadata.motivationOccultation,
         );
         return (
           <HomeDocumentAnnotator

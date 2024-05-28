@@ -93,6 +93,7 @@ function PreAssignDocumentsTable(props: {
             console.warn(error);
             return;
           }
+          props.refetch();
         },
         iconName: 'delete' as const,
       },

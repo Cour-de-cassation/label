@@ -6,18 +6,18 @@ export { createPreAssignation };
 async function createPreAssignation({
   userId,
   source,
-  documentNumber,
+  number,
 }: {
   userId: idType;
   source: string;
-  documentNumber: number;
+  number: string;
 }) {
   const preAssignationRepository = buildPreAssignationRepository();
 
   const preAssignation = preAssignationModule.lib.buildPreAssignation({
     userId,
     source,
-    documentNumber,
+    number,
     creationDate: new Date().getTime(),
   });
 

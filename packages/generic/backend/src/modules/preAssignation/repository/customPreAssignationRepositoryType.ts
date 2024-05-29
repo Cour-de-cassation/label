@@ -3,11 +3,11 @@ import { preAssignationType } from '@label/core';
 export type { customPreAssignationRepositoryType };
 
 type customPreAssignationRepositoryType = {
-  findOneByDocumentNumberAndSource: ({
-    documentNumber,
+  findOneByNumberAndSource: ({
+    number,
     source,
   }: {
-    documentNumber: number;
+    number: string;
     source: string;
   }) => Promise<preAssignationType | undefined>;
 };

@@ -835,9 +835,9 @@ const apiSchema = {
           kind: 'primitive',
           content: 'string',
         } as const),
-        documentNumber: buildModel({
+        number: buildModel({
           kind: 'primitive',
-          content: 'number',
+          content: 'string',
         } as const),
       },
       out: buildModel({ kind: 'primitive', content: 'void' } as const),

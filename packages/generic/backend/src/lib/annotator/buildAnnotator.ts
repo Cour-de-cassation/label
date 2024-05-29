@@ -316,10 +316,17 @@ function buildAnnotator(
       route: document.route,
     });
 
-    const preAssignationForDocument = await preAssignationService.fetchPreAssignationBySourceAndDocumentNumber(
-      document.documentNumber,
+    // Check first pre-assignation by documentNumber and then by appelNumber
+    let preAssignationForDocument = await preAssignationService.fetchPreAssignationBySourceAndNumber(
+      document.documentNumber.toString(),
       document.source,
     );
+    if (preAssignationForDocument == undefined) {
+      preAssignationForDocument = await preAssignationService.fetchPreAssignationBySourceAndNumber(
+        document.decisionMetadata.appealNumber,
+        document.source,
+      );
+    }
     if (
       nextDocumentStatus === 'free' &&
       preAssignationForDocument != undefined
@@ -328,7 +335,9 @@ function buildAnnotator(
         operationName: 'annotateDocument',
         msg: `Pre-assignation found for document ${formatDocumentInfos(
           document,
-        )}, creating assignation...`,
+        )}. Matching pre-assignation number : ${
+          preAssignationForDocument.number
+        }. Creating assignation...`,
       });
       await createAssignation(preAssignationForDocument, document);
     } else {

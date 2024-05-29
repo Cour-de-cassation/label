@@ -11,14 +11,14 @@ const buildPreAssignationRepository = buildRepositoryBuilder<
   collectionName: 'preAssignations',
   indexes: [
     {
-      index: { source: 1, documentNumber: 1 },
+      index: { source: 1, number: 1 },
       mustBeUnique: true,
     } as const,
   ],
   buildCustomRepository: (collection) => ({
-    async findOneByDocumentNumberAndSource({ documentNumber, source }) {
+    async findOneByNumberAndSource({ number, source }) {
       const preAssignation = await collection.findOne({
-        documentNumber,
+        number,
         source,
       });
       return preAssignation || undefined;

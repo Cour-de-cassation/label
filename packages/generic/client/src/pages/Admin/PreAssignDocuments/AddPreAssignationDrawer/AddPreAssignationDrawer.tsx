@@ -20,19 +20,19 @@ const sources = ['jurinet', 'jurica', 'juritj'];
 
 type formErrorType = {
   source?: boolean;
-  documentNumber?: boolean;
+  number?: boolean;
   user?: boolean;
 };
 
 type formValuesType = {
   source: string | undefined;
-  documentNumber: number | undefined;
+  number: string | undefined;
   user: string | undefined;
 };
 
 const INITIAL_FORM_VALUES = {
   source: undefined,
-  documentNumber: undefined,
+  number: undefined,
   user: undefined,
 };
 
@@ -71,11 +71,11 @@ function AddWorkingUserDrawer(props: {
             </div>
             <div style={styles.fieldContainer}>
               <RichTextInput
-                name="documentNumber"
-                error={!!formErrors.documentNumber}
-                value={formValues.documentNumber?.toString() || ''}
-                onChange={(value) => updateField('documentNumber', Number(value))}
-                placeholder={wordings.preAssignDocumentsPage.createPreAssignationDrawer.fields.documentNumber}
+                name="number"
+                error={!!formErrors.number}
+                value={formValues.number?.toString() || ''}
+                onChange={(value) => updateField('number', value)}
+                placeholder={wordings.preAssignDocumentsPage.createPreAssignationDrawer.fields.number}
                 style={styles.field}
               />
             </div>
@@ -118,8 +118,8 @@ function AddWorkingUserDrawer(props: {
   }
 
   async function createPreAssignation() {
-    const { source, documentNumber, user } = formValues;
-    if (!source || !documentNumber || !user) {
+    const { source, number, user } = formValues;
+    if (!source || !number || !user) {
       updateFormErrors();
       return;
     }
@@ -127,7 +127,7 @@ function AddWorkingUserDrawer(props: {
     try {
       await apiCaller.post('createPreAssignation', {
         source,
-        documentNumber,
+        number: number.trim(),
         userId: idModule.lib.buildId(user),
       });
       props.refetch();
@@ -143,7 +143,7 @@ function AddWorkingUserDrawer(props: {
   function updateFormErrors() {
     setFormErrors({
       source: !formValues.source,
-      documentNumber: !formValues.documentNumber,
+      number: !formValues.number,
       user: !formValues.user,
     });
   }

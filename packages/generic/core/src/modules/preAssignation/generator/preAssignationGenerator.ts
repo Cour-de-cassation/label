@@ -5,10 +5,10 @@ import { preAssignationType } from '../preAssignationType';
 export { preAssignationGenerator };
 
 const preAssignationGenerator: generatorType<preAssignationType> = {
-  generate: ({ _id, userId, documentNumber, source, creationDate } = {}) => ({
+  generate: ({ _id, userId, number, source, creationDate } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     userId: userId ? idModule.lib.buildId(userId) : idModule.lib.buildId(),
-    documentNumber: documentNumber ?? Math.floor(Math.random() * 1000000),
+    number: number ?? Math.floor(Math.random() * 1000000).toString(),
     source: source ?? `SOURCE_${Math.random()}`,
     creationDate: creationDate ?? new Date().getTime(),
   }),

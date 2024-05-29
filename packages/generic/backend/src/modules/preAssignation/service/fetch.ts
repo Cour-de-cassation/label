@@ -2,7 +2,7 @@ import { idModule, preAssignationType } from '@label/core';
 import { buildPreAssignationRepository } from '..';
 import { userService } from '../../user';
 
-export { fetchAllPreAssignation, fetchPreAssignationBySourceAndDocumentNumber };
+export { fetchAllPreAssignation, fetchPreAssignationBySourceAndNumber };
 
 async function fetchAllPreAssignation() {
   const preAssignationRepository = buildPreAssignationRepository();
@@ -21,13 +21,13 @@ async function fetchAllPreAssignation() {
   });
 }
 
-async function fetchPreAssignationBySourceAndDocumentNumber(
-  documentNumber: number,
+async function fetchPreAssignationBySourceAndNumber(
+  number: string,
   source: string,
 ): Promise<preAssignationType | undefined> {
   const preAssignationRepository = buildPreAssignationRepository();
-  return preAssignationRepository.findOneByDocumentNumberAndSource({
-    documentNumber,
+  return preAssignationRepository.findOneByNumberAndSource({
+    number,
     source,
   });
 }

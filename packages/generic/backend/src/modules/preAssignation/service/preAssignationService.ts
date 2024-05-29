@@ -1,6 +1,6 @@
 import {
   fetchAllPreAssignation,
-  fetchPreAssignationBySourceAndDocumentNumber,
+  fetchPreAssignationBySourceAndNumber,
 } from './fetch';
 import { createPreAssignation } from './createPreAssignation';
 import { deletePreAssignation } from './deletePreAssignation';
@@ -11,5 +11,5 @@ const preAssignationService = {
   createPreAssignation,
   deletePreAssignation,
   fetchAllPreAssignation,
-  fetchPreAssignationBySourceAndDocumentNumber,
+  fetchPreAssignationBySourceAndNumber,
 };

@@ -325,7 +325,7 @@ const fr = {
     table: {
       columnTitles: {
         source: 'Source',
-        documentNumber: 'N° de décision',
+        number: 'N° de décision ou pourvoi',
         agent: 'Agent',
         creationDate: 'Date de création',
       },
@@ -337,7 +337,7 @@ const fr = {
       title: 'Ajouter une pré-assignation',
       fields: {
         source: 'Source',
-        documentNumber: 'N° de document',
+        number: 'N° de document ou pourvoi (au format "00-00.000")',
         user: 'Agent',
       },
       submit: 'Créer la pré-assignation',

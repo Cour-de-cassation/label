@@ -35,10 +35,10 @@ function PreAssignDocumentsTable(props: {
         width: 10,
       },
       {
-        id: 'documentNumber',
-        title: wordings.preAssignDocumentsPage.table.columnTitles.documentNumber,
+        id: 'number',
+        title: wordings.preAssignDocumentsPage.table.columnTitles.number,
         canBeSorted: true,
-        extractor: (preAssignation) => preAssignation.preAssignation.documentNumber,
+        extractor: (preAssignation) => preAssignation.preAssignation.number,
         width: 10,
       },
       {

@@ -10,11 +10,10 @@ const buildFakePreAssignationRepository = buildFakeRepositoryBuilder<
 >({
   collectionName: 'preAssignations',
   buildCustomFakeRepository: (collection) => ({
-    async findOneByDocumentNumberAndSource({ documentNumber, source }) {
+    async findOneByNumberAndSource({ number, source }) {
       return collection.find(
         (preAssignation) =>
-          preAssignation.source === source &&
-          preAssignation.documentNumber === documentNumber,
+          preAssignation.source === source && preAssignation.number === number,
       );
     },
   }),

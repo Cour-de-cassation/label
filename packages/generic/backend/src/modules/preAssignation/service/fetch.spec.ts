@@ -1,7 +1,7 @@
 import { buildPreAssignationRepository } from '../repository';
 import { preAssignationModule, userModule } from '@label/core';
 import {
-  fetchPreAssignationBySourceAndDocumentNumber,
+  fetchPreAssignationBySourceAndNumber,
   fetchAllPreAssignation,
 } from './fetch';
 import { buildUserRepository } from '../../user';
@@ -12,12 +12,12 @@ describe('fetch', () => {
 
   const preAssignationRepository = buildPreAssignationRepository();
   const preAssignation1 = preAssignationModule.generator.generate({
-    documentNumber: 123456,
+    number: '123456',
     source: 'mySource',
     userId: user1._id,
   });
   const preAssignation2 = preAssignationModule.generator.generate({
-    documentNumber: 654321,
+    number: '654321',
     source: 'myOtherSource',
     userId: user1._id,
   });
@@ -42,8 +42,8 @@ describe('fetch', () => {
 
   it('should fetch one pre assignation with documentNumber and source provided', async () => {
     await preAssignationRepository.insert(preAssignation1);
-    const myPreAssignation = await fetchPreAssignationBySourceAndDocumentNumber(
-      123456,
+    const myPreAssignation = await fetchPreAssignationBySourceAndNumber(
+      '123456',
       'mySource',
     );
     expect(myPreAssignation).toEqual(preAssignation1);

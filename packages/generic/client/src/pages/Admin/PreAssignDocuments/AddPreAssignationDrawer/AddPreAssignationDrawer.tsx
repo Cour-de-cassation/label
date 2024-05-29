@@ -9,14 +9,14 @@ import {
   RichTextInput,
 } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
-import { idModule, userModule, userType } from '@label/core';
+import { idModule, userType } from '@label/core';
 
-export {AddWorkingUserDrawer}
+export { AddWorkingUserDrawer };
 
 const FIELD_WIDTH = 400;
 const DRAWER_WIDTH = 600;
 
-const sources = ["jurinet", "jurica", "juritj"];
+const sources = ['jurinet', 'jurica', 'juritj'];
 // const users = ["utilisateur1", "utilisateur2"];
 
 type formErrorType = {
@@ -37,7 +37,12 @@ const INITIAL_FORM_VALUES = {
   user: undefined,
 };
 
-function AddWorkingUserDrawer(props: { isOpen: boolean; onClose: () => void; refetch: () => void; users: Array<Pick<userType, '_id' | 'name'>> }) {
+function AddWorkingUserDrawer(props: {
+  isOpen: boolean;
+  onClose: () => void;
+  refetch: () => void;
+  users: Array<Pick<userType, '_id' | 'name'>>;
+}) {
   const [formValues, setFormValues] = useState<formValuesType>(INITIAL_FORM_VALUES);
   const [formErrors, setFormErrors] = useState<formErrorType>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +72,7 @@ function AddWorkingUserDrawer(props: { isOpen: boolean; onClose: () => void; ref
             </div>
             <div style={styles.fieldContainer}>
               <RichTextInput
-                name='documentNumber'
+                name="documentNumber"
                 error={!!formErrors.documentNumber}
                 value={formValues.documentNumber?.toString() || ''}
                 onChange={(value) => updateField('documentNumber', Number(value))}
@@ -131,6 +136,7 @@ function AddWorkingUserDrawer(props: { isOpen: boolean; onClose: () => void; ref
     } catch (error) {
       console.warn(error);
     } finally {
+      onClose();
       setIsLoading(false);
     }
   }

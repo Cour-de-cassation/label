@@ -1,6 +1,6 @@
 import React from 'react';
 import { apiRouteOutType, userType } from '@label/core';
-import { customThemeType, useCustomTheme, RefreshButton, tableRowFieldType } from 'pelta-design-system';
+import { customThemeType, useCustomTheme, RefreshButton } from 'pelta-design-system';
 import { heights, widths } from '../../../styles';
 import { PreAssignDocumentsTable } from './PreAssignDocumentsTable';
 import { AddPreAssignationButton } from './AddPreAssignationDrawer/AddPreAssignationButton';
@@ -8,7 +8,7 @@ import { AddPreAssignationButton } from './AddPreAssignationDrawer/AddPreAssigna
 export { PreAssignDocuments };
 
 function PreAssignDocuments(props: {
-  users: Array<Pick<userType, '_id' | 'name'>>
+  users: Array<Pick<userType, '_id' | 'name'>>;
   preAssignations: apiRouteOutType<'get', 'preAssignations'>;
   refetch: () => void;
   isLoading: boolean;
@@ -53,8 +53,8 @@ function buildStyles(theme: customThemeType) {
       paddingLeft: theme.spacing * 3,
       paddingRight: theme.spacing * 2,
     },
-    addPreAssignationButton:{
-      marginRight: theme.spacing * 2
+    addPreAssignationButton: {
+      marginRight: theme.spacing * 2,
     },
   } as const;
 }

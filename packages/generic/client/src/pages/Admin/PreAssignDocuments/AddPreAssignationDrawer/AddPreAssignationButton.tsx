@@ -17,7 +17,12 @@ function AddPreAssignationButton(props: { refetch: () => void; users: Array<Pick
         iconName="plus"
       />
 
-      <AddWorkingUserDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} refetch={props.refetch} users={props.users} />
+      <AddWorkingUserDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        refetch={props.refetch}
+        users={props.users}
+      />
     </>
   );
 }

@@ -82,55 +82,59 @@ function AdminInfosDataFetcher(props: {
                         ressourceFilter: ressourceFilterAggregatedStatistics,
                       }) => (
                         <PreAssignDocumentsDataFetcher>
-                          {({preAssignations, isLoading:isLoadingPreAssignDocuments, refetch:refetchPreAssignDocuments})=>(
-                        <SummaryDataFetcher>
-                          {({ summary, refetch: refetchSummary, isLoading: isLoadingSummary }) => (
-                            <ProblemReportsDataFetcher>
-                              {({
-                                problemReportsWithDetails,
-                                refetch: refetchProblemReportsWithDetails,
-                                isLoading: isLoadingProblemReports,
-                              }) =>
-                                props.children({
-                                  adminInfos: {
-                                    availableStatisticFilters,
-                                    aggregatedStatistics,
+                          {({
+                            preAssignations,
+                            isLoading: isLoadingPreAssignDocuments,
+                            refetch: refetchPreAssignDocuments,
+                          }) => (
+                            <SummaryDataFetcher>
+                              {({ summary, refetch: refetchSummary, isLoading: isLoadingSummary }) => (
+                                <ProblemReportsDataFetcher>
+                                  {({
                                     problemReportsWithDetails,
-                                    summary,
-                                    toBeConfirmedDocuments,
-                                    treatedDocuments,
-                                    workingUsers,
-                                    untreatedDocuments,
-                                    preAssignations
-                                  },
-                                  refetch: {
-                                    aggregatedStatistics: refetchAggregatedStatistics,
-                                    problemReportsWithDetails: refetchProblemReportsWithDetails,
-                                    summary: refetchSummary,
-                                    toBeConfirmedDocuments: refetchToBeConfirmedDocuments,
-                                    treatedDocuments: refetchTreatedDocuments,
-                                    untreatedDocuments: refetchUntreatedDocuments,
-                                    workingUsers: refetchWorkingUsers,
-                                    preAssignDocuments:refetchPreAssignDocuments,
-                                  },
-                                  isLoading: {
-                                    aggregatedStatistics: isLoadingAggregatedStatistics,
-                                    summary: isLoadingSummary,
-                                    problemReports: isLoadingProblemReports,
-                                    toBeConfirmedDocuments: isLoadindToBeConfirmedDocuments,
-                                    treatedDocuments: isLoadingTreatedDocuments,
-                                    untreatedDocuments: isLoadingUntreatedDocuments,
-                                    preAssignDocuments: isLoadingPreAssignDocuments,
-                                  },
-                                  ressourceFilters: {
-                                    aggregatedStatistics: ressourceFilterAggregatedStatistics,
-                                  },
-                                })
-                              }
-                            </ProblemReportsDataFetcher>
+                                    refetch: refetchProblemReportsWithDetails,
+                                    isLoading: isLoadingProblemReports,
+                                  }) =>
+                                    props.children({
+                                      adminInfos: {
+                                        availableStatisticFilters,
+                                        aggregatedStatistics,
+                                        problemReportsWithDetails,
+                                        summary,
+                                        toBeConfirmedDocuments,
+                                        treatedDocuments,
+                                        workingUsers,
+                                        untreatedDocuments,
+                                        preAssignations,
+                                      },
+                                      refetch: {
+                                        aggregatedStatistics: refetchAggregatedStatistics,
+                                        problemReportsWithDetails: refetchProblemReportsWithDetails,
+                                        summary: refetchSummary,
+                                        toBeConfirmedDocuments: refetchToBeConfirmedDocuments,
+                                        treatedDocuments: refetchTreatedDocuments,
+                                        untreatedDocuments: refetchUntreatedDocuments,
+                                        workingUsers: refetchWorkingUsers,
+                                        preAssignDocuments: refetchPreAssignDocuments,
+                                      },
+                                      isLoading: {
+                                        aggregatedStatistics: isLoadingAggregatedStatistics,
+                                        summary: isLoadingSummary,
+                                        problemReports: isLoadingProblemReports,
+                                        toBeConfirmedDocuments: isLoadindToBeConfirmedDocuments,
+                                        treatedDocuments: isLoadingTreatedDocuments,
+                                        untreatedDocuments: isLoadingUntreatedDocuments,
+                                        preAssignDocuments: isLoadingPreAssignDocuments,
+                                      },
+                                      ressourceFilters: {
+                                        aggregatedStatistics: ressourceFilterAggregatedStatistics,
+                                      },
+                                    })
+                                  }
+                                </ProblemReportsDataFetcher>
+                              )}
+                            </SummaryDataFetcher>
                           )}
-                        </SummaryDataFetcher>
-                        )}
                         </PreAssignDocumentsDataFetcher>
                       )}
                     </StatisticsDataFetcher>

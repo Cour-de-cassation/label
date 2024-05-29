@@ -31,9 +31,7 @@ function PreAssignDocumentsDataFetcher(props: {
 
 function buildFetchPreAssignations() {
   return async () => {
-    const { data: preAssignations, statusCode } = await apiCaller.get<'preAssignations'>(
-      'preAssignations',
-    );
+    const { data: preAssignations, statusCode } = await apiCaller.get<'preAssignations'>('preAssignations');
     return {
       data: preAssignations.map((preAssignation) => ({
         preAssignation: {
@@ -41,7 +39,7 @@ function buildFetchPreAssignations() {
           _id: idModule.lib.buildId(preAssignation.preAssignation._id),
           userId: idModule.lib.buildId(preAssignation.preAssignation.userId),
         },
-        userName: preAssignation.userName
+        userName: preAssignation.userName,
       })),
       statusCode,
     };

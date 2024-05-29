@@ -1,36 +1,19 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import format from 'string-template';
-import { customThemeType, useCustomTheme, optionItemType, Table, tableRowFieldType } from 'pelta-design-system';
-import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
+import { Table, tableRowFieldType } from 'pelta-design-system';
+import { apiRouteOutType, timeOperator } from '@label/core';
 import { apiCaller } from '../../../api';
-import { DocumentStatusIcon, ProblemReportIcon, PublicationCategoryBadge } from '../../../components';
 import { useAlert } from '../../../services/alert';
-import { usePopup } from '../../../services/popup';
-import { localStorage } from '../../../services/localStorage';
-import { sendMail } from '../../../services/sendMail';
 import { wordings } from '../../../wordings';
-import { routes } from '../../routes';
 
 export { PreAssignDocumentsTable };
-
-const TABLE_ICON_SIZE = 24;
-
-const PROBLEM_REPORT_TEXT_CELL_MAX_WIDTH = 400;
 
 function PreAssignDocumentsTable(props: {
   refetch: () => void;
   preAssignations: apiRouteOutType<'get', 'preAssignations'>;
 }) {
-  const history = useHistory();
-  const theme = useCustomTheme();
   const { displayAlert } = useAlert();
-  const { displayPopup } = usePopup();
 
-  const styles = buildStyles(theme);
   const preAssignationFields = buildPreAssignationFields();
-  const userRole = localStorage.userHandler.getRole();
-  const adminView = localStorage.adminViewHandler.get();
 
   return (
     <Table
@@ -42,9 +25,7 @@ function PreAssignDocumentsTable(props: {
     />
   );
 
-  function buildPreAssignationFields(): Array<
-    tableRowFieldType<apiRouteOutType<'get', 'preAssignations'>[number]>
-  > {
+  function buildPreAssignationFields(): Array<tableRowFieldType<apiRouteOutType<'get', 'preAssignations'>[number]>> {
     return [
       {
         id: 'source',
@@ -71,11 +52,13 @@ function PreAssignDocumentsTable(props: {
         id: 'creationDate',
         title: wordings.preAssignDocumentsPage.table.columnTitles.creationDate,
         canBeSorted: true,
-        extractor: (preAssignation) => preAssignation.preAssignation.creationDate? timeOperator.convertTimestampToReadableDate(preAssignation.preAssignation.creationDate): '-',
+        extractor: (preAssignation) =>
+          preAssignation.preAssignation.creationDate
+            ? timeOperator.convertTimestampToReadableDate(preAssignation.preAssignation.creationDate)
+            : '-',
         width: 10,
       },
     ];
-
   }
 
   function buildOptionItems(preAssignations: apiRouteOutType<'get', 'preAssignations'>[number]) {
@@ -89,7 +72,11 @@ function PreAssignDocumentsTable(props: {
               preAssignationId: preAssignations.preAssignation._id,
             });
           } catch (error) {
-            displayAlert({ text: wordings.business.errors.deletePreAssignationFailed, variant: 'alert', autoHide: true });
+            displayAlert({
+              text: wordings.business.errors.deletePreAssignationFailed,
+              variant: 'alert',
+              autoHide: true,
+            });
             console.warn(error);
             return;
           }
@@ -99,15 +86,4 @@ function PreAssignDocumentsTable(props: {
       },
     ];
   }
-}
-
-function buildStyles(theme: customThemeType) {
-  return {
-    publicationCategoryBadgesContainer: {
-      display: 'flex',
-    },
-    publicationCategoryBadgeContainer: {
-      marginRight: theme.spacing,
-    },
-  };
 }

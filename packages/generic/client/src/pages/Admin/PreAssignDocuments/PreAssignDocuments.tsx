@@ -1,5 +1,5 @@
 import React from 'react';
-import { apiRouteOutType } from '@label/core';
+import { apiRouteOutType, userType } from '@label/core';
 import { customThemeType, useCustomTheme, RefreshButton, tableRowFieldType } from 'pelta-design-system';
 import { heights, widths } from '../../../styles';
 import { PreAssignDocumentsTable } from './PreAssignDocumentsTable';
@@ -8,6 +8,7 @@ import { AddPreAssignationButton } from './AddPreAssignationDrawer/AddPreAssigna
 export { PreAssignDocuments };
 
 function PreAssignDocuments(props: {
+  users: Array<Pick<userType, '_id' | 'name'>>
   preAssignations: apiRouteOutType<'get', 'preAssignations'>;
   refetch: () => void;
   isLoading: boolean;
@@ -19,7 +20,7 @@ function PreAssignDocuments(props: {
       <div style={styles.tableHeaderContainer}>
         <div style={styles.tableHeader}>
           <div style={styles.addPreAssignationButton}>
-            <AddPreAssignationButton refetch={props.refetch} />
+            <AddPreAssignationButton refetch={props.refetch} users={props.users} />
           </div>
           <RefreshButton onClick={props.refetch} isLoading={props.isLoading} />
         </div>

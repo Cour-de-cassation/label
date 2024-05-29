@@ -333,7 +333,15 @@ const fr = {
         delete: 'Supprimer la pré-affectation',
       },
     },
-    createPreAssignationDrawer: { title: 'Ajouter une pré-assignation' },
+    createPreAssignationDrawer: {
+      title: 'Ajouter une pré-assignation',
+      fields: {
+        source: 'Source',
+        documentNumber: 'N° de document',
+        user: 'Agent',
+      },
+      submit: 'Créer la pré-assignation',
+    },
   },
   resetPasswordPage: {
     popup:

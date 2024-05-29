@@ -111,6 +111,7 @@ function Router() {
                         toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
                       >
                         <PreAssignDocuments
+                          users={adminInfos.workingUsers.map(({ _id, name }) => ({ _id, name }))}
                           refetch={refetch.preAssignDocuments}
                           preAssignations={adminInfos.preAssignations}
                           isLoading={isLoading.preAssignDocuments}

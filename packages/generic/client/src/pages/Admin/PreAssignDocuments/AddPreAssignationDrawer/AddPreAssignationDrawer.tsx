@@ -17,7 +17,6 @@ const FIELD_WIDTH = 400;
 const DRAWER_WIDTH = 600;
 
 const sources = ['jurinet', 'jurica', 'juritj'];
-// const users = ["utilisateur1", "utilisateur2"];
 
 type formErrorType = {
   source?: boolean;

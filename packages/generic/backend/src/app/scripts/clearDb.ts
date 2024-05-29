@@ -1,4 +1,4 @@
-import { buildPreAssignationRepository } from 'src/modules/preAssignation';
+import { buildPreAssignationRepository } from '../../modules/preAssignation';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';

@@ -1,21 +1,19 @@
 import {
   annotationType,
   annotationReportType,
-  buildAutoAnnotator,
   documentType,
   documentModule,
   idType,
-  settingsModule,
   idModule,
   settingsType,
   treatmentModule,
+  annotationModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
-import { computeAdditionalAnnotations } from './computeAdditionalAnnotations';
 
 export { buildAnnotator };
 
@@ -133,7 +131,6 @@ function buildAnnotator(
             msg: `Error while annotating document ${formatDocumentInfos(
               currentDocumentToAnnotate,
             )}. Setting the document to its previous status...`,
-            data: error as Record<string, unknown>,
           });
           await documentService.updateDocumentStatus(
             currentDocumentToAnnotate._id,
@@ -161,7 +158,15 @@ function buildAnnotator(
   async function reAnnotateFreeDocuments() {
     const documentIds = await documentService.fetchFreeDocumentsIds();
 
+    logger.log({
+      operationName: 'reAnnotateFreeDocuments',
+      msg: `Found ${documentIds.length} free documents to reannotate, deleting their treatments and annotation report.`,
+    });
+
     for (const documentId of documentIds) {
+      const annotationReportRepository = buildAnnotationReportRepository();
+      await annotationReportRepository.deleteByDocumentId(documentId);
+      await treatmentService.deleteTreatmentsByDocumentId(documentId);
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
 
@@ -184,6 +189,10 @@ function buildAnnotator(
       annotations,
       documentId,
       report,
+      newCategoriesToAnnotate,
+      newCategoriesToUnAnnotate,
+      computedAdditionalTerms,
+      additionalTermsParsingFailed,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log({
       operationName: 'annotateDocument',
@@ -203,42 +212,101 @@ function buildAnnotator(
       operationName: 'annotateDocument',
       msg: 'NLP treatment created in DB',
     });
-    const additionalAnnotations = computeAdditionalAnnotations(
-      document,
-      annotations,
-      settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryName(),
-    );
-    if (additionalAnnotations.length > 0) {
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Creating additional annotations treatment...',
-      });
-      await createAdditionalAnnotationsTreatment({
-        annotations: additionalAnnotations,
-        documentId: document._id,
-      });
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Additional annotations treatment created in DB',
-      });
+
+    if (document.decisionMetadata.motivationOccultation === true) {
+      if (
+        document.zoning != undefined &&
+        document.zoning.zones?.motivations != undefined &&
+        document.zoning.zones.motivations.length > 0
+      ) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: 'Annotate motivation zone because motivationOccultation is true',
+        });
+
+        createMotivationOccultationTreatment(
+          documentId,
+          document.zoning.zones.motivations,
+          document.text,
+          document.documentNumber,
+          annotations,
+        );
+      } else {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: `Annotate decision motivation zone impossible because motication zone was not found for document ${formatDocumentInfos(
+            document,
+          )}`,
+        });
+      }
     }
-    if (JSON.stringify(settings).includes('autoLinkSensitivity')) {
+
+    //Todo : create report only if report is not null
+    await createReport(report);
+    logger.log({
+      operationName: 'annotateDocument',
+      msg: 'Annotation report created in DB',
+    });
+
+    if (
+      additionalTermsParsingFailed !== null &&
+      additionalTermsParsingFailed !== undefined
+    ) {
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'Creating post-process treatment...',
+        msg: `additionalTermsParsingFailed found, updating with value ${additionalTermsParsingFailed}`,
       });
-      await createAutoTreatment({
-        annotations: [...annotations, ...additionalAnnotations],
+      await documentService.updateDocumentAdditionalTermsParsingFailed(
         documentId,
+        additionalTermsParsingFailed,
+      );
+    }
+
+    let newCategoriesToOmit = document.decisionMetadata.categoriesToOmit;
+    if (!!newCategoriesToUnAnnotate) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `categoriesToUnAnnotate found, adding '${newCategoriesToUnAnnotate}' to categoriesToOmit if not already in`,
       });
+      newCategoriesToOmit = Array.from(
+        new Set(newCategoriesToOmit.concat(newCategoriesToUnAnnotate)),
+      );
+    }
+
+    if (!!newCategoriesToAnnotate) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `categoriesToAnnotate found, removing '${newCategoriesToAnnotate}' from categoriesToOmit if present`,
+      });
+      newCategoriesToOmit = newCategoriesToOmit.filter(
+        (category) => !newCategoriesToAnnotate.includes(category),
+      );
+    }
+
+    if (document.decisionMetadata.categoriesToOmit != newCategoriesToOmit) {
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: `updating categoriesToOmit in database`,
+      });
+      documentService.updateDocumentCategoriesToOmit(
+        documentId,
+        newCategoriesToOmit,
+      );
+    }
+
+    if (!!computedAdditionalTerms) {
       logger.log({
         operationName: 'annotateDocument',
         msg:
-          'Post-process treatment created. Creating report and updating document status...',
+          'Additionals terms to annotate or to unannotate found, adding to document...',
       });
+
+      await documentService.updateDocumentComputedAdditionalTerms(
+        documentId,
+        computedAdditionalTerms,
+      );
     }
 
-    await createReport(report);
     const nextDocumentStatus = documentModule.lib.getNextStatus({
       status: document.status,
       publicationCategory: document.publicationCategory,
@@ -272,39 +340,53 @@ function buildAnnotator(
     );
   }
 
-  async function createAdditionalAnnotationsTreatment({
-    annotations,
-    documentId,
-  }: {
-    annotations: annotationType[];
-    documentId: idType;
-  }) {
-    await treatmentService.createTreatment(
-      {
-        documentId,
-        previousAnnotations: [],
-        nextAnnotations: annotations,
-        source: 'supplementaryAnnotations',
-      },
-      settings,
-    );
-  }
+  async function createMotivationOccultationTreatment(
+    documentId: documentType['_id'],
+    motivations: { start: number; end: number }[],
+    documentText: string,
+    documentNumber: number,
+    previousAnnotations: annotationType[],
+  ) {
+    const motivationAnnotations: annotationType[] = [];
+    motivations.forEach((motivation, index) => {
+      const motivationText = documentText.substring(
+        motivation.start,
+        motivation.end,
+      );
 
-  async function createAutoTreatment({
-    annotations,
-    documentId,
-  }: {
-    annotations: annotationType[];
-    documentId: idType;
-  }) {
-    const autoAnnotator = buildAutoAnnotator(settings);
-    const autoTreatedAnnotations = autoAnnotator.annotate(annotations);
+      // Suppression des espaces et des sauts de ligne au début du texte
+      const trimmedStartMotivation = motivationText.replace(/^[\s\r\n]+/, '');
+      // Calcul du nombre de caractères retirés au début du texte
+      const removedCharactersAtStart =
+        motivationText.length - trimmedStartMotivation.length;
+
+      // Suppression des espaces et des sauts de ligne à la fin du texte
+      const trimmedMotivation = trimmedStartMotivation.replace(
+        /[\s\r\n]+$/,
+        '',
+      );
+
+      motivationAnnotations.push(
+        annotationModule.lib.buildAnnotation({
+          start: motivation.start + removedCharactersAtStart,
+          text: trimmedMotivation,
+          category: 'motivations',
+          certaintyScore: 1,
+          entityId: `motivations${index}_${documentNumber}`,
+        }),
+      );
+    });
+
+    const annotationWithoutOverlapping = annotationModule.lib.removeOverlappingAnnotations(
+      [...previousAnnotations, ...motivationAnnotations],
+    );
+
     await treatmentService.createTreatment(
       {
         documentId,
-        previousAnnotations: annotations,
-        nextAnnotations: autoTreatedAnnotations,
-        source: 'postProcess',
+        previousAnnotations: previousAnnotations,
+        nextAnnotations: annotationWithoutOverlapping,
+        source: 'supplementaryAnnotations',
       },
       settings,
     );

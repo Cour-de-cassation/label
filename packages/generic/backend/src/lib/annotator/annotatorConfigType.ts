@@ -18,6 +18,10 @@ type annotatorConfigType = {
     annotations: annotationType[];
     documentId: idType;
     report: annotationReportType;
+    newCategoriesToAnnotate?: string[];
+    newCategoriesToUnAnnotate?: string[];
+    computedAdditionalTerms?: documentType['decisionMetadata']['computedAdditionalTerms'];
+    additionalTermsParsingFailed?: boolean;
   }>;
   fetchLossOfDocument: (
     document: documentType,

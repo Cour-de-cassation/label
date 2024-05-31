@@ -1,7 +1,6 @@
 import {
   dateBuilder,
   documentModule,
-  environmentType,
   settingsModule,
   treatmentModule,
 } from '@label/core';
@@ -72,13 +71,9 @@ describe('buildExporter', () => {
       await Promise.all(documents.map(documentRepository.insert));
       await Promise.all(treatments.map(treatmentRepository.insert));
       const fakeExporterConfig = buildFakeExporterConfig();
-      const exporter = buildExporter(
-        {} as environmentType,
-        fakeExporterConfig,
-        settings,
-      );
+      const exporter = buildExporter(fakeExporterConfig, settings);
 
-      await exporter.exportTreatedDocumentsSince(days, {} as environmentType);
+      await exporter.exportTreatedDocumentsSince(days);
 
       const exportedExternalIds = fakeExporterConfig.getExportedExternalIds();
       const exportedPseudonymizationTexts = fakeExporterConfig.getExportedPseudonymizationTexts();
@@ -163,7 +158,7 @@ function buildFakeExporterConfig(): exporterConfigType & {
       return exportedlabelTreatments;
     },
 
-    async sendDocumentBlockedStatus({ externalId, environment }) {
+    async sendDocumentBlockedStatus({ externalId }) {
       lockedExternalIds.push(externalId);
     },
 

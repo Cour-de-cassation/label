@@ -1,5 +1,5 @@
 import { range } from 'lodash';
-import { dateBuilder, documentType, environmentType } from '@label/core';
+import { dateBuilder, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildConnector } from './buildConnector';
 import { buildFakeConnectorWithNDecisions } from './buildFakeConnector';
@@ -30,7 +30,6 @@ describe('buildConnector', () => {
       await connector.importDocumentsSinceOrBetween({
         fromDaysAgo: 10,
         byDateCreation: false,
-        environment: {} as environmentType,
       });
 
       const insertedDocuments = await documentRepository.findAll();
@@ -61,7 +60,6 @@ describe('buildConnector', () => {
       await connector.importDocumentsSinceOrBetween({
         fromDaysAgo: 10,
         byDateCreation: true,
-        environment: {} as environmentType,
       });
 
       const insertedDocuments = await documentRepository.findAll();
@@ -95,7 +93,6 @@ describe('buildConnector', () => {
         fromDaysAgo: 20, // plus ancien
         toDaysAgo: 8, // jusqu'à nos jours / plus proche
         byDateCreation: true,
-        environment: {} as environmentType,
       });
 
       const insertedDocuments = await documentRepository.findAll();
@@ -130,7 +127,6 @@ describe('buildConnector', () => {
 
       await connector.importNewDocuments({
         documentsCount: 3,
-        environment: {} as environmentType,
         daysStep: 5,
       });
 
@@ -166,7 +162,6 @@ describe('buildConnector', () => {
       await connector.importNewDocuments({
         documentsCount: 4,
         threshold: 5,
-        environment: {} as environmentType,
       });
 
       const finalDocuments = await documentRepository.findAll();
@@ -204,7 +199,6 @@ describe('buildConnector', () => {
       await connector.importNewDocuments({
         documentsCount: 4,
         threshold: 6,
-        environment: {} as environmentType,
       });
 
       const finalDocuments = await documentRepository.findAll();
@@ -232,7 +226,6 @@ describe('buildConnector', () => {
       await connector.importChainedDocumentsFromSder({
         documentsCount: 5,
         threshold: 4,
-        environment: {} as environmentType,
       });
 
       const finalDocuments = await documentRepository.findAll();
@@ -270,7 +263,6 @@ describe('buildConnector', () => {
       await connector.importChainedDocumentsFromSder({
         documentsCount: 4,
         threshold: 6,
-        environment: {} as environmentType,
       });
 
       const finalDocuments = await documentRepository.findAll();

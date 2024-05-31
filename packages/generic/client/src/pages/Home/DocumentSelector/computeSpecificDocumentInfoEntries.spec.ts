@@ -1,12 +1,13 @@
 import { documentModule } from '@label/core';
 import { computeSpecificDocumentInfoEntries } from './computeSpecificDocumentInfoEntries';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('computeSpecificDocumentInfoEntries', () => {
   it('should return all the specific infos of a document', () => {
     const decisionDate = new Date().getTime();
     const document = documentModule.generator.generate({
       documentNumber: 1234567,
-      decisionMetadata: {
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         appealNumber: '',
         chamberName: 'Civile',
         civilCaseCode: '',
@@ -23,7 +24,7 @@ describe('computeSpecificDocumentInfoEntries', () => {
         parties: [],
         session: '',
         solution: '',
-      },
+      }),
     });
 
     const specificDocumentInfoEntries = computeSpecificDocumentInfoEntries(document);

@@ -6,6 +6,8 @@ export { documentGenerator, decisionMetadataGenerator };
 const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['decisionMetadata']> = {
   generate: ({
     additionalTermsToAnnotate,
+    additionalTermsParsingFailed,
+    computedAdditionalTerms,
     appealNumber,
     boundDecisionDocumentNumbers,
     categoriesToOmit,
@@ -21,8 +23,11 @@ const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['dec
     parties,
     session,
     solution,
+    motivationOccultation,
   } = {}) => ({
     additionalTermsToAnnotate: additionalTermsToAnnotate ?? '',
+    computedAdditionalTerms: computedAdditionalTerms ?? undefined,
+    additionalTermsParsingFailed: additionalTermsParsingFailed ?? undefined,
     appealNumber: appealNumber ?? '',
     boundDecisionDocumentNumbers: boundDecisionDocumentNumbers ?? [],
     categoriesToOmit: categoriesToOmit ?? [],
@@ -38,6 +43,7 @@ const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['dec
     parties: parties ?? [],
     session: session ?? '',
     solution: solution ?? '',
+    motivationOccultation: motivationOccultation ?? undefined,
   }),
 };
 
@@ -59,6 +65,7 @@ const documentGenerator: generatorType<documentType> = {
     title,
     text,
     updateDate,
+    zoning,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date().getTime(),
     decisionMetadata: decisionMetadata ? decisionMetadata : decisionMetadataGenerator.generate(),
@@ -76,5 +83,6 @@ const documentGenerator: generatorType<documentType> = {
     title: title ?? `TITLE_${Math.random()}`,
     text: text ?? `TEXT_${Math.random()}`,
     updateDate: updateDate ?? new Date().getTime(),
+    zoning: zoning ?? undefined,
   }),
 };

@@ -4,16 +4,13 @@ import { parametersHandler } from '../lib/parametersHandler';
 import { sderConnector } from '../connector';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { days } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
-  backend.runScript(
-    () => sderConnector.resetAllDocumentsSince({ days, environment }),
-    {
-      shouldLoadDb: true,
-    },
-  );
+  backend.runScript(() => sderConnector.resetAllDocumentsSince({ days }), {
+    shouldLoadDb: true,
+  });
 })();
 
 function parseArgv() {

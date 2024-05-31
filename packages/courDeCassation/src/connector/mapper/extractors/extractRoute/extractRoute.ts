@@ -19,6 +19,7 @@ function extractRoute(
     criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
     NACCode: documentType['decisionMetadata']['NACCode'];
     endCaseCode: documentType['decisionMetadata']['endCaseCode'];
+    status?: documentType['status'];
   },
   source: documentType['source'],
 ): documentType['route'] {

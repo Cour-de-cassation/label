@@ -28,10 +28,19 @@ function extractRouteForJurica({
     (decEndCaseCode >= 11.01 && decEndCaseCode <= 22.24) ||
     (decEndCaseCode >= 33.01 && decEndCaseCode <= 33.03)
   ) {
-    const endCaseCodeCsv = fs.readFileSync('./static/endCaseRoutes.csv', {
-      encoding: 'utf8',
-    }) as string;
-
+    let endCaseCodeCsv;
+    if (process.env.RUN_MODE === 'LOCAL') {
+      endCaseCodeCsv = fs.readFileSync(
+        'packages/courDeCassation/static/endCaseRoutes.csv',
+        {
+          encoding: 'utf8',
+        },
+      ) as string;
+    } else {
+      endCaseCodeCsv = fs.readFileSync('./static/endCaseRoutes.csv', {
+        encoding: 'utf8',
+      }) as string;
+    }
     const endCaseCodeData = {} as Array<any>;
 
     endCaseCodeCsv.split('\n').forEach((line) => {
@@ -48,10 +57,19 @@ function extractRouteForJurica({
     }
   }
 
-  const NACCodeCsv = fs.readFileSync('./static/NACCodeRoutes.csv', {
-    encoding: 'utf8',
-  }) as string;
-
+  let NACCodeCsv;
+  if (process.env.RUN_MODE === 'LOCAL') {
+    NACCodeCsv = fs.readFileSync(
+      'packages/courDeCassation/static/NACCodeRoutes.csv',
+      {
+        encoding: 'utf8',
+      },
+    ) as string;
+  } else {
+    NACCodeCsv = fs.readFileSync('./static/NACCodeRoutes.csv', {
+      encoding: 'utf8',
+    }) as string;
+  }
   const NACCodeData = {} as Array<any>;
 
   NACCodeCsv.split('\n').forEach((line) => {

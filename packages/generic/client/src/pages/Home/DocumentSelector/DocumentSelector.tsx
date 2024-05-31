@@ -63,6 +63,9 @@ function DocumentSelector(props: {
             props.settings,
             choice.document.decisionMetadata.categoriesToOmit,
             choice.document.decisionMetadata.additionalTermsToAnnotate,
+            choice.document.decisionMetadata.computedAdditionalTerms,
+            choice.document.decisionMetadata.additionalTermsParsingFailed,
+            choice.document.decisionMetadata.motivationOccultation,
           );
 
           return (

@@ -1,5 +1,5 @@
-# Use a node 14 base image
-FROM node:14-alpine
+# Use a node 16 base image
+FROM node:16-alpine
 
 # Create the app directory
 WORKDIR /usr/src/app
@@ -18,8 +18,7 @@ COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 COPY . .
 
-RUN yarn buildDev
-RUN chmod +x ./scripts/*
+RUN yarn build:backend
 
 # Start the app
-CMD ["yarn", "startLocalDev"]
+CMD ["yarn", "start:backend"]

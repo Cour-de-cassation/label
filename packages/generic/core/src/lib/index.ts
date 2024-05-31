@@ -1,11 +1,9 @@
 import { buildAnonymizer, anonymizerType } from './anonymizer';
-import { buildAutoAnnotator } from './autoAnnotator';
 import { autoLinker } from './autoLink';
 import { annotationHandler } from './annotationHandler';
 import { annotationLinkHandler } from './annotationLinkHandler';
 import { annotationOverlapDetector } from './annotationOverlapDetector';
 import { annotationTextDetector } from './annotationTextDetector';
-import { environmentType } from './environment';
 import { statisticsCreator } from './statisticsCreator';
 import { stringComparator, stringComparisonSensitivityType } from './stringComparator';
 import { annotationChunkType, textChunkType, textChunkContentType, textSplitter } from './textSplitter';
@@ -18,7 +16,6 @@ export {
   annotationTextDetector,
   autoLinker,
   buildAnonymizer,
-  buildAutoAnnotator,
   statisticsCreator,
   stringComparator,
   textSplitter,
@@ -29,7 +26,6 @@ export type {
   anonymizerType,
   annotationChunkType,
   dateType,
-  environmentType,
   stringComparisonSensitivityType,
   textChunkType,
   textChunkContentType,

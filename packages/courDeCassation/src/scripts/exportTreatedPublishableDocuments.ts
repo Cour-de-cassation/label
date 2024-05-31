@@ -3,20 +3,17 @@ import { buildSderExporter } from '../exporter';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
-  const backend = buildBackend(environment, settings);
+  const { settings } = await parametersHandler.getParameters();
+  const backend = buildBackend(settings);
 
   await backend.runScript(
     () => backend.scripts.cleanDuplicatedDocuments.run(),
     backend.scripts.cleanDuplicatedDocuments.option,
   );
 
-  const sderExporter = buildSderExporter(environment, settings);
+  const sderExporter = buildSderExporter(settings);
 
-  backend.runScript(
-    () => sderExporter.exportTreatedPublishableDocuments(environment),
-    {
-      shouldLoadDb: true,
-    },
-  );
+  backend.runScript(() => sderExporter.exportTreatedPublishableDocuments(), {
+    shouldLoadDb: true,
+  });
 })();

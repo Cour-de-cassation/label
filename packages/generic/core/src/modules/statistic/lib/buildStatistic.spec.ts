@@ -4,6 +4,7 @@ import { buildStatistic } from './buildStatistic';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('buildStatistic', () => {
   it('should build a new statistic', () => {
     const annotationsCount = 10;
@@ -18,7 +19,7 @@ describe('buildStatistic', () => {
     const userId = idModule.lib.buildId();
     const decisionDate = new Date().getTime();
     const document = documentModule.generator.generate({
-      decisionMetadata: {
+      decisionMetadata: documentModule.decisionMetadataGenerator.generate({
         additionalTermsToAnnotate: '',
         appealNumber: 'TRUC',
         boundDecisionDocumentNumbers: [],
@@ -35,7 +36,7 @@ describe('buildStatistic', () => {
         parties: [],
         session: 'FRH',
         solution: '',
-      },
+      }),
       documentNumber,
       externalId: documentExternalId,
       publicationCategory: documentPublicationCategory,

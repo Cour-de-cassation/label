@@ -1,10 +1,10 @@
 import { promises as fs } from 'fs';
 import { settingsModule } from '@label/core';
-import { nlpApiType, nlpAnnotationsType } from './nlpApiType';
+import { nlpApiType, nlpResponseType } from './nlpApiType';
 
 export { buildNlpLocalApi };
 
-const pathToNlpAnnotations = './storage/annotations/';
+const pathToNlpAnnotations = 'packages/courDeCassation/storage/annotations/';
 
 function buildNlpLocalApi(): nlpApiType {
   return {
@@ -13,6 +13,9 @@ function buildNlpLocalApi(): nlpApiType {
         settings,
         document.decisionMetadata.categoriesToOmit,
         document.decisionMetadata.additionalTermsToAnnotate,
+        document.decisionMetadata.computedAdditionalTerms,
+        document.decisionMetadata.additionalTermsParsingFailed,
+        document.decisionMetadata.motivationOccultation,
       );
       const annotations = JSON.parse(
         await fs.readFile(
@@ -21,7 +24,7 @@ function buildNlpLocalApi(): nlpApiType {
             encoding: 'utf8',
           },
         ),
-      ) as nlpAnnotationsType;
+      ) as nlpResponseType;
 
       const availableCategories = settingsModule.lib.getCategories(
         filteredSettings,
@@ -37,6 +40,10 @@ function buildNlpLocalApi(): nlpApiType {
           availableCategories.includes(entity.label),
         ),
         checklist: annotations.checklist,
+        newCategoriesToAnnotate: annotations.newCategoriesToAnnotate,
+        newCategoriesToUnAnnotate: annotations.newCategoriesToUnAnnotate,
+        additionalTermsToAnnotate: annotations.additionalTermsToAnnotate,
+        additionalTermsToUnAnnotate: annotations.additionalTermsToUnAnnotate,
       };
     },
     async fetchNlpLoss() {

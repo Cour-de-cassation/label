@@ -38,7 +38,7 @@ function buildAdditionalAnnotationCategoryHandler() {
         order: order,
         status: 'hidden',
         text: 'Occultation supplémentaire',
-        canBeAnnotatedBy: 'human',
+        canBeAnnotatedBy: 'both',
       },
     };
   }

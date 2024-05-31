@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { idModule, settingsModule } from '@label/core';
-import { nlpApiType, nlpAnnotationsType, nlpLossType } from './nlpApiType';
+import { nlpApiType, nlpResponseType, nlpLossType } from './nlpApiType';
+import { logger } from '@label/backend';
 
 export { buildNlpApi };
 
@@ -12,6 +13,7 @@ type nlpRequestParametersType = {
   text: string;
   parties?: Array<any>;
   categories?: string[];
+  additionalTerms?: string;
 };
 
 function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
@@ -21,6 +23,9 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         settings,
         document.decisionMetadata.categoriesToOmit,
         document.decisionMetadata.additionalTermsToAnnotate,
+        document.decisionMetadata.computedAdditionalTerms,
+        document.decisionMetadata.additionalTermsParsingFailed,
+        document.decisionMetadata.motivationOccultation,
       );
       const nlpCategories = settingsModule.lib.getCategories(filteredSettings, {
         status: ['visible', 'alwaysVisible', 'annotable'],
@@ -34,6 +39,10 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         text: document.text,
         parties: document.decisionMetadata.parties,
         categories: nlpCategories,
+        additionalTerms:
+          document.decisionMetadata.additionalTermsToAnnotate === ''
+            ? undefined
+            : document.decisionMetadata.additionalTermsToAnnotate,
       };
 
       return await axios({
@@ -44,17 +53,29 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
       })
         .then((response: AxiosResponse) => {
           if (response.status != 200) {
+            logger.error({
+              operationName: 'Call NLP api ner endpoint',
+              msg: `${response.status} ${response.statusText}`,
+            });
             throw new Error(`${response.status} ${response.statusText}`);
           } else {
-            return response.data as nlpAnnotationsType;
+            return response.data as nlpResponseType;
           }
         })
         .catch((error: AxiosError) => {
           if (error.response) {
+            logger.error({
+              operationName: 'Call NLP api ner endpoint',
+              msg: `${error.response.status} ${error.response.statusText}`,
+            });
             throw new Error(
               `${error.response.status} ${error.response.statusText}`,
             );
           }
+          logger.error({
+            operationName: 'Call NLP api ner endpoint',
+            msg: `${error.code ?? 'Unknown'} on /ner`,
+          });
           throw new Error(`${error.code ?? 'Unknown'} on /ner`);
         });
     },
@@ -67,6 +88,10 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
       })
         .then((response: AxiosResponse) => {
           if (response.status != 200) {
+            logger.error({
+              operationName: 'Call NLP api loss endpoint',
+              msg: `${response.status} ${response.statusText}`,
+            });
             throw new Error(`${response.status} ${response.statusText}`);
           } else {
             return response.data as nlpLossType;
@@ -74,10 +99,18 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         })
         .catch((error: AxiosError) => {
           if (error.response) {
+            logger.error({
+              operationName: 'Call NLP api loss endpoint',
+              msg: `${error.response.status} ${error.response.statusText}`,
+            });
             throw new Error(
               `${error.response.status} ${error.response.statusText}`,
             );
           }
+          logger.error({
+            operationName: 'Call NLP api loss endpoint',
+            msg: `${error.code ?? 'Unknown'} on /loss`,
+          });
           throw new Error(`${error.code ?? 'Unknown'} on /loss`);
         });
     },

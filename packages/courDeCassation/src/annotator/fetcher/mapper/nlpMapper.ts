@@ -5,17 +5,18 @@ import {
   annotationReportType,
   annotationReportModule,
 } from '@label/core';
-import { nlpAnnotationsType } from '../api';
+import { nlpResponseType } from '../api';
 
 export { nlpMapper };
 
 const nlpMapper = {
   mapNlpAnnotationsToAnnotations,
   mapNlpAnnotationstoReport,
+  mapNlpAdditionalTerms,
 };
 
 function mapNlpAnnotationsToAnnotations(
-  nlpAnnotations: nlpAnnotationsType,
+  nlpAnnotations: nlpResponseType,
   document: documentType,
 ): annotationType[] {
   return nlpAnnotations.entities.map((nlpAnnotation) =>
@@ -30,11 +31,35 @@ function mapNlpAnnotationsToAnnotations(
 }
 
 function mapNlpAnnotationstoReport(
-  nlpAnnotations: nlpAnnotationsType,
+  nlpAnnotations: nlpResponseType,
   document: documentType,
 ): annotationReportType {
   return annotationReportModule.lib.buildAnnotationReport({
     checklist: nlpAnnotations.checklist,
     documentId: document._id,
   });
+}
+
+function mapNlpAdditionalTerms(
+  nlpResponse: nlpResponseType,
+): documentType['decisionMetadata']['computedAdditionalTerms'] {
+  if (
+    nlpResponse.additionalTermsToAnnotate !== undefined ||
+    nlpResponse.additionalTermsToUnAnnotate !== undefined
+  ) {
+    const additionalTermsToAnnotate =
+      nlpResponse.additionalTermsToAnnotate == undefined
+        ? []
+        : nlpResponse.additionalTermsToAnnotate;
+    const additionalTermsToUnAnnotate =
+      nlpResponse.additionalTermsToUnAnnotate == undefined
+        ? []
+        : nlpResponse.additionalTermsToUnAnnotate;
+    return {
+      additionalTermsToAnnotate,
+      additionalTermsToUnAnnotate,
+    };
+  } else {
+    return;
+  }
 }

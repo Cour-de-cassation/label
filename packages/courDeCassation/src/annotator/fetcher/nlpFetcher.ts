@@ -5,7 +5,10 @@ import { nlpMapper } from './mapper';
 
 export { buildNlpFetcher };
 
-function buildNlpFetcher(nlpApiBaseUrl: string) {
+function buildNlpFetcher(nlpApiBaseUrl: string | undefined) {
+  if (nlpApiBaseUrl == undefined) {
+    throw new Error('You must provide a valid NLP api URL');
+  }
   const nlpApi = buildNlpApi(nlpApiBaseUrl);
 
   return {
@@ -25,6 +28,13 @@ function buildNlpFetcher(nlpApiBaseUrl: string) {
         ),
         documentId: document._id,
         report: nlpMapper.mapNlpAnnotationstoReport(nlpAnnotations, document),
+        newCategoriesToAnnotate: nlpAnnotations.newCategoriesToAnnotate,
+        newCategoriesToUnAnnotate: nlpAnnotations.newCategoriesToUnAnnotate,
+        computedAdditionalTerms: nlpMapper.mapNlpAdditionalTerms(
+          nlpAnnotations,
+        ),
+        additionalTermsParsingFailed:
+          nlpAnnotations.additionalTermsParsingFailed,
       };
     },
     async fetchLossOfDocument(

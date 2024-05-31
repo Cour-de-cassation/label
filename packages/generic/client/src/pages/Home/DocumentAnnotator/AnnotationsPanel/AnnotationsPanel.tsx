@@ -1,5 +1,5 @@
 import React from 'react';
-import { settingsModule, fetchedDocumentType, documentModule, annotationReportType } from '@label/core';
+import { settingsModule, fetchedDocumentType, annotationReportType } from '@label/core';
 import { Icon, Text, customThemeType, getColor, useCustomTheme, useDisplayMode } from 'pelta-design-system';
 import { heights } from '../../../../styles';
 import { wordings } from '../../../../wordings';
@@ -42,6 +42,12 @@ function AnnotationsPanel(props: {
         </Text>
       </div>
       <div style={styles.categoriesContainer}>
+        {props.document.decisionMetadata.motivationOccultation === true && (
+          <div key={'partiallyPublic'} style={styles.categoryContainer}>
+            {renderPartiallyPublicWarning()}
+          </div>
+        )}
+
         {props.checklist && props.checklist.length > 0 && (
           <div key={'checklist'} style={styles.categoryContainer}>
             {renderChecklist(props.checklist)}
@@ -54,7 +60,11 @@ function AnnotationsPanel(props: {
           return (
             <div key={category} style={styles.categoryContainer}>
               {isCategoryAdditionalAnnotationCategory &&
-                renderAdditionalAnnotationTerms(props.document.decisionMetadata.additionalTermsToAnnotate)}
+                renderAdditionalAnnotationTerms(
+                  props.document.decisionMetadata.additionalTermsToAnnotate,
+                  props.document.decisionMetadata.computedAdditionalTerms,
+                  props.document.decisionMetadata.additionalTermsParsingFailed,
+                )}
               <div>{renderCategory({ category, categorySize, categoryAnnotations })}</div>
             </div>
           );
@@ -81,21 +91,67 @@ function AnnotationsPanel(props: {
     );
   }
 
-  function renderAdditionalAnnotationTerms(additionalTermsToAnnotate: string) {
-    const annotationTerms = documentModule.lib.extractAdditionalAnnotationTerms(additionalTermsToAnnotate);
-    return (
-      <div style={styles.additionalAnnotationTermsContainer}>
-        <div style={styles.additionalAnnotationTermsLeftContainer}>
-          <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
+  function renderAdditionalAnnotationTerms(
+    additionalTermsToAnnotate: string,
+    computedAdditionalTerms?: { additionalTermsToAnnotate: string[]; additionalTermsToUnAnnotate: string[] },
+    additionalTermsParsingFailed?: boolean,
+  ) {
+    if (
+      additionalTermsParsingFailed ||
+      (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '') ||
+      (computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+        computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
+      (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+        computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0)
+    ) {
+      return (
+        <div style={styles.additionalAnnotationTermsContainer}>
+          <div style={styles.additionalAnnotationTermsLeftContainer}>
+            <Icon iconName={settingsModule.lib.additionalAnnotationCategoryHandler.getCategoryIconName()} />
+          </div>
+          <div style={styles.additionalAnnotationTermsRightContainer}>
+            {(additionalTermsParsingFailed ||
+              (additionalTermsParsingFailed == undefined && additionalTermsToAnnotate !== '')) && (
+              <>
+                <Text>{wordings.homePage.additionalTermsParsingFailed}</Text>
+              </>
+            )}
+
+            {(computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+              computedAdditionalTerms.additionalTermsToAnnotate.length > 0) ||
+            (computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+              computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0) ? (
+              <>
+                <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
+                {computedAdditionalTerms?.additionalTermsToAnnotate != undefined &&
+                  computedAdditionalTerms.additionalTermsToAnnotate.length > 0 && (
+                    <>
+                      <Text>{wordings.homePage.additionalTermsToAnnotate}</Text>
+                      {computedAdditionalTerms.additionalTermsToAnnotate.map((term) => (
+                        <Text variant="body2">- {term}</Text>
+                      ))}
+                    </>
+                  )}
+                {computedAdditionalTerms?.additionalTermsToUnAnnotate != undefined &&
+                  computedAdditionalTerms.additionalTermsToUnAnnotate.length > 0 && (
+                    <>
+                      <Text>{wordings.homePage.additionalTermsToUnAnnotate}</Text>
+                      {computedAdditionalTerms.additionalTermsToUnAnnotate.map((term) => (
+                        <Text variant="body2">- {term}</Text>
+                      ))}
+                    </>
+                  )}
+              </>
+            ) : (
+              <>
+                <Text>{wordings.homePage.promptRawAdditionalTermsText}</Text>
+                <Text variant="body2">{additionalTermsToAnnotate}</Text>
+              </>
+            )}
+          </div>
         </div>
-        <div style={styles.additionalAnnotationTermsRightContainer}>
-          <Text>{wordings.homePage.askedAdditionalOccultations}</Text>
-          {annotationTerms.map((annotationTerm) => (
-            <Text variant="body2">{annotationTerm}</Text>
-          ))}
-        </div>
-      </div>
-    );
+      );
+    }
   }
 
   function renderChecklist(checklist: string[]) {
@@ -109,6 +165,19 @@ function AnnotationsPanel(props: {
           {checklist.map((checklistElement) => (
             <Text variant="body2">- {checklistElement}</Text>
           ))}
+        </div>
+      </div>
+    );
+  }
+
+  function renderPartiallyPublicWarning() {
+    return (
+      <div style={styles.partiallyPublicContainer}>
+        <div style={styles.partiallyPublicLeftContainer}>
+          <Icon iconName={settingsModule.lib.motivationCategoryHandler.getCategoryIconName()} />
+        </div>
+        <div style={styles.partiallyPublicRightContainer}>
+          <Text>{wordings.homePage.motivationOccultation}</Text>
         </div>
       </div>
     );
@@ -143,6 +212,23 @@ function AnnotationsPanel(props: {
         overflowY: 'auto',
         height: heights.annotatorPanel,
         paddingRight: theme.spacing * 2,
+      },
+      partiallyPublicContainer: {
+        padding: theme.spacing * 2,
+        marginBottom: theme.spacing,
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'space-between',
+        borderRadius: theme.shape.borderRadius.l,
+        backgroundColor: getColor(settingsModule.lib.motivationCategoryHandler.getCategoryColor(displayMode)),
+      },
+      partiallyPublicLeftContainer: {
+        marginRight: theme.spacing * 3,
+      },
+      partiallyPublicRightContainer: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
       },
       additionalAnnotationTermsContainer: {
         padding: theme.spacing * 2,

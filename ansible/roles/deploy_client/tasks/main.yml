@@ -5,9 +5,6 @@
 - name: Deploy configmap
   include_tasks: configmap.yml
 
-- name: Deploy secret
-  include_tasks: secret.yml
-
 - name: Deploy client deployment
   include_tasks: deployment.yml
 

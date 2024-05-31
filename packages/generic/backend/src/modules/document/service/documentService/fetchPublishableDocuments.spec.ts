@@ -2,6 +2,7 @@ import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 import { fetchPublishableDocuments } from './fetchPublishableDocuments';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('fetchPublishableDocuments', () => {
   const documentRepository = buildDocumentRepository();
 
@@ -11,7 +12,7 @@ describe('fetchPublishableDocuments', () => {
       {
         status: 'done' as const,
         publicationCategory: ['P'],
-        decisionMetadata: {
+        decisionMetadata: documentModule.decisionMetadataGenerator.generate({
           additionalTermsToAnnotate: '',
           appealNumber: '08-16.486',
           boundDecisionDocumentNumbers: [],
@@ -28,7 +29,7 @@ describe('fetchPublishableDocuments', () => {
           solution: '',
           NACCode: '',
           endCaseCode: '',
-        },
+        }),
         route: 'confirmation' as documentType['route'],
       },
       {

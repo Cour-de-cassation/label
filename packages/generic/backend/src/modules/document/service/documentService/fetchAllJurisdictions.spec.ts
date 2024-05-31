@@ -2,6 +2,7 @@ import { documentModule } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 import { fetchAllJurisdictions } from './fetchAllJurisdictions';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('fetchAllJurisdictions', () => {
   it('should fetch all the distinc jurisdictions', async () => {
     const documentRepository = buildDocumentRepository();
@@ -12,7 +13,7 @@ describe('fetchAllJurisdictions', () => {
       "cour d'appel de Bordeaux",
     ].map((jurisdiction) =>
       documentModule.generator.generate({
-        decisionMetadata: {
+        decisionMetadata: documentModule.decisionMetadataGenerator.generate({
           appealNumber: '',
           additionalTermsToAnnotate: '',
           boundDecisionDocumentNumbers: [],
@@ -29,7 +30,7 @@ describe('fetchAllJurisdictions', () => {
           jurisdiction,
           NACCode: '',
           endCaseCode: '',
-        },
+        }),
       }),
     );
     await documentRepository.insertMany(documents);

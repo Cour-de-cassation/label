@@ -8,7 +8,7 @@ import {
 import {
   extractReadableChamberName,
   extractReadableJurisdictionName,
-  extractAppealNumber,
+  extractAppealRegisterRoleGeneralNumber,
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
@@ -27,15 +27,24 @@ async function mapCourtDecisionToDocument(
   const readableJurisdictionName = extractReadableJurisdictionName(
     sderCourtDecision.jurisdictionName,
   );
-  const appealNumber = extractAppealNumber(sderCourtDecision.originalText);
-
   const creationDate = convertToValidDate(sderCourtDecision.dateCreation);
-
   const decisionDate = convertToValidDate(sderCourtDecision.dateDecision);
-
   const source = sderCourtDecision.sourceName;
 
+  const registerNumber = sderCourtDecision.registerNumber;
+  const appeal = sderCourtDecision.appeals[0];
+  const numeroRoleGeneral = sderCourtDecision.numeroRoleGeneral || '';
+  const appealNumber = extractAppealRegisterRoleGeneralNumber(
+    sderCourtDecision.originalText,
+    source,
+    readableJurisdictionName,
+    appeal,
+    registerNumber,
+    numeroRoleGeneral,
+  );
+
   const title = computeTitleFromParsedCourtDecision({
+    source: source,
     number: sderCourtDecision.sourceId,
     appealNumber,
     readableChamberName,
@@ -90,11 +99,97 @@ async function mapCourtDecisionToDocument(
     source,
   );
 
+  let moyens = undefined;
+  if (sderCourtDecision.originalTextZoning?.zones?.moyens) {
+    if (Array.isArray(sderCourtDecision.originalTextZoning.zones.moyens)) {
+      moyens = sderCourtDecision.originalTextZoning.zones.moyens;
+    } else {
+      moyens = [sderCourtDecision.originalTextZoning.zones.moyens];
+    }
+  }
+
+  let expose_du_litige = undefined;
+  if (sderCourtDecision.originalTextZoning?.zones?.['expose du litige']) {
+    if (
+      Array.isArray(
+        sderCourtDecision.originalTextZoning.zones['expose du litige'],
+      )
+    ) {
+      expose_du_litige =
+        sderCourtDecision.originalTextZoning.zones['expose du litige'];
+    } else {
+      expose_du_litige = [
+        sderCourtDecision.originalTextZoning.zones['expose du litige'],
+      ];
+    }
+  }
+
+  let motivations = undefined;
+  if (sderCourtDecision.originalTextZoning?.zones?.motivations) {
+    if (Array.isArray(sderCourtDecision.originalTextZoning.zones.motivations)) {
+      motivations = sderCourtDecision.originalTextZoning.zones.motivations;
+    } else {
+      motivations = [sderCourtDecision.originalTextZoning.zones.motivations];
+    }
+  }
+
+  const zoningZones = {
+    introduction:
+      sderCourtDecision.originalTextZoning?.zones?.introduction || undefined,
+    moyens: moyens,
+    'expose du litige': expose_du_litige,
+    motivations: motivations,
+    dispositif:
+      sderCourtDecision.originalTextZoning?.zones?.dispositif || undefined,
+    'moyens annexes':
+      sderCourtDecision.originalTextZoning?.zones?.['moyens annexes'] ||
+      undefined,
+  };
+
+  const introduction_subzonage = {
+    n_arret:
+      sderCourtDecision.originalTextZoning?.introduction_subzonage?.n_arret ||
+      undefined,
+    formation:
+      sderCourtDecision.originalTextZoning?.introduction_subzonage?.formation ||
+      undefined,
+    publication:
+      sderCourtDecision.originalTextZoning?.introduction_subzonage
+        ?.publication || undefined,
+    juridiction:
+      sderCourtDecision.originalTextZoning?.introduction_subzonage
+        ?.juridiction || undefined,
+    chambre:
+      sderCourtDecision.originalTextZoning?.introduction_subzonage?.chambre ||
+      undefined,
+    pourvoi:
+      sderCourtDecision.originalTextZoning?.introduction_subzonage?.pourvoi ||
+      undefined,
+    composition:
+      sderCourtDecision.originalTextZoning?.introduction_subzonage
+        ?.composition || undefined,
+  };
+
+  let zoning = undefined;
+  if (sderCourtDecision.originalTextZoning) {
+    zoning = {
+      zones: zoningZones || undefined,
+      introduction_subzonage: introduction_subzonage || undefined,
+      visa: sderCourtDecision.originalTextZoning?.visa || undefined,
+      is_public: sderCourtDecision.originalTextZoning?.is_public || undefined,
+      is_public_text:
+        sderCourtDecision.originalTextZoning?.is_public_text || undefined,
+      arret_id: sderCourtDecision.originalTextZoning?.arret_id,
+    };
+  }
+
   return documentModule.lib.buildDocument({
     creationDate: creationDate?.getTime(),
     decisionMetadata: {
       appealNumber: appealNumber || '',
       additionalTermsToAnnotate,
+      computedAdditionalTerms: undefined,
+      additionalTermsParsingFailed: undefined,
       boundDecisionDocumentNumbers: sderCourtDecision.decatt || [],
       categoriesToOmit,
       civilCaseCode,
@@ -109,6 +204,8 @@ async function mapCourtDecisionToDocument(
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session,
       solution,
+      motivationOccultation:
+        sderCourtDecision.occultation.motivationOccultation ?? undefined,
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id),
@@ -120,26 +217,50 @@ async function mapCourtDecisionToDocument(
     source,
     title,
     text: sderCourtDecision.originalText,
+    zoning: zoning,
   });
 }
-
+function getNumberPrefix(
+  numberToPrefix: string | undefined,
+  source: string,
+  readableJurisdictionName: string,
+) {
+  if (numberToPrefix === undefined) {
+    return undefined;
+  }
+  if (source === 'jurinet' && readableJurisdictionName.includes('cassation')) {
+    return `Pourvoi n°${numberToPrefix}`;
+  } else {
+    return `RG n°${numberToPrefix}`;
+  }
+}
 function computeTitleFromParsedCourtDecision({
+  source,
   number,
   appealNumber,
   readableChamberName,
   readableJurisdictionName,
   date,
 }: {
+  source: string;
   number: number;
   appealNumber: string | undefined;
   readableChamberName: string;
   readableJurisdictionName: string;
   date?: Date;
 }) {
+  const prefixedNumber = getNumberPrefix(
+    appealNumber,
+    source,
+    readableJurisdictionName,
+  );
+
+  if (source === 'juritj') {
+    readableJurisdictionName = `Tribunal judiciaire de ${readableJurisdictionName}`;
+  }
+
   const readableNumber = `Décision n°${number}`;
-  const readableAppealNumber = appealNumber
-    ? `pourvoi n°${appealNumber}`
-    : undefined;
+  const readableAppealNumber = prefixedNumber ? prefixedNumber : undefined;
   const readableDate = date
     ? timeOperator.convertTimestampToReadableDate(date.getTime())
     : undefined;

@@ -4,6 +4,7 @@ import { treatmentModule } from '../../treatment';
 import { ressourceFilterGenerator } from '../generator';
 import { filterTreatedDocuments } from './filterTreatedDocuments';
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('filterTreatedDocuments', () => {
   it('should filter all the given treated documents with added annotations', () => {
     const documents = [{}, {}].map(documentModule.generator.generate);
@@ -144,7 +145,7 @@ describe('filterTreatedDocuments', () => {
     const decisionDate = new Date().getTime();
     const documents = [{ jurisdiction: 'JURISDICTION1' }, { jurisdiction: 'JURISDICTION2' }].map(({ jurisdiction }) =>
       documentModule.generator.generate({
-        decisionMetadata: {
+        decisionMetadata: documentModule.decisionMetadataGenerator.generate({
           jurisdiction,
           solution: '',
           session: '',
@@ -156,12 +157,11 @@ describe('filterTreatedDocuments', () => {
           date: decisionDate,
           categoriesToOmit: [],
           boundDecisionDocumentNumbers: [],
-          additionalTermsToAnnotate: '',
           NACCode: '',
           endCaseCode: '',
           parties: [],
           appealNumber: '',
-        },
+        }),
       }),
     );
     const ressourceFilter = ressourceFilterGenerator.generate({

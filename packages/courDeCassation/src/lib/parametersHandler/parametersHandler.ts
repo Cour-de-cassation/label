@@ -1,4 +1,4 @@
-import { environmentType, settingsModule } from '@label/core';
+import { settingsModule } from '@label/core';
 import { promises as fs } from 'fs';
 import yargs from 'yargs';
 
@@ -10,22 +10,20 @@ const parametersHandler = {
 };
 
 async function getParameters() {
-  const { environmentFile, settingsFile } = getCommandParameters();
+  const { settingsFile } = getCommandParameters();
 
-  const environment = await fs.readFile(environmentFile, {
-    encoding: 'utf8',
-  });
   const settings = await fs.readFile(settingsFile, {
     encoding: 'utf8',
   });
 
   const parsedSettings = settingsModule.lib.parseFromJson(settings);
-  const enhancedSettings = settingsModule.lib.additionalAnnotationCategoryHandler.addCategoryToSettings(
-    parsedSettings,
+  const enhancedSettings = settingsModule.lib.motivationCategoryHandler.addCategoryToSettings(
+    settingsModule.lib.additionalAnnotationCategoryHandler.addCategoryToSettings(
+      parsedSettings,
+    ),
   );
 
   return {
-    environment: JSON.parse(environment) as environmentType,
     settings: enhancedSettings,
   };
 }
@@ -33,12 +31,6 @@ async function getParameters() {
 function getCommandParameters() {
   const argv = yargs
     .options({
-      environment: {
-        alias: 'e',
-        demandOption: true,
-        description: 'Environment of LABEL',
-        type: 'string',
-      },
       settings: {
         alias: 's',
         demandOption: true,
@@ -50,7 +42,6 @@ function getCommandParameters() {
     .alias('help', 'h').argv;
 
   return {
-    environmentFile: argv.environment as string,
     settingsFile: argv.settings as string,
   };
 }

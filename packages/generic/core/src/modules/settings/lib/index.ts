@@ -7,6 +7,7 @@ import { getAnnotationCategoryIconName } from './getAnnotationCategoryIconName';
 import { getAnnotationCategoryStatus } from './getAnnotationCategoryStatus';
 import { getAnnotationCategoryText } from './getAnnotationCategoryText';
 import { getCategories } from './getCategories';
+import { motivationCategoryHandler } from './motivationCategoryHandler';
 
 export {
   additionalAnnotationCategoryHandler,
@@ -18,4 +19,5 @@ export {
   getAnnotationCategoryStatus,
   getAnnotationCategoryText,
   getCategories,
+  motivationCategoryHandler,
 };

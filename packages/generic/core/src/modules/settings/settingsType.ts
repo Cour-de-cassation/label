@@ -52,6 +52,7 @@ const categoryIconNames = [
   'store',
   'web',
   'work',
+  'eyeoff',
 ] as const;
 
 type categoryIconNameType = typeof categoryIconNames[number];

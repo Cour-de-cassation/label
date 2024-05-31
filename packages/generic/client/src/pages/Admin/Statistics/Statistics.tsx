@@ -9,7 +9,8 @@ import { DocumentsTableHeaderStatistics } from '../../../components/business/Doc
 
 export { Statistics };
 
-const WIDTH = 350;
+const STATISTICS_BOX_WIDTH = 350;
+const DOCUMENT_STATISTIC_BOX_WIDTH = 450;
 
 function Statistics(props: {
   aggregatedStatistics: apiRouteOutType<'get', 'aggregatedStatistics'>;
@@ -27,7 +28,6 @@ function Statistics(props: {
     setSearchedDocumentNumber(searchedDocumentNumber);
     return searchedDocumentNumber;
   };
-  // get documentStatistics
   const [documentStatistics, setdocumentStatistics] = useState<Array<documentStatsType>>();
   const receivedocumentStatistics = (data: Array<documentStatsType>) => {
     setdocumentStatistics(data);
@@ -64,7 +64,7 @@ function Statistics(props: {
               <StatisticsBox
                 aggregatedStatistic={aggregatedStatistics}
                 statisticsCount={props.aggregatedStatistics.total}
-                width={WIDTH}
+                width={STATISTICS_BOX_WIDTH}
               />
             </>
           )}
@@ -83,10 +83,13 @@ function Statistics(props: {
                 </Text>
               </div>
               <div style={styles.rowBox}>
-                {documentStatistics?.map((val) => {
+                {documentStatistics?.map((documentStatistic) => {
                   return (
                     <div>
-                      <DocumentStatisticsBox documentStatistic={val} width={WIDTH} />
+                      <DocumentStatisticsBox
+                        documentStatistic={documentStatistic}
+                        width={DOCUMENT_STATISTIC_BOX_WIDTH}
+                      />
                     </div>
                   );
                 })}
@@ -125,8 +128,8 @@ function buildStyles(theme: customThemeType) {
       paddingLeft: theme.spacing * 3,
     },
     body: {
-      height: '70%', // à changer et à tester pour le problème d'espace blanc dans statistique/ admin onglet
-      //height: heights.statisticsBodyHeight,
+      height: '70%',
+      // height: heights.statisticsBodyHeight,
       width: widths.adminContent,
       display: 'flex',
       flexDirection: 'row',
@@ -134,7 +137,7 @@ function buildStyles(theme: customThemeType) {
       alignItems: 'center',
     },
     row: {
-      height: heights.statisticsBodyHeight, // à changer et à tester pour le problème d'espace blanc dans statistique/ admin onglet
+      height: heights.statisticsBodyHeight,
       width: widths.adminContent,
       display: 'flex',
       flexDirection: 'column',
@@ -152,7 +155,7 @@ function buildStyles(theme: customThemeType) {
       display: 'flex',
       justifyContent: 'space-between',
       paddingBottom: theme.spacing * 3,
-      width: `${WIDTH}px`,
+      width: `${STATISTICS_BOX_WIDTH}px`,
     },
     hrLine: {
       border: 'none',

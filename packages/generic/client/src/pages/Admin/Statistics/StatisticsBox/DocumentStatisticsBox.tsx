@@ -143,13 +143,11 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
       ];
     }
     const uniqueTreatments = removeNullAndDuplicatesTreatments(treatmentsSummary);
-    const duration = uniqueTreatments.map((treatment) => {
-      return ' ' + timeOperator.convertDurationToReadableDuration(treatment.treatmentDuration) + ' ';
-    });
+    const duration = uniqueTreatments
+      .map((treatment) => timeOperator.convertDurationToReadableDuration(treatment.treatmentDuration))
+      .join(', ');
 
-    const agent = uniqueTreatments.map((treatment) => {
-      return ' ' + treatment.name + ' ';
-    });
+    const agent = uniqueTreatments.map((treatment) => treatment.name).join(', ');
 
     return [
       {
@@ -166,7 +164,7 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
   function removeNullAndDuplicatesTreatments(
     treatmentsSummaries: Array<treatmentsSummaryType>,
   ): Array<treatmentsSummaryType> {
-    const filteredArray = treatmentsSummaries.filter((val) => val !== null);
+    const filteredArray = treatmentsSummaries.filter((treatmentsSummary) => treatmentsSummary !== null);
     const uniqueArray = filteredArray.filter(
       (item, index, self) => index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(item)),
     );
@@ -176,7 +174,7 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
   function buildStyles(theme: customThemeType) {
     return {
       container: {
-        width: `700px`,
+        width: `${props.width}px`,
         borderRadius: theme.shape.borderRadius.s,
         padding: theme.spacing * 4,
         margin: '10px',

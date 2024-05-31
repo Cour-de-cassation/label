@@ -36,10 +36,10 @@ function DocumentsTableHeaderStatistics(props: {
           <div style={styles.searchTextInputContainer}>
             <DocumentNumberTextInput
               value={props.documentNumber}
-              onChange={(e) => {
-                props.setSearchedDocumentNumber(e);
-                buildFetchDocumentStatistics(e ?? 0).then((val) => {
-                  props.documentStatistics(val.data as any);
+              onChange={(documentNumber) => {
+                props.setSearchedDocumentNumber(documentNumber);
+                buildFetchDocumentStatistics(documentNumber ?? 0).then((documentStatistics) => {
+                  props.documentStatistics(documentStatistics.data as any);
                 });
               }}
             />
@@ -51,8 +51,7 @@ function DocumentsTableHeaderStatistics(props: {
 }
 
 const buildFetchDocumentStatistics = async (documentNumber: documentType['documentNumber']) => {
-  const data = await apiCaller.get<'documentStatistics'>('documentStatistics', { documentNumber });
-  return data;
+  return await apiCaller.get<'documentStatistics'>('documentStatistics', { documentNumber });
 };
 
 function buildStyles(theme: customThemeType) {

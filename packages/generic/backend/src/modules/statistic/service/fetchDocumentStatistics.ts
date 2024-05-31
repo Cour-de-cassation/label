@@ -14,17 +14,17 @@ async function fetchDocumentStatistics(
   );
 
   const usersDocumentsStatistics = await Promise.all(
-    documentStatistics.map(async (val) => {
+    documentStatistics.map(async (documentStatistic) => {
       const treatmentsDetails = await getUsersAndDuration(
-        val.treatmentsSummary.map((treatment) => ({
+        documentStatistic.treatmentsSummary.map((treatment) => ({
           userId: treatment.userId,
           treatmentDuration: treatment.treatmentDuration,
         })),
-        val._id,
+        documentStatistic._id,
       );
 
       return {
-        ...val,
+        ...documentStatistic,
         treatmentsSummary: treatmentsDetails,
       };
     }),
@@ -37,17 +37,17 @@ async function getUsersAndDuration(
   userTreatments: { userId: ObjectId; treatmentDuration: number }[],
   statId: ObjectId,
 ) {
-  const userIds = userTreatments.map((ut) => ut.userId);
-  const val = await userService.fetchUsersByIds(userIds);
-  return userTreatments.map((ut) => {
-    const userIdString = idModule.lib.convertToString(ut.userId);
-    const { email, name, _id } = val[userIdString];
+  const userIds = userTreatments.map((userTreatment) => userTreatment.userId);
+  const users = await userService.fetchUsersByIds(userIds);
+  return userTreatments.map((userTreatment) => {
+    const userIdString = idModule.lib.convertToString(userTreatment.userId);
+    const { email, name, _id } = users[userIdString];
     return {
       email: email,
       name: name,
       id: _id,
       statId: statId,
-      treatmentDuration: ut.treatmentDuration,
+      treatmentDuration: userTreatment.treatmentDuration,
     };
   });
 }

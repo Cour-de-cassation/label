@@ -1,12 +1,9 @@
-import { environmentType } from '@label/core';
 import { logger, mongo } from '../utils';
 import { setupMongo } from './setup';
 
 export { buildRunScript };
 
-function buildRunScript(
-  environment: environmentType,
-): (
+function buildRunScript(): (
   script: () => Promise<void>,
   { shouldLoadDb }: { shouldLoadDb: boolean; shouldExit?: boolean },
 ) => Promise<void> {
@@ -22,7 +19,7 @@ function buildRunScript(
     }
 
     async function runScriptWithDb() {
-      await setupMongo(environment);
+      await setupMongo();
 
       await script();
 

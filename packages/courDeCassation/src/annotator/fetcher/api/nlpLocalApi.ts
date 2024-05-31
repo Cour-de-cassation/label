@@ -4,7 +4,7 @@ import { nlpApiType, nlpResponseType } from './nlpApiType';
 
 export { buildNlpLocalApi };
 
-const pathToNlpAnnotations = './storage/annotations/';
+const pathToNlpAnnotations = 'packages/courDeCassation/storage/annotations/';
 
 function buildNlpLocalApi(): nlpApiType {
   return {
@@ -15,7 +15,7 @@ function buildNlpLocalApi(): nlpApiType {
         document.decisionMetadata.additionalTermsToAnnotate,
         document.decisionMetadata.computedAdditionalTerms,
         document.decisionMetadata.additionalTermsParsingFailed,
-        document.decisionMetadata.debatPublic,
+        document.decisionMetadata.motivationOccultation,
       );
       const annotations = JSON.parse(
         await fs.readFile(

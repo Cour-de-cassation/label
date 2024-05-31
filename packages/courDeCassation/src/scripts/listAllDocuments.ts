@@ -2,8 +2,8 @@ import { buildBackend } from '@label/backend';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
-  const backend = buildBackend(environment, settings);
+  const { settings } = await parametersHandler.getParameters();
+  const backend = buildBackend(settings);
 
   await backend.runScript(
     () => backend.scripts.listAllDocuments.run(),

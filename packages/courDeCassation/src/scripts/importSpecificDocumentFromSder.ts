@@ -4,9 +4,9 @@ import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
-  const { environment, settings } = await parametersHandler.getParameters();
+  const { settings } = await parametersHandler.getParameters();
   const { documentNumber, source, lowPriority } = parseArgv();
-  const backend = buildBackend(environment, settings);
+  const backend = buildBackend(settings);
 
   backend.runScript(
     () =>
@@ -14,7 +14,6 @@ import { parametersHandler } from '../lib/parametersHandler';
         documentNumber,
         source,
         lowPriority,
-        environment,
       }),
     {
       shouldLoadDb: true,

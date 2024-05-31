@@ -213,7 +213,7 @@ function buildAnnotator(
       msg: 'NLP treatment created in DB',
     });
 
-    if (document.decisionMetadata.debatPublic === false) {
+    if (document.decisionMetadata.motivationOccultation === true) {
       if (
         document.zoning != undefined &&
         document.zoning.zones?.motivations != undefined &&
@@ -221,7 +221,7 @@ function buildAnnotator(
       ) {
         logger.log({
           operationName: 'annotateDocument',
-          msg: 'Annotate motivation zone because decision debat are not public',
+          msg: 'Annotate motivation zone because motivationOccultation is true',
         });
 
         createMotivationOccultationTreatment(
@@ -232,17 +232,12 @@ function buildAnnotator(
           annotations,
         );
       } else {
-        logger.error({
+        logger.log({
           operationName: 'annotateDocument',
-          msg: `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
+          msg: `Annotate decision motivation zone impossible because motication zone was not found for document ${formatDocumentInfos(
             document,
           )}`,
         });
-        throw new Error(
-          `Annotate zone for non public debat decision impossible because motication zone was not found for document ${formatDocumentInfos(
-            document,
-          )}`,
-        );
       }
     }
 
@@ -354,13 +349,27 @@ function buildAnnotator(
   ) {
     const motivationAnnotations: annotationType[] = [];
     motivations.forEach((motivation, index) => {
+      const motivationText = documentText.substring(
+        motivation.start,
+        motivation.end,
+      );
+
+      // Suppression des espaces et des sauts de ligne au début du texte
+      const trimmedStartMotivation = motivationText.replace(/^[\s\r\n]+/, '');
+      // Calcul du nombre de caractères retirés au début du texte
+      const removedCharactersAtStart =
+        motivationText.length - trimmedStartMotivation.length;
+
+      // Suppression des espaces et des sauts de ligne à la fin du texte
+      const trimmedMotivation = trimmedStartMotivation.replace(
+        /[\s\r\n]+$/,
+        '',
+      );
+
       motivationAnnotations.push(
         annotationModule.lib.buildAnnotation({
-          start: motivation.start + 1,
-          text: documentText.substring(
-            motivation.start + 1,
-            motivation.end - 1,
-          ),
+          start: motivation.start + removedCharactersAtStart,
+          text: trimmedMotivation,
           category: 'motivations',
           certaintyScore: 1,
           entityId: `motivations${index}_${documentNumber}`,

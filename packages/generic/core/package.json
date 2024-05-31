@@ -1,10 +1,44 @@
 {
+  "name": "@label/core",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn compile",
+    "clean": "rimraf -rf ./dist",
+    "clean:all": "rimraf -rf ./dist && rimraf -rf ./node_modules",
+    "compile": "tsc -p tsconfig.json",
+    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
+    "test": "RUN_MODE=TEST jest --passWithNoTests",
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testEnvironment": "node",
+    "testRegex": ".spec.ts$"
+  },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "^26.0.13",
+    "@types/lodash": "^4.14.161",
+    "@types/mongodb": "^3.5.27",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
-    "string-template": "^1.0.0"
+    "sder": "https://github.com/Cour-de-cassation/sder#5333e7ac962fe80850cddbd3cd83b73fbb4fd656",
+    "string-template": "^1.0.0",
+    "typescript": "~4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -12,10 +46,6 @@
     "@babel/polyfill": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
-    "@types/bcryptjs": "^2.4.2",
-    "@types/jest": "^26.0.13",
-    "@types/lodash": "^4.14.161",
-    "@types/mongodb": "^3.5.27",
     "@types/string-template": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
@@ -25,38 +55,7 @@
     "eslint-plugin-react": "^7.20.6",
     "jest": "24.9.0",
     "prettier": "^2.1.2",
-    "sder-core": "https://github.com/Cour-de-cassation/sder-core#091abbfa3309d64a95a06e20a05620adb30274ea",
     "rimraf": "~3.0.2",
-    "typescript": "~4.0.0"
-  },
-  "files": [
-    "dist"
-  ],
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
-    "testEnvironment": "node"
-  },
-  "main": "dist/index",
-  "name": "@label/core",
-  "scripts": {
-    "build": "yarn clean && yarn compile",
-    "clean": "rimraf -rf ./dist",
-    "cleanAll": "rimraf -rf ./dist && rimraf -rf ./node_modules",
-    "compile": "tsc -p tsconfig.json",
-    "coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
-    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "start": "node dist/app.js",
-    "test": "RUN_MODE=TEST jest --passWithNoTests",
-    "type": "yarn build"
-  },
-  "types": "dist/index",
-  "version": "1.0.0"
+    "sder-core": "https://github.com/Cour-de-cassation/sder-core#091abbfa3309d64a95a06e20a05620adb30274ea"
+  }
 }

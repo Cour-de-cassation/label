@@ -1,3 +1,4 @@
+import { buildPreAssignationRepository } from '../../modules/preAssignation';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
@@ -19,6 +20,7 @@ async function clearDb({
   statistic = true,
   treatment = true,
   user = true,
+  preAssignations = true,
 }: {
   annotation?: boolean;
   assignation?: boolean;
@@ -28,6 +30,7 @@ async function clearDb({
   statistic?: boolean;
   treatment?: boolean;
   user?: boolean;
+  preAssignations?: boolean;
 }) {
   logger.log({
     operationName: 'clearDb',
@@ -41,6 +44,7 @@ async function clearDb({
       statistic,
       treatment,
       user,
+      preAssignations,
     },
   });
 
@@ -76,6 +80,10 @@ async function clearDb({
     {
       shouldClear: user,
       buildRepository: buildUserRepository,
+    },
+    {
+      shouldClear: preAssignations,
+      buildRepository: buildPreAssignationRepository,
     },
   ]
     .filter(({ shouldClear }) => shouldClear)

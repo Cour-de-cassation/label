@@ -4,7 +4,7 @@ import { nlpApiType, nlpResponseType } from './nlpApiType';
 
 export { buildNlpLocalApi };
 
-const pathToNlpAnnotations = 'packages/courDeCassation/storage/annotations/';
+const pathToNlpAnnotations = './storage/annotations/';
 
 function buildNlpLocalApi(): nlpApiType {
   return {

@@ -11,6 +11,7 @@ import { userService } from '../modules/user';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
 import { annotationReportService } from '../modules/annotationReport';
+import { preAssignationService } from '../modules/preAssignation';
 import { replacementTermType } from '@label/core';
 
 export { controllers };
@@ -191,6 +192,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async () => userService.fetchWorkingUsers(),
     }),
+
+    preAssignations: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async () =>
+        preAssignationService.fetchAllPreAssignation(),
+    }),
   },
 
   post: {
@@ -238,7 +245,13 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(problemReportId),
         ),
     }),
-
+    deletePreAssignation: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { preAssignationId } }) =>
+        preAssignationService.deletePreAssignation(
+          idModule.lib.buildId(preAssignationId),
+        ),
+    }),
     deleteHumanTreatmentsForDocument: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { documentId } }) => {
@@ -466,6 +479,17 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           },
           settings,
         );
+      },
+    }),
+
+    createPreAssignation: buildAuthenticatedController({
+      permissions: ['admin'],
+      controllerWithUser: async (_, { args: { userId, source, number } }) => {
+        preAssignationService.createPreAssignation({
+          userId: idModule.lib.buildId(userId),
+          source,
+          number,
+        });
       },
     }),
   },

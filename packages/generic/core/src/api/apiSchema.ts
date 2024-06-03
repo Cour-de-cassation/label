@@ -10,6 +10,7 @@ import {
   statisticModule,
   treatmentModule,
   replacementTermModule,
+  preAssignationModule,
 } from '../modules';
 import { buildModel, modelType } from '../modules/modelType';
 
@@ -538,6 +539,18 @@ const apiSchema = {
         },
       } as const),
     },
+    preAssignations: {
+      out: buildModel({
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            preAssignation: preAssignationModule.model,
+            userName: userModule.models.user.content.name,
+          },
+        },
+      } as const),
+    },
   },
 
   post: {
@@ -581,6 +594,18 @@ const apiSchema = {
     deleteProblemReport: {
       in: {
         problemReportId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+      },
+      out: buildModel({
+        kind: 'primitive',
+        content: 'void',
+      } as const),
+    },
+    deletePreAssignation: {
+      in: {
+        preAssignationId: buildModel({
           kind: 'custom',
           content: 'id',
         } as const),
@@ -799,6 +824,23 @@ const apiSchema = {
         kind: 'primitive',
         content: 'void',
       } as const),
+    },
+    createPreAssignation: {
+      in: {
+        userId: buildModel({
+          kind: 'custom',
+          content: 'id',
+        } as const),
+        source: buildModel({
+          kind: 'primitive',
+          content: 'string',
+        } as const),
+        number: buildModel({
+          kind: 'primitive',
+          content: 'string',
+        } as const),
+      },
+      out: buildModel({ kind: 'primitive', content: 'void' } as const),
     },
   },
 } as const;

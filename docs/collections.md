@@ -8,3 +8,4 @@
 - statistics
 - treatments
 - users
+- preAssignations

@@ -2,8 +2,13 @@ import { settingsType } from '@label/core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { logger, mongo } from '../utils';
 import { setIndexesOnAllCollections } from './scripts';
+import * as dotenv from 'dotenv';
 
 export { setup, setupMongo };
+
+if (process.env.RUN_MODE === 'LOCAL') {
+  dotenv.config();
+}
 
 async function setup(settings: settingsType) {
   setupSettings(settings);

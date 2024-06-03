@@ -53,9 +53,7 @@ function PreAssignDocumentsTable(props: {
         title: wordings.preAssignDocumentsPage.table.columnTitles.creationDate,
         canBeSorted: true,
         extractor: (preAssignation) =>
-          preAssignation.preAssignation.creationDate
-            ? timeOperator.convertTimestampToReadableDate(preAssignation.preAssignation.creationDate)
-            : '-',
+          timeOperator.convertTimestampToReadableDate(preAssignation.preAssignation.creationDate),
         width: 10,
       },
     ];

@@ -337,7 +337,8 @@ const fr = {
       title: 'Ajouter une pré-assignation',
       fields: {
         source: 'Source',
-        number: 'N° de document ou pourvoi (au format "00-00.000")',
+        number: 'N° de document, pourvoi (au format "00-00.000") ou RG (au format "00/00000")',
+        numberPlaceholder: 'Numéro',
         user: 'Agent',
       },
       submit: 'Créer la pré-assignation',

@@ -7,6 +7,7 @@ import {
   Drawer,
   LabelledDropdown,
   RichTextInput,
+  Text,
 } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 import { idModule, userType } from '@label/core';
@@ -70,12 +71,15 @@ function AddWorkingUserDrawer(props: {
               />
             </div>
             <div style={styles.fieldContainer}>
+              <div style={styles.numberField}>
+                <Text variant="h3">{wordings.preAssignDocumentsPage.createPreAssignationDrawer.fields.number}</Text>
+              </div>
               <RichTextInput
                 name="number"
                 error={!!formErrors.number}
                 value={formValues.number?.toString() || ''}
                 onChange={(value) => updateField('number', value)}
-                placeholder={wordings.preAssignDocumentsPage.createPreAssignationDrawer.fields.number}
+                placeholder={wordings.preAssignDocumentsPage.createPreAssignationDrawer.fields.numberPlaceholder}
                 style={styles.field}
               />
             </div>
@@ -181,6 +185,10 @@ function buildStyles(theme: customThemeType) {
     },
     submitButtonContainer: {
       alignSelf: 'flex-end',
+    },
+    numberField: {
+      padding: theme.spacing,
+      color: theme.colors.line.level2,
     },
   } as const;
 }

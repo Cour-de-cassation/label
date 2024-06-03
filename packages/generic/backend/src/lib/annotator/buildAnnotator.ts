@@ -317,16 +317,16 @@ function buildAnnotator(
     });
 
     // Check first pre-assignation by documentNumber and then by appelNumber
-    let preAssignationForDocument = await preAssignationService.fetchPreAssignationBySourceAndNumber(
-      document.documentNumber.toString(),
-      document.source,
-    );
-    if (preAssignationForDocument == undefined) {
-      preAssignationForDocument = await preAssignationService.fetchPreAssignationBySourceAndNumber(
+    const preAssignationForDocument =
+      (await preAssignationService.fetchPreAssignationBySourceAndNumber(
+        document.documentNumber.toString(),
+        document.source,
+      )) ||
+      (await preAssignationService.fetchPreAssignationBySourceAndNumber(
         document.decisionMetadata.appealNumber,
         document.source,
-      );
-    }
+      ));
+
     if (
       nextDocumentStatus === 'free' &&
       preAssignationForDocument != undefined

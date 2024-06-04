@@ -73,6 +73,22 @@ yarn init:db
 
 This script is lauch with the `.env` configuration.
 
+### Launch scripts
+
+You can launch scripts with theses commands :
+
+#### With docker
+
+```sh
+docker container exec -it label-backend-1 sh -c "cd packages/courDeCassation; sh scripts/runLocalScript.sh ./dist/scripts/myScript.js --myArgument
+```
+
+#### Without docker
+
+```sh
+(cd packages/courDeCassation && sh scripts/runLocalScript.sh ./dist/scripts/myScript.js --myArgument)
+```
+
 ## Troubleshooting
 
 To use mongo, you need to run in your terminal:

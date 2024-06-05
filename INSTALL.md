@@ -86,7 +86,7 @@ docker container exec -it label-backend-1 sh -c "cd packages/courDeCassation; sh
 #### Without docker
 
 ```sh
-(cd packages/courDeCassation && sh scripts/runLocalScript.sh ./dist/scripts/myScript.js --myArgument)
+scripts/runScriptLocally.sh "myScript.js --myArgument"
 ```
 
 ## Troubleshooting

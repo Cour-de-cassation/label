@@ -56,6 +56,6 @@
     "jest": "24.9.0",
     "prettier": "^2.1.2",
     "rimraf": "~3.0.2",
-    "sder-core": "https://github.com/Cour-de-cassation/sder-core#091abbfa3309d64a95a06e20a05620adb30274ea"
+    "sder-core": "https://github.com/Cour-de-cassation/sder-core#8afb44f74c9ffefbbadc6f0d3de0def1c916dcc7"
   }
 }

@@ -52,7 +52,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
-    "sder-core": "https://github.com/Cour-de-cassation/sder-core#091abbfa3309d64a95a06e20a05620adb30274ea",
+    "sder-core": "https://github.com/Cour-de-cassation/sder-core#8afb44f74c9ffefbbadc6f0d3de0def1c916dcc7",
     "typescript": "~4.0.0"
   },
   "devDependencies": {

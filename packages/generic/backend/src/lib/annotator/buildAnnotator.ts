@@ -196,11 +196,13 @@ function buildAnnotator(
       newCategoriesToUnAnnotate,
       computedAdditionalTerms,
       additionalTermsParsingFailed,
+      versions,
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log({
       operationName: 'annotateDocument',
       msg: 'NLP annotation succeeded',
     });
+    documentService.updateDocumentNlpVersions(documentId, versions);
 
     if (document.route == 'simple' && annotations.length == 0) {
       await documentService.updateDocumentRoute(documentId, 'automatic');

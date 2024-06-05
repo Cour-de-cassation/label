@@ -46,6 +46,7 @@ import { updateDocumentComputedAdditionalTerms } from './updateDocumentComputedA
 import { updateDocumentStatus } from './updateDocumentStatus';
 import { fetchAllImporters } from './fetchAllImporters';
 import { updateDocumentAdditionalTermsParsingFailed } from './updateDocumentAdditionalTermsParsingFailed';
+import { updateDocumentNlpVersions } from './updateDocumentNlpVersions';
 
 export { buildDocumentService, documentService };
 
@@ -109,5 +110,6 @@ function buildDocumentService() {
     updateDocumentCategoriesToOmit,
     updateDocumentComputedAdditionalTerms,
     updateDocumentAdditionalTermsParsingFailed,
+    updateDocumentNlpVersions,
   };
 }

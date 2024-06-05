@@ -82,6 +82,10 @@ type customDocumentRepositoryType = {
     _id: idType,
     loss: documentType['loss'],
   ) => Promise<documentType | undefined>;
+  updateNlpVersionsById: (
+    _id: idType,
+    nlpVersions: documentType['versions'],
+  ) => Promise<documentType | undefined>;
   updateAdditionalTermsParsingFailed: (
     _id: idType,
     additionalTermsParsingFailed: documentType['decisionMetadata']['additionalTermsParsingFailed'],

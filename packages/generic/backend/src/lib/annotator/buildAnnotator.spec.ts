@@ -76,7 +76,9 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
         documentId: document._id,
       });
 
-      return { annotations, documentId: document._id, report };
+      const versions = documentModule.generator.generate().versions;
+
+      return { annotations, documentId: document._id, report, versions };
     },
     async fetchLossOfDocument() {
       return 0;

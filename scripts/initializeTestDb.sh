@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
 cd packages/courDeCassation;
 
 echo "Reset the DB except for users and migrations"

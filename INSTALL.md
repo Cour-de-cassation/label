@@ -80,7 +80,7 @@ You can launch scripts with theses commands :
 #### With docker
 
 ```sh
-docker container exec -it label-backend-1 sh -c "cd packages/courDeCassation; sh scripts/runLocalScript.sh ./dist/scripts/myScript.js --myArgument
+docker container exec -it label-backend-1 sh -c "cd packages/courDeCassation; sh scripts/runLocalScript.sh ./dist/scripts/myScript.js --myArgument"
 ```
 
 #### Without docker

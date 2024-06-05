@@ -25,6 +25,7 @@
     "init:db": "scripts/initializeTestDb.sh",
     "lint": "lerna run lint",
     "migration:create": "scripts/createMigrationFile.sh",
+    "start:backend": "RUN_MODE=LOCAL lerna run --scope @label/cour-de-cassation start --stream",
     "start:backend:dev": "RUN_MODE=LOCAL nodemon",
     "start:client:dev": "yarn compile:client && cd packages/generic/client && yarn start",
     "test": "lerna run test",

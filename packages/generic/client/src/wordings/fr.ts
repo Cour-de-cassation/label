@@ -92,6 +92,7 @@ const fr = {
     },
     errors: {
       deleteProblemReportFailed: 'La suppression du signalement a échoué. Veuillez recharger la page.',
+      deletePreAssignationFailed: 'La suppression de la pré-assignation a échoué. Veuillez recharger la page.',
       deleteDocumentFailed: 'La suppression du document a échoué. Veuillez recharger la page.',
       pendingDocumentsFreed:
         'Les documents ont été libérés, ils ne vous sont maintenant plus réservés. Veuillez recharger la page.',
@@ -314,6 +315,33 @@ const fr = {
       },
       mailSubject: 'Alerte sur le document {documentNumber}',
       popupConfirmMessage: 'Souhaitez-vous vraiment supprimer ce document ? Cette action est irréversible.',
+    },
+  },
+  preAssignDocumentsPage: {
+    header: {
+      title: 'Administration',
+      subtitle: 'Pré-assignation des décisions',
+    },
+    table: {
+      columnTitles: {
+        source: 'Source',
+        number: 'N° de décision ou pourvoi',
+        agent: 'Agent',
+        creationDate: 'Date de création',
+      },
+      optionItems: {
+        delete: 'Supprimer la pré-affectation',
+      },
+    },
+    createPreAssignationDrawer: {
+      title: 'Ajouter une pré-assignation',
+      fields: {
+        source: 'Source',
+        number: 'N° de document, pourvoi (au format "00-00.000") ou RG (au format "00/00000")',
+        numberPlaceholder: 'Numéro',
+        user: 'Agent',
+      },
+      submit: 'Créer la pré-assignation',
     },
   },
   resetPasswordPage: {

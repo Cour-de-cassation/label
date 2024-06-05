@@ -84,7 +84,7 @@ type customDocumentRepositoryType = {
   ) => Promise<documentType | undefined>;
   updateNlpVersionsById: (
     _id: idType,
-    nlpVersions: documentType['versions'],
+    nlpVersions: documentType['nlpVersions'],
   ) => Promise<documentType | undefined>;
   updateAdditionalTermsParsingFailed: (
     _id: idType,

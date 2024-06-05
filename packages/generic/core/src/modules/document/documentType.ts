@@ -282,7 +282,7 @@ const documentModelCommonFields = {
       { kind: 'primitive', content: 'undefined' },
     ],
   },
-  versions: {
+  nlpVersions: {
     kind: 'object',
     content: {
       juriSpacyTokenizer: {

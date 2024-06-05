@@ -6,7 +6,7 @@ export { updateDocumentNlpVersions };
 
 async function updateDocumentNlpVersions(
   _id: documentType['_id'],
-  nlpVersions: documentType['versions'],
+  nlpVersions: documentType['nlpVersions'],
 ) {
   const documentRepository = buildDocumentRepository();
   const updatedDocument = await documentRepository.updateNlpVersionsById(

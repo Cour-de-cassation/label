@@ -66,7 +66,7 @@ const documentGenerator: generatorType<documentType> = {
     text,
     updateDate,
     zoning,
-    versions,
+    nlpVersions,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date().getTime(),
     decisionMetadata: decisionMetadata ? decisionMetadata : decisionMetadataGenerator.generate(),
@@ -85,7 +85,7 @@ const documentGenerator: generatorType<documentType> = {
     text: text ?? `TEXT_${Math.random()}`,
     updateDate: updateDate ?? new Date().getTime(),
     zoning: zoning ?? undefined,
-    versions: versions ?? nlpVersionsMock,
+    nlpVersions: nlpVersions ?? nlpVersionsMock,
   }),
 };
 

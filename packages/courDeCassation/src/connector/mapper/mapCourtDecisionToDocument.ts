@@ -218,7 +218,7 @@ async function mapCourtDecisionToDocument(
     title,
     text: sderCourtDecision.originalText,
     zoning: zoning,
-    versions: {} as documentType['versions'],
+    nlpVersions: {} as documentType['nlpVersions'],
   });
 }
 function getNumberPrefix(

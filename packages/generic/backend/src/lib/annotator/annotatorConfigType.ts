@@ -22,7 +22,7 @@ type annotatorConfigType = {
     newCategoriesToUnAnnotate?: string[];
     computedAdditionalTerms?: documentType['decisionMetadata']['computedAdditionalTerms'];
     additionalTermsParsingFailed?: boolean;
-    versions: documentType['versions'];
+    versions: documentType['nlpVersions'];
   }>;
   fetchLossOfDocument: (
     document: documentType,

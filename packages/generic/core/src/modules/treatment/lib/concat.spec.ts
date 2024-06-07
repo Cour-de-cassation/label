@@ -13,6 +13,7 @@ describe('concat', () => {
       },
       { documentId: document._id, order: 0, source: 'NLP' as treatmentType['source'] },
       { documentId: document._id, order: 1, source: 'postProcess' as treatmentType['source'] },
+      { documentId: document._id, order: 3, source: 'admin' as treatmentType['source'] },
     ].map(treatmentModule.generator.generate);
 
     const labelTreatments = concat(treatments);
@@ -21,6 +22,7 @@ describe('concat', () => {
       { annotations: [], order: 1, source: 'NLP' },
       { annotations: [], order: 2, source: 'LABEL_AUTO_TREATMENT' },
       { annotations: [], order: 3, source: 'LABEL_WORKING_USER_TREATMENT' },
+      { annotations: [], order: 4, source: 'LABEL_ADMIN_USER_TREATMENT' },
     ]);
   });
 });

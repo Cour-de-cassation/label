@@ -29,7 +29,7 @@ const treatmentModel = buildModel({
     },
     source: {
       kind: 'constant',
-      content: ['annotator', 'admin', 'NLP', 'postProcess', 'supplementaryAnnotations'] as const,
+      content: ['annotator', 'admin', 'NLP', 'postProcess', 'supplementaryAnnotations', 'reimportedTreatment'] as const,
     },
   },
 } as const);

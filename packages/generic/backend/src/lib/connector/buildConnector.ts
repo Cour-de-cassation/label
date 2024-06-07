@@ -6,6 +6,7 @@ import {
 import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 import { decisionType } from 'sder';
+import { treatmentService } from '../../modules/treatment';
 
 export { buildConnector };
 
@@ -53,10 +54,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
     documentNumber,
     source,
     lowPriority,
+    keepLabelTreatments,
   }: {
     documentNumber: number;
     source: string;
     lowPriority: boolean;
+    keepLabelTreatments: boolean;
   }) {
     logger.log({
       operationName: 'importSpecificDocument',
@@ -94,6 +97,30 @@ function buildConnector(connectorConfig: connectorConfigType) {
         operationName: 'importSpecificDocument',
         msg: 'Court decision converted. Inserting document into database...',
       });
+
+      if (keepLabelTreatments) {
+        if (courtDecision.labelTreatments.length == 0) {
+          logger.error({
+            operationName: 'importSpecificDocument',
+            msg:
+              'LabelTreatments not found in court decision, skiping labelTreatments reimport.',
+          });
+        } else {
+          await treatmentService.createTreatment(
+            {
+              documentId: document._id,
+              previousAnnotations: [],
+              nextAnnotations:
+                courtDecision.labelTreatments[
+                  courtDecision.labelTreatments.length - 1
+                ],
+              source: 'reimportedTreatment',
+            },
+            settings,
+          );
+        }
+      }
+
       if (lowPriority) {
         await insertDocument({ ...document });
       } else {
@@ -805,6 +832,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       documentNumber,
       source,
       lowPriority: true,
+      keepLabelTreatments: false,
     });
   }
 }

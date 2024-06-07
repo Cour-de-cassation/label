@@ -14,7 +14,7 @@ function concat(treatments: treatmentType[]): labelTreatmentsType {
 
     labelTreatments.unshift({
       annotations: computeAnnotations(sortedTreatments),
-      source: computeSource(order),
+      source: computeSource(sortedTreatments[order - 1].source),
       order,
     });
     sortedTreatments.pop();
@@ -22,14 +22,16 @@ function concat(treatments: treatmentType[]): labelTreatmentsType {
 
   return labelTreatments;
 
-  function computeSource(order: number) {
-    switch (order) {
-      case 1:
+  function computeSource(source: treatmentType['source']) {
+    switch (source) {
+      case 'NLP':
         return 'NLP';
-      case 2:
-        return 'LABEL_AUTO_TREATMENT';
-      default:
+      case 'annotator':
         return 'LABEL_WORKING_USER_TREATMENT';
+      case 'admin':
+        return 'LABEL_ADMIN_USER_TREATMENT';
+      default:
+        return 'LABEL_AUTO_TREATMENT';
     }
   }
 }

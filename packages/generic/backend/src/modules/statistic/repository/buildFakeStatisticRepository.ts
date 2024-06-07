@@ -53,7 +53,7 @@ const buildFakeStatisticRepository = buildFakeRepositoryBuilder<
         collection.map((treatment) => {
           if (ids.includes(treatment._id)) {
             modifiedCount++;
-            return { ...treatment, treatmentsSummary: null };
+            return { ...treatment, treatmentsSummary: [] };
           } else {
             return treatment;
           }

@@ -23,10 +23,10 @@ describe('deleteTreatmentsSummaryBefore', () => {
 
     const statisticsAfterDeletion = await statisticRepository.findAll();
 
-    expect(statisticsAfterDeletion[0].treatmentsSummary).toEqual(null);
+    expect(statisticsAfterDeletion[0].treatmentsSummary).toEqual([]);
     expect(statisticsAfterDeletion[1].treatmentsSummary).toEqual(
       statistics[1].treatmentsSummary,
     );
-    expect(statisticsAfterDeletion[2].treatmentsSummary).toEqual(null);
+    expect(statisticsAfterDeletion[2].treatmentsSummary).toEqual([]);
   });
 });

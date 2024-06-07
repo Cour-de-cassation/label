@@ -70,7 +70,7 @@ const buildStatisticRepository = buildRepositoryBuilder<
           _id: { $in: ids },
         },
         {
-          $unset: { treatmentsSummary: '' },
+          $set: { treatmentsSummary: [] },
         },
       );
       return result.modifiedCount;

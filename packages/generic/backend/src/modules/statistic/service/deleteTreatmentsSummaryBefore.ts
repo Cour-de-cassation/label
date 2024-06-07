@@ -23,8 +23,8 @@ async function deleteTreatmentsSummaryBefore({
   );
 
   logger.log({
-    operationName: 'deleteStaticticsBefore',
-    msg: `START: ${since}${unit}: ${count} statistics deleted`,
+    operationName: 'deleteTreatmentsSummaryBefore',
+    msg: `START: ${since} ${unit}: ${count} treatments sumary deleted`,
   });
 
   function computeExpirationDate() {

@@ -1,4 +1,4 @@
-import { idModule, statisticType } from '@label/core';
+import { statisticType } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
   updateFakeCollection,

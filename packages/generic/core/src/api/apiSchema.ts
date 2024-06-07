@@ -51,6 +51,39 @@ const apiSchema = {
         },
       } as const),
     },
+    documentStatistics: {
+      in: {
+        documentNumber: documentModule.fetchedModel.content.documentNumber,
+      },
+      out: {
+        kind: 'array',
+        content: buildModel({
+          kind: 'object',
+          content: {
+            ...statisticModule.model.content,
+            treatmentsSummary: {
+              kind: 'array',
+              content: {
+                kind: 'object',
+                content: {
+                  id: buildModel({
+                    kind: 'custom',
+                    content: 'id',
+                  } as const),
+                  statId: buildModel({
+                    kind: 'custom',
+                    content: 'id',
+                  } as const),
+                  treatmentDuration: { kind: 'primitive', content: 'number' },
+                  name: { kind: 'primitive', content: 'string' },
+                  email: { kind: 'primitive', content: 'string' },
+                },
+              },
+            },
+          },
+        }),
+      },
+    },
     checklist: {
       in: {
         documentId: buildModel({

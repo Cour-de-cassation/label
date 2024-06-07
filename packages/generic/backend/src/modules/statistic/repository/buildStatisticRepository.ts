@@ -54,5 +54,17 @@ const buildStatisticRepository = buildRepositoryBuilder<
         maxDate: maxDateStatistics[0]?.treatmentDate,
       };
     },
+
+    async deleteTreatmentsSummaryByIds(ids) {
+      const result = await collection.updateMany(
+        {
+          _id: { $in: ids },
+        },
+        {
+          $unset: { treatmentsSummary: '' },
+        },
+      );
+      return result.modifiedCount;
+    },
   }),
 });

@@ -1,4 +1,10 @@
-import { dateBuilder, documentType, idModule, timeOperator } from '@label/core';
+import {
+  dateBuilder,
+  documentType,
+  idModule,
+  settingsType,
+  timeOperator,
+} from '@label/core';
 import {
   buildDocumentRepository,
   documentService,
@@ -55,15 +61,17 @@ function buildConnector(connectorConfig: connectorConfigType) {
     source,
     lowPriority,
     keepLabelTreatments,
+    settings,
   }: {
     documentNumber: number;
     source: string;
     lowPriority: boolean;
     keepLabelTreatments: boolean;
+    settings: settingsType;
   }) {
     logger.log({
       operationName: 'importSpecificDocument',
-      msg: `START: ${documentNumber} - ${source}, lowPriority: ${lowPriority}`,
+      msg: `START: ${documentNumber} - ${source}, lowPriority: ${lowPriority}, keepLabelTreatments: ${keepLabelTreatments}`,
     });
 
     try {
@@ -106,18 +114,25 @@ function buildConnector(connectorConfig: connectorConfigType) {
               'LabelTreatments not found in court decision, skiping labelTreatments reimport.',
           });
         } else {
+          logger.log({
+            operationName: 'importSpecificDocument',
+            msg: 'LabelTreatments found in court decision, importing.',
+          });
           await treatmentService.createTreatment(
             {
               documentId: document._id,
               previousAnnotations: [],
-              nextAnnotations:
-                courtDecision.labelTreatments[
-                  courtDecision.labelTreatments.length - 1
-                ],
+              nextAnnotations: courtDecision.labelTreatments[
+                courtDecision.labelTreatments.length - 1
+              ].annotations.map((annotation) => ({
+                ...annotation,
+                certaintyScore: 1,
+              })),
               source: 'reimportedTreatment',
             },
             settings,
           );
+          await documentService.updateDocumentStatus(document._id, 'free');
         }
       }
 
@@ -785,9 +800,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function resetDocument({
     documentNumber,
     source,
+    settings,
   }: {
     documentNumber: documentType['documentNumber'];
     source: documentType['source'];
+    settings: settingsType;
   }) {
     const documentRepository = buildDocumentRepository();
 
@@ -833,6 +850,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       source,
       lowPriority: true,
       keepLabelTreatments: false,
+      settings,
     });
   }
 }

@@ -20,6 +20,7 @@ import { parametersHandler } from '../lib/parametersHandler';
         source,
         lowPriority,
         keepLabelTreatments,
+        settings,
       }),
     {
       shouldLoadDb: true,

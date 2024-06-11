@@ -30,6 +30,8 @@ function concat(treatments: treatmentType[]): labelTreatmentsType {
         return 'LABEL_WORKING_USER_TREATMENT';
       case 'admin':
         return 'LABEL_ADMIN_USER_TREATMENT';
+      case 'reimportedTreatment':
+        return 'REIMPORTED_TREATMENT';
       default:
         return 'LABEL_AUTO_TREATMENT';
     }

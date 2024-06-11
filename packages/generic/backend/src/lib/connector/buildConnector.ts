@@ -1,4 +1,6 @@
 import {
+  annotationModule,
+  annotationType,
   dateBuilder,
   documentType,
   idModule,
@@ -106,6 +108,16 @@ function buildConnector(connectorConfig: connectorConfigType) {
         msg: 'Court decision converted. Inserting document into database...',
       });
 
+      if (lowPriority) {
+        await insertDocument({ ...document });
+      } else {
+        await insertDocument({ ...document, route: 'request', priority: 4 });
+      }
+      logger.log({
+        operationName: 'importSpecificDocument',
+        msg: 'Insertion done',
+      });
+
       if (keepLabelTreatments) {
         if (courtDecision.labelTreatments.length == 0) {
           logger.error({
@@ -118,33 +130,35 @@ function buildConnector(connectorConfig: connectorConfigType) {
             operationName: 'importSpecificDocument',
             msg: 'LabelTreatments found in court decision, importing.',
           });
+
+          const annotations: annotationType[] = courtDecision.labelTreatments[
+            courtDecision.labelTreatments.length - 1
+          ].annotations.map((annotation) => {
+            return annotationModule.lib.buildAnnotation({
+              category: annotation.category,
+              start: annotation.start,
+              text: annotation.text,
+              certaintyScore: 1,
+              entityId: annotation.entityId,
+            });
+          });
+
           await treatmentService.createTreatment(
             {
               documentId: document._id,
               previousAnnotations: [],
-              nextAnnotations: courtDecision.labelTreatments[
-                courtDecision.labelTreatments.length - 1
-              ].annotations.map((annotation) => ({
-                ...annotation,
-                certaintyScore: 1,
-              })),
+              nextAnnotations: annotations,
               source: 'reimportedTreatment',
             },
             settings,
           );
+          logger.log({
+            operationName: 'importSpecificDocument',
+            msg: 'LabelTreatments reimported, setting document status to free.',
+          });
           await documentService.updateDocumentStatus(document._id, 'free');
         }
       }
-
-      if (lowPriority) {
-        await insertDocument({ ...document });
-      } else {
-        await insertDocument({ ...document, route: 'request', priority: 4 });
-      }
-      logger.log({
-        operationName: 'importSpecificDocument',
-        msg: 'Insertion done',
-      });
 
       logger.log({
         operationName: 'importSpecificDocument',

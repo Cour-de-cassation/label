@@ -82,7 +82,7 @@ build_label_client:
 
 deploy_label_backend:
   stage: deploy
-  image: alpine/ansible:latest
+  image: alpine/ansible:2.16.1
   script:
     - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
@@ -103,7 +103,7 @@ deploy_label_backend:
 
 deploy_label_client:
   stage: deploy
-  image: alpine/ansible:latest
+  image: alpine/ansible:2.16.1
   script:
     - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh

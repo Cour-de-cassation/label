@@ -51,8 +51,9 @@ function buildExporter(
     for (let index = 0; index < documentsReadyToExport.length; index++) {
       logger.log({
         operationName: 'exportTreatedDocumentsSince',
-        msg: `Exportation of document ${index + 1}/${documentsReadyToExport.length
-          }`,
+        msg: `Exportation of document ${index + 1}/${
+          documentsReadyToExport.length
+        }`,
       });
       const document = documentsReadyToExport[index];
 
@@ -85,8 +86,9 @@ function buildExporter(
     for (let index = 0; index < documentsReadyToExport.length; index++) {
       logger.log({
         operationName: 'exportTreatedPublishableDocuments',
-        msg: `Exportation of document ${index + 1}/${documentsReadyToExport.length
-          }`,
+        msg: `Exportation of document ${index + 1}/${
+          documentsReadyToExport.length
+        }`,
       });
       const document = documentsReadyToExport[index];
 
@@ -190,7 +192,7 @@ function buildExporter(
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
     try {
-      const nlpVersions = document.nlpVersions
+      const nlpVersions = document.nlpVersions;
       // check treatments in concat lib source if nlp set nlpVersions in labelTreatments
       await exporterConfig.sendDocumentPseudonymisationAndTreatments({
         externalId: document.externalId,

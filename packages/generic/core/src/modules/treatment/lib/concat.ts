@@ -13,12 +13,11 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
   while (sortedTreatments.length > 0) {
     const order = sortedTreatments.length;
 
-
     labelTreatments.unshift({
       annotations: computeAnnotations(sortedTreatments),
       source: computeSource(order),
       order,
-      nlpVersions: computeSource(order) == "NLP" ? nlpVersions : undefined,
+      nlpVersions: computeSource(order) == 'NLP' ? nlpVersions : undefined,
     });
     sortedTreatments.pop();
   }

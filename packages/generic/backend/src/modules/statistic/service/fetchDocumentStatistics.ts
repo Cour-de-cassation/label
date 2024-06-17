@@ -37,17 +37,27 @@ async function getUsersAndDuration(
   userTreatments: { userId: ObjectId; treatmentDuration: number }[],
   statId: ObjectId,
 ) {
-  const userIds = userTreatments.map((userTreatment) => userTreatment.userId);
+  const userIds = userTreatments
+    .filter((userTreatment) => userTreatment.userId != undefined)
+    .map((userTreatment) => userTreatment.userId);
   const users = await userService.fetchUsersByIds(userIds);
   return userTreatments.map((userTreatment) => {
-    const userIdString = idModule.lib.convertToString(userTreatment.userId);
-    const { email, name, _id } = users[userIdString];
-    return {
-      email: email,
-      name: name,
-      id: _id,
-      statId: statId,
-      treatmentDuration: userTreatment.treatmentDuration,
-    };
+    if (userTreatment.userId != undefined) {
+      const userIdString = idModule.lib.convertToString(userTreatment.userId);
+      const { name, _id } = users[userIdString];
+      return {
+        name: name,
+        id: _id,
+        statId: statId,
+        treatmentDuration: userTreatment.treatmentDuration,
+      };
+    } else {
+      return {
+        name: undefined,
+        id: undefined,
+        statId: statId,
+        treatmentDuration: userTreatment.treatmentDuration,
+      };
+    }
   });
 }

@@ -39,7 +39,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     documentStatistics: buildAuthenticatedController({
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async (_, { args: { documentNumber } }) => {
-        return statisticService.fetchDocumentStatistics(documentNumber);
+        return await statisticService.fetchDocumentStatistics(documentNumber);
       },
     }),
 

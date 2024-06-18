@@ -85,24 +85,6 @@ const documentGenerator: generatorType<documentType> = {
     text: text ?? `TEXT_${Math.random()}`,
     updateDate: updateDate ?? new Date().getTime(),
     zoning: zoning ?? undefined,
-    nlpVersions: nlpVersions ?? nlpVersionsMock,
+    nlpVersions: nlpVersions ?? undefined,
   }),
-};
-
-const nlpVersionsMock = {
-  juriSpacyTokenizer: {
-    version: `VERSION_${Math.random()}`,
-    date: `DATE_${Math.random()}`,
-  },
-  juritools: {
-    version: `VERSION_${Math.random()}`,
-    date: `DATE_${Math.random()}`,
-  },
-  pseudonymisationApi: {
-    version: `VERSION_${Math.random()}`,
-    date: `DATE_${Math.random()}`,
-  },
-  model: {
-    name: `MODEL_${Math.random()}`,
-  },
 };

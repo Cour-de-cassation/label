@@ -17,7 +17,7 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
       annotations: computeAnnotations(sortedTreatments),
       source: computeSource(order),
       order,
-      nlpVersions: computeSource(order) == 'NLP' ? nlpVersions : undefined,
+      version: computeSource(order) == 'NLP' ? nlpVersions : undefined,
     });
     sortedTreatments.pop();
   }

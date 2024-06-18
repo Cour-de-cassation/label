@@ -23,7 +23,7 @@ type labelTreatmentsType = Array<{
     start: number;
     text: string;
   }>;
-  nlpVersions?: documentType['nlpVersions'];
+  version?: documentType['nlpVersions'];
   source: string;
   order: number;
 }>;

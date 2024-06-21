@@ -365,10 +365,10 @@ const fr = {
       subtitle: 'Statistiques',
     },
     treatedDecisions: 'Décisions traitées',
-    agregatedStatisticsHintMessage: 'Veuillez sélectionner un filtre pour afficher les statistiques',
-    specificStatisticsHintMessage: 'Veuillez chercher par numéro de décision pour afficher les statistiques',
-    specificStatisticsNotFound:
-      "Il n'y a pas de statistiques pour ce numéro de document. Les statistiques sont conservées 6 mois.",
+    agregatedStatisticsHintMessage: 'Veuillez sélectionner un filtre pour afficher les statistiques.',
+    specificStatisticsHintMessage:
+      "Veuillez chercher par numéro de décision pour afficher les statistiques. Le nom de l'agent ayant traité la décision est conservé 6 mois.",
+    specificStatisticsNotFound: "Il n'y a pas de statistiques pour ce numéro de document.",
     box: {
       computation: {
         total: 'Total',

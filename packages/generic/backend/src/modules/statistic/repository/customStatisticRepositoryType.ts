@@ -14,4 +14,5 @@ type customStatisticRepositoryType = {
   findExtremumTreatmentDateBySources: (
     sources: statisticType['source'][],
   ) => Promise<{ minDate: number | undefined; maxDate: number | undefined }>;
+  deleteTreatmentsSummaryByIds: (ids: idType[]) => Promise<number>;
 };

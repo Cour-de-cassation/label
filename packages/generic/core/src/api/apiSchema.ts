@@ -66,17 +66,28 @@ const apiSchema = {
               content: {
                 kind: 'object',
                 content: {
-                  id: buildModel({
-                    kind: 'custom',
-                    content: 'id',
-                  } as const),
+                  id: {
+                    kind: 'or',
+                    content: [
+                      buildModel({
+                        kind: 'custom',
+                        content: 'id',
+                      } as const),
+                      { kind: 'primitive', content: 'undefined' },
+                    ],
+                  },
                   statId: buildModel({
                     kind: 'custom',
                     content: 'id',
                   } as const),
                   treatmentDuration: { kind: 'primitive', content: 'number' },
-                  name: { kind: 'primitive', content: 'string' },
-                  email: { kind: 'primitive', content: 'string' },
+                  name: {
+                    kind: 'or',
+                    content: [
+                      { kind: 'primitive', content: 'string' },
+                      { kind: 'primitive', content: 'undefined' },
+                    ],
+                  },
                 },
               },
             },

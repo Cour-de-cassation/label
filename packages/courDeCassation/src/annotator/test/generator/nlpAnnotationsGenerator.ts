@@ -5,9 +5,10 @@ import { nlpResponseType } from '../../fetcher/api';
 export { nlpAnnotationsGenerator };
 
 const nlpAnnotationsGenerator: generatorType<nlpResponseType> = {
-  generate: ({ entities, checklist } = {}) => ({
+  generate: ({ entities, checklist, versions } = {}) => ({
     entities: entities ? entities : generateRandomNlpAnnotations(),
     checklist: checklist ? checklist : [],
+    versions: versions ? versions : generateRandomNlpVersion(),
   }),
 };
 
@@ -28,4 +29,25 @@ function generateRandomNlpAnnotation() {
     entityId: `LABEL_${text.toLowerCase()}`,
   };
   return entity;
+}
+
+function generateRandomNlpVersion() {
+  const nlpVersion = {
+    juriSpacyTokenizer: {
+      version: `VERSION_${Math.random()}`,
+      date: `DATE_${Math.random()}`,
+    },
+    juritools: {
+      version: `VERSION_${Math.random()}`,
+      date: `DATE_${Math.random()}`,
+    },
+    pseudonymisationApi: {
+      version: `VERSION_${Math.random()}`,
+      date: `DATE_${Math.random()}`,
+    },
+    model: {
+      name: `MODEL_${Math.random()}`,
+    },
+  };
+  return nlpVersion;
 }

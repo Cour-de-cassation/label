@@ -1,5 +1,8 @@
 import { statisticType } from '@label/core';
-import { buildFakeRepositoryBuilder } from '../../../repository';
+import {
+  buildFakeRepositoryBuilder,
+  updateFakeCollection,
+} from '../../../repository';
 import { buildFakeRessourceFilterRequest } from '../../ressourceFilter';
 import { customStatisticRepositoryType } from './customStatisticRepositoryType';
 
@@ -41,6 +44,22 @@ const buildFakeStatisticRepository = buildFakeRepositoryBuilder<
         minDate: sortedItems[0]?.treatmentDate,
         maxDate: sortedItems[sortedItems.length - 1]?.treatmentDate,
       };
+    },
+
+    async deleteTreatmentsSummaryByIds(ids) {
+      let modifiedCount = 0;
+      updateFakeCollection(
+        collection,
+        collection.map((treatment) => {
+          if (ids.includes(treatment._id)) {
+            modifiedCount++;
+            return { ...treatment, treatmentsSummary: [] };
+          } else {
+            return treatment;
+          }
+        }),
+      );
+      return modifiedCount;
     },
   }),
 });

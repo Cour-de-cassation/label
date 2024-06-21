@@ -7,7 +7,6 @@ import { wordings } from '../../../../wordings';
 export { DocumentStatisticsBox };
 
 type treatmentsSummaryType = {
-  email: string;
   id: string;
   name: string;
   statId: string;
@@ -147,7 +146,7 @@ function DocumentStatisticsBox(props: { documentStatistic: documentStatsType; wi
       .map((treatment) => timeOperator.convertDurationToReadableDuration(treatment.treatmentDuration))
       .join(', ');
 
-    const agent = uniqueTreatments.map((treatment) => treatment.name).join(', ');
+    const agent = uniqueTreatments.map((treatment) => treatment.name || 'N/A').join(', ');
 
     return [
       {

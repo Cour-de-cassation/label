@@ -10,16 +10,21 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
 
   const sortedTreatments = treatments.sort((treatment1, treatment2) => treatment1.order - treatment2.order);
 
-  while (sortedTreatments.length > 0) {
-    const order = sortedTreatments.length;
+  // Reimported treatment are already in sder database
+  const treatmentsWithoutReimported = sortedTreatments.filter((treatment) => {
+    treatment.source != 'reimportedTreatment';
+  });
+
+  while (treatmentsWithoutReimported.length > 0) {
+    const order = treatmentsWithoutReimported.length;
 
     labelTreatments.unshift({
-      annotations: computeAnnotations(sortedTreatments),
-      source: computeSource(sortedTreatments[order - 1].source),
+      annotations: computeAnnotations(treatmentsWithoutReimported),
+      source: computeSource(treatmentsWithoutReimported[order - 1].source),
       order,
-      version: computeSource(order) == 'NLP' ? nlpVersions : undefined,
+      version: treatmentsWithoutReimported[order - 1].source === 'NLP' ? nlpVersions : undefined,
     });
-    sortedTreatments.pop();
+    treatmentsWithoutReimported.pop();
   }
 
   return labelTreatments;
@@ -32,8 +37,6 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
         return 'LABEL_WORKING_USER_TREATMENT';
       case 'admin':
         return 'LABEL_ADMIN_USER_TREATMENT';
-      case 'reimportedTreatment':
-        return 'REIMPORTED_TREATMENT';
       default:
         return 'LABEL_AUTO_TREATMENT';
     }

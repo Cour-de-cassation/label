@@ -2,6 +2,24 @@ import { documentModule } from '@label/core';
 import { nlpResponseType } from '../api';
 import { nlpMapper } from './nlpMapper';
 
+const nlpVersion = {
+  juriSpacyTokenizer: {
+    version: '0.13.21',
+    date: '2024-01-01 12:00:00',
+  },
+  juritools: {
+    version: '0.13.21',
+    date: '2024-01-01 12:00:00',
+  },
+  pseudonymisationApi: {
+    version: '0.13.21',
+    date: '2024-01-01 12:00:00',
+  },
+  model: {
+    name: 'new_categories_model.pt',
+  },
+};
+
 const nlpAnnotations: nlpResponseType = {
   entities: [
     {
@@ -24,6 +42,7 @@ const nlpAnnotations: nlpResponseType = {
     },
   ],
   checklist: ['CHECK 1', 'CHECK 2'],
+  versions: nlpVersion,
 };
 
 const nlpAnnotationsWithAdditionalTerms: nlpResponseType = {
@@ -49,6 +68,7 @@ const nlpAnnotationsWithAdditionalTerms: nlpResponseType = {
   ],
   checklist: ['CHECK 1', 'CHECK 2'],
   additionalTermsToUnAnnotate: ['blabla', 'toto'],
+  versions: nlpVersion,
 };
 
 const document = documentModule.generator.generate({

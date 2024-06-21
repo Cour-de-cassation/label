@@ -282,6 +282,44 @@ const documentModelCommonFields = {
       { kind: 'primitive', content: 'undefined' },
     ],
   },
+  nlpVersions: {
+    kind: 'or',
+    content: [
+      {
+        kind: 'object',
+        content: {
+          juriSpacyTokenizer: {
+            kind: 'object',
+            content: {
+              version: { kind: 'primitive', content: 'string' },
+              date: { kind: 'primitive', content: 'string' },
+            },
+          },
+          juritools: {
+            kind: 'object',
+            content: {
+              version: { kind: 'primitive', content: 'string' },
+              date: { kind: 'primitive', content: 'string' },
+            },
+          },
+          pseudonymisationApi: {
+            kind: 'object',
+            content: {
+              version: { kind: 'primitive', content: 'string' },
+              date: { kind: 'primitive', content: 'string' },
+            },
+          },
+          model: {
+            kind: 'object',
+            content: {
+              name: { kind: 'primitive', content: 'string' },
+            },
+          },
+        },
+      },
+      { kind: 'primitive', content: 'undefined' },
+    ],
+  },
   publicationCategory: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
   reviewStatus: {
     kind: 'object',

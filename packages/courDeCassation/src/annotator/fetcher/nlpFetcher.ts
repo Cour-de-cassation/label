@@ -35,6 +35,7 @@ function buildNlpFetcher(nlpApiBaseUrl: string | undefined) {
         ),
         additionalTermsParsingFailed:
           nlpAnnotations.additionalTermsParsingFailed,
+        version: nlpAnnotations.versions,
       };
     },
     async fetchLossOfDocument(

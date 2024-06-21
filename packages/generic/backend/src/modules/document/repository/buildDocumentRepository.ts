@@ -207,6 +207,12 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .toArray();
     },
 
+    async updateNlpVersionsById(_id, nlpVersions) {
+      await collection.updateOne({ _id }, { $set: { nlpVersions } });
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
     async updateLossById(_id, loss) {
       await collection.updateOne({ _id }, { $set: { loss } });
       const updatedDocument = await collection.findOne({ _id });

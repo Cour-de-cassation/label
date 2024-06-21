@@ -1,7 +1,7 @@
 import { labelTreatmentsType } from '@label/backend';
 import { documentType, settingsType } from '@label/core';
 
-export type { nlpApiType, nlpResponseType, nlpLossType };
+export type { nlpApiType, nlpResponseType, nlpLossType, nlpVersion };
 
 type nlpApiType = {
   fetchNlpAnnotations: (
@@ -14,6 +14,19 @@ type nlpApiType = {
   ) => Promise<nlpLossType>;
 };
 
+type nlpVersionDetails = {
+  version: string;
+  date: string;
+};
+type nlpVersion = {
+  juriSpacyTokenizer: nlpVersionDetails;
+  juritools: nlpVersionDetails;
+  pseudonymisationApi: nlpVersionDetails;
+  model: {
+    name: string;
+  };
+};
+
 type nlpResponseType = {
   entities: nlpAnnotationType[];
   checklist: string[];
@@ -22,6 +35,7 @@ type nlpResponseType = {
   additionalTermsToAnnotate?: string[];
   additionalTermsToUnAnnotate?: string[];
   additionalTermsParsingFailed?: boolean;
+  versions: nlpVersion;
 };
 
 type nlpAnnotationType = {

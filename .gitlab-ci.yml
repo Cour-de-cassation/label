@@ -52,7 +52,7 @@ build_label_backend:
       -t $docker_backend_image .
     - docker push $docker_backend_image
   only:
-    - feat/keep-labelTreatments-when-reimport
+    - /^feat\/keep-labelTreatments-when-reimport$/
     - master
     - re7
     # - dev
@@ -75,7 +75,7 @@ build_label_client:
       -t $docker_client_image .
     - docker push $docker_client_image
   only:
-    - feat/keep-labelTreatments-when-reimport
+    - /^feat\/keep-labelTreatments-when-reimport$/
     - master
     - re7
     # - dev

@@ -14,7 +14,7 @@
         entryPoints:
           - web
         routes:
-          - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/label/api`)
+          - match: Host(`xpl.judilibre-prive.local`) && PathPrefix(`/label/api`)
             kind: Rule
             services:
               - name: "{{ label_back_app_id }}-service"

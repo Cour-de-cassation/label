@@ -15,6 +15,7 @@ import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 import { decisionType } from 'sder';
 import { treatmentService } from '../../modules/treatment';
+import { buildPreAssignator } from '../preAssignator';
 
 export { buildConnector };
 
@@ -154,12 +155,20 @@ function buildConnector(connectorConfig: connectorConfigType) {
           );
           logger.log({
             operationName: 'importSpecificDocument',
-            msg: 'LabelTreatments reimported, setting document status to free.',
+            msg: 'LabelTreatments reimported, checking for pre-assignation.',
           });
-          await documentService.updateDocumentStatus(document._id, 'free');
+          const preAssignator = buildPreAssignator();
+          const isPreassignated = preAssignator.preAssignDocument(document);
+          if (!isPreassignated) {
+            logger.log({
+              operationName: 'importSpecificDocument',
+              msg: 'No preAssignation found, setting documentStatus to free.',
+            });
+          }
         }
       }
 
+      // update this logger
       logger.log({
         operationName: 'importSpecificDocument',
         msg: 'Send document has been loaded...',

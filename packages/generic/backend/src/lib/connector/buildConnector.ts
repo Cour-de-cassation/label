@@ -158,7 +158,9 @@ function buildConnector(connectorConfig: connectorConfigType) {
             msg: 'LabelTreatments reimported, checking for pre-assignation.',
           });
           const preAssignator = buildPreAssignator();
-          const isPreassignated = preAssignator.preAssignDocument(document);
+          const isPreassignated = await preAssignator.preAssignDocument(
+            document,
+          );
           if (!isPreassignated) {
             logger.log({
               operationName: 'importSpecificDocument',

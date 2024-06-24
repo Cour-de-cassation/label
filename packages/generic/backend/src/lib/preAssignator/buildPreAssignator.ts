@@ -14,54 +14,63 @@ function buildPreAssignator() {
   async function preAssignDocument(document: documentType): Promise<boolean> {
     logger.log({
       operationName: 'preAssignation',
-      msg: `Starting for preAssignation for document ${document.source} ${document.documentNumber}`,
+      msg: `Starting preAssignation for document ${document.source} ${document.documentNumber}`,
     });
 
-    if (document.status != 'nlpAnnotating' && document.status != 'loaded')
-      throw new Error(
-        'Document status must be loaded or nlpAnnotating before pre-assign it',
-      );
-
-    const preAssignationForDocument =
-      (await preAssignationService.fetchPreAssignationBySourceAndNumber(
-        document.documentNumber.toString(),
-        document.source,
-      )) ||
-      (await preAssignationService.fetchPreAssignationBySourceAndNumber(
-        document.decisionMetadata.appealNumber,
-        document.source,
-      ));
-
-    if (preAssignationForDocument != undefined) {
+    if (document.status === 'nlpAnnotating' || document.status === 'loaded') {
       logger.log({
         operationName: 'preAssignation',
-        msg: `Pre-assignation found for document ${document.source} ${document.documentNumber}. Matching pre-assignation number : ${preAssignationForDocument.number}. Creating assignation...`,
+        msg: `in preassignation`,
       });
-      await assignationService.createAssignation({
-        documentId: idModule.lib.buildId(document._id),
-        userId: idModule.lib.buildId(preAssignationForDocument.userId),
-      });
-      await preAssignationService.deletePreAssignation(
-        preAssignationForDocument._id,
-      );
-      if (document.route === 'automatic' || document.route === 'simple') {
-        await documentService.updateDocumentRoute(
-          idModule.lib.buildId(document._id),
-          'exhaustive',
-        );
-      }
-      await documentService.updateDocumentStatus(
-        idModule.lib.buildId(document._id),
-        'saved',
-      );
+      const preAssignationForDocument =
+        (await preAssignationService.fetchPreAssignationBySourceAndNumber(
+          document.documentNumber.toString(),
+          document.source,
+        )) ||
+        (await preAssignationService.fetchPreAssignationBySourceAndNumber(
+          document.decisionMetadata.appealNumber,
+          document.source,
+        ));
 
-      return true;
+      if (preAssignationForDocument != undefined) {
+        logger.log({
+          operationName: 'preAssignation',
+          msg: `Pre-assignation found for document ${document.source} ${document.documentNumber}. Matching pre-assignation number : ${preAssignationForDocument.number}. Creating assignation...`,
+        });
+        await assignationService.createAssignation({
+          documentId: idModule.lib.buildId(document._id),
+          userId: idModule.lib.buildId(preAssignationForDocument.userId),
+        });
+        await preAssignationService.deletePreAssignation(
+          preAssignationForDocument._id,
+        );
+        if (document.route === 'automatic' || document.route === 'simple') {
+          await documentService.updateDocumentRoute(
+            idModule.lib.buildId(document._id),
+            'exhaustive',
+          );
+        }
+        await documentService.updateDocumentStatus(
+          idModule.lib.buildId(document._id),
+          'saved',
+        );
+
+        return true;
+      } else {
+        logger.log({
+          operationName: 'preAssignation',
+          msg: `Pre-assignation not found for document ${document.source} ${document.documentNumber}`,
+        });
+        return false;
+      }
     } else {
       logger.log({
         operationName: 'preAssignation',
-        msg: `Pre-assignation not found for document ${document.source} ${document.documentNumber}`,
+        msg: `out preassignation`,
       });
-      return false;
+      throw new Error(
+        'Document status must be loaded or nlpAnnotating before pre-assign it',
+      );
     }
   }
 }

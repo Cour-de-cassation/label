@@ -3,7 +3,7 @@ services:
   - docker:20.10.22-dind
 
 variables:
-  ops/deployDev: dev
+  ops_deployDev: dev
   re7: preprod
   master: prod
   docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
@@ -94,7 +94,7 @@ deploy_label_backend:
     - chmod 600 /root/.ssh/known_hosts
     - ansible-playbook -e label_backend_image=$docker_backend_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_backend.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7" || $CI_COMMIT_BRANCH == "ops/deployDev"
       when: manual
     - if: $CI_COMMIT_BRANCH == "dev"
       when: on_success
@@ -115,7 +115,7 @@ deploy_label_client:
     - chmod 600 /root/.ssh/known_hosts
     - ansible-playbook -e label_client_image=$docker_client_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_client.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7" || $CI_COMMIT_BRANCH == "ops/deployDev"
       when: manual
     - if: $CI_COMMIT_BRANCH == "dev"
       when: on_success

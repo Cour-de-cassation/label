@@ -166,14 +166,17 @@ function buildConnector(connectorConfig: connectorConfigType) {
               operationName: 'importSpecificDocument',
               msg: 'No preAssignation found, setting documentStatus to free.',
             });
+            await documentService.updateDocumentStatus(
+              idModule.lib.buildId(document._id),
+              'free',
+            );
           }
         }
       }
 
-      // update this logger
       logger.log({
         operationName: 'importSpecificDocument',
-        msg: 'Send document has been loaded...',
+        msg: 'Selected document has been inserted in label database.',
       });
       await connectorConfig.updateDocumentsLoadedStatus({
         documents: [document],

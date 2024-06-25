@@ -11,9 +11,7 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
   const sortedTreatments = treatments.sort((treatment1, treatment2) => treatment1.order - treatment2.order);
 
   // Reimported treatment are already in sder database
-  const treatmentsWithoutReimported = sortedTreatments.filter((treatment) => {
-    treatment.source != 'reimportedTreatment';
-  });
+  const treatmentsWithoutReimported = sortedTreatments.filter((treatment) => treatment.source != 'reimportedTreatment');
 
   while (treatmentsWithoutReimported.length > 0) {
     const order = treatmentsWithoutReimported.length;

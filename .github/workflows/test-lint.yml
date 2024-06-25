@@ -6,13 +6,13 @@ on:
       - dev
       - re7
       - master
-      - opsDeployDev
+      #- opsDeployDev
   push:
     branches:
       - dev
       - re7
       - master
-      - opsDeployDev
+      #- opsDeployDev
 
 jobs:
   build:

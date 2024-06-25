@@ -6,8 +6,8 @@ variables:
   ops_deployDev: dev
   re7: preprod
   master: prod
-  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
-  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:testdev-$CI_COMMIT_SHORT_SHA"
+  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label/client:testdev-$CI_COMMIT_SHORT_SHA"
 
 stages:
   - test

@@ -10,22 +10,24 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
 
   const sortedTreatments = treatments.sort((treatment1, treatment2) => treatment1.order - treatment2.order);
 
-  // Reimported treatment are already in sder database
-  const treatmentsWithoutReimported = sortedTreatments.filter((treatment) => treatment.source != 'reimportedTreatment');
-
-  while (treatmentsWithoutReimported.length > 0) {
-    const order = treatmentsWithoutReimported.length;
+  while (sortedTreatments.length > 0) {
+    const order = sortedTreatments.length;
 
     labelTreatments.unshift({
-      annotations: computeAnnotations(treatmentsWithoutReimported),
-      source: computeSource(treatmentsWithoutReimported[order - 1].source),
+      annotations: computeAnnotations(sortedTreatments),
+      source: computeSource(sortedTreatments[order - 1].source),
       order,
-      version: treatmentsWithoutReimported[order - 1].source === 'NLP' ? nlpVersions : undefined,
+      version: sortedTreatments[order - 1].source === 'NLP' ? nlpVersions : undefined,
     });
-    treatmentsWithoutReimported.pop();
+    sortedTreatments.pop();
   }
 
-  return labelTreatments;
+  // Reimported treatment are already in sder database
+  const labelTreatmentsWithoutReimported = labelTreatments.filter(
+    (labelTreatment) => labelTreatment.source != 'reimportedTreatment',
+  );
+
+  return labelTreatmentsWithoutReimported;
 
   function computeSource(source: treatmentType['source']) {
     switch (source) {

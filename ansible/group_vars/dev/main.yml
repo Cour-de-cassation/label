@@ -1,4 +1,4 @@
-git_branch: ops/deployDev
+git_branch: opsDeployDev
 
 sder_mongodb_url: "{{ vault_sder_mongodb_url }}"
 label_mongodb_url: "{{ vault_label_mongodb_url }}"

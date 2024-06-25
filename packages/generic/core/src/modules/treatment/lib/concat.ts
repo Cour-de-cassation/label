@@ -24,7 +24,7 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
 
   // Reimported treatment are already in sder database
   const labelTreatmentsWithoutReimported = labelTreatments.filter(
-    (labelTreatment) => labelTreatment.source != 'reimportedTreatment',
+    (labelTreatment) => labelTreatment.source != 'REIMPORTED_TREATMENT',
   );
 
   return labelTreatmentsWithoutReimported;
@@ -37,6 +37,8 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
         return 'LABEL_WORKING_USER_TREATMENT';
       case 'admin':
         return 'LABEL_ADMIN_USER_TREATMENT';
+      case 'reimportedTreatment':
+        return 'REIMPORTED_TREATMENT';
       default:
         return 'LABEL_AUTO_TREATMENT';
     }

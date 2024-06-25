@@ -3,7 +3,7 @@ services:
   - docker:20.10.22-dind
 
 variables:
-  ops_deployDev: dev
+  dev: dev
   re7: preprod
   master: prod
   docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:testdev-$CI_COMMIT_SHORT_SHA"
@@ -86,7 +86,8 @@ deploy_label_backend:
   stage: deploy
   image: alpine/ansible:2.16.1
   script:
-    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
+    - inventaire="dev"
+    #- inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
@@ -107,7 +108,8 @@ deploy_label_client:
   stage: deploy
   image: alpine/ansible:2.16.1
   script:
-    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
+    - inventaire="dev"
+    #- inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts

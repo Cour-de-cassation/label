@@ -14,6 +14,9 @@ stages:
   - build
   - deploy
 
+before_script:
+  - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD
+
 # Partie à compléter par les développeurs label
 # test:
 #   stage: test

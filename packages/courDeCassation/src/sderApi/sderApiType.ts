@@ -1,6 +1,6 @@
 import { decisionType, publishStatusType } from 'sder';
 import { documentType } from '@label/core';
-import { labelTreatmentsType } from '@label/backend';
+import { labelTreatmentsType } from 'sder';
 
 export type { sderApiType };
 

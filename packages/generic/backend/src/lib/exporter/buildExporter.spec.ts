@@ -7,7 +7,8 @@ import {
 import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildExporter } from './buildExporter';
-import { exporterConfigType, labelTreatmentsType } from './exporterConfigType';
+import { exporterConfigType } from './exporterConfigType';
+import { labelTreatmentsType } from 'sder';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 describe('buildExporter', () => {

@@ -1,4 +1,4 @@
-import { labelTreatmentsType } from '@label/backend';
+import { labelTreatmentsType } from 'sder';
 import { documentType, settingsType } from '@label/core';
 
 export type { nlpApiType, nlpResponseType, nlpLossType, nlpVersion };

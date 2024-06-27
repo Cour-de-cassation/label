@@ -8,15 +8,12 @@ import {
   settingsType,
   treatmentModule,
   annotationModule,
-  preAssignationType,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
-import { preAssignationService } from '../../modules/preAssignation';
-import { assignationService } from '../../modules/assignation';
 import { buildPreAssignator } from '../preAssignator';
 
 export { buildAnnotator };

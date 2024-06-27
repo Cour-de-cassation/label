@@ -1,9 +1,4 @@
-import {
-  documentModule,
-  idModule,
-  preAssignationModule,
-  userModule,
-} from '@label/core';
+import { documentModule, preAssignationModule, userModule } from '@label/core';
 import { buildPreAssignator } from './buildPreAssignator';
 import { buildUserRepository } from '../../modules/user';
 import { buildPreAssignationRepository } from '../../modules/preAssignation';

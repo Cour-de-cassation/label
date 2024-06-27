@@ -1,4 +1,4 @@
-import { labelTreatmentsType } from '@label/backend';
+import { labelTreatmentsType } from 'sder';
 import { idModule } from '@label/core';
 import { mapCourtDecisionToDocument } from './mapCourtDecisionToDocument';
 

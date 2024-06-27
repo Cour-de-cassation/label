@@ -1,4 +1,4 @@
-import { preAssignationType } from '@label/core';
+import { idType, preAssignationType } from '@label/core';
 import { buildRepositoryBuilder } from '../../../repository';
 import { customPreAssignationRepositoryType } from './customPreAssignationRepositoryType';
 
@@ -22,6 +22,10 @@ const buildPreAssignationRepository = buildRepositoryBuilder<
         source,
       });
       return preAssignation || undefined;
+    },
+
+    async deleteById(id: idType) {
+      await collection.deleteOne({ _id: id });
     },
   }),
 });

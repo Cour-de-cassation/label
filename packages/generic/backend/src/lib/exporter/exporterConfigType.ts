@@ -1,7 +1,7 @@
 import { documentType } from '@label/core';
-import { publishStatusType } from 'sder';
+import { publishStatusType, labelTreatmentsType } from 'sder';
 
-export type { exporterConfigType, labelTreatmentsType };
+export type { exporterConfigType };
 
 type exporterConfigType = {
   name: string;
@@ -15,15 +15,3 @@ type exporterConfigType = {
     externalId: documentType['externalId'];
   }) => Promise<void>;
 };
-
-type labelTreatmentsType = Array<{
-  annotations: Array<{
-    category: string;
-    entityId: string;
-    start: number;
-    text: string;
-  }>;
-  version?: documentType['nlpVersions'];
-  source: string;
-  order: number;
-}>;

@@ -1,4 +1,4 @@
-import { preAssignationType } from '@label/core';
+import { idType, preAssignationType } from '@label/core';
 
 export type { customPreAssignationRepositoryType };
 
@@ -10,4 +10,5 @@ type customPreAssignationRepositoryType = {
     number: string;
     source: string;
   }) => Promise<preAssignationType | undefined>;
+  deleteById: (id: idType) => Promise<void>;
 };

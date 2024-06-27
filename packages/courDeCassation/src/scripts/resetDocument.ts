@@ -9,7 +9,7 @@ import { sderConnector } from '../connector';
   const backend = buildBackend(settings);
 
   backend.runScript(
-    () => sderConnector.resetDocument({ documentNumber, source }),
+    () => sderConnector.resetDocument({ documentNumber, source, settings }),
     {
       shouldLoadDb: true,
     },

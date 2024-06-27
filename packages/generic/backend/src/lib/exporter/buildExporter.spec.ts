@@ -3,6 +3,7 @@ import {
   documentModule,
   settingsModule,
   treatmentModule,
+  treatmentType,
 } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
@@ -51,6 +52,8 @@ describe('buildExporter', () => {
           },
           documentId: documents[0]._id,
           order: 0,
+          lastUpdateDate: 123,
+          source: 'NLP' as treatmentType['source'],
         },
         {
           annotationsDiff: {
@@ -66,7 +69,9 @@ describe('buildExporter', () => {
             ],
           },
           documentId: documents[2]._id,
-          order: 0,
+          order: 1,
+          lastUpdateDate: 456,
+          source: 'NLP' as treatmentType['source'],
         },
       ].map(treatmentModule.generator.generate);
       await Promise.all(documents.map(documentRepository.insert));
@@ -100,6 +105,8 @@ describe('buildExporter', () => {
               ],
               source: 'NLP',
               order: 1,
+              treatmentDate: 123,
+              version: undefined,
             },
           ],
           [
@@ -115,6 +122,8 @@ describe('buildExporter', () => {
               ],
               source: 'NLP',
               order: 1,
+              treatmentDate: 456,
+              version: undefined,
             },
           ],
         ].sort(),

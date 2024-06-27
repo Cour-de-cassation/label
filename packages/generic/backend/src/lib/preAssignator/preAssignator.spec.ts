@@ -18,7 +18,9 @@ describe('buildPreAssignator', () => {
     });
     expect(
       preAssignator.preAssignDocument(documentNotFree),
-    ).rejects.toThrowError('Document status must be free before pre-assign it');
+    ).rejects.toThrowError(
+      'Document status must be loaded or nlpAnnotating before pre-assign it',
+    );
   });
 
   it('must find preAssignation and assign document', async () => {
@@ -31,7 +33,7 @@ describe('buildPreAssignator', () => {
     const documentNumber = 123456;
     const source = 'juritest';
     const documentToPreAssign = documentModule.generator.generate({
-      status: 'free',
+      status: 'loaded',
       source: source,
       documentNumber: documentNumber,
     });
@@ -43,8 +45,6 @@ describe('buildPreAssignator', () => {
       source: source,
     });
     await preAssignationRepository.insert(preAssignation);
-
-    await preAssignator.preAssignDocument(documentToPreAssign);
 
     expect(await preAssignator.preAssignDocument(documentToPreAssign)).toEqual(
       true,

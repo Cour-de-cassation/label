@@ -21,6 +21,7 @@ import {
   resetUntreatedDocumentsForTest,
   revertOneMigration,
   runNewMigrations,
+  promptDailyStats,
 } from './scripts';
 import { cleanDuplicatedDocuments } from './scripts/cleanDocuments';
 
@@ -113,6 +114,10 @@ function buildBackend(settings: settingsType) {
       },
       cleanDuplicatedDocuments: {
         run: cleanDuplicatedDocuments,
+        option: { shouldLoadDb: true, shouldExit: false },
+      },
+      promptDailyStats: {
+        run: promptDailyStats,
         option: { shouldLoadDb: true, shouldExit: false },
       },
     },

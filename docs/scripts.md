@@ -89,8 +89,10 @@ Import documents from the SDER database with jurisdiction and chamber filter bet
 ## importAllDocumentsFromSderSinceOrBetween
 
 Import documents from the SDER database since X days / or with optional param, you give a scope "from --- to".
+
 - example : command: "importAllDocumentsFromSderSinceOrBetween.js --days 7"
 - example with scope : command: "importAllDocumentsFromSderSinceOrBetween.js --days 7 --to 1"
+
 ## importChainedDocumentsFromSder
 
 Import from the SDER database JuriCA decisions to pseudonymise chained with Jurinet decisions that are in the SDER database.
@@ -168,3 +170,7 @@ Run migrations.
 ## updateRouteForFreeDocuments
 
 Reapply route rules for documents with a specific status.
+
+## promptDailyStats
+
+Log daily statistics for all active users to build elastic dashboards

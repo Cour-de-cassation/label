@@ -18,10 +18,6 @@ function buildPreAssignator() {
     });
 
     if (document.status === 'nlpAnnotating' || document.status === 'loaded') {
-      logger.log({
-        operationName: 'preAssignation',
-        msg: `in preassignation`,
-      });
       const preAssignationForDocument =
         (await preAssignationService.fetchPreAssignationBySourceAndNumber(
           document.documentNumber.toString(),
@@ -55,6 +51,11 @@ function buildPreAssignator() {
           'saved',
         );
 
+        logger.log({
+          operationName: 'preAssignation',
+          msg: `Pre-assignation DONE`,
+        });
+
         return true;
       } else {
         logger.log({
@@ -64,9 +65,9 @@ function buildPreAssignator() {
         return false;
       }
     } else {
-      logger.log({
+      logger.error({
         operationName: 'preAssignation',
-        msg: `out preassignation`,
+        msg: `Document status must be loaded or nlpAnnotating before pre-assign it`,
       });
       throw new Error(
         'Document status must be loaded or nlpAnnotating before pre-assign it',

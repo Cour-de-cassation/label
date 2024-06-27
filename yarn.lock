@@ -15032,9 +15032,9 @@ schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.1, schema-utils@^2.6
     jsonwebtoken "^8.5.1"
     lodash "^4.17.21"
 
-"sder@https://github.com/Cour-de-cassation/sder#08e7f21956682737d9beb37d59a513d29f0accf0":
+"sder@https://github.com/Cour-de-cassation/sder#23128aa1540922a30d4c66535b1084084dabab35":
   version "1.0.0"
-  resolved "https://github.com/Cour-de-cassation/sder#08e7f21956682737d9beb37d59a513d29f0accf0"
+  resolved "https://github.com/Cour-de-cassation/sder#23128aa1540922a30d4c66535b1084084dabab35"
   dependencies:
     bcryptjs "^2.4.3"
     body-parser "^1.19.0"

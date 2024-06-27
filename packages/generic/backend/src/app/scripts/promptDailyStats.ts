@@ -36,9 +36,9 @@ async function promptDailyStats(settings: settingsType) {
         settings,
       );
       logger.log({
-        operationName: 'promptDailyStats',
-        msg: `dailyStats of user ${user.name}`,
-        data: aggregatedStats,
+        operationName: 'userDailyStats',
+        msg: `dailyStats of ${user.name}`,
+        data: { userName: user.name, ...aggregatedStats },
       });
     } catch (error) {
       logger.error({

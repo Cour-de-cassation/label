@@ -1,7 +1,7 @@
 import { logger } from '../../utils';
 import { ressourceFilterType, settingsType } from '@label/core';
 import { userService } from '../../modules/user';
-import { fetchAggregatedStatisticsAccordingToFilter } from '../../modules/statistic/service/fetchAggregatedStatisticsAccordingToFilter';
+import { statisticService } from '../../modules/statistic';
 
 export { promptDailyStats };
 
@@ -9,7 +9,9 @@ async function promptDailyStats(settings: settingsType) {
   logger.log({ operationName: 'promptDailyStats', msg: 'START' });
 
   // Fetch working users
-  const activeUsers = await userService.fetchWorkingUsers();
+  const activeUsers = (await userService.fetchWorkingUsers()).filter((user) => {
+    return user.role === 'annotator' && user.isActivated === true;
+  });
 
   // Define the date range for the last 24 hours
   const endDate = Date.now();
@@ -31,7 +33,7 @@ async function promptDailyStats(settings: settingsType) {
     };
 
     try {
-      const aggregatedStats = await fetchAggregatedStatisticsAccordingToFilter(
+      const aggregatedStats = await statisticService.fetchAggregatedStatisticsAccordingToFilter(
         filter,
         settings,
       );

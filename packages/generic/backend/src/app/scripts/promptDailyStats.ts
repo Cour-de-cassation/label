@@ -8,23 +8,20 @@ export { promptDailyStats };
 async function promptDailyStats(settings: settingsType) {
   logger.log({ operationName: 'promptDailyStats', msg: 'START' });
 
-  // Fetch working users
   const activeUsers = (await userService.fetchWorkingUsers()).filter((user) => {
     return user.role === 'annotator' && user.isActivated === true;
   });
 
-  // Define the date range for the last 24 hours
   const endDate = Date.now();
   const startDate = endDate - 24 * 60 * 60 * 1000;
 
-  // Iterate over each active user and fetch their statistics
   for (const user of activeUsers) {
     const filter: ressourceFilterType = {
       mustHaveSurAnnotations: false,
       mustHaveSubAnnotations: false,
       startDate,
       endDate,
-      userId: user._id, // Assuming user._id is the correct user ID
+      userId: user._id,
       importer: undefined,
       jurisdiction: undefined,
       publicationCategory: undefined,

@@ -7,6 +7,8 @@ import {
 import { assignationService } from '../../assignation';
 import { treatmentService } from '../../treatment';
 import { buildStatisticRepository } from '../repository';
+import { logger } from '../../../utils';
+import { userService } from 'src/modules/user';
 
 export { saveStatisticsOfDocument };
 
@@ -36,6 +38,22 @@ async function saveStatisticsOfDocument(
     treatments,
     humanTreatments,
     settings,
+  });
+
+  if (humanTreatments && humanTreatments.length > 0) {
+    humanTreatments.forEach(async (humanTreatment) => {
+      const user = await userService.fetchUsersByIds([humanTreatment.userId]);
+      logger.log({
+        operationName: 'documentStatistics',
+        msg: `Human treatment for document ${document.source}:${document.documentNumber} : ${user.name} treat document in ${humanTreatment.treatment.duration}`,
+      });
+    });
+  }
+
+  logger.log({
+    operationName: 'documentStatistics',
+    msg: `Create statistics for document ${document.source}:${document.documentNumber}`,
+    data: { statistic },
   });
 
   await statisticRepository.insert(statistic);

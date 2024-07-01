@@ -30,8 +30,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
     threshold: number;
   }) {
     logger.log({
-      operationName: 'annotateDocument',
-      msg: `importChainedDocumentsFromSder: ${threshold}`,
+      operationName: 'importChainedDocumentsFromSder',
+      msg: `Import chained documents from sder with ${threshold} threshold`,
     });
 
     const documentRepository = buildDocumentRepository();
@@ -813,12 +813,51 @@ async function insertDocuments(documents: documentType[]) {
   const documentRepository = buildDocumentRepository();
 
   for await (const document of documents) {
-    await documentRepository.insert(document);
+    try {
+      await documentRepository.insert(document);
+      logger.log({
+        operationName: 'documentInsertion',
+        msg: `Document ${document.source}:${document.documentNumber} has been inserted in database imported by ${document.importer}`,
+        data: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
+      });
+    } catch {
+      logger.error({
+        operationName: 'documentInsertion',
+        msg: `Failed to import ${document.source}:${document.documentNumber} document`,
+        data: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
+      });
+    }
   }
 }
 
 function insertDocument(document: documentType) {
   const documentRepository = buildDocumentRepository();
 
-  return documentRepository.insert(document);
+  try {
+    const insertedDocument = documentRepository.insert(document);
+    logger.log({
+      operationName: 'documentInsertion',
+      msg: `Document ${document.source}:${document.documentNumber} has been inserted in database imported by ${document.importer}`,
+      data: {
+        sourceId: document.documentNumber,
+        sourceName: document.source,
+      },
+    });
+    return insertedDocument;
+  } catch {
+    logger.error({
+      operationName: 'documentInsertion',
+      msg: `Failed to import ${document.source}:${document.documentNumber} document`,
+      data: {
+        sourceId: document.documentNumber,
+        sourceName: document.source,
+      },
+    });
+  }
 }

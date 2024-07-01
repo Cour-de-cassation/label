@@ -133,7 +133,11 @@ function buildAnnotator(
             operationName: 'annotateDocumentsWithoutAnnotations',
             msg: `Error while annotating document ${formatDocumentInfos(
               currentDocumentToAnnotate,
-            )}. Setting the document to its previous status...`,
+            )}.`,
+            data: {
+              sourceId: currentDocumentToAnnotate.documentNumber,
+              sourceName: currentDocumentToAnnotate.source,
+            },
           });
           await documentService.updateDocumentStatus(
             currentDocumentToAnnotate._id,
@@ -200,7 +204,8 @@ function buildAnnotator(
     } = await annotatorConfig.fetchAnnotationOfDocument(settings, document);
     logger.log({
       operationName: 'annotateDocument',
-      msg: 'NLP annotation succeeded',
+      msg: 'NLP annotation succesfully fetched',
+      data: { sourceId: document.documentNumber, sourceName: document.source },
     });
     documentService.updateDocumentNlpVersions(documentId, version);
 
@@ -216,6 +221,7 @@ function buildAnnotator(
     logger.log({
       operationName: 'annotateDocument',
       msg: 'NLP treatment created in DB',
+      data: { sourceId: document.documentNumber, sourceName: document.source },
     });
 
     if (document.decisionMetadata.motivationOccultation === true) {
@@ -227,6 +233,10 @@ function buildAnnotator(
         logger.log({
           operationName: 'annotateDocument',
           msg: 'Annotate motivation zone because motivationOccultation is true',
+          data: {
+            sourceId: document.documentNumber,
+            sourceName: document.source,
+          },
         });
 
         createMotivationOccultationTreatment(
@@ -242,6 +252,10 @@ function buildAnnotator(
           msg: `Annotate decision motivation zone impossible because motication zone was not found for document ${formatDocumentInfos(
             document,
           )}`,
+          data: {
+            sourceId: document.documentNumber,
+            sourceName: document.source,
+          },
         });
       }
     }
@@ -251,6 +265,7 @@ function buildAnnotator(
     logger.log({
       operationName: 'annotateDocument',
       msg: 'Annotation report created in DB',
+      data: { sourceId: document.documentNumber, sourceName: document.source },
     });
 
     if (
@@ -260,6 +275,10 @@ function buildAnnotator(
       logger.log({
         operationName: 'annotateDocument',
         msg: `additionalTermsParsingFailed found, updating with value ${additionalTermsParsingFailed}`,
+        data: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
       });
       await documentService.updateDocumentAdditionalTermsParsingFailed(
         documentId,
@@ -272,6 +291,10 @@ function buildAnnotator(
       logger.log({
         operationName: 'annotateDocument',
         msg: `categoriesToUnAnnotate found, adding '${newCategoriesToUnAnnotate}' to categoriesToOmit if not already in`,
+        data: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
       });
       newCategoriesToOmit = Array.from(
         new Set(newCategoriesToOmit.concat(newCategoriesToUnAnnotate)),
@@ -282,6 +305,10 @@ function buildAnnotator(
       logger.log({
         operationName: 'annotateDocument',
         msg: `categoriesToAnnotate found, removing '${newCategoriesToAnnotate}' from categoriesToOmit if present`,
+        data: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
       });
       newCategoriesToOmit = newCategoriesToOmit.filter(
         (category) => !newCategoriesToAnnotate.includes(category),
@@ -292,6 +319,10 @@ function buildAnnotator(
       logger.log({
         operationName: 'annotateDocument',
         msg: `updating categoriesToOmit in database`,
+        data: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
       });
       documentService.updateDocumentCategoriesToOmit(
         documentId,
@@ -304,6 +335,10 @@ function buildAnnotator(
         operationName: 'annotateDocument',
         msg:
           'Additionals terms to annotate or to unannotate found, adding to document...',
+        data: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
       });
 
       await documentService.updateDocumentComputedAdditionalTerms(
@@ -352,6 +387,7 @@ function buildAnnotator(
     logger.log({
       operationName: 'annotateDocument',
       msg: `Annotation done for document ${formatDocumentInfos(document)}`,
+      data: { sourceId: document.documentNumber, sourceName: document.source },
     });
   }
 

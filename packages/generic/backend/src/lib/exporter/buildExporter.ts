@@ -199,6 +199,14 @@ function buildExporter(
         pseudonymizationText: anonymizer.anonymizeDocument(document).text,
         labelTreatments: treatmentModule.lib.concat(treatments, version),
       });
+      logger.log({
+        operationName: 'exportDocument',
+        msg: `Document ${document.source}:${document.documentNumber} has been exported`,
+        data: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
+      });
 
       await statisticService.saveStatisticsOfDocument(document, settings);
 

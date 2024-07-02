@@ -8,6 +8,7 @@ import {
 import { documentService } from '../../document';
 import { userService } from '../../user';
 import { buildProblemReportRepository } from '../repository';
+import { logger } from '../../../utils';
 
 export { problemReportService };
 
@@ -35,6 +36,28 @@ const problemReportService = {
         type: problemType,
       }),
     );
+    const documents = await documentService.fetchAllDocumentsByIds([
+      documentId,
+    ]);
+    const users = await userService.fetchUsersByIds([userId]);
+
+    const document = documents[idModule.lib.convertToString(documentId)];
+    const user = users[idModule.lib.convertToString(userId)];
+
+    if (document && user) {
+      logger.log({
+        operationName: 'createProblemReport',
+        msg: `Problem report created on document ${document.source}:${document.documentNumber} by ${user.name}`,
+        data: {
+          decision: {
+            sourceId: document.documentNumber,
+            sourceName: document.source,
+          },
+          userId: userId,
+          userName: user.name,
+        },
+      });
+    }
   },
 
   async deleteProblemReportById(problemReportId: problemReportType['_id']) {

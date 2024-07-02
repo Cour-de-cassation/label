@@ -3,6 +3,7 @@ import { documentType, idModule } from '@label/core';
 import { assignationService } from '../../../assignation';
 import { buildDocumentRepository } from '../../repository';
 import { resetDocument } from './resetDocument';
+import { logger } from '../../../../utils';
 
 export { updateDocumentStatus };
 
@@ -27,5 +28,15 @@ async function updateDocumentStatus(
   } else if (status === 'loaded') {
     await resetDocument(_id);
   }
+  logger.log({
+    operationName: 'updateDocumentStatus',
+    msg: `Document ${updatedDocument.source}:${updatedDocument.documentNumber} status updated to ${status}`,
+    data: {
+      decision: {
+        sourceId: updatedDocument.documentNumber,
+        sourceName: updatedDocument.source,
+      },
+    },
+  });
   return updatedDocument;
 }

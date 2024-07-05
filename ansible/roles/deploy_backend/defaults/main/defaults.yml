@@ -8,7 +8,15 @@ jobs:
     parallelism: 1
     active_deadline_seconds: 3600
     command: "dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js"
-  - name: "import-j-4"
+  - name: "import-j-4-dateDecision"
+    schedule: "*/15 6-12 * * *"
+    successful_jobs_history_limit: 7
+    failed_jobs_history_limit: 7
+    backoff_limit: 0
+    parallelism: 1
+    active_deadline_seconds: 300
+    command: "dist/scripts/importAllDocumentsFromSderSinceOrBetween.js --fromDaysAgo 4"
+  - name: "import-j-4-dateCreation"
     schedule: "*/30 6-12 * * *"
     successful_jobs_history_limit: 7
     failed_jobs_history_limit: 7

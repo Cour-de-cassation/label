@@ -8,14 +8,14 @@ jobs:
     parallelism: 1
     active_deadline_seconds: 3600
     command: "dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js"
-  - name: "import-j-7"
+  - name: "import-j-4"
     schedule: "*/30 6-12 * * *"
     successful_jobs_history_limit: 7
     failed_jobs_history_limit: 7
     backoff_limit: 0
     parallelism: 1
     active_deadline_seconds: 300
-    command: "dist/scripts/importAllDocumentsFromSderSinceOrBetween.js --fromDaysAgo 7 --byDateCreation 1"
+    command: "dist/scripts/importAllDocumentsFromSderSinceOrBetween.js --fromDaysAgo 4 --byDateCreation 1"
   - name: "filler-import"
     schedule: "15 6-17 * * *"
     successful_jobs_history_limit: 7
@@ -67,7 +67,7 @@ jobs:
   - name: "renew-cache"
     schedule: "*/5 6-17 * * *"
     successful_jobs_history_limit: 3
-    failed_jobs_history_limit: 7 
+    failed_jobs_history_limit: 7
     backoff_limit: 0
     parallelism: 1
     active_deadline_seconds: 300

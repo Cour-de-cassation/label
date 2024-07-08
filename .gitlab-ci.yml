@@ -14,9 +14,6 @@ stages:
   - build
   - deploy
 
-before_script:
-  - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD
-
 # Partie à compléter par les développeurs label
 # test:
 #   stage: test
@@ -46,6 +43,7 @@ build_label_backend:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
+    - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker build
       --build-arg http_proxy=$HTTP_PROXY
@@ -68,6 +66,7 @@ build_label_client:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
+    - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - export NODE_OPTIONS=--openssl-legacy-provider
     - docker build

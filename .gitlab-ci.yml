@@ -53,7 +53,6 @@ build_label_backend:
       -t $docker_backend_image .
     - docker push $docker_backend_image
   only:
-    - keep-labelTreatments-when-reimport
     - master
     - re7
     # - dev
@@ -77,7 +76,6 @@ build_label_client:
       -t $docker_client_image .
     - docker push $docker_client_image
   only:
-    - keep-labelTreatments-when-reimport
     - master
     - re7
     # - dev
@@ -88,8 +86,7 @@ deploy_label_backend:
   stage: deploy
   image: alpine/ansible:2.16.1
   script:
-    # - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - inventaire="preprod"
+    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
@@ -97,7 +94,7 @@ deploy_label_backend:
     - chmod 600 /root/.ssh/known_hosts
     - ansible-playbook -e label_backend_image=$docker_backend_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_backend.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7" || $CI_COMMIT_BRANCH == "keep-labelTreatments-when-reimport"
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
     - if: $CI_COMMIT_BRANCH == "dev"
       when: on_success
@@ -110,8 +107,7 @@ deploy_label_client:
   stage: deploy
   image: alpine/ansible:2.16.1
   script:
-    # - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - inventaire="preprod"
+    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
@@ -119,7 +115,7 @@ deploy_label_client:
     - chmod 600 /root/.ssh/known_hosts
     - ansible-playbook -e label_client_image=$docker_client_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_client.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7" || $CI_COMMIT_BRANCH == "keep-labelTreatments-when-reimport"
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
     - if: $CI_COMMIT_BRANCH == "dev"
       when: on_success

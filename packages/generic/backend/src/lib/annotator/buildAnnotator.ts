@@ -179,7 +179,8 @@ function buildAnnotator(
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
 
-    await annotateDocumentsWithoutAnnotations();
+    // Uncomment this line to run the annotation script
+    // await annotateDocumentsWithoutAnnotations();
   }
 
   async function annotateDocument(document: documentType) {

@@ -30,22 +30,6 @@ describe('buildAnnotator', () => {
       expect(documentWithoutAnnotations).toEqual(undefined);
     });
   });
-
-  describe('reAnnotateFreeDocuments', () => {
-    it('should re annotate all the documents', async () => {
-      await insertNDocumentsWithoutAnnotationsInDb(5);
-      const fakeAnnotator = buildFakeAnnotatorConfig();
-      const annotator = buildAnnotator(settings, fakeAnnotator);
-      await annotator.annotateDocumentsWithoutAnnotations();
-
-      await annotator.reAnnotateFreeDocuments();
-
-      const documentWithoutAnnotations = await documentService.fetchDocumentWithoutAnnotationsNotIn(
-        [],
-      );
-      expect(documentWithoutAnnotations).toEqual(undefined);
-    });
-  });
 });
 
 async function insertNDocumentsWithoutAnnotationsInDb(n: number) {

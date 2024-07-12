@@ -20,7 +20,7 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
         source: computeSource(currentTreatment.source),
         order,
         version: currentTreatment.source == 'NLP' ? nlpVersions : undefined,
-        treatmentDate: currentTreatment.lastUpdateDate,
+        treatmentDate: new Date(currentTreatment.lastUpdateDate).toISOString(),
       });
     }
     sortedTreatments.pop();
@@ -38,9 +38,8 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
       case 'NLP':
         return 'NLP';
       case 'annotator':
-        return 'LABEL_WORKING_USER_TREATMENT';
       case 'admin':
-        return 'LABEL_ADMIN_USER_TREATMENT';
+        return 'LABEL_WORKING_USER_TREATMENT';
       default:
         return 'LABEL_AUTO_TREATMENT';
     }

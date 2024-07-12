@@ -12,26 +12,36 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
 
   while (sortedTreatments.length > 0) {
     const order = sortedTreatments.length;
+    const currentTreatment = sortedTreatments[order - 1];
 
-    labelTreatments.unshift({
-      annotations: computeAnnotations(sortedTreatments),
-      source: computeSource(order),
-      order,
-      version: computeSource(order) == 'NLP' ? nlpVersions : undefined,
-    });
+    if (currentTreatment.source != 'reimportedTreatment') {
+      labelTreatments.unshift({
+        annotations: computeAnnotations(sortedTreatments),
+        source: computeSource(currentTreatment.source),
+        order,
+        version: currentTreatment.source == 'NLP' ? nlpVersions : undefined,
+        treatmentDate: new Date(currentTreatment.lastUpdateDate).toISOString(),
+      });
+    }
     sortedTreatments.pop();
   }
 
+  // re-write order in case of reimportedTreatment
+  labelTreatments.forEach((labelTreatment, index) => {
+    labelTreatment.order = index + 1;
+  });
+
   return labelTreatments;
 
-  function computeSource(order: number) {
-    switch (order) {
-      case 1:
+  function computeSource(source: treatmentType['source']) {
+    switch (source) {
+      case 'NLP':
         return 'NLP';
-      case 2:
-        return 'LABEL_AUTO_TREATMENT';
-      default:
+      case 'annotator':
+      case 'admin':
         return 'LABEL_WORKING_USER_TREATMENT';
+      default:
+        return 'LABEL_AUTO_TREATMENT';
     }
   }
 }

@@ -6,7 +6,7 @@ export { assertTreatmentsSourcesFollowRightOrder };
 type documentStepType = { treatmentSource: treatmentType['source'][]; quantity: '0|1' | '1' | '1+' };
 
 const DOCUMENT_STEPS: documentStepType[] = [
-  { treatmentSource: ['NLP'], quantity: '1' },
+  { treatmentSource: ['NLP', 'reimportedTreatment'], quantity: '1' },
   { treatmentSource: ['supplementaryAnnotations'], quantity: '0|1' },
   { treatmentSource: ['postProcess'], quantity: '0|1' },
   { treatmentSource: ['admin', 'annotator'], quantity: '1+' },

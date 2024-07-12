@@ -1,4 +1,12 @@
-import { dateBuilder, documentType, idModule, timeOperator } from '@label/core';
+import {
+  annotationModule,
+  annotationType,
+  dateBuilder,
+  documentType,
+  idModule,
+  settingsType,
+  timeOperator,
+} from '@label/core';
 import {
   buildDocumentRepository,
   documentService,
@@ -6,6 +14,8 @@ import {
 import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 import { decisionType } from 'sder';
+import { treatmentService } from '../../modules/treatment';
+import { buildPreAssignator } from '../preAssignator';
 
 export { buildConnector };
 
@@ -53,14 +63,18 @@ function buildConnector(connectorConfig: connectorConfigType) {
     documentNumber,
     source,
     lowPriority,
+    keepLabelTreatments,
+    settings,
   }: {
     documentNumber: number;
     source: string;
     lowPriority: boolean;
+    keepLabelTreatments: boolean;
+    settings: settingsType;
   }) {
     logger.log({
       operationName: 'importSpecificDocument',
-      msg: `START: ${documentNumber} - ${source}, lowPriority: ${lowPriority}`,
+      msg: `START: ${documentNumber} - ${source}, lowPriority: ${lowPriority}, keepLabelTreatments: ${keepLabelTreatments}`,
     });
 
     try {
@@ -94,6 +108,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         operationName: 'importSpecificDocument',
         msg: 'Court decision converted. Inserting document into database...',
       });
+
       if (lowPriority) {
         await insertDocument({ ...document });
       } else {
@@ -104,9 +119,64 @@ function buildConnector(connectorConfig: connectorConfigType) {
         msg: 'Insertion done',
       });
 
+      if (keepLabelTreatments) {
+        if (courtDecision.labelTreatments.length == 0) {
+          logger.error({
+            operationName: 'importSpecificDocument',
+            msg:
+              'LabelTreatments not found in court decision, skiping labelTreatments reimport.',
+          });
+        } else {
+          logger.log({
+            operationName: 'importSpecificDocument',
+            msg: 'LabelTreatments found in court decision, importing.',
+          });
+
+          const annotations: annotationType[] = courtDecision.labelTreatments[
+            courtDecision.labelTreatments.length - 1
+          ].annotations.map((annotation) => {
+            return annotationModule.lib.buildAnnotation({
+              category: annotation.category,
+              start: annotation.start,
+              text: annotation.text,
+              certaintyScore: 1,
+              entityId: annotation.entityId,
+            });
+          });
+
+          await treatmentService.createTreatment(
+            {
+              documentId: document._id,
+              previousAnnotations: [],
+              nextAnnotations: annotations,
+              source: 'reimportedTreatment',
+            },
+            settings,
+          );
+          logger.log({
+            operationName: 'importSpecificDocument',
+            msg: 'LabelTreatments reimported, checking for pre-assignation.',
+          });
+          const preAssignator = buildPreAssignator();
+          const isPreassignated = await preAssignator.preAssignDocument(
+            document,
+          );
+          if (!isPreassignated) {
+            logger.log({
+              operationName: 'importSpecificDocument',
+              msg: 'No preAssignation found, setting documentStatus to free.',
+            });
+            await documentService.updateDocumentStatus(
+              idModule.lib.buildId(document._id),
+              'free',
+            );
+          }
+        }
+      }
+
       logger.log({
         operationName: 'importSpecificDocument',
-        msg: 'Send document has been loaded...',
+        msg: 'Selected document has been inserted in label database.',
       });
       await connectorConfig.updateDocumentsLoadedStatus({
         documents: [document],
@@ -758,9 +828,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
   async function resetDocument({
     documentNumber,
     source,
+    settings,
   }: {
     documentNumber: documentType['documentNumber'];
     source: documentType['source'];
+    settings: settingsType;
   }) {
     const documentRepository = buildDocumentRepository();
 
@@ -805,6 +877,8 @@ function buildConnector(connectorConfig: connectorConfigType) {
       documentNumber,
       source,
       lowPriority: true,
+      keepLabelTreatments: false,
+      settings,
     });
   }
 }

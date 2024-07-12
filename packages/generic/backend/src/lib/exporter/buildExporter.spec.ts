@@ -3,11 +3,13 @@ import {
   documentModule,
   settingsModule,
   treatmentModule,
+  treatmentType,
 } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildExporter } from './buildExporter';
-import { exporterConfigType, labelTreatmentsType } from './exporterConfigType';
+import { exporterConfigType } from './exporterConfigType';
+import { labelTreatmentsType } from 'sder';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 describe('buildExporter', () => {
@@ -50,6 +52,8 @@ describe('buildExporter', () => {
           },
           documentId: documents[0]._id,
           order: 0,
+          lastUpdateDate: 1720776507000,
+          source: 'NLP' as treatmentType['source'],
         },
         {
           annotationsDiff: {
@@ -65,7 +69,9 @@ describe('buildExporter', () => {
             ],
           },
           documentId: documents[2]._id,
-          order: 0,
+          order: 1,
+          lastUpdateDate: 1720776599000,
+          source: 'NLP' as treatmentType['source'],
         },
       ].map(treatmentModule.generator.generate);
       await Promise.all(documents.map(documentRepository.insert));
@@ -99,6 +105,8 @@ describe('buildExporter', () => {
               ],
               source: 'NLP',
               order: 1,
+              treatmentDate: '2024-07-12T09:28:27.000Z',
+              version: undefined,
             },
           ],
           [
@@ -114,6 +122,8 @@ describe('buildExporter', () => {
               ],
               source: 'NLP',
               order: 1,
+              treatmentDate: '2024-07-12T09:29:59.000Z',
+              version: undefined,
             },
           ],
         ].sort(),

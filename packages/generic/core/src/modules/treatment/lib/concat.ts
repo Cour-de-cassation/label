@@ -2,6 +2,7 @@ import { treatmentType } from '..';
 import { labelTreatmentsType } from 'sder';
 import { computeAnnotations } from './computeAnnotations';
 import { documentType } from '../../document/documentType';
+import moment from 'moment-timezone';
 
 export { concat };
 
@@ -20,7 +21,7 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
         source: computeSource(currentTreatment.source),
         order,
         version: currentTreatment.source == 'NLP' ? nlpVersions : undefined,
-        treatmentDate: new Date(currentTreatment.lastUpdateDate).toISOString(),
+        treatmentDate: moment(currentTreatment.lastUpdateDate).tz('Europe/Paris').toISOString(),
       });
     }
     sortedTreatments.pop();

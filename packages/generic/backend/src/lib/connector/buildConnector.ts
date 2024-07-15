@@ -164,12 +164,20 @@ function buildConnector(connectorConfig: connectorConfigType) {
           if (!isPreassignated) {
             logger.log({
               operationName: 'importSpecificDocument',
-              msg: 'No preAssignation found, setting documentStatus to free.',
+              msg:
+                'No preAssignation found, setting documentStatus to next status.',
             });
-            await documentService.updateDocumentStatus(
-              idModule.lib.buildId(document._id),
-              'free',
-            );
+            if (lowPriority) {
+              await documentService.updateDocumentStatus(
+                idModule.lib.buildId(document._id),
+                'free',
+              );
+            } else {
+              await documentService.updateDocumentStatus(
+                idModule.lib.buildId(document._id),
+                'toBeConfirmed',
+              );
+            }
           }
         }
       }

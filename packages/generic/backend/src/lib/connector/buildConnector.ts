@@ -2,7 +2,6 @@ import {
   annotationModule,
   annotationType,
   dateBuilder,
-  documentModule,
   documentType,
   idModule,
   settingsType,

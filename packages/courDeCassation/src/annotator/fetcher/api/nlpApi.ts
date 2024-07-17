@@ -46,57 +46,57 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
       };
 
       const startTime = Date.now();
-      try {
-        const response = await axios({
-          data: nlpRequestParameters,
-          headers: { 'Content-Type': 'application/json' },
-          method: 'post',
-          url: `${nlpApiBaseUrl}/ner`,
-          timeout: 600000,
-        });
-        const endTime = Date.now();
-        const duration = endTime - startTime;
-
-        if (response.status != 200) {
-          logger.error({
-            operationName: 'callNlpNerEndpoint',
-            msg: `${response.status} ${response.statusText}`,
-          });
-          throw new Error(`${response.status} ${response.statusText}`);
-        } else {
-          logger.log({
-            operationName: 'callNlpNerEndpoint',
-            msg: `Decision ${document.source}:${document.documentNumber} has been treated by NLP API (NER) in ${duration}ms`,
-            data: {
-              decision: {
-                sourceId: document.documentNumber,
-                sourceName: document.source,
+      return await axios({
+        data: nlpRequestParameters,
+        headers: { 'Content-Type': 'application/json' },
+        method: 'post',
+        url: `${nlpApiBaseUrl}/ner`,
+        timeout: 600000,
+      })
+        .then((response: AxiosResponse) => {
+          if (response.status != 200) {
+            logger.error({
+              operationName: 'callNlpNerEndpoint',
+              msg: `${response.status} ${response.statusText}`,
+            });
+            throw new Error(`${response.status} ${response.statusText}`);
+          } else {
+            const endTime = Date.now();
+            const duration = endTime - startTime;
+            logger.log({
+              operationName: 'callNlpNerEndpoint',
+              msg: `Decision ${document.source}:${document.documentNumber} has been treated by NLP API (NER) in ${duration}ms`,
+              data: {
+                decision: {
+                  sourceId: document.documentNumber,
+                  sourceName: document.source,
+                },
+                callNlpNerEndpointDuration: duration,
               },
-              callNlpNerEndpointDuration: duration,
-            },
-          });
-          return response.data as nlpResponseType;
-        }
-      } catch (error: any) {
-        // To avoid a 429 too many request error after a timeout
-        if (error.code === 'ECONNABORTED') {
-          await new Promise((_) => setTimeout(_, 2000));
-        }
-        if (error.response) {
+            });
+            return response.data as nlpResponseType;
+          }
+        })
+        .catch(async (error: AxiosError) => {
+          // To avoid a 429 too many request error after a timeout
+          if (error.code === 'ECONNABORTED') {
+            await new Promise((_) => setTimeout(_, 2000));
+          }
+          if (error.response) {
+            logger.error({
+              operationName: 'callNlpNerEndpoint',
+              msg: `${error.response.status} ${error.response.statusText}`,
+            });
+            throw new Error(
+              `${error.response.status} ${error.response.statusText}`,
+            );
+          }
           logger.error({
             operationName: 'callNlpNerEndpoint',
-            msg: `${error.response.status} ${error.response.statusText}`,
+            msg: `${error.code ?? 'Unknown'} on /ner`,
           });
-          throw new Error(
-            `${error.response.status} ${error.response.statusText}`,
-          );
-        }
-        logger.error({
-          operationName: 'callNlpNerEndpoint',
-          msg: `${error.code ?? 'Unknown'} on /ner`,
+          throw new Error(`${error.code ?? 'Unknown'} on /ner`);
         });
-        throw new Error(`${error.code ?? 'Unknown'} on /ner`);
-      }
     },
     async fetchNlpLoss(document, treatments) {
       return await axios({

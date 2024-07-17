@@ -78,9 +78,9 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
           return response.data as nlpResponseType;
         }
       } catch (error: any) {
+        // To avoid a 429 too many request error after a timeout
         if (error.code === 'ECONNABORTED') {
-          console.log('timeout axio request');
-          await new Promise((resolve) => setTimeout(resolve, 5000));
+          await new Promise((_) => setTimeout(_, 2000));
         }
         if (error.response) {
           logger.error({

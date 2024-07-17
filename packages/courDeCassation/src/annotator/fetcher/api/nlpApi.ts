@@ -45,39 +45,58 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
             : document.decisionMetadata.additionalTermsToAnnotate,
       };
 
-      return await axios({
-        data: nlpRequestParameters,
-        headers: { 'Content-Type': 'application/json' },
-        method: 'post',
-        url: `${nlpApiBaseUrl}/ner`,
-      })
-        .then((response: AxiosResponse) => {
-          if (response.status != 200) {
-            logger.error({
-              operationName: 'Call NLP api ner endpoint',
-              msg: `${response.status} ${response.statusText}`,
-            });
-            throw new Error(`${response.status} ${response.statusText}`);
-          } else {
-            return response.data as nlpResponseType;
-          }
-        })
-        .catch((error: AxiosError) => {
-          if (error.response) {
-            logger.error({
-              operationName: 'Call NLP api ner endpoint',
-              msg: `${error.response.status} ${error.response.statusText}`,
-            });
-            throw new Error(
-              `${error.response.status} ${error.response.statusText}`,
-            );
-          }
-          logger.error({
-            operationName: 'Call NLP api ner endpoint',
-            msg: `${error.code ?? 'Unknown'} on /ner`,
-          });
-          throw new Error(`${error.code ?? 'Unknown'} on /ner`);
+      const startTime = Date.now();
+      try {
+        const response = await axios({
+          data: nlpRequestParameters,
+          headers: { 'Content-Type': 'application/json' },
+          method: 'post',
+          url: `${nlpApiBaseUrl}/ner`,
+          timeout: 2000,
         });
+        const endTime = Date.now();
+        const duration = endTime - startTime;
+
+        if (response.status != 200) {
+          logger.error({
+            operationName: 'callNlpNerEndpoint',
+            msg: `${response.status} ${response.statusText}`,
+          });
+          throw new Error(`${response.status} ${response.statusText}`);
+        } else {
+          logger.log({
+            operationName: 'callNlpNerEndpoint',
+            msg: `Decision ${document.source}:${document.documentNumber} has been treated by NLP API (NER) in ${duration}ms`,
+            data: {
+              decision: {
+                sourceId: document.documentNumber,
+                sourceName: document.source,
+              },
+              callNlpNerEndpointDuration: duration,
+            },
+          });
+          return response.data as nlpResponseType;
+        }
+      } catch (error: any) {
+        if (error.code === 'ECONNABORTED') {
+          console.log('timeout axio request');
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+        }
+        if (error.response) {
+          logger.error({
+            operationName: 'callNlpNerEndpoint',
+            msg: `${error.response.status} ${error.response.statusText}`,
+          });
+          throw new Error(
+            `${error.response.status} ${error.response.statusText}`,
+          );
+        }
+        logger.error({
+          operationName: 'callNlpNerEndpoint',
+          msg: `${error.code ?? 'Unknown'} on /ner`,
+        });
+        throw new Error(`${error.code ?? 'Unknown'} on /ner`);
+      }
     },
     async fetchNlpLoss(document, treatments) {
       return await axios({
@@ -89,7 +108,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         .then((response: AxiosResponse) => {
           if (response.status != 200) {
             logger.error({
-              operationName: 'Call NLP api loss endpoint',
+              operationName: 'callNlpLossEndpoint',
               msg: `${response.status} ${response.statusText}`,
             });
             throw new Error(`${response.status} ${response.statusText}`);
@@ -100,7 +119,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
         .catch((error: AxiosError) => {
           if (error.response) {
             logger.error({
-              operationName: 'Call NLP api loss endpoint',
+              operationName: 'callNlpLossEndpoint',
               msg: `${error.response.status} ${error.response.statusText}`,
             });
             throw new Error(
@@ -108,7 +127,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
             );
           }
           logger.error({
-            operationName: 'Call NLP api loss endpoint',
+            operationName: 'callNlpLossEndpoint',
             msg: `${error.code ?? 'Unknown'} on /loss`,
           });
           throw new Error(`${error.code ?? 'Unknown'} on /loss`);

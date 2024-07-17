@@ -52,7 +52,7 @@ function buildNlpApi(nlpApiBaseUrl: string): nlpApiType {
           headers: { 'Content-Type': 'application/json' },
           method: 'post',
           url: `${nlpApiBaseUrl}/ner`,
-          timeout: 2000,
+          timeout: 600000,
         });
         const endTime = Date.now();
         const duration = endTime - startTime;

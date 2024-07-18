@@ -28,7 +28,7 @@ function DocumentLine(props: {
           {props.line ?? '[…]'}
         </Text>
       </td>
-      <td>
+      <td style={styles.lineTextCell}>
         <span>
           <Text variant="body2" color={textColor}>
             {props.content?.map(renderChunk) ?? ''}
@@ -68,5 +68,8 @@ function buildStyles(theme: customThemeType) {
       flexDirection: 'row-reverse',
       paddingRight: theme.spacing * 2,
     },
+    lineTextCell:{
+      overflowWrap: 'anywhere'
+    }
   } as const;
 }

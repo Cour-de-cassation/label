@@ -68,8 +68,8 @@ function buildStyles(theme: customThemeType) {
       flexDirection: 'row-reverse',
       paddingRight: theme.spacing * 2,
     },
-    lineTextCell:{
-      overflowWrap: 'anywhere'
-    }
+    lineTextCell: {
+      overflowWrap: 'anywhere',
+    },
   } as const;
 }

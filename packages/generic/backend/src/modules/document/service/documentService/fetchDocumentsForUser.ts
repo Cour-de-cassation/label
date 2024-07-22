@@ -88,12 +88,14 @@ function buildFetchDocumentsForUser(
       let document: documentType | undefined;
 
       // Get document by priority
-      document = await assignDocumentByPriority(4, documentIdsToSearchIn);
-      if (!document) {
-        document = await assignDocumentByPriority(2, documentIdsToSearchIn);
-      }
-      if (!document) {
-        document = await assignDocumentByPriority(0, documentIdsToSearchIn);
+      for (let priority = 4; priority >= 0; priority--) {
+        document = await assignDocumentByPriority(
+          priority,
+          documentIdsToSearchIn,
+        );
+        if (document) {
+          break;
+        }
       }
       if (!document) {
         throw new Error(`No free document available`);

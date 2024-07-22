@@ -256,6 +256,7 @@ const sderApi: sderApiType = {
     publishStatus,
   }) {
     //TODO : include publishStatus to dbsder api call
+    //TODO : manage labelTreatments before sending to dbsder-api (like in sder updateDecisionPseudonymisation function)
     if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',

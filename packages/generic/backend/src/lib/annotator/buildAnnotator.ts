@@ -8,15 +8,13 @@ import {
   settingsType,
   treatmentModule,
   annotationModule,
-  preAssignationType,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
-import { preAssignationService } from '../../modules/preAssignation';
-import { assignationService } from '../../modules/assignation';
+import { buildPreAssignator } from '../preAssignator';
 
 export { buildAnnotator };
 
@@ -179,7 +177,8 @@ function buildAnnotator(
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
 
-    await annotateDocumentsWithoutAnnotations();
+    // Uncomment this line to run the annotation script
+    // await annotateDocumentsWithoutAnnotations();
   }
 
   async function annotateDocument(document: documentType) {
@@ -384,31 +383,10 @@ function buildAnnotator(
       route: document.route,
     });
 
-    // Check first pre-assignation by documentNumber and then by appelNumber
-    const preAssignationForDocument =
-      (await preAssignationService.fetchPreAssignationBySourceAndNumber(
-        document.documentNumber.toString(),
-        document.source,
-      )) ||
-      (await preAssignationService.fetchPreAssignationBySourceAndNumber(
-        document.decisionMetadata.appealNumber,
-        document.source,
-      ));
+    const preAssignator = buildPreAssignator();
+    const isPreassignated = await preAssignator.preAssignDocument(document);
 
-    if (
-      nextDocumentStatus === 'free' &&
-      preAssignationForDocument != undefined
-    ) {
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: `Pre-assignation found for document ${formatDocumentInfos(
-          document,
-        )}. Matching pre-assignation number : ${
-          preAssignationForDocument.number
-        }. Creating assignation...`,
-      });
-      await createAssignation(preAssignationForDocument, document);
-    } else {
+    if (!isPreassignated) {
       await documentService.updateDocumentStatus(
         document._id,
         nextDocumentStatus,
@@ -425,21 +403,6 @@ function buildAnnotator(
         },
       },
     });
-  }
-
-  async function createAssignation(
-    preAssignation: preAssignationType,
-    document: documentType,
-  ) {
-    await assignationService.createAssignation({
-      documentId: idModule.lib.buildId(document._id),
-      userId: idModule.lib.buildId(preAssignation.userId),
-    });
-    await preAssignationService.deletePreAssignation(preAssignation._id);
-    await documentService.updateDocumentStatus(
-      idModule.lib.buildId(document._id),
-      'saved',
-    );
   }
 
   async function createAnnotatorTreatment({

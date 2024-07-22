@@ -192,12 +192,13 @@ function buildExporter(
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
     try {
-      const version = document.nlpVersions;
-      // check treatments in concat lib source if nlp set nlpVersions in labelTreatments
       await exporterConfig.sendDocumentPseudonymisationAndTreatments({
         externalId: document.externalId,
         pseudonymizationText: anonymizer.anonymizeDocument(document).text,
-        labelTreatments: treatmentModule.lib.concat(treatments, version),
+        labelTreatments: treatmentModule.lib.concat(
+          treatments,
+          document.nlpVersions,
+        ),
       });
       logger.log({
         operationName: 'exportDocument',

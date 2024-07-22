@@ -70,7 +70,9 @@ async function saveStatisticsOfDocument(
               sourceName: document.source,
             },
             treatmentDuration: humanTreatment.treatment.duration,
-            lastUpdateDate: humanTreatment.treatment.lastUpdateDate,
+            treatmentLastUpdateDate: new Date(
+              humanTreatment.treatment.lastUpdateDate,
+            ).toISOString(),
             userName: user.name,
           },
         });

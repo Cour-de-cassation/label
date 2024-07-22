@@ -16,6 +16,11 @@ async function cleanFreeDocuments() {
     ['free'],
     ['_id'],
   );
+  logger.log({
+    operationName: 'countFreeDocuments',
+    msg: `${freeDocuments.length} free documents found.`,
+    data: { freeDocumentsCount: freeDocuments.length },
+  });
   const freeDocumentIds = freeDocuments.map(({ _id }) => _id);
   logger.log({
     operationName: 'cleanFreeDocuments',

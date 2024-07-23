@@ -17,6 +17,7 @@ export { saveStatisticsOfDocument };
 async function saveStatisticsOfDocument(
   document: documentType,
   settings: settingsType,
+  annotationReportsChecklist?: string[],
 ) {
   const statisticRepository = buildStatisticRepository();
 
@@ -35,10 +36,11 @@ async function saveStatisticsOfDocument(
     );
   }
 
-  const statistic = statisticsCreator.buildFromDocument({
+  let statistic = statisticsCreator.buildFromDocument({
     document,
     treatments,
     humanTreatments,
+    annotationReportsChecklist: annotationReportsChecklist ?? undefined,
     settings,
   });
 
@@ -54,16 +56,14 @@ async function saveStatisticsOfDocument(
       if (user) {
         logger.log({
           operationName: 'documentStatistics',
-          msg: `Human treatment for document ${document.source}:${
-            document.documentNumber
-          } : ${
-            user.name
-          } treat the document in ${timeOperator.convertDurationToReadableDuration(
-            humanTreatment.treatment.duration,
-          )} on ${timeOperator.convertTimestampToReadableDate(
-            humanTreatment.treatment.lastUpdateDate,
-            true,
-          )}`,
+          msg: `Human treatment for document ${document.source}:${document.documentNumber
+            } : ${user.name
+            } treat the document in ${timeOperator.convertDurationToReadableDuration(
+              humanTreatment.treatment.duration,
+            )} on ${timeOperator.convertTimestampToReadableDate(
+              humanTreatment.treatment.lastUpdateDate,
+              true,
+            )}`,
           data: {
             decision: {
               sourceId: document.documentNumber,
@@ -99,6 +99,8 @@ async function saveStatisticsOfDocument(
       },
     },
   });
+
+  statistic = { ...annotationReportsChecklist, ...statistic }
 
   await statisticRepository.insert(statistic);
 }

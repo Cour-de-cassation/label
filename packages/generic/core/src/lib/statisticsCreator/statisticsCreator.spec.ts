@@ -94,6 +94,7 @@ describe('statisticsCreator', () => {
         humanTreatments: [{ treatment: treatments[1], userId }],
         document,
         treatments: treatments,
+        annotationReportsChecklist: undefined,
         settings,
       });
 
@@ -158,6 +159,7 @@ describe('statisticsCreator', () => {
       const statistic = statisticsCreator.buildFromDocument({
         document,
         treatments: treatments,
+        annotationReportsChecklist: undefined,
         humanTreatments: [{ treatment: treatments[1], userId }],
         settings,
       });

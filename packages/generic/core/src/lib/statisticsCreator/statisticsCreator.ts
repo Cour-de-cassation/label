@@ -11,11 +11,13 @@ const statisticsCreator = { buildFromDocument };
 
 function buildFromDocument({
   document,
+  annotationReportsChecklist,
   treatments,
   humanTreatments,
   settings,
 }: {
   document: documentType;
+  annotationReportsChecklist: statisticType['annotationReportsChecklist']
   treatments: treatmentType[];
   humanTreatments: Array<{ treatment: treatmentType; userId: userType['_id'] }> | undefined;
   settings: settingsType;
@@ -42,5 +44,6 @@ function buildFromDocument({
     treatmentInfo,
     document,
     linkedEntitiesCount,
+    annotationReportsChecklist,
   });
 }

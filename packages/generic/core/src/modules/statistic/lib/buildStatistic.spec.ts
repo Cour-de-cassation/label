@@ -58,6 +58,7 @@ describe('buildStatistic', () => {
       linkedEntitiesCount,
       lastUpdateDate,
       treatmentInfo,
+      annotationReportsChecklist: undefined,
       humanTreatmentsSummary: [{ userId, treatmentDuration: 10 }],
     });
 

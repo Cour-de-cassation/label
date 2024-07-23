@@ -28,6 +28,7 @@ const statisticGenerator: generatorType<statisticType> = {
     wordsCount,
     endCaseCode,
     NACCode,
+    annotationReportsChecklist,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     annotationsCount: annotationsCount ? annotationsCount : 0,
@@ -52,5 +53,6 @@ const statisticGenerator: generatorType<statisticType> = {
     treatmentDate: treatmentDate ? treatmentDate : new Date().getTime(),
     treatmentsSummary: treatmentsSummary ? treatmentsSummary : [],
     wordsCount: wordsCount ? wordsCount : 0,
+    annotationReportsChecklist: annotationReportsChecklist ? annotationReportsChecklist : ["annotationReportsChecklist 1", "annotationReportsChecklist 2"]
   }),
 };

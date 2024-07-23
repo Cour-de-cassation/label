@@ -53,6 +53,8 @@ const statisticGenerator: generatorType<statisticType> = {
     treatmentDate: treatmentDate ? treatmentDate : new Date().getTime(),
     treatmentsSummary: treatmentsSummary ? treatmentsSummary : [],
     wordsCount: wordsCount ? wordsCount : 0,
-    annotationReportsChecklist: annotationReportsChecklist ? annotationReportsChecklist : ["annotationReportsChecklist 1", "annotationReportsChecklist 2"]
+    annotationReportsChecklist: annotationReportsChecklist
+      ? annotationReportsChecklist
+      : ['annotationReportsChecklist 1', 'annotationReportsChecklist 2'],
   }),
 };

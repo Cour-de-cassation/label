@@ -17,7 +17,7 @@ function buildFromDocument({
   settings,
 }: {
   document: documentType;
-  annotationReportsChecklist: statisticType['annotationReportsChecklist']
+  annotationReportsChecklist: statisticType['annotationReportsChecklist'];
   treatments: treatmentType[];
   humanTreatments: Array<{ treatment: treatmentType; userId: userType['_id'] }> | undefined;
   settings: settingsType;

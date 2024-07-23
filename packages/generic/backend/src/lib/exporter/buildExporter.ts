@@ -52,8 +52,9 @@ function buildExporter(
     for (let index = 0; index < documentsReadyToExport.length; index++) {
       logger.log({
         operationName: 'exportTreatedDocumentsSince',
-        msg: `Exportation of document ${index + 1}/${documentsReadyToExport.length
-          }`,
+        msg: `Exportation of document ${index + 1}/${
+          documentsReadyToExport.length
+        }`,
       });
       const document = documentsReadyToExport[index];
 
@@ -86,8 +87,9 @@ function buildExporter(
     for (let index = 0; index < documentsReadyToExport.length; index++) {
       logger.log({
         operationName: 'exportTreatedPublishableDocuments',
-        msg: `Exportation of document ${index + 1}/${documentsReadyToExport.length
-          }`,
+        msg: `Exportation of document ${index + 1}/${
+          documentsReadyToExport.length
+        }`,
       });
       const document = documentsReadyToExport[index];
 
@@ -179,11 +181,13 @@ function buildExporter(
       document._id,
     );
     // On stock dans la collecte statistique
-    const checklists = await annotationReportService.fetchChecklistByDocumentId(document._id);
+    const checklists = await annotationReportService.fetchChecklistByDocumentId(
+      document._id,
+    );
     logger.log({
-      operationName: "annotationReport",
-      msg: `checklist ==> ${document._id} -- ${checklists}`
-    })
+      operationName: 'annotationReport',
+      msg: `checklist ==> ${document._id} -- ${checklists}`,
+    });
     const annotations = treatmentModule.lib.computeAnnotations(treatments);
     const seed = documentModule.lib.computeCaseNumber(document);
     const settingsForDocument = settingsModule.lib.computeFilteredSettings(
@@ -220,7 +224,11 @@ function buildExporter(
         },
       });
 
-      await statisticService.saveStatisticsOfDocument(document, settings, checklists);
+      await statisticService.saveStatisticsOfDocument(
+        document,
+        settings,
+        checklists,
+      );
 
       await documentService.deleteDocument(document._id);
     } catch (error) {
@@ -271,8 +279,14 @@ function buildExporter(
     });
 
     // On stock dans la collecte statistique
-    const checklists = await annotationReportService.fetchChecklistByDocumentId(document._id);
-    await statisticService.saveStatisticsOfDocument(document, settings, checklists);
+    const checklists = await annotationReportService.fetchChecklistByDocumentId(
+      document._id,
+    );
+    await statisticService.saveStatisticsOfDocument(
+      document,
+      settings,
+      checklists,
+    );
 
     await documentService.deleteDocument(document._id);
   }

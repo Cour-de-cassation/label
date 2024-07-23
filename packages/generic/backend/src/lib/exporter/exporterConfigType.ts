@@ -11,7 +11,6 @@ type exporterConfigType = {
     labelTreatments: labelTreatmentsType;
     publishStatus?: publishStatusType;
     annotationReportsChecklist?: string[];
-
   }) => Promise<void>;
   sendDocumentBlockedStatus: (param: {
     externalId: documentType['externalId'];

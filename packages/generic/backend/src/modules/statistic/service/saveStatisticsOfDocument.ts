@@ -56,14 +56,16 @@ async function saveStatisticsOfDocument(
       if (user) {
         logger.log({
           operationName: 'documentStatistics',
-          msg: `Human treatment for document ${document.source}:${document.documentNumber
-            } : ${user.name
-            } treat the document in ${timeOperator.convertDurationToReadableDuration(
-              humanTreatment.treatment.duration,
-            )} on ${timeOperator.convertTimestampToReadableDate(
-              humanTreatment.treatment.lastUpdateDate,
-              true,
-            )}`,
+          msg: `Human treatment for document ${document.source}:${
+            document.documentNumber
+          } : ${
+            user.name
+          } treat the document in ${timeOperator.convertDurationToReadableDuration(
+            humanTreatment.treatment.duration,
+          )} on ${timeOperator.convertTimestampToReadableDate(
+            humanTreatment.treatment.lastUpdateDate,
+            true,
+          )}`,
           data: {
             decision: {
               sourceId: document.documentNumber,
@@ -100,7 +102,7 @@ async function saveStatisticsOfDocument(
     },
   });
 
-  statistic = { ...annotationReportsChecklist, ...statistic }
+  statistic = { ...annotationReportsChecklist, ...statistic };
 
   await statisticRepository.insert(statistic);
 }

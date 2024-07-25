@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { decisionModule, decisionType } from 'sder';
-import { idModule } from '@label/core';
+import { documentType, idModule } from '@label/core';
 import { sderApiType } from './sderApiType';
 import { logger } from '@label/backend';
 
@@ -275,6 +275,22 @@ const sderApi: sderApiType = {
         labelTreatments,
         publishStatus,
       });
+    }
+  },
+
+  async getDecisionRoute({ codeNac, codeDecision, source }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
+      return ((await fetchApi({
+        method: 'get',
+        path: 'decision-route',
+        body: {
+          codeNac,
+          codeDecision,
+          source,
+        },
+      })) as unknown) as Promise<documentType['route'] | undefined>;
+    } else {
+      return undefined;
     }
   },
 };

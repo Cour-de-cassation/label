@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { decisionType } from 'sder';
-import { idModule } from '@label/core';
+import { documentType, idModule } from '@label/core';
 import { fileSystem, logger } from '@label/backend';
 import { sderApiType } from './sderApiType';
 
@@ -338,6 +338,22 @@ const sderLocalApi: sderApiType = {
         operationName: 'updateDecisionPseudonymisation',
         msg: 'Warning: API Dbsder is disabled, no export performed',
       });
+    }
+  },
+
+  async getDecisionRoute({ codeNac, codeDecision, source }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
+      return ((await fetchApi({
+        method: 'get',
+        path: 'decision-route',
+        body: {
+          codeNac,
+          codeDecision,
+          source,
+        },
+      })) as unknown) as Promise<documentType['route'] | undefined>;
+    } else {
+      return undefined;
     }
   },
 };

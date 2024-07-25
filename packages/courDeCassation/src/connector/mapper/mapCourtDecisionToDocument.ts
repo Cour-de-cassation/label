@@ -82,7 +82,7 @@ async function mapCourtDecisionToDocument(
     importer,
   );
 
-  const route = extractRoute(
+  const route = await extractRoute(
     {
       additionalTermsToAnnotate,
       solution,

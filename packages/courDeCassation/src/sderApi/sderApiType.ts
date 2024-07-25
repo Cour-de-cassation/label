@@ -51,4 +51,9 @@ type sderApiType = {
     labelTreatments: labelTreatmentsType;
     publishStatus?: publishStatusType;
   }) => Promise<void>;
+  getDecisionRoute: (param: {
+    codeNac: string;
+    codeDecision: string;
+    source: 'jurinet' | 'jurica' | 'juritj';
+  }) => Promise<documentType['route'] | undefined>;
 };

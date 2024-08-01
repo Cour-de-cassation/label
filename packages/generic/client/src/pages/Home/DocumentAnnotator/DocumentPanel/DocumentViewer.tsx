@@ -66,9 +66,34 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
 
   const getTextBetweenLines = (startLine: number, endLine: number) => {
     const lines = props.splittedTextByLine.filter((line) => line.line >= startLine && line.line <= endLine);
+    console.log(lines);
 
-    // To avoid overlaping annotations
-    for (const line of lines) {
+    // Delete empty lines at the beggining
+    let startIndex = 0;
+    while (startIndex < lines.length && lines[startIndex].content.length === 0) {
+      startIndex++;
+    }
+
+    // Delete empty lines at the end
+    let endIndex = lines.length - 1;
+    while (endIndex >= 0 && lines[endIndex].content.length === 0) {
+      endIndex--;
+    }
+
+    if (startIndex > endIndex) {
+      displayAlert({
+        variant: 'info',
+        text: wordings.business.errors.emptyParagraphSelection,
+        autoHide: true,
+      });
+      setSelectedLines([]);
+      return { text: '', index: -1 };
+    }
+
+    const validLines = lines.slice(startIndex, endIndex + 1);
+
+    // To avoid overlapping
+    for (const line of validLines) {
       for (const chunk of line.content) {
         if (chunk.type === 'annotation') {
           displayAlert({
@@ -82,10 +107,12 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
       }
     }
 
-    const text = lines
+    const text = validLines
       .map((line) => line.content.map((chunk) => (chunk.type === 'text' ? chunk.content.text : '')).join(''))
       .join('\n');
-    const index = lines[0].content[0].type === 'text' ? lines[0].content[0].content.index : 0;
+
+    const index = validLines[0].content[0].type === 'text' ? validLines[0].content[0].content.index : -1;
+
     return { text, index };
   };
 

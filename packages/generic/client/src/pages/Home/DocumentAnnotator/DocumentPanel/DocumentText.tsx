@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
 import { positionType } from 'pelta-design-system';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
-import { computeMultilineSelection, textNeighboursType } from '../lib';
+import { textNeighboursType } from '../lib';
 
 export { PureDocumentText as DocumentText };
 

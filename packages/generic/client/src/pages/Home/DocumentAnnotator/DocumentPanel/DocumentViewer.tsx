@@ -65,20 +65,26 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   }, [selectedLines]);
 
   const getTextBetweenLines = (startLine: number, endLine: number) => {
-    const lines = props.splittedTextByLine.filter(line => line.line >= startLine && line.line <= endLine);
-    
+    const lines = props.splittedTextByLine.filter((line) => line.line >= startLine && line.line <= endLine);
+
     // To avoid overlaping annotations
     for (const line of lines) {
       for (const chunk of line.content) {
         if (chunk.type === 'annotation') {
-          displayAlert({ variant: 'info', text: wordings.business.errors.paragraphOverlapsAnnotations, autoHide: true });
+          displayAlert({
+            variant: 'info',
+            text: wordings.business.errors.paragraphOverlapsAnnotations,
+            autoHide: true,
+          });
           setSelectedLines([]);
-          return {text:"", index:-1}
+          return { text: '', index: -1 };
         }
       }
     }
-  
-    const text = lines.map(line => line.content.map(chunk => chunk.type === 'text' ? chunk.content.text : '').join('')).join('\n');
+
+    const text = lines
+      .map((line) => line.content.map((chunk) => (chunk.type === 'text' ? chunk.content.text : '')).join(''))
+      .join('\n');
     const index = lines[0].content[0].type === 'text' ? lines[0].content[0].content.index : 0;
     return { text, index };
   };
@@ -98,7 +104,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
 
   return (
     <>
-      {tooltipMenuOriginPosition && selectedLines.length === 2 && paragraphStartIndex>-1 &&(
+      {tooltipMenuOriginPosition && selectedLines.length === 2 && paragraphStartIndex > -1 && (
         <AnnotationCreationTooltipMenu
           onClose={closeTooltipMenu}
           originPosition={tooltipMenuOriginPosition}
@@ -114,7 +120,8 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
           <table style={styles.table}>
             <tbody>
               {displayedText.map((splittedLine) => {
-                const isHighlighted = selectedLines.includes(splittedLine.line) ||
+                const isHighlighted =
+                  selectedLines.includes(splittedLine.line) ||
                   (selectedLines.length === 2 &&
                     splittedLine.line > selectedLines[0] &&
                     splittedLine.line < selectedLines[1]);

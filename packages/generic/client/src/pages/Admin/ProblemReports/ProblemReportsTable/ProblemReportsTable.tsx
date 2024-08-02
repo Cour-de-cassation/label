@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import format from 'string-template';
 import { customThemeType, useCustomTheme, optionItemType, Table, tableRowFieldType } from 'pelta-design-system';
@@ -11,6 +11,7 @@ import { localStorage } from '../../../../services/localStorage';
 import { sendMail } from '../../../../services/sendMail';
 import { wordings } from '../../../../wordings';
 import { routes } from '../../../routes';
+import { annotationDiffDocumentInfoType, AnnotationsDiffDrawer } from '../../TreatedDocuments/AnnotationsDiffDrawer';
 
 export { ProblemReportsTable };
 
@@ -26,6 +27,9 @@ function ProblemReportsTable(props: {
   const theme = useCustomTheme();
   const { displayAlert } = useAlert();
   const { displayPopup } = usePopup();
+  const [annotationDiffDocumentInfo, setAnnotationDiffDocumentInfo] = useState<
+    annotationDiffDocumentInfoType | undefined
+  >();
 
   const styles = buildStyles(theme);
   const problemReportsFields = buildProblemReportsFields();
@@ -33,15 +37,18 @@ function ProblemReportsTable(props: {
   const adminView = localStorage.adminViewHandler.get();
 
   return (
-    <Table
-      data={props.problemReportsWithDetails}
-      isRowHighlighted={isRowHighlighted}
-      fields={problemReportsFields}
-      buildOptionItems={buildOptionItems}
-      onRowClick={userRole === 'admin' && adminView === 'admin' ? onRowClick : undefined}
-      defaultOrderByProperty="date"
-      defaultOrderDirection="desc"
-    />
+    <>
+      <AnnotationsDiffDrawer documentInfo={annotationDiffDocumentInfo} close={resetDrawer} />
+      <Table
+        data={props.problemReportsWithDetails}
+        isRowHighlighted={isRowHighlighted}
+        fields={problemReportsFields}
+        buildOptionItems={buildOptionItems}
+        onRowClick={userRole === 'admin' && adminView === 'admin' ? onRowClick : undefined}
+        defaultOrderByProperty="date"
+        defaultOrderDirection="desc"
+      />
+    </>
   );
 
   function buildProblemReportsFields(): Array<
@@ -273,11 +280,27 @@ function ProblemReportsTable(props: {
       isDisabled: userRole !== 'admin' || adminView !== 'admin',
       iconName: 'turnRight' as const,
     };
+
+    const displayAnnotationDiff = {
+      kind: 'text' as const,
+      text: wordings.treatedDocumentsPage.table.optionItems.displayAnnotationDiff,
+      onClick: () =>
+        problemReportWithDetails.document &&
+        setAnnotationDiffDocumentInfo({
+          _id: problemReportWithDetails.document?._id,
+          documentNumber: problemReportWithDetails.document?.documentNumber,
+          userName: problemReportWithDetails.user.name,
+        }),
+      iconName: 'link' as const,
+      isDisabled: !problemReportWithDetails.document?._id || !problemReportWithDetails.document.documentNumber,
+    };
+
     const optionItems: Array<optionItemType> = [
       answerByEmailOptionItem,
       openDocumentOptionItem,
       reassignToWorkingUserOptionItem,
       validateDocumentOptionItem,
+      displayAnnotationDiff,
       deleteProblemReportOptionItem,
       deleteDocument,
     ];
@@ -301,6 +324,10 @@ function ProblemReportsTable(props: {
       return;
     }
     props.refetch();
+  }
+
+  function resetDrawer() {
+    setAnnotationDiffDocumentInfo(undefined);
   }
 }
 

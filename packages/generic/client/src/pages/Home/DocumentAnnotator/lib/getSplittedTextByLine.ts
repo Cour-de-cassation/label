@@ -1,10 +1,16 @@
 import { range } from 'lodash';
-import { annotationType, textSplitter, textChunkType, annotationChunkType } from '@label/core';
+import { annotationType, textSplitter, textChunkType, annotationChunkType, textChunkContentType } from '@label/core';
 import { lineSplitter } from '../../../../services/lineSplitter';
 
 export { getSplittedTextByLine };
 
-export type { splittedTextByLineType };
+export type { splittedTextByLineType, textNeighboursType };
+
+type textNeighboursType = {
+  before: textChunkContentType[];
+  current: textChunkContentType;
+  after: textChunkContentType[];
+};
 
 type splittedTextByLineType = Array<{
   line: number;

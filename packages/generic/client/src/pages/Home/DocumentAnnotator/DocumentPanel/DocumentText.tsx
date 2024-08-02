@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, MouseEvent } from 'react';
 import { positionType } from 'pelta-design-system';
 import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
-import { computeMultilineSelection, textNeighboursType } from '../lib';
+import { textNeighboursType } from '../lib';
 
 export { PureDocumentText as DocumentText };
 
@@ -64,6 +64,7 @@ function DocumentText(props: propsType): ReactElement {
     const anchorNodeValue = selection.anchorNode?.nodeValue;
     const focusNodeValue = selection.focusNode?.nodeValue;
     const selectionText = selection.toString();
+
     if (
       !anchorNodeValue ||
       !focusNodeValue ||
@@ -73,17 +74,11 @@ function DocumentText(props: propsType): ReactElement {
     ) {
       return [];
     }
-    if (anchorNodeValue === focusNodeValue) {
+    // Check if selection in contained in one line
+    if (anchorNodeValue === focusNodeValue && !selectionText.includes('\n')) {
       return [{ text: selectionText.trim(), index: computeSelectedTextIndex(selection) }];
     }
-
-    const multilineSelection = computeMultilineSelection(
-      selectionText.trim(),
-      props.neighbours,
-      anchorNodeValue,
-      focusNodeValue,
-    );
-    return multilineSelection;
+    return [];
   }
 
   function openTooltipMenu(event: MouseEvent<Element>) {

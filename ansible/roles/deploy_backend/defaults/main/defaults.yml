@@ -86,5 +86,5 @@ jobs:
     failed_jobs_history_limit: 7
     backoff_limit: 0
     parallelism: 1
-    active_deadline_seconds: 300
+    active_deadline_seconds: 600
     command: "dist/scripts/cleanDocuments.js"

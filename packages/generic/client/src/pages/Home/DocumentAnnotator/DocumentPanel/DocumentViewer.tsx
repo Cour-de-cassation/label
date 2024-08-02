@@ -58,7 +58,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
       const textBetweenLines = getTextBetweenLines(selectedLines[0], selectedLines[1]);
       setSelectedParagraphText(textBetweenLines.text);
       setParagraphStartIndex(textBetweenLines.index);
-      setTooltipMenuOriginPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+      setTooltipMenuOriginPosition({ x: window.innerWidth / 2, y: window.innerHeight / 4 });
     } else {
       setTooltipMenuOriginPosition(undefined);
     }
@@ -66,7 +66,6 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
 
   const getTextBetweenLines = (startLine: number, endLine: number) => {
     const lines = props.splittedTextByLine.filter((line) => line.line >= startLine && line.line <= endLine);
-    console.log(lines);
 
     // Delete empty lines at the beggining
     let startIndex = 0;

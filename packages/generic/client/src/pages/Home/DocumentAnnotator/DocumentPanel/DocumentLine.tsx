@@ -23,7 +23,7 @@ function DocumentLine(props: {
   const textColor = isLineHighlighted() ? 'textPrimary' : 'textSecondary';
 
   return (
-    <tr id={`line${props.line}`}>
+    <tr id={`line${props.line}`} style={props.isHighlighted ? styles.selectedLine : {}}>
       <td style={styles.lineNumberCell} onClick={() => props.onLineClick(props.line)}>
         <Text variant="body2" color={props.isHighlighted ? 'textPrimary' : 'textSecondary'}>
           {props.line ?? '[…]'}
@@ -72,6 +72,9 @@ function buildStyles(theme: customThemeType) {
     },
     lineTextCell: {
       overflowWrap: 'anywhere',
+    },
+    selectedLine: {
+      backgroundColor: theme.colors.default.background,
     },
   } as const;
 }

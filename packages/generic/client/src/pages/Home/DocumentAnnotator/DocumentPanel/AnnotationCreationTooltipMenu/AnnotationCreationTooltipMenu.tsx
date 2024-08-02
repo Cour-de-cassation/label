@@ -169,7 +169,7 @@ function AnnotationCreationTooltipMenu(props: {
         color: theme.colors.default.hoveredTextColor,
         padding: '2px 4px',
         borderRadius: '3px',
-        whiteSpace: 'pre-wrap', // Preserve line breaks
+        whiteSpace: 'pre-wrap',
       },
       checkboxContainer: {
         alignSelf: 'flex-start',

@@ -58,7 +58,6 @@ function DocumentText(props: propsType): ReactElement {
   }
 
   function getValidSelection(selection: Selection | null) {
-    console.log(selection?.toString());
     if (!selection) {
       return [];
     }
@@ -77,8 +76,6 @@ function DocumentText(props: propsType): ReactElement {
     }
     if (anchorNodeValue === focusNodeValue) {
       //cette condition entraine un bug si on cherche a créer une annotation sur plusieurs lignes qui commence et qui termine par le même mot, en effet la condition sera vraie alors qu'il sagirat d'un anchor et d'un focus différent
-      console.log('anchorNodeValue === focusNodeValue');
-      console.log([{ text: selectionText.trim(), index: computeSelectedTextIndex(selection) }]);
       return [{ text: selectionText.trim(), index: computeSelectedTextIndex(selection) }];
     }
     return [];

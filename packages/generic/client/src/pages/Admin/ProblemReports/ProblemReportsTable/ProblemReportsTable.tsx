@@ -292,7 +292,7 @@ function ProblemReportsTable(props: {
           userName: problemReportWithDetails.user.name,
         }),
       iconName: 'link' as const,
-      isDisabled: !problemReportWithDetails.document?._id || !problemReportWithDetails.document.documentNumber,
+      isDisabled: !problemReportWithDetails.document,
     };
 
     const optionItems: Array<optionItemType> = [

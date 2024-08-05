@@ -11,6 +11,7 @@ import { statisticService } from '../../modules/statistic';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { exporterConfigType } from './exporterConfigType';
+import { annotationReportService } from '../../modules/annotationReport';
 
 export { buildExporter };
 
@@ -179,6 +180,14 @@ function buildExporter(
     const treatments = await treatmentService.fetchTreatmentsByDocumentId(
       document._id,
     );
+    // On stock dans la collecte statistique
+    const checklists = await annotationReportService.fetchChecklistByDocumentId(
+      document._id,
+    );
+    logger.log({
+      operationName: 'annotationReport',
+      msg: `checklist ==> ${document._id} -- ${checklists}`,
+    });
     const annotations = treatmentModule.lib.computeAnnotations(treatments);
     const seed = documentModule.lib.computeCaseNumber(document);
     const settingsForDocument = settingsModule.lib.computeFilteredSettings(
@@ -192,6 +201,10 @@ function buildExporter(
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
     try {
+      logger.log({
+        operationName: 'exportDocument',
+        msg: `checklists ${checklists} `,
+      });
       await exporterConfig.sendDocumentPseudonymisationAndTreatments({
         externalId: document.externalId,
         pseudonymizationText: anonymizer.anonymizeDocument(document).text,
@@ -211,7 +224,11 @@ function buildExporter(
         },
       });
 
-      await statisticService.saveStatisticsOfDocument(document, settings);
+      await statisticService.saveStatisticsOfDocument(
+        document,
+        settings,
+        checklists,
+      );
 
       await documentService.deleteDocument(document._id);
     } catch (error) {
@@ -261,7 +278,15 @@ function buildExporter(
       externalId: document.externalId,
     });
 
-    await statisticService.saveStatisticsOfDocument(document, settings);
+    // On stock dans la collecte statistique
+    const checklists = await annotationReportService.fetchChecklistByDocumentId(
+      document._id,
+    );
+    await statisticService.saveStatisticsOfDocument(
+      document,
+      settings,
+      checklists,
+    );
 
     await documentService.deleteDocument(document._id);
   }

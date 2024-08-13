@@ -226,7 +226,7 @@ describe('nlpMapper', () => {
           },
         ],
         documentId: document._id,
-        _id: annotationReport._id,
+        _id: annotationReport?._id,
       });
     });
   });

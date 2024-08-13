@@ -33,11 +33,13 @@ function mapNlpAnnotationsToAnnotations(
 function mapNlpAnnotationstoReport(
   nlpAnnotations: nlpResponseType,
   document: documentType,
-): annotationReportType {
-  return annotationReportModule.lib.buildAnnotationReport({
-    checklist: nlpAnnotations.checklist ?? [],
-    documentId: document._id,
-  });
+): annotationReportType | undefined {
+  if (nlpAnnotations.checklist && nlpAnnotations.checklist.length == 0) {
+    return annotationReportModule.lib.buildAnnotationReport({
+      checklist: nlpAnnotations.checklist,
+      documentId: document._id,
+    });
+  }
 }
 
 function mapNlpAdditionalTerms(

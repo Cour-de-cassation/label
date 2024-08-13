@@ -52,12 +52,12 @@ function buildAnnotator(
       if (currentDocumentToFillLoss) {
         documentsFilledLossCount++;
         try {
-          const currentTreatmentsOfDocument = await treatmentService.fetchTreatmentsByDocumentId(
+          const currentTreanlpAnnotationstmentsOfDocument = await treatmentService.fetchTreatmentsByDocumentId(
             currentDocumentToFillLoss._id,
           );
           const loss = await annotatorConfig.fetchLossOfDocument(
             currentDocumentToFillLoss,
-            treatmentModule.lib.concat(currentTreatmentsOfDocument),
+            treatmentModule.lib.concat(currentTreanlpAnnotationstmentsOfDocument),
           );
           await documentService.updateDocumentLoss(
             currentDocumentToFillLoss._id,
@@ -118,11 +118,10 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${
-            annotatorConfig.name
-          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-            currentDocumentToAnnotate,
-          )}`,
+          msg: `Annotating with ${annotatorConfig.name
+            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+              currentDocumentToAnnotate,
+            )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -272,19 +271,20 @@ function buildAnnotator(
       }
     }
 
-    if (report.checklist.length > 0) {
-      await createReport(report);
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Annotation report created in DB',
-        data: {
-          decision: {
-            sourceId: document.documentNumber,
-            sourceName: document.source,
-          },
+    //Todo : create report only if report is not null
+    if (report?.checklist.length != 0) await createReport(report);
+
+    logger.log({
+      operationName: 'annotateDocument',
+      msg: 'Annotation report created in DB',
+      data: {
+        decision: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
         },
-      });
-    }
+      }
+    });
+
 
     if (
       additionalTermsParsingFailed !== null &&
@@ -471,14 +471,13 @@ function buildAnnotator(
     );
   }
 
-  async function createReport(report: annotationReportType) {
+  async function createReport(report: annotationReportType | undefined) {
     const annotationReportRepository = buildAnnotationReportRepository();
-    await annotationReportRepository.insert(report);
+    if (report) await annotationReportRepository.insert(report);
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
-      document.documentNumber
-    }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
+      }]`;
   }
 }

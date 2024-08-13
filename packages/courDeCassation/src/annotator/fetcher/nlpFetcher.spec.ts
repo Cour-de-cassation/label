@@ -24,8 +24,8 @@ describe('nlpFetcher', () => {
       );
 
       const nlpAnnotations = nlpFakeServer.getNlpAnnotations();
-      expect(report.checklist).toEqual(nlpAnnotations.checklist);
-      expect(report.documentId).toEqual(document._id);
+      expect(report?.checklist).toEqual(nlpAnnotations.checklist);
+      expect(report?.documentId).toEqual(document._id);
     });
     it('should fetch all the annotations from the nlp engine of the given document', async () => {
       const { annotations } = await nlpFetcher.fetchAnnotationOfDocument(

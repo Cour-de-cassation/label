@@ -10,7 +10,7 @@ echo "Reset the DB except for users and migrations"
 sh scripts/runLocalScript.sh ./dist/scripts/clearDb.js;
 
 echo "Import the documents from SDER database"
-sh scripts/runLocalScript.sh ./dist/scripts/importAllDocumentsFromSderSinceOrBetween.js --fromDaysAgo 365;
+sh scripts/runLocalScript.sh ./dist/scripts/importAllDocumentsFromSderSinceOrBetween.js --fromDaysAgo 2;
 
 echo "Annotate all the documents with the NLP engine"
 sh scripts/runLocalScript.sh ./dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js;

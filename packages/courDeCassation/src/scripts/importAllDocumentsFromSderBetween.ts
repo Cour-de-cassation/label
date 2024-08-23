@@ -2,7 +2,6 @@ import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
 import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
-import { sderApi } from '../sderApi/sderApi';
 
 (async () => {
   const { settings } = await parametersHandler.getParameters();
@@ -34,13 +33,6 @@ async function importAllDocumentsFromSderBetween(
   jurisdictions: string[],
   chambers: string[],
 ) {
-  /*await sderApi.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween({
-    startDate: from,
-    endDate: to,
-    source: 'jurinet',
-    jurisdictions: jurisdictions,
-    chambers: chambers,
-  });*/
   await sderConnector.importDocumentsByJurisdictionBetween(
     from,
     to,

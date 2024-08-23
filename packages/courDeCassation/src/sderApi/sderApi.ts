@@ -2,7 +2,6 @@ import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { decisionModule, decisionType } from 'sder';
 import { idModule } from '@label/core';
 import { sderApiType } from './sderApiType';
-import { logger } from '@label/backend';
 
 export { sderApi };
 
@@ -50,16 +49,49 @@ const sderApi: sderApiType = {
     chambers,
   }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
-      logger.log({
-        operationName:
-          'fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween',
-        msg:
-          'Warning: The method fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween is not implemented for the db_api, switching to Mongo request',
+      const decisionList = ((await fetchApi({
+        method: 'get',
+        path: `decisions?status=toBeTreated&source=${source}&startDate=${
+          startDate.toISOString().split('T')[0]
+        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        body: {},
+      })) as unknown) as {
+        _id: string;
+        status: string;
+        source: string;
+        dateCreation: string;
+      }[];
+      const decisions: decisionType[] = [];
+      for (const decisionRef of decisionList) {
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = (await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+          })) as decisionType;
+          decisions.push(decision);
+        }
+      }
+      return decisions.filter((item) => {
+        // Check for jurisdiction match
+        const jurisdictionMatch =
+          jurisdictions.includes(item.jurisdictionCode) ||
+          jurisdictions.includes(item.jurisdictionId) ||
+          jurisdictions.includes(item.jurisdictionName);
+
+        // Check for chamber match
+        const chamberMatch =
+          chambers.includes(item.chamberId) ||
+          chambers.includes(item.chamberName);
+
+        // Return true if both match
+        return jurisdictionMatch && chamberMatch;
       });
+    } else {
+      return await decisionModule.service.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
+        { startDate, endDate, jurisdictions, chambers, source },
+      );
     }
-    return await decisionModule.service.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      { startDate, endDate, jurisdictions, chambers, source },
-    );
   },
 
   async fetchDecisionsToPseudonymiseBetween({ startDate, endDate, source }) {
@@ -144,15 +176,40 @@ const sderApi: sderApiType = {
     endDate,
   }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
-      logger.log({
-        operationName: 'fetchChainedJuricaDecisionsToPseudonymiseBetween',
-        msg:
-          'Warning: The method fetchChainedJuricaDecisionsToPseudonymiseBetween is not implemented for the db_api, switching to Mongo request',
-      });
+      const decisionList = ((await fetchApi({
+        method: 'get',
+        path: `decisions?status=toBeTreated&startDate=${
+          startDate.toISOString().split('T')[0]
+        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        body: {},
+      })) as unknown) as {
+        _id: string;
+        status: string;
+        source: string;
+        dateCreation: string;
+      }[];
+      const decisions: decisionType[] = [];
+      for (const decisionRef of decisionList) {
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+          });
+          if (
+            decision['decisionAssociee'] != null &&
+            decision['decisionAssociee'] != undefined
+          ) {
+            decisions.push(decision as decisionType);
+          }
+        }
+      }
+      return decisions;
+    } else {
+      return await decisionModule.service.fetchChainedJuricaDecisionsToPseudonymiseBetween(
+        { startDate, endDate },
+      );
     }
-    return await decisionModule.service.fetchChainedJuricaDecisionsToPseudonymiseBetween(
-      { startDate, endDate },
-    );
   },
 
   async fetchCourtDecisionById({ id }) {
@@ -169,16 +226,34 @@ const sderApi: sderApiType = {
 
   async fetchCourtDecisionBySourceIdAndSourceName({ sourceId, sourceName }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
-      logger.log({
-        operationName: 'fetchCourtDecisionBySourceIdAndSourceName',
-        msg:
-          'Warning: The method fetchCourtDecisionBySourceIdAndSourceName is not implemented for the db_api, switching to Mongo request',
-      });
+      const decisionList = ((await fetchApi({
+        method: 'get',
+        path: `decisions?status=toBeTreated&sourceId=${sourceId}&sourceName=${sourceName}`,
+        body: {},
+      })) as unknown) as {
+        _id: string;
+        status: string;
+        source: string;
+        dateCreation: string;
+      }[];
+      const decisions: decisionType[] = [];
+      for (const decisionRef of decisionList) {
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = (await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+          })) as decisionType;
+          decisions.push(decision);
+        }
+      }
+      return decisions.length > 0 ? decisions[0] : undefined;
+    } else {
+      return decisionModule.service.fetchDecisionBySourceIdAndSourceName(
+        sourceId,
+        sourceName,
+      );
     }
-    return decisionModule.service.fetchDecisionBySourceIdAndSourceName(
-      sourceId,
-      sourceName,
-    );
   },
 
   async setCourtDecisionsLoaded({ documents }) {

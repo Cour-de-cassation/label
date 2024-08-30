@@ -53,4 +53,22 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
 
     return anonymizedText;
   }
+
+  function extractReplacementTerms() {
+    const uniqueAnnotationsText: {
+      [key: string]: { entityId: string; replacementTerm: string; category: string };
+    } = {};
+
+    annotations.forEach((annotation) => {
+      if (!uniqueAnnotationsText[annotation.text]) {
+        uniqueAnnotationsText[annotation.text] = {
+          entityId: annotation.entityId,
+          replacementTerm: mapper[annotation.entityId] || ANONYMIZATION_DEFAULT_TEXT,
+          category: annotation.category,
+        };
+      }
+    });
+
+    return uniqueAnnotationsText;
+  }
 }

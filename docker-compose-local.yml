@@ -6,37 +6,37 @@ services:
     command: mongod --port 55431
     volumes:
       - mongo-storage:/data/db
-    expose:
-      - 55431
     ports:
       - 55431:55431
 
-  backend:
+  label-backend:
     build:
       context: ./
       dockerfile: Dockerfile.label.local
     ports:
-      - "55430:55430"
+      - 55430:55430
     depends_on:
       - labelDb
     environment:
       - RUN_MODE=LOCAL
     env_file:
-      - .env
+      - docker.env
     volumes:
       - .:/home/node
-  client:
+
+  label-client:
     build:
       context: ./
       dockerfile: Dockerfile.label.local
     ports:
-      - "55432:55432"
+      - 55432:55432
     depends_on:
       - labelDb
+      - label-backend
     environment:
       - RUN_MODE=LOCAL
     env_file:
-      - .env
+      - docker.env
     volumes:
       - .:/home/node
     command: "yarn start:client:dev"

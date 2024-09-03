@@ -19,6 +19,8 @@ import { buildPreAssignator } from '../preAssignator';
 
 export { buildConnector };
 
+// define sources enum to import documents from alla sources
+
 function buildConnector(connectorConfig: connectorConfigType) {
   return {
     importChainedDocumentsFromSder,

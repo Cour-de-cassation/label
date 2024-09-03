@@ -21,8 +21,6 @@ import {
 import { statisticModule, statisticType } from './statistic';
 import { treatmentType, treatmentModule, treatmentInfoType } from './treatment';
 import { userModule, userType, passwordTimeValidityStatusType } from './user';
-import { migrationModule, migrationType } from './migration';
-
 export {
   annotationModule,
   annotationReportModule,
@@ -33,7 +31,6 @@ export {
   documentModule,
   ressourceFilterModule,
   idModule,
-  migrationModule,
   problemReportModule,
   replacementTermModule,
   settingsModule,
@@ -59,7 +56,6 @@ export type {
   fetchedDocumentType,
   ressourceFilterType,
   idType,
-  migrationType,
   problemReportType,
   settingsType,
   statisticType,

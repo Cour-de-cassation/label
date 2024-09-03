@@ -4,7 +4,6 @@ import { buildRunServer } from './buildRunServer';
 import {
   cleanDocuments,
   clearDb,
-  createMigrationFile,
   deleteDocument,
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
@@ -19,8 +18,6 @@ import {
   purgeDb,
   renewCache,
   resetUntreatedDocumentsForTest,
-  revertOneMigration,
-  runNewMigrations,
 } from './scripts';
 import { cleanDuplicatedDocuments } from './scripts/cleanDocuments';
 
@@ -41,10 +38,6 @@ function buildBackend(settings: settingsType) {
       clearDb: {
         run: clearDb,
         option: { shouldLoadDb: true, shouldExit: false },
-      },
-      createMigrationFile: {
-        run: createMigrationFile,
-        option: { shouldLoadDb: false, shouldExit: true },
       },
       deleteDocument: {
         run: deleteDocument,
@@ -99,16 +92,8 @@ function buildBackend(settings: settingsType) {
         run: renewCache,
         option: { shouldLoadDb: true, shouldExit: true },
       },
-      revertOneMigration: {
-        run: revertOneMigration,
-        option: { shouldLoadDb: true, shouldExit: true },
-      },
       resetUntreatedDocumentsForTest: {
         run: resetUntreatedDocumentsForTest,
-        option: { shouldLoadDb: true, shouldExit: true },
-      },
-      runNewMigrations: {
-        run: runNewMigrations,
         option: { shouldLoadDb: true, shouldExit: true },
       },
       cleanDuplicatedDocuments: {

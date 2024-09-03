@@ -300,9 +300,9 @@ function ProblemReportsTable(props: {
       openDocumentOptionItem,
       reassignToWorkingUserOptionItem,
       validateDocumentOptionItem,
-      displayAnnotationDiff,
       deleteProblemReportOptionItem,
       deleteDocument,
+      displayAnnotationDiff,
     ];
 
     return optionItems;

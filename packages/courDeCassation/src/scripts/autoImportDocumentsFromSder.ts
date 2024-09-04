@@ -56,7 +56,7 @@ function parseArgv() {
       sources: {
         demandOption: false,
         description:
-          'sources (jurinet, jurica or juritj) of the decisions you want to import',
+          'sources (jurinet, jurica, juritj or juritcom) of the decisions you want to import',
         type: 'string',
       },
     })

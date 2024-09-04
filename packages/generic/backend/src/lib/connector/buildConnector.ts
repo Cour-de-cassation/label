@@ -19,7 +19,13 @@ import { buildPreAssignator } from '../preAssignator';
 
 export { buildConnector };
 
-// define sources enum to import documents from alla sources
+// TODO : use dbsder-api-types ?
+enum Sources {
+  CC = 'jurinet',
+  CA = 'jurica',
+  TJ = 'juritj',
+  TCOM = 'juritcom',
+}
 
 function buildConnector(connectorConfig: connectorConfigType) {
   return {
@@ -252,37 +258,31 @@ function buildConnector(connectorConfig: connectorConfigType) {
       const endDate = new Date(dateBuilder.daysAgo(daysAgo));
       try {
         const newCourtDecisions: decisionType[] = [];
-        if (!sources || sources.includes('jurinet')) {
-          const newJurinetDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-            {
-              startDate,
-              endDate,
-              source: 'jurinet',
-            },
-          );
-          newJurinetDecisions && newCourtDecisions.push(...newJurinetDecisions);
+        if (sources) {
+          sources.forEach(async (source) => {
+            const newDecisionsForSource = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+              {
+                startDate,
+                endDate,
+                source: source,
+              },
+            );
+            newDecisionsForSource &&
+              newCourtDecisions.push(...newDecisionsForSource);
+          });
+        } else {
+          for (const source of Object.values(Sources)) {
+            const newDecisionsForSource = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
+              {
+                startDate,
+                endDate,
+                source: source,
+              },
+            );
+            newDecisionsForSource &&
+              newCourtDecisions.push(...newDecisionsForSource);
+          }
         }
-        if (!sources || sources.includes('jurica')) {
-          const newJuricaDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-            {
-              startDate,
-              endDate,
-              source: 'jurica',
-            },
-          );
-          newJuricaDecisions && newCourtDecisions.push(...newJuricaDecisions);
-        }
-        if (!sources || sources.includes('juritj')) {
-          const newJuritjDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
-            {
-              startDate,
-              endDate,
-              source: 'juritj',
-            },
-          );
-          newJuritjDecisions && newCourtDecisions.push(...newJuritjDecisions);
-        }
-
         logger.log({
           operationName: 'importNewDocuments',
           msg: `${newCourtDecisions.length} ${
@@ -446,110 +446,43 @@ function buildConnector(connectorConfig: connectorConfigType) {
         });
 
     const newCourtDecisions = [];
-    try {
-      logger.log({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: `Fetching ${connectorConfig.name} jurinet documents...`,
-      });
-      const newJurinetCourtDecisions =
-        (byDateCreation
-          ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-              {
+
+    for (const source of Object.values(Sources)) {
+      try {
+        logger.log({
+          operationName: 'importDocumentsSinceOrBetween',
+          msg: `Fetching ${connectorConfig.name} ${source} documents...`,
+        });
+        const newCourtDecisionsBySource =
+          (byDateCreation
+            ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
+                {
+                  startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+                  endDate: toDaysAgo
+                    ? new Date(dateBuilder.daysAgo(toDaysAgo))
+                    : new Date(),
+                  source: source,
+                },
+              )
+            : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
                 startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
                 endDate: toDaysAgo
                   ? new Date(dateBuilder.daysAgo(toDaysAgo))
                   : new Date(),
-                source: 'jurinet',
-              },
-            )
-          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-              startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
-              endDate: toDaysAgo
-                ? new Date(dateBuilder.daysAgo(toDaysAgo))
-                : new Date(),
-              source: 'jurinet',
-            })) ?? [];
-      logger.log({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
-      });
-      newCourtDecisions.push(...newJurinetCourtDecisions);
-    } catch (error) {
-      logger.error({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: 'Error',
-        data: error as Record<string, unknown>,
-      });
-    }
-    try {
-      logger.log({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: `Fetching ${connectorConfig.name} jurica documents...`,
-      });
-      const newJuricaCourtDecisions =
-        (byDateCreation
-          ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-              {
-                startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
-                endDate: toDaysAgo
-                  ? new Date(dateBuilder.daysAgo(toDaysAgo))
-                  : new Date(),
-                source: 'jurica',
-              },
-            )
-          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-              startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
-              endDate: toDaysAgo
-                ? new Date(dateBuilder.daysAgo(toDaysAgo))
-                : new Date(),
-              source: 'jurica',
-            })) ?? [];
-      logger.log({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
-      });
-      newCourtDecisions.push(...newJuricaCourtDecisions);
-    } catch (error) {
-      logger.error({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: 'Error',
-        data: error as Record<string, unknown>,
-      });
-    }
-    try {
-      logger.log({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: `Fetching ${connectorConfig.name} juritj documents...`,
-      });
-      const newJuritjCourtDecisions =
-        (byDateCreation
-          ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
-              {
-                startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
-                endDate: toDaysAgo
-                  ? new Date(dateBuilder.daysAgo(toDaysAgo))
-                  : new Date(),
-                source: 'juritj',
-              },
-            )
-          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
-              startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
-              endDate: toDaysAgo
-                ? new Date(dateBuilder.daysAgo(toDaysAgo))
-                : new Date(),
-              source: 'juritj',
-            })) ?? [];
-      logger.log({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
-      });
-      newCourtDecisions.push(...newJuritjCourtDecisions);
-    } catch (error) {
-      logger.error({
-        operationName: 'importDocumentsSinceOrBetween',
-        msg: 'Error',
-        data: error as Record<string, unknown>,
-      });
+                source: source,
+              })) ?? [];
+        logger.log({
+          operationName: 'importDocumentsSinceOrBetween',
+          msg: `${newCourtDecisionsBySource.length} ${connectorConfig.name} court decisions fetched from ${source}!`,
+        });
+        newCourtDecisions.push(...newCourtDecisionsBySource);
+      } catch (error) {
+        logger.error({
+          operationName: 'importDocumentsSinceOrBetween',
+          msg: 'Error',
+          data: error as Record<string, unknown>,
+        });
+      }
     }
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
@@ -594,86 +527,35 @@ function buildConnector(connectorConfig: connectorConfigType) {
       )} & chambers=${chambers.join(',')}`,
     });
     const newCourtDecisions = [];
-    try {
-      logger.log({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: `Fetching ${connectorConfig.name} jurinet documents...`,
-      });
-      const newJurinetCourtDecisions =
-        (await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-          {
-            startDate: from,
-            endDate: to,
-            source: 'jurinet',
-            jurisdictions,
-            chambers,
-          },
-        )) ?? [];
-      logger.log({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: `${newJurinetCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurinet!`,
-      });
-      newCourtDecisions.push(...newJurinetCourtDecisions);
-    } catch (error) {
-      logger.error({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: 'Error',
-        data: error as Record<string, unknown>,
-      });
-    }
-    try {
-      logger.log({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: `Fetching ${connectorConfig.name} jurica documents...`,
-      });
-      const newJuricaCourtDecisions =
-        (await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-          {
-            startDate: from,
-            endDate: to,
-            source: 'jurica',
-            jurisdictions,
-            chambers,
-          },
-        )) ?? [];
-      logger.log({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: `${newJuricaCourtDecisions.length} ${connectorConfig.name} court decisions fetched from jurica!`,
-      });
-      newCourtDecisions.push(...newJuricaCourtDecisions);
-      logger.log({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: `Fetching ${connectorConfig.name} juritj documents...`,
-      });
-    } catch (error) {
-      logger.error({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: 'Error',
-        data: error as Record<string, unknown>,
-      });
-    }
-    try {
-      const newJuritjCourtDecisions =
-        (await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-          {
-            startDate: from,
-            endDate: to,
-            source: 'juritj',
-            jurisdictions,
-            chambers,
-          },
-        )) ?? [];
-      logger.log({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: `${newJuritjCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritj!`,
-      });
-      newCourtDecisions.push(...newJuritjCourtDecisions);
-    } catch (error) {
-      logger.error({
-        operationName: 'importDocumentsByJurisdictionBetween',
-        msg: 'Error',
-        data: error as Record<string, unknown>,
-      });
+
+    for (const source of Object.values(Sources)) {
+      try {
+        logger.log({
+          operationName: 'importDocumentsByJurisdictionBetween',
+          msg: `Fetching ${connectorConfig.name} ${source} documents...`,
+        });
+        const newCourtDecisionsBySource =
+          (await connectorConfig.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
+            {
+              startDate: from,
+              endDate: to,
+              source: source,
+              jurisdictions,
+              chambers,
+            },
+          )) ?? [];
+        logger.log({
+          operationName: 'importDocumentsByJurisdictionBetween',
+          msg: `${newCourtDecisionsBySource.length} ${connectorConfig.name} court decisions fetched from ${source}!`,
+        });
+        newCourtDecisions.push(...newCourtDecisionsBySource);
+      } catch (error) {
+        logger.error({
+          operationName: 'importDocumentsByJurisdictionBetween',
+          msg: 'Error',
+          data: error as Record<string, unknown>,
+        });
+      }
     }
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {

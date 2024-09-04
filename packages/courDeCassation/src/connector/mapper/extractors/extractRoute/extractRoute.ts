@@ -3,6 +3,7 @@ import { documentType } from '@label/core';
 import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
 import { extractRouteForJuritj } from './extractRouteForJuritj';
+import { extractRouteForJuritcom } from './extractRouteForJuritcom';
 
 export { extractRoute };
 
@@ -25,31 +26,32 @@ function extractRoute(
 ): documentType['route'] {
   let route: documentType['route'] = 'default';
 
-  switch (source) {
-    case 'jurinet':
-      try {
-        route = extractRouteForJurinet({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJurinet', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-    case 'jurica':
-      try {
-        route = extractRouteForJurica({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJurica', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-    case 'juritj':
-      try {
-        route = extractRouteForJuritj({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
+  // TODO : use dbsder-api-types
+  enum Sources {
+    CC = 'jurinet',
+    CA = 'jurica',
+    TJ = 'juritj',
+    TCOM = 'juritcom',
+  }
+
+  const extractRouteFunctions = {
+    [Sources.CC]: extractRouteForJurinet,
+    [Sources.CA]: extractRouteForJurica,
+    [Sources.TJ]: extractRouteForJuritj,
+    [Sources.TCOM]: extractRouteForJuritcom,
+  };
+
+  try {
+    if (source in extractRouteFunctions) {
+      route = extractRouteFunctions[source as Sources]({
+        ...routeInfos,
+      });
+    } else {
+      throw new Error('Source non prise en charge');
+    }
+  } catch (e) {
+    logger.error({ operationName: `extractRouteFor ${source}`, msg: `${e}` });
+    route = 'exhaustive';
   }
 
   if (

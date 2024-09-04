@@ -7,8 +7,9 @@ async function fetchExtremumDates() {
   const statisticRepository = buildStatisticRepository();
   const treatmentRepository = buildTreatmentRepository();
 
+  // find all available sources or use dbsder-api-types
   const extremumDatesInStatistics = await statisticRepository.findExtremumTreatmentDateBySources(
-    ['jurinet', 'jurica', 'juritj'],
+    ['jurinet', 'jurica', 'juritj', 'juritcom'],
   );
 
   const extremumDatesInTreatments = await treatmentRepository.findExtremumLastUpdateDateBySources(

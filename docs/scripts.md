@@ -10,10 +10,6 @@ Send documents to the NLP API and retreive their annotations.
 
 Import all possible documents from SDER.
 
-## bootstrap
-
-??
-
 ## cleanDocuments
 
 Cleaning script (clean duplicated documents and other).
@@ -22,17 +18,13 @@ Cleaning script (clean duplicated documents and other).
 
 Clear Label database.
 
-## clearDbExceptUsersAndMigrations
+## clearDbExceptUsers
 
-Delete all documents related data but keep users and migrations.
+Delete all documents related data but keep users.
 
 ## clearDbOnlyProblemReports
 
 Delete all problem reports.
-
-## createMigrationFile
-
-Init migration.
 
 ## deleteDocument
 
@@ -60,7 +52,7 @@ Reject documents with the rejected status (delete document from Label & set 'blo
 
 ## exportAllTreatedDocuments
 
-Export all documents that ahve been treated (without waiting).
+Export all documents that have been treated (without waiting).
 
 ## exportSpecificDocument
 
@@ -89,23 +81,13 @@ Import documents from the SDER database with jurisdiction and chamber filter bet
 ## importAllDocumentsFromSderSinceOrBetween
 
 Import documents from the SDER database since X days / or with optional param, you give a scope "from --- to".
+
 - example : command: "importAllDocumentsFromSderSinceOrBetween.js --days 7"
 - example with scope : command: "importAllDocumentsFromSderSinceOrBetween.js --days 7 --to 1"
+
 ## importChainedDocumentsFromSder
 
 Import from the SDER database JuriCA decisions to pseudonymise chained with Jurinet decisions that are in the SDER database.
-
-## importJuricaDocuments
-
-Import from the SDER database recent JuriCA decisions to pseudonymise.
-
-## importJuritjDocuments
-
-Import from the SDER database recent JuriTJ decisions to pseudonymise.
-
-## importNewDocumentsFromSder
-
-Same as `autoImportDocumentsFromSder`, but without the `threshold` option.
 
 ## importSpecificDocumentFromSder
 
@@ -133,11 +115,12 @@ List documents with problem reports.
 
 ## purgeDb
 
-Purge db (for now only the statistics after 6 months).
+Purge db (for now only the users in statistics after 6 months).
 
 ## reAnnotateFreeDocuments
 
 If the NLP API was outdated or buggy, reannotate free documents. Warning: suspend nlp-annotation job during this operation to avoid side effects.
+This script only prepare documents and set their status to loaded, the next nlp-annotation job will reannotate them.
 
 ## renewCache
 
@@ -157,13 +140,7 @@ Reset a specific document.
 
 ## resetUntreatedDocumentsForTest
 
-## revertOneMigration
-
-Revert a migration.
-
-## runNewMigrations
-
-Run migrations.
+Randomise untreated documents, use only in local or in dev env.
 
 ## updateRouteForFreeDocuments
 

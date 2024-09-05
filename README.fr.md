@@ -2,7 +2,7 @@
 
 <img src="./packages/generic/client/src/assets/logo/logo.svg" alt="Label logo" width="40%"/>
 
-LABEL est un logiciel d'annotation de texte créé par la [Cour de cassation](https://www.courdecassation.fr/). Il est actuellement utilisé pour publier des décisions de justice dans le cadre de l'ouverture des données de la justice.
+LABEL est un logiciel d'annotation de texte créé par la [Cour de cassation](https://www.courdecassation.fr/). Il est actuellement utilisé pour annoter des décisions de justice dans le cadre de [l'open data des décisions de justice](https://www.courdecassation.fr/la-cour-de-cassation/demain/lopen-data-des-decisions-judiciaires).
 
 Cet outil permet aux annotateurs et annotatrices de relire et passer en revue les décisions qui ont été pré-annotées automatiquement par un algorithme.
 
@@ -16,7 +16,7 @@ Cet outil permet aux annotateurs et annotatrices de relire et passer en revue le
 <img src="docs/images/LABEL_admin-tabs.png" align="left" width="200px" alt="Label admin tabs"/>
 <h4 align="left">:paperclip: L'interface d'administration</h4>
 <p align="left">
-Nous avons conçu une interface d'administration facile d'utilisation qui intègre de nombreuses fonctionnalité. Le premier onglet est dédié aux statistiques. Dans le deuxième onglet vous trouverez les documents à traiter. Le suivant rassemble les documents qui nécessitent une double relecture. Dans le quatrième onglet il y a les documents traités. Ensuite, nous avons les signalements envoyés par les annotateurs et annotatrices. Pour finir, vous pouvez gérer les comptes dans le dernier onglet.
+Nous avons conçu une interface d'administration facile d'utilisation qui intègre de nombreuses fonctionnalité. Voici les fonctionalités disponibles dans les différents onglets de l'interface d'administration : consultation des statistiques, listes de documents (à traités, traités, documents nécessitant une double relecture), liste de signalements, gestion des utilisateurs, gestion des affectation des documents.
 </p>
 </section>
 
@@ -27,7 +27,7 @@ Nous avons conçu une interface d'administration facile d'utilisation qui intèg
 
 <h4 align="right">:mag: Actions contextuelles & recherche</h4>
 <p align="right">
-Pour chaque document, vous pouvez voir le document anonymisé, assigné le document à vous-même ou à un annotateur et même supprimé l'assignation (si par exemple le document doit être traité par un autre annotateur).
+Pour chaque document, vous pouvez voir le document anonymisé, assigner le document à vous-même ou à un annotateur et même supprimer l'assignation (si par exemple le document doit être traité par un autre annotateur).
 </p>
 <p align="right">
 Vous avez peut-être remarqué que vous avez une barre de recherche. Vous pouvez entrer le numéro du document pour le trouver instantanément. Le bouton "rafraichir" met à jour la liste de documents avec les données les plus récentes.
@@ -52,14 +52,14 @@ Notez que vous pouvez classer le tableau en cliquant sur l'en-tête de chaque co
 
 <br/>
 
-### Annotators side
+### Interface d'annotation
 
 <section style="min-height:200px">
 <img src="docs/images/LABEL_supplementary-annotations.png" align="left" width="200px" alt="Label supplementary annotations"/>
 
 <h4 align="left">:pushpin: Annotations supplémentaires</h4>
 <p align="left">
-Par défaut, LABEL permet des annotations de divers types: des numéros de téléphone, aux dates de naissance en passant par les numéros de comptes bancaires. Vous pouvez tout personnaliser et le champ "annotations supplémentaires" permet l'ajout d'annotations personnalisées qui ne rentre pas dans un type prédéfini. C'est très utile pour les demandes d'annotations non génériques comme les numéros de vol, les noms de chevaux, etc. par exemple.
+Par défaut, LABEL permet des annotations de divers types : numéros de téléphone, dates de naissance ou numéros de comptes bancaires par exemple. Vous pouvez tout personnaliser et le champ "annotations supplémentaires" permet l'ajout d'annotations personnalisées qui ne rentre pas dans un type prédéfini. C'est très utile pour les demandes d'annotations non génériques comme les numéros de vol, les noms de chevaux, etc. par exemple. Ce champ permet aussi de signaler des termes spécifiques a ne pas annoter.
 </p>
 </section>
 
@@ -97,13 +97,13 @@ LABEL permet de lier des annotations. Parfois les noms sont écrits en minuscule
 - Septembre 2020 : Le projet est lancé par [le programme Entrepeneur d'Intérêt Général (EIG)](https://eig.etalab.gouv.fr/defis/label/).
 - Juin 2021 : Mise en production avec les décisions de la Cour de cassation (base de données Jurinet).
 - Avril 2022 : Ajout des décisions des Cours d'appel en matière civile, sociale et commerciale (base de données JuriCA).
-
+- Décembre 2023 : Ajout des décisions de 9 tribunaux judiciaires.
+- Courant 2024-2025 : Ajout des décisions de l'ensemble les tribunaux judiciaires.
 
 Prochaines étapes:
 
-- Décembre 2023 : Ajout des décisions de 9 tribunaux judiciaires.
 - Décembre 2024 : Ajout des décisions des tribunaux de commerce.
-- Septembre 2025 : Ajout des décisions des conseils de prud'hommes et des décisions des l'ensemble des tribunaux judiciaires.
+- Septembre 2025 : Ajout des décisions des conseils de prud'hommes
 
 Pour en savoir plus, [une roadmap est disponible](ROADMAP.md).
 

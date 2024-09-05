@@ -3,7 +3,6 @@
 - annotationReports
 - assignations
 - documents
-- migrations
 - problemReports
 - statistics
 - treatments

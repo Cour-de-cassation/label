@@ -6,7 +6,7 @@ fi
 
 cd packages/courDeCassation;
 
-echo "Reset the DB except for users and migrations"
+echo "Reset the DB except for users"
 sh scripts/runLocalScript.sh ./dist/scripts/clearDb.js;
 
 echo "Import the documents from SDER database"
@@ -20,4 +20,3 @@ sh scripts/runLocalScript.sh ./dist/scripts/initializeTestDb.js;
 
 echo "Create initial cache"
 sh scripts/runLocalScript.sh ./dist/scripts/renewCache.js --beforeMinutes=5;
-

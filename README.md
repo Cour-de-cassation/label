@@ -2,7 +2,7 @@
 
 <img src="./packages/generic/client/src/assets/logo/logo.svg" alt="Label logo" width="40%"/>
 
-LABEL is an open source text annotation software created by the [french supreme court 'Cour de cassation'](https://www.courdecassation.fr/). It is currently used for publishing court decisions in order to open justice data.
+LABEL is an open source text annotation software created by the [french supreme court 'Cour de cassation'](https://www.courdecassation.fr/). It is currently used for annotating court decisions for the [french justice open data project](https://www.courdecassation.fr/la-cour-de-cassation/demain/lopen-data-des-decisions-judiciaires).
 
 This tool allows annotators to proofread and review decisions that have been pre-annotated by an NLP algorithm.
 
@@ -16,7 +16,7 @@ This tool allows annotators to proofread and review decisions that have been pre
 <img src="docs/images/LABEL_admin-tabs.png" align="left" width="200px" alt="Label admin tabs"/>
 <h4 align="left">:paperclip: Admin panel</h4>
 <p align="left">
-We have designed a complete and easy to use admin panel. The first tab is dedicated to statistics. In the second tab you can find the documents ready to be treated. The next one is for documents that need to be double checked by admins before they are published. In the fourth tab there are treated documents. Next, we have all alerts sent by the annotators. Finally, you can manage accounts in the last tab.
+We have designed an easy-to-use administration interface that integrates many features. Here are the features available in the different tabs of the administration interface: consultation of statistics, lists of documents (to be processed, processed, documents requiring double review), list of reports, user management, management of document assignments.
 </p>
 </section>
 
@@ -59,7 +59,7 @@ Note that you can also sort the table by clicking on the columns' header.
 
 <h4 align="left">:pushpin: Supplementary annotations</h4>
 <p align="left">
-By default, LABEL allows a great range of annotation types: from phone numbers, to birth dates and bank account numbers. You can customize everything and another field called "supplementary annotations" let you add custom annotations that does not belong to any annotation type. This is very useful if we have non-generic annotation requests like plane numbers, horse names or others.
+By default, LABEL allows annotations of various types: phone numbers, dates of birth or bank account numbers for example. You can customize everything and the "additional annotations" field allows the addition of custom annotations that do not fit into a predefined type. This is very useful for non-generic annotation requests such as flight numbers, horse names, etc. for example. This field also allows you to flag specific terms that should not be annotated.
 </p>
 </section>
 
@@ -98,10 +98,10 @@ LABEL allow you to link annotations. Sometimes names are written lowercase or in
 - June 2021: Production launch with supreme court decisions (Jurinet database).
 - April 2022: Addition of appeal court's decisions (JuriCA database).
 - December 2023: Addition of 9 first judicial courts' decisions.
+- During 2024-2025: Addition of other judicial courts' decisions.
 
 Next steps:
 
-- During 2024: Addition of other judicial courts' decisions.
 - December 2024: Addition of industrial courts' decisions.
 - Septembre 2025: Addition of labour courts' decisions and all first instance.
 

@@ -75,6 +75,7 @@ This script is lauch with the `.env` configuration.
 
 ### Launch scripts
 
+Label contains many scripts, they are listed [here](docs/scripts.md)
 You can launch scripts with theses commands :
 
 #### With docker
@@ -87,12 +88,4 @@ docker container exec -it label-backend-1 sh -c "cd packages/courDeCassation; sh
 
 ```sh
 scripts/runScriptLocally.sh "myScript.js --myArgument"
-```
-
-## Troubleshooting
-
-To use mongo, you need to run in your terminal:
-
-```
-sudo chmod 666 /var/run/docker.sock
 ```

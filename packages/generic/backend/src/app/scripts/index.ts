@@ -1,10 +1,5 @@
 import { cleanDocuments } from './cleanDocuments';
 import { clearDb } from './clearDb';
-import {
-  createMigrationFile,
-  revertOneMigration,
-  runNewMigrations,
-} from './deployment';
 import { deleteDocument } from './deleteDocument';
 import { displayDocumentLinks } from './displayDocumentLinks';
 import { displayMultipleAssignatedDocuments } from './displayMultipleAssignatedDocuments';
@@ -24,7 +19,6 @@ import { setIndexesOnAllCollections } from './setIndexesOnAllCollections';
 export {
   cleanDocuments,
   clearDb,
-  createMigrationFile,
   deleteDocument,
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
@@ -39,7 +33,5 @@ export {
   purgeDb,
   renewCache,
   resetUntreatedDocumentsForTest,
-  revertOneMigration,
-  runNewMigrations,
   setIndexesOnAllCollections,
 };

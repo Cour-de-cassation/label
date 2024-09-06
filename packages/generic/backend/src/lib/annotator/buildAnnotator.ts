@@ -176,9 +176,6 @@ function buildAnnotator(
       await treatmentService.deleteTreatmentsByDocumentId(documentId);
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
-
-    // Uncomment this line to run the annotation script
-    // await annotateDocumentsWithoutAnnotations();
   }
 
   async function annotateDocument(document: documentType) {

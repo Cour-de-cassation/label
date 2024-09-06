@@ -3,13 +3,12 @@ import { buildStatisticRepository } from '../../repository';
 
 export { fetchExtremumDates };
 
-async function fetchExtremumDates() {
+async function fetchExtremumDates(sources: string[]) {
   const statisticRepository = buildStatisticRepository();
   const treatmentRepository = buildTreatmentRepository();
 
-  // find all available sources or use dbsder-api-types
   const extremumDatesInStatistics = await statisticRepository.findExtremumTreatmentDateBySources(
-    ['jurinet', 'jurica', 'juritj', 'juritcom'],
+    sources,
   );
 
   const extremumDatesInTreatments = await treatmentRepository.findExtremumLastUpdateDateBySources(

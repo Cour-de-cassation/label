@@ -4,6 +4,7 @@ import { buildStatisticRepository } from '../../repository';
 import { fetchExtremumDates } from './fetchExtremumDates';
 
 describe('fetchExtremumDates', () => {
+  const sources = ['jurinet', 'jurica'];
   it('should fetch the statistic extremum dates if they are wider than treatments', async () => {
     const statisticRepository = buildStatisticRepository();
     const statistics = [
@@ -30,7 +31,7 @@ describe('fetchExtremumDates', () => {
     ].map(treatmentModule.generator.generate);
     await treatmentRepository.insertMany(treatments);
 
-    const extremumDates = await fetchExtremumDates();
+    const extremumDates = await fetchExtremumDates(sources);
 
     expect(extremumDates).toEqual({ minDate: 10, maxDate: 50 });
   });
@@ -61,7 +62,7 @@ describe('fetchExtremumDates', () => {
     ].map(treatmentModule.generator.generate);
     await treatmentRepository.insertMany(treatments);
 
-    const extremumDates = await fetchExtremumDates();
+    const extremumDates = await fetchExtremumDates(sources);
 
     expect(extremumDates).toEqual({ minDate: 10, maxDate: 50 });
   });
@@ -80,7 +81,7 @@ describe('fetchExtremumDates', () => {
     ].map(treatmentModule.generator.generate);
     await treatmentRepository.insertMany(treatments);
 
-    const extremumDates = await fetchExtremumDates();
+    const extremumDates = await fetchExtremumDates(sources);
 
     expect(extremumDates).toEqual({ minDate: 10, maxDate: 50 });
   });
@@ -99,7 +100,7 @@ describe('fetchExtremumDates', () => {
     ].map(statisticModule.generator.generate);
     await statisticRepository.insertMany(statistics);
 
-    const extremumDates = await fetchExtremumDates();
+    const extremumDates = await fetchExtremumDates(sources);
 
     expect(extremumDates).toEqual({ minDate: 10, maxDate: 50 });
   });
@@ -130,7 +131,7 @@ describe('fetchExtremumDates', () => {
     ].map(treatmentModule.generator.generate);
     await treatmentRepository.insertMany(treatments);
 
-    const extremumDates = await fetchExtremumDates();
+    const extremumDates = await fetchExtremumDates(sources);
 
     expect(extremumDates).toEqual({ minDate: 10, maxDate: 50 });
   });

@@ -17,7 +17,8 @@ export { AddWorkingUserDrawer };
 const FIELD_WIDTH = 400;
 const DRAWER_WIDTH = 600;
 
-const sources = ['jurinet', 'jurica', 'juritj'];
+// use dbsder-api-types ?
+const sources = ['jurinet', 'jurica', 'juritj', 'juritom'];
 
 type formErrorType = {
   source?: boolean;

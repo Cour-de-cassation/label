@@ -3,12 +3,12 @@ import { buildStatisticRepository } from '../../repository';
 
 export { fetchExtremumDates };
 
-async function fetchExtremumDates() {
+async function fetchExtremumDates(sources: string[]) {
   const statisticRepository = buildStatisticRepository();
   const treatmentRepository = buildTreatmentRepository();
 
   const extremumDatesInStatistics = await statisticRepository.findExtremumTreatmentDateBySources(
-    ['jurinet', 'jurica', 'juritj'],
+    sources,
   );
 
   const extremumDatesInTreatments = await treatmentRepository.findExtremumLastUpdateDateBySources(

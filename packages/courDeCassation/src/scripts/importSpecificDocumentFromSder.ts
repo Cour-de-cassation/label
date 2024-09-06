@@ -44,7 +44,7 @@ function parseArgv() {
       source: {
         demandOption: true,
         description:
-          'source (jurinet, jurica or juritj) of the document you want to import',
+          'source (jurinet, jurica, juritj, juritcom) of the document you want to import',
         type: 'string',
       },
       keepLabelTreatments: {

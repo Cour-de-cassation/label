@@ -8,7 +8,7 @@ type connectorConfigType = {
   fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: string;
     jurisdictions: string[];
     chambers: string[];
   }) => Promise<decisionType[] | undefined>;
@@ -23,12 +23,12 @@ type connectorConfigType = {
   fetchDecisionsToPseudonymiseBetween(param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: string;
   }): Promise<decisionType[] | undefined>;
   fetchDecisionsToPseudonymiseBetweenDateCreation(param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: string;
   }): Promise<decisionType[] | undefined>;
   updateDocumentsLoadedStatus: (param: {
     documents: documentType[];

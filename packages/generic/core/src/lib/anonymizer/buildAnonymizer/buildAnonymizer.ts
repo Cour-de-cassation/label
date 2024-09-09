@@ -26,6 +26,7 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
   };
 
   function anonymizeDocument(document: documentT): documentT {
+    extractReplacementTerms();
     const splittedText = textSplitter.splitTextAccordingToAnnotations(document.text, annotations);
     const splittedAnonymizedText = splittedText.map((chunk) => {
       switch (chunk.type) {
@@ -55,20 +56,29 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
   }
 
   function extractReplacementTerms() {
-    const uniqueAnnotationsText: {
-      [key: string]: { entityId: string; replacementTerm: string; category: string };
+    const replacementTerms: {
+      [key: string]: {
+        replacementTerm: string;
+        instances: string[];
+        category: string;
+      };
     } = {};
 
     annotations.forEach((annotation) => {
-      if (!uniqueAnnotationsText[annotation.text]) {
-        uniqueAnnotationsText[annotation.text] = {
-          entityId: annotation.entityId,
-          replacementTerm: mapper[annotation.entityId] || ANONYMIZATION_DEFAULT_TEXT,
+      if (replacementTerms[annotation.entityId]) {
+        if (!replacementTerms[annotation.entityId].instances.includes(annotation.text)) {
+          replacementTerms[annotation.entityId].instances.push(annotation.text);
+        }
+      } else {
+        replacementTerms[annotation.entityId] = {
+          replacementTerm: anonymize(annotation),
+          instances: [annotation.text],
           category: annotation.category,
         };
       }
     });
 
-    return uniqueAnnotationsText;
+    console.log(replacementTerms);
+    return { replacementTerms };
   }
 }

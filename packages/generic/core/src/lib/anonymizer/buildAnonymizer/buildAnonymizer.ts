@@ -9,9 +9,18 @@ export { buildAnonymizer };
 
 export type { anonymizerType };
 
+type ReplacementTermDict = {
+  [key: string]: {
+    replacementTerm: string;
+    instances: string[];
+    category: string;
+  };
+};
+
 type anonymizerType<documentT extends fetchedDocumentType> = {
   anonymizeDocument: (document: documentT) => documentT;
   anonymize: (annotation: annotationType) => string;
+  extractReplacementTerms: () => any;
 };
 
 function buildAnonymizer<documentT extends fetchedDocumentType>(
@@ -23,6 +32,7 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
   return {
     anonymizeDocument,
     anonymize,
+    extractReplacementTerms,
   };
 
   function anonymizeDocument(document: documentT): documentT {
@@ -56,13 +66,7 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
   }
 
   function extractReplacementTerms() {
-    const replacementTerms: {
-      [key: string]: {
-        replacementTerm: string;
-        instances: string[];
-        category: string;
-      };
-    } = {};
+    const replacementTerms: ReplacementTermDict = {};
 
     annotations.forEach((annotation) => {
       if (replacementTerms[annotation.entityId]) {
@@ -77,8 +81,6 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
         };
       }
     });
-
-    console.log(replacementTerms);
-    return { replacementTerms };
+    return replacementTerms;
   }
 }

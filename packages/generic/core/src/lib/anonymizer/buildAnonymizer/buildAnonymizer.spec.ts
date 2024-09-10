@@ -151,4 +151,40 @@ describe('buildAnonymizer', () => {
       expect(anonymizedText).toEqual('Leon');
     });
   });
+
+  describe('extractReplacementTerms', () => {
+    it('should extract replacementTerms mapping', () => {
+      const annotations = [
+        { category: 'firstName', text: 'Tintin', start: 0, certaintyScore: 1 },
+        { category: 'lastName', text: 'Archibald', start: 7, certaintyScore: 1 },
+        { category: 'firstName', text: 'Tournesol', start: 37, certaintyScore: 1 },
+        { category: 'adresse', text: 'Chateau de Moulinsart', start: 45, certaintyScore: 1 },
+        { category: 'firstName', text: 'Ottokar', start: 77, certaintyScore: 1 },
+        { category: 'lastName', text: 'Haddock', start: 84, certaintyScore: 1 },
+      ].map(annotationModule.lib.buildAnnotation);
+      annotations[5] = annotationModule.lib.annotationLinker.link(annotations[5], annotations[1]);
+
+      const anonymizer = buildAnonymizer(settings, annotations, seed);
+
+      const replacementTerms = anonymizer.extractReplacementTerms();
+
+      const expectedReplacementTerms = {
+        firstName_tintin: { replacementTerm: '[FIRST_NAME 4]', instances: ['Tintin'], category: 'firstName' },
+        lastName_archibald: {
+          replacementTerm: '[LAST_NAME 1]',
+          instances: ['Archibald', 'Haddock'],
+          category: 'lastName',
+        },
+        firstName_tournesol: { replacementTerm: '[FIRST_NAME 5]', instances: ['Tournesol'], category: 'firstName' },
+        'adresse_chateau de moulinsart': {
+          replacementTerm: 'Chateau de Moulinsart',
+          instances: ['Chateau de Moulinsart'],
+          category: 'adresse',
+        },
+        firstName_ottokar: { replacementTerm: '[FIRST_NAME 3]', instances: ['Ottokar'], category: 'firstName' },
+      };
+
+      expect(replacementTerms).toEqual(expectedReplacementTerms);
+    });
+  });
 });

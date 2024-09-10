@@ -43,15 +43,6 @@ async function mapCourtDecisionToDocument(
     numeroRoleGeneral,
   );
 
-  const title = computeTitleFromParsedCourtDecision({
-    source: source,
-    number: sderCourtDecision.sourceId,
-    appealNumber,
-    readableChamberName,
-    readableJurisdictionName,
-    date: decisionDate,
-  });
-
   const publicationCategory = computePublicationCategory(
     sderCourtDecision.pubCategory,
     sderCourtDecision.publication,
@@ -73,7 +64,19 @@ async function mapCourtDecisionToDocument(
   const civilMatterCode = sderCourtDecision.codeMatiereCivil?.trim() || '';
   const criminalCaseCode = sderCourtDecision.natureAffairePenal?.trim() || '';
   const NACCode = sderCourtDecision.NACCode || '';
+  const NAOCode = sderCourtDecision.NAOCode || '';
   const endCaseCode = sderCourtDecision.endCaseCode || '';
+
+  const title = computeTitleFromParsedCourtDecision({
+    source: source,
+    number: sderCourtDecision.sourceId,
+    appealNumber,
+    readableChamberName,
+    readableJurisdictionName,
+    NACCode: NACCode,
+    NAOCode: NAOCode,
+    date: decisionDate,
+  });
 
   const priority = computePriority(
     sderCourtDecision.sourceName,
@@ -221,7 +224,7 @@ async function mapCourtDecisionToDocument(
     nlpVersions: {} as documentType['nlpVersions'],
   });
 }
-function getNumberPrefix(
+function getPrefixedNumber(
   numberToPrefix: string | undefined,
   source: string,
   readableJurisdictionName: string,
@@ -241,6 +244,8 @@ function computeTitleFromParsedCourtDecision({
   appealNumber,
   readableChamberName,
   readableJurisdictionName,
+  NACCode,
+  NAOCode,
   date,
 }: {
   source: string;
@@ -248,17 +253,26 @@ function computeTitleFromParsedCourtDecision({
   appealNumber: string | undefined;
   readableChamberName: string;
   readableJurisdictionName: string;
+  NACCode: string;
+  NAOCode: string;
   date?: Date;
 }) {
-  const prefixedNumber = getNumberPrefix(
+  const prefixedNumber = getPrefixedNumber(
     appealNumber,
     source,
     readableJurisdictionName,
   );
 
   if (source === 'juritj') {
-    readableJurisdictionName = `Tribunal judiciaire de ${readableJurisdictionName}`;
+    readableJurisdictionName = `TJ de ${readableJurisdictionName}`;
   }
+
+  const nomenclatureNumber =
+    source === 'jurinet' && NAOCode
+      ? `NAO ${NAOCode}`
+      : (source === 'juritj' || source === 'jurica') && NACCode
+      ? `NAC ${NACCode}`
+      : undefined;
 
   const readableNumber = `Décision n°${number}`;
   const readableAppealNumber = prefixedNumber ? prefixedNumber : undefined;
@@ -270,6 +284,7 @@ function computeTitleFromParsedCourtDecision({
     readableAppealNumber,
     readableJurisdictionName,
     readableChamberName,
+    nomenclatureNumber,
     readableDate,
   ]
     .filter(Boolean)

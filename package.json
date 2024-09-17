@@ -23,7 +23,7 @@
     "docker:stop:db": "docker compose -f docker-compose-dev.yml down labelDb",
     "docker:start": "docker compose -f docker-compose-local.yml up -d",
     "docker:stop": "docker compose -f docker-compose-local.yml down",
-    "docker:kill": "docker compose -f docker-compose-local.yml down --remove-orphans --volumes --rmi all",
+    "docker:kill": "docker compose -f docker-compose-local.yml down --remove-orphans --volumes --rmi local",
     "docker:logs": "docker compose -f docker-compose-local.yml logs --follow",
     "fix": "lerna run fix",
     "init:db": "scripts/initializeTestDb.sh",

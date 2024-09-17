@@ -1,0 +1,116 @@
+image: "glregistry.boost.open.global/boost/docker/node-toolkit:16"
+
+variables:
+  DOCKER_BUILD_IMAGE: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:$CI_COMMIT_SHA
+  DOCKER_BACKEND_IMAGE: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
+  DOCKER_CLIENT_IMAGE: $CI_REGISTRY_IMAGE/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  GIT_SSL_BACKEND: openssl
+  HTTP_PROXY: ""
+  HTTPS_PROXY: ""
+
+include:
+  - project: "boost/template-ci/pipelines/common"
+    file: "securite/oss-index/oss-index-template.yml"
+  - project: 'boost/template-ci/pipelines/common'
+    file: '/sonar/sonar-scanner.yml'
+  - project: 'bots/trivy-script'
+    file: 'trivy-template-job.yml'
+
+stages:  
+  - build
+  - sast
+  - test
+  - quality
+  - docker
+  - scan_docker
+  - deploy
+
+# Utilisation du cache pour accélérer les builds
+cache:
+  paths:
+    - node_modules/
+
+# Build du projet
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+# Test phase
+test-unit:
+  stage: test
+  script:
+    - npm run test
+  coverage: /All files\s*\|\s*([\d\.]+)/
+  allow_failure: true
+
+
+docker:backend:
+  image: docker:19.03.5
+  stage: docker
+  services:
+    - docker:18-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build
+      --build-arg http_proxy=$HTTP_PROXY
+      --build-arg https_proxy=$HTTPS_PROXY
+      --target label-backend
+      -f Dockerfile.label-backend
+      -t $DOCKER_BACKEND_IMAGE .
+    - docker push $DOCKER_BACKEND_IMAGE
+  only:
+    - develop-open
+    - recette
+
+docker:client:
+  image: docker:19.03.5
+  stage: docker
+  services:
+    - docker:18-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build
+      --build-arg http_proxy=$HTTP_PROXY
+      --build-arg https_proxy=$HTTPS_PROXY
+      --target label-backend
+      -f Dockerfile.label-backend
+      -t $DOCKER_BUILD_IMAGE_CLIENT .
+    - docker push $DOCKER_BUILD_IMAGE_CLIENT
+  only:
+    - develop-open
+    - recette
+
+
+trivy:backend:
+  extends: [".trivy-scan"]
+  stage: scan_docker
+  variables:
+    TRIVY_DOCKER_SCAN: $DOCKER_BUILD_IMAGE_BACKEND
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+
+trivy:client:
+  extends: [".trivy-scan"]
+  stage: scan_docker
+  variables:
+    TRIVY_DOCKER_SCAN: $DOCKER_BUILD_IMAGE_CLIENT
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+    
+deploy:iaas:
+  stage: deploy
+  tags:
+    - iaas
+  script:
+    - |
+    - echo " ****************** DEPLOY *************************** "
+  only:
+    - develop-open
+    - recette

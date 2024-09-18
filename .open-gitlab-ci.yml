@@ -28,17 +28,23 @@ stages:
 # Utilisation du cache pour accélérer les builds
 cache:
   paths:
-    - node_modules/
+    - packages/courDeCassation/node_modules/
+    - packages/generic/backend/node_modules/
+    - packages/generic/client/node_modules/
 
 # Build du projet
 build:
   stage: build
   script:
-    - npm ci
-    - npm run build
+    - yarn compile:client
+    - yarn build:client
+    - yarn compile:backend
+    - yarn build:backend
   artifacts:
     paths:
-      - dist/
+      - packages/courDeCassation/dist/
+      - packages/generic/backend/dist/
+      - packages/generic/client/dist/
 
 # Test phase
 test-unit:

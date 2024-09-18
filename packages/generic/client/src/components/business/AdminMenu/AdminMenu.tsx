@@ -116,6 +116,7 @@ function getMenuIcons({
       TO_BE_CONFIRMED_DOCUMENTS_ICON,
       TREATED_DOCUMENTS_ICON,
       PROBLEM_REPORTS_ICON,
+      PRE_ASSIGN_DOCUMENTS_ICON,
     ],
   };
 }

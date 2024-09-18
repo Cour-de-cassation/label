@@ -34,7 +34,7 @@ cache:
 build:
   stage: build
   script:
-    - npm install
+    - npm ci
     - npm run build
   artifacts:
     paths:

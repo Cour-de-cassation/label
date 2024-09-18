@@ -35,9 +35,10 @@ cache:
 # Build du projet
 build:
   stage: build
-  before_script:
-    - npm install -g lerna
+ # before_script:
+    #- npm install
   script:
+    - yarn install
     - yarn compile:client
     - yarn build:client
     - yarn compile:backend

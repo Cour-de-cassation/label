@@ -1,6 +1,5 @@
 {
   "npmClient": "yarn",
   "packages": ["packages/generic/*", "packages/courDeCassation"],
-  "useWorkspaces": true,
   "version": "independent"
 }

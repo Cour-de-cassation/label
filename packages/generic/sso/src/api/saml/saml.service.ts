@@ -23,7 +23,8 @@ export class SamlService {
     // Initialiser le Service Provider (SP)
     const isKeycloakIdp = Boolean(process.env.SSO_IDP_KEYCLOAK);
 
-    const props = {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const spProps = {
       entityID: isKeycloakIdp ? process.env.SSO_SP_ENTITY_ID : process.env.SSO_SP_ENTITY_ID_VM,
       assertionConsumerService: [
         {
@@ -34,16 +35,18 @@ export class SamlService {
       authnRequestsSigned: !isKeycloakIdp,
       wantAssertionsSigned: !isKeycloakIdp,
       isAssertionEncrypted: false, // keycloak
-    };
+      ...(isKeycloakIdp
+        ? {}
+        : {
+            signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT_VM), 'utf8'),
+            privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
+          }),
+    } as any;
 
-    if (!isKeycloakIdp) {
-      props['signingCert'] = fs.readFileSync(String(process.env.SSO_CERTIFICAT_VM), 'utf8');
-      props['privateKey'] = fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8');
-    }
-    this.sp = samlify.ServiceProvider(props);
+    this.sp = samlify.ServiceProvider(spProps);
     // Initialiser l'Identity Provider (IdP)
-    // eslint-disable-next-line no-console
-    this.idp = samlify.IdentityProvider({
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const idpProps = {
       metadata: fs.readFileSync(
         isKeycloakIdp ? String(process.env.SSO_IDP_METADATA) : String(process.env.SSO_IDP_METADATA_VM),
       ),
@@ -64,19 +67,23 @@ export class SamlService {
             : process.env.SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION_VM,
         },
       ],
-    });
+    } as any;
+    this.idp = samlify.IdentityProvider(idpProps);
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   generateMetadata() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
     return this.sp.getMetadata();
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   createLoginRequestUrl() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     return this.sp.createLoginRequest(this.idp, 'redirect');
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async parseResponse(request: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/ban-ts-comment
@@ -113,6 +120,7 @@ export class SamlService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async createLogoutRequestUrl(user: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     return this.sp.createLogoutRequest(this.idp, 'redirect', {

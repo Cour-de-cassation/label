@@ -14,9 +14,6 @@
     "dist"
   ],
   "scripts": {
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "build": "yarn clean && yarn compile",
@@ -29,9 +26,9 @@
   },
   "dependencies": {
     "@authenio/samlify-node-xmllint": "^1.0.1",
-    "@nestjs/common": "^7.0.0",
+    "@nestjs/common": "^8.4.7",
     "@nestjs/config": "^0.5.0",
-    "@nestjs/core": "7.6.18",
+    "@nestjs/core": "8.4.7",
     "@nestjs/jwt": "7.2.0",
     "@nestjs/passport": "7.1.5",
     "@nestjs/platform-express": "7.6.18",
@@ -50,7 +47,8 @@
     "@babel/polyfill": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
-    "@nestjs/testing": "^10.4.1",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@nestjs/testing": "^8.4.7",
     "@types/body-parser": "^1.19.0",
     "@types/jest": "^26.0.13",
     "@types/jsonwebtoken": "^8.5.0",

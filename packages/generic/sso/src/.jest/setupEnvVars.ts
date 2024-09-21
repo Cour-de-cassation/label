@@ -27,4 +27,5 @@ process.env = {
   SSO_USER_TEST_ADMIN_ID:'669a47e0a746afa816985b53',
   NODE_ENV: 'test',
   PUBLIC_URL: '',
+  SSO_IDP_KEYCLOAK: 'true'
 }

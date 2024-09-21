@@ -75,7 +75,6 @@ export async function acsSso(req: any, res: any) {
       });
       return setUserSessionAndReturnRedirectUrl(req, res, createdUser);
     } else {
-      // If the error is unexpected, throw it
       throw new Error(`Error in acsSso: ${err}`);
     }
   }

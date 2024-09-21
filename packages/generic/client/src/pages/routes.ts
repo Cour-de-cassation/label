@@ -13,7 +13,6 @@ const routes = {
   LOGIN: { getPath: () => '/label/login' },
   PROBLEM_REPORTS: { getPath: () => '/label/admin/main/problem-reports' },
   PRE_ASSIGN_DOCUMENTS: { getPath: () => '/label/admin/main/pre-assign-documents' },
-  RESET_PASSWORD: { getPath: () => '/label/reset-password' },
   PUBLISHABLE_DOCUMENTS: { getPath: () => '/label/publishable-documents' },
   STATISTICS: { getPath: () => '/label/admin/main/statistics' },
   SUMMARY: { getPath: () => '/label/admin/main/summary' },

@@ -13,13 +13,13 @@ import { UntreatedDocuments } from './Admin/UntreatedDocuments';
 import { AnonymizedDocument } from './AnonymizedDocument';
 import { Home } from './Home';
 import { Login } from './Login';
-import { ResetPassword } from './ResetPassword';
 import { PublishableDocuments } from './PublishableDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { Statistics } from './Admin/Statistics';
 import { defaultRoutes, routes } from './routes';
 import { ToBeConfirmedDocuments } from './Admin/ToBeConfirmedDocuments';
 import { Summary } from './Admin/Summary';
+import {urlHandler} from "../utils";
 
 export { Router };
 
@@ -30,9 +30,6 @@ function Router() {
         <UnauthenticatedRoute path={routes.LOGIN.getPath()}>
           <Login />
         </UnauthenticatedRoute>
-        <AuthenticatedRoute path={routes.RESET_PASSWORD.getPath()}>
-          <ResetPassword />
-        </AuthenticatedRoute>
         <AuthenticatedRoute path={routes.ADMIN.getPath()}>
           <AuthenticatedRoute path={routes.DOCUMENT.getPath()}>
             <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
@@ -219,10 +216,6 @@ const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => (
 );
 
 function getRedirectionRoute() {
-  const passwordTimeValidityStatus = localStorage.userHandler.getPasswordTimeValidityStatus();
-  if (passwordTimeValidityStatus === 'outdated') {
-    return routes.RESET_PASSWORD.getPath();
-  }
   const userRole = localStorage.userHandler.getRole();
 
   if (!userRole) {
@@ -258,5 +251,111 @@ const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest
 );
 
 function isAuthenticated() {
-  return !!localStorage.bearerTokenHandler.get() && !!localStorage.userHandler.getRole();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { _id, email, name, role, passwordTimeValidityStatus } = buildCookies();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  localStorage.userHandler.set({ _id, email, name, role });
+  localStorage.userHandler.setPasswordTimeValidityStatus(passwordTimeValidityStatus);
+  return !!localStorage.userHandler.getRole();
+}
+
+async function whoami(): Promise<boolean> {
+  try {
+    const response = await fetch(`${urlHandler.getApiUrl()}/label/api/sso/whoami`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const { _id, email, name, role, passwordTimeValidityStatus } = data || buildCookies();
+
+    // Store user information in localStorage
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    localStorage.userHandler.set({ _id, email, name, role });
+    localStorage.userHandler.setPasswordTimeValidityStatus(passwordTimeValidityStatus);
+    return !!localStorage.userHandler.getRole();
+  } catch (error) {
+    console.error('Error fetching authentication status:', error);
+    // Return false in case of any error
+    return false;
+  }
+}
+
+function getCookieByName(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  let cookie: string = null;
+  if (parts.length === 2) {
+    // eslint-disable-next-line prefer-const,@typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // eslint-disable-next-line prefer-const
+    cookie = parts.pop().split(';').shift();
+  }
+  return cookie;
+}
+
+function buildCookies() {
+  const cookies: Array<{
+    key: string;
+    value: string;
+  }> = [];
+  const BEARER_TOKEN = 'BEARER_TOKEN';
+  const USER_ID = 'USER_ID';
+  const USER_EMAIL = 'USER_EMAIL';
+  const USER_NAME = 'USER_NAME';
+  const USER_ROLE = 'USER_ROLE';
+  const USER_PASSWORD_TIME_VALIDITY_STATUS = 'USER_PASSWORD_TIME_VALIDITY_STATUS';
+  [BEARER_TOKEN, USER_ID, USER_EMAIL, USER_NAME, USER_ROLE, USER_PASSWORD_TIME_VALIDITY_STATUS].forEach((item) =>
+    cookies.push({
+      key: item,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      value: getCookieByName(item),
+    }),
+  );
+  let _id: any, email: any, name: any, role: any, passwordTimeValidityStatus: any;
+  cookies.forEach((cookie) => {
+    if (cookie.value) {
+      switch (cookie.key) {
+        case BEARER_TOKEN:
+          localStorage.bearerTokenHandler.set(cookie.value);
+          break;
+        case USER_ID:
+          _id = cookie.value;
+          break;
+        case USER_EMAIL:
+          email = decodeURIComponent(cookie.value);
+          break;
+        case USER_NAME:
+          name = decodeURIComponent(cookie.value);
+          break;
+        case USER_ROLE:
+          role = decodeURIComponent(cookie.value);
+          break;
+        case USER_PASSWORD_TIME_VALIDITY_STATUS:
+          passwordTimeValidityStatus = cookie.value;
+          break;
+      }
+    }
+  });
+  return {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    _id,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    email,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    name,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    role,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    passwordTimeValidityStatus,
+  };
 }

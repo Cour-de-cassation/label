@@ -12,6 +12,12 @@ import { resetPassword } from './resetPassword';
 import { setDeletionDateForUser } from './setDeletionDateForUser';
 import { setIsActivatedForUser } from './setIsActivatedForUser';
 import { signUpUser } from './signUpUser';
+import {
+  acsSso,
+  getMetadataSso,
+  loginSso,
+  logoutSso,
+} from './ssoCnx';
 
 export { userService, buildUserService };
 
@@ -40,5 +46,9 @@ function buildUserService() {
     setIsActivatedForUser,
     setDeletionDateForUser,
     signUpUser,
+    acsSso,
+    getMetadataSso,
+    loginSso,
+    logoutSso,
   };
 }

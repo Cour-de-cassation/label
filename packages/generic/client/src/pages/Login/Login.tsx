@@ -1,11 +1,9 @@
-import { idModule } from '@label/core';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { customThemeType, useCustomTheme, LoginForm } from 'pelta-design-system';
-import { apiCaller } from '../../api';
+import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { Logo } from '../../components';
-import { localStorage } from '../../services/localStorage';
-import { routes } from '../routes';
+import { urlHandler } from '../../utils';
+import {apiCaller} from "../../api";
 
 export { Login };
 
@@ -13,25 +11,19 @@ const Login: FunctionComponent = () => {
   const history = useHistory();
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
+  useEffect(() => {
+    // URL backend qui déclenche la redirection SAML (à mettre en variable d'env)
+    window.location.href = urlHandler.getSsoLoginUrl();
+  }, [history]);
 
   return (
     <div style={styles.mainContainer}>
+      Redirection vers SSO...
       <div style={styles.logoContainer}>
         <Logo size="medium" />
       </div>
-      <LoginForm handleSubmit={handleSubmit} />
     </div>
   );
-
-  async function handleSubmit({ email, password }: { email: string; password: string }) {
-    const {
-      data: { _id, email: userEmail, name, role, token, passwordTimeValidityStatus },
-    } = await apiCaller.post<'login'>('login', { email, password });
-    localStorage.bearerTokenHandler.set(token);
-    localStorage.userHandler.set({ _id: idModule.lib.buildId(_id), email: userEmail, name, role });
-    localStorage.userHandler.setPasswordTimeValidityStatus(passwordTimeValidityStatus);
-    history.push(routes.DEFAULT.getPath());
-  }
 
   function buildStyles(theme: customThemeType) {
     return {
@@ -47,4 +39,8 @@ const Login: FunctionComponent = () => {
       },
     } as const;
   }
+
+  /*async function whoami(){
+    return await apiCaller.get<'isAuthenticated'>('isAuthenticated');
+  }*/
 };

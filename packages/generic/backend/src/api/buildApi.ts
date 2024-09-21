@@ -4,6 +4,7 @@ import { CustomError, httpStatusCodeHandler } from 'sder-core';
 import { apiSchema, apiSchemaMethodNameType } from '@label/core';
 import { logger } from '../utils';
 import { controllers } from './controllers';
+import { userService } from '../modules/user';
 
 export { buildApi };
 
@@ -15,6 +16,9 @@ function buildApi(app: Express) {
   ) as any) as apiSchemaMethodNameType[];
 
   methodNames.map((methodName) => buildMethod(app, methodName));
+
+  // urls SSO
+  buildApiSso(app);
 }
 
 function buildMethod(app: Express, methodName: apiSchemaMethodNameType) {
@@ -56,7 +60,11 @@ function buildPostRoutes(app: Express) {
 
 function buildController(
   method: apiSchemaMethodNameType,
-  controller: (param: { headers: any; args: any }) => Promise<any>,
+  controller: (param: {
+    headers: any;
+    args: any;
+    session: any;
+  }) => Promise<any>,
 ) {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -92,15 +100,106 @@ function buildController(
             data: await controller({
               headers: req.headers,
               args: sanitizedQuery,
+              session: req.session,
             }),
             statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.OK,
           };
         case 'post':
           return {
-            data: await controller({ headers: req.headers, args: req.body }),
+            data: await controller({
+              headers: req.headers,
+              args: req.body,
+              session: req.session,
+            }),
             statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.CREATED,
           };
       }
     }
   };
+}
+
+function buildApiSso(app: Express) {
+  app.get(`${API_BASE_URL}/sso/metadata`, async (req, res) => {
+    try {
+      const xml = await userService.getMetadataSso();
+      res.type('application/xml').send(xml);
+    } catch (err) {
+      res
+        .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
+        .send(`Metadata SAML protocol erreur ${err}`);
+    }
+  });
+
+  app.get(`${API_BASE_URL}/sso/login`, async (req, res) => {
+    try {
+      const context = await userService.loginSso();
+      res.redirect(context);
+    } catch (err) {
+      res
+        .status(
+          httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
+        )
+        .redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
+    }
+  });
+
+  app.get(`${API_BASE_URL}/sso/logout`, (req, res) => {
+    const nameID = String(req.session.user?.email);
+    req.session.destroy(async (err) => {
+      if (err) {
+        res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
+      }
+      try {
+        const context = await userService.logoutSso(nameID);
+        clearAllCookies(res);
+        res.redirect(context);
+      } catch (err) {
+        res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
+        await logger.error({
+          operationName: 'logoutSso SamlService ',
+          msg: `${err}`,
+        });
+        clearAllCookies(res);
+        res.redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
+      }
+    });
+  });
+
+  app.get(`${API_BASE_URL}/sso/whoami`, (req, res) => {
+    const user = req.session && req.session.user ? req.session.user : null;
+    if (!user) {
+      clearAllCookies(res);
+      return res
+        .status(
+          httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
+        )
+        .redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
+    }
+    res.type('application/json').send(req.session.user);
+  });
+
+  app.post(`${API_BASE_URL}/sso/acs`, async (req, res) => {
+    try {
+      const url = await userService.acsSso(req, res);
+      res.redirect(url);
+    } catch (err) {
+      res
+        .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
+        .redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
+    }
+  });
+}
+
+function clearAllCookies(res: any) {
+  [
+    'connect.sid', // expression session cookie
+    process.env.SSO_USER_ID,
+    process.env.SSO_USER_EMAIL,
+    process.env.SSO_USER_NAME,
+    process.env.SSO_USER_ROLE,
+    process.env.SSO_USER_PASSWORD_TIME_VALIDITY_STATUS,
+  ].forEach((key) => {
+    res.clearCookie(key);
+  });
 }

@@ -3,8 +3,8 @@ import { useHistory } from 'react-router';
 import { customThemeType, useCustomTheme, ButtonWithIcon, Icon, Text } from 'pelta-design-system';
 import { localStorage } from '../../services/localStorage';
 import { wordings } from '../../wordings';
-import { routes } from '../routes';
 import format from 'string-template';
+import { urlHandler } from '../../utils';
 
 export { ErrorPage };
 
@@ -42,7 +42,7 @@ function ErrorPage(props: { route?: string; errorCode?: number }) {
   function logout() {
     localStorage.bearerTokenHandler.remove();
     localStorage.userHandler.remove();
-    history.push(routes.LOGIN.getPath());
+    window.location.replace(urlHandler.getSsoLoginUrl());
   }
 
   function reload() {

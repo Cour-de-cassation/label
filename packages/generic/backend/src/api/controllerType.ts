@@ -14,6 +14,7 @@ type controllersFromSchemaType<apiSchemaT extends apiSchemaType> = {
         [controllerName in keyof apiSchemaT[methodName]]: (req: {
           args: networkType<apiRouteInType<methodName, controllerName>>;
           headers: any;
+          session?: any;
         }) => Promise<apiRouteOutType<methodName, controllerName>>;
       }
     : never;

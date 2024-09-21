@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDisplayMode, ButtonWithIcon, Drawer, RadioButton, Text } from 'pelta-design-system';
-import { routes } from '../../../pages';
 import { localStorage } from '../../../services/localStorage';
 import { wordings } from '../../../wordings';
-import { ResetPasswordForm } from '../ResetPasswordForm';
-import { PasswordChangeConfirmationPopup } from './PasswordChangeConfirmationPopup';
 import { SettingsSection } from './SettingsSection';
+import { urlHandler } from '../../../utils';
 
 export { SettingsDrawer };
 
@@ -15,16 +13,11 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
   const styles = buildStyles();
   const history = useHistory();
 
-  const [isPasswordConfirmationPopupShown, setIsPasswordConfirmationPopupShown] = useState(false);
-
   const userEmail = localStorage.userHandler.getEmail();
   const userName = localStorage.userHandler.getName();
 
   return (
     <>
-      {isPasswordConfirmationPopupShown && (
-        <PasswordChangeConfirmationPopup onClose={() => setIsPasswordConfirmationPopupShown(false)} />
-      )}
       <Drawer onClose={props.close} title={wordings.shared.settingsDrawer.title} isOpen={props.isOpen}>
         <div style={styles.drawer}>
           <SettingsSection
@@ -59,24 +52,16 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
             title={wordings.shared.settingsDrawer.displayMode}
           />
 
-          <SettingsSection
-            content={<ResetPasswordForm onUpdatePassword={onUpdatePassword} />}
-            title={wordings.business.changePassword}
-          />
         </div>
       </Drawer>
     </>
   );
 
-  function onUpdatePassword() {
-    setIsPasswordConfirmationPopupShown(true);
-    props.close();
-  }
 
   function logout() {
     localStorage.bearerTokenHandler.remove();
     localStorage.userHandler.remove();
-    history.push(routes.DEFAULT.getPath());
+    window.location.replace(urlHandler.getSsoLogoutUrl());
   }
 
   function buildStyles() {

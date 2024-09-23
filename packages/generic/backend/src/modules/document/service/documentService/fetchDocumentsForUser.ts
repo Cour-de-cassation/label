@@ -60,8 +60,7 @@ function buildFetchDocumentsForUser(
       } catch (error) {
         logger.log({
           operationName: 'fetchDocumentsForUser',
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          msg: 'Error '+ `userId === ${userId}\n error ${error?.message}`,
+          msg: 'Error',
           data: error as Record<string, unknown>,
         });
       }

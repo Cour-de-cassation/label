@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDisplayMode, ButtonWithIcon, Drawer, RadioButton, Text } from 'pelta-design-system';
-import { localStorage } from '../../../services/localStorage';
 import { wordings } from '../../../wordings';
 import { SettingsSection } from './SettingsSection';
 import { urlHandler } from '../../../utils';
+import { useCtxUser } from '../../../contexts/user.context';
 
 export { SettingsDrawer };
 
@@ -13,9 +13,13 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
   const styles = buildStyles();
   const history = useHistory();
 
-  const userEmail = localStorage.userHandler.getEmail();
-  const userName = localStorage.userHandler.getName();
+  const { user, loading } = useCtxUser();
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  const userEmail = user?.email;
+  const userName = user?.name;
   return (
     <>
       <Drawer onClose={props.close} title={wordings.shared.settingsDrawer.title} isOpen={props.isOpen}>
@@ -51,16 +55,12 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
             }
             title={wordings.shared.settingsDrawer.displayMode}
           />
-
         </div>
       </Drawer>
     </>
   );
 
-
   function logout() {
-    localStorage.bearerTokenHandler.remove();
-    localStorage.userHandler.remove();
     window.location.replace(urlHandler.getSsoLogoutUrl());
   }
 

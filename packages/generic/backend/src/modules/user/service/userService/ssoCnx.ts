@@ -44,7 +44,7 @@ export async function acsSso(req: any, res: any) {
     const user = await getUserByEmail(extract?.nameID);
     await logger.error({
       operationName: 'user connected',
-      msg: `${user}`,
+      msg: `${user.email}`,
     });
     return setUserSessionAndReturnRedirectUrl(req, res, user);
   } catch (err) {
@@ -91,7 +91,7 @@ function setUserSessionAndReturnRedirectUrl(req: any, res: any, user: any) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (req.session) {
     logger.error({
-      operationName: 'acsSso req.session ',
+      operationName: 'acsSso setUserSessionAndReturnRedirectUrl ',
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       msg: `set the user ${user.email} in session`,
     });
@@ -105,46 +105,12 @@ function setUserSessionAndReturnRedirectUrl(req: any, res: any, user: any) {
       role: user.role,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
       email: user.email,
-      passwordTimeValidityStatus: 'valid',
     };
   }
-  //const token = await userModule.lib.getTokenForUser(user);
-  setCookies(res, user);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   return user.role === 'annotator'
     ? ((process.env
         .SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL as unknown) as string)
     : ((process.env
         .SSO_FRONT_SUCCESS_CONNEXION_OTHER_URL as unknown) as string);
-}
-
-function setCookies(res: any, user: any) {
-  [
-    {
-      key: process.env.SSO_USER_ID,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-      value: user._id,
-    },
-    {
-      key: process.env.SSO_USER_EMAIL,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-      value: user.email,
-    },
-    {
-      key: process.env.SSO_USER_NAME,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-      value: user.name,
-    },
-    {
-      key: process.env.SSO_USER_ROLE,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-      value: user.role,
-    },
-    {
-      key: process.env.SSO_USER_PASSWORD_TIME_VALIDITY_STATUS,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-      value: 'valid',
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-  ].forEach((item) => res.cookie(item.key, item.value, { httpOnly: false }));
 }

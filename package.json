@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@lerna/filter-options": "^3.20.0",
+    "dbsder-api-types": "^1.5.0",
     "lerna": "~3.22.0"
   },
   "devDependencies": {

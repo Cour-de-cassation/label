@@ -151,7 +151,6 @@ function buildApiSso(app: Express) {
       }
       try {
         const context = await userService.logoutSso(nameID);
-        clearAllCookies(res);
         res.redirect(context);
       } catch (err) {
         res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
@@ -160,7 +159,6 @@ function buildApiSso(app: Express) {
           operationName: 'logoutSso SamlService ',
           msg: `${err}`,
         });
-        clearAllCookies(res);
         res.redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
       }
     });
@@ -169,7 +167,6 @@ function buildApiSso(app: Express) {
   app.get(`${API_BASE_URL}/sso/whoami`, (req, res) => {
     const user = req.session && req.session.user ? req.session.user : null;
     if (!user) {
-      clearAllCookies(res);
       return res
         .status(
           httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
@@ -188,18 +185,5 @@ function buildApiSso(app: Express) {
         .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
         .redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
     }
-  });
-}
-
-function clearAllCookies(res: any) {
-  [
-    'connect.sid', // expression session cookie
-    process.env.SSO_USER_ID,
-    process.env.SSO_USER_EMAIL,
-    process.env.SSO_USER_NAME,
-    process.env.SSO_USER_ROLE,
-    process.env.SSO_USER_PASSWORD_TIME_VALIDITY_STATUS,
-  ].forEach((key) => {
-    res.clearCookie(key);
   });
 }

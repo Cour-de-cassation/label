@@ -18,8 +18,8 @@ include:
 
 stages:  
   - build
-  - sast
   - test
+  - sast
   - quality
   - docker
   - scan_docker
@@ -35,8 +35,6 @@ cache:
 # Build du projet
 build:
   stage: build
- # before_script:
-    #- npm install
   script:
     - yarn install
     - yarn compile:client

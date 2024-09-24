@@ -1,0 +1,1 @@
+export { assignationService } from './assignationService';

@@ -277,15 +277,14 @@ function buildCookies() {
   const USER_EMAIL = 'USER_EMAIL';
   const USER_NAME = 'USER_NAME';
   const USER_ROLE = 'USER_ROLE';
-  const USER_PASSWORD_TIME_VALIDITY_STATUS = 'USER_PASSWORD_TIME_VALIDITY_STATUS';
-  [BEARER_TOKEN, USER_ID, USER_EMAIL, USER_NAME, USER_ROLE, USER_PASSWORD_TIME_VALIDITY_STATUS].forEach((item) =>
+  [BEARER_TOKEN, USER_ID, USER_EMAIL, USER_NAME, USER_ROLE].forEach((item) =>
     cookies.push({
       key: item,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       value: getCookieByName(item),
     }),
   );
-  let _id: any, email: any, name: any, role: any, passwordTimeValidityStatus: any;
+  let _id: any, email: any, name: any, role: any;
   cookies.forEach((cookie) => {
     if (cookie.value) {
       switch (cookie.key) {
@@ -304,9 +303,6 @@ function buildCookies() {
         case USER_ROLE:
           role = decodeURIComponent(cookie.value);
           break;
-        case USER_PASSWORD_TIME_VALIDITY_STATUS:
-          passwordTimeValidityStatus = cookie.value;
-          break;
       }
     }
   });
@@ -319,7 +315,5 @@ function buildCookies() {
     name,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     role,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    passwordTimeValidityStatus,
   };
 }

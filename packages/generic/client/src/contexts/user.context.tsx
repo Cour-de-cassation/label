@@ -29,7 +29,6 @@ export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
     fetchUser();
   }, []);
   const onLogout = () => {
-    console.log('on log out button press')
     setUser(null); // Remettre l'utilisateur à null
   };
   return <UserContext.Provider value={{ user, loading, onLogout }}>{children}</UserContext.Provider>;

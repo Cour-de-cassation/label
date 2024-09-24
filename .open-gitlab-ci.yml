@@ -18,8 +18,8 @@ include:
 
 stages:  
   - build
-  - test
   - sast
+  - test
   - quality
   - docker
   - scan_docker
@@ -35,8 +35,14 @@ cache:
 # Build du projet
 build:
   stage: build
+<<<<<<< HEAD
   script:
     - yarn install
+=======
+  before_script:
+    - npm install -g lerna
+  script:
+>>>>>>> 687d618bf939849729d25fb3c6b2e4846c962082
     - yarn compile:client
     - yarn build:client
     - yarn compile:backend

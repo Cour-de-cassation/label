@@ -12,16 +12,18 @@ import { useCtxUser } from '../../../contexts/user.context';
 
 export { TreatedDocumentsTable };
 
-function TreatedDocumentsTable(props: {
-  fields: Array<
-    tableRowFieldType<
-      apiRouteOutType<'get', 'treatedDocuments'>[number],
-      typeof treatedDocumentOrderByProperties[number]
-    >
-  >;
-  refetch: () => void;
-  treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
-}) {
+function TreatedDocumentsTable(
+  props: Readonly<{
+    fields: Array<
+      tableRowFieldType<
+        apiRouteOutType<'get', 'treatedDocuments'>[number],
+        typeof treatedDocumentOrderByProperties[number]
+      >
+    >;
+    refetch: () => void;
+    treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
+  }>,
+) {
   const history = useHistory();
   const [documentIdToReset, setDocumentIdToReset] = useState<documentType['_id'] | undefined>(undefined);
   const { displayAlert } = useAlert();

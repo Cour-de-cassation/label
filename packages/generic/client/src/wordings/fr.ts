@@ -193,14 +193,6 @@ const fr = {
     },
     validate: 'Valider',
   },
-  loginPage: {
-    login: 'Connexion',
-    email: 'E-mail',
-    forgottenPassword: "En cas d'oubli de votre mot de passe, veuillez contacter votre administrateur.",
-    password: 'Mot de passe',
-    pleaseTryAgain: 'Veuillez réessayer.',
-    wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",
-  },
   errorPage: {
     title: 'Une erreur est survenue...',
     errorCode: 'Erreur {code}',

@@ -10,26 +10,45 @@ function buildAuthenticatedController<inT, outT>({
   permissions: Array<userType['role']>;
   controllerWithUser: (
     user: userType,
-    req: { args: inT; headers: any; session?: any },
+    req: { args: inT; headers: any; session?: any; path?: string },
   ) => Promise<outT>;
-}): (req: { args: inT; headers: any; session?: any }) => Promise<outT> {
-  return async (req: { args: inT; headers: any; session?: any }) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-    const currentUser =
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      req.session && req.session.user ? req.session.user : null;
+}): (req: {
+  args: inT;
+  headers: any;
+  session?: any;
+  path?: string;
+}) => Promise<outT> {
+  return async (req: {
+    args: inT;
+    headers: any;
+    session?: any;
+    path?: string;
+  }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+    let currentUser = req.session?.user ?? null;
+    // eslint-disable-next-line no-console
+    console.log(`path ${req.path}`);
     if (!currentUser) {
       throw errorHandlers.authenticationErrorHandler.build(
-        `user session has expired or invalid`,
+        `user session has expired or is invalid`,
       );
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const dbUser = {
-      ...currentUser,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const isAnnotator = currentUser.role === 'annotator';
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const isAdminAccessingDocs =
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      _id: idModule.lib.buildId(currentUser._id),
-    };
-    userModule.lib.assertPermissions(dbUser, permissions);
-    return controllerWithUser(dbUser, req);
+      currentUser.role === 'admin' && req.path?.includes('documentsForUser');
+
+    if (isAnnotator || isAdminAccessingDocs) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      currentUser = {
+        ...currentUser,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        _id: idModule.lib.buildId(currentUser._id),
+      };
+    }
+    userModule.lib.assertPermissions(currentUser, permissions);
+    return controllerWithUser(currentUser, req);
   };
 }

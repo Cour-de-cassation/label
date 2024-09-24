@@ -4,6 +4,7 @@ import { customThemeType, useCustomTheme, ButtonWithIcon, Icon, Text } from 'pel
 import { wordings } from '../../wordings';
 import format from 'string-template';
 import { urlHandler } from '../../utils';
+import { localStorage } from '../../services/localStorage';
 
 export { ErrorPage };
 
@@ -39,6 +40,7 @@ function ErrorPage(props: { route?: string; errorCode?: number }) {
   );
 
   function logout() {
+    localStorage.adminViewHandler.remove();
     window.location.replace(urlHandler.getSsoLoginUrl());
   }
 

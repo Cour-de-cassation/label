@@ -42,7 +42,7 @@ export async function acsSso(req: any, res: any) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const user = await getUserByEmail(extract?.nameID);
-    await logger.error({
+    await logger.log({
       operationName: 'user connected',
       msg: `${user.email}`,
     });
@@ -90,7 +90,7 @@ export async function getUserByEmail(email: string) {
 function setUserSessionAndReturnRedirectUrl(req: any, res: any, user: any) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (req.session) {
-    logger.error({
+    logger.log({
       operationName: 'acsSso setUserSessionAndReturnRedirectUrl ',
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       msg: `set the user ${user.email} in session`,

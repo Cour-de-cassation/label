@@ -64,6 +64,7 @@ function buildController(
     headers: any;
     args: any;
     session: any;
+    path: string;
   }) => Promise<any>,
 ) {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -101,6 +102,7 @@ function buildController(
               headers: req.headers,
               args: sanitizedQuery,
               session: req.session,
+              path: req.path,
             }),
             statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.OK,
           };
@@ -110,6 +112,7 @@ function buildController(
               headers: req.headers,
               args: req.body,
               session: req.session,
+              path: req.path,
             }),
             statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.CREATED,
           };
@@ -165,7 +168,7 @@ function buildApiSso(app: Express) {
   });
 
   app.get(`${API_BASE_URL}/sso/whoami`, (req, res) => {
-    const user = req.session && req.session.user ? req.session.user : null;
+    const user = req.session?.user ?? null;
     if (!user) {
       return res
         .status(

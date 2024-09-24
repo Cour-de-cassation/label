@@ -5,6 +5,7 @@ import { wordings } from '../../../wordings';
 import { SettingsSection } from './SettingsSection';
 import { urlHandler } from '../../../utils';
 import { useCtxUser } from '../../../contexts/user.context';
+import { localStorage } from '../../../services/localStorage';
 
 export { SettingsDrawer };
 
@@ -61,6 +62,7 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
   );
 
   function logout() {
+    localStorage.adminViewHandler.remove();
     window.location.replace(urlHandler.getSsoLogoutUrl());
   }
 

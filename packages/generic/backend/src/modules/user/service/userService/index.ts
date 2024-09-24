@@ -23,9 +23,9 @@ const MAX_LOGIN_ATTEMPTS = 1;
 const userService = buildUserService();
 
 function buildUserService() {
-  const { checkCallAttempts } = buildCallAttemptsRegulator(
+  buildCallAttemptsRegulator(
     MAX_LOGIN_ATTEMPTS,
-    DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS,
+    DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS
   );
   return {
     createUser,

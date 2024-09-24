@@ -236,7 +236,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-
     deleteProblemReport: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { problemReportId } }) =>

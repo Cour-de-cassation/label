@@ -12,10 +12,7 @@ async function up() {
 
   await Promise.all(
     users.map((user) =>
-      userRepository.updateOne(user._id, {
-        isActivated: true,
-      }),
-    ),
+      userRepository.updateOne(user._id, {}))
   );
 }
 
@@ -24,5 +21,5 @@ async function down() {
 
   const userRepository = buildUserRepository();
 
-  await userRepository.deletePropertiesForMany({}, ['isActivated']);
+  await userRepository.deletePropertiesForMany({}, ['']);
 }

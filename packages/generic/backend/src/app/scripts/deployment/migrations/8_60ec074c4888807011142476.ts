@@ -12,9 +12,7 @@ async function up() {
 
   await Promise.all(
     users.map((user) =>
-      userRepository.updateOne(user._id, {
-        passwordLastUpdateDate: new Date().getTime(),
-      }),
+      userRepository.updateOne(user._id, {}),
     ),
   );
 }
@@ -22,7 +20,4 @@ async function up() {
 async function down() {
   logger.log({ operationName: 'migration', msg: 'Down: ' });
 
-  const userRepository = buildUserRepository();
-
-  await userRepository.deletePropertiesForMany({}, ['passwordLastUpdateDate']);
 }

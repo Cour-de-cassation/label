@@ -10,9 +10,9 @@ export { AdminMenu };
 const OFFSET_TOP = 15;
 
 function AdminMenu(props: {
-  unreadProblemReportsCount: number;
-  toBeConfirmedDocumentsCount: number;
-  userRole: 'admin' | 'scrutator';
+  readonly unreadProblemReportsCount: number;
+  readonly toBeConfirmedDocumentsCount: number;
+  readonly userRole: 'admin' | 'scrutator';
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
@@ -90,14 +90,6 @@ function getMenuIcons({
     />
   );
 
-  const WORKING_USERS_ICON = (
-    <MenuIcon
-      title={wordings.workingUsersPage.header.subtitle}
-      pathname={routes.WORKING_USERS.getPath()}
-      iconName="admin"
-    />
-  );
-
   return {
     admin: [
       SUMMARY_ICON,
@@ -107,7 +99,6 @@ function getMenuIcons({
       TREATED_DOCUMENTS_ICON,
       PROBLEM_REPORTS_ICON,
       PRE_ASSIGN_DOCUMENTS_ICON,
-      WORKING_USERS_ICON,
     ],
     scrutator: [
       SUMMARY_ICON,

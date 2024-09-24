@@ -8,11 +8,10 @@ import { localStorage, treatedDocumentOrderByProperties } from '../../../service
 import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';
 import { useAlert } from '../../../services/alert';
 import { routes } from '../../routes';
-import { useCtxUser } from '../../../contexts/user.context';
 
 export { TreatedDocumentsTable };
 
-function TreatedDocumentsTable(props: {
+function TreatedDocumentsTable(props: Readonly<{
   fields: Array<
     tableRowFieldType<
       apiRouteOutType<'get', 'treatedDocuments'>[number],
@@ -21,7 +20,7 @@ function TreatedDocumentsTable(props: {
   >;
   refetch: () => void;
   treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
-}) {
+}>) {
   const history = useHistory();
   const [documentIdToReset, setDocumentIdToReset] = useState<documentType['_id'] | undefined>(undefined);
   const { displayAlert } = useAlert();
@@ -32,8 +31,6 @@ function TreatedDocumentsTable(props: {
   const orderByProperty = localStorage.treatedDocumentsStateHandler.getOrderByProperty();
   const orderDirection = localStorage.treatedDocumentsStateHandler.getOrderDirection();
   const styles = buildStyles();
-
-  const { user } = useCtxUser();
 
   return (
     <div style={styles.container}>
@@ -94,8 +91,7 @@ function TreatedDocumentsTable(props: {
   }
 
   function buildOptionItems(treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-    const userRole = user?.role;
+    const userRole = localStorage.userHandler.getRole();
     const adminView = localStorage.adminViewHandler.get();
 
     const openDocumentOption = {

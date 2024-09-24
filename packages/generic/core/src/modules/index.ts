@@ -20,7 +20,7 @@ import {
 } from './settings';
 import { statisticModule, statisticType } from './statistic';
 import { treatmentType, treatmentModule, treatmentInfoType } from './treatment';
-import { userModule, userType, passwordTimeValidityStatusType } from './user';
+import { userModule, userType } from './user';
 import { migrationModule, migrationType } from './migration';
 
 export {
@@ -66,7 +66,6 @@ export type {
   categoryIconNameType,
   userType,
   replacementTermType,
-  passwordTimeValidityStatusType,
   treatmentType,
   treatmentInfoType,
 };

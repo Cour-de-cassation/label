@@ -12,9 +12,7 @@ async function up() {
 
   await Promise.all(
     users.map((user) =>
-      userRepository.updateOne(user._id, {
-        deletionDate: undefined,
-      }),
+      userRepository.updateOne(user._id, {}),
     ),
   );
 }
@@ -24,5 +22,5 @@ async function down() {
 
   const userRepository = buildUserRepository();
 
-  await userRepository.deletePropertiesForMany({}, ['deletionDate']);
+  await userRepository.deletePropertiesForMany({}, ['']);
 }

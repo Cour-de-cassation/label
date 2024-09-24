@@ -1,4 +1,4 @@
-import { apiSchema, documentType, idModule } from '@label/core';
+import { apiSchema, documentType, idModule, replacementTermType } from '@label/core';
 import { errorHandlers } from 'sder-core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
@@ -12,7 +12,6 @@ import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
 import { annotationReportService } from '../modules/annotationReport';
 import { preAssignationService } from '../modules/preAssignation';
-import { replacementTermType } from '@label/core';
 
 export { controllers };
 
@@ -80,7 +79,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           await cacheService.fetchAllByKey('availableStatisticFilters')
         )[0];
         if (cache) {
-          return JSON.parse(cache.content as string) as {
+          return JSON.parse(cache.content) as {
             publicationCategories: string[];
             maxDate: number | undefined;
             minDate: number | undefined;
@@ -237,13 +236,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    changePassword: buildAuthenticatedController({
-      permissions: ['admin', 'annotator', 'publicator', 'scrutator'],
-      controllerWithUser: async (
-        user,
-        { args: { previousPassword, newPassword } },
-      ) => userService.changePassword({ user, previousPassword, newPassword }),
-    }),
 
     deleteProblemReport: buildAuthenticatedController({
       permissions: ['admin'],
@@ -275,27 +267,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    async login({ args: { email, password } }) {
-      const {
-        _id,
-        email: userEmail,
-        name,
-        role,
-        token,
-        passwordTimeValidityStatus,
-      } = await userService.login({
-        email,
-        password,
-      });
-      return {
-        email: userEmail,
-        name,
-        role,
-        token,
-        _id,
-        passwordTimeValidityStatus,
-      };
-    },
 
     problemReport: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
@@ -319,11 +290,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    resetPassword: buildAuthenticatedController({
-      permissions: ['admin'],
-      controllerWithUser: async (_, { args: { userId } }) =>
-        userService.resetPassword(idModule.lib.buildId(userId)),
-    }),
 
     resetTreatmentLastUpdateDate: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
@@ -346,20 +312,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    setDeletionDateForUser: buildAuthenticatedController({
-      permissions: ['admin'],
-      controllerWithUser: async (_, { args: { userId } }) =>
-        userService.setDeletionDateForUser(idModule.lib.buildId(userId)),
-    }),
 
-    setIsActivatedForUser: buildAuthenticatedController({
-      permissions: ['admin'],
-      controllerWithUser: async (_, { args: { userId, isActivated } }) =>
-        userService.setIsActivatedForUser({
-          userId: idModule.lib.buildId(userId),
-          isActivated,
-        }),
-    }),
 
     updateAssignationDocumentStatus: buildAuthenticatedController({
       permissions: ['admin'],

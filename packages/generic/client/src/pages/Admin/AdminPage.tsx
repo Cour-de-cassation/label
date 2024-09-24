@@ -6,11 +6,11 @@ import { localStorage } from '../../services/localStorage';
 export { AdminPage };
 
 function AdminPage(props: {
-  userRole: 'admin' | 'scrutator';
-  header: { title: string; subtitle: string };
-  unreadProblemReportsCount: number;
-  toBeConfirmedDocumentsCount: number;
-  children: ReactElement;
+  readonly userRole: 'admin' | 'scrutator';
+  readonly header: { title: string; subtitle: string };
+  readonly unreadProblemReportsCount: number;
+  readonly toBeConfirmedDocumentsCount: number;
+  readonly children: ReactElement;
 }) {
   const styles = buildStyles();
 

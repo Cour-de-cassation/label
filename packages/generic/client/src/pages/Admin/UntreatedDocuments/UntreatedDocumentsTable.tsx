@@ -15,7 +15,6 @@ import { useAlert } from '../../../services/alert';
 import { localStorage, untreatedDocumentOrderByProperties } from '../../../services/localStorage';
 import { wordings } from '../../../wordings';
 import { routes } from '../../routes';
-import { useCtxUser } from '../../../contexts/user.context';
 
 export { UntreatedDocumentsTable };
 
@@ -35,11 +34,6 @@ function UntreatedDocumentsTable(props: {
   const orderDirection = localStorage.untreatedDocumentsStateHandler.getOrderDirection();
   const styles = buildStyles(theme);
   const fields = buildUntreatedDocumentsFields();
-
-  const { user, loading } = useCtxUser();
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div style={styles.container}>
@@ -71,7 +65,7 @@ function UntreatedDocumentsTable(props: {
   }
 
   function buildOptionItems(untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) {
-    const userRole = user?.role;
+    const userRole = localStorage.userHandler.getRole();
     const adminView = localStorage.adminViewHandler.get();
 
     const openAnonymizedDocumentOptionItem = {
@@ -138,13 +132,11 @@ function UntreatedDocumentsTable(props: {
 
   async function onConfirmUpdateDocumentStatus(documentIdToUpdateStatus: documentType['_id']) {
     setDocumentIdToUpdateStatus(undefined);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const userId = (user?._id as unknown) as any;
+    const userId = localStorage.userHandler.getId();
     if (!userId) {
       displayAlert({ text: wordings.business.errors.noUserIdFound, variant: 'alert', autoHide: true });
       return;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     await releaseAndAssignDocumentToUser({ userId, documentId: documentIdToUpdateStatus });
   }
 
@@ -183,110 +175,110 @@ function UntreatedDocumentsTable(props: {
       apiRouteOutType<'get', 'untreatedDocuments'>[number],
       typeof untreatedDocumentOrderByProperties[number]
     >> = [
-      {
-        id: 'documentNumber',
-        title: wordings.business.filters.columnTitles.documentNumber,
-        canBeSorted: true,
-        extractor: (untreatedDocument) => untreatedDocument.document.documentNumber,
-        width: 2,
-      },
-      {
-        id: 'occultationBlock',
-        title: wordings.business.filters.columnTitles.occultationBlock.title,
-        tooltipText: wordings.business.filters.columnTitles.occultationBlock.tooltipText,
-        canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
-        getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
-        width: 1,
-      },
-      {
-        id: 'jurisdiction',
-        title: wordings.business.filters.columnTitles.jurisdiction.title,
-        tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
-        canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
-        width: 4,
-      },
-      {
-        id: 'publicationCategory',
-        title: wordings.business.filters.columnTitles.publicationCategory.title,
-        tooltipText: wordings.business.filters.columnTitles.publicationCategory.tooltipText,
-        canBeSorted: true,
-        getSortingValue: (untreatedDocument) => untreatedDocument.document.publicationCategory.length,
-        extractor: (untreatedDocument) => untreatedDocument.document.publicationCategory.join(','),
-        render: (untreatedDocument) =>
-          untreatedDocument.document.publicationCategory.length > 0 ? (
-            <div style={styles.publicationCategoryBadgesContainer}>
-              {untreatedDocument.document.publicationCategory.map((publicationCategoryLetter) => (
-                <div style={styles.publicationCategoryBadgeContainer}>
-                  <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            '-'
+        {
+          id: 'documentNumber',
+          title: wordings.business.filters.columnTitles.documentNumber,
+          canBeSorted: true,
+          extractor: (untreatedDocument) => untreatedDocument.document.documentNumber,
+          width: 2,
+        },
+        {
+          id: 'occultationBlock',
+          title: wordings.business.filters.columnTitles.occultationBlock.title,
+          tooltipText: wordings.business.filters.columnTitles.occultationBlock.tooltipText,
+          canBeSorted: true,
+          extractor: (treatedDocument) => treatedDocument.document.occultationBlock || '-',
+          getSortingValue: (treatedDocument) => treatedDocument.document.occultationBlock || 0,
+          width: 1,
+        },
+        {
+          id: 'jurisdiction',
+          title: wordings.business.filters.columnTitles.jurisdiction.title,
+          tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
+          canBeSorted: true,
+          extractor: (treatedDocument) => treatedDocument.document.jurisdiction || '-',
+          width: 4,
+        },
+        {
+          id: 'publicationCategory',
+          title: wordings.business.filters.columnTitles.publicationCategory.title,
+          tooltipText: wordings.business.filters.columnTitles.publicationCategory.tooltipText,
+          canBeSorted: true,
+          getSortingValue: (untreatedDocument) => untreatedDocument.document.publicationCategory.length,
+          extractor: (untreatedDocument) => untreatedDocument.document.publicationCategory.join(','),
+          render: (untreatedDocument) =>
+            untreatedDocument.document.publicationCategory.length > 0 ? (
+              <div style={styles.publicationCategoryBadgesContainer}>
+                {untreatedDocument.document.publicationCategory.map((publicationCategoryLetter) => (
+                  <div style={styles.publicationCategoryBadgeContainer}>
+                    <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              '-'
+            ),
+          width: 2,
+        },
+        {
+          id: 'source',
+          title: wordings.business.filters.columnTitles.source.title,
+          tooltipText: wordings.business.filters.columnTitles.source.tooltipText,
+          canBeSorted: true,
+          extractor: (treatedDocument) => treatedDocument.document.source,
+          width: 2,
+        },
+        {
+          id: 'route',
+          title: wordings.business.filters.columnTitles.route.title,
+          tooltipText: wordings.business.filters.columnTitles.route.tooltipText,
+          canBeSorted: true,
+          extractor: (treatedDocument) => wordings.business.documentRoute[treatedDocument.document.route],
+          width: 2,
+        },
+        {
+          id: 'userName',
+          title: wordings.business.filters.columnTitles.userName,
+          canBeSorted: true,
+          width: 10,
+          extractor: (untreatedDocument) =>
+            untreatedDocument.userNames.length > 0 ? untreatedDocument.userNames.join(', ') : '-',
+        },
+        {
+          id: 'status',
+          canBeSorted: true,
+          title: wordings.business.filters.columnTitles.status,
+          extractor: (untreatedDocument) => untreatedDocument.document.status,
+          render: (untreatedDocument) => (
+            <DocumentStatusIcon status={untreatedDocument.document.status} iconSize={TABLE_ICON_SIZE} />
           ),
-        width: 2,
-      },
-      {
-        id: 'source',
-        title: wordings.business.filters.columnTitles.source.title,
-        tooltipText: wordings.business.filters.columnTitles.source.tooltipText,
-        canBeSorted: true,
-        extractor: (treatedDocument) => treatedDocument.document.source,
-        width: 2,
-      },
-      {
-        id: 'route',
-        title: wordings.business.filters.columnTitles.route.title,
-        tooltipText: wordings.business.filters.columnTitles.route.tooltipText,
-        canBeSorted: true,
-        extractor: (treatedDocument) => wordings.business.documentRoute[treatedDocument.document.route],
-        width: 2,
-      },
-      {
-        id: 'userName',
-        title: wordings.business.filters.columnTitles.userName,
-        canBeSorted: true,
-        width: 10,
-        extractor: (untreatedDocument) =>
-          untreatedDocument.userNames.length > 0 ? untreatedDocument.userNames.join(', ') : '-',
-      },
-      {
-        id: 'status',
-        canBeSorted: true,
-        title: wordings.business.filters.columnTitles.status,
-        extractor: (untreatedDocument) => untreatedDocument.document.status,
-        render: (untreatedDocument) => (
-          <DocumentStatusIcon status={untreatedDocument.document.status} iconSize={TABLE_ICON_SIZE} />
-        ),
-        width: 1,
-      },
-      {
-        id: 'decisionDate',
-        title: wordings.business.filters.columnTitles.decisionDate.title,
-        tooltipText: wordings.business.filters.columnTitles.decisionDate.tooltipText,
-        canBeSorted: true,
-        extractor: (untreatedDocument) =>
-          untreatedDocument.document.decisionDate
-            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionDate)
-            : '-',
-        getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionDate || 0,
-        width: 2,
-      },
-      {
-        id: 'creationDate',
-        title: wordings.business.filters.columnTitles.creationDate.title,
-        tooltipText: wordings.business.filters.columnTitles.creationDate.tooltipText,
-        canBeSorted: true,
-        extractor: (untreatedDocument) =>
-          untreatedDocument.document.creationDate
-            ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.creationDate)
-            : '-',
-        getSortingValue: (untreatedDocument) => untreatedDocument.document.creationDate || 0,
-        width: 2,
-      },
-    ];
+          width: 1,
+        },
+        {
+          id: 'decisionDate',
+          title: wordings.business.filters.columnTitles.decisionDate.title,
+          tooltipText: wordings.business.filters.columnTitles.decisionDate.tooltipText,
+          canBeSorted: true,
+          extractor: (untreatedDocument) =>
+            untreatedDocument.document.decisionDate
+              ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.decisionDate)
+              : '-',
+          getSortingValue: (untreatedDocument) => untreatedDocument.document.decisionDate || 0,
+          width: 2,
+        },
+        {
+          id: 'creationDate',
+          title: wordings.business.filters.columnTitles.creationDate.title,
+          tooltipText: wordings.business.filters.columnTitles.creationDate.tooltipText,
+          canBeSorted: true,
+          extractor: (untreatedDocument) =>
+            untreatedDocument.document.creationDate
+              ? timeOperator.convertTimestampToReadableDate(untreatedDocument.document.creationDate)
+              : '-',
+          getSortingValue: (untreatedDocument) => untreatedDocument.document.creationDate || 0,
+          width: 2,
+        },
+      ];
     return untreatedDocumentsFields;
   }
 }

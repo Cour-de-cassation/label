@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { Logo } from '../../components';
 import { urlHandler } from '../../utils';
-import {apiCaller} from "../../api";
 
 export { Login };
 
@@ -40,7 +39,4 @@ const Login: FunctionComponent = () => {
     } as const;
   }
 
-  /*async function whoami(){
-    return await apiCaller.get<'isAuthenticated'>('isAuthenticated');
-  }*/
 };

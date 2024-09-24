@@ -11,6 +11,7 @@ import { localStorage } from '../../../../services/localStorage';
 import { sendMail } from '../../../../services/sendMail';
 import { wordings } from '../../../../wordings';
 import { routes } from '../../../routes';
+import { useCtxUser } from '../../../../contexts/user.context';
 
 export { ProblemReportsTable };
 
@@ -29,7 +30,12 @@ function ProblemReportsTable(props: {
 
   const styles = buildStyles(theme);
   const problemReportsFields = buildProblemReportsFields();
-  const userRole = localStorage.userHandler.getRole();
+
+  const { user, loading } = useCtxUser();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  const userRole = user?.role;
   const adminView = localStorage.adminViewHandler.get();
 
   return (
@@ -128,7 +134,7 @@ function ProblemReportsTable(props: {
   }
 
   function buildOptionItems(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
-    const userRole = localStorage.userHandler.getRole();
+    const userRole = user?.role;
 
     const validateDocumentOptionItem = {
       kind: 'text' as const,
@@ -178,7 +184,7 @@ function ProblemReportsTable(props: {
         try {
           displayPopup({
             text: wordings.problemReportsPage.table.popupConfirmMessage,
-            onCancel: () => { },
+            onCancel: () => {},
             onConfirm: () => {
               problemReportWithDetails.document &&
                 apiCaller.post<'rejectDocument'>('rejectDocument', {

@@ -11,20 +11,26 @@ import { PreAssignDocuments } from './Admin/PreAssignDocuments';
 import { UntreatedDocuments } from './Admin/UntreatedDocuments';
 import { AnonymizedDocument } from './AnonymizedDocument';
 import { Home } from './Home';
+import { Login } from './Login';
 import { PublishableDocuments } from './PublishableDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { Statistics } from './Admin/Statistics';
 import { defaultRoutes, routes } from './routes';
 import { ToBeConfirmedDocuments } from './Admin/ToBeConfirmedDocuments';
 import { Summary } from './Admin/Summary';
-import { urlHandler } from "../utils";
+import { CurrentUser, useCtxUser } from '../contexts/user.context';
 
 export { Router };
 
 function Router() {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
+  const { user } = useCtxUser();
   return (
     <BrowserRouter>
       <Switch>
+        <UnauthenticatedRoute path={routes.LOGIN.getPath()}>
+          <Login />
+        </UnauthenticatedRoute>
         <AuthenticatedRoute path={routes.ADMIN.getPath()}>
           <AuthenticatedRoute path={routes.DOCUMENT.getPath()}>
             <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
@@ -36,7 +42,8 @@ function Router() {
                   ({ problemReport }) => !problemReport.hasBeenRead,
                 ).length;
                 const toBeConfirmedDocumentsCount = adminInfos.toBeConfirmedDocuments.length;
-                const userRole = localStorage.adminViewHandler.get() || localStorage.userHandler.getRole();
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+                const userRole = localStorage.adminViewHandler.get() || (user?.role as 'admin' | 'scrutator');
                 if (userRole !== 'admin' && userRole !== 'scrutator') {
                   return <></>;
                 }
@@ -166,40 +173,57 @@ function Router() {
   );
 }
 
-const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
-  <Route
-    {...rest}
-    render={({ location }) =>
-      isAuthenticated() ? (
-        children
-      ) : (
+const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
+  const { user, loading } = useCtxUser();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: routes.LOGIN.getPath(),
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
+
+const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
+  const { user, loading } = useCtxUser();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <Route
+      {...props}
+      render={({ location }) => (
         <Redirect
           to={{
-            pathname: routes.LOGIN.getPath(),
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            pathname: getRedirectionRoute(user),
             state: { from: location },
           }}
         />
-      )
-    }
-  />
-);
+      )}
+    />
+  );
+};
 
-const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => (
-  <Route
-    {...props}
-    render={({ location }) => (
-      <Redirect
-        to={{
-          pathname: getRedirectionRoute(),
-          state: { from: location },
-        }}
-      />
-    )}
-  />
-);
-
-function getRedirectionRoute() {
-  const userRole = localStorage.userHandler.getRole();
+function getRedirectionRoute(user: CurrentUser | null) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+  const userRole = user?.role;
 
   if (!userRole) {
     return routes.LOGIN.getPath();
@@ -212,108 +236,30 @@ function getRedirectionRoute() {
     }
   }
 
-  return defaultRoutes[userRole];
+  return defaultRoutes[userRole as 'annotator' | 'scrutator' | 'admin'];
 }
 
-
-function isAuthenticated() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { _id, email, name, role } = buildCookies();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  localStorage.userHandler.set({ _id, email, name, role });
-  return !!localStorage.userHandler.getRole();
-}
-
-async function whoami(): Promise<boolean> {
-  try {
-    const response = await fetch(`${urlHandler.getApiUrl()}/label/api/sso/whoami`, {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
-      credentials: 'include',
-      mode: 'cors',
-    });
-
-    if (!response.ok) {
-      return false;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const data = await response.json();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { _id, email, name, role } = data || buildCookies();
-
-    // Store user information in localStorage
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    localStorage.userHandler.set({ _id, email, name, role });
-    return !!localStorage.userHandler.getRole();
-  } catch (error) {
-    console.error('Error fetching authentication status:', error);
-    // Return false in case of any error
-    return false;
+const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
+  const { user, loading } = useCtxUser();
+  if (loading) {
+    return <div>Loading...</div>;
   }
-}
-
-function getCookieByName(name: string) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  let cookie: string = null;
-  if (parts.length === 2) {
-    // eslint-disable-next-line prefer-const,@typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // eslint-disable-next-line prefer-const
-    cookie = parts.pop().split(';').shift();
-  }
-  return cookie;
-}
-
-function buildCookies() {
-  const cookies: Array<{
-    key: string;
-    value: string;
-  }> = [];
-  const BEARER_TOKEN = 'BEARER_TOKEN';
-  const USER_ID = 'USER_ID';
-  const USER_EMAIL = 'USER_EMAIL';
-  const USER_NAME = 'USER_NAME';
-  const USER_ROLE = 'USER_ROLE';
-  [BEARER_TOKEN, USER_ID, USER_EMAIL, USER_NAME, USER_ROLE].forEach((item) =>
-    cookies.push({
-      key: item,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      value: getCookieByName(item),
-    }),
-  );
-  let _id: any, email: any, name: any, role: any;
-  cookies.forEach((cookie) => {
-    if (cookie.value) {
-      switch (cookie.key) {
-        case BEARER_TOKEN:
-          localStorage.bearerTokenHandler.set(cookie.value);
-          break;
-        case USER_ID:
-          _id = cookie.value;
-          break;
-        case USER_EMAIL:
-          email = decodeURIComponent(cookie.value);
-          break;
-        case USER_NAME:
-          name = decodeURIComponent(cookie.value);
-          break;
-        case USER_ROLE:
-          role = decodeURIComponent(cookie.value);
-          break;
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        !user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: routes.DEFAULT.getPath(),
+              state: { from: location },
+            }}
+          />
+        )
       }
-    }
-  });
-  return {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    _id,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    email,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    name,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    role,
-  };
-}
+    />
+  );
+};

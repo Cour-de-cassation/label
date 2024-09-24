@@ -8,19 +8,22 @@ import { localStorage, treatedDocumentOrderByProperties } from '../../../service
 import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';
 import { useAlert } from '../../../services/alert';
 import { routes } from '../../routes';
+import { useCtxUser } from '../../../contexts/user.context';
 
 export { TreatedDocumentsTable };
 
-function TreatedDocumentsTable(props: Readonly<{
-  fields: Array<
-    tableRowFieldType<
-      apiRouteOutType<'get', 'treatedDocuments'>[number],
-      typeof treatedDocumentOrderByProperties[number]
-    >
-  >;
-  refetch: () => void;
-  treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
-}>) {
+function TreatedDocumentsTable(
+  props: Readonly<{
+    fields: Array<
+      tableRowFieldType<
+        apiRouteOutType<'get', 'treatedDocuments'>[number],
+        typeof treatedDocumentOrderByProperties[number]
+      >
+    >;
+    refetch: () => void;
+    treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
+  }>,
+) {
   const history = useHistory();
   const [documentIdToReset, setDocumentIdToReset] = useState<documentType['_id'] | undefined>(undefined);
   const { displayAlert } = useAlert();
@@ -31,6 +34,8 @@ function TreatedDocumentsTable(props: Readonly<{
   const orderByProperty = localStorage.treatedDocumentsStateHandler.getOrderByProperty();
   const orderDirection = localStorage.treatedDocumentsStateHandler.getOrderDirection();
   const styles = buildStyles();
+
+  const { user } = useCtxUser();
 
   return (
     <div style={styles.container}>
@@ -91,7 +96,8 @@ function TreatedDocumentsTable(props: Readonly<{
   }
 
   function buildOptionItems(treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) {
-    const userRole = localStorage.userHandler.getRole();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+    const userRole = user?.role;
     const adminView = localStorage.adminViewHandler.get();
 
     const openDocumentOption = {

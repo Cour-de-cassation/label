@@ -26,8 +26,6 @@ function buildAuthenticatedController<inT, outT>({
   }) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
     let currentUser = req.session?.user ?? null;
-    // eslint-disable-next-line no-console
-    console.log(`path ${req.path}`);
     if (!currentUser) {
       throw errorHandlers.authenticationErrorHandler.build(
         `user session has expired or is invalid`,

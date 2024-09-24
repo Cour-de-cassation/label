@@ -6,7 +6,10 @@ import { DataFetcher } from '../../DataFetcher';
 export { WorkingUsersDataFetcher };
 
 function WorkingUsersDataFetcher(props: {
-  children: (fetched: { workingUsers: apiRouteOutType<'get', 'workingUsers'>; refetch: () => void }) => ReactElement;
+  readonly children: (fetched: {
+    workingUsers: apiRouteOutType<'get', 'workingUsers'>;
+    refetch: () => void;
+  }) => ReactElement;
 }) {
   const workingUsersFetchInfo = useApi(buildFetchWorkingUsers(), {});
 

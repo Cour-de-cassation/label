@@ -4,7 +4,6 @@ import { localStorage } from '../services/localStorage';
 import { wordings } from '../wordings';
 import { AdminPage } from './Admin/AdminPage';
 import { AdminInfosDataFetcher } from './Admin/AdminInfosDataFetcher';
-import { WorkingUsers } from './Admin/WorkingUsers';
 import { DocumentInspector } from './Admin/DocumentInspector';
 import { TreatedDocuments } from './Admin/TreatedDocuments';
 import { ProblemReports } from './Admin/ProblemReports';
@@ -77,18 +76,6 @@ function Router() {
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
-                    {userRole === 'admin' && (
-                      <AuthenticatedRoute path={routes.WORKING_USERS.getPath()}>
-                        <AdminPage
-                          userRole="admin"
-                          header={wordings.workingUsersPage.header}
-                          unreadProblemReportsCount={unreadProblemReportsCount}
-                          toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
-                        >
-                          <WorkingUsers workingUsers={adminInfos.workingUsers} refetch={refetch.workingUsers} />
-                        </AdminPage>
-                      </AuthenticatedRoute>
-                    )}
                     <AuthenticatedRoute path={routes.PROBLEM_REPORTS.getPath()}>
                       <AdminPage
                         userRole={userRole}

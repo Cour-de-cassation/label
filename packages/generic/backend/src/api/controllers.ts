@@ -1,4 +1,4 @@
-import { apiSchema, documentType, idModule } from '@label/core';
+import { apiSchema, documentType, idModule, replacementTermType } from '@label/core';
 import { errorHandlers } from 'sder-core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
@@ -12,7 +12,6 @@ import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
 import { annotationReportService } from '../modules/annotationReport';
 import { preAssignationService } from '../modules/preAssignation';
-import { replacementTermType } from '@label/core';
 
 export { controllers };
 
@@ -80,7 +79,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           await cacheService.fetchAllByKey('availableStatisticFilters')
         )[0];
         if (cache) {
-          return JSON.parse(cache.content as string) as {
+          return JSON.parse(cache.content) as {
             publicationCategories: string[];
             maxDate: number | undefined;
             minDate: number | undefined;

@@ -37,9 +37,9 @@ export class SamlService {
       ...(isKeycloakIdp
         ? {}
         : {
-            signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT_VM), 'utf8'),
-            privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
-          }),
+          signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT_VM), 'utf8'),
+          privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
+        }),
     } as any;
 
     this.sp = samlify.ServiceProvider(spProps);

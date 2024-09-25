@@ -1,15 +1,21 @@
 {
   "presets": [
-    ["@babel/preset-env",
+    [
+      "@babel/preset-env",
       {
-      "targets": {
-        "esmodules": true
-      },
-      "useBuiltIns": "entry",
-      "corejs": 3
-    }]
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-typescript"
   ],
   "plugins": [
-    ["@babel/plugin-proposal-decorators", { "legacy": true }]
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ]
   ]
 }

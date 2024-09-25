@@ -10,6 +10,7 @@ services:
       - 55431
     ports:
       - 55431:55431
+
   backend:
     build:
       context: ./
@@ -22,6 +23,8 @@ services:
       - labelDb
     env_file:
       - docker.env
+    volumes:
+      - sso_files:/usr/src/app/sso_files
     networks:
       - default
       - dbsder-external-network
@@ -37,3 +40,5 @@ volumes:
   mongo-storage:
     driver: local
     name: label-mongo-storage
+  sso_files:
+    driver: local

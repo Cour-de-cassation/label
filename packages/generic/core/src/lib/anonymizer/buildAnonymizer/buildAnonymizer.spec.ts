@@ -152,6 +152,7 @@ describe('buildAnonymizer', () => {
     });
   });
 
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   describe('extractReplacementTerms', () => {
     it('should extract replacementTerms mapping', () => {
       const annotations = [

@@ -280,6 +280,15 @@ const buildDocumentRepository = buildRepositoryBuilder<
       const updatedDocument = await collection.findOne({ _id: filter._id });
       return updatedDocument || undefined;
     },
+
+    async updateReplacementTermsById(documentId, replacementTerms) {
+      await collection.updateOne(
+        { _id: documentId },
+        { $set: { replacementTerms: replacementTerms } },
+      );
+      const updatedDocument = await collection.findOne({ _id: documentId });
+      return updatedDocument || undefined;
+    },
   }),
 });
 

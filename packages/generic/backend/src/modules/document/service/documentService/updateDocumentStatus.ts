@@ -4,6 +4,7 @@ import { assignationService } from '../../../assignation';
 import { buildDocumentRepository } from '../../repository';
 import { resetDocument } from './resetDocument';
 import { logger } from '../../../../utils';
+import { updateDocumentReplacementTerms } from './updateDocumentReplacementTerms';
 
 export { updateDocumentStatus };
 
@@ -25,6 +26,8 @@ async function updateDocumentStatus(
   }
   if (status === 'free') {
     await assignationService.deleteAssignationsByDocumentId(_id);
+  } else if (status === 'done' || status === 'toBePublished') {
+    await updateDocumentReplacementTerms(_id);
   } else if (status === 'loaded') {
     await resetDocument(_id);
   }

@@ -9,7 +9,7 @@ export { buildAnonymizer };
 
 export type { anonymizerType };
 
-type ReplacementTermDict = {
+export type ReplacementTermDict = {
   [key: string]: {
     replacementTerm: string;
     instances: string[];
@@ -65,7 +65,7 @@ function buildAnonymizer<documentT extends fetchedDocumentType>(
     return anonymizedText;
   }
 
-  function extractReplacementTerms() {
+  function extractReplacementTerms(): ReplacementTermDict {
     const replacementTerms: ReplacementTermDict = {};
 
     annotations.forEach((annotation) => {

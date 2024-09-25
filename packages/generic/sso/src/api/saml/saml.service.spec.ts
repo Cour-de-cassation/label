@@ -84,7 +84,7 @@ describe('SamlService', () => {
         SAMLResponse: Buffer.from('mock-saml-response').toString('base64'),
       },
     };
-    process.env.SSO_NODE_ENV = 'dev';
+    process.env.SSO_IDP_KEYCLOAK = 'true';
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const response = await service.parseResponse(mockRequest);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

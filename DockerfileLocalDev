@@ -11,10 +11,6 @@ RUN apk add git
 COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/sso/package.json ./packages/generic/sso/
-COPY packages/generic/sso/sso_idp_metadata.xml /usr/src/app
-COPY packages/generic/sso/sso_idp_metadata_pb.xml /usr/src/app
-COPY packages/generic/sso/certificat_vm.pem /usr/src/app
-COPY packages/generic/sso/sp_key.pem /usr/src/app
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 COPY yarn.lock ./

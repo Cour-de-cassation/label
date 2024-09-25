@@ -110,10 +110,22 @@ function setUserSessionAndReturnRedirectUrl(req: any, res: any, user: any) {
       email: user.email,
     };
   }
+
+  const roleToUrlMap: Record<string, string> = {
+    annotator: process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL as string,
+    admin: process.env
+      .SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL as string,
+    scrutator: process.env
+      .SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL as string,
+    publicator: process.env
+      .SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL as string,
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  return user.role === 'annotator'
-    ? ((process.env
-        .SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL as unknown) as string)
-    : ((process.env
-        .SSO_FRONT_SUCCESS_CONNEXION_OTHER_URL as unknown) as string);
+  if (!roleToUrlMap[user.role]) {
+    throw new Error(`Role doesn't exist in label`);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  return roleToUrlMap[user.role];
 }

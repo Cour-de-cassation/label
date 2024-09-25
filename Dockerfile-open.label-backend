@@ -1,0 +1,45 @@
+FROM node:16-alpine as label-backend
+
+ENV API_PORT=55430
+
+
+WORKDIR /home/node/
+
+# Install git for sder and sder-core package
+RUN apk add git
+
+# Copy context files
+COPY ./package.json ./
+COPY packages/generic/core/package.json ./packages/generic/core/
+COPY packages/generic/backend/package.json ./packages/generic/backend/
+COPY packages/courDeCassation/package.json ./packages/courDeCassation/
+
+COPY . .
+
+# Do not bring client dependencies to backend prod
+# Workaround to rewrite 'workspaces' in packages.json file to not run 'yarn install' in all packages
+RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core"|' > package.json.new && \
+  mv package.json.new package.json
+
+# Install dependencies
+RUN yarn install --production
+
+# Compile project without lerna
+RUN cd /home/node/packages/generic/core && yarn compile && \
+  cd /home/node/packages/generic/backend && yarn compile && \
+  cd /home/node/packages/courDeCassation && yarn compile
+
+ADD packages/generic/core packages/generic/core
+ADD packages/generic/backend packages/generic/backend
+ADD packages/courDeCassation packages/courDeCassation
+
+WORKDIR /home/node/packages/courDeCassation
+
+RUN chown node .
+
+USER node
+
+# Expose the listening port of your app
+EXPOSE ${API_PORT}
+
+CMD ["sh", "-c", "RUN_MODE=PROD node dist/labelServer.js -s settings/settings.json"]

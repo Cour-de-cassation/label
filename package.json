@@ -8,7 +8,7 @@
     "packages/courDeCassation/"
   ],
   "scripts": {
-    "build": "lerna run build --stream && cp -r packages/generic/client/build/ packages/generic/backend/ packages/generic/sso/",
+    "build": "lerna run build --stream && cp -r packages/generic/client/build/ packages/generic/backend/",
     "build:backend": "lerna run --ignore @label/client build --stream",
     "build:client": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation --ignore @label/sso build --stream",
     "build:sso": "lerna run --ignore @label/backend --ignore @label/client --ignore @label/cour-de-cassation build --stream",

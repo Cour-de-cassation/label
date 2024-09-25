@@ -134,6 +134,7 @@ function buildApiSso(app: Express) {
   });
 
   app.get(`${API_BASE_URL}/sso/login`, async (req, res) => {
+    logger.error({ operationName: 'acs', msg: `${req.path}` });
     try {
       const context = await userService.loginSso();
       res.redirect(context);
@@ -180,6 +181,7 @@ function buildApiSso(app: Express) {
   });
 
   app.post(`${API_BASE_URL}/sso/acs`, async (req, res) => {
+    logger.error({ operationName: 'acs', msg: `${req.path}` });
     try {
       const url = await userService.acsSso(req, res);
       res.redirect(url);

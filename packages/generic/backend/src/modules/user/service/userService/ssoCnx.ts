@@ -19,6 +19,7 @@ export async function getMetadataSso() {
 }
 
 export async function loginSso() {
+  //logger.error({ operationName: 'acs', msg: `${req.path}` });
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   const { context } = await samlService.createLoginRequestUrl();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -52,6 +53,7 @@ export async function acsSso(req: any, res: any) {
       operationName: `catch autoprovision user ${JSON.stringify(err)}`,
       msg: `${err}`,
     });
+
     if (
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       err.message.indexOf(
@@ -67,6 +69,7 @@ export async function acsSso(req: any, res: any) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
         role: extract.role || 'annotator',
       };
+
       await userService.createUser(newUser);
       const createdUser = await getUserByEmail(newUser.email);
       await logger.log({

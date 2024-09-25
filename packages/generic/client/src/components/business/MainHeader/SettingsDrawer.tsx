@@ -1,10 +1,11 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDisplayMode, ButtonWithIcon, Drawer, RadioButton, Text} from 'pelta-design-system';
-import {routes} from '../../../pages';
 import {localStorage} from '../../../services/localStorage';
 import {wordings} from '../../../wordings';
 import {SettingsSection} from './SettingsSection';
+import {useCtxUser} from "../../../contexts/user.context";
+import {urlHandler} from "../../../utils";
 
 export {SettingsDrawer};
 
@@ -12,9 +13,13 @@ function SettingsDrawer(props: { readonly close: () => void; readonly isOpen: bo
     const {displayMode, setDisplayMode} = useDisplayMode();
     const styles = buildStyles();
     const history = useHistory();
+    const {user, loading} = useCtxUser();
 
-    const userEmail = localStorage.userHandler.getEmail();
-    const userName = localStorage.userHandler.getName();
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    const userEmail = user?.email;
+    const userName = user?.name;
 
     return (
         <Drawer onClose={props.close} title={wordings.shared.settingsDrawer.title} isOpen={props.isOpen}>
@@ -56,10 +61,8 @@ function SettingsDrawer(props: { readonly close: () => void; readonly isOpen: bo
     );
 
     function logout() {
-        localStorage.bearerTokenHandler.remove();
-        localStorage.userHandler.remove();
         localStorage.adminViewHandler.remove();
-        history.push(routes.DEFAULT.getPath());
+        window.location.replace(urlHandler.getSsoLogoutUrl());
     }
 
     function buildStyles() {

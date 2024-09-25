@@ -1,1 +1,0 @@
-export { fetchExtremumDates } from './fetchExtremumDates';

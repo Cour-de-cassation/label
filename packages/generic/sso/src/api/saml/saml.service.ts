@@ -21,7 +21,7 @@ export class SamlService {
 
   constructor() {
     // Initialiser le Service Provider (SP)
-    const isKeycloakIdp = Boolean(process.env.SSO_IDP_KEYCLOAK);
+    const isKeycloakIdp = (process.env.SSO_IDP_KEYCLOAK as unknown) as boolean;
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const spProps = {

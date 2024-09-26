@@ -24,8 +24,8 @@
     "fix": "lerna run fix",
     "init:db": "scripts/initializeTestDb.sh",
     "lint": "lerna run lint",
-    "start:backend": "RUN_MODE=LOCAL lerna run --scope @label/cour-de-cassation start --stream",
-    "start:backend:dev": "RUN_MODE=LOCAL nodemon",
+    "start:backend": "lerna run --scope @label/cour-de-cassation start --stream",
+    "start:backend:dev": "nodemon",
     "start:client:dev": "yarn compile:client && cd packages/generic/client && yarn start",
     "test": "lerna run test",
     "type": "lerna run type"

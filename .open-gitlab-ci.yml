@@ -140,7 +140,7 @@ docker:backend:
     - recette
     - develop-ci
     - casslab-57
-    - label-rec1
+    - label-rec
 
 docker:client:
   image: docker:19.03.5
@@ -164,7 +164,7 @@ docker:client:
     - recette
     - develop-casslab-57
     - casslab-57
-    - label-rec
+    - label-rec1
 
 trivy:backend:
   extends: [".trivy-scan"]

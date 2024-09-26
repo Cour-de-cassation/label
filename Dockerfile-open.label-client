@@ -44,6 +44,6 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /home/node/packages/generic/client/build /usr/share/nginx/html/label/
 
-EXPOSE 80
+EXPOSE 8084
 
 CMD ["nginx", "-g", "daemon off;"]

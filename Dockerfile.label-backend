@@ -15,6 +15,7 @@ RUN apk add git
 # Copy context files
 COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
+COPY packages/generic/sso/package.json ./packages/generic/sso/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 
@@ -30,10 +31,12 @@ RUN yarn install --production
 
 # Compile project without lerna
 RUN cd /home/node/packages/generic/core && yarn compile && \
+  cd /home/node/packages/generic/sso && yarn compile && \
   cd /home/node/packages/generic/backend && yarn compile && \
   cd /home/node/packages/courDeCassation && yarn compile
 
 ADD packages/generic/core packages/generic/core
+ADD packages/generic/sso packages/generic/sso
 ADD packages/generic/backend packages/generic/backend
 ADD packages/courDeCassation packages/courDeCassation
 

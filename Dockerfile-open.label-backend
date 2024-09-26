@@ -1,11 +1,5 @@
 FROM node:16-alpine as label-backend
-ARG http_proxy
-ARG https_proxy
 ENV API_PORT=55430
-
-# Use proxy
-RUN yarn config set proxy $http_proxy; \
-  yarn config set https-proxy $https_proxy;
 
 WORKDIR /home/node/
 

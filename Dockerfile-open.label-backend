@@ -22,7 +22,7 @@ RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/sso", "pac
 
 
 # Install dependencies
-RUN yarn install --production
+RUN yarn install
 
 # Compile project without lerna
 RUN cd /home/node/packages/generic/core && yarn compile && \

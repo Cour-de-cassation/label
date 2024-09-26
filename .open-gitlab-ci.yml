@@ -17,11 +17,11 @@ include:
     file: 'trivy-template-job.yml'
 
 stages:
+  - docker
   - build
   - sast
   - test
-  - quality
-  - docker
+  - quality  
   - scan_docker
   - deploy
 
@@ -49,6 +49,7 @@ build:
       - packages/courDeCassation/node_modules/
       - packages/generic/backend/node_modules/
       - packages/generic/client/node_modules/
+      - packages/generic/sso/node_modules/
   allow_failure: true
 
 # Test phase
@@ -139,6 +140,7 @@ docker:backend:
     - recette
     - develop-ci
     - casslab-57
+    - label-rec
 
 docker:client:
   image: docker:19.03.5
@@ -162,6 +164,7 @@ docker:client:
     - recette
     - develop-casslab-57
     - casslab-57
+    - label-rec
 
 trivy:backend:
   extends: [".trivy-scan"]

@@ -151,8 +151,6 @@ docker:client:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker build
-      --build-arg http_proxy=$HTTP_PROXY
-      --build-arg https_proxy=$HTTPS_PROXY
       --target label-client
       -f Dockerfile-open.label-client
       -t $DOCKER_CLIENT_IMAGE .

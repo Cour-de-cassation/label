@@ -140,7 +140,7 @@ docker:backend:
     - recette
     - develop-ci
     - casslab-57
-    - label-rec
+    - label-rec1
 
 docker:client:
   image: docker:19.03.5
@@ -153,8 +153,8 @@ docker:client:
     - docker build
       --build-arg http_proxy=$HTTP_PROXY
       --build-arg https_proxy=$HTTPS_PROXY
-      --target label-backend
-      -f Dockerfile-open.label-backend
+      --target label-client
+      -f Dockerfile-open.label-client
       -t $DOCKER_CLIENT_IMAGE .
     - docker tag $DOCKER_CLIENT_IMAGE $DOCKER_CLIENT_TAG_BRANCH
     - docker push $DOCKER_CLIENT_IMAGE

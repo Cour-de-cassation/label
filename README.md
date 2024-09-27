@@ -125,3 +125,24 @@ LABEL has been designed to be reused whatever the annotation context. There are 
 - `generic`: what is not linked to the specific needs of the Cour de cassation
 
 Learn more in the [reuser guide](docs/reuserGuide.md).
+
+## Authentication
+<section style="min-height:200px">
+LABEL integrates with the Pages Blanches SSO to facilitate user authentication using the SAML 2.0 protocol.
+
+The diagram below illustrates the authentication flow.
+
+<img src="docs/images/LABEL_auth_workflow.png" alt="Label auth workflow" />
+
+1. When a user initiates access to LABEL, the frontend communicates with the backend to check the user’s authentication status. If the user is not authenticated, the backend initiates a redirect to the identity provider (IdP), passing the necessary authentication parameters.
+
+
+2. The user is then prompted to log in via the SSO page. Upon successful authentication, the identity provider generates a SAML assertion and sends it to LABEL's backend via the Assertion Consumer Service (ACS) URL.
+
+
+3. The backend processes and validates the SAML assertion to ensure data integrity and verify the authenticity of the digital signature
+
+
+4. After validation, access to secured resources is granted, allowing the user to continue their authenticated session.
+
+</section>

@@ -75,7 +75,6 @@ sonar:
   image: glregistry.boost.open.global/boost/docker/gitlab-ant-sonar:latest
   before_script:
     - LABEL_PROJECTS=("client" "backend")
-    - yum install -y jq
   script:
     - |
 

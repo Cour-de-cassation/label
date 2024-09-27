@@ -24,7 +24,7 @@ services:
     env_file:
       - docker.env
     volumes:
-      - sso_files:/usr/src/app/sso_files
+      - ./sso_files/sso_idp_metadata.xml:/usr/src/app/packages/courDeCassation/sso_idp_metadata.xml
     networks:
       - default
       - dbsder-external-network
@@ -40,5 +40,3 @@ volumes:
   mongo-storage:
     driver: local
     name: label-mongo-storage
-  sso_files:
-    driver: local

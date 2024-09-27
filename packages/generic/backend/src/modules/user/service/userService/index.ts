@@ -7,14 +7,8 @@ import {fetchUsersByAssignations} from './fetchUsersByAssignations';
 import {fetchUsersByIds} from './fetchUsersByIds';
 import {fetchWorkingUsers} from './fetchWorkingUsers';
 import {signUpUser} from './signUpUser';
-import {
-    acsSso,
-    getMetadataSso,
-    loginSso,
-    logoutSso,
-} from './ssoCnx';
 
-export {userService, ssoService, buildUserService};
+export {userService, buildUserService};
 
 const DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS = 1 * 1000;
 
@@ -37,20 +31,4 @@ function buildUserService() {
         fetchUserRole,
         signUpUser,
     };
-}
-
-const ssoService = buildSsoService();
-
-function buildSsoService() {
-    buildCallAttemptsRegulator(
-        MAX_LOGIN_ATTEMPTS,
-        DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS
-    );
-
-    return {
-        acsSso,
-        getMetadataSso,
-        loginSso,
-        logoutSso,
-    }
 }

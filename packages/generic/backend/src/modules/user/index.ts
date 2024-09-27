@@ -1,4 +1,4 @@
 import { buildUserRepository } from './repository';
-import { userService, ssoService } from './service';
+import { userService } from './service';
 
-export { buildUserRepository, userService, ssoService };
+export { buildUserRepository, userService };

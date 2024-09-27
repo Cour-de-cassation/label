@@ -4,7 +4,7 @@ import {CustomError, httpStatusCodeHandler} from 'sder-core';
 import {apiSchema, apiSchemaMethodNameType} from '@label/core';
 import {logger} from '../utils';
 import {controllers} from './controllers';
-import {ssoService} from "../modules/user";
+import {ssoService} from "../modules/sso";
 
 export {buildApi};
 

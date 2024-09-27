@@ -2,7 +2,8 @@ export { urlHandler };
 
 const urlHandler = {
   getApiUrl() {
-    console.log("test API URL");
+    console.log("test API URL", process.env.REACT_APP_SSO_API_LOGIN_URL);
+    console.log("test API URL", '${process.env.REACT_APP_SSO_API_LOGOUT_URL}');
     console.log(process.env.REACT_APP_LABEL_API_URL);
     console.log(`${process.env.REACT_APP_LABEL_API_URL}`);
     return `${process.env.REACT_APP_LABEL_API_URL}`;

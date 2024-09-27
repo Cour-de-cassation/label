@@ -14,12 +14,16 @@
     "dist"
   ],
   "scripts": {
+    "test": "RUN_MODE=TEST jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",
     "clean:all": "rimraf -rf ./dist && rimraf -rf ./node_modules",
-    "compile": "tsc -p tsconfig.json"
+    "compile": "tsc -p tsconfig.json",
+    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -29,15 +33,9 @@
     "@nestjs/common": "^8.4.7",
     "@nestjs/config": "^0.5.0",
     "@nestjs/core": "8.4.7",
-    "@nestjs/jwt": "7.2.0",
-    "@nestjs/passport": "7.1.5",
     "@nestjs/platform-express": "7.6.18",
-    "@nestjs/swagger": "4.7.12",
     "body-parser": "^1.19.0",
     "dotenv": "^16.4.5",
-    "joi": "17.11.0",
-    "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.1",
     "samlify": "2.6.0"
   },
@@ -51,8 +49,6 @@
     "@nestjs/testing": "^8.4.7",
     "@types/body-parser": "^1.19.0",
     "@types/jest": "^26.0.13",
-    "@types/jsonwebtoken": "^8.5.0",
-    "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",

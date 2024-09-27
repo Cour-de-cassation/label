@@ -18,22 +18,7 @@
     "test": "RUN_MODE=TEST jest --passWithNoTests",
     "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src/",
-    "setupFiles": [
-      "core-js"
-    ],
-    "setupFilesAfterEnv": [
-      "./tests/setupTests.ts"
-    ],
-    "testEnvironment": "node",
-    "testRegex": ".spec.ts$"
-  },
+
   "dependencies": {
     "@label/core": "*",
     "@label/sso": "*",
@@ -61,6 +46,7 @@
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
+    "@babel/plugin-transform-runtime": "^7.10.4",
     "@babel/polyfill": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
@@ -70,6 +56,7 @@
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
+    "dotenv": "^16.4.5",
     "core-js": "^3.6.5",
     "eslint": "7.7.0",
     "eslint-config-prettier": "^6.12.0",

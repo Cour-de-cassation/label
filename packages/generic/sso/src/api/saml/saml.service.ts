@@ -1,18 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as samlify from 'samlify';
 import * as fs from 'fs';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-//import * as validator from '@authenio/samlify-node-xmllint';
+import * as validator from '@authenio/samlify-node-xmllint';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-samlify.setSchemaValidator(
-  {
-    validate: () => Promise.resolve(true),
-  } /*|| validator*/,
-);
+samlify.setSchemaValidator(validator);
 
 @Injectable()
 export class SamlService {
@@ -35,11 +26,11 @@ export class SamlService {
       authnRequestsSigned: !isKeycloakIdp,
       wantAssertionsSigned: !isKeycloakIdp,
       isAssertionEncrypted: false, // keycloak
-      ...(isKeycloakIdp
+      ...(isKeycloakIdp || process.env.RUN_MODE === 'TEST'
         ? {}
         : {
             signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT_VM), 'utf8'),
-            privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
+            privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY_VM), 'utf8'),
           }),
     } as any;
 
@@ -47,9 +38,13 @@ export class SamlService {
     // Initialiser l'Identity Provider (IdP)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const idpProps = {
-      metadata: fs.readFileSync(
-        isKeycloakIdp ? String(process.env.SSO_IDP_METADATA) : String(process.env.SSO_IDP_METADATA_VM),
-      ),
+      ...(process.env.RUN_MODE === 'TEST'
+        ? {}
+        : {
+            metadata: fs.readFileSync(
+              isKeycloakIdp ? String(process.env.SSO_IDP_METADATA) : String(process.env.SSO_IDP_METADATA_VM),
+            ),
+          }),
       wantAuthnRequestsSigned: !isKeycloakIdp,
       singleSignOnService: [
         {
@@ -85,11 +80,12 @@ export class SamlService {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async parseResponse(request: any) {
+    const isKeycloakIdp = (process.env.SSO_IDP_KEYCLOAK as unknown) as boolean;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/ban-ts-comment
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    if (['local', 'dev'].includes(process.env.SSO_NODE_ENV)) {
+    if (isKeycloakIdp) {
       const samlContent = Buffer.from(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         request.body.SAMLResponse,

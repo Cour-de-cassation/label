@@ -1,4 +1,10 @@
-import { acsSso, getMetadataSso, loginSso, logoutSso } from './ssoCnx';
+import {
+  acsSso,
+  getMetadataSso,
+  loginSso,
+  logoutSso,
+  setUserSessionAndReturnRedirectUrl,
+} from './ssoCnx';
 
 jest.mock('@label/sso', () => ({
   SamlService: jest.fn().mockImplementation(() => ({
@@ -40,6 +46,14 @@ jest.mock('../../repository', () => ({
   })),
 }));
 
+process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL =
+  'http://localhost:55432/label/annotation';
+(process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL =
+  'http://localhost:55432/label/admin/main/summary'),
+  (process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL =
+    'http://localhost:55432/label/publishable-documents');
+//process.env.SSO_IDP_KEYCLOAK = true;
+
 describe('SSO CNX functions', () => {
   describe('getMetadataSso', () => {
     it('should return SAML metadata', async () => {
@@ -78,12 +92,96 @@ describe('SSO CNX functions', () => {
           },
         },
       };
-      const mockRes = { cookie: jest.fn() };
-
-      const redirectUrl = await acsSso(mockReq, mockRes);
-      expect(redirectUrl).toContain('annotator'); // Check if it's the annotator URL
+      const redirectUrl = await acsSso(mockReq);
+      expect(redirectUrl).toContain(
+        process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
+      ); // Check if it's the annotator URL
       expect(mockReq.session.user).toBeDefined();
       expect(mockReq.session.user.email).toBe('test@example.com');
+    });
+  });
+
+  describe('setUserSessionAndReturnRedirectUrl', () => {
+    const mockRequest = {
+      session: {
+        user: {},
+      },
+    };
+
+    /*beforeEach(() => {
+      jest.clearAllMocks();
+    });*/
+
+    it('should return the correct URL for annotator role', () => {
+      const user = {
+        _id: '1',
+        name: 'Annotator',
+        role: 'annotator',
+        email: 'annotator@test.com',
+      };
+      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user);
+      expect(mockRequest.session.user).toEqual(user);
+      expect(result).toEqual(
+        process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
+      );
+    });
+
+    it('should return the correct URL for admin role', () => {
+      const user = {
+        _id: '2',
+        name: 'Admin',
+        role: 'admin',
+        email: 'admin@test.com',
+      };
+      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user);
+
+      expect(mockRequest.session.user).toEqual(user);
+      expect(result).toEqual(
+        process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL,
+      );
+    });
+
+    it('should return the correct URL for scrutator role', () => {
+      const user = {
+        _id: '3',
+        name: 'Scrutator',
+        role: 'scrutator',
+        email: 'scrutator@test.com',
+      };
+      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user);
+
+      expect(mockRequest.session.user).toEqual(user);
+      expect(result).toEqual(
+        process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL,
+      );
+    });
+
+    it('should return the correct URL for publicator role', () => {
+      const user = {
+        _id: '4',
+        name: 'Publicator',
+        role: 'publicator',
+        email: 'publicator@test.com',
+      };
+      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user);
+
+      expect(mockRequest.session.user).toEqual(user);
+      expect(result).toEqual(
+        process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL,
+      );
+    });
+
+    it('should throw an error for an invalid role', () => {
+      const user = {
+        _id: '5',
+        name: 'InvalidRole',
+        role: 'invalidRole',
+        email: 'invalid@test.com',
+      };
+
+      expect(() => {
+        setUserSessionAndReturnRedirectUrl(mockRequest, user);
+      }).toThrowError("Role doesn't exist in label");
     });
   });
 });

@@ -35,11 +35,11 @@ function buildRunServer(settings: settingsType) {
 
     // Configuration de la session
     const sessionMiddleware = session({
-      secret: `${process.env.JWT_PRIVATE_KEY}`,
+      secret: `${process.env.COOKIE_PRIVATE_KEY}`,
       resave: false,
       saveUninitialized: false,
       cookie: {
-        maxAge: Number(process.env.SSO_ONE_WEEK),
+        maxAge: Number(process.env.SESSION_DURATION),
         secure: false,
       },
     });

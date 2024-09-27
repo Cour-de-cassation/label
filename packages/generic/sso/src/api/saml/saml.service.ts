@@ -35,8 +35,6 @@ export class SamlService {
     } as any;
 
     this.sp = samlify.ServiceProvider(spProps);
-    // eslint-disable-next-line no-console
-    console.log(process.env.SSO_IDP_METADATA);
     // Initialiser l'Identity Provider (IdP)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const idpProps = {

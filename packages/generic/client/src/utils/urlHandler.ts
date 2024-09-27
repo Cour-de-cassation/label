@@ -2,10 +2,11 @@ export { urlHandler };
 
 const urlHandler = {
   getApiUrl() {
-    console.log("test API URL");
+    /*console.log("test API URL");
     console.log(process.env.LABEL_API_URL);
     console.log(`${process.env.LABEL_API_URL}`);
-    return `${process.env.LABEL_API_URL}`;
+    return `${process.env.LABEL_API_URL}`;*/
+    return 'https://dev-label-api.teamlog.intra';
   },
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

@@ -4,7 +4,7 @@ import { CustomError, httpStatusCodeHandler } from 'sder-core';
 import { apiSchema, apiSchemaMethodNameType } from '@label/core';
 import { logger } from '../utils';
 import { controllers } from './controllers';
-import { userService } from '../modules/user';
+import {ssoService} from "../modules/user/service/userService";
 
 export { buildApi };
 
@@ -124,7 +124,7 @@ function buildController(
 function buildApiSso(app: Express) {
   app.get(`${API_BASE_URL}/sso/metadata`, async (req, res) => {
     try {
-      const xml = await userService.getMetadataSso();
+      const xml = await ssoService.getMetadataSso();
       res.type('application/xml').send(xml);
     } catch (err) {
       res
@@ -135,7 +135,7 @@ function buildApiSso(app: Express) {
 
   app.get(`${API_BASE_URL}/sso/login`, async (req, res) => {
     try {
-      const context = await userService.loginSso();
+      const context = await ssoService.loginSso();
       res.redirect(context);
     } catch (err) {
       await logger.error({
@@ -157,7 +157,7 @@ function buildApiSso(app: Express) {
         res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
       }
       try {
-        const context = await userService.logoutSso(nameID);
+        const context = await ssoService.logoutSso(nameID);
         res.redirect(context);
       } catch (err) {
         await logger.error({
@@ -185,7 +185,7 @@ function buildApiSso(app: Express) {
 
   app.post(`${API_BASE_URL}/sso/acs`, async (req, res) => {
     try {
-      const url = await userService.acsSso(req);
+      const url = await ssoService.acsSso(req);
       res.redirect(url);
     } catch (err) {
       res

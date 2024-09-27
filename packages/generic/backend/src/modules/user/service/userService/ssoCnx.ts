@@ -19,7 +19,6 @@ export async function getMetadataSso() {
 }
 
 export async function loginSso() {
-  //logger.error({ operationName: 'acs', msg: `${req.path}` });
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   const { context } = await samlService.createLoginRequestUrl();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -35,7 +34,7 @@ export async function logoutSso(nameID: any) {
   return context;
 }
 
-export async function acsSso(req: any, res: any) {
+export async function acsSso(req: any) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   const response = await samlService.parseResponse(req);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unsafe-assignment
@@ -47,7 +46,7 @@ export async function acsSso(req: any, res: any) {
       operationName: 'user connected',
       msg: `${user.email}`,
     });
-    return setUserSessionAndReturnRedirectUrl(req, res, user);
+    return setUserSessionAndReturnRedirectUrl(req, user);
   } catch (err) {
     await logger.log({
       operationName: `catch autoprovision user ${JSON.stringify(err)}`,
@@ -76,7 +75,7 @@ export async function acsSso(req: any, res: any) {
         operationName: `Auto-provided user`,
         msg: `successfully created user ${createdUser.email}`,
       });
-      return setUserSessionAndReturnRedirectUrl(req, res, createdUser);
+      return setUserSessionAndReturnRedirectUrl(req, createdUser);
     } else {
       throw new Error(`Error in acsSso: ${err}`);
     }
@@ -90,14 +89,9 @@ export async function getUserByEmail(email: string) {
   return await userRepository.findByEmail(email);
 }
 
-function setUserSessionAndReturnRedirectUrl(req: any, res: any, user: any) {
+export function setUserSessionAndReturnRedirectUrl(req: any, user: any) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (req.session) {
-    logger.log({
-      operationName: 'acsSso setUserSessionAndReturnRedirectUrl ',
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      msg: `set the user ${user.email} in session`,
-    });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     req.session.user = {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment

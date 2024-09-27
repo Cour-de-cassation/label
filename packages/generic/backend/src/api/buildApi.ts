@@ -138,11 +138,15 @@ function buildApiSso(app: Express) {
       const context = await userService.loginSso();
       res.redirect(context);
     } catch (err) {
+      await logger.error({
+        operationName: 'login SSO ',
+        msg: `${err}`,
+      });
       res
         .status(
           httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
         )
-        .redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
+        .json({ status: 401, message: err.message });
     }
   });
 
@@ -156,13 +160,13 @@ function buildApiSso(app: Express) {
         const context = await userService.logoutSso(nameID);
         res.redirect(context);
       } catch (err) {
-        res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
         await logger.error({
           operationName: 'logoutSso SamlService ',
           msg: `${err}`,
         });
-        res.redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
+        res
+          .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
+          .json({ status: 500, message: err.message });
       }
     });
   });
@@ -174,19 +178,19 @@ function buildApiSso(app: Express) {
         .status(
           httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
         )
-        .redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
+        .send({ status: 401, message: `Session invalid or expired` });
     }
     res.type('application/json').send(req.session.user);
   });
 
   app.post(`${API_BASE_URL}/sso/acs`, async (req, res) => {
     try {
-      const url = await userService.acsSso(req, res);
+      const url = await userService.acsSso(req);
       res.redirect(url);
     } catch (err) {
       res
         .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
-        .redirect(process.env.REACT_APP_SSO_API_LOGIN_URL as string);
+        .json({ status: 500, message: err.message });
     }
   });
 }

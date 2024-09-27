@@ -89,3 +89,5 @@ docker container exec -it label-backend-1 sh -c "cd packages/courDeCassation; sh
 ```sh
 scripts/runScriptLocally.sh "myScript.js --myArgument"
 ```
+### SSO configuration
+Follow the [installation guide](packages/generic/sso/README.md).

@@ -77,7 +77,7 @@ sonar:
   image: sonarsource/sonar-scanner-cli:latest
   before_script:
     - LABEL_PROJECTS=("client" "backend")
-    - curl -L -o /usr/local/bin/jq https://github.com/stedolan/jq/releases/latest/download/jq-linux64
+    - curl -L -o ~/jq https://github.com/stedolan/jq/releases/latest/download/jq-linux64
     - chmod +x ~/jq
     - ./jq
   script:
@@ -98,7 +98,7 @@ sonar:
 
         PACKAGE_JSON="packages/generic/$PROJECT/package.json"
         if [ -f "$PACKAGE_JSON" ]; then
-          PROJECT_DEPENDENCIES=$(jq -r '.dependencies | keys[] | "packages/" + "'$PROJECT'" + "/node_modules/" + .' $PACKAGE_JSON | paste -sd "," -)
+          PROJECT_DEPENDENCIES=$(./jq -r '.dependencies | keys[] | "packages/" + "'$PROJECT'" + "/node_modules/" + .' $PACKAGE_JSON | paste -sd "," -)
         else
           echo "Warning: package.json not found for project $PROJECT. Skipping dependencies."
           PROJECT_DEPENDENCIES=""

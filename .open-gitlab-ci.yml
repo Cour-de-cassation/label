@@ -17,11 +17,12 @@ include:
     file: 'trivy-template-job.yml'
 
 stages:
+  - quality  
   - docker
   - build
   - sast
   - test
-  - quality  
+  #- quality  
   - scan_docker
   - deploy
 
@@ -76,7 +77,8 @@ sonar:
   image: sonarsource/sonar-scanner-cli:latest
   before_script:
     - LABEL_PROJECTS=("client" "backend")
-    - apk add --update jq
+    - yum install -y jq
+    - jq
   script:
     - |
 

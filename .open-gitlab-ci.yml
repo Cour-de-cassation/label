@@ -79,7 +79,8 @@ sonar:
     - LABEL_PROJECTS=("client" "backend")
     - curl -L -o ~/jq https://github.com/stedolan/jq/releases/latest/download/jq-linux64
     - chmod +x ~/jq
-    - ./jq
+    - ls -l ~/jq
+    - ~/jq
   script:
     - |
 

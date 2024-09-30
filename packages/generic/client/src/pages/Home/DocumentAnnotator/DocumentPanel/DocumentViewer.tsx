@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { customThemeType, positionType, useCustomTheme } from 'pelta-design-system';
+import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useAnonymizerBuilder } from '../../../../services/anonymizer';
 import { useDocumentViewerModeHandler, viewerModeType } from '../../../../services/documentViewerMode';
@@ -8,9 +8,9 @@ import { heights } from '../../../../styles';
 import { splittedTextByLineType } from '../lib';
 import { DocumentLine } from './DocumentLine';
 import { SimpleReviewScreen } from './SimpleReviewScreen';
-import { AnnotationCreationTooltipMenu } from './AnnotationCreationTooltipMenu';
 import { useAlert } from '../../../../services/alert';
 import { wordings } from '../../../../wordings';
+import { annotationHandler, settingsModule } from '@label/core';
 
 export { DocumentViewer };
 
@@ -35,12 +35,10 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   const viewerRef = viewerScrollerHandler.getViewerRef();
 
   const [selectedLines, setSelectedLines] = useState<number[]>([]);
-  const [tooltipMenuOriginPosition, setTooltipMenuOriginPosition] = useState<positionType | undefined>();
-  const [selectedParagraphText, setSelectedParagraphText] = useState<string>('');
-  const [paragraphStartIndex, setParagraphStartIndex] = useState<number>(0);
 
   const handleLineClick = (line: number | undefined) => {
     if (line === undefined) return;
+    if (!document.decisionMetadata.motivationOccultation) return;
 
     setSelectedLines((prevSelectedLines) => {
       if (prevSelectedLines.includes(line)) {
@@ -56,11 +54,25 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   useEffect(() => {
     if (selectedLines.length === 2) {
       const textBetweenLines = getTextBetweenLines(selectedLines[0], selectedLines[1]);
-      setSelectedParagraphText(textBetweenLines.text);
-      setParagraphStartIndex(textBetweenLines.index);
-      setTooltipMenuOriginPosition({ x: window.innerWidth / 2, y: window.innerHeight / 4 });
-    } else {
-      setTooltipMenuOriginPosition(undefined);
+      if (textBetweenLines.index > -1 && textBetweenLines.text) {
+        const category = settingsModule.lib.motivationCategoryHandler.getCategoryName();
+
+        const newAnnotations = annotationHandler.create(
+          annotatorStateHandler.get().annotations,
+          {
+            category,
+            start: textBetweenLines.index,
+            text: textBetweenLines.text,
+          },
+          annotatorStateHandler.get().settings,
+        );
+
+        annotatorStateHandler.set({
+          ...annotatorStateHandler.get(),
+          annotations: newAnnotations,
+        });
+        setSelectedLines([]);
+      }
     }
   }, [selectedLines]);
 
@@ -115,11 +127,6 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
     return { text, index };
   };
 
-  const closeTooltipMenu = () => {
-    setTooltipMenuOriginPosition(undefined);
-    setSelectedLines([]);
-  };
-
   const styles = buildStyle(
     theme,
     documentViewerModeHandler.documentViewerMode,
@@ -130,13 +137,6 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
 
   return (
     <>
-      {tooltipMenuOriginPosition && selectedLines.length === 2 && paragraphStartIndex > -1 && (
-        <AnnotationCreationTooltipMenu
-          onClose={closeTooltipMenu}
-          originPosition={tooltipMenuOriginPosition}
-          textSelection={[{ text: selectedParagraphText, index: paragraphStartIndex }]}
-        />
-      )}
       {displayedText ? (
         <div
           style={styles.container}

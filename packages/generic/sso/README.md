@@ -1,12 +1,12 @@
 # Module SSO
-Ce service implémente l'authentification unique (SSO) via **SAML 2** en utilisant **NestJS** et la bibliothèque `samlify`. Le service gère l'authentification avec un Identity Provider (IdP) comme **Keycloak**, **PageBlanches** ou un autre fournisseur SAML. Il utilise **SAMLify** pour s'interfacer avec le SSO et faciliter la gestion des requêtes et réponses SAML.
+Ce service implémente l'authentification unique (SSO) via **SAML 2** en de basant sur le framework **NestJS** et la bibliothèque `samlify`. Le service gère l'authentification avec un Identity Provider (IdP) comme **Keycloak**, **Pages Blanches** ou un autre fournisseur SAML. Il utilise **SAMLify** pour s'interfacer avec le SSO et faciliter la gestion des requêtes et réponses SAML.
 
 ## Prérequis
 
 - **Node.js** (version 16 ou plus récente)
 - **NestJS**
 - **SAMLify** : Bibliothèque pour gérer les interactions avec SAML 2.
-- Un **Identity Provider (IdP)** compatible SAML 2.0 (par ex. Keycloak, PageBlanches)
+- Un **Identity Provider (IdP)** compatible SAML 2.0 (par ex. Keycloak, Pages Blanches)
 - Le fichier `sso_idp_metadata.xml` contient la configuration de l'Identity Provider.
 - Le fichier `.env` contient les variables d'environnement nécessaires au fonctionnement du module.
 

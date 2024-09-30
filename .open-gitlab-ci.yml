@@ -72,9 +72,11 @@ test_label:
 
 sonar:
   stage: quality
-  image: glregistry.boost.open.global/boost/docker/gitlab-ant-sonar:latest
+  #image: glregistry.boost.open.global/boost/docker/gitlab-ant-sonar:latest
+  image: sonarsource/sonar-scanner-cli:latest
   before_script:
     - LABEL_PROJECTS=("client" "backend")
+    - apk add --update jq
   script:
     - |
 

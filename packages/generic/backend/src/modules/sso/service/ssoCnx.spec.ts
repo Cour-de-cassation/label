@@ -24,18 +24,18 @@ jest.mock('@label/sso', () => ({
     }),
   })),
 }));
-jest.mock('../../../../utils/logger', () => ({
+jest.mock('../../../utils/logger', () => ({
   logger: {
     log: jest.fn(),
     error: jest.fn(),
   },
 }));
-jest.mock('./index', () => ({
+jest.mock('../../user', () => ({
   userService: {
     createUser: jest.fn(),
   },
 }));
-jest.mock('../../repository', () => ({
+jest.mock('../../user', () => ({
   buildUserRepository: jest.fn().mockImplementation(() => ({
     findByEmail: jest.fn().mockResolvedValue({
       _id: '123',

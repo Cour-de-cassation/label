@@ -19,3 +19,4 @@ package-lock.json
 *coverage
 .history/
 .history/*
+.ash-history

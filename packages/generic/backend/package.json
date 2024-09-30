@@ -18,7 +18,22 @@
     "test": "RUN_MODE=TEST jest --passWithNoTests",
     "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
   },
-
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src/",
+    "setupFiles": [
+      "core-js"
+    ],
+    "setupFilesAfterEnv": [
+      "./tests/setupTests.ts"
+    ],
+    "testEnvironment": "node",
+    "testRegex": ".spec.ts$"
+  },
   "dependencies": {
     "@label/core": "*",
     "@label/sso": "*",

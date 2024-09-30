@@ -15,8 +15,8 @@
   ],
   "scripts": {
     "test": "RUN_MODE=TEST jest --passWithNoTests",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:watch": "RUN_MODE=TEST jest --passWithNoTests --watch",
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage",
     "build": "yarn clean && yarn compile",
     "clean": "rimraf -rf ./dist",
     "clean:all": "rimraf -rf ./dist && rimraf -rf ./node_modules",

@@ -1,7 +1,6 @@
 import { SamlService } from '@label/sso';
-import { logger } from '../../../../utils';
-import { buildUserRepository } from '../../repository';
-import { userService } from './index';
+import { buildUserRepository, userService } from '../../user';
+import { logger } from '../../../utils';
 
 export { samlService };
 

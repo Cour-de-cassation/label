@@ -77,7 +77,8 @@ sonar:
   image: sonarsource/sonar-scanner-cli:latest
   before_script:
     - LABEL_PROJECTS=("client" "backend")
-    - yum install -y jq
+    - curl -L -o /usr/local/bin/jq https://github.com/stedolan/jq/releases/latest/download/jq-linux64
+    - chmod +x /usr/local/bin/jq
     - jq
   script:
     - |

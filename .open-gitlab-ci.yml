@@ -78,8 +78,8 @@ sonar:
   before_script:
     - LABEL_PROJECTS=("client" "backend")
     - curl -L -o /usr/local/bin/jq https://github.com/stedolan/jq/releases/latest/download/jq-linux64
-    - chmod +x /usr/local/bin/jq
-    - jq
+    - chmod +x ~/jq
+    - ./jq
   script:
     - |
 

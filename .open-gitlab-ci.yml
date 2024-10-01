@@ -17,11 +17,12 @@ include:
     file: 'trivy-template-job.yml'
 
 stages:
+  - docker
   - build
   - test
   - quality
   - sast  
-  - docker
+  #- docker
   - scan_docker
   - deploy
 

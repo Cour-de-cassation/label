@@ -17,11 +17,11 @@ include:
     file: 'trivy-template-job.yml'
 
 stages:
-  - docker
   - build
-  - sast
   - test
-  - quality  
+  - quality
+  - sast  
+  - docker
   - scan_docker
   - deploy
 
@@ -76,7 +76,8 @@ sonar:
   image: sonarsource/sonar-scanner-cli:latest
   before_script:
     - LABEL_PROJECTS=("client" "backend")
-    - apk add --update jq
+    - curl -L -o ~/jq https://github.com/stedolan/jq/releases/latest/download/jq-linux64
+    - chmod +x ~/jq
   script:
     - |
 
@@ -95,7 +96,7 @@ sonar:
 
         PACKAGE_JSON="packages/generic/$PROJECT/package.json"
         if [ -f "$PACKAGE_JSON" ]; then
-          PROJECT_DEPENDENCIES=$(jq -r '.dependencies | keys[] | "packages/" + "'$PROJECT'" + "/node_modules/" + .' $PACKAGE_JSON | paste -sd "," -)
+          PROJECT_DEPENDENCIES=$(~/jq -r '.dependencies | keys[] | "packages/" + "'$PROJECT'" + "/node_modules/" + .' $PACKAGE_JSON | paste -sd "," -)
         else
           echo "Warning: package.json not found for project $PROJECT. Skipping dependencies."
           PROJECT_DEPENDENCIES=""
@@ -141,7 +142,7 @@ docker:backend:
     - recette
     - develop-ci
     - casslab-57
-    - label-rec1
+    - label-rec
 
 docker:client:
   image: docker:19.03.5
@@ -171,7 +172,7 @@ trivy:backend:
   variables:
     TRIVY_DOCKER_SCAN: $DOCKER_BACKEND_IMAGE
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"  || $CI_COMMIT_BRANCH == "develop-casslab-57"
+    - if: $CI_COMMIT_BRANCH == "develop"  || $CI_COMMIT_BRANCH == "label-rec"
 
 trivy:client:
   extends: [".trivy-scan"]
@@ -179,7 +180,7 @@ trivy:client:
   variables:
     TRIVY_DOCKER_SCAN: $DOCKER_CLIENT_IMAGE
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"  || $CI_COMMIT_BRANCH == "develop-casslab-57"
+    - if: $CI_COMMIT_BRANCH == "develop"  || $CI_COMMIT_BRANCH == "label-rec"
     
 deploy:iaas:
   stage: deploy

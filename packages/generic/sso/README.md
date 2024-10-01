@@ -1,5 +1,5 @@
 # Module SSO
-Ce service implémente l'authentification unique (SSO) via **SAML 2** en de basant sur le framework **NestJS** et la bibliothèque `samlify`. Le service gère l'authentification avec un Identity Provider (IdP) comme **Keycloak**, **Pages Blanches** ou un autre fournisseur SAML. Il utilise **SAMLify** pour s'interfacer avec le SSO et faciliter la gestion des requêtes et réponses SAML.
+Ce service implémente l'authentification unique (SSO) via **SAML 2** en de basant sur le framework **NestJS** et la bibliothèque `samlify`. Il gère gère l'authentification avec un fournisseur d'identité (IdP) tel quee **Keycloak**, **Pages Blanches** ou tout autre fournisseur compatible SAML. Le service utilise la librairie **SAMLify** pour s'interfacer avec le SSO et faciliter la gestion des requêtes et des réponses SAML.
 
 ## Prérequis
 
@@ -51,16 +51,18 @@ npm install
 
     Les variables d'environnement nécessaires au fonctionnement du SSO doivent être configurées dans le fichier docker.env.example, situé à la racine du projet principal. Ce fichier doit ensuite être renommé en docker.env ou .env, selon le besoin, adapter les variables d'environnement si besoin
 
-# Configuration du Service Provider (SP)
-Pour cette partie, 
-SSO_SP_ENTITY_ID=<votre-entity-id-sp>
-SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION=<url-d-assertion-consumer-service>
-SSO_SP_PRIVATE_KEY=<chemin-vers-cle-privee-sp>
+# Configuration du Service Provider (SP) 
+<b> Les instructions spécifiques à la configuration du fournisseur d'identité (IdP) et du fournisseur de services (SP) sont détaillées dans le document suivant  :</b> `MANU_SSO_Configuration_IDP_SAML_VM_Test_V1.1.odt`
+
+- SSO_SP_ENTITY_ID=<votre-entity-id-sp>
+- SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION=<url-d-assertion-consumer-service>
+- SSO_SP_PRIVATE_KEY=<chemin-vers-cle-privee-sp>
 
 # Configuration de l'Identity Provider (IdP)
-SSO_IDP_METADATA=<chemin-vers-idp-metadata>
-SSO_IDP_SINGLE_SIGN_ON_SERVICE_LOCATION=<url-de-single-sign-on-service>
-SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION=<url-de-single-logout-service>
+- SSO_IDP_METADATA=<chemin-vers-idp-metadata>
+- SSO_IDP_SINGLE_SIGN_ON_SERVICE_LOCATION=<url-de-single-sign-on-service>
+- SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION=<url-de-single-logout-service>
+
 
 # Autres variables
 SSO_IDP_KEYCLOAK=true # ou false si un autre IdP est utilisé

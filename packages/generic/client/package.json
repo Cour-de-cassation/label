@@ -11,7 +11,7 @@
     "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
-    "start": "PORT=55432 REACT_APP_SSO_API_LOGIN_URL=http://localhost:55430/label/api/sso/login REACT_APP_SSO_API_LOGOUT_URL=http://localhost:55430/label/api/sso/logout react-scripts start",
+    "start": "PORT=55432 REACT_APP_BACKEND_API_URL=http://localhost:55430 react-scripts start",
     "test": "RUN_MODE=TEST jest --passWithNoTests",
     "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage"
   },

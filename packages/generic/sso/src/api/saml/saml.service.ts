@@ -23,15 +23,18 @@ export class SamlService {
           Location: process.env.SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION,
         },
       ],
-      authnRequestsSigned: !isKeycloakIdp,
-      wantAssertionsSigned: !isKeycloakIdp,
-      isAssertionEncrypted: false, // keycloak
-      ...(isKeycloakIdp || process.env.RUN_MODE === 'TEST'
+      authnRequestsSigned: isKeycloakIdp,
+      wantAssertionsSigned: isKeycloakIdp,
+      isAssertionEncrypted: !isKeycloakIdp, //false, // keycloak
+      /*...(isKeycloakIdp || process.env.RUN_MODE === 'TEST'
         ? {}
         : {
             signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT_VM), 'utf8'),
             privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY_VM), 'utf8'),
-          }),
+          }),*/
+      //signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
+      privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
+      encPrivateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY)),
     } as any;
 
     this.sp = samlify.ServiceProvider(spProps);
@@ -45,7 +48,7 @@ export class SamlService {
               isKeycloakIdp ? String(process.env.SSO_IDP_METADATA) : String(process.env.SSO_IDP_METADATA_VM),
             ),
           }),
-      wantAuthnRequestsSigned: !isKeycloakIdp,
+      wantAuthnRequestsSigned: isKeycloakIdp,
       singleSignOnService: [
         {
           Binding: samlify.Constants.namespace.binding.redirect,
@@ -62,6 +65,8 @@ export class SamlService {
             : process.env.SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION_VM,
         },
       ],
+      encCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT)),
+      signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
     } as any;
     this.idp = samlify.IdentityProvider(idpProps);
   }
@@ -100,6 +105,12 @@ export class SamlService {
           attributes: [],
           shortcut: samlContent as unknown,
         },
+        {
+          key: 'sessionIndex',
+          localPath: ['Response', 'Assertion', 'AuthnStatement'],
+          attributes: ['SessionIndex'],
+          shortcut: samlContent as unknown,
+        },
       ];
 
       return {
@@ -118,10 +129,22 @@ export class SamlService {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async createLogoutRequestUrl(user: any) {
+    // eslint-disable-next-line no-console
+    console.log('sso ....user .... ', JSON.stringify(user));
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     return this.sp.createLogoutRequest(this.idp, 'redirect', {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
       logoutNameID: user.nameID,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+      id: user.sessionIndex,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+      nameID: user.nameID,
+      nameIDFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+      signingKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+      sessionIndex: user.sessionIndex,
+      //relayState: 'SomeRelayState',
+      sigAlg: 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
     });
   }
 }

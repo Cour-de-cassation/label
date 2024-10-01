@@ -1,25 +1,25 @@
-<md:EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="http://localhost:8080/realms/nouveau-realm">
-    <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+<md:EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="http://opn2vmla123:80/realms/nouveau-realm">
+    <md:IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
         <md:KeyDescriptor use="signing">
             <ds:KeyInfo>
-                <ds:KeyName>BngHFrorunwB4fbS2xqvuu-HKhVM4rgFbQZTrSu4qxo</ds:KeyName>
+                <ds:KeyName>vh5L8Iya6WlrKfw0KU-p4l8dx9ZWxaxpDtIznMn66dM</ds:KeyName>
                 <ds:X509Data>
-                    <ds:X509Certificate>MIICqTCCAZECBgGRlFAHGDANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1ub3V2ZWF1LXJlYWxtMB4XDTI0MDgyNzE0NDczOFoXDTM0MDgyNzE0NDkxOFowGDEWMBQGA1UEAwwNbm91dmVhdS1yZWFsbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJxpImE7LUKe1iUJopaCjTdEXEmZFqVXlVXCvApgenmQcsPx3oPquDoVkIIMEm78o063VAvtXS/C+OFFSvjfwd45Kf2N0IUH8A/yIhWSbqGdKWrVle5Woy/RRP/pajRrjZYwbgkgRul6cQxjMKoQLhEl3INAIrI8ydY84Dbj0s5jMJQcI60refLhHRfD/PxwRD7ApkW0aBwA8NkE+NpN+ZJXE62whu7B23Xm9voJ48RdboEz6gNgnVTPzYXdazEHYDNXOpUFykprRVGUPthv0TFFHeI5imn+f+d26gnBmfL/YGACFz6aZDUwwNIakH/ADMeI+nUnD3k7K+0Cy/SrepMCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAR9AKzMvyGe5uqgNxH4vAZCghyoTEJG+oEmGWs9oDQgSfJa2C8Adt6E0QhIzeO22WaRwWKmT+dfqTHvDePkzNLlcB9D0hMA8gWsd1v9UcL298iwYW8LzSynD6P3rZc3GjL9D58h+cnfG3aDMH6sY+8xTk7yQrtDjKXQUaPrBYcXfpOVVNTFY6y1T0r8MFsKcXXXLBMsUm8+ut1VDWHr7fpvnfKx8KhlelaWZI19hw2823ZyZCmK5epEjydLp80jihVz+Mo3a6/Z45e+AkeaBHCDERYXLUnvDJkHMu3OQ2mVqZiUl1DMgIAoB5oeOJClzhGqSgtydWZ6JHQ7djt4f1Pg==</ds:X509Certificate>
+                    <ds:X509Certificate>MIICqTCCAZECBgGSM5zsbTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1ub3V2ZWF1LXJlYWxtMB4XDTI0MDkyNzEzMTExNVoXDTM0MDkyNzEzMTI1NVowGDEWMBQGA1UEAwwNbm91dmVhdS1yZWFsbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALOt+pi9YMMVXNpwtbX9Tp70HN5SGteBr2b3MtwbwLtLU2YZh87ObOkBgI7skX+zVc9jVFKmJTu4tMjlrff36PXJ9LNVZLQtESFCNotzDd+lqBw7IpDW2zBHDf3o9yHPFgbRBpu/9+Rwc4B1ps5NoJUvS+zTKDGQingE8oMGrIBVwA8xxdkvImExBt82D1r32Dt2utBfu+Mk6SdyT6l3s6H9fFWaLrf33wMq0ZsPqHonAf9UVUND/h1dVZNo1iZ7/sR2ZKAIw0GxT+PfH8asX5put2H/4JNwTNDsE/NSckTWp+Nj5alaRXlsOx3azb0Fh6X+opi7usb0KP8TD6Z71WECAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAQkH0QrsaumXWgmuoB7ihnQ30+IRKg7Fe6T3ddrwQyMGmP4RzL/tsp8AcY6oHxLZeGxyTJT7qq6b10E9m+M7atSTJDvMq1yqqldd4Sytzvh7aezY9AybOhzfr8uUroIZDQs98ZksMRzUWxBF8uTXhPprSk+bYziboERPzbqCww1DCfDq/WmSoT66T7rJkgJyVZHW/3ORkDwx9bynYvpq1kNHygYo2gatZMy/0OuN2gio1DcpUFeHogTygkJKTG9rID+CnfzZ/5+pDAiomb9Znmi7v5g/2w8dFcvjAnciMbBvygyXSK3ZtLnQ/2W2n0Xj4q7FqPKySKmRUvOW0KYHs/g==</ds:X509Certificate>
                 </ds:X509Data>
             </ds:KeyInfo>
         </md:KeyDescriptor>
-        <md:ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml/resolve" index="0"/>
-        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml"/>
-        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml"/>
-        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml"/>
-        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml"/>
+        <md:ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml/resolve" index="0"/>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml"/>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml"/>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml"/>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml"/>
         <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
         <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
         <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
         <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
-        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml"/>
-        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml"/>
-        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml"/>
-        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://localhost:8080/realms/nouveau-realm/protocol/saml"/>
+        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml"/>
+        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml"/>
+        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml"/>
+        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://opn2vmla123:80/realms/nouveau-realm/protocol/saml"/>
     </md:IDPSSODescriptor>
 </md:EntityDescriptor>

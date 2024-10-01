@@ -51,10 +51,11 @@ async function whoami() {
       mode: 'cors',
     });
 
+    console.warn('#################### ',JSON.stringify(await response), ' #################### ');
     if (!response.ok) {
       return null;
     }
-
+    console.warn('**************** ', JSON.stringify(await response), ' ****************');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await response.json();
   } catch (error) {

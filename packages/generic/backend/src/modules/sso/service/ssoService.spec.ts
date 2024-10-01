@@ -1,10 +1,10 @@
 import {
-  acsSso,
-  getMetadataSso,
-  loginSso,
-  logoutSso,
+  acs,
+  getMetadata,
+  login,
+  logout,
   setUserSessionAndReturnRedirectUrl,
-} from './ssoCnx';
+} from './ssoService';
 
 jest.mock('@label/sso', () => ({
   SamlService: jest.fn().mockImplementation(() => ({
@@ -58,7 +58,7 @@ describe('SSO CNX functions', () => {
   describe('getMetadataSso', () => {
     it('should return SAML metadata', async () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const metadata = await getMetadataSso();
+      const metadata = await getMetadata();
       expect(metadata).toBe('<metadata>');
     });
   });
@@ -66,7 +66,7 @@ describe('SSO CNX functions', () => {
   describe('loginSso', () => {
     it('should return login URL', async () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const loginUrl = await loginSso();
+      const loginUrl = await login();
       expect(loginUrl).toBe('login-url');
     });
   });
@@ -74,7 +74,7 @@ describe('SSO CNX functions', () => {
   describe('logoutSso', () => {
     it('should return logout URL', async () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const logoutUrl = await logoutSso('test-user-id');
+      const logoutUrl = await logout('test-user-id');
       expect(logoutUrl).toBe('logout-url');
     });
   });
@@ -92,7 +92,7 @@ describe('SSO CNX functions', () => {
           },
         },
       };
-      const redirectUrl = await acsSso(mockReq);
+      const redirectUrl = await acs(mockReq);
       expect(redirectUrl).toContain(
         process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
       ); // Check if it's the annotator URL
@@ -107,10 +107,6 @@ describe('SSO CNX functions', () => {
         user: {},
       },
     };
-
-    /*beforeEach(() => {
-      jest.clearAllMocks();
-    });*/
 
     it('should return the correct URL for annotator role', () => {
       const user = {

@@ -1,5 +1,5 @@
 import { buildCallAttemptsRegulator } from 'sder-core';
-import { acsSso, getMetadataSso, loginSso, logoutSso } from './ssoCnx';
+import { acs, getMetadata, login, logout } from './ssoService';
 
 const DELAY_BETWEEN_LOGIN_ATTEMPTS_IN_SECONDS = 1 * 1000;
 
@@ -12,10 +12,10 @@ function buildSsoService() {
   );
 
   return {
-    acsSso,
-    getMetadataSso,
-    loginSso,
-    logoutSso,
+    acs,
+    getMetadata,
+    login,
+    logout,
   };
 }
 

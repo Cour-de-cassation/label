@@ -12,41 +12,52 @@ function ssoService() {
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const samlService = ssoService();
 
-export async function getMetadataSso() {
+export async function getMetadata() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
   return samlService.generateMetadata();
 }
 
-export async function loginSso() {
+export async function login() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   const { context } = await samlService.createLoginRequestUrl();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return context;
 }
 
-export async function logoutSso(nameID: any) {
+export async function logout(nameID: any, sessionIndex?: string) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-  const user = { nameID: nameID };
+  const user = { nameID, sessionIndex };
+  // eslint-disable-next-line no-console
+  console.log('backend --- logout ', JSON.stringify(user));
+  // eslint-disable-next-line no-console
+  console.log('--- logoout user ----- ', JSON.stringify(user));
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   const { context } = await samlService.createLogoutRequestUrl(user);
+  // eslint-disable-next-line no-console
+  console.log('--- logoout context ----- ', JSON.stringify(context));
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return context;
 }
 
-export async function acsSso(req: any) {
+export async function acs(req: any) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   const response = await samlService.parseResponse(req);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unsafe-assignment
   const { extract } = response;
+
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     const user = await getUserByEmail(extract?.nameID);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     await logger.log({
       operationName: 'user connected',
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       msg: `${user.email}`,
     });
-    return setUserSessionAndReturnRedirectUrl(req, user);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    return setUserSessionAndReturnRedirectUrl(req, user, extract?.sessionIndex);
   } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     await logger.log({
       operationName: `catch autoprovision user ${JSON.stringify(err)}`,
       msg: `${err}`,
@@ -69,12 +80,21 @@ export async function acsSso(req: any) {
       };
 
       await userService.createUser(newUser);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const createdUser = await getUserByEmail(newUser.email);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       await logger.log({
         operationName: `Auto-provided user`,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         msg: `successfully created user ${createdUser.email}`,
       });
-      return setUserSessionAndReturnRedirectUrl(req, createdUser);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      return setUserSessionAndReturnRedirectUrl(
+        req,
+        createdUser,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        extract?.sessionIndex,
+      );
     } else {
       throw new Error(`Error in acsSso: ${err}`);
     }
@@ -88,7 +108,11 @@ export async function getUserByEmail(email: string) {
   return await userRepository.findByEmail(email);
 }
 
-export function setUserSessionAndReturnRedirectUrl(req: any, user: any) {
+export function setUserSessionAndReturnRedirectUrl(
+  req: any,
+  user: any,
+  sessionIndex?: string,
+) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (req.session) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -101,6 +125,7 @@ export function setUserSessionAndReturnRedirectUrl(req: any, user: any) {
       role: user.role,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
       email: user.email,
+      sessionIndex: sessionIndex,
     };
   }
 

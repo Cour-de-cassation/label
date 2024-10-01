@@ -54,14 +54,14 @@ npm install
 # Configuration du Service Provider (SP) 
 <b> Les instructions spécifiques à la configuration du fournisseur d'identité (IdP) et du fournisseur de services (SP) sont détaillées dans le document suivant  :</b> `MANU_SSO_Configuration_IDP_SAML_VM_Test_V1.1.odt`
 
-SSO_SP_ENTITY_ID=<votre-entity-id-sp>
-SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION=<url-d-assertion-consumer-service>
-SSO_SP_PRIVATE_KEY=<chemin-vers-cle-privee-sp>
+- SSO_SP_ENTITY_ID=<votre-entity-id-sp>
+- SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION=<url-d-assertion-consumer-service>
+- SSO_SP_PRIVATE_KEY=<chemin-vers-cle-privee-sp>
 
 # Configuration de l'Identity Provider (IdP)
-SSO_IDP_METADATA=<chemin-vers-idp-metadata>
-SSO_IDP_SINGLE_SIGN_ON_SERVICE_LOCATION=<url-de-single-sign-on-service>
-SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION=<url-de-single-logout-service>
+- SSO_IDP_METADATA=<chemin-vers-idp-metadata>
+- SSO_IDP_SINGLE_SIGN_ON_SERVICE_LOCATION=<url-de-single-sign-on-service>
+- SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION=<url-de-single-logout-service>
 
 
 # Autres variables

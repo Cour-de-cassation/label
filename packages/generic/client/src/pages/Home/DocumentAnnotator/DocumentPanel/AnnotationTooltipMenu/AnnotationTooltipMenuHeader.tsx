@@ -62,6 +62,10 @@ function AnnotationTooltipMenuHeader(props: propsType): ReactElement {
         <Text inline variant="body2">
           {!props.isAnonymizedView ? (
             <DocumentAnonymizedAnnotationText annotation={props.annotation} anonymizer={props.anonymizer} />
+          ) : props.annotation.text.length > 250 ? (
+            `${props.annotation.text.substring(0, 125)} [...] ${props.annotation.text.substring(
+              props.annotation.text.length - 125,
+            )}`
           ) : (
             props.annotation.text
           )}

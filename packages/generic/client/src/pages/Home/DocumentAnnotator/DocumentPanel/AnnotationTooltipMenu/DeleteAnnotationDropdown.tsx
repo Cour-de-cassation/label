@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react';
 import format from 'string-template';
-import { annotationHandler, annotationLinkHandler, annotationType } from '@label/core';
+import { annotationHandler, annotationLinkHandler, annotationType, settingsModule } from '@label/core';
 import { IconButton, IconDropdown } from 'pelta-design-system';
 import { useAnnotatorStateHandler } from '../../../../../services/annotatorState';
 import { wordings } from '../../../../../wordings';
+import { useAlert } from '../../../../../services/alert';
 
 export { DeleteAnnotationDropdown };
 
@@ -15,6 +16,7 @@ function DeleteAnnotationDropdown(props: {
   onClose: () => void;
 }): ReactElement {
   const annotatorStateHandler = useAnnotatorStateHandler();
+  const { displayAlert } = useAlert();
 
   const annotatorState = annotatorStateHandler.get();
   const linkedAnnotations = annotationLinkHandler.getLinkedAnnotations(
@@ -82,6 +84,14 @@ function DeleteAnnotationDropdown(props: {
     annotatorStateHandler.set(newAnnotatorState);
 
     props.onClose();
+
+    if (props.annotation.category === settingsModule.lib.motivationCategoryHandler.getCategoryName()) {
+      displayAlert({
+        text: wordings.business.errors.deleteMotivationOccultationAlert,
+        variant: 'info',
+        autoHide: false,
+      });
+    }
 
     function computeNewAnnotations() {
       switch (deletionOption) {

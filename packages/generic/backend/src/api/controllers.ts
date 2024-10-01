@@ -201,7 +201,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     }),
 
     preAssignations: buildAuthenticatedController({
-      permissions: ['admin'],
+      permissions: ['admin', 'scrutator'],
       controllerWithUser: async () =>
         preAssignationService.fetchAllPreAssignation(),
     }),

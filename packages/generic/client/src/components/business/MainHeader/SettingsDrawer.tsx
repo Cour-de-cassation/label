@@ -76,6 +76,7 @@ function SettingsDrawer(props: { close: () => void; isOpen: boolean }) {
   function logout() {
     localStorage.bearerTokenHandler.remove();
     localStorage.userHandler.remove();
+    localStorage.adminViewHandler.remove();
     history.push(routes.DEFAULT.getPath());
   }
 

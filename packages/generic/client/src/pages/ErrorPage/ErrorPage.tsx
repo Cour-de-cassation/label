@@ -42,6 +42,7 @@ function ErrorPage(props: { route?: string; errorCode?: number }) {
   function logout() {
     localStorage.bearerTokenHandler.remove();
     localStorage.userHandler.remove();
+    localStorage.adminViewHandler.remove();
     history.push(routes.LOGIN.getPath());
   }
 

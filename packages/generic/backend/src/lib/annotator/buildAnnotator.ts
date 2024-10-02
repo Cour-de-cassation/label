@@ -8,6 +8,7 @@ import {
   settingsType,
   treatmentModule,
   annotationModule,
+  settingsModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
@@ -448,9 +449,8 @@ function buildAnnotator(
         annotationModule.lib.buildAnnotation({
           start: motivation.start + removedCharactersAtStart,
           text: trimmedMotivation,
-          category: 'motivations',
+          category: settingsModule.lib.motivationCategoryHandler.getCategoryName(),
           certaintyScore: 1,
-          entityId: `motivations_${trimmedMotivation.length}`,
         }),
       );
     });

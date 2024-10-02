@@ -10,11 +10,11 @@ jest.mock('@label/sso', () => ({
   SamlService: jest.fn().mockImplementation(() => ({
     generateMetadata: jest.fn().mockReturnValue('<metadata>'),
     createLoginRequestUrl: jest
-      .fn()
-      .mockResolvedValue({ context: 'login-url' }),
+        .fn()
+        .mockResolvedValue({ context: 'login-url' }),
     createLogoutRequestUrl: jest
-      .fn()
-      .mockResolvedValue({ context: 'logout-url' }),
+        .fn()
+        .mockResolvedValue({ context: 'logout-url' }),
     parseResponse: jest.fn().mockResolvedValue({
       extract: {
         nameID: 'test@example.com',
@@ -47,11 +47,11 @@ jest.mock('../../user', () => ({
 }));
 
 process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL =
-  'http://localhost:55432/label/annotation';
+    'http://localhost:55432/label/annotation';
 (process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL =
-  'http://localhost:55432/label/admin/main/summary'),
-  (process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL =
-    'http://localhost:55432/label/publishable-documents');
+    'http://localhost:55432/label/admin/main/summary'),
+    (process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL =
+        'http://localhost:55432/label/publishable-documents');
 //process.env.SSO_IDP_KEYCLOAK = true;
 
 describe('SSO CNX functions', () => {
@@ -74,7 +74,7 @@ describe('SSO CNX functions', () => {
   describe('logoutSso', () => {
     it('should return logout URL', async () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const logoutUrl = await logout('test-user-id');
+      const logoutUrl = await logout({nameID: 'test-user-id', sessionIndex: 'test-session-index'});
       expect(logoutUrl).toBe('logout-url');
     });
   });
@@ -94,7 +94,7 @@ describe('SSO CNX functions', () => {
       };
       const redirectUrl = await acs(mockReq);
       expect(redirectUrl).toContain(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
+          process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
       ); // Check if it's the annotator URL
       expect(mockReq.session.user).toBeDefined();
       expect(mockReq.session.user.email).toBe('test@example.com');
@@ -115,10 +115,10 @@ describe('SSO CNX functions', () => {
         role: 'annotator',
         email: 'annotator@test.com',
       };
-      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user);
-      expect(mockRequest.session.user).toEqual(user);
+      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user, 'test-session-index');
+      expect(mockRequest.session.user).toEqual({... user, sessionIndex: 'test-session-index' });
       expect(result).toEqual(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
+          process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
       );
     });
 
@@ -129,11 +129,11 @@ describe('SSO CNX functions', () => {
         role: 'admin',
         email: 'admin@test.com',
       };
-      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user);
+      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user, 'test-session-index');
 
-      expect(mockRequest.session.user).toEqual(user);
+      expect(mockRequest.session.user).toEqual({... user, sessionIndex: 'test-session-index' });
       expect(result).toEqual(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL,
+          process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL,
       );
     });
 
@@ -144,11 +144,11 @@ describe('SSO CNX functions', () => {
         role: 'scrutator',
         email: 'scrutator@test.com',
       };
-      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user);
+      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user, 'test-session-index');
 
-      expect(mockRequest.session.user).toEqual(user);
+      expect(mockRequest.session.user).toEqual({... user, sessionIndex: 'test-session-index' });
       expect(result).toEqual(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL,
+          process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL,
       );
     });
 
@@ -159,11 +159,11 @@ describe('SSO CNX functions', () => {
         role: 'publicator',
         email: 'publicator@test.com',
       };
-      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user);
+      const result = setUserSessionAndReturnRedirectUrl(mockRequest, user, 'test-session-index');
 
-      expect(mockRequest.session.user).toEqual(user);
+      expect(mockRequest.session.user).toEqual({... user, sessionIndex: 'test-session-index' });
       expect(result).toEqual(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL,
+          process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL,
       );
     });
 
@@ -176,7 +176,7 @@ describe('SSO CNX functions', () => {
       };
 
       expect(() => {
-        setUserSessionAndReturnRedirectUrl(mockRequest, user);
+        setUserSessionAndReturnRedirectUrl(mockRequest, user, 'test-session-index');
       }).toThrowError("Role doesn't exist in label");
     });
   });

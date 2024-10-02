@@ -12,7 +12,7 @@ const API_BASE_URL = '/label/api';
 
 function buildApi(app: Express) {
   const methodNames = (Object.keys(
-    apiSchema,
+      apiSchema,
   ) as any) as apiSchemaMethodNameType[];
 
   methodNames.map((methodName) => buildMethod(app, methodName));
@@ -34,38 +34,38 @@ function buildMethod(app: Express, methodName: apiSchemaMethodNameType) {
 
 function buildGetRoutes(app: Express) {
   const getRoutes = (Object.keys(apiSchema.get) as any) as Array<
-    keyof typeof apiSchema['get']
+      keyof typeof apiSchema['get']
   >;
 
   getRoutes.forEach((getRoute) => {
     app.get(
-      `${API_BASE_URL}/${getRoute}`,
-      buildController('get', controllers.get[getRoute]),
+        `${API_BASE_URL}/${getRoute}`,
+        buildController('get', controllers.get[getRoute]),
     );
   });
 }
 
 function buildPostRoutes(app: Express) {
   const postRoutes = (Object.keys(apiSchema.post) as any) as Array<
-    keyof typeof apiSchema['post']
+      keyof typeof apiSchema['post']
   >;
 
   postRoutes.forEach((postRoute) => {
     app.post(
-      `${API_BASE_URL}/${postRoute}`,
-      buildController('post', controllers.post[postRoute]),
+        `${API_BASE_URL}/${postRoute}`,
+        buildController('post', controllers.post[postRoute]),
     );
   });
 }
 
 function buildController(
-  method: apiSchemaMethodNameType,
-  controller: (param: {
-    headers: any;
-    args: any;
-    session: any;
-    path: string;
-  }) => Promise<any>,
+    method: apiSchemaMethodNameType,
+    controller: (param: {
+      headers: any;
+      args: any;
+      session: any;
+      path: string;
+    }) => Promise<any>,
 ) {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -95,7 +95,7 @@ function buildController(
       switch (method) {
         case 'get':
           const sanitizedQuery = mapValues(req.query, (queryValue) =>
-            JSON.parse(queryValue),
+              JSON.parse(queryValue),
           );
           return {
             data: await controller({
@@ -128,8 +128,8 @@ function buildApiSso(app: Express) {
       res.type('application/xml').send(xml);
     } catch (err) {
       res
-        .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
-        .send(`Metadata SAML protocol erreur ${err}`);
+          .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
+          .send(`Metadata SAML protocol erreur ${err}`);
     }
   });
 
@@ -143,10 +143,10 @@ function buildApiSso(app: Express) {
         msg: `${err}`,
       });
       res
-        .status(
-          httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
-        )
-        .json({ status: 401, message: err.message });
+          .status(
+              httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
+          )
+          .json({ status: 401, message: err.message });
     }
   });
 
@@ -158,7 +158,7 @@ function buildApiSso(app: Express) {
         res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
       }
       try {
-        const context = await ssoService.logout(nameID, sessionIndex);
+        const context = await ssoService.logout({nameID, sessionIndex});
         res.redirect(context);
       } catch (err) {
         await logger.error({
@@ -166,8 +166,8 @@ function buildApiSso(app: Express) {
           msg: `${err}`,
         });
         res
-          .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
-          .json({ status: 500, message: err.message });
+            .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
+            .json({ status: 500, message: err.message });
       }
     });
   });
@@ -176,10 +176,10 @@ function buildApiSso(app: Express) {
     const user = req.session?.user ?? null;
     if (!user) {
       return res
-        .status(
-          httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
-        )
-        .send({ status: 401, message: `Session invalid or expired` });
+          .status(
+              httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
+          )
+          .send({ status: 401, message: `Session invalid or expired` });
     }
     res.type('application/json').send(user);
   });
@@ -190,8 +190,8 @@ function buildApiSso(app: Express) {
       res.redirect(url);
     } catch (err) {
       res
-        .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
-        .json({ status: 500, message: err.message });
+          .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
+          .json({ status: 500, message: err.message });
     }
   });
 }

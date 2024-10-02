@@ -24,17 +24,9 @@ export async function login() {
   return context;
 }
 
-export async function logout(nameID: any, sessionIndex?: string) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-  const user = { nameID, sessionIndex };
-  // eslint-disable-next-line no-console
-  console.log('backend --- logout ', JSON.stringify(user));
-  // eslint-disable-next-line no-console
-  console.log('--- logoout user ----- ', JSON.stringify(user));
+export async function logout(user : {nameID: string; sessionIndex: string}) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   const { context } = await samlService.createLogoutRequestUrl(user);
-  // eslint-disable-next-line no-console
-  console.log('--- logoout context ----- ', JSON.stringify(context));
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return context;
 }
@@ -64,11 +56,11 @@ export async function acs(req: any) {
     });
 
     if (
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-      err.message.indexOf(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        `No matching user for email ${extract.nameID}`,
-      ) !== -1
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+        err.message.indexOf(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            `No matching user for email ${extract.nameID}`,
+        ) !== -1
     ) {
       const newUser = {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
@@ -90,10 +82,10 @@ export async function acs(req: any) {
       });
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       return setUserSessionAndReturnRedirectUrl(
-        req,
-        createdUser,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        extract?.sessionIndex,
+          req,
+          createdUser,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          extract?.sessionIndex,
       );
     } else {
       throw new Error(`Error in acsSso: ${err}`);
@@ -109,9 +101,9 @@ export async function getUserByEmail(email: string) {
 }
 
 export function setUserSessionAndReturnRedirectUrl(
-  req: any,
-  user: any,
-  sessionIndex?: string,
+    req: any,
+    user: any,
+    sessionIndex: string,
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (req.session) {
@@ -132,11 +124,11 @@ export function setUserSessionAndReturnRedirectUrl(
   const roleToUrlMap: Record<string, string> = {
     annotator: process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL as string,
     admin: process.env
-      .SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL as string,
+        .SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL as string,
     scrutator: process.env
-      .SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL as string,
+        .SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL as string,
     publicator: process.env
-      .SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL as string,
+        .SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL as string,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

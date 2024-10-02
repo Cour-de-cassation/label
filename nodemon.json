@@ -5,5 +5,5 @@
     "packages/generic/core/src"
   ],
   "ext": "ts,json",
-  "exec": "yarn compile:backend && node packages/courDeCassation/dist/labelServer.js --settings packages/courDeCassation/settings/settings.json"
+  "exec": "node packages/courDeCassation/dist/labelServer.js --settings packages/courDeCassation/settings/settings.json"
 }

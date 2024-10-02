@@ -127,7 +127,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     documentsForUser: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { documentsMaxCount } }) =>
-        documentService.fetchDocumentsForUser(user._id, documentsMaxCount),
+        documentService.fetchDocumentsForUser(idModule.lib.buildId(user._id), documentsMaxCount),
     }),
 
     async health() {
@@ -274,7 +274,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         { args: { documentId, problemText, problemType } },
       ) => {
         await problemReportService.createProblemReport({
-          userId: user._id,
+          userId: idModule.lib.buildId(user._id),
           documentId: idModule.lib.buildId(documentId),
           problemText,
           problemType,
@@ -297,7 +297,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(assignationId),
         );
 
-        if (!idModule.lib.equalId(user._id, assignation.userId)) {
+        if (!idModule.lib.equalId(idModule.lib.buildId(user._id), assignation.userId)) {
           throw errorHandlers.permissionErrorHandler.build(
             `User ${idModule.lib.convertToString(
               user._id,
@@ -329,7 +329,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         if (user.role !== 'admin' && user.role !== 'publicator') {
           await assignationService.assertDocumentIsAssignatedToUser({
             documentId: idModule.lib.buildId(documentId),
-            userId: user._id,
+            userId: idModule.lib.buildId(user._id),
           });
         }
 
@@ -383,7 +383,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(assignationId),
         );
 
-        if (!idModule.lib.equalId(user._id, assignation.userId)) {
+        if (!idModule.lib.equalId(idModule.lib.buildId(user._id), assignation.userId)) {
           throw errorHandlers.permissionErrorHandler.build(
             `User ${idModule.lib.convertToString(
               user._id,
@@ -406,7 +406,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         const assignation = await assignationService.fetchAssignation(
           idModule.lib.buildId(assignationId),
         );
-        if (!idModule.lib.equalId(user._id, assignation.userId)) {
+        if (!idModule.lib.equalId(idModule.lib.buildId(user._id), assignation.userId)) {
           throw errorHandlers.permissionErrorHandler.build(
             `User ${idModule.lib.convertToString(
               user._id,
@@ -434,7 +434,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           {
             annotationsDiff,
             documentId: idModule.lib.buildId(documentId),
-            userId: user._id,
+            userId: idModule.lib.buildId(user._id),
           },
           settings,
         );

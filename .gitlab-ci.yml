@@ -80,7 +80,7 @@ build_label_client:
     - master
     - re7
     - dev
-    - ops/add-restart-policy-for-cron
+    - add-restart-policy-for-cron
   tags:
     - docker
 
@@ -99,7 +99,7 @@ deploy_label_backend:
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
-    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "ops/add-restart-policy-for-cron"
+    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "add-restart-policy-for-cron"
       when: on_success
   tags:
     - docker
@@ -121,7 +121,7 @@ deploy_label_client:
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
-    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "ops/add-restart-policy-for-cron"
+    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "add-restart-policy-for-cron"
       when: on_success
   tags:
     - docker

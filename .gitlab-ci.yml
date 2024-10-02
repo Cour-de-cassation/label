@@ -56,7 +56,6 @@ build_label_backend:
     - master
     - re7
     - dev
-    - ops-add-restart-policy-for-cron
   tags:
     - docker
 
@@ -80,7 +79,6 @@ build_label_client:
     - master
     - re7
     - dev
-    - ops-add-restart-policy-for-cron
   tags:
     - docker
 
@@ -88,8 +86,7 @@ deploy_label_backend:
   stage: deploy
   image: alpine/ansible:2.16.1
   script:
-    # - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - inventaire="dev"
+    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
@@ -99,7 +96,7 @@ deploy_label_backend:
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
-    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "ops-add-restart-policy-for-cron"
+    - if: $CI_COMMIT_BRANCH == "dev"
       when: on_success
   tags:
     - docker
@@ -110,8 +107,7 @@ deploy_label_client:
   stage: deploy
   image: alpine/ansible:2.16.1
   script:
-    # - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - inventaire="dev"
+    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
@@ -121,7 +117,7 @@ deploy_label_client:
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
       when: manual
-    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "ops-add-restart-policy-for-cron"
+    - if: $CI_COMMIT_BRANCH == "dev"
       when: on_success
   tags:
     - docker

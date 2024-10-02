@@ -1,5 +1,7 @@
 # Module SSO
-Ce service implémente l'authentification unique (SSO) via **SAML 2** en de basant sur le framework **NestJS** et la bibliothèque `samlify`. Il gère gère l'authentification avec un fournisseur d'identité (IdP) tel quee **Keycloak**, **Pages Blanches** ou tout autre fournisseur compatible SAML. Le service utilise la librairie **SAMLify** pour s'interfacer avec le SSO et faciliter la gestion des requêtes et des réponses SAML.
+Ce service implémente l'authentification unique (SSO) via **SAML 2** en de basant sur le framework **NestJS** et la bibliothèque `samlify`.   
+Il gère l'authentification avec un fournisseur d'identité (IdP) tel que **Keycloak**, **Pages Blanches** ou tout autre fournisseur compatible SAML.   
+Le service utilise la librairie **SAMLify** pour s'interfacer avec le SSO et faciliter la gestion des requêtes et des réponses SAML.
 
 ## Prérequis
 
@@ -192,3 +194,34 @@ export class AuthController {
     }
 }
 ```
+
+1. **Méthode de Connexion**
+
+   Endpoint : ***GET /auth/login***
+  
+   Cette méthode initie le processus de connexion en redirigeant l'utilisateur vers l'URL de demande de connexion SAML.
+
+>##### Fonctionnement
+>Lorsqu'un utilisateur accède à l'endpoint /auth/login, la méthode login est appelée.
+La méthode utilise le service SAML (SamlService) pour générer une URL de demande de connexion.
+L'utilisateur est ensuite redirigé vers cette URL pour procéder à l'authentification.
+
+2. **Méthode de Gestion des Réponses SSO**  
+   Endpoint : ***POST /auth/sso/acs***
+  
+   Cette méthode gère les réponses du SSO après que l'utilisateur se soit authentifié.
+
+>#### Fonctionnement
+>Lorsque l'utilisateur est authentifié, le SSO redirige vers l'endpoint /auth/sso/acs avec une réponse SAML.
+La méthode handleSSO est appelée, qui utilise le service SAML pour analyser la réponse.
+Les informations de l'utilisateur sont extraites de la réponse et stockées dans la session.
+
+3. **Méthode de Déconnexion**  
+   Endpoint : ***GET /auth/logout***  
+   
+   Cette méthode permet de déconnecter l'utilisateur et de gérer le processus de déconnexion avec le SSO.
+
+>#### Fonctionnement
+>Lorsque l'utilisateur souhaite se déconnecter, il accède à l'endpoint /auth/logout.
+La méthode logout est appelée, qui génère une URL de demande de déconnexion SAML.
+La session de l'utilisateur est détruite, et l'utilisateur est redirigé vers l'URL de déconnexion pour finaliser le processus.

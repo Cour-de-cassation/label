@@ -147,3 +147,5 @@ Le schéma ci-dessous illustre le flux d'authentification.
 
 
 4. Après validation, l'accès aux ressources sécurisées est accordé, permettant à l'utilisateur de poursuivre sa session authentifiée.</section>
+</section>
+>L'application LABEL utilise le module SSO comme dépendance pour son intégration avec le système d'authentification unique (SSO). Les spécificités de cette intégration sont documentées dans le [readme](packages/generic/sso/README.md) du module SSO 

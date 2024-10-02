@@ -146,3 +146,5 @@ The diagram below illustrates the authentication flow.
 4. After validation, access to secured resources is granted, allowing the user to continue their authenticated session.
 
 </section>
+
+>The LABEL application leverages the SSO module as a dependency for its integration with the Single Sign-On (SSO) system. The details of this integration are documented in the [README](packages/generic/sso/README.md) of the SSO module.

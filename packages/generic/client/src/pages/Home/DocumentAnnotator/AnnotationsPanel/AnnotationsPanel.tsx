@@ -154,7 +154,7 @@ function AnnotationsPanel(props: {
     }
   }
 
-  function renderChecklist(checklist: string[]) {
+  function renderChecklist(checklist: annotationReportType['checklist']) {
     return (
       <div style={styles.checklistContainer}>
         <div style={styles.checklistLeftContainer}>
@@ -162,9 +162,13 @@ function AnnotationsPanel(props: {
         </div>
         <div style={styles.checklistRightContainer}>
           <Text>{wordings.homePage.checklist}</Text>
-          {checklist.map((checklistElement) => (
-            <Text variant="body2">- {checklistElement}</Text>
-          ))}
+          {checklist.map((checklistElement, index) => {
+            return (
+              <Text key={index} variant="body2">
+                - {checklistElement.message}
+              </Text>
+            );
+          })}
         </div>
       </div>
     );

@@ -4,7 +4,7 @@ import { logger } from '../../../utils';
 
 export { samlService };
 
-function ssoService() {
+export function ssoService() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
   return new SamlService();
 }
@@ -71,6 +71,9 @@ export async function acs(req: any) {
       };
 
       const commonRoles = roles.map((item) => roleMap[item]).filter(Boolean);
+
+      // eslint-disable-next-line no-console
+      console.log('commonRoles ', commonRoles.length);
 
       if (!commonRoles.length) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

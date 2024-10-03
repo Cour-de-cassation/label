@@ -1,48 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { annotationReportType } from '@label/core';
-import { customThemeType, Icon, Text, useCustomTheme } from 'pelta-design-system';
+import { Accordion, CircleIcon, customThemeType, Icon, Text, useCustomTheme } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 
 export { Checklist };
 
+const ACCORDION_HEADER_PADDING = 8;
+
 function Checklist(props: { checklist: annotationReportType['checklist'] }) {
   const theme = useCustomTheme();
+  const iconSize = theme.shape.borderRadius.l;
   const styles = buildStyles(theme);
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
   return (
-    <div style={styles.checklistContainer}>
-      <div style={styles.checklistLeftContainer}>
-        <Icon iconName={'help'} />
-      </div>
-      <div style={styles.checklistRightContainer}>
-        <Text>{wordings.homePage.checklist}</Text>
-        {props.checklist.map((checklistElement, index) => {
-          return (
-            <Text key={index} variant="body2">
-              - {checklistElement.message}
-            </Text>
-          );
-        })}
-      </div>
-    </div>
+    <Accordion
+      headerStyle={styles.accordionHeaderContainer}
+      header={
+        <div style={styles.accordionHeader}>
+          <div style={styles.accordionHeaderLeftContainer}>
+            <Icon iconName={'help'} />
+            <div style={styles.categoryContainer}>
+              <Text>{`${wordings.homePage.checklist}`}</Text>
+            </div>
+          </div>
+          <div style={styles.accordionHeaderArrowContainer}>
+            <Icon iconName={isExpanded ? 'arrowUp' : 'arrowDown'} />
+          </div>
+        </div>
+      }
+      body={
+        <div>
+          {props.checklist.map((item, index) => (
+            <div key={index}>
+              <Text>{item.message}</Text>
+            </div>
+          ))}
+        </div>
+      }
+      onChange={setIsExpanded}
+      defaultExpanded={true}
+    />
   );
 
   function buildStyles(theme: customThemeType) {
     return {
-      checklistContainer: {
-        padding: theme.spacing * 2,
-        marginBottom: theme.spacing,
+      accordionHeaderContainer: {
+        padding: ACCORDION_HEADER_PADDING,
+        minHeight: iconSize,
+        '&$expanded': {
+          minHeight: iconSize,
+        },
+      },
+      accordionHeader: {
         display: 'flex',
-        flex: 1,
+        width: '100%',
         justifyContent: 'space-between',
-        borderRadius: theme.shape.borderRadius.l,
+        alignItems: 'center',
       },
-      checklistLeftContainer: {
-        marginRight: theme.spacing * 3,
-      },
-      checklistRightContainer: {
+      accordionHeaderLeftContainer: {
         display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
+        alignItems: 'center',
+      },
+      categoryContainer: {
+        paddingLeft: theme.spacing,
+      },
+      accordionHeaderArrowContainer: {
+        paddingRight: theme.spacing,
+        paddingTop: '4px',
       },
     } as const;
   }

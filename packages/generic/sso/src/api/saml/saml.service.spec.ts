@@ -12,6 +12,7 @@ jest.mock('samlify', () => {
       // Simuler la réponse extraite ici
       samlContent: 'mock-saml-content',
       fields: [],
+      attributes: { nom: 'Xx', prenom: 'Alain', role: ['ANNOTATEUR'], email: 'mail.573@justice.fr', name: 'Xx Alain' },
     }),
   };
   jest.mock('@authenio/samlify-node-xmllint', () => ({
@@ -43,7 +44,6 @@ jest.mock('samlify', () => {
     }),
   };
 });
-//jest.mock('validator');
 
 describe('SamlService', () => {
   let service: SamlService;
@@ -79,21 +79,81 @@ describe('SamlService', () => {
     expect(samlify.ServiceProvider().createLoginRequest).toHaveBeenCalled();
   });
 
-  it('should parse login response', async () => {
-    const mockRequest = {
-      body: {
-        SAMLResponse: Buffer.from('mock-saml-response').toString('base64'),
-      },
-    };
-    process.env.SSO_IDP_KEYCLOAK = 'true';
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const response = await service.parseResponse(mockRequest);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    expect(response.samlContent).toBeDefined();
+  describe('parseResponse', () => {
+    it('should throw an error if SAMLResponse is missing', async () => {
+      const request = {};
+      await expect(service.parseResponse(request)).rejects.toThrow('Missing SAMLResponse in request body');
+    });
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(samlify.ServiceProvider().parseLoginResponse).not.toHaveBeenCalled();
+    it('should decode the SAMLResponse correctly', async () => {
+      const base64Response = Buffer.from('<SAMLResponse></SAMLResponse>').toString('base64');
+      const request = { body: { SAMLResponse: base64Response } };
+
+      const samlContent = await service.parseResponse(request);
+
+      expect(samlContent.samlContent).toBe('<SAMLResponse></SAMLResponse>');
+    });
+
+    it('should extract fields correctly', async () => {
+      const base64Response = Buffer.from('<SAMLResponse></SAMLResponse>').toString('base64');
+      const request = { body: { SAMLResponse: base64Response } };
+
+      const mockExtract = {
+        attributes: {
+          role: ['app:role1', 'other:role2'],
+        },
+      };
+      (samlify.Extractor.extract as jest.Mock).mockReturnValue(mockExtract);
+
+      process.env.SSO_ATTRIBUT_ROLE = 'role';
+      process.env.SSO_APP_NAME = 'app';
+
+      const result = await service.parseResponse(request);
+
+      expect(result.extract).toEqual(mockExtract);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      expect(result.extract.attributes.role).toEqual(['role1']);
+    });
+
+    it('should handle roles correctly when role is a string', async () => {
+      const base64Response = Buffer.from('<SAMLResponse></SAMLResponse>').toString('base64');
+      const request = { body: { SAMLResponse: base64Response } };
+
+      const mockExtract = {
+        attributes: {
+          role: 'app:role1',
+        },
+      };
+      (samlify.Extractor.extract as jest.Mock).mockReturnValue(mockExtract);
+
+      process.env.SSO_ATTRIBUT_ROLE = 'role';
+      process.env.SSO_APP_NAME = 'app';
+
+      const result = await service.parseResponse(request);
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      expect(result.extract.attributes.role).toEqual(['role1']); // Vérifie que le rôle est bien traité
+    });
+
+    it('should not modify roles if appName is empty', async () => {
+      const base64Response = Buffer.from('<SAMLResponse></SAMLResponse>').toString('base64');
+      const request = { body: { SAMLResponse: base64Response } };
+
+      const mockExtract = {
+        attributes: {
+          role: ['app:role1', 'other:role2'],
+        },
+      };
+      (samlify.Extractor.extract as jest.Mock).mockReturnValue(mockExtract);
+
+      process.env.SSO_ATTRIBUT_ROLE = 'role';
+      process.env.SSO_APP_NAME = '';
+
+      const result = await service.parseResponse(request);
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      expect(result.extract.attributes.role.length).toEqual(2);
+    });
   });
 
   it('should create logout request URL', async () => {
@@ -101,8 +161,8 @@ describe('SamlService', () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const logoutUrl = await service.createLogoutRequestUrl(mockUser);
     expect(logoutUrl).toEqual('http://logout-url');
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(samlify.ServiceProvider().createLogoutRequest).toHaveBeenCalledTimes(1);
-
   });
 });

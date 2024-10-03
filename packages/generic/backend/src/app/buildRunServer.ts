@@ -43,7 +43,7 @@ function buildRunServer(settings: settingsType) {
         secure: false,
       },
     });
-    // exclusion de certain paths
+
     app.use((req, res, next) => {
       sessionMiddleware(req, res, next);
     });

@@ -14,5 +14,8 @@ function DocumentPanelHeader() {
     case 'occurrence':
       const { entityId, category } = documentViewerModeHandler.documentViewerMode;
       return <OccurrenceHeader entityId={entityId} category={category} />;
+    case 'checklist':
+      // to complete
+      return <AnnotationHeader />;
   }
 }

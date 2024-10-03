@@ -13,6 +13,13 @@ type documentViewerModeHandlerType = {
     entityId: annotationType['entityId'],
     entityLineNumbers: number[],
   ) => void;
+  setChecklistMode: (
+    entities: {
+      category: annotationType['category'];
+      entityId: annotationType['entityId'];
+    }[],
+    entitiesLineNumbers: number[],
+  ) => void;
   switchAnonymizedView: () => void;
   documentViewerMode: viewerModeType;
 };
@@ -24,6 +31,7 @@ function buildDocumentViewerModeHandler(
   return {
     isAnonymizedView,
     setOccurrenceMode,
+    setChecklistMode,
     switchAnonymizedView,
     documentViewerMode,
     resetViewerMode,
@@ -50,6 +58,21 @@ function buildDocumentViewerModeHandler(
       category,
       entityId,
       entityLineNumbers,
+      isAnonymizedView: documentViewerMode.isAnonymizedView,
+    });
+  }
+
+  function setChecklistMode(
+    entities: {
+      category: annotationType['category'];
+      entityId: annotationType['entityId'];
+    }[],
+    entitiesLineNumbers: number[],
+  ) {
+    setViewerMode({
+      kind: 'checklist',
+      entities: entities,
+      entitiesLineNumbers: entitiesLineNumbers,
       isAnonymizedView: documentViewerMode.isAnonymizedView,
     });
   }

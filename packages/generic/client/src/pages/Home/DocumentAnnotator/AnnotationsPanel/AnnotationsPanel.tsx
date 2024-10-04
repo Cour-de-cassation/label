@@ -156,7 +156,7 @@ function AnnotationsPanel(props: {
   }
 
   function renderChecklist(checklist: annotationReportType['checklist']) {
-    return <Checklist checklist={checklist} />;
+    return <Checklist checklist={checklist} splittedTextByLine={props.splittedTextByLine} />;
   }
 
   function renderPartiallyPublicWarning() {

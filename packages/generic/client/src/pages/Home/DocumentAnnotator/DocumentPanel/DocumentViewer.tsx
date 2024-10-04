@@ -239,6 +239,10 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
           default:
             return props.splittedTextByLine;
         }
+      case 'checklist':
+        const { checkLineNumbers } = documentViewerModeHandler.documentViewerMode;
+        const checkLines: splittedTextByLineType = [];
+        return props.splittedTextByLine.filter(({ line }) => checkLineNumbers.includes(line));
     }
   }
 

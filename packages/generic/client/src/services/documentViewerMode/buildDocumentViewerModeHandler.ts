@@ -56,11 +56,11 @@ function buildDocumentViewerModeHandler(
     });
   }
 
-  function setChecklistMode(check: annotationReportType['checklist'][number], entitiesLineNumbers: number[]) {
+  function setChecklistMode(check: annotationReportType['checklist'][number], checkLineNumbers: number[]) {
     setViewerMode({
       kind: 'checklist',
       check,
-      entitiesLineNumbers,
+      checkLineNumbers,
       isAnonymizedView: documentViewerMode.isAnonymizedView,
     });
   }

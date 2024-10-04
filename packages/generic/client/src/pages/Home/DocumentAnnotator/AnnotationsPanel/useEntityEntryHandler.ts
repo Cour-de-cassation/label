@@ -29,7 +29,6 @@ function useEntityEntryHandler({
 
   function setSelected(category?: string, entityId?: string) {
     if (category && entityId) {
-      console.log(documentViewerModeHandler.documentViewerMode.kind);
       if (documentViewerModeHandler.documentViewerMode.kind != 'occurrence') {
         onLeaveAnnotationMode();
       }

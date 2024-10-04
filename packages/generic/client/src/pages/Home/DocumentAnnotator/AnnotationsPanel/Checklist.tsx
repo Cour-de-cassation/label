@@ -3,12 +3,16 @@ import { annotationReportType } from '@label/core';
 import { Accordion, CircleIcon, customThemeType, Icon, Text, useCustomTheme } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 import { ChecklistEntry } from './ChecklistEntry';
+import { splittedTextByLineType } from '../lib';
 
 export { Checklist };
 
 const ACCORDION_HEADER_PADDING = 8;
 
-function Checklist(props: { checklist: annotationReportType['checklist'] }) {
+function Checklist(props: {
+  checklist: annotationReportType['checklist'];
+  splittedTextByLine: splittedTextByLineType;
+}) {
   const theme = useCustomTheme();
   const iconSize = theme.shape.borderRadius.l;
   const styles = buildStyles(theme);
@@ -35,7 +39,7 @@ function Checklist(props: { checklist: annotationReportType['checklist'] }) {
         <div>
           {props.checklist.map((item, index) => (
             <div key={index}>
-              <ChecklistEntry check={item} />
+              <ChecklistEntry check={item} splittedTextByLine={props.splittedTextByLine} />
             </div>
           ))}
         </div>

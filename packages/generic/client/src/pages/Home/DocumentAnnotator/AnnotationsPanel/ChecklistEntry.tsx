@@ -4,14 +4,22 @@ import { Text, useCustomTheme } from 'pelta-design-system';
 import { useChecklistEntryHandler } from './useChecklistEntryHandler';
 import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
 import { annotationReportType, annotationType } from '@label/core';
+import { splittedTextByLineType } from '../lib';
 
 export { ChecklistEntry };
 
-function ChecklistEntry(props: { check: annotationReportType['checklist'][number] }) {
+function ChecklistEntry(props: {
+  check: annotationReportType['checklist'][number];
+  splittedTextByLine: splittedTextByLineType;
+}) {
   const { check } = props;
   const theme = useCustomTheme();
   const viewerScrollerHandler = useViewerScrollerHandler();
-  const checklistEntryHandler = useChecklistEntryHandler({ onLeaveAnnotationMode, onResetViewerMode });
+  const checklistEntryHandler = useChecklistEntryHandler({
+    onLeaveAnnotationMode,
+    onResetViewerMode,
+    splittedTextByLine: props.splittedTextByLine,
+  });
 
   const selectChecklist = () => {
     const isChecklistSelected = checklistEntryHandler.isSelected(check.message);

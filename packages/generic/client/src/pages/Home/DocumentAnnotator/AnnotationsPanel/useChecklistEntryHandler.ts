@@ -1,15 +1,16 @@
 import { annotationReportType } from '@label/core';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { useState } from 'react';
+import { splittedTextByLineType } from '../lib';
 
 export { useChecklistEntryHandler };
 
 function useChecklistEntryHandler({
-  // splittedTextByLine,
+  splittedTextByLine,
   onLeaveAnnotationMode,
   onResetViewerMode,
 }: {
-  // splittedTextByLine: splittedTextByLineType;
+  splittedTextByLine: splittedTextByLineType;
   onLeaveAnnotationMode: () => void;
   onResetViewerMode: () => void;
 }) {
@@ -28,8 +29,8 @@ function useChecklistEntryHandler({
       if (documentViewerModeHandler.documentViewerMode.kind != 'checklist') {
         onLeaveAnnotationMode();
       }
-      // const checklistLines =
-      documentViewerModeHandler.setChecklistMode(check, [1, 2, 3, 4]);
+      const checklistLines = filterLinesByCheck(check, splittedTextByLine).map(({ line }) => line);
+      documentViewerModeHandler.setChecklistMode(check, checklistLines);
     } else {
       onResetViewerMode();
       documentViewerModeHandler.resetViewerMode();
@@ -43,5 +44,54 @@ function useChecklistEntryHandler({
         : undefined;
 
     return selectedChecklistMessage === message;
+  }
+
+  function filterLinesByCheck(
+    check: annotationReportType['checklist'][number],
+    splittedTextByLine: splittedTextByLineType,
+  ): splittedTextByLineType {
+    const result: splittedTextByLineType = [];
+
+    check.entities.forEach((entity) => {
+      const linesWithEntityId = splittedTextByLine.filter(({ content }) =>
+        content.some((chunk) => {
+          if (chunk.type === 'annotation') {
+            return chunk.annotation.entityId === entity.entityId;
+          }
+        }),
+      );
+      console.log(`linesWithEntityId : ${JSON.stringify(linesWithEntityId)}`);
+
+      if (linesWithEntityId.length > 0) {
+        result.push(...linesWithEntityId);
+      } else {
+        const linesWithIndex = splittedTextByLine.filter(({ content }) =>
+          content.some((chunk) => {
+            if (chunk.type === 'text') {
+              return chunk.content.index >= entity.start && chunk.content.index <= entity.end;
+            }
+          }),
+        );
+        console.log(`linesWithIndex : ${JSON.stringify(linesWithIndex)}`);
+        result.push(...linesWithIndex);
+      }
+    });
+
+    if (result.length === 0 && check.sentences) {
+      check.sentences.forEach((sentence) => {
+        const linesWithSentence = splittedTextByLine.filter(({ content }) =>
+          content.some((chunk) => {
+            if (chunk.type === 'text') {
+              return chunk.content.index >= sentence.start && chunk.content.index <= sentence.end;
+            }
+          }),
+        );
+        console.log(`linesWithSentence : ${JSON.stringify(linesWithSentence)}`);
+        result.push(...linesWithSentence);
+      });
+    }
+
+    console.log(result);
+    return result;
   }
 }

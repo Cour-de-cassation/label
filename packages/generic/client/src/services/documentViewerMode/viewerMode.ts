@@ -16,7 +16,7 @@ type viewerModeType =
   | {
       kind: 'checklist';
       check: annotationReportType['checklist'][number];
-      entitiesLineNumbers: number[];
+      checkLineNumbers: number[];
       isAnonymizedView: boolean;
     };
 

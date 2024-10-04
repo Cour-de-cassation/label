@@ -69,6 +69,7 @@ async function fetchFilteredStatistics(
             humanTreatments,
             document,
             treatments,
+            annotationReportsChecklist: undefined,
             settings,
           }),
       ),

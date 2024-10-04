@@ -52,7 +52,7 @@ function ChecklistEntry(props: {
 const Div_ChecklistEntry = styled.div<{ isSelected: boolean }>`
   ${({ theme, isSelected }) => `
     padding: ${theme.spacing}px ${theme.spacing * 2}px;
-    background-color: ${isSelected ? theme.colors.default.hoveredBackground : theme.colors.default.background};
+    background-color: ${isSelected ? theme.colors.default.hoveredTextColor : theme.colors.default.background};
     cursor: pointer;
     border-radius: ${theme.shape.borderRadius.m}px;
 

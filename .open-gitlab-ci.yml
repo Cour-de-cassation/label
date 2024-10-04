@@ -17,13 +17,14 @@ include:
     file: 'trivy-template-job.yml'
 
 stages:
+  - docker
+  - deploy
   - build
   - sast 
   - test
-  - quality   
-  - docker
+  - quality  
   - scan_docker
-  - deploy
+  
 
 # Utilisation du cache pour accélérer les builds
 cache:
@@ -184,7 +185,7 @@ deploy:iaas:
   stage: deploy
   image: kroniak/ssh-client
   variables:
-    APP_TO_DEPLOY: "lablel label-api"
+    APP_TO_DEPLOY: "label label-api"
   tags:
     - iaas
   before_script:

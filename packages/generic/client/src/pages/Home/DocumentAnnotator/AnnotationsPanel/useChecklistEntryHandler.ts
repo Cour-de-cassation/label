@@ -60,7 +60,6 @@ function useChecklistEntryHandler({
           }
         }),
       );
-      console.log(`linesWithEntityId : ${JSON.stringify(linesWithEntityId)}`);
 
       if (linesWithEntityId.length > 0) {
         result.push(...linesWithEntityId);
@@ -72,7 +71,6 @@ function useChecklistEntryHandler({
             }
           }),
         );
-        console.log(`linesWithIndex : ${JSON.stringify(linesWithIndex)}`);
         result.push(...linesWithIndex);
       }
     });
@@ -86,12 +84,10 @@ function useChecklistEntryHandler({
             }
           }),
         );
-        console.log(`linesWithSentence : ${JSON.stringify(linesWithSentence)}`);
         result.push(...linesWithSentence);
       });
     }
 
-    console.log(result);
     return result;
   }
 }

@@ -17,12 +17,11 @@ include:
     file: 'trivy-template-job.yml'
 
 stages:
-  - docker
   - build
+  - sast 
   - test
-  - quality
-  - sast  
-  #- docker
+  - quality   
+  - docker
   - scan_docker
   - deploy
 
@@ -141,8 +140,7 @@ docker:backend:
   only:
     - develop-open
     - recette
-    - develop-ci
-    - casslab-57
+    - label-vmsso
     - label-rec
 
 docker:client:
@@ -163,8 +161,7 @@ docker:client:
   only:
     - develop-open
     - recette
-    - develop-casslab-57
-    - casslab-57
+    - label-vmsso
     - label-rec
 
 trivy:backend:
@@ -173,7 +170,7 @@ trivy:backend:
   variables:
     TRIVY_DOCKER_SCAN: $DOCKER_BACKEND_IMAGE
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"  || $CI_COMMIT_BRANCH == "label-rec"
+    - if: $CI_COMMIT_BRANCH == "develop"  || $CI_COMMIT_BRANCH == "label-rec" || $CI_COMMIT_BRANCH == "label-vmsso"
 
 trivy:client:
   extends: [".trivy-scan"]
@@ -181,16 +178,24 @@ trivy:client:
   variables:
     TRIVY_DOCKER_SCAN: $DOCKER_CLIENT_IMAGE
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"  || $CI_COMMIT_BRANCH == "label-rec"
+    - if: $CI_COMMIT_BRANCH == "develop"  || $CI_COMMIT_BRANCH == "label-rec" || $CI_COMMIT_BRANCH == "label-vmsso"
     
 deploy:iaas:
   stage: deploy
+  image: kroniak/ssh-client
+  variables:
+    APP_TO_DEPLOY: "lablel label-api"
   tags:
     - iaas
+  before_script:
+    - >
+      if [ "$CI_COMMIT_BRANCH" != "recette" ]; then
+        export ENV_DESTINATION="INTEGRATION";
+      else
+        export ENV_DESTINATION="RECETTE";
+      fi
   script:
     - |
-    - echo " ****************** DEPLOY *************************** "
+    - bash ci/deploy_app.sh ${ENV_DESTINATION}
   only:
-    - develop-open
-    - recette
-    - develop-casslab-57
+    - label-vmsso

@@ -130,19 +130,20 @@ describe('SSO CNX functions', () => {
       const userRepository = buildUserRepository();
       jest
         .spyOn(userRepository, 'findByEmail')
-        .mockRejectedValue(new Error('No matching user'));
+        .mockRejectedValue(new Error('No matching user for email newuser@example.com'));
 
       const userService = buildUserService();
       jest
         .spyOn(userService, 'createUser')
         .mockResolvedValue('User created successfully');
 
-      jest.spyOn(userRepository, 'findByEmail').mockReturnValue(mockNewUser);
+      jest.spyOn(userRepository, 'findByEmail').mockReturnValue(mockNewUser as any);
 
       const result = await acs(mockReq);
 
       expect(result).toBeDefined();
     });
+
   });
 
   describe('setUserSessionAndReturnRedirectUrl', () => {

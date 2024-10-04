@@ -129,7 +129,7 @@ function buildApiSso(app: Express) {
     } catch (err) {
       res
         .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
-        .send(`Metadata SAML protocol erreur ${err}`);
+        .send(`Metadata SAML protocol error ${err}`);
     }
   });
 
@@ -191,7 +191,7 @@ function buildApiSso(app: Express) {
     } catch (err) {
       res
         .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
-        .json({ status: 500, message: err.message });
+      res.redirect(`${API_BASE_URL}/sso/logout`);
     }
   });
 }

@@ -1,0 +1,55 @@
+import React from 'react';
+import styled from 'styled-components';
+import { Text, useCustomTheme } from 'pelta-design-system';
+import { useChecklistEntryHandler } from './useChecklistEntryHandler';
+import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
+import { annotationReportType, annotationType } from '@label/core';
+
+export { ChecklistEntry };
+
+function ChecklistEntry(props: { check: annotationReportType['checklist'][number] }) {
+  const { check } = props;
+  const theme = useCustomTheme();
+  const viewerScrollerHandler = useViewerScrollerHandler();
+  const checklistEntryHandler = useChecklistEntryHandler({ onLeaveAnnotationMode, onResetViewerMode });
+
+  const selectChecklist = () => {
+    const isChecklistSelected = checklistEntryHandler.isSelected(check.message);
+    if (isChecklistSelected) {
+      checklistEntryHandler.setSelected(undefined);
+    } else {
+      checklistEntryHandler.setSelected(check);
+    }
+  };
+
+  function onLeaveAnnotationMode() {
+    viewerScrollerHandler.storeCurrentVerticalPosition();
+  }
+
+  function onResetViewerMode() {
+    viewerScrollerHandler.scrollToStoredVerticalPosition();
+  }
+
+  return (
+    <Div_ChecklistEntry
+      theme={theme}
+      isSelected={checklistEntryHandler.isSelected(check.message)}
+      onClick={selectChecklist}
+    >
+      <Text variant="body2">{`- ${check.message}`}</Text>
+    </Div_ChecklistEntry>
+  );
+}
+
+const Div_ChecklistEntry = styled.div<{ isSelected: boolean }>`
+  ${({ theme, isSelected }) => `
+    padding: ${theme.spacing}px ${theme.spacing * 2}px;
+    background-color: ${isSelected ? theme.colors.default.hoveredBackground : theme.colors.default.background};
+    cursor: pointer;
+    border-radius: ${theme.shape.borderRadius.m}px;
+
+    &:hover {
+      background: linear-gradient(to left, ${theme.colors.default.hoveredBackground}, 50%, transparent);
+    }
+  `}
+`;

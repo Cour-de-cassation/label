@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { annotationReportType } from '@label/core';
 import { Accordion, CircleIcon, customThemeType, Icon, Text, useCustomTheme } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
+import { ChecklistEntry } from './ChecklistEntry';
 
 export { Checklist };
 
@@ -34,7 +35,7 @@ function Checklist(props: { checklist: annotationReportType['checklist'] }) {
         <div>
           {props.checklist.map((item, index) => (
             <div key={index}>
-              <Text>{item.message}</Text>
+              <ChecklistEntry check={item} />
             </div>
           ))}
         </div>

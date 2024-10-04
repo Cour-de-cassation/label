@@ -29,7 +29,8 @@ function useEntityEntryHandler({
 
   function setSelected(category?: string, entityId?: string) {
     if (category && entityId) {
-      if (documentViewerModeHandler.documentViewerMode.kind === 'annotation') {
+      console.log(documentViewerModeHandler.documentViewerMode.kind);
+      if (documentViewerModeHandler.documentViewerMode.kind != 'occurrence') {
         onLeaveAnnotationMode();
       }
       const entityLines = filterLineByEntityId(entityId, splittedTextByLine).map(({ line }) => line);

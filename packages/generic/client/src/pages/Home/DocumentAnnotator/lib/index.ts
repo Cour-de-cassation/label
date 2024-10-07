@@ -1,11 +1,10 @@
-import { getSplittedTextByLine, splittedTextByLineType } from './getSplittedTextByLine';
+import { getSplittedTextByLine, splittedTextByLineType, textNeighboursType } from './getSplittedTextByLine';
 import {
   annotationPerCategoryAndEntityType,
   annotationPerEntityType,
   groupByCategoryAndEntity,
 } from './groupByCategoryAndEntity';
-import { computeMultilineSelection, textNeighboursType } from './computeMultilineSelection';
 
-export { computeMultilineSelection, getSplittedTextByLine, groupByCategoryAndEntity };
+export { getSplittedTextByLine, groupByCategoryAndEntity };
 
 export type { annotationPerCategoryAndEntityType, annotationPerEntityType, splittedTextByLineType, textNeighboursType };

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { customThemeType, useCustomTheme } from 'pelta-design-system';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 import { useAnonymizerBuilder } from '../../../../services/anonymizer';
@@ -8,6 +8,9 @@ import { heights } from '../../../../styles';
 import { splittedTextByLineType } from '../lib';
 import { DocumentLine } from './DocumentLine';
 import { SimpleReviewScreen } from './SimpleReviewScreen';
+import { useAlert } from '../../../../services/alert';
+import { wordings } from '../../../../wordings';
+import { annotationHandler, settingsModule } from '@label/core';
 
 export { DocumentViewer };
 
@@ -15,6 +18,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   const documentViewerModeHandler = useDocumentViewerModeHandler();
   const viewerScrollerHandler = useViewerScrollerHandler();
   const theme = useCustomTheme();
+  const { displayAlert } = useAlert();
   const { documentViewerMode } = documentViewerModeHandler;
   const annotatorStateHandler = useAnnotatorStateHandler();
   const anonymizerBuilder = useAnonymizerBuilder();
@@ -29,6 +33,100 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   }, [documentViewerMode.kind, documentViewerMode.kind === 'occurrence' ? documentViewerMode.entityId : undefined]);
 
   const viewerRef = viewerScrollerHandler.getViewerRef();
+
+  const [selectedLines, setSelectedLines] = useState<number[]>([]);
+
+  const handleLineClick = (line: number | undefined) => {
+    if (line === undefined) return;
+    if (!document.decisionMetadata.motivationOccultation) return;
+
+    setSelectedLines((prevSelectedLines) => {
+      if (prevSelectedLines.includes(line)) {
+        return prevSelectedLines.filter((selectedLine) => selectedLine !== line);
+      } else if (prevSelectedLines.length < 2) {
+        return [...prevSelectedLines, line].sort((a, b) => a - b);
+      } else {
+        return [line];
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (selectedLines.length === 2) {
+      const textBetweenLines = getTextBetweenLines(selectedLines[0], selectedLines[1]);
+      if (textBetweenLines.index > -1 && textBetweenLines.text) {
+        const category = settingsModule.lib.motivationCategoryHandler.getCategoryName();
+
+        const newAnnotations = annotationHandler.create(
+          annotatorStateHandler.get().annotations,
+          {
+            category,
+            start: textBetweenLines.index,
+            text: textBetweenLines.text,
+          },
+          annotatorStateHandler.get().settings,
+        );
+
+        annotatorStateHandler.set({
+          ...annotatorStateHandler.get(),
+          annotations: newAnnotations,
+        });
+        setSelectedLines([]);
+      }
+    }
+  }, [selectedLines]);
+
+  const getTextBetweenLines = (startLine: number, endLine: number) => {
+    const lines = props.splittedTextByLine.filter((line) => line.line >= startLine && line.line <= endLine);
+
+    // Delete empty lines at the beggining
+    let startIndex = 0;
+    while (startIndex < lines.length && lines[startIndex].content.length === 0) {
+      startIndex++;
+    }
+
+    // Delete empty lines at the end
+    let endIndex = lines.length - 1;
+    while (endIndex >= 0 && lines[endIndex].content.length === 0) {
+      endIndex--;
+    }
+
+    if (startIndex > endIndex) {
+      displayAlert({
+        variant: 'info',
+        text: wordings.business.errors.emptyParagraphSelection,
+        autoHide: true,
+      });
+      setSelectedLines([]);
+      return { text: '', index: -1 };
+    }
+
+    const validLines = lines.slice(startIndex, endIndex + 1);
+
+    // To avoid overlapping
+    for (const line of validLines) {
+      for (const chunk of line.content) {
+        if (chunk.type === 'annotation') {
+          displayAlert({
+            variant: 'info',
+            text: wordings.business.errors.paragraphOverlapsAnnotations,
+            autoHide: true,
+          });
+          setSelectedLines([]);
+          return { text: '', index: -1 };
+        }
+      }
+    }
+
+    const text = validLines
+      .map((line) => line.content.map((chunk) => (chunk.type === 'text' ? chunk.content.text : '')).join(''))
+      .join('\n');
+
+    const index = validLines[0].content[0].type === 'text' ? validLines[0].content[0].content.index : -1;
+
+    return { text, index };
+  };
+
   const styles = buildStyle(
     theme,
     documentViewerModeHandler.documentViewerMode,
@@ -37,51 +135,66 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
   const displayedText = computeDisplayedText();
   let expectedLine = 1;
 
-  return displayedText ? (
-    <div
-      style={styles.container}
-      ref={viewerRef}
-      key={documentViewerMode.kind === 'occurrence' ? documentViewerMode.entityId : documentViewerMode.kind}
-    >
-      <table style={styles.table}>
-        <tbody>
-          {displayedText.map((splittedLine) => {
-            if (splittedLine.line != expectedLine) {
-              expectedLine = splittedLine.line + 1;
-              return (
-                <>
-                  <DocumentLine
-                    key={splittedLine.line + 'p'}
-                    line={undefined}
-                    content={undefined}
-                    anonymizer={anonymizer}
-                  />
+  return (
+    <>
+      {displayedText ? (
+        <div
+          style={styles.container}
+          ref={viewerRef}
+          key={documentViewerMode.kind === 'occurrence' ? documentViewerMode.entityId : documentViewerMode.kind}
+        >
+          <table style={styles.table}>
+            <tbody>
+              {displayedText.map((splittedLine) => {
+                const isHighlighted =
+                  selectedLines.includes(splittedLine.line) ||
+                  (selectedLines.length === 2 &&
+                    splittedLine.line > selectedLines[0] &&
+                    splittedLine.line < selectedLines[1]);
+                if (splittedLine.line != expectedLine) {
+                  expectedLine = splittedLine.line + 1;
+                  return (
+                    <>
+                      <DocumentLine
+                        key={splittedLine.line + 'p'}
+                        line={undefined}
+                        content={undefined}
+                        anonymizer={anonymizer}
+                        onLineClick={handleLineClick}
+                        isHighlighted={isHighlighted}
+                      />
+                      <DocumentLine
+                        key={splittedLine.line}
+                        line={splittedLine.line}
+                        content={splittedLine.content}
+                        anonymizer={anonymizer}
+                        onLineClick={handleLineClick}
+                        isHighlighted={isHighlighted}
+                      />
+                    </>
+                  );
+                }
+                expectedLine = splittedLine.line + 1;
+                return (
                   <DocumentLine
                     key={splittedLine.line}
                     line={splittedLine.line}
                     content={splittedLine.content}
                     anonymizer={anonymizer}
+                    onLineClick={handleLineClick}
+                    isHighlighted={isHighlighted}
                   />
-                </>
-              );
-            }
-            expectedLine = splittedLine.line + 1;
-            return (
-              <DocumentLine
-                key={splittedLine.line}
-                line={splittedLine.line}
-                content={splittedLine.content}
-                anonymizer={anonymizer}
-              />
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  ) : (
-    <div style={styles.simpleScreenContainer}>
-      <SimpleReviewScreen />
-    </div>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div style={styles.simpleScreenContainer}>
+          <SimpleReviewScreen />
+        </div>
+      )}
+    </>
   );
 
   function computeDisplayedText() {

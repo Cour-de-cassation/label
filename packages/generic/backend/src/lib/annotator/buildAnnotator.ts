@@ -8,6 +8,7 @@ import {
   settingsType,
   treatmentModule,
   annotationModule,
+  settingsModule,
 } from '@label/core';
 import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
@@ -253,7 +254,6 @@ function buildAnnotator(
           documentId,
           document.zoning.zones.motivations,
           document.text,
-          document.documentNumber,
           annotations,
         );
       } else {
@@ -424,11 +424,10 @@ function buildAnnotator(
     documentId: documentType['_id'],
     motivations: { start: number; end: number }[],
     documentText: string,
-    documentNumber: number,
     previousAnnotations: annotationType[],
   ) {
     const motivationAnnotations: annotationType[] = [];
-    motivations.forEach((motivation, index) => {
+    motivations.forEach((motivation) => {
       const motivationText = documentText.substring(
         motivation.start,
         motivation.end,
@@ -450,9 +449,8 @@ function buildAnnotator(
         annotationModule.lib.buildAnnotation({
           start: motivation.start + removedCharactersAtStart,
           text: trimmedMotivation,
-          category: 'motivations',
+          category: settingsModule.lib.motivationCategoryHandler.getCategoryName(),
           certaintyScore: 1,
-          entityId: `motivations${index}_${documentNumber}`,
         }),
       );
     });

@@ -13,18 +13,19 @@ function DocumentLine(props: {
   line: splittedTextByLineType[number]['line'] | undefined;
   content: splittedTextByLineType[number]['content'] | undefined;
   anonymizer: clientAnonymizerType;
+  onLineClick: (line: number | undefined) => void;
+  isHighlighted: boolean;
 }) {
   const documentViewerModeHandler = useDocumentViewerModeHandler();
-
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
   const textColor = isLineHighlighted() ? 'textPrimary' : 'textSecondary';
 
   return (
-    <tr id={`line${props.line}`}>
-      <td style={styles.lineNumberCell}>
-        <Text variant="body2" color="textSecondary">
+    <tr id={`line${props.line}`} style={props.isHighlighted ? styles.selectedLine : {}}>
+      <td style={styles.lineNumberCell} onClick={() => props.onLineClick(props.line)}>
+        <Text variant="body2" color={props.isHighlighted ? 'textPrimary' : 'textSecondary'}>
           {props.line ?? '[…]'}
         </Text>
       </td>
@@ -67,9 +68,13 @@ function buildStyles(theme: customThemeType) {
       display: 'flex',
       flexDirection: 'row-reverse',
       paddingRight: theme.spacing * 2,
+      cursor: 'pointer',
     },
     lineTextCell: {
       overflowWrap: 'anywhere',
+    },
+    selectedLine: {
+      backgroundColor: theme.colors.default.background,
     },
   } as const;
 }

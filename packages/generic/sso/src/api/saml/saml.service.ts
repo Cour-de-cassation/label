@@ -24,26 +24,29 @@ export class SamlService {
       ],
       authnRequestsSigned: true,
       wantAssertionsSigned: true,
-      isAssertionEncrypted: false,
-      ...(process.env.RUN_MODE === 'TEST'
-        ? {}
-        : {
-            privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
-            encPrivateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
-          }),
+      isAssertionEncrypted: true,
+
+      privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
+      encPrivateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
+      signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
+      signatureConfig: {
+        prefix: 'ds',
+        location: {
+          reference: '/EntityDescriptor',
+          action: 'append',
+        },
+        signatureAlgorithm: 'http://www.w3.org/2000/09/xmldsig#',
+        digestAlgorithm: 'http://www.w3.org/2000/09/xmldsig#',
+      },
     } as any;
 
     this.sp = samlify.ServiceProvider(spProps);
     // Initialiser l'Identity Provider (IdP)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const idpProps = {
-      ...(process.env.RUN_MODE === 'TEST'
-        ? {}
-        : {
-            metadata: fs.readFileSync(String(process.env.SSO_IDP_METADATA), 'utf8'),
-            encCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
-            signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
-          }),
+      metadata: fs.readFileSync(String(process.env.SSO_IDP_METADATA), 'utf8'),
+      encCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
+      signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
       wantAuthnRequestsSigned: true,
       singleSignOnService: [
         {

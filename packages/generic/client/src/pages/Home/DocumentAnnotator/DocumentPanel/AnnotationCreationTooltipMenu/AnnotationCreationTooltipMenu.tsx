@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import {
   customThemeType,
   useCustomTheme,
@@ -17,8 +17,10 @@ import { textSelectionType } from '../DocumentText';
 
 export { AnnotationCreationTooltipMenu };
 
-const TOOLTIP_MENU_MAX_WIDTH = 300;
 const CATEGORY_ICON_SIZE = 30;
+const ANNOTATION_TEXT_MAX_LENGTH = 300;
+const TOOLTIP_MENU_MIN_WIDTH = 300;
+const TOOLTIP_MENU_MAX_WIDTH = 600;
 
 function AnnotationCreationTooltipMenu(props: {
   textSelection: textSelectionType;
@@ -37,12 +39,20 @@ function AnnotationCreationTooltipMenu(props: {
     canBeAnnotatedBy: 'human',
   });
   const annotationText = computeAnnotationText();
+
+  const [tooltipWidth, setTooltipWidth] = useState(TOOLTIP_MENU_MIN_WIDTH);
+  useEffect(() => {
+    const textLength = annotationText.length;
+    const newWidth = Math.min(TOOLTIP_MENU_MAX_WIDTH, Math.max(TOOLTIP_MENU_MIN_WIDTH, textLength * 4));
+    setTooltipWidth(newWidth);
+  }, [annotationText]);
+
   return (
     <FloatingTooltipMenu
       shouldCloseWhenClickedAway
       originPosition={props.originPosition}
       onClose={props.onClose}
-      width={TOOLTIP_MENU_MAX_WIDTH}
+      width={tooltipWidth}
     >
       <div style={styles.tooltipMenuContent}>
         <div style={styles.annotationTextContainer}>
@@ -126,10 +136,11 @@ function AnnotationCreationTooltipMenu(props: {
   }
 
   function computeAnnotationText() {
-    if (props.textSelection.length === 1) {
-      return props.textSelection[0].text;
+    const { text } = props.textSelection[0];
+    if (text.length > ANNOTATION_TEXT_MAX_LENGTH) {
+      return text.slice(0, ANNOTATION_TEXT_MAX_LENGTH / 2) + '\n[...]\n' + text.slice(-ANNOTATION_TEXT_MAX_LENGTH / 2);
     }
-    return props.textSelection.map(({ text }) => text).join(' ');
+    return text;
   }
 
   function getAnnotationTextsAndIndices() {
@@ -144,8 +155,6 @@ function AnnotationCreationTooltipMenu(props: {
   }
 
   function buildStyles(theme: customThemeType) {
-    const MAX_DISPLAYED_LINES = 3;
-    const ANNOTATION_TEXT_LINE_HEIGHT = 15;
     return {
       tooltipMenuContent: {
         display: 'flex',
@@ -156,14 +165,11 @@ function AnnotationCreationTooltipMenu(props: {
         marginBottom: theme.spacing * 2,
       },
       annotationText: {
-        maxHeight: `${MAX_DISPLAYED_LINES * ANNOTATION_TEXT_LINE_HEIGHT}px`,
-        WebkitLineClamp: MAX_DISPLAYED_LINES,
-        lineHeight: `${ANNOTATION_TEXT_LINE_HEIGHT}px`,
-        overflow: 'hidden',
         backgroundColor: theme.colors.default.hoveredBackground,
         color: theme.colors.default.hoveredTextColor,
         padding: '2px 4px',
         borderRadius: '3px',
+        whiteSpace: 'pre-wrap',
       },
       checkboxContainer: {
         alignSelf: 'flex-start',

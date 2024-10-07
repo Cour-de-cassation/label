@@ -19,6 +19,7 @@ function WorkingUsersDataFetcher(props: {
         props.children({ workingUsers, refetch: workingUsersFetchInfo.refetch })
       }
       fetchInfo={workingUsersFetchInfo}
+      route={'workingUsers'}
     />
   );
 }

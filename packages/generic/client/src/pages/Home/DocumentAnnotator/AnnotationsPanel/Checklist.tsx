@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { annotationReportType } from '@label/core';
-import { Accordion, CircleIcon, customThemeType, Icon, Text, useCustomTheme } from 'pelta-design-system';
+import { Accordion, customThemeType, Icon, Text, useCustomTheme } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 import { ChecklistEntry } from './ChecklistEntry';
 import { splittedTextByLineType } from '../lib';

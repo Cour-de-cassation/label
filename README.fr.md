@@ -158,3 +158,5 @@ Le backend expose les URLs suivantes pour interagir avec le SSO :
 > 2. **/api/sso/acs** : Endpoint pour le traitement des assertions SAML suite à une authentification réussie.
 > 2. **/api/sso/logout** : Endpoint pour déconnecter l'utilisateur du SSO.
 > 3. **/api/sso/metadata** : Endpoint pour récupérer les métadonnées du service SSO, incluant les configurations nécessaires pour l'authentification.
+
+Les attributs renvoyés par le SSO, ainsi que les rôles utilisés par l'application, sont spécifiés dans le fichier de configuration

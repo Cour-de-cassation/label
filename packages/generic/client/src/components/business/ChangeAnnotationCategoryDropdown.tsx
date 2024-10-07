@@ -35,6 +35,7 @@ function ChangeAnnotationCategoryDropdown(props: {
       }))}
       onChange={changeAnnotationCategory}
       width={CHANGE_ANNOTATION_CATEGORY_MENU_WIDTH}
+      disabled={props.annotation.category === settingsModule.lib.motivationCategoryHandler.getCategoryName()}
     />
   );
 

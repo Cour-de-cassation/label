@@ -1,6 +1,8 @@
 import { SamlService } from '@label/sso';
 import { buildUserRepository, userService } from '../../user';
 import { logger } from '../../../utils';
+import every  from "lodash/every";
+import includes from "lodash/includes";
 
 export { samlService };
 
@@ -61,18 +63,12 @@ export async function acs(req: any) {
     if (err.message.includes(`No matching user for email ${extract?.nameID}`)) {
       const { attributes } = extract as Record<string, any>;
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const roles = attributes[`${process.env.SSO_ATTRIBUTE_ROLE}`] as string[];
+      const roles = attributes[`${process.env.SSO_ATTRIBUTE_ROLE}`].map((item: string) => item.toLowerCase()) as string[];
 
-      const roleMap: Record<string, string> = {
-        ANNOTATEUR: 'annotator',
-        ADMINISTRATEUR: 'admin',
-        SCRUTATEUR: 'scrutator',
-        PUBLICATEUR: 'publicator',
-      };
+      const appRoles = (process.env.SSO_APP_ROLES as string).toLowerCase().split(',');
+      const userRolesInAppRoles = every(roles, (element) => includes(appRoles, element));
 
-      const commonRoles = roles.map((item) => roleMap[item]).filter(Boolean);
-
-      if (!commonRoles.length) {
+      if (!roles.length || !userRolesInAppRoles) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const errorMsg = `User ${extract.nameID}, role ${roles} doesn't exist in application ${process.env.SSO_APP_NAME}`;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
@@ -92,7 +88,7 @@ export async function acs(req: any) {
           }`,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
         email: attributes[`${process.env.SSO_ATTRIBUTE_MAIL}`],
-        role: commonRoles[0] as
+        role: roles[0] as
           | 'annotator'
           | 'scrutator'
           | 'admin'

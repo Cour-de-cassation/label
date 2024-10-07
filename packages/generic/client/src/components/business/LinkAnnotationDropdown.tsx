@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { IconDropdown } from 'pelta-design-system';
-import { annotationLinkHandler, annotationModule, annotationType } from '@label/core';
+import { annotationLinkHandler, annotationModule, annotationType, settingsModule } from '@label/core';
 import { useAnnotatorStateHandler } from '../../services/annotatorState';
 import { wordings } from '../../wordings';
 
@@ -25,7 +25,10 @@ function LinkAnnotationDropdown(props: {
   return (
     <IconDropdown
       buttonSize={props.buttonSize}
-      disabled={linkableAnnotations.length === 0}
+      disabled={
+        linkableAnnotations.length === 0 ||
+        props.annotation.category === settingsModule.lib.motivationCategoryHandler.getCategoryName()
+      }
       hint={wordings.homePage.link}
       iconName="link"
       items={linkableAnnotations.sort(annotationModule.lib.comparator.compareByText).map((annotation) => ({

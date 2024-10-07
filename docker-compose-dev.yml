@@ -10,7 +10,6 @@ services:
       - 55431
     ports:
       - 55431:55431
-
   backend:
     build:
       context: ./
@@ -23,8 +22,6 @@ services:
       - labelDb
     env_file:
       - docker.env
-    volumes:
-      - ./sso_files/sso_idp_metadata.xml:/usr/src/app/packages/courDeCassation/sso_idp_metadata.xml
     networks:
       - default
       - dbsder-external-network
@@ -34,7 +31,7 @@ services:
 networks:
   default:
   dbsder-external-network:
-    # external: true
+    external: true
 
 volumes:
   mongo-storage:

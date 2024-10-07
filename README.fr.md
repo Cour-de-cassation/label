@@ -99,6 +99,7 @@ LABEL permet de lier des annotations. Parfois les noms sont écrits en minuscule
 - Avril 2022 : Ajout des décisions des Cours d'appel en matière civile, sociale et commerciale (base de données JuriCA).
 - Décembre 2023 : Ajout des décisions de 9 tribunaux judiciaires.
 - Courant 2024-2025 : Ajout des décisions de l'ensemble les tribunaux judiciaires.
+- Septembre 2024: Connection de LABEL au SSO/LDAP du ministère
 
 Prochaines étapes:
 
@@ -148,4 +149,5 @@ Le schéma ci-dessous illustre le flux d'authentification.
 
 4. Après validation, l'accès aux ressources sécurisées est accordé, permettant à l'utilisateur de poursuivre sa session authentifiée.</section>
 </section>
->L'application LABEL utilise le module SSO comme dépendance pour son intégration avec le système d'authentification unique (SSO). Les spécificités de cette intégration sont documentées dans le [readme](packages/generic/sso/README.md) du module SSO 
+
+> L'application LABEL utilise le module SSO comme dépendance pour son intégration avec le système d'authentification unique (SSO). Les spécificités de cette intégration sont documentées dans le [readme](packages/generic/sso/README.md) du module SSO 

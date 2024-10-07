@@ -8,7 +8,6 @@ Here are the current roadmaps:
 - Fix security issues and update dependencies
 - Improve reusability
 - Improve test coverage
-- Connect label to the ministry's SSO/LDAP
 - Use dbsder api and dbsder-api-type instead of `sder` repository
 - Rethinking the use of the pelta design system
 - Use mongoose

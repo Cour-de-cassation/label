@@ -99,6 +99,7 @@ LABEL allow you to link annotations. Sometimes names are written lowercase or in
 - April 2022: Addition of appeal court's decisions (JuriCA database).
 - December 2023: Addition of 9 first judicial courts' decisions.
 - During 2024-2025: Addition of other judicial courts' decisions.
+- September 2024: Connecting label to the ministry's SSO/LDAP.
 
 Next steps:
 

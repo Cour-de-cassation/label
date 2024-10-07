@@ -1,27 +1,32 @@
-# Module SSO
-Ce service implémente l'authentification unique (SSO) via **SAML 2** en de basant sur le framework **NestJS** et la bibliothèque `samlify`.   
-Il gère l'authentification avec un fournisseur d'identité (IdP) tel que **Keycloak**, **Pages Blanches** ou tout autre fournisseur compatible SAML.   
-Le service utilise la librairie **SAMLify** pour s'interfacer avec le SSO et faciliter la gestion des requêtes et des réponses SAML.
 
-## Prérequis
+**EN** | [FR](README.fr.md)
 
-- **Node.js** (version 16 ou plus récente)
+# SSO Module
+
+This service implements Single Sign-On (SSO) using **SAML 2**, built on the **NestJS** framework and the `samlify` library.  
+It facilitates authentication with Identity Providers (IdP) such as **Keycloak**, **Pages Blanches**, or any other SAML-compatible provider.  
+The service utilizes the **SAMLify** library to interface with SSO, simplifying the management of SAML requests and responses.
+
+## Prerequisites
+
+- **Node.js** (version 16 or higher)
 - **NestJS**
-- **SAMLify** : Bibliothèque pour gérer les interactions avec SAML 2.
-- Un **Identity Provider (IdP)** compatible SAML 2.0 (par ex. Keycloak, Pages Blanches)
-- Le fichier `sso_idp_metadata.xml` contient la configuration de l'Identity Provider.
-- Le fichier `.env` contient les variables d'environnement nécessaires au fonctionnement du module.
+- **SAMLify**: Library for managing interactions with SAML 2.
+- A **SAML 2.0 compatible Identity Provider (IdP)** (e.g., Keycloak, Pages Blanches).
+- The `sso_idp_metadata.xml` file containing the Identity Provider configuration.
+- The `.env` file that holds the necessary environment variables for the module.
 
 ## Technologies
 
-- **NestJS** : Framework pour construire des applications Node.js performantes.
-- **TypeScript** : Langage de programmation pour un typage statique.
-- **Jest** : Framework de tests pour JavaScript.
-- **Prettier** : Outil de formatage de code.
-- **ESLint** : Outil de linting pour identifier et reporter les motifs dans le code JavaScript.
+- **NestJS**: A framework for building efficient Node.js applications.
+- **TypeScript**: A programming language that adds static typing.
+- **Jest**: A testing framework for JavaScript.
+- **Prettier**: A code formatting tool.
+- **ESLint**: A linting tool for identifying and reporting patterns in JavaScript code.
 
-## Dépendances
-### Le projet JURITCOM utilise les dépendances suivantes :
+## Dependencies
+
+The SSO module requires the following dependencies:
 - `@nestjs/common`
 - `@nestjs/core`
 - `@nestjs/config`
@@ -32,117 +37,159 @@ Le service utilise la librairie **SAMLify** pour s'interfacer avec le SSO et fac
 - `reflect-metadata`
 - `samlify`
 
-### Pré-requis
+### Installation Prerequisites
 
-- Installer [nvm](https://github.com/nvm-sh/nvm) afin d'avoir la version utilisée pour cette application et lancer la commande :
+1. Install [nvm](https://github.com/nvm-sh/nvm) to manage Node.js versions.
+2. Run the following command to install the required Node.js version:
 
-```bash
-nvm install
-```
+   ```bash
+   nvm install
 
 ### Installation
 
-Pour installer les packages nécessaires au bon fonctionnement de l'application, ouvrir un terminal et executer la commande suivante :
+To install the necessary packages for the application, open a terminal and execute the following command:
 
 ```bash
 npm install
 ```
 
 ## Configuration
-### Configurer les variables d'environnement:
-
-    Les variables d'environnement nécessaires au fonctionnement du SSO doivent être configurées dans le fichier docker.env.example, situé à la racine du projet principal. Ce fichier doit ensuite être renommé en docker.env ou .env, selon le besoin, adapter les variables d'environnement si besoin
-
-# Configuration du Service Provider (SP) 
-<b> Les instructions spécifiques à la configuration du fournisseur d'identité (IdP) et du fournisseur de services (SP) sont détaillées dans le document suivant  :</b> `MANU_SSO_Configuration_IDP_SAML_VM_Test_V1.1.odt`
-
-- SSO_SP_ENTITY_ID: Identifiant unique du SP (ie: SP-LABEL)
-- SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION: URL où le SP reçoit les assertions SAML après authentification
-- SSO_SP_PRIVATE_KEY: Clé privée du Service Provider utilisée pour signer et déchiffrer les messages SAML échangés avec l'Identity Provider
-
-# Configuration de l'Identity Provider (IdP)
-- SSO_IDP_METADATA: Fichier XML contenant les métadonnées du IdP (Entity ID, certificats, endpoints).
-- SSO_IDP_SINGLE_SIGN_ON_SERVICE_LOCATION: URL du SSO où le Service Provider redirige les utilisateurs pour l'authentification.
-- SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION: URL permettant la déconnexion  des utilisateurs
+### Environment Variables
+Configure the environment variables required for the SSO module in the [docker.env.example](../../../docker.env.example) / [.env.example](../../../.env.example) file located at the root of the main project. Rename this file to docker.env or .env as necessary, and adjust the environment variables as needed.
 
 
-# Autres variables
-SSO_IDP_KEYCLOAK=true # ou false si un autre IdP est utilisé
+# Service Provider (SP) Configuration
+<b>Specific instructions for configuring the Identity Provider (IdP) and the Service Provider (SP) can be found in the following document:</b> `MANU_SSO_Configuration_IDP_SAML_VM_Test_V1.1.odt`
+
+- SSO_SP_ENTITY_ID: Unique identifier for the SP (e.g., SP-LABEL).
+- SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION: URL where the SP receives SAML assertions after authentication.
+- SSO_SP_PRIVATE_KEY: Private key of the Service Provider used for signing and decrypting SAML messages exchanged with the Identity Provider.
+
+### Generating a Private Key and Self-Signed Certificate for SAML
+
+This section details the steps needed to generate a private key and a self-signed certificate using OpenSSL, which can be used to set up a Service Provider (SP) in a SAML environment.
+
+**Self-signed certificates are typically suitable for development or testing environments. For production use, it is highly recommended to obtain a certificate from a trusted Certificate Authority (CA) to ensure secure and trusted communication.**
+
+#### Prérequis
+
+- **OpenSSL**: Verify that OpenSSL is installed on your system. It can be downloaded from the official website or installed via a package manager.
+
+#### Étapes de Génération
+
+1. **Installer OpenSSL**:
+
+```sh
+   sudo apt-get update
+   sudo apt-get install openssl
+```
+2. **Generate a Private Key**
+```sh
+   openssl genrsa -out privatekey.pem 2048
+```
+3. **Generate a Self-Signed Certificate**
+
+Use the private key to create a self-signed certificate
+```sh
+   openssl req -new -x509 -key privatekey.pem -out certificate.pem
+```
+Integrate the private key and the self-signed certificate into your application configuration. For example, in your SAML configuration file
+```typescript
+const spProps = {
+   entityID: process.env.SSO_SP_ENTITY_ID,
+   assertionConsumerService: [
+      {
+      Binding: samlify.Constants.namespace.binding.post,
+      Location: process.env.SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION,
+      },
+   ],
+   privateKey: fs.readFileSync('path/to/privatekey.pem', 'utf8'),
+   signingCert: fs.readFileSync('path/to/certificate.pem', 'utf8'),
+   authnRequestsSigned: true,
+   wantAssertionsSigned: true,
+};
+```
+
+## Identity Provider (IdP) Configuration
+- SSO_IDP_METADATA: XML file containing the IdP metadata (Entity ID, certificates, endpoints).
+- SSO_IDP_SINGLE_SIGN_ON_SERVICE_LOCATION: URL where the Service Provider redirects users for authentication.
+- SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION: URL for user logout.
+
 
 ## Scripts
--   Voici une liste des scripts disponibles dans `package.json` :
+-   The following scripts are available in `package.json` :
 
-| Commande           | Description                                                                                   |
-|--------------------|-----------------------------------------------------------------------------------------------|
-| `build`            | Clean et compile l'application NestJS.                                                        |
-| `compile`          | Compile l'application NestJS.                                                                 |
-| `format`           | Vérifie le formatage du code avec Prettier.                                                   |
-| `lint`             | Vérifie le code TypeScript avec ESLint.                                                       |
-| `test`             | Exécute les tests unitaires et d'intégration.                                                 |
-| `test:watch`       | Exécute les tests en mode interactif avec surveillance des changements.                       |
-| `test:cov`         | Exécute les tests avec génération de rapports de couverture.                                  |
-| `fix`              | Corrige les erreurs de formatage avec ESLint et Prettier.                                     |    
+| Commande           | Description                                                                     |
+|--------------------|---------------------------------------------------------------------------------|
+| `build`            | Cleans and compiles the NestJS application.                                     |
+| `compile`          | Compiles the NestJS application.                                                |
+| `format`           | Checks the code formatting with Prettier.                                       |
+| `lint`             | Checks TypeScript code with ESLint.                                             |
+| `test`             | Runs unit and integration tests.                                                |
+| `test:watch`       | Executes tests in interactive mode with change monitoring.                      |
+| `test:coverage`    | Runs tests while generating a coverage report.                                  |
+| `fix`              | Corrects formatting errors with ESLint and Prettier.                            |    
 
-## Tests
-- Pour exécuter les tests, utilisez la commande suivante :
+## Testing
+- To run the tests, use the following command:
 
 ```bash
 npm run test
 ```
 
-- Pour exécuter les tests en mode interactif :
+- To run the tests in interactive mode, execute:
 
 ```bash
  npm run test:watch 
  ```
 
-- Pour exécuter les tests avec un rapport de couverture :
+- To run the tests with coverage reporting, execute:
 
 ```bash
  npm run test:cov 
  ```
 
-## Fonctionnalités
+## Features
 
-### Génération des métadonnées
-
-
-
-    La méthode `generateMetadata()` permet de générer et de récupérer les métadonnées du Service Provider (SP).
+### Metadata Generation
 
 
-### Création d'une URL de demande de connexion
+
+>The ***generateMetadata()*** method allows for the generation and retrieval of the Service Provider (SP) metadata.
 
 
-    La méthode `createLoginRequestUrl()` génère une URL pour initier la procédure de connexion via SAML 2.
+### Creating a Login Request URL
 
 
-### Analyse et traitement de la réponse SAML 2
+>The ***createLoginRequestUrl()*** method generates a URL to initiate the login process via SAML 2..
 
 
-    La méthode `parseResponse()` permet d'analyser et de traiter la réponse SAML reçue du IdP après une tentative de connexion.
+### Parsing and Handling SAML 2 Responses
 
 
-### Création d'une URL de demande de déconnexion
+>The ***parseResponse()*** method parses and processes the SAML response received from the IdP after a login attempt.
 
 
-     La méthode `createLogoutRequestUrl(user)` permet de créer une URL de déconnexion basée sur les informations d'utilisateur (nameID).
+### Creating a Logout Request URL
 
 
-## Utilisation
-L'exemple ci-dessous illustre l'utilisation du module SSO dans une application NestJs.
+>The ***createLogoutRequestUrl(user)*** method generates a logout URL based on user information (nameID).
 
 
-### Gestion de la session
-Exemple d'implémentation de la gestion des sessions utilisateurs avec express-session.
+## Usage
+The following example illustrates the use of the SSO module within a NestJS application.
+
+
+### Session Management
+Example implementation of user session management with express-session.
 
 #### Installation
 ```sh
 npm install express-session
 ```
 
-#### Configuration de la session
-Dans votre application NestJS, procédez à la configuration d'express-session dans le fichier principal (par exemple, main.ts) comme suit :
+#### Configuring the Session
+In your NestJS application, configure express-session in the main file (e.g., main.ts) as follows::
 ```typescript
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -152,10 +199,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.use(session({
-    secret: 'votre_secret', // Remplacez par un secret fort
+    secret: 'votre_secret', // Replace with a strong secret.
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // Mettez à true en production si vous utilisez HTTPS
+    cookie: { secure: false }, // Set to true in production if you are using HTTPS.
   }));
 
   await app.listen(3000);
@@ -164,8 +211,8 @@ bootstrap();
 
 ```
 
-#### Initialisation du service 
-Intégrez SamlService en l'injectant dans votre contrôleur ou service NestJS afin de l'utiliser de manière optimale.
+#### Initialisation du service
+Integrate SamlService by injecting it into your NestJS controller or service for optimal usage.
 ```typescript
 import { SamlService } from './saml.service';
 
@@ -182,46 +229,47 @@ export class AuthController {
     @Post('sso/acs')
     async handleSSO(@Req() req: Request) {
         const response = await this.samlService.parseResponse(req);
-        req.session.user = response; // Enregistrer l'utilisateur dans la session
-        return response; // Traiter la réponse selon votre logique
+        req.session.user = response; // Register the user in the session.
+        return response; // Process the response according to your logic.
     }
 
     @Get('logout')
     async logout(@Req() req: Request, @Res() res: Response) {
         const logoutUrl = await this.samlService.createLogoutRequestUrl(req.session.user);
-        req.session.destroy(); // Détruire la session
+        req.session.destroy(); // Destroy the session.
         return res.redirect(logoutUrl);
     }
+    
 }
 ```
 
-1. **Méthode de Connexion**
+1. **Login method**
 
    Endpoint : ***GET /auth/login***
-  
-   Cette méthode initie le processus de connexion en redirigeant l'utilisateur vers l'URL de demande de connexion SAML.
 
->##### Fonctionnement
->Lorsqu'un utilisateur accède à l'endpoint /auth/login, la méthode login est appelée.
-La méthode utilise le service SAML (SamlService) pour générer une URL de demande de connexion.
-L'utilisateur est ensuite redirigé vers cette URL pour procéder à l'authentification.
+   This method initiates the login process by redirecting the user to the SAML login request URL
 
-2. **Méthode de Gestion des Réponses SSO**  
+>##### Mechanism
+>When a user accesses the endpoint /auth/login, the login method is called.
+The method uses the SAML service (SamlService) to generate a login request URL.
+The user is then redirected to this URL to proceed with authentication.
+
+2. **SSO Response Handling Method**  
    Endpoint : ***POST /auth/sso/acs***
-  
-   Cette méthode gère les réponses du SSO après que l'utilisateur se soit authentifié.
 
->#### Fonctionnement
->Lorsque l'utilisateur est authentifié, le SSO redirige vers l'endpoint /auth/sso/acs avec une réponse SAML.
-La méthode handleSSO est appelée, qui utilise le service SAML pour analyser la réponse.
-Les informations de l'utilisateur sont extraites de la réponse et stockées dans la session.
+   This method handles SSO responses after the user has authenticated.
 
-3. **Méthode de Déconnexion**  
-   Endpoint : ***GET /auth/logout***  
-   
-   Cette méthode permet de déconnecter l'utilisateur et de gérer le processus de déconnexion avec le SSO.
+>#### Mechanism
+>When the user is authenticated, the SSO redirects to the endpoint /auth/sso/acs with a SAML response.
+The handleSSO method is called, which uses the SAML service to parse the response.
+The user's information is extracted from the response and stored in the session.
 
->#### Fonctionnement
->Lorsque l'utilisateur souhaite se déconnecter, il accède à l'endpoint /auth/logout.
-La méthode logout est appelée, qui génère une URL de demande de déconnexion SAML.
-La session de l'utilisateur est détruite, et l'utilisateur est redirigé vers l'URL de déconnexion pour finaliser le processus.
+3. **Logout Method**  
+   Endpoint : ***GET /auth/logout***
+
+   This method allows the user to log out and manages the logout process with the SSO.
+
+>#### Mechanism
+>When the user wishes to log out, they access the endpoint /auth/logout.
+The logout method is called, which generates a SAML logout request URL.
+The user's session is destroyed, and the user is redirected to the logout URL to finalize the process.

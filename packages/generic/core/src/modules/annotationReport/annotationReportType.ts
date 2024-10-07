@@ -14,16 +14,8 @@ const annotationReportModel = buildModel({
         kind: 'object',
         content: {
           checkType: {
-            kind: 'constant',
-            content: [
-              'similar_writing',
-              'different_categories',
-              'less_than_two_characters',
-              'missing_bank_account',
-              'missing_cadatre',
-              'incorrect_metadata',
-              'other_checklist',
-            ] as const,
+            kind: 'primitive',
+            content: 'string',
           },
           message: { kind: 'primitive', content: 'string' },
           entities: {

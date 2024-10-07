@@ -150,4 +150,11 @@ Le schéma ci-dessous illustre le flux d'authentification.
 4. Après validation, l'accès aux ressources sécurisées est accordé, permettant à l'utilisateur de poursuivre sa session authentifiée.</section>
 </section>
 
-> L'application LABEL utilise le module SSO comme dépendance pour son intégration avec le système d'authentification unique (SSO). Les spécificités de cette intégration sont documentées dans le [readme](packages/generic/sso/README.md) du module SSO 
+> L'application LABEL utilise le module SSO comme dépendance pour son intégration avec le système d'authentification unique (SSO). Les spécificités de cette intégration sont documentées dans le [readme](packages/generic/sso/README.md) du module SSO.
+
+Le backend expose les URLs suivantes pour interagir avec le SSO :
+
+> 1. **/api/sso/login** : Endpoint pour initier le processus de connexion via SSO
+> 2. **/api/sso/acs** : Endpoint pour le traitement des assertions SAML suite à une authentification réussie.
+> 2. **/api/sso/logout** : Endpoint pour déconnecter l'utilisateur du SSO.
+> 3. **/api/sso/metadata** : Endpoint pour récupérer les métadonnées du service SSO, incluant les configurations nécessaires pour l'authentification.

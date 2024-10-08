@@ -110,4 +110,8 @@ type customDocumentRepositoryType = {
     filter: { status: documentType['status']; _id: documentType['_id'] },
     update: { status: documentType['status'] },
   ) => Promise<documentType | undefined>;
+  updateReplacementTermsById: (
+    _id: idType,
+    replacementTerms: Record<string, unknown>,
+  ) => Promise<documentType | undefined>;
 };

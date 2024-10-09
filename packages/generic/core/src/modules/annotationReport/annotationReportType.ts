@@ -25,7 +25,7 @@ const annotationReportModel = buildModel({
               content: {
                 text: { kind: 'primitive', content: 'string' },
                 start: { kind: 'primitive', content: 'number' },
-                label: { kind: 'primitive', content: 'string' },
+                category: { kind: 'primitive', content: 'string' },
                 source: { kind: 'primitive', content: 'string' },
                 score: { kind: 'primitive', content: 'number' },
                 entityId: { kind: 'primitive', content: 'string' },

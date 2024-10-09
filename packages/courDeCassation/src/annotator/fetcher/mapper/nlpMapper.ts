@@ -21,7 +21,7 @@ function mapNlpAnnotationsToAnnotations(
 ): annotationType[] {
   return nlpAnnotations.entities.map((nlpAnnotation) =>
     annotationModule.lib.buildAnnotation({
-      category: nlpAnnotation.label,
+      category: nlpAnnotation.category,
       entityId: nlpAnnotation.entityId,
       start: nlpAnnotation.start,
       certaintyScore: nlpAnnotation.score,
@@ -35,7 +35,7 @@ function mapNlpAnnotationstoReport(
   document: documentType,
 ): annotationReportType {
   return annotationReportModule.lib.buildAnnotationReport({
-    checklist: nlpAnnotations.checklist,
+    checklist: nlpAnnotations.checklist ?? [],
     documentId: document._id,
   });
 }

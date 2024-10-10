@@ -2,7 +2,7 @@ import { extractRoute } from '.';
 
 describe('extractRoute', () => {
   it('should return exhaustive because it is juritj', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: '',
@@ -23,7 +23,7 @@ describe('extractRoute', () => {
   });
 
   it('should return default if no endCaseCode & no NACCode', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
@@ -44,7 +44,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if jurica with endCaseCode 44E & NACCode 10A', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
@@ -65,7 +65,7 @@ describe('extractRoute', () => {
   });
 
   it('should return automatic if jurica with endCaseCode 11A', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
@@ -86,7 +86,7 @@ describe('extractRoute', () => {
   });
 
   it('should return simple if jurica with NACCode 55L', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
@@ -107,7 +107,7 @@ describe('extractRoute', () => {
   });
 
   it('should return default if jurica with endCaseCode 33G (not in csv)', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
@@ -128,7 +128,7 @@ describe('extractRoute', () => {
   });
 
   it('should return automatic if NA', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'non-admission',
@@ -149,7 +149,7 @@ describe('extractRoute', () => {
   });
 
   it('should return confirmation if C', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -170,7 +170,7 @@ describe('extractRoute', () => {
   });
 
   it('should return confirmation if AVIS', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -191,7 +191,7 @@ describe('extractRoute', () => {
   });
 
   it('should return confirmation if Assemblée plénière', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -212,7 +212,7 @@ describe('extractRoute', () => {
   });
 
   it('should return confirmation if chambre mixte', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -233,7 +233,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if category published', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -254,7 +254,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if category published', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -275,7 +275,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if category published', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -296,7 +296,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if QPC', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -317,7 +317,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if QPC', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -338,7 +338,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if QPC', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'QPC incidente',
@@ -359,7 +359,7 @@ describe('extractRoute', () => {
   });
 
   it('should return automatic if Désistement', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Desistement par arret',
@@ -380,7 +380,7 @@ describe('extractRoute', () => {
   });
 
   it('should return automatic if Déchéance', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Decheance',
@@ -401,7 +401,7 @@ describe('extractRoute', () => {
   });
 
   it('should return simple if formation restreinte', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Cassation partielle',
@@ -422,7 +422,7 @@ describe('extractRoute', () => {
   });
 
   it('should return simple if Rejet non spécialement motivé', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -443,7 +443,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if has additionalTermsToAnnotate', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: 'Something',
         solution: 'Rejet non spécialement motivé',
@@ -464,7 +464,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if has more than 50 parties', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -556,7 +556,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive if has more than 50 parties', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
         solution: 'Rejet non spécialement motivé',
@@ -648,7 +648,7 @@ describe('extractRoute', () => {
   });
 
   it('should return exhaustive even if Rejet non spécialement motivé because has additionalTermsToAnnotate', async () => {
-    const route = extractRoute(
+    const route = await extractRoute(
       {
         additionalTermsToAnnotate: 'Something',
         solution: 'Rejet non spécialement motivé',

@@ -506,7 +506,7 @@
       "score": 1
     },
     {
-      "category": "personnePhysique",
+      "category": "professionnelMagistratGreffier",
       "start": 6796,
       "end": 6799,
       "text": "Yon",
@@ -522,6 +522,37 @@
       "score": 1
     }
   ],
-  "check_needed": false,
-  "checklist": []
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "message": "L'annotation 'Yon' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "entities": [
+        {
+          "text": "Yon",
+          "start": 9358,
+          "category": "personnePhysique",
+          "source": "postprocess",
+          "score": 1.0,
+          "entityId": "personnePhysique_amaury",
+          "end": 9361
+        },
+        {
+          "text": "Yon",
+          "start": 6796,
+          "category": "professionnelMagistratGreffier",
+          "source": "postprocess",
+          "score": 1.0,
+          "entityId": "professionnelMagistratGreffier_amaury",
+          "end": 6799
+        }
+      ],
+      "sentences": [
+        {
+          "start": 0,
+          "end": 22
+        }
+      ],
+      "metadata_text": []
+    }
+  ]
 }

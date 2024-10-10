@@ -24,7 +24,7 @@ function generateRandomNlpAnnotation() {
     start: start,
     end: start + random(8),
     score: Math.random(),
-    label: `LABEL`,
+    category: `LABEL`,
     source: `NLP`,
     entityId: `LABEL_${text.toLowerCase()}`,
   };

@@ -32,6 +32,8 @@ function getAnnotationTextDisplayStyle({
           } else {
             return 'outlined';
           }
+        case 'checklist':
+          return 'filled';
       }
   }
 }

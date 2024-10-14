@@ -17,7 +17,7 @@ function Checklist(props: {
   const iconSize = theme.shape.borderRadius.l;
   const styles = buildStyles(theme);
 
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
   return (
     <Accordion
@@ -54,9 +54,6 @@ function Checklist(props: {
       accordionHeaderContainer: {
         padding: ACCORDION_HEADER_PADDING,
         minHeight: iconSize,
-        '&$expanded': {
-          minHeight: iconSize,
-        },
       },
       accordionHeader: {
         display: 'flex',

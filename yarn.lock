@@ -12930,9 +12930,9 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-"pelta-design-system@https://github.com/Cour-de-cassation/pelta-design-system#e508f818ac443ad048e5cd1b74f42ec7f0bd046d":
+"pelta-design-system@https://github.com/Cour-de-cassation/pelta-design-system#b9d52684da753a250ba351588c31da7bc7280cbe":
   version "0.0.1"
-  resolved "https://github.com/Cour-de-cassation/pelta-design-system#e508f818ac443ad048e5cd1b74f42ec7f0bd046d"
+  resolved "https://github.com/Cour-de-cassation/pelta-design-system#b9d52684da753a250ba351588c31da7bc7280cbe"
   dependencies:
     "@material-ui/core" "^4.12.3"
     "@material-ui/icons" "^4.11.2"

@@ -202,7 +202,7 @@ const fr = {
     annotationGuide: "Guide d'annotation",
     category: 'Catégorie',
     changeCategory: 'Changer de catégorie',
-    checklist: 'Mises en doute : ',
+    checklist: 'Mises en doute',
     close: 'Fermer',
     describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
     delete: 'Supprimer',

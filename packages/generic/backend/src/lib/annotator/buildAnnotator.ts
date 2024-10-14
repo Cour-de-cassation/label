@@ -272,18 +272,19 @@ function buildAnnotator(
       }
     }
 
-    //Todo : create report only if report is not null
-    await createReport(report);
-    logger.log({
-      operationName: 'annotateDocument',
-      msg: 'Annotation report created in DB',
-      data: {
-        decision: {
-          sourceId: document.documentNumber,
-          sourceName: document.source,
+    if (report.checklist.length > 0) {
+      await createReport(report);
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'Annotation report created in DB',
+        data: {
+          decision: {
+            sourceId: document.documentNumber,
+            sourceName: document.source,
+          },
         },
-      },
-    });
+      });
+    }
 
     if (
       additionalTermsParsingFailed !== null &&

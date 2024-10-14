@@ -174,22 +174,41 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       { status, priority },
       idsToSearchInFirst,
     ) {
-      const freeDocuments = collection
-        .filter(
-          (document) =>
-            document.priority === priority &&
-            document.status === status &&
-            idsToSearchInFirst.some((id) =>
-              idModule.lib.equalId(document._id, id),
-            ),
-        )
-        .sort(
-          (documentA, documentB) =>
-            documentB.decisionMetadata.date ||
-            0 - (documentA.decisionMetadata.date || 0),
-        );
-      return freeDocuments[
-        Math.round(Math.random() * (freeDocuments.length - 1))
+      const freeDocuments = collection.filter(
+        (document) =>
+          document.priority === priority &&
+          document.status === status &&
+          idsToSearchInFirst.some((id) =>
+            idModule.lib.equalId(document._id, id),
+          ),
+      );
+
+      const sortedByMostRecent = freeDocuments.sort(
+        (documentA, documentB) =>
+          (documentB.decisionMetadata.date || 0) -
+          (documentA.decisionMetadata.date || 0),
+      );
+
+      const mostRecentDocuments = sortedByMostRecent.slice(0, 50);
+
+      const sortedByLeastRecent = freeDocuments.sort(
+        (documentA, documentB) =>
+          (documentA.decisionMetadata.date || 0) -
+          (documentB.decisionMetadata.date || 0),
+      );
+
+      const leastRecentDocuments = sortedByLeastRecent.slice(0, 50);
+
+      const combinedDocuments = mostRecentDocuments.concat(
+        leastRecentDocuments,
+      );
+
+      if (combinedDocuments.length === 0) {
+        return undefined;
+      }
+
+      return combinedDocuments[
+        Math.floor(Math.random() * combinedDocuments.length)
       ];
     },
 

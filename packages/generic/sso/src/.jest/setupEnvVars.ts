@@ -1,4 +1,5 @@
 // @ts-ignore
+// pas à laise avec les ts-ignore..
 process.env = {
   SSO_SP_ENTITY_ID: 'SP-LABEL-DEV',
   SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION: 'http://localhost:3005/saml/acs',

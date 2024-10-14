@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as samlify from 'samlify';
+import * as samlify from 'samlify'; // import "*" est à proscire à mon sens, mieux vaut importer que ce qu'on a besoin..
 import * as fs from 'fs';
 import * as validator from '@authenio/samlify-node-xmllint';
 
@@ -35,10 +35,10 @@ export class SamlService {
           reference: '/EntityDescriptor',
           action: 'append',
         },
-        signatureAlgorithm: 'http://www.w3.org/2000/09/xmldsig#',
+        signatureAlgorithm: 'http://www.w3.org/2000/09/xmldsig#', // faut il prevoire une mise à jour dans les années à venir?
         digestAlgorithm: 'http://www.w3.org/2000/09/xmldsig#',
       },
-    } as any;
+    } as any; // pourquoi ne pas en faire un typage stricte ?? car le as any est permissive à mon sens
 
     this.sp = samlify.ServiceProvider(spProps);
     // Initialiser l'Identity Provider (IdP)
@@ -61,7 +61,7 @@ export class SamlService {
         },
       ],
       wantLogoutRequestSigned: true,
-    } as any;
+    } as any; // même commentaire qu'au dessus ?
     this.idp = samlify.IdentityProvider(idpProps);
   }
 
@@ -104,7 +104,7 @@ export class SamlService {
         index: ['Name'],
         attributePath: ['AttributeValue'],
         attributes: [],
-        shortcut: samlContent as unknown,
+        shortcut: samlContent as unknown, // pas precis, est il possible de preciser le type de ce que l'on recois ?
       },
     ];
 
@@ -134,7 +134,7 @@ export class SamlService {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async createLogoutRequestUrl(user: any) {
+  async createLogoutRequestUrl(user: any) { // ne faut il pas typer le user ? comment resoudre les eslint-disable ??
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     return this.sp.createLogoutRequest(this.idp, 'redirect', {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access

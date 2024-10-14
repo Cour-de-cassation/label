@@ -1,5 +1,5 @@
 # Module SSO
-Ce service implémente l'authentification unique (SSO) via **SAML 2** en de basant sur le framework **NestJS** et la bibliothèque `samlify`.   
+Ce service implémente l'authentification unique (SSO) via **SAML 2** en se basant sur le framework **NestJS** et la bibliothèque `samlify`.   
 Il gère l'authentification avec un fournisseur d'identité (IdP) tel que **Keycloak**, **Pages Blanches** ou tout autre fournisseur compatible SAML.   
 Le service utilise la librairie **SAMLify** pour s'interfacer avec le SSO et faciliter la gestion des requêtes et des réponses SAML.
 

@@ -63,6 +63,7 @@ describe('SamlService', () => {
   });
 
   it('should generate metadata', () => {
+    // est il possible d'enlever les eslint-disable ? sinon est-ce juste des erreurs de typages ?
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const metadata = service.generateMetadata();
     expect(metadata).toEqual('<SPMetadata />');

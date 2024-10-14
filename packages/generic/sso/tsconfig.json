@@ -1,4 +1,4 @@
-{
+{ // erreur, ajout de configuration exclude / include ?
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,

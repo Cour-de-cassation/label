@@ -1,5 +1,6 @@
-import { labelTreatmentsType } from 'sder';
+
 import { documentType, settingsType } from '@label/core';
+import {LabelTreatment} from "dbsder-api-types";
 
 export type { nlpApiType, nlpResponseType, nlpLossType, nlpVersion };
 
@@ -10,7 +11,7 @@ type nlpApiType = {
   ) => Promise<nlpResponseType>;
   fetchNlpLoss: (
     document: documentType,
-    treatments: labelTreatmentsType,
+    treatments: LabelTreatment,
   ) => Promise<nlpLossType>;
 };
 

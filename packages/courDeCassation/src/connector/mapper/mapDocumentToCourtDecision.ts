@@ -1,9 +1,9 @@
 import {documentType, idModule} from '@label/core';
-import {DecisionDTO, LabelStatus} from "dbsder-api-types";
+import {DecisionTJDTO, LabelStatus, Occultation, Sources} from "dbsder-api-types";
 
 export {mapDocumentToCourtDecision};
 
-function mapDocumentToCourtDecision(document: documentType): DecisionDTO {
+function mapDocumentToCourtDecision(document: documentType): DecisionTJDTO {
     let dateDecision;
     if (document.decisionMetadata.date) {
         dateDecision = new Date();
@@ -16,8 +16,26 @@ function mapDocumentToCourtDecision(document: documentType): DecisionDTO {
     }
 
     return {
-        _id: idModule.lib.buildId(document.externalId),
-        blocOccultation: document.decisionMetadata.occultationBlock,
+        codeService: "",
+        debatPublic: false,
+        decisionAssociee: {
+            numeroRegistre: '',
+            numeroRoleGeneral: '',
+            idJuridiction: '',
+            date: ''
+        },
+        idDecisionTJ: "",
+        libelleEndCaseCode: "",
+        libelleNAC: "",
+        libelleService: "",
+        matiereDeterminee: false,
+        numeroRoleGeneral: "",
+        pourvoiCourDeCassation: false,
+        pourvoiLocal: false,
+        recommandationOccultation: Occultation.AUCUNE,
+        selection: false,
+        _id: idModule.lib.buildId(document.externalId).toString(),
+        blocOccultation: document.decisionMetadata.occultationBlock ?? 0,
         chamberName: document.decisionMetadata.chamberName,
         dateCreation: dateCreation?.toISOString() ?? (new Date()).toISOString(),
         dateDecision: dateDecision?.toISOString() ?? (new Date()).toISOString(),
@@ -44,12 +62,12 @@ function mapDocumentToCourtDecision(document: documentType): DecisionDTO {
                 !['B', 'R', 'L', 'C'].includes(publicationCategoryLetter),
         ),
         sourceId: document.documentNumber,
-        sourceName: document.source,
+        sourceName: document.source as Sources,
         solution: document.decisionMetadata.solution,
-        appeals: document.decisionMetada.appeals,
-        chamberId: document.decisionMetada.chamberId,
-        jurisdictionCode: document.decisionMetada.jurisdictionCode,
-        jurisdictionId: document.decisionMetada.jurisdictionId,
-        registerNumber: document.decisionMetada.registerNumber
+        appeals: [],
+        chamberId: document.decisionMetadata.chamberName,
+        jurisdictionCode: document.decisionMetadata.jurisdiction,
+        jurisdictionId: document.decisionMetadata.jurisdiction,
+        registerNumber: ''
     };
 }

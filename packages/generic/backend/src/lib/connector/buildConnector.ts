@@ -13,9 +13,9 @@ import {
 } from '../../modules/document';
 import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
-import { decisionType } from 'sder';
 import { treatmentService } from '../../modules/treatment';
 import { buildPreAssignator } from '../preAssignator';
+import { DecisionTJDTO, Sources } from 'dbsder-api-types';
 
 export { buildConnector };
 
@@ -120,7 +120,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       });
 
       if (keepLabelTreatments) {
-        if (courtDecision.labelTreatments.length == 0) {
+        if (courtDecision.labelTreatments?.length == 0) {
           logger.error({
             operationName: 'importSpecificDocument',
             msg:
@@ -132,17 +132,20 @@ function buildConnector(connectorConfig: connectorConfigType) {
             msg: 'LabelTreatments found in court decision, importing.',
           });
 
-          const annotations: annotationType[] = courtDecision.labelTreatments[
-            courtDecision.labelTreatments.length - 1
-          ].annotations.map((annotation) => {
-            return annotationModule.lib.buildAnnotation({
-              category: annotation.category,
-              start: annotation.start,
-              text: annotation.text,
-              certaintyScore: 1,
-              entityId: annotation.entityId,
-            });
-          });
+          const annotations: annotationType[] =
+            courtDecision.labelTreatments == undefined
+              ? []
+              : courtDecision.labelTreatments[
+                  courtDecision.labelTreatments.length - 1
+                ].annotations.map((annotation) => {
+                  return annotationModule.lib.buildAnnotation({
+                    category: annotation.category,
+                    start: annotation.start,
+                    text: annotation.text,
+                    certaintyScore: 1,
+                    entityId: annotation.entityId,
+                  });
+                });
 
           await treatmentService.createTreatment(
             {
@@ -207,7 +210,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
   }: {
     documentsCount: number;
     threshold?: number;
-    sources?: decisionType['sourceName'][];
+    sources?: DecisionTJDTO['sourceName'][];
     daysStep?: number;
   }) {
     const DEFAULT_DAYS_STEP = 30;
@@ -249,33 +252,33 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       const endDate = new Date(dateBuilder.daysAgo(daysAgo));
       try {
-        const newCourtDecisions: decisionType[] = [];
-        if (!sources || sources.includes('jurinet')) {
+        const newCourtDecisions: DecisionTJDTO[] = [];
+        if (!sources || sources.includes(Sources.CC)) {
           const newJurinetDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
             {
               startDate,
               endDate,
-              source: 'jurinet',
+              source: Sources.CC,
             },
           );
           newJurinetDecisions && newCourtDecisions.push(...newJurinetDecisions);
         }
-        if (!sources || sources.includes('jurica')) {
+        if (!sources || sources.includes(Sources.CA)) {
           const newJuricaDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
             {
               startDate,
               endDate,
-              source: 'jurica',
+              source: Sources.CA,
             },
           );
           newJuricaDecisions && newCourtDecisions.push(...newJuricaDecisions);
         }
-        if (!sources || sources.includes('juritj')) {
+        if (!sources || sources.includes(Sources.TJ)) {
           const newJuritjDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
             {
               startDate,
               endDate,
-              source: 'juritj',
+              source: Sources.TJ,
             },
           );
           newJuritjDecisions && newCourtDecisions.push(...newJuritjDecisions);
@@ -457,7 +460,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
                 endDate: toDaysAgo
                   ? new Date(dateBuilder.daysAgo(toDaysAgo))
                   : new Date(),
-                source: 'jurinet',
+                source: Sources.CC,
               },
             )
           : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
@@ -465,7 +468,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
               endDate: toDaysAgo
                 ? new Date(dateBuilder.daysAgo(toDaysAgo))
                 : new Date(),
-              source: 'jurinet',
+              source: Sources.CC,
             })) ?? [];
       logger.log({
         operationName: 'importDocumentsSinceOrBetween',
@@ -492,7 +495,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
                 endDate: toDaysAgo
                   ? new Date(dateBuilder.daysAgo(toDaysAgo))
                   : new Date(),
-                source: 'jurica',
+                source: Sources.CA,
               },
             )
           : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
@@ -500,7 +503,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
               endDate: toDaysAgo
                 ? new Date(dateBuilder.daysAgo(toDaysAgo))
                 : new Date(),
-              source: 'jurica',
+              source: Sources.CA,
             })) ?? [];
       logger.log({
         operationName: 'importDocumentsSinceOrBetween',
@@ -527,7 +530,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
                 endDate: toDaysAgo
                   ? new Date(dateBuilder.daysAgo(toDaysAgo))
                   : new Date(),
-                source: 'juritj',
+                source: Sources.TJ,
               },
             )
           : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
@@ -535,7 +538,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
               endDate: toDaysAgo
                 ? new Date(dateBuilder.daysAgo(toDaysAgo))
                 : new Date(),
-              source: 'juritj',
+              source: Sources.TJ,
             })) ?? [];
       logger.log({
         operationName: 'importDocumentsSinceOrBetween',
@@ -602,7 +605,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           {
             startDate: from,
             endDate: to,
-            source: 'jurinet',
+            source: Sources.CC,
             jurisdictions,
             chambers,
           },
@@ -629,7 +632,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           {
             startDate: from,
             endDate: to,
-            source: 'jurica',
+            source: Sources.CA,
             jurisdictions,
             chambers,
           },
@@ -656,7 +659,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           {
             startDate: from,
             endDate: to,
-            source: 'juritj',
+            source: Sources.TJ,
             jurisdictions,
             chambers,
           },

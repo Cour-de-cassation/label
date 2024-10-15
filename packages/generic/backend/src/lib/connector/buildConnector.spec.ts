@@ -1,272 +1,287 @@
-import { range } from 'lodash';
-import { dateBuilder, documentType } from '@label/core';
-import { buildDocumentRepository } from '../../modules/document';
-import { buildConnector } from './buildConnector';
-import { buildFakeConnectorWithNDecisions } from './buildFakeConnector';
+import {range} from 'lodash';
+import {dateBuilder, documentType} from '@label/core';
+import {buildDocumentRepository} from '../../modules/document';
+import {buildConnector} from './buildConnector';
+import {buildFakeConnectorWithNDecisions} from './buildFakeConnector';
+import {LabelStatus, Sources} from "dbsder-api-types";
 
 describe('buildConnector', () => {
-  let documentRepository = buildDocumentRepository();
+    let documentRepository = buildDocumentRepository();
 
-  beforeEach(() => {
-    documentRepository = buildDocumentRepository();
-  });
-
-  describe('importDocumentsSinceOrBetween', () => {
-    it('should import all the document fetched by the connector (with dateDecision)', async () => {
-      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
-      const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId, index) => {
-          const dateDecision = new Date();
-          dateDecision.setTime(dateBuilder.daysAgo(index * 7));
-          return {
-            sourceId,
-            dateDecision: dateDecision.toISOString(),
-            sourceName: 'jurinet',
-          };
-        }),
-      );
-      const connector = buildConnector(fakeConnector);
-
-      await connector.importDocumentsSinceOrBetween({
-        fromDaysAgo: 10,
-        byDateCreation: false,
-      });
-
-      const insertedDocuments = await documentRepository.findAll();
-      expect(insertedDocuments.length).toBe(2);
-      [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
-        expect(
-          insertedDocuments.some(
-            (insertedDocument) => insertedDocument.documentNumber === sourceId,
-          ),
-        ),
-      );
-    });
-    it('should import all the document fetched by the connector (with dateCreation)', async () => {
-      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
-      const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId, index) => {
-          const dateCreation = new Date();
-          dateCreation.setTime(dateBuilder.daysAgo(index * 7));
-          return {
-            sourceId,
-            dateCreation: dateCreation.toISOString(),
-            sourceName: 'jurinet',
-          };
-        }),
-      );
-      const connector = buildConnector(fakeConnector);
-
-      await connector.importDocumentsSinceOrBetween({
-        fromDaysAgo: 10,
-        byDateCreation: true,
-      });
-
-      const insertedDocuments = await documentRepository.findAll();
-      expect(insertedDocuments.length).toBe(2);
-      [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
-        expect(
-          insertedDocuments.some(
-            (insertedDocument) => insertedDocument.documentNumber === sourceId,
-          ),
-        ),
-      );
+    beforeEach(() => {
+        documentRepository = buildDocumentRepository();
     });
 
-    it('should import all the document fetched by the connector by dateCreation (between two dates from --- to)', async () => {
-      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
-      const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId, index) => {
-          const dateCreation = new Date();
-          dateCreation.setTime(dateBuilder.daysAgo(index * 7));
-          return {
-            sourceId,
-            dateCreation: dateCreation.toISOString(),
-            sourceName: 'jurinet',
-          };
-        }),
-      );
+    describe('importDocumentsSinceOrBetween', () => {
+        it('should import all the document fetched by the connector (with dateDecision)', async () => {
+            const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+            const fakeConnector = await buildFakeConnectorWithNDecisions(
+                sourceIds.map((sourceId, index) => {
+                    const dateDecision = new Date();
+                    dateDecision.setTime(dateBuilder.daysAgo(index * 7));
+                    return {
+                        sourceId,
+                        dateDecision: dateDecision.toISOString(),
+                        sourceName: Sources.CC,
+                        labelStatus: LabelStatus.TOBETREATED,
+                        dateCreation: dateDecision.toISOString(),
+                        appeals: [],
+                        chamberId: '',
+                        chamberName: '',
+                        jurisdictionCode: '',
+                        jurisdictionName: '',
+                        jurisdictionId: '',
+                        registerNumber: 0,
+                        occultation: {
+                            additionalTerms: '',
+                            categoriesToOmit: [],
+                            motivationOccultation: false,
+                        },
+                    };
+                }),
+            );
+            const connector = buildConnector(fakeConnector);
 
-      const connector = buildConnector(fakeConnector);
+            await connector.importDocumentsSinceOrBetween({
+                fromDaysAgo: 10,
+                byDateCreation: false,
+            });
 
-      await connector.importDocumentsSinceOrBetween({
-        fromDaysAgo: 20, // plus ancien
-        toDaysAgo: 8, // jusqu'à nos jours / plus proche
-        byDateCreation: true,
-      });
+            const insertedDocuments = await documentRepository.findAll();
+            expect(insertedDocuments.length).toBe(2);
+            [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
+                expect(
+                    insertedDocuments.some(
+                        (insertedDocument) => insertedDocument.documentNumber === sourceId,
+                    ),
+                ),
+            );
+        });
+        it('should import all the document fetched by the connector (with dateCreation)', async () => {
+            const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+            const fakeConnector = await buildFakeConnectorWithNDecisions(
+                sourceIds.map((sourceId, index) => {
+                    const dateCreation = new Date();
+                    dateCreation.setTime(dateBuilder.daysAgo(index * 7));
+                    return {
+                        sourceId,
+                        dateCreation: dateCreation.toISOString(),
+                        sourceName: Sources.CC,
+                    };
+                }),
+            );
+            const connector = buildConnector(fakeConnector);
 
-      const insertedDocuments = await documentRepository.findAll();
+            await connector.importDocumentsSinceOrBetween({
+                fromDaysAgo: 10,
+                byDateCreation: true,
+            });
 
-      expect(insertedDocuments.length).toBe(1);
+            const insertedDocuments = await documentRepository.findAll();
+            expect(insertedDocuments.length).toBe(2);
+            [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
+                expect(
+                    insertedDocuments.some(
+                        (insertedDocument) => insertedDocument.documentNumber === sourceId,
+                    ),
+                ),
+            );
+        });
 
-      [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
-        expect(
-          insertedDocuments.some(
-            (insertedDocument) => insertedDocument.documentNumber === sourceId,
-          ),
-        ),
-      );
-    });
-  });
+        it('should import all the document fetched by the connector by dateCreation (between two dates from --- to)', async () => {
+            const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+            const fakeConnector = await buildFakeConnectorWithNDecisions(
+                sourceIds.map((sourceId, index) => {
+                    const dateCreation = new Date();
+                    dateCreation.setTime(dateBuilder.daysAgo(index * 7));
+                    return {
+                        sourceId,
+                        dateCreation: dateCreation.toISOString(),
+                        sourceName: Sources.CC,
+                    };
+                }),
+            );
 
-  describe('importNewDocuments', () => {
-    it('should import documents fetched by the connector', async () => {
-      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
-      const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId, index) => {
-          const dateDecision = new Date();
-          dateDecision.setTime(dateBuilder.daysAgo(index * 7));
-          return {
-            sourceId,
-            dateDecision: dateDecision.toISOString(),
-            sourceName: 'jurica',
-          };
-        }),
-      );
-      const connector = buildConnector(fakeConnector);
+            const connector = buildConnector(fakeConnector);
 
-      await connector.importNewDocuments({
-        documentsCount: 3,
-        daysStep: 5,
-      });
+            await connector.importDocumentsSinceOrBetween({
+                fromDaysAgo: 20, // plus ancien
+                toDaysAgo: 8, // jusqu'à nos jours / plus proche
+                byDateCreation: true,
+            });
 
-      const insertedDocuments = await documentRepository.findAll();
-      expect(insertedDocuments.length).toBe(3);
-      [sourceIds[0], sourceIds[1], sourceIds[2]].forEach((sourceId) =>
-        expect(
-          insertedDocuments.some(
-            (insertedDocument) => insertedDocument.documentNumber === sourceId,
-          ),
-        ),
-      );
-    });
-  });
+            const insertedDocuments = await documentRepository.findAll();
 
-  describe('importNewDocuments', () => {
-    it('should not import documents', async () => {
-      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
-      const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId) => ({ sourceId, sourceName: 'jurica' })),
-      );
-      const connector = buildConnector(fakeConnector);
-      const initialCourtDecisions = fakeConnector.fetchAllCourtDecisions();
-      const initialDocuments = [] as documentType[];
-      for (const decision of initialCourtDecisions) {
-        initialDocuments.push(
-          await fakeConnector.mapCourtDecisionToDocument(decision),
-        );
-      }
-      await documentRepository.insertMany(initialDocuments);
-      await documentRepository.updateMany({}, { status: 'free' });
+            expect(insertedDocuments.length).toBe(1);
 
-      await connector.importNewDocuments({
-        documentsCount: 4,
-        threshold: 5,
-      });
-
-      const finalDocuments = await documentRepository.findAll();
-      expect(sourceIds.sort()).toEqual(
-        finalDocuments.map(({ documentNumber }) => documentNumber).sort(),
-      );
-    });
-
-    it('should import 9 documents', async () => {
-      const sourceIds = range(10).map(() => Math.floor(Math.random() * 10000));
-      const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId, index) => {
-          const dateDecision = new Date();
-          dateDecision.setTime(dateBuilder.daysAgo(index * 31));
-          return {
-            sourceId,
-            dateDecision: dateDecision.toISOString(),
-            sourceName: 'jurica',
-          };
-        }),
-      );
-      const connector = buildConnector(fakeConnector);
-      const initialCourtDecisions = fakeConnector
-        .fetchAllCourtDecisions()
-        .slice(0, 5);
-      const initialDocuments = [] as documentType[];
-      for (const decision of initialCourtDecisions) {
-        initialDocuments.push(
-          await fakeConnector.mapCourtDecisionToDocument(decision),
-        );
-      }
-      await documentRepository.insertMany(initialDocuments);
-      await documentRepository.updateMany({}, { status: 'free' });
-
-      await connector.importNewDocuments({
-        documentsCount: 4,
-        threshold: 6,
-      });
-
-      const finalDocuments = await documentRepository.findAll();
-      expect(finalDocuments.length).toBe(9);
-    });
-  });
-
-  describe('importChainedDocumentsFromSder', () => {
-    it('should not import documents', async () => {
-      const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
-      const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId) => ({ sourceId, sourceName: 'jurica' })),
-      );
-      const connector = buildConnector(fakeConnector);
-      const initialCourtDecisions = fakeConnector.fetchAllCourtDecisions();
-      const initialDocuments = [] as documentType[];
-      for (const decision of initialCourtDecisions) {
-        initialDocuments.push(
-          await fakeConnector.mapCourtDecisionToDocument(decision),
-        );
-      }
-      await documentRepository.insertMany(initialDocuments);
-      await documentRepository.updateMany({}, { status: 'free' });
-
-      await connector.importChainedDocumentsFromSder({
-        documentsCount: 5,
-        threshold: 4,
-      });
-
-      const finalDocuments = await documentRepository.findAll();
-      expect(sourceIds.sort()).toEqual(
-        finalDocuments.map(({ documentNumber }) => documentNumber).sort(),
-      );
+            [sourceIds[0], sourceIds[1]].forEach((sourceId) =>
+                expect(
+                    insertedDocuments.some(
+                        (insertedDocument) => insertedDocument.documentNumber === sourceId,
+                    ),
+                ),
+            );
+        });
     });
 
-    it('should import 9 documents', async () => {
-      const sourceIds = range(10).map(() => Math.floor(Math.random() * 10000));
-      const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId, index) => {
-          const dateDecision = new Date();
-          dateDecision.setTime(dateBuilder.daysAgo(index * 31));
-          return {
-            sourceId,
-            dateDecision: dateDecision.toISOString(),
-            sourceName: 'jurica',
-          };
-        }),
-      );
-      const connector = buildConnector(fakeConnector);
-      const initialCourtDecisions = fakeConnector
-        .fetchAllCourtDecisions()
-        .slice(0, 5);
-      const initialDocuments = [] as documentType[];
-      for (const decision of initialCourtDecisions) {
-        initialDocuments.push(
-          await fakeConnector.mapCourtDecisionToDocument(decision),
-        );
-      }
-      await documentRepository.insertMany(initialDocuments);
-      await documentRepository.updateMany({}, { status: 'free' });
+    describe('importNewDocuments', () => {
+        it('should import documents fetched by the connector', async () => {
+            const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+            const fakeConnector = await buildFakeConnectorWithNDecisions(
+                sourceIds.map((sourceId, index) => {
+                    const dateDecision = new Date();
+                    dateDecision.setTime(dateBuilder.daysAgo(index * 7));
+                    return {
+                        sourceId,
+                        dateDecision: dateDecision.toISOString(),
+                        sourceName: Sources.CA,
+                    };
+                }),
+            );
+            const connector = buildConnector(fakeConnector);
 
-      await connector.importChainedDocumentsFromSder({
-        documentsCount: 4,
-        threshold: 6,
-      });
+            await connector.importNewDocuments({
+                documentsCount: 3,
+                daysStep: 5,
+            });
 
-      const finalDocuments = await documentRepository.findAll();
-      expect(finalDocuments.length).toBe(9);
+            const insertedDocuments = await documentRepository.findAll();
+            expect(insertedDocuments.length).toBe(3);
+            [sourceIds[0], sourceIds[1], sourceIds[2]].forEach((sourceId) =>
+                expect(
+                    insertedDocuments.some(
+                        (insertedDocument) => insertedDocument.documentNumber === sourceId,
+                    ),
+                ),
+            );
+        });
     });
-  });
+
+    describe('importNewDocuments', () => {
+        it('should not import documents', async () => {
+            const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+            const fakeConnector = await buildFakeConnectorWithNDecisions(
+                sourceIds.map((sourceId) => ({sourceId, sourceName: Sources.CA})),
+            );
+            const connector = buildConnector(fakeConnector);
+            const initialCourtDecisions = fakeConnector.fetchAllCourtDecisions();
+            const initialDocuments = [] as documentType[];
+            for (const decision of initialCourtDecisions) {
+                initialDocuments.push(
+                    await fakeConnector.mapCourtDecisionToDocument(decision),
+                );
+            }
+            await documentRepository.insertMany(initialDocuments);
+            await documentRepository.updateMany({}, {status: 'free'});
+
+            await connector.importNewDocuments({
+                documentsCount: 4,
+                threshold: 5,
+            });
+
+            const finalDocuments = await documentRepository.findAll();
+            expect(sourceIds.sort()).toEqual(
+                finalDocuments.map(({documentNumber}) => documentNumber).sort(),
+            );
+        });
+
+        it('should import 9 documents', async () => {
+            const sourceIds = range(10).map(() => Math.floor(Math.random() * 10000));
+            const fakeConnector = await buildFakeConnectorWithNDecisions(
+                sourceIds.map((sourceId, index) => {
+                    const dateDecision = new Date();
+                    dateDecision.setTime(dateBuilder.daysAgo(index * 31));
+                    return {
+                        sourceId,
+                        dateDecision: dateDecision.toISOString(),
+                        sourceName: Sources.CA,
+                    };
+                }),
+            );
+            const connector = buildConnector(fakeConnector);
+            const initialCourtDecisions = fakeConnector
+                .fetchAllCourtDecisions()
+                .slice(0, 5);
+            const initialDocuments = [] as documentType[];
+            for (const decision of initialCourtDecisions) {
+                initialDocuments.push(
+                    await fakeConnector.mapCourtDecisionToDocument(decision),
+                );
+            }
+            await documentRepository.insertMany(initialDocuments);
+            await documentRepository.updateMany({}, {status: 'free'});
+
+            await connector.importNewDocuments({
+                documentsCount: 4,
+                threshold: 6,
+            });
+
+            const finalDocuments = await documentRepository.findAll();
+            expect(finalDocuments.length).toBe(9);
+        });
+    });
+
+    describe('importChainedDocumentsFromSder', () => {
+        it('should not import documents', async () => {
+            const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
+            const fakeConnector = await buildFakeConnectorWithNDecisions(
+                sourceIds.map((sourceId) => ({sourceId, sourceName: Sources.CA})),
+            );
+            const connector = buildConnector(fakeConnector);
+            const initialCourtDecisions = fakeConnector.fetchAllCourtDecisions();
+            const initialDocuments = [] as documentType[];
+            for (const decision of initialCourtDecisions) {
+                initialDocuments.push(
+                    await fakeConnector.mapCourtDecisionToDocument(decision),
+                );
+            }
+            await documentRepository.insertMany(initialDocuments);
+            await documentRepository.updateMany({}, {status: 'free'});
+
+            await connector.importChainedDocumentsFromSder({
+                documentsCount: 5,
+                threshold: 4,
+            });
+
+            const finalDocuments = await documentRepository.findAll();
+            expect(sourceIds.sort()).toEqual(
+                finalDocuments.map(({documentNumber}) => documentNumber).sort(),
+            );
+        });
+
+        it('should import 9 documents', async () => {
+            const sourceIds = range(10).map(() => Math.floor(Math.random() * 10000));
+            const fakeConnector = await buildFakeConnectorWithNDecisions(
+                sourceIds.map((sourceId, index) => {
+                    const dateDecision = new Date();
+                    dateDecision.setTime(dateBuilder.daysAgo(index * 31));
+                    return {
+                        sourceId,
+                        dateDecision: dateDecision.toISOString(),
+                        sourceName: Sources.CA,
+                    };
+                }),
+            );
+            const connector = buildConnector(fakeConnector);
+            const initialCourtDecisions = fakeConnector
+                .fetchAllCourtDecisions()
+                .slice(0, 5);
+            const initialDocuments = [] as documentType[];
+            for (const decision of initialCourtDecisions) {
+                initialDocuments.push(
+                    await fakeConnector.mapCourtDecisionToDocument(decision),
+                );
+            }
+            await documentRepository.insertMany(initialDocuments);
+            await documentRepository.updateMany({}, {status: 'free'});
+
+            await connector.importChainedDocumentsFromSder({
+                documentsCount: 4,
+                threshold: 6,
+            });
+
+            const finalDocuments = await documentRepository.findAll();
+            expect(finalDocuments.length).toBe(9);
+        });
+    });
 });

@@ -11,7 +11,7 @@ import {
 } from './extractors';
 import {extractRoute} from './extractors/extractRoute';
 import {categoriesMapper} from './categoriesMapper';
-import {DecisionDTO, DecisionTJDTO} from "dbsder-api-types";
+import {DecisionTJDTO, PartieTJ} from "dbsder-api-types";
 
 export {mapCourtDecisionToDocument};
 
@@ -92,7 +92,14 @@ async function mapCourtDecisionToDocument(
         {
             additionalTermsToAnnotate,
             solution,
-            parties: sderCourtDecision.parties,
+            parties: ((): string[] => {
+                if (typeof sderCourtDecision.parties == undefined) {
+                    return [] as string[]
+                }
+                let parties = sderCourtDecision.parties as PartieTJ[];
+                return parties.map(partie =>
+                    (partie as PartieTJ)?.nom) as string[]
+            })(),
             publicationCategory,
             chamberName: readableChamberName,
             civilMatterCode,
@@ -173,8 +180,9 @@ async function mapCourtDecisionToDocument(
             undefined,
         composition:
             sderCourtDecision.originalTextZoning?.introduction_subzonage
-                ?.composition || undefined,
+                ?.composition as { readonly start: number; readonly end: number; } || undefined,
     };
+
 
     let zoning = undefined;
     if (sderCourtDecision.originalTextZoning) {
@@ -187,6 +195,7 @@ async function mapCourtDecisionToDocument(
                 sderCourtDecision.originalTextZoning?.is_public_text || undefined,
             arret_id: sderCourtDecision.originalTextZoning?.arret_id,
         };
+
     }
 
     return documentModule.lib.buildDocument({
@@ -206,7 +215,14 @@ async function mapCourtDecisionToDocument(
             jurisdiction: readableJurisdictionName,
             NACCode,
             endCaseCode,
-            parties: sderCourtDecision.parties || [],
+            parties: ((): string[] => {
+                if (typeof sderCourtDecision.parties == undefined) {
+                    return [] as string[]
+                }
+                let parties = sderCourtDecision.parties as PartieTJ[];
+                return parties.map(partie =>
+                    (partie as PartieTJ)?.nom) as string[]
+            })(),
             occultationBlock: sderCourtDecision.blocOccultation || undefined,
             session,
             solution,
@@ -214,7 +230,7 @@ async function mapCourtDecisionToDocument(
                 sderCourtDecision.occultation.motivationOccultation ?? undefined,
         },
         documentNumber: sderCourtDecision.sourceId,
-        externalId: idModule.lib.convertToString(sderCourtDecision._id),
+        externalId: idModule.lib.convertToString(sderCourtDecision._id ?? ''),
         loss: undefined,
         priority,
         publicationCategory,
@@ -298,8 +314,8 @@ function computeTitleFromParsedCourtDecision({
 }
 
 function computePublicationCategory(
-    pubCategory: DecisionDTO['pubCategory'],
-    publication: DecisionDTO['publication'],
+    pubCategory: DecisionTJDTO['pubCategory'],
+    publication: DecisionTJDTO['publication'],
 ): documentType['publicationCategory'] {
     const publicationCategory: string[] = [];
     if (!!pubCategory) {
@@ -312,9 +328,9 @@ function computePublicationCategory(
 }
 
 function computePriority(
-    source: DecisionDTO['sourceName'],
+    source: DecisionTJDTO['sourceName'],
     publicationCategory: documentType['publicationCategory'],
-    NACCode: DecisionDTO['NACCode'],
+    NACCode: DecisionTJDTO['NACCode'],
     importer: documentType['importer'],
 ): documentType['priority'] {
     if (

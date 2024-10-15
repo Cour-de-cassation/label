@@ -5,7 +5,7 @@ import {
   idType,
   settingsType,
 } from '@label/core';
-import { labelTreatmentsType } from 'sder';
+import {LabelTreatment} from "dbsder-api-types";
 
 export type { annotatorConfigType };
 
@@ -26,6 +26,6 @@ type annotatorConfigType = {
   }>;
   fetchLossOfDocument: (
     document: documentType,
-    treatments: labelTreatmentsType,
+    treatments: LabelTreatment,
   ) => Promise<number>;
 };

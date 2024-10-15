@@ -1,5 +1,5 @@
 import { documentType } from '@label/core';
-import { publishStatusType, labelTreatmentsType } from 'sder';
+import { LabelTreatment, PublishStatus } from 'dbsder-api-types';
 
 export type { exporterConfigType };
 
@@ -8,8 +8,8 @@ type exporterConfigType = {
   sendDocumentPseudonymisationAndTreatments: (param: {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
-    labelTreatments: labelTreatmentsType;
-    publishStatus?: publishStatusType;
+    labelTreatments: LabelTreatment;
+    publishStatus?: PublishStatus;
   }) => Promise<void>;
   sendDocumentBlockedStatus: (param: {
     externalId: documentType['externalId'];

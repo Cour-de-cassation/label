@@ -143,7 +143,7 @@ docker:backend:
     - recette
     - label-vmsso
     - label-rec
-    - label-dbsder
+    - label-dbsder-legacy
 
 docker:client:
   image: docker:19.03.5
@@ -165,7 +165,7 @@ docker:client:
     - recette
     - label-vmsso
     - label-rec
-    - label-dbsder
+    - label-dbsder-legacy
 
 trivy:backend:
   extends: [".trivy-scan"]
@@ -203,3 +203,4 @@ deploy:iaas:
   only:
     - label-vmsso
     - label-dbsder
+    - label-dbsder-legacy

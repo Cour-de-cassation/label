@@ -165,7 +165,7 @@ docker:client:
     - recette
     - label-vmsso
     - label-rec
-    - label-dbsder-legacy
+    - label-dbsder-legacy1
 
 trivy:backend:
   extends: [".trivy-scan"]

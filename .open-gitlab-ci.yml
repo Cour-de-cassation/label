@@ -16,9 +16,9 @@ include:
   - project: 'bots/trivy-script'
     file: 'trivy-template-job.yml'
 
-stages:
-  - docker
+stages:  
   - deploy
+  - docker
   - build
   - sast 
   - test

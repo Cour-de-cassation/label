@@ -17,8 +17,8 @@ include:
     file: 'trivy-template-job.yml'
 
 stages:  
-  - deploy
   - docker
+  - deploy
   - build
   - sast 
   - test
@@ -165,7 +165,7 @@ docker:client:
     - recette
     - label-vmsso
     - label-rec
-    - label-dbsder-legacy1
+    - label-dbsder-legacy
 
 trivy:backend:
   extends: [".trivy-scan"]

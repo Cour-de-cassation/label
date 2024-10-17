@@ -11,6 +11,7 @@ import { statisticService } from '../../modules/statistic';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { exporterConfigType } from './exporterConfigType';
+import { PublishStatus } from 'dbsder-api-types';
 
 export { buildExporter };
 

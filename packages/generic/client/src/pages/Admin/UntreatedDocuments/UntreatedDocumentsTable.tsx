@@ -15,6 +15,7 @@ import { useAlert } from '../../../services/alert';
 import { localStorage, untreatedDocumentOrderByProperties } from '../../../services/localStorage';
 import { wordings } from '../../../wordings';
 import { routes } from '../../routes';
+import { useCtxUser } from '../../../contexts/user.context';
 
 export { UntreatedDocumentsTable };
 
@@ -34,6 +35,11 @@ function UntreatedDocumentsTable(props: {
   const orderDirection = localStorage.untreatedDocumentsStateHandler.getOrderDirection();
   const styles = buildStyles(theme);
   const fields = buildUntreatedDocumentsFields();
+
+  const { user, loading } = useCtxUser();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div style={styles.container}>
@@ -65,7 +71,7 @@ function UntreatedDocumentsTable(props: {
   }
 
   function buildOptionItems(untreatedDocument: apiRouteOutType<'get', 'untreatedDocuments'>[number]) {
-    const userRole = localStorage.userHandler.getRole();
+    const userRole = user?.role;
     const adminView = localStorage.adminViewHandler.get();
 
     const openAnonymizedDocumentOptionItem = {
@@ -132,11 +138,13 @@ function UntreatedDocumentsTable(props: {
 
   async function onConfirmUpdateDocumentStatus(documentIdToUpdateStatus: documentType['_id']) {
     setDocumentIdToUpdateStatus(undefined);
-    const userId = localStorage.userHandler.getId();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const userId = (user?._id as unknown) as any;
     if (!userId) {
       displayAlert({ text: wordings.business.errors.noUserIdFound, variant: 'alert', autoHide: true });
       return;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     await releaseAndAssignDocumentToUser({ userId, documentId: documentIdToUpdateStatus });
   }
 

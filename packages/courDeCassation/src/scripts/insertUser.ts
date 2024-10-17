@@ -4,11 +4,11 @@ import { parametersHandler } from '../lib/parametersHandler';
 
 (async () => {
   const { settings } = await parametersHandler.getParameters();
-  const { email, name, password, role } = parseArgv();
+  const { email, name, role } = parseArgv();
   const backend = buildBackend(settings);
 
   await backend.runScript(
-    () => backend.scripts.insertUser.run({ email, name, password, role }),
+    () => backend.scripts.insertUser.run({ email, name, role }),
     backend.scripts.insertUser.option,
   );
 })();
@@ -26,11 +26,6 @@ function parseArgv() {
         description: 'Name of the new user',
         type: 'array',
       },
-      password: {
-        demandOption: true,
-        description: 'Password of the new user',
-        type: 'string',
-      },
       role: {
         demandOption: true,
         description: 'Role of the new user (must be "admin" or "annotator")',
@@ -46,8 +41,7 @@ function parseArgv() {
 
   return {
     email: argv.email as string,
-    name: (argv.name as string[]).join(' ') as string,
-    password: argv.password as string,
+    name: (argv.name as string[]).join(' '),
     role: argv.role as 'admin' | 'annotator',
   };
 }

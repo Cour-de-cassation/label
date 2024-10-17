@@ -49,11 +49,11 @@ type ressourceFiltersType = {
 };
 
 function AdminInfosDataFetcher(props: {
-  children: (fetched: {
-    adminInfos: adminInfosType;
-    refetch: refetchInfosType;
-    isLoading: isLoadingInfosType;
-    ressourceFilters: ressourceFiltersType;
+  readonly children: (fetched: {
+    readonly adminInfos: adminInfosType;
+    readonly refetch: refetchInfosType;
+    readonly isLoading: isLoadingInfosType;
+    readonly ressourceFilters: ressourceFiltersType;
   }) => ReactElement;
 }) {
   return (

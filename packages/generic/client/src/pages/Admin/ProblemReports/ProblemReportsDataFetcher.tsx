@@ -6,8 +6,8 @@ import { DataFetcher } from '../../DataFetcher';
 export { ProblemReportsDataFetcher };
 
 function ProblemReportsDataFetcher(props: {
-  children: (fetched: {
-    problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
+  readonly children: (fetched: {
+    readonly problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
     refetch: () => void;
     isLoading: boolean;
   }) => ReactElement;

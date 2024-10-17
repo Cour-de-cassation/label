@@ -99,6 +99,7 @@ LABEL permet de lier des annotations. Parfois les noms sont écrits en minuscule
 - Avril 2022 : Ajout des décisions des Cours d'appel en matière civile, sociale et commerciale (base de données JuriCA).
 - Décembre 2023 : Ajout des décisions de 9 tribunaux judiciaires.
 - Courant 2024-2025 : Ajout des décisions de l'ensemble les tribunaux judiciaires.
+- Septembre 2024: Connection de LABEL au SSO/LDAP du ministère
 
 Prochaines étapes:
 
@@ -125,3 +126,37 @@ LABEL a été conçu pour être réutiliser dans n'importe quel contexte d'annot
 - `generic` : tout ce qui n'est pas lié aux besoins propres à la Cour de cassation
 
 Lisez [le guide de réutilisation](docs/reuserGuide.md) pour en savoir plus.
+
+
+## Authentification
+
+<section style="min-height:200px">
+
+LABEL s'interface avec le SSO Pages Blanches pour assurer l'authentification des utilisateurs via le protocole SAML 2. 
+
+Le schéma ci-dessous illustre le flux d'authentification.
+
+<img src="docs/images/LABEL_auth_workflow.png" alt="Label auth workflow" />
+
+1. Lorsqu'un utilisateur accède à LABEL, le frontend interroge le backend pour vérifier son authentification. Si l'utilisateur n'est pas authentifié, le backend redirige vers le fournisseur d'identité (IdP) avec les paramètres nécessaires.
+
+
+2. L'utilisateur se connecte sur la page SSO et, après authentification, le fournisseur d'identité génère et envoie une assertion SAML au backend de LABEL via l'URL de l'ACS.
+
+
+3. Le backend valide l'assertion SAML pour garantir l'intégrité des données et la conformité de la signature numérique.
+
+
+4. Après validation, l'accès aux ressources sécurisées est accordé, permettant à l'utilisateur de poursuivre sa session authentifiée.</section>
+</section>
+
+> L'application LABEL utilise le module SSO comme dépendance pour son intégration avec le système d'authentification unique (SSO). Les spécificités de cette intégration sont documentées dans le [readme](packages/generic/sso/README.md) du module SSO.
+
+Le backend expose les URLs suivantes pour interagir avec le SSO :
+
+> 1. **/api/sso/login** : Endpoint pour initier le processus de connexion via SSO
+> 2. **/api/sso/acs** : Endpoint pour le traitement des assertions SAML suite à une authentification réussie.
+> 2. **/api/sso/logout** : Endpoint pour déconnecter l'utilisateur du SSO.
+> 3. **/api/sso/metadata** : Endpoint pour récupérer les métadonnées du service SSO, incluant les configurations nécessaires pour l'authentification.
+
+Les attributs renvoyés par le SSO, ainsi que les rôles utilisés par l'application, sont spécifiés dans le fichier de configuration

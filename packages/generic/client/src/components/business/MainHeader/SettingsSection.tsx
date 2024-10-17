@@ -3,7 +3,7 @@ import { useCustomTheme, customThemeType, Text } from 'pelta-design-system';
 
 export { SettingsSection };
 
-function SettingsSection(props: { content: ReactElement; title: string }) {
+function SettingsSection(props: { readonly content: ReactElement; readonly title: string }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 

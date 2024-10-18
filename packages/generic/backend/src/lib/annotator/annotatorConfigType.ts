@@ -5,7 +5,7 @@ import {
   idType,
   settingsType,
 } from '@label/core';
-import {LabelTreatment} from "dbsder-api-types";
+import { LabelTreatment } from 'dbsder-api-types';
 
 export type { annotatorConfigType };
 

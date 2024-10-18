@@ -1,7 +1,7 @@
 import { documentType, settingsType } from '@label/core';
 import { buildNlpApi } from './api';
 import { nlpMapper } from './mapper';
-import {LabelTreatment} from "dbsder-api-types";
+import { LabelTreatment } from 'dbsder-api-types';
 
 export { buildNlpFetcher };
 

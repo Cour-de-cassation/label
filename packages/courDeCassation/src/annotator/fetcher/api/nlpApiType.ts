@@ -1,6 +1,5 @@
-
 import { documentType, settingsType } from '@label/core';
-import {LabelTreatment} from "dbsder-api-types";
+import { LabelTreatment } from 'dbsder-api-types';
 
 export type { nlpApiType, nlpResponseType, nlpLossType, nlpVersion };
 

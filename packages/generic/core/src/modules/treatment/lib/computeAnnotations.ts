@@ -4,7 +4,7 @@ import { idModule } from '../../id';
 import { treatmentType } from '../treatmentType';
 import { assertTreatmentsSourcesFollowRightOrder } from './assertTreatmentsSourcesFollowRightOrder';
 import { sortInConsistentOrder } from './sortInConsistentOrder';
-import {Annotation} from "dbsder-api-types";
+import { Annotation } from 'dbsder-api-types';
 
 export { computeAnnotations, computeAnnotationsDiff };
 

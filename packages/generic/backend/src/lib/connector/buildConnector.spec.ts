@@ -3,6 +3,7 @@ import { dateBuilder, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildConnector } from './buildConnector';
 import { buildFakeConnectorWithNDecisions } from './buildFakeConnector';
+import { LabelStatus, Sources } from 'dbsder-api-types';
 
 describe('buildConnector', () => {
   let documentRepository = buildDocumentRepository();
@@ -21,7 +22,21 @@ describe('buildConnector', () => {
           return {
             sourceId,
             dateDecision: dateDecision.toISOString(),
-            sourceName: 'jurinet',
+            sourceName: Sources.CC,
+            labelStatus: LabelStatus.TOBETREATED,
+            dateCreation: dateDecision.toISOString(),
+            appeals: [],
+            chamberId: '',
+            chamberName: '',
+            jurisdictionCode: '',
+            jurisdictionName: '',
+            jurisdictionId: '',
+            registerNumber: 0,
+            occultation: {
+              additionalTerms: '',
+              categoriesToOmit: [],
+              motivationOccultation: false,
+            },
           };
         }),
       );
@@ -51,7 +66,7 @@ describe('buildConnector', () => {
           return {
             sourceId,
             dateCreation: dateCreation.toISOString(),
-            sourceName: 'jurinet',
+            sourceName: Sources.CC,
           };
         }),
       );
@@ -82,7 +97,7 @@ describe('buildConnector', () => {
           return {
             sourceId,
             dateCreation: dateCreation.toISOString(),
-            sourceName: 'jurinet',
+            sourceName: Sources.CC,
           };
         }),
       );
@@ -119,7 +134,7 @@ describe('buildConnector', () => {
           return {
             sourceId,
             dateDecision: dateDecision.toISOString(),
-            sourceName: 'jurica',
+            sourceName: Sources.CA,
           };
         }),
       );
@@ -146,7 +161,7 @@ describe('buildConnector', () => {
     it('should not import documents', async () => {
       const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId) => ({ sourceId, sourceName: 'jurica' })),
+        sourceIds.map((sourceId) => ({ sourceId, sourceName: Sources.CA })),
       );
       const connector = buildConnector(fakeConnector);
       const initialCourtDecisions = fakeConnector.fetchAllCourtDecisions();
@@ -179,7 +194,7 @@ describe('buildConnector', () => {
           return {
             sourceId,
             dateDecision: dateDecision.toISOString(),
-            sourceName: 'jurica',
+            sourceName: Sources.CA,
           };
         }),
       );
@@ -210,7 +225,7 @@ describe('buildConnector', () => {
     it('should not import documents', async () => {
       const sourceIds = range(5).map(() => Math.floor(Math.random() * 10000));
       const fakeConnector = await buildFakeConnectorWithNDecisions(
-        sourceIds.map((sourceId) => ({ sourceId, sourceName: 'jurica' })),
+        sourceIds.map((sourceId) => ({ sourceId, sourceName: Sources.CA })),
       );
       const connector = buildConnector(fakeConnector);
       const initialCourtDecisions = fakeConnector.fetchAllCourtDecisions();
@@ -243,7 +258,7 @@ describe('buildConnector', () => {
           return {
             sourceId,
             dateDecision: dateDecision.toISOString(),
-            sourceName: 'jurica',
+            sourceName: Sources.CA,
           };
         }),
       );

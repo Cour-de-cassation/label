@@ -1,8 +1,6 @@
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
-import { decisionModule, decisionType } from 'sder';
-import { idModule } from '@label/core';
 import { sderApiType } from './sderApiType';
-import { logger } from '@label/backend';
+import { DecisionTJDTO } from 'dbsder-api-types';
 
 export { sderApi };
 
@@ -25,7 +23,7 @@ async function fetchApi({
     },
   })
     .then((response: AxiosResponse) => {
-      if (response.status != 200) {
+      if (response.status != 200 && response.status != 204) {
         throw new Error(`${response.status} ${response.statusText}`);
       } else {
         return response.data as Record<string, unknown>;
@@ -49,52 +47,71 @@ const sderApi: sderApiType = {
     jurisdictions,
     chambers,
   }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      logger.log({
-        operationName:
-          'fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween',
-        msg:
-          'Warning: The method fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween is not implemented for the db_api, switching to Mongo request',
-      });
+    const decisionList = ((await fetchApi({
+      method: 'get',
+      path: `decisions?status=toBeTreated&sourceName=${source}&startDate=${
+        startDate.toISOString().split('T')[0]
+      }&endDate=${endDate.toISOString().split('T')[0]}`,
+      body: {},
+    })) as unknown) as {
+      _id: string;
+      status: string;
+      source: string;
+      dateCreation: string;
+    }[];
+    const decisions: DecisionTJDTO[] = [];
+    for (const decisionRef of decisionList) {
+      if (decisionRef['status'] == 'toBeTreated') {
+        const decision = ((await fetchApi({
+          method: 'get',
+          path: `decisions/${decisionRef['_id']}`,
+          body: {},
+        })) as unknown) as DecisionTJDTO;
+        decisions.push(decision);
+      }
     }
-    return await decisionModule.service.fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween(
-      { startDate, endDate, jurisdictions, chambers, source },
-    );
+    return decisions.filter((item) => {
+      // Check for jurisdiction match
+      const jurisdictionMatch =
+        jurisdictions.includes(item.jurisdictionCode) ||
+        jurisdictions.includes(item.jurisdictionId) ||
+        jurisdictions.includes(item.jurisdictionName);
+
+      // Check for chamber match
+      const chamberMatch =
+        chambers.includes(item.chamberId) ||
+        chambers.includes(item.chamberName);
+
+      // Return true if both match
+      return jurisdictionMatch && chamberMatch;
+    });
   },
 
   async fetchDecisionsToPseudonymiseBetween({ startDate, endDate, source }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      const decisionList = ((await fetchApi({
-        method: 'get',
-        path: `decisions?status=toBeTreated&source=${source}&startDate=${
-          startDate.toISOString().split('T')[0]
-        }&endDate=${endDate.toISOString().split('T')[0]}`,
-        body: {},
-      })) as unknown) as {
-        _id: string;
-        status: string;
-        source: string;
-        dateCreation: string;
-      }[];
-      const decisions: decisionType[] = [];
-      for (const decisionRef of decisionList) {
-        if (decisionRef['status'] == 'toBeTreated') {
-          const decision = (await fetchApi({
-            method: 'get',
-            path: `decisions/${decisionRef['_id']}`,
-            body: {},
-          })) as decisionType;
-          decisions.push(decision);
-        }
+    const decisionList = ((await fetchApi({
+      method: 'get',
+      path: `decisions?status=toBeTreated&sourceName=${source}&startDate=${
+        startDate.toISOString().split('T')[0]
+      }&endDate=${endDate.toISOString().split('T')[0]}`,
+      body: {},
+    })) as unknown) as {
+      _id: string;
+      status: string;
+      source: string;
+      dateCreation: string;
+    }[];
+    const decisions: DecisionTJDTO[] = [];
+    for (const decisionRef of decisionList) {
+      if (decisionRef['status'] == 'toBeTreated') {
+        const decision = ((await fetchApi({
+          method: 'get',
+          path: `decisions/${decisionRef['_id']}`,
+          body: {},
+        })) as unknown) as DecisionTJDTO;
+        decisions.push(decision);
       }
-      return decisions;
-    } else {
-      return await decisionModule.service.fetchDecisionsToPseudonymiseBetween({
-        startDate,
-        endDate,
-        source,
-      });
     }
+    return decisions;
   },
 
   async fetchDecisionsToPseudonymiseBetweenDateCreation({
@@ -103,150 +120,134 @@ const sderApi: sderApiType = {
     endDate,
     source,
   }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      const decisionList = ((await fetchApi({
-        method: 'get',
-        path: `decisions?status=toBeTreated&source=${source}&startDate=${
-          startDate.toISOString().split('T')[0]
-        }&endDate=${endDate.toISOString().split('T')[0]}`,
-        body: {},
-      })) as unknown) as {
-        _id: string;
-        status: string;
-        source: string;
-        dateCreation: string;
-      }[];
-      const decisions: decisionType[] = [];
-      for (const decisionRef of decisionList) {
-        if (decisionRef['status'] == 'toBeTreated') {
-          const decision = (await fetchApi({
-            method: 'get',
-            path: `decisions/${decisionRef['_id']}`,
-            body: {},
-          })) as decisionType;
-          decisions.push(decision);
-        }
+    const decisionList = ((await fetchApi({
+      method: 'get',
+      path: `decisions?status=toBeTreated&sourceName=${source}&startDate=${
+        startDate.toISOString().split('T')[0]
+      }&endDate=${endDate.toISOString().split('T')[0]}`,
+      body: {},
+    })) as unknown) as {
+      _id: string;
+      status: string;
+      source: string;
+      dateCreation: string;
+    }[];
+    const decisions: DecisionTJDTO[] = [];
+    for (const decisionRef of decisionList) {
+      if (decisionRef['status'] == 'toBeTreated') {
+        const decision = ((await fetchApi({
+          method: 'get',
+          path: `decisions/${decisionRef['_id']}`,
+          body: {},
+        })) as unknown) as DecisionTJDTO;
+        decisions.push(decision);
       }
-      return decisions;
-    } else {
-      return decisionModule.service.fetchDecisionsToPseudonymiseBetweenDateCreation(
-        {
-          startDate,
-          endDate,
-          source,
-        },
-      );
     }
+    return decisions;
   },
 
   async fetchChainedJuricaDecisionsToPseudonymiseBetween({
     startDate,
     endDate,
   }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      logger.log({
-        operationName: 'fetchChainedJuricaDecisionsToPseudonymiseBetween',
-        msg:
-          'Warning: The method fetchChainedJuricaDecisionsToPseudonymiseBetween is not implemented for the db_api, switching to Mongo request',
-      });
+    const decisionList = ((await fetchApi({
+      method: 'get',
+      path: `decisions?status=toBeTreated&startDate=${
+        startDate.toISOString().split('T')[0]
+      }&endDate=${endDate.toISOString().split('T')[0]}`,
+      body: {},
+    })) as unknown) as {
+      _id: string;
+      status: string;
+      source: string;
+      dateCreation: string;
+    }[];
+    const decisions: DecisionTJDTO[] = [];
+    for (const decisionRef of decisionList) {
+      if (decisionRef['status'] == 'toBeTreated') {
+        const decision = await fetchApi({
+          method: 'get',
+          path: `decisions/${decisionRef['_id']}`,
+          body: {},
+        });
+        if (
+          decision['decisionAssociee'] != null &&
+          decision['decisionAssociee'] != undefined
+        ) {
+          decisions.push((decision as unknown) as DecisionTJDTO);
+        }
+      }
     }
-    return await decisionModule.service.fetchChainedJuricaDecisionsToPseudonymiseBetween(
-      { startDate, endDate },
-    );
+    return decisions;
   },
 
   async fetchCourtDecisionById({ id }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      return ((await fetchApi({
-        method: 'get',
-        path: `decisions/${id}/`,
-        body: {},
-      })) as unknown) as Promise<decisionType>;
-    } else {
-      return decisionModule.service.fetchCourtDecisionById(id);
-    }
+    return ((await fetchApi({
+      method: 'get',
+      path: `decisions/${id}/`,
+      body: {},
+    })) as unknown) as Promise<DecisionTJDTO>;
   },
 
   async fetchCourtDecisionBySourceIdAndSourceName({ sourceId, sourceName }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      logger.log({
-        operationName: 'fetchCourtDecisionBySourceIdAndSourceName',
-        msg:
-          'Warning: The method fetchCourtDecisionBySourceIdAndSourceName is not implemented for the db_api, switching to Mongo request',
-      });
+    const decisionList = ((await fetchApi({
+      method: 'get',
+      path: `decisions?status=toBeTreated&sourceId=${sourceId}&sourceName=${sourceName}`,
+      body: {},
+    })) as unknown) as {
+      _id: string;
+      status: string;
+      source: string;
+      dateCreation: string;
+    }[];
+    const decisions: DecisionTJDTO[] = [];
+    for (const decisionRef of decisionList) {
+      if (decisionRef['status'] == 'toBeTreated') {
+        const decision = ((await fetchApi({
+          method: 'get',
+          path: `decisions/${decisionRef['_id']}`,
+          body: {},
+        })) as unknown) as DecisionTJDTO;
+        decisions.push(decision);
+      }
     }
-    return decisionModule.service.fetchDecisionBySourceIdAndSourceName(
-      sourceId,
-      sourceName,
-    );
+    return decisions.length > 0 ? decisions[0] : undefined;
   },
 
   async setCourtDecisionsLoaded({ documents }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      documents.forEach(async (document) => {
-        await fetchApi({
-          method: 'put',
-          path: `decisions/${document.externalId}/`,
-          body: { statut: 'loaded' },
-        });
+    documents.forEach(async (document) => {
+      await fetchApi({
+        method: 'put',
+        path: `decisions/${document.externalId}/`,
+        body: { statut: 'loaded' },
       });
-    } else {
-      await decisionModule.service.updateDecisionsLabelStatus({
-        decisionIds: documents.map((document) =>
-          idModule.lib.buildId(document.externalId),
-        ),
-        labelStatus: 'loaded',
-      });
-    }
+    });
   },
 
   async setCourtDecisionsToBeTreated({ documents }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      documents.forEach(async (document) => {
-        await fetchApi({
-          method: 'put',
-          path: `decisions/${document.externalId}/`,
-          body: { statut: 'toBeTreated' },
-        });
+    documents.forEach(async (document) => {
+      await fetchApi({
+        method: 'put',
+        path: `decisions/${document.externalId}/`,
+        body: { statut: 'toBeTreated' },
       });
-    } else {
-      await decisionModule.service.updateDecisionsLabelStatus({
-        decisionIds: documents.map((document) =>
-          idModule.lib.buildId(document.externalId),
-        ),
-        labelStatus: 'toBeTreated',
-      });
-    }
+    });
   },
 
   async setCourtDecisionDone({ externalId }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      await fetchApi({
-        method: 'put',
-        path: `decisions/${externalId}/`,
-        body: { statut: 'done' },
-      });
-    } else {
-      await decisionModule.service.updateDecisionsLabelStatus({
-        decisionIds: [idModule.lib.buildId(externalId)],
-        labelStatus: 'done',
-      });
-    }
+    await fetchApi({
+      method: 'put',
+      path: `decisions/${externalId}/`,
+      body: { statut: 'done' },
+    });
   },
 
   async setCourtDecisionBlocked({ externalId }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      await fetchApi({
-        method: 'put',
-        path: `decisions/${externalId}/`,
-        body: { statut: 'blocked' },
-      });
-    } else {
-      await decisionModule.service.updateDecisionsLabelStatus({
-        decisionIds: [idModule.lib.buildId(externalId)],
-        labelStatus: 'blocked',
-      });
-    }
+    await fetchApi({
+      method: 'put',
+      path: `decisions/${externalId}/`,
+      body: { statut: 'blocked' },
+    });
   },
 
   async updateDecisionPseudonymisation({
@@ -257,24 +258,21 @@ const sderApi: sderApiType = {
   }) {
     //TODO : include publishStatus to dbsder api call
     //TODO : manage labelTreatments before sending to dbsder-api (like in sder updateDecisionPseudonymisation function)
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      await fetchApi({
-        method: 'put',
-        path: `decisions/${externalId}/rapports-occultations`,
-        body: { rapportsOccultations: labelTreatments },
-      });
-      await fetchApi({
-        method: 'put',
-        path: `decisions/${externalId}/decision-pseudonymisee`,
-        body: { decisionPseudonymisee: pseudonymizationText },
-      });
-    } else {
-      await decisionModule.service.updateDecisionPseudonymisation({
-        decisionId: idModule.lib.buildId(externalId),
-        decisionPseudonymisedText: pseudonymizationText,
-        labelTreatments,
-        publishStatus,
-      });
-    }
+    await fetchApi({
+      method: 'put',
+      path: `decisions/${externalId}/rapports-occultations`,
+      body: {
+        rapportsOccultations: labelTreatments,
+        publishStatus: publishStatus,
+      },
+    });
+    await fetchApi({
+      method: 'put',
+      path: `decisions/${externalId}/decision-pseudonymisee`,
+      body: {
+        decisionPseudonymisee: pseudonymizationText,
+        publishStatus: publishStatus,
+      },
+    });
   },
 };

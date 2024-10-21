@@ -2,6 +2,7 @@ import yargs from 'yargs';
 import { buildBackend } from '@label/backend';
 import { sderConnector } from '../connector';
 import { parametersHandler } from '../lib/parametersHandler';
+import { Sources } from 'dbsder-api-types';
 
 (async () => {
   const { settings } = await parametersHandler.getParameters();
@@ -35,7 +36,7 @@ async function autoImportDocumentsFromSder({
   await sderConnector.importNewDocuments({
     documentsCount: count,
     threshold,
-    sources: sourcesArr,
+    sources: sourcesArr as Sources[],
   });
 }
 

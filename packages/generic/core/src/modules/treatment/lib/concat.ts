@@ -1,11 +1,11 @@
 import { treatmentType } from '..';
-import { labelTreatmentsType } from 'sder';
 import { computeAnnotations } from './computeAnnotations';
 import { documentType } from '../../document/documentType';
+import { LabelTreatment } from 'dbsder-api-types';
 
 export { concat };
 
-function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVersions']): labelTreatmentsType {
+function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVersions']): LabelTreatment {
   const labelTreatments = [];
 
   const sortedTreatments = treatments.sort((treatment1, treatment2) => treatment1.order - treatment2.order);
@@ -31,7 +31,7 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
     labelTreatment.order = index + 1;
   });
 
-  return labelTreatments;
+  return (labelTreatments as unknown) as LabelTreatment;
 
   function computeSource(source: treatmentType['source']) {
     switch (source) {

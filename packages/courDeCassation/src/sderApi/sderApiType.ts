@@ -1,6 +1,5 @@
-import { decisionType, publishStatusType } from 'sder';
 import { documentType } from '@label/core';
-import { labelTreatmentsType } from 'sder';
+import { DecisionTJDTO, LabelTreatment, PublishStatus } from 'dbsder-api-types';
 
 export type { sderApiType };
 
@@ -8,31 +7,31 @@ type sderApiType = {
   fetchChainedJuricaDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
-  }) => Promise<Array<decisionType>>;
+  }) => Promise<Array<DecisionTJDTO>>;
   fetchCourtDecisionById: (param: {
-    id: decisionType['_id'];
-  }) => Promise<decisionType>;
+    id: DecisionTJDTO['_id'];
+  }) => Promise<DecisionTJDTO>;
   fetchDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
     source: 'jurinet' | 'jurica' | 'juritj';
-  }) => Promise<Array<decisionType>>;
+  }) => Promise<Array<DecisionTJDTO>>;
   fetchDecisionsToPseudonymiseBetweenDateCreation: (param: {
     startDate: Date;
     endDate: Date;
     source: 'jurinet' | 'jurica' | 'juritj';
-  }) => Promise<Array<decisionType>>;
+  }) => Promise<Array<DecisionTJDTO>>;
   fetchCourtDecisionBySourceIdAndSourceName: (param: {
-    sourceId: decisionType['sourceId'];
-    sourceName: decisionType['sourceName'];
-  }) => Promise<decisionType | undefined>;
+    sourceId: DecisionTJDTO['sourceId'];
+    sourceName: DecisionTJDTO['sourceName'];
+  }) => Promise<DecisionTJDTO | undefined>;
   fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
     startDate: Date;
     endDate: Date;
     source: string;
     jurisdictions: string[];
     chambers: string[];
-  }) => Promise<decisionType[]>;
+  }) => Promise<DecisionTJDTO[]>;
   setCourtDecisionsLoaded: (param: {
     documents: Array<documentType>;
   }) => Promise<void>;
@@ -48,7 +47,7 @@ type sderApiType = {
   updateDecisionPseudonymisation: (param: {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
-    labelTreatments: labelTreatmentsType;
-    publishStatus?: publishStatusType;
+    labelTreatments: LabelTreatment;
+    publishStatus?: PublishStatus;
   }) => Promise<void>;
 };

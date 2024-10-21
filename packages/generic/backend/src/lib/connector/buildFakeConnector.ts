@@ -1,11 +1,12 @@
-import { decisionModule, decisionType } from 'sder';
 import { documentModule, documentType, idModule } from '@label/core';
+import { DecisionTJDTO, LabelStatus, Sources } from 'dbsder-api-types';
+import { generateDecision } from './generateDecision';
 
 export { buildFakeConnectorWithNDecisions };
 
 type partialDecisionType = Partial<
   Pick<
-    decisionType,
+    DecisionTJDTO,
     'labelStatus' | 'sourceName' | 'dateDecision' | 'dateCreation' | 'sourceId'
   >
 >;
@@ -16,7 +17,7 @@ async function buildFakeConnectorWithNDecisions(
 ) {
   let courtDecisions = courtDecisionFields.map(
     ({ sourceName, labelStatus, dateDecision, dateCreation, sourceId }) =>
-      decisionModule.lib.generateDecision({
+      generateDecision({
         sourceName,
         labelStatus,
         dateDecision,
@@ -85,7 +86,7 @@ async function buildFakeConnectorWithNDecisions(
         const dateDecision = new Date(courtDecision.dateDecision);
 
         return (
-          courtDecision.sourceName === 'jurica' &&
+          courtDecision.sourceName === Sources.CA &&
           dateDecision.getTime() >= startDate.getTime() &&
           dateDecision.getTime() <= endDate.getTime()
         );
@@ -98,7 +99,7 @@ async function buildFakeConnectorWithNDecisions(
     }: {
       startDate: Date;
       endDate: Date;
-      source: 'jurinet' | 'jurica' | 'juritj';
+      source: Sources;
     }) {
       return courtDecisions.filter((courtDecision) => {
         if (!courtDecision.dateDecision) {
@@ -120,7 +121,7 @@ async function buildFakeConnectorWithNDecisions(
     }: {
       startDate: Date;
       endDate: Date;
-      source: 'jurinet' | 'jurica' | 'juritj';
+      source: Sources;
     }) {
       return courtDecisions.filter((courtDecision) => {
         if (!courtDecision.dateCreation) {
@@ -145,11 +146,11 @@ async function buildFakeConnectorWithNDecisions(
           documents.some((document) =>
             idModule.lib.equalId(
               idModule.lib.buildId(document.externalId),
-              courtDecision._id,
+              idModule.lib.buildId(courtDecision._id),
             ),
           )
         ) {
-          return { ...courtDecision, labelStatus: 'loaded' };
+          return { ...courtDecision, labelStatus: LabelStatus.LOADED };
         }
         return courtDecision;
       });
@@ -164,11 +165,11 @@ async function buildFakeConnectorWithNDecisions(
           documents.some((document) =>
             idModule.lib.equalId(
               idModule.lib.buildId(document.externalId),
-              courtDecision._id,
+              idModule.lib.buildId(courtDecision._id),
             ),
           )
         ) {
-          return { ...courtDecision, labelStatus: 'toBeTreated' };
+          return { ...courtDecision, labelStatus: LabelStatus.TOBETREATED };
         }
         return courtDecision;
       });
@@ -179,21 +180,21 @@ async function buildFakeConnectorWithNDecisions(
 }
 
 const fakeSderMapper = {
-  mapDocumentToCourtDecision(document: documentType): decisionType {
-    return decisionModule.lib.generateDecision({
-      labelStatus: 'loaded',
-      _id: idModule.lib.buildId(document.externalId),
+  mapDocumentToCourtDecision(document: documentType): DecisionTJDTO {
+    return (({
+      labelStatus: LabelStatus.LOADED,
+      _id: idModule.lib.convertToString(document.externalId),
       sourceId: document.documentNumber,
-      sourceName: document.source,
+      sourceName: document.source as Sources,
       decatt: document.decisionMetadata.boundDecisionDocumentNumbers,
-    });
+    } as unknown) as any) as DecisionTJDTO;
   },
-  mapCourtDecisionToDocument(courtDecision: decisionType) {
+  mapCourtDecisionToDocument(courtDecision: DecisionTJDTO) {
     return new Promise(function executor(resolve) {
       resolve(
         documentModule.generator.generate({
-          status: 'loaded',
-          externalId: idModule.lib.convertToString(courtDecision._id),
+          status: LabelStatus.LOADED,
+          externalId: idModule.lib.convertToString(courtDecision._id ?? ''),
           documentNumber: courtDecision.sourceId,
           source: courtDecision.sourceName,
         }),

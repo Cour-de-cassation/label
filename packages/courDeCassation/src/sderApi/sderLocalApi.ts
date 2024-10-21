@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
-import { decisionType } from 'sder';
 import { idModule } from '@label/core';
 import { fileSystem, logger } from '@label/backend';
 import { sderApiType } from './sderApiType';
+import { DecisionTJDTO } from 'dbsder-api-types';
 
 export { sderLocalApi };
 
@@ -27,7 +27,7 @@ async function fetchApi({
     },
   })
     .then((response: AxiosResponse) => {
-      if (response.status != 200) {
+      if (response.status != 200 && response.status != 204) {
         throw new Error(`${response.status} ${response.statusText}`);
       } else {
         return response.data as Record<string, unknown>;
@@ -56,10 +56,10 @@ const sderLocalApi: sderApiType = {
     );
 
     return courtDecisions.map(({ content }) => {
-      const parsedContent = JSON.parse(content) as decisionType;
+      const parsedContent = JSON.parse(content) as DecisionTJDTO;
       return {
         ...parsedContent,
-        _id: idModule.lib.buildId(),
+        _id: idModule.lib.buildId().toString(),
         dateDecision: parsedContent.dateDecision,
       };
     });
@@ -79,14 +79,14 @@ const sderLocalApi: sderApiType = {
         source: string;
         dateCreation: string;
       }[];
-      const decisions: decisionType[] = [];
+      const decisions: DecisionTJDTO[] = [];
       for (const decisionRef of decisionList) {
         if (decisionRef['status'] == 'toBeTreated') {
-          const decision = (await fetchApi({
+          const decision = ((await fetchApi({
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-          })) as decisionType;
+          })) as unknown) as DecisionTJDTO;
           decisions.push(decision);
         }
       }
@@ -103,10 +103,10 @@ const sderLocalApi: sderApiType = {
       );
 
       const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-        const parsedContent = JSON.parse(content) as decisionType;
+        const parsedContent = JSON.parse(content) as DecisionTJDTO;
         return {
           ...parsedContent,
-          _id: idModule.lib.buildId(),
+          _id: idModule.lib.buildId().toString(),
           dateDecision: parsedContent.dateDecision,
         };
       });
@@ -135,14 +135,14 @@ const sderLocalApi: sderApiType = {
         source: string;
         dateCreation: string;
       }[];
-      const decisions: decisionType[] = [];
+      const decisions: DecisionTJDTO[] = [];
       for (const decisionRef of decisionList) {
         if (decisionRef['status'] == 'toBeTreated') {
-          const decision = (await fetchApi({
+          const decision = ((await fetchApi({
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-          })) as decisionType;
+          })) as unknown) as DecisionTJDTO;
           decisions.push(decision);
         }
       }
@@ -159,10 +159,10 @@ const sderLocalApi: sderApiType = {
       );
 
       const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-        const parsedContent = JSON.parse(content) as decisionType;
+        const parsedContent = JSON.parse(content) as DecisionTJDTO;
         return {
           ...parsedContent,
-          _id: idModule.lib.buildId(),
+          _id: idModule.lib.buildId().toString(),
           dateDecision: parsedContent.dateDecision,
         };
       });
@@ -185,10 +185,10 @@ const sderLocalApi: sderApiType = {
     );
 
     return courtDecisions.map(({ content }) => {
-      const parsedContent = JSON.parse(content) as decisionType;
+      const parsedContent = JSON.parse(content) as DecisionTJDTO;
       return {
         ...parsedContent,
-        _id: idModule.lib.buildId(),
+        _id: idModule.lib.buildId().toString(),
         dateDecision: parsedContent.dateDecision,
       };
     });
@@ -200,7 +200,7 @@ const sderLocalApi: sderApiType = {
         method: 'get',
         path: `decisions/${id}`,
         body: {},
-      })) as unknown) as Promise<decisionType>;
+      })) as unknown) as Promise<DecisionTJDTO>;
     } else {
       const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
         pathToCourtDecisions,
@@ -213,16 +213,16 @@ const sderLocalApi: sderApiType = {
       );
 
       const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-        const parsedContent = JSON.parse(content) as decisionType;
+        const parsedContent = JSON.parse(content) as DecisionTJDTO;
         return {
           ...parsedContent,
           dateDecision: parsedContent.dateDecision,
         };
       });
 
-      return mappedCourtDecisions.find((courtDecision) =>
-        courtDecision._id.equals(id),
-      ) as decisionType;
+      return mappedCourtDecisions.find(
+        (courtDecision) => courtDecision._id === id,
+      ) as DecisionTJDTO;
     }
   },
 
@@ -238,7 +238,7 @@ const sderLocalApi: sderApiType = {
     );
 
     const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-      const parsedContent = JSON.parse(content) as decisionType;
+      const parsedContent = JSON.parse(content) as DecisionTJDTO;
       return {
         ...parsedContent,
         dateDecision: parsedContent.dateDecision,

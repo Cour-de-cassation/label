@@ -9,7 +9,7 @@ import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildExporter } from './buildExporter';
 import { exporterConfigType } from './exporterConfigType';
-import { labelTreatmentsType } from 'sder';
+import { LabelTreatment } from 'dbsder-api-types';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 describe('buildExporter', () => {
@@ -135,12 +135,12 @@ describe('buildExporter', () => {
 function buildFakeExporterConfig(): exporterConfigType & {
   getExportedExternalIds: () => string[];
   getExportedPseudonymizationTexts: () => string[];
-  getExportedLabelTreatments: () => labelTreatmentsType[];
+  getExportedLabelTreatments: () => LabelTreatment[];
   getLockedExternalIds: () => string[];
 } {
   const exportedExternalIds: string[] = [];
   const exportedpseudonymizationTexts: string[] = [];
-  const exportedlabelTreatments: labelTreatmentsType[] = [];
+  const exportedlabelTreatments: LabelTreatment[] = [];
   const lockedExternalIds: string[] = [];
 
   return {

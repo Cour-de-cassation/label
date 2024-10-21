@@ -18,7 +18,7 @@
     "compile:client": "lerna run --ignore @label/backend --ignore @label/cour-de-cassation compile ",
     "coverage": "lerna run test:coverage",
     "docker:build:backend": "docker compose -f docker-compose-dev.yml build",
-    "docker:start:backend": "docker compose -f docker-compose-dev.yml up",
+    "docker:start:backend": "docker compose -f docker-compose-dev.yml up -d",
     "docker:start:db": "docker compose -f docker-compose-dev.yml up -d labelDb",
     "docker:stop:db": "docker compose -f docker-compose-dev.yml down labelDb",
     "fix": "lerna run fix",
@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@lerna/filter-options": "^3.20.0",
+    "dbsder-api-types": "^1.5.0",
     "lerna": "~3.22.0"
   },
   "devDependencies": {

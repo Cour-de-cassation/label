@@ -1,0 +1,66 @@
+{
+  "name": "@label/sso",
+  "version": "1.0.0",
+  "description": "Module d'interface d'authentification SSO",
+  "author": "@open-groupe",
+  "license": "ISC",
+  "main": "dist/index",
+  "types": "dist/index",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.boost.open.global:443/cour_de_cassation/cassation_lab/label.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "RUN_MODE=TEST jest --passWithNoTests",
+    "test:watch": "RUN_MODE=TEST jest --passWithNoTests --watch",
+    "test:coverage": "RUN_MODE=TEST jest --passWithNoTests --coverage",
+    "build": "yarn clean && yarn compile",
+    "clean": "rimraf -rf ./dist",
+    "clean:all": "rimraf -rf ./dist && rimraf -rf ./node_modules",
+    "compile": "tsc -p tsconfig.json",
+    "fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "dependencies": {
+    "@authenio/samlify-node-xmllint": "^1.0.1",
+    "@nestjs/common": "^8.4.7",
+    "@nestjs/config": "^0.5.0",
+    "@nestjs/core": "8.4.7",
+    "@nestjs/platform-express": "7.6.18",
+    "body-parser": "^1.19.0",
+    "dotenv": "^16.4.5",
+    "reflect-metadata": "^0.2.1",
+    "samlify": "2.6.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/polyfill": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@nestjs/testing": "^8.4.7",
+    "@types/body-parser": "^1.19.0",
+    "@types/jest": "^26.0.13",
+    "@types/supertest": "^2.0.8",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
+    "core-js": "^3.6.5",
+    "eslint": "7.7.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "24.9.0",
+    "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
+    "supertest": "^4.0.2",
+    "ts-jest": "^29.2.5",
+    "typescript": "~4.0.0"
+  }
+}

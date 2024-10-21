@@ -17,4 +17,5 @@ package-lock.json
 /packages/courDeCassation/yarn-error.log
 *.env
 *coverage
+.history/*
 .ash-history

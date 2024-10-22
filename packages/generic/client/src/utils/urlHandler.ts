@@ -10,4 +10,14 @@ const urlHandler = {
 
     return serverPort ? `${clientProtocol}//${clientHostname}:${serverPort}` : `${clientProtocol}//${clientHostname}`;
   },
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  getSsoLoginUrl() {
+    return `${this.getApiUrl()}/label/api/sso/login`;
+  },
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  getSsoLogoutUrl() {
+    return `${this.getApiUrl()}/label/api/sso/logout`;
+  },
 };

@@ -1,6 +1,5 @@
 import { errorHandlers, httpStatusCodeHandler } from 'sder-core';
 import { apiSchema, apiRouteInType, apiRouteOutType, networkType } from '@label/core';
-import { localStorage } from '../services/localStorage';
 import { urlHandler } from '../utils';
 
 export { apiCaller };
@@ -15,13 +14,12 @@ const apiCaller = {
     data: networkType<apiRouteOutType<'get', routeNameT>>;
     statusCode: number;
   }> {
-    const bearerToken = localStorage.bearerTokenHandler.get();
-
     const response = await fetch(buildUrlWithParams(`${urlHandler.getApiUrl()}/label/api/${routeName}`, args), {
       cache: 'default',
-      headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,
+      headers: DEFAULT_HEADER,
       method: 'get',
       mode: 'cors',
+      credentials: 'include',
     });
 
     const data = (await computeDataFromResponse(response)) as networkType<apiRouteOutType<'get', routeNameT>>;
@@ -39,14 +37,13 @@ const apiCaller = {
     data: networkType<apiRouteOutType<'post', routeNameT>>;
     statusCode: number;
   }> {
-    const bearerToken = localStorage.bearerTokenHandler.get();
-
     const response = await fetch(`${urlHandler.getApiUrl()}/label/api/${routeName}`, {
       body: JSON.stringify(args),
       cache: 'default',
-      headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,
+      headers: DEFAULT_HEADER,
       method: 'post',
       mode: 'cors',
+      credentials: 'include',
     });
 
     const data = (await computeDataFromResponse(response)) as networkType<apiRouteOutType<'post', routeNameT>>;

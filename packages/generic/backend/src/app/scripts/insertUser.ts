@@ -1,5 +1,4 @@
 import { userType } from '@label/core';
-import { userService } from '../../modules/user';
 import { logger } from '../../utils';
 
 export { insertUser };
@@ -7,12 +6,10 @@ export { insertUser };
 async function insertUser({
   email,
   name,
-  password,
   role,
 }: {
   email: string;
   name: string;
-  password: string;
   role: userType['role'];
 }) {
   logger.log({
@@ -23,13 +20,6 @@ async function insertUser({
       name,
       role,
     },
-  });
-
-  await userService.signUpUser({
-    email,
-    name,
-    password,
-    role,
   });
 
   logger.log({ operationName: 'insertUser', msg: 'DONE' });

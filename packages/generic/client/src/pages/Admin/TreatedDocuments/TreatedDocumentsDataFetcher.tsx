@@ -5,13 +5,13 @@ import { DataFetcher } from '../../DataFetcher';
 
 export { TreatedDocumentsDataFetcher };
 
-function TreatedDocumentsDataFetcher(props: {
+function TreatedDocumentsDataFetcher(props: Readonly<{
   children: (fetched: {
     treatedDocuments: apiRouteOutType<'get', 'treatedDocuments'>;
     refetch: () => void;
     isLoading: boolean;
   }) => ReactElement;
-}) {
+}>) {
   const treatedDocumentsFetchInfo = useApi(buildFetchTreatedDocuments(), {});
 
   return (

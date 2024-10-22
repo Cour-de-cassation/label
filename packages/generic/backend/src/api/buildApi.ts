@@ -189,8 +189,7 @@ function buildApiSso(app: Express) {
       const url = await ssoService.acs(req);
       res.redirect(url);
     } catch (err) {
-      res
-        .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
+      res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
       res.redirect(`${API_BASE_URL}/sso/logout`);
     }
   });

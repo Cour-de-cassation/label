@@ -18,5 +18,4 @@ const userModel = buildModel({
   },
 } as const);
 
-
 type userType = buildType<typeof userModel, { id: idType }>;

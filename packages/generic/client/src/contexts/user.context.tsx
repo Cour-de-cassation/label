@@ -15,6 +15,7 @@ interface UserContextType {
 }
 const UserContext = createContext<UserContextType | null>(null);
 
+// eslint-disable-next-line react/prop-types
 export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,11 +52,9 @@ async function whoami() {
       mode: 'cors',
     });
 
-    console.warn('#################### ',JSON.stringify(await response), ' #################### ');
     if (!response.ok) {
       return null;
     }
-    console.warn('**************** ', JSON.stringify(await response), ' ****************');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await response.json();
   } catch (error) {

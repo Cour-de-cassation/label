@@ -14,7 +14,5 @@
   ],
   "coverageDirectory": "../coverage",
   "testEnvironment": "node",
-  "setupFiles": [
-    "<rootDir>/.jest/setupEnvVars.ts"
-  ]
+  "setupFiles": []
 }

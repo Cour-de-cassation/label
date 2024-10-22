@@ -1,7 +1,5 @@
 import { userModule, userType } from '@label/core';
-import {
-  buildFakeRepositoryBuilder,
-} from '../../../repository';
+import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customUserRepositoryType } from './customUserRepositoryType';
 
 export { buildFakeUserRepository };

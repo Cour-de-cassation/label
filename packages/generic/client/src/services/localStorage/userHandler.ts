@@ -25,7 +25,6 @@ function set({ _id, email, name, role }: Pick<userType, '_id' | 'email' | 'role'
   localStorageHandler.set({ key: USER_ROLE_STORAGE_KEY, value: role, mapper: localStorageMappers.string });
 }
 
-
 function remove() {
   localStorageHandler.set({ key: USER_ID_STORAGE_KEY, value: undefined, mapper: localStorageMappers.id });
   localStorageHandler.set({ key: USER_EMAIL_STORAGE_KEY, value: undefined, mapper: localStorageMappers.string });

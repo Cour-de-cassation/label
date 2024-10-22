@@ -138,7 +138,7 @@ function UntreatedDocumentsTable(props: {
 
   async function onConfirmUpdateDocumentStatus(documentIdToUpdateStatus: documentType['_id']) {
     setDocumentIdToUpdateStatus(undefined);
-    const userId = (user?._id as unknown) as any;
+    const userId = (user?._id as unknown) as userType['_id'];
     if (!userId) {
       displayAlert({ text: wordings.business.errors.noUserIdFound, variant: 'alert', autoHide: true });
       return;

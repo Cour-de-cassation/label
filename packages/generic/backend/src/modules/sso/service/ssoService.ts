@@ -1,8 +1,8 @@
 import { SamlService } from '@label/sso';
 import { buildUserRepository, userService } from '../../user';
 import { logger } from '../../../utils';
-import every  from "lodash/every";
-import includes from "lodash/includes";
+import every from 'lodash/every';
+import includes from 'lodash/includes';
 
 export { samlService };
 
@@ -62,11 +62,17 @@ export async function acs(req: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     if (err.message.includes(`No matching user for email ${extract?.nameID}`)) {
       const { attributes } = extract as Record<string, any>;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const roles = attributes[`${process.env.SSO_ATTRIBUTE_ROLE}`].map((item: string) => item.toLowerCase()) as string[];
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+      const roles = attributes[
+        `${process.env.SSO_ATTRIBUTE_ROLE}`
+      ].map((item: string) => item.toLowerCase()) as string[];
 
-      const appRoles = (process.env.SSO_APP_ROLES as string).toLowerCase().split(',');
-      const userRolesInAppRoles = every(roles, (element) => includes(appRoles, element));
+      const appRoles = (process.env.SSO_APP_ROLES as string)
+        .toLowerCase()
+        .split(',');
+      const userRolesInAppRoles = every(roles, (element) =>
+        includes(appRoles, element),
+      );
 
       if (!roles.length || !userRolesInAppRoles) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -88,11 +94,7 @@ export async function acs(req: any) {
           }`,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
         email: attributes[`${process.env.SSO_ATTRIBUTE_MAIL}`],
-        role: roles[0] as
-          | 'annotator'
-          | 'scrutator'
-          | 'admin'
-          | 'publicator',
+        role: roles[0] as 'annotator' | 'scrutator' | 'admin' | 'publicator',
       };
 
       await userService.createUser(newUser);

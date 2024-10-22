@@ -67,6 +67,8 @@ describe('SamlService', () => {
     const metadata = service.generateMetadata();
     expect(metadata).toEqual('<SPMetadata />');
     expect(samlify.ServiceProvider).toHaveBeenCalled();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+    expect(validator.validate()).toBeTruthy();
   });
 
   it('should create login request URL', async () => {

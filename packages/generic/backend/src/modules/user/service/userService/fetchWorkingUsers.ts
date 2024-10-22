@@ -10,7 +10,7 @@ async function fetchWorkingUsers() {
     throw new Error('No users found');
   }
 
-  return users.map(user => {
+  return users.map((user) => {
     const { _id, email, name, role } = user;
     return {
       _id,
@@ -20,4 +20,3 @@ async function fetchWorkingUsers() {
     };
   });
 }
-

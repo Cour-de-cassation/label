@@ -1,4 +1,9 @@
-import { apiSchema, documentType, idModule, replacementTermType } from '@label/core';
+import {
+  apiSchema,
+  documentType,
+  idModule,
+  replacementTermType,
+} from '@label/core';
 import { errorHandlers } from 'sder-core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
@@ -127,7 +132,10 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
     documentsForUser: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { documentsMaxCount } }) =>
-        documentService.fetchDocumentsForUser(idModule.lib.buildId(user._id), documentsMaxCount),
+        documentService.fetchDocumentsForUser(
+          idModule.lib.buildId(user._id),
+          documentsMaxCount,
+        ),
     }),
 
     async health() {
@@ -266,7 +274,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-
     problemReport: buildAuthenticatedController({
       permissions: ['admin', 'annotator', 'scrutator'],
       controllerWithUser: async (
@@ -289,7 +296,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-
     resetTreatmentLastUpdateDate: buildAuthenticatedController({
       permissions: ['admin', 'annotator'],
       controllerWithUser: async (user, { args: { assignationId } }) => {
@@ -297,7 +303,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(assignationId),
         );
 
-        if (!idModule.lib.equalId(idModule.lib.buildId(user._id), assignation.userId)) {
+        if (
+          !idModule.lib.equalId(
+            idModule.lib.buildId(user._id),
+            assignation.userId,
+          )
+        ) {
           throw errorHandlers.permissionErrorHandler.build(
             `User ${idModule.lib.convertToString(
               user._id,
@@ -310,8 +321,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         );
       },
     }),
-
-
 
     updateAssignationDocumentStatus: buildAuthenticatedController({
       permissions: ['admin'],
@@ -383,7 +392,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
           idModule.lib.buildId(assignationId),
         );
 
-        if (!idModule.lib.equalId(idModule.lib.buildId(user._id), assignation.userId)) {
+        if (
+          !idModule.lib.equalId(
+            idModule.lib.buildId(user._id),
+            assignation.userId,
+          )
+        ) {
           throw errorHandlers.permissionErrorHandler.build(
             `User ${idModule.lib.convertToString(
               user._id,
@@ -406,7 +420,12 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
         const assignation = await assignationService.fetchAssignation(
           idModule.lib.buildId(assignationId),
         );
-        if (!idModule.lib.equalId(idModule.lib.buildId(user._id), assignation.userId)) {
+        if (
+          !idModule.lib.equalId(
+            idModule.lib.buildId(user._id),
+            assignation.userId,
+          )
+        ) {
           throw errorHandlers.permissionErrorHandler.build(
             `User ${idModule.lib.convertToString(
               user._id,

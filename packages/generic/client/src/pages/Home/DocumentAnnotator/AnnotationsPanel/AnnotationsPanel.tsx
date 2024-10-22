@@ -7,6 +7,7 @@ import { annotationPerCategoryAndEntityType, splittedTextByLineType } from '../l
 import { CategoryTable } from './CategoryTable';
 import { EmptyCategory } from './EmptyCategory';
 import { StrickenCategory } from './StrickenCategory';
+import { Checklist } from './Checklist';
 
 export { AnnotationsPanel };
 
@@ -154,20 +155,8 @@ function AnnotationsPanel(props: {
     }
   }
 
-  function renderChecklist(checklist: string[]) {
-    return (
-      <div style={styles.checklistContainer}>
-        <div style={styles.checklistLeftContainer}>
-          <Icon iconName={'help'} />
-        </div>
-        <div style={styles.checklistRightContainer}>
-          <Text>{wordings.homePage.checklist}</Text>
-          {checklist.map((checklistElement) => (
-            <Text variant="body2">- {checklistElement}</Text>
-          ))}
-        </div>
-      </div>
-    );
+  function renderChecklist(checklist: annotationReportType['checklist']) {
+    return <Checklist checklist={checklist} splittedTextByLine={props.splittedTextByLine} />;
   }
 
   function renderPartiallyPublicWarning() {
@@ -243,22 +232,6 @@ function AnnotationsPanel(props: {
         marginRight: theme.spacing * 3,
       },
       additionalAnnotationTermsRightContainer: {
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-      },
-      checklistContainer: {
-        padding: theme.spacing * 2,
-        marginBottom: theme.spacing,
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'space-between',
-        borderRadius: theme.shape.borderRadius.l,
-      },
-      checklistLeftContainer: {
-        marginRight: theme.spacing * 3,
-      },
-      checklistRightContainer: {
         display: 'flex',
         flex: 1,
         flexDirection: 'column',

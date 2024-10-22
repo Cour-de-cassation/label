@@ -1,4 +1,4 @@
-import { annotationType } from '@label/core';
+import { annotationReportType, annotationType } from '@label/core';
 import { viewerModeType } from './viewerMode';
 
 export { buildDocumentViewerModeHandler };
@@ -13,6 +13,7 @@ type documentViewerModeHandlerType = {
     entityId: annotationType['entityId'],
     entityLineNumbers: number[],
   ) => void;
+  setChecklistMode: (check: annotationReportType['checklist'][number], entitiesLineNumbers: number[]) => void;
   switchAnonymizedView: () => void;
   documentViewerMode: viewerModeType;
 };
@@ -24,6 +25,7 @@ function buildDocumentViewerModeHandler(
   return {
     isAnonymizedView,
     setOccurrenceMode,
+    setChecklistMode,
     switchAnonymizedView,
     documentViewerMode,
     resetViewerMode,
@@ -50,6 +52,15 @@ function buildDocumentViewerModeHandler(
       category,
       entityId,
       entityLineNumbers,
+      isAnonymizedView: documentViewerMode.isAnonymizedView,
+    });
+  }
+
+  function setChecklistMode(check: annotationReportType['checklist'][number], checkLineNumbers: number[]) {
+    setViewerMode({
+      kind: 'checklist',
+      check,
+      checkLineNumbers,
       isAnonymizedView: documentViewerMode.isAnonymizedView,
     });
   }

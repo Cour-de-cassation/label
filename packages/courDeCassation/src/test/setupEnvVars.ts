@@ -26,4 +26,5 @@ process.env = {
   SSO_APP_NAME: 'LABEL',
   SSO_SP_PRIVATE_KEY: 'src/test/pk.txt',
   SSO_CERTIFICAT: 'src/test/crt.txt',
+  RUN_MODE: 'TEST',
 };

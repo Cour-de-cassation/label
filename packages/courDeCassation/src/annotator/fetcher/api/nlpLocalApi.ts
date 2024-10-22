@@ -37,7 +37,7 @@ function buildNlpLocalApi(): nlpApiType {
       return {
         ...annotations,
         entities: annotations.entities.filter((entity) =>
-          availableCategories.includes(entity.label),
+          availableCategories.includes(entity.category),
         ),
         checklist: annotations.checklist,
         newCategoriesToAnnotate: annotations.newCategoriesToAnnotate,

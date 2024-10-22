@@ -202,28 +202,7 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
       case 'occurrence':
         const { entityLineNumbers } = documentViewerModeHandler.documentViewerMode;
         const detectedLines = props.splittedTextByLine.filter(({ line }) => entityLineNumbers.includes(line));
-        const displayedLines: splittedTextByLineType = [];
-        for (const detectedLine of detectedLines) {
-          const addedLinesNumber: number[] = [];
-          while (
-            getLinesLengthByLineNumbers([detectedLine.line, ...addedLinesNumber]) < 30 &&
-            addedLinesNumber.length < 5
-          ) {
-            addedLinesNumber.push(
-              detectedLine.line + (addedLinesNumber.length / 2 + 1),
-              detectedLine.line - (addedLinesNumber.length / 2 + 1),
-            );
-          }
-          displayedLines.push(detectedLine, ...getLinesByLineNumbers(addedLinesNumber));
-        }
-        const displayedUniqueLines: splittedTextByLineType = [];
-        displayedLines.forEach(function (displayedLine) {
-          const doubledLinesCount = displayedUniqueLines.findIndex((line) => line.line == displayedLine.line);
-          if (doubledLinesCount <= -1) {
-            displayedUniqueLines.push(displayedLine);
-          }
-        });
-        return displayedUniqueLines.sort((line1, line2) => line1.line - line2.line);
+        return getDisplayedUniqueLines(detectedLines);
 
       case 'annotation':
         switch (document.route) {
@@ -239,7 +218,40 @@ function DocumentViewer(props: { splittedTextByLine: splittedTextByLineType }): 
           default:
             return props.splittedTextByLine;
         }
+
+      case 'checklist':
+        const { checkLineNumbers } = documentViewerModeHandler.documentViewerMode;
+        const detectedCheckLines = props.splittedTextByLine.filter(({ line }) => checkLineNumbers.includes(line));
+        return getDisplayedUniqueLines(detectedCheckLines);
     }
+  }
+
+  function getDisplayedUniqueLines(detectedLines: splittedTextByLineType): splittedTextByLineType {
+    const displayedLines: splittedTextByLineType = [];
+
+    detectedLines.forEach((detectedLine) => {
+      const addedLinesNumber: number[] = [];
+      while (
+        getLinesLengthByLineNumbers([detectedLine.line, ...addedLinesNumber]) < 30 &&
+        addedLinesNumber.length < 5
+      ) {
+        addedLinesNumber.push(
+          detectedLine.line + (addedLinesNumber.length / 2 + 1),
+          detectedLine.line - (addedLinesNumber.length / 2 + 1),
+        );
+      }
+      displayedLines.push(detectedLine, ...getLinesByLineNumbers(addedLinesNumber));
+    });
+
+    const displayedUniqueLines: splittedTextByLineType = [];
+    displayedLines.forEach(function (displayedLine) {
+      const doubledLinesCount = displayedUniqueLines.findIndex((line) => line.line == displayedLine.line);
+      if (doubledLinesCount <= -1) {
+        displayedUniqueLines.push(displayedLine);
+      }
+    });
+
+    return displayedUniqueLines.sort((line1, line2) => line1.line - line2.line);
   }
 
   function getLinesByLineNumbers(lineNumbers: number[]): splittedTextByLineType {

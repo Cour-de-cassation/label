@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { customThemeType, Text, useCustomTheme } from 'pelta-design-system';
+import { Checkbox, customThemeType, Text, useCustomTheme } from 'pelta-design-system';
 import { useChecklistEntryHandler } from './useChecklistEntryHandler';
 import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
 import { annotationReportType } from '@label/core';
@@ -20,6 +20,7 @@ function ChecklistEntry(props: {
     onResetViewerMode,
     splittedTextByLine,
   });
+  const [isChecked, setIsChecked] = useState(false);
 
   const selectChecklist = () => {
     const isChecklistSelected = checklistEntryHandler.isSelected(check.message);
@@ -44,13 +45,23 @@ function ChecklistEntry(props: {
       isSelected={checklistEntryHandler.isSelected(check.message)}
       onClick={selectChecklist}
     >
-      <Text variant="body2">{`- ${check.message}`}</Text>
+      <div onClick={(e) => e.stopPropagation()}>
+        <Checkbox defaultChecked={false} onChange={(checked: boolean) => setIsChecked(checked)}></Checkbox>
+      </div>
+      <Text
+        variant="body2"
+        color={isChecked ? 'textSecondary' : 'textPrimary'}
+        style={{ textDecoration: isChecked ? 'line-through' : 'none' }}
+      >
+        {check.message}
+      </Text>
     </Div_ChecklistEntry>
   );
 }
 
 const Div_ChecklistEntry = styled.div<{ isSelected: boolean }>`
   ${({ theme, isSelected }: { theme: customThemeType; isSelected: boolean }) => `
+    display: flex;
     padding: ${theme.spacing}px ${theme.spacing * 2}px;
     background-color: ${isSelected ? theme.colors.default.hoveredTextColor : theme.colors.default.background};
     cursor: pointer;

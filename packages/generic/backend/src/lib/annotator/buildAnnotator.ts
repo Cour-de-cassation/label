@@ -120,11 +120,10 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${
-            annotatorConfig.name
-          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-            currentDocumentToAnnotate,
-          )}`,
+          msg: `Annotating with ${annotatorConfig.name
+            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+              currentDocumentToAnnotate,
+            )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -273,7 +272,7 @@ function buildAnnotator(
         });
       }
     }
-    
+
     //Todo : create report only if report is not null
     if (report?.checklist.length != 0) await createReport(report);
 
@@ -285,8 +284,8 @@ function buildAnnotator(
           sourceId: document.documentNumber,
           sourceName: document.source,
         },
-      });
-    }
+      },
+    });
 
     if (
       additionalTermsParsingFailed !== null &&
@@ -479,8 +478,7 @@ function buildAnnotator(
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
-      document.documentNumber
-    }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
+      }]`;
   }
 }

@@ -184,10 +184,6 @@ function buildExporter(
     const checklists = await annotationReportService.fetchChecklistByDocumentId(
       document._id,
     );
-    logger.log({
-      operationName: 'annotationReport',
-      msg: `checklist ==> ${document._id} -- ${checklists}`,
-    });
     const annotations = treatmentModule.lib.computeAnnotations(treatments);
     const seed = documentModule.lib.computeCaseNumber(document);
     const settingsForDocument = settingsModule.lib.computeFilteredSettings(
@@ -201,10 +197,6 @@ function buildExporter(
     const anonymizer = buildAnonymizer(settingsForDocument, annotations, seed);
 
     try {
-      logger.log({
-        operationName: 'exportDocument',
-        msg: `checklists ${checklists} `,
-      });
       await exporterConfig.sendDocumentPseudonymisationAndTreatments({
         externalId: document.externalId,
         pseudonymizationText: anonymizer.anonymizeDocument(document).text,

@@ -57,7 +57,9 @@ function buildAnnotator(
           );
           const loss = await annotatorConfig.fetchLossOfDocument(
             currentDocumentToFillLoss,
-            treatmentModule.lib.concat(currentTreanlpAnnotationstmentsOfDocument),
+            treatmentModule.lib.concat(
+              currentTreanlpAnnotationstmentsOfDocument,
+            ),
           );
           await documentService.updateDocumentLoss(
             currentDocumentToFillLoss._id,
@@ -118,10 +120,11 @@ function buildAnnotator(
         );
         logger.log({
           operationName: 'annotateDocumentsWithoutAnnotations',
-          msg: `Annotating with ${annotatorConfig.name
-            } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
-              currentDocumentToAnnotate,
-            )}`,
+          msg: `Annotating with ${
+            annotatorConfig.name
+          } : ${documentsAnnotatedCount}/${documentsCountToAnnotate}... ${formatDocumentInfos(
+            currentDocumentToAnnotate,
+          )}`,
         });
         try {
           await annotateDocument(updatedDocument);
@@ -282,9 +285,8 @@ function buildAnnotator(
           sourceId: document.documentNumber,
           sourceName: document.source,
         },
-      }
+      },
     });
-
 
     if (
       additionalTermsParsingFailed !== null &&
@@ -477,7 +479,8 @@ function buildAnnotator(
   }
 
   function formatDocumentInfos(document: documentType) {
-    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${document.documentNumber
-      }]`;
+    return `[${idModule.lib.convertToString(document._id)} ${document.source} ${
+      document.documentNumber
+    }]`;
   }
 }

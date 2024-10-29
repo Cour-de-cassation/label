@@ -5,6 +5,7 @@ import { idModule } from '../../modules/id';
 import { treatmentModule } from '../../modules/treatment';
 import { settingsModule } from '../../modules/settings';
 import { statisticsCreator } from './statisticsCreator';
+import { statisticModule } from '../../modules';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
 
@@ -94,7 +95,7 @@ describe('statisticsCreator', () => {
         humanTreatments: [{ treatment: treatments[1], userId }],
         document,
         treatments: treatments,
-        annotationReportsChecklist: undefined,
+        annotationReportsChecklist: statisticModule.generator.generate().annotationReportsChecklist,
         settings,
       });
 
@@ -119,6 +120,7 @@ describe('statisticsCreator', () => {
         treatmentDate: TREATMENT_DATE.getTime(),
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
+        annotationReportsChecklist: statisticModule.generator.generate().annotationReportsChecklist,
       });
     });
 
@@ -159,7 +161,7 @@ describe('statisticsCreator', () => {
       const statistic = statisticsCreator.buildFromDocument({
         document,
         treatments: treatments,
-        annotationReportsChecklist: undefined,
+        annotationReportsChecklist: statisticModule.generator.generate().annotationReportsChecklist,
         humanTreatments: [{ treatment: treatments[1], userId }],
         settings,
       });
@@ -185,6 +187,7 @@ describe('statisticsCreator', () => {
         treatmentDate: TREATMENT_DATE.getTime(),
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
+        annotationReportsChecklist: statisticModule.generator.generate().annotationReportsChecklist,
       });
     });
   });

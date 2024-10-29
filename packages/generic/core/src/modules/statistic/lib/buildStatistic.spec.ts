@@ -3,6 +3,39 @@ import { idModule } from '../../id';
 import { buildStatistic } from './buildStatistic';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
+const checklistMock = [
+  {
+    checkType: 'different_categories',
+    message: "L'annotation 'Yon' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+    entities: [
+      {
+        text: 'Yon',
+        start: 9358,
+        category: 'personnePhysique',
+        source: 'postprocess',
+        score: 1.0,
+        entityId: 'personnePhysique_yon',
+        end: 9361,
+      },
+      {
+        text: 'Yon',
+        start: 6796,
+        category: 'professionnelMagistratGreffier',
+        source: 'postprocess',
+        score: 1.0,
+        entityId: 'professionnelMagistratGreffier_yon',
+        end: 6799,
+      },
+    ],
+    sentences: [
+      {
+        start: 0,
+        end: 22,
+      },
+    ],
+    metadata_text: [],
+  },
+];
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('buildStatistic', () => {
@@ -58,7 +91,7 @@ describe('buildStatistic', () => {
       linkedEntitiesCount,
       lastUpdateDate,
       treatmentInfo,
-      annotationReportsChecklist: undefined,
+      annotationReportsChecklist: checklistMock,
       humanTreatmentsSummary: [{ userId, treatmentDuration: 10 }],
     });
 
@@ -83,6 +116,7 @@ describe('buildStatistic', () => {
       treatmentDate: TREATMENT_DATE.getTime(),
       treatmentsSummary: [{ userId, treatmentDuration: 10 }],
       wordsCount: 5,
+      annotationReportsChecklist: checklistMock,
     });
   });
 });

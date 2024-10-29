@@ -34,7 +34,7 @@ function mapNlpAnnotationstoReport(
   nlpAnnotations: nlpResponseType,
   document: documentType,
 ): annotationReportType | undefined {
-  if (nlpAnnotations.checklist && nlpAnnotations.checklist.length == 0) {
+  if (nlpAnnotations.checklist?.length != 0 && nlpAnnotations.checklist) {
     return annotationReportModule.lib.buildAnnotationReport({
       checklist: nlpAnnotations.checklist,
       documentId: document._id,

@@ -41,7 +41,57 @@ const nlpAnnotations: nlpResponseType = {
       entityId: 'LABEL2_annotation2',
     },
   ],
-  checklist: [],
+  checklist: [
+    {
+      checkType: 'missing_something',
+      message: "Label est-il un bon logiciel d'annotation ?",
+      entities: [
+        {
+          text: 'Label',
+          start: 0,
+          end: 5,
+          category: 'myCategory',
+          source: 'source1',
+          score: 0.85,
+          entityId: 'myCategory',
+        },
+        {
+          text: 'Application',
+          start: 10,
+          end: 15,
+          category: 'myCategory',
+          source: 'source2',
+          score: 0.9,
+          entityId: 'myCategory_application',
+        },
+      ],
+      sentences: [
+        {
+          start: 0,
+          end: 50,
+        },
+      ],
+      metadata_text: ['Label', 'Applcation'],
+    },
+    {
+      checkType: 'other',
+      message:
+        "L'annotation [Antoine] est présente dans les catégories [développeur, data scientist] est-ce une erreur ?",
+      entities: [
+        {
+          text: 'Antoine',
+          start: 20,
+          end: 25,
+          category: 'developpeur',
+          source: 'nlp',
+          score: 1,
+          entityId: 'developpeur_antoine',
+        },
+      ],
+      sentences: undefined,
+      metadata_text: undefined,
+    },
+  ],
   versions: nlpVersion,
 };
 
@@ -66,7 +116,57 @@ const nlpAnnotationsWithAdditionalTerms: nlpResponseType = {
       entityId: 'LABEL2_annotation2',
     },
   ],
-  checklist: [],
+  checklist: [
+    {
+      checkType: 'missing_something',
+      message: "Label est-il un bon logiciel d'annotation ?",
+      entities: [
+        {
+          text: 'Label',
+          start: 0,
+          end: 5,
+          category: 'myCategory',
+          source: 'source1',
+          score: 0.85,
+          entityId: 'myCategory',
+        },
+        {
+          text: 'Application',
+          start: 10,
+          end: 15,
+          category: 'myCategory',
+          source: 'source2',
+          score: 0.9,
+          entityId: 'myCategory_application',
+        },
+      ],
+      sentences: [
+        {
+          start: 0,
+          end: 50,
+        },
+      ],
+      metadata_text: ['Label', 'Applcation'],
+    },
+    {
+      checkType: 'other',
+      message:
+        "L'annotation [Antoine] est présente dans les catégories [développeur, data scientist] est-ce une erreur ?",
+      entities: [
+        {
+          text: 'Antoine',
+          start: 20,
+          end: 25,
+          category: 'developpeur',
+          source: 'nlp',
+          score: 1,
+          entityId: 'developpeur_antoine',
+        },
+      ],
+      sentences: undefined,
+      metadata_text: undefined,
+    },
+  ],
   additionalTermsToUnAnnotate: ['blabla', 'toto'],
   versions: nlpVersion,
 };
@@ -172,6 +272,8 @@ describe('nlpMapper', () => {
         nlpAnnotationsWithChecklist,
         document,
       );
+
+      console.log('mapNlpAnnotationstoReport ', annotationReport);
 
       expect(annotationReport).toEqual({
         checklist: [

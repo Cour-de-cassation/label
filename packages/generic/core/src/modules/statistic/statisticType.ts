@@ -1,4 +1,5 @@
 import { documentModel } from '../document/documentType';
+import { annotationReportModel } from '../annotationReport/annotationReportType';
 import { idType } from '../id';
 import { buildModel, buildType } from '../modelType';
 
@@ -85,13 +86,7 @@ const statisticModel = buildModel({
       },
     },
     wordsCount: { kind: 'primitive', content: 'number' },
-    annotationReportsChecklist: {
-      kind: 'or',
-      content: [
-        { kind: 'array', content: { kind: 'primitive', content: 'string' } },
-        { kind: 'primitive', content: 'undefined' },
-      ],
-    },
+    annotationReportsChecklist: annotationReportModel.content.checklist,
   },
 } as const);
 

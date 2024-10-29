@@ -21,6 +21,7 @@ function Checklist(props: {
 
   return (
     <Accordion
+      style={styles.accordionStyle}
       headerStyle={styles.accordionHeaderContainer}
       header={
         <div style={styles.accordionHeader}>
@@ -51,6 +52,9 @@ function Checklist(props: {
 
   function buildStyles(theme: customThemeType) {
     return {
+      accordionStyle: {
+        backgroundColor: theme.colors.default.background,
+      },
       accordionHeaderContainer: {
         padding: ACCORDION_HEADER_PADDING,
         minHeight: iconSize,

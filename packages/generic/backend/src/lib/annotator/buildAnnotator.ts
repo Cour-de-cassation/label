@@ -273,7 +273,7 @@ function buildAnnotator(
         });
       }
     }
-
+    
     //Todo : create report only if report is not null
     if (report?.checklist.length != 0) await createReport(report);
 
@@ -285,8 +285,8 @@ function buildAnnotator(
           sourceId: document.documentNumber,
           sourceName: document.source,
         },
-      },
-    });
+      });
+    }
 
     if (
       additionalTermsParsingFailed !== null &&

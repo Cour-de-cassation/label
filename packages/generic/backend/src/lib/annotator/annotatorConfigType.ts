@@ -17,7 +17,7 @@ type annotatorConfigType = {
   ): Promise<{
     annotations: annotationType[];
     documentId: idType;
-    report?: annotationReportType;
+    report: annotationReportType;
     newCategoriesToAnnotate?: string[];
     newCategoriesToUnAnnotate?: string[];
     computedAdditionalTerms?: documentType['decisionMetadata']['computedAdditionalTerms'];

@@ -49,6 +49,6 @@ function buildStatistic({
     treatmentDate: lastUpdateDate,
     treatmentsSummary: humanTreatmentsSummary,
     wordsCount: documentModule.lib.countWords(document),
-    annotationReportsChecklist: annotationReportsChecklist || undefined,
+    annotationReportsChecklist: annotationReportsChecklist,
   };
 }

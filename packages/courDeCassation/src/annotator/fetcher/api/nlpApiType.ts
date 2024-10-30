@@ -29,7 +29,7 @@ type nlpVersion = {
 
 type nlpResponseType = {
   entities: nlpAnnotationType[];
-  checklist?: annotationReportType['checklist'];
+  checklist: annotationReportType['checklist'];
   newCategoriesToAnnotate?: string[];
   newCategoriesToUnAnnotate?: string[];
   additionalTermsToAnnotate?: string[];

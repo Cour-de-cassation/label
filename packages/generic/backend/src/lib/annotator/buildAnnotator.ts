@@ -52,14 +52,12 @@ function buildAnnotator(
       if (currentDocumentToFillLoss) {
         documentsFilledLossCount++;
         try {
-          const currentTreanlpAnnotationstmentsOfDocument = await treatmentService.fetchTreatmentsByDocumentId(
+          const currentTreatmentsOfDocument = await treatmentService.fetchTreatmentsByDocumentId(
             currentDocumentToFillLoss._id,
           );
           const loss = await annotatorConfig.fetchLossOfDocument(
             currentDocumentToFillLoss,
-            treatmentModule.lib.concat(
-              currentTreanlpAnnotationstmentsOfDocument,
-            ),
+            treatmentModule.lib.concat(currentTreatmentsOfDocument),
           );
           await documentService.updateDocumentLoss(
             currentDocumentToFillLoss._id,
@@ -275,19 +273,19 @@ function buildAnnotator(
     }
 
     //Todo : create report only if report is not null
-    if (report?.checklist.length != 0) await createReport(report);
-
-    logger.log({
-      operationName: 'annotateDocument',
-      msg: 'Annotation report created in DB',
-      data: {
-        decision: {
-          sourceId: document.documentNumber,
-          sourceName: document.source,
+    if (report.checklist.length > 0) {
+      await createReport(report);
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'Annotation report created in DB',
+        data: {
+          decision: {
+            sourceId: document.documentNumber,
+            sourceName: document.source,
+          },
         },
-      },
-    });
-
+      });
+    }
     if (
       additionalTermsParsingFailed !== null &&
       additionalTermsParsingFailed !== undefined
@@ -473,7 +471,7 @@ function buildAnnotator(
     );
   }
 
-  async function createReport(report: annotationReportType | undefined) {
+  async function createReport(report: annotationReportType) {
     const annotationReportRepository = buildAnnotationReportRepository();
     if (report) await annotationReportRepository.insert(report);
   }

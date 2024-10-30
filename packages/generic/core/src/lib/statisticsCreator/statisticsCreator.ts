@@ -11,16 +11,16 @@ const statisticsCreator = { buildFromDocument };
 
 function buildFromDocument({
   document,
-  annotationReportsChecklist,
   treatments,
   humanTreatments,
   settings,
+  annotationReportsChecklist,
 }: {
   document: documentType;
-  annotationReportsChecklist: statisticType['annotationReportsChecklist'];
   treatments: treatmentType[];
   humanTreatments: Array<{ treatment: treatmentType; userId: userType['_id'] }> | undefined;
   settings: settingsType;
+  annotationReportsChecklist: statisticType['annotationReportsChecklist'];
 }): statisticType {
   const annotations = treatmentModule.lib.computeAnnotations(treatments);
   const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(annotations);

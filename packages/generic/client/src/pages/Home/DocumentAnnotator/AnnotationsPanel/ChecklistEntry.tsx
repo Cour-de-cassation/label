@@ -31,6 +31,14 @@ function ChecklistEntry(props: {
     }
   };
 
+  const hitCheckbox = (checked: boolean) => {
+    setIsChecked(checked);
+    const isChecklistSelected = checklistEntryHandler.isSelected(check.message);
+    if (isChecklistSelected && checked) {
+      checklistEntryHandler.setSelected(undefined);
+    }
+  };
+
   function onLeaveAnnotationMode() {
     viewerScrollerHandler.storeCurrentVerticalPosition();
   }
@@ -46,7 +54,7 @@ function ChecklistEntry(props: {
       onClick={selectChecklist}
     >
       <div onClick={(e) => e.stopPropagation()}>
-        <Checkbox defaultChecked={false} onChange={(checked: boolean) => setIsChecked(checked)}></Checkbox>
+        <Checkbox defaultChecked={false} onChange={(checked: boolean) => hitCheckbox(checked)}></Checkbox>
       </div>
       <Text
         variant="body2"

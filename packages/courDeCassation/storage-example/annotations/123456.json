@@ -78,7 +78,6 @@
       "end": 276,
       "text": "Gonsse",
       "source": "Cour de cassation example",
-      "score": 1,
       "score": 1
     },
     {
@@ -529,21 +528,21 @@
       "entities": [
         {
           "text": "Yon",
-          "start": 20,
+          "start": 9358,
           "category": "personnePhysique",
           "source": "postprocess",
           "score": 1.0,
           "entityId": "personnePhysique_amaury",
-          "end": 30
+          "end": 9361
         },
         {
           "text": "Yon",
-          "start": 45,
+          "start": 6796,
           "category": "professionnelMagistratGreffier",
           "source": "postprocess",
           "score": 1.0,
           "entityId": "professionnelMagistratGreffier_amaury",
-          "end": 55
+          "end": 6799
         }
       ],
       "sentences": [

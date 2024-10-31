@@ -37,7 +37,7 @@ async function saveStatisticsOfDocument(
     );
   }
 
-  let statistic = statisticsCreator.buildFromDocument({
+  const statistic = statisticsCreator.buildFromDocument({
     document,
     treatments,
     humanTreatments,
@@ -102,8 +102,6 @@ async function saveStatisticsOfDocument(
       },
     },
   });
-
-  statistic = { ...statistic };
 
   await statisticRepository.insert(statistic);
 }

@@ -180,7 +180,6 @@ function buildExporter(
     const treatments = await treatmentService.fetchTreatmentsByDocumentId(
       document._id,
     );
-    // On stock dans la collecte statistique
     const checklists = await annotationReportService.fetchChecklistByDocumentId(
       document._id,
     );
@@ -270,7 +269,6 @@ function buildExporter(
       externalId: document.externalId,
     });
 
-    // On stock dans la collecte statistique
     const checklists = await annotationReportService.fetchChecklistByDocumentId(
       document._id,
     );

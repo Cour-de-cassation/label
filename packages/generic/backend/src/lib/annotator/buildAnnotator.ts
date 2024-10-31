@@ -272,7 +272,6 @@ function buildAnnotator(
       }
     }
 
-    //Todo : create report only if report is not null
     if (report.checklist.length > 0) {
       await createReport(report);
       logger.log({
@@ -473,7 +472,7 @@ function buildAnnotator(
 
   async function createReport(report: annotationReportType) {
     const annotationReportRepository = buildAnnotationReportRepository();
-    if (report) await annotationReportRepository.insert(report);
+    await annotationReportRepository.insert(report);
   }
 
   function formatDocumentInfos(document: documentType) {

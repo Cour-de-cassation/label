@@ -1,6 +1,7 @@
 import { generatorType } from '../../../types';
 import { idModule } from '../../id';
 import { statisticType } from '../statisticType';
+import { annotationReportGenerator } from './../../../modules/annotationReport/generator';
 
 export { statisticGenerator };
 
@@ -55,39 +56,6 @@ const statisticGenerator: generatorType<statisticType> = {
     wordsCount: wordsCount ? wordsCount : 0,
     annotationReportsChecklist: annotationReportsChecklist
       ? annotationReportsChecklist
-      : [
-          {
-            checkType: 'different_categories',
-            message:
-              "L'annotation 'Yon' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
-            entities: [
-              {
-                text: 'Yon',
-                start: 9358,
-                category: 'personnePhysique',
-                source: 'postprocess',
-                score: 1.0,
-                entityId: 'personnePhysique_yon',
-                end: 9361,
-              },
-              {
-                text: 'Yon',
-                start: 6796,
-                category: 'professionnelMagistratGreffier',
-                source: 'postprocess',
-                score: 1.0,
-                entityId: 'professionnelMagistratGreffier_yon',
-                end: 6799,
-              },
-            ],
-            sentences: [
-              {
-                start: 0,
-                end: 22,
-              },
-            ],
-            metadata_text: [],
-          },
-        ],
+      : annotationReportGenerator.generate().checklist,
   }),
 };

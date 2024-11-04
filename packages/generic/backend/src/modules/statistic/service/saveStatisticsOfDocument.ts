@@ -18,7 +18,7 @@ export { saveStatisticsOfDocument };
 async function saveStatisticsOfDocument(
   document: documentType,
   settings: settingsType,
-  annotationReportsChecklist: annotationReportType['checklist'],
+  checklist: annotationReportType['checklist'],
 ) {
   const statisticRepository = buildStatisticRepository();
 
@@ -41,7 +41,7 @@ async function saveStatisticsOfDocument(
     document,
     treatments,
     humanTreatments,
-    annotationReportsChecklist: annotationReportsChecklist,
+    checklist: checklist,
     settings,
   });
 

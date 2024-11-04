@@ -91,7 +91,7 @@ describe('buildStatistic', () => {
       linkedEntitiesCount,
       lastUpdateDate,
       treatmentInfo,
-      annotationReportsChecklist: checklistMock,
+      checklist: checklistMock,
       humanTreatmentsSummary: [{ userId, treatmentDuration: 10 }],
     });
 
@@ -116,7 +116,7 @@ describe('buildStatistic', () => {
       treatmentDate: TREATMENT_DATE.getTime(),
       treatmentsSummary: [{ userId, treatmentDuration: 10 }],
       wordsCount: 5,
-      annotationReportsChecklist: checklistMock,
+      checklist: checklistMock,
     });
   });
 });

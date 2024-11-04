@@ -97,7 +97,7 @@ describe('statisticsCreator', () => {
         humanTreatments: [{ treatment: treatments[1], userId }],
         document,
         treatments: treatments,
-        annotationReportsChecklist: checklistForStatistics,
+        checklist: checklistForStatistics,
         settings,
       });
 
@@ -122,7 +122,7 @@ describe('statisticsCreator', () => {
         treatmentDate: TREATMENT_DATE.getTime(),
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
-        annotationReportsChecklist: checklistForStatistics,
+        checklist: checklistForStatistics,
       });
     });
 
@@ -163,7 +163,7 @@ describe('statisticsCreator', () => {
       const statistic = statisticsCreator.buildFromDocument({
         document,
         treatments: treatments,
-        annotationReportsChecklist: checklistForStatistics,
+        checklist: checklistForStatistics,
         humanTreatments: [{ treatment: treatments[1], userId }],
         settings,
       });
@@ -189,7 +189,7 @@ describe('statisticsCreator', () => {
         treatmentDate: TREATMENT_DATE.getTime(),
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
-        annotationReportsChecklist: checklistForStatistics,
+        checklist: checklistForStatistics,
       });
     });
   });

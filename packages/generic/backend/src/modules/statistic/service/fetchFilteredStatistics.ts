@@ -70,7 +70,7 @@ async function fetchFilteredStatistics(
             document,
             treatments,
             settings,
-            annotationReportsChecklist: [],
+            checklist: [],
           }),
       ),
     );

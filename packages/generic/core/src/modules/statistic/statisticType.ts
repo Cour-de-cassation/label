@@ -86,7 +86,7 @@ const statisticModel = buildModel({
       },
     },
     wordsCount: { kind: 'primitive', content: 'number' },
-    annotationReportsChecklist: annotationReportModel.content.checklist,
+    checklist: annotationReportModel.content.checklist,
   },
 } as const);
 

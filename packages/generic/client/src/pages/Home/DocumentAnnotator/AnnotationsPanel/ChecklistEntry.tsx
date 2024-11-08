@@ -3,14 +3,16 @@ import styled from 'styled-components';
 import { Checkbox, customThemeType, Text, useCustomTheme } from 'pelta-design-system';
 import { useChecklistEntryHandler } from './useChecklistEntryHandler';
 import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
-import { annotationReportType } from '@label/core';
+import { annotationReportType, settingsType } from '@label/core';
 import { splittedTextByLineType } from '../lib';
+import { CategoryIcon } from '../../../../components';
 
 export { ChecklistEntry };
 
 function ChecklistEntry(props: {
   check: annotationReportType['checklist'][number];
   splittedTextByLine: splittedTextByLineType;
+  settings: settingsType;
 }) {
   const { check, splittedTextByLine } = props;
   const theme = useCustomTheme();
@@ -47,6 +49,18 @@ function ChecklistEntry(props: {
     viewerScrollerHandler.scrollToStoredVerticalPosition();
   }
 
+  function renderShortMessageWithIcons(shortMessage: string) {
+    const parts = shortMessage.split(/(\[.*?\])/g);
+    return parts.map((part, index) => {
+      if (part.startsWith('[') && part.endsWith(']')) {
+        const category = part.slice(1, -1);
+        return <CategoryIcon key={index} category={category} iconSize={25} settings={props.settings} />;
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  }
+
   return (
     <Div_ChecklistEntry
       theme={theme}
@@ -59,9 +73,9 @@ function ChecklistEntry(props: {
       <Text
         variant="body2"
         color={isChecked ? 'textSecondary' : 'textPrimary'}
-        style={{ textDecoration: isChecked ? 'line-through' : 'none' }}
+        style={{ textDecoration: isChecked ? 'line-through' : 'none', display: 'inline-flex' }}
       >
-        {check.message}
+        {renderShortMessageWithIcons(check.short_message)}
       </Text>
     </Div_ChecklistEntry>
   );

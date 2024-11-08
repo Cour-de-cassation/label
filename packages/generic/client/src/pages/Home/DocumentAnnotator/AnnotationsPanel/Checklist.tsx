@@ -4,6 +4,7 @@ import { Accordion, customThemeType, Icon, Text, useCustomTheme } from 'pelta-de
 import { wordings } from '../../../../wordings';
 import { ChecklistEntry } from './ChecklistEntry';
 import { splittedTextByLineType } from '../lib';
+import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
 
 export { Checklist };
 
@@ -16,6 +17,8 @@ function Checklist(props: {
   const theme = useCustomTheme();
   const iconSize = theme.shape.borderRadius.l;
   const styles = buildStyles(theme);
+  const annotatorStateHandler = useAnnotatorStateHandler();
+  const settings = annotatorStateHandler.get().settings;
 
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
@@ -40,7 +43,7 @@ function Checklist(props: {
         <div>
           {props.checklist.map((item, index) => (
             <div key={index}>
-              <ChecklistEntry check={item} splittedTextByLine={props.splittedTextByLine} />
+              <ChecklistEntry check={item} splittedTextByLine={props.splittedTextByLine} settings={settings} />
             </div>
           ))}
         </div>

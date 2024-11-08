@@ -1,4 +1,5 @@
 import {
+  annotationReportType,
   documentType,
   idModule,
   settingsType,
@@ -17,6 +18,7 @@ export { saveStatisticsOfDocument };
 async function saveStatisticsOfDocument(
   document: documentType,
   settings: settingsType,
+  checklist: annotationReportType['checklist'],
 ) {
   const statisticRepository = buildStatisticRepository();
 
@@ -39,6 +41,7 @@ async function saveStatisticsOfDocument(
     document,
     treatments,
     humanTreatments,
+    checklist: checklist,
     settings,
   });
 

@@ -1,6 +1,7 @@
 import { generatorType } from '../../../types';
 import { idModule } from '../../id';
 import { statisticType } from '../statisticType';
+import { annotationReportGenerator } from './../../../modules/annotationReport/generator';
 
 export { statisticGenerator };
 
@@ -28,6 +29,7 @@ const statisticGenerator: generatorType<statisticType> = {
     wordsCount,
     endCaseCode,
     NACCode,
+    checklist,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     annotationsCount: annotationsCount ? annotationsCount : 0,
@@ -52,5 +54,6 @@ const statisticGenerator: generatorType<statisticType> = {
     treatmentDate: treatmentDate ? treatmentDate : new Date().getTime(),
     treatmentsSummary: treatmentsSummary ? treatmentsSummary : [],
     wordsCount: wordsCount ? wordsCount : 0,
+    checklist: checklist ? checklist : annotationReportGenerator.generate().checklist,
   }),
 };

@@ -14,11 +14,13 @@ function buildFromDocument({
   treatments,
   humanTreatments,
   settings,
+  checklist,
 }: {
   document: documentType;
   treatments: treatmentType[];
   humanTreatments: Array<{ treatment: treatmentType; userId: userType['_id'] }> | undefined;
   settings: settingsType;
+  checklist: statisticType['checklist'];
 }): statisticType {
   const annotations = treatmentModule.lib.computeAnnotations(treatments);
   const linkedEntitiesCount = annotationLinkHandler.countLinkedEntities(annotations);
@@ -42,5 +44,6 @@ function buildFromDocument({
     treatmentInfo,
     document,
     linkedEntitiesCount,
+    checklist,
   });
 }

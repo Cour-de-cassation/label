@@ -285,7 +285,6 @@ function buildAnnotator(
         },
       });
     }
-
     if (
       additionalTermsParsingFailed !== null &&
       additionalTermsParsingFailed !== undefined

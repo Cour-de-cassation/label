@@ -13,6 +13,7 @@ const annotationReportGenerator: generatorType<annotationReportType> = {
             checkType: `CATEGORIES_${Math.random()}`,
             message:
               "L'annotation 'Test' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+            short_message: "Test ['Magistrat/Greffier', 'Personne physique'] ?",
             entities: [
               {
                 text: 'Test',

@@ -87,6 +87,7 @@ const nlpAnnotationsWithChecklist: nlpResponseType = {
     {
       checkType: 'missing_something',
       message: "Label est-il un bon logiciel d'annotation ?",
+      short_message: 'Label ok ?',
       entities: [
         {
           text: 'Label',
@@ -119,6 +120,7 @@ const nlpAnnotationsWithChecklist: nlpResponseType = {
       checkType: 'other',
       message:
         "L'annotation [Antoine] est présente dans les catégories [développeur, data scientist] est-ce une erreur ?",
+      short_message: '[Antoine] erreur ?',
       entities: [
         {
           text: 'Antoine',
@@ -178,6 +180,7 @@ describe('nlpMapper', () => {
           {
             checkType: 'missing_something',
             message: "Label est-il un bon logiciel d'annotation ?",
+            short_message: 'Label ok ?',
             entities: [
               {
                 text: 'Label',
@@ -210,6 +213,7 @@ describe('nlpMapper', () => {
             checkType: 'other',
             message:
               "L'annotation [Antoine] est présente dans les catégories [développeur, data scientist] est-ce une erreur ?",
+            short_message: '[Antoine] erreur ?',
             entities: [
               {
                 text: 'Antoine',

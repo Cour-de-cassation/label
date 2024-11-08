@@ -18,6 +18,7 @@ const annotationReportModel = buildModel({
             content: 'string',
           },
           message: { kind: 'primitive', content: 'string' },
+          short_message: { kind: 'primitive', content: 'string' },
           entities: {
             kind: 'array',
             content: {

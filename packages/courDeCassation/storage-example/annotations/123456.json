@@ -41,7 +41,7 @@
       "score": 1
     },
     {
-      "category": "personnePhysique",
+      "category": "localite",
       "start": 5312,
       "end": 5318,
       "text": "Xavier",
@@ -525,6 +525,7 @@
     {
       "check_type": "different_categories",
       "message": "L'annotation 'Yon' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "Yon [professionnelMagistratGreffier] [personnePhysique]",
       "entities": [
         {
           "text": "Yon",
@@ -543,6 +544,38 @@
           "score": 1.0,
           "entityId": "professionnelMagistratGreffier_yon",
           "end": 6799
+        }
+      ],
+      "sentences": [
+        {
+          "start": 0,
+          "end": 22
+        }
+      ],
+      "metadata_text": []
+    },
+    {
+      "check_type": "different_categories",
+      "message": "L'annotation 'Xavier' est présente dans différentes catégories: ['Personne physique', 'Localité']",
+      "short_message": "Xavier [personnePhysique] [localite]",
+      "entities": [
+        {
+          "category": "personnePhysique",
+          "start": 5312,
+          "end": 5318,
+          "text": "Xavier",
+          "source": "Cour de cassation example",
+          "score": 1,
+          "entityId": "personnePhysique_xavier"
+        },
+        {
+          "category": "localite",
+          "start": 135,
+          "end": 143,
+          "text": "Bertrand",
+          "source": "Cour de cassation example",
+          "score": 1,
+          "entityId": "localite_xavier"
         }
       ],
       "sentences": [

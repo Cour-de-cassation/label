@@ -33,7 +33,6 @@ function getAnnotationTextDisplayStyle({
             return 'outlined';
           }
         case 'checklist':
-          console.log(documentViewerMode.check.entities);
           const isSelectedCheck = documentViewerMode.check.entities.some(
             (entity) => entity.entityId === annotation.entityId,
           );

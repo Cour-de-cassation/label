@@ -53,7 +53,7 @@ function Checklist(props: {
   function buildStyles(theme: customThemeType) {
     return {
       accordionStyle: {
-        backgroundColor: theme.colors.default.background,
+        backgroundColor: theme.colors.checklist,
       },
       accordionHeaderContainer: {
         padding: ACCORDION_HEADER_PADDING,

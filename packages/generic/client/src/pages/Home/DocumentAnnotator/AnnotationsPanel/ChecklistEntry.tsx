@@ -71,7 +71,7 @@ const Div_ChecklistEntry = styled.div<{ isSelected: boolean }>`
   ${({ theme, isSelected }: { theme: customThemeType; isSelected: boolean }) => `
     display: flex;
     padding: ${theme.spacing}px ${theme.spacing * 2}px;
-    background-color: ${isSelected ? theme.colors.default.hoveredTextColor : theme.colors.default.background};
+    background-color: ${isSelected ? theme.colors.default.background : theme.colors.checklist};
     cursor: pointer;
     border-radius: ${theme.shape.borderRadius.m}px;
 

@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { idModule } from '@label/core';
 import { fileSystem, logger } from '@label/backend';
 import { sderApiType } from './sderApiType';
-import { DecisionTJDTO } from 'dbsder-api-types';
+import { DecisionDTO } from 'dbsder-api-types';
 
 export { sderLocalApi };
 
@@ -44,25 +44,72 @@ async function fetchApi({
 }
 
 const sderLocalApi: sderApiType = {
-  async fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween() {
-    const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
-      pathToCourtDecisions,
-    );
+  async fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween({
+    startDate,
+    endDate,
+    source,
+    jurisdictions,
+    chambers,
+  }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
+      const decisionList = ((await fetchApi({
+        method: 'get',
+        path: `decisions?status=toBeTreated&sourceName=${source}&startDate=${
+          startDate.toISOString().split('T')[0]
+        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        body: {},
+      })) as unknown) as {
+        _id: string;
+        status: string;
+        source: string;
+        dateCreation: string;
+      }[];
+      const decisions: DecisionDTO[] = [];
+      for (const decisionRef of decisionList) {
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = ((await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+          })) as unknown) as DecisionDTO;
+          decisions.push(decision);
+        }
+      }
+      return decisions.filter((item) => {
+        // Check for jurisdiction match
+        const jurisdictionMatch =
+          jurisdictions.includes(item.jurisdictionCode) ||
+          jurisdictions.includes(item.jurisdictionId) ||
+          jurisdictions.includes(item.jurisdictionName);
 
-    const courtDecisions = await fileSystem.readFiles(
-      courtDecisionFileNames,
-      'utf8',
-      pathToCourtDecisions,
-    );
+        // Check for chamber match
+        const chamberMatch =
+          chambers.includes(item.chamberId) ||
+          chambers.includes(item.chamberName);
 
-    return courtDecisions.map(({ content }) => {
-      const parsedContent = JSON.parse(content) as DecisionTJDTO;
-      return {
-        ...parsedContent,
-        _id: idModule.lib.buildId().toString(),
-        dateDecision: parsedContent.dateDecision,
-      };
-    });
+        // Return true if both match
+        return jurisdictionMatch && chamberMatch;
+      });
+    } else {
+      const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
+        pathToCourtDecisions,
+      );
+
+      const courtDecisions = await fileSystem.readFiles(
+        courtDecisionFileNames,
+        'utf8',
+        pathToCourtDecisions,
+      );
+
+      return courtDecisions.map(({ content }) => {
+        const parsedContent = JSON.parse(content) as DecisionDTO;
+        return {
+          ...parsedContent,
+          _id: idModule.lib.buildId().toString(),
+          dateDecision: parsedContent.dateDecision,
+        };
+      });
+    }
   },
 
   async fetchDecisionsToPseudonymiseBetween({ startDate, endDate, source }) {
@@ -79,14 +126,14 @@ const sderLocalApi: sderApiType = {
         source: string;
         dateCreation: string;
       }[];
-      const decisions: DecisionTJDTO[] = [];
+      const decisions: DecisionDTO[] = [];
       for (const decisionRef of decisionList) {
         if (decisionRef['status'] == 'toBeTreated') {
           const decision = ((await fetchApi({
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-          })) as unknown) as DecisionTJDTO;
+          })) as unknown) as DecisionDTO;
           decisions.push(decision);
         }
       }
@@ -103,7 +150,7 @@ const sderLocalApi: sderApiType = {
       );
 
       const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-        const parsedContent = JSON.parse(content) as DecisionTJDTO;
+        const parsedContent = JSON.parse(content) as DecisionDTO;
         return {
           ...parsedContent,
           _id: idModule.lib.buildId().toString(),
@@ -135,14 +182,14 @@ const sderLocalApi: sderApiType = {
         source: string;
         dateCreation: string;
       }[];
-      const decisions: DecisionTJDTO[] = [];
+      const decisions: DecisionDTO[] = [];
       for (const decisionRef of decisionList) {
         if (decisionRef['status'] == 'toBeTreated') {
           const decision = ((await fetchApi({
             method: 'get',
             path: `decisions/${decisionRef['_id']}`,
             body: {},
-          })) as unknown) as DecisionTJDTO;
+          })) as unknown) as DecisionDTO;
           decisions.push(decision);
         }
       }
@@ -159,7 +206,7 @@ const sderLocalApi: sderApiType = {
       );
 
       const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-        const parsedContent = JSON.parse(content) as DecisionTJDTO;
+        const parsedContent = JSON.parse(content) as DecisionDTO;
         return {
           ...parsedContent,
           _id: idModule.lib.buildId().toString(),
@@ -173,25 +220,60 @@ const sderLocalApi: sderApiType = {
     }
   },
 
-  async fetchChainedJuricaDecisionsToPseudonymiseBetween() {
-    const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
-      pathToCourtDecisions,
-    );
+  async fetchChainedJuricaDecisionsToPseudonymiseBetween({
+    startDate,
+    endDate,
+  }) {
+    if (process.env.DBSDER_API_ENABLED === 'true') {
+      const decisionList = ((await fetchApi({
+        method: 'get',
+        path: `decisions?status=toBeTreated&startDate=${
+          startDate.toISOString().split('T')[0]
+        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        body: {},
+      })) as unknown) as {
+        _id: string;
+        status: string;
+        source: string;
+        dateCreation: string;
+      }[];
+      const decisions: DecisionDTO[] = [];
+      for (const decisionRef of decisionList) {
+        if (decisionRef['status'] == 'toBeTreated') {
+          const decision = await fetchApi({
+            method: 'get',
+            path: `decisions/${decisionRef['_id']}`,
+            body: {},
+          });
+          if (
+            decision['decisionAssociee'] != null &&
+            decision['decisionAssociee'] != undefined
+          ) {
+            decisions.push((decision as unknown) as DecisionDTO);
+          }
+        }
+      }
+      return decisions;
+    } else {
+      const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
+        pathToCourtDecisions,
+      );
 
-    const courtDecisions = await fileSystem.readFiles(
-      courtDecisionFileNames,
-      'utf8',
-      pathToCourtDecisions,
-    );
+      const courtDecisions = await fileSystem.readFiles(
+        courtDecisionFileNames,
+        'utf8',
+        pathToCourtDecisions,
+      );
 
-    return courtDecisions.map(({ content }) => {
-      const parsedContent = JSON.parse(content) as DecisionTJDTO;
-      return {
-        ...parsedContent,
-        _id: idModule.lib.buildId().toString(),
-        dateDecision: parsedContent.dateDecision,
-      };
-    });
+      return courtDecisions.map(({ content }) => {
+        const parsedContent = JSON.parse(content) as DecisionDTO;
+        return {
+          ...parsedContent,
+          _id: idModule.lib.buildId().toString(),
+          dateDecision: parsedContent.dateDecision,
+        };
+      });
+    }
   },
 
   async fetchCourtDecisionById({ id }) {
@@ -200,7 +282,7 @@ const sderLocalApi: sderApiType = {
         method: 'get',
         path: `decisions/${id}`,
         body: {},
-      })) as unknown) as Promise<DecisionTJDTO>;
+      })) as unknown) as Promise<DecisionDTO>;
     } else {
       const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
         pathToCourtDecisions,
@@ -213,7 +295,7 @@ const sderLocalApi: sderApiType = {
       );
 
       const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-        const parsedContent = JSON.parse(content) as DecisionTJDTO;
+        const parsedContent = JSON.parse(content) as DecisionDTO;
         return {
           ...parsedContent,
           dateDecision: parsedContent.dateDecision,
@@ -222,7 +304,7 @@ const sderLocalApi: sderApiType = {
 
       return mappedCourtDecisions.find(
         (courtDecision) => courtDecision._id === id,
-      ) as DecisionTJDTO;
+      ) as DecisionDTO;
     }
   },
 
@@ -238,7 +320,7 @@ const sderLocalApi: sderApiType = {
     );
 
     const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-      const parsedContent = JSON.parse(content) as DecisionTJDTO;
+      const parsedContent = JSON.parse(content) as DecisionDTO;
       return {
         ...parsedContent,
         dateDecision: parsedContent.dateDecision,
@@ -320,18 +402,25 @@ const sderLocalApi: sderApiType = {
     externalId,
     labelTreatments,
     pseudonymizationText,
+    publishStatus,
   }) {
     //TODO : include publishStatus to dbsder api call
     if (process.env.DBSDER_API_ENABLED === 'true') {
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/rapports-occultations`,
-        body: { rapportsOccultations: labelTreatments },
+        body: {
+          rapportsOccultations: labelTreatments,
+          publishStatus: publishStatus,
+        },
       });
       await fetchApi({
         method: 'put',
         path: `decisions/${externalId}/decision-pseudonymisee`,
-        body: { decisionPseudonymisee: pseudonymizationText },
+        body: {
+          decisionPseudonymisee: pseudonymizationText,
+          publishStatus: publishStatus,
+        },
       });
     } else {
       logger.log({

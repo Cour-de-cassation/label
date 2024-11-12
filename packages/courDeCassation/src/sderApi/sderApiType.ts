@@ -1,5 +1,5 @@
 import { documentType } from '@label/core';
-import { DecisionTJDTO, LabelTreatment, PublishStatus } from 'dbsder-api-types';
+import { DecisionDTO, LabelTreatment, PublishStatus } from 'dbsder-api-types';
 
 export type { sderApiType };
 
@@ -7,31 +7,31 @@ type sderApiType = {
   fetchChainedJuricaDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
-  }) => Promise<Array<DecisionTJDTO>>;
+  }) => Promise<Array<DecisionDTO>>;
   fetchCourtDecisionById: (param: {
-    id: DecisionTJDTO['_id'];
-  }) => Promise<DecisionTJDTO>;
+    id: DecisionDTO['_id'];
+  }) => Promise<DecisionDTO>;
   fetchDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
     source: 'jurinet' | 'jurica' | 'juritj';
-  }) => Promise<Array<DecisionTJDTO>>;
+  }) => Promise<Array<DecisionDTO>>;
   fetchDecisionsToPseudonymiseBetweenDateCreation: (param: {
     startDate: Date;
     endDate: Date;
     source: 'jurinet' | 'jurica' | 'juritj';
-  }) => Promise<Array<DecisionTJDTO>>;
+  }) => Promise<Array<DecisionDTO>>;
   fetchCourtDecisionBySourceIdAndSourceName: (param: {
-    sourceId: DecisionTJDTO['sourceId'];
-    sourceName: DecisionTJDTO['sourceName'];
-  }) => Promise<DecisionTJDTO | undefined>;
+    sourceId: DecisionDTO['sourceId'];
+    sourceName: DecisionDTO['sourceName'];
+  }) => Promise<DecisionDTO | undefined>;
   fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
     startDate: Date;
     endDate: Date;
     source: string;
     jurisdictions: string[];
     chambers: string[];
-  }) => Promise<DecisionTJDTO[]>;
+  }) => Promise<DecisionDTO[]>;
   setCourtDecisionsLoaded: (param: {
     documents: Array<documentType>;
   }) => Promise<void>;

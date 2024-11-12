@@ -1,6 +1,6 @@
 import { idModule } from '@label/core';
 import { mapCourtDecisionToDocument } from './mapCourtDecisionToDocument';
-import { LabelStatus, Occultation, Sources } from 'dbsder-api-types';
+import { LabelStatus, Sources } from 'dbsder-api-types';
 
 describe('mapCourtDecisionToDocument', () => {
   it('should return priority 0 because it has the filler importer', async () => {
@@ -26,26 +26,8 @@ describe('mapCourtDecisionToDocument', () => {
         labelStatus: LabelStatus.TOBETREATED,
         labelTreatments: [],
         blocOccultation: 0,
-        codeService: '',
         dateCreation: '',
         dateDecision: '',
-        debatPublic: false,
-        decisionAssociee: {
-          numeroRegistre: '',
-          numeroRoleGeneral: '',
-          idJuridiction: '',
-          date: '',
-        },
-        idDecisionTJ: '',
-        libelleEndCaseCode: '',
-        libelleNAC: '',
-        libelleService: '',
-        matiereDeterminee: false,
-        numeroRoleGeneral: '',
-        pourvoiCourDeCassation: false,
-        pourvoiLocal: false,
-        recommandationOccultation: Occultation.CONFORME,
-        selection: false,
         occultation: {
           additionalTerms: '',
           categoriesToOmit: [],
@@ -91,26 +73,8 @@ describe('mapCourtDecisionToDocument', () => {
         labelStatus: LabelStatus.TOBETREATED,
         labelTreatments: [],
         blocOccultation: 0,
-        codeService: '',
         dateCreation: '',
         dateDecision: '',
-        debatPublic: false,
-        decisionAssociee: {
-          numeroRegistre: '',
-          numeroRoleGeneral: '',
-          idJuridiction: '',
-          date: '',
-        },
-        idDecisionTJ: '',
-        libelleEndCaseCode: '',
-        libelleNAC: '',
-        libelleService: '',
-        matiereDeterminee: false,
-        numeroRoleGeneral: '',
-        pourvoiCourDeCassation: false,
-        pourvoiLocal: false,
-        recommandationOccultation: Occultation.AUCUNE,
-        selection: false,
         occultation: {
           additionalTerms: '',
           categoriesToOmit: [],

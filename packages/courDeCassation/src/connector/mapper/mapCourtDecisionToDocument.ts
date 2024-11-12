@@ -11,13 +11,13 @@ import {
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
-import { DecisionTJDTO, PartieTJ } from 'dbsder-api-types';
+import { DecisionDTO, PartieTJ } from 'dbsder-api-types';
 
 export { mapCourtDecisionToDocument };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function mapCourtDecisionToDocument(
-  sderCourtDecision: DecisionTJDTO,
+  sderCourtDecision: DecisionDTO,
   importer: documentType['importer'],
 ): Promise<documentType> {
   const readableChamberName = extractReadableChamberName({
@@ -33,7 +33,7 @@ async function mapCourtDecisionToDocument(
 
   const registerNumber = sderCourtDecision.registerNumber;
   const appeal = sderCourtDecision.appeals[0];
-  const numeroRoleGeneral = sderCourtDecision.numeroRoleGeneral || '';
+  const numeroRoleGeneral = /*sderCourtDecision['numeroRoleGeneral'] ||*/ '';
   const appealNumber = extractAppealRegisterRoleGeneralNumber(
     sderCourtDecision.originalText,
     source,
@@ -308,8 +308,8 @@ function computeTitleFromParsedCourtDecision({
 }
 
 function computePublicationCategory(
-  pubCategory: DecisionTJDTO['pubCategory'],
-  publication: DecisionTJDTO['publication'],
+  pubCategory: DecisionDTO['pubCategory'],
+  publication: DecisionDTO['publication'],
 ): documentType['publicationCategory'] {
   const publicationCategory: string[] = [];
   if (!!pubCategory) {
@@ -322,9 +322,9 @@ function computePublicationCategory(
 }
 
 function computePriority(
-  source: DecisionTJDTO['sourceName'],
+  source: DecisionDTO['sourceName'],
   publicationCategory: documentType['publicationCategory'],
-  NACCode: DecisionTJDTO['NACCode'],
+  NACCode: DecisionDTO['NACCode'],
   importer: documentType['importer'],
 ): documentType['priority'] {
   if (

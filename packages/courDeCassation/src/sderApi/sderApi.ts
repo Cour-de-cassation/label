@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { sderApiType } from './sderApiType';
-import { DecisionTJDTO } from 'dbsder-api-types';
+import { DecisionDTO } from 'dbsder-api-types';
 
 export { sderApi };
 
@@ -59,14 +59,14 @@ const sderApi: sderApiType = {
       source: string;
       dateCreation: string;
     }[];
-    const decisions: DecisionTJDTO[] = [];
+    const decisions: DecisionDTO[] = [];
     for (const decisionRef of decisionList) {
       if (decisionRef['status'] == 'toBeTreated') {
         const decision = ((await fetchApi({
           method: 'get',
           path: `decisions/${decisionRef['_id']}`,
           body: {},
-        })) as unknown) as DecisionTJDTO;
+        })) as unknown) as DecisionDTO;
         decisions.push(decision);
       }
     }
@@ -100,14 +100,14 @@ const sderApi: sderApiType = {
       source: string;
       dateCreation: string;
     }[];
-    const decisions: DecisionTJDTO[] = [];
+    const decisions: DecisionDTO[] = [];
     for (const decisionRef of decisionList) {
       if (decisionRef['status'] == 'toBeTreated') {
         const decision = ((await fetchApi({
           method: 'get',
           path: `decisions/${decisionRef['_id']}`,
           body: {},
-        })) as unknown) as DecisionTJDTO;
+        })) as unknown) as DecisionDTO;
         decisions.push(decision);
       }
     }
@@ -132,14 +132,14 @@ const sderApi: sderApiType = {
       source: string;
       dateCreation: string;
     }[];
-    const decisions: DecisionTJDTO[] = [];
+    const decisions: DecisionDTO[] = [];
     for (const decisionRef of decisionList) {
       if (decisionRef['status'] == 'toBeTreated') {
         const decision = ((await fetchApi({
           method: 'get',
           path: `decisions/${decisionRef['_id']}`,
           body: {},
-        })) as unknown) as DecisionTJDTO;
+        })) as unknown) as DecisionDTO;
         decisions.push(decision);
       }
     }
@@ -162,7 +162,7 @@ const sderApi: sderApiType = {
       source: string;
       dateCreation: string;
     }[];
-    const decisions: DecisionTJDTO[] = [];
+    const decisions: DecisionDTO[] = [];
     for (const decisionRef of decisionList) {
       if (decisionRef['status'] == 'toBeTreated') {
         const decision = await fetchApi({
@@ -174,7 +174,7 @@ const sderApi: sderApiType = {
           decision['decisionAssociee'] != null &&
           decision['decisionAssociee'] != undefined
         ) {
-          decisions.push((decision as unknown) as DecisionTJDTO);
+          decisions.push((decision as unknown) as DecisionDTO);
         }
       }
     }
@@ -186,7 +186,7 @@ const sderApi: sderApiType = {
       method: 'get',
       path: `decisions/${id}/`,
       body: {},
-    })) as unknown) as Promise<DecisionTJDTO>;
+    })) as unknown) as Promise<DecisionDTO>;
   },
 
   async fetchCourtDecisionBySourceIdAndSourceName({ sourceId, sourceName }) {
@@ -200,14 +200,14 @@ const sderApi: sderApiType = {
       source: string;
       dateCreation: string;
     }[];
-    const decisions: DecisionTJDTO[] = [];
+    const decisions: DecisionDTO[] = [];
     for (const decisionRef of decisionList) {
       if (decisionRef['status'] == 'toBeTreated') {
         const decision = ((await fetchApi({
           method: 'get',
           path: `decisions/${decisionRef['_id']}`,
           body: {},
-        })) as unknown) as DecisionTJDTO;
+        })) as unknown) as DecisionDTO;
         decisions.push(decision);
       }
     }

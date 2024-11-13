@@ -9,6 +9,8 @@ import { CategoryIcon } from '../../../../components';
 
 export { ChecklistEntry };
 
+const CHECKLIST_ICON_SIZE = 25;
+
 function ChecklistEntry(props: {
   check: annotationReportType['checklist'][number];
   splittedTextByLine: splittedTextByLineType;
@@ -51,12 +53,19 @@ function ChecklistEntry(props: {
 
   function renderShortMessageWithIcons(shortMessage: string) {
     const parts = shortMessage.split(/(\[.*?\])/g);
-    return parts.map((part, index) => {
+    return parts.map((part) => {
       if (part.startsWith('[') && part.endsWith(']')) {
         const category = part.slice(1, -1);
-        return <CategoryIcon key={index} category={category} iconSize={25} settings={props.settings} />;
+        return (
+          <CategoryIcon
+            category={category}
+            iconSize={CHECKLIST_ICON_SIZE}
+            settings={props.settings}
+            isDisabled={isChecked}
+          />
+        );
       } else {
-        return <span key={index}>{part}</span>;
+        return part.replace(/ /g, '\u00A0');
       }
     });
   }
@@ -68,12 +77,16 @@ function ChecklistEntry(props: {
       onClick={selectChecklist}
     >
       <div onClick={(e) => e.stopPropagation()}>
-        <Checkbox defaultChecked={false} onChange={(checked: boolean) => hitCheckbox(checked)}></Checkbox>
+        <Checkbox defaultChecked={false} onChange={(checked: boolean) => hitCheckbox(checked)} />
       </div>
       <Text
         variant="body2"
         color={isChecked ? 'textSecondary' : 'textPrimary'}
-        style={{ textDecoration: isChecked ? 'line-through' : 'none', display: 'inline-flex' }}
+        style={{
+          textDecoration: isChecked ? 'line-through' : 'none',
+          display: 'inline-flex',
+          alignItems: 'center',
+        }}
       >
         {renderShortMessageWithIcons(check.short_message)}
       </Text>
@@ -84,11 +97,10 @@ function ChecklistEntry(props: {
 const Div_ChecklistEntry = styled.div<{ isSelected: boolean }>`
   ${({ theme, isSelected }: { theme: customThemeType; isSelected: boolean }) => `
     display: flex;
-    padding: ${theme.spacing}px ${theme.spacing * 2}px;
+    padding: ${theme.spacing / 2}px ${theme.spacing * 2}px;
     background-color: ${isSelected ? theme.colors.default.background : theme.colors.checklist};
     cursor: pointer;
     border-radius: ${theme.shape.borderRadius.m}px;
-
     &:hover {
       background: linear-gradient(to left, ${theme.colors.default.hoveredBackground}, 50%, transparent);
     }

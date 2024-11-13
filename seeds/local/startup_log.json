@@ -1,0 +1,1406 @@
+[
+  {
+    "_id": "e23e43ac984a-1729082243566",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-16T12:37:23.000Z",
+    "startTimeLocal": "Wed Oct 16 12:37:23.566",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729083156486",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-16T12:52:36.000Z",
+    "startTimeLocal": "Wed Oct 16 12:52:36.486",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729083190629",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-16T12:53:10.000Z",
+    "startTimeLocal": "Wed Oct 16 12:53:10.629",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729519021361",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-21T13:57:01.000Z",
+    "startTimeLocal": "Mon Oct 21 13:57:01.361",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729519303190",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-21T14:01:43.000Z",
+    "startTimeLocal": "Mon Oct 21 14:01:43.190",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729519362884",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-21T14:02:42.000Z",
+    "startTimeLocal": "Mon Oct 21 14:02:42.884",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729524586973",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-21T15:29:46.000Z",
+    "startTimeLocal": "Mon Oct 21 15:29:46.973",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729584269561",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T08:04:29.000Z",
+    "startTimeLocal": "Tue Oct 22 08:04:29.561",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729584896870",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T08:14:56.000Z",
+    "startTimeLocal": "Tue Oct 22 08:14:56.870",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729585240498",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T08:20:40.000Z",
+    "startTimeLocal": "Tue Oct 22 08:20:40.498",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729585956328",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T08:32:36.000Z",
+    "startTimeLocal": "Tue Oct 22 08:32:36.328",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729585981996",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T08:33:01.000Z",
+    "startTimeLocal": "Tue Oct 22 08:33:01.996",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729586614605",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T08:43:34.000Z",
+    "startTimeLocal": "Tue Oct 22 08:43:34.605",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729586745338",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T08:45:45.000Z",
+    "startTimeLocal": "Tue Oct 22 08:45:45.338",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729587202411",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T08:53:22.000Z",
+    "startTimeLocal": "Tue Oct 22 08:53:22.411",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729590243034",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-22T09:44:03.000Z",
+    "startTimeLocal": "Tue Oct 22 09:44:03.034",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1729928263365",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-26T07:37:43.000Z",
+    "startTimeLocal": "Sat Oct 26 07:37:43.365",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1730374140750",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-10-31T11:29:00.000Z",
+    "startTimeLocal": "Thu Oct 31 11:29:00.750",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1730553314251",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-02T13:15:14.000Z",
+    "startTimeLocal": "Sat Nov  2 13:15:14.251",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1730717111950",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-04T10:45:11.000Z",
+    "startTimeLocal": "Mon Nov  4 10:45:11.950",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1730718175467",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-04T11:02:55.000Z",
+    "startTimeLocal": "Mon Nov  4 11:02:55.467",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1730718266711",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-04T11:04:26.000Z",
+    "startTimeLocal": "Mon Nov  4 11:04:26.711",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1730728601214",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-04T13:56:41.000Z",
+    "startTimeLocal": "Mon Nov  4 13:56:41.214",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1730994876544",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-07T15:54:36.000Z",
+    "startTimeLocal": "Thu Nov  7 15:54:36.544",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1731006426990",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-07T19:07:06.000Z",
+    "startTimeLocal": "Thu Nov  7 19:07:06.990",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1731059084500",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-08T09:44:44.000Z",
+    "startTimeLocal": "Fri Nov  8 09:44:44.500",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  },
+  {
+    "_id": "e23e43ac984a-1731078969917",
+    "hostname": "e23e43ac984a",
+    "startTime": "2024-11-08T15:16:09.000Z",
+    "startTimeLocal": "Fri Nov  8 15:16:09.917",
+    "cmdLine": {
+      "net": {
+        "bindIp": "*",
+        "port": 55431
+      }
+    },
+    "pid": 1,
+    "buildinfo": {
+      "version": "4.4.29",
+      "gitVersion": "f4dda329a99811c707eb06d05ad023599f9be263",
+      "modules": [],
+      "allocator": "tcmalloc",
+      "javascriptEngine": "mozjs",
+      "sysInfo": "deprecated",
+      "versionArray": [
+        4,
+        4,
+        29,
+        0
+      ],
+      "openssl": {
+        "running": "OpenSSL 1.1.1f  31 Mar 2020",
+        "compiled": "OpenSSL 1.1.1f  31 Mar 2020"
+      },
+      "buildEnvironment": {
+        "distmod": "ubuntu2004",
+        "distarch": "x86_64",
+        "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.5.0",
+        "ccflags": "-ffp-contract=off -fno-omit-frame-pointer -fno-strict-aliasing -fasynchronous-unwind-tables -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+        "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.5.0",
+        "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+        "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--no-threads -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro -Wl,-z,origin -Wl,--enable-new-dtags",
+        "target_arch": "x86_64",
+        "target_os": "linux",
+        "cppdefines": "SAFEINT_USE_INTRINSICS 0 PCRE_STATIC NDEBUG _XOPEN_SOURCE 700 _GNU_SOURCE _FORTIFY_SOURCE 2 BOOST_THREAD_VERSION 5 BOOST_THREAD_USES_DATETIME BOOST_SYSTEM_NO_DEPRECATED BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS BOOST_ENABLE_ASSERT_DEBUG_HANDLER BOOST_LOG_NO_SHORTHAND_NAMES BOOST_LOG_USE_NATIVE_SYSLOG BOOST_LOG_WITHOUT_THREAD_ATTR ABSL_FORCE_ALIGNED_ACCESS"
+      },
+      "bits": 64,
+      "debug": false,
+      "maxBsonObjectSize": 16777216,
+      "storageEngines": [
+        "biggie",
+        "devnull",
+        "ephemeralForTest",
+        "wiredTiger"
+      ]
+    }
+  }
+]

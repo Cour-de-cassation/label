@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "670fb71e75a3e1005bca2919",
+    "deletionDate": null,
+    "email": "test.annotator@label.fr",
+    "hashedPassword": "$2a$10$hNrQgvB8a81lpUm/2ss5juOq2tUBAm/rEcQJmWdzq5pAGr.WcmAVK",
+    "isActivated": true,
+    "passwordLastUpdateDate": 1729083166093,
+    "name": "Test Annotator",
+    "role": "annotator"
+  },
+  {
+    "_id": "670fb71e75a3e1005bca291a",
+    "deletionDate": null,
+    "email": "test.scrutator@label.fr",
+    "hashedPassword": "$2a$10$RkMDGjEQwUAKe6Y8ojUyyeNkc97PAsKpMG.zEaX7jJgAkq17twz1C",
+    "isActivated": true,
+    "passwordLastUpdateDate": 1729083166201,
+    "name": "Test Scrutator",
+    "role": "scrutator"
+  },
+  {
+    "_id": "670fb71e75a3e1005bca291b",
+    "deletionDate": null,
+    "email": "test.admin@label.fr",
+    "hashedPassword": "$2a$10$9.wN9O1r9OpGMIwT93zm.O90UshPzsnzWowvEN38SWUFv8nXq/c7S",
+    "isActivated": true,
+    "passwordLastUpdateDate": 1729083166307,
+    "name": "Test Admin",
+    "role": "admin"
+  }
+]

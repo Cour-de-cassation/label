@@ -67,7 +67,9 @@ function useChecklistEntryHandler({
         const linesWithIndex = splittedTextByLine.filter(({ content }) =>
           content.some((chunk) => {
             if (chunk.type === 'text') {
-              return chunk.content.index >= entity.start && chunk.content.index <= entity.end;
+              return (
+                chunk.content.index <= entity.start && chunk.content.index + chunk.content.text.length >= entity.end
+              );
             }
           }),
         );
@@ -80,7 +82,9 @@ function useChecklistEntryHandler({
         const linesWithSentence = splittedTextByLine.filter(({ content }) =>
           content.some((chunk) => {
             if (chunk.type === 'text') {
-              return chunk.content.index >= sentence.start && chunk.content.index <= sentence.end;
+              return (
+                chunk.content.index <= sentence.start && chunk.content.index + chunk.content.text.length >= sentence.end
+              );
             }
           }),
         );

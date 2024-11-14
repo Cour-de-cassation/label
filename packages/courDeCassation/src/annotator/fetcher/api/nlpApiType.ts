@@ -10,7 +10,7 @@ type nlpApiType = {
   ) => Promise<nlpResponseType>;
   fetchNlpLoss: (
     document: documentType,
-    treatments: LabelTreatment,
+    treatments: LabelTreatment[],
   ) => Promise<nlpLossType>;
 };
 

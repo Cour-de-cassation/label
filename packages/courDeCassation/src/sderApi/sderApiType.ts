@@ -1,5 +1,10 @@
 import { documentType } from '@label/core';
-import { DecisionDTO, LabelTreatment, PublishStatus } from 'dbsder-api-types';
+import {
+  DecisionDTO,
+  LabelTreatment,
+  PublishStatus,
+  Sources,
+} from 'dbsder-api-types';
 
 export type { sderApiType };
 
@@ -14,12 +19,12 @@ type sderApiType = {
   fetchDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: Sources;
   }) => Promise<Array<DecisionDTO>>;
   fetchDecisionsToPseudonymiseBetweenDateCreation: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: Sources;
   }) => Promise<Array<DecisionDTO>>;
   fetchCourtDecisionBySourceIdAndSourceName: (param: {
     sourceId: DecisionDTO['sourceId'];
@@ -47,7 +52,7 @@ type sderApiType = {
   updateDecisionPseudonymisation: (param: {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
-    labelTreatments: LabelTreatment;
+    labelTreatments: LabelTreatment[];
     publishStatus?: PublishStatus;
   }) => Promise<void>;
 };

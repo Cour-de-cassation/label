@@ -26,6 +26,6 @@ type annotatorConfigType = {
   }>;
   fetchLossOfDocument: (
     document: documentType,
-    treatments: LabelTreatment,
+    treatments: LabelTreatment[],
   ) => Promise<number>;
 };

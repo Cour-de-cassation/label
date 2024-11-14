@@ -51,7 +51,9 @@ const sderApi: sderApiType = {
       method: 'get',
       path: `decisions?status=toBeTreated&sourceName=${source}&startDate=${
         startDate.toISOString().split('T')[0]
-      }&endDate=${endDate.toISOString().split('T')[0]}&chamber=${chambers}&jurisdiction=${jurisdictions}`,
+      }&endDate=${
+        endDate.toISOString().split('T')[0]
+      }&chamber=${chambers}&jurisdiction=${jurisdictions}`,
       body: {},
     })) as unknown) as {
       _id: string;

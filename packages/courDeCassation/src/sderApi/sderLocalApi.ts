@@ -56,7 +56,9 @@ const sderLocalApi: sderApiType = {
         method: 'get',
         path: `decisions?status=toBeTreated&sourceName=${source}&startDate=${
           startDate.toISOString().split('T')[0]
-        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        }&endDate=${
+          endDate.toISOString().split('T')[0]
+        }&chamber=${chambers}&jurisdiction=${jurisdictions}`,
         body: {},
       })) as unknown) as {
         _id: string;
@@ -75,21 +77,7 @@ const sderLocalApi: sderApiType = {
           decisions.push(decision);
         }
       }
-      return decisions.filter((item) => {
-        // Check for jurisdiction match
-        const jurisdictionMatch =
-          jurisdictions.includes(item.jurisdictionCode) ||
-          jurisdictions.includes(item.jurisdictionId) ||
-          jurisdictions.includes(item.jurisdictionName);
-
-        // Check for chamber match
-        const chamberMatch =
-          chambers.includes(item.chamberId) ||
-          chambers.includes(item.chamberName);
-
-        // Return true if both match
-        return jurisdictionMatch && chamberMatch;
-      });
+      return decisions;
     } else {
       const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
         pathToCourtDecisions,
@@ -118,7 +106,7 @@ const sderLocalApi: sderApiType = {
         method: 'get',
         path: `decisions?status=toBeTreated&source=${source}&startDate=${
           startDate.toISOString().split('T')[0]
-        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        }&endDate=${endDate.toISOString().split('T')[0]}&dateType=dateDecision`,
         body: {},
       })) as unknown) as {
         _id: string;
@@ -174,7 +162,7 @@ const sderLocalApi: sderApiType = {
         method: 'get',
         path: `decisions?status=toBeTreated&source=${source}&startDate=${
           startDate.toISOString().split('T')[0]
-        }&endDate=${endDate.toISOString().split('T')[0]}`,
+        }&endDate=${endDate.toISOString().split('T')[0]}&dateType=dateCreation`,
         body: {},
       })) as unknown) as {
         _id: string;
@@ -419,7 +407,6 @@ const sderLocalApi: sderApiType = {
         path: `decisions/${externalId}/decision-pseudonymisee`,
         body: {
           decisionPseudonymisee: pseudonymizationText,
-          publishStatus: publishStatus,
         },
       });
     } else {

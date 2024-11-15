@@ -1,9 +1,5 @@
 import { documentType, idModule } from '@label/core';
-import {
-  DecisionDTO,
-  LabelStatus,
-  Sources,
-} from 'dbsder-api-types';
+import { DecisionDTO, LabelStatus, Sources } from 'dbsder-api-types';
 
 export { mapDocumentToCourtDecision };
 

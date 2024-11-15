@@ -307,29 +307,57 @@ const sderLocalApi: sderApiType = {
   },
 
   async fetchCourtDecisionBySourceIdAndSourceName({ sourceId, sourceName }) {
-    const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
-      pathToCourtDecisions,
-    );
+    if (process.env.DBSDER_API_ENABLED === 'true') {
+      const decisionList = ((await fetchApi({
+        method: 'get',
+        path: `decisions?status=toBeTreated&sourceId=${sourceId}&sourceName=${sourceName}`,
+        body: {},
+      })) as unknown) as {
+        _id: string;
+        status: string;
+        source: string;
+        dateCreation: string;
+      }[];
+      const decisions: (DecisionDTO | DecisionTJDTO)[] = [];
+      for (const decisionRef of decisionList) {
+        const decision = ((await fetchApi({
+          method: 'get',
+          path: `decisions/${decisionRef['_id']}`,
+          body: {},
+        })) as unknown) as DecisionDTO | DecisionTJDTO;
 
-    const courtDecisions = await fileSystem.readFiles(
-      courtDecisionFileNames,
-      'utf8',
-      pathToCourtDecisions,
-    );
+        if (decision['sourceName'] === Sources.TJ) {
+          decisions.push(decision as DecisionTJDTO);
+        } else {
+          decisions.push(decision as DecisionDTO);
+        }
+      }
+      return decisions.length > 0 ? decisions[0] : undefined;
+    } else {
+      const courtDecisionFileNames = await fileSystem.listFilesOfDirectory(
+        pathToCourtDecisions,
+      );
 
-    const mappedCourtDecisions = courtDecisions.map(({ content }) => {
-      const parsedContent = JSON.parse(content) as DecisionDTO;
-      return {
-        ...parsedContent,
-        dateDecision: parsedContent.dateDecision,
-      };
-    });
+      const courtDecisions = await fileSystem.readFiles(
+        courtDecisionFileNames,
+        'utf8',
+        pathToCourtDecisions,
+      );
 
-    return mappedCourtDecisions.find(
-      (courtDecision) =>
-        courtDecision.sourceId === sourceId &&
-        courtDecision.sourceName === sourceName,
-    );
+      const mappedCourtDecisions = courtDecisions.map(({ content }) => {
+        const parsedContent = JSON.parse(content) as DecisionDTO;
+        return {
+          ...parsedContent,
+          dateDecision: parsedContent.dateDecision,
+        };
+      });
+
+      return mappedCourtDecisions.find(
+        (courtDecision) =>
+          courtDecision.sourceId === sourceId &&
+          courtDecision.sourceName === sourceName,
+      );
+    }
   },
 
   async setCourtDecisionsLoaded({ documents }) {

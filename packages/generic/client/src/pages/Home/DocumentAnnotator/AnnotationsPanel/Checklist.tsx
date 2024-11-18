@@ -40,7 +40,7 @@ function Checklist(props: {
         </div>
       }
       body={
-        <div>
+        <div style={styles.accordionContent}>
           {props.checklist.map((item, index) => (
             <div key={index}>
               <ChecklistEntry check={item} splittedTextByLine={props.splittedTextByLine} settings={settings} />
@@ -78,6 +78,9 @@ function Checklist(props: {
       accordionHeaderArrowContainer: {
         paddingRight: theme.spacing,
         paddingTop: '4px',
+      },
+      accordionContent: {
+        width: '100%',
       },
     } as const;
   }

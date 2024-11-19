@@ -380,7 +380,7 @@ const sderLocalApi: sderApiType = {
   async setCourtDecisionsToBeTreated({ documents }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
       documents.forEach(async (document) => {
-        return await fetchApi({
+        await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/statut`,
           body: { statut: 'toBeTreated' },

@@ -238,7 +238,7 @@ const sderApi: sderApiType = {
   async setCourtDecisionDone({ externalId }) {
     await fetchApi({
       method: 'put',
-      path: `decisions/${externalId}/`,
+      path: `decisions/${externalId}/statut`,
       body: { statut: 'done' },
     });
   },

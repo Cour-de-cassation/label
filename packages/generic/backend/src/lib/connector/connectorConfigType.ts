@@ -1,5 +1,5 @@
 import { documentType } from '@label/core';
-import { DecisionTJDTO, Sources } from 'dbsder-api-types';
+import { DecisionDTO, Sources } from 'dbsder-api-types';
 
 export type { connectorConfigType };
 
@@ -11,25 +11,25 @@ type connectorConfigType = {
     source: Sources;
     jurisdictions: string[];
     chambers: string[];
-  }) => Promise<DecisionTJDTO[] | undefined>;
+  }) => Promise<DecisionDTO[] | undefined>;
   fetchCourtDecisionBySourceIdAndSourceName(param: {
     sourceId: number;
     sourceName: string;
-  }): Promise<DecisionTJDTO | undefined>;
+  }): Promise<DecisionDTO | undefined>;
   fetchChainedJuricaDecisionsToPseudonymiseBetween(param: {
     startDate: Date;
     endDate: Date;
-  }): Promise<DecisionTJDTO[] | undefined>;
+  }): Promise<DecisionDTO[] | undefined>;
   fetchDecisionsToPseudonymiseBetween(param: {
     startDate: Date;
     endDate: Date;
     source: Sources;
-  }): Promise<DecisionTJDTO[] | undefined>;
+  }): Promise<DecisionDTO[] | undefined>;
   fetchDecisionsToPseudonymiseBetweenDateCreation(param: {
     startDate: Date;
     endDate: Date;
     source: Sources;
-  }): Promise<DecisionTJDTO[] | undefined>;
+  }): Promise<DecisionDTO[] | undefined>;
   updateDocumentsLoadedStatus: (param: {
     documents: documentType[];
   }) => Promise<void>;
@@ -37,8 +37,8 @@ type connectorConfigType = {
     documents: documentType[];
   }) => Promise<void>;
   mapCourtDecisionToDocument: (
-    courtDecision: DecisionTJDTO,
+    courtDecision: DecisionDTO,
     importer: documentType['importer'],
   ) => Promise<documentType>;
-  mapDocumentToCourtDecision: (document: documentType) => DecisionTJDTO;
+  mapDocumentToCourtDecision: (document: documentType) => DecisionDTO;
 };

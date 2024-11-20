@@ -1,14 +1,9 @@
 import { documentType, idModule } from '@label/core';
-import {
-  DecisionTJDTO,
-  LabelStatus,
-  Occultation,
-  Sources,
-} from 'dbsder-api-types';
+import { DecisionDTO, LabelStatus, Sources } from 'dbsder-api-types';
 
 export { mapDocumentToCourtDecision };
 
-function mapDocumentToCourtDecision(document: documentType): DecisionTJDTO {
+function mapDocumentToCourtDecision(document: documentType): DecisionDTO {
   let dateDecision;
   if (document.decisionMetadata.date) {
     dateDecision = new Date();
@@ -21,24 +16,6 @@ function mapDocumentToCourtDecision(document: documentType): DecisionTJDTO {
   }
 
   return {
-    codeService: '',
-    debatPublic: false,
-    decisionAssociee: {
-      numeroRegistre: '',
-      numeroRoleGeneral: '',
-      idJuridiction: '',
-      date: '',
-    },
-    idDecisionTJ: '',
-    libelleEndCaseCode: '',
-    libelleNAC: '',
-    libelleService: '',
-    matiereDeterminee: false,
-    numeroRoleGeneral: '',
-    pourvoiCourDeCassation: false,
-    pourvoiLocal: false,
-    recommandationOccultation: Occultation.AUCUNE,
-    selection: false,
     _id: idModule.lib.buildId(document.externalId).toString(),
     blocOccultation: document.decisionMetadata.occultationBlock ?? 0,
     chamberName: document.decisionMetadata.chamberName,

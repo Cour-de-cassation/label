@@ -1,5 +1,11 @@
 import { documentType } from '@label/core';
-import { DecisionTJDTO, LabelTreatment, PublishStatus } from 'dbsder-api-types';
+import {
+  DecisionDTO,
+  DecisionTJDTO,
+  LabelTreatment,
+  PublishStatus,
+  Sources,
+} from 'dbsder-api-types';
 
 export type { sderApiType };
 
@@ -7,31 +13,31 @@ type sderApiType = {
   fetchChainedJuricaDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
-  }) => Promise<Array<DecisionTJDTO>>;
+  }) => Promise<Array<DecisionDTO | DecisionTJDTO>>;
   fetchCourtDecisionById: (param: {
-    id: DecisionTJDTO['_id'];
-  }) => Promise<DecisionTJDTO>;
+    id: DecisionDTO['_id'] | DecisionTJDTO['_id'];
+  }) => Promise<DecisionDTO | DecisionTJDTO>;
   fetchDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
-  }) => Promise<Array<DecisionTJDTO>>;
+    source: Sources;
+  }) => Promise<Array<DecisionDTO | DecisionTJDTO>>;
   fetchDecisionsToPseudonymiseBetweenDateCreation: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
-  }) => Promise<Array<DecisionTJDTO>>;
+    source: Sources;
+  }) => Promise<Array<DecisionDTO | DecisionTJDTO>>;
   fetchCourtDecisionBySourceIdAndSourceName: (param: {
-    sourceId: DecisionTJDTO['sourceId'];
-    sourceName: DecisionTJDTO['sourceName'];
-  }) => Promise<DecisionTJDTO | undefined>;
+    sourceId: DecisionDTO['sourceId'] | DecisionTJDTO['sourceId'];
+    sourceName: DecisionDTO['sourceName'] | DecisionTJDTO['sourceName'];
+  }) => Promise<DecisionDTO | DecisionTJDTO | undefined>;
   fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
     startDate: Date;
     endDate: Date;
     source: string;
     jurisdictions: string[];
     chambers: string[];
-  }) => Promise<DecisionTJDTO[]>;
+  }) => Promise<(DecisionDTO | DecisionTJDTO)[]>;
   setCourtDecisionsLoaded: (param: {
     documents: Array<documentType>;
   }) => Promise<void>;
@@ -47,7 +53,7 @@ type sderApiType = {
   updateDecisionPseudonymisation: (param: {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
-    labelTreatments: LabelTreatment;
+    labelTreatments: LabelTreatment[];
     publishStatus?: PublishStatus;
   }) => Promise<void>;
 };

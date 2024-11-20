@@ -15,7 +15,7 @@ import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 import { treatmentService } from '../../modules/treatment';
 import { buildPreAssignator } from '../preAssignator';
-import { DecisionTJDTO, Sources } from 'dbsder-api-types';
+import { DecisionDTO, Sources } from 'dbsder-api-types';
 
 export { buildConnector };
 
@@ -210,7 +210,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
   }: {
     documentsCount: number;
     threshold?: number;
-    sources?: DecisionTJDTO['sourceName'][];
+    sources?: DecisionDTO['sourceName'][];
     daysStep?: number;
   }) {
     const DEFAULT_DAYS_STEP = 30;
@@ -252,7 +252,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       );
       const endDate = new Date(dateBuilder.daysAgo(daysAgo));
       try {
-        const newCourtDecisions: DecisionTJDTO[] = [];
+        const newCourtDecisions: DecisionDTO[] = [];
         if (!sources || sources.includes(Sources.CC)) {
           const newJurinetDecisions = await connectorConfig.fetchDecisionsToPseudonymiseBetween(
             {

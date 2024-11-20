@@ -8,7 +8,7 @@ type exporterConfigType = {
   sendDocumentPseudonymisationAndTreatments: (param: {
     externalId: documentType['externalId'];
     pseudonymizationText: string;
-    labelTreatments: LabelTreatment;
+    labelTreatments: LabelTreatment[];
     publishStatus?: PublishStatus;
   }) => Promise<void>;
   sendDocumentBlockedStatus: (param: {

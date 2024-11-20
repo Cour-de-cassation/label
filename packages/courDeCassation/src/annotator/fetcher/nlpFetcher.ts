@@ -40,7 +40,7 @@ function buildNlpFetcher(nlpApiBaseUrl: string | undefined) {
     },
     async fetchLossOfDocument(
       document: documentType,
-      treatments: LabelTreatment,
+      treatments: LabelTreatment[],
     ) {
       const nlpLoss = await nlpApi.fetchNlpLoss(document, treatments);
 

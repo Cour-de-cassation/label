@@ -6,7 +6,7 @@ LABEL is an open source text annotation software created by the [french supreme 
 
 This tool allows annotators to proofread and review decisions that have been pre-annotated by an NLP algorithm.
 
-![Screenshot LABEL](docs/images/screenshot_LABEL.jpg)
+![Screenshot LABEL](docs/images/screenshot_LABEL.png)
 
 ## Features
 

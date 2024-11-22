@@ -525,7 +525,7 @@
     {
       "check_type": "different_categories",
       "message": "L'annotation 'Yon' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
-      "short_message": "Yon [professionnelMagistratGreffier] [personnePhysique]",
+      "short_message": "Yon [professionnelMagistratGreffier] [personnePhysique] ?",
       "entities": [
         {
           "text": "Yon",
@@ -557,7 +557,7 @@
     {
       "check_type": "different_categories",
       "message": "L'annotation 'Xavier' est présente dans différentes catégories: ['Personne physique', 'Localité']",
-      "short_message": "Xavier [personnePhysique] [localite]",
+      "short_message": "Xavier [personnePhysique] [localite] ?",
       "entities": [
         {
           "category": "personnePhysique",
@@ -582,6 +582,28 @@
         {
           "start": 0,
           "end": 22
+        }
+      ],
+      "metadata_text": []
+    },
+    {
+      "check_type": "juridoute",
+      "message": "L'annotation 'Colonel-Fabien' est-elle une personne physique ?",
+      "short_message": "Colonel-Fabien [personnePhysique] ?",
+      "entities": [
+        {
+          "category": "personnePhysique",
+          "entityId": "personnePhysique_colonel-fabien",
+          "start": 2732,
+          "end": 2746,
+          "text": "Colonel-Fabien",
+          "certaintyScore": 1
+        }
+      ],
+      "sentences": [
+        {
+          "start": 2700,
+          "end": 2747
         }
       ],
       "metadata_text": []

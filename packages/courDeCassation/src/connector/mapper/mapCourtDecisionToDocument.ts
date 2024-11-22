@@ -222,6 +222,7 @@ async function mapCourtDecisionToDocument(
     text: sderCourtDecision.originalText,
     zoning: zoning,
     nlpVersions: {} as documentType['nlpVersions'],
+    checklist: [],
   });
 }
 function getPrefixedNumber(

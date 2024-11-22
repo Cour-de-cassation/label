@@ -1,6 +1,5 @@
 import {
   annotationType,
-  annotationReportType,
   documentType,
   documentModule,
   idType,
@@ -10,7 +9,6 @@ import {
   annotationModule,
   settingsModule,
 } from '@label/core';
-import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
@@ -172,8 +170,6 @@ function buildAnnotator(
     });
 
     for (const documentId of documentIds) {
-      const annotationReportRepository = buildAnnotationReportRepository();
-      await annotationReportRepository.deleteByDocumentId(documentId);
       await treatmentService.deleteTreatmentsByDocumentId(documentId);
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
@@ -194,7 +190,7 @@ function buildAnnotator(
     const {
       annotations,
       documentId,
-      report,
+      checklist,
       newCategoriesToAnnotate,
       newCategoriesToUnAnnotate,
       computedAdditionalTerms,
@@ -272,11 +268,11 @@ function buildAnnotator(
       }
     }
 
-    if (report.checklist.length > 0) {
-      await createReport(report);
+    if (checklist.length > 0) {
+      documentService.updateDocumentChecklist(document._id, checklist);
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'Annotation report created in DB',
+        msg: 'Checklist added to document',
         data: {
           decision: {
             sourceId: document.documentNumber,
@@ -468,11 +464,6 @@ function buildAnnotator(
       },
       settings,
     );
-  }
-
-  async function createReport(report: annotationReportType) {
-    const annotationReportRepository = buildAnnotationReportRepository();
-    await annotationReportRepository.insert(report);
   }
 
   function formatDocumentInfos(document: documentType) {

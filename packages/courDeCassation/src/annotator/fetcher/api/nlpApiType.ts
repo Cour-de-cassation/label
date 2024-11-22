@@ -1,5 +1,5 @@
 import { labelTreatmentsType } from 'sder';
-import { annotationReportType, documentType, settingsType } from '@label/core';
+import { documentType, settingsType } from '@label/core';
 
 export type { nlpApiType, nlpResponseType, nlpLossType, nlpVersion };
 
@@ -29,7 +29,7 @@ type nlpVersion = {
 
 type nlpResponseType = {
   entities: nlpAnnotationType[];
-  checklist?: annotationReportType['checklist'];
+  checklist?: documentType['checklist'];
   newCategoriesToAnnotate?: string[];
   newCategoriesToUnAnnotate?: string[];
   additionalTermsToAnnotate?: string[];

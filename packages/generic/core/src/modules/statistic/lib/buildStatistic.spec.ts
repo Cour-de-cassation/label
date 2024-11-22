@@ -1,10 +1,9 @@
 import { documentModule } from '../../document';
 import { idModule } from '../../id';
 import { buildStatistic } from './buildStatistic';
-import { annotationReportModule } from '../../annotationReport';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
-const checklistMock = annotationReportModule.generator.generate().checklist;
+const checklistMock = documentModule.checklistGenerator.generate(3);
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('buildStatistic', () => {

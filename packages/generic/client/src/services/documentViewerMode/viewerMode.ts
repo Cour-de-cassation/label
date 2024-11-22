@@ -1,4 +1,4 @@
-import { annotationReportType, annotationType } from '@label/core';
+import { annotationType, documentType } from '@label/core';
 
 export { DEFAULT_VIEWER_MODE };
 
@@ -15,7 +15,7 @@ type viewerModeType =
     }
   | {
       kind: 'checklist';
-      check: annotationReportType['checklist'][number];
+      check: documentType['checklist'][number];
       checkLineNumbers: number[];
       isAnonymizedView: boolean;
     };

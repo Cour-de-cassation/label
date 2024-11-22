@@ -273,6 +273,26 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return updatedDocument;
     },
 
+    async updateChecklistById(_id, checklist) {
+      updateFakeCollection(
+        collection,
+        collection.map((document) =>
+          idModule.lib.equalId(_id, document._id)
+            ? {
+                ...document,
+                checklist,
+              }
+            : document,
+        ),
+      );
+
+      const updatedDocument = collection.find((document) =>
+        idModule.lib.equalId(_id, document._id),
+      );
+
+      return updatedDocument;
+    },
+
     async updateAdditionalTermsParsingFailed(
       _id,
       additionalTermsParsingFailed,

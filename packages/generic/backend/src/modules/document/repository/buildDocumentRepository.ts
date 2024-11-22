@@ -240,6 +240,12 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return updatedDocument || undefined;
     },
 
+    async updateChecklistById(_id, checklist) {
+      await collection.updateOne({ _id }, { $set: { checklist } });
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
     async updateAdditionalTermsParsingFailed(
       _id,
       additionalTermsParsingFailed,

@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { annotationReportType } from '@label/core';
 import { Accordion, customThemeType, Icon, Text, useCustomTheme } from 'pelta-design-system';
 import { wordings } from '../../../../wordings';
 import { ChecklistEntry } from './ChecklistEntry';
 import { splittedTextByLineType } from '../lib';
 import { useAnnotatorStateHandler } from '../../../../services/annotatorState';
+import { documentType } from '@label/core';
 
 export { Checklist };
 
 const ACCORDION_HEADER_PADDING = 8;
 
-function Checklist(props: {
-  checklist: annotationReportType['checklist'];
-  splittedTextByLine: splittedTextByLineType;
-}) {
+function Checklist(props: { checklist: documentType['checklist']; splittedTextByLine: splittedTextByLineType }) {
   const theme = useCustomTheme();
   const iconSize = theme.shape.borderRadius.l;
   const styles = buildStyles(theme);
@@ -41,11 +38,12 @@ function Checklist(props: {
       }
       body={
         <div style={styles.accordionContent}>
-          {props.checklist.map((item, index) => (
-            <div key={index}>
-              <ChecklistEntry check={item} splittedTextByLine={props.splittedTextByLine} settings={settings} />
-            </div>
-          ))}
+          {props.checklist &&
+            props.checklist.map((item, index) => (
+              <div key={index}>
+                <ChecklistEntry check={item} splittedTextByLine={props.splittedTextByLine} settings={settings} />
+              </div>
+            ))}
         </div>
       }
       onChange={setIsExpanded}

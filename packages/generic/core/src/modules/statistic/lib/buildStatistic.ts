@@ -1,4 +1,3 @@
-import { annotationReportType } from '../../annotationReport';
 import { documentModule, documentType } from '../../document';
 import { idModule } from '../../id';
 import { treatmentInfoType, treatmentType } from '../../treatment';
@@ -21,7 +20,7 @@ function buildStatistic({
   linkedEntitiesCount: number;
   treatmentInfo: treatmentInfoType;
   lastUpdateDate: treatmentType['lastUpdateDate'];
-  checklist: annotationReportType['checklist'];
+  checklist: documentType['checklist'];
 }): statisticType {
   return {
     _id: idModule.lib.buildId(),

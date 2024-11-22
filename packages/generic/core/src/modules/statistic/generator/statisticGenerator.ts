@@ -1,7 +1,7 @@
+import { checklistGenerator } from '../../document/generator';
 import { generatorType } from '../../../types';
 import { idModule } from '../../id';
 import { statisticType } from '../statisticType';
-import { annotationReportGenerator } from './../../../modules/annotationReport/generator';
 
 export { statisticGenerator };
 
@@ -54,6 +54,6 @@ const statisticGenerator: generatorType<statisticType> = {
     treatmentDate: treatmentDate ? treatmentDate : new Date().getTime(),
     treatmentsSummary: treatmentsSummary ? treatmentsSummary : [],
     wordsCount: wordsCount ? wordsCount : 0,
-    checklist: checklist ? checklist : annotationReportGenerator.generate().checklist,
+    checklist: checklist ? checklist : checklistGenerator.generate(3),
   }),
 };

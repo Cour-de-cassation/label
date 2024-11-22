@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Checkbox, customThemeType, Text, useCustomTheme } from 'pelta-design-system';
 import { useChecklistEntryHandler } from './useChecklistEntryHandler';
 import { useViewerScrollerHandler } from '../../../../services/viewerScroller';
-import { annotationReportType, settingsType } from '@label/core';
+import { documentType, settingsType } from '@label/core';
 import { splittedTextByLineType } from '../lib';
 import { CategoryIcon } from '../../../../components';
 
@@ -12,7 +12,7 @@ export { ChecklistEntry };
 const CHECKLIST_ICON_SIZE = 25;
 
 function ChecklistEntry(props: {
-  check: annotationReportType['checklist'][number];
+  check: documentType['checklist'][number];
   splittedTextByLine: splittedTextByLineType;
   settings: settingsType;
 }) {

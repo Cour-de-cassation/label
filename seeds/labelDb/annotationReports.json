@@ -1,930 +1,447 @@
 [{
-    "_id": {
-      "$oid": "673610d85f041e5a5a99cf3f"
-    },
-    "checklist": [
-      {
-        "check_type": "different_categories",
-        "entities": [
-          {
-            "text": "Seguin",
-            "start": 3615,
-            "category": "localite",
-            "source": "NER model",
-            "score": 0.9987198114395142,
-            "entityId": "localite_seguin",
-            "end": 3621
-          },
-          {
-            "text": "Seguin",
-            "start": 4476,
-            "category": "localite",
-            "source": "NER model",
-            "score": 0.9990168809890747,
-            "entityId": "localite_seguin",
-            "end": 4482
-          },
-          {
-            "text": "Seguin",
-            "start": 5606,
-            "category": "localite",
-            "source": "NER model",
-            "score": 0.9987550973892212,
-            "entityId": "localite_seguin",
-            "end": 5612
-          },
-          {
-            "text": "Seguin",
-            "start": 7354,
-            "category": "localite",
-            "source": "NER model",
-            "score": 0.9982315897941589,
-            "entityId": "localite_seguin",
-            "end": 7360
-          },
-          {
-            "text": "Seguin",
-            "start": 8076,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9999215602874756,
-            "entityId": "personnePhysique_seguin",
-            "end": 8082
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "L'annotation 'Seguin' est présente dans différentes catégories: ['Localité', 'Personne physique']"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab1128"
-    }
+  "_id": {
+    "$oid": "673e0ee3de34a67d3f722492"
   },
-  {
-    "_id": {
-      "$oid": "67361cb75f041e6efa99cfc6"
-    },
-    "checklist": [
-      {
-        "check_type": "similar_writing",
-        "entities": [
-          {
-            "text": "Marthe",
-            "start": 353,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9999934434890747,
-            "entityId": "personnePhysique_marthe",
-            "end": 359
-          },
-          {
-            "text": "MartheP",
-            "start": 12843,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9999533891677856,
-            "entityId": "personnePhysique_marthep",
-            "end": 12850
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'Marthe' est similaire à 'MartheP'. Est-ce une erreur de saisie ?"
-      },
-      {
-        "check_type": "juridoute",
-        "entities": [
-          {
-            "text": "LucieD",
-            "start": 13978,
-            "category": "personnePhysique",
-            "source": "postprocess",
-            "score": 1,
-            "entityId": "personnePhysique_lucied",
-            "end": 13984
-          }
-        ],
-        "sentences": [
-          {
-            "start": 13854,
-            "end": 14150
-          }
-        ],
-        "metadata_text": [],
-        "message": "Il semblerait que le mot LucieD soit potentiellement une personne physique."
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab1133"
+  "checklist": [
+    {
+      "check_type": "similar_writing",
+      "entities": [
+        {
+          "text": "Marine",
+          "start": 554,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9995833039283752,
+          "entityId": "personnePhysique_marine",
+          "end": 560
+        },
+        {
+          "text": "Marie",
+          "start": 561,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9998307228088379,
+          "entityId": "personnePhysique_marie",
+          "end": 566
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "'Marine' est similaire à 'Marie'. Est-ce une erreur de saisie ?"
     }
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca82bf0bde39"
+  }
+},
+{
+  "_id": {
+    "$oid": "673e1068de34a67d897224ad"
   },
-  {
-    "_id": {
-      "$oid": "67362b3d5f041e236999d04d"
-    },
-    "checklist": [
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 1994,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.803370475769043,
-            "entityId": "personnePhysique_¿",
-            "end": 1995
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "juridoute",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 1808,
-            "category": "personnePhysique",
-            "source": "postprocess",
-            "score": 1,
-            "entityId": "personnePhysique_¿",
-            "end": 1809
-          }
-        ],
-        "sentences": [
-          {
-            "start": 1728,
-            "end": 1904
-          }
-        ],
-        "metadata_text": [],
-        "message": "Il semblerait que le mot ¿ soit potentiellement une personne physique."
-      },
-      {
-        "check_type": "juridoute",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 4065,
-            "category": "personnePhysique",
-            "source": "postprocess",
-            "score": 1,
-            "entityId": "personnePhysique_¿",
-            "end": 4066
-          }
-        ],
-        "sentences": [
-          {
-            "start": 4018,
-            "end": 4151
-          }
-        ],
-        "metadata_text": [],
-        "message": "Il semblerait que le mot ¿ soit potentiellement une personne physique."
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab116a"
+  "checklist": [
+    {
+      "check_type": "similar_writing",
+      "entities": [
+        {
+          "text": "Alexandre",
+          "start": 699,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9999781847000122,
+          "entityId": "personnePhysique_alexandre",
+          "end": 708
+        },
+        {
+          "text": "Alexandrie",
+          "start": 725,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9999241828918457,
+          "entityId": "personnePhysique_alexandrie",
+          "end": 735
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "'Alexandre' est similaire à 'Alexandrie'. Est-ce une erreur de saisie ?"
     }
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca93c00bde44"
+  }
+},
+{
+  "_id": {
+    "$oid": "673e1539de34a64f067224e9"
   },
-  {
-    "_id": {
-      "$oid": "67362b5b5f041e718299d050"
-    },
-    "checklist": [
-      {
-        "check_type": "juridoute",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 518,
-            "category": "personnePhysique",
-            "source": "postprocess",
-            "score": 1,
-            "entityId": "personnePhysique_¿",
-            "end": 519
-          }
-        ],
-        "sentences": [
-          {
-            "start": 510,
-            "end": 529
-          }
-        ],
-        "metadata_text": [],
-        "message": "Il semblerait que le mot ¿ soit potentiellement une personne physique."
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab116b"
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Marianne",
+          "start": 282,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999561309814453,
+          "entityId": "professionnelMagistratGreffier_marianne",
+          "end": 290
+        },
+        {
+          "text": "Marianne",
+          "start": 10687,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.39217662811279297,
+          "entityId": "personnePhysique_marianne",
+          "end": 10695
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Marianne' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     }
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca7b2a0bde5a"
+  }
+},
+{
+  "_id": {
+    "$oid": "673e255cde34a63288722558"
   },
-  {
-    "_id": {
-      "$oid": "6736301f5f041e4fe999d06e"
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Josette",
+          "start": 2296,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9914813041687012,
+          "entityId": "personnePhysique_josette",
+          "end": 2303
+        },
+        {
+          "text": "Josette",
+          "start": 2651,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.703476071357727,
+          "entityId": "personnePhysique_josette",
+          "end": 2658
+        },
+        {
+          "text": "Josette",
+          "start": 3186,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9888399243354797,
+          "entityId": "professionnelMagistratGreffier_josette",
+          "end": 3193
+        },
+        {
+          "text": "Josette",
+          "start": 3537,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9560930132865906,
+          "entityId": "professionnelMagistratGreffier_josette",
+          "end": 3544
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Josette' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     },
-    "checklist": [
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 2349,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.6249372959136963,
-            "entityId": "personnePhysique_¿",
-            "end": 2350
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "similar_writing",
-        "entities": [
-          {
-            "text": "l¿onore",
-            "start": 195,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9999274015426636,
-            "entityId": "personnePhysique_l¿onore",
-            "end": 202
-          },
-          {
-            "text": "¿l¿onore",
-            "start": 3349,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.8102453351020813,
-            "entityId": "personnePhysique_¿l¿onore",
-            "end": 3357
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'l¿onore' est similaire à '¿l¿onore'. Est-ce une erreur de saisie ?"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab1175"
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Alain",
+          "start": 2304,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9747382402420044,
+          "entityId": "personnePhysique_alain",
+          "end": 2309
+        },
+        {
+          "text": "Alain",
+          "start": 2659,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.6566782593727112,
+          "entityId": "professionnelMagistratGreffier_alain",
+          "end": 2664
+        },
+        {
+          "text": "Alain",
+          "start": 3194,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9808743596076965,
+          "entityId": "professionnelMagistratGreffier_alain",
+          "end": 3199
+        },
+        {
+          "text": "Alain",
+          "start": 3545,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9016762375831604,
+          "entityId": "professionnelMagistratGreffier_alain",
+          "end": 3550
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Alain' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     }
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca89270bde85"
+  }
+},
+{
+  "_id": {
+    "$oid": "673e288ade34a65a9c722567"
   },
-  {
-    "_id": {
-      "$oid": "6736307e5f041e2b8e99d074"
-    },
-    "checklist": [
-      {
-        "check_type": "juridoute",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 353,
-            "category": "personnePhysique",
-            "source": "postprocess",
-            "score": 1,
-            "entityId": "personnePhysique_¿",
-            "end": 354
-          }
-        ],
-        "sentences": [
-          {
-            "start": 337,
-            "end": 358
-          }
-        ],
-        "metadata_text": [],
-        "message": "Il semblerait que le mot ¿ soit potentiellement une personne physique."
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab1177"
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Clémence",
+          "start": 372,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999563694000244,
+          "entityId": "professionnelMagistratGreffier_clemence",
+          "end": 380
+        },
+        {
+          "text": "Clémence",
+          "start": 13241,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9921184778213501,
+          "entityId": "personnePhysique_clemence",
+          "end": 13249
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Clémence' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     }
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca8a0c0bde8a"
+  }
+},
+{
+  "_id": {
+    "$oid": "673e3764de34a6ce277225c4"
   },
-  {
-    "_id": {
-      "$oid": "673631a05f041ef4fc99d083"
-    },
-    "checklist": [
-      {
-        "check_type": "different_categories",
-        "entities": [
-          {
-            "text": "LA MESTA",
-            "start": 297,
-            "category": "professionnelMagistratGreffier",
-            "source": "NER model",
-            "score": 0.9998489022254944,
-            "entityId": "professionnelMagistratGreffier_la mesta",
-            "end": 305
-          },
-          {
-            "text": "LA MESTA",
-            "start": 6988,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9941515624523163,
-            "entityId": "personnePhysique_la mesta",
-            "end": 6996
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "L'annotation 'LA MESTA' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab117c"
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Clémence",
+          "start": 376,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999538660049438,
+          "entityId": "professionnelMagistratGreffier_clemence",
+          "end": 384
+        },
+        {
+          "text": "Clémence",
+          "start": 12050,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.8101123571395874,
+          "entityId": "personnePhysique_clemence",
+          "end": 12058
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Clémence' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     }
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca815d0bdeaa"
+  }
+},
+{
+  "_id": {
+    "$oid": "673e424cde34a6af6e7225fd"
   },
-  {
-    "_id": {
-      "$oid": "673631f45f041ec5a699d086"
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Marion",
+          "start": 861,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9996507167816162,
+          "entityId": "personnePhysique_marion",
+          "end": 867
+        },
+        {
+          "text": "Marion",
+          "start": 14524,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9998558759689331,
+          "entityId": "professionnelMagistratGreffier_marion",
+          "end": 14530
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     },
-    "checklist": [
-      {
-        "check_type": "different_categories",
-        "entities": [
-          {
-            "text": "Marianne",
-            "start": 282,
-            "category": "professionnelMagistratGreffier",
-            "source": "NER model",
-            "score": 0.9999561309814453,
-            "entityId": "professionnelMagistratGreffier_marianne",
-            "end": 290
-          },
-          {
-            "text": "Marianne",
-            "start": 10687,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.39217662811279297,
-            "entityId": "personnePhysique_marianne",
-            "end": 10695
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "L'annotation 'Marianne' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab117d"
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "COCHENNEC",
+          "start": 868,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9986673593521118,
+          "entityId": "personnePhysique_cochennec",
+          "end": 877
+        },
+        {
+          "text": "COCHENNEC",
+          "start": 14531,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999001026153564,
+          "entityId": "professionnelMagistratGreffier_cochennec",
+          "end": 14540
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     }
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca78a70bdebe"
+  }
+},
+{
+  "_id": {
+    "$oid": "673e43bcde34a6e75872260f"
   },
-  {
-    "_id": {
-      "$oid": "673632355f041e05b399d089"
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Marion",
+          "start": 759,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9996143579483032,
+          "entityId": "personnePhysique_marion",
+          "end": 765
+        },
+        {
+          "text": "Marion",
+          "start": 7734,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.999854564666748,
+          "entityId": "professionnelMagistratGreffier_marion",
+          "end": 7740
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     },
-    "checklist": [
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 72,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.557350218296051,
-            "entityId": "personnePhysique_¿",
-            "end": 73
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 2524,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9866917729377747,
-            "entityId": "personnePhysique_¿",
-            "end": 2525
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 4071,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9960281848907471,
-            "entityId": "personnePhysique_¿",
-            "end": 4072
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 4116,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9112194776535034,
-            "entityId": "personnePhysique_¿",
-            "end": 4117
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 6957,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9990026354789734,
-            "entityId": "personnePhysique_¿",
-            "end": 6958
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 7362,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9984906911849976,
-            "entityId": "personnePhysique_¿",
-            "end": 7363
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "juridoute",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 2254,
-            "category": "personnePhysique",
-            "source": "postprocess",
-            "score": 1,
-            "entityId": "personnePhysique_¿",
-            "end": 2255
-          }
-        ],
-        "sentences": [
-          {
-            "start": 1996,
-            "end": 2300
-          }
-        ],
-        "metadata_text": [],
-        "message": "Il semblerait que le mot ¿ soit potentiellement une personne physique."
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab117e"
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "COCHENNEC",
+          "start": 766,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9988658428192139,
+          "entityId": "personnePhysique_cochennec",
+          "end": 775
+        },
+        {
+          "text": "COCHENNEC",
+          "start": 7741,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999046325683594,
+          "entityId": "professionnelMagistratGreffier_cochennec",
+          "end": 7750
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
     }
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca8cd50bdec3"
+  }
+},
+{
+  "_id": {
+    "$oid": "673eec5f65165c546db3a74a"
   },
-  {
-    "_id": {
-      "$oid": "673633b25f041e571d99d095"
-    },
-    "checklist": [
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 12953,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9895597696304321,
-            "entityId": "personnePhysique_¿",
-            "end": 12954
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 12964,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9360483884811401,
-            "entityId": "personnePhysique_¿",
-            "end": 12965
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 13079,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9980034232139587,
-            "entityId": "personnePhysique_¿",
-            "end": 13080
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab1182"
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Maury",
+          "start": 1017,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.981116771697998,
+          "entityId": "personnePhysique_maury",
+          "end": 1022
+        },
+        {
+          "text": "Maury",
+          "start": 1880,
+          "category": "localite",
+          "source": "NER model",
+          "score": 0.9186369776725769,
+          "entityId": "localite_maury",
+          "end": 1885
+        },
+        {
+          "text": "Maury",
+          "start": 20195,
+          "category": "localite",
+          "source": "NER model",
+          "score": 0.6047534346580505,
+          "entityId": "localite_maury",
+          "end": 20200
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Maury' est présente dans différentes catégories: ['Localité', 'Personne physique']"
     }
-  },
-  {
-    "_id": {
-      "$oid": "673634955f041e86ef99d0a4"
-    },
-    "checklist": [
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 438,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9996856451034546,
-            "entityId": "personnePhysique_¿",
-            "end": 439
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 2258,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9659639000892639,
-            "entityId": "personnePhysique_¿",
-            "end": 2259
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 5495,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9956576824188232,
-            "entityId": "personnePhysique_¿",
-            "end": 5496
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 5661,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9980785846710205,
-            "entityId": "personnePhysique_¿",
-            "end": 5662
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 6110,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.999521017074585,
-            "entityId": "personnePhysique_¿",
-            "end": 6111
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab1187"
-    }
-  },
-  {
-    "_id": {
-      "$oid": "673636565f041efd0899d0b9"
-    },
-    "checklist": [
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 566,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9950644373893738,
-            "entityId": "personnePhysique_¿",
-            "end": 567
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 1877,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9990788698196411,
-            "entityId": "personnePhysique_¿",
-            "end": 1878
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 2696,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.993724524974823,
-            "entityId": "personnePhysique_¿",
-            "end": 2697
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 4645,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9997268319129944,
-            "entityId": "personnePhysique_¿",
-            "end": 4646
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "juridoute",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 3178,
-            "category": "personnePhysique",
-            "source": "postprocess",
-            "score": 1,
-            "entityId": "personnePhysique_¿",
-            "end": 3179
-          }
-        ],
-        "sentences": [
-          {
-            "start": 2671,
-            "end": 3190
-          }
-        ],
-        "metadata_text": [],
-        "message": "Il semblerait que le mot ¿ soit potentiellement une personne physique."
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab118e"
-    }
-  },
-  {
-    "_id": {
-      "$oid": "673636a85f041ea7ba99d0bc"
-    },
-    "checklist": [
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 1102,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9997571110725403,
-            "entityId": "personnePhysique_¿",
-            "end": 1103
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 1126,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.998015284538269,
-            "entityId": "personnePhysique_¿",
-            "end": 1127
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "different_categories",
-        "entities": [
-          {
-            "text": "Emmanuelle",
-            "start": 1191,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9999759197235107,
-            "entityId": "personnePhysique_emmanuelle",
-            "end": 1201
-          },
-          {
-            "text": "Emmanuelle",
-            "start": 5668,
-            "category": "professionnelMagistratGreffier",
-            "source": "NER model",
-            "score": 0.9999635219573975,
-            "entityId": "professionnelMagistratGreffier_emmanuelle",
-            "end": 5678
-          },
-          {
-            "text": "Emmanuelle",
-            "start": 6557,
-            "category": "professionnelMagistratGreffier",
-            "source": "NER model",
-            "score": 0.9999716281890869,
-            "entityId": "professionnelMagistratGreffier_emmanuelle",
-            "end": 6567
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "L'annotation 'Emmanuelle' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab118f"
-    }
-  },
-  {
-    "_id": {
-      "$oid": "673637445f041e755a99d0c8"
-    },
-    "checklist": [
-      {
-        "check_type": "similar_writing",
-        "entities": [
-          {
-            "text": "Alexandre",
-            "start": 699,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9999792575836182,
-            "entityId": "personnePhysique_alexandre",
-            "end": 708
-          },
-          {
-            "text": "Alexandrie",
-            "start": 725,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9999285936355591,
-            "entityId": "personnePhysique_alexandrie",
-            "end": 735
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'Alexandre' est similaire à 'Alexandrie'. Est-ce une erreur de saisie ?"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab1193"
-    }
-  },
-  {
-    "_id": {
-      "$oid": "673637845f041ebe0a99d0ce"
-    },
-    "checklist": [
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 580,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9972353577613831,
-            "entityId": "personnePhysique_¿",
-            "end": 581
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      },
-      {
-        "check_type": "less_than_two_characters",
-        "entities": [
-          {
-            "text": "¿",
-            "start": 818,
-            "category": "personnePhysique",
-            "source": "NER model",
-            "score": 0.9999468326568604,
-            "entityId": "personnePhysique_¿",
-            "end": 819
-          }
-        ],
-        "sentences": [],
-        "metadata_text": [],
-        "message": "'¿' cette annotation fait moins de deux caratères. Est-ce normal ?"
-      }
-    ],
-    "documentId": {
-      "$oid": "67335d7722a61d02edab1195"
-    }
-  }]
+  ],
+  "documentId": {
+    "$oid": "673dfab6d3d2ca8bad0bdede"
+  }
+}]

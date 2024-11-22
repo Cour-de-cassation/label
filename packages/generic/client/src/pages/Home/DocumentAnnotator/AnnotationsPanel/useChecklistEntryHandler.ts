@@ -1,7 +1,7 @@
-import { annotationReportType } from '@label/core';
 import { useDocumentViewerModeHandler } from '../../../../services/documentViewerMode';
 import { useState } from 'react';
 import { splittedTextByLineType } from '../lib';
+import { documentType } from '@label/core';
 
 export { useChecklistEntryHandler };
 
@@ -24,7 +24,7 @@ function useChecklistEntryHandler({
     setSelected,
   };
 
-  function setSelected(check?: annotationReportType['checklist'][number]) {
+  function setSelected(check?: documentType['checklist'][number]) {
     if (check) {
       if (documentViewerModeHandler.documentViewerMode.kind != 'checklist') {
         onLeaveAnnotationMode();
@@ -47,7 +47,7 @@ function useChecklistEntryHandler({
   }
 
   function filterLinesByCheck(
-    check: annotationReportType['checklist'][number],
+    check: documentType['checklist'][number],
     splittedTextByLine: splittedTextByLineType,
   ): splittedTextByLineType {
     const result: splittedTextByLineType = [];
@@ -67,7 +67,9 @@ function useChecklistEntryHandler({
         const linesWithIndex = splittedTextByLine.filter(({ content }) =>
           content.some((chunk) => {
             if (chunk.type === 'text') {
-              return chunk.content.index >= entity.start && chunk.content.index <= entity.end;
+              return (
+                chunk.content.index <= entity.start && chunk.content.index + chunk.content.text.length >= entity.end
+              );
             }
           }),
         );
@@ -80,7 +82,9 @@ function useChecklistEntryHandler({
         const linesWithSentence = splittedTextByLine.filter(({ content }) =>
           content.some((chunk) => {
             if (chunk.type === 'text') {
-              return chunk.content.index >= sentence.start && chunk.content.index <= sentence.end;
+              return (
+                chunk.content.index <= sentence.start && chunk.content.index + chunk.content.text.length >= sentence.end
+              );
             }
           }),
         );

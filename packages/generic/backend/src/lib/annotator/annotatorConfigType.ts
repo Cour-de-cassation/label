@@ -1,6 +1,5 @@
 import {
   annotationType,
-  annotationReportType,
   documentType,
   idType,
   settingsType,
@@ -17,7 +16,7 @@ type annotatorConfigType = {
   ): Promise<{
     annotations: annotationType[];
     documentId: idType;
-    report: annotationReportType;
+    checklist: documentType['checklist'];
     newCategoriesToAnnotate?: string[];
     newCategoriesToUnAnnotate?: string[];
     computedAdditionalTerms?: documentType['decisionMetadata']['computedAdditionalTerms'];

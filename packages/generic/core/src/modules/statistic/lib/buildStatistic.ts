@@ -20,7 +20,7 @@ function buildStatistic({
   linkedEntitiesCount: number;
   treatmentInfo: treatmentInfoType;
   lastUpdateDate: treatmentType['lastUpdateDate'];
-  checklist: statisticType['checklist'];
+  checklist: documentType['checklist'];
 }): statisticType {
   return {
     _id: idModule.lib.buildId(),

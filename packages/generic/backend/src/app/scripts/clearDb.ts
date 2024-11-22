@@ -1,5 +1,4 @@
 import { buildPreAssignationRepository } from '../../modules/preAssignation';
-import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildProblemReportRepository } from '../../modules/problemReport';
@@ -45,10 +44,6 @@ async function clearDb({
   });
 
   const repositories = [
-    {
-      shouldClear: annotation,
-      buildRepository: buildAnnotationReportRepository,
-    },
     {
       shouldClear: assignation,
       buildRepository: buildAssignationRepository,

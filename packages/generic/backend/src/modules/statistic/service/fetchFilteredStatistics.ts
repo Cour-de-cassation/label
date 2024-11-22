@@ -70,7 +70,6 @@ async function fetchFilteredStatistics(
             document,
             treatments,
             settings,
-            checklist: [],
           }),
       ),
     );

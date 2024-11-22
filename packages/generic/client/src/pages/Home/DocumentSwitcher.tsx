@@ -7,7 +7,6 @@ import {
   settingsModule,
   documentModule,
   assignationType,
-  annotationReportType,
 } from '@label/core';
 import { apiCaller } from '../../api';
 import { MainHeader } from '../../components';
@@ -24,7 +23,6 @@ type documentStateType =
         document: fetchedDocumentType;
         annotations: annotationType[];
         assignationId: assignationType['_id'];
-        checklist: annotationReportType['checklist'];
       };
     }
   | { kind: 'selecting' };
@@ -34,7 +32,6 @@ function DocumentSwitcher(props: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
-    checklist: annotationReportType['checklist'];
   }>;
   fetchNewDocumentsForUser: () => void;
   settings: settingsType;
@@ -58,7 +55,6 @@ function DocumentSwitcher(props: {
         return (
           <HomeDocumentAnnotator
             assignationId={documentState.choice.assignationId}
-            checklist={documentState.choice.checklist}
             committer={buildAnnotationsCommitter()}
             settings={settingsForDocument}
             document={documentState.choice.document}
@@ -101,7 +97,6 @@ function DocumentSwitcher(props: {
     document: fetchedDocumentType;
     annotations: annotationType[];
     assignationId: assignationType['_id'];
-    checklist: annotationReportType['checklist'];
   }) {
     try {
       const documentStatus = (

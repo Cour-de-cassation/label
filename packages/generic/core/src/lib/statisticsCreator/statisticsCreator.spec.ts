@@ -5,7 +5,6 @@ import { idModule } from '../../modules/id';
 import { treatmentModule } from '../../modules/treatment';
 import { settingsModule } from '../../modules/settings';
 import { statisticsCreator } from './statisticsCreator';
-import { annotationReportGenerator } from '../../modules/annotationReport/generator';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
 
@@ -19,6 +18,7 @@ describe('statisticsCreator', () => {
   const duration = 1500;
   const userId = idModule.lib.buildId();
   const decisionDate = new Date().getTime();
+  const documentChecklist = documentModule.checklistGenerator.generate(4);
   const document = documentModule.generator.generate({
     decisionMetadata: documentModule.decisionMetadataGenerator.generate({
       additionalTermsToAnnotate: '',
@@ -45,6 +45,7 @@ describe('statisticsCreator', () => {
     importer: 'recent',
     source: documentSource,
     text: 'Some text with five words',
+    checklist: documentChecklist,
   });
   const settings = settingsModule.lib.buildSettings({
     personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
@@ -52,8 +53,6 @@ describe('statisticsCreator', () => {
     personneMorale: { isSensitive: false, isAnonymized: false },
     professionnelNom: { isSensitive: false, isAnonymized: false },
   });
-
-  const checklistForStatistics = annotationReportGenerator.generate().checklist;
 
   describe('buildFromDocument', () => {
     it('should build all the statistics of the given documents', () => {
@@ -97,7 +96,6 @@ describe('statisticsCreator', () => {
         humanTreatments: [{ treatment: treatments[1], userId }],
         document,
         treatments: treatments,
-        checklist: checklistForStatistics,
         settings,
       });
 
@@ -122,7 +120,7 @@ describe('statisticsCreator', () => {
         treatmentDate: TREATMENT_DATE.getTime(),
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
-        checklist: checklistForStatistics,
+        checklist: documentChecklist,
       });
     });
 
@@ -163,7 +161,6 @@ describe('statisticsCreator', () => {
       const statistic = statisticsCreator.buildFromDocument({
         document,
         treatments: treatments,
-        checklist: checklistForStatistics,
         humanTreatments: [{ treatment: treatments[1], userId }],
         settings,
       });
@@ -189,7 +186,7 @@ describe('statisticsCreator', () => {
         treatmentDate: TREATMENT_DATE.getTime(),
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
-        checklist: checklistForStatistics,
+        checklist: documentChecklist,
       });
     });
   });

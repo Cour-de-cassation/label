@@ -51,7 +51,6 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<voi
                 <AnnotationsPanel
                   document={annotatorState.document}
                   annotationPerCategoryAndEntity={annotationPerCategoryAndEntity}
-                  checklist={annotatorState.checklist}
                   splittedTextByLine={splittedTextByLine}
                   nonAnnotableCategories={nonAnnotableCategories}
                 />

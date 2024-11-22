@@ -1,5 +1,4 @@
 import { annotationModule, annotationType } from './annotation';
-import { annotationReportModule, annotationReportType } from './annotationReport';
 import { annotationsDiffModule, annotationsDiffType } from './annotationsDiff';
 import { assignationModule, assignationType } from './assignation';
 import { preAssignationModule, preAssignationType } from './preAssignation';
@@ -23,7 +22,6 @@ import { treatmentType, treatmentModule, treatmentInfoType } from './treatment';
 import { userModule, userType, passwordTimeValidityStatusType } from './user';
 export {
   annotationModule,
-  annotationReportModule,
   annotationsDiffModule,
   assignationModule,
   preAssignationModule,
@@ -43,7 +41,6 @@ export * from './modelType';
 
 export type {
   annotationType,
-  annotationReportType,
   annotationsDiffType,
   assignationType,
   preAssignationType,

@@ -6,7 +6,7 @@ LABEL est un logiciel d'annotation de texte créé par la [Cour de cassation](ht
 
 Cet outil permet aux annotateurs et annotatrices de relire et passer en revue les décisions qui ont été pré-annotées automatiquement par un algorithme.
 
-![Capture d'écran de LABEL](docs/images/screenshot_LABEL.jpg)
+![Capture d'écran de LABEL](docs/images/screenshot_LABEL.png)
 
 ## Fonctionnalités
 

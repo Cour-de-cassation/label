@@ -33,7 +33,14 @@ function getAnnotationTextDisplayStyle({
             return 'outlined';
           }
         case 'checklist':
-          return 'filled';
+          const isSelectedCheck = documentViewerMode.check.entities.some(
+            (entity) => entity.entityId === annotation.entityId,
+          );
+          if (isSelectedCheck) {
+            return 'filled';
+          } else {
+            return 'outlined';
+          }
       }
   }
 }

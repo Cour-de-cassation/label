@@ -1,5 +1,5 @@
 import { random } from 'lodash';
-import { generatorType, annotationReportModule } from '@label/core';
+import { documentModule, generatorType } from '@label/core';
 import { nlpResponseType } from '../../fetcher/api';
 
 export { nlpAnnotationsGenerator };
@@ -9,7 +9,7 @@ const nlpAnnotationsGenerator: generatorType<nlpResponseType> = {
     entities: entities ? entities : generateRandomNlpAnnotations(),
     checklist: checklist
       ? checklist
-      : annotationReportModule.generator.generate().checklist,
+      : documentModule.checklistGenerator.generate(2),
     versions: versions ? versions : generateRandomNlpVersion(),
   }),
 };

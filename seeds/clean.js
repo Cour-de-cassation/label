@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb')
-if (!process.env.NODE_ENV) require('dotenv')
+if (!process.env.NODE_ENV) require('dotenv').config()
 
 async function main() {
   const client = new MongoClient(process.env.LABEL_DB_URL, { useUnifiedTopology: true })

@@ -61,7 +61,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732116554745
+  "updateDate": 1732116554745,
+  "checklist": []
 },
 {
   "_id": {
@@ -126,7 +127,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732116586382
+  "updateDate": 1732116586382,
+  "checklist": []
 },
 {
   "_id": {
@@ -191,7 +193,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732116617016
+  "updateDate": 1732116617016,
+  "checklist": []
 },
 {
   "_id": {
@@ -256,7 +259,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732116830208
+  "updateDate": 1732116830208,
+  "checklist": []
 },
 {
   "_id": {
@@ -321,7 +325,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732116921227
+  "updateDate": 1732116921227,
+  "checklist": []
 },
 {
   "_id": {
@@ -370,7 +375,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126367
+  "updateDate": 1732115126367,
+  "checklist": []
 },
 {
   "_id": {
@@ -435,7 +441,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732117005279
+  "updateDate": 1732117005279,
+  "checklist": []
 },
 {
   "_id": {
@@ -484,7 +491,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126367
+  "updateDate": 1732115126367,
+  "checklist": []
 },
 {
   "_id": {
@@ -549,7 +557,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732117079174
+  "updateDate": 1732117079174,
+  "checklist": []
 },
 {
   "_id": {
@@ -614,7 +623,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732117105575
+  "updateDate": 1732117105575,
+  "checklist": []
 },
 {
   "_id": {
@@ -679,7 +689,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732117232528
+  "updateDate": 1732117232528,
+  "checklist": []
 },
 {
   "_id": {
@@ -744,7 +755,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732117543326
+  "updateDate": 1732117543326,
+  "checklist": []
 },
 {
   "_id": {
@@ -809,7 +821,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732117654819
+  "updateDate": 1732117654819,
+  "checklist": []
 },
 {
   "_id": {
@@ -874,7 +887,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732117820351
+  "updateDate": 1732117820351,
+  "checklist": []
 },
 {
   "_id": {
@@ -924,7 +938,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126368
+  "updateDate": 1732115126368,
+  "checklist": []
 },
 {
   "_id": {
@@ -991,7 +1006,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732116325764
+  "updateDate": 1732116325764,
+  "checklist": []
 },
 {
   "_id": {
@@ -1042,7 +1058,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126368
+  "updateDate": 1732115126368,
+  "checklist": []
 },
 {
   "_id": {
@@ -1093,7 +1110,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126369
+  "updateDate": 1732115126369,
+  "checklist": []
 },
 {
   "_id": {
@@ -1160,7 +1178,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732118743574
+  "updateDate": 1732118743574,
+  "checklist": []
 },
 {
   "_id": {
@@ -1214,7 +1233,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126369
+  "updateDate": 1732115126369,
+  "checklist": []
 },
 {
   "_id": {
@@ -1281,7 +1301,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732118935787
+  "updateDate": 1732118935787,
+  "checklist": []
 },
 {
   "_id": {
@@ -1332,7 +1353,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126369
+  "updateDate": 1732115126369,
+  "checklist": []
 },
 {
   "_id": {
@@ -1402,7 +1424,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732119107828
+  "updateDate": 1732119107828,
+  "checklist": []
 },
 {
   "_id": {
@@ -1469,7 +1492,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732119207238
+  "updateDate": 1732119207238,
+  "checklist": []
 },
 {
   "_id": {
@@ -1536,7 +1560,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732119283534
+  "updateDate": 1732119283534,
+  "checklist": []
 },
 {
   "_id": {
@@ -1603,7 +1628,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732119510008
+  "updateDate": 1732119510008,
+  "checklist": []
 },
 {
   "_id": {
@@ -1670,7 +1696,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732180898455
+  "updateDate": 1732180898455,
+  "checklist": []
 },
 {
   "_id": {
@@ -1721,7 +1748,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126369
+  "updateDate": 1732115126369,
+  "checklist": []
 },
 {
   "_id": {
@@ -1775,7 +1803,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126370
+  "updateDate": 1732115126370,
+  "checklist": []
 },
 {
   "_id": {
@@ -1826,7 +1855,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126370
+  "updateDate": 1732115126370,
+  "checklist": []
 },
 {
   "_id": {
@@ -1915,7 +1945,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732120184212
+  "updateDate": 1732120184212,
+  "checklist": []
 },
 {
   "_id": {
@@ -1982,7 +2013,36 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732120291604
+  "updateDate": 1732120291604,
+  "checklist": [
+    {
+      "check_type": "similar_writing",
+      "entities": [
+        {
+          "text": "Marine",
+          "start": 554,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9995833039283752,
+          "entityId": "personnePhysique_marine",
+          "end": 560
+        },
+        {
+          "text": "Marie",
+          "start": 561,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9998307228088379,
+          "entityId": "personnePhysique_marie",
+          "end": 566
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "'Marine' est similaire à 'Marie'. Est-ce une erreur de saisie ?",
+      "short_message": "'Marine' = 'Marie' ?"
+    }
+  ]
 },
 {
   "_id": {
@@ -2046,7 +2106,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126375
+  "updateDate": 1732115126375,
+  "checklist": []
 },
 {
   "_id": {
@@ -2110,7 +2171,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126375
+  "updateDate": 1732115126375,
+  "checklist": []
 },
 {
   "_id": {
@@ -2177,7 +2239,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732120650527
+  "updateDate": 1732120650527,
+  "checklist": []
 },
 {
   "_id": {
@@ -2244,7 +2307,36 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732120680497
+  "updateDate": 1732120680497,
+  "checklist": [
+    {
+      "check_type": "similar_writing",
+      "entities": [
+        {
+          "text": "Alexandre",
+          "start": 699,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9999781847000122,
+          "entityId": "personnePhysique_alexandre",
+          "end": 708
+        },
+        {
+          "text": "Alexandrie",
+          "start": 725,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9999241828918457,
+          "entityId": "personnePhysique_alexandrie",
+          "end": 735
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "'Alexandre' est similaire à 'Alexandrie'. Est-ce une erreur de saisie ?",
+      "short_message":"'Alexandre' = 'Alexandrie' ?"
+    }
+  ]
 },
 {
   "_id": {
@@ -2311,7 +2403,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732120720858
+  "updateDate": 1732120720858,
+  "checklist": []
 },
 {
   "_id": {
@@ -2393,7 +2486,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732121169118
+  "updateDate": 1732121169118,
+  "checklist": []
 },
 {
   "_id": {
@@ -2444,7 +2538,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126389
+  "updateDate": 1732115126389,
+  "checklist": []
 },
 {
   "_id": {
@@ -2495,7 +2590,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126393
+  "updateDate": 1732115126393,
+  "checklist": []
 },
 {
   "_id": {
@@ -2562,7 +2658,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732121284798
+  "updateDate": 1732121284798,
+  "checklist": []
 },
 {
   "_id": {
@@ -2629,7 +2726,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732121377511
+  "updateDate": 1732121377511,
+  "checklist": []
 },
 {
   "_id": {
@@ -2696,7 +2794,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732121542087
+  "updateDate": 1732121542087,
+  "checklist": []
 },
 {
   "_id": {
@@ -2763,7 +2862,36 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732121913816
+  "updateDate": 1732121913816,
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Marianne",
+          "start": 282,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999561309814453,
+          "entityId": "professionnelMagistratGreffier_marianne",
+          "end": 290
+        },
+        {
+          "text": "Marianne",
+          "start": 10687,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.39217662811279297,
+          "entityId": "personnePhysique_marianne",
+          "end": 10695
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Marianne' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'Marianne' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    }
+  ]
 },
 {
   "_id": {
@@ -2858,7 +2986,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732122189018
+  "updateDate": 1732122189018,
+  "checklist": []
 },
 {
   "_id": {
@@ -2953,7 +3082,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732122675918
+  "updateDate": 1732122675918,
+  "checklist": []
 },
 {
   "_id": {
@@ -3019,7 +3149,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126432
+  "updateDate": 1732115126432,
+  "checklist": []
 },
 {
   "_id": {
@@ -3070,7 +3201,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126433
+  "updateDate": 1732115126433,
+  "checklist": []
 },
 {
   "_id": {
@@ -3137,7 +3269,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732123086737
+  "updateDate": 1732123086737,
+  "checklist": []
 },
 {
   "_id": {
@@ -3203,7 +3336,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126439
+  "updateDate": 1732115126439,
+  "checklist": []
 },
 {
   "_id": {
@@ -3270,7 +3404,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732123350945
+  "updateDate": 1732123350945,
+  "checklist": []
 },
 {
   "_id": {
@@ -3337,7 +3472,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732124091595
+  "updateDate": 1732124091595,
+  "checklist": []
 },
 {
   "_id": {
@@ -3404,7 +3540,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732124287861
+  "updateDate": 1732124287861,
+  "checklist": []
 },
 {
   "_id": {
@@ -3490,7 +3627,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126458
+  "updateDate": 1732115126458,
+  "checklist": []
 },
 {
   "_id": {
@@ -3569,7 +3707,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126459
+  "updateDate": 1732115126459,
+  "checklist": []
 },
 {
   "_id": {
@@ -3651,7 +3790,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732124583448
+  "updateDate": 1732124583448,
+  "checklist": []
 },
 {
   "_id": {
@@ -3718,7 +3858,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732125174606
+  "updateDate": 1732125174606,
+  "checklist": []
 },
 {
   "_id": {
@@ -3785,7 +3926,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732125720113
+  "updateDate": 1732125720113,
+  "checklist": []
 },
 {
   "_id": {
@@ -3852,7 +3994,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732125946256
+  "updateDate": 1732125946256,
+  "checklist": []
 },
 {
   "_id": {
@@ -3903,7 +4046,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126482
+  "updateDate": 1732115126482,
+  "checklist": []
 },
 {
   "_id": {
@@ -4014,7 +4158,99 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181235115
+  "updateDate": 1732181235115,
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Josette",
+          "start": 2296,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9914813041687012,
+          "entityId": "personnePhysique_josette",
+          "end": 2303
+        },
+        {
+          "text": "Josette",
+          "start": 2651,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.703476071357727,
+          "entityId": "personnePhysique_josette",
+          "end": 2658
+        },
+        {
+          "text": "Josette",
+          "start": 3186,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9888399243354797,
+          "entityId": "professionnelMagistratGreffier_josette",
+          "end": 3193
+        },
+        {
+          "text": "Josette",
+          "start": 3537,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9560930132865906,
+          "entityId": "professionnelMagistratGreffier_josette",
+          "end": 3544
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Josette' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'Josette' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    },
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Alain",
+          "start": 2304,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9747382402420044,
+          "entityId": "personnePhysique_alain",
+          "end": 2309
+        },
+        {
+          "text": "Alain",
+          "start": 2659,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.6566782593727112,
+          "entityId": "professionnelMagistratGreffier_alain",
+          "end": 2664
+        },
+        {
+          "text": "Alain",
+          "start": 3194,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9808743596076965,
+          "entityId": "professionnelMagistratGreffier_alain",
+          "end": 3199
+        },
+        {
+          "text": "Alain",
+          "start": 3545,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9016762375831604,
+          "entityId": "professionnelMagistratGreffier_alain",
+          "end": 3550
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Alain' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'Alain' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    }
+  ]
 },
 {
   "_id": {
@@ -4080,7 +4316,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732126310386
+  "updateDate": 1732126310386,
+  "checklist": []
 },
 {
   "_id": {
@@ -4149,7 +4386,36 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732180983712
+  "updateDate": 1732180983712,
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Clémence",
+          "start": 372,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999563694000244,
+          "entityId": "professionnelMagistratGreffier_clemence",
+          "end": 380
+        },
+        {
+          "text": "Clémence",
+          "start": 13241,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9921184778213501,
+          "entityId": "personnePhysique_clemence",
+          "end": 13249
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Clémence' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'Clémence' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    }
+  ]
 },
 {
   "_id": {
@@ -4199,7 +4465,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126483
+  "updateDate": 1732115126483,
+  "checklist": []
 },
 {
   "_id": {
@@ -4252,7 +4519,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126483
+  "updateDate": 1732115126483,
+  "checklist": []
 },
 {
   "_id": {
@@ -4356,7 +4624,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181252693
+  "updateDate": 1732181252693,
+  "checklist": []
 },
 {
   "_id": {
@@ -4460,7 +4729,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732129016106
+  "updateDate": 1732129016106,
+  "checklist": []
 },
 {
   "_id": {
@@ -4529,7 +4799,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181316832
+  "updateDate": 1732181316832,
+  "checklist": []
 },
 {
   "_id": {
@@ -4582,7 +4853,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126483
+  "updateDate": 1732115126483,
+  "checklist": []
 },
 {
   "_id": {
@@ -4651,7 +4923,36 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181285260
+  "updateDate": 1732181285260,
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Clémence",
+          "start": 376,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999538660049438,
+          "entityId": "professionnelMagistratGreffier_clemence",
+          "end": 384
+        },
+        {
+          "text": "Clémence",
+          "start": 12050,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.8101123571395874,
+          "entityId": "personnePhysique_clemence",
+          "end": 12058
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Clémence' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'Clémence' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    }
+  ]
 },
 {
   "_id": {
@@ -4757,7 +5058,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732130872129
+  "updateDate": 1732130872129,
+  "checklist": []
 },
 {
   "_id": {
@@ -4826,7 +5128,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732130990809
+  "updateDate": 1732130990809,
+  "checklist": []
 },
 {
   "_id": {
@@ -4895,7 +5198,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732131200632
+  "updateDate": 1732131200632,
+  "checklist": []
 },
 {
   "_id": {
@@ -4946,7 +5250,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126483
+  "updateDate": 1732115126483,
+  "checklist": []
 },
 {
   "_id": {
@@ -5031,7 +5336,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126483
+  "updateDate": 1732115126483,
+  "checklist": []
 },
 {
   "_id": {
@@ -5139,7 +5445,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732132881162
+  "updateDate": 1732132881162,
+  "checklist": []
 },
 {
   "_id": {
@@ -5192,7 +5499,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126483
+  "updateDate": 1732115126483,
+  "checklist": []
 },
 {
   "_id": {
@@ -5295,7 +5603,63 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181013169
+  "updateDate": 1732181013169,
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Marion",
+          "start": 861,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9996507167816162,
+          "entityId": "personnePhysique_marion",
+          "end": 867
+        },
+        {
+          "text": "Marion",
+          "start": 14524,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9998558759689331,
+          "entityId": "professionnelMagistratGreffier_marion",
+          "end": 14530
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'Marion' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    },
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "COCHENNEC",
+          "start": 868,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9986673593521118,
+          "entityId": "personnePhysique_cochennec",
+          "end": 877
+        },
+        {
+          "text": "COCHENNEC",
+          "start": 14531,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999001026153564,
+          "entityId": "professionnelMagistratGreffier_cochennec",
+          "end": 14540
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'COCHENNEC' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    }
+  ]
 },
 {
   "_id": {
@@ -5382,7 +5746,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126483
+  "updateDate": 1732115126483,
+  "checklist": []
 },
 {
   "_id": {
@@ -5485,7 +5850,63 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181314582
+  "updateDate": 1732181314582,
+  "checklist": [
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Marion",
+          "start": 759,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9996143579483032,
+          "entityId": "personnePhysique_marion",
+          "end": 765
+        },
+        {
+          "text": "Marion",
+          "start": 7734,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.999854564666748,
+          "entityId": "professionnelMagistratGreffier_marion",
+          "end": 7740
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'Marion' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    },
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "COCHENNEC",
+          "start": 766,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.9988658428192139,
+          "entityId": "personnePhysique_cochennec",
+          "end": 775
+        },
+        {
+          "text": "COCHENNEC",
+          "start": 7741,
+          "category": "professionnelMagistratGreffier",
+          "source": "NER model",
+          "score": 0.9999046325683594,
+          "entityId": "professionnelMagistratGreffier_cochennec",
+          "end": 7750
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+      "short_message": "'COCHENNEC' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+    }
+  ]
 },
 {
   "_id": {
@@ -5572,7 +5993,8 @@
     "viewerNames": []
   },
   "status": "nlpAnnotating",
-  "updateDate": 1732133965726
+  "updateDate": 1732133965726,
+  "checklist": []
 },
 {
   "_id": {
@@ -5683,7 +6105,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181250412
+  "updateDate": 1732181250412,
+  "checklist": []
 },
 {
   "_id": {
@@ -5752,7 +6175,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732173746256
+  "updateDate": 1732173746256,
+  "checklist": []
 },
 {
   "_id": {
@@ -5847,7 +6271,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126484
+  "updateDate": 1732115126484,
+  "checklist": []
 },
 {
   "_id": {
@@ -5955,7 +6380,8 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181794393
+  "updateDate": 1732181794393,
+  "checklist": []
 },
 {
   "_id": {
@@ -6008,7 +6434,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126484
+  "updateDate": 1732115126484,
+  "checklist": []
 },
 {
   "_id": {
@@ -6103,7 +6530,8 @@
     "viewerNames": []
   },
   "status": "loaded",
-  "updateDate": 1732115126484
+  "updateDate": 1732115126484,
+  "checklist": []
 },
 {
   "_id": {
@@ -6208,7 +6636,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732174415426
+  "updateDate": 1732174415426,
+  "checklist": []
 },
 {
   "_id": {
@@ -6275,7 +6704,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732175427252
+  "updateDate": 1732175427252,
+  "checklist": []
 },
 {
   "_id": {
@@ -6344,7 +6774,8 @@
     "viewerNames": []
   },
   "status": "free",
-  "updateDate": 1732176774082
+  "updateDate": 1732176774082,
+  "checklist": []
 },
 {
   "_id": {
@@ -6413,5 +6844,43 @@
     "viewerNames": []
   },
   "status": "done",
-  "updateDate": 1732181282810
+  "updateDate": 1732181282810,
+  "checklist":[
+    {
+      "check_type": "different_categories",
+      "entities": [
+        {
+          "text": "Maury",
+          "start": 1017,
+          "category": "personnePhysique",
+          "source": "NER model",
+          "score": 0.981116771697998,
+          "entityId": "personnePhysique_maury",
+          "end": 1022
+        },
+        {
+          "text": "Maury",
+          "start": 1880,
+          "category": "localite",
+          "source": "NER model",
+          "score": 0.9186369776725769,
+          "entityId": "localite_maury",
+          "end": 1885
+        },
+        {
+          "text": "Maury",
+          "start": 20195,
+          "category": "localite",
+          "source": "NER model",
+          "score": 0.6047534346580505,
+          "entityId": "localite_maury",
+          "end": 20200
+        }
+      ],
+      "sentences": [],
+      "metadata_text": [],
+      "message": "L'annotation 'Maury' est présente dans différentes catégories: ['Localité', 'Personne physique']",
+      "short_message": "'Maury' [localite] ou [personnePhysique] ?"
+    }
+  ]
 }]

@@ -2,7 +2,7 @@ const { MongoClient } = require("mongodb");
 const { writeFile } = require("fs/promises");
 const { existsSync, mkdirSync } = require("fs");
 const { resolve } = require("path");
-if (!process.env.NODE_ENV) require("dotenv");
+if (!process.env.NODE_ENV) require("dotenv").config();
 
 async function exportCollection(collection) {
   const { collectionName, dbName } = collection;

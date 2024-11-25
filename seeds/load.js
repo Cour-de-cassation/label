@@ -1,7 +1,7 @@
 const { MongoClient, ObjectId } = require("mongodb");
 const { readFile, readdir } = require("fs/promises");
 const { resolve } = require("path");
-if (!process.env.NODE_ENV) require("dotenv");
+if (!process.env.NODE_ENV) require("dotenv").config();
 
 async function readCollectionNames(dbName) {
   const files = await readdir(resolve(__dirname, dbName));

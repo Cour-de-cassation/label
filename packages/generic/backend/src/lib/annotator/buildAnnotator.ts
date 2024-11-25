@@ -171,6 +171,7 @@ function buildAnnotator(
 
     for (const documentId of documentIds) {
       await treatmentService.deleteTreatmentsByDocumentId(documentId);
+      await documentService.updateDocumentChecklist(documentId, []);
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
   }

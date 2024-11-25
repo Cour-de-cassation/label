@@ -83,7 +83,7 @@ function useChecklistEntryHandler({
           content.some((chunk) => {
             if (chunk.type === 'text') {
               return (
-                chunk.content.index <= sentence.start && chunk.content.index + chunk.content.text.length >= sentence.end
+                sentence.end > chunk.content.index && sentence.start < chunk.content.index + chunk.content.text.length
               );
             }
           }),

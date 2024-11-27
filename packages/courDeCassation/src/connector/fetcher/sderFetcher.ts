@@ -1,4 +1,5 @@
 import { sderApi } from '../../sderApi';
+import { Sources } from 'dbsder-api-types';
 
 export { sderFetcher };
 
@@ -8,7 +9,7 @@ const sderFetcher = {
     sourceName,
   }: {
     sourceId: number;
-    sourceName: string;
+    sourceName: Sources;
   }) {
     return sderApi.fetchCourtDecisionBySourceIdAndSourceName({
       sourceId,
@@ -23,7 +24,7 @@ const sderFetcher = {
   }: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: Sources;
   }) {
     const courtDecisions = await sderApi.fetchDecisionsToPseudonymiseBetween({
       startDate,
@@ -46,7 +47,7 @@ const sderFetcher = {
   }: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: Sources;
   }) {
     const courtDecisions = await sderApi.fetchDecisionsToPseudonymiseBetweenDateCreation(
       {

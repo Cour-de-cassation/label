@@ -11,7 +11,7 @@ import {
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
-import { DecisionDTO, PartieTJ } from 'dbsder-api-types';
+import { DecisionDTO, DecisionTJDTO, PartieTJ } from 'dbsder-api-types';
 
 export { mapCourtDecisionToDocument };
 
@@ -33,7 +33,9 @@ async function mapCourtDecisionToDocument(
 
   const registerNumber = sderCourtDecision.registerNumber;
   const appeal = sderCourtDecision.appeals[0];
-  const numeroRoleGeneral = /*sderCourtDecision['numeroRoleGeneral'] ||*/ '';
+  const numeroRoleGeneral = isDecisionTJDTO(sderCourtDecision)
+    ? sderCourtDecision.numeroRoleGeneral
+    : '';
   const appealNumber = extractAppealRegisterRoleGeneralNumber(
     sderCourtDecision.originalText,
     source,
@@ -89,13 +91,7 @@ async function mapCourtDecisionToDocument(
     {
       additionalTermsToAnnotate,
       solution,
-      parties: ((): string[] => {
-        if (typeof sderCourtDecision.parties == undefined) {
-          return [] as string[];
-        }
-        const parties = sderCourtDecision.parties as PartieTJ[];
-        return parties.map((partie) => (partie as PartieTJ)?.nom) as string[];
-      })(),
+      parties: sderCourtDecision.parties ? sderCourtDecision.parties : [],
       publicationCategory,
       chamberName: readableChamberName,
       civilMatterCode,
@@ -210,13 +206,7 @@ async function mapCourtDecisionToDocument(
       jurisdiction: readableJurisdictionName,
       NACCode,
       endCaseCode,
-      parties: ((): string[] => {
-        if (typeof sderCourtDecision.parties == undefined) {
-          return [] as string[];
-        }
-        const parties = sderCourtDecision.parties as PartieTJ[];
-        return parties.map((partie) => (partie as PartieTJ)?.nom) as string[];
-      })(),
+      parties: sderCourtDecision.parties ? sderCourtDecision.parties : [],
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session,
       solution,
@@ -361,4 +351,8 @@ function convertToValidDate(date: string | undefined) {
     return undefined;
   }
   return convertedDate;
+}
+
+function isDecisionTJDTO(decision: DecisionDTO): decision is DecisionTJDTO {
+  return 'numeroRoleGeneral' in decision;
 }

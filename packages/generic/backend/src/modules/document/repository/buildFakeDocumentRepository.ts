@@ -424,5 +424,24 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
 
       return updatedDocument;
     },
+
+    async updateReplacementTermsById(documentId, replacementTerm) {
+      updateFakeCollection(
+        collection,
+        collection.map((document) =>
+          idModule.lib.equalId(documentId, document._id)
+            ? {
+                ...document,
+                replacementTerm,
+              }
+            : document,
+        ),
+      );
+      const updatedDocument = collection.find((document) =>
+        idModule.lib.equalId(documentId, document._id),
+      );
+
+      return updatedDocument;
+    },
   }),
 });

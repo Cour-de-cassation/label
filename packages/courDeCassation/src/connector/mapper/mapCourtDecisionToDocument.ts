@@ -11,7 +11,7 @@ import {
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
-import { DecisionDTO, DecisionTJDTO, PartieTJ } from 'dbsder-api-types';
+import { DecisionDTO, DecisionTJDTO } from 'dbsder-api-types';
 
 export { mapCourtDecisionToDocument };
 

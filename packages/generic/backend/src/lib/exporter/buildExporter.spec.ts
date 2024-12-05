@@ -142,11 +142,11 @@ function buildFakeExporterConfig(): exporterConfigType & {
 
     async sendDocumentPseudonymisationAndTreatments({
       externalId,
-      pseudonymizationText,
+      pseudoText,
       labelTreatments,
     }) {
       exportedExternalIds.push(externalId);
-      exportedpseudonymizationTexts.push(pseudonymizationText);
+      exportedpseudonymizationTexts.push(pseudoText);
       exportedlabelTreatments.push(...labelTreatments);
     },
 
@@ -160,10 +160,6 @@ function buildFakeExporterConfig(): exporterConfigType & {
 
     getExportedLabelTreatments() {
       return exportedlabelTreatments;
-    },
-
-    async sendDocumentBlockedStatus({ externalId }) {
-      lockedExternalIds.push(externalId);
     },
 
     getLockedExternalIds() {

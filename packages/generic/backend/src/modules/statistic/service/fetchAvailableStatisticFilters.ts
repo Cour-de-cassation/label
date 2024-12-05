@@ -17,7 +17,10 @@ async function fetchAvailableStatisticFilters() {
     'jurisdiction',
   ]);
 
-  const { minDate, maxDate } = await fetchExtremumDates();
+  const availableDocumentSources = await documentService.fetchAllSources();
+  const { minDate, maxDate } = await fetchExtremumDates(
+    availableDocumentSources,
+  );
 
   return {
     minDate,

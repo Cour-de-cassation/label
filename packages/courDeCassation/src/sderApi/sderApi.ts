@@ -77,7 +77,7 @@ const sderApi = {
   ): Promise<DecisionDTO | undefined> {
     const decisionList = ((await fetchApi({
       method: 'get',
-      path: `decisions?status=toBeTreated&sourceId=${sourceId}&sourceName=${sourceName}`,
+      path: `decisions?&sourceId=${sourceId}&sourceName=${sourceName}`,
       body: {},
     })) as unknown) as {
       _id: string;

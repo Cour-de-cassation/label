@@ -8,36 +8,46 @@ import { logger } from '../../../utils';
 export { cleanDuplicatedDocuments };
 
 /**
- * Delete all doubled documents (same source, same documentNumber and same text) keep the most recent document by dateCreation
+ * Delete all doubled documents (same externalId) and keep the most recent document by dateCreation
  */
 async function cleanDuplicatedDocuments() {
   logger.log({ operationName: 'cleanDuplicatedDocuments', msg: 'START' });
 
   const documentRepository = buildDocumentRepository();
 
-  const documents = await documentRepository.findAll();
-  const sortedDocuments = documents.sort(compareDocumentsByStatus);
+  const documents = (await documentRepository.findAll()).filter(
+    (doc) => doc.status !== 'rejected',
+  );
 
   logger.log({
     operationName: 'cleanDuplicatedDocuments',
     msg: `${documents.length} documents found. Searching for duplicates...`,
   });
 
+  const documentsByExternalId = new Map<string, documentType[]>();
+
+  for (const document of documents) {
+    if (!documentsByExternalId.has(document.externalId)) {
+      documentsByExternalId.set(document.externalId, []);
+    }
+    documentsByExternalId.get(document.externalId)!.push(document);
+  }
+
   const documentsToDelete: documentType[] = [];
 
-  for (let index = 0, l = documents.length - 1; index < l; index++) {
-    const currentDocument = sortedDocuments[index];
-    const nextDocument = sortedDocuments[index + 1];
-    if (areDocumentsIdentical(currentDocument, nextDocument)) {
-      if (
-        currentDocument.creationDate &&
-        nextDocument.creationDate &&
-        currentDocument.creationDate > nextDocument.creationDate
-      ) {
-        documentsToDelete.push(nextDocument);
-      } else {
-        documentsToDelete.push(currentDocument);
-      }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  for (const [_, docs] of documentsByExternalId.entries()) {
+    if (docs.length > 1) {
+      docs.sort((a, b) => {
+        if (a.creationDate && b.creationDate) {
+          return a.creationDate > b.creationDate ? -1 : 1;
+        }
+        return 1;
+      });
+      // keep only the most recent doc
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [_, ...duplicates] = docs;
+      documentsToDelete.push(...duplicates);
     }
   }
 
@@ -49,70 +59,6 @@ async function cleanDuplicatedDocuments() {
   for (let index = 0, l = documentsToDelete.length; index < l; index++) {
     await documentService.deleteDocument(documentsToDelete[index]._id);
   }
+
   logger.log({ operationName: 'cleanDuplicatedDocuments', msg: 'DONE' });
-}
-
-function areDocumentsIdentical(
-  document1: documentType,
-  document2: documentType,
-) {
-  return (
-    document1.documentNumber === document2.documentNumber &&
-    document1.source === document2.source &&
-    document1.text === document2.text
-  );
-}
-
-function compareDocumentsByStatus(
-  document1: documentType,
-  document2: documentType,
-) {
-  const statusToPriorities = {
-    loaded: 0,
-    nlpAnnotating: 1,
-    free: 2,
-    pending: 3,
-    saved: 4,
-    toBePublished: 5,
-    done: 6,
-    toBeConfirmed: 7,
-    locked: 8,
-    rejected: 9,
-  };
-
-  // comparing source
-  if (document1.source < document2.source) {
-    return -1;
-  } else if (document1.source > document2.source) {
-    return 1;
-  } else {
-    // comparing documentNumber
-    if (document1.documentNumber < document1.documentNumber) {
-      return -1;
-    } else if (document1.documentNumber > document2.documentNumber) {
-      return 1;
-    } else {
-      //comparing text
-      if (document1.text < document2.text) {
-        return -1;
-      } else if (document1.text > document2.text) {
-        return 1;
-      } else {
-        // comparing statuses
-        if (
-          statusToPriorities[document1.status] <
-          statusToPriorities[document2.status]
-        ) {
-          return 1; // low priority
-        } else if (
-          statusToPriorities[document1.status] >
-          statusToPriorities[document2.status]
-        ) {
-          return -1; // high priority
-        } else {
-          return 0;
-        }
-      }
-    }
-  }
 }

@@ -32,7 +32,7 @@ function buildMotivationCategoryHandler() {
       ...settings,
       [MOTIVATION_CATEGORY_NAME]: {
         autoLinkSensitivity: [{ kind: 'caseInsensitive' }],
-        anonymization: '[DÉBATS NON PUBLICS – Motivation de la décision occultée]',
+        anonymization: '[Motifs de la décision occultés – Débats non publics]',
         color: MOTIVATION_CATEGORY_COLOR,
         iconName: MOTIVATION_CATEGORY_ICON_NAME,
         order: order,

@@ -128,9 +128,7 @@ function buildAnnotator(
           failedDocumentIds.push(updatedDocument._id);
           logger.log({
             operationName: 'annotateDocumentsWithoutAnnotations',
-            msg: `Error while annotating document ${formatDocumentInfos(
-              currentDocumentToAnnotate,
-            )}.`,
+            msg: `${error}`,
             data: {
               decision: {
                 sourceId: currentDocumentToAnnotate.documentNumber,
@@ -247,17 +245,20 @@ function buildAnnotator(
           },
         });
 
-        if (motivations?.length === 1 || exposeDuLitige?.length === 1) {
+        if (
+          (motivations && motivations?.length > 1) ||
+          (exposeDuLitige && exposeDuLitige?.length > 1)
+        ) {
+          throw new Error(
+            'Cannot annotate motifs with multiple motivations or expose du litige zones',
+          );
+        } else {
           createMotifOccultationTreatment(
             documentId,
             motivations?.[0],
             exposeDuLitige?.[0],
             document.text,
             annotations,
-          );
-        } else {
-          throw new Error(
-            'Cannot annotate motifs with multiple motivations or expose du litige zones',
           );
         }
       } else {

@@ -230,22 +230,12 @@ function buildAnnotator(
       },
     });
 
-    if (document.decisionMetadata.motivationOccultation === true) {
-      if (
-        document.zoning != undefined &&
-        (document.zoning.zones?.motivations != undefined ||
-          document.zoning.zones?.['expose du litige'] != undefined)
-      ) {
-        if (
-          (document.zoning.zones.motivations &&
-            document.zoning.zones.motivations.length > 1) ||
-          (document.zoning.zones['expose du litige'] &&
-            document.zoning.zones['expose du litige'].length > 1)
-        ) {
-          throw new Error(
-            'Not able to annotate motifs if there is multiple motivations or multiple expose du litige',
-          );
-        }
+    if (document.decisionMetadata.motivationOccultation) {
+      const zones = document.zoning?.zones;
+      const motivations = zones?.motivations;
+      const exposeDuLitige = zones?.['expose du litige'];
+
+      if (motivations || exposeDuLitige) {
         logger.log({
           operationName: 'annotateDocument',
           msg: 'Annotate motif zone because motivationOccultation is true',
@@ -257,17 +247,23 @@ function buildAnnotator(
           },
         });
 
-        createMotifOccultationTreatment(
-          documentId,
-          document.zoning.zones.motivations,
-          document.zoning.zones['expose du litige'],
-          document.text,
-          annotations,
-        );
+        if (motivations?.length === 1 || exposeDuLitige?.length === 1) {
+          createMotifOccultationTreatment(
+            documentId,
+            motivations?.[0],
+            exposeDuLitige?.[0],
+            document.text,
+            annotations,
+          );
+        } else {
+          throw new Error(
+            'Cannot annotate motifs with multiple motivations or expose du litige zones',
+          );
+        }
       } else {
         logger.log({
           operationName: 'annotateDocument',
-          msg: `Annotate decision 'motif' zone impossible because 'motivation' and 'expose du litige' zone was not found for document ${formatDocumentInfos(
+          msg: `No 'motivation' or 'expose du litige' zone found, skipping motivation occultation for ${formatDocumentInfos(
             document,
           )}`,
           data: {
@@ -430,14 +426,14 @@ function buildAnnotator(
 
   async function createMotifOccultationTreatment(
     documentId: documentType['_id'],
-    motivations: { start: number; end: number }[] | undefined,
-    exposesDuLitige: { start: number; end: number }[] | undefined,
+    motivations: { start: number; end: number } | undefined,
+    exposesDuLitige: { start: number; end: number } | undefined,
     documentText: string,
     previousAnnotations: annotationType[],
   ) {
-    // Si une des 2 zones n'est pas définie on ne prend qu'une seule des 2 zones.
-    const motifStart = motivations?.[0]?.start ?? exposesDuLitige?.[0]?.start;
-    const motifEnd = exposesDuLitige?.[0]?.end ?? motivations?.[0]?.end;
+    // Si une des 2 zones n'est pas définie on occulte qu'une seule des 2 zones.
+    const motifStart = motivations?.start ?? exposesDuLitige?.start;
+    const motifEnd = exposesDuLitige?.end ?? motivations?.end;
 
     if (motifStart === undefined || motifEnd === undefined) {
       throw new Error('Impossible de définir les bornes des motifs.');

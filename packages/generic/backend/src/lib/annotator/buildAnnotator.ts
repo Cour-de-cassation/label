@@ -432,8 +432,8 @@ function buildAnnotator(
     previousAnnotations: annotationType[],
   ) {
     // Si une des 2 zones n'est pas définie on occulte qu'une seule des 2 zones.
-    const motifStart = motivations?.start ?? exposesDuLitige?.start;
-    const motifEnd = exposesDuLitige?.end ?? motivations?.end;
+    const motifStart = exposesDuLitige?.start ?? motivations?.start;
+    const motifEnd = motivations?.end ?? exposesDuLitige?.end;
 
     if (motifStart === undefined || motifEnd === undefined) {
       throw new Error('Impossible de définir les bornes des motifs.');

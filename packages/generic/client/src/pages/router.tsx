@@ -41,8 +41,7 @@ function Router() {
                   ({ problemReport }) => !problemReport.hasBeenRead,
                 ).length;
                 const toBeConfirmedDocumentsCount = adminInfos.toBeConfirmedDocuments.length;
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-                const userRole = localStorage.adminViewHandler.get() || (user?.role as 'admin' | 'scrutator');
+                const userRole = localStorage.adminViewHandler.get() || user?.role;
                 if (userRole !== 'admin' && userRole !== 'scrutator') {
                   return <></>;
                 }
@@ -101,6 +100,7 @@ function Router() {
                           refetch={refetch.preAssignDocuments}
                           preAssignations={adminInfos.preAssignations}
                           isLoading={isLoading.preAssignDocuments}
+                          userRole={userRole}
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
@@ -173,7 +173,6 @@ function Router() {
 }
 
 const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
   const { user, loading } = useCtxUser();
   if (loading) {
     return <div>Loading...</div>;
@@ -198,7 +197,6 @@ const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }
 };
 
 const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
   const { user, loading } = useCtxUser();
 
   if (loading) {
@@ -221,7 +219,6 @@ const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => {
 };
 
 function getRedirectionRoute(user: CurrentUser | null) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   const userRole = user?.role;
 
   if (!userRole) {
@@ -239,7 +236,6 @@ function getRedirectionRoute(user: CurrentUser | null) {
 }
 
 const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
   const { user, loading } = useCtxUser();
   if (loading) {
     return <div>Loading...</div>;

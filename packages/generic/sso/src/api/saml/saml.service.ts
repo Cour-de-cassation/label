@@ -4,7 +4,10 @@ import * as fs from 'fs';
 import * as validator from '@authenio/samlify-node-xmllint';
 
 samlify.setSchemaValidator(validator);
-
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 @Injectable()
 export class SamlService {
   private sp;
@@ -12,8 +15,6 @@ export class SamlService {
 
   constructor() {
     // Initialiser le Service Provider (SP)
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const spProps = {
       entityID: process.env.SSO_SP_ENTITY_ID,
       assertionConsumerService: [
@@ -42,7 +43,6 @@ export class SamlService {
 
     this.sp = samlify.ServiceProvider(spProps);
     // Initialiser l'Identity Provider (IdP)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const idpProps = {
       metadata: fs.readFileSync(String(process.env.SSO_IDP_METADATA), 'utf8'),
       encCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
@@ -65,20 +65,18 @@ export class SamlService {
     this.idp = samlify.IdentityProvider(idpProps);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  generateMetadata() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
+  generateMetadata(): string {
     return this.sp.getMetadata();
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  createLoginRequestUrl() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+  createLoginRequestUrl(): {
+    context: string;
+    id: string;
+  } {
     return this.sp.createLoginRequest(this.idp, 'redirect');
   }
 
-  async parseResponse(request: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+  async parseResponse(request?: { body?: { SAMLResponse: string } }) {
     const samlResponse = request?.body?.SAMLResponse;
     if (!samlResponse) throw new Error('Missing SAMLResponse in request body');
 
@@ -108,41 +106,40 @@ export class SamlService {
       },
     ];
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const extract = samlify.Extractor.extract(samlContent, extractFields);
-    // eslint-disable-next-line no-console
-    //console.log('extract ', extract);
+    const extract: {
+      nameID?: string;
+      sessionIndex?: string;
+      attributes?: Record<string, string[] | string | null>;
+    } = samlify.Extractor.extract(samlContent, extractFields) as {
+      nameID?: string;
+      sessionIndex?: string;
+      attributes?: Record<string, string[] | string | null>;
+    };
+
     const roleKey = process.env.SSO_ATTRIBUTE_ROLE || 'role';
     const appName = process.env.SSO_APP_NAME || '';
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (typeof extract.attributes?.[roleKey] === 'string') {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      extract.attributes[roleKey] = [extract.attributes[roleKey]];
-    }
+    if (extract.attributes) {
+      const roleKeyValue = extract.attributes[roleKey];
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-    extract.attributes[roleKey] = extract.attributes[roleKey]
-      ?.filter((role: string) => role.includes(appName))
-      .map((role: string) => role.replace(`${appName}:`, ''));
+      const normalizedRoles = Array.isArray(roleKeyValue) ? roleKeyValue : roleKeyValue ? [roleKeyValue] : [];
+
+      extract.attributes[roleKey] = normalizedRoles
+        .filter((role) => role.includes(appName))
+        .map((role) => role.replace(`${appName}:`, ''));
+    }
 
     return {
       samlContent,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       extract,
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async createLogoutRequestUrl(user: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+  async createLogoutRequestUrl(user: { nameID: string; sessionIndex: string }) {
     return this.sp.createLogoutRequest(this.idp, 'redirect', {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
       logoutNameID: user.nameID,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
       id: user.sessionIndex,
       nameIDFormat: process.env.SSO_NAME_ID_FORMAT,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
       sessionIndex: user.sessionIndex,
       signRequest: true,
       signatureAlgorithm: process.env.SSO_SIGNATURE_ALGORITHM,

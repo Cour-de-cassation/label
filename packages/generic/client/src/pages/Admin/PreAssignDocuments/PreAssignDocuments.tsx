@@ -4,7 +4,6 @@ import { customThemeType, useCustomTheme, RefreshButton } from 'pelta-design-sys
 import { heights, widths } from '../../../styles';
 import { PreAssignDocumentsTable } from './PreAssignDocumentsTable';
 import { AddPreAssignationButton } from './AddPreAssignationDrawer/AddPreAssignationButton';
-import { localStorage } from '../../../services/localStorage';
 
 export { PreAssignDocuments };
 
@@ -13,11 +12,12 @@ function PreAssignDocuments(props: {
   preAssignations: apiRouteOutType<'get', 'preAssignations'>;
   refetch: () => void;
   isLoading: boolean;
+  userRole: userType['role'];
 }) {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
 
-  const userRole = localStorage.userHandler.getRole();
+  const userRole = props.userRole;
 
   return (
     <div style={styles.table}>

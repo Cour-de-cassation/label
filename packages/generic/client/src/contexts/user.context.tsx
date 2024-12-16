@@ -1,12 +1,13 @@
 import React, { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react';
 import { urlHandler } from '../utils';
+import { userType } from '@label/core';
 
 export interface CurrentUser {
   _id?: string;
   email?: string;
   name?: string;
-  role?: string;
-  passwordTimeValidityStatus?: string;
+  role?: userType['role'];
+  sessionIndex?: string;
 }
 interface UserContextType {
   user: CurrentUser | null;
@@ -17,12 +18,11 @@ const UserContext = createContext<UserContextType | null>(null);
 
 // eslint-disable-next-line react/prop-types
 export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<CurrentUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchUser() {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const userData = await whoami();
       setUser(userData);
       setLoading(false);
@@ -43,7 +43,7 @@ export const useCtxUser = () => {
   return context;
 };
 
-async function whoami() {
+async function whoami(): Promise<CurrentUser | null> {
   try {
     const response = await fetch(`${urlHandler.getApiUrl()}/label/api/sso/whoami`, {
       headers: { 'Content-Type': 'application/json' },
@@ -55,8 +55,7 @@ async function whoami() {
     if (!response.ok) {
       return null;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await response.json();
+    return (await response.json()) as CurrentUser;
   } catch (error) {
     console.error('Error fetching authentication status:', error);
     return null;

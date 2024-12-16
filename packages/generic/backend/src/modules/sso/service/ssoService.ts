@@ -3,69 +3,81 @@ import { buildUserRepository, userService } from '../../user';
 import { logger } from '../../../utils';
 import every from 'lodash/every';
 import includes from 'lodash/includes';
+import { idModule, userType } from '@label/core';
+import { Request } from 'express';
 
 export { samlService };
 
+export interface BindingContext {
+  context: string;
+  id: string;
+}
+
+export interface ParseResponseResult {
+  samlContent: string;
+  extract: {
+    nameID: string;
+    sessionIndex: string;
+    attributes: Record<string, string[] | string>;
+  };
+}
+
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
+
 function ssoSamlService() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
   return new SamlService();
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const samlService = ssoSamlService();
 
 export async function getMetadata() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-  return samlService.generateMetadata();
+  return samlService.generateMetadata() as string;
 }
 
 export async function login() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-  const { context } = await samlService.createLoginRequestUrl();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  const {
+    context,
+  } = (await samlService.createLoginRequestUrl()) as BindingContext;
   return context;
 }
 
 export async function logout(user: { nameID: string; sessionIndex: string }) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-  const { context } = await samlService.createLogoutRequestUrl(user);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  const { context } = (await samlService.createLogoutRequestUrl(
+    user,
+  )) as BindingContext;
   return context;
 }
 
 export async function acs(req: any) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-  const response = await samlService.parseResponse(req);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const response = (await samlService.parseResponse(
+    req,
+  )) as ParseResponseResult;
   const { extract } = response;
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-    const user = await getUserByEmail(extract?.nameID);
+    const user = (await getUserByEmail(extract?.nameID)) as userType;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     await logger.log({
       operationName: 'user connected',
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
       msg: user.email,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return setUserSessionAndReturnRedirectUrl(req, user, extract?.sessionIndex);
-  } catch (err) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+  } catch (err: unknown) {
     await logger.log({
       operationName: `catch autoprovision user ${JSON.stringify(err)}`,
       msg: `${err}`,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    if (err.message.includes(`No matching user for email ${extract?.nameID}`)) {
-      const { attributes } = extract as Record<string, any>;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-      const roles = attributes[
+    if (
+      err instanceof Error &&
+      err.message.includes(`No matching user for email ${extract?.nameID}`)
+    ) {
+      const { attributes } = extract;
+      const roles = (attributes[
         `${process.env.SSO_ATTRIBUTE_ROLE}`
-      ].map((item: string) => item.toLowerCase()) as string[];
+      ] as string[]).map((item: string) => item.toLowerCase()) as string[];
 
       const appRoles = (process.env.SSO_APP_ROLES as string)
         .toLowerCase()
@@ -75,43 +87,33 @@ export async function acs(req: any) {
       );
 
       if (!roles.length || !userRolesInAppRoles) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const errorMsg = `User ${extract.nameID}, role ${roles} doesn't exist in application ${process.env.SSO_APP_NAME}`;
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         logger.error({ operationName: 'ssoService', msg: errorMsg });
         throw new Error(errorMsg);
       }
 
       const newUser = {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         name:
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          attributes[`${process.env.SSO_ATTRIBUTE_FULLNAME}`] ||
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          `${attributes[`${process.env.SSO_ATTRIBUTE_NAME}`]} ${
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            attributes[`${process.env.SSO_ATTRIBUTE_FIRSTNAME}`]
+          (attributes[`${process.env.SSO_ATTRIBUTE_FULLNAME}`] as string) ||
+          `${attributes[`${process.env.SSO_ATTRIBUTE_NAME}`] as string} ${
+            attributes[`${process.env.SSO_ATTRIBUTE_FIRSTNAME}`] as string
           }`,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-        email: attributes[`${process.env.SSO_ATTRIBUTE_MAIL}`],
+        email: attributes[`${process.env.SSO_ATTRIBUTE_MAIL}`] as string,
         role: roles[0] as 'annotator' | 'scrutator' | 'admin' | 'publicator',
       };
 
       await userService.createUser(newUser);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const createdUser = await getUserByEmail(newUser.email);
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+      const createdUser = (await getUserByEmail(newUser.email)) as userType;
+
       await logger.log({
         operationName: `Auto-provided user`,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         msg: `successfully created user ${createdUser.email}`,
       });
 
       return setUserSessionAndReturnRedirectUrl(
         req,
         createdUser,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         extract?.sessionIndex,
       );
     } else {
@@ -121,29 +123,21 @@ export async function acs(req: any) {
 }
 
 export async function getUserByEmail(email: string) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
   const userRepository = buildUserRepository();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-  return await userRepository.findByEmail(email);
+  return (await userRepository.findByEmail(email)) as userType;
 }
 
 export function setUserSessionAndReturnRedirectUrl(
-  req: any,
-  user: any,
+  req: Request,
+  user: userType,
   sessionIndex: string,
 ) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (req.session) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     req.session.user = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-      _id: user._id,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-      name: user.name,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-      role: user.role,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-      email: user.email,
+      _id: idModule.lib.convertToString(user._id),
+      name: user.name as string,
+      role: user.role as string,
+      email: user.email as string,
       sessionIndex: sessionIndex,
     };
   }
@@ -158,11 +152,9 @@ export function setUserSessionAndReturnRedirectUrl(
       .SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL as string,
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (!roleToUrlMap[user.role]) {
     throw new Error(`Role doesn't exist in label`);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   return roleToUrlMap[user.role];
 }

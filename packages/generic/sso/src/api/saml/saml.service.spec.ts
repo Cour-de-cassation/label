@@ -6,7 +6,7 @@ import * as validator from '@authenio/samlify-node-xmllint';
 
 jest.mock('fs');
 jest.mock('samlify', () => {
-  const Extractor = {
+  const mockExtractor = {
     loginResponseFields: jest.fn().mockReturnValue([]),
     extract: jest.fn().mockReturnValue({
       // Simuler la réponse extraite ici
@@ -15,9 +15,6 @@ jest.mock('samlify', () => {
       attributes: { nom: 'Xx', prenom: 'Alain', role: ['ANNOTATEUR'], email: 'mail.573@justice.fr', name: 'Xx Alain' },
     }),
   };
-  jest.mock('@authenio/samlify-node-xmllint', () => ({
-    validate: jest.fn(() => true),
-  }));
 
   return {
     // Autres méthodes de samlify
@@ -30,7 +27,7 @@ jest.mock('samlify', () => {
       createLogoutRequest: jest.fn().mockResolvedValue('http://logout-url'),
     }),
     IdentityProvider: jest.fn().mockReturnValue({}),
-    Extractor,
+    Extractor: mockExtractor,
     Constants: {
       namespace: {
         binding: {
@@ -44,6 +41,14 @@ jest.mock('samlify', () => {
     }),
   };
 });
+
+jest.mock('@authenio/samlify-node-xmllint', () => ({
+  validate: jest.fn(() => true),
+}));
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 
 describe('SamlService', () => {
   let service: SamlService;
@@ -63,22 +68,17 @@ describe('SamlService', () => {
   });
 
   it('should generate metadata', () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const metadata = service.generateMetadata();
     expect(metadata).toEqual('<SPMetadata />');
     expect(samlify.ServiceProvider).toHaveBeenCalled();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    expect(validator.validate()).toBeTruthy();
+    expect(validator.validate()).toBe(true);
   });
 
   it('should create login request URL', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const loginUrl = await service.createLoginRequestUrl();
     expect(loginUrl).toEqual('http://login-url');
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(samlify.ServiceProvider().createLoginRequest).toHaveBeenCalled();
+    expect(samlify.ServiceProvider({}).createLoginRequest).toHaveBeenCalled();
   });
 
   describe('parseResponse', () => {
@@ -113,7 +113,6 @@ describe('SamlService', () => {
       const result = await service.parseResponse(request);
 
       expect(result.extract).toEqual(mockExtract);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       expect(result.extract.attributes.role).toEqual(['role1']);
     });
 
@@ -133,7 +132,6 @@ describe('SamlService', () => {
 
       const result = await service.parseResponse(request);
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       expect(result.extract.attributes.role).toEqual(['role1']); // Vérifie que le rôle est bien traité
     });
 
@@ -153,18 +151,14 @@ describe('SamlService', () => {
 
       const result = await service.parseResponse(request);
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       expect(result.extract.attributes.role.length).toEqual(2);
     });
   });
 
   it('should create logout request URL', async () => {
     const mockUser = { nameID: 'test.user@label.fr', sessionIndex: undefined };
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const logoutUrl = await service.createLogoutRequestUrl(mockUser);
     expect(logoutUrl).toEqual('http://logout-url');
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(samlify.ServiceProvider().createLogoutRequest).toHaveBeenCalledTimes(1);
+    expect(samlify.ServiceProvider({}).createLogoutRequest).toHaveBeenCalledTimes(1);
   });
 });

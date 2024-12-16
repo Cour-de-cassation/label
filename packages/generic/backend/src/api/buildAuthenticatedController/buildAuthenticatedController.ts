@@ -21,32 +21,36 @@ function buildAuthenticatedController<inT, outT>({
   return async (req: {
     args: inT;
     headers: any;
-    session?: any;
+    session?: {
+      user: {
+        _id: string;
+        name: string;
+        role: string;
+        email: string;
+        sessionIndex: string;
+      };
+    };
     path?: string;
   }) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-    let currentUser = req.session?.user ?? null;
+    const currentUser = req.session?.user ?? null;
     if (!currentUser) {
       throw errorHandlers.authenticationErrorHandler.build(
         `user session has expired or is invalid`,
       );
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const isAnnotator = currentUser.role === 'annotator';
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const isAdminAccessingDocs =
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      currentUser.role === 'admin' && req.path?.includes('documentsForUser');
 
-    if (isAnnotator || isAdminAccessingDocs) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      currentUser = {
-        ...currentUser,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        _id: idModule.lib.buildId(currentUser._id),
-      };
-    }
-    userModule.lib.assertPermissions(currentUser, permissions);
-    return controllerWithUser(currentUser, req);
+    const resolvedUser = {
+      _id: idModule.lib.buildId(currentUser._id) as userType['_id'],
+      name: currentUser.name,
+      role: currentUser.role as
+        | 'admin'
+        | 'annotator'
+        | 'publicator'
+        | 'scrutator',
+      email: currentUser.email,
+    };
+
+    userModule.lib.assertPermissions(resolvedUser, permissions);
+    return controllerWithUser(resolvedUser, req);
   };
 }

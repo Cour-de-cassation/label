@@ -20,7 +20,6 @@ import {
   toBeConfirmedDocumentOrderByProperties,
   toBeConfirmedDocumentsStateHandler,
 } from './documentStateHandler/toBeConfirmedDocumentsStateHandler';
-import { userHandler } from './userHandler';
 
 export {
   adminViews,
@@ -41,5 +40,4 @@ const localStorage = {
   treatedDocumentsStateHandler,
   untreatedDocumentsStateHandler,
   toBeConfirmedDocumentsStateHandler,
-  userHandler,
 };

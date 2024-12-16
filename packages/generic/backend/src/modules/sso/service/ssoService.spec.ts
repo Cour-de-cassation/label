@@ -8,6 +8,8 @@ import {
 } from './ssoService';
 import { buildUserRepository } from '../../user';
 import { buildUserService } from '../../user/service/userService';
+import { Request } from 'express';
+import { userType } from '@label/core';
 
 jest.mock('@label/sso', () => ({
   SamlService: jest.fn().mockImplementation(() => ({
@@ -60,7 +62,6 @@ process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL =
 describe('SSO CNX functions', () => {
   describe('getMetadataSso', () => {
     it('should return SAML metadata', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const metadata = await getMetadata();
       expect(metadata).toBe('<metadata>');
     });
@@ -68,7 +69,6 @@ describe('SSO CNX functions', () => {
 
   describe('loginSso', () => {
     it('should return login URL', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const loginUrl = await login();
       expect(loginUrl).toBe('login-url');
     });
@@ -76,7 +76,6 @@ describe('SSO CNX functions', () => {
 
   describe('logoutSso', () => {
     it('should return logout URL', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const logoutUrl = await logout({
         nameID: 'test-user-id',
         sessionIndex: 'test-session-index',
@@ -113,7 +112,6 @@ describe('SSO CNX functions', () => {
     it('should handle the case where user does not exist and is auto-provisioned', async () => {
       const mockNewUser = { email: 'newuser@example.com' };
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       (samlService.parseResponse as jest.Mock).mockResolvedValue({
         extract: {
           nameID: 'newuser@example.com',
@@ -126,7 +124,6 @@ describe('SSO CNX functions', () => {
         },
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
       const userRepository = buildUserRepository();
       jest
         .spyOn(userRepository, 'findByEmail')
@@ -150,19 +147,25 @@ describe('SSO CNX functions', () => {
   });
 
   describe('setUserSessionAndReturnRedirectUrl', () => {
-    const mockRequest = {
+    const mockRequest = ({
       session: {
         user: {},
       },
-    };
+      body: {
+        SAMLResponse: 'mock-saml-response',
+      },
+      params: {
+        id: '123456789',
+      },
+    } as unknown) as Request;
 
     it('should return the correct URL for annotator role', () => {
-      const user = {
+      const user = ({
         _id: '1',
         name: 'Annotator',
         role: 'annotator',
         email: 'annotator@test.com',
-      };
+      } as unknown) as userType;
       const result = setUserSessionAndReturnRedirectUrl(
         mockRequest,
         user,
@@ -178,12 +181,12 @@ describe('SSO CNX functions', () => {
     });
 
     it('should return the correct URL for admin role', () => {
-      const user = {
+      const user = ({
         _id: '2',
         name: 'Admin',
         role: 'admin',
         email: 'admin@test.com',
-      };
+      } as unknown) as userType;
       const result = setUserSessionAndReturnRedirectUrl(
         mockRequest,
         user,
@@ -200,12 +203,12 @@ describe('SSO CNX functions', () => {
     });
 
     it('should return the correct URL for scrutator role', () => {
-      const user = {
+      const user = ({
         _id: '3',
         name: 'Scrutator',
         role: 'scrutator',
         email: 'scrutator@test.com',
-      };
+      } as unknown) as userType;
       const result = setUserSessionAndReturnRedirectUrl(
         mockRequest,
         user,
@@ -222,12 +225,12 @@ describe('SSO CNX functions', () => {
     });
 
     it('should return the correct URL for publicator role', () => {
-      const user = {
+      const user = ({
         _id: '4',
         name: 'Publicator',
         role: 'publicator',
         email: 'publicator@test.com',
-      };
+      } as unknown) as userType;
       const result = setUserSessionAndReturnRedirectUrl(
         mockRequest,
         user,
@@ -244,12 +247,12 @@ describe('SSO CNX functions', () => {
     });
 
     it('should throw an error for an invalid role', () => {
-      const user = {
+      const user = ({
         _id: '5',
         name: 'InvalidRole',
         role: 'invalidRole',
         email: 'invalid@test.com',
-      };
+      } as unknown) as userType;
 
       expect(() => {
         setUserSessionAndReturnRedirectUrl(

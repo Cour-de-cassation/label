@@ -1,4 +1,3 @@
-import { bearerTokenHandler } from './bearerTokenHandler';
 import { adminViewHandler, adminViews } from './adminViewHandler';
 import { displayModeHandler } from './displayModeHandler';
 import {
@@ -34,7 +33,6 @@ export type { treatedDocumentFilterType, untreatedDocumentFilterType, toBeConfir
 
 const localStorage = {
   adminViewHandler,
-  bearerTokenHandler,
   displayModeHandler,
   publishableDocumentsStateHandler,
   treatedDocumentsStateHandler,

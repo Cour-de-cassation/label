@@ -9,8 +9,6 @@ The service utilizes the **SAMLify** library to interface with SSO, simplifying 
 
 ## Workflow
 <section style="min-height:200px">
-LABEL integrates with the SSO to facilitate user authentication using the SAML 2.0 protocol.
-
 The diagram below illustrates the interaction between the Label application and the Pages Blanches SSO for authentication.
 
 <img src="docs/images/LABEL_auth_workflow.png" alt="Label auth workflow" />

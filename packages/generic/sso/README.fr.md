@@ -8,8 +8,6 @@ Le service utilise la librairie **SAMLify** pour s'interfacer avec le SSO et fac
 
 <section style="min-height:200px">
 
-LABEL s'interface avec le SSO Pages Blanches pour assurer l'authentification des utilisateurs via le protocole SAML 2.
-
 Le diagramme ci-dessous illustre l'interaction entre l'application Label et le SSO Pages Blanches pour l'authentification.
 
 <img src="docs/images/LABEL_auth_workflow.png" alt="Label auth workflow" />
@@ -25,8 +23,6 @@ Le diagramme ci-dessous illustre l'interaction entre l'application Label et le S
 
 4. Après validation, l'accès aux ressources sécurisées est accordé, permettant à l'utilisateur de poursuivre sa session authentifiée.</section>
 </section>
-
-> L'application LABEL utilise le module SSO comme dépendance pour son intégration avec le système d'authentification unique (SSO). Les spécificités de cette intégration sont documentées dans le [readme](packages/generic/sso/README.md) du module SSO.
 
 
 ## Prérequis

@@ -3,10 +3,11 @@ import { documentType } from '@label/core';
 import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
 import { extractRouteForJuritj } from './extractRouteForJuritj';
+import { sderApi } from '../../../../sderApi';
 
 export { extractRoute };
 
-function extractRoute(
+async function extractRoute(
   routeInfos: {
     additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'];
     session: documentType['decisionMetadata']['session'];
@@ -22,7 +23,7 @@ function extractRoute(
     status?: documentType['status'];
   },
   source: documentType['source'],
-): documentType['route'] {
+): Promise<documentType['route']> {
   let route: documentType['route'] = 'default';
 
   switch (source) {
@@ -36,7 +37,16 @@ function extractRoute(
       break;
     case 'jurica':
       try {
-        route = extractRouteForJurica({ ...routeInfos });
+        const routeFromMetadata = await sderApi.getDecisionRoute({
+          codeNac: routeInfos.NACCode,
+          codeDecision: routeInfos.endCaseCode,
+          source: source,
+        });
+        if (routeFromMetadata) {
+          route = routeFromMetadata as documentType['route'];
+        } else {
+          route = extractRouteForJurica({ ...routeInfos });
+        }
       } catch (e) {
         logger.error({ operationName: 'extractRouteForJurica', msg: `${e}` });
         route = 'exhaustive';
@@ -44,7 +54,16 @@ function extractRoute(
       break;
     case 'juritj':
       try {
-        route = extractRouteForJuritj({ ...routeInfos });
+        const routeFromMetadata = await sderApi.getDecisionRoute({
+          codeNac: routeInfos.NACCode,
+          codeDecision: routeInfos.endCaseCode,
+          source: source,
+        });
+        if (routeFromMetadata) {
+          route = routeFromMetadata as documentType['route'];
+        } else {
+          route = extractRouteForJuritj({ ...routeInfos });
+        }
       } catch (e) {
         logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });
         route = 'exhaustive';

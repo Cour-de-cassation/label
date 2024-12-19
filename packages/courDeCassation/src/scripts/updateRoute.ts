@@ -43,7 +43,7 @@ async function updateRouteForFreeDocuments() {
   });
 
   for (let index = 0; index < documentsToUpdate.length; index++) {
-    const newRoute = extractRoute(
+    const newRoute = await extractRoute(
       {
         additionalTermsToAnnotate:
           documentsToUpdate[index].decisionMetadata.additionalTermsToAnnotate,

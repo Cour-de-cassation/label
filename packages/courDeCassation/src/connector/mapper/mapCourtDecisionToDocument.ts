@@ -171,9 +171,8 @@ async function mapCourtDecisionToDocument(
       sderCourtDecision.originalTextZoning?.introduction_subzonage?.pourvoi ||
       undefined,
     composition:
-      (sderCourtDecision.originalTextZoning?.introduction_subzonage
-        ?.composition as { readonly start: number; readonly end: number }) ||
-      undefined,
+      sderCourtDecision.originalTextZoning?.introduction_subzonage
+        ?.composition || undefined,
   };
 
   let zoning = undefined;

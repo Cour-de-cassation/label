@@ -23,7 +23,7 @@ const sderFetcher = {
   }: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: string;
   }) {
     const courtDecisions = await sderApi.fetchDecisionsToPseudonymiseBetween({
       startDate,
@@ -46,7 +46,7 @@ const sderFetcher = {
   }: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: string;
   }) {
     const courtDecisions = await sderApi.fetchDecisionsToPseudonymiseBetweenDateCreation(
       {

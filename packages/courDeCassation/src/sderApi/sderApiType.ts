@@ -15,12 +15,12 @@ type sderApiType = {
   fetchDecisionsToPseudonymiseBetween: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: string;
   }) => Promise<Array<decisionType>>;
   fetchDecisionsToPseudonymiseBetweenDateCreation: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: string;
   }) => Promise<Array<decisionType>>;
   fetchCourtDecisionBySourceIdAndSourceName: (param: {
     sourceId: decisionType['sourceId'];

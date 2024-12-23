@@ -216,23 +216,23 @@ const sderApi: sderApiType = {
   },
 
   async setCourtDecisionsLoaded({ documents }) {
-    documents.forEach(async (document) => {
+    for (const document of documents) {
       await fetchApi({
         method: 'put',
         path: `decisions/${document.externalId}/statut`,
         body: { statut: 'loaded' },
       });
-    });
+    }
   },
 
   async setCourtDecisionsToBeTreated({ documents }) {
-    documents.forEach(async (document) => {
+    for (const document of documents) {
       await fetchApi({
         method: 'put',
         path: `decisions/${document.externalId}/statut`,
         body: { statut: 'toBeTreated' },
       });
-    });
+    }
   },
 
   async setCourtDecisionDone({ externalId }) {

@@ -11,13 +11,18 @@ import {
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
-import { DecisionDTO, PartieTJ } from 'dbsder-api-types';
+import {
+  DecisionDTO,
+  DecisionTJDTO,
+  PartieTJ,
+  Sources,
+} from 'dbsder-api-types';
 
 export { mapCourtDecisionToDocument };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function mapCourtDecisionToDocument(
-  sderCourtDecision: DecisionDTO,
+  sderCourtDecision: DecisionDTO | DecisionTJDTO,
   importer: documentType['importer'],
 ): Promise<documentType> {
   const readableChamberName = extractReadableChamberName({
@@ -33,7 +38,11 @@ async function mapCourtDecisionToDocument(
 
   const registerNumber = sderCourtDecision.registerNumber;
   const appeal = sderCourtDecision.appeals[0];
-  const numeroRoleGeneral = /*sderCourtDecision['numeroRoleGeneral'] ||*/ '';
+  const numeroRoleGeneral =
+    sderCourtDecision.sourceName === Sources.TJ
+      ? (sderCourtDecision as DecisionTJDTO).numeroRoleGeneral
+      : '';
+
   const appealNumber = extractAppealRegisterRoleGeneralNumber(
     sderCourtDecision.originalText,
     source,
@@ -308,8 +317,8 @@ function computeTitleFromParsedCourtDecision({
 }
 
 function computePublicationCategory(
-  pubCategory: DecisionDTO['pubCategory'],
-  publication: DecisionDTO['publication'],
+  pubCategory: DecisionDTO['pubCategory'] | DecisionTJDTO['pubCategory'],
+  publication: DecisionDTO['publication'] | DecisionTJDTO['publication'],
 ): documentType['publicationCategory'] {
   const publicationCategory: string[] = [];
   if (!!pubCategory) {
@@ -322,9 +331,9 @@ function computePublicationCategory(
 }
 
 function computePriority(
-  source: DecisionDTO['sourceName'],
+  source: DecisionDTO['sourceName'] | DecisionTJDTO['sourceName'],
   publicationCategory: documentType['publicationCategory'],
-  NACCode: DecisionDTO['NACCode'],
+  NACCode: DecisionDTO['NACCode'] | DecisionTJDTO['NACCode'],
   importer: documentType['importer'],
 ): documentType['priority'] {
   if (

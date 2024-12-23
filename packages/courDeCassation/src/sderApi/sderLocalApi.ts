@@ -362,13 +362,13 @@ const sderLocalApi: sderApiType = {
 
   async setCourtDecisionsLoaded({ documents }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
-      documents.forEach(async (document) => {
-        return await fetchApi({
+      for (const document of documents) {
+        await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/statut`,
           body: { statut: 'loaded' },
         });
-      });
+      }
     } else {
       logger.log({
         operationName: 'setCourtDecisionsLoaded',
@@ -379,13 +379,13 @@ const sderLocalApi: sderApiType = {
 
   async setCourtDecisionsToBeTreated({ documents }) {
     if (process.env.DBSDER_API_ENABLED === 'true') {
-      documents.forEach(async (document) => {
+      for (const document of documents) {
         await fetchApi({
           method: 'put',
           path: `decisions/${document.externalId}/statut`,
           body: { statut: 'toBeTreated' },
         });
-      });
+      }
     } else {
       logger.log({
         operationName: 'setCourtDecisionsToBeTreated',

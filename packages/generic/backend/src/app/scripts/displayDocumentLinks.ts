@@ -1,6 +1,6 @@
 import { logger } from '../../utils';
 import { buildDocumentRepository } from '../../modules/document';
-import { idModule } from 'sder';
+import { idModule } from '@label/core';
 
 export { displayDocumentLinks };
 

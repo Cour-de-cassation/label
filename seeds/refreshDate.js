@@ -1,6 +1,13 @@
 const { MongoClient } = require("mongodb");
 if (!process.env.NODE_ENV) require("dotenv").config();
 
+function setDate(dateRef, day, month) {
+  const date = new Date(dateRef.toISOString())
+  date.setDate(day > 28 ? 28: day)
+  date.setMonth(month)
+  return date
+}
+
 async function refreshDocuments(db, date) {
   const decisions = await db.collection("documents").find();
 
@@ -11,11 +18,7 @@ async function refreshDocuments(db, date) {
         {
           $set: {
             creationDate: date.getTime(),
-            "decisionMetadata.date": new Date(
-              `${date.toISOString().slice(0, 4)}-${
-                date.toISOString().slice(5, 7) - 1
-              }-${new Date(decisionMetadata.date).toISOString().slice(8)}`
-            ).getTime(),
+            "decisionMetadata.date": setDate(date, (new Date(decisionMetadata.date)).getDate(), date.getMonth() -1).getTime(),
             updateDate: date.getTime(),
             nlpVersions: Object.entries(nlpVersions).reduce(
               (acc, [key, value]) => {
@@ -64,11 +67,7 @@ async function refreshStatistics(db, date) {
         { _id },
         {
           $set: {
-            decisionDate: new Date(
-              `${date.toISOString().slice(0, 4)}-${
-                date.toISOString().slice(5, 7) - 1
-              }-${new Date(decisionDate).toISOString().slice(8)}`
-            ).getTime(),
+            decisionDate: setDate(date, (new Date(decisionDate)).getDate(), date.getMonth() -1).getTime(),
             treatmentDate: treatmentDate ? date.getTime() : null,
           },
         }

@@ -549,6 +549,41 @@ function buildConnector(connectorConfig: connectorConfigType) {
         data: error as Record<string, unknown>,
       });
     }
+    try {
+      logger.log({
+        operationName: 'importDocumentsSinceOrBetween',
+        msg: `Fetching ${connectorConfig.name} juritcom documents...`,
+      });
+      const newJuritcomCourtDecisions =
+        (byDateCreation
+          ? await connectorConfig.fetchDecisionsToPseudonymiseBetweenDateCreation(
+              {
+                startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+                endDate: toDaysAgo
+                  ? new Date(dateBuilder.daysAgo(toDaysAgo))
+                  : new Date(),
+                source: 'juritcom',
+              },
+            )
+          : await connectorConfig.fetchDecisionsToPseudonymiseBetween({
+              startDate: new Date(dateBuilder.daysAgo(fromDaysAgo)),
+              endDate: toDaysAgo
+                ? new Date(dateBuilder.daysAgo(toDaysAgo))
+                : new Date(),
+              source: 'juritcom',
+            })) ?? [];
+      logger.log({
+        operationName: 'importDocumentsSinceOrBetween',
+        msg: `${newJuritcomCourtDecisions.length} ${connectorConfig.name} court decisions fetched from juritcom!`,
+      });
+      newCourtDecisions.push(...newJuritcomCourtDecisions);
+    } catch (error) {
+      logger.error({
+        operationName: 'importDocumentsSinceOrBetween',
+        msg: 'Error',
+        data: error as Record<string, unknown>,
+      });
+    }
     const documents = [] as documentType[];
     for (const courtDecision of newCourtDecisions) {
       documents.push(

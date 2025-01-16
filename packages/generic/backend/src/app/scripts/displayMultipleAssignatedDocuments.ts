@@ -1,4 +1,4 @@
-import { idModule } from 'sder';
+import { idModule } from '@label/core';
 import { logger } from '../../utils';
 import { assignationService } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';

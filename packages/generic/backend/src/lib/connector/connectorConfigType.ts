@@ -1,5 +1,5 @@
 import { documentType } from '@label/core';
-import { decisionType } from 'sder';
+import { DecisionDTO, DecisionTJDTO, Sources } from 'dbsder-api-types';
 
 export type { connectorConfigType };
 
@@ -8,28 +8,28 @@ type connectorConfigType = {
   fetchAllDecisionsBySourceAndJurisdictionsAndChambersBetween: (param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
+    source: Sources;
     jurisdictions: string[];
     chambers: string[];
-  }) => Promise<decisionType[] | undefined>;
+  }) => Promise<(DecisionDTO | DecisionTJDTO)[] | undefined>;
   fetchCourtDecisionBySourceIdAndSourceName(param: {
     sourceId: number;
     sourceName: string;
-  }): Promise<decisionType | undefined>;
+  }): Promise<DecisionDTO | DecisionTJDTO | undefined>;
   fetchChainedJuricaDecisionsToPseudonymiseBetween(param: {
     startDate: Date;
     endDate: Date;
-  }): Promise<decisionType[] | undefined>;
+  }): Promise<(DecisionDTO | DecisionTJDTO)[] | undefined>;
   fetchDecisionsToPseudonymiseBetween(param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
-  }): Promise<decisionType[] | undefined>;
+    source: Sources;
+  }): Promise<(DecisionDTO | DecisionTJDTO)[] | undefined>;
   fetchDecisionsToPseudonymiseBetweenDateCreation(param: {
     startDate: Date;
     endDate: Date;
-    source: 'jurinet' | 'jurica' | 'juritj';
-  }): Promise<decisionType[] | undefined>;
+    source: Sources;
+  }): Promise<(DecisionDTO | DecisionTJDTO)[] | undefined>;
   updateDocumentsLoadedStatus: (param: {
     documents: documentType[];
   }) => Promise<void>;
@@ -37,8 +37,10 @@ type connectorConfigType = {
     documents: documentType[];
   }) => Promise<void>;
   mapCourtDecisionToDocument: (
-    courtDecision: decisionType,
+    courtDecision: DecisionDTO | DecisionTJDTO,
     importer: documentType['importer'],
   ) => Promise<documentType>;
-  mapDocumentToCourtDecision: (document: documentType) => decisionType;
+  mapDocumentToCourtDecision: (
+    document: documentType,
+  ) => DecisionDTO | DecisionTJDTO;
 };

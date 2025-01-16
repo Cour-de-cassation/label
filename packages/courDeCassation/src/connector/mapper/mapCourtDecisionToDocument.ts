@@ -1,4 +1,3 @@
-import { decisionType } from 'sder';
 import {
   documentType,
   documentModule,
@@ -12,12 +11,18 @@ import {
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
+import {
+  DecisionDTO,
+  DecisionTJDTO,
+  PartieTJ,
+  Sources,
+} from 'dbsder-api-types';
 
 export { mapCourtDecisionToDocument };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function mapCourtDecisionToDocument(
-  sderCourtDecision: decisionType,
+  sderCourtDecision: DecisionDTO | DecisionTJDTO,
   importer: documentType['importer'],
 ): Promise<documentType> {
   const readableChamberName = extractReadableChamberName({
@@ -33,7 +38,11 @@ async function mapCourtDecisionToDocument(
 
   const registerNumber = sderCourtDecision.registerNumber;
   const appeal = sderCourtDecision.appeals[0];
-  const numeroRoleGeneral = sderCourtDecision.numeroRoleGeneral || '';
+  const numeroRoleGeneral =
+    sderCourtDecision.sourceName === Sources.TJ
+      ? (sderCourtDecision as DecisionTJDTO).numeroRoleGeneral
+      : '';
+
   const appealNumber = extractAppealRegisterRoleGeneralNumber(
     sderCourtDecision.originalText,
     source,
@@ -89,7 +98,13 @@ async function mapCourtDecisionToDocument(
     {
       additionalTermsToAnnotate,
       solution,
-      parties: sderCourtDecision.parties,
+      parties: ((): string[] => {
+        if (typeof sderCourtDecision.parties == undefined) {
+          return [] as string[];
+        }
+        const parties = sderCourtDecision.parties as PartieTJ[];
+        return parties.map((partie) => (partie as PartieTJ)?.nom) as string[];
+      })(),
       publicationCategory,
       chamberName: readableChamberName,
       civilMatterCode,
@@ -169,8 +184,9 @@ async function mapCourtDecisionToDocument(
       sderCourtDecision.originalTextZoning?.introduction_subzonage?.pourvoi ||
       undefined,
     composition:
-      sderCourtDecision.originalTextZoning?.introduction_subzonage
-        ?.composition || undefined,
+      (sderCourtDecision.originalTextZoning?.introduction_subzonage
+        ?.composition as { readonly start: number; readonly end: number }) ||
+      undefined,
   };
 
   let zoning = undefined;
@@ -203,7 +219,13 @@ async function mapCourtDecisionToDocument(
       jurisdiction: readableJurisdictionName,
       NACCode,
       endCaseCode,
-      parties: sderCourtDecision.parties || [],
+      parties: ((): string[] => {
+        if (typeof sderCourtDecision.parties == undefined) {
+          return [] as string[];
+        }
+        const parties = sderCourtDecision.parties as PartieTJ[];
+        return parties.map((partie) => (partie as PartieTJ)?.nom) as string[];
+      })(),
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session,
       solution,
@@ -211,7 +233,7 @@ async function mapCourtDecisionToDocument(
         sderCourtDecision.occultation.motivationOccultation ?? undefined,
     },
     documentNumber: sderCourtDecision.sourceId,
-    externalId: idModule.lib.convertToString(sderCourtDecision._id),
+    externalId: idModule.lib.convertToString(sderCourtDecision._id ?? ''),
     loss: undefined,
     priority,
     publicationCategory,
@@ -225,6 +247,7 @@ async function mapCourtDecisionToDocument(
     checklist: [],
   });
 }
+
 function getPrefixedNumber(
   numberToPrefix: string | undefined,
   source: string,
@@ -239,6 +262,7 @@ function getPrefixedNumber(
     return `RG n°${numberToPrefix}`;
   }
 }
+
 function computeTitleFromParsedCourtDecision({
   source,
   number,
@@ -294,8 +318,8 @@ function computeTitleFromParsedCourtDecision({
 }
 
 function computePublicationCategory(
-  pubCategory: decisionType['pubCategory'],
-  publication: decisionType['publication'],
+  pubCategory: DecisionDTO['pubCategory'] | DecisionTJDTO['pubCategory'],
+  publication: DecisionDTO['publication'] | DecisionTJDTO['publication'],
 ): documentType['publicationCategory'] {
   const publicationCategory: string[] = [];
   if (!!pubCategory) {
@@ -308,9 +332,9 @@ function computePublicationCategory(
 }
 
 function computePriority(
-  source: decisionType['sourceName'],
+  source: DecisionDTO['sourceName'] | DecisionTJDTO['sourceName'],
   publicationCategory: documentType['publicationCategory'],
-  NACCode: decisionType['NACCode'],
+  NACCode: DecisionDTO['NACCode'] | DecisionTJDTO['NACCode'],
   importer: documentType['importer'],
 ): documentType['priority'] {
   if (

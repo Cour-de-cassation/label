@@ -1,4 +1,4 @@
-import { decisionType } from 'sder';
+import { DecisionDTO, DecisionTJDTO } from 'dbsder-api-types';
 import { documentType } from '../documentType';
 
 export { publicationHandler };
@@ -21,7 +21,10 @@ function getPrioritizedNACCodes() {
   return PRIORITIZED_NAC_CODES;
 }
 
-function mustBePublished(publicationCategory: documentType['publicationCategory'], NACCode?: decisionType['NACCode']) {
+function mustBePublished(
+  publicationCategory: documentType['publicationCategory'],
+  NACCode?: DecisionDTO['NACCode'] | DecisionTJDTO['NACCode'],
+) {
   return (
     PUBLISHED_PUBLICATION_CATEGORY_LETTERS.some((publicationCategoryLetter) =>
       publicationCategory.includes(publicationCategoryLetter),

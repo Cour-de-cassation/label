@@ -29,7 +29,7 @@ const exporterConfig: exporterConfigType = {
     externalId: documentType['externalId'];
   }) {
     const externalDecision = await sderApi.fetchCourtDecisionById({
-      id: idModule.lib.buildId(externalId),
+      id: idModule.lib.buildId(externalId).toString(),
     });
     if (externalDecision.labelStatus == 'loaded') {
       await sderApi.setCourtDecisionBlocked({ externalId });

@@ -30,7 +30,7 @@ async function main() {
   });
   await client.connect();
 
-  const collections = await readCollections(client);
+  const collections = await readCollections();
 
   return Promise.all(collections.map(_ => saveCollections(client, _)));
 }

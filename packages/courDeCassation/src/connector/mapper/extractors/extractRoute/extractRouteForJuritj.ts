@@ -1,18 +1,29 @@
 import { documentType } from '@label/core';
+import { sderApi } from '../../../../sderApi';
+import { logger } from '@label/backend';
 
 export { extractRouteForJuritj };
 
-function extractRouteForJuritj({}: {
-  session: documentType['decisionMetadata']['session'];
-  solution: documentType['decisionMetadata']['solution'];
-  parties: documentType['decisionMetadata']['parties'];
-  publicationCategory: documentType['publicationCategory'];
-  chamberName: documentType['decisionMetadata']['chamberName'];
-  civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
-  civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
-  criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
+async function extractRouteForJuritj({
+  NACCode,
+  endCaseCode,
+}: {
   NACCode: documentType['decisionMetadata']['NACCode'];
   endCaseCode: documentType['decisionMetadata']['endCaseCode'];
-}): documentType['route'] {
-  return 'exhaustive';
+}): Promise<documentType['route']> {
+  try {
+    const routeFromMetadata = await sderApi.getDecisionRoute({
+      codeNac: NACCode,
+      codeDecision: endCaseCode,
+      source: 'juritj',
+    });
+    if (routeFromMetadata) {
+      return routeFromMetadata as documentType['route'];
+    } else {
+      return 'default';
+    }
+  } catch (e) {
+    logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });
+    return 'default';
+  }
 }

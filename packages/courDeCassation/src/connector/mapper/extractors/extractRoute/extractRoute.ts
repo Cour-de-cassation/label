@@ -3,7 +3,8 @@ import { documentType } from '@label/core';
 import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
 import { extractRouteForJuritj } from './extractRouteForJuritj';
-import { sderApi } from '../../../../sderApi';
+import { extractRouteForJuritcom } from './extractRouteForJuritcom';
+import { Sources } from 'dbsder-api-types';
 
 export { extractRoute };
 
@@ -26,49 +27,24 @@ async function extractRoute(
 ): Promise<documentType['route']> {
   let route: documentType['route'] = 'default';
 
-  switch (source) {
-    case 'jurinet':
-      try {
-        route = extractRouteForJurinet({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJurinet', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-    case 'jurica':
-      try {
-        const routeFromMetadata = await sderApi.getDecisionRoute({
-          codeNac: routeInfos.NACCode,
-          codeDecision: routeInfos.endCaseCode,
-          source: source,
-        });
-        if (routeFromMetadata) {
-          route = routeFromMetadata as documentType['route'];
-        } else {
-          route = extractRouteForJurica({ ...routeInfos });
-        }
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJurica', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-    case 'juritj':
-      try {
-        const routeFromMetadata = await sderApi.getDecisionRoute({
-          codeNac: routeInfos.NACCode,
-          codeDecision: routeInfos.endCaseCode,
-          source: source,
-        });
-        if (routeFromMetadata) {
-          route = routeFromMetadata as documentType['route'];
-        } else {
-          route = extractRouteForJuritj({ ...routeInfos });
-        }
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
+  const extractRouteFunctions = {
+    [Sources.CC]: extractRouteForJurinet,
+    [Sources.CA]: extractRouteForJurica,
+    [Sources.TJ]: extractRouteForJuritj,
+    [Sources.TCOM]: extractRouteForJuritcom,
+  };
+
+  try {
+    if (source in extractRouteFunctions) {
+      route = await extractRouteFunctions[source as Sources]({
+        ...routeInfos,
+      });
+    } else {
+      throw new Error('Source non prise en charge');
+    }
+  } catch (e) {
+    logger.error({ operationName: `extractRouteFor ${source}`, msg: `${e}` });
+    route = 'exhaustive';
   }
 
   if (

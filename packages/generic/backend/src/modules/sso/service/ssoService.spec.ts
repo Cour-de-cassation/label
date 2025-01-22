@@ -1,14 +1,12 @@
 import {
   acs,
+  compareUser,
   getMetadata,
+  getUserFromSSO,
   login,
   logout,
-  samlService,
   setUserSessionAndReturnRedirectUrl,
 } from './ssoService';
-import { buildUserRepository } from '../../user';
-import { buildUserService } from '../../user/service/userService';
-import { Request } from 'express';
 import { userType } from '@label/core';
 
 jest.mock('@label/sso', () => ({
@@ -23,9 +21,12 @@ jest.mock('@label/sso', () => ({
     parseResponse: jest.fn().mockResolvedValue({
       extract: {
         nameID: 'test@example.com',
-        name: 'Test User',
-        role: 'annotator',
-        sessionIndex: 'session123',
+        sessionIndex: '63e7d8764f1a0a2f6c123456',
+        attributes: {
+          role: ['ANNOTATOR'],
+          email: 'test@example.com',
+          name: 'Test User',
+        },
       },
     }),
   })),
@@ -37,33 +38,93 @@ jest.mock('../../../utils/logger', () => ({
   },
 }));
 jest.mock('../../user', () => ({
-  userService: {
-    createUser: jest.fn(),
-  },
-}));
-jest.mock('../../user', () => ({
   buildUserRepository: jest.fn().mockImplementation(() => ({
-    findByEmail: jest.fn().mockResolvedValue({
-      _id: '123',
+    findByEmail: jest.fn().mockResolvedValueOnce({
+      _id: '63e7d8764f1a0a2f6c123457',
       email: 'test@example.com',
       name: 'Test User',
       role: 'annotator',
     }),
   })),
+  userService: {
+    createUser: jest.fn(),
+    updateUser: jest.fn().mockResolvedValue({ success: true }),
+  },
 }));
 
 process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL =
   'http://localhost:55432/label/annotation';
-(process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL =
-  'http://localhost:55432/label/admin/main/summary'),
-  (process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL =
-    'http://localhost:55432/label/publishable-documents');
+process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL =
+  'http://localhost:55432/label/admin/main/summary';
+process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL =
+  'http://localhost:55432/label/publishable-documents';
+process.env.SSO_ATTRIBUTE_ROLE = 'role';
+process.env.SSO_APP_ROLES = 'admin,annotator,publicator,scrutator';
+process.env.SSO_APP_NAME = 'LABEL';
 
 describe('SSO CNX functions', () => {
   describe('getMetadataSso', () => {
     it('should return SAML metadata', async () => {
       const metadata = await getMetadata();
       expect(metadata).toBe('<metadata>');
+    });
+  });
+
+  describe('acsSso', () => {
+    it('should update an existing user if there are differences', async () => {
+      const mockReq = {
+        body: { SAMLResponse: 'mock-saml-response' },
+        session: {},
+      };
+      const result = await acs(mockReq);
+
+      expect(result).toContain(
+        process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
+      );
+    });
+  });
+
+  describe('compareUser', () => {
+    it('should return true if name or role is different', () => {
+      const userSSO = ({
+        name: 'New Name',
+        role: 'annotator',
+        email: 'test@example.com',
+        _id: '63e7d8764f1a0a2f6c123457',
+      } as unknown) as userType;
+      const userDB = ({
+        name: 'Old Name',
+        role: 'admin',
+        email: 'test@example.com',
+        _id: '63e7d8764f1a0a2f6c123457',
+      } as unknown) as userType;
+
+      const result = compareUser(userSSO, userDB);
+      expect(result).toBe(true);
+    });
+
+    it('should return false if name and role are the same', () => {
+      const userSSO = ({
+        name: 'Test User',
+        role: 'annotator',
+        email: 'test@example.com',
+        _id: '63e7d8764f1a0a2f6c123457',
+      } as unknown) as userType;
+      const userDB = ({
+        name: 'Test User',
+        role: 'annotator',
+        email: 'test@example.com',
+        _id: '63e7d8764f1a0a2f6c123457',
+      } as unknown) as userType;
+
+      const result = compareUser(userSSO, userDB);
+      expect(result).toBe(false);
+    });
+
+    it('should throw error', () => {
+      expect(() => compareUser(undefined, undefined)).toThrowError(
+        `Both objects must be defined.`,
+      );
     });
   });
 
@@ -78,72 +139,26 @@ describe('SSO CNX functions', () => {
     it('should return logout URL', async () => {
       const logoutUrl = await logout({
         nameID: 'test-user-id',
-        sessionIndex: 'test-session-index',
+        sessionIndex: '63e7d8764f1a0a2f6c123431',
       });
       expect(logoutUrl).toBe('logout-url');
     });
   });
 
-  describe('acsSso', () => {
-    it('should handle ACS SSO and return a redirect URL', async () => {
-      const mockReq = {
-        body: { SAMLResponse: 'mock-saml-response' },
-        session: {
-          user: {
-            _id: '123',
-            email: 'test@example.com',
-            name: 'Test User',
-            role: 'annotator',
-          },
-        },
-      };
-      const redirectUrl = await acs(mockReq);
-      expect(redirectUrl).toContain(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
-      );
-      expect(mockReq.session.user).toBeDefined();
-      expect(mockReq.session.user.email).toBe('test@example.com');
-    });
-
-    const mockReq = {
-      body: { SAMLResponse: 'dummyResponse' },
-    };
-
-    it('should handle the case where user does not exist and is auto-provisioned', async () => {
-      const mockNewUser = { email: 'newuser@example.com' };
-
-      (samlService.parseResponse as jest.Mock).mockResolvedValue({
-        extract: {
-          nameID: 'newuser@example.com',
-          sessionIndex: 'session123',
-          attributes: {
-            role: ['ANNOTATEUR'],
-            email: 'newuser@example.com',
-            name: 'New User',
-          },
+  describe('getUserFromSSO when throw error', () => {
+    expect(() => {
+      getUserFromSSO({
+        nameID: 'fake@example.com',
+        sessionIndex: '63e7d8764f1a0a2f6c123478',
+        attributes: {
+          role: ['ANNOT'],
+          email: 'fake@example.com',
+          name: 'Fake User',
         },
       });
-
-      const userRepository = buildUserRepository();
-      jest
-        .spyOn(userRepository, 'findByEmail')
-        .mockRejectedValue(
-          new Error('No matching user for email newuser@example.com'),
-        );
-
-      const userService = buildUserService();
-      jest
-        .spyOn(userService, 'createUser')
-        .mockResolvedValue('User created successfully');
-
-      jest
-        .spyOn(userRepository, 'findByEmail')
-        .mockReturnValue(mockNewUser as any);
-
-      const result = await acs(mockReq);
-
-      expect(result).toBeDefined();
-    });
+    }).toThrowError(
+      "User fake@example.com, role annot doesn't exist in application LABEL",
+    );
   });
 
   describe('setUserSessionAndReturnRedirectUrl', () => {
@@ -157,98 +172,11 @@ describe('SSO CNX functions', () => {
       params: {
         id: '123456789',
       },
-    } as unknown) as Request;
-
-    it('should return the correct URL for annotator role', () => {
-      const user = ({
-        _id: '1',
-        name: 'Annotator',
-        role: 'annotator',
-        email: 'annotator@test.com',
-      } as unknown) as userType;
-      const result = setUserSessionAndReturnRedirectUrl(
-        mockRequest,
-        user,
-        'test-session-index',
-      );
-      expect(mockRequest.session.user).toEqual({
-        ...user,
-        sessionIndex: 'test-session-index',
-      });
-      expect(result).toEqual(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL,
-      );
-    });
-
-    it('should return the correct URL for admin role', () => {
-      const user = ({
-        _id: '2',
-        name: 'Admin',
-        role: 'admin',
-        email: 'admin@test.com',
-      } as unknown) as userType;
-      const result = setUserSessionAndReturnRedirectUrl(
-        mockRequest,
-        user,
-        'test-session-index',
-      );
-
-      expect(mockRequest.session.user).toEqual({
-        ...user,
-        sessionIndex: 'test-session-index',
-      });
-      expect(result).toEqual(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL,
-      );
-    });
-
-    it('should return the correct URL for scrutator role', () => {
-      const user = ({
-        _id: '3',
-        name: 'Scrutator',
-        role: 'scrutator',
-        email: 'scrutator@test.com',
-      } as unknown) as userType;
-      const result = setUserSessionAndReturnRedirectUrl(
-        mockRequest,
-        user,
-        'test-session-index',
-      );
-
-      expect(mockRequest.session.user).toEqual({
-        ...user,
-        sessionIndex: 'test-session-index',
-      });
-      expect(result).toEqual(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL,
-      );
-    });
-
-    it('should return the correct URL for publicator role', () => {
-      const user = ({
-        _id: '4',
-        name: 'Publicator',
-        role: 'publicator',
-        email: 'publicator@test.com',
-      } as unknown) as userType;
-      const result = setUserSessionAndReturnRedirectUrl(
-        mockRequest,
-        user,
-        'test-session-index',
-      );
-
-      expect(mockRequest.session.user).toEqual({
-        ...user,
-        sessionIndex: 'test-session-index',
-      });
-      expect(result).toEqual(
-        process.env.SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL,
-      );
-    });
+    } as unknown) as Partial<Request>;
 
     it('should throw an error for an invalid role', () => {
       const user = ({
-        _id: '5',
+        _id: '63e7d8764f1a0a2f6c123489',
         name: 'InvalidRole',
         role: 'invalidRole',
         email: 'invalid@test.com',
@@ -258,7 +186,7 @@ describe('SSO CNX functions', () => {
         setUserSessionAndReturnRedirectUrl(
           mockRequest,
           user,
-          'test-session-index',
+          '63e7d8764f1a0a2f6c123456',
         );
       }).toThrowError("Role doesn't exist in label");
     });

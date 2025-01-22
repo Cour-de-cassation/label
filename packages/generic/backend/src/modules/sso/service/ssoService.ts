@@ -24,6 +24,7 @@ export interface ParseResponseResult {
 
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 function ssoSamlService() {
   return new SamlService();
@@ -55,15 +56,37 @@ export async function acs(req: any) {
   )) as ParseResponseResult;
   const { extract } = response;
 
-  try {
-    const user = (await getUserByEmail(extract?.nameID)) as userType;
+  const userSSO = getUserFromSSO(extract);
 
+  try {
+    const userDB = (await getUserByEmail(extract?.nameID)) as userType;
+    const hasDiff = compareUser(userSSO, userDB);
+    let currentUser = userDB;
+    if (hasDiff) {
+      currentUser = { ...userSSO, _id: userDB._id };
+
+      const resp = await userService.updateUser({
+        userId: idModule.lib.buildId(userDB._id),
+        name: userSSO.name,
+        role: userSSO.role,
+      });
+      await logger.log({
+        operationName: 'updateUser',
+        msg: resp.success
+          ? `user ${userDB.email} name and role are updated successfully.`
+          : `The name and role of user ${userDB.email} could not be updated successfully.`,
+      });
+    }
     await logger.log({
       operationName: 'user connected',
-      msg: user.email,
+      msg: userDB.email,
     });
 
-    return setUserSessionAndReturnRedirectUrl(req, user, extract?.sessionIndex);
+    return setUserSessionAndReturnRedirectUrl(
+      req,
+      currentUser,
+      extract?.sessionIndex,
+    );
   } catch (err: unknown) {
     await logger.log({
       operationName: `catch autoprovision user ${JSON.stringify(err)}`,
@@ -74,37 +97,12 @@ export async function acs(req: any) {
       err instanceof Error &&
       err.message.includes(`No matching user for email ${extract?.nameID}`)
     ) {
-      const { attributes } = extract;
-      const roles = (attributes[
-        `${process.env.SSO_ATTRIBUTE_ROLE}`
-      ] as string[]).map((item: string) => item.toLowerCase()) as string[];
-
-      const appRoles = (process.env.SSO_APP_ROLES as string)
-        .toLowerCase()
-        .split(',');
-      const userRolesInAppRoles = every(roles, (element) =>
-        includes(appRoles, element),
-      );
-
-      if (!roles.length || !userRolesInAppRoles) {
-        const errorMsg = `User ${extract.nameID}, role ${roles} doesn't exist in application ${process.env.SSO_APP_NAME}`;
-        logger.error({ operationName: 'ssoService', msg: errorMsg });
-        throw new Error(errorMsg);
-      }
-
-      const newUser = {
-        name:
-          (attributes[`${process.env.SSO_ATTRIBUTE_FULLNAME}`] as string) ||
-          `${attributes[`${process.env.SSO_ATTRIBUTE_NAME}`] as string} ${
-            attributes[`${process.env.SSO_ATTRIBUTE_FIRSTNAME}`] as string
-          }`,
-        email: attributes[`${process.env.SSO_ATTRIBUTE_MAIL}`] as string,
-        role: roles[0] as 'annotator' | 'scrutator' | 'admin' | 'publicator',
-      };
-
-      await userService.createUser(newUser);
-
-      const createdUser = (await getUserByEmail(newUser.email)) as userType;
+      await userService.createUser({
+        name: userSSO.name,
+        email: userSSO.email,
+        role: userSSO.role,
+      });
+      const createdUser = (await getUserByEmail(userSSO.email)) as userType;
 
       await logger.log({
         operationName: `Auto-provided user`,
@@ -128,7 +126,7 @@ export async function getUserByEmail(email: string) {
 }
 
 export function setUserSessionAndReturnRedirectUrl(
-  req: Request,
+  req: Request | any,
   user: userType,
   sessionIndex: string,
 ) {
@@ -157,4 +155,49 @@ export function setUserSessionAndReturnRedirectUrl(
   }
 
   return roleToUrlMap[user.role];
+}
+
+export function getUserFromSSO(
+  extract: ParseResponseResult['extract'],
+): userType {
+  const { attributes } = extract;
+  const roles = (attributes[
+    `${process.env.SSO_ATTRIBUTE_ROLE}`
+  ] as string[]).map((item: string) => item.toLowerCase()) as string[];
+
+  const appRoles = (process.env.SSO_APP_ROLES as string)
+    .toLowerCase()
+    .split(',');
+  const userRolesInAppRoles = every(roles, (element) =>
+    includes(appRoles, element),
+  );
+
+  if (!roles.length || !userRolesInAppRoles) {
+    const errorMsg = `User ${extract.nameID}, role ${roles} doesn't exist in application ${process.env.SSO_APP_NAME}`;
+    logger.error({ operationName: 'getUserFromSSO', msg: errorMsg });
+    throw new Error(errorMsg);
+  }
+
+  return {
+    name:
+      (attributes[`${process.env.SSO_ATTRIBUTE_FULLNAME}`] as string) ||
+      `${attributes[`${process.env.SSO_ATTRIBUTE_NAME}`] as string} ${
+        attributes[`${process.env.SSO_ATTRIBUTE_FIRSTNAME}`] as string
+      }`,
+    email: attributes[`${process.env.SSO_ATTRIBUTE_MAIL}`] as string,
+    role: roles[0] as 'annotator' | 'scrutator' | 'admin' | 'publicator',
+    _id: idModule.lib.buildId(),
+  };
+}
+
+export function compareUser(
+  userSSO: userType | undefined,
+  userDB: userType | undefined,
+): boolean {
+  if (!userSSO || !userDB) {
+    const errorMsg = `Both objects must be defined.`;
+    logger.error({ operationName: 'compareUser', msg: errorMsg });
+    throw new Error(errorMsg);
+  }
+  return userSSO.name !== userDB.name || userSSO.role !== userDB.role;
 }

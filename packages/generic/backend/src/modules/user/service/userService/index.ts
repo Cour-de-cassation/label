@@ -7,6 +7,7 @@ import { fetchUsersByAssignations } from './fetchUsersByAssignations';
 import { fetchUsersByIds } from './fetchUsersByIds';
 import { fetchWorkingUsers } from './fetchWorkingUsers';
 import { signUpUser } from './signUpUser';
+import { updateUser } from './updateUser';
 
 export { userService, buildUserService };
 
@@ -30,5 +31,6 @@ function buildUserService() {
     fetchWorkingUsers,
     fetchUserRole,
     signUpUser,
+    updateUser,
   };
 }

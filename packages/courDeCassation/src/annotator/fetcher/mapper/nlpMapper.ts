@@ -1,17 +1,10 @@
-import {
-  annotationType,
-  annotationModule,
-  documentType,
-  annotationReportType,
-  annotationReportModule,
-} from '@label/core';
+import { annotationType, annotationModule, documentType } from '@label/core';
 import { nlpResponseType } from '../api';
 
 export { nlpMapper };
 
 const nlpMapper = {
   mapNlpAnnotationsToAnnotations,
-  mapNlpAnnotationstoReport,
   mapNlpAdditionalTerms,
 };
 
@@ -21,23 +14,13 @@ function mapNlpAnnotationsToAnnotations(
 ): annotationType[] {
   return nlpAnnotations.entities.map((nlpAnnotation) =>
     annotationModule.lib.buildAnnotation({
-      category: nlpAnnotation.label,
+      category: nlpAnnotation.category,
       entityId: nlpAnnotation.entityId,
       start: nlpAnnotation.start,
       certaintyScore: nlpAnnotation.score,
       text: document.text.substring(nlpAnnotation.start, nlpAnnotation.end),
     }),
   );
-}
-
-function mapNlpAnnotationstoReport(
-  nlpAnnotations: nlpResponseType,
-  document: documentType,
-): annotationReportType {
-  return annotationReportModule.lib.buildAnnotationReport({
-    checklist: nlpAnnotations.checklist,
-    documentId: document._id,
-  });
 }
 
 function mapNlpAdditionalTerms(

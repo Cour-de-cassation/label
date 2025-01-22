@@ -1,0 +1,6896 @@
+[
+  {
+    "_id": {
+      "$oid": "673f04a306b8757cf5d8956c"
+    },
+    "annotationsCount": 35,
+    "appealNumber": "22-16.073",
+    "chamberName": "chambre civile ii",
+    "decisionDate": 1729717200000,
+    "documentExternalId": "673ded6e5559d27e30e40f67",
+    "documentNumber": 2004966,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "P",
+      "B"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180862729,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 4237
+      }
+    ],
+    "wordsCount": 1191,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f04a306b8756de6d8956d"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-85.669",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fbd",
+    "documentNumber": 2004847,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "P",
+      "B"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180868958,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1065
+      }
+    ],
+    "wordsCount": 679,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f04a306b8759e8bd8956e"
+    },
+    "annotationsCount": 26,
+    "appealNumber": "24-81.321",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fc1",
+    "documentNumber": 2004843,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FS",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "P",
+      "B",
+      "L"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180866096,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1434
+      }
+    ],
+    "wordsCount": 962,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd1"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "24-84.707",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729026000000,
+    "documentExternalId": "673ded6e5559d27e30e40f69",
+    "documentNumber": 2004919,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116426971,
+    "treatmentsSummary": [],
+    "wordsCount": 342,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd2"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-82.488",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6e5559d27e30e40f6b",
+    "documentNumber": 2004918,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116451569,
+    "treatmentsSummary": [],
+    "wordsCount": 297,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd3"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-82.796",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f6d",
+    "documentNumber": 2004917,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116475662,
+    "treatmentsSummary": [],
+    "wordsCount": 292,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd4"
+    },
+    "annotationsCount": 24,
+    "appealNumber": "24-81.388",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f6f",
+    "documentNumber": 2004916,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116529518,
+    "treatmentsSummary": [],
+    "wordsCount": 484,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd5"
+    },
+    "annotationsCount": 24,
+    "appealNumber": "23-84.588",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f77",
+    "documentNumber": 2004912,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116650869,
+    "treatmentsSummary": [],
+    "wordsCount": 390,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd6"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-82.058",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f79",
+    "documentNumber": 2004911,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116683351,
+    "treatmentsSummary": [],
+    "wordsCount": 324,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd7"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-82.031",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f7b",
+    "documentNumber": 2004910,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116708623,
+    "treatmentsSummary": [],
+    "wordsCount": 292,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd8"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-81.783",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f7d",
+    "documentNumber": 2004909,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116734985,
+    "treatmentsSummary": [],
+    "wordsCount": 297,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abd9"
+    },
+    "annotationsCount": 12,
+    "appealNumber": "24-80.777",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f7f",
+    "documentNumber": 2004908,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116762432,
+    "treatmentsSummary": [],
+    "wordsCount": 315,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abda"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "23-87.275",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f81",
+    "documentNumber": 2004907,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116788860,
+    "treatmentsSummary": [],
+    "wordsCount": 294,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abdb"
+    },
+    "annotationsCount": 25,
+    "appealNumber": "23-86.877",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f85",
+    "documentNumber": 2004905,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116863133,
+    "treatmentsSummary": [],
+    "wordsCount": 381,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abdc"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "23-86.845",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f87",
+    "documentNumber": 2004904,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116886977,
+    "treatmentsSummary": [],
+    "wordsCount": 295,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abdd"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-81.739",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f8b",
+    "documentNumber": 2004902,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116949145,
+    "treatmentsSummary": [],
+    "wordsCount": 317,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abde"
+    },
+    "annotationsCount": 12,
+    "appealNumber": "24-80.892",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f8d",
+    "documentNumber": 2004901,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732116978843,
+    "treatmentsSummary": [],
+    "wordsCount": 300,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abdf"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-82.480",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f93",
+    "documentNumber": 2004898,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732117030407,
+    "treatmentsSummary": [],
+    "wordsCount": 292,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0600c728cb0025f8abe0"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-81.439",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f95",
+    "documentNumber": 2004897,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732117056255,
+    "treatmentsSummary": [],
+    "wordsCount": 313,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe1"
+    },
+    "annotationsCount": 9,
+    "appealNumber": "24-82.450",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f9d",
+    "documentNumber": 2004893,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732117135214,
+    "treatmentsSummary": [],
+    "wordsCount": 319,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe2"
+    },
+    "annotationsCount": 16,
+    "appealNumber": "24-81.148",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40f9f",
+    "documentNumber": 2004892,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732117169752,
+    "treatmentsSummary": [],
+    "wordsCount": 374,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe3"
+    },
+    "annotationsCount": 12,
+    "appealNumber": "24-80.900",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fa1",
+    "documentNumber": 2004891,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732117199031,
+    "treatmentsSummary": [],
+    "wordsCount": 315,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe4"
+    },
+    "annotationsCount": 74,
+    "appealNumber": "24-84.629",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729544400000,
+    "documentExternalId": "673ded6f5559d27e30e40fa5",
+    "documentNumber": 2004872,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180911589,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1179
+      }
+    ],
+    "wordsCount": 2634,
+    "checklist": [
+      {
+        "check_type": "similar_writing",
+        "entities": [
+          {
+            "text": "Marthe",
+            "start": 353,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999934434890747,
+            "entityId": "personnePhysique_marthe",
+            "end": 359
+          },
+          {
+            "text": "MartheP",
+            "start": 12843,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999533891677856,
+            "entityId": "personnePhysique_marthep",
+            "end": 12850
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "'Marthe' est similaire à 'MartheP'. Est-ce une erreur de saisie ?",
+        "short_message": "'Marthe' = 'MartheP' ?"
+      },
+      {
+        "check_type": "juridoute",
+        "entities": [
+          {
+            "text": "LucieD",
+            "start": 13978,
+            "category": "personnePhysique",
+            "source": "postprocess",
+            "score": 1,
+            "entityId": "personnePhysique_lucied",
+            "end": 13984
+          }
+        ],
+        "sentences": [
+          {
+            "start": 13854,
+            "end": 14150
+          }
+        ],
+        "metadata_text": [],
+        "message": "Il semblerait que le mot LucieD soit potentiellement une personne physique.",
+        "short_message": "'LucieD' [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe5"
+    },
+    "annotationsCount": 17,
+    "appealNumber": "23-84.413",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fa7",
+    "documentNumber": 2004868,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180956976,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1124
+      }
+    ],
+    "wordsCount": 856,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe6"
+    },
+    "annotationsCount": 24,
+    "appealNumber": "24-80.175",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fa9",
+    "documentNumber": 2004867,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180895780,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1144
+      }
+    ],
+    "wordsCount": 823,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe7"
+    },
+    "annotationsCount": 12,
+    "appealNumber": "23-86.777",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40faf",
+    "documentNumber": 2004864,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180918133,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1218
+      }
+    ],
+    "wordsCount": 332,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe8"
+    },
+    "annotationsCount": 14,
+    "appealNumber": "23-86.711",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fb1",
+    "documentNumber": 2004863,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180945565,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1161
+      }
+    ],
+    "wordsCount": 888,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abe9"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-83.736",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fb5",
+    "documentNumber": 2004861,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180938390,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 983
+      }
+    ],
+    "wordsCount": 1091,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abea"
+    },
+    "annotationsCount": 37,
+    "appealNumber": "23-86.992",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fb7",
+    "documentNumber": 2004860,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180893323,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 2843
+      }
+    ],
+    "wordsCount": 1013,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abeb"
+    },
+    "annotationsCount": 25,
+    "appealNumber": "23-85.692",
+    "chamberName": "chambre criminelle",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fb9",
+    "documentNumber": 2004859,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180940343,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 956
+      }
+    ],
+    "wordsCount": 1098,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abec"
+    },
+    "annotationsCount": 42,
+    "appealNumber": "23-21.553",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fc3",
+    "documentNumber": 2004840,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180947672,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 897
+      }
+    ],
+    "wordsCount": 447,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abed"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-16.410",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fc5",
+    "documentNumber": 2004839,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180905125,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1175
+      }
+    ],
+    "wordsCount": 374,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abee"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-15.680",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fc7",
+    "documentNumber": 2004838,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180927243,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1036
+      }
+    ],
+    "wordsCount": 378,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abef"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-13.810",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded6f5559d27e30e40fcb",
+    "documentNumber": 2004836,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180950193,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1169
+      }
+    ],
+    "wordsCount": 369,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf0"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-18.670",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fcd",
+    "documentNumber": 2004835,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180922531,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1147
+      }
+    ],
+    "wordsCount": 368,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf1"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-18.153",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fcf",
+    "documentNumber": 2004834,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180933876,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1077
+      }
+    ],
+    "wordsCount": 382,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf2"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-16.053",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fd1",
+    "documentNumber": 2004833,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180925195,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1664
+      }
+    ],
+    "wordsCount": 370,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf3"
+    },
+    "annotationsCount": 19,
+    "appealNumber": "23-14.225",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fd3",
+    "documentNumber": 2004832,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180943356,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 2027
+      }
+    ],
+    "wordsCount": 423,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf4"
+    },
+    "annotationsCount": 18,
+    "appealNumber": "23-15.726",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fd5",
+    "documentNumber": 2004831,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180907183,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1072
+      }
+    ],
+    "wordsCount": 417,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf5"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-12.877",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fd7",
+    "documentNumber": 2004830,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180900815,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1083
+      }
+    ],
+    "wordsCount": 370,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf6"
+    },
+    "annotationsCount": 17,
+    "appealNumber": "23-18.375",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fd9",
+    "documentNumber": 2004829,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180902811,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1053
+      }
+    ],
+    "wordsCount": 419,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf7"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "22-11.244",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fdb",
+    "documentNumber": 2004828,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180913780,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1080
+      }
+    ],
+    "wordsCount": 396,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf8"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23-21.302",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fdd",
+    "documentNumber": 2004827,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRR",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "N"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180936306,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1408
+      }
+    ],
+    "wordsCount": 369,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abf9"
+    },
+    "annotationsCount": 18,
+    "appealNumber": "23-12.152",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fe1",
+    "documentNumber": 2004825,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180909317,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 964
+      }
+    ],
+    "wordsCount": 972,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abfa"
+    },
+    "annotationsCount": 19,
+    "appealNumber": "23-60.099",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fe7",
+    "documentNumber": 2004822,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180915896,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1027
+      }
+    ],
+    "wordsCount": 1527,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abfb"
+    },
+    "annotationsCount": 29,
+    "appealNumber": "22-23.050",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40fed",
+    "documentNumber": 2004819,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180952505,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1132
+      }
+    ],
+    "wordsCount": 1360,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abfc"
+    },
+    "annotationsCount": 17,
+    "appealNumber": "22-23.823",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40ff5",
+    "documentNumber": 2004815,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180954741,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1089
+      }
+    ],
+    "wordsCount": 955,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0601c728cb0025f8abfd"
+    },
+    "annotationsCount": 24,
+    "appealNumber": "22-22.917",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e40ff7",
+    "documentNumber": 2004814,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180931744,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1076
+      }
+    ],
+    "wordsCount": 1469,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8abfe"
+    },
+    "annotationsCount": 27,
+    "appealNumber": "22-15.203",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e41003",
+    "documentNumber": 2004808,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180929645,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1154
+      }
+    ],
+    "wordsCount": 1621,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8abff"
+    },
+    "annotationsCount": 53,
+    "appealNumber": "21-19.704",
+    "chamberName": "chambre sociale",
+    "decisionDate": 1729630800000,
+    "documentExternalId": "673ded705559d27e30e41005",
+    "documentNumber": 2004807,
+    "jurisdiction": "cour de cassation",
+    "linkedEntitiesCount": 0,
+    "session": "FRH",
+    "endCaseCode": null,
+    "NACCode": null,
+    "publicationCategory": [
+      "D"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurinet",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180920305,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 968
+      }
+    ],
+    "wordsCount": 1180,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac00"
+    },
+    "annotationsCount": 16,
+    "appealNumber": "24/02762",
+    "chamberName": "3ème chambre commerciale",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded715559d27e30e4101a",
+    "documentNumber": 2929098,
+    "jurisdiction": "cour d'appel de rennes",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "56E",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732119897499,
+    "treatmentsSummary": [],
+    "wordsCount": 555,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac01"
+    },
+    "annotationsCount": 73,
+    "appealNumber": "24/00050",
+    "chamberName": "1ère chambre",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded715559d27e30e4101c",
+    "documentNumber": 2929088,
+    "jurisdiction": "cour d'appel de rennes",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22C",
+    "NACCode": "82C",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120008297,
+    "treatmentsSummary": [],
+    "wordsCount": 755,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac02"
+    },
+    "annotationsCount": 27,
+    "appealNumber": "23/05445",
+    "chamberName": "3ème chambre commerciale",
+    "decisionDate": 1729202400000,
+    "documentExternalId": "673ded715559d27e30e41020",
+    "documentNumber": 2929071,
+    "jurisdiction": "cour d'appel de rennes",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11A",
+    "NACCode": "56C",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120255192,
+    "treatmentsSummary": [],
+    "wordsCount": 399,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac03"
+    },
+    "annotationsCount": 11,
+    "appealNumber": "24/01361",
+    "chamberName": "1ère chambre section jex",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded715559d27e30e41024",
+    "documentNumber": 2929054,
+    "jurisdiction": "cour d'appel de reims",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22C",
+    "NACCode": "78F",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120329563,
+    "treatmentsSummary": [],
+    "wordsCount": 283,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac04"
+    },
+    "annotationsCount": 24,
+    "appealNumber": "24/00861",
+    "chamberName": "1ere chambre sect.civile",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded715559d27e30e41026",
+    "documentNumber": 2929051,
+    "jurisdiction": "cour d'appel de reims",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22C",
+    "NACCode": "50D",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120363814,
+    "treatmentsSummary": [],
+    "wordsCount": 306,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac05"
+    },
+    "annotationsCount": 25,
+    "appealNumber": "24/00069",
+    "chamberName": "premier président",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded715559d27e30e4102c",
+    "documentNumber": 2929040,
+    "jurisdiction": "cour d'appel de poitiers",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22L",
+    "NACCode": "14S",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120411954,
+    "treatmentsSummary": [],
+    "wordsCount": 571,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac06"
+    },
+    "annotationsCount": 23,
+    "appealNumber": "24/01645",
+    "chamberName": "1ère chambre",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded715559d27e30e4102e",
+    "documentNumber": 2929038,
+    "jurisdiction": "cour d'appel de poitiers",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "70E",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120454713,
+    "treatmentsSummary": [],
+    "wordsCount": 309,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac07"
+    },
+    "annotationsCount": 13,
+    "appealNumber": "24/00582",
+    "chamberName": "pôle 1 - chambre 12",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded715559d27e30e41030",
+    "documentNumber": 2928990,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "14I",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120522124,
+    "treatmentsSummary": [],
+    "wordsCount": 586,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac08"
+    },
+    "annotationsCount": 13,
+    "appealNumber": "24/00580",
+    "chamberName": "pôle 1 - chambre 12",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded725559d27e30e41032",
+    "documentNumber": 2928988,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "14K",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120588584,
+    "treatmentsSummary": [],
+    "wordsCount": 566,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac09"
+    },
+    "annotationsCount": 41,
+    "appealNumber": "24/16439",
+    "chamberName": "pôle 4 - chambre 9 - a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded725559d27e30e41034",
+    "documentNumber": 2928934,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "70A",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120622735,
+    "treatmentsSummary": [],
+    "wordsCount": 211,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac0a"
+    },
+    "annotationsCount": 5,
+    "appealNumber": "24/05235",
+    "chamberName": "pôle 5 - chambre 3",
+    "decisionDate": 1728424800000,
+    "documentExternalId": "673ded725559d27e30e4103c",
+    "documentNumber": 2928905,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22C",
+    "NACCode": "30B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120754355,
+    "treatmentsSummary": [],
+    "wordsCount": 246,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac0b"
+    },
+    "annotationsCount": 15,
+    "appealNumber": "23/16261",
+    "chamberName": "pôle 5 - chambre 3",
+    "decisionDate": 1728424800000,
+    "documentExternalId": "673ded725559d27e30e4103e",
+    "documentNumber": 2928890,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "30B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120793016,
+    "treatmentsSummary": [],
+    "wordsCount": 374,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac0c"
+    },
+    "annotationsCount": 62,
+    "appealNumber": "23/14975",
+    "chamberName": "pôle 4 - chambre 5",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded725559d27e30e41040",
+    "documentNumber": 2928888,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "54G",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120877806,
+    "treatmentsSummary": [],
+    "wordsCount": 1037,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Emmanuelle",
+            "start": 1191,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999825954437256,
+            "entityId": "personnePhysique_emmanuelle",
+            "end": 1201
+          },
+          {
+            "text": "Emmanuelle",
+            "start": 5668,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999662637710571,
+            "entityId": "professionnelMagistratGreffier_emmanuelle",
+            "end": 5678
+          },
+          {
+            "text": "Emmanuelle",
+            "start": 6557,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999716281890869,
+            "entityId": "professionnelMagistratGreffier_emmanuelle",
+            "end": 6567
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Emmanuelle' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "Emmanuelle [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac0d"
+    },
+    "annotationsCount": 59,
+    "appealNumber": "23/09237",
+    "chamberName": "pôle 5 - chambre 16",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded725559d27e30e41042",
+    "documentNumber": 2928882,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "86F",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732120948059,
+    "treatmentsSummary": [],
+    "wordsCount": 815,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac0e"
+    },
+    "annotationsCount": 59,
+    "appealNumber": "23/09232",
+    "chamberName": "pôle 5 - chambre 16",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded725559d27e30e41044",
+    "documentNumber": 2928881,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "86F",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732121017138,
+    "treatmentsSummary": [],
+    "wordsCount": 797,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac0f"
+    },
+    "annotationsCount": 70,
+    "appealNumber": "22/17738",
+    "chamberName": "pôle 5 - chambre 16",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded725559d27e30e41046",
+    "documentNumber": 2928868,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "86F",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732121096505,
+    "treatmentsSummary": [],
+    "wordsCount": 887,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac10"
+    },
+    "annotationsCount": 8,
+    "appealNumber": "22/05848",
+    "chamberName": "pôle 5 - chambre 3",
+    "decisionDate": 1728424800000,
+    "documentExternalId": "673ded725559d27e30e41048",
+    "documentNumber": 2928863,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11A",
+    "NACCode": "30C",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732121134066,
+    "treatmentsSummary": [],
+    "wordsCount": 254,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac11"
+    },
+    "annotationsCount": 18,
+    "appealNumber": "22/03500",
+    "chamberName": "pôle 4 - chambre 5",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded725559d27e30e4104c",
+    "documentNumber": 2928860,
+    "jurisdiction": "cour d'appel de paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "54B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732121200915,
+    "treatmentsSummary": [],
+    "wordsCount": 326,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac12"
+    },
+    "annotationsCount": 19,
+    "appealNumber": "24/00869",
+    "chamberName": "rétention administrative",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded725559d27e30e41052",
+    "documentNumber": 2928804,
+    "jurisdiction": "cour d'appel de metz",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44D",
+    "NACCode": "14G",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181256713,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 938
+      }
+    ],
+    "wordsCount": 819,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac13"
+    },
+    "annotationsCount": 38,
+    "appealNumber": "24/00864",
+    "chamberName": "rétention administrative",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41056",
+    "documentNumber": 2928801,
+    "jurisdiction": "cour d'appel de metz",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "14G",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180976882,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1180
+      }
+    ],
+    "wordsCount": 841,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac14"
+    },
+    "annotationsCount": 16,
+    "appealNumber": "21/02928",
+    "chamberName": "1ère chambre",
+    "decisionDate": 1729116000000,
+    "documentExternalId": "673ded735559d27e30e4105c",
+    "documentNumber": 2928796,
+    "jurisdiction": "cour d'appel de metz",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22A",
+    "NACCode": "54B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732121601177,
+    "treatmentsSummary": [],
+    "wordsCount": 441,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac15"
+    },
+    "annotationsCount": 62,
+    "appealNumber": "24/08002",
+    "chamberName": "retentions",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e4105e",
+    "documentNumber": 2928795,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "14H",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181296119,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1555
+      }
+    ],
+    "wordsCount": 1328,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac16"
+    },
+    "annotationsCount": 54,
+    "appealNumber": "24/07990",
+    "chamberName": "retentions",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41060",
+    "documentNumber": 2928792,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "14H",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181036344,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1952
+      }
+    ],
+    "wordsCount": 1239,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac17"
+    },
+    "annotationsCount": 49,
+    "appealNumber": "24/07989",
+    "chamberName": "retentions",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41062",
+    "documentNumber": 2928791,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "14H",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181765387,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 771
+      }
+    ],
+    "wordsCount": 1165,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac18"
+    },
+    "annotationsCount": 53,
+    "appealNumber": "24/07974",
+    "chamberName": "retentions",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41066",
+    "documentNumber": 2928788,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "14H",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181780616,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 897
+      }
+    ],
+    "wordsCount": 1030,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "LA MESTA",
+            "start": 297,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9998489022254944,
+            "entityId": "professionnelMagistratGreffier_la mesta",
+            "end": 305
+          },
+          {
+            "text": "LA MESTA",
+            "start": 6988,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9941515624523163,
+            "entityId": "personnePhysique_la mesta",
+            "end": 6996
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'LA MESTA' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'LA MESTA' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac19"
+    },
+    "annotationsCount": 32,
+    "appealNumber": "24/07895",
+    "chamberName": "retentions",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41068",
+    "documentNumber": 2928787,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "68C",
+    "NACCode": "14H",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181784361,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 857
+      }
+    ],
+    "wordsCount": 504,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac1a"
+    },
+    "annotationsCount": 6,
+    "appealNumber": "24/07394",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e4106a",
+    "documentNumber": 2928785,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "E09",
+    "NACCode": "4IF",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181798564,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 818
+      }
+    ],
+    "wordsCount": 105,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0602c728cb0025f8ac1b"
+    },
+    "annotationsCount": 72,
+    "appealNumber": "24/05813",
+    "chamberName": "1ère chambre civile b",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e4106c",
+    "documentNumber": 2928782,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44I",
+    "NACCode": "63B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181001559,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 895
+      }
+    ],
+    "wordsCount": 701,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac1c"
+    },
+    "annotationsCount": 10,
+    "appealNumber": "24/05720",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41070",
+    "documentNumber": 2928780,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22C",
+    "NACCode": "4GA",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732122235726,
+    "treatmentsSummary": [],
+    "wordsCount": 237,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac1d"
+    },
+    "annotationsCount": 5,
+    "appealNumber": "24/05483",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41072",
+    "documentNumber": 2928779,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22C",
+    "NACCode": "4DC",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732122271807,
+    "treatmentsSummary": [],
+    "wordsCount": 233,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac1e"
+    },
+    "annotationsCount": 51,
+    "appealNumber": "24/00928",
+    "chamberName": "1ère chambre civile b",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41074",
+    "documentNumber": 2928774,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "74Z",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732122358241,
+    "treatmentsSummary": [],
+    "wordsCount": 759,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac1f"
+    },
+    "annotationsCount": 12,
+    "appealNumber": "24/00664",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41076",
+    "documentNumber": 2928772,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "E45",
+    "NACCode": "59C",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181272467,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 4274
+      }
+    ],
+    "wordsCount": 590,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac20"
+    },
+    "annotationsCount": 38,
+    "appealNumber": "24/00319",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded735559d27e30e41078",
+    "documentNumber": 2928771,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "E45",
+    "NACCode": "59B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181769036,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1059
+      }
+    ],
+    "wordsCount": 1419,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac21"
+    },
+    "annotationsCount": 24,
+    "appealNumber": "24/00112",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e4107a",
+    "documentNumber": 2928770,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "E45",
+    "NACCode": "4DC",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180965349,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1026
+      }
+    ],
+    "wordsCount": 1088,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac22"
+    },
+    "annotationsCount": 6,
+    "appealNumber": "23/08862",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e4107e",
+    "documentNumber": 2928766,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "59D",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732122710860,
+    "treatmentsSummary": [],
+    "wordsCount": 218,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac23"
+    },
+    "annotationsCount": 35,
+    "appealNumber": "23/08631",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e41080",
+    "documentNumber": 2928765,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11E",
+    "NACCode": "53I",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181263218,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 965
+      }
+    ],
+    "wordsCount": 1618,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac24"
+    },
+    "annotationsCount": 14,
+    "appealNumber": "23/01575",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e41088",
+    "documentNumber": 2928758,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "50G",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732123117897,
+    "treatmentsSummary": [],
+    "wordsCount": 238,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac25"
+    },
+    "annotationsCount": 90,
+    "appealNumber": "22/07905",
+    "chamberName": "1ère chambre civile b",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e4108a",
+    "documentNumber": 2928757,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "50D",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180959070,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1023
+      }
+    ],
+    "wordsCount": 1798,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac26"
+    },
+    "annotationsCount": 40,
+    "appealNumber": "22/03119",
+    "chamberName": "chambre sociale d (ps)",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e41090",
+    "documentNumber": 2928753,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "88A",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181023151,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1471
+      }
+    ],
+    "wordsCount": 2186,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac27"
+    },
+    "annotationsCount": 44,
+    "appealNumber": "22/03116",
+    "chamberName": "chambre sociale d (ps)",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e41092",
+    "documentNumber": 2928752,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "88A",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181275451,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1294
+      }
+    ],
+    "wordsCount": 1466,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac28"
+    },
+    "annotationsCount": 133,
+    "appealNumber": "22/02368",
+    "chamberName": "chambre sociale d (ps)",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e41094",
+    "documentNumber": 2928748,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "89B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732123966722,
+    "treatmentsSummary": [],
+    "wordsCount": 8000,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac29"
+    },
+    "annotationsCount": 6,
+    "appealNumber": "22/02121",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded745559d27e30e41098",
+    "documentNumber": 2928746,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "57A",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732124121038,
+    "treatmentsSummary": [],
+    "wordsCount": 186,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac2a"
+    },
+    "annotationsCount": 6,
+    "appealNumber": "22/01643",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded755559d27e30e4109a",
+    "documentNumber": 2928745,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "31Z",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732124147827,
+    "treatmentsSummary": [],
+    "wordsCount": 186,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac2b"
+    },
+    "annotationsCount": 6,
+    "appealNumber": "21/07464",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded755559d27e30e4109e",
+    "documentNumber": 2928741,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "59D",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732124313213,
+    "treatmentsSummary": [],
+    "wordsCount": 175,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac2c"
+    },
+    "annotationsCount": 6,
+    "appealNumber": "21/00929",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded755559d27e30e410a0",
+    "documentNumber": 2928740,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "59C",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732124337830,
+    "treatmentsSummary": [],
+    "wordsCount": 180,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac2d"
+    },
+    "annotationsCount": 10,
+    "appealNumber": "20/06112",
+    "chamberName": "3ème chambre a",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded755559d27e30e410a4",
+    "documentNumber": 2928738,
+    "jurisdiction": "cour d'appel de lyon",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "11B",
+    "NACCode": "59A",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "automatic",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732124369562,
+    "treatmentsSummary": [],
+    "wordsCount": 219,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac2e"
+    },
+    "annotationsCount": 70,
+    "appealNumber": "24/00362",
+    "chamberName": "2ème chambre",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded755559d27e30e410aa",
+    "documentNumber": 2928727,
+    "jurisdiction": "cour d'appel de grenoble",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "60A",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180987952,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1086
+      }
+    ],
+    "wordsCount": 1436,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac2f"
+    },
+    "annotationsCount": 88,
+    "appealNumber": "23/01703",
+    "chamberName": "2ème chambre",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded755559d27e30e410ae",
+    "documentNumber": 2928725,
+    "jurisdiction": "cour d'appel de grenoble",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44K",
+    "NACCode": "54C",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181291576,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 879
+      }
+    ],
+    "wordsCount": 2537,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac30"
+    },
+    "annotationsCount": 111,
+    "appealNumber": "23/01524",
+    "chamberName": "2ème chambre",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded755559d27e30e410b0",
+    "documentNumber": 2928723,
+    "jurisdiction": "cour d'appel de grenoble",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44L",
+    "NACCode": "64B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181309823,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 944
+      }
+    ],
+    "wordsCount": 3297,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac31"
+    },
+    "annotationsCount": 103,
+    "appealNumber": "22/02661",
+    "chamberName": "2ème chambre",
+    "decisionDate": 1729548000000,
+    "documentExternalId": "673ded755559d27e30e410b4",
+    "documentNumber": 2928715,
+    "jurisdiction": "cour d'appel de grenoble",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33F",
+    "NACCode": "62B",
+    "publicationCategory": [
+      "W"
+    ],
+    "route": "simple",
+    "importer": "recent",
+    "source": "jurica",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181786007,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 801
+      }
+    ],
+    "wordsCount": 1912,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0603c728cb0025f8ac32"
+    },
+    "annotationsCount": 89,
+    "appealNumber": "23/54695",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab97c",
+    "documentNumber": 2779775496,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "55J",
+    "NACCode": "62B",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181244882,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1008
+      }
+    ],
+    "wordsCount": 2373,
+    "checklist": [
+      {
+        "check_type": "juridoute",
+        "entities": [
+          {
+            "text": "BREUILC",
+            "start": 15505,
+            "category": "personnePhysique",
+            "source": "postprocess",
+            "score": 1,
+            "entityId": "personnePhysique_breuilc",
+            "end": 15512
+          }
+        ],
+        "sentences": [
+          {
+            "start": 15496,
+            "end": 15529
+          }
+        ],
+        "metadata_text": [],
+        "message": "Il semblerait que le mot BREUILC soit potentiellement une personne physique.",
+        "short_message": "BREUILC [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac33"
+    },
+    "annotationsCount": 18,
+    "appealNumber": "23/01899",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab97e",
+    "documentNumber": 3527391303,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "30B",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181248017,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1439
+      }
+    ],
+    "wordsCount": 180,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac34"
+    },
+    "annotationsCount": 325,
+    "appealNumber": "23/02433",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab97f",
+    "documentNumber": 1269480618,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "81C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181789818,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 997
+      }
+    ],
+    "wordsCount": 3251,
+    "checklist": [
+      {
+        "check_type": "similar_writing",
+        "entities": [
+          {
+            "text": "Bernadette",
+            "start": 2432,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999853372573853,
+            "entityId": "personnePhysique_bernadette",
+            "end": 2442
+          },
+          {
+            "text": "BernadetteZ",
+            "start": 4008,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.999958872795105,
+            "entityId": "personnePhysique_bernadettez",
+            "end": 4019
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "'Bernadette' est similaire à 'BernadetteZ'. Est-ce une erreur de saisie ?",
+        "short_message": "'Bernadette' = 'BernadetteZ' ?"
+      },
+      {
+        "check_type": "juridoute",
+        "entities": [
+          {
+            "text": "JosetteD",
+            "start": 13551,
+            "category": "personnePhysique",
+            "source": "postprocess",
+            "score": 1,
+            "entityId": "personnePhysique_josetted",
+            "end": 13559
+          }
+        ],
+        "sentences": [
+          {
+            "start": 13487,
+            "end": 13838
+          }
+        ],
+        "metadata_text": [],
+        "message": "Il semblerait que le mot JosetteD soit potentiellement une personne physique.",
+        "short_message": "'JosetteD' [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac35"
+    },
+    "annotationsCount": 136,
+    "appealNumber": "21/14736",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab981",
+    "documentNumber": 827562981,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "30C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181763266,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 745
+      }
+    ],
+    "wordsCount": 4445,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac36"
+    },
+    "annotationsCount": 62,
+    "appealNumber": "23/01503",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab982",
+    "documentNumber": 4244008842,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "58E",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180961062,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1053
+      }
+    ],
+    "wordsCount": 2399,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac37"
+    },
+    "annotationsCount": 50,
+    "appealNumber": "23/51493",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab983",
+    "documentNumber": 1526940297,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33B",
+    "NACCode": "72C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181289678,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1017
+      }
+    ],
+    "wordsCount": 1466,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac38"
+    },
+    "annotationsCount": 93,
+    "appealNumber": "23/06161",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab985",
+    "documentNumber": 1119488316,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "5AZ",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181791815,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 974
+      }
+    ],
+    "wordsCount": 2754,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac39"
+    },
+    "annotationsCount": 48,
+    "appealNumber": "23/06806",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab987",
+    "documentNumber": 263822085,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "E06",
+    "NACCode": "54C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181232982,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1331
+      }
+    ],
+    "wordsCount": 1025,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac3a"
+    },
+    "annotationsCount": 46,
+    "appealNumber": "23/00467",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab989",
+    "documentNumber": 3516059808,
+    "jurisdiction": "marseille",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "C05",
+    "NACCode": "89A",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181018130,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1606
+      }
+    ],
+    "wordsCount": 1313,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac3b"
+    },
+    "annotationsCount": 18,
+    "appealNumber": "23/04009",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab98a",
+    "documentNumber": 3886035912,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44A",
+    "NACCode": "14Q",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181029162,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 991
+      }
+    ],
+    "wordsCount": 747,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac3c"
+    },
+    "annotationsCount": 100,
+    "appealNumber": "21/03793",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab98b",
+    "documentNumber": 4234639404,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "30C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180985943,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1176
+      }
+    ],
+    "wordsCount": 4932,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac3d"
+    },
+    "annotationsCount": 131,
+    "appealNumber": "21/03660",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab98c",
+    "documentNumber": 3994338465,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "71F",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181800656,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 974
+      }
+    ],
+    "wordsCount": 2458,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac3e"
+    },
+    "annotationsCount": 80,
+    "appealNumber": "23/57500",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab98d",
+    "documentNumber": 3300340164,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "558",
+    "NACCode": "30B",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181240600,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1143
+      }
+    ],
+    "wordsCount": 2293,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Clémence",
+            "start": 386,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999531507492065,
+            "entityId": "professionnelMagistratGreffier_clemence",
+            "end": 394
+          },
+          {
+            "text": "Clémence",
+            "start": 14913,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9956010580062866,
+            "entityId": "personnePhysique_clemence",
+            "end": 14921
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Clémence' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Clémence' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac3f"
+    },
+    "annotationsCount": 50,
+    "appealNumber": "22/12471",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab98e",
+    "documentNumber": 250559085,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "58E",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180963204,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1197
+      }
+    ],
+    "wordsCount": 1642,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Gilles",
+            "start": 495,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9995101690292358,
+            "entityId": "personnePhysique_gilles",
+            "end": 501
+          },
+          {
+            "text": "Gilles",
+            "start": 633,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.999941349029541,
+            "entityId": "professionnelMagistratGreffier_gilles",
+            "end": 639
+          },
+          {
+            "text": "Gilles",
+            "start": 1079,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999551773071289,
+            "entityId": "professionnelMagistratGreffier_gilles",
+            "end": 1085
+          },
+          {
+            "text": "Gilles",
+            "start": 10913,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999680519104004,
+            "entityId": "professionnelMagistratGreffier_gilles",
+            "end": 10919
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Gilles' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Gilles' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac40"
+    },
+    "annotationsCount": 72,
+    "appealNumber": "23/03375",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab98f",
+    "documentNumber": 1061735970,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "54C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180969439,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1118
+      }
+    ],
+    "wordsCount": 1383,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac41"
+    },
+    "annotationsCount": 69,
+    "appealNumber": "22/09892",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab990",
+    "documentNumber": 2917929510,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "50Z",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181242877,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1040
+      }
+    ],
+    "wordsCount": 2518,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac42"
+    },
+    "annotationsCount": 38,
+    "appealNumber": "23/00730",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab991",
+    "documentNumber": 1689359913,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "54Z",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180981505,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1236
+      }
+    ],
+    "wordsCount": 2588,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Victor",
+            "start": 1279,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.6803566217422485,
+            "entityId": "adresse_victor",
+            "end": 1285
+          },
+          {
+            "text": "Victor",
+            "start": 14963,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.7559326887130737,
+            "entityId": "personnePhysique_victor",
+            "end": 14969
+          },
+          {
+            "text": "Victor",
+            "start": 15148,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.5438022613525391,
+            "entityId": "personnePhysique_victor",
+            "end": 15154
+          },
+          {
+            "text": "Victor",
+            "start": 15898,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.545001208782196,
+            "entityId": "personnePhysique_victor",
+            "end": 15904
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Victor' est présente dans différentes catégories: ['Adresse', 'Personne physique']",
+        "short_message": "'Victor' [adresse] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac43"
+    },
+    "annotationsCount": 67,
+    "appealNumber": "23/10724",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab992",
+    "documentNumber": 1823479212,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "67A",
+    "NACCode": "14K",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180990359,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1529
+      }
+    ],
+    "wordsCount": 1100,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac44"
+    },
+    "annotationsCount": 90,
+    "appealNumber": "23/08185",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab994",
+    "documentNumber": 2521233828,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "C05",
+    "NACCode": "30C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181033344,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1091
+      }
+    ],
+    "wordsCount": 1458,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac45"
+    },
+    "annotationsCount": 113,
+    "appealNumber": "23/05425",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab995",
+    "documentNumber": 3087287130,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "5AZ",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181024996,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 874
+      }
+    ],
+    "wordsCount": 1968,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac46"
+    },
+    "annotationsCount": 25,
+    "appealNumber": "23/09805",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab997",
+    "documentNumber": 3561357252,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44A",
+    "NACCode": "3AA",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181277966,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1546
+      }
+    ],
+    "wordsCount": 1478,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0604c728cb0025f8ac47"
+    },
+    "annotationsCount": 70,
+    "appealNumber": "23/10682",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab999",
+    "documentNumber": 855047937,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "67A",
+    "NACCode": "14K",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181787626,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 736
+      }
+    ],
+    "wordsCount": 1144,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac48"
+    },
+    "annotationsCount": 93,
+    "appealNumber": "22/14256",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab99a",
+    "documentNumber": 2453437029,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33B",
+    "NACCode": "28A",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181007076,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 910
+      }
+    ],
+    "wordsCount": 1090,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac49"
+    },
+    "annotationsCount": 20,
+    "appealNumber": "23/11262",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab99b",
+    "documentNumber": 1398222726,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "30C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180979236,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1173
+      }
+    ],
+    "wordsCount": 1246,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac4a"
+    },
+    "annotationsCount": 33,
+    "appealNumber": "21/02548",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab99c",
+    "documentNumber": 2138812809,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "3CA",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181298695,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 951
+      }
+    ],
+    "wordsCount": 4802,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac4b"
+    },
+    "annotationsCount": 59,
+    "appealNumber": "23/00263",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab99d",
+    "documentNumber": 3135077793,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44A",
+    "NACCode": "88Q",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181254720,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 977
+      }
+    ],
+    "wordsCount": 1544,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac4c"
+    },
+    "annotationsCount": 149,
+    "appealNumber": "22/12535",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab99e",
+    "documentNumber": 458602956,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "50Z",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180974492,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1226
+      }
+    ],
+    "wordsCount": 2381,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Thibaut EXPERTON",
+            "start": 303,
+            "category": "professionnelAvocat",
+            "source": "NER model",
+            "score": 0.9999828338623047,
+            "entityId": "professionnelAvocat_thibaut experton",
+            "end": 319
+          },
+          {
+            "text": "Thibaut EXPERTON",
+            "start": 492,
+            "category": "professionnelAvocat",
+            "source": "NER model",
+            "score": 0.9999845623970032,
+            "entityId": "professionnelAvocat_thibaut experton",
+            "end": 508
+          },
+          {
+            "text": "Thibaut EXPERTON",
+            "start": 699,
+            "category": "personnePhysique",
+            "source": "postprocess",
+            "score": 0.9999866485595703,
+            "entityId": "personnePhysique_thibaut experton",
+            "end": 715
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Thibaut EXPERTON' est présente dans différentes catégories: ['Avocat', 'Personne physique']",
+        "short_message": "'Thibaut EXPERTON' [professionnelAvocat] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac4d"
+    },
+    "annotationsCount": 24,
+    "appealNumber": "23/57194",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab99f",
+    "documentNumber": 3365653389,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "558",
+    "NACCode": "30B",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180967370,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1030
+      }
+    ],
+    "wordsCount": 1804,
+    "checklist": [
+      {
+        "check_type": "juridoute",
+        "entities": [
+          {
+            "text": "BREUILC",
+            "start": 11576,
+            "category": "personnePhysique",
+            "source": "postprocess",
+            "score": 1,
+            "entityId": "personnePhysique_breuilc",
+            "end": 11583
+          }
+        ],
+        "sentences": [
+          {
+            "start": 11567,
+            "end": 11600
+          }
+        ],
+        "metadata_text": [],
+        "message": "Il semblerait que le mot BREUILC soit potentiellement une personne physique.",
+        "short_message": "'BREUILC' [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac4e"
+    },
+    "annotationsCount": 64,
+    "appealNumber": "23/03676",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9a4",
+    "documentNumber": 2260706190,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "58E",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180998046,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 2615
+      }
+    ],
+    "wordsCount": 1429,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac4f"
+    },
+    "annotationsCount": 93,
+    "appealNumber": "21/07328",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9a6",
+    "documentNumber": 3211054182,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "C24",
+    "NACCode": "71F",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181782465,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 906
+      }
+    ],
+    "wordsCount": 1508,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "LE PANORAMIC",
+            "start": 266,
+            "category": "personnePhysique",
+            "source": "postprocess",
+            "score": 0.7964028418064117,
+            "entityId": "personnePhysique_le panoramic",
+            "end": 278
+          },
+          {
+            "text": "LE PANORAMIC",
+            "start": 1235,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.6261919736862183,
+            "entityId": "adresse_le panoramic",
+            "end": 1247
+          },
+          {
+            "text": "Le Panoramic",
+            "start": 1645,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.9058867692947388,
+            "entityId": "adresse_le panoramic",
+            "end": 1657
+          },
+          {
+            "text": "Le Panoramic",
+            "start": 2061,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.9480427801609039,
+            "entityId": "adresse_le panoramic",
+            "end": 2073
+          },
+          {
+            "text": "Le Panoramic",
+            "start": 2558,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.8414478302001953,
+            "entityId": "adresse_le panoramic",
+            "end": 2570
+          },
+          {
+            "text": "Le Panoramic",
+            "start": 2754,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.6340700834989548,
+            "entityId": "adresse_le panoramic",
+            "end": 2766
+          },
+          {
+            "text": "Le Panoramic",
+            "start": 3034,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.9371624886989594,
+            "entityId": "adresse_le panoramic",
+            "end": 3046
+          },
+          {
+            "text": "Le Panoramic",
+            "start": 4648,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.8954710066318512,
+            "entityId": "adresse_le panoramic",
+            "end": 4660
+          },
+          {
+            "text": "Le Panoramic",
+            "start": 9109,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.9473108351230621,
+            "entityId": "adresse_le panoramic",
+            "end": 9121
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'LE PANORAMIC' est présente dans différentes catégories: ['Adresse', 'Personne physique']",
+        "short_message": "'LE PANORAMIC' [adresse] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac50"
+    },
+    "annotationsCount": 83,
+    "appealNumber": "22/06398",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9a7",
+    "documentNumber": 713468943,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "88G",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181324843,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1224
+      }
+    ],
+    "wordsCount": 1414,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac51"
+    },
+    "annotationsCount": 167,
+    "appealNumber": "21/08778",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9a8",
+    "documentNumber": 3196477992,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44B",
+    "NACCode": "60B",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181772919,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1108
+      }
+    ],
+    "wordsCount": 5035,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac52"
+    },
+    "annotationsCount": 25,
+    "appealNumber": "23/04038",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9a9",
+    "documentNumber": 3098569287,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "14Q",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181796758,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1047
+      }
+    ],
+    "wordsCount": 1044,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac53"
+    },
+    "annotationsCount": 87,
+    "appealNumber": "21/13372",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9aa",
+    "documentNumber": 1942798923,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "38E",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181020518,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1171
+      }
+    ],
+    "wordsCount": 4123,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac54"
+    },
+    "annotationsCount": 47,
+    "appealNumber": "23/33666",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9ab",
+    "documentNumber": 1220217837,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "66U",
+    "NACCode": "20L",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181304303,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1782
+      }
+    ],
+    "wordsCount": 1857,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Marion",
+            "start": 775,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9984815716743469,
+            "entityId": "personnePhysique_marion",
+            "end": 781
+          },
+          {
+            "text": "Marion",
+            "start": 12123,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9998586177825928,
+            "entityId": "professionnelMagistratGreffier_marion",
+            "end": 12129
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Marion' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      },
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "COCHENNEC",
+            "start": 782,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9974032044410706,
+            "entityId": "personnePhysique_cochennec",
+            "end": 791
+          },
+          {
+            "text": "COCHENNEC",
+            "start": 12130,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999052286148071,
+            "entityId": "professionnelMagistratGreffier_cochennec",
+            "end": 12139
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
+      },
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Rodriguez",
+            "start": 4841,
+            "category": "localite",
+            "source": "NER model",
+            "score": 0.9900743365287781,
+            "entityId": "localite_rodriguez",
+            "end": 4850
+          },
+          {
+            "text": "Rodriguez",
+            "start": 11196,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.6407729983329773,
+            "entityId": "personnePhysique_rodriguez",
+            "end": 11205
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Rodriguez' est présente dans différentes catégories: ['Localité', 'Personne physique']"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac55"
+    },
+    "annotationsCount": 117,
+    "appealNumber": "23/58182",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9ad",
+    "documentNumber": 2124040680,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "55E",
+    "NACCode": "60A",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181312258,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1092
+      }
+    ],
+    "wordsCount": 4016,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac56"
+    },
+    "annotationsCount": 61,
+    "appealNumber": "23/32463",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9ae",
+    "documentNumber": 227570187,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "66U",
+    "NACCode": "20J",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181005127,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 2684
+      }
+    ],
+    "wordsCount": 1040,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Marion",
+            "start": 803,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9998563528060913,
+            "entityId": "personnePhysique_marion",
+            "end": 809
+          },
+          {
+            "text": "Marion",
+            "start": 6949,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9998451471328735,
+            "entityId": "professionnelMagistratGreffier_marion",
+            "end": 6955
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Marion' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      },
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "COCHENNEC",
+            "start": 810,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9998094439506531,
+            "entityId": "personnePhysique_cochennec",
+            "end": 819
+          },
+          {
+            "text": "COCHENNEC",
+            "start": 6956,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999033212661743,
+            "entityId": "professionnelMagistratGreffier_cochennec",
+            "end": 6965
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac57"
+    },
+    "annotationsCount": 76,
+    "appealNumber": "22/38812",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9b0",
+    "documentNumber": 1136108106,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "66U",
+    "NACCode": "20L",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181027095,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 964
+      }
+    ],
+    "wordsCount": 1693,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Marion",
+            "start": 746,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9995935559272766,
+            "entityId": "personnePhysique_marion",
+            "end": 752
+          },
+          {
+            "text": "Marion",
+            "start": 11192,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9998544454574585,
+            "entityId": "professionnelMagistratGreffier_marion",
+            "end": 11198
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Marion' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      },
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "COCHENNEC",
+            "start": 753,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.998738706111908,
+            "entityId": "personnePhysique_cochennec",
+            "end": 762
+          },
+          {
+            "text": "COCHENNEC",
+            "start": 11199,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999014139175415,
+            "entityId": "professionnelMagistratGreffier_cochennec",
+            "end": 11208
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac58"
+    },
+    "annotationsCount": 87,
+    "appealNumber": "23/57780",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9b1",
+    "documentNumber": 2881203939,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "55E",
+    "NACCode": "60A",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181266014,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1183
+      }
+    ],
+    "wordsCount": 3921,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0605c728cb0025f8ac59"
+    },
+    "annotationsCount": 12,
+    "appealNumber": "21/08835",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9b2",
+    "documentNumber": 1611868137,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "C33",
+    "NACCode": "38E",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180999823,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 885
+      }
+    ],
+    "wordsCount": 252,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac5a"
+    },
+    "annotationsCount": 41,
+    "appealNumber": "22/38681",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9b6",
+    "documentNumber": 2648420142,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "66T",
+    "NACCode": "20J",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181258714,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 982
+      }
+    ],
+    "wordsCount": 1123,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Marion",
+            "start": 638,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9998555183410645,
+            "entityId": "personnePhysique_marion",
+            "end": 644
+          },
+          {
+            "text": "Marion",
+            "start": 7478,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9998553991317749,
+            "entityId": "professionnelMagistratGreffier_marion",
+            "end": 7484
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Marion' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      },
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "COCHENNEC",
+            "start": 645,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9997416138648987,
+            "entityId": "personnePhysique_cochennec",
+            "end": 654
+          },
+          {
+            "text": "COCHENNEC",
+            "start": 7485,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999009370803833,
+            "entityId": "professionnelMagistratGreffier_cochennec",
+            "end": 7494
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac5b"
+    },
+    "annotationsCount": 65,
+    "appealNumber": "22/32541",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9b7",
+    "documentNumber": 3695294859,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "66G",
+    "NACCode": "20J",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181327597,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1579
+      }
+    ],
+    "wordsCount": 1018,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Marion",
+            "start": 674,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9998192191123962,
+            "entityId": "personnePhysique_marion",
+            "end": 680
+          },
+          {
+            "text": "Marion",
+            "start": 6713,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9998606443405151,
+            "entityId": "professionnelMagistratGreffier_marion",
+            "end": 6719
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Marion' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Marion' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      },
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "COCHENNEC",
+            "start": 681,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9997156262397766,
+            "entityId": "personnePhysique_cochennec",
+            "end": 690
+          },
+          {
+            "text": "COCHENNEC",
+            "start": 6720,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9998964071273804,
+            "entityId": "professionnelMagistratGreffier_cochennec",
+            "end": 6729
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'COCHENNEC' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac5c"
+    },
+    "annotationsCount": 14,
+    "appealNumber": "23/04034",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9b8",
+    "documentNumber": 4037940939,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44A",
+    "NACCode": "14Q",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181238352,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 2315
+      }
+    ],
+    "wordsCount": 840,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac5d"
+    },
+    "annotationsCount": 26,
+    "appealNumber": "23/36690",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9ba",
+    "documentNumber": 2576711073,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "66T",
+    "NACCode": "20I",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181774977,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1003
+      }
+    ],
+    "wordsCount": 572,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac5e"
+    },
+    "annotationsCount": 17,
+    "appealNumber": "23/04036",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9bb",
+    "documentNumber": 928095369,
+    "jurisdiction": "paris",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "14Q",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181770862,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 854
+      }
+    ],
+    "wordsCount": 1082,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Rey",
+            "start": 2438,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.9765487909317017,
+            "entityId": "adresse_rey",
+            "end": 2441
+          },
+          {
+            "text": "Rey",
+            "start": 4347,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9982545971870422,
+            "entityId": "personnePhysique_rey",
+            "end": 4350
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Rey' est présente dans différentes catégories: ['Adresse', 'Personne physique']",
+        "short_message": "'Rey' [adresse] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac5f"
+    },
+    "annotationsCount": 154,
+    "appealNumber": "23/09254",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9bf",
+    "documentNumber": 344241894,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "53J",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732180971593,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1132
+      }
+    ],
+    "wordsCount": 2212,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac60"
+    },
+    "annotationsCount": 57,
+    "appealNumber": "23/00066",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9c1",
+    "documentNumber": 119618505,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22B",
+    "NACCode": "70Z",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181287545,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1039
+      }
+    ],
+    "wordsCount": 1113,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac61"
+    },
+    "annotationsCount": 118,
+    "appealNumber": "23/09890",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9c3",
+    "documentNumber": 1069298724,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "53J",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181301168,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1254
+      }
+    ],
+    "wordsCount": 2013,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Royer",
+            "start": 491,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.8774396181106567,
+            "entityId": "personnePhysique_royer",
+            "end": 496
+          },
+          {
+            "text": "Royer",
+            "start": 592,
+            "category": "adresse",
+            "source": "NER model",
+            "score": 0.9807702302932739,
+            "entityId": "adresse_royer",
+            "end": 597
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Royer' est présente dans différentes catégories: ['Adresse', 'Personne physique']",
+        "short_message": "'Royer' [adresse] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac62"
+    },
+    "annotationsCount": 65,
+    "appealNumber": "23/07946",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9c6",
+    "documentNumber": 1669088256,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "30B",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181767046,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 759
+      }
+    ],
+    "wordsCount": 1581,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac63"
+    },
+    "annotationsCount": 43,
+    "appealNumber": "23/01585",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9c8",
+    "documentNumber": 1102573989,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22K",
+    "NACCode": "63B",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181761073,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 2965
+      }
+    ],
+    "wordsCount": 960,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac64"
+    },
+    "annotationsCount": 123,
+    "appealNumber": "23/09290",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9c9",
+    "documentNumber": 231274350,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "53J",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181307177,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1351
+      }
+    ],
+    "wordsCount": 1906,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac65"
+    },
+    "annotationsCount": 208,
+    "appealNumber": "22/09274",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9ca",
+    "documentNumber": 2763875781,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "63A",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181015537,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1138
+      }
+    ],
+    "wordsCount": 5106,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac66"
+    },
+    "annotationsCount": 44,
+    "appealNumber": "22/05957",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9cb",
+    "documentNumber": 238257795,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "59A",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181776843,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 888
+      }
+    ],
+    "wordsCount": 4142,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Sidonie",
+            "start": 680,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9891108870506287,
+            "entityId": "professionnelMagistratGreffier_sidonie",
+            "end": 687
+          },
+          {
+            "text": "Sidonie",
+            "start": 6414,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.716452956199646,
+            "entityId": "personnePhysique_sidonie",
+            "end": 6421
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Sidonie' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Sidonie' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac67"
+    },
+    "annotationsCount": 67,
+    "appealNumber": "22/12674",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9cc",
+    "documentNumber": 3775936299,
+    "jurisdiction": "bobigny",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "E06",
+    "NACCode": "50D",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181280465,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1004
+      }
+    ],
+    "wordsCount": 1652,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac68"
+    },
+    "annotationsCount": 286,
+    "appealNumber": "20/06588",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9ce",
+    "documentNumber": 2165177835,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "29C",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181293617,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 957
+      }
+    ],
+    "wordsCount": 6000,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Caroline",
+            "start": 262,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9998779296875,
+            "entityId": "personnePhysique_caroline",
+            "end": 270
+          },
+          {
+            "text": "Caroline",
+            "start": 517,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999305009841919,
+            "entityId": "professionnelMagistratGreffier_caroline",
+            "end": 525
+          },
+          {
+            "text": "Caroline",
+            "start": 796,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9998718500137329,
+            "entityId": "professionnelMagistratGreffier_caroline",
+            "end": 804
+          },
+          {
+            "text": "Caroline",
+            "start": 1858,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999792575836182,
+            "entityId": "personnePhysique_caroline",
+            "end": 1866
+          },
+          {
+            "text": "Caroline",
+            "start": 2192,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999785423278809,
+            "entityId": "personnePhysique_caroline",
+            "end": 2200
+          },
+          {
+            "text": "Caroline",
+            "start": 2346,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999886751174927,
+            "entityId": "personnePhysique_caroline",
+            "end": 2354
+          },
+          {
+            "text": "Caroline",
+            "start": 2539,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999853372573853,
+            "entityId": "personnePhysique_caroline",
+            "end": 2547
+          },
+          {
+            "text": "Caroline",
+            "start": 2746,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.999990701675415,
+            "entityId": "personnePhysique_caroline",
+            "end": 2754
+          },
+          {
+            "text": "Caroline",
+            "start": 2886,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999901056289673,
+            "entityId": "personnePhysique_caroline",
+            "end": 2894
+          },
+          {
+            "text": "Caroline",
+            "start": 2951,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999886751174927,
+            "entityId": "personnePhysique_caroline",
+            "end": 2959
+          },
+          {
+            "text": "Caroline",
+            "start": 3067,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999898672103882,
+            "entityId": "personnePhysique_caroline",
+            "end": 3075
+          },
+          {
+            "text": "Caroline",
+            "start": 3192,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999909400939941,
+            "entityId": "personnePhysique_caroline",
+            "end": 3200
+          },
+          {
+            "text": "Caroline",
+            "start": 4514,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999918937683105,
+            "entityId": "personnePhysique_caroline",
+            "end": 4522
+          },
+          {
+            "text": "Caroline",
+            "start": 4640,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999920129776001,
+            "entityId": "personnePhysique_caroline",
+            "end": 4648
+          },
+          {
+            "text": "Caroline",
+            "start": 4967,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999909400939941,
+            "entityId": "personnePhysique_caroline",
+            "end": 4975
+          },
+          {
+            "text": "Caroline",
+            "start": 5487,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999887943267822,
+            "entityId": "personnePhysique_caroline",
+            "end": 5495
+          },
+          {
+            "text": "Caroline",
+            "start": 5543,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999916553497314,
+            "entityId": "personnePhysique_caroline",
+            "end": 5551
+          },
+          {
+            "text": "Caroline",
+            "start": 5580,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999905824661255,
+            "entityId": "personnePhysique_caroline",
+            "end": 5588
+          },
+          {
+            "text": "Caroline",
+            "start": 5698,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999908208847046,
+            "entityId": "personnePhysique_caroline",
+            "end": 5706
+          },
+          {
+            "text": "Caroline",
+            "start": 6017,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999918937683105,
+            "entityId": "personnePhysique_caroline",
+            "end": 6025
+          },
+          {
+            "text": "Caroline",
+            "start": 6221,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.999993085861206,
+            "entityId": "personnePhysique_caroline",
+            "end": 6229
+          },
+          {
+            "text": "Caroline",
+            "start": 6281,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999934434890747,
+            "entityId": "personnePhysique_caroline",
+            "end": 6289
+          },
+          {
+            "text": "Caroline",
+            "start": 6588,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999926090240479,
+            "entityId": "personnePhysique_caroline",
+            "end": 6596
+          },
+          {
+            "text": "Caroline",
+            "start": 6729,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999923706054688,
+            "entityId": "personnePhysique_caroline",
+            "end": 6737
+          },
+          {
+            "text": "Caroline",
+            "start": 7000,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999920129776001,
+            "entityId": "personnePhysique_caroline",
+            "end": 7008
+          },
+          {
+            "text": "Caroline",
+            "start": 7642,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999910593032837,
+            "entityId": "personnePhysique_caroline",
+            "end": 7650
+          },
+          {
+            "text": "Caroline",
+            "start": 7720,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999916553497314,
+            "entityId": "personnePhysique_caroline",
+            "end": 7728
+          },
+          {
+            "text": "Caroline",
+            "start": 8094,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999912977218628,
+            "entityId": "personnePhysique_caroline",
+            "end": 8102
+          },
+          {
+            "text": "Caroline",
+            "start": 8247,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999923706054688,
+            "entityId": "personnePhysique_caroline",
+            "end": 8255
+          },
+          {
+            "text": "Caroline",
+            "start": 8299,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999929666519165,
+            "entityId": "personnePhysique_caroline",
+            "end": 8307
+          },
+          {
+            "text": "Caroline",
+            "start": 8433,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999932050704956,
+            "entityId": "personnePhysique_caroline",
+            "end": 8441
+          },
+          {
+            "text": "Caroline",
+            "start": 8663,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999922513961792,
+            "entityId": "personnePhysique_caroline",
+            "end": 8671
+          },
+          {
+            "text": "Caroline",
+            "start": 9115,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999923706054688,
+            "entityId": "personnePhysique_caroline",
+            "end": 9123
+          },
+          {
+            "text": "Caroline",
+            "start": 9999,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999918937683105,
+            "entityId": "personnePhysique_caroline",
+            "end": 10007
+          },
+          {
+            "text": "Caroline",
+            "start": 10258,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999914169311523,
+            "entityId": "personnePhysique_caroline",
+            "end": 10266
+          },
+          {
+            "text": "Caroline",
+            "start": 12972,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999901056289673,
+            "entityId": "personnePhysique_caroline",
+            "end": 12980
+          },
+          {
+            "text": "Caroline",
+            "start": 13176,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.99998939037323,
+            "entityId": "personnePhysique_caroline",
+            "end": 13184
+          },
+          {
+            "text": "Caroline",
+            "start": 14722,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999903440475464,
+            "entityId": "personnePhysique_caroline",
+            "end": 14730
+          },
+          {
+            "text": "Caroline",
+            "start": 14823,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999920129776001,
+            "entityId": "personnePhysique_caroline",
+            "end": 14831
+          },
+          {
+            "text": "Caroline",
+            "start": 15176,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999905824661255,
+            "entityId": "personnePhysique_caroline",
+            "end": 15184
+          },
+          {
+            "text": "Caroline",
+            "start": 16734,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999897480010986,
+            "entityId": "personnePhysique_caroline",
+            "end": 16742
+          },
+          {
+            "text": "Caroline",
+            "start": 17152,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999910593032837,
+            "entityId": "personnePhysique_caroline",
+            "end": 17160
+          },
+          {
+            "text": "Caroline",
+            "start": 17574,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999914169311523,
+            "entityId": "personnePhysique_caroline",
+            "end": 17582
+          },
+          {
+            "text": "Caroline",
+            "start": 18134,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999927282333374,
+            "entityId": "personnePhysique_caroline",
+            "end": 18142
+          },
+          {
+            "text": "Caroline",
+            "start": 18541,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999935626983643,
+            "entityId": "personnePhysique_caroline",
+            "end": 18549
+          },
+          {
+            "text": "Caroline",
+            "start": 20797,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999938011169434,
+            "entityId": "personnePhysique_caroline",
+            "end": 20805
+          },
+          {
+            "text": "Caroline",
+            "start": 21166,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999922513961792,
+            "entityId": "personnePhysique_caroline",
+            "end": 21174
+          },
+          {
+            "text": "Caroline",
+            "start": 22648,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999878406524658,
+            "entityId": "personnePhysique_caroline",
+            "end": 22656
+          },
+          {
+            "text": "Caroline",
+            "start": 22787,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999910593032837,
+            "entityId": "personnePhysique_caroline",
+            "end": 22795
+          },
+          {
+            "text": "Caroline",
+            "start": 23051,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999922513961792,
+            "entityId": "personnePhysique_caroline",
+            "end": 23059
+          },
+          {
+            "text": "Caroline",
+            "start": 23130,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999927282333374,
+            "entityId": "personnePhysique_caroline",
+            "end": 23138
+          },
+          {
+            "text": "Caroline",
+            "start": 23214,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999940395355225,
+            "entityId": "personnePhysique_caroline",
+            "end": 23222
+          },
+          {
+            "text": "Caroline",
+            "start": 23581,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999909400939941,
+            "entityId": "personnePhysique_caroline",
+            "end": 23589
+          },
+          {
+            "text": "Caroline",
+            "start": 23765,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999899864196777,
+            "entityId": "personnePhysique_caroline",
+            "end": 23773
+          },
+          {
+            "text": "Caroline",
+            "start": 24498,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999872446060181,
+            "entityId": "personnePhysique_caroline",
+            "end": 24506
+          },
+          {
+            "text": "Caroline",
+            "start": 25529,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999879598617554,
+            "entityId": "personnePhysique_caroline",
+            "end": 25537
+          },
+          {
+            "text": "Caroline",
+            "start": 26609,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999915361404419,
+            "entityId": "personnePhysique_caroline",
+            "end": 26617
+          },
+          {
+            "text": "Caroline",
+            "start": 26829,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999911785125732,
+            "entityId": "personnePhysique_caroline",
+            "end": 26837
+          },
+          {
+            "text": "Caroline",
+            "start": 27691,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999902248382568,
+            "entityId": "personnePhysique_caroline",
+            "end": 27699
+          },
+          {
+            "text": "Caroline",
+            "start": 28185,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999898672103882,
+            "entityId": "personnePhysique_caroline",
+            "end": 28193
+          },
+          {
+            "text": "Caroline",
+            "start": 28449,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999899864196777,
+            "entityId": "personnePhysique_caroline",
+            "end": 28457
+          },
+          {
+            "text": "Caroline",
+            "start": 28851,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999909400939941,
+            "entityId": "personnePhysique_caroline",
+            "end": 28859
+          },
+          {
+            "text": "Caroline",
+            "start": 29134,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999884366989136,
+            "entityId": "personnePhysique_caroline",
+            "end": 29142
+          },
+          {
+            "text": "Caroline",
+            "start": 29793,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999912977218628,
+            "entityId": "personnePhysique_caroline",
+            "end": 29801
+          },
+          {
+            "text": "Caroline",
+            "start": 30047,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.99998939037323,
+            "entityId": "personnePhysique_caroline",
+            "end": 30055
+          },
+          {
+            "text": "Caroline",
+            "start": 30263,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999905824661255,
+            "entityId": "personnePhysique_caroline",
+            "end": 30271
+          },
+          {
+            "text": "Caroline",
+            "start": 31316,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999876022338867,
+            "entityId": "personnePhysique_caroline",
+            "end": 31324
+          },
+          {
+            "text": "Caroline",
+            "start": 32721,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999853372573853,
+            "entityId": "personnePhysique_caroline",
+            "end": 32729
+          },
+          {
+            "text": "Caroline",
+            "start": 33979,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999901056289673,
+            "entityId": "personnePhysique_caroline",
+            "end": 33987
+          },
+          {
+            "text": "Caroline",
+            "start": 34273,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.99998939037323,
+            "entityId": "personnePhysique_caroline",
+            "end": 34281
+          },
+          {
+            "text": "Caroline",
+            "start": 35559,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999926090240479,
+            "entityId": "personnePhysique_caroline",
+            "end": 35567
+          },
+          {
+            "text": "Caroline",
+            "start": 35697,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999918937683105,
+            "entityId": "personnePhysique_caroline",
+            "end": 35705
+          },
+          {
+            "text": "Caroline",
+            "start": 35792,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999910593032837,
+            "entityId": "personnePhysique_caroline",
+            "end": 35800
+          },
+          {
+            "text": "Caroline",
+            "start": 35874,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999911785125732,
+            "entityId": "personnePhysique_caroline",
+            "end": 35882
+          },
+          {
+            "text": "Caroline",
+            "start": 36049,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999923706054688,
+            "entityId": "personnePhysique_caroline",
+            "end": 36057
+          },
+          {
+            "text": "Caroline",
+            "start": 36621,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999910593032837,
+            "entityId": "personnePhysique_caroline",
+            "end": 36629
+          },
+          {
+            "text": "Caroline",
+            "start": 36865,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999886751174927,
+            "entityId": "personnePhysique_caroline",
+            "end": 36873
+          },
+          {
+            "text": "Caroline",
+            "start": 38121,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999876022338867,
+            "entityId": "personnePhysique_caroline",
+            "end": 38129
+          },
+          {
+            "text": "Caroline",
+            "start": 38187,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999607801437378,
+            "entityId": "professionnelMagistratGreffier_caroline",
+            "end": 38195
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Caroline' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Caroline' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac69"
+    },
+    "annotationsCount": 56,
+    "appealNumber": "23/10014",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9cf",
+    "documentNumber": 1718336463,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "22C",
+    "NACCode": "54G",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181261131,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1454
+      }
+    ],
+    "wordsCount": 743,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac6a"
+    },
+    "annotationsCount": 272,
+    "appealNumber": "21/02164",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9d0",
+    "documentNumber": 3811919304,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "70A",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181778695,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 930
+      }
+    ],
+    "wordsCount": 6538,
+    "checklist": [
+      {
+        "check_type": "different_categories",
+        "entities": [
+          {
+            "text": "Caroline",
+            "start": 564,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999442100524902,
+            "entityId": "professionnelMagistratGreffier_caroline",
+            "end": 572
+          },
+          {
+            "text": "Caroline",
+            "start": 35141,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999929666519165,
+            "entityId": "personnePhysique_caroline",
+            "end": 35149
+          },
+          {
+            "text": "Caroline",
+            "start": 40369,
+            "category": "professionnelMagistratGreffier",
+            "source": "NER model",
+            "score": 0.9999587535858154,
+            "entityId": "professionnelMagistratGreffier_caroline",
+            "end": 40377
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "L'annotation 'Caroline' est présente dans différentes catégories: ['Magistrat/Greffier', 'Personne physique']",
+        "short_message": "'Caroline' [professionnelMagistratGreffier] ou [personnePhysique] ?"
+      },
+      {
+        "check_type": "similar_writing",
+        "entities": [
+          {
+            "text": "Thibaut",
+            "start": 203,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999457597732544,
+            "entityId": "personnePhysique_thibaut",
+            "end": 210
+          },
+          {
+            "text": "Thibault",
+            "start": 20035,
+            "category": "personnePhysique",
+            "source": "NER model",
+            "score": 0.9999600648880005,
+            "entityId": "personnePhysique_thibault",
+            "end": 20043
+          }
+        ],
+        "sentences": [],
+        "metadata_text": [],
+        "message": "'Thibaut' est similaire à 'Thibault'. Est-ce une erreur de saisie ?"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac6b"
+    },
+    "annotationsCount": 18,
+    "appealNumber": "21/00343",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9d1",
+    "documentNumber": 3022944429,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "33D",
+    "NACCode": "64B",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181230144,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 192389
+      }
+    ],
+    "wordsCount": 3032,
+    "checklist": []
+  },
+  {
+    "_id": {
+      "$oid": "673f0606c728cb0025f8ac6c"
+    },
+    "annotationsCount": 513,
+    "appealNumber": "19/10583",
+    "chamberName": null,
+    "decisionDate": 1731679726864,
+    "documentExternalId": "673df6cd48894027060ab9d2",
+    "documentNumber": 1129901133,
+    "jurisdiction": "bordeaux",
+    "linkedEntitiesCount": 0,
+    "session": null,
+    "endCaseCode": "44C",
+    "NACCode": "29E",
+    "publicationCategory": [],
+    "route": "exhaustive",
+    "importer": "recent",
+    "source": "juritj",
+    "surAnnotationsCount": 0,
+    "subAnnotationsSensitiveCount": 0,
+    "subAnnotationsNonSensitiveCount": 0,
+    "treatmentDate": 1732181031392,
+    "treatmentsSummary": [
+      {
+        "userId": {
+          "$oid": "673dfc2648894027060ab9fc"
+        },
+        "treatmentDuration": 1100
+      }
+    ],
+    "wordsCount": 7729,
+    "checklist": []
+  }
+]

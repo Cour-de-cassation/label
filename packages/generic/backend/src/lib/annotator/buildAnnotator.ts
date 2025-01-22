@@ -1,6 +1,5 @@
 import {
   annotationType,
-  annotationReportType,
   documentType,
   documentModule,
   idType,
@@ -8,8 +7,8 @@ import {
   settingsType,
   treatmentModule,
   annotationModule,
+  settingsModule,
 } from '@label/core';
-import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { documentService } from '../../modules/document';
 import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
@@ -171,14 +170,10 @@ function buildAnnotator(
     });
 
     for (const documentId of documentIds) {
-      const annotationReportRepository = buildAnnotationReportRepository();
-      await annotationReportRepository.deleteByDocumentId(documentId);
       await treatmentService.deleteTreatmentsByDocumentId(documentId);
+      await documentService.updateDocumentChecklist(documentId, []);
       await documentService.updateDocumentStatus(documentId, 'loaded');
     }
-
-    // Uncomment this line to run the annotation script
-    // await annotateDocumentsWithoutAnnotations();
   }
 
   async function annotateDocument(document: documentType) {
@@ -196,7 +191,7 @@ function buildAnnotator(
     const {
       annotations,
       documentId,
-      report,
+      checklist,
       newCategoriesToAnnotate,
       newCategoriesToUnAnnotate,
       computedAdditionalTerms,
@@ -256,7 +251,6 @@ function buildAnnotator(
           documentId,
           document.zoning.zones.motivations,
           document.text,
-          document.documentNumber,
           annotations,
         );
       } else {
@@ -275,19 +269,19 @@ function buildAnnotator(
       }
     }
 
-    //Todo : create report only if report is not null
-    await createReport(report);
-    logger.log({
-      operationName: 'annotateDocument',
-      msg: 'Annotation report created in DB',
-      data: {
-        decision: {
-          sourceId: document.documentNumber,
-          sourceName: document.source,
+    if (checklist.length > 0) {
+      documentService.updateDocumentChecklist(document._id, checklist);
+      logger.log({
+        operationName: 'annotateDocument',
+        msg: 'Checklist added to document',
+        data: {
+          decision: {
+            sourceId: document.documentNumber,
+            sourceName: document.source,
+          },
         },
-      },
-    });
-
+      });
+    }
     if (
       additionalTermsParsingFailed !== null &&
       additionalTermsParsingFailed !== undefined
@@ -427,11 +421,10 @@ function buildAnnotator(
     documentId: documentType['_id'],
     motivations: { start: number; end: number }[],
     documentText: string,
-    documentNumber: number,
     previousAnnotations: annotationType[],
   ) {
     const motivationAnnotations: annotationType[] = [];
-    motivations.forEach((motivation, index) => {
+    motivations.forEach((motivation) => {
       const motivationText = documentText.substring(
         motivation.start,
         motivation.end,
@@ -453,9 +446,8 @@ function buildAnnotator(
         annotationModule.lib.buildAnnotation({
           start: motivation.start + removedCharactersAtStart,
           text: trimmedMotivation,
-          category: 'motivations',
+          category: settingsModule.lib.motivationCategoryHandler.getCategoryName(),
           certaintyScore: 1,
-          entityId: `motivations${index}_${documentNumber}`,
         }),
       );
     });
@@ -473,11 +465,6 @@ function buildAnnotator(
       },
       settings,
     );
-  }
-
-  async function createReport(report: annotationReportType) {
-    const annotationReportRepository = buildAnnotationReportRepository();
-    await annotationReportRepository.insert(report);
   }
 
   function formatDocumentInfos(document: documentType) {

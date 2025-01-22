@@ -1,8 +1,8 @@
-import { idModule } from 'sder';
 import { logger } from '../../utils';
 import { assignationService } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
 import { userService } from '../../modules/user';
+import { idModule } from '@label/core';
 
 export { displayMultipleAssignatedDocuments };
 

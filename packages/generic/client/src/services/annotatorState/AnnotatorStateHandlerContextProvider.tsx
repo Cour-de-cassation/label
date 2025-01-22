@@ -1,5 +1,5 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
-import { annotationReportType, documentModule, replacementTermType } from '@label/core';
+import { documentModule, replacementTermType } from '@label/core';
 import { annotationsCommitterType } from './buildAnnotationsCommitter';
 import { annotatorStateType } from './annotatorStateType';
 import { annotatorStateHandlerType, buildAnnotatorStateHandler } from './buildAnnotatorStateHandler';
@@ -15,7 +15,6 @@ const AnnotatorStateHandlerContext = createContext<annotatorStateHandlerType>({
     settings: {},
     document: documentModule.generator.generate(),
     mandatoryReplacementTerms: [] as replacementTermType[],
-    checklist: [] as annotationReportType['checklist'],
   }),
   getChecksum: () => '',
   reinitialize: () => null,

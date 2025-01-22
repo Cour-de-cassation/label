@@ -106,6 +106,10 @@ const fr = {
       updateTreatmentFailed: 'La mise à jour des annotations pour ce traitement a échoué. Veuillez recharger la page.',
       updateProblemReportHasBeenReadFailed:
         'La mise à jour du statut de lecture du signalement a échoué. Veuillez recharger la page.',
+      paragraphOverlapsAnnotations: "Il n'est pas possible d'annoter un paragraphe qui contient déjà des annotations.",
+      emptyParagraphSelection: 'Il faut sélectioner un paragraphe non vide.',
+      deleteMotivationOccultationAlert:
+        'Les motifs ont été désocultés, le paragraphe concerné doit être ré-annoté manuellement',
     },
     filters: {
       button: 'Filtrer',
@@ -198,7 +202,7 @@ const fr = {
     annotationGuide: "Guide d'annotation",
     category: 'Catégorie',
     changeCategory: 'Changer de catégorie',
-    checklist: 'Mises en doute : ',
+    checklist: 'Annotations à vérifier :',
     close: 'Fermer',
     describeTheProblem: 'Décrivez le problème. Soyez exhaustif.',
     delete: 'Supprimer',

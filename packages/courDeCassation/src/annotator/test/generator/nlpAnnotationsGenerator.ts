@@ -1,5 +1,5 @@
 import { random } from 'lodash';
-import { generatorType } from '@label/core';
+import { documentModule, generatorType } from '@label/core';
 import { nlpResponseType } from '../../fetcher/api';
 
 export { nlpAnnotationsGenerator };
@@ -7,7 +7,9 @@ export { nlpAnnotationsGenerator };
 const nlpAnnotationsGenerator: generatorType<nlpResponseType> = {
   generate: ({ entities, checklist, versions } = {}) => ({
     entities: entities ? entities : generateRandomNlpAnnotations(),
-    checklist: checklist ? checklist : [],
+    checklist: checklist
+      ? checklist
+      : documentModule.checklistGenerator.generate(2),
     versions: versions ? versions : generateRandomNlpVersion(),
   }),
 };
@@ -24,7 +26,7 @@ function generateRandomNlpAnnotation() {
     start: start,
     end: start + random(8),
     score: Math.random(),
-    label: `LABEL`,
+    category: `LABEL`,
     source: `NLP`,
     entityId: `LABEL_${text.toLowerCase()}`,
   };

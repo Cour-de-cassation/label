@@ -1,5 +1,5 @@
-import { labelTreatmentsType } from 'sder';
 import { documentType, settingsType } from '@label/core';
+import { LabelTreatment } from 'dbsder-api-types';
 
 export type { nlpApiType, nlpResponseType, nlpLossType, nlpVersion };
 
@@ -10,7 +10,7 @@ type nlpApiType = {
   ) => Promise<nlpResponseType>;
   fetchNlpLoss: (
     document: documentType,
-    treatments: labelTreatmentsType,
+    treatments: LabelTreatment[],
   ) => Promise<nlpLossType>;
 };
 
@@ -29,7 +29,7 @@ type nlpVersion = {
 
 type nlpResponseType = {
   entities: nlpAnnotationType[];
-  checklist: string[];
+  checklist?: documentType['checklist'];
   newCategoriesToAnnotate?: string[];
   newCategoriesToUnAnnotate?: string[];
   additionalTermsToAnnotate?: string[];
@@ -42,7 +42,7 @@ type nlpAnnotationType = {
   text: string;
   start: number;
   end: number;
-  label: string;
+  category: string;
   source: string;
   score: number;
   entityId: string;

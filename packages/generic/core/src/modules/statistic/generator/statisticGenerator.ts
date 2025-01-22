@@ -1,3 +1,4 @@
+import { checklistGenerator } from '../../document/generator';
 import { generatorType } from '../../../types';
 import { idModule } from '../../id';
 import { statisticType } from '../statisticType';
@@ -28,6 +29,7 @@ const statisticGenerator: generatorType<statisticType> = {
     wordsCount,
     endCaseCode,
     NACCode,
+    checklist,
   } = {}) => ({
     _id: _id ? idModule.lib.buildId(_id) : idModule.lib.buildId(),
     annotationsCount: annotationsCount ? annotationsCount : 0,
@@ -52,5 +54,6 @@ const statisticGenerator: generatorType<statisticType> = {
     treatmentDate: treatmentDate ? treatmentDate : new Date().getTime(),
     treatmentsSummary: treatmentsSummary ? treatmentsSummary : [],
     wordsCount: wordsCount ? wordsCount : 0,
+    checklist: checklist ? checklist : checklistGenerator.generate(3),
   }),
 };

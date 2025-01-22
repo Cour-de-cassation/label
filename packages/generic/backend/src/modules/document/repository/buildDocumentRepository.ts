@@ -89,7 +89,7 @@ const buildDocumentRepository = buildRepositoryBuilder<
       { status, priority },
       idsToSearchInFirst,
     ) {
-      const freeDocuments = await collection
+      const mostRecentDocuments = await collection
         .find({
           priority,
           status,
@@ -98,8 +98,29 @@ const buildDocumentRepository = buildRepositoryBuilder<
         .sort({ 'decisionMetadata.date': -1 })
         .limit(50)
         .toArray();
-      return freeDocuments[
-        Math.round(Math.random() * (freeDocuments.length - 1))
+
+      const leastRecentDocuments = await collection
+        .find({
+          priority,
+          status,
+          _id: { $in: idsToSearchInFirst },
+        })
+        .sort({ 'decisionMetadata.date': 1 })
+        .limit(50)
+        .toArray();
+
+      // Combine the two lists to treat a mix of recent and old documents
+      const combinedDocuments = mostRecentDocuments.concat(
+        leastRecentDocuments,
+      );
+
+      if (combinedDocuments.length === 0) {
+        return undefined;
+      }
+
+      // Select a random document from the combined list
+      return combinedDocuments[
+        Math.floor(Math.random() * combinedDocuments.length)
       ];
     },
 
@@ -215,6 +236,12 @@ const buildDocumentRepository = buildRepositoryBuilder<
 
     async updateLossById(_id, loss) {
       await collection.updateOne({ _id }, { $set: { loss } });
+      const updatedDocument = await collection.findOne({ _id });
+      return updatedDocument || undefined;
+    },
+
+    async updateChecklistById(_id, checklist) {
+      await collection.updateOne({ _id }, { $set: { checklist } });
       const updatedDocument = await collection.findOne({ _id });
       return updatedDocument || undefined;
     },

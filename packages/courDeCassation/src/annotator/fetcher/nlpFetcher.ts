@@ -1,7 +1,7 @@
-import { labelTreatmentsType } from 'sder';
 import { documentType, settingsType } from '@label/core';
 import { buildNlpApi } from './api';
 import { nlpMapper } from './mapper';
+import { LabelTreatment } from 'dbsder-api-types';
 
 export { buildNlpFetcher };
 
@@ -27,7 +27,7 @@ function buildNlpFetcher(nlpApiBaseUrl: string | undefined) {
           document,
         ),
         documentId: document._id,
-        report: nlpMapper.mapNlpAnnotationstoReport(nlpAnnotations, document),
+        checklist: nlpAnnotations.checklist ?? [],
         newCategoriesToAnnotate: nlpAnnotations.newCategoriesToAnnotate,
         newCategoriesToUnAnnotate: nlpAnnotations.newCategoriesToUnAnnotate,
         computedAdditionalTerms: nlpMapper.mapNlpAdditionalTerms(
@@ -40,7 +40,7 @@ function buildNlpFetcher(nlpApiBaseUrl: string | undefined) {
     },
     async fetchLossOfDocument(
       document: documentType,
-      treatments: labelTreatmentsType,
+      treatments: LabelTreatment[],
     ) {
       const nlpLoss = await nlpApi.fetchNlpLoss(document, treatments);
 

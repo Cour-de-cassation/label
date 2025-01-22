@@ -1,0 +1,10 @@
+[
+  {
+    "_id": {
+      "$oid": "67449c0781bc324c79ff6bdb"
+    },
+    "key": "availableStatisticFilters",
+    "updateDate": 1732549639636,
+    "content": "{\"minDate\":1732116426971,\"maxDate\":1732181800656,\"jurisdictions\":[\"BOBIGNY\",\"BORDEAUX\",\"Cour de cassation\",\"Paris\",\"bobigny\",\"bordeaux\",\"cour d'appel de Douai\",\"cour d'appel de Grenoble\",\"cour d'appel de Lyon\",\"cour d'appel de Metz\",\"cour d'appel de Nimes\",\"cour d'appel de Paris\",\"cour d'appel de Reims\",\"cour d'appel de Rennes\",\"cour d'appel de grenoble\",\"cour d'appel de lyon\",\"cour d'appel de metz\",\"cour d'appel de paris\",\"cour d'appel de poitiers\",\"cour d'appel de reims\",\"cour d'appel de rennes\",\"cour de cassation\",\"marseille\",\"paris\"],\"publicationCategories\":[\"B\",\"D\",\"L\",\"N\",\"P\",\"W\",null],\"routes\":[\"automatic\",\"default\",\"exhaustive\",\"simple\"],\"importers\":[\"recent\"],\"sources\":[\"jurica\",\"jurinet\",\"juritj\"]}"
+  }
+]

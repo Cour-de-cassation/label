@@ -9,7 +9,7 @@ import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildExporter } from './buildExporter';
 import { exporterConfigType } from './exporterConfigType';
-import { labelTreatmentsType } from 'sder';
+import { LabelTreatment } from 'dbsder-api-types';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 describe('buildExporter', () => {
@@ -90,44 +90,38 @@ describe('buildExporter', () => {
       expect(exportedPseudonymizationTexts.sort()).toEqual(
         ['[FIRST_NAME 1] est ingénieur', '[FIRST_NAME 1] est designer'].sort(),
       );
-      expect(exportedLabelTreatments.sort()).toEqual(
-        [
-          [
+      expect(exportedLabelTreatments.sort()).toEqual([
+        {
+          annotations: [
             {
-              annotations: [
-                {
-                  category: 'firstName',
-                  certaintyScore: 1,
-                  entityId: 'firstName_Benoit',
-                  start: 0,
-                  text: 'Benoit',
-                },
-              ],
-              source: 'NLP',
-              order: 1,
-              treatmentDate: '2024-07-12T09:28:27.000Z',
-              version: undefined,
+              category: 'firstName',
+              certaintyScore: 1,
+              entityId: 'firstName_Benoit',
+              start: 0,
+              text: 'Benoit',
             },
           ],
-          [
+          order: 1,
+          source: 'NLP',
+          treatmentDate: '2024-07-12T09:28:27.000Z',
+          version: undefined,
+        },
+        {
+          annotations: [
             {
-              annotations: [
-                {
-                  category: 'firstName',
-                  certaintyScore: 1,
-                  entityId: 'firstName_Romain',
-                  start: 0,
-                  text: 'Romain',
-                },
-              ],
-              source: 'NLP',
-              order: 1,
-              treatmentDate: '2024-07-12T09:29:59.000Z',
-              version: undefined,
+              category: 'firstName',
+              certaintyScore: 1,
+              entityId: 'firstName_Romain',
+              start: 0,
+              text: 'Romain',
             },
           ],
-        ].sort(),
-      );
+          order: 1,
+          source: 'NLP',
+          treatmentDate: '2024-07-12T09:29:59.000Z',
+          version: undefined,
+        },
+      ]);
     });
   });
 });
@@ -135,12 +129,12 @@ describe('buildExporter', () => {
 function buildFakeExporterConfig(): exporterConfigType & {
   getExportedExternalIds: () => string[];
   getExportedPseudonymizationTexts: () => string[];
-  getExportedLabelTreatments: () => labelTreatmentsType[];
+  getExportedLabelTreatments: () => LabelTreatment[];
   getLockedExternalIds: () => string[];
 } {
   const exportedExternalIds: string[] = [];
   const exportedpseudonymizationTexts: string[] = [];
-  const exportedlabelTreatments: labelTreatmentsType[] = [];
+  const exportedlabelTreatments: LabelTreatment[] = [];
   const lockedExternalIds: string[] = [];
 
   return {
@@ -148,12 +142,12 @@ function buildFakeExporterConfig(): exporterConfigType & {
 
     async sendDocumentPseudonymisationAndTreatments({
       externalId,
-      pseudonymizationText,
+      pseudoText,
       labelTreatments,
     }) {
       exportedExternalIds.push(externalId);
-      exportedpseudonymizationTexts.push(pseudonymizationText);
-      exportedlabelTreatments.push(labelTreatments);
+      exportedpseudonymizationTexts.push(pseudoText);
+      exportedlabelTreatments.push(...labelTreatments);
     },
 
     getExportedExternalIds() {
@@ -166,10 +160,6 @@ function buildFakeExporterConfig(): exporterConfigType & {
 
     getExportedLabelTreatments() {
       return exportedlabelTreatments;
-    },
-
-    async sendDocumentBlockedStatus({ externalId }) {
-      lockedExternalIds.push(externalId);
     },
 
     getLockedExternalIds() {

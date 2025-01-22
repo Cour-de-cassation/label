@@ -1,8 +1,6 @@
 import { buildPreAssignationRepository } from '../../modules/preAssignation';
-import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
-import { buildMigrationRepository } from '../../modules/migration';
 import { buildProblemReportRepository } from '../../modules/problemReport';
 import { buildStatisticRepository } from '../../modules/statistic';
 import { buildTreatmentRepository } from '../../modules/treatment';
@@ -15,7 +13,6 @@ async function clearDb({
   annotation = true,
   assignation = true,
   document = true,
-  migration = true,
   problemReport = true,
   statistic = true,
   treatment = true,
@@ -25,7 +22,6 @@ async function clearDb({
   annotation?: boolean;
   assignation?: boolean;
   document?: boolean;
-  migration?: boolean;
   problemReport?: boolean;
   statistic?: boolean;
   treatment?: boolean;
@@ -39,7 +35,6 @@ async function clearDb({
       annotation,
       assignation,
       document,
-      migration,
       problemReport,
       statistic,
       treatment,
@@ -50,20 +45,12 @@ async function clearDb({
 
   const repositories = [
     {
-      shouldClear: annotation,
-      buildRepository: buildAnnotationReportRepository,
-    },
-    {
       shouldClear: assignation,
       buildRepository: buildAssignationRepository,
     },
     {
       shouldClear: document,
       buildRepository: buildDocumentRepository,
-    },
-    {
-      shouldClear: migration,
-      buildRepository: buildMigrationRepository,
     },
     {
       shouldClear: problemReport,

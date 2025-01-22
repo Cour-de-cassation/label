@@ -11,6 +11,7 @@
     successful_jobs_history_limit: "{{ job.successful_jobs_history_limit }}"
     failed_jobs_history_limit: "{{ job.failed_jobs_history_limit }}"
     backoff_limit: "{{ job.backoff_limit }}"
+    restartPolicy: "{{ job.restartPolicy}}"
     parallelism: "{{ job.parallelism }}"
     active_deadline_seconds: "{{ job.active_deadline_seconds }}"
     name: "{{ job.name }}"

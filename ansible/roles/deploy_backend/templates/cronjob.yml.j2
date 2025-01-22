@@ -32,7 +32,7 @@ spec:
                     name: "{{ label_back_app_id }}-config"
                 - secretRef:
                     name: "{{ label_back_app_id }}-secret"
-          restartPolicy: Never
+          restartPolicy: {{ restartPolicy }}
           # volumes:
           #   - name: label-backend-config
           #     secret:

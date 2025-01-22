@@ -3,6 +3,7 @@ import { idModule } from '../../id';
 import { buildStatistic } from './buildStatistic';
 
 const TREATMENT_DATE = new Date(2021, 3, 30, 0, 0, 0);
+const checklistMock = documentModule.checklistGenerator.generate(3);
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 describe('buildStatistic', () => {
@@ -58,6 +59,7 @@ describe('buildStatistic', () => {
       linkedEntitiesCount,
       lastUpdateDate,
       treatmentInfo,
+      checklist: checklistMock,
       humanTreatmentsSummary: [{ userId, treatmentDuration: 10 }],
     });
 
@@ -82,6 +84,7 @@ describe('buildStatistic', () => {
       treatmentDate: TREATMENT_DATE.getTime(),
       treatmentsSummary: [{ userId, treatmentDuration: 10 }],
       wordsCount: 5,
+      checklist: checklistMock,
     });
   });
 });

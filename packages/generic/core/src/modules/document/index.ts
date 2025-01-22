@@ -1,4 +1,4 @@
-import { documentGenerator, decisionMetadataGenerator } from './generator';
+import { documentGenerator, decisionMetadataGenerator, checklistGenerator } from './generator';
 import { documentModel, documentType, fetchedDocumentModel, fetchedDocumentType } from './documentType';
 import {
   buildDocument,
@@ -19,6 +19,7 @@ const documentModule = {
   model: documentModel,
   generator: documentGenerator,
   decisionMetadataGenerator: decisionMetadataGenerator,
+  checklistGenerator: checklistGenerator,
   lib: {
     buildDocument,
     comparator,

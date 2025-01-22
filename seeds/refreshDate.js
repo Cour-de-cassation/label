@@ -99,7 +99,7 @@ async function main() {
   });
   await client.connect();
 
-  const db = client.db(process.env.LABEL_DB_NAME);
+  const db = client.db();
 
   const input = process.argv[2];
   const date = new Date(input * 1000);

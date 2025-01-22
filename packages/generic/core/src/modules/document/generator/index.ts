@@ -1,3 +1,3 @@
-import { documentGenerator, decisionMetadataGenerator } from './documentGenerator';
+import { documentGenerator, decisionMetadataGenerator, checklistGenerator } from './documentGenerator';
 
-export { documentGenerator, decisionMetadataGenerator };
+export { documentGenerator, decisionMetadataGenerator, checklistGenerator };

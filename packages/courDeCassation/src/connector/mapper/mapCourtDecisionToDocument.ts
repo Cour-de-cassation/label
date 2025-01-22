@@ -69,6 +69,7 @@ async function mapCourtDecisionToDocument(
   const NAOCode = sderCourtDecision.NAOCode || '';
   const endCaseCode = sderCourtDecision.endCaseCode || '';
 
+  // TODO add title compute for TCOM
   const title = computeTitleFromParsedCourtDecision({
     source: source,
     number: sderCourtDecision.sourceId,
@@ -224,6 +225,7 @@ async function mapCourtDecisionToDocument(
     text: sderCourtDecision.originalText,
     zoning: zoning,
     nlpVersions: {} as documentType['nlpVersions'],
+    checklist: [],
   });
 }
 

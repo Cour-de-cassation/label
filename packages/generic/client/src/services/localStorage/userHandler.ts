@@ -1,6 +1,7 @@
 import { passwordTimeValidityStatusType, userType } from '@label/core';
 import { localStorageHandler } from './localStorageHandler';
 import { localStorageMappers } from './localStorageMappers';
+import { adminViewHandler } from './adminViewHandler';
 
 export { userHandler };
 
@@ -26,6 +27,9 @@ function set({ _id, email, name, role }: Pick<userType, '_id' | 'email' | 'role'
   localStorageHandler.set({ key: USER_EMAIL_STORAGE_KEY, value: email, mapper: localStorageMappers.string });
   localStorageHandler.set({ key: USER_NAME_STORAGE_KEY, value: name, mapper: localStorageMappers.string });
   localStorageHandler.set({ key: USER_ROLE_STORAGE_KEY, value: role, mapper: localStorageMappers.string });
+  if (role === 'admin') {
+    adminViewHandler.set('admin');
+  }
 }
 
 function setPasswordTimeValidityStatus(passwordTimeValidityStatus: passwordTimeValidityStatusType) {

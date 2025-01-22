@@ -42,5 +42,6 @@ function buildFromDocument({
     treatmentInfo,
     document,
     linkedEntitiesCount,
+    checklist: document.checklist,
   });
 }

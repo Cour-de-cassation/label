@@ -26,7 +26,7 @@ const nlpAnnotations: nlpResponseType = {
       text: 'ANNOTATION1',
       start: 0,
       end: 11,
-      label: 'LABEL1',
+      category: 'LABEL1',
       source: 'NLP',
       score: 0.5,
       entityId: 'LABEL1_annotation1',
@@ -35,13 +35,13 @@ const nlpAnnotations: nlpResponseType = {
       text: 'ANNOTATION2',
       start: 12,
       end: 23,
-      label: 'LABEL2',
+      category: 'LABEL2',
       source: 'NLP',
       score: 0.6,
       entityId: 'LABEL2_annotation2',
     },
   ],
-  checklist: ['CHECK 1', 'CHECK 2'],
+  checklist: [],
   versions: nlpVersion,
 };
 
@@ -51,7 +51,7 @@ const nlpAnnotationsWithAdditionalTerms: nlpResponseType = {
       text: 'ANNOTATION1',
       start: 0,
       end: 11,
-      label: 'LABEL1',
+      category: 'LABEL1',
       source: 'NLP',
       score: 0.5,
       entityId: 'LABEL1_annotation1',
@@ -60,13 +60,13 @@ const nlpAnnotationsWithAdditionalTerms: nlpResponseType = {
       text: 'ANNOTATION2',
       start: 12,
       end: 23,
-      label: 'LABEL2',
+      category: 'LABEL2',
       source: 'NLP',
       score: 0.6,
       entityId: 'LABEL2_annotation2',
     },
   ],
-  checklist: ['CHECK 1', 'CHECK 2'],
+  checklist: [],
   additionalTermsToUnAnnotate: ['blabla', 'toto'],
   versions: nlpVersion,
 };
@@ -96,20 +96,6 @@ describe('nlpMapper', () => {
         start: 12,
         text: 'ANNOTATION2',
         certaintyScore: 0.6,
-      });
-    });
-  });
-  describe('mapNlpAnnotationstoReport', () => {
-    it('should convert the nlp annotations into an annotation report', () => {
-      const annotationReport = nlpMapper.mapNlpAnnotationstoReport(
-        nlpAnnotations,
-        document,
-      );
-
-      expect(annotationReport).toEqual({
-        checklist: ['CHECK 1', 'CHECK 2'],
-        documentId: document._id,
-        _id: annotationReport._id,
       });
     });
   });

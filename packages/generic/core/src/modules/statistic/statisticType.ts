@@ -1,4 +1,4 @@
-import { documentModel } from '../document/documentType';
+import { documentModel, checklistModel } from '../document/documentType';
 import { idType } from '../id';
 import { buildModel, buildType } from '../modelType';
 
@@ -85,6 +85,7 @@ const statisticModel = buildModel({
       },
     },
     wordsCount: { kind: 'primitive', content: 'number' },
+    checklist: checklistModel,
   },
 } as const);
 

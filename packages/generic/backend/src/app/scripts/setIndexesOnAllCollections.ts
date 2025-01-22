@@ -1,4 +1,3 @@
-import { buildAnnotationReportRepository } from '../../modules/annotationReport';
 import { buildAssignationRepository } from '../../modules/assignation';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildProblemReportRepository } from '../../modules/problemReport';
@@ -9,7 +8,6 @@ export { setIndexesOnAllCollections };
 
 async function setIndexesOnAllCollections() {
   const repositories = [
-    buildAnnotationReportRepository,
     buildAssignationRepository,
     buildDocumentRepository,
     buildProblemReportRepository,

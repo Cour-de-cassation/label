@@ -1,4 +1,4 @@
-import { annotationType } from '@label/core';
+import { annotationType, documentType } from '@label/core';
 
 export { DEFAULT_VIEWER_MODE };
 
@@ -11,6 +11,12 @@ type viewerModeType =
       category: annotationType['category'];
       entityId: annotationType['entityId'];
       entityLineNumbers: number[];
+      isAnonymizedView: boolean;
+    }
+  | {
+      kind: 'checklist';
+      check: documentType['checklist'][number];
+      checkLineNumbers: number[];
       isAnonymizedView: boolean;
     };
 

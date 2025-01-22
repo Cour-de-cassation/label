@@ -6768,10 +6768,10 @@ dateformat@^5.0.3:
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-5.0.3.tgz#fe2223eff3cc70ce716931cb3038b59a9280696e"
   integrity sha512-Kvr6HmPXUMerlLcLF+Pwq3K7apHpYmGDVqrxcDasBg86UcKeTSNWbEzU8bwdXnxnR44FtMhJAxI4Bov6Y/KUfA==
 
-dbsder-api-types@^1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/dbsder-api-types/-/dbsder-api-types-1.6.4.tgz#ce14b4061220dfe046a3f41a5a7341a02c90f8ff"
-  integrity sha512-VTlRoBKK8n5Mo5bmbaV/d2Um80Vr1P43x+EOJ//j4opws9I9KgX46kilQdThuEsnyM1dr1Y1XN32vuFmLI4s4w==
+dbsder-api-types@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/dbsder-api-types/-/dbsder-api-types-1.7.0.tgz#68df88e6ee741f849a76717e67f758798b808046"
+  integrity sha512-vbko8KCaX0bP9NHxjIIjmR8/NefA32/s7HvmBFoD7lwhI8oXrU6cfFzzjf1Htc3cOYyNrVnFD7Z3IeVLD/0qbw==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"

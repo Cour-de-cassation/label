@@ -26,5 +26,14 @@ const buildUserRepository = buildRepositoryBuilder<
       }
       return result;
     },
+    async updateNameAndRoleById(userId, name, role) {
+      const { result } = await collection.updateOne(
+        { _id: userId },
+        { $set: { name, role } },
+      );
+      return {
+        success: result.ok === 1,
+      };
+    },
   }),
 });

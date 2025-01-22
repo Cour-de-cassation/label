@@ -18,5 +18,17 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
       }
       return result;
     },
+    async updateNameAndRoleById(userId, name, role) {
+      const storedUserIndex = collection.findIndex(({ _id }) => _id === userId);
+      if (storedUserIndex === -1) {
+        return { success: false };
+      }
+      collection[storedUserIndex] = {
+        ...collection[storedUserIndex],
+        name,
+        role,
+      };
+      return { success: true };
+    },
   }),
 });

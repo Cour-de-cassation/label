@@ -122,19 +122,23 @@ const sderApi = {
     });
   },
 
-  async getDecisionRoute({ codeNac, codeDecision, source }) {
-    if (process.env.DBSDER_API_ENABLED === 'true') {
-      return ((await fetchApi({
-        method: 'get',
-        path: 'decision-route',
-        body: {
-          codeNac,
-          codeDecision,
-          source,
-        },
-      })) as unknown) as Promise<documentType['route'] | undefined>;
-    } else {
-      return undefined;
-    }
+  async getDecisionRoute({
+    codeNac,
+    codeDecision,
+    source,
+  }: {
+    codeNac: string;
+    codeDecision: string;
+    source: string;
+  }) {
+    return ((await fetchApi({
+      method: 'get',
+      path: 'decision-route',
+      body: {
+        codeNac,
+        codeDecision,
+        source,
+      },
+    })) as unknown) as Promise<documentType['route'] | undefined>;
   },
 };

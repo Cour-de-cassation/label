@@ -20,7 +20,6 @@ function buildExporter(
 ) {
   return {
     exportAllTreatedDocuments,
-    exportAllRejectedDocuments,
     exportSpecificDocument,
     exportTreatedDocumentsSince,
     exportTreatedPublishableDocuments,
@@ -194,7 +193,7 @@ function buildExporter(
     try {
       await exporterConfig.sendDocumentPseudonymisationAndTreatments({
         externalId: document.externalId,
-        pseudonymizationText: anonymizer.anonymizeDocument(document).text,
+        pseudoText: anonymizer.anonymizeDocument(document).text,
         labelTreatments: treatmentModule.lib.concat(
           treatments,
           document.nlpVersions,
@@ -221,48 +220,5 @@ function buildExporter(
         data: error as Record<string, unknown>,
       });
     }
-  }
-
-  async function exportAllRejectedDocuments() {
-    logger.log({
-      operationName: 'exportAllRejectedDocuments',
-      msg: `START: Exportation to ${exporterConfig.name}`,
-    });
-
-    logger.log({
-      operationName: 'exportAllRejectedDocuments',
-      msg: `Fetching all rejected documents...`,
-    });
-    const rejectedDocuments = await documentService.fetchRejectedDocuments();
-    logger.log({
-      operationName: 'exportAllRejectedDocuments',
-      msg: `${rejectedDocuments.length} rejected documents to export`,
-    });
-
-    logger.log({
-      operationName: 'exportAllRejectedDocuments',
-      msg: `Beginning exportation...`,
-    });
-    for (let index = 0; index < rejectedDocuments.length; index++) {
-      logger.log({
-        operationName: 'exportAllRejectedDocuments',
-        msg: `Exportation of document ${index + 1}/${rejectedDocuments.length}`,
-      });
-      const document = rejectedDocuments[index];
-
-      await exportRejectedDocument(document);
-    }
-
-    logger.log({ operationName: 'exportAllRejectedDocuments', msg: 'DONE' });
-  }
-
-  async function exportRejectedDocument(document: documentType) {
-    await exporterConfig.sendDocumentBlockedStatus({
-      externalId: document.externalId,
-    });
-
-    await statisticService.saveStatisticsOfDocument(document, settings);
-
-    await documentService.deleteDocument(document._id);
   }
 }

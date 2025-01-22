@@ -310,7 +310,43 @@ const documentModelCommonFields = {
       },
       NACCode: { kind: 'primitive', content: 'string' },
       endCaseCode: { kind: 'primitive', content: 'string' },
-      parties: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+      parties: {
+        kind: 'or',
+        content: [
+          {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {
+                type: { kind: 'primitive', content: 'string' },
+                nom: { kind: 'primitive', content: 'string' },
+                prenom: { kind: 'primitive', content: 'string' },
+                civilite: {
+                  kind: 'or',
+                  content: [
+                    { kind: 'primitive', content: 'string' },
+                    { kind: 'primitive', content: 'undefined' },
+                  ],
+                },
+                qualite: {
+                  kind: 'or',
+                  content: [
+                    { kind: 'primitive', content: 'string' },
+                    { kind: 'primitive', content: 'undefined' },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {},
+            },
+          },
+        ],
+      },
       session: { kind: 'primitive', content: 'string' },
       solution: { kind: 'primitive', content: 'string' },
       motivationOccultation: {

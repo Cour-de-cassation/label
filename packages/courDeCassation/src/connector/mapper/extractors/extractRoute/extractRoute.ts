@@ -3,10 +3,12 @@ import { documentType } from '@label/core';
 import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
 import { extractRouteForJuritj } from './extractRouteForJuritj';
+import { extractRouteForJuritcom } from './extractRouteForJuritcom';
+import { Sources } from 'dbsder-api-types';
 
 export { extractRoute };
 
-function extractRoute(
+async function extractRoute(
   routeInfos: {
     additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'];
     session: documentType['decisionMetadata']['session'];
@@ -22,34 +24,27 @@ function extractRoute(
     status?: documentType['status'];
   },
   source: documentType['source'],
-): documentType['route'] {
+): Promise<documentType['route']> {
   let route: documentType['route'] = 'default';
 
-  switch (source) {
-    case 'jurinet':
-      try {
-        route = extractRouteForJurinet({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJurinet', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-    case 'jurica':
-      try {
-        route = extractRouteForJurica({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJurica', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-    case 'juritj':
-      try {
-        route = extractRouteForJuritj({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
+  const extractRouteFunctions = {
+    [Sources.CC]: extractRouteForJurinet,
+    [Sources.CA]: extractRouteForJurica,
+    [Sources.TJ]: extractRouteForJuritj,
+    [Sources.TCOM]: extractRouteForJuritcom,
+  };
+
+  try {
+    if (source in extractRouteFunctions) {
+      route = await extractRouteFunctions[source as Sources]({
+        ...routeInfos,
+      });
+    } else {
+      throw new Error('Source non prise en charge');
+    }
+  } catch (e) {
+    logger.error({ operationName: `extractRouteFor ${source}`, msg: `${e}` });
+    route = 'default';
   }
 
   if (

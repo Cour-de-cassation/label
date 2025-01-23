@@ -1,7 +1,7 @@
 import { extractRoute } from '.';
 
 describe('extractRoute', () => {
-  it('should return exhaustive because it is juritj', async () => {
+  it('should return default because it is juritj', async () => {
     const route = await extractRoute(
       {
         additionalTermsToAnnotate: '',
@@ -19,7 +19,7 @@ describe('extractRoute', () => {
       'juritj',
     );
 
-    expect(route).toBe('exhaustive');
+    expect(route).toBe('default');
   });
 
   it('should return default if no endCaseCode & no NACCode', async () => {

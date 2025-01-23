@@ -44,7 +44,7 @@ async function extractRoute(
     }
   } catch (e) {
     logger.error({ operationName: `extractRouteFor ${source}`, msg: `${e}` });
-    route = 'exhaustive';
+    route = 'default';
   }
 
   if (

@@ -10,14 +10,18 @@ async function extractRouteForJuritj({
   NACCode: documentType['decisionMetadata']['NACCode'];
   endCaseCode: documentType['decisionMetadata']['endCaseCode'];
 }): Promise<documentType['route']> {
-  const routeFromMetadata = await sderApi.getDecisionRoute({
-    codeNac: NACCode,
-    codeDecision: endCaseCode,
-    source: 'juritj',
-  });
-  if (routeFromMetadata) {
-    return routeFromMetadata as documentType['route'];
-  } else {
+  try {
+    const routeFromMetadata = await sderApi.getDecisionRoute({
+      codeNac: NACCode,
+      codeDecision: endCaseCode,
+      source: 'juritj',
+    });
+    if (routeFromMetadata) {
+      return routeFromMetadata as documentType['route'];
+    } else {
+      return 'default';
+    }
+  } catch {
     return 'default';
   }
 }

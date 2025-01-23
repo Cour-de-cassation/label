@@ -12,14 +12,18 @@ async function extractRouteForJurica({
   NACCode: documentType['decisionMetadata']['NACCode'];
   endCaseCode: documentType['decisionMetadata']['endCaseCode'];
 }): Promise<documentType['route']> {
-  const routeFromMetadata = await sderApi.getDecisionRoute({
-    codeNac: NACCode,
-    codeDecision: endCaseCode,
-    source: 'jurica',
-  });
-  if (routeFromMetadata) {
-    return routeFromMetadata as documentType['route'];
-  } else {
+  try {
+    const routeFromMetadata = await sderApi.getDecisionRoute({
+      codeNac: NACCode,
+      codeDecision: endCaseCode,
+      source: 'jurica',
+    });
+    if (routeFromMetadata) {
+      return routeFromMetadata as documentType['route'];
+    } else {
+      return 'default';
+    }
+  } catch {
     // Historical extract route for CA
     const decEndCaseCode: number = transformLetterCodeToDec({
       code: endCaseCode,

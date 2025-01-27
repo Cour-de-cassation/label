@@ -206,7 +206,7 @@ const checklistModel = {
   content: {
     kind: 'object',
     content: {
-      checkType: {
+      check_type: {
         kind: 'primitive',
         content: 'string',
       },

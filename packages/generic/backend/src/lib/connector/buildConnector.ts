@@ -72,7 +72,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       });
 
       if (lowPriority) {
-        await insertDocument({ ...document });
+        await insertDocument({ ...document, route: 'exhaustive' });
       } else {
         await insertDocument({ ...document, route: 'request', priority: 4 });
       }

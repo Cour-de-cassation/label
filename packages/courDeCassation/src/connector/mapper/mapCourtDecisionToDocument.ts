@@ -11,7 +11,7 @@ import {
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
-import { DecisionDTO, DecisionTJDTO } from 'dbsder-api-types';
+import { DecisionDTO, DecisionTJDTO, Sources } from 'dbsder-api-types';
 
 export { mapCourtDecisionToDocument };
 
@@ -33,7 +33,7 @@ async function mapCourtDecisionToDocument(
 
   const registerNumber = sderCourtDecision.registerNumber;
   const appeal = sderCourtDecision.appeals[0];
-  const numeroRoleGeneral = isDecisionTJDTO(sderCourtDecision)
+  const numeroRoleGeneral = isDecisionTJ(sderCourtDecision)
     ? sderCourtDecision.numeroRoleGeneral
     : '';
   const appealNumber = extractAppealRegisterRoleGeneralNumber(
@@ -269,14 +269,18 @@ function computeTitleFromParsedCourtDecision({
     readableJurisdictionName,
   );
 
-  if (source === 'juritj') {
+  if (source === Sources.TJ) {
     readableJurisdictionName = `TJ de ${readableJurisdictionName}`;
   }
 
+  if (source === Sources.TCOM) {
+    readableJurisdictionName = `TCOM de ${readableJurisdictionName}`;
+  }
+
   const nomenclatureNumber =
-    source === 'jurinet' && NAOCode
+    source === Sources.CC && NAOCode
       ? `NAO ${NAOCode}`
-      : (source === 'juritj' || source === 'jurica') && NACCode
+      : (source === Sources.TJ || source === Sources.CA) && NACCode
       ? `NAC ${NACCode}`
       : undefined;
 
@@ -354,6 +358,6 @@ function convertToValidDate(date: string | undefined) {
   return convertedDate;
 }
 
-function isDecisionTJDTO(decision: DecisionDTO): decision is DecisionTJDTO {
-  return 'numeroRoleGeneral' in decision;
+function isDecisionTJ(decision: DecisionDTO): decision is DecisionTJDTO {
+  return decision.sourceName === Sources.TJ;
 }

@@ -1,3 +1,5 @@
+import { Sources } from 'dbsder-api-types';
+
 export { extractAppealRegisterRoleGeneralNumber };
 
 function extractAppealRegisterRoleGeneralNumber(
@@ -8,9 +10,9 @@ function extractAppealRegisterRoleGeneralNumber(
   registerNumber?: string,
   numeroRoleGeneral?: string,
 ) {
-  if (source === 'jurica' && registerNumber != undefined) {
+  if (source === Sources.CA && registerNumber != undefined) {
     return registerNumber?.split(' ')[0];
-  } else if (source === 'jurinet') {
+  } else if (source === Sources.CC) {
     const verifappeal = /^[A-Za-z]\d+$/;
     if (
       jurisdictionName?.includes('cassation') &&
@@ -28,8 +30,10 @@ function extractAppealRegisterRoleGeneralNumber(
     } else {
       return appeal;
     }
-  } else if (source === 'juritj' && numeroRoleGeneral != undefined) {
+  } else if (source === Sources.TJ && numeroRoleGeneral != undefined) {
     return numeroRoleGeneral;
+  } else if (source === Sources.TCOM && registerNumber) {
+    return registerNumber;
   } else {
     return regexExtractAppealNumber(text);
   }

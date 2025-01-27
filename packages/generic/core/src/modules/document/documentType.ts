@@ -228,28 +228,16 @@ const checklistModel = {
         },
       },
       sentences: {
-        kind: 'or',
-        content: [
-          {
-            kind: 'array',
-            content: {
-              kind: 'object',
-              content: {
-                start: { kind: 'primitive', content: 'number' },
-                end: { kind: 'primitive', content: 'number' },
-              },
-            },
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            start: { kind: 'primitive', content: 'number' },
+            end: { kind: 'primitive', content: 'number' },
           },
-          { kind: 'primitive', content: 'undefined' },
-        ],
+        },
       },
-      metadata_text: {
-        kind: 'or',
-        content: [
-          { kind: 'array', content: { kind: 'primitive', content: 'string' } },
-          { kind: 'primitive', content: 'undefined' },
-        ],
-      },
+      metadata_text: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
     },
   },
 } as const;

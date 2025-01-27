@@ -77,7 +77,7 @@ function useChecklistEntryHandler({
       }
     });
 
-    if (result.length === 0 && check.sentences) {
+    if (result.length === 0 && check.sentences.length > 0) {
       check.sentences.forEach((sentence) => {
         const linesWithSentence = splittedTextByLine.filter(({ content }) =>
           content.some((chunk) => {

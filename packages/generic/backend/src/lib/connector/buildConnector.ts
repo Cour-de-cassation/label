@@ -81,6 +81,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
         msg: 'Insertion done',
       });
 
+      // To update
       if (keepLabelTreatments) {
         if (courtDecision.labelTreatments?.length == 0) {
           logger.error({
@@ -214,6 +215,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           'recent',
         );
         insertDocument(converted);
+        // Add labelTreatment import
         await connectorConfig.updateDocumentLabelStatusToLoaded(
           converted.externalId,
         );

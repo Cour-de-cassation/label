@@ -72,7 +72,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       });
 
       if (lowPriority) {
-        await insertDocument({ ...document });
+        await insertDocument({ ...document, route: 'exhaustive' });
       } else {
         await insertDocument({ ...document, route: 'request', priority: 4 });
       }
@@ -118,6 +118,23 @@ function buildConnector(connectorConfig: connectorConfigType) {
             },
             settings,
           );
+
+          // on récupère la checklist du treatment NLP le plus récent
+          const reimportedChecklist = courtDecision.labelTreatments
+            ?.filter((treatment) => treatment.source === 'NLP')
+            .sort((a, b) => b.order - a.order)[0].checklist;
+
+          if (reimportedChecklist) {
+            await documentService.updateDocumentChecklist(
+              document._id,
+              reimportedChecklist,
+            );
+            logger.log({
+              operationName: 'importSpecificDocument',
+              msg: 'Checklist reimported',
+            });
+          }
+
           logger.log({
             operationName: 'importSpecificDocument',
             msg: 'LabelTreatments reimported, checking for pre-assignation.',
@@ -158,7 +175,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     } catch (error) {
       logger.error({
         operationName: 'importSpecificDocument',
-        msg: 'Error',
+        msg: `${error}`,
         data: error as Record<string, unknown>,
       });
     }
@@ -221,10 +238,10 @@ function insertDocument(document: documentType) {
       },
     });
     return insertedDocument;
-  } catch {
+  } catch (error) {
     logger.error({
       operationName: 'documentInsertion',
-      msg: `Failed to import ${document.source}:${document.documentNumber} document`,
+      msg: `Failed to import ${document.source}:${document.documentNumber} document. ${error}`,
       data: {
         decision: {
           sourceId: document.documentNumber,

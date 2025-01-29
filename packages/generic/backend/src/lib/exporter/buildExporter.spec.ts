@@ -22,19 +22,34 @@ describe('buildExporter', () => {
   describe('exportTreatedDocumentsSince', () => {
     it('should export all the ready document since the given days fetched by the exporter', async () => {
       const days = 4;
+      const checklist = [
+        {
+          check_type: 'check',
+          message: 'message',
+          short_message: 'short message',
+          entities: [],
+          sentences: [],
+          metadata_text: [],
+        },
+      ];
       const documents = ([
         {
           text: 'Benoit est ingénieur',
           status: 'done',
           updateDate: dateBuilder.daysAgo(5),
+          checklist: checklist,
         },
         { status: 'pending' },
         {
           text: 'Romain est designer',
           status: 'done',
           updateDate: dateBuilder.daysAgo(7),
+          checklist: checklist,
         },
-        { status: 'done', updateDate: dateBuilder.daysAgo(2) },
+        {
+          status: 'done',
+          updateDate: dateBuilder.daysAgo(2),
+        },
       ] as const).map(documentModule.generator.generate);
       const treatments = [
         {
@@ -105,6 +120,7 @@ describe('buildExporter', () => {
           source: 'NLP',
           treatmentDate: '2024-07-12T09:28:27.000Z',
           version: undefined,
+          checklist: checklist,
         },
         {
           annotations: [
@@ -120,6 +136,7 @@ describe('buildExporter', () => {
           source: 'NLP',
           treatmentDate: '2024-07-12T09:29:59.000Z',
           version: undefined,
+          checklist: checklist,
         },
       ]);
     });

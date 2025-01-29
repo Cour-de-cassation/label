@@ -7,7 +7,7 @@ export { documentGenerator, decisionMetadataGenerator, checklistGenerator };
 const checklistGenerator = {
   generate(size: number): documentType['checklist'] {
     return Array.from({ length: size }, () => ({
-      checkType: `CHECK_TYPE_${Math.random()}`,
+      check_type: `CHECK_TYPE_${Math.random()}`,
       message: "Default message: L'annotation 'Test' est présente dans différentes catégories.",
       short_message: 'Default short message: Annotation dans plusieurs catégories ?',
       entities: [

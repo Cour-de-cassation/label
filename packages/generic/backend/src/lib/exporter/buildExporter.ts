@@ -197,6 +197,7 @@ function buildExporter(
         labelTreatments: treatmentModule.lib.concat(
           treatments,
           document.nlpVersions,
+          document.checklist,
         ),
       });
       logger.log({

@@ -5,7 +5,11 @@ import { LabelTreatment } from 'dbsder-api-types';
 
 export { concat };
 
-function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVersions']): LabelTreatment[] {
+function concat(
+  treatments: treatmentType[],
+  nlpVersions?: documentType['nlpVersions'],
+  checklist?: documentType['checklist'],
+): LabelTreatment[] {
   const labelTreatments: LabelTreatment[] = [];
 
   const sortedTreatments = treatments.sort((treatment1, treatment2) => treatment1.order - treatment2.order);
@@ -19,7 +23,8 @@ function concat(treatments: treatmentType[], nlpVersions?: documentType['nlpVers
         annotations: computeAnnotations(sortedTreatments),
         source: computeSource(currentTreatment.source),
         order,
-        version: currentTreatment.source == 'NLP' ? nlpVersions : undefined,
+        version: currentTreatment.source === 'NLP' ? nlpVersions : undefined,
+        checklist: currentTreatment.source === 'NLP' ? checklist : undefined,
         treatmentDate: new Date(currentTreatment.lastUpdateDate).toISOString(),
       });
     }

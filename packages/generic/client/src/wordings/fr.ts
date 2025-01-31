@@ -79,8 +79,6 @@ const fr = {
       default: 'N/A',
     },
     documentStatus: {
-      loaded: "En attente d'annotation par le moteur NLP",
-      nlpAnnotating: "En cours d'annotation par le moteur NLP",
       free: 'Disponible pour être relu',
       pending: 'Assigné à un agent',
       saved: 'En cours de relecture par un agent',

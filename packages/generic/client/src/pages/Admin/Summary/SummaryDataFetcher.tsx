@@ -32,8 +32,6 @@ function SummaryDataFetcher(props: {
 function buildFetchSummary() {
   return async () => {
     let summary = {
-      loadedDocuments: -1,
-      nlpAnnotatingDocuments: -1,
       freeDocuments: -1,
       pendingDocuments: -1,
       savedDocuments: -1,

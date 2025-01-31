@@ -9,8 +9,6 @@ export type { summaryType };
 const ROW_HEIGHT = 30;
 
 type summaryType = {
-  loadedDocuments: number;
-  nlpAnnotatingDocuments: number;
   freeDocuments: number;
   pendingDocuments: number;
   savedDocuments: number;
@@ -40,14 +38,6 @@ function SummaryBox(props: { summary: summaryType; width: number }) {
     const { summary } = props;
 
     return [
-      {
-        label: wordings.summaryPage.box.fields.loadedDocuments,
-        value: summary.loadedDocuments,
-      },
-      {
-        label: wordings.summaryPage.box.fields.nlpAnnotatingDocuments,
-        value: summary.nlpAnnotatingDocuments,
-      },
       {
         label: wordings.summaryPage.box.fields.freeDocuments,
         value: summary.freeDocuments,

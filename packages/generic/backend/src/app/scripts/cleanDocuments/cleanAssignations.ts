@@ -15,8 +15,6 @@ export { cleanAssignations };
 async function cleanAssignations() {
   logger.log({ operationName: 'cleanAssignations', msg: 'START' });
   const FORBIDDEN_STATUSES_FOR_ASSIGNATED_DOCUMENT: documentType['status'][] = [
-    'loaded',
-    'nlpAnnotating',
     'free',
   ];
   const documentRepository = buildDocumentRepository();

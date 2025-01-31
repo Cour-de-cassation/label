@@ -16,7 +16,6 @@ describe('cleanDocuments', () => {
     personneMorale: { isSensitive: false, isAnonymized: false },
   });
   const user = userModule.generator.generate({ role: 'admin' });
-  const LOADED_DOCUMENTS_COUNT = 10;
   const FREE_DOCUMENTS_COUNT = 8;
   const DONE_DOCUMENTS_COUNT = 5;
 
@@ -26,16 +25,11 @@ describe('cleanDocuments', () => {
     const treatmentRepository = buildTreatmentRepository();
     const userRepository = buildUserRepository();
     await userRepository.insert(user);
-    const documentsToInsert = range(LOADED_DOCUMENTS_COUNT).map(() =>
-      documentModule.generator.generate({ status: 'loaded' }),
+    const documentsToInsert = range(FREE_DOCUMENTS_COUNT).map(() =>
+      documentModule.generator.generate({ status: 'free' }),
     );
     await documentRepository.insertMany(documentsToInsert);
-    for (let i = 0; i < FREE_DOCUMENTS_COUNT; i++) {
-      await documentRepository.updateStatusById(
-        documentsToInsert[i]._id,
-        'free',
-      );
-    }
+
     await Promise.all(
       range(FREE_DOCUMENTS_COUNT).map(async (i) => {
         await treatmentService.createEmptyTreatment({
@@ -69,13 +63,6 @@ describe('cleanDocuments', () => {
 
     await cleanDocuments();
 
-    const fetchedLoadedDocuments = await documentRepository.findAllByStatusProjection(
-      ['loaded'],
-      ['_id'],
-    );
-    expect(fetchedLoadedDocuments.length).toBe(
-      LOADED_DOCUMENTS_COUNT - FREE_DOCUMENTS_COUNT,
-    );
     const fetchedFreeDocuments = await documentRepository.findAllByStatusProjection(
       ['free'],
       ['_id'],

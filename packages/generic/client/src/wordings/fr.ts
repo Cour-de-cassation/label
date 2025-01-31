@@ -407,8 +407,6 @@ const fr = {
     welcomeMessage: 'Bienvenue dans Label',
     box: {
       fields: {
-        loadedDocuments: 'Documents chargés',
-        nlpAnnotatingDocuments: 'Documents en annotation',
         freeDocuments: 'Documents en attente',
         pendingDocuments: 'Documents assignés',
         savedDocuments: 'Documents en relecture',

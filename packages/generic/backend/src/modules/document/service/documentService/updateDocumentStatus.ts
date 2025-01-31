@@ -25,8 +25,6 @@ async function updateDocumentStatus(
   }
   if (status === 'free') {
     await assignationService.deleteAssignationsByDocumentId(_id);
-  } else if (status === 'loaded') {
-    await resetDocument(_id);
   }
   logger.log({
     operationName: 'updateDocumentStatus',

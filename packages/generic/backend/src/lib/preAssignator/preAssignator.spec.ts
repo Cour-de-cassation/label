@@ -28,7 +28,7 @@ describe('buildPreAssignator', () => {
     const documentNumber = 123456;
     const source = 'juritest';
     const documentToPreAssign = documentModule.generator.generate({
-      status: 'loaded',
+      status: 'free',
       source: source,
       documentNumber: documentNumber,
     });

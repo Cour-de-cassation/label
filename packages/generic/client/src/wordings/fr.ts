@@ -79,8 +79,6 @@ const fr = {
       default: 'N/A',
     },
     documentStatus: {
-      loaded: "En attente d'annotation par le moteur NLP",
-      nlpAnnotating: "En cours d'annotation par le moteur NLP",
       free: 'Disponible pour être relu',
       pending: 'Assigné à un agent',
       saved: 'En cours de relecture par un agent',
@@ -407,8 +405,6 @@ const fr = {
     welcomeMessage: 'Bienvenue dans Label',
     box: {
       fields: {
-        loadedDocuments: 'Documents chargés',
-        nlpAnnotatingDocuments: 'Documents en annotation',
         freeDocuments: 'Documents en attente',
         pendingDocuments: 'Documents assignés',
         savedDocuments: 'Documents en relecture',

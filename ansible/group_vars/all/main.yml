@@ -6,8 +6,6 @@ label_api_port: "55430" # pas encore utilisé, a utiliser dans le dockerfile du 
 label_client_app_id: "label-client"
 label_back_app_id: "label-backend"
 label_back_root_path: "label/api"
-nlp_pseudonymisation_api_url: "http://nlp-pseudonymisation-api-service.nlp.svc.cluster.local:8081"
-nlp_pseudonymisation_api_enabled: "true"
 dbsder_api_url: "http://api-service.dbsder:3000" # url not tested
 dbsder_api_version: "v1"
 label_db_name: "labelDb"

@@ -9,8 +9,6 @@ const documentStatusIconNameMapping: Record<
   documentType['status'],
   { iconName: iconNameType; colorName: 'alert' | 'primary' }
 > = {
-  loaded: { iconName: 'waiting', colorName: 'primary' },
-  nlpAnnotating: { iconName: 'waiting', colorName: 'primary' },
   free: { iconName: 'waiting', colorName: 'primary' },
   pending: { iconName: 'assigned', colorName: 'primary' },
   saved: { iconName: 'update', colorName: 'primary' },

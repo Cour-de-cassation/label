@@ -2,8 +2,6 @@
 
 A `document` is supposed to follow a specific flow once it enters the label database. Its status will evolve accordingly.
 
-- `loaded`: the document has only been imported in LABEL. No treatment has been done on it.
-- `nlpAnnotating`: the document is currently being annotated by the NLP annotator.
 - `free`: the document is ready to be annotated by a working user. There are already several `treatments` related to that document (one by the `NLP`, maybe one with the `supplementaryAnnotations` if decision is partially public)
 - `pending`: the document is proposed to a working user. An `assignation` and a corresponding empty `treatment` have been created. The document won't be proposed to another working user.
 - `saved`: the document is being annotated by a working user.

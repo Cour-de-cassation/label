@@ -332,14 +332,6 @@ const apiSchema = {
       out: buildModel({
         kind: 'object',
         content: {
-          loadedDocuments: buildModel({
-            kind: 'primitive',
-            content: 'number',
-          } as const),
-          nlpAnnotatingDocuments: buildModel({
-            kind: 'primitive',
-            content: 'number',
-          } as const),
           freeDocuments: buildModel({
             kind: 'primitive',
             content: 'number',

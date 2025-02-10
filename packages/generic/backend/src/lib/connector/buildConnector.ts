@@ -231,13 +231,14 @@ async function insertDocument(document: documentType) {
   if (duplicatesDocuments.length > 0) {
     logger.log({
       operationName: 'documentInsertion',
-      msg: `Document ${document.source}:${document.documentNumber} is already ${duplicatesDocuments.length} time in label database, deleting already receive documents`,
+      msg: `Document ${document.source}:${document.documentNumber} is already ${duplicatesDocuments.length} time in label database, deleting not rejected documents`,
     });
-    await Promise.all(
-      duplicatesDocuments.map((document) =>
-        documentService.deleteDocument(document._id),
-      ),
-    );
+
+    for (const doc of duplicatesDocuments) {
+      if (doc.status !== 'rejected') {
+        await documentService.deleteDocument(doc._id);
+      }
+    }
   }
 
   try {

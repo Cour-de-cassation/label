@@ -17,6 +17,8 @@ COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
+COPY packages/generic/sso/package.json ./packages/generic/sso/
+COPY ./sso_files ./sso_files/
 
 COPY . .
 
@@ -36,6 +38,7 @@ RUN cd /home/node/packages/generic/core && yarn compile && \
 ADD packages/generic/core packages/generic/core
 ADD packages/generic/backend packages/generic/backend
 ADD packages/courDeCassation packages/courDeCassation
+ADD packages/generic/sso packages/generic/sso
 
 WORKDIR /home/node/packages/courDeCassation
 

@@ -1,6 +1,47 @@
-git_branch: dev
+#git_branch: dev
+git_branch: develop-open-sso
 
 sder_mongodb_url: "{{ vault_sder_mongodb_url }}"
 label_mongodb_url: "{{ vault_label_mongodb_url }}"
 dbsder_api_key: "{{ vault_dbsder_api_key }}"
 jwt_private_key: "{{ vault_jwt_private_key }}"
+
+#SSO VARIABLES
+COOKIE_PRIVATE_KEY: "{{ vault_cookie_private_key }}"
+
+#Service Provider (SP)
+SSO_SP_ENTITY_ID: "{{ vault_sso_sp_entity_id }}"
+SSO_SP_ASSERTION_CONSUMER_SERVICE_LOCATION: "{{ vault_sso_sp_assertion_consumer_service_location }}"
+
+#Identity Provider (IdP)
+SSO_IDP_METADATA: "{{ vault_sso_idp_metadata }}"
+SSO_IDP_SINGLE_SIGN_ON_SERVICE_LOCATION: "{{ vault_sso_idp_single_sign_on_service_location }}"
+SSO_IDP_SINGLE_LOGOUT_SERVICE_LOCATION: "{{ vault_sso_idp_single_logout_service_location }}"
+
+SSO_CERTIFICAT: "{{ vault_sso_certificat }}"
+SSO_SP_PRIVATE_KEY: "{{ vault_sso_sp_private_key }}"
+# Les valeurs possibles du SSO_NAME_ID_FORMAT sont le IDP metadata.xml
+SSO_NAME_ID_FORMAT: "{{ vault_sso_name_id_format }}"
+SSO_SIGNATURE_ALGORITHM: "{{ vault_sso_signature_algorithm }}"
+
+# Authentication
+SESSION_DURATION: "{{ vault_session_duration }}"
+# FRONT END
+SSO_FRONT_SUCCESS_CONNEXION_ANNOTATOR_URL: "{{ vault_sso_front_success_connexion_annotator_url }}"
+SSO_FRONT_SUCCESS_CONNEXION_ADMIN_SCRUTATOR_URL: "{{ vault_sso_front_success_connexion_admin_scrutator_url }}"
+SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL: "{{ vault_sso_front_success_connexion_publicator_url }}"
+# SSO URL du back à setter dans le serveur du client (front react)
+REACT_APP_BACKEND_API_URL: "{{ vault_react_app_backend_api_url }}"
+
+#ATTRIBUTS KEYS
+SSO_ATTRIBUTE_NAME: "{{ vault_sso_attribute_name }}"
+SSO_ATTRIBUTE_FIRSTNAME: "{{ vault_sso_attribute_firstname }}"
+SSO_ATTRIBUTE_FULLNAME: "{{ vault_sso_attribute_fullname }}"
+SSO_ATTRIBUTE_MAIL: "{{ vault_sso_attribute_mail }}"
+SSO_ATTRIBUTE_ROLE: "{{ vault_sso_attribute_role }}"
+
+#APPLICATION NAME
+SSO_APP_NAME: "{{ vault_sso_app_name }}"
+
+#APPLICATION ROLES
+SSO_APP_ROLES: "{{ vault_sso_app_roles }}" # pour la prod adminitrator pour harmoniser

@@ -31,9 +31,9 @@ RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/backend", 
 RUN yarn install --production
 
 # Compile project without lerna
-RUN cd packages/generic/core && yarn compile && \
-  cd packages/generic/backend && yarn compile && \
-  cd packages/courDeCassation && yarn compile
+# RUN cd packages/generic/core && yarn compile && \
+#   cd packages/generic/backend && yarn compile && \
+#   cd packages/courDeCassation && yarn compile
 
 ADD packages/generic/core packages/generic/core
 ADD packages/generic/backend packages/generic/backend

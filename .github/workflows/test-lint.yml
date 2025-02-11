@@ -12,6 +12,7 @@ on:
       - dev
       - re7
       - master
+      - develop-open-sso
 
 jobs:
   build:

@@ -182,7 +182,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
   }
 
-  async function importNewDocuments() {
+  async function importNewDocuments(settings: settingsType) {
     logger.log({
       operationName: 'importNewDocuments',
       msg: `Starting importNewDocuments...`,
@@ -215,7 +215,39 @@ function buildConnector(connectorConfig: connectorConfigType) {
           'recent',
         );
         insertDocument(converted);
-        // Add labelTreatment import
+
+        const lastNlpLabelTreatment = decision.labelTreatments
+          ?.filter((treatment) => treatment.source === 'NLP')
+          .sort((a, b) => b.order - a.order)[0];
+
+        if (!lastNlpLabelTreatment) {
+          throw new Error(
+            'Could not import to label a document without NLP annotations',
+          );
+        }
+
+        const annotations: annotationType[] = lastNlpLabelTreatment.annotations.map(
+          (annotation) => {
+            return annotationModule.lib.buildAnnotation({
+              category: annotation.category,
+              start: annotation.start,
+              text: annotation.text,
+              certaintyScore: annotation.certaintyScore,
+              entityId: annotation.entityId,
+            });
+          },
+        );
+
+        await treatmentService.createTreatment(
+          {
+            documentId: converted._id,
+            previousAnnotations: [],
+            nextAnnotations: annotations,
+            source: 'NLP',
+          },
+          settings,
+        );
+
         await connectorConfig.updateDocumentLabelStatusToLoaded(
           converted.externalId,
         );

@@ -31,9 +31,9 @@ RUN yarn install  --production
 # RUN yarn install --pure-lockfile
 
 # Compilation explicite des packages nécessaires
+RUN cd packages/generic/sso && yarn compile
 RUN cd packages/generic/core && yarn compile
 RUN cd packages/generic/backend && yarn compile
-RUN cd packages/generic/sso && yarn compile
 RUN cd packages/courDeCassation && yarn compile
 
 # ADD packages/generic/core packages/generic/core

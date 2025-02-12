@@ -873,6 +873,10 @@ const apiSchema = {
           kind: 'primitive',
           content: 'string',
         } as const),
+        publicationDate: buildModel({
+          kind: 'primitive',
+          content: 'number',
+        } as const),
       },
       out: buildModel({ kind: 'primitive', content: 'void' } as const),
     },

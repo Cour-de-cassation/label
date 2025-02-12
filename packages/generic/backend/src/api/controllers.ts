@@ -482,11 +482,15 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
 
     createPreAssignation: buildAuthenticatedController({
       permissions: ['admin'],
-      controllerWithUser: async (_, { args: { userId, source, number } }) => {
+      controllerWithUser: async (
+        _,
+        { args: { userId, source, number, publicationDate } },
+      ) => {
         preAssignationService.createPreAssignation({
           userId: idModule.lib.buildId(userId),
           source,
           number,
+          publicationDate,
         });
       },
     }),

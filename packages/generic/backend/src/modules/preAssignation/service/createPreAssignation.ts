@@ -7,10 +7,12 @@ async function createPreAssignation({
   userId,
   source,
   number,
+  publicationDate,
 }: {
   userId: idType;
   source: string;
   number: string;
+  publicationDate: number;
 }) {
   const preAssignationRepository = buildPreAssignationRepository();
 
@@ -18,6 +20,7 @@ async function createPreAssignation({
     userId,
     source,
     number,
+    publicationDate,
     creationDate: new Date().getTime(),
   });
 

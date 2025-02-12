@@ -10,6 +10,7 @@ const preAssignationGenerator: generatorType<preAssignationType> = {
     userId: userId ? idModule.lib.buildId(userId) : idModule.lib.buildId(),
     number: number ?? Math.floor(Math.random() * 1000000).toString(),
     source: source ?? `SOURCE_${Math.random()}`,
+    publicationDate: undefined,
     creationDate: creationDate ?? new Date().getTime(),
   }),
 };

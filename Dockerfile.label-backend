@@ -27,8 +27,7 @@ RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/backend", 
   mv package.json.new package.json
 
 # Install dependencies
-RUN yarn install  --pure-lockfile
-RUN ls -la 
+RUN yarn install  --production
 
 # Compilation explicite des packages nécessaires
 # RUN cd packages/generic/core && yarn compile

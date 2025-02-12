@@ -1,11 +1,11 @@
 FROM node:16-alpine as label-backend
-# ARG http_proxy
-# ARG https_proxy
+ARG http_proxy
+ARG https_proxy
 ENV API_PORT=55430
 
 # Use proxy
-# RUN yarn config set proxy $http_proxy; \
-#   yarn config set https-proxy $https_proxy;
+RUN yarn config set proxy $http_proxy; \
+  yarn config set https-proxy $https_proxy;
 
 WORKDIR /home/node/
 
@@ -28,19 +28,20 @@ RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/backend", 
 
 # Install dependencies
 RUN yarn install  --production
+# RUN yarn install --pure-lockfile
 
 # Compilation explicite des packages nécessaires
-# RUN cd packages/generic/core && yarn compile
-# RUN cd packages/generic/backend && yarn compile
-# RUN cd packages/generic/sso && yarn compile
-# RUN cd packages/courDeCassation && yarn compile
+RUN cd packages/generic/core && yarn compile
+RUN cd packages/generic/backend && yarn compile
+RUN cd packages/generic/sso && yarn compile
+RUN cd packages/courDeCassation && yarn compile
 
 # ADD packages/generic/core packages/generic/core
 # ADD packages/generic/backend packages/generic/backend
 # ADD packages/courDeCassation packages/courDeCassation
 # ADD packages/generic/sso packages/generic/sso
 
-RUN yarn build
+# RUN yarn build
 
 # Vérification que le fichier compilé existe
 RUN ls -la packages/courDeCassation/dist/ || (echo "Erreur: dist/ est manquant" && exit 1)

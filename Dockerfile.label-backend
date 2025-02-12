@@ -1,11 +1,11 @@
 FROM node:16-alpine as label-backend
-ARG http_proxy
-ARG https_proxy
+# ARG http_proxy
+# ARG https_proxy
 ENV API_PORT=55430
 
 # Use proxy
-RUN yarn config set proxy $http_proxy; \
-  yarn config set https-proxy $https_proxy;
+# RUN yarn config set proxy $http_proxy; \
+#   yarn config set https-proxy $https_proxy;
 
 WORKDIR /home/node/
 
@@ -22,25 +22,29 @@ COPY ./sso_files ./sso_files/
 
 COPY . .
 
-# Do not bring client dependencies to backend prod
-# Workaround to rewrite 'workspaces' in packages.json file to not run 'yarn install' in all packages
+# Exclure les dépendances inutiles pour le backend prod
 RUN cat package.json | sed 's|"packages/generic/\*"|"packages/generic/backend", "packages/generic/core", "packages/generic/sso"|' > package.json.new && \
   mv package.json.new package.json
 
 # Install dependencies
-RUN yarn install --production
+RUN yarn install  --pure-lockfile
+RUN ls -la 
 
-# Compile project without lerna
-# RUN cd packages/generic/core && yarn compile && \
-#   cd packages/generic/backend && yarn compile && \
-#   cd packages/courDeCassation && yarn compile
+# Compilation explicite des packages nécessaires
+# RUN cd packages/generic/core && yarn compile
+# RUN cd packages/generic/backend && yarn compile
+# RUN cd packages/generic/sso && yarn compile
+# RUN cd packages/courDeCassation && yarn compile
 
-ADD packages/generic/core packages/generic/core
-ADD packages/generic/backend packages/generic/backend
-ADD packages/courDeCassation packages/courDeCassation
-ADD packages/generic/sso packages/generic/sso
+# ADD packages/generic/core packages/generic/core
+# ADD packages/generic/backend packages/generic/backend
+# ADD packages/courDeCassation packages/courDeCassation
+# ADD packages/generic/sso packages/generic/sso
 
-WORKDIR /packages/courDeCassation
+RUN yarn build
+
+# Vérification que le fichier compilé existe
+RUN ls -la packages/courDeCassation/dist/ || (echo "Erreur: dist/ est manquant" && exit 1)
 
 RUN chown node .
 
@@ -49,4 +53,5 @@ USER node
 # Expose the listening port of your app
 EXPOSE ${API_PORT}
 
-CMD ["sh", "-c", "RUN_MODE=PROD node dist/labelServer.js -s settings/settings.json"]
+# Lancement avec vérification
+CMD ["sh", "-c", "RUN_MODE=PROD node packages/courDeCassation/dist/labelServer.js -s packages/courDeCassation/settings/settings.json"]

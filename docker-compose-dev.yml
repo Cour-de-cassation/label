@@ -13,7 +13,8 @@ services:
   backend:
     build:
       context: ./
-      dockerfile: DockerfileLocalDev
+      # dockerfile: DockerfileLocalDev
+      dockerfile: Dockerfile.label-backend
     environment:
       - RUN_MODE=LOCAL
     ports:

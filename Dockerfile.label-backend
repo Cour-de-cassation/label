@@ -1,11 +1,11 @@
 FROM node:16-alpine as label-backend
-ARG http_proxy
-ARG https_proxy
+# ARG http_proxy
+# ARG https_proxy
 ENV API_PORT=55430
 
 # Use proxy
-RUN yarn config set proxy $http_proxy; \
-  yarn config set https-proxy $https_proxy;
+# RUN yarn config set proxy $http_proxy; \
+#   yarn config set https-proxy $https_proxy;
 
 WORKDIR /home/node/
 
@@ -32,9 +32,9 @@ RUN yarn install  --production
 
 # Compilation explicite des packages nécessaires
 # RUN cd packages/generic/sso && yarn compile
-RUN cd packages/generic/core && yarn compile
-RUN cd packages/generic/backend && yarn compile
-RUN cd packages/courDeCassation && yarn compile
+# RUN cd packages/generic/core && yarn compile
+# RUN cd packages/generic/backend && yarn compile
+# RUN cd packages/courDeCassation && yarn compile
 
 # ADD packages/generic/core packages/generic/core
 # ADD packages/generic/backend packages/generic/backend

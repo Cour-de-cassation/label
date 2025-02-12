@@ -5,8 +5,6 @@ import { displayDocumentLinks } from './displayDocumentLinks';
 import { displayMultipleAssignatedDocuments } from './displayMultipleAssignatedDocuments';
 import { dumpDocument } from './dumpDocument';
 import { freePendingDocuments } from './freePendingDocuments';
-import { insertTestStatistics } from './insertTestStatistics';
-import { insertTestUsers } from './insertTestUsers';
 import { insertUser } from './insertUser';
 import { listAllCaches } from './listAllCaches';
 import { listAllDocuments } from './listAllDocuments';
@@ -24,8 +22,6 @@ export {
   displayMultipleAssignatedDocuments,
   dumpDocument,
   freePendingDocuments,
-  insertTestStatistics,
-  insertTestUsers,
   insertUser,
   listAllCaches,
   listAllDocuments,

@@ -10,18 +10,6 @@ Import all documents to be pseudonymized from SDER.
 
 Cleaning script (clean duplicated documents and other).
 
-## clearDb
-
-Clear Label database.
-
-## clearDbExceptUsers
-
-Delete all documents related data but keep users.
-
-## clearDbOnlyProblemReports
-
-Delete all problem reports.
-
 ## deleteDocument
 
 Delete specific document from Label db.

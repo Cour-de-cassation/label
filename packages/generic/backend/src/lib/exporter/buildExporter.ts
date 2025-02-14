@@ -194,11 +194,7 @@ function buildExporter(
       await exporterConfig.sendDocumentPseudonymisationAndTreatments({
         externalId: document.externalId,
         pseudoText: anonymizer.anonymizeDocument(document).text,
-        labelTreatments: treatmentModule.lib.concat(
-          treatments,
-          document.nlpVersions,
-          document.checklist,
-        ),
+        labelTreatments: treatmentModule.lib.concat(treatments),
       });
       logger.log({
         operationName: 'exportDocument',

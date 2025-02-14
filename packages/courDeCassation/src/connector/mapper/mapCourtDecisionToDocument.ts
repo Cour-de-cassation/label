@@ -228,7 +228,7 @@ async function mapCourtDecisionToDocument(
     checklist:
       sderCourtDecision.labelTreatments
         ?.filter((treatment) => treatment.source === 'NLP')
-        .sort((a, b) => b.order - a.order)[0].checklist ?? [],
+        .sort((a, b) => b.order - a.order)[0]?.checklist ?? [],
   });
 }
 

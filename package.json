@@ -22,7 +22,6 @@
     "docker:start:db": "docker compose -f docker-compose-dev.yml up -d labelDb",
     "docker:stop:db": "docker compose -f docker-compose-dev.yml down labelDb",
     "fix": "lerna run fix",
-    "init:db": "scripts/initializeTestDb.sh",
     "lint": "lerna run lint",
     "start:backend": "lerna run --scope @label/cour-de-cassation start --stream",
     "start:backend:dev": "nodemon",

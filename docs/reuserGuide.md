@@ -4,15 +4,13 @@ If you are reusing Label, these instructions will be usefull. Also have a look a
 
 ## Add documents you want to annotate
 
-The `courDeCassation/storage-example` contains two folders:
+We provide seeds to populate the database with test data.
+To use seeds you can use the following commands from the project root :
 
-- documents : the documents you want to annotate. Look at `courDeCassation/storage-example/documents/123452.json` for an example of the fields you are supposed to fill. The only required fields are:
-  - `dateDecision`: the date of the document
-  - `originalText`: the text of the document. Every paragraph has to be separated by \n
-  - `sourceId`: the unique ID of the document, which must also be its name ("{ID}.json")
-- annotations: the initial annotations for a document. If you don't have an automatic annotator, copy/paste the `courDeCassation/storage-example/annotations/123452.json` content.
-
-The folder used by LABEL is `courDeCassation/storage`. If you want to reuse the `storage-example` folder as is, simply rename it to `storage`.
+- clean the database : `node seeds/clean.js`
+- load fake data in all collections : `node seeds/load.js`
+- save your current database data on seeds : `node seeds/save.js`
+- refresh date to a recent date : `node seeds/refreshDate.js <timestamp>`
 
 ## Edit the annotation settings
 

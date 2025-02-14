@@ -19,11 +19,6 @@ const sderFetcher = {
       sourceName,
     );
 
-    return courtDecisions?.filter((courtDecision) => {
-      if (!courtDecision.originalText) {
-        return false;
-      }
-      return true;
-    });
+    return courtDecisions;
   },
 };

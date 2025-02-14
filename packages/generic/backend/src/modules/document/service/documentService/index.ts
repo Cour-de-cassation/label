@@ -5,9 +5,7 @@ import { countDocumentsWithoutAnnotations } from './countDocumentsWithoutAnnotat
 import { countDoneDocumentsWithoutLossNotIn } from './countDoneDocumentsWithoutLossNotIn';
 import { countDoneDocuments } from './countDoneDocuments';
 import { countFreeDocuments } from './countFreeDocuments';
-import { countLoadedDocuments } from './countLoadedDocuments';
 import { countLockedDocuments } from './countLockedDocuments';
-import { countNlpAnnotatingDocuments } from './countNlpAnnotatingDocuments';
 import { countPendingDocuments } from './countPendingDocuments';
 import { countRejectedDocuments } from './countRejectedDocuments';
 import { countSavedDocuments } from './countSavedDocuments';
@@ -23,7 +21,6 @@ import { fetchDocument } from './fetchDocument';
 import { buildFetchDocumentsForUser } from './fetchDocumentsForUser';
 import { fetchDocumentBySourceAndDocumentNumber } from './fetchDocumentBySourceAndDocumentNumber';
 import { fetchDocumentsReadyToExport } from './fetchDocumentsReadyToExport';
-import { fetchDocumentWithoutAnnotationsNotIn } from './fetchDocumentWithoutAnnotationsNotIn';
 import { fetchDoneDocuments } from './fetchDoneDocuments';
 import { fetchDoneDocumentWithoutLossNotIn } from './fetchDoneDocumentWithoutLossNotIn';
 import { fetchFreeDocumentsIds } from './fetchFreeDocumentsIds';
@@ -46,7 +43,6 @@ import { updateDocumentComputedAdditionalTerms } from './updateDocumentComputedA
 import { updateDocumentStatus } from './updateDocumentStatus';
 import { fetchAllImporters } from './fetchAllImporters';
 import { updateDocumentAdditionalTermsParsingFailed } from './updateDocumentAdditionalTermsParsingFailed';
-import { updateDocumentNlpVersions } from './updateDocumentNlpVersions';
 import { updateDocumentChecklist } from './updateDocumentChecklist';
 
 export { buildDocumentService, documentService };
@@ -70,9 +66,7 @@ function buildDocumentService() {
     countDoneDocumentsWithoutLossNotIn,
     countDoneDocuments,
     countFreeDocuments,
-    countLoadedDocuments,
     countLockedDocuments,
-    countNlpAnnotatingDocuments,
     countPendingDocuments,
     countRejectedDocuments,
     countSavedDocuments,
@@ -89,7 +83,6 @@ function buildDocumentService() {
     fetchDocumentBySourceAndDocumentNumber,
     fetchDocumentsForUser: buildFetchDocumentsForUser(checkCallAttempts),
     fetchDocumentsReadyToExport,
-    fetchDocumentWithoutAnnotationsNotIn,
     fetchDoneDocuments,
     fetchDoneDocumentWithoutLossNotIn,
     fetchFreeDocumentsIds,
@@ -111,7 +104,6 @@ function buildDocumentService() {
     updateDocumentCategoriesToOmit,
     updateDocumentComputedAdditionalTerms,
     updateDocumentAdditionalTermsParsingFailed,
-    updateDocumentNlpVersions,
     updateDocumentChecklist,
   };
 }

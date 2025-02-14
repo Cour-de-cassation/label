@@ -2,24 +2,6 @@ import { documentModule, treatmentModule, treatmentType } from '../../';
 import { concat } from './concat';
 
 describe('concat', () => {
-  const nlpVersion = {
-    juriSpacyTokenizer: {
-      version: `VERSION_${Math.random()}`,
-      date: `DATE_${Math.random()}`,
-    },
-    juritools: {
-      version: `VERSION_${Math.random()}`,
-      date: `DATE_${Math.random()}`,
-    },
-    pseudonymisationApi: {
-      version: `VERSION_${Math.random()}`,
-      date: `DATE_${Math.random()}`,
-    },
-    model: {
-      name: `MODEL_${Math.random()}`,
-    },
-  };
-
   it('should return a labelTreatment', () => {
     const document = documentModule.generator.generate();
     const treatments: treatmentType[] = [
@@ -40,27 +22,26 @@ describe('concat', () => {
       { documentId: document._id, order: 3, source: 'admin' as treatmentType['source'], lastUpdateDate: 1720776507123 },
     ].map(treatmentModule.generator.generate);
 
-    const labelTreatments = concat(treatments, nlpVersion);
+    const labelTreatments = concat(treatments);
 
     expect(labelTreatments).toEqual([
-      { annotations: [], order: 1, source: 'NLP', treatmentDate: '2024-07-12T08:38:27.000Z', version: nlpVersion },
       {
         annotations: [],
-        order: 2,
+        order: 1,
         source: 'LABEL_AUTO_TREATMENT',
         treatmentDate: '2024-07-12T09:29:27.000Z',
         version: undefined,
       },
       {
         annotations: [],
-        order: 3,
+        order: 2,
         source: 'LABEL_WORKING_USER_TREATMENT',
         treatmentDate: '2024-07-12T09:28:27.700Z',
         version: undefined,
       },
       {
         annotations: [],
-        order: 4,
+        order: 3,
         source: 'LABEL_WORKING_USER_TREATMENT',
         treatmentDate: '2024-07-12T09:28:27.123Z',
         version: undefined,
@@ -107,16 +88,6 @@ describe('concat', () => {
     ]);
   });
   it('should return a checklist in the NLP treatment', () => {
-    const checklist = [
-      {
-        check_type: 'check',
-        message: 'message',
-        short_message: 'short message',
-        entities: [],
-        sentences: [],
-        metadata_text: [],
-      },
-    ];
     const document = documentModule.generator.generate();
     const treatments: treatmentType[] = [
       {
@@ -129,20 +100,12 @@ describe('concat', () => {
       { documentId: document._id, order: 0, source: 'NLP' as treatmentType['source'], lastUpdateDate: 1720773507000 },
     ].map(treatmentModule.generator.generate);
 
-    const labelTreatments = concat(treatments, nlpVersion, checklist);
+    const labelTreatments = concat(treatments);
 
     expect(labelTreatments).toEqual([
       {
         annotations: [],
         order: 1,
-        source: 'NLP',
-        treatmentDate: '2024-07-12T08:38:27.000Z',
-        version: nlpVersion,
-        checklist: checklist,
-      },
-      {
-        annotations: [],
-        order: 2,
         source: 'LABEL_WORKING_USER_TREATMENT',
         treatmentDate: '2024-07-12T09:28:27.700Z',
         version: undefined,

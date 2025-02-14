@@ -3,14 +3,11 @@ import { buildRunScript } from './buildRunScript';
 import { buildRunServer } from './buildRunServer';
 import {
   cleanDocuments,
-  clearDb,
   deleteDocument,
   displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,
   freePendingDocuments,
-  insertTestStatistics,
-  insertTestUsers,
   insertUser,
   listAllDocuments,
   listAllCaches,
@@ -35,10 +32,6 @@ function buildBackend(settings: settingsType) {
         run: cleanDocuments,
         option: { shouldLoadDb: true, shouldExit: false },
       },
-      clearDb: {
-        run: clearDb,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
       deleteDocument: {
         run: deleteDocument,
         option: { shouldLoadDb: true, shouldExit: false },
@@ -57,15 +50,6 @@ function buildBackend(settings: settingsType) {
       },
       freePendingDocuments: {
         run: freePendingDocuments,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      insertTestStatistics: {
-        run: insertTestStatistics,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-
-      insertTestUsers: {
-        run: insertTestUsers,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       insertUser: {

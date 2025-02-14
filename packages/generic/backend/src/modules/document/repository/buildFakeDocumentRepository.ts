@@ -235,25 +235,6 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       return documents;
     },
 
-    async updateNlpVersionsById(_id, nlpVersions) {
-      updateFakeCollection(
-        collection,
-        collection.map((document) =>
-          idModule.lib.equalId(_id, document._id)
-            ? {
-                ...document,
-                nlpVersions,
-              }
-            : document,
-        ),
-      );
-      const updatedDocument = collection.find((document) =>
-        idModule.lib.equalId(_id, document._id),
-      );
-
-      return updatedDocument;
-    },
-
     async updateLossById(_id, loss) {
       updateFakeCollection(
         collection,

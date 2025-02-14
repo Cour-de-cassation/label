@@ -13,7 +13,7 @@ You can lauch the backend with or withour docker. To configure each of these met
 
 Copy and rename `docker.env.example` and `.env.example`.
 
-Label depends on 2 other services from the Cour de cassation : dbsder-api and nlp-pseudonymisation-api. You can lauch these services locally to simulate operation close to production or you can disable theses services from env files. In this case these 2 services are emulated by Label with the storage folder. To do so, follow the `Add documents you want to annotate` step in the [reuser guide](docs/reuserGuide.md) or just rename the `storage-example` folder to `storage`.
+Label depends on one other service from the Cour de cassation : [dbsder-api](https://github.com/cour-de-cassation/dbsder-api). This API is used to import and export decisions in label.
 
 ## Installation and lauch
 
@@ -65,11 +65,12 @@ yarn start:backend:dev
 
 ### Database
 
-You can init database with :
+You can init/load/clean database with seeds scripts :
 
-```sh
-yarn init:db
-```
+- clean the database : `node seeds/clean.js`
+- load fake data in all collections : `node seeds/load.js`
+- save your current database data on seeds : `node seeds/save.js`
+- refresh date to a recent date : `node seeds/refreshDate.js <timestamp>`
 
 This script is lauch with the `.env` configuration.
 

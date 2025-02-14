@@ -225,7 +225,10 @@ async function mapCourtDecisionToDocument(
     text: sderCourtDecision.originalText,
     zoning: zoning,
     nlpVersions: {} as documentType['nlpVersions'],
-    checklist: [],
+    checklist:
+      sderCourtDecision.labelTreatments
+        ?.filter((treatment) => treatment.source === 'NLP')
+        .sort((a, b) => b.order - a.order)[0].checklist ?? [],
   });
 }
 

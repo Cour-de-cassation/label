@@ -23,6 +23,8 @@
     "docker:start:backend": "docker compose -f docker-compose-dev.yml up -d",
     "docker:start:db": "docker compose -f docker-compose-dev.yml up -d labelDb",
     "docker:stop:db": "docker compose -f docker-compose-dev.yml down labelDb",
+    "docker:start:auth": "docker compose -f docker-compose-dev.yml up -d auth",
+    "docker:stop:auth": "docker compose -f docker-compose-dev.yml down auth",
     "fix": "lerna run fix",
     "init:db": "scripts/initializeTestDb.sh",
     "lint": "lerna run lint",

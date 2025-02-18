@@ -27,6 +27,20 @@ services:
       - dbsder-external-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+  auth:
+    image: quay.io/keycloak/keycloak:26.1.2
+    command: ["start-dev", "--import-realm"]
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+    volumes:
+      - ./keycloak-realm-config.json:/opt/keycloak/data/import/keycloak-realm-config.json
+    ports:
+      - "8085:8080"
+    depends_on:
+      - labelDb
+    networks:
+      - default
 
 networks:
   default:

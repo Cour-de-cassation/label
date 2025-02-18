@@ -6,17 +6,9 @@ Here are all the cron jobs of Label :
 
 Send Label documents to the nlp annotation service.
 
-## import-j-7
+## tobetreated-document-import
 
-Import recent (7 days) documents from the source databases.
-
-## filler-import
-
-Fill Label with old documents if Label is lacking of documents to treat.
-
-## import-chained
-
-Import chained decisions.
+Import all documents that must be treat in label.
 
 ## export-j-4
 

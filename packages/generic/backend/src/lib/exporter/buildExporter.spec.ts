@@ -9,7 +9,7 @@ import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildExporter } from './buildExporter';
 import { exporterConfigType } from './exporterConfigType';
-import { labelTreatmentsType } from 'sder';
+import { LabelTreatment } from 'dbsder-api-types';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 describe('buildExporter', () => {
@@ -22,19 +22,34 @@ describe('buildExporter', () => {
   describe('exportTreatedDocumentsSince', () => {
     it('should export all the ready document since the given days fetched by the exporter', async () => {
       const days = 4;
+      const checklist = [
+        {
+          check_type: 'check',
+          message: 'message',
+          short_message: 'short message',
+          entities: [],
+          sentences: [],
+          metadata_text: [],
+        },
+      ];
       const documents = ([
         {
           text: 'Benoit est ingénieur',
           status: 'done',
           updateDate: dateBuilder.daysAgo(5),
+          checklist: checklist,
         },
         { status: 'pending' },
         {
           text: 'Romain est designer',
           status: 'done',
           updateDate: dateBuilder.daysAgo(7),
+          checklist: checklist,
         },
-        { status: 'done', updateDate: dateBuilder.daysAgo(2) },
+        {
+          status: 'done',
+          updateDate: dateBuilder.daysAgo(2),
+        },
       ] as const).map(documentModule.generator.generate);
       const treatments = [
         {
@@ -90,44 +105,40 @@ describe('buildExporter', () => {
       expect(exportedPseudonymizationTexts.sort()).toEqual(
         ['[FIRST_NAME 1] est ingénieur', '[FIRST_NAME 1] est designer'].sort(),
       );
-      expect(exportedLabelTreatments.sort()).toEqual(
-        [
-          [
+      expect(exportedLabelTreatments.sort()).toEqual([
+        {
+          annotations: [
             {
-              annotations: [
-                {
-                  category: 'firstName',
-                  certaintyScore: 1,
-                  entityId: 'firstName_Benoit',
-                  start: 0,
-                  text: 'Benoit',
-                },
-              ],
-              source: 'NLP',
-              order: 1,
-              treatmentDate: '2024-07-12T09:28:27.000Z',
-              version: undefined,
+              category: 'firstName',
+              certaintyScore: 1,
+              entityId: 'firstName_Benoit',
+              start: 0,
+              text: 'Benoit',
             },
           ],
-          [
+          order: 1,
+          source: 'NLP',
+          treatmentDate: '2024-07-12T09:28:27.000Z',
+          version: undefined,
+          checklist: checklist,
+        },
+        {
+          annotations: [
             {
-              annotations: [
-                {
-                  category: 'firstName',
-                  certaintyScore: 1,
-                  entityId: 'firstName_Romain',
-                  start: 0,
-                  text: 'Romain',
-                },
-              ],
-              source: 'NLP',
-              order: 1,
-              treatmentDate: '2024-07-12T09:29:59.000Z',
-              version: undefined,
+              category: 'firstName',
+              certaintyScore: 1,
+              entityId: 'firstName_Romain',
+              start: 0,
+              text: 'Romain',
             },
           ],
-        ].sort(),
-      );
+          order: 1,
+          source: 'NLP',
+          treatmentDate: '2024-07-12T09:29:59.000Z',
+          version: undefined,
+          checklist: checklist,
+        },
+      ]);
     });
   });
 });
@@ -135,12 +146,12 @@ describe('buildExporter', () => {
 function buildFakeExporterConfig(): exporterConfigType & {
   getExportedExternalIds: () => string[];
   getExportedPseudonymizationTexts: () => string[];
-  getExportedLabelTreatments: () => labelTreatmentsType[];
+  getExportedLabelTreatments: () => LabelTreatment[];
   getLockedExternalIds: () => string[];
 } {
   const exportedExternalIds: string[] = [];
   const exportedpseudonymizationTexts: string[] = [];
-  const exportedlabelTreatments: labelTreatmentsType[] = [];
+  const exportedlabelTreatments: LabelTreatment[] = [];
   const lockedExternalIds: string[] = [];
 
   return {
@@ -148,12 +159,12 @@ function buildFakeExporterConfig(): exporterConfigType & {
 
     async sendDocumentPseudonymisationAndTreatments({
       externalId,
-      pseudonymizationText,
+      pseudoText,
       labelTreatments,
     }) {
       exportedExternalIds.push(externalId);
-      exportedpseudonymizationTexts.push(pseudonymizationText);
-      exportedlabelTreatments.push(labelTreatments);
+      exportedpseudonymizationTexts.push(pseudoText);
+      exportedlabelTreatments.push(...labelTreatments);
     },
 
     getExportedExternalIds() {
@@ -166,10 +177,6 @@ function buildFakeExporterConfig(): exporterConfigType & {
 
     getExportedLabelTreatments() {
       return exportedlabelTreatments;
-    },
-
-    async sendDocumentBlockedStatus({ externalId }) {
-      lockedExternalIds.push(externalId);
     },
 
     getLockedExternalIds() {

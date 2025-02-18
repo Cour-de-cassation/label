@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  annotationReportType,
   annotationsDiffType,
   annotationType,
   assignationType,
@@ -25,7 +24,6 @@ export { HomeDocumentAnnotator };
 
 function HomeDocumentAnnotator(props: {
   annotations: annotationType[];
-  checklist: annotationReportType['checklist'];
   assignationId: assignationType['_id'];
   committer: annotationsCommitterType;
   document: fetchedDocumentType;
@@ -57,7 +55,6 @@ function HomeDocumentAnnotator(props: {
       initialAnnotatorState={{
         assignationId: props.assignationId,
         annotations: props.annotations,
-        checklist: props.checklist,
         document: props.document,
         settings: props.settings,
         mandatoryReplacementTerms: [] as replacementTermType[],

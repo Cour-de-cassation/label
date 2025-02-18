@@ -1,9 +1,38 @@
-import { generatorType, generatorDecisionMetadataType } from '../../../types';
+import { generatorType } from '../../../types';
 import { idModule } from '../../id';
 import { documentType } from '../documentType';
 
-export { documentGenerator, decisionMetadataGenerator };
-const decisionMetadataGenerator: generatorDecisionMetadataType<documentType['decisionMetadata']> = {
+export { documentGenerator, decisionMetadataGenerator, checklistGenerator };
+
+const checklistGenerator = {
+  generate(size: number): documentType['checklist'] {
+    return Array.from({ length: size }, () => ({
+      check_type: `CHECK_TYPE_${Math.random()}`,
+      message: "Default message: L'annotation 'Test' est présente dans différentes catégories.",
+      short_message: 'Default short message: Annotation dans plusieurs catégories ?',
+      entities: [
+        {
+          text: 'DefaultEntity',
+          start: Math.floor(Math.random() * 100),
+          end: Math.floor(Math.random() * 100 + 100),
+          category: `defaultCategory_${Math.random()}`,
+          source: 'test',
+          score: Math.random(),
+          entityId: `defaultEntity_${Math.random()}`,
+        },
+      ],
+      sentences: [
+        {
+          start: Math.floor(Math.random() * 100),
+          end: Math.floor(Math.random() * 100 + 100),
+        },
+      ],
+      metadata_text: [`metadata_${Math.random()}`, `_metadata_${Math.random()}`],
+    }));
+  },
+};
+
+const decisionMetadataGenerator: generatorType<documentType['decisionMetadata']> = {
   generate: ({
     additionalTermsToAnnotate,
     additionalTermsParsingFailed,
@@ -67,6 +96,7 @@ const documentGenerator: generatorType<documentType> = {
     updateDate,
     zoning,
     nlpVersions,
+    checklist,
   } = {}) => ({
     creationDate: creationDate ? creationDate : new Date().getTime(),
     decisionMetadata: decisionMetadata ? decisionMetadata : decisionMetadataGenerator.generate(),
@@ -86,5 +116,6 @@ const documentGenerator: generatorType<documentType> = {
     updateDate: updateDate ?? new Date().getTime(),
     zoning: zoning ?? undefined,
     nlpVersions: nlpVersions ?? undefined,
+    checklist: checklist ?? checklistGenerator.generate(Math.floor(Math.random() * (10 - 0 + 1) + 0)),
   }),
 };

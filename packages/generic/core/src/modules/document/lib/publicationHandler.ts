@@ -1,4 +1,3 @@
-import { decisionType } from 'sder';
 import { documentType } from '../documentType';
 
 export { publicationHandler };
@@ -21,7 +20,10 @@ function getPrioritizedNACCodes() {
   return PRIORITIZED_NAC_CODES;
 }
 
-function mustBePublished(publicationCategory: documentType['publicationCategory'], NACCode?: decisionType['NACCode']) {
+function mustBePublished(
+  publicationCategory: documentType['publicationCategory'],
+  NACCode?: documentType['decisionMetadata']['NACCode'],
+) {
   return (
     PUBLISHED_PUBLICATION_CATEGORY_LETTERS.some((publicationCategoryLetter) =>
       publicationCategory.includes(publicationCategoryLetter),

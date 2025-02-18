@@ -15,7 +15,6 @@ import { treatmentService } from '../modules/treatment';
 import { userService } from '../modules/user';
 import { buildAuthenticatedController } from './buildAuthenticatedController';
 import { controllersFromSchemaType } from './controllerType';
-import { annotationReportService } from '../modules/annotationReport';
 import { preAssignationService } from '../modules/preAssignation';
 
 export { controllers };
@@ -51,14 +50,6 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       permissions: ['admin', 'scrutator'],
       controllerWithUser: async (_, { args: { documentId } }) =>
         treatmentService.fetchAnnotationsDiffDetailsForDocument(
-          idModule.lib.buildId(documentId),
-        ),
-    }),
-
-    checklist: buildAuthenticatedController({
-      permissions: ['admin', 'annotator', 'scrutator'],
-      controllerWithUser: async (_, { args: { documentId } }) =>
-        annotationReportService.fetchChecklistByDocumentId(
           idModule.lib.buildId(documentId),
         ),
     }),

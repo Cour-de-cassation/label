@@ -1,7 +1,7 @@
 import { idType } from '../id';
 import { buildModel, buildType } from '../modelType';
 
-export { documentModel, fetchedDocumentModel };
+export { documentModel, fetchedDocumentModel, checklistModel };
 
 export type { documentType, fetchedDocumentType };
 
@@ -201,6 +201,47 @@ const zoning = {
   ],
 } as const;
 
+const checklistModel = {
+  kind: 'array',
+  content: {
+    kind: 'object',
+    content: {
+      check_type: {
+        kind: 'primitive',
+        content: 'string',
+      },
+      message: { kind: 'primitive', content: 'string' },
+      short_message: { kind: 'primitive', content: 'string' },
+      entities: {
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            text: { kind: 'primitive', content: 'string' },
+            start: { kind: 'primitive', content: 'number' },
+            category: { kind: 'primitive', content: 'string' },
+            source: { kind: 'primitive', content: 'string' },
+            score: { kind: 'primitive', content: 'number' },
+            entityId: { kind: 'primitive', content: 'string' },
+            end: { kind: 'primitive', content: 'number' },
+          },
+        },
+      },
+      sentences: {
+        kind: 'array',
+        content: {
+          kind: 'object',
+          content: {
+            start: { kind: 'primitive', content: 'number' },
+            end: { kind: 'primitive', content: 'number' },
+          },
+        },
+      },
+      metadata_text: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+    },
+  },
+} as const;
+
 const documentModelCommonFields = {
   creationDate: {
     kind: 'or',
@@ -257,7 +298,43 @@ const documentModelCommonFields = {
       },
       NACCode: { kind: 'primitive', content: 'string' },
       endCaseCode: { kind: 'primitive', content: 'string' },
-      parties: { kind: 'array', content: { kind: 'primitive', content: 'string' } },
+      parties: {
+        kind: 'or',
+        content: [
+          {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {
+                type: { kind: 'primitive', content: 'string' },
+                nom: { kind: 'primitive', content: 'string' },
+                prenom: { kind: 'primitive', content: 'string' },
+                civilite: {
+                  kind: 'or',
+                  content: [
+                    { kind: 'primitive', content: 'string' },
+                    { kind: 'primitive', content: 'undefined' },
+                  ],
+                },
+                qualite: {
+                  kind: 'or',
+                  content: [
+                    { kind: 'primitive', content: 'string' },
+                    { kind: 'primitive', content: 'undefined' },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            kind: 'array',
+            content: {
+              kind: 'object',
+              content: {},
+            },
+          },
+        ],
+      },
       session: { kind: 'primitive', content: 'string' },
       solution: { kind: 'primitive', content: 'string' },
       motivationOccultation: {
@@ -351,6 +428,7 @@ const documentModelCommonFields = {
   title: { kind: 'primitive', content: 'string' },
   text: { kind: 'primitive', content: 'string' },
   zoning: zoning,
+  checklist: checklistModel,
 } as const;
 
 const fetchedDocumentModel = buildModel({

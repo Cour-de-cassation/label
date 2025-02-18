@@ -1,9 +1,4 @@
-import {
-  annotationModule,
-  annotationReportModule,
-  documentModule,
-  settingsModule,
-} from '@label/core';
+import { annotationModule, documentModule, settingsModule } from '@label/core';
 import { range } from 'lodash';
 import {
   documentService,
@@ -56,13 +51,11 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
           certaintyScore: Math.random(),
         }),
       );
-      const report = annotationReportModule.generator.generate({
-        documentId: document._id,
-      });
+      const checklist = documentModule.checklistGenerator.generate(4);
 
       const version = documentModule.generator.generate().nlpVersions;
 
-      return { annotations, documentId: document._id, report, version };
+      return { annotations, documentId: document._id, checklist, version };
     },
     async fetchLossOfDocument() {
       return 0;

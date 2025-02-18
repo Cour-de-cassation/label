@@ -1,6 +1,5 @@
 import {
   annotationModule,
-  annotationReportModule,
   annotationsDiffModule,
   documentModule,
   problemReportModule,
@@ -94,15 +93,6 @@ const apiSchema = {
           },
         }),
       },
-    },
-    checklist: {
-      in: {
-        documentId: buildModel({
-          kind: 'primitive',
-          content: 'string',
-        } as const),
-      },
-      out: annotationReportModule.model.content.checklist,
     },
     annotations: {
       in: {

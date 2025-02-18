@@ -90,6 +90,10 @@ type customDocumentRepositoryType = {
     _id: idType,
     additionalTermsParsingFailed: documentType['decisionMetadata']['additionalTermsParsingFailed'],
   ) => Promise<documentType | undefined>;
+  updateChecklistById: (
+    _id: idType,
+    checklist: documentType['checklist'],
+  ) => Promise<documentType | undefined>;
   updateCategoriesToOmitById: (
     _id: idType,
     loss: documentType['decisionMetadata']['categoriesToOmit'],

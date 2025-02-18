@@ -1,14 +1,12 @@
-import { labelTreatmentsType } from 'sder';
 import { idModule } from '@label/core';
 import { mapCourtDecisionToDocument } from './mapCourtDecisionToDocument';
+import { LabelStatus, Sources } from 'dbsder-api-types';
 
 describe('mapCourtDecisionToDocument', () => {
   it('should return priority 0 because it has the filler importer', async () => {
     const document = await mapCourtDecisionToDocument(
       {
-        _id: idModule.lib.buildId(),
-        _rev: 0,
-        _version: 0,
+        _id: idModule.lib.buildId().toString(),
         analysis: {
           analyse: [],
           doctrine: '',
@@ -25,23 +23,26 @@ describe('mapCourtDecisionToDocument', () => {
         jurisdictionCode: '',
         jurisdictionId: '',
         jurisdictionName: '',
-        labelStatus: 'toBeTreated',
-        labelTreatments: ([] as any) as labelTreatmentsType,
-        locked: false,
+        labelStatus: LabelStatus.TOBETREATED,
+        labelTreatments: [],
+        blocOccultation: 0,
+        dateCreation: '',
+        dateDecision: '',
         occultation: {
           additionalTerms: '',
           categoriesToOmit: [],
+          motivationOccultation: false,
         },
         originalText: '',
         parties: [],
-        public: null,
+        public: undefined,
         pseudoStatus: '',
         pseudoText: '',
         pubCategory: '',
         registerNumber: '',
         solution: '',
         sourceId: 0,
-        sourceName: '',
+        sourceName: Sources.CA,
       },
       'filler',
     );
@@ -52,9 +53,7 @@ describe('mapCourtDecisionToDocument', () => {
   it('should return priority 1 because it has the chained importer', async () => {
     const document = await mapCourtDecisionToDocument(
       {
-        _id: idModule.lib.buildId(),
-        _rev: 0,
-        _version: 0,
+        _id: idModule.lib.buildId().toString(),
         analysis: {
           analyse: [],
           doctrine: '',
@@ -71,23 +70,26 @@ describe('mapCourtDecisionToDocument', () => {
         jurisdictionCode: '',
         jurisdictionId: '',
         jurisdictionName: '',
-        labelStatus: 'toBeTreated',
-        labelTreatments: ([] as any) as labelTreatmentsType,
-        locked: false,
+        labelStatus: LabelStatus.TOBETREATED,
+        labelTreatments: [],
+        blocOccultation: 0,
+        dateCreation: '',
+        dateDecision: '',
         occultation: {
           additionalTerms: '',
           categoriesToOmit: [],
+          motivationOccultation: false,
         },
         originalText: '',
         parties: [],
-        public: null,
+        public: undefined,
         pseudoStatus: '',
         pseudoText: '',
         pubCategory: '',
         registerNumber: '',
         solution: '',
         sourceId: 0,
-        sourceName: '',
+        sourceName: Sources.CA,
       },
       'chained',
     );

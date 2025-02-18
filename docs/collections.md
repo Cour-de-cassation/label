@@ -1,6 +1,5 @@
 # Mongo collections
 
-- annotationReports
 - assignations
 - documents
 - problemReports

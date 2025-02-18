@@ -1,0 +1,167 @@
+[
+  {
+    "_id": {
+      "$oid": "673efb85cc7af61ae5a18551"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca7b3d0bde2f"
+    },
+    "treatmentId": {
+      "$oid": "673efb85cc7af676b9a18550"
+    },
+    "assignationDate": 1732180869007
+  },
+  {
+    "_id": {
+      "$oid": "673efbf0cc7af64cf9a185c3"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca8a0c0bde8a"
+    },
+    "treatmentId": {
+      "$oid": "673efbf0cc7af62ecaa185c2"
+    },
+    "assignationDate": 1732180976950
+  },
+  {
+    "_id": {
+      "$oid": "673efc09cc7af677aaa185de"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca78a70bdebe"
+    },
+    "treatmentId": {
+      "$oid": "673efc09cc7af627ada185dd"
+    },
+    "assignationDate": 1732181001641
+  },
+  {
+    "_id": {
+      "$oid": "673efc2ccc7af63014a18605"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca89270bde85"
+    },
+    "treatmentId": {
+      "$oid": "673efc2ccc7af66f18a18604"
+    },
+    "assignationDate": 1732181036432
+  },
+  {
+    "_id": {
+      "$oid": "673efcfacc7af6bf0fa18617"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca7f630bdec7"
+    },
+    "treatmentId": {
+      "$oid": "673efcfacc7af625baa18616"
+    },
+    "assignationDate": 1732181242965
+  },
+  {
+    "_id": {
+      "$oid": "673efcfccc7af646d4a1861a"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca73960bde92"
+    },
+    "treatmentId": {
+      "$oid": "673efcfccc7af6db91a18619"
+    },
+    "assignationDate": 1732181244966
+  },
+  {
+    "_id": {
+      "$oid": "673efd1bcc7af677a4a1863b"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca8bad0bdede"
+    },
+    "treatmentId": {
+      "$oid": "673efd1bcc7af6bf61a1863a"
+    },
+    "assignationDate": 1732181275536
+  },
+  {
+    "_id": {
+      "$oid": "673efd1ecc7af60534a1863e"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca815d0bdeaa"
+    },
+    "treatmentId": {
+      "$oid": "673efd1ecc7af649b1a1863d"
+    },
+    "assignationDate": 1732181278047
+  },
+  {
+    "_id": {
+      "$oid": "673efd3bcc7af669a5a18662"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca8cd50bdec3"
+    },
+    "treatmentId": {
+      "$oid": "673efd3bcc7af6a61da18661"
+    },
+    "assignationDate": 1732181307257
+  },
+  {
+    "_id": {
+      "$oid": "673efd3dcc7af64f90a18665"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca73e80bdea0"
+    },
+    "treatmentId": {
+      "$oid": "673efd3dcc7af63d09a18664"
+    },
+    "assignationDate": 1732181309913
+  },
+  {
+    "_id": {
+      "$oid": "673eff1b175f1b307234284e"
+    },
+    "userId": {
+      "$oid": "673dfc2648894027060ab9fc"
+    },
+    "documentId": {
+      "$oid": "673dfab6d3d2ca75b10bdecc"
+    },
+    "treatmentId": {
+      "$oid": "673eff1b175f1b5f2234284d"
+    },
+    "assignationDate": 1732181787688
+  }
+]

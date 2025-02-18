@@ -18,6 +18,7 @@ describe('statisticsCreator', () => {
   const duration = 1500;
   const userId = idModule.lib.buildId();
   const decisionDate = new Date().getTime();
+  const documentChecklist = documentModule.checklistGenerator.generate(4);
   const document = documentModule.generator.generate({
     decisionMetadata: documentModule.decisionMetadataGenerator.generate({
       additionalTermsToAnnotate: '',
@@ -44,6 +45,7 @@ describe('statisticsCreator', () => {
     importer: 'recent',
     source: documentSource,
     text: 'Some text with five words',
+    checklist: documentChecklist,
   });
   const settings = settingsModule.lib.buildSettings({
     personnePhysiqueNom: { isSensitive: true, isAnonymized: true },
@@ -118,6 +120,7 @@ describe('statisticsCreator', () => {
         treatmentDate: TREATMENT_DATE.getTime(),
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
+        checklist: documentChecklist,
       });
     });
 
@@ -183,6 +186,7 @@ describe('statisticsCreator', () => {
         treatmentDate: TREATMENT_DATE.getTime(),
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
+        checklist: documentChecklist,
       });
     });
   });

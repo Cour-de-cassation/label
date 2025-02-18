@@ -1,11 +1,10 @@
 import {
   annotationType,
-  annotationReportType,
   documentType,
   idType,
   settingsType,
 } from '@label/core';
-import { labelTreatmentsType } from 'sder';
+import { LabelTreatment } from 'dbsder-api-types';
 
 export type { annotatorConfigType };
 
@@ -17,7 +16,7 @@ type annotatorConfigType = {
   ): Promise<{
     annotations: annotationType[];
     documentId: idType;
-    report: annotationReportType;
+    checklist: documentType['checklist'];
     newCategoriesToAnnotate?: string[];
     newCategoriesToUnAnnotate?: string[];
     computedAdditionalTerms?: documentType['decisionMetadata']['computedAdditionalTerms'];
@@ -26,6 +25,6 @@ type annotatorConfigType = {
   }>;
   fetchLossOfDocument: (
     document: documentType,
-    treatments: labelTreatmentsType,
+    treatments: LabelTreatment[],
   ) => Promise<number>;
 };

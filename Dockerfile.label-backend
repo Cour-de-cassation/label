@@ -9,7 +9,7 @@ RUN yarn config set proxy $http_proxy; \
 
 WORKDIR /home/node/
 
-# Install git for sder and sder-core package
+# Install git for pelta-design-system
 RUN apk add git
 
 # Copy context files

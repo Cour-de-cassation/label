@@ -1,5 +1,4 @@
 import { idModule, userModule, userType } from '@label/core';
-import { errorHandlers } from 'sder-core';
 
 export { buildAuthenticatedController };
 
@@ -34,9 +33,7 @@ function buildAuthenticatedController<inT, outT>({
   }) => {
     const currentUser = req.session?.user ?? null;
     if (!currentUser) {
-      throw errorHandlers.authenticationErrorHandler.build(
-        `user session has expired or is invalid`,
-      );
+      throw new Error(`user session has expired or is invalid`);
     }
 
     const resolvedUser = {

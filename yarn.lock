@@ -15706,14 +15706,6 @@ schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.1, schema-utils@^2.6
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-"sder-core@https://github.com/Cour-de-cassation/sder-core#8afb44f74c9ffefbbadc6f0d3de0def1c916dcc7":
-  version "1.0.0"
-  resolved "https://github.com/Cour-de-cassation/sder-core#8afb44f74c9ffefbbadc6f0d3de0def1c916dcc7"
-  dependencies:
-    bcryptjs "^2.4.3"
-    jsonwebtoken "^8.5.1"
-    lodash "^4.17.21"
-
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"

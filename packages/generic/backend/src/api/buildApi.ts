@@ -1,6 +1,5 @@
 import { Express } from 'express';
 import { mapValues } from 'lodash';
-import { CustomError, httpStatusCodeHandler } from 'sder-core';
 import { apiSchema, apiSchemaMethodNameType } from '@label/core';
 import { logger } from '../utils';
 import { controllers } from './controllers';
@@ -78,13 +77,7 @@ function buildController(
       res.send(data);
     } catch (error) {
       logger.error({ operationName: 'buildController', msg: `${error}` });
-
-      if (error instanceof CustomError) {
-        res.status(error.statusCode);
-      } else {
-        res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
-      }
-
+      res.status((error as any).statusCode || 500);
       next(error);
     }
 
@@ -104,7 +97,7 @@ function buildController(
               session: req.session,
               path: req.path,
             }),
-            statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.OK,
+            statusCode: 200,
           };
         case 'post':
           return {
@@ -114,7 +107,7 @@ function buildController(
               session: req.session,
               path: req.path,
             }),
-            statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.CREATED,
+            statusCode: 201,
           };
       }
     }
@@ -127,9 +120,7 @@ function buildApiSso(app: Express) {
       const xml = await ssoService.getMetadata();
       res.type('application/xml').send(xml);
     } catch (err) {
-      res
-        .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
-        .send(`Metadata SAML protocol error ${err}`);
+      res.status(500).send(`Metadata SAML protocol error ${err}`);
     }
   });
 
@@ -142,11 +133,7 @@ function buildApiSso(app: Express) {
         operationName: 'login SSO ',
         msg: `${err}`,
       });
-      res
-        .status(
-          httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
-        )
-        .json({ status: 401, message: err.message });
+      res.status(401).json({ status: 401, message: err.message });
     }
   });
 
@@ -155,7 +142,7 @@ function buildApiSso(app: Express) {
     const sessionIndex = String(req.session.user?.sessionIndex);
     req.session.destroy(async (err) => {
       if (err) {
-        res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
+        res.status(500);
       }
       try {
         const context = await ssoService.logout({ nameID, sessionIndex });
@@ -165,9 +152,7 @@ function buildApiSso(app: Express) {
           operationName: 'logoutSso SamlService ',
           msg: `${err}`,
         });
-        res
-          .status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR)
-          .json({ status: 500, message: err.message });
+        res.status(500).json({ status: 500, message: err.message });
       }
     });
   });
@@ -176,9 +161,7 @@ function buildApiSso(app: Express) {
     const user = req.session?.user ?? null;
     if (!user) {
       return res
-        .status(
-          httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
-        )
+        .status(401)
         .send({ status: 401, message: `Session invalid or expired` });
     }
     res.type('application/json').send(user);
@@ -189,7 +172,7 @@ function buildApiSso(app: Express) {
       const url = await ssoService.acs(req);
       res.redirect(url);
     } catch (err) {
-      res.status(httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.SERVER_ERROR);
+      res.status(500);
       res.redirect(`${API_BASE_URL}/sso/logout`);
     }
   });

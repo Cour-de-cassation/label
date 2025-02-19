@@ -1,4 +1,4 @@
-import { userModule, userType } from '@label/core';
+import { userType } from '@label/core';
 import { buildFakeRepositoryBuilder } from '../../../repository';
 import { customUserRepositoryType } from './customUserRepositoryType';
 
@@ -11,7 +11,7 @@ const buildFakeUserRepository = buildFakeRepositoryBuilder<
   collectionName: 'users',
   buildCustomFakeRepository: (collection) => ({
     async findByEmail(email) {
-      const formattedEmail = userModule.lib.formatEmail(email);
+      const formattedEmail = email.trim().toLowerCase();
       const result = collection.find((user) => user.email === formattedEmail);
       if (!result) {
         throw new Error(`No matching user for email ${email}`);

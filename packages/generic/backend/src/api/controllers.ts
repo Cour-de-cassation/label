@@ -4,7 +4,6 @@ import {
   idModule,
   replacementTermType,
 } from '@label/core';
-import { errorHandlers } from 'sder-core';
 import { settingsLoader } from '../lib/settingsLoader';
 import { assignationService } from '../modules/assignation';
 import { cacheService } from '../modules/cache';
@@ -300,7 +299,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             assignation.userId,
           )
         ) {
-          throw errorHandlers.permissionErrorHandler.build(
+          throw new Error(
             `User ${idModule.lib.convertToString(
               user._id,
             )} is trying to update a treatment that is not assigned to him/her`,
@@ -389,7 +388,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             assignation.userId,
           )
         ) {
-          throw errorHandlers.permissionErrorHandler.build(
+          throw new Error(
             `User ${idModule.lib.convertToString(
               user._id,
             )} is trying to update a treatment that is not assigned to him/her`,
@@ -417,7 +416,7 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
             assignation.userId,
           )
         ) {
-          throw errorHandlers.permissionErrorHandler.build(
+          throw new Error(
             `User ${idModule.lib.convertToString(
               user._id,
             )} is trying to update a treatment that is not assigned to him/her`,

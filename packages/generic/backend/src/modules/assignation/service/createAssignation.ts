@@ -1,4 +1,3 @@
-import { errorHandlers } from 'sder-core';
 import { assignationModule, idModule, idType } from '@label/core';
 import { treatmentService } from '../../treatment';
 import { userService } from '../../user';
@@ -18,7 +17,7 @@ async function createAssignation({
   const userRole = await userService.fetchUserRole(userId);
 
   if (userRole === 'publicator' || userRole === 'scrutator') {
-    throw errorHandlers.serverErrorHandler.build(
+    throw new Error(
       `User ${idModule.lib.convertToString(
         userId,
       )} is a ${userRole} and is trying to create an assignation`,

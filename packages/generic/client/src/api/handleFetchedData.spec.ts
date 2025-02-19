@@ -1,4 +1,3 @@
-import { httpStatusCodeHandler } from 'sder-core';
 import { handleFetchedData } from './handleFetchedData';
 
 describe('handleFetchedData', () => {
@@ -29,7 +28,7 @@ describe('handleFetchedData', () => {
     const fetchedInfo = {
       data: { content: 'notEmpty' },
       isLoaded: true,
-      statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.NOT_FOUND_ERROR,
+      statusCode: 404,
     };
     const showLoadingOnRefetch = true;
 
@@ -42,7 +41,7 @@ describe('handleFetchedData', () => {
     const fetchedInfo = {
       data: { content: 'notEmpty' },
       isLoaded: true,
-      statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
+      statusCode: 401,
     };
     const showLoadingOnRefetch = true;
 
@@ -55,7 +54,7 @@ describe('handleFetchedData', () => {
     const fetchedInfo = {
       data: { content: 'notEmpty' },
       isLoaded: true,
-      statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.CREATED,
+      statusCode: 201,
     };
     const showLoadingOnRefetch = false;
 

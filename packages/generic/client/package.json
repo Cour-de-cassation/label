@@ -68,7 +68,6 @@
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "sder-core": "https://github.com/Cour-de-cassation/sder-core#8afb44f74c9ffefbbadc6f0d3de0def1c916dcc7",
     "string-template": "^1.0.0",
     "styled-components": "4.0.3",
     "superstatic": "^7.1.0",

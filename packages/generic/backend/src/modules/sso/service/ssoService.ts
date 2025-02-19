@@ -1,4 +1,4 @@
-import { SamlService } from '@label/sso';
+import { SamlService } from '../../../utils/saml';
 import { buildUserRepository, userService } from '../../user';
 import { logger } from '../../../utils';
 import every from 'lodash/every';

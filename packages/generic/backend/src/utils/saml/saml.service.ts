@@ -1,14 +1,13 @@
-import { Injectable } from '@nestjs/common';
 import * as samlify from 'samlify';
 import * as fs from 'fs';
-import * as validator from '@authenio/samlify-node-xmllint';
 
-samlify.setSchemaValidator(validator);
+// import * as validator from '@authenio/samlify-node-xmllint';
+
+// samlify.setSchemaValidator(validator);
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-@Injectable()
 export class SamlService {
   private sp;
   private idp;
@@ -27,8 +26,14 @@ export class SamlService {
       wantAssertionsSigned: true,
       isAssertionEncrypted: true,
 
-      privateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
-      encPrivateKey: fs.readFileSync(String(process.env.SSO_SP_PRIVATE_KEY), 'utf8'),
+      privateKey: fs.readFileSync(
+        String(process.env.SSO_SP_PRIVATE_KEY),
+        'utf8',
+      ),
+      encPrivateKey: fs.readFileSync(
+        String(process.env.SSO_SP_PRIVATE_KEY),
+        'utf8',
+      ),
       signingCert: fs.readFileSync(String(process.env.SSO_CERTIFICAT), 'utf8'),
       signatureConfig: {
         prefix: 'ds',
@@ -122,7 +127,11 @@ export class SamlService {
     if (extract.attributes) {
       const roleKeyValue = extract.attributes[roleKey];
 
-      const normalizedRoles = Array.isArray(roleKeyValue) ? roleKeyValue : roleKeyValue ? [roleKeyValue] : [];
+      const normalizedRoles = Array.isArray(roleKeyValue)
+        ? roleKeyValue
+        : roleKeyValue
+        ? [roleKeyValue]
+        : [];
 
       extract.attributes[roleKey] = normalizedRoles
         .filter((role) => role.includes(appName))

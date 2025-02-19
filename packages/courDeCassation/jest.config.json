@@ -15,8 +15,5 @@
     "./test/setupTests.ts"
   ],
   "testRegex": ".spec.ts$",
-  "testEnvironment": "node",
-  "setupFiles": [
-    "./test/setupEnvVars.ts"
-  ]
+  "testEnvironment": "node"
 }

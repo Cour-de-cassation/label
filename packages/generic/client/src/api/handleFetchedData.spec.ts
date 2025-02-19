@@ -37,7 +37,7 @@ describe('handleFetchedData', () => {
     expect(fetchedData).toEqual({ kind: 'error', error: 'unknown' });
   });
 
-  it('should return an authentication error', () => {
+  it('should return an unknown error', () => {
     const fetchedInfo = {
       data: { content: 'notEmpty' },
       isLoaded: true,
@@ -47,7 +47,7 @@ describe('handleFetchedData', () => {
 
     const fetchedData = handleFetchedData(fetchedInfo, showLoadingOnRefetch);
 
-    expect(fetchedData).toEqual({ kind: 'error', error: 'authentication' });
+    expect(fetchedData).toEqual({ kind: 'error', error: 'unknown' });
   });
 
   it('should return the fetched data', () => {

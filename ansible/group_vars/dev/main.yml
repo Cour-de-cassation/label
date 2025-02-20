@@ -3,19 +3,23 @@ git_branch: dev
 label_mongodb_url: "{{ vault_label_mongodb_url }}"
 dbsder_api_key: "{{ vault_dbsder_api_key }}"
 cookie_private_key: "{{ vault_cookie_private_key }}"
-sso_sp_entity_id: "label"
-sso_sp_assertion_consumer_service_location: "https://lbl.dev.opj.cour-de-cassation.justice.fr/label/api/sso/login"
-sso_idp_metadata: "sso_files/keycloak-metadata-idp.xml"
-sso_idp_single_sign_on_service_location: "http://KEYCLOACKURL/realms/label/protocol/saml"
-sso_idp_single_logout_service_location: "http://KEYCLOACKURL/realms/label/protocol/saml"
-sso_certificat: "sso_files/keycloak-cert.pem"
-sso_sp_private_key: "sso_files/keycloak-private.key"
-sso_name_id_format: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
-sso_front_success_connexion_annotator_url: "https://lbl.dev.opj.cour-de-cassation.justice.fr/label/annotation"
-sso_front_success_connexion_admin_scrutator_url: "https://lbl.dev.opj.cour-de-cassation.justice.fr/label/admin/main/summary"
-sso_front_success_connexion_publicator_url: "https://lbl.dev.opj.cour-de-cassation.justice.fr/label/publishable-documents"
-sso_attribute_name: "lastName"
-sso_attribute_firstname: "firstName"
-sso_attribute_fullname: "name"
-sso_attribute_mail: "email"
-sso_attribute_role: "Role"
+sso_sp_entity_id: label
+sso_sp_assertion_consumer_service_location: https://lbl.dev.opj.cour-de-cassation.justice.fr/label/api/sso/login
+sso_idp_metadata: sso_files/keycloak-metadata-idp.xml
+sso_idp_single_sign_on_service_location: http://KEYCLOACKURL/realms/label/protocol/saml
+sso_idp_single_logout_service_location: http://KEYCLOACKURL/realms/label/protocol/saml
+sso_certificat: sso_files/keycloak-cert.pem
+sso_sp_private_key: sso_files/keycloak-private.key
+sso_name_id_format: urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+sso_signature_algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
+session_duration: 604800
+sso_front_success_connexion_annotator_url: https://lbl.dev.opj.cour-de-cassation.justice.fr/label/annotation
+sso_front_success_connexion_admin_scrutator_url: https://lbl.dev.opj.cour-de-cassation.justice.fr/label/admin/main/summary
+sso_front_success_connexion_publicator_url: https://lbl.dev.opj.cour-de-cassation.justice.fr/label/publishable-documents
+sso_attribute_name: lastName
+sso_attribute_firstname: firstName
+sso_attribute_fullname: name
+sso_attribute_mail: email
+sso_attribute_role: Role
+sso_app_name: LABEL
+sso_app_roles: admin,annotator,publicator,scrutator

@@ -12,7 +12,7 @@ sso_certificat: sso_files/keycloak-cert.pem
 sso_sp_private_key: sso_files/keycloak-private.key
 sso_name_id_format: urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
 sso_signature_algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
-session_duration: 604800
+session_duration: "604800"
 sso_front_success_connexion_annotator_url: https://lbl.dev.opj.cour-de-cassation.justice.fr/label/annotation
 sso_front_success_connexion_admin_scrutator_url: https://lbl.dev.opj.cour-de-cassation.justice.fr/label/admin/main/summary
 sso_front_success_connexion_publicator_url: https://lbl.dev.opj.cour-de-cassation.justice.fr/label/publishable-documents

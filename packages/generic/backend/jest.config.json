@@ -11,9 +11,6 @@
     "ts"
   ],
   "rootDir": "src",
-  "setupFiles": [
-    "core-js"
-  ],
   "setupFilesAfterEnv": [
     "./test/setupTests.ts"
   ],

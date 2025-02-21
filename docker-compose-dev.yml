@@ -37,8 +37,6 @@ services:
       - ./keycloak-realm-config.json:/opt/keycloak/data/import/keycloak-realm-config.json
     ports:
       - "8085:8080"
-    depends_on:
-      - labelDb
     networks:
       - default
 

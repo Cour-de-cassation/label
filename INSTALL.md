@@ -73,6 +73,14 @@ yarn init:db
 
 This script is lauch with the `.env` configuration.
 
+### Authentification
+
+To manage local authentication label uses keycloak, you can launch it with the following command, the needed configuration is automatically loaded on launch.
+
+```sh
+yarn docker:start:auth
+```
+
 ### Launch scripts
 
 Label contains many scripts, they are listed [here](docs/scripts.md)
@@ -89,11 +97,12 @@ docker container exec -it label-backend-1 sh -c "cd packages/courDeCassation; sh
 ```sh
 scripts/runScriptLocally.sh "myScript.js --myArgument"
 ```
+
 ### SSO configuration
+
 Follow the [installation guide](packages/generic/sso/README.md).
 
-
->The LABEL application leverages the SSO module as a dependency for its integration with the Single Sign-On (SSO) system. The details of this integration are documented in the [README](packages/generic/sso/README.md) of the SSO module.
+> The LABEL application leverages the SSO module as a dependency for its integration with the Single Sign-On (SSO) system. The details of this integration are documented in the [README](packages/generic/sso/README.md) of the SSO module.
 
 The backend exposes the following URLs to interact with the SSO:
 
@@ -101,4 +110,4 @@ The backend exposes the following URLs to interact with the SSO:
 2. /api/sso/acs: Endpoint for processing SAML assertions following a successful authentication.
 3. /api/sso/logout: Endpoint to disconnect the user from the SSO.
 
-***The attributes returned by the SSO, as well as the roles used by the application, are specified in the configuration file.***
+**_The attributes returned by the SSO, as well as the roles used by the application, are specified in the configuration file._**

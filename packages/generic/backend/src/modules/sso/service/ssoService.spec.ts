@@ -9,7 +9,7 @@ import {
 } from './ssoService';
 import { userType } from '@label/core';
 
-jest.mock('@label/sso', () => ({
+jest.mock('../../../utils/saml', () => ({
   SamlService: jest.fn().mockImplementation(() => ({
     generateMetadata: jest.fn().mockReturnValue('<metadata>'),
     createLoginRequestUrl: jest

@@ -6,8 +6,6 @@ import includes from 'lodash/includes';
 import { idModule, userType } from '@label/core';
 import { Request } from 'express';
 
-export { samlService };
-
 export interface BindingContext {
   context: string;
   id: string;

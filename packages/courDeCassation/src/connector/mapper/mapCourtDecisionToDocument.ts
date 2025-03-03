@@ -340,6 +340,8 @@ function computePriority(
   switch (source) {
     case 'jurinet':
       return 2;
+    case 'jurica':
+      return 1;
     default:
       return 0;
   }

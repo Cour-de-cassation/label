@@ -17,8 +17,9 @@ function mapNlpAnnotationsToAnnotations(
       category: nlpAnnotation.category,
       entityId: nlpAnnotation.entityId,
       start: nlpAnnotation.start,
-      certaintyScore: nlpAnnotation.score,
+      score: nlpAnnotation.score,
       text: document.text.substring(nlpAnnotation.start, nlpAnnotation.end),
+      source: nlpAnnotation.source,
     }),
   );
 }

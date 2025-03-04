@@ -8,7 +8,7 @@ annotationType: {
   entityId, // id that is common for every linked annotation ("personnePhysique_DUPONT")
   start, // index of the beginning of the annotation
   text, // text of the annotation ("DUPONT"),
-  certaintyScore // certainty score computed by NLP
+  score // certainty score computed by NLP
 }
 ```
 

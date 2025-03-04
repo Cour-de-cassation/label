@@ -177,11 +177,16 @@ describe('fetch', () => {
         text: documentText,
       });
       const annotations = [
-        { category: 'FIRST_NAME', start: 47, text: 'Romain Glé' },
-        { category: 'FIRST_NAME', start: 47, text: 'Romain' },
-        { category: 'LAST_NAME', start: 54, text: 'Glé' },
-        { category: 'FIRST_NAME', start: 60, text: 'Nicolas' },
-        { category: 'FIRST_NAME', start: 134, text: 'Benoit' },
+        {
+          category: 'FIRST_NAME',
+          start: 47,
+          text: 'Romain Glé',
+          source: 'test',
+        },
+        { category: 'FIRST_NAME', start: 47, text: 'Romain', source: 'test' },
+        { category: 'LAST_NAME', start: 54, text: 'Glé', source: 'test' },
+        { category: 'FIRST_NAME', start: 60, text: 'Nicolas', source: 'test2' },
+        { category: 'FIRST_NAME', start: 134, text: 'Benoit', source: 'test2' },
       ].map(annotationModule.generator.generate);
       const previousTreatments = [
         { order: 0, source: 'NLP' as const },
@@ -211,10 +216,11 @@ describe('fetch', () => {
           {
             addedAnnotation: {
               category: 'FIRST_NAME',
-              certaintyScore: 1,
+              score: 1,
               entityId: 'FIRST_NAME_nicolas',
               start: 60,
               text: 'Nicolas',
+              source: 'test2',
             },
             text: 'Nicolas is a designer who speaks ',
             textStart: 59,
@@ -225,10 +231,11 @@ describe('fetch', () => {
           {
             deletedAnnotation: {
               category: 'FIRST_NAME',
-              certaintyScore: 1,
+              score: 1,
               entityId: 'FIRST_NAME_benoit',
               start: 134,
               text: 'Benoit',
+              source: 'test2',
             },
             text: 'As a data scientist, Benoit knows everything about piz',
             textStart: 111,
@@ -239,17 +246,19 @@ describe('fetch', () => {
           {
             annotationAfter: {
               category: 'FIRST_NAME',
-              certaintyScore: 1,
+              score: 1,
               entityId: 'FIRST_NAME_romain',
               start: 47,
               text: 'Romain',
+              source: 'test',
             },
             annotationBefore: {
               category: 'FIRST_NAME',
-              certaintyScore: 1,
+              score: 1,
               entityId: 'FIRST_NAME_romain gle',
               start: 47,
               text: 'Romain Glé',
+              source: 'test',
             },
             text: ' all design patterns is Romain Glé.',
             textStart: 23,

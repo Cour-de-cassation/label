@@ -34,8 +34,7 @@ services:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
     volumes:
-      # - ./keycloak-realm-config.json:/opt/keycloak/data/import/keycloak-realm-config.json
-      - ./labelrealm/label-realm.json:/opt/keycloak/data/import/label-realm.json
+      - ./keycloak-realm-config.json:/opt/keycloak/data/import/keycloak-realm-config.json
     ports:
       - "8085:8080"
     networks:

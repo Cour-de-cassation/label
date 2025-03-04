@@ -76,7 +76,7 @@ describe('autoLinker', () => {
       });
       it('should not link the unrelated annotations', () => {
         const annotations = ['Jean', 'Jean Henri', 'Jean Marie'].map((text, index) =>
-          annotationModule.lib.buildAnnotation({ text, start: index * 10, category: 'CATEGORY', certaintyScore: 1 }),
+          annotationModule.lib.buildAnnotation({ text, start: index * 10, category: 'CATEGORY', score: 1 }),
         );
 
         const linkedAnnotations = autoLinker.autoLinkAll(annotations, settings);

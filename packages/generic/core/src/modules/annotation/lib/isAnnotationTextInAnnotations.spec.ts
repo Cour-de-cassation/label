@@ -7,11 +7,11 @@ describe('isAnnotationTextInAnnotations', () => {
       start: 90,
       text: 'Harry Potter',
       category: 'personnePhysiqueNom',
-      certaintyScore: 1,
+      score: 1,
     });
     const annotationsToSearchIn = [
-      { start: 90, text: 'Harry', category: 'personnePhysiqueNom', certaintyScore: 1 },
-      { start: 96, text: 'Potter', category: 'personnePhysiqueNom', certaintyScore: 1 },
+      { start: 90, text: 'Harry', category: 'personnePhysiqueNom', score: 1 },
+      { start: 96, text: 'Potter', category: 'personnePhysiqueNom', score: 1 },
     ].map(buildAnnotation);
 
     expect(isAnnotationTextInAnnotations(annotation, annotationsToSearchIn)).toBe(true);
@@ -22,11 +22,11 @@ describe('isAnnotationTextInAnnotations', () => {
       start: 90,
       text: 'Bruni-Sarkozy',
       category: 'personnePhysiqueNom',
-      certaintyScore: 1,
+      score: 1,
     });
     const annotationsToSearchIn = [
-      { start: 90, text: 'Bruni', category: 'personnePhysiqueNom', certaintyScore: 1 },
-      { start: 96, text: 'Sarkozy', category: 'personnePhysiqueNom', certaintyScore: 1 },
+      { start: 90, text: 'Bruni', category: 'personnePhysiqueNom', score: 1 },
+      { start: 96, text: 'Sarkozy', category: 'personnePhysiqueNom', score: 1 },
     ].map(buildAnnotation);
 
     expect(isAnnotationTextInAnnotations(annotation, annotationsToSearchIn)).toBe(true);
@@ -37,11 +37,11 @@ describe('isAnnotationTextInAnnotations', () => {
       start: 90,
       text: 'Harry Potter',
       category: 'personnePhysiqueNom',
-      certaintyScore: 1,
+      score: 1,
     });
     const annotationsToSearchIn = [
-      { start: 90, text: 'Harry', category: 'personnePhysiqueNom', certaintyScore: 1 },
-      { start: 150, text: 'Potter', category: 'personnePhysiqueNom', certaintyScore: 1 },
+      { start: 90, text: 'Harry', category: 'personnePhysiqueNom', score: 1 },
+      { start: 150, text: 'Potter', category: 'personnePhysiqueNom', score: 1 },
     ].map(buildAnnotation);
 
     expect(isAnnotationTextInAnnotations(annotation, annotationsToSearchIn)).toBe(false);

@@ -11,12 +11,12 @@ describe('buildAnonymizer', () => {
     dateNaissance: { anonymization: '[BIRTHDATE %d]', status: 'visible' },
   });
   const annotations = [
-    { category: 'firstName', text: 'Benoit', start: 0, certaintyScore: 1 },
-    { category: 'lastName', text: 'Serrano', start: 7, certaintyScore: 1 },
-    { category: 'firstName', text: 'Nicolas', start: 37, certaintyScore: 1 },
-    { category: 'lastName', text: 'Assouad', start: 45, certaintyScore: 1 },
-    { category: 'firstName', text: 'Romain', start: 77, certaintyScore: 1 },
-    { category: 'lastName', text: 'Glé', start: 84, certaintyScore: 1 },
+    { category: 'firstName', text: 'Benoit', start: 0, score: 1 },
+    { category: 'lastName', text: 'Serrano', start: 7, score: 1 },
+    { category: 'firstName', text: 'Nicolas', start: 37, score: 1 },
+    { category: 'lastName', text: 'Assouad', start: 45, score: 1 },
+    { category: 'firstName', text: 'Romain', start: 77, score: 1 },
+    { category: 'lastName', text: 'Glé', start: 84, score: 1 },
   ].map(annotationModule.lib.buildAnnotation);
   const seed = 123;
   const text = 'Benoit Serrano is software engineer. Nicolas Assouad is a software engineer. Romain Glé is a designer.';
@@ -51,22 +51,22 @@ describe('buildAnonymizer', () => {
         lastName: { anonymization: '[LAST_NAME %c]' },
       });
       const annotations1 = [
-        { category: 'firstName', text: 'Benoit', start: 0, certaintyScore: 1 },
-        { category: 'lastName', text: 'Serrano', start: 7, certaintyScore: 1 },
-        { category: 'firstName', text: 'Nicolas', start: 37, certaintyScore: 1 },
-        { category: 'lastName', text: 'Assouad', start: 45, certaintyScore: 1 },
-        { category: 'firstName', text: 'Romain', start: 77, certaintyScore: 1 },
-        { category: 'lastName', text: 'Glé', start: 84, certaintyScore: 1 },
+        { category: 'firstName', text: 'Benoit', start: 0, score: 1 },
+        { category: 'lastName', text: 'Serrano', start: 7, score: 1 },
+        { category: 'firstName', text: 'Nicolas', start: 37, score: 1 },
+        { category: 'lastName', text: 'Assouad', start: 45, score: 1 },
+        { category: 'firstName', text: 'Romain', start: 77, score: 1 },
+        { category: 'lastName', text: 'Glé', start: 84, score: 1 },
       ].map(annotationModule.lib.buildAnnotation);
       const annotations2 = [
-        { category: 'firstName', text: 'Nicolas', start: 55, certaintyScore: 1 },
-        { category: 'lastName', text: 'Assouad', start: 63, certaintyScore: 1 },
-        { category: 'firstName', text: 'Benoit', start: 72, certaintyScore: 1 },
-        { category: 'lastName', text: 'Serrano', start: 79, certaintyScore: 1 },
-        { category: 'firstName', text: 'Romain', start: 103, certaintyScore: 1 },
-        { category: 'lastName', text: 'Glé', start: 110, certaintyScore: 1 },
-        { category: 'firstName', text: 'BENOIT', start: 130, certaintyScore: 1 },
-        { category: 'firstName', text: 'NICOLAS', start: 141, certaintyScore: 1 },
+        { category: 'firstName', text: 'Nicolas', start: 55, score: 1 },
+        { category: 'lastName', text: 'Assouad', start: 63, score: 1 },
+        { category: 'firstName', text: 'Benoit', start: 72, score: 1 },
+        { category: 'lastName', text: 'Serrano', start: 79, score: 1 },
+        { category: 'firstName', text: 'Romain', start: 103, score: 1 },
+        { category: 'lastName', text: 'Glé', start: 110, score: 1 },
+        { category: 'firstName', text: 'BENOIT', start: 130, score: 1 },
+        { category: 'firstName', text: 'NICOLAS', start: 141, score: 1 },
       ].map(annotationModule.lib.buildAnnotation);
       annotations2[6] = annotationModule.lib.annotationLinker.link(annotations2[6], annotations2[2]);
       annotations2[7] = annotationModule.lib.annotationLinker.link(annotations2[7], annotations2[0]);
@@ -103,9 +103,9 @@ describe('buildAnonymizer', () => {
         firstName: { anonymization: '[FIRST_NAME %c]' },
       });
       const annotations = [
-        { category: 'firstName', text: 'Benoit', start: 0, certaintyScore: 1 },
-        { category: 'firstName', text: 'Nicolas', start: 29, certaintyScore: 1 },
-        { category: 'firstName', text: 'Romain', start: 61, certaintyScore: 1 },
+        { category: 'firstName', text: 'Benoit', start: 0, score: 1 },
+        { category: 'firstName', text: 'Nicolas', start: 29, score: 1 },
+        { category: 'firstName', text: 'Romain', start: 61, score: 1 },
       ].map(annotationModule.lib.buildAnnotation);
 
       let anonymizer = buildAnonymizer(settings, annotations, seed);

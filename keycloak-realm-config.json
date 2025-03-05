@@ -521,7 +521,7 @@
   "clientScopeMappings" : {
     "label" : [ {
       "clientScope" : "user",
-      "roles" : [ "LABEL:annotator" ]
+      "roles" : [ "LABEL:admin", "LABEL:scrutator", "LABEL:annotator", "LABEL:publicator" ]
     } ],
     "account" : [ {
       "client" : "account-console",
@@ -686,6 +686,7 @@
       "saml.assertion.signature" : "false",
       "saml.force.post.binding" : "true",
       "saml.encrypt" : "false",
+      "post.logout.redirect.uris" : "+",
       "saml.server.signature" : "true",
       "saml_idp_initiated_sso_url_name" : "http://localhost:8080/realms/label/protocol/saml/clients/label",
       "saml.server.signature.keyinfo.ext" : "false",
@@ -929,7 +930,7 @@
   }, {
     "id" : "9d3b45bd-4d97-42e1-9bad-fa0aa4be709d",
     "name" : "user",
-    "description" : "User metadata ?",
+    "description" : "User metadata",
     "protocol" : "saml",
     "attributes" : {
       "include.in.token.scope" : "false",
@@ -1499,7 +1500,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "oidc-full-name-mapper", "saml-role-list-mapper", "saml-user-attribute-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-full-name-mapper", "saml-user-property-mapper", "saml-role-list-mapper", "saml-user-attribute-mapper", "oidc-usermodel-attribute-mapper", "oidc-usermodel-property-mapper" ]
       }
     }, {
       "id" : "59c53d47-59f6-4a5e-844f-ebbf0310c146",
@@ -1534,7 +1535,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-usermodel-attribute-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper", "saml-user-attribute-mapper", "oidc-address-mapper", "oidc-full-name-mapper", "saml-user-property-mapper", "saml-role-list-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-usermodel-attribute-mapper", "oidc-address-mapper", "oidc-full-name-mapper", "oidc-usermodel-property-mapper", "saml-role-list-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "saml-user-attribute-mapper" ]
       }
     }, {
       "id" : "cda2b5e1-c81d-41c6-8441-dd8544e3d84a",

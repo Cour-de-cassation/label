@@ -188,15 +188,6 @@ function buildConnector(connectorConfig: connectorConfigType) {
     });
 
     for (const source of Object.values(Sources)) {
-      // Skip juritcom import in prod, delete the condition to activate juritcom import
-      if (process.env.GIT_BRANCH === 'prod' && source === Sources.TCOM) {
-        logger.log({
-          operationName: 'importNewDocuments',
-          msg: `Skipping ${source} decisions in prod environment.`,
-        });
-        continue;
-      }
-
       logger.log({
         operationName: 'importNewDocuments',
         msg: `Fetching ${source} decisions...`,

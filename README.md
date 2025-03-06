@@ -99,10 +99,10 @@ LABEL allow you to link annotations. Sometimes names are written lowercase or in
 - April 2022: Addition of appeal court's decisions (JuriCA database).
 - December 2023: Addition of 9 first judicial courts' decisions.
 - During 2024-2025: Addition of other judicial courts' decisions.
+- March 2025: Addition of industrial courts' decisions.
 
 Next steps:
 
-- December 2024: Addition of industrial courts' decisions.
 - Septembre 2025: Addition of labour courts' decisions and all first instance.
 
 Learn more with [the roadmap](ROADMAP.md).

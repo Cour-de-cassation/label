@@ -13,13 +13,13 @@
       spec:
         entryPoints:
           - web
-
         routes:
           - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/label`)
             kind: Rule
             services:
               - name: "{{ label_client_app_id }}-service"
                 port: label-client-port
+
 
 - name: Creation middleware
   k8s:

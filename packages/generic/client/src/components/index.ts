@@ -15,7 +15,6 @@ import {
   MainHeader,
   ProblemReportIcon,
   PublicationCategoryBadge,
-  ResetPasswordForm,
   UnlinkAnnotationDropdown,
 } from './business';
 
@@ -35,7 +34,6 @@ export {
   MainHeader,
   ProblemReportIcon,
   PublicationCategoryBadge,
-  ResetPasswordForm,
   UnlinkAnnotationDropdown,
 };
 

@@ -19,12 +19,7 @@
             services:
               - name: "{{ label_client_app_id }}-service"
                 port: label-client-port
-          # ajout
-          - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/label/api`)
-            kind: Rule
-            services:
-              - name: "{{ label_back_app_id }}-service"
-                port: label-backend-port
+
 
 - name: Creation middleware
   k8s:

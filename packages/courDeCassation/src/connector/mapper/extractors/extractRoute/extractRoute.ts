@@ -16,12 +16,8 @@ async function extractRoute(
     parties: documentType['decisionMetadata']['parties'];
     publicationCategory: documentType['publicationCategory'];
     chamberName: documentType['decisionMetadata']['chamberName'];
-    civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
-    civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
-    criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
     NACCode: documentType['decisionMetadata']['NACCode'];
     endCaseCode: documentType['decisionMetadata']['endCaseCode'];
-    status?: documentType['status'];
   },
   source: documentType['source'],
 ): Promise<documentType['route']> {
@@ -48,8 +44,15 @@ async function extractRoute(
   }
 
   if (
-    (!!routeInfos.additionalTermsToAnnotate ||
-      (routeInfos.parties && routeInfos.parties.length > 50)) &&
+    !!routeInfos.additionalTermsToAnnotate &&
+    (route === 'automatic' || route === 'simple' || route === 'default')
+  ) {
+    route = 'exhaustive';
+  }
+
+  if (
+    routeInfos.parties &&
+    routeInfos.parties.length > 50 &&
     (route == 'simple' || route == 'default')
   ) {
     route = 'exhaustive';

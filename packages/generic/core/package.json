@@ -36,7 +36,7 @@
     "bcryptjs": "^2.4.3",
     "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
-    "dbsder-api-types": "1.7.0",
+    "dbsder-api-types": "1.7.1",
     "string-template": "^1.0.0",
     "typescript": "~4.0.0"
   },

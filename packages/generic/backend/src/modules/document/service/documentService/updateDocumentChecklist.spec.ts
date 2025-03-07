@@ -7,7 +7,7 @@ describe('updateDocumentChecklist', () => {
 
   const checklist = [
     {
-      checkType: `My checkType`,
+      check_type: `My check_type`,
       message: 'My check message',
       short_message: 'Short message',
       entities: [

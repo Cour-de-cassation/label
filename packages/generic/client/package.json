@@ -60,7 +60,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/string-template": "^1.0.2",
     "@types/styled-components": "4.0.3",
-    "axios": "^0.24.0",
+    "axios": "^1.8.2",
     "dateformat": "^5.0.3",
     "http2": "^3.3.7",
     "pelta-design-system": "https://github.com/Cour-de-cassation/pelta-design-system#b237ac7876e09e7ab12e930a730c58e7b75b4dd0",

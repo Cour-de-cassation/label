@@ -1,37 +1,44 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: keycloak
-  namespace: "{{ label_kube_namespace }}"
-  labels:
-    app: keycloak
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: keycloak
-  template:
-    metadata:
-      labels:
-        app: keycloak
-    spec:
-      containers:
-        - name: keycloak
-          image: quay.io/keycloak/keycloak:26.1.3
-          args: ["start-dev"]
-          env:
-            - name: KC_BOOTSTRAP_ADMIN_USERNAME
-              value: "admin"
-            - name: KC_BOOTSTRAP_ADMIN_PASSWORD
-              value: "admin"
-            - name: KC_PROXY
-              value: "edge"
-            - name: KC_HEALTH_ENABLED
-              value: "true"
-            - name: KC_HOSTNAME_STRICT
-              value: "false"
-            - name: KC_HOSTNAME_STRICT_HTTPS
-              value: "false"
-          ports:
-            - name: keycloak
-              containerPort: 8080
+---
+- name: Creation Deployment
+  k8s:
+    apply: true
+    state: present
+    verify_ssl: true
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: keycloak
+        namespace: "{{ label_kube_namespace }}"
+        labels:
+          app: keycloak
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: keycloak
+        template:
+          metadata:
+            labels:
+              app: keycloak
+          spec:
+            containers:
+              - name: keycloak
+                image: quay.io/keycloak/keycloak:26.1.3
+                args: ["start-dev"]
+                env:
+                  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+                    value: "admin"
+                  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+                    value: "admin"
+                  - name: KC_PROXY
+                    value: "edge"
+                  - name: KC_HEALTH_ENABLED
+                    value: "true"
+                  - name: KC_HOSTNAME_STRICT
+                    value: "false"
+                  - name: KC_HOSTNAME_STRICT_HTTPS
+                    value: "false"
+                ports:
+                  - name: keycloak
+                    containerPort: 8080

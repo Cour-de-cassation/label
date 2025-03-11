@@ -1,15 +1,22 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: keycloak
-  namespace: "{{ label_kube_namespace }}"
-  labels:
-    app: keycloak
-spec:
-  selector:
-    app: keycloak
-  ports:
-    - name: keycloak
-      port: 8080
-      targetPort: 8080
-  type: ClusterIP
+---
+- name: Creation Service
+  k8s:
+    apply: true
+    state: present
+    verify_ssl: true
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: keycloak
+        namespace: "{{ label_kube_namespace }}"
+        labels:
+          app: keycloak
+      spec:
+        selector:
+          app: keycloak
+        ports:
+          - name: keycloak
+            port: 8080
+            targetPort: 8080
+        type: ClusterIP

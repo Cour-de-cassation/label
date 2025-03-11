@@ -24,8 +24,11 @@
   import_tasks: ingress.yml
 
 ## deploy keycloack
-- name: Deploy keycloack deployment & service
-  include_tasks: keycloack.yml
+- name: Deploy keycloack deployment
+  include_tasks: deployment-keycloack.yml
+
+- name: Deploy keycloack service
+  include_tasks: service-keycloack.yml
 
 - name: Deploy keycloack ingress
   include_tasks: ingress-keycloack.yml

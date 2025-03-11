@@ -17,6 +17,6 @@
           app: keycloak
         ports:
           - name: keycloak
-            port: 8080
-            targetPort: 8080
+            port: 8088
+            targetPort: 8088
         type: ClusterIP

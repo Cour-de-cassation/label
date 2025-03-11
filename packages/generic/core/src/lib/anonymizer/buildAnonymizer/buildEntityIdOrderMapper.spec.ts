@@ -8,36 +8,42 @@ describe('buildEntityIdOrderMapper', () => {
       start: 0,
       text: `benoit`,
       score: 1,
+      source: 'agent',
     });
     const annotation2 = buildAnnotation({
       category: 'prenom',
       start: 0,
       text: `romain`,
       score: 1,
+      source: 'agent',
     });
     const annotation3 = buildAnnotation({
       category: 'prenom',
       start: 0,
       text: `nicolas`,
       score: 1,
+      source: 'agent',
     });
     const annotation4 = buildAnnotation({
       category: 'nom',
       start: 0,
       text: `gle`,
       score: 1,
+      source: 'agent',
     });
     const annotation5 = buildAnnotation({
       category: 'nom',
       start: 0,
       text: `assouad`,
       score: 1,
+      source: 'agent',
     });
     const annotation6 = buildAnnotation({
       category: 'nom',
       start: 0,
       text: `serrano`,
       score: 1,
+      source: 'agent',
     });
 
     const entityIdOrderMapper = buildEntityIdOrderMapper([

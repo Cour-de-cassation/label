@@ -15,7 +15,7 @@ function buildAnnotation({
   text: string;
   score: number;
   entityId?: string;
-  source?: string;
+  source: string;
 }) {
   return {
     category,
@@ -23,6 +23,6 @@ function buildAnnotation({
     start,
     text,
     score,
-    source: source ?? 'agent',
+    source: source,
   };
 }

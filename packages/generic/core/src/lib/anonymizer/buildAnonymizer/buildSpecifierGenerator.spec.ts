@@ -8,24 +8,28 @@ describe('buildSpecifierGenerator', () => {
       start: 0,
       text: `gle`,
       score: 1,
+      source: 'agent',
     });
     const annotation2 = buildAnnotation({
       category: 'prenom',
       start: 0,
       text: `romain`,
       score: 1,
+      source: 'agent',
     });
     const annotation3 = buildAnnotation({
       category: 'adresse',
       start: 0,
       text: `13 rue`,
       score: 1,
+      source: 'agent',
     });
     const annotation4 = buildAnnotation({
       category: 'adresse',
       start: 0,
       text: `45 cour`,
       score: 1,
+      source: 'agent',
     });
     const specifierGenerator = buildSpecifierGenerator([annotation1, annotation2, annotation3, annotation4], 123);
 

@@ -49,6 +49,7 @@ function buildFakeAnnotatorConfig(): annotatorConfigType {
           start: index * 10,
           category,
           score: Math.random(),
+          source: 'NLP',
         }),
       );
       const checklist = documentModule.checklistGenerator.generate(4);

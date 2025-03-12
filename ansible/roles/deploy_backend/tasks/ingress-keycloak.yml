@@ -14,27 +14,27 @@
         entryPoints:
           - web
         routes:
-          - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/auth`)  # 🔥 Restreint à /auth pour éviter les conflits
+          - match: Host(`lbl.judilibre-prive.local`)
             kind: Rule
             services:
               - name: "keycloak"
-                port: 8080  # 🔥 Correction : le port doit être un nombre, Keycloak tourne souvent sur 8080
+                port: 8080 
 
+# - name: Creation middleware
+#   k8s:
+#     apply: true
+#     state: present
+#     verify_ssl: true
+#     definition:
+#       apiVersion: traefik.containo.us/v1alpha1
+#       kind: Middleware
+#       metadata:
+#         name: keycloak-rewrite
+#         namespace: "{{ label_kube_namespace }}"
+#       spec:
+#         replacePathRegex:
+#           regex: "^/auth(/|$)(.*)"
+#           replacement: "/$2"
 
-- name: Creation middleware
-  k8s:
-    apply: true
-    state: present
-    verify_ssl: true
-    definition:
-      apiVersion: traefik.containo.us/v1alpha1
-      kind: Middleware
-      metadata:
-        name: keycloak-stripprefix
-        namespace: "{{ label_kube_namespace }}"
-      spec:
-        replacePathRegex:
-          regex: ^/auth(/|$)(.*)  # 🔥 Correction de la regex
-          replacement: /$2
 
 

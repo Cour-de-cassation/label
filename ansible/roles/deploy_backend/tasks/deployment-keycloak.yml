@@ -41,4 +41,4 @@
                     value: "false"
                 ports:
                   - name: keycloak
-                    containerPort: 8080
+                    containerPort: 8088

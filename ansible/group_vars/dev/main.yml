@@ -6,10 +6,8 @@ cookie_private_key: "{{ vault_cookie_private_key }}"
 sso_sp_entity_id: label
 sso_sp_assertion_consumer_service_location: https://lbl.dev.opj.cour-de-cassation.justice.fr/label/api/sso/login
 sso_idp_metadata: sso_files/keycloak-metadata-idp-dev.xml
-#sso_idp_single_sign_on_service_location: http://10.227.10.196:8080/realms/label/protocol/saml
-#sso_idp_single_logout_service_location: http://10.227.10.196:8080/realms/label/protocol/saml
-sso_idp_single_sign_on_service_location: https://lbl.dev.opj.cour-de-cassation.justice.fr/realms/label/protocol/saml
-sso_idp_single_logout_service_location: https://lbl.dev.opj.cour-de-cassation.justice.fr/realms/label/protocol/saml
+sso_idp_single_sign_on_service_location: http://10.227.10.196:8080/realms/label/protocol/saml
+sso_idp_single_logout_service_location: http://10.227.10.196:8080/realms/label/protocol/saml
 sso_certificat: sso_files/keycloak-cert.pem
 sso_sp_private_key: sso_files/keycloak-private.key
 sso_name_id_format: urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress

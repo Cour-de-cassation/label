@@ -22,13 +22,3 @@
 
 - name: Deploy ingress
   import_tasks: ingress.yml
-
-## deploy keycloak
-- name: Deploy keycloak deployment
-  include_tasks: deployment-keycloak.yml
-
-- name: Deploy keycloak service
-  include_tasks: service-keycloak.yml
-
-- name: Deploy keycloak ingress
-  include_tasks: ingress-keycloak.yml

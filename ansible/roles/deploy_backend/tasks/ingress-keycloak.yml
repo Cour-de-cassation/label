@@ -14,7 +14,7 @@
         entryPoints:
           - web
         routes:
-          - match: Host(`lbl.judilibre-prive.local`)
+          - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/`)
             kind: Rule
             services:
               - name: "keycloak"

@@ -104,8 +104,9 @@ function buildConnector(connectorConfig: connectorConfigType) {
                     category: annotation.category,
                     start: annotation.start,
                     text: annotation.text,
-                    certaintyScore: 1,
+                    score: annotation.score,
                     entityId: annotation.entityId,
+                    source: annotation.source,
                   });
                 });
 

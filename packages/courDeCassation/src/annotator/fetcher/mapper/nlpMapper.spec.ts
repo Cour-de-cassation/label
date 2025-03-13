@@ -88,14 +88,16 @@ describe('nlpMapper', () => {
         entityId: 'LABEL1_annotation1',
         start: 0,
         text: 'ANNOTATION1',
-        certaintyScore: 0.5,
+        score: 0.5,
+        source: 'NLP',
       });
       expect(annotations[1]).toEqual({
         category: 'LABEL2',
         entityId: 'LABEL2_annotation2',
         start: 12,
         text: 'ANNOTATION2',
-        certaintyScore: 0.6,
+        score: 0.6,
+        source: 'NLP',
       });
     });
   });

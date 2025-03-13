@@ -447,7 +447,8 @@ function buildAnnotator(
           start: motivation.start + removedCharactersAtStart,
           text: trimmedMotivation,
           category: settingsModule.lib.motivationCategoryHandler.getCategoryName(),
-          certaintyScore: 1,
+          score: 1,
+          source: 'motivation',
         }),
       );
     });

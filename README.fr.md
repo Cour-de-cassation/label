@@ -99,10 +99,10 @@ LABEL permet de lier des annotations. Parfois les noms sont écrits en minuscule
 - Avril 2022 : Ajout des décisions des Cours d'appel en matière civile, sociale et commerciale (base de données JuriCA).
 - Décembre 2023 : Ajout des décisions de 9 tribunaux judiciaires.
 - Courant 2024-2025 : Ajout des décisions de l'ensemble les tribunaux judiciaires.
+- Mars 2025 : Ajout des décisions des tribunaux de commerce.
 
 Prochaines étapes:
 
-- Décembre 2024 : Ajout des décisions des tribunaux de commerce.
 - Septembre 2025 : Ajout des décisions des conseils de prud'hommes
 
 Pour en savoir plus, [une roadmap est disponible](ROADMAP.md).

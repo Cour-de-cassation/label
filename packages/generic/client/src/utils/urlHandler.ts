@@ -10,4 +10,12 @@ const urlHandler = {
 
     return serverPort ? `${clientProtocol}//${clientHostname}:${serverPort}` : `${clientProtocol}//${clientHostname}`;
   },
+
+  getSsoLoginUrl() {
+    return `${this.getApiUrl()}/label/api/sso/login`;
+  },
+
+  getSsoLogoutUrl() {
+    return `${this.getApiUrl()}/label/api/sso/logout`;
+  },
 };

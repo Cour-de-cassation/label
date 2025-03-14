@@ -4,18 +4,19 @@ export { fetchWorkingUsers };
 
 async function fetchWorkingUsers() {
   const userRepository = buildUserRepository();
-  const users = await userRepository.findAllWithNoDeletionDateProjection([
-    '_id',
-    'email',
-    'isActivated',
-    'name',
-    'role',
-  ]);
-  return users.map(({ _id, email, isActivated, name, role }) => ({
-    _id,
-    email,
-    isActivated,
-    name,
-    role,
-  }));
+  const users = await userRepository.findAll(); // This returns an array of users
+
+  if (!users || users.length === 0) {
+    throw new Error('No users found');
+  }
+
+  return users.map((user) => {
+    const { _id, email, name, role } = user;
+    return {
+      _id,
+      email,
+      name,
+      role,
+    };
+  });
 }

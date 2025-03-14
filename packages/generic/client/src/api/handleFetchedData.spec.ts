@@ -1,4 +1,3 @@
-import { httpStatusCodeHandler } from 'sder-core';
 import { handleFetchedData } from './handleFetchedData';
 
 describe('handleFetchedData', () => {
@@ -29,7 +28,7 @@ describe('handleFetchedData', () => {
     const fetchedInfo = {
       data: { content: 'notEmpty' },
       isLoaded: true,
-      statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.NOT_FOUND_ERROR,
+      statusCode: 404,
     };
     const showLoadingOnRefetch = true;
 
@@ -38,24 +37,24 @@ describe('handleFetchedData', () => {
     expect(fetchedData).toEqual({ kind: 'error', error: 'unknown' });
   });
 
-  it('should return an authentication error', () => {
+  it('should return an unknown error', () => {
     const fetchedInfo = {
       data: { content: 'notEmpty' },
       isLoaded: true,
-      statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.ERROR.AUTHENTICATION_ERROR,
+      statusCode: 401,
     };
     const showLoadingOnRefetch = true;
 
     const fetchedData = handleFetchedData(fetchedInfo, showLoadingOnRefetch);
 
-    expect(fetchedData).toEqual({ kind: 'error', error: 'authentication' });
+    expect(fetchedData).toEqual({ kind: 'error', error: 'unknown' });
   });
 
   it('should return the fetched data', () => {
     const fetchedInfo = {
       data: { content: 'notEmpty' },
       isLoaded: true,
-      statusCode: httpStatusCodeHandler.HTTP_STATUS_CODE.SUCCESS.CREATED,
+      statusCode: 201,
     };
     const showLoadingOnRefetch = false;
 

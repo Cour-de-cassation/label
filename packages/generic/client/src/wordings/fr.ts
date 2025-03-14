@@ -1,55 +1,6 @@
 export { fr };
 
 const fr = {
-  workingUsersPage: {
-    header: {
-      title: 'Administration',
-      subtitle: 'Gestion des agents',
-    },
-    createWorkingUserDrawer: {
-      title: 'Créer un agent',
-      fields: {
-        firstName: 'Prénom',
-        lastName: 'Nom',
-        email: 'Email',
-        role: 'Sélectionnez un rôle',
-      },
-      submit: "Créer l'agent",
-      createdWorkingUserPopup: {
-        createdWorkingUserConfirmation: "L'agent a bien été créé.",
-        passwordIndication:
-          'Veuillez noter et lui transmettre le mot de passe temporaire suivant. Ce mot de passe doit être changé dès la première connexion afin d’assurer la sécurité du système.',
-        button: "C'est noté",
-      },
-    },
-    table: {
-      columnTitles: {
-        name: 'Nom',
-        email: 'E-mail',
-        role: 'Habilitation',
-      },
-      optionItems: {
-        activate: 'Activer',
-        deactivate: 'Désactiver',
-        delete: 'Supprimer...',
-        resetPassword: 'Réinitialiser le mot de passe',
-      },
-      deleteUserConfirmationPopup: {
-        text:
-          'Cette action supprimera cet utilisateur. Ses statistiques seront cependant toujours présentes en base de données. Cette action est irréversible, souhaitez-vous continuer ?',
-      },
-      passwordResetSuccessPopup: {
-        passwordResetConfirmation: 'Le mot de passe a bien été réinitialisé',
-        passwordIndication:
-          'Veuillez noter et lui transmettre son nouveau mot de passe ci-après. Ce mot de passe doit être changé dès la première connexion afin d’assurer la sécurité du système.',
-        button: "C'est noté",
-      },
-      passwordResetConfirmationPopup: {
-        text:
-          "Cette action supprimera l'ancien mot de passe et vous affichera un nouveau mot de passe que vous devrez transmettre à l'agent.",
-      },
-    },
-  },
   business: {
     account: 'Compte',
     adminViews: {
@@ -61,8 +12,6 @@ const fr = {
         scrutator: 'Vue scrutateur',
       },
     },
-    changePassword: 'Modifier le mot de passe',
-    confirmPassword: 'Confirmer le nouveau mot de passe',
     decisionNumberPlaceholder: 'Rechercher...',
     decisionNumberHint: 'Numéro de décision à rechercher',
     documentReviewFilterStatus: {
@@ -175,11 +124,6 @@ const fr = {
       },
     },
     problemReportType: { bug: 'Bug', annotationProblem: "Problème lié à l'annotation", suggestion: 'Suggestion' },
-    newPassword: 'Nouveau mot de passe',
-    newPasswordsDontMatch: 'Les nouveaux mots de passe ne correspondent pas',
-    newPasswordInstructions:
-      'Le mot de passe doit contenir au moins 8 caractères dont 2 minuscules, 2 majuscules, 2 chiffres et 2 caractères spéciaux',
-    previousPassword: 'Ancien mot de passe',
     update: 'Mettre à jour',
     userRoles: {
       admin: 'Administrateur',
@@ -187,7 +131,6 @@ const fr = {
       publicator: 'Publicateur',
       scrutator: 'Scrutateur',
     },
-    wrongPassword: 'Le mot de passe est erroné',
   },
   homePage: {
     anonymisedView: 'Vue anonymisée',
@@ -254,14 +197,6 @@ const fr = {
     },
     validate: 'Valider',
   },
-  loginPage: {
-    login: 'Connexion',
-    email: 'E-mail',
-    forgottenPassword: "En cas d'oubli de votre mot de passe, veuillez contacter votre administrateur.",
-    password: 'Mot de passe',
-    pleaseTryAgain: 'Veuillez réessayer.',
-    wrongEmailOrPassword: "L'email et/ou le mot de passe sont erronés.",
-  },
   errorPage: {
     title: 'Une erreur est survenue...',
     errorCode: 'Erreur {code}',
@@ -291,7 +226,6 @@ const fr = {
     refresh: 'Rafraîchir',
     moreOptions: "Plus d'options",
     or: 'ou',
-    passwordChangedConfirmation: { text: 'Votre mot de passe a été modifié.', button: 'OK' },
     settingsDrawer: {
       displayMode: "Type d'affichage",
       darkMode: 'Mode sombre',
@@ -347,10 +281,6 @@ const fr = {
       },
       submit: 'Créer la pré-assignation',
     },
-  },
-  resetPasswordPage: {
-    popup:
-      "Votre mot de passe n'a pas été mis à jour depuis plus de 6 mois. Pour des raisons de sécurité, il vous est demandé d'en renseigner un nouveau respectant les règles du PSSI.",
   },
   publishableDocumentsPage: {
     title: 'Arrêts P',

@@ -342,6 +342,8 @@ function computePriority(
       return 2;
     case 'jurica':
       return 1;
+    case 'juritcom':
+      return 1;
     default:
       return 0;
   }

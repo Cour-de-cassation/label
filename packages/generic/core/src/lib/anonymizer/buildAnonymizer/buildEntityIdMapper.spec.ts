@@ -10,12 +10,12 @@ describe('buildEntityIdMapper', () => {
     adresse: { anonymization: '[adresse %d]' },
   });
   const annotations = [
-    { category: 'nom', start: 0, text: 'gle', certaintyScore: 1 },
-    { category: 'nom', start: 5, text: 'gle', certaintyScore: 1 },
-    { category: 'prenom', start: 10, text: 'romain', certaintyScore: 1 },
-    { category: 'prenom', start: 20, text: 'benoit', certaintyScore: 1 },
-    { category: 'adresse', start: 30, text: '10 rue', certaintyScore: 1 },
-    { category: 'adresse', start: 40, text: '20 cour', certaintyScore: 1 },
+    { category: 'nom', start: 0, text: 'gle', score: 1, source: 'agent' },
+    { category: 'nom', start: 5, text: 'gle', score: 1, source: 'agent' },
+    { category: 'prenom', start: 10, text: 'romain', score: 1, source: 'agent' },
+    { category: 'prenom', start: 20, text: 'benoit', score: 1, source: 'agent' },
+    { category: 'adresse', start: 30, text: '10 rue', score: 1, source: 'agent' },
+    { category: 'adresse', start: 40, text: '20 cour', score: 1, source: 'agent' },
   ].map(annotationModule.lib.buildAnnotation);
   const seed = 123;
 

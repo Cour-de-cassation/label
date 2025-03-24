@@ -10,19 +10,22 @@ describe('buildAvailableCharactersMapper', () => {
       category: 'prenom',
       start: 0,
       text: `benoit`,
-      certaintyScore: 1,
+      score: 1,
+      source: 'agent',
     });
     const annotation2 = buildAnnotation({
       category: 'prenom',
       start: 0,
       text: `nicolas`,
-      certaintyScore: 1,
+      score: 1,
+      source: 'agent',
     });
     const annotation3 = buildAnnotation({
       category: 'nom',
       start: 0,
       text: `gle`,
-      certaintyScore: 1,
+      score: 1,
+      source: 'agent',
     });
 
     const mapper = buildAvailableCharactersMapper([annotation1, annotation2, annotation3], seed);
@@ -39,7 +42,8 @@ describe('buildAvailableCharactersMapper', () => {
         category: 'prenom',
         start: 0,
         text: `${value}`,
-        certaintyScore: 1,
+        score: 1,
+        source: 'agent',
       }),
     );
 

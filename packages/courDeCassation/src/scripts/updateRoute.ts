@@ -52,11 +52,6 @@ async function updateRouteForFreeDocuments() {
         parties: documentsToUpdate[index].decisionMetadata.parties,
         publicationCategory: documentsToUpdate[index].publicationCategory,
         chamberName: documentsToUpdate[index].decisionMetadata.chamberName,
-        civilMatterCode:
-          documentsToUpdate[index].decisionMetadata.civilMatterCode,
-        civilCaseCode: documentsToUpdate[index].decisionMetadata.civilCaseCode,
-        criminalCaseCode:
-          documentsToUpdate[index].decisionMetadata.criminalCaseCode,
         NACCode: documentsToUpdate[index].decisionMetadata.NACCode,
         endCaseCode: documentsToUpdate[index].decisionMetadata.endCaseCode,
       },

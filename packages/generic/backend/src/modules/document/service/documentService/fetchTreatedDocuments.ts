@@ -106,6 +106,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
         reviewStatus: treatedDocument.reviewStatus,
         route: treatedDocument.route,
         source: treatedDocument.source,
+        selection: treatedDocument.decisionMetadata.selection,
       },
       totalTreatmentDuration,
       lastTreatmentDate,

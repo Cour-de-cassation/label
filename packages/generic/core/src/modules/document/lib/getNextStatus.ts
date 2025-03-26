@@ -7,7 +7,13 @@ function getNextStatus({
   publicationCategory,
   status,
   route,
-}: Pick<documentType, 'status' | 'publicationCategory' | 'route'>): documentType['status'] {
+  selection,
+}: {
+  publicationCategory: documentType['publicationCategory'];
+  status: documentType['status'];
+  route: documentType['route'];
+  selection: documentType['decisionMetadata']['selection'];
+}): documentType['status'] {
   switch (status) {
     case 'loaded':
       return 'nlpAnnotating';
@@ -27,14 +33,14 @@ function getNextStatus({
       if (route === 'confirmation') {
         return 'toBeConfirmed';
       }
-      return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
+      return publicationHandler.mustBePublished(publicationCategory, selection) ? 'toBePublished' : 'done';
     case 'locked':
       if (route === 'confirmation') {
         return 'toBeConfirmed';
       }
-      return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
+      return publicationHandler.mustBePublished(publicationCategory, selection) ? 'toBePublished' : 'done';
     case 'toBeConfirmed':
-      return publicationHandler.mustBePublished(publicationCategory) ? 'toBePublished' : 'done';
+      return publicationHandler.mustBePublished(publicationCategory, selection) ? 'toBePublished' : 'done';
     case 'toBePublished':
       return 'done';
     default:

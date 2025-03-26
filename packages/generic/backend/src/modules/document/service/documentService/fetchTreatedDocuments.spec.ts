@@ -127,5 +127,6 @@ function projectTreatedDocumentDocument(document: documentType) {
     ]),
     occultationBlock: document.decisionMetadata.occultationBlock,
     jurisdiction: document.decisionMetadata.jurisdiction,
+    selection: document.decisionMetadata.selection,
   };
 }

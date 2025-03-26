@@ -141,6 +141,7 @@ function buildFetchDocumentsForUser(
       status: document.status,
       publicationCategory: document.publicationCategory,
       route: document.route,
+      selection: document.decisionMetadata.selection,
     });
 
     const updatedDocument = await documentRepository.updateOneStatusByIdAndStatus(

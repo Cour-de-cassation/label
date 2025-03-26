@@ -40,6 +40,7 @@ async function fetchPublishableDocuments() {
         publicationCategory,
         route,
         status,
+        selection: decisionMetadata.selection,
       }),
     );
 }

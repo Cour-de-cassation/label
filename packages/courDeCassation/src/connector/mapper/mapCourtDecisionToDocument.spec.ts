@@ -43,6 +43,7 @@ describe('mapCourtDecisionToDocument', () => {
         solution: '',
         sourceId: 0,
         sourceName: Sources.CA,
+        selection: false,
       },
       'filler',
     );
@@ -90,6 +91,7 @@ describe('mapCourtDecisionToDocument', () => {
         solution: '',
         sourceId: 0,
         sourceName: Sources.CA,
+        selection: false,
       },
       'chained',
     );
@@ -137,6 +139,7 @@ describe('mapCourtDecisionToDocument', () => {
         solution: '',
         sourceId: 0,
         sourceName: Sources.CA,
+        selection: false,
       },
       'recent',
     );

@@ -109,6 +109,7 @@ function buildAnnotator(
           status: currentDocumentToAnnotate.status,
           publicationCategory: currentDocumentToAnnotate.publicationCategory,
           route: currentDocumentToAnnotate.route,
+          selection: currentDocumentToAnnotate.decisionMetadata.selection,
         });
         const updatedDocument = await documentService.updateDocumentStatus(
           currentDocumentToAnnotate._id,
@@ -375,6 +376,7 @@ function buildAnnotator(
       status: document.status,
       publicationCategory: document.publicationCategory,
       route: document.route,
+      selection: document.decisionMetadata.selection,
     });
 
     const preAssignator = buildPreAssignator();

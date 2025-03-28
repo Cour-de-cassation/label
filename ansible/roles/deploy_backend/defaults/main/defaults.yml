@@ -18,15 +18,15 @@ jobs:
     parallelism: 1
     active_deadline_seconds: 1800
     command: "dist/scripts/autoImportDocumentsFromSder.js"
-  - name: "export-j-4"
-    schedule: "25 17 * * *"
+  - name: "export-j-7"
+    schedule: "25 18 * * *"
     successful_jobs_history_limit: 7
     failed_jobs_history_limit: 7
     backoff_limit: 2
     restartPolicy: "OnFailure"
     parallelism: 1
     active_deadline_seconds: 300
-    command: "dist/scripts/exportTreatedDocumentsSince.js --days 4"
+    command: "dist/scripts/exportTreatedDocumentsSince.js --days 7"
   - name: "export-publishable"
     schedule: "50 13 * * *"
     successful_jobs_history_limit: 7

@@ -214,8 +214,24 @@ function buildConnector(connectorConfig: connectorConfigType) {
   }
 }
 
-function insertDocument(document: documentType) {
+async function insertDocument(document: documentType) {
   const documentRepository = buildDocumentRepository();
+
+  const duplicatesDocuments = await documentRepository.findAllByExternalId(
+    document.externalId,
+  );
+  if (duplicatesDocuments.length > 0) {
+    logger.log({
+      operationName: 'documentInsertion',
+      msg: `Document ${document.source}:${document.documentNumber} is already ${duplicatesDocuments.length} time in label database, deleting not rejected documents`,
+    });
+
+    for (const doc of duplicatesDocuments) {
+      if (doc.status !== 'rejected') {
+        await documentService.deleteDocument(doc._id);
+      }
+    }
+  }
 
   try {
     const insertedDocument = documentRepository.insert(document);

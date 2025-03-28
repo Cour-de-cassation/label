@@ -149,6 +149,12 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       );
     },
 
+    async findAllByExternalId(externalId) {
+      return collection.filter(
+        (document) => document.externalId === externalId,
+      );
+    },
+
     async findOneByStatusAndPriorityAmong(
       { status, priority },
       idsToSearchInFirst,

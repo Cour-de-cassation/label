@@ -122,23 +122,13 @@ const sderApi = {
     });
   },
 
-  async getDecisionRoute({
-    codeNac,
-    codeDecision,
-    source,
-  }: {
-    codeNac: string;
-    codeDecision: string;
-    source: string;
-  }) {
+  async getDecisionRoute({ codeNac }: { codeNac: string }) {
     return ((await fetchApi({
       method: 'get',
-      path: 'decision-route',
-      body: {
-        codeNac,
-        codeDecision,
-        source,
-      },
-    })) as unknown) as Promise<documentType['route'] | undefined>;
+      path: `decision-route?codeNac=${codeNac}`,
+      body: {},
+    })) as unknown) as Promise<
+      'systematique' | 'aleatoireSensible' | 'aleatoireNonSensible' | undefined
+    >;
   },
 };

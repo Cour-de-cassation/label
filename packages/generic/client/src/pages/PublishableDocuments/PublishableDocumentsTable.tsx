@@ -73,6 +73,7 @@ function PublishableDocumentsTable(props: {
             status: publishableDocument.status,
             publicationCategory: publishableDocument.publicationCategory,
             route: publishableDocument.route,
+            selection: publishableDocument.selection,
           }) as 'done' | 'toBePublished',
         });
         props.refetch();

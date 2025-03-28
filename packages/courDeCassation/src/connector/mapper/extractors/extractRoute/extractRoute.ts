@@ -1,12 +1,12 @@
 import { logger } from '@label/backend';
 import { documentType } from '@label/core';
-import { extractRouteForJurica } from './extractRouteForJurica';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
-import { extractRouteForJuritj } from './extractRouteForJuritj';
+import { extractRouteForCivilJurisdiction } from './extractRouteForCivilJurisdiction';
+import { Sources } from 'dbsder-api-types';
 
 export { extractRoute };
 
-function extractRoute(
+async function extractRoute(
   routeInfos: {
     additionalTermsToAnnotate: documentType['decisionMetadata']['additionalTermsToAnnotate'];
     session: documentType['decisionMetadata']['session'];
@@ -14,50 +14,32 @@ function extractRoute(
     parties: documentType['decisionMetadata']['parties'];
     publicationCategory: documentType['publicationCategory'];
     chamberName: documentType['decisionMetadata']['chamberName'];
-    civilMatterCode: documentType['decisionMetadata']['civilMatterCode'];
-    civilCaseCode: documentType['decisionMetadata']['civilCaseCode'];
-    criminalCaseCode: documentType['decisionMetadata']['criminalCaseCode'];
     NACCode: documentType['decisionMetadata']['NACCode'];
     endCaseCode: documentType['decisionMetadata']['endCaseCode'];
-    status?: documentType['status'];
   },
   source: documentType['source'],
-): documentType['route'] {
+): Promise<documentType['route']> {
   let route: documentType['route'] = 'default';
 
-  switch (source) {
-    case 'jurinet':
-      try {
-        route = extractRouteForJurinet({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJurinet', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-    case 'jurica':
-      try {
-        route = extractRouteForJurica({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJurica', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-    case 'juritj':
-      try {
-        route = extractRouteForJuritj({ ...routeInfos });
-      } catch (e) {
-        logger.error({ operationName: 'extractRouteForJuritj', msg: `${e}` });
-        route = 'exhaustive';
-      }
-      break;
-  }
+  const extractRouteFunctions = {
+    [Sources.CC]: extractRouteForJurinet,
+    [Sources.CA]: extractRouteForCivilJurisdiction,
+    [Sources.TJ]: extractRouteForCivilJurisdiction,
+    [Sources.TCOM]: extractRouteForCivilJurisdiction,
+  };
 
-  if (
-    (!!routeInfos.additionalTermsToAnnotate ||
-      (routeInfos.parties && routeInfos.parties.length > 50)) &&
-    (route == 'simple' || route == 'default')
-  ) {
-    route = 'exhaustive';
+  try {
+    if (source in extractRouteFunctions) {
+      route = await extractRouteFunctions[source as Sources]({
+        ...routeInfos,
+        source,
+      });
+    } else {
+      throw new Error('Source non prise en charge');
+    }
+  } catch (e) {
+    logger.error({ operationName: `extractRouteFor ${source}`, msg: `${e}` });
+    route = 'default';
   }
 
   return route;

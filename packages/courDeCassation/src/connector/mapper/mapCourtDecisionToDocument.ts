@@ -87,17 +87,14 @@ async function mapCourtDecisionToDocument(
     importer,
   );
 
-  const route = extractRoute(
+  const route = await extractRoute(
     {
       additionalTermsToAnnotate,
       solution,
       parties: sderCourtDecision.parties ? sderCourtDecision.parties : [],
       publicationCategory,
       chamberName: readableChamberName,
-      civilMatterCode,
       session,
-      civilCaseCode,
-      criminalCaseCode,
       NACCode,
       endCaseCode,
     },

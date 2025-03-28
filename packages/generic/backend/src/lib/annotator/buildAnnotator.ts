@@ -210,11 +210,12 @@ function buildAnnotator(
     });
     documentService.updateDocumentNlpVersions(documentId, version);
 
-    if (document.route == 'simple' && annotations.length == 0) {
+    if (document.route === 'simple' && annotations.length === 0) {
       await documentService.updateDocumentRoute(documentId, 'automatic');
       logger.log({
         operationName: 'annotateDocument',
-        msg: 'Route switched to automatic',
+        msg:
+          'Document route switched to automatic because there is no annotations',
       });
     }
 
@@ -270,7 +271,7 @@ function buildAnnotator(
     }
 
     if (checklist.length > 0) {
-      documentService.updateDocumentChecklist(document._id, checklist);
+      await documentService.updateDocumentChecklist(document._id, checklist);
       logger.log({
         operationName: 'annotateDocument',
         msg: 'Checklist added to document',
@@ -281,6 +282,25 @@ function buildAnnotator(
           },
         },
       });
+
+      if (
+        document.route === 'automatic' ||
+        document.route === 'simple' ||
+        document.route === 'default'
+      ) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg:
+            'Document route updated to exhaustive because there is a checklist.',
+          data: {
+            decision: {
+              sourceId: document.documentNumber,
+              sourceName: document.source,
+            },
+          },
+        });
+        await documentService.updateDocumentRoute(document._id, 'exhaustive');
+      }
     }
     if (
       additionalTermsParsingFailed !== null &&
@@ -346,7 +366,7 @@ function buildAnnotator(
           },
         },
       });
-      documentService.updateDocumentCategoriesToOmit(
+      await documentService.updateDocumentCategoriesToOmit(
         documentId,
         newCategoriesToOmit,
       );

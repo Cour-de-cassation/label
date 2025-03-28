@@ -43,7 +43,7 @@ async function updateRouteForFreeDocuments() {
   });
 
   for (let index = 0; index < documentsToUpdate.length; index++) {
-    const newRoute = extractRoute(
+    const newRoute = await extractRoute(
       {
         additionalTermsToAnnotate:
           documentsToUpdate[index].decisionMetadata.additionalTermsToAnnotate,
@@ -52,11 +52,6 @@ async function updateRouteForFreeDocuments() {
         parties: documentsToUpdate[index].decisionMetadata.parties,
         publicationCategory: documentsToUpdate[index].publicationCategory,
         chamberName: documentsToUpdate[index].decisionMetadata.chamberName,
-        civilMatterCode:
-          documentsToUpdate[index].decisionMetadata.civilMatterCode,
-        civilCaseCode: documentsToUpdate[index].decisionMetadata.civilCaseCode,
-        criminalCaseCode:
-          documentsToUpdate[index].decisionMetadata.criminalCaseCode,
         NACCode: documentsToUpdate[index].decisionMetadata.NACCode,
         endCaseCode: documentsToUpdate[index].decisionMetadata.endCaseCode,
       },

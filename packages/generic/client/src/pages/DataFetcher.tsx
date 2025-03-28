@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { handleFetchedData } from '../api';
-import { localStorage } from '../services/localStorage';
 import { ErrorPage } from './ErrorPage';
 import { LoadingPage } from './LoadingPage';
 
@@ -23,8 +22,6 @@ function DataFetcher<dataT>(props: {
     case 'error':
       switch (fetchedData.error) {
         case 'authentication':
-          localStorage.bearerTokenHandler.remove();
-          localStorage.userHandler.remove();
           return buildLoginRedirectionPage();
         case 'unknown':
           return buildErrorPage();

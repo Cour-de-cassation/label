@@ -9,14 +9,13 @@ RUN yarn config set proxy $http_proxy; \
 
 WORKDIR /home/node/
 
-# Install git for sder and sder-core package
-RUN apk add git
-
 # Copy context files
 COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
+
+COPY sso_files/ ./packages/courDeCassation/sso_files/
 
 COPY . .
 

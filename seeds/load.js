@@ -4,10 +4,10 @@ const { resolve } = require("path");
 if (!process.env.NODE_ENV) require("dotenv").config();
 
 async function readCollections() {
-  const path = resolve(__dirname, "db");
+  const path = resolve(__dirname, 'db')
   const files = await readdir(path);
   return files.map((_) => ({
-    collectionName: _.slice(0, _.length - ".json".length),
+    collectionName: _.slice(0, _.length - '.json'.length),
     path: resolve(path, _),
   }));
 }
@@ -18,12 +18,6 @@ async function saveCollections(client, { collectionName, path }) {
   const saveParse = JSON.parse(save, (_, value) => {
     if (value && typeof value["$oid"] === "string" && value["$oid"].length > 0)
       return ObjectId(value["$oid"]);
-    if (
-      value &&
-      typeof value["$date"] === "string" &&
-      value["$date"].length > 0
-    )
-      return new Date(value["$date"]);
     return value;
   });
   if (saveParse.length <= 0) return;
@@ -38,7 +32,7 @@ async function main() {
 
   const collections = await readCollections();
 
-  return Promise.all(collections.map((_) => saveCollections(client, _)));
+  return Promise.all(collections.map(_ => saveCollections(client, _)));
 }
 
 main()

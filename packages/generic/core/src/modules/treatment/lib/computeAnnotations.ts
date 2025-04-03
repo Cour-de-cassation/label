@@ -4,6 +4,7 @@ import { idModule } from '../../id';
 import { treatmentType } from '../treatmentType';
 import { assertTreatmentsSourcesFollowRightOrder } from './assertTreatmentsSourcesFollowRightOrder';
 import { sortInConsistentOrder } from './sortInConsistentOrder';
+import { Annotation } from 'dbsder-api-types';
 
 export { computeAnnotations, computeAnnotationsDiff };
 
@@ -16,7 +17,7 @@ function computeAnnotations(treatments: treatmentType[]): annotationType[] {
   if (checkTreatmentsConsistency(sortedTreatments) && areAnnotationsInitiallyEmpty(treatments)) {
     assertTreatmentsSourcesFollowRightOrder(treatments);
     const annotationsDiffs = sortedTreatments.map((treatment) => treatment.annotationsDiff);
-    return annotationsDiffModule.lib.squash(annotationsDiffs).after;
+    return annotationsDiffModule.lib.squash(annotationsDiffs).after as Annotation[];
   } else {
     throw new Error(
       `Can not compute annotations from inconsistent treatments : [${treatments.map(({ _id }) => _id).join(', ')}]`,

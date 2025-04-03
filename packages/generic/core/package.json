@@ -36,7 +36,7 @@
     "bcryptjs": "^2.4.3",
     "lodash": "^4.17.21",
     "mongodb": "^3.6.1",
-    "sder": "https://github.com/Cour-de-cassation/sder#28fa6bb18f121bd081be6205b5536e24860f01c6",
+    "dbsder-api-types": "1.7.2",
     "string-template": "^1.0.0",
     "typescript": "~4.0.0"
   },

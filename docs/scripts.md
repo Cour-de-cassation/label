@@ -8,7 +8,7 @@ Send documents to the NLP API and retreive their annotations.
 
 ## autoImportDocumentsFromSder
 
-Import all possible documents from SDER.
+Import all documents to be pseudonymized from SDER.
 
 ## cleanDocuments
 
@@ -30,10 +30,6 @@ Delete all problem reports.
 
 Delete specific document from Label db.
 
-## deleteDocumentsOlderThan
-
-Deleted documents older than a specific date from Label db.
-
 ## displayDocumentLinks
 
 Count linked documents in Label database (chained documents that are in the same time in Label).
@@ -45,10 +41,6 @@ Display if documents are assigneted to multiple users (which is a bug).
 ## dumpDocument
 
 Dump document data in the console.
-
-## exportAllRejectedDocuments
-
-Reject documents with the rejected status (delete document from Label & set 'blocked' status in the SDER database).
 
 ## exportAllTreatedDocuments
 
@@ -73,21 +65,6 @@ Calculate loss of the documents with the NLP API.
 ## freePendingDocuments
 
 Free documents assignated to an annotator that is AFK after X minutes.
-
-## importAllDocumentsFromSderBetween
-
-Import documents from the SDER database with jurisdiction and chamber filter between dates.
-
-## importAllDocumentsFromSderSinceOrBetween
-
-Import documents from the SDER database since X days / or with optional param, you give a scope "from --- to".
-
-- example : command: "importAllDocumentsFromSderSinceOrBetween.js --days 7"
-- example with scope : command: "importAllDocumentsFromSderSinceOrBetween.js --days 7 --to 1"
-
-## importChainedDocumentsFromSder
-
-Import from the SDER database JuriCA decisions to pseudonymise chained with Jurinet decisions that are in the SDER database.
 
 ## importSpecificDocumentFromSder
 
@@ -125,18 +102,6 @@ This script only prepare documents and set their status to loaded, the next nlp-
 ## renewCache
 
 Renew the cache.
-
-## resetAllDocumentsSince
-
-Reset documents since a specific date.
-
-## resetAllLockedDocuments
-
-Reset locked documents.
-
-## resetDocument
-
-Reset a specific document.
 
 ## resetUntreatedDocumentsForTest
 

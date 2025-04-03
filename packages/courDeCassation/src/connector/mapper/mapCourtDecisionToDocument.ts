@@ -1,4 +1,3 @@
-import { decisionType } from 'sder';
 import {
   documentType,
   documentModule,
@@ -12,12 +11,13 @@ import {
 } from './extractors';
 import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
+import { DecisionDTO, DecisionTJDTO, Sources } from 'dbsder-api-types';
 
 export { mapCourtDecisionToDocument };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function mapCourtDecisionToDocument(
-  sderCourtDecision: decisionType,
+  sderCourtDecision: DecisionDTO,
   importer: documentType['importer'],
 ): Promise<documentType> {
   const readableChamberName = extractReadableChamberName({
@@ -33,7 +33,9 @@ async function mapCourtDecisionToDocument(
 
   const registerNumber = sderCourtDecision.registerNumber;
   const appeal = sderCourtDecision.appeals[0];
-  const numeroRoleGeneral = sderCourtDecision.numeroRoleGeneral || '';
+  const numeroRoleGeneral = isDecisionTJ(sderCourtDecision)
+    ? sderCourtDecision.numeroRoleGeneral
+    : '';
   const appealNumber = extractAppealRegisterRoleGeneralNumber(
     sderCourtDecision.originalText,
     source,
@@ -89,7 +91,7 @@ async function mapCourtDecisionToDocument(
     {
       additionalTermsToAnnotate,
       solution,
-      parties: sderCourtDecision.parties,
+      parties: sderCourtDecision.parties ? sderCourtDecision.parties : [],
       publicationCategory,
       chamberName: readableChamberName,
       civilMatterCode,
@@ -203,7 +205,7 @@ async function mapCourtDecisionToDocument(
       jurisdiction: readableJurisdictionName,
       NACCode,
       endCaseCode,
-      parties: sderCourtDecision.parties || [],
+      parties: sderCourtDecision.parties ? sderCourtDecision.parties : [],
       occultationBlock: sderCourtDecision.blocOccultation || undefined,
       session,
       solution,
@@ -211,7 +213,7 @@ async function mapCourtDecisionToDocument(
         sderCourtDecision.occultation.motivationOccultation ?? undefined,
     },
     documentNumber: sderCourtDecision.sourceId,
-    externalId: idModule.lib.convertToString(sderCourtDecision._id),
+    externalId: idModule.lib.convertToString(sderCourtDecision._id ?? ''),
     loss: undefined,
     priority,
     publicationCategory,
@@ -225,6 +227,7 @@ async function mapCourtDecisionToDocument(
     checklist: [],
   });
 }
+
 function getPrefixedNumber(
   numberToPrefix: string | undefined,
   source: string,
@@ -239,6 +242,7 @@ function getPrefixedNumber(
     return `RG n°${numberToPrefix}`;
   }
 }
+
 function computeTitleFromParsedCourtDecision({
   source,
   number,
@@ -264,14 +268,18 @@ function computeTitleFromParsedCourtDecision({
     readableJurisdictionName,
   );
 
-  if (source === 'juritj') {
+  if (source === Sources.TJ) {
     readableJurisdictionName = `TJ de ${readableJurisdictionName}`;
   }
 
+  if (source === Sources.TCOM) {
+    readableJurisdictionName = `TCOM de ${readableJurisdictionName}`;
+  }
+
   const nomenclatureNumber =
-    source === 'jurinet' && NAOCode
+    source === Sources.CC && NAOCode
       ? `NAO ${NAOCode}`
-      : (source === 'juritj' || source === 'jurica') && NACCode
+      : (source === Sources.TJ || source === Sources.CA) && NACCode
       ? `NAC ${NACCode}`
       : undefined;
 
@@ -294,8 +302,8 @@ function computeTitleFromParsedCourtDecision({
 }
 
 function computePublicationCategory(
-  pubCategory: decisionType['pubCategory'],
-  publication: decisionType['publication'],
+  pubCategory: DecisionDTO['pubCategory'],
+  publication: DecisionDTO['publication'],
 ): documentType['publicationCategory'] {
   const publicationCategory: string[] = [];
   if (!!pubCategory) {
@@ -308,9 +316,9 @@ function computePublicationCategory(
 }
 
 function computePriority(
-  source: decisionType['sourceName'],
+  source: DecisionDTO['sourceName'],
   publicationCategory: documentType['publicationCategory'],
-  NACCode: decisionType['NACCode'],
+  NACCode: DecisionDTO['NACCode'],
   importer: documentType['importer'],
 ): documentType['priority'] {
   if (
@@ -332,6 +340,10 @@ function computePriority(
   switch (source) {
     case 'jurinet':
       return 2;
+    case 'jurica':
+      return 1;
+    case 'juritcom':
+      return 1;
     default:
       return 0;
   }
@@ -347,4 +359,8 @@ function convertToValidDate(date: string | undefined) {
     return undefined;
   }
   return convertedDate;
+}
+
+function isDecisionTJ(decision: DecisionDTO): decision is DecisionTJDTO {
+  return decision.sourceName === Sources.TJ;
 }

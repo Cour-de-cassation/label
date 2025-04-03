@@ -5,12 +5,13 @@ import { annotationType } from '../annotationType';
 export { annotationGenerator };
 
 const annotationGenerator: generatorType<annotationType> = {
-  generate: ({ category, start, text, certaintyScore } = {}) => {
+  generate: ({ category, start, text, score, source } = {}) => {
     const annotationFields = {
       category: category ? category : `CATEGORY_${Math.random()}`,
       start: start ? start : 0,
       text: text ? text : `TEXT_${Math.random()}`,
-      certaintyScore: certaintyScore ?? 1,
+      score: score ?? 1,
+      source: source ?? 'agent',
     };
 
     return {

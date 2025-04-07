@@ -213,6 +213,7 @@ async function mapCourtDecisionToDocument(
       motivationOccultation:
         sderCourtDecision.occultation.motivationOccultation ?? undefined,
       selection: sderCourtDecision.selection ?? undefined,
+      sommaire: sderCourtDecision.sommaire ?? '',
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id ?? ''),

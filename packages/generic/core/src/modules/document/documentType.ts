@@ -351,6 +351,13 @@ const documentModelCommonFields = {
           { kind: 'primitive', content: 'undefined' },
         ],
       },
+      sommaire: {
+        kind: 'or',
+        content: [
+          { kind: 'primitive', content: 'string' },
+          { kind: 'primitive', content: 'undefined' },
+        ],
+      },
     },
   },
   documentNumber: { kind: 'primitive', content: 'number' },

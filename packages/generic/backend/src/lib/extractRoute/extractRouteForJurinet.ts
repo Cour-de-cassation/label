@@ -1,18 +1,13 @@
-import { documentType, documentModule, stringComparator } from '@label/core';
+import { documentType, stringComparator } from '@label/core';
 
 export { extractRouteForJurinet };
 
-function extractRouteForJurinet({
-  solution,
-  session,
-  publicationCategory,
-  chamberName,
-}: {
-  session: documentType['decisionMetadata']['session'];
-  solution: documentType['decisionMetadata']['solution'];
-  publicationCategory: documentType['publicationCategory'];
-  chamberName: documentType['decisionMetadata']['chamberName'];
-}): documentType['route'] {
+function extractRouteForJurinet(document: documentType): documentType['route'] {
+  const solution = document.decisionMetadata.solution;
+  const session = document.decisionMetadata.session;
+  const publicationCategory = document.publicationCategory;
+  const chamberName = document.decisionMetadata.chamberName;
+
   /* Double relecture :
     - Décisions rendues en Assemblée plénière
     - Décisions rendues en chambre mixte

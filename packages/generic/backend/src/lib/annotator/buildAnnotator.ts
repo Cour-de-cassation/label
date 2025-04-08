@@ -14,6 +14,7 @@ import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
 import { buildPreAssignator } from '../preAssignator';
+import { extractRoute } from '../extractRoute';
 
 export { buildAnnotator };
 
@@ -210,15 +211,6 @@ function buildAnnotator(
     });
     documentService.updateDocumentNlpVersions(documentId, version);
 
-    if (document.route === 'simple' && annotations.length === 0) {
-      await documentService.updateDocumentRoute(documentId, 'automatic');
-      logger.log({
-        operationName: 'annotateDocument',
-        msg:
-          'Document route switched to automatic because there is no annotations',
-      });
-    }
-
     await createAnnotatorTreatment({ annotations, documentId });
     logger.log({
       operationName: 'annotateDocument',
@@ -282,25 +274,6 @@ function buildAnnotator(
           },
         },
       });
-
-      if (
-        document.route === 'automatic' ||
-        document.route === 'simple' ||
-        document.route === 'default'
-      ) {
-        logger.log({
-          operationName: 'annotateDocument',
-          msg:
-            'Document route updated to exhaustive because there is a checklist.',
-          data: {
-            decision: {
-              sourceId: document.documentNumber,
-              sourceName: document.source,
-            },
-          },
-        });
-        await documentService.updateDocumentRoute(document._id, 'exhaustive');
-      }
     }
     if (
       additionalTermsParsingFailed !== null &&
@@ -406,6 +379,10 @@ function buildAnnotator(
         nextDocumentStatus,
       );
     }
+
+    // calculate route after annotation
+    const documentRoute = await extractRoute(document);
+    await documentService.updateDocumentRoute(document._id, documentRoute);
 
     logger.log({
       operationName: 'annotateDocument',

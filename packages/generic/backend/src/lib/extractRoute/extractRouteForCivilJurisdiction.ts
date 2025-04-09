@@ -1,6 +1,7 @@
 import { documentType } from '@label/core';
 import { Sources } from 'dbsder-api-types';
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
+import { documentService } from '../../modules/document';
 
 export { extractRouteForCivilJurisdiction };
 
@@ -39,13 +40,36 @@ async function extractRouteForCivilJurisdiction(
     const routeFromDb = await getDecisionRoute({
       codeNac: NACCode,
     });
+
+    const freeDocuments = await documentService.countFreeDocuments();
+    const targetFreeDocuments = 15000;
+    const nonSensibleMinimumRatio = 0.01;
+    const sensibleMinimumRatio = 0.1;
+
+    const ratio = Math.max(
+      0,
+      (targetFreeDocuments - freeDocuments) / targetFreeDocuments,
+    );
+
+    // nonSensibleRatio est toujours supérieur a sa limite minimum
+    const nonSensibleRatio =
+      ratio < nonSensibleMinimumRatio ? nonSensibleMinimumRatio : ratio;
+
+    // sensibleRatio est 10 fois plus élevé que nonSensibleRatio, toujours supérieur a sa limite minimale, dans la limite logique de 100%
+    const sensibleRatio = Math.min(
+      1,
+      nonSensibleRatio * 10 < sensibleMinimumRatio
+        ? sensibleMinimumRatio
+        : nonSensibleRatio * 10,
+    );
+
     switch (routeFromDb) {
       case 'systematique':
         return 'exhaustive';
       case 'aleatoireSensible':
-        return Math.random() < 0.1 ? 'exhaustive' : 'automatic';
+        return Math.random() < sensibleRatio ? 'exhaustive' : 'automatic';
       case 'aleatoireNonSensible':
-        return Math.random() < 0.01 ? 'exhaustive' : 'automatic';
+        return Math.random() < nonSensibleRatio ? 'exhaustive' : 'automatic';
       default:
         throw new Error('Route non trouvée en base');
     }

@@ -9,7 +9,6 @@ import {
   extractReadableJurisdictionName,
   extractAppealRegisterRoleGeneralNumber,
 } from './extractors';
-import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
 import { DecisionDTO, DecisionTJDTO, Sources } from 'dbsder-api-types';
 
@@ -85,23 +84,6 @@ async function mapCourtDecisionToDocument(
     publicationCategory,
     NACCode,
     importer,
-  );
-
-  const route = extractRoute(
-    {
-      additionalTermsToAnnotate,
-      solution,
-      parties: sderCourtDecision.parties ? sderCourtDecision.parties : [],
-      publicationCategory,
-      chamberName: readableChamberName,
-      civilMatterCode,
-      session,
-      civilCaseCode,
-      criminalCaseCode,
-      NACCode,
-      endCaseCode,
-    },
-    source,
   );
 
   let moyens = undefined;
@@ -217,7 +199,7 @@ async function mapCourtDecisionToDocument(
     loss: undefined,
     priority,
     publicationCategory,
-    route,
+    route: 'default',
     importer,
     source,
     title,

@@ -121,14 +121,4 @@ const sderApi = {
       },
     });
   },
-
-  async getDecisionRoute({ codeNac }: { codeNac: string }) {
-    return ((await fetchApi({
-      method: 'get',
-      path: `decision-route?codeNac=${codeNac}`,
-      body: {},
-    })) as unknown) as Promise<
-      'systematique' | 'aleatoireSensible' | 'aleatoireNonSensible' | undefined
-    >;
-  },
 };

@@ -1,0 +1,88 @@
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="https://recette.sso.intranet.justice.gouv.fr/saml/metadata">
+<IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+<KeyDescriptor use="signing">
+<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:X509Data>
+<ds:X509Certificate> MIIDkDCCAngCCQCqblG3IBmk/DANBgkqhkiG9w0BAQUFADCBiTELMAkGA1UEBhMC RlIxDzANBgNVBAcMBk5hbnRlczELMAkGA1UECgwCTUoxFTATBgNVBAsMDFNESVQv RVREL0JVQTEWMBQGA1UEAwwNVk0tTERBUC1TU08tNTEtMCsGCSqGSIb3DQEJARYe Q2xhdWRlLkxvaXNlYXVAanVzdGljZS5nb3V2LmZyMB4XDTE1MDgxMTE3MTEwOFoX DTI1MDgwODE3MTEwOFowgYkxCzAJBgNVBAYTAkZSMQ8wDQYDVQQHDAZOYW50ZXMx CzAJBgNVBAoMAk1KMRUwEwYDVQQLDAxTRElUL0VURC9CVUExFjAUBgNVBAMMDVZN LUxEQVAtU1NPLTUxLTArBgkqhkiG9w0BCQEWHkNsYXVkZS5Mb2lzZWF1QGp1c3Rp Y2UuZ291di5mcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJuiF1LA 2fQbpeFxaizjMsh3wPLintEMU4apHAfIbtba72qTFJ99FicqDxPi+kcqD5hVfUnx DhwSp1ZTx3zgRkR5cdcj9AAuVwCHh9Ph/1OZvFi3isLk9gDtoFqcEC7jpUaSFgsj 6vS1TkHf9j7qIVqG4Kv/D74/2Dsv6I/6zE/QodmAI3m2g2NPMM8jyuPYf3882tBe Iny6sR9OWsM92F2OcmeimhmdPE/zB7yZWB0Nn0iZQIN+MoBFrEIdnos8L63koADL mNX6bh9qrEmGzNqTObjUr/hbDl6t6QrsgNhosRR2rM8SQHlwX+Iwsssg0adBPmS7 kBq6STXjAVI+EVcCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEADX2EHMYr58KctZHP gluCJKjmyGMAubl1YS0nStRyDtjxzbTunm03C+zGDDM/0wcMHN27XLJ/KXqyoSUi sYjOi3s6m29mTAGHl3e9CNg8/m6gf3ffrJTfLgALpSqNp4ShnrtJu5Sci42rYsJe L8/ywC4uy01dY+5PXJRc7BXPfHura7+f6/bUuF4H5hYjox/SBx4ZVLhyAIS81d4d raEzlyr28/q88/nyk6rEo/C4qDuQ7KRijaRvfpk41rogPU8RxeTR8MwXCdgMxwwz g8Dg7rySqUjgsn1UacMZTH2K+voFgt8mysaA/k6zAn1wU9gpxvHwgIBZE8q4clL6 y/A0AQ== </ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<KeyDescriptor use="encryption">
+<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:X509Data>
+<ds:X509Certificate> MIIDkDCCAngCCQCqblG3IBmk/DANBgkqhkiG9w0BAQUFADCBiTELMAkGA1UEBhMC RlIxDzANBgNVBAcMBk5hbnRlczELMAkGA1UECgwCTUoxFTATBgNVBAsMDFNESVQv RVREL0JVQTEWMBQGA1UEAwwNVk0tTERBUC1TU08tNTEtMCsGCSqGSIb3DQEJARYe Q2xhdWRlLkxvaXNlYXVAanVzdGljZS5nb3V2LmZyMB4XDTE1MDgxMTE3MTEwOFoX DTI1MDgwODE3MTEwOFowgYkxCzAJBgNVBAYTAkZSMQ8wDQYDVQQHDAZOYW50ZXMx CzAJBgNVBAoMAk1KMRUwEwYDVQQLDAxTRElUL0VURC9CVUExFjAUBgNVBAMMDVZN LUxEQVAtU1NPLTUxLTArBgkqhkiG9w0BCQEWHkNsYXVkZS5Mb2lzZWF1QGp1c3Rp Y2UuZ291di5mcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJuiF1LA 2fQbpeFxaizjMsh3wPLintEMU4apHAfIbtba72qTFJ99FicqDxPi+kcqD5hVfUnx DhwSp1ZTx3zgRkR5cdcj9AAuVwCHh9Ph/1OZvFi3isLk9gDtoFqcEC7jpUaSFgsj 6vS1TkHf9j7qIVqG4Kv/D74/2Dsv6I/6zE/QodmAI3m2g2NPMM8jyuPYf3882tBe Iny6sR9OWsM92F2OcmeimhmdPE/zB7yZWB0Nn0iZQIN+MoBFrEIdnos8L63koADL mNX6bh9qrEmGzNqTObjUr/hbDl6t6QrsgNhosRR2rM8SQHlwX+Iwsssg0adBPmS7 kBq6STXjAVI+EVcCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEADX2EHMYr58KctZHP gluCJKjmyGMAubl1YS0nStRyDtjxzbTunm03C+zGDDM/0wcMHN27XLJ/KXqyoSUi sYjOi3s6m29mTAGHl3e9CNg8/m6gf3ffrJTfLgALpSqNp4ShnrtJu5Sci42rYsJe L8/ywC4uy01dY+5PXJRc7BXPfHura7+f6/bUuF4H5hYjox/SBx4ZVLhyAIS81d4d raEzlyr28/q88/nyk6rEo/C4qDuQ7KRijaRvfpk41rogPU8RxeTR8MwXCdgMxwwz g8Dg7rySqUjgsn1UacMZTH2K+voFgt8mysaA/k6zAn1wU9gpxvHwgIBZE8q4clL6 y/A0AQ== </ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<ArtifactResolutionService isDefault="true" index="0" Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://recette.sso.intranet.justice.gouv.fr/saml/artifact"/>
+<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://recette.sso.intranet.justice.gouv.fr/saml/singleLogoutSOAP"/>
+<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://recette.sso.intranet.justice.gouv.fr/saml/singleLogout" ResponseLocation="https://recette.sso.intranet.justice.gouv.fr/saml/singleLogoutReturn"/>
+<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://recette.sso.intranet.justice.gouv.fr/saml/singleLogout" ResponseLocation="https://recette.sso.intranet.justice.gouv.fr/saml/singleLogoutReturn"/>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://recette.sso.intranet.justice.gouv.fr/saml/singleSignOn"/>
+<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://recette.sso.intranet.justice.gouv.fr/saml/singleSignOn"/>
+<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://recette.sso.intranet.justice.gouv.fr/saml/singleSignOnArtifact"/>
+<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://recette.sso.intranet.justice.gouv.fr/saml/singleSignOnSOAP"/>
+</IDPSSODescriptor>
+<SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+<KeyDescriptor use="signing">
+<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:X509Data>
+<ds:X509Certificate> MIIDkDCCAngCCQCqblG3IBmk/DANBgkqhkiG9w0BAQUFADCBiTELMAkGA1UEBhMC RlIxDzANBgNVBAcMBk5hbnRlczELMAkGA1UECgwCTUoxFTATBgNVBAsMDFNESVQv RVREL0JVQTEWMBQGA1UEAwwNVk0tTERBUC1TU08tNTEtMCsGCSqGSIb3DQEJARYe Q2xhdWRlLkxvaXNlYXVAanVzdGljZS5nb3V2LmZyMB4XDTE1MDgxMTE3MTEwOFoX DTI1MDgwODE3MTEwOFowgYkxCzAJBgNVBAYTAkZSMQ8wDQYDVQQHDAZOYW50ZXMx CzAJBgNVBAoMAk1KMRUwEwYDVQQLDAxTRElUL0VURC9CVUExFjAUBgNVBAMMDVZN LUxEQVAtU1NPLTUxLTArBgkqhkiG9w0BCQEWHkNsYXVkZS5Mb2lzZWF1QGp1c3Rp Y2UuZ291di5mcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJuiF1LA 2fQbpeFxaizjMsh3wPLintEMU4apHAfIbtba72qTFJ99FicqDxPi+kcqD5hVfUnx DhwSp1ZTx3zgRkR5cdcj9AAuVwCHh9Ph/1OZvFi3isLk9gDtoFqcEC7jpUaSFgsj 6vS1TkHf9j7qIVqG4Kv/D74/2Dsv6I/6zE/QodmAI3m2g2NPMM8jyuPYf3882tBe Iny6sR9OWsM92F2OcmeimhmdPE/zB7yZWB0Nn0iZQIN+MoBFrEIdnos8L63koADL mNX6bh9qrEmGzNqTObjUr/hbDl6t6QrsgNhosRR2rM8SQHlwX+Iwsssg0adBPmS7 kBq6STXjAVI+EVcCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEADX2EHMYr58KctZHP gluCJKjmyGMAubl1YS0nStRyDtjxzbTunm03C+zGDDM/0wcMHN27XLJ/KXqyoSUi sYjOi3s6m29mTAGHl3e9CNg8/m6gf3ffrJTfLgALpSqNp4ShnrtJu5Sci42rYsJe L8/ywC4uy01dY+5PXJRc7BXPfHura7+f6/bUuF4H5hYjox/SBx4ZVLhyAIS81d4d raEzlyr28/q88/nyk6rEo/C4qDuQ7KRijaRvfpk41rogPU8RxeTR8MwXCdgMxwwz g8Dg7rySqUjgsn1UacMZTH2K+voFgt8mysaA/k6zAn1wU9gpxvHwgIBZE8q4clL6 y/A0AQ== </ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<KeyDescriptor use="encryption">
+<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:X509Data>
+<ds:X509Certificate> MIIDkDCCAngCCQCqblG3IBmk/DANBgkqhkiG9w0BAQUFADCBiTELMAkGA1UEBhMC RlIxDzANBgNVBAcMBk5hbnRlczELMAkGA1UECgwCTUoxFTATBgNVBAsMDFNESVQv RVREL0JVQTEWMBQGA1UEAwwNVk0tTERBUC1TU08tNTEtMCsGCSqGSIb3DQEJARYe Q2xhdWRlLkxvaXNlYXVAanVzdGljZS5nb3V2LmZyMB4XDTE1MDgxMTE3MTEwOFoX DTI1MDgwODE3MTEwOFowgYkxCzAJBgNVBAYTAkZSMQ8wDQYDVQQHDAZOYW50ZXMx CzAJBgNVBAoMAk1KMRUwEwYDVQQLDAxTRElUL0VURC9CVUExFjAUBgNVBAMMDVZN LUxEQVAtU1NPLTUxLTArBgkqhkiG9w0BCQEWHkNsYXVkZS5Mb2lzZWF1QGp1c3Rp Y2UuZ291di5mcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJuiF1LA 2fQbpeFxaizjMsh3wPLintEMU4apHAfIbtba72qTFJ99FicqDxPi+kcqD5hVfUnx DhwSp1ZTx3zgRkR5cdcj9AAuVwCHh9Ph/1OZvFi3isLk9gDtoFqcEC7jpUaSFgsj 6vS1TkHf9j7qIVqG4Kv/D74/2Dsv6I/6zE/QodmAI3m2g2NPMM8jyuPYf3882tBe Iny6sR9OWsM92F2OcmeimhmdPE/zB7yZWB0Nn0iZQIN+MoBFrEIdnos8L63koADL mNX6bh9qrEmGzNqTObjUr/hbDl6t6QrsgNhosRR2rM8SQHlwX+Iwsssg0adBPmS7 kBq6STXjAVI+EVcCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEADX2EHMYr58KctZHP gluCJKjmyGMAubl1YS0nStRyDtjxzbTunm03C+zGDDM/0wcMHN27XLJ/KXqyoSUi sYjOi3s6m29mTAGHl3e9CNg8/m6gf3ffrJTfLgALpSqNp4ShnrtJu5Sci42rYsJe L8/ywC4uy01dY+5PXJRc7BXPfHura7+f6/bUuF4H5hYjox/SBx4ZVLhyAIS81d4d raEzlyr28/q88/nyk6rEo/C4qDuQ7KRijaRvfpk41rogPU8RxeTR8MwXCdgMxwwz g8Dg7rySqUjgsn1UacMZTH2K+voFgt8mysaA/k6zAn1wU9gpxvHwgIBZE8q4clL6 y/A0AQ== </ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<ArtifactResolutionService isDefault="true" index="0" Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://recette.sso.intranet.justice.gouv.fr/saml/artifact"/>
+<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://recette.sso.intranet.justice.gouv.fr/saml/proxySingleLogoutSOAP"/>
+<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://recette.sso.intranet.justice.gouv.fr/saml/proxySingleLogout" ResponseLocation="https://recette.sso.intranet.justice.gouv.fr/saml/proxySingleLogoutReturn"/>
+<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://recette.sso.intranet.justice.gouv.fr/saml/proxySingleLogout" ResponseLocation="https://recette.sso.intranet.justice.gouv.fr/saml/proxySingleLogoutReturn"/>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+<AssertionConsumerService isDefault="true" index="0" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://recette.sso.intranet.justice.gouv.fr/saml/proxySingleSignOnArtifact"/>
+<AssertionConsumerService isDefault="false" index="1" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://recette.sso.intranet.justice.gouv.fr/saml/proxySingleSignOnPost"/>
+</SPSSODescriptor>
+<AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+<KeyDescriptor use="signing">
+<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:X509Data>
+<ds:X509Certificate> MIIDkDCCAngCCQCqblG3IBmk/DANBgkqhkiG9w0BAQUFADCBiTELMAkGA1UEBhMC RlIxDzANBgNVBAcMBk5hbnRlczELMAkGA1UECgwCTUoxFTATBgNVBAsMDFNESVQv RVREL0JVQTEWMBQGA1UEAwwNVk0tTERBUC1TU08tNTEtMCsGCSqGSIb3DQEJARYe Q2xhdWRlLkxvaXNlYXVAanVzdGljZS5nb3V2LmZyMB4XDTE1MDgxMTE3MTEwOFoX DTI1MDgwODE3MTEwOFowgYkxCzAJBgNVBAYTAkZSMQ8wDQYDVQQHDAZOYW50ZXMx CzAJBgNVBAoMAk1KMRUwEwYDVQQLDAxTRElUL0VURC9CVUExFjAUBgNVBAMMDVZN LUxEQVAtU1NPLTUxLTArBgkqhkiG9w0BCQEWHkNsYXVkZS5Mb2lzZWF1QGp1c3Rp Y2UuZ291di5mcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJuiF1LA 2fQbpeFxaizjMsh3wPLintEMU4apHAfIbtba72qTFJ99FicqDxPi+kcqD5hVfUnx DhwSp1ZTx3zgRkR5cdcj9AAuVwCHh9Ph/1OZvFi3isLk9gDtoFqcEC7jpUaSFgsj 6vS1TkHf9j7qIVqG4Kv/D74/2Dsv6I/6zE/QodmAI3m2g2NPMM8jyuPYf3882tBe Iny6sR9OWsM92F2OcmeimhmdPE/zB7yZWB0Nn0iZQIN+MoBFrEIdnos8L63koADL mNX6bh9qrEmGzNqTObjUr/hbDl6t6QrsgNhosRR2rM8SQHlwX+Iwsssg0adBPmS7 kBq6STXjAVI+EVcCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEADX2EHMYr58KctZHP gluCJKjmyGMAubl1YS0nStRyDtjxzbTunm03C+zGDDM/0wcMHN27XLJ/KXqyoSUi sYjOi3s6m29mTAGHl3e9CNg8/m6gf3ffrJTfLgALpSqNp4ShnrtJu5Sci42rYsJe L8/ywC4uy01dY+5PXJRc7BXPfHura7+f6/bUuF4H5hYjox/SBx4ZVLhyAIS81d4d raEzlyr28/q88/nyk6rEo/C4qDuQ7KRijaRvfpk41rogPU8RxeTR8MwXCdgMxwwz g8Dg7rySqUjgsn1UacMZTH2K+voFgt8mysaA/k6zAn1wU9gpxvHwgIBZE8q4clL6 y/A0AQ== </ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<KeyDescriptor use="encryption">
+<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:X509Data>
+<ds:X509Certificate> MIIDkDCCAngCCQCqblG3IBmk/DANBgkqhkiG9w0BAQUFADCBiTELMAkGA1UEBhMC RlIxDzANBgNVBAcMBk5hbnRlczELMAkGA1UECgwCTUoxFTATBgNVBAsMDFNESVQv RVREL0JVQTEWMBQGA1UEAwwNVk0tTERBUC1TU08tNTEtMCsGCSqGSIb3DQEJARYe Q2xhdWRlLkxvaXNlYXVAanVzdGljZS5nb3V2LmZyMB4XDTE1MDgxMTE3MTEwOFoX DTI1MDgwODE3MTEwOFowgYkxCzAJBgNVBAYTAkZSMQ8wDQYDVQQHDAZOYW50ZXMx CzAJBgNVBAoMAk1KMRUwEwYDVQQLDAxTRElUL0VURC9CVUExFjAUBgNVBAMMDVZN LUxEQVAtU1NPLTUxLTArBgkqhkiG9w0BCQEWHkNsYXVkZS5Mb2lzZWF1QGp1c3Rp Y2UuZ291di5mcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJuiF1LA 2fQbpeFxaizjMsh3wPLintEMU4apHAfIbtba72qTFJ99FicqDxPi+kcqD5hVfUnx DhwSp1ZTx3zgRkR5cdcj9AAuVwCHh9Ph/1OZvFi3isLk9gDtoFqcEC7jpUaSFgsj 6vS1TkHf9j7qIVqG4Kv/D74/2Dsv6I/6zE/QodmAI3m2g2NPMM8jyuPYf3882tBe Iny6sR9OWsM92F2OcmeimhmdPE/zB7yZWB0Nn0iZQIN+MoBFrEIdnos8L63koADL mNX6bh9qrEmGzNqTObjUr/hbDl6t6QrsgNhosRR2rM8SQHlwX+Iwsssg0adBPmS7 kBq6STXjAVI+EVcCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEADX2EHMYr58KctZHP gluCJKjmyGMAubl1YS0nStRyDtjxzbTunm03C+zGDDM/0wcMHN27XLJ/KXqyoSUi sYjOi3s6m29mTAGHl3e9CNg8/m6gf3ffrJTfLgALpSqNp4ShnrtJu5Sci42rYsJe L8/ywC4uy01dY+5PXJRc7BXPfHura7+f6/bUuF4H5hYjox/SBx4ZVLhyAIS81d4d raEzlyr28/q88/nyk6rEo/C4qDuQ7KRijaRvfpk41rogPU8RxeTR8MwXCdgMxwwz g8Dg7rySqUjgsn1UacMZTH2K+voFgt8mysaA/k6zAn1wU9gpxvHwgIBZE8q4clL6 y/A0AQ== </ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<AttributeService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://recette.sso.intranet.justice.gouv.fr/saml/AA/SOAP"/>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+</AttributeAuthorityDescriptor>
+<Organization>
+<OrganizationName xml:lang="en">SSO Intranet Justice - RECETTE</OrganizationName>
+<OrganizationDisplayName xml:lang="en">SSO Intranet Justice - RECETTE</OrganizationDisplayName>
+<OrganizationURL xml:lang="en">http://www.justice.gouv.fr/</OrganizationURL>
+</Organization>
+</EntityDescriptor>

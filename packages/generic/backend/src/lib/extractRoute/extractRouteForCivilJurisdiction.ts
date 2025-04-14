@@ -8,8 +8,8 @@ export { extractRouteForCivilJurisdiction };
 async function extractRouteForCivilJurisdiction(
   document: documentType,
 ): Promise<documentType['route']> {
-  // const selection = document.decisionMetadata.selection;
-  // const sommaire = document.decisionMetadata.sommaire;
+  const selection = document.decisionMetadata.selection;
+  const sommaire = document.decisionMetadata.sommaire;
   const NACCode = document.decisionMetadata.NACCode;
   const source = document.source;
   const additionalTermsToAnnotate =
@@ -26,10 +26,9 @@ async function extractRouteForCivilJurisdiction(
   }
 
   // Relecture exhaustive pour les décisions présentant un intéret particulier
-  // En attente de validation métier pour être implémenté
-  // if (selection === 'true') {
-  //   return 'exhaustive';
-  // }
+  if (selection === true && sommaire != '') {
+    return 'exhaustive';
+  }
 
   // Relecture exhaustive pour les décisions comportant des demandes d'occultation particulières
   if (additionalTermsToAnnotate != '') {

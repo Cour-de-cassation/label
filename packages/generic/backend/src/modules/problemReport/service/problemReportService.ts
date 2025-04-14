@@ -85,11 +85,11 @@ const problemReportService = {
     return problemReports.map((problemReport) => {
       const userIdString = idModule.lib.convertToString(problemReport.userId);
       const { email, name } = usersByIds[userIdString];
-      let document = undefined;
+      let documentToReturn = undefined;
       try {
-        document =
+        const document =
           documentsById[idModule.lib.convertToString(problemReport.documentId)];
-        document = {
+        documentToReturn = {
           _id: document._id,
           documentNumber: document.documentNumber,
           publicationCategory: document.publicationCategory,
@@ -104,7 +104,7 @@ const problemReportService = {
           email,
           name,
         },
-        document,
+        document: documentToReturn,
       };
     });
   },

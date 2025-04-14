@@ -122,7 +122,6 @@ function DocumentAnnotatorFooter(props: { onStopAnnotatingDocument?: () => Promi
         status: document.status,
         publicationCategory: document.publicationCategory,
         route: document.route,
-        selection: document.decisionMetadata.selection,
       });
       await setDocumentStatus(document._id, nextDocumentStatus);
       props.onStopAnnotatingDocument && (await props.onStopAnnotatingDocument());

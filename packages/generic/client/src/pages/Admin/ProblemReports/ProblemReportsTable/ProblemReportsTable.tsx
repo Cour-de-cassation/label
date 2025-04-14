@@ -148,7 +148,6 @@ function ProblemReportsTable(props: {
               status: problemReportWithDetails.document?.status ?? 'locked',
               publicationCategory: problemReportWithDetails.document?.publicationCategory ?? [],
               route: problemReportWithDetails.document?.route ?? 'default',
-              selection: problemReportWithDetails.document?.selection ?? false,
             }),
           });
         } catch (error) {
@@ -251,7 +250,6 @@ function ProblemReportsTable(props: {
               status: 'pending',
               publicationCategory: problemReportWithDetails.document?.publicationCategory ?? [],
               route: problemReportWithDetails.document?.route ?? 'default',
-              selection: problemReportWithDetails.document?.selection ?? false,
             }),
           });
         } catch (error) {

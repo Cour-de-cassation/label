@@ -328,11 +328,13 @@ function computePriority(
   if (
     documentModule.lib.publicationHandler.mustBePublished(
       publicationCategory,
-      selection,
       NACCode,
     )
   ) {
     return 4;
+  }
+  if (selection === true) {
+    return 2;
   }
   switch (importer) {
     case 'manual':

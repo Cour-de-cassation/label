@@ -34,10 +34,7 @@ function HomeDocumentAnnotator(props: {
   const theme = useCustomTheme();
 
   const styles = buildStyles(theme);
-  const subtitle = documentModule.lib.publicationHandler.mustBePublished(
-    props.document.publicationCategory,
-    props.document.decisionMetadata.selection,
-  ) ? (
+  const subtitle = documentModule.lib.publicationHandler.mustBePublished(props.document.publicationCategory) ? (
     <div style={styles.documentHeaderSubtitle}>
       {props.document.publicationCategory.map((publicationCategoryLetter) => (
         <div key={publicationCategoryLetter} style={styles.publicationCategoryLetter}>

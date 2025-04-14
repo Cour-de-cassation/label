@@ -29,7 +29,6 @@ describe('fetchPublishableDocuments', () => {
           solution: '',
           NACCode: '',
           endCaseCode: '',
-          selection: false,
         }),
         route: 'confirmation' as documentType['route'],
       },
@@ -93,7 +92,6 @@ describe('fetchPublishableDocuments', () => {
       chamberName: doc.decisionMetadata.chamberName,
       route: doc.route,
       publicationCategory: doc.publicationCategory,
-      selection: doc.decisionMetadata.selection,
     }));
 
     expect(publishableDocuments).toEqual(expectedDocuments);

@@ -118,7 +118,6 @@ function DocumentSwitcher(props: {
           status: documentStatus,
           publicationCategory: choice.document.publicationCategory,
           route: choice.document.route,
-          selection: choice.document.decisionMetadata.selection,
         });
         const { data: updatedDocument } = await apiCaller.post<'updateDocumentStatus'>('updateDocumentStatus', {
           documentId: choice.document._id,

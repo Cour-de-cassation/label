@@ -299,7 +299,6 @@ const apiSchema = {
                     publicationCategory: documentModule.fetchedModel.content.publicationCategory,
                     route: documentModule.fetchedModel.content.route,
                     status: documentModule.fetchedModel.content.status,
-                    selection: documentModule.fetchedModel.content.decisionMetadata.content.selection,
                   },
                 },
                 { kind: 'primitive', content: 'undefined' },
@@ -383,7 +382,6 @@ const apiSchema = {
             publicationCategory: documentModule.fetchedModel.content.publicationCategory,
             route: documentModule.fetchedModel.content.route,
             status: documentModule.fetchedModel.content.status,
-            selection: documentModule.fetchedModel.content.decisionMetadata.content.selection,
           },
         },
       } as const),
@@ -450,7 +448,6 @@ const apiSchema = {
                 reviewStatus: documentModule.fetchedModel.content.reviewStatus,
                 route: documentModule.fetchedModel.content.route,
                 source: documentModule.fetchedModel.content.source,
-                selection: documentModule.fetchedModel.content.decisionMetadata.content.selection,
               },
             },
             totalTreatmentDuration: {

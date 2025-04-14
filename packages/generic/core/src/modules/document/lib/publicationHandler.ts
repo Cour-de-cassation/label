@@ -22,14 +22,12 @@ function getPrioritizedNACCodes() {
 
 function mustBePublished(
   publicationCategory: documentType['publicationCategory'],
-  selection: documentType['decisionMetadata']['selection'],
   NACCode?: documentType['decisionMetadata']['NACCode'],
 ) {
   return (
     PUBLISHED_PUBLICATION_CATEGORY_LETTERS.some((publicationCategoryLetter) =>
       publicationCategory.includes(publicationCategoryLetter),
     ) ||
-    (NACCode && PRIORITIZED_NAC_CODES.some((prioritizedNACCode) => prioritizedNACCode.includes(NACCode))) ||
-    selection === true
+    (NACCode && PRIORITIZED_NAC_CODES.some((prioritizedNACCode) => prioritizedNACCode.includes(NACCode)))
   );
 }

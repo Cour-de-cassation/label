@@ -95,7 +95,6 @@ const problemReportService = {
           publicationCategory: document.publicationCategory,
           route: document.route,
           status: document.status,
-          selection: document.decisionMetadata.selection,
         };
       } catch (e) {}
 

@@ -133,7 +133,6 @@ function TreatedDocumentsTable(props: {
               status: 'pending',
               publicationCategory: treatmentWithDetails.document?.publicationCategory ?? [],
               route: treatmentWithDetails.document?.route ?? 'default',
-              selection: treatmentWithDetails.document?.selection ?? false,
             }),
           });
         } catch (error) {

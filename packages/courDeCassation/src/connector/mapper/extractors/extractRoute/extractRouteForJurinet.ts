@@ -37,7 +37,6 @@ function extractRouteForJurinet({
   if (
     documentModule.lib.publicationHandler.mustBePublished(
       publicationCategory,
-      false,
     ) ||
     publicationCategory.includes('L') ||
     publicationCategory.includes('R')

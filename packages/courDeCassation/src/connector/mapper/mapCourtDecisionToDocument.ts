@@ -85,6 +85,7 @@ async function mapCourtDecisionToDocument(
     publicationCategory,
     NACCode,
     importer,
+    sderCourtDecision.selection,
   );
 
   const route = extractRoute(
@@ -211,6 +212,8 @@ async function mapCourtDecisionToDocument(
       solution,
       motivationOccultation:
         sderCourtDecision.occultation.motivationOccultation ?? undefined,
+      selection: sderCourtDecision.selection ?? undefined,
+      sommaire: sderCourtDecision.sommaire ?? '',
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id ?? ''),
@@ -320,6 +323,7 @@ function computePriority(
   publicationCategory: documentType['publicationCategory'],
   NACCode: DecisionDTO['NACCode'],
   importer: documentType['importer'],
+  selection: documentType['decisionMetadata']['selection'],
 ): documentType['priority'] {
   if (
     documentModule.lib.publicationHandler.mustBePublished(
@@ -328,6 +332,9 @@ function computePriority(
     )
   ) {
     return 4;
+  }
+  if (selection === true) {
+    return 2;
   }
   switch (importer) {
     case 'manual':

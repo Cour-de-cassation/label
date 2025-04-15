@@ -16,6 +16,7 @@ COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 
 COPY sso_files/ ./packages/courDeCassation/sso_files/
+# ajout a enlever car pour changer les fichier depuis le serveur dans le pod
 RUN chmod -R 777 ./packages/courDeCassation/sso_files
 RUN chmod -R 777 ./packages/courDeCassation/sso_files/
 

@@ -65,9 +65,9 @@ async function extractRouteForCivilJurisdiction(
     switch (routeFromDb) {
       case 'systematique':
         return 'exhaustive';
-      case 'aleatoireSensible':
+      case 'aleatoiresensible':
         return Math.random() < sensibleRatio ? 'exhaustive' : 'automatic';
-      case 'aleatoireNonSensible':
+      case 'aleatoirenonsensible':
         return Math.random() < nonSensibleRatio ? 'exhaustive' : 'automatic';
       default:
         throw new Error('Route non trouvée en base');
@@ -119,6 +119,6 @@ async function getDecisionRoute({ codeNac }: { codeNac: string }) {
     path: `decision-route?codeNac=${codeNac}`,
     body: {},
   })) as unknown) as Promise<
-    'systematique' | 'aleatoireSensible' | 'aleatoireNonSensible' | undefined
+    'systematique' | 'aleatoiresensible' | 'aleatoirenonsensible' | undefined
   >;
 }

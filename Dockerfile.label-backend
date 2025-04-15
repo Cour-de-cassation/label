@@ -16,7 +16,8 @@ COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
 
 COPY sso_files/ ./packages/courDeCassation/sso_files/
-RUN chmod -R 755 ./packages/courDeCassation/sso_files/
+RUN chmod -R 777 ./packages/courDeCassation/sso_files
+RUN chmod -R 777 ./packages/courDeCassation/sso_files/
 
 COPY . .
 

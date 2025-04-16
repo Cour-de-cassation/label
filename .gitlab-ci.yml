@@ -59,30 +59,30 @@ build_label_backend:
     - finalise-sso
   tags:
     - docker
-#
-# build_label_client:
-#   stage: build
-#   variables:
-#     HTTP_PROXY: $HTTP_PROXY_DEV
-#     HTTPS_PROXY: $HTTPS_PROXY_DEV
-#   script:
-#     - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD
-#     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-#     - export NODE_OPTIONS=--openssl-legacy-provider
-#     - docker build
-#       --build-arg http_proxy=$HTTP_PROXY
-#       --build-arg https_proxy=$HTTPS_PROXY
-#       --target label-client
-#       -f Dockerfile.label-client
-#       -t $docker_client_image .
-#     - docker push $docker_client_image
-#   only:
-#     - master
-#     - re7
-#     - dev
-#     - finalise-sso
-#   tags:
-#     - docker
+
+build_label_client:
+  stage: build
+  variables:
+    HTTP_PROXY: $HTTP_PROXY_DEV
+    HTTPS_PROXY: $HTTPS_PROXY_DEV
+  script:
+    - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - export NODE_OPTIONS=--openssl-legacy-provider
+    - docker build
+      --build-arg http_proxy=$HTTP_PROXY
+      --build-arg https_proxy=$HTTPS_PROXY
+      --target label-client
+      -f Dockerfile.label-client
+      -t $docker_client_image .
+    - docker push $docker_client_image
+  only:
+    - master
+    - re7
+    - dev
+    - finalise-sso
+  tags:
+    - docker
 
 deploy_label_backend:
   stage: deploy

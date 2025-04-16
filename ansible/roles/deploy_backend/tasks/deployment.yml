@@ -30,24 +30,24 @@
                 args:
                   - -c
                   - |
-                    rclone -v sync s3:{{ sso_bucket }} /sso_files && \
-                    chmod -R 755 /sso_files
+                    rclone -v sync s3:{{ sso_bucket }} /sso-files && \
+                    chmod -R 755 /sso-files
                 envFrom:
                   - secretRef:
                       name: "{{ rclone_app_id }}-secret"
                 volumeMounts:
                   - name: "{{ rclone_app_id }}-pvc-sso"
-                    mountPath: /sso_files
+                    mountPath: /sso-files
             containers:
               - name: "{{ label_back_app_id }}"
                 image: "{{ label_backend_image }}"
                 ports:
                   - containerPort: 55430
-                command:
-                  - /bin/sh
-                args:
-                  - -c
-                  - "sleep infinity"
+                #command:
+                #  - /bin/sh
+                #args:
+                #  - -c
+                #  - "sleep infinity"
                 envFrom:
                   - configMapRef:
                       name: "{{ label_back_app_id }}-config"
@@ -55,7 +55,7 @@
                       name: "{{ label_back_app_id }}-secret"
                 volumeMounts:
                   - name: "{{ rclone_app_id }}-pvc-sso"
-                    mountPath: /sso_files
+                    mountPath: /home/node/packages/courDeCassation/sso-files
             volumes:
               - name: "{{ rclone_app_id }}-pvc-sso"
                 persistentVolumeClaim:

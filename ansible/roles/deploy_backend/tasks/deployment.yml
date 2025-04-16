@@ -43,11 +43,11 @@
                 image: "{{ label_backend_image }}"
                 ports:
                   - containerPort: 55430
-                command:
-                  - /bin/sh
-                args:
-                  - -c
-                  - "sleep infinity"
+                #command:
+                #  - /bin/sh
+                #args:
+                #  - -c
+                #  - "sleep infinity"
                 envFrom:
                   - configMapRef:
                       name: "{{ label_back_app_id }}-config"

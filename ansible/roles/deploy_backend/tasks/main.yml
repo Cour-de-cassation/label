@@ -2,6 +2,9 @@
 - name: Deploy namespace
   import_tasks: namespace.yml
 
+- name: Deploy PVC
+  include_tasks: persistentVolumeClaim.yml
+
 - name: Deploy configmap
   include_tasks: configmap.yml
 

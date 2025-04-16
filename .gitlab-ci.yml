@@ -89,7 +89,7 @@ deploy_label_backend:
   image: alpine/ansible:2.16.1
   script:
     # - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - inventaire=re7 # using preprod for test sso_files with bucket
+    - inventaire=preprod # using preprod for test sso_files with bucket
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
@@ -111,7 +111,7 @@ deploy_label_client:
   image: alpine/ansible:2.16.1
   script:
     # - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - inventaire=re7 # using preprod for test sso_files with bucket
+    - inventaire=preprod # using preprod for test sso_files with bucket
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts

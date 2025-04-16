@@ -30,7 +30,8 @@
                 args:
                   - -c
                   - |
-                    rclone -v sync s3:{{ sso_bucket }} /sso_files
+                    rclone -v sync s3:{{ sso_bucket }} /sso_files && \
+                    chmod -R 755 /sso_files
                 envFrom:
                   - secretRef:
                       name: "{{ rclone_app_id }}-secret"
@@ -39,8 +40,7 @@
                     mountPath: /sso_files
             containers:
               - name: "{{ label_back_app_id }}"
-                image: nginx
-                #  image: "{{ label_backend_image }}"
+                image: "{{ label_backend_image }}"
                 ports:
                   - containerPort: 55430
                 envFrom:

@@ -40,7 +40,8 @@
                     mountPath: /sso_files
             containers:
               - name: "{{ label_back_app_id }}"
-                image: "{{ label_backend_image }}"
+                image: nginx
+                #image: "{{ label_backend_image }}"
                 ports:
                   - containerPort: 55430
                 envFrom:

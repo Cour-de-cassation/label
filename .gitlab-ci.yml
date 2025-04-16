@@ -59,8 +59,6 @@ build_label_backend:
     - finalise-sso
   tags:
     - docker
-  rules:
-    - when: never
 
 build_label_client:
   stage: build
@@ -85,8 +83,6 @@ build_label_client:
     - finalise-sso
   tags:
     - docker
-  rules:
-    - when: never
 
 deploy_label_backend:
   stage: deploy

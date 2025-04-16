@@ -136,7 +136,8 @@ function buildStyledComponents() {
     };
   };
   const Div_AnnotationTextMargin = styled.div`
-    margin-bottom: 4px;
+    margin-bottom: 2px;
+    margin-top: 2px;
   `;
   const Div_AnnotationText = styled.div<stylePropsType>`
     line-height: 14px;
@@ -156,7 +157,7 @@ function buildStyledComponents() {
   `;
   const Div_Occurences = styled.div<stylePropsType>`
     ${({ styleProps }) => `
-      padding: 0 ${styleProps.theme.spacing * 3}px;
+      padding: ${styleProps.theme.spacing}px ${styleProps.theme.spacing * 3}px;
       ${
         styleProps.entityEntryHandler.isFocused(styleProps.entityId)
           ? `
@@ -172,7 +173,7 @@ function buildStyledComponents() {
       return `
         display: none;
         border-radius: ${styleProps.theme.shape.borderRadius.m}px;
-        background: linear-gradient(to left, ${hoveredBackgroundColor}, 75%,transparent);
+        background: linear-gradient(to right, transparent 0%, ${hoveredBackgroundColor} 80%, ${hoveredBackgroundColor} 20%, transparent 100%);
         padding-left: 50%;
         height: 100%;
         position: absolute;
@@ -219,12 +220,13 @@ function buildStyledComponents() {
         }
 
         &:hover ${Div_Occurences} {
-          color: ${hoveredBackgroundColor};
+          color: ${styleProps.theme.colors.default.hoveredTextColor};
         }
 
         &:hover ${Div_ActionButtons} {
           display: flex;
           align-items: center;
+          margin-right: 10%;
         }`;
     }}
   `;

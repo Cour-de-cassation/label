@@ -4,8 +4,7 @@ services:
 
 variables:
   dev: dev
-  # re7: preprod
-  finalise-sso: preprod
+  re7: preprod
   master: prod
   docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
   docker_client_image: "$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
@@ -90,7 +89,7 @@ deploy_label_backend:
   image: alpine/ansible:2.16.1
   script:
     # - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - inventaire=dev
+    - inventaire=re7 # using preprod for test sso_files with bucket
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
@@ -112,7 +111,7 @@ deploy_label_client:
   image: alpine/ansible:2.16.1
   script:
     # - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
-    - inventaire=dev
+    - inventaire=re7 # using preprod for test sso_files with bucket
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts

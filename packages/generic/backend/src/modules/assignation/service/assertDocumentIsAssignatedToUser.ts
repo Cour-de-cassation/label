@@ -1,4 +1,3 @@
-import { errorHandlers } from 'sder-core';
 import { documentType, userType } from '@label/core';
 import { buildAssignationRepository } from '../repository';
 
@@ -18,7 +17,7 @@ async function assertDocumentIsAssignatedToUser({
   });
 
   if (!assignation) {
-    throw errorHandlers.notFoundErrorHandler.build(
+    throw new Error(
       `No assignation found for userId ${userId} and documentId ${documentId}`,
     );
   }

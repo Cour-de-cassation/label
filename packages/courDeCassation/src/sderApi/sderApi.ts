@@ -1,6 +1,6 @@
 import { documentType } from '@label/core';
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
-import { DecisionDTO, LabelTreatment } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export { sderApi };
 
@@ -42,7 +42,7 @@ async function fetchApi({
 const sderApi = {
   async fetchDecisionsToPseudonymise(
     sourceName: string,
-  ): Promise<DecisionDTO[]> {
+  ): Promise<Deprecated.DecisionDTO[]> {
     const decisionList = ((await fetchApi({
       method: 'get',
       path: `decisions?status=toBeTreated&sourceName=${sourceName}`,
@@ -64,7 +64,7 @@ const sderApi = {
           method: 'get',
           path: `decisions/${decisionRef['_id']}`,
           body: {},
-        })) as unknown) as DecisionDTO;
+        })) as unknown) as Deprecated.DecisionDTO;
       }),
     );
 
@@ -74,7 +74,7 @@ const sderApi = {
   async fetchCourtDecisionBySourceIdAndSourceName(
     sourceId: number,
     sourceName: string,
-  ): Promise<DecisionDTO | undefined> {
+  ): Promise<Deprecated.DecisionDTO | undefined> {
     const decisionList = ((await fetchApi({
       method: 'get',
       path: `decisions?&sourceId=${sourceId}&sourceName=${sourceName}`,
@@ -90,7 +90,7 @@ const sderApi = {
         method: 'get',
         path: `decisions/${decisionList[0]['_id']}`,
         body: {},
-      })) as unknown) as DecisionDTO;
+      })) as unknown) as Deprecated.DecisionDTO;
     }
     return undefined;
   },
@@ -109,7 +109,7 @@ const sderApi = {
     pseudoText,
   }: {
     externalId: documentType['externalId'];
-    labelTreatments: LabelTreatment[];
+    labelTreatments: Deprecated.LabelTreatment[];
     pseudoText: string;
   }) {
     await fetchApi({

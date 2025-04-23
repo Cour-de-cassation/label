@@ -1,4 +1,4 @@
-import { Sources } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export { extractAppealRegisterRoleGeneralNumber };
 
@@ -10,9 +10,9 @@ function extractAppealRegisterRoleGeneralNumber(
   registerNumber?: string,
   numeroRoleGeneral?: string,
 ) {
-  if (source === Sources.CA && registerNumber != undefined) {
+  if (source === Deprecated.Sources.CA && registerNumber != undefined) {
     return registerNumber?.split(' ')[0];
-  } else if (source === Sources.CC) {
+  } else if (source === Deprecated.Sources.CC) {
     const verifappeal = /^[A-Za-z]\d+$/;
     if (
       jurisdictionName?.includes('cassation') &&
@@ -30,9 +30,12 @@ function extractAppealRegisterRoleGeneralNumber(
     } else {
       return appeal;
     }
-  } else if (source === Sources.TJ && numeroRoleGeneral != undefined) {
+  } else if (
+    source === Deprecated.Sources.TJ &&
+    numeroRoleGeneral != undefined
+  ) {
     return numeroRoleGeneral;
-  } else if (source === Sources.TCOM && registerNumber) {
+  } else if (source === Deprecated.Sources.TCOM && registerNumber) {
     return registerNumber;
   } else {
     return regexExtractAppealNumber(text);

@@ -20,7 +20,6 @@
         NLP_PSEUDONYMISATION_API_URL: "{{ nlp_pseudonymisation_api_url }}"
         NLP_PSEUDONYMISATION_API_ENABLED: "{{ nlp_pseudonymisation_api_enabled }}"
         DBSDER_API_URL: "{{ dbsder_api_url }}"
-        DBSDER_API_VERSION: "{{ dbsder_api_version }}"
         LABEL_API_PORT: "{{ label_api_port }}"
         LABEL_DB_NAME: "{{ label_db_name }}"
         LABEL_CLIENT_URL: "{{ label_client_url }}"

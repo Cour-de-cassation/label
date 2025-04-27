@@ -15,7 +15,7 @@ async function fetchApi({
 }) {
   return await axios({
     method: method,
-    baseURL: `${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}`,
+    baseURL: `${process.env.DBSDER_API_URL}`,
     url: `/${path}`,
     data: body,
     headers: {
@@ -30,6 +30,9 @@ async function fetchApi({
       }
     })
     .catch((error: AxiosError) => {
+      console.log("error")
+      console.log(error.message)
+      console.log(method + ': ' + process.env.DBSDER_API_URL + '/' + path)
       if (error.response) {
         throw new Error(
           `${error.response.status} ${error.response.statusText}`,
@@ -42,31 +45,12 @@ async function fetchApi({
 const sderApi = {
   async fetchDecisionsToPseudonymise(
     sourceName: string,
-  ): Promise<Deprecated.DecisionDTO[]> {
-    const decisionList = ((await fetchApi({
+  ): Promise<Deprecated.DecisionDTO[]> {    
+    const decisions = ((await fetchApi({
       method: 'get',
       path: `decisions?status=toBeTreated&sourceName=${sourceName}`,
       body: {},
-    })) as unknown) as {
-      _id: string;
-      status: string;
-      sourceName: string;
-      dateCreation: string;
-    }[];
-
-    if (!decisionList.length) {
-      return [];
-    }
-
-    const decisions = await Promise.all(
-      decisionList.map(async (decisionRef) => {
-        return ((await fetchApi({
-          method: 'get',
-          path: `decisions/${decisionRef['_id']}`,
-          body: {},
-        })) as unknown) as Deprecated.DecisionDTO;
-      }),
-    );
+    })) as unknown) as Deprecated.DecisionDTO[];
 
     return decisions;
   },
@@ -79,27 +63,19 @@ const sderApi = {
       method: 'get',
       path: `decisions?&sourceId=${sourceId}&sourceName=${sourceName}`,
       body: {},
-    })) as unknown) as {
-      _id: string;
-      status: string;
-      sourceName: string;
-      dateCreation: string;
-    }[];
+    })) as unknown) as Deprecated.DecisionDTO[];
+
     if (decisionList.length > 0) {
-      return ((await fetchApi({
-        method: 'get',
-        path: `decisions/${decisionList[0]['_id']}`,
-        body: {},
-      })) as unknown) as Deprecated.DecisionDTO;
+      return decisionList[0]
     }
     return undefined;
   },
 
   async setCourtDecisionLoaded(externalId: string) {
     await fetchApi({
-      method: 'put',
-      path: `decisions/${externalId}/statut`,
-      body: { statut: 'loaded' },
+      method: 'patch',
+      path: `decisions/${externalId}`,
+      body: { labelStatus: 'loaded' },
     });
   },
 
@@ -113,8 +89,8 @@ const sderApi = {
     pseudoText: string;
   }) {
     await fetchApi({
-      method: 'put',
-      path: `decisions/${externalId}/decision-pseudonymisee`,
+      method: 'patch',
+      path: `fromLabel/${externalId}`,
       body: {
         pseudoText,
         labelTreatments,

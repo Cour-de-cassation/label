@@ -261,19 +261,6 @@ function buildAnnotator(
             annotations,
           );
         }
-      } else {
-        logger.log({
-          operationName: 'annotateDocument',
-          msg: `No 'motivation' or 'expose du litige' zone found, skipping motivation occultation for ${formatDocumentInfos(
-            document,
-          )}`,
-          data: {
-            decision: {
-              sourceId: document.documentNumber,
-              sourceName: document.source,
-            },
-          },
-        });
       }
     }
 

@@ -30,9 +30,6 @@ async function fetchApi({
       }
     })
     .catch((error: AxiosError) => {
-      console.log("error")
-      console.log(error.message)
-      console.log(method + ': ' + process.env.DBSDER_API_URL + '/' + path)
       if (error.response) {
         throw new Error(
           `${error.response.status} ${error.response.statusText}`,
@@ -48,7 +45,7 @@ const sderApi = {
   ): Promise<Deprecated.DecisionDTO[]> {    
     const decisions = ((await fetchApi({
       method: 'get',
-      path: `decisions?status=toBeTreated&sourceName=${sourceName}`,
+      path: `decisions?labelStatus=toBeTreated&sourceName=${sourceName}`,
       body: {},
     })) as unknown) as Deprecated.DecisionDTO[];
 
@@ -90,7 +87,7 @@ const sderApi = {
   }) {
     await fetchApi({
       method: 'patch',
-      path: `fromLabel/${externalId}`,
+      path: `label/${externalId}`,
       body: {
         pseudoText,
         labelTreatments,

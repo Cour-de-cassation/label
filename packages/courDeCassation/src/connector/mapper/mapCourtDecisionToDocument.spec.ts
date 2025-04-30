@@ -1,6 +1,6 @@
 import { idModule } from '@label/core';
 import { mapCourtDecisionToDocument } from './mapCourtDecisionToDocument';
-import { LabelStatus, Sources } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 describe('mapCourtDecisionToDocument', () => {
   it('should return priority 0 because it has the filler importer', async () => {
@@ -23,7 +23,7 @@ describe('mapCourtDecisionToDocument', () => {
         jurisdictionCode: '',
         jurisdictionId: '',
         jurisdictionName: '',
-        labelStatus: LabelStatus.TOBETREATED,
+        labelStatus: Deprecated.LabelStatus.TOBETREATED,
         labelTreatments: [],
         blocOccultation: 0,
         dateCreation: '',
@@ -41,7 +41,7 @@ describe('mapCourtDecisionToDocument', () => {
         registerNumber: '',
         solution: '',
         sourceId: 0,
-        sourceName: Sources.CA,
+        sourceName: Deprecated.Sources.CA,
         selection: false,
       },
       'filler',
@@ -70,7 +70,7 @@ describe('mapCourtDecisionToDocument', () => {
         jurisdictionCode: '',
         jurisdictionId: '',
         jurisdictionName: '',
-        labelStatus: LabelStatus.TOBETREATED,
+        labelStatus: Deprecated.LabelStatus.TOBETREATED,
         labelTreatments: [],
         blocOccultation: 0,
         dateCreation: '',
@@ -88,7 +88,7 @@ describe('mapCourtDecisionToDocument', () => {
         registerNumber: '',
         solution: '',
         sourceId: 0,
-        sourceName: Sources.CA,
+        sourceName: Deprecated.Sources.CA,
         selection: false,
       },
       'chained',
@@ -117,7 +117,7 @@ describe('mapCourtDecisionToDocument', () => {
         jurisdictionCode: '',
         jurisdictionId: '',
         jurisdictionName: '',
-        labelStatus: LabelStatus.TOBETREATED,
+        labelStatus: Deprecated.LabelStatus.TOBETREATED,
         labelTreatments: [],
         blocOccultation: 0,
         dateCreation: '',
@@ -135,7 +135,7 @@ describe('mapCourtDecisionToDocument', () => {
         registerNumber: '',
         solution: '',
         sourceId: 0,
-        sourceName: Sources.CA,
+        sourceName: Deprecated.Sources.CA,
         selection: false,
       },
       'recent',

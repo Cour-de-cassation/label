@@ -1,7 +1,7 @@
 import { treatmentType } from '..';
 import { computeAnnotations } from './computeAnnotations';
 import { documentType } from '../../document/documentType';
-import { LabelTreatment } from 'dbsder-api-types';
+import { Deprecated } from '../../../types/decision';
 
 export { concat };
 
@@ -9,8 +9,8 @@ function concat(
   treatments: treatmentType[],
   nlpVersions?: documentType['nlpVersions'],
   checklist?: documentType['checklist'],
-): LabelTreatment[] {
-  const labelTreatments: LabelTreatment[] = [];
+): Deprecated.LabelTreatment[] {
+  const labelTreatments: Deprecated.LabelTreatment[] = [];
 
   const sortedTreatments = treatments.sort((treatment1, treatment2) => treatment1.order - treatment2.order);
 

@@ -13,3 +13,9 @@ dbsder_api_version: "v1"
 label_db_name: "labelDb"
 label_client_url: "https://label.cour-de-cassation.justice.fr:55432" # strange url
 label_kube_namespace: "label"
+
+sso_bucket: "sso-files"
+s3_type: "s3"
+s3_provider: "Minio"
+s3_endpoint: "http://bucket-service.juritj.svc.cluster.local:9000"
+rclone_app_id: "rclone"

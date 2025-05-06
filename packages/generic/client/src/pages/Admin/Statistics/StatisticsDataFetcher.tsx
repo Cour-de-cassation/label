@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { httpStatusCodeHandler } from 'sder-core';
 import { apiRouteOutType, ressourceFilterType } from '@label/core';
 import { apiCaller, useApi } from '../../../api';
 import { DataFetcher } from '../../DataFetcher';
@@ -71,7 +70,7 @@ function buildFetchStatistics() {
 
     return {
       data: { availableStatisticFilters, aggregatedStatistics },
-      statusCode: httpStatusCodeHandler.merge([statusCodeAvailableStatisticFilters, statusCodeAggregatedStatistics]),
+      statusCode: Math.max(statusCodeAvailableStatisticFilters, statusCodeAggregatedStatistics),
     };
   };
 }

@@ -4,7 +4,7 @@ import format from 'string-template';
 import { optionItemType, Table, tableRowFieldType } from 'pelta-design-system';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { DocumentStatusIcon, ProblemReportIcon, PublicationCategoryBadge } from '../../../../components';
+import { DocumentStatusIcon, ProblemReportIcon } from '../../../../components';
 import { useAlert } from '../../../../services/alert';
 import { usePopup } from '../../../../services/popup';
 import { localStorage } from '../../../../services/localStorage';

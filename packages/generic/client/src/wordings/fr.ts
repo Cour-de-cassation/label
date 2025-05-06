@@ -318,7 +318,8 @@ const fr = {
         validate: 'Débloquer et valider la décision',
       },
       mailSubject: 'Alerte sur le document {documentNumber}',
-      popupConfirmMessage: 'Souhaitez-vous vraiment supprimer ce document ? Cette action est irréversible.',
+      popupConfirmMessage:
+        'Souhaitez-vous vraiment supprimer ce document et les signalements associés ? Cette action est irréversible.',
     },
   },
   preAssignDocumentsPage: {

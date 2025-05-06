@@ -92,6 +92,9 @@ const problemReportService = {
         documentToReturn = {
           _id: document._id,
           documentNumber: document.documentNumber,
+          source: document.source,
+          jurisdiction: document.decisionMetadata.jurisdiction,
+          appealNumber: document.decisionMetadata.appealNumber,
           publicationCategory: document.publicationCategory,
           route: document.route,
           status: document.status,

@@ -296,6 +296,9 @@ const apiSchema = {
                   content: {
                     _id: documentModule.fetchedModel.content._id,
                     documentNumber: documentModule.fetchedModel.content.documentNumber,
+                    source: documentModule.fetchedModel.content.source,
+                    jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
+                    appealNumber: documentModule.fetchedModel.content.decisionMetadata.content.appealNumber,
                     publicationCategory: documentModule.fetchedModel.content.publicationCategory,
                     route: documentModule.fetchedModel.content.route,
                     status: documentModule.fetchedModel.content.status,

@@ -414,42 +414,57 @@ function buildAnnotator(
 
   async function createMotifOccultationTreatment(
     documentId: documentType['_id'],
-    motivations: { start: number; end: number } | undefined,
-    exposesDuLitige: { start: number; end: number } | undefined,
+    motivation: { start: number; end: number } | undefined,
+    exposeDuLitige: { start: number; end: number } | undefined,
     documentText: string,
     previousAnnotations: annotationType[],
   ) {
-    // Si une des 2 zones n'est pas définie on occulte qu'une seule des 2 zones.
-    const motifStart = exposesDuLitige?.start ?? motivations?.start;
-    const motifEnd = motivations?.end ?? exposesDuLitige?.end;
+    const motifsAnnotations: annotationType[] = [];
 
-    if (motifStart === undefined || motifEnd === undefined) {
-      throw new Error('Impossible de définir les bornes des motifs.');
-    }
+    function extractAndAnnotate(
+      range: { start: number; end: number },
+      source: string,
+    ): annotationType | null {
+      const rawZoneText = documentText.substring(range.start, range.end);
+      const trimmedStart = rawZoneText.replace(/^[\s\r\n]+/, '');
+      const removedCharactersAtStart = rawZoneText.length - trimmedStart.length;
+      const finalTrimmedText = trimmedStart.replace(/[\s\r\n]+$/, '');
 
-    const motivationText = documentText.substring(motifStart, motifEnd);
+      if (!finalTrimmedText) return null;
 
-    // Suppression des espaces et des sauts de ligne au début du texte
-    const trimmedStartMotivation = motivationText.replace(/^[\s\r\n]+/, '');
-    // Calcul du nombre de caractères retirés au début du texte
-    const removedCharactersAtStart =
-      motivationText.length - trimmedStartMotivation.length;
-
-    // Suppression des espaces et des sauts de ligne à la fin du texte
-    const trimmedMotivation = trimmedStartMotivation.replace(/[\s\r\n]+$/, '');
-
-    const motifAnnotation: annotationType = annotationModule.lib.buildAnnotation(
-      {
-        start: motifStart + removedCharactersAtStart,
-        text: trimmedMotivation,
+      return annotationModule.lib.buildAnnotation({
+        start: range.start + removedCharactersAtStart,
+        text: finalTrimmedText,
         category: settingsModule.lib.motivationCategoryHandler.getCategoryName(),
         score: 1,
-        source: 'motivation',
-      },
-    );
+        source,
+      });
+    }
+
+    if (motivation) {
+      const annotation = extractAndAnnotate(motivation, 'motivation');
+      if (annotation) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: 'Motivation zone found, annotating...',
+        });
+        motifsAnnotations.push(annotation);
+      }
+    }
+
+    if (exposeDuLitige) {
+      const annotation = extractAndAnnotate(exposeDuLitige, 'exposeDuLitige');
+      if (annotation) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: 'Expose du litige zone found, annotating...',
+        });
+        motifsAnnotations.push(annotation);
+      }
+    }
 
     const annotationWithoutOverlapping = annotationModule.lib.removeOverlappingAnnotations(
-      [...previousAnnotations, motifAnnotation],
+      [...previousAnnotations, ...motifsAnnotations],
     );
 
     await treatmentService.createTreatment(

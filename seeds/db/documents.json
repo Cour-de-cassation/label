@@ -3754,7 +3754,8 @@
       "occultationBlock": null,
       "session": "",
       "solution": "Confirme la décision déférée dans toutes ses dispositions, à l'égard de toutes les parties au recours",
-      "motivationOccultation": null
+      "motivationOccultation": null,
+      "selection": true
     },
     "documentNumber": 2928735,
     "externalId": "673ded755559d27e30e410a8",
@@ -4821,7 +4822,9 @@
       "occultationBlock": 1,
       "session": "",
       "solution": "",
-      "motivationOccultation": true
+      "motivationOccultation": true,
+      "selection": true,
+      "sommaire": "Mon sommaire de décision TJ"
     },
     "documentNumber": 4241786445,
     "externalId": "673df6cd48894027060ab993",
@@ -5283,7 +5286,9 @@
       "occultationBlock": 4,
       "session": "",
       "solution": "",
-      "motivationOccultation": false
+      "motivationOccultation": false,
+      "selection": true,
+      "sommaire": "Mon court sommaire de décision TJ"
     },
     "documentNumber": 2700261384,
     "externalId": "673df6cd48894027060ab9a1",
@@ -6251,7 +6256,8 @@
       "occultationBlock": 1,
       "session": "",
       "solution": "",
-      "motivationOccultation": true
+      "motivationOccultation": true,
+      "selection": true
     },
     "documentNumber": 2457858252,
     "externalId": "673df6cd48894027060ab9b9",

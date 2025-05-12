@@ -14,6 +14,17 @@ label_db_name: "labelDb"
 label_client_url: "https://label.cour-de-cassation.justice.fr:55432" # strange url
 label_kube_namespace: "label"
 
+sso_sp_entity_id: "label"
+sso_name_id_format: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+sso_signature_algorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
+sso_attribute_name: "lastName"
+sso_attribute_firstname: "firstname"
+sso_attribute_fullname: "name"
+sso_attribute_mail: "email"
+sso_attribute_role: "Role"
+sso_app_name: "LABEL"
+sso_app_roles: "admin,annotator,publicator,scrutator"
+
 sso_bucket: "sso-files"
 s3_type: "s3"
 s3_provider: "Minio"

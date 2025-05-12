@@ -20,7 +20,6 @@
               - name: "{{ label_client_app_id }}-service"
                 port: label-client-port
 
-
 - name: Creation middleware
   k8s:
     apply: true
@@ -36,5 +35,3 @@
         replacePathRegex:
           regex: /label-client(/|$)(.*)
           replacement: /$2
-
-

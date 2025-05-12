@@ -11,7 +11,6 @@ const Login: FunctionComponent = () => {
   const theme = useCustomTheme();
   const styles = buildStyles(theme);
   useEffect(() => {
-    // URL backend qui déclenche la redirection SAML (à mettre en variable d'env)
     window.location.href = urlHandler.getSsoLoginUrl();
   }, [history]);
 

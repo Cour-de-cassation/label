@@ -14,7 +14,7 @@ label_db_name: "labelDb"
 label_client_url: "https://label.cour-de-cassation.justice.fr:55432" # strange url
 label_kube_namespace: "label"
 
-sso_sp_entity_id: "label"
+sso_sp_entity_id: "https://lbl.preprod.opj.cour-de-cassation.justice.fr/label/api/sso/metadata"
 sso_name_id_format: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
 sso_signature_algorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
 sso_attribute_name: "lastName"

@@ -23,7 +23,7 @@ sso_attribute_fullname: "name"
 sso_attribute_mail: "email"
 sso_attribute_role: "Role"
 sso_app_name: "LABEL"
-sso_app_roles: "admin,annotator,publicator,scrutator"
+sso_app_roles: "administrator,annotator,publicator,scrutator"
 
 sso_bucket: "sso-files"
 s3_type: "s3"

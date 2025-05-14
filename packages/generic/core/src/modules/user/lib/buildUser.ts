@@ -14,7 +14,7 @@ async function buildUser({
 }): Promise<userType> {
   return {
     _id: idModule.lib.buildId(),
-    email,
+    email: email.trim().toLowerCase(),
     name,
     role,
   };

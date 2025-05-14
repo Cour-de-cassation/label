@@ -16,7 +16,6 @@ sso_front_success_connexion_publicator_url: "{{ vault_sso_front_success_connexio
 
 sso_attribute_name: "lastName"
 sso_attribute_firstname: "firstname"
-sso_attribute_fullname: "name"
 sso_attribute_mail: "email"
 sso_attribute_role: "Role"
 sso_app_name: "LABEL"

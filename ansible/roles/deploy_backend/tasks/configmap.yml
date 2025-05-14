@@ -39,7 +39,6 @@
         SSO_FRONT_SUCCESS_CONNEXION_PUBLICATOR_URL: "{{ sso_front_success_connexion_publicator_url }}"
         SSO_ATTRIBUTE_NAME: "{{ sso_attribute_name }}"
         SSO_ATTRIBUTE_FIRSTNAME: "{{ sso_attribute_firstname }}"
-        SSO_ATTRIBUTE_FULLNAME: "{{ sso_attribute_fullname }}"
         SSO_ATTRIBUTE_MAIL: "{{ sso_attribute_mail }}"
         SSO_ATTRIBUTE_ROLE: "{{ sso_attribute_role }}"
         SSO_APP_NAME: "{{ sso_app_name }}"

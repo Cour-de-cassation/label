@@ -15,9 +15,8 @@ sso_front_success_connexion_annotator_url: "{{ vault_sso_front_success_connexion
 sso_front_success_connexion_admin_scrutator_url: "{{ vault_sso_front_success_connexion_admin_scrutator_url }}"
 sso_front_success_connexion_publicator_url: "{{ vault_sso_front_success_connexion_publicator_url }}"
 
-sso_attribute_name: "lastName"
+sso_attribute_name: "nom"
 sso_attribute_firstname: "prenom"
-sso_attribute_fullname: "nom"
 sso_attribute_mail: "mail"
 sso_attribute_role: "roles"
 sso_app_name: "LABEL"

@@ -129,7 +129,7 @@ function buildApiSso(app: Express) {
       const context = await ssoService.login();
       res.redirect(context);
     } catch (err) {
-      await logger.error({
+      logger.error({
         operationName: 'login SSO ',
         msg: `${err}`,
       });
@@ -148,8 +148,8 @@ function buildApiSso(app: Express) {
         const context = await ssoService.logout({ nameID, sessionIndex });
         res.redirect(context);
       } catch (err) {
-        await logger.error({
-          operationName: 'logoutSso SamlService ',
+        logger.error({
+          operationName: 'logoutSso',
           msg: `${err}`,
         });
         res.status(500).json({ status: 500, message: err.message });

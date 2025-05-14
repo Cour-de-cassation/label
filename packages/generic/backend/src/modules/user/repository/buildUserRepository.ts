@@ -21,9 +21,6 @@ const buildUserRepository = buildRepositoryBuilder<
     async findByEmail(email) {
       const formattedEmail = email.trim().toLowerCase();
       const result = await collection.findOne({ email: formattedEmail });
-      if (!result) {
-        throw new Error(`No matching user for email ${email}`);
-      }
       return result;
     },
     async updateNameAndRoleById(userId, name, role) {

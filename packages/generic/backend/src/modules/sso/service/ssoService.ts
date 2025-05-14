@@ -58,43 +58,12 @@ export async function acs(req: any) {
 
   try {
     const userDB = (await getUserByEmail(extract?.nameID)) as userType;
-    const hasDiff = compareUser(userSSO, userDB);
-    let currentUser = userDB;
-    if (hasDiff) {
-      currentUser = { ...userSSO, _id: userDB._id };
-
-      const resp = await userService.updateUser({
-        userId: idModule.lib.buildId(userDB._id),
-        name: userSSO.name,
-        role: userSSO.role,
+    if (!userDB) {
+      logger.log({
+        operationName: 'SSO ACS',
+        msg: `No matching user for email ${extract?.nameID}, creatin a new user`,
       });
-      await logger.log({
-        operationName: 'updateUser',
-        msg: resp.success
-          ? `user ${userDB.email} name and role are updated successfully.`
-          : `The name and role of user ${userDB.email} could not be updated successfully.`,
-      });
-    }
-    await logger.log({
-      operationName: 'user connected',
-      msg: userDB.email,
-    });
 
-    return setUserSessionAndReturnRedirectUrl(
-      req,
-      currentUser,
-      extract?.sessionIndex,
-    );
-  } catch (err: unknown) {
-    await logger.log({
-      operationName: `catch autoprovision user ${JSON.stringify(err)}`,
-      msg: `${err}`,
-    });
-
-    if (
-      err instanceof Error &&
-      err.message.includes(`No matching user for email ${extract?.nameID}`)
-    ) {
       await userService.createUser({
         name: userSSO.name,
         email: userSSO.email,
@@ -102,9 +71,9 @@ export async function acs(req: any) {
       });
       const createdUser = (await getUserByEmail(userSSO.email)) as userType;
 
-      await logger.log({
-        operationName: `Auto-provided user`,
-        msg: `successfully created user ${createdUser.email}`,
+      logger.log({
+        operationName: `SSO ACS`,
+        msg: `Successfully created user ${createdUser.email}`,
       });
 
       return setUserSessionAndReturnRedirectUrl(
@@ -112,9 +81,31 @@ export async function acs(req: any) {
         createdUser,
         extract?.sessionIndex,
       );
-    } else {
-      throw new Error(`Error in acsSso: ${err}`);
     }
+    const hasDiff = compareUser(userSSO, userDB);
+    let currentUser = userDB;
+    if (hasDiff) {
+      currentUser = { ...userSSO, _id: userDB._id };
+
+      logger.log({
+        operationName: 'SSO ACS',
+        msg: `Difference between SSO and DB user, updating DB user`,
+      });
+
+      await userService.updateUser({
+        userId: idModule.lib.buildId(userDB._id),
+        name: userSSO.name,
+        role: userSSO.role,
+      });
+    }
+
+    return setUserSessionAndReturnRedirectUrl(
+      req,
+      currentUser,
+      extract?.sessionIndex,
+    );
+  } catch (err: unknown) {
+    throw new Error(`Error in acsSso: ${err}`);
   }
 }
 
@@ -177,11 +168,9 @@ export function getUserFromSSO(
   }
 
   return {
-    name:
-      (attributes[`${process.env.SSO_ATTRIBUTE_FULLNAME}`] as string) ||
-      `${attributes[`${process.env.SSO_ATTRIBUTE_NAME}`] as string} ${
-        attributes[`${process.env.SSO_ATTRIBUTE_FIRSTNAME}`] as string
-      }`,
+    name: `${attributes[`${process.env.SSO_ATTRIBUTE_NAME}`] as string} ${
+      attributes[`${process.env.SSO_ATTRIBUTE_FIRSTNAME}`] as string
+    }`,
     email: attributes[`${process.env.SSO_ATTRIBUTE_MAIL}`] as string,
     role: roles[0] as 'annotator' | 'scrutator' | 'admin' | 'publicator',
     _id: idModule.lib.buildId(),

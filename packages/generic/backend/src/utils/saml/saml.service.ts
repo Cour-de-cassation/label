@@ -145,13 +145,18 @@ export class SamlService {
   }
 
   async createLogoutRequestUrl(user: { nameID: string; sessionIndex: string }) {
-    return this.sp.createLogoutRequest(this.idp, 'redirect', {
-      logoutNameID: user.nameID,
-      id: user.sessionIndex,
-      nameIDFormat: process.env.SSO_NAME_ID_FORMAT,
-      sessionIndex: user.sessionIndex,
-      signRequest: true,
-      signatureAlgorithm: process.env.SSO_SIGNATURE_ALGORITHM,
-    });
+    return this.sp.createLogoutRequest(
+      this.idp,
+      'redirect',
+      {
+        logoutNameID: user.nameID,
+        id: user.sessionIndex,
+        nameIDFormat: process.env.SSO_NAME_ID_FORMAT,
+        sessionIndex: user.sessionIndex,
+        signRequest: true,
+        signatureAlgorithm: process.env.SSO_SIGNATURE_ALGORITHM,
+      },
+      'logout=1',
+    );
   }
 }

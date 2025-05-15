@@ -146,7 +146,7 @@ function buildApiSso(app: Express) {
       }
       try {
         const context = await ssoService.logout({ nameID, sessionIndex });
-        res.redirect(context + '&logout=1');
+        res.redirect(context);
       } catch (err) {
         logger.error({
           operationName: 'logoutSso',

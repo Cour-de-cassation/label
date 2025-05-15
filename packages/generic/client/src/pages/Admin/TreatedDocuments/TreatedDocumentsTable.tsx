@@ -8,6 +8,7 @@ import { localStorage, treatedDocumentOrderByProperties } from '../../../service
 import { AnnotationsDiffDrawer, annotationDiffDocumentInfoType } from './AnnotationsDiffDrawer';
 import { useAlert } from '../../../services/alert';
 import { routes } from '../../routes';
+import { useCtxUser } from '../../../contexts/user.context';
 
 export { TreatedDocumentsTable };
 
@@ -31,6 +32,8 @@ function TreatedDocumentsTable(props: {
   const orderByProperty = localStorage.treatedDocumentsStateHandler.getOrderByProperty();
   const orderDirection = localStorage.treatedDocumentsStateHandler.getOrderDirection();
   const styles = buildStyles();
+
+  const { user } = useCtxUser();
 
   return (
     <div style={styles.container}>
@@ -91,7 +94,7 @@ function TreatedDocumentsTable(props: {
   }
 
   function buildOptionItems(treatmentWithDetails: apiRouteOutType<'get', 'treatedDocuments'>[number]) {
-    const userRole = localStorage.userHandler.getRole();
+    const userRole = user?.role;
     const adminView = localStorage.adminViewHandler.get();
 
     const openDocumentOption = {

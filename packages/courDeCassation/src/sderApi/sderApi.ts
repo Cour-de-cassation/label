@@ -42,7 +42,7 @@ async function fetchApi({
 const sderApi = {
   async fetchDecisionsToPseudonymise(
     sourceName: string,
-  ): Promise<Deprecated.DecisionDTO[]> {    
+  ): Promise<Deprecated.DecisionDTO[]> {
     const decisions = ((await fetchApi({
       method: 'get',
       path: `decisions?labelStatus=toBeTreated&sourceName=${sourceName}`,
@@ -63,7 +63,7 @@ const sderApi = {
     })) as unknown) as Deprecated.DecisionDTO[];
 
     if (decisionList.length > 0) {
-      return decisionList[0]
+      return decisionList[0];
     }
     return undefined;
   },

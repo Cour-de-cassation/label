@@ -1,5 +1,5 @@
 import { documentType } from '@label/core';
-import { DecisionDTO } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export type { connectorConfigType };
 
@@ -8,11 +8,13 @@ type connectorConfigType = {
   fetchCourtDecisionBySourceIdAndSourceName(
     sourceId: number,
     sourceName: string,
-  ): Promise<DecisionDTO | undefined>;
-  fetchDecisionsToPseudonymise(sourceName: string): Promise<DecisionDTO[]>;
+  ): Promise<Deprecated.DecisionDTO | undefined>;
+  fetchDecisionsToPseudonymise(
+    sourceName: string,
+  ): Promise<Deprecated.DecisionDTO[]>;
   updateDocumentLabelStatusToLoaded: (externalId: string) => Promise<void>;
   mapCourtDecisionToDocument: (
-    courtDecision: DecisionDTO,
+    courtDecision: Deprecated.DecisionDTO,
     importer: documentType['importer'],
   ) => Promise<documentType>;
 };

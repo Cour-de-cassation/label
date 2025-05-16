@@ -4,12 +4,12 @@ import {
   settingsModule,
   treatmentModule,
   treatmentType,
+  Deprecated,
 } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildExporter } from './buildExporter';
 import { exporterConfigType } from './exporterConfigType';
-import { LabelTreatment } from 'dbsder-api-types';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 describe('buildExporter', () => {
@@ -150,12 +150,12 @@ describe('buildExporter', () => {
 function buildFakeExporterConfig(): exporterConfigType & {
   getExportedExternalIds: () => string[];
   getExportedPseudonymizationTexts: () => string[];
-  getExportedLabelTreatments: () => LabelTreatment[];
+  getExportedLabelTreatments: () => Deprecated.LabelTreatment[];
   getLockedExternalIds: () => string[];
 } {
   const exportedExternalIds: string[] = [];
   const exportedpseudonymizationTexts: string[] = [];
-  const exportedlabelTreatments: LabelTreatment[] = [];
+  const exportedlabelTreatments: Deprecated.LabelTreatment[] = [];
   const lockedExternalIds: string[] = [];
 
   return {

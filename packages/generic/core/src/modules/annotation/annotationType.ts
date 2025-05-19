@@ -11,7 +11,8 @@ const annotationModel = buildModel({
     entityId: { kind: 'primitive', content: 'string' },
     start: { kind: 'primitive', content: 'number' },
     text: { kind: 'primitive', content: 'string' },
-    certaintyScore: { kind: 'primitive', content: 'number' },
+    score: { kind: 'primitive', content: 'number' },
+    source: { kind: 'primitive', content: 'string' },
   },
 } as const);
 

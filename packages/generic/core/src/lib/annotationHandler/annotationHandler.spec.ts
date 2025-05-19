@@ -27,16 +27,18 @@ describe('annotationHandler', () => {
         {
           category,
           start: 34,
-          certaintyScore: 1,
+          score: 1,
           entityId: annotationModule.lib.entityIdHandler.compute(category, annotationText),
           text: annotationText,
+          source: 'agent',
         },
         {
           category,
-          certaintyScore: 1,
+          score: 1,
           start: 66,
           entityId: annotationModule.lib.entityIdHandler.compute(category, annotationText),
           text: annotationText,
+          source: 'agent',
         },
         ...annotations,
       ]);
@@ -207,6 +209,6 @@ describe('annotationHandler', () => {
   });
 });
 
-function generateFetchedAnnotation(fields: { start?: number; category?: string; text?: string }) {
+function generateFetchedAnnotation(fields: { start?: number; category?: string; text?: string; source?: string }) {
   return annotationModule.generator.generate(fields);
 }

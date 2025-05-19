@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import format from 'string-template';
-import { customThemeType, useCustomTheme, optionItemType, Table, tableRowFieldType } from 'pelta-design-system';
+import { optionItemType, Table, tableRowFieldType } from 'pelta-design-system';
 import { apiRouteOutType, documentModule, idModule, timeOperator } from '@label/core';
 import { apiCaller } from '../../../../api';
-import { DocumentStatusIcon, ProblemReportIcon, PublicationCategoryBadge } from '../../../../components';
+import { DocumentStatusIcon, ProblemReportIcon } from '../../../../components';
 import { useAlert } from '../../../../services/alert';
 import { usePopup } from '../../../../services/popup';
 import { localStorage } from '../../../../services/localStorage';
@@ -24,14 +24,12 @@ function ProblemReportsTable(props: {
   problemReportsWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>;
 }) {
   const history = useHistory();
-  const theme = useCustomTheme();
   const { displayAlert } = useAlert();
   const { displayPopup } = usePopup();
   const [annotationDiffDocumentInfo, setAnnotationDiffDocumentInfo] = useState<
     annotationDiffDocumentInfoType | undefined
   >();
 
-  const styles = buildStyles(theme);
   const problemReportsFields = buildProblemReportsFields();
   const userRole = localStorage.userHandler.getRole();
   const adminView = localStorage.adminViewHandler.get();
@@ -63,25 +61,27 @@ function ProblemReportsTable(props: {
         width: 2,
       },
       {
-        id: 'publicationCategory',
-        title: wordings.business.filters.columnTitles.publicationCategory.title,
-        tooltipText: wordings.business.filters.columnTitles.publicationCategory.tooltipText,
+        id: 'source',
+        title: wordings.business.filters.columnTitles.source.title,
+        tooltipText: wordings.business.filters.columnTitles.source.tooltipText,
         canBeSorted: true,
-        getSortingValue: (problemReport) => problemReport.document?.publicationCategory.length ?? 0,
-        extractor: (problemReport) => problemReport.document?.publicationCategory.join(',') ?? '',
-        render: (problemReport) =>
-          problemReport.document && problemReport.document.publicationCategory.length > 0 ? (
-            <div style={styles.publicationCategoryBadgesContainer}>
-              {problemReport.document.publicationCategory.map((publicationCategoryLetter) => (
-                <div style={styles.publicationCategoryBadgeContainer}>
-                  <PublicationCategoryBadge publicationCategoryLetter={publicationCategoryLetter} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            '-'
-          ),
+        extractor: (problemReportWithDetails) => problemReportWithDetails.document?.source ?? '',
         width: 2,
+      },
+      {
+        id: 'jurisdiction',
+        title: wordings.business.filters.columnTitles.jurisdiction.title,
+        tooltipText: wordings.business.filters.columnTitles.jurisdiction.tooltipText,
+        canBeSorted: true,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.document?.jurisdiction ?? '',
+        width: 4,
+      },
+      {
+        id: 'appealNumber',
+        title: wordings.business.filters.columnTitles.appealNumber,
+        canBeSorted: true,
+        extractor: (problemReportWithDetails) => problemReportWithDetails.document?.appealNumber ?? '',
+        width: 3,
       },
       {
         id: 'userName',
@@ -333,15 +333,4 @@ function ProblemReportsTable(props: {
 
 function isRowHighlighted(problemReportWithDetails: apiRouteOutType<'get', 'problemReportsWithDetails'>[number]) {
   return !problemReportWithDetails.problemReport.hasBeenRead;
-}
-
-function buildStyles(theme: customThemeType) {
-  return {
-    publicationCategoryBadgesContainer: {
-      display: 'flex',
-    },
-    publicationCategoryBadgeContainer: {
-      marginRight: theme.spacing,
-    },
-  };
 }

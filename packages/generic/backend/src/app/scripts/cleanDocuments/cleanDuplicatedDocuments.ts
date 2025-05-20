@@ -15,9 +15,7 @@ async function cleanDuplicatedDocuments() {
 
   const documentRepository = buildDocumentRepository();
 
-  const documents = (await documentRepository.findAll()).filter(
-    (doc) => doc.status !== 'rejected',
-  );
+  const documents = await documentRepository.findAll();
 
   logger.log({
     operationName: 'cleanDuplicatedDocuments',

@@ -39,7 +39,6 @@ function buildFetchSummary() {
       savedDocuments: -1,
       doneDocuments: -1,
       lockedDocuments: -1,
-      rejectedDocuments: -1,
     };
     let statusCodeSummary = 200;
 

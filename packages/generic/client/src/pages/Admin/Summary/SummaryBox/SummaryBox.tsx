@@ -16,7 +16,6 @@ type summaryType = {
   savedDocuments: number;
   doneDocuments: number;
   lockedDocuments: number;
-  rejectedDocuments: number;
 };
 
 function SummaryBox(props: { summary: summaryType; width: number }) {
@@ -67,10 +66,6 @@ function SummaryBox(props: { summary: summaryType; width: number }) {
       {
         label: wordings.summaryPage.box.fields.lockedDocuments,
         value: summary.lockedDocuments,
-      },
-      {
-        label: wordings.summaryPage.box.fields.rejectedDocuments,
-        value: summary.rejectedDocuments,
       },
     ];
   }

@@ -188,7 +188,7 @@ function ProblemReportsTable(props: {
             onCancel: () => {},
             onConfirm: () => {
               problemReportWithDetails.document &&
-                apiCaller.post<'rejectDocument'>('rejectDocument', {
+                apiCaller.post<'deleteDocument'>('deleteDocument', {
                   documentId: problemReportWithDetails.document._id,
                 });
               props.refetch();
@@ -201,11 +201,7 @@ function ProblemReportsTable(props: {
         }
       },
       iconName: 'deleteOutline' as const,
-      isDisabled:
-        userRole !== 'admin' ||
-        adminView !== 'admin' ||
-        !problemReportWithDetails.document ||
-        problemReportWithDetails.document?.status === 'rejected',
+      isDisabled: userRole !== 'admin' || adminView !== 'admin' || !problemReportWithDetails.document,
     };
 
     const deleteProblemReportOptionItem = {

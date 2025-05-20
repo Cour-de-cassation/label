@@ -363,10 +363,6 @@ const apiSchema = {
             kind: 'primitive',
             content: 'number',
           } as const),
-          rejectedDocuments: buildModel({
-            kind: 'primitive',
-            content: 'number',
-          } as const),
         },
       } as const),
     },
@@ -704,7 +700,7 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
-    rejectDocument: {
+    deleteDocument: {
       in: {
         documentId: buildModel({
           kind: 'custom',

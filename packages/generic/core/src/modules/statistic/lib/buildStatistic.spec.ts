@@ -61,6 +61,7 @@ describe('buildStatistic', () => {
       treatmentInfo,
       checklist: checklistMock,
       humanTreatmentsSummary: [{ userId, treatmentDuration: 10 }],
+      comment: 'comment',
     });
 
     expect(statistic).toEqual({
@@ -85,6 +86,7 @@ describe('buildStatistic', () => {
       treatmentsSummary: [{ userId, treatmentDuration: 10 }],
       wordsCount: 5,
       checklist: checklistMock,
+      comment: 'comment',
     });
   });
 });

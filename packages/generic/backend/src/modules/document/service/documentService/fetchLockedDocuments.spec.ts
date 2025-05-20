@@ -26,9 +26,6 @@ describe('fetchLockedDocuments', () => {
     const doneDocument = documentModule.generator.generate({
       status: 'done',
     });
-    const rejectedDocument = documentModule.generator.generate({
-      status: 'rejected',
-    });
     const lockedDocument = documentModule.generator.generate({
       status: 'locked',
     });
@@ -44,10 +41,6 @@ describe('fetchLockedDocuments', () => {
       documentId: doneDocument._id,
       userId: user._id,
     });
-    const rejectedDocumentAssignation = assignationModule.generator.generate({
-      documentId: rejectedDocument._id,
-      userId: user._id,
-    });
     const lockedDocumentAssignation = assignationModule.generator.generate({
       documentId: lockedDocument._id,
       userId: user._id,
@@ -58,7 +51,6 @@ describe('fetchLockedDocuments', () => {
         pendingDocument,
         savedDocument,
         doneDocument,
-        rejectedDocument,
         lockedDocument,
       ].map(documentRepository.insert),
     );
@@ -67,7 +59,6 @@ describe('fetchLockedDocuments', () => {
         pendingDocumentAssignation,
         savedDocumentAssignation,
         doneDocumentAssignation,
-        rejectedDocumentAssignation,
         lockedDocumentAssignation,
       ].map(assignationRepository.insert),
     );

@@ -1,6 +1,7 @@
 import {
   annotationModule,
   annotationType,
+  assignationType,
   documentType,
   idModule,
   settingsType,
@@ -14,6 +15,8 @@ import { connectorConfigType } from './connectorConfigType';
 import { treatmentService } from '../../modules/treatment';
 import { buildPreAssignator } from '../preAssignator';
 import { Sources } from 'dbsder-api-types';
+import { assignationService } from '../../modules/assignation';
+import { preAssignationService } from '../../modules/preAssignation';
 
 export { buildConnector };
 
@@ -214,8 +217,24 @@ function buildConnector(connectorConfig: connectorConfigType) {
   }
 }
 
-function insertDocument(document: documentType) {
+async function insertDocument(document: documentType) {
   const documentRepository = buildDocumentRepository();
+  let assignation: assignationType[] = [];
+
+  const sameDocument = await documentRepository.findOneByExternalId(
+    document.externalId,
+  );
+  if (sameDocument) {
+    logger.log({
+      operationName: 'documentInsertion',
+      msg: `Document ${document.source}:${document.documentNumber} is already in label database, deleting old one.`,
+    });
+
+    assignation = await assignationService.fetchAssignationsOfDocumentId(
+      sameDocument._id,
+    );
+    await documentService.deleteDocument(sameDocument._id);
+  }
 
   try {
     const insertedDocument = documentRepository.insert(document);
@@ -229,6 +248,24 @@ function insertDocument(document: documentType) {
         },
       },
     });
+
+    if (assignation.length > 0) {
+      logger.log({
+        operationName: 'documentInsertion',
+        msg: `Document ${document.source}:${document.documentNumber} previously had an assignation, pre-assigning it.`,
+        data: {
+          decision: {
+            sourceId: document.documentNumber,
+            sourceName: document.source,
+          },
+        },
+      });
+      preAssignationService.createPreAssignation({
+        userId: assignation[0].userId,
+        source: document.source,
+        number: document.documentNumber.toString(),
+      });
+    }
     return insertedDocument;
   } catch (error) {
     logger.error({

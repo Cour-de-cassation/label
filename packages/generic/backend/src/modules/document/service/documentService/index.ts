@@ -9,7 +9,6 @@ import { countLoadedDocuments } from './countLoadedDocuments';
 import { countLockedDocuments } from './countLockedDocuments';
 import { countNlpAnnotatingDocuments } from './countNlpAnnotatingDocuments';
 import { countPendingDocuments } from './countPendingDocuments';
-import { countRejectedDocuments } from './countRejectedDocuments';
 import { countSavedDocuments } from './countSavedDocuments';
 import { deleteDocument } from './deleteDocument';
 import { fetchAllDocumentsByIds } from './fetchAllDocumentsByIds';
@@ -33,9 +32,7 @@ import { fetchPublishableDocumentsToExport } from './fetchPublishableDocumentsTo
 import { fetchToBeConfirmedDocuments } from './fetchToBeConfirmedDocuments';
 import { fetchTreatedDocuments } from './fetchTreatedDocuments';
 import { fetchUntreatedDocuments } from './fetchUntreatedDocuments';
-import { fetchRejectedDocuments } from './fetchRejectedDocuments';
 import { fetchDocumentsWithoutAnnotations } from './fetchDocumentsWithoutAnnotations';
-import { rejectDocument } from './rejectDocument';
 import { resetDocument } from './resetDocument';
 import { resetDocumentReviewStatus } from './resetDocumentReviewStatus';
 import { updateDocumentLoss } from './updateDocumentLoss';
@@ -74,7 +71,6 @@ function buildDocumentService() {
     countLockedDocuments,
     countNlpAnnotatingDocuments,
     countPendingDocuments,
-    countRejectedDocuments,
     countSavedDocuments,
     deleteDocument,
     fetchAllDocumentsByIds,
@@ -99,9 +95,7 @@ function buildDocumentService() {
     fetchToBeConfirmedDocuments,
     fetchTreatedDocuments,
     fetchUntreatedDocuments,
-    fetchRejectedDocuments,
     fetchDocumentsWithoutAnnotations,
-    rejectDocument,
     resetDocument,
     resetDocumentReviewStatus,
     updateDocumentLoss,

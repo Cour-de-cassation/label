@@ -69,9 +69,9 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
-    async findAllByExternalId(externalId) {
-      const documents = await collection.find({ externalId }).toArray();
-      return documents;
+    async findOneByExternalId(externalId) {
+      const document = await collection.findOne({ externalId });
+      return document || undefined;
     },
 
     async findOneByStatusAndPriorityAmong(

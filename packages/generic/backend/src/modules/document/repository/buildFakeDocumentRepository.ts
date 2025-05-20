@@ -149,10 +149,11 @@ const buildFakeDocumentRepository = buildFakeRepositoryBuilder<
       );
     },
 
-    async findAllByExternalId(externalId) {
-      return collection.filter(
+    async findOneByExternalId(externalId) {
+      const document = collection.find(
         (document) => document.externalId === externalId,
       );
+      return document || undefined;
     },
 
     async findOneByStatusAndPriorityAmong(

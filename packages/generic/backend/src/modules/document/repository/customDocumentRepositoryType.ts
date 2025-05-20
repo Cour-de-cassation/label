@@ -45,7 +45,9 @@ type customDocumentRepositoryType = {
     documentNumber: documentType['documentNumber'];
     source: documentType['source'];
   }) => Promise<documentType | undefined>;
-  findAllByExternalId: (externalId: string) => Promise<documentType[]>;
+  findOneByExternalId: (
+    externalId: string,
+  ) => Promise<documentType | undefined>;
   findOneByStatusAndPriorityAmong: (
     {
       status,

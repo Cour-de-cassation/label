@@ -88,7 +88,6 @@ const fr = {
       done: 'Prêt à être exporté',
       toBeConfirmed: 'A confirmer par un administrateur',
       locked: 'En alerte',
-      rejected: 'Rejeté',
     },
     errors: {
       deleteProblemReportFailed: 'La suppression du signalement a échoué. Veuillez recharger la page.',
@@ -415,7 +414,6 @@ const fr = {
         savedDocuments: 'Documents en relecture',
         doneDocuments: 'Documents traités',
         lockedDocuments: 'Documents bloqués',
-        rejectedDocuments: 'Documents rejetés',
       },
     },
   },

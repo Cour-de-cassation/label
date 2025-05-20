@@ -17,6 +17,7 @@ export { saveStatisticsOfDocument };
 async function saveStatisticsOfDocument(
   document: documentType,
   settings: settingsType,
+  comment: string,
 ) {
   const statisticRepository = buildStatisticRepository();
 
@@ -40,6 +41,7 @@ async function saveStatisticsOfDocument(
     treatments,
     humanTreatments,
     settings,
+    comment,
   });
 
   if (humanTreatments && humanTreatments.length > 0) {

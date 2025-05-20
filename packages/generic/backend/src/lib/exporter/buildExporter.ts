@@ -211,7 +211,11 @@ function buildExporter(
         },
       });
 
-      await statisticService.saveStatisticsOfDocument(document, settings);
+      await statisticService.saveStatisticsOfDocument(
+        document,
+        settings,
+        'exported',
+      );
 
       await documentService.deleteDocument(document._id);
     } catch (error) {

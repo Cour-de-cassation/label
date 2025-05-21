@@ -4,7 +4,7 @@ import {
   idType,
   settingsType,
 } from '@label/core';
-import { LabelTreatment } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export type { annotatorConfigType };
 
@@ -25,6 +25,6 @@ type annotatorConfigType = {
   }>;
   fetchLossOfDocument: (
     document: documentType,
-    treatments: LabelTreatment[],
+    treatments: Deprecated.LabelTreatment[],
   ) => Promise<number>;
 };

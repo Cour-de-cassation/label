@@ -45,7 +45,7 @@ jobs:
     parallelism: 1
     active_deadline_seconds: 300
     command: "dist/scripts/freePendingDocuments.js"
-  - name: "purge-m-6"
+  - name: "purge-m-12"
     schedule: "0 19 * * *"
     successful_jobs_history_limit: 7
     failed_jobs_history_limit: 7
@@ -53,7 +53,7 @@ jobs:
     restartPolicy: "Never"
     parallelism: 1
     active_deadline_seconds: 300
-    command: "dist/scripts/purgeDb.js --beforeMonths 6"
+    command: "dist/scripts/purgeDb.js --beforeMonths 12"
   - name: "renew-cache"
     schedule: "*/5 6-17 * * *"
     successful_jobs_history_limit: 3

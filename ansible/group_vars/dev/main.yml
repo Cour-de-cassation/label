@@ -1,6 +1,26 @@
 git_branch: dev
 
-sder_mongodb_url: "{{ vault_sder_mongodb_url }}"
-label_mongodb_url: "{{ vault_label_mongodb_url }}"
-dbsder_api_key: "{{ vault_dbsder_api_key }}"
-jwt_private_key: "{{ vault_jwt_private_key }}"
+label_mongodb_url: "{{ vault_label_mongodb_url }}" 
+dbsder_api_key: "{{ vault_dbsder_api_key }}" 
+cookie_private_key: "{{ vault_cookie_private_key }}" 
+sso_sp_assertion_consumer_service_location: "{{ vault_sso_sp_assertion_consumer_service_location }}" 
+sso_sp_entity_id: "{{ vault_sso_sp_entity_id }}" 
+sso_idp_single_sign_on_service_location: "{{ vault_sso_idp_single_sign_on_service_location }}"
+sso_idp_single_logout_service_location: "{{ vault_sso_idp_single_logout_service_location }}"
+sso_front_success_connexion_annotator_url: "{{ vault_sso_front_success_connexion_annotator_url }}" 
+sso_front_success_connexion_admin_scrutator_url: "{{ vault_sso_front_success_connexion_admin_scrutator_url }}" 
+sso_front_success_connexion_publicator_url: "{{ vault_sso_front_success_connexion_publicator_url }}" 
+
+sso_idp_metadata: "sso_files/keycloak-metadata-idp-dev.xml"
+sso_certificat: "sso_files/keycloak-cert.pem"
+sso_sp_private_key: "sso_files/keycloak-private.key"
+
+# On ajoutera cette parti dans le all quand on aura les mêmes attributs partout (keyclaock et ldapMJ)
+sso_attribute_name: "lastName" 
+sso_attribute_firstname: "firstname"
+sso_attribute_mail: "email"
+sso_attribute_role: "Role"
+
+
+s3_access_key: "{{ vault_s3_access_key }}" 
+s3_secret_key: "{{ vault_s3_secret_key }}"  

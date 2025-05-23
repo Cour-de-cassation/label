@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { CustomError } from 'sder-core';
 
 export { useApi };
 
@@ -22,7 +21,9 @@ function useApi<dataT, paramsT>(
       },
       (error) => {
         setIsLoaded(true);
-        if (error instanceof CustomError) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (error.statusCode) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           setStatusCode(error.statusCode);
         } else {
           setStatusCode(500);

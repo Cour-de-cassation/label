@@ -8,7 +8,6 @@ sso_sp_assertion_consumer_service_location: "{{ vault_sso_sp_assertion_consumer_
 sso_sp_entity_id: "{{ vault_sso_sp_entity_id }}"
 sso_idp_single_sign_on_service_location: "{{ vault_sso_idp_single_sign_on_service_location }}"
 sso_idp_single_logout_service_location: "{{ vault_sso_idp_single_logout_service_location }}"
-session_duration: "{{ vault_session_duration }}"
 sso_front_success_connexion_annotator_url: "{{ vault_sso_front_success_connexion_annotator_url }}"
 sso_front_success_connexion_admin_scrutator_url: "{{ vault_sso_front_success_connexion_admin_scrutator_url }}"
 sso_front_success_connexion_publicator_url: "{{ vault_sso_front_success_connexion_publicator_url }}"

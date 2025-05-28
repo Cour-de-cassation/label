@@ -2,7 +2,7 @@ import { logger } from '../../utils';
 import { documentType } from '@label/core';
 import { extractRouteForJurinet } from './extractRouteForJurinet';
 import { extractRouteForCivilJurisdiction } from './extractRouteForCivilJurisdiction';
-import { Sources } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export { extractRoute };
 
@@ -12,15 +12,17 @@ async function extractRoute(
   let route: documentType['route'] = 'default';
 
   const extractRouteFunctions = {
-    [Sources.CC]: extractRouteForJurinet,
-    [Sources.CA]: extractRouteForCivilJurisdiction,
-    [Sources.TJ]: extractRouteForCivilJurisdiction,
-    [Sources.TCOM]: extractRouteForCivilJurisdiction,
+    [Deprecated.Sources.CC]: extractRouteForJurinet,
+    [Deprecated.Sources.CA]: extractRouteForCivilJurisdiction,
+    [Deprecated.Sources.TJ]: extractRouteForCivilJurisdiction,
+    [Deprecated.Sources.TCOM]: extractRouteForCivilJurisdiction,
   };
 
   try {
     if (document.source in extractRouteFunctions) {
-      route = await extractRouteFunctions[document.source as Sources](document);
+      route = await extractRouteFunctions[
+        document.source as Deprecated.Sources
+      ](document);
     } else {
       throw new Error('Source non prise en charge');
     }

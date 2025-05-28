@@ -1,5 +1,5 @@
 import { documentType } from '@label/core';
-import { Sources } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { documentService } from '../../modules/document';
 
@@ -17,7 +17,7 @@ async function extractRouteForCivilJurisdiction(
   const checklist = document.checklist;
 
   // En attente de stabilisation du flux avant d'implémenter les règles spécifiques
-  if (source === Sources.TCOM) {
+  if (source === Deprecated.Sources.TCOM) {
     return 'default';
   }
 
@@ -35,7 +35,7 @@ async function extractRouteForCivilJurisdiction(
     return 'exhaustive';
   }
 
-  if (source === Sources.CA || source === Sources.TJ) {
+  if (source === Deprecated.Sources.CA || source === Deprecated.Sources.TJ) {
     const routeFromDb = await getDecisionRoute({
       codeNac: NACCode,
     });

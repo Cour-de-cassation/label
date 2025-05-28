@@ -169,9 +169,11 @@ function buildStyledComponents() {
   `;
   const Div_ActionButtons = styled.div<stylePropsType>`
     ${({ styleProps }) => {
+      const { hoveredBackgroundColor } = computeBackgroundColors(styleProps);
       return `
         display: none;
         border-radius: ${styleProps.theme.shape.borderRadius.m}px;
+        background: linear-gradient(to left, ${hoveredBackgroundColor}, 75%,transparent);
         padding-left: 50%;
         height: 100%;
         position: absolute;

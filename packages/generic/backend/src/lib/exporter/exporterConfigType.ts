@@ -1,5 +1,5 @@
 import { documentType } from '@label/core';
-import { LabelTreatment } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export type { exporterConfigType };
 
@@ -8,6 +8,6 @@ type exporterConfigType = {
   sendDocumentPseudonymisationAndTreatments: (param: {
     externalId: documentType['externalId'];
     pseudoText: string;
-    labelTreatments: LabelTreatment[];
+    labelTreatments: Deprecated.LabelTreatment[];
   }) => Promise<void>;
 };

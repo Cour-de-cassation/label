@@ -9,7 +9,7 @@ function buildMotivationCategoryHandler() {
   const MOTIVATION_CATEGORY_ICON_NAME = 'eyeoff' as const;
   const MOTIVATION_CATEGORY_COLOR = {
     lightMode: ['yellow', '300'] as colorType,
-    darkMode: ['yellow', '800'] as colorType,
+    darkMode: ['yellow', '900'] as colorType,
   };
 
   return { getCategoryName, getCategoryColor, getCategoryIconName, addCategoryToSettings };

@@ -144,9 +144,9 @@ const fr = {
       columnTitles: {
         documentNumber: 'N° décision',
         chamberName: 'Chambre',
-        appealNumber: 'N° de pourvoi',
+        appealNumber: 'N° de pourvoi / RG',
         occultationBlock: { title: 'Bloc', tooltipText: "Bloc d'occultation" },
-        jurisdiction: { title: 'Cour', tooltipText: 'Juridiction de la décision' },
+        jurisdiction: { title: 'Juridiction', tooltipText: 'Juridiction de la décision' },
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
@@ -318,7 +318,8 @@ const fr = {
         validate: 'Débloquer et valider la décision',
       },
       mailSubject: 'Alerte sur le document {documentNumber}',
-      popupConfirmMessage: 'Souhaitez-vous vraiment supprimer ce document ? Cette action est irréversible.',
+      popupConfirmMessage:
+        'Souhaitez-vous vraiment supprimer ce document et les signalements associés ? Cette action est irréversible.',
     },
   },
   preAssignDocumentsPage: {

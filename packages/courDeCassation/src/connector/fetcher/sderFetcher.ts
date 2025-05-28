@@ -1,12 +1,12 @@
 import { sderApi } from '../../sderApi';
-import { Sources } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export { sderFetcher };
 
 const sderFetcher = {
   async fetchCourtDecisionBySourceIdAndSourceName(
     sourceId: number,
-    sourceName: Sources,
+    sourceName: Deprecated.Sources,
   ) {
     return sderApi.fetchCourtDecisionBySourceIdAndSourceName(
       sourceId,

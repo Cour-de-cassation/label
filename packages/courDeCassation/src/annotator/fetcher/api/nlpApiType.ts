@@ -1,5 +1,5 @@
 import { documentType, settingsType } from '@label/core';
-import { LabelTreatment } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export type { nlpApiType, nlpResponseType, nlpLossType, nlpVersion };
 
@@ -10,7 +10,7 @@ type nlpApiType = {
   ) => Promise<nlpResponseType>;
   fetchNlpLoss: (
     document: documentType,
-    treatments: LabelTreatment[],
+    treatments: Deprecated.LabelTreatment[],
   ) => Promise<nlpLossType>;
 };
 

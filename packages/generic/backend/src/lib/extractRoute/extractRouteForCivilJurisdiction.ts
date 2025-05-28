@@ -1,7 +1,8 @@
 import { documentType } from '@label/core';
 import { Deprecated } from '@label/core';
-import axios, { AxiosError, AxiosResponse, Method } from 'axios';
+import axios, { AxiosResponse, Method } from 'axios';
 import { documentService } from '../../modules/document';
+import { logger } from '../../utils';
 
 export { extractRouteForCivilJurisdiction };
 
@@ -26,7 +27,7 @@ async function extractRouteForCivilJurisdiction(
   }
 
   // Relecture exhaustive pour les décisions présentant un intéret particulier
-  if (selection === true && sommaire != '') {
+  if (selection === true /* && sommaire != '' */) {
     return 'exhaustive';
   }
 
@@ -36,9 +37,7 @@ async function extractRouteForCivilJurisdiction(
   }
 
   if (source === Deprecated.Sources.CA || source === Deprecated.Sources.TJ) {
-    const routeFromDb = await getDecisionRoute({
-      codeNac: NACCode,
-    });
+    const routeFromDb = await getDecisionRoute(NACCode);
 
     const freeDocuments = await documentService.countFreeDocuments();
     const targetFreeDocuments = 15000;
@@ -63,12 +62,34 @@ async function extractRouteForCivilJurisdiction(
     );
 
     switch (routeFromDb) {
-      case 'systematique':
+      case 'systematique': {
+        logger.log({
+          operationName: 'computeRouteFromNac',
+          msg: 'Route systematique',
+          data: { routeFromDb, routeRelecture: 'exhaustive' },
+        });
         return 'exhaustive';
-      case 'aleatoiresensible':
-        return Math.random() < sensibleRatio ? 'exhaustive' : 'automatic';
-      case 'aleatoirenonsensible':
-        return Math.random() < nonSensibleRatio ? 'exhaustive' : 'automatic';
+      }
+      case 'aleatoireSensible': {
+        const routeRelecture =
+          Math.random() < sensibleRatio ? 'exhaustive' : 'automatic';
+        logger.log({
+          operationName: 'computeRouteFromNac',
+          msg: 'Route systematique',
+          data: { routeFromDb, routeRelecture },
+        });
+        return routeRelecture;
+      }
+      case 'aleatoireNonSensible': {
+        const routeRelecture =
+          Math.random() < nonSensibleRatio ? 'exhaustive' : 'automatic';
+        logger.log({
+          operationName: 'computeRouteFromNac',
+          msg: 'Route systematique',
+          data: { routeFromDb, routeRelecture },
+        });
+        return routeRelecture;
+      }
       default:
         throw new Error('Route non trouvée en base');
     }
@@ -77,48 +98,49 @@ async function extractRouteForCivilJurisdiction(
   return 'default';
 }
 
-// Same as sderApi.ts, duplicated waiting for extractRoute to be moved from label
-async function fetchApi({
+async function fetchApi<T>({
   method,
   path,
   body,
 }: {
   method: Method;
   path: string;
-  body: Record<string, unknown>;
-}) {
-  return await axios({
-    method: method,
-    baseURL: `${process.env.DBSDER_API_URL}/${process.env.DBSDER_API_VERSION}`,
-    url: `/${path}`,
-    data: body,
-    headers: {
-      'x-api-key': process.env.DBSDER_API_KEY ?? '',
-    },
-  })
-    .then((response: AxiosResponse) => {
-      if (response.status != 200 && response.status != 204) {
-        throw new Error(`${response.status} ${response.statusText}`);
-      } else {
-        return response.data as Record<string, unknown>;
-      }
-    })
-    .catch((error: AxiosError) => {
-      if (error.response) {
-        throw new Error(
-          `${error.response.status} ${error.response.statusText}`,
-        );
-      }
-      throw new Error(`${error.code ?? 'Unknown'} on /${path}`);
+  body?: Record<string, unknown>;
+}): Promise<T> {
+  try {
+    const response: AxiosResponse = await axios({
+      method,
+      baseURL: `${process.env.DBSDER_API_URL}`,
+      url: `/${path}`,
+      data: body,
+      headers: {
+        'x-api-key': process.env.DBSDER_API_KEY ?? '',
+      },
     });
+
+    if (![200, 204].includes(response.status)) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+
+    return response.data as T;
+  } catch (error: unknown) {
+    throw error;
+  }
 }
 
-async function getDecisionRoute({ codeNac }: { codeNac: string }) {
-  return ((await fetchApi({
-    method: 'get',
-    path: `decision-route?codeNac=${codeNac}`,
-    body: {},
-  })) as unknown) as Promise<
-    'systematique' | 'aleatoiresensible' | 'aleatoirenonsensible' | undefined
-  >;
+async function getDecisionRoute(code: string): Promise<string | undefined> {
+  try {
+    const codenac = await fetchApi<Deprecated.CodeNAC>({
+      method: 'get',
+      path: `codenacs/${code}`,
+    });
+
+    return codenac.routeRelecture;
+  } catch (error) {
+    logger.error({
+      operationName: 'getDecisionRoute',
+      msg: `Failed to fetch code nac for code "${code}"`,
+    });
+    return undefined;
+  }
 }

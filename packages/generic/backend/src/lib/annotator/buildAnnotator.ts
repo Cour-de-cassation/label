@@ -14,6 +14,7 @@ import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
 import { buildPreAssignator } from '../preAssignator';
+import { extractRoute } from '../extractRoute';
 
 export { buildAnnotator };
 
@@ -210,14 +211,6 @@ function buildAnnotator(
     });
     documentService.updateDocumentNlpVersions(documentId, version);
 
-    if (document.route == 'simple' && annotations.length == 0) {
-      await documentService.updateDocumentRoute(documentId, 'automatic');
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Route switched to automatic',
-      });
-    }
-
     await createAnnotatorTreatment({ annotations, documentId });
     logger.log({
       operationName: 'annotateDocument',
@@ -270,7 +263,7 @@ function buildAnnotator(
     }
 
     if (checklist.length > 0) {
-      documentService.updateDocumentChecklist(document._id, checklist);
+      await documentService.updateDocumentChecklist(document._id, checklist);
       logger.log({
         operationName: 'annotateDocument',
         msg: 'Checklist added to document',
@@ -346,7 +339,7 @@ function buildAnnotator(
           },
         },
       });
-      documentService.updateDocumentCategoriesToOmit(
+      await documentService.updateDocumentCategoriesToOmit(
         documentId,
         newCategoriesToOmit,
       );
@@ -386,6 +379,10 @@ function buildAnnotator(
         nextDocumentStatus,
       );
     }
+
+    // calculate route after annotation
+    const documentRoute = await extractRoute(document);
+    await documentService.updateDocumentRoute(document._id, documentRoute);
 
     logger.log({
       operationName: 'annotateDocument',

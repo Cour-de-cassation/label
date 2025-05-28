@@ -19,7 +19,6 @@ import {
   renewCache,
   resetUntreatedDocumentsForTest,
 } from './scripts';
-import { cleanDuplicatedDocuments } from './scripts/cleanDocuments';
 
 export { buildBackend };
 
@@ -95,10 +94,6 @@ function buildBackend(settings: settingsType) {
       resetUntreatedDocumentsForTest: {
         run: resetUntreatedDocumentsForTest,
         option: { shouldLoadDb: true, shouldExit: true },
-      },
-      cleanDuplicatedDocuments: {
-        run: cleanDuplicatedDocuments,
-        option: { shouldLoadDb: true, shouldExit: false },
       },
     },
   };

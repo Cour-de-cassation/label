@@ -10,7 +10,6 @@ async function fetchSummary() {
   const savedDocumentsCount = await documentService.countSavedDocuments();
   const doneDocumentsCount = await documentService.countDoneDocuments();
   const lockedDocumentsCount = await documentService.countLockedDocuments();
-  const rejectedDocumentsCount = await documentService.countRejectedDocuments();
 
   return {
     loadedDocuments: loadedDocumentsCount,
@@ -20,6 +19,5 @@ async function fetchSummary() {
     savedDocuments: savedDocumentsCount,
     doneDocuments: doneDocumentsCount,
     lockedDocuments: lockedDocumentsCount,
-    rejectedDocuments: rejectedDocumentsCount,
   };
 }

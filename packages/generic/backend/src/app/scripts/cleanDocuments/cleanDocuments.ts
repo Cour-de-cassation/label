@@ -1,7 +1,6 @@
 import { logger } from '../../../utils';
 import { cleanAssignations } from './cleanAssignations';
 import { cleanAssignedDocuments } from './cleanAssignedDocuments';
-import { cleanDuplicatedDocuments } from './cleanDuplicatedDocuments';
 import { cleanFreeDocuments } from './cleanFreeDocuments';
 import { cleanLoadedDocuments } from './cleanLoadedDocuments';
 import { cleanUnconsistentTreatments } from './cleanUnconsistentTreatments';
@@ -11,8 +10,6 @@ export { cleanDocuments };
 
 async function cleanDocuments() {
   logger.log({ operationName: 'cleanDocuments', msg: 'START' });
-
-  await cleanDuplicatedDocuments();
 
   await cleanAssignedDocuments();
 

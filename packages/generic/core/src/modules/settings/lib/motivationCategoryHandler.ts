@@ -9,7 +9,7 @@ function buildMotivationCategoryHandler() {
   const MOTIVATION_CATEGORY_ICON_NAME = 'eyeoff' as const;
   const MOTIVATION_CATEGORY_COLOR = {
     lightMode: ['yellow', '300'] as colorType,
-    darkMode: ['yellow', '800'] as colorType,
+    darkMode: ['yellow', '900'] as colorType,
   };
 
   return { getCategoryName, getCategoryColor, getCategoryIconName, addCategoryToSettings };
@@ -32,7 +32,7 @@ function buildMotivationCategoryHandler() {
       ...settings,
       [MOTIVATION_CATEGORY_NAME]: {
         autoLinkSensitivity: [{ kind: 'caseInsensitive' }],
-        anonymization: '[DÉBATS NON PUBLICS – Motivation de la décision occultée]',
+        anonymization: '[Motifs de la décision occultés]',
         color: MOTIVATION_CATEGORY_COLOR,
         iconName: MOTIVATION_CATEGORY_ICON_NAME,
         order: order,

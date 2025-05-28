@@ -10,7 +10,7 @@ async function extractRouteForCivilJurisdiction(
   document: documentType,
 ): Promise<documentType['route']> {
   const selection = document.decisionMetadata.selection;
-  const sommaire = document.decisionMetadata.sommaire;
+  // const sommaire = document.decisionMetadata.sommaire;
   const NACCode = document.decisionMetadata.NACCode;
   const source = document.source;
   const additionalTermsToAnnotate =

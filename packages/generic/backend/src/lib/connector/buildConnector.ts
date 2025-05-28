@@ -14,7 +14,7 @@ import { logger } from '../../utils';
 import { connectorConfigType } from './connectorConfigType';
 import { treatmentService } from '../../modules/treatment';
 import { buildPreAssignator } from '../preAssignator';
-import { Sources } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 import { assignationService } from '../../modules/assignation';
 import { preAssignationService } from '../../modules/preAssignation';
 
@@ -191,7 +191,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
       msg: `Starting importNewDocuments...`,
     });
 
-    for (const source of Object.values(Sources)) {
+    for (const source of Object.values(Deprecated.Sources)) {
       logger.log({
         operationName: 'importNewDocuments',
         msg: `Fetching ${source} decisions...`,

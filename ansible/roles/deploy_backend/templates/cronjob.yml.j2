@@ -5,6 +5,7 @@ metadata:
   namespace: "{{ label_kube_namespace }}"
 spec:
   schedule: "{{ schedule }}"
+  suspend: {{ suspend }}
   successfulJobsHistoryLimit: {{ successful_jobs_history_limit }}
   failedJobsHistoryLimit: {{ failed_jobs_history_limit }}
   concurrencyPolicy: Forbid

@@ -231,7 +231,8 @@ const fr = {
     identicalOccurrencesSpotted: 'occurence(s) identique(s) détectée(s)',
     link: 'Créer une liaison',
     originalText: 'Texte original',
-    motivationOccultation: 'Les débats de cette décision ne sont pas publics, les motifs sont occultés.',
+    motivationOccultation:
+      "Les débats de cette décision ne sont pas publics, l'exposé du litige et la motivation sont occultés.",
     problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
     problemType: 'Type de problème',
     publishedDocument: 'Cette décision sera publiée',

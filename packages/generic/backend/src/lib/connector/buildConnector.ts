@@ -17,6 +17,7 @@ import { buildPreAssignator } from '../preAssignator';
 import { Deprecated } from '@label/core';
 import { assignationService } from '../../modules/assignation';
 import { preAssignationService } from '../../modules/preAssignation';
+import { statisticService } from '../../modules/statistic';
 
 export { buildConnector };
 
@@ -75,9 +76,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
       });
 
       if (lowPriority) {
-        await insertDocument({ ...document, route: 'exhaustive' });
+        await insertDocument({ ...document, route: 'exhaustive' }, settings);
       } else {
-        await insertDocument({ ...document, route: 'request', priority: 4 });
+        await insertDocument(
+          { ...document, route: 'request', priority: 4 },
+          settings,
+        );
       }
       logger.log({
         operationName: 'importSpecificDocument',
@@ -185,7 +189,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
     }
   }
 
-  async function importNewDocuments() {
+  async function importNewDocuments(settings: settingsType) {
     logger.log({
       operationName: 'importNewDocuments',
       msg: `Starting importNewDocuments...`,
@@ -208,7 +212,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           decision,
           'recent',
         );
-        insertDocument(converted);
+        await insertDocument(converted, settings);
         await connectorConfig.updateDocumentLabelStatusToLoaded(
           converted.externalId,
         );
@@ -217,7 +221,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
   }
 }
 
-async function insertDocument(document: documentType) {
+async function insertDocument(document: documentType, settings: settingsType) {
   const documentRepository = buildDocumentRepository();
   let assignation: assignationType[] = [];
 
@@ -229,6 +233,17 @@ async function insertDocument(document: documentType) {
       operationName: 'documentInsertion',
       msg: `Document ${document.source}:${document.documentNumber} is already in label database, deleting old one.`,
     });
+
+    if (
+      sameDocument.status != 'loaded' &&
+      sameDocument.status != 'nlpAnnotating'
+    ) {
+      await statisticService.saveStatisticsOfDocument(
+        sameDocument,
+        settings,
+        'deleted because new reception',
+      );
+    }
 
     assignation = await assignationService.fetchAssignationsOfDocumentId(
       sameDocument._id,

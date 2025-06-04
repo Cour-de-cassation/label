@@ -8,7 +8,7 @@ import { parametersHandler } from '../lib/parametersHandler';
   const backend = buildBackend(settings);
 
   backend.runScript(
-    () => backend.scripts.deleteDocument.run(documentNumber, source),
+    () => backend.scripts.deleteDocument.run(documentNumber, source, settings),
     {
       shouldLoadDb: true,
     },

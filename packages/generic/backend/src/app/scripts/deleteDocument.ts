@@ -3,15 +3,15 @@ import {
   buildDocumentRepository,
   documentService,
 } from '../../modules/document';
-import { documentType } from '@label/core';
+import { documentType, settingsType } from '@label/core';
 import { statisticService } from '../../modules/statistic';
-import { settingsLoader } from '../../lib/settingsLoader';
 
 export { deleteDocument };
 
 async function deleteDocument(
   documentNumber: documentType['documentNumber'],
   source: documentType['source'],
+  settings: settingsType,
 ) {
   logger.log({ operationName: 'deleteDocument', msg: 'START' });
   const documentRepository = buildDocumentRepository();
@@ -21,7 +21,6 @@ async function deleteDocument(
   });
 
   if (document) {
-    const settings = settingsLoader.getSettings();
     if (document.status != 'loaded' && document.status != 'nlpAnnotating') {
       await statisticService.saveStatisticsOfDocument(
         document,

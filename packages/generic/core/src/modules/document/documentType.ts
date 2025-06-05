@@ -433,7 +433,6 @@ const documentModelCommonFields = {
       'nlpAnnotating',
       'pending',
       'locked',
-      'rejected',
       'saved',
       'toBePublished',
       'toBeConfirmed',

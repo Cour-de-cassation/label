@@ -18,7 +18,6 @@ const documentStatusIconNameMapping: Record<
   done: { iconName: 'check', colorName: 'primary' },
   toBeConfirmed: { iconName: 'checkBox', colorName: 'primary' },
   locked: { iconName: 'stop', colorName: 'alert' },
-  rejected: { iconName: 'delete', colorName: 'alert' },
 };
 
 function DocumentStatusIcon(props: { iconSize: number; status: documentType['status'] }) {

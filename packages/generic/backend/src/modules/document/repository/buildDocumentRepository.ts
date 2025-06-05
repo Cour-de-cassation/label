@@ -69,6 +69,11 @@ const buildDocumentRepository = buildRepositoryBuilder<
       return document || undefined;
     },
 
+    async findOneByExternalId(externalId) {
+      const document = await collection.findOne({ externalId });
+      return document || undefined;
+    },
+
     async findOneByStatusAndPriorityAmong(
       { status, priority },
       idsToSearchInFirst,

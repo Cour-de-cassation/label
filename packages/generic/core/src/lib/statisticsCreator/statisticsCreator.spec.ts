@@ -97,6 +97,7 @@ describe('statisticsCreator', () => {
         document,
         treatments: treatments,
         settings,
+        comment: 'comment',
       });
 
       expect(statistic).toEqual({
@@ -121,6 +122,7 @@ describe('statisticsCreator', () => {
         treatmentsSummary: [{ userId, treatmentDuration: duration }],
         wordsCount: 5,
         checklist: documentChecklist,
+        comment: 'comment',
       });
     });
 

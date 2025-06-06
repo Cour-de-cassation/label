@@ -223,7 +223,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
 async function insertDocument(document: documentType, settings: settingsType) {
   const documentRepository = buildDocumentRepository();
-  let assignation: assignationType[] = [];
+  let assignations: assignationType[] = [];
 
   const sameDocument = await documentRepository.findOneByExternalId(
     document.externalId,
@@ -245,9 +245,11 @@ async function insertDocument(document: documentType, settings: settingsType) {
       );
     }
 
-    assignation = await assignationService.fetchAssignationsOfDocumentId(
-      sameDocument._id,
-    );
+    if (sameDocument.source === 'jurinet') {
+      assignations = await assignationService.fetchAssignationsOfDocumentId(
+        sameDocument._id,
+      );
+    }
     await documentService.deleteDocument(sameDocument._id);
   }
 
@@ -264,7 +266,7 @@ async function insertDocument(document: documentType, settings: settingsType) {
       },
     });
 
-    if (assignation.length > 0) {
+    if (assignations.length > 0) {
       logger.log({
         operationName: 'documentInsertion',
         msg: `Document ${document.source}:${document.documentNumber} previously had an assignation, pre-assigning it.`,
@@ -276,7 +278,7 @@ async function insertDocument(document: documentType, settings: settingsType) {
         },
       });
       preAssignationService.createPreAssignation({
-        userId: assignation[0].userId,
+        userId: assignations[0].userId,
         source: document.source,
         number: document.documentNumber.toString(),
       });

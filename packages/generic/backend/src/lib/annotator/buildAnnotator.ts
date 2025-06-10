@@ -359,25 +359,24 @@ function buildAnnotator(
       );
     }
 
-    const nextDocumentStatus = documentModule.lib.getNextStatus({
-      status: document.status,
-      publicationCategory: document.publicationCategory,
-      route: document.route,
-    });
-
     const preAssignator = buildPreAssignator();
     const isPreassignated = await preAssignator.preAssignDocument(document);
 
+    // in case of pre-assignation, lyfecycle is manage by pre-assignator
     if (!isPreassignated) {
+      const documentRoute = await extractRoute(document);
+      await documentService.updateDocumentRoute(document._id, documentRoute);
+
+      const nextDocumentStatus = documentModule.lib.getNextStatus({
+        status: document.status,
+        publicationCategory: document.publicationCategory,
+        route: documentRoute,
+      });
       await documentService.updateDocumentStatus(
         document._id,
         nextDocumentStatus,
       );
     }
-
-    // calculate route after annotation
-    const documentRoute = await extractRoute(document);
-    await documentService.updateDocumentRoute(document._id, documentRoute);
 
     logger.log({
       operationName: 'annotateDocument',

@@ -30,10 +30,6 @@ Delete all problem reports.
 
 Delete specific document from Label db.
 
-## displayDocumentLinks
-
-Count linked documents in Label database (chained documents that are in the same time in Label).
-
 ## displayMultipleAssignatedDocuments
 
 Display if documents are assigneted to multiple users (which is a bug).

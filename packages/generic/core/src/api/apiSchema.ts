@@ -225,7 +225,7 @@ const apiSchema = {
             kind: 'array',
             content: {
               kind: 'constant',
-              content: ['recent', 'chained', 'filler', 'manual', 'default'] as const,
+              content: ['recent', 'manual', 'default'] as const,
             },
           },
           sources: {

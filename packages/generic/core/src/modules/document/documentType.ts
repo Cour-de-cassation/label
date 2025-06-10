@@ -364,7 +364,7 @@ const documentModelCommonFields = {
   _id: { kind: 'custom', content: 'id' },
   importer: {
     kind: 'constant',
-    content: ['recent', 'chained', 'filler', 'manual', 'default'] as const,
+    content: ['recent', 'manual', 'default'] as const,
   },
   loss: {
     kind: 'or',

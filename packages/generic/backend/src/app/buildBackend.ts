@@ -5,7 +5,6 @@ import {
   cleanDocuments,
   clearDb,
   deleteDocument,
-  displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,
   freePendingDocuments,
@@ -40,10 +39,6 @@ function buildBackend(settings: settingsType) {
       },
       deleteDocument: {
         run: deleteDocument,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      displayDocumentLinks: {
-        run: displayDocumentLinks,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       displayMultipleAssignatedDocuments: {

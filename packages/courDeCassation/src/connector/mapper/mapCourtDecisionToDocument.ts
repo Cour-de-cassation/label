@@ -323,18 +323,10 @@ function computePriority(
   switch (importer) {
     case 'manual':
       return 3;
-    case 'chained':
-      return 1;
-    case 'filler':
-      return 0;
   }
   switch (source) {
     case 'jurinet':
       return 2;
-    case 'jurica':
-      return 1;
-    case 'juritcom':
-      return 1;
     default:
       return 0;
   }

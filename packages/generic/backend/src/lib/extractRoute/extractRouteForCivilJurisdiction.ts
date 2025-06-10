@@ -65,7 +65,8 @@ async function extractRouteForCivilJurisdiction(
       case 'systematique': {
         logger.log({
           operationName: 'computeRouteFromNac',
-          msg: 'Route systematique',
+          msg:
+            'Route systematique trouvée en base, relecture exhaustive appliquée',
           data: { routeFromDb, routeRelecture: 'exhaustive' },
         });
         return 'exhaustive';
@@ -75,7 +76,7 @@ async function extractRouteForCivilJurisdiction(
           Math.random() < sensibleRatio ? 'exhaustive' : 'automatic';
         logger.log({
           operationName: 'computeRouteFromNac',
-          msg: 'Route systematique',
+          msg: `Route aleatoireSensible trouvée en base, relecture ${routeRelecture} appliquée`,
           data: { routeFromDb, routeRelecture },
         });
         return routeRelecture;
@@ -85,7 +86,7 @@ async function extractRouteForCivilJurisdiction(
           Math.random() < nonSensibleRatio ? 'exhaustive' : 'automatic';
         logger.log({
           operationName: 'computeRouteFromNac',
-          msg: 'Route systematique',
+          msg: `Route aleatoireNonSensible trouvée en base, relecture ${routeRelecture} appliquée`,
           data: { routeFromDb, routeRelecture },
         });
         return routeRelecture;

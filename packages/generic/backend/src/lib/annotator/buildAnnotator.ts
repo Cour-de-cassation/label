@@ -368,16 +368,16 @@ function buildAnnotator(
     const preAssignator = buildPreAssignator();
     const isPreassignated = await preAssignator.preAssignDocument(document);
 
+    // calculate route after annotation
+    const documentRoute = await extractRoute(document);
+    await documentService.updateDocumentRoute(document._id, documentRoute);
+
     if (!isPreassignated) {
       await documentService.updateDocumentStatus(
         document._id,
         nextDocumentStatus,
       );
     }
-
-    // calculate route after annotation
-    const documentRoute = await extractRoute(document);
-    await documentService.updateDocumentRoute(document._id, documentRoute);
 
     logger.log({
       operationName: 'annotateDocument',

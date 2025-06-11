@@ -364,7 +364,7 @@ function buildAnnotator(
 
     // in case of pre-assignation, lyfecycle is manage by pre-assignator
     if (!isPreassignated) {
-      const documentRoute = await extractRoute(document);
+      const documentRoute = await extractRoute({ ...document, checklist });
       await documentService.updateDocumentRoute(document._id, documentRoute);
 
       const nextDocumentStatus = documentModule.lib.getNextStatus({

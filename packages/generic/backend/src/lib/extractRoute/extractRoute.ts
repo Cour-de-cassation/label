@@ -29,10 +29,28 @@ async function extractRoute(
   } catch (e) {
     logger.error({
       operationName: `extractRouteFor ${document.source}`,
-      msg: `${e}`,
+      msg: `Error extracting route for ${document.source}:${document.documentNumber}: ${e}`,
+      data: {
+        decision: {
+          sourceId: document.documentNumber,
+          sourceName: document.source,
+        },
+      },
     });
     route = 'default';
   }
+
+  logger.log({
+    operationName: `extractRoute`,
+    msg: `Applied route: ${route}`,
+    data: {
+      appliedRoute: route,
+      decision: {
+        sourceId: document.documentNumber,
+        sourceName: document.source,
+      },
+    },
+  });
 
   return route;
 }

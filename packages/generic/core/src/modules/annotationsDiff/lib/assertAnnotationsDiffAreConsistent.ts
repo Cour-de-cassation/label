@@ -47,7 +47,7 @@ function computeAvailableCategoriesFilter(treatmentSource: treatmentType['source
       canBeAnnotatedBy = 'human';
       break;
     case 'reimportedTreatment':
-      canBeAnnotatedBy = 'NLP';
+      canBeAnnotatedBy = 'human';
       break;
   }
   return { status, canBeAnnotatedBy };

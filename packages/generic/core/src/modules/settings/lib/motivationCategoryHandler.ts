@@ -38,7 +38,7 @@ function buildMotivationCategoryHandler() {
         order: order,
         status: 'hidden',
         text: 'Motifs de la décision',
-        canBeAnnotatedBy: 'both',
+        canBeAnnotatedBy: 'human',
       },
     };
   }

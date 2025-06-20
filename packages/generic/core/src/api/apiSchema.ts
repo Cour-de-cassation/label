@@ -218,7 +218,15 @@ const apiSchema = {
             kind: 'array',
             content: {
               kind: 'constant',
-              content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request', 'default'] as const,
+              content: [
+                'automatic',
+                'exhaustive',
+                'simple',
+                'confirmation',
+                'request',
+                'default',
+                'randomConfirmation',
+              ] as const,
             },
           },
           importers: {

@@ -421,7 +421,7 @@ const documentModelCommonFields = {
   },
   route: {
     kind: 'constant',
-    content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request', 'default'] as const,
+    content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request', 'default', 'randomConfirmation'] as const,
   },
   source: { kind: 'primitive', content: 'string' },
   status: {

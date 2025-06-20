@@ -1,10 +1,10 @@
 import React from 'react';
 import { customThemeType, heights, useCustomTheme, Header, IconButton, MenuBar, Text } from 'pelta-design-system';
-import { localStorage } from '../../../services/localStorage';
 import { wordings } from '../../../wordings';
 import { AdminViewDropdown } from './AdminViewDropdown';
 import { PersonalStatisticsButton } from './PersonalStatisticsButton';
 import { SettingsButton } from './SettingsButton';
+import { useCtxUser } from '../../../contexts/user.context';
 
 export { MainHeader };
 
@@ -18,11 +18,16 @@ function MainHeader(props: {
   const styles = buildStyles(theme);
   const leftHeaderComponents = buildLeftHeaders();
 
+  const { user, loading } = useCtxUser();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <MenuBar color="inherit" isElevated={!!props.title}>
       <Header
         leftHeaderComponents={leftHeaderComponents}
-        rightHeaderComponents={buildRightHeaderComponents()}
+        rightHeaderComponents={buildRightHeaderComponents(user)}
         spaceBetweenComponents={theme.spacing * 2}
         style={styles.header}
         variant="classic"
@@ -30,8 +35,9 @@ function MainHeader(props: {
     </MenuBar>
   );
 
-  function buildRightHeaderComponents() {
-    const userRole = localStorage.userHandler.getRole();
+  function buildRightHeaderComponents(user?: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+    const userRole = user?.role;
     if (userRole === 'admin') {
       return [
         <AdminViewDropdown updateAdminMenu={props.updateAdminMenu} />,

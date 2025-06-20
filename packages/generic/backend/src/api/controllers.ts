@@ -279,10 +279,19 @@ const controllers: controllersFromSchemaType<typeof apiSchema> = {
       },
     }),
 
-    rejectDocument: buildAuthenticatedController({
+    deleteDocument: buildAuthenticatedController({
       permissions: ['admin'],
       controllerWithUser: async (_, { args: { documentId } }) => {
-        await documentService.rejectDocument(idModule.lib.buildId(documentId));
+        const documentToDelete = await documentService.fetchDocument(
+          idModule.lib.buildId(documentId),
+        );
+        const settings = settingsLoader.getSettings();
+        await statisticService.saveStatisticsOfDocument(
+          documentToDelete,
+          settings,
+          'deleted from the interface',
+        );
+        await documentService.deleteDocument(idModule.lib.buildId(documentId));
       },
     }),
 

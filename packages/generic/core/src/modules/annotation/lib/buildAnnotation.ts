@@ -6,20 +6,23 @@ function buildAnnotation({
   category,
   start,
   text,
-  certaintyScore,
+  score,
   entityId,
+  source,
 }: {
   category: string;
   start: number;
   text: string;
-  certaintyScore: number;
+  score: number;
   entityId?: string;
+  source: string;
 }) {
   return {
     category,
     entityId: entityId ?? entityIdHandler.compute(category, text),
     start,
     text,
-    certaintyScore,
+    score,
+    source: source,
   };
 }

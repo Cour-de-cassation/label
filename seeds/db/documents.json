@@ -3754,7 +3754,8 @@
       "occultationBlock": null,
       "session": "",
       "solution": "Confirme la décision déférée dans toutes ses dispositions, à l'égard de toutes les parties au recours",
-      "motivationOccultation": null
+      "motivationOccultation": null,
+      "selection": true
     },
     "documentNumber": 2928735,
     "externalId": "673ded755559d27e30e410a8",
@@ -4099,14 +4100,18 @@
           "start": 0,
           "end": 514
         },
-        "expose du litige": {
-          "start": 514,
-          "end": 1982
-        },
-        "motivations": {
-          "start": 1982,
-          "end": 7717
-        },
+        "expose du litige": [
+          {
+            "start": 514,
+            "end": 1982
+          }
+        ],
+        "motivations": [
+          {
+            "start": 1982,
+            "end": 7717
+          }
+        ],
         "dispositif": {
           "start": 7717,
           "end": 8474
@@ -4297,14 +4302,18 @@
           "start": 0,
           "end": 1022
         },
-        "expose du litige": {
-          "start": 1022,
-          "end": 3505
-        },
-        "motivations": {
-          "start": 3505,
-          "end": 12737
-        },
+        "expose du litige": [
+          {
+            "start": 1022,
+            "end": 3505
+          }
+        ],
+        "motivations": [
+          {
+            "start": 3505,
+            "end": 12737
+          }
+        ],
         "dispositif": {
           "start": 12737,
           "end": 13821
@@ -4404,14 +4413,18 @@
           "start": 0,
           "end": 1039
         },
-        "expose du litige": {
-          "start": 1039,
-          "end": 4747
-        },
-        "motivations": {
-          "start": 4747,
-          "end": 11129
-        },
+        "expose du litige": [
+          {
+            "start": 1039,
+            "end": 4747
+          }
+        ],
+        "motivations": [
+          {
+            "start": 4747,
+            "end": 11129
+          }
+        ],
         "dispositif": {
           "start": 11129,
           "end": 13277
@@ -4539,14 +4552,18 @@
           "start": 0,
           "end": 986
         },
-        "expose du litige": {
-          "start": 986,
-          "end": 3262
-        },
-        "motivations": {
-          "start": 3262,
-          "end": 14090
-        },
+        "expose du litige": [
+          {
+            "start": 986,
+            "end": 3262
+          }
+        ],
+        "motivations": [
+          {
+            "start": 3262,
+            "end": 14090
+          }
+        ],
         "dispositif": {
           "start": 14090,
           "end": 15303
@@ -4630,14 +4647,18 @@
           "start": 0,
           "end": 1576
         },
-        "expose du litige": {
-          "start": 1576,
-          "end": 2490
-        },
-        "motivations": {
-          "start": 2490,
-          "end": 3682
-        },
+        "expose du litige": [
+          {
+            "start": 1576,
+            "end": 2490
+          }
+        ],
+        "motivations": [
+          {
+            "start": 2490,
+            "end": 3682
+          }
+        ],
         "dispositif": {
           "start": 3682,
           "end": 4315
@@ -4713,14 +4734,18 @@
           "start": 0,
           "end": 658
         },
-        "expose du litige": {
-          "start": 658,
-          "end": 1886
-        },
-        "motivations": {
-          "start": 1886,
-          "end": 1949
-        },
+        "expose du litige": [
+          {
+            "start": 658,
+            "end": 1886
+          }
+        ],
+        "motivations": [
+          {
+            "start": 1886,
+            "end": 1949
+          }
+        ],
         "dispositif": {
           "start": 1949,
           "end": 2388
@@ -4797,7 +4822,9 @@
       "occultationBlock": 1,
       "session": "",
       "solution": "",
-      "motivationOccultation": true
+      "motivationOccultation": true,
+      "selection": true,
+      "sommaire": "Mon sommaire de décision TJ"
     },
     "documentNumber": 4241786445,
     "externalId": "673df6cd48894027060ab993",
@@ -4815,14 +4842,18 @@
           "start": 0,
           "end": 806
         },
-        "expose du litige": {
-          "start": 806,
-          "end": 1661
-        },
-        "motivations": {
-          "start": 1661,
-          "end": 1724
-        },
+        "expose du litige": [
+          {
+            "start": 806,
+            "end": 1661
+          }
+        ],
+        "motivations": [
+          {
+            "start": 1661,
+            "end": 1724
+          }
+        ],
         "dispositif": {
           "start": 1724,
           "end": 4014
@@ -4923,14 +4954,18 @@
           "start": 0,
           "end": 1419
         },
-        "expose du litige": {
-          "start": 1419,
-          "end": 2319
-        },
-        "motivations": {
-          "start": 2319,
-          "end": 16672
-        },
+        "expose du litige": [
+          {
+            "start": 1419,
+            "end": 2319
+          }
+        ],
+        "motivations": [
+          {
+            "start": 2319,
+            "end": 16672
+          }
+        ],
         "dispositif": {
           "start": 16672,
           "end": 17290
@@ -5030,14 +5065,18 @@
           "start": 0,
           "end": 1064
         },
-        "expose du litige": {
-          "start": 1064,
-          "end": 2513
-        },
-        "motivations": {
-          "start": 2513,
-          "end": 5505
-        },
+        "expose du litige": [
+          {
+            "start": 1064,
+            "end": 2513
+          }
+        ],
+        "motivations": [
+          {
+            "start": 2513,
+            "end": 5505
+          }
+        ],
         "dispositif": {
           "start": 5505,
           "end": 6510
@@ -5124,14 +5163,18 @@
           "start": 0,
           "end": 1193
         },
-        "expose du litige": {
-          "start": 1193,
-          "end": 6013
-        },
-        "motivations": {
-          "start": 6013,
-          "end": 9354
-        },
+        "expose du litige": [
+          {
+            "start": 1193,
+            "end": 6013
+          }
+        ],
+        "motivations": [
+          {
+            "start": 6013,
+            "end": 9354
+          }
+        ],
         "dispositif": {
           "start": 9354,
           "end": 12086
@@ -5243,7 +5286,9 @@
       "occultationBlock": 4,
       "session": "",
       "solution": "",
-      "motivationOccultation": false
+      "motivationOccultation": false,
+      "selection": true,
+      "sommaire": "Mon court sommaire de décision TJ"
     },
     "documentNumber": 2700261384,
     "externalId": "673df6cd48894027060ab9a1",
@@ -5261,14 +5306,18 @@
           "start": 0,
           "end": 2006
         },
-        "expose du litige": {
-          "start": 2006,
-          "end": 10403
-        },
-        "motivations": {
-          "start": 10403,
-          "end": 17543
-        },
+        "expose du litige": [
+          {
+            "start": 2006,
+            "end": 10403
+          }
+        ],
+        "motivations": [
+          {
+            "start": 10403,
+            "end": 17543
+          }
+        ],
         "dispositif": {
           "start": 17543,
           "end": 18839
@@ -5366,14 +5415,18 @@
           "start": 0,
           "end": 905
         },
-        "expose du litige": {
-          "start": 905,
-          "end": 3498
-        },
-        "motivations": {
-          "start": 3498,
-          "end": 10160
-        },
+        "expose du litige": [
+          {
+            "start": 905,
+            "end": 3498
+          }
+        ],
+        "motivations": [
+          {
+            "start": 3498,
+            "end": 10160
+          }
+        ],
         "dispositif": {
           "start": 10160,
           "end": 10693
@@ -5476,14 +5529,18 @@
           "start": 0,
           "end": 1714
         },
-        "expose du litige": {
-          "start": 1714,
-          "end": 6232
-        },
-        "motivations": {
-          "start": 6232,
-          "end": 26412
-        },
+        "expose du litige": [
+          {
+            "start": 1714,
+            "end": 6232
+          }
+        ],
+        "motivations": [
+          {
+            "start": 6232,
+            "end": 26412
+          }
+        ],
         "dispositif": {
           "start": 26412,
           "end": 27594
@@ -5584,14 +5641,18 @@
           "start": 0,
           "end": 1408
         },
-        "expose du litige": {
-          "start": 1408,
-          "end": 6020
-        },
-        "motivations": {
-          "start": 6020,
-          "end": 18237
-        },
+        "expose du litige": [
+          {
+            "start": 1408,
+            "end": 6020
+          }
+        ],
+        "motivations": [
+          {
+            "start": 6020,
+            "end": 18237
+          }
+        ],
         "dispositif": {
           "start": 18237,
           "end": 19474
@@ -5669,14 +5730,18 @@
           "start": 0,
           "end": 698
         },
-        "expose du litige": {
-          "start": 698,
-          "end": 1207
-        },
-        "motivations": {
-          "start": 1207,
-          "end": 1265
-        },
+        "expose du litige": [
+          {
+            "start": 698,
+            "end": 1207
+          }
+        ],
+        "motivations": [
+          {
+            "start": 1207,
+            "end": 1265
+          }
+        ],
         "dispositif": {
           "start": 1265,
           "end": 2504
@@ -5757,14 +5822,18 @@
           "start": 0,
           "end": 1281
         },
-        "expose du litige": {
-          "start": 1281,
-          "end": 6379
-        },
-        "motivations": {
-          "start": 6379,
-          "end": 13963
-        },
+        "expose du litige": [
+          {
+            "start": 1281,
+            "end": 6379
+          }
+        ],
+        "motivations": [
+          {
+            "start": 6379,
+            "end": 13963
+          }
+        ],
         "dispositif": {
           "start": 13963,
           "end": 17044
@@ -5864,14 +5933,18 @@
           "start": 0,
           "end": 3162
         },
-        "expose du litige": {
-          "start": 3162,
-          "end": 16804
-        },
-        "motivations": {
-          "start": 16804,
-          "end": 26761
-        },
+        "expose du litige": [
+          {
+            "start": 3162,
+            "end": 16804
+          }
+        ],
+        "motivations": [
+          {
+            "start": 16804,
+            "end": 26761
+          }
+        ],
         "dispositif": {
           "start": 26761,
           "end": 27783
@@ -5952,14 +6025,18 @@
           "start": 0,
           "end": 878
         },
-        "expose du litige": {
-          "start": 878,
-          "end": 6579
-        },
-        "motivations": {
-          "start": 6579,
-          "end": 6651
-        },
+        "expose du litige": [
+          {
+            "start": 878,
+            "end": 6579
+          }
+        ],
+        "motivations": [
+          {
+            "start": 6579,
+            "end": 6651
+          }
+        ],
         "dispositif": {
           "start": 6651,
           "end": 14583
@@ -6108,14 +6185,18 @@
           "start": 0,
           "end": 828
         },
-        "expose du litige": {
-          "start": 828,
-          "end": 1980
-        },
-        "motivations": {
-          "start": 1980,
-          "end": 2042
-        },
+        "expose du litige": [
+          {
+            "start": 828,
+            "end": 1980
+          }
+        ],
+        "motivations": [
+          {
+            "start": 1980,
+            "end": 2042
+          }
+        ],
         "dispositif": {
           "start": 2042,
           "end": 2901
@@ -6175,7 +6256,8 @@
       "occultationBlock": 1,
       "session": "",
       "solution": "",
-      "motivationOccultation": true
+      "motivationOccultation": true,
+      "selection": true
     },
     "documentNumber": 2457858252,
     "externalId": "673df6cd48894027060ab9b9",
@@ -6193,14 +6275,18 @@
           "start": 0,
           "end": 776
         },
-        "expose du litige": {
-          "start": 776,
-          "end": 4969
-        },
-        "motivations": {
-          "start": 4969,
-          "end": 5031
-        },
+        "expose du litige": [
+          {
+            "start": 776,
+            "end": 4969
+          }
+        ],
+        "motivations": [
+          {
+            "start": 4969,
+            "end": 5031
+          }
+        ],
         "dispositif": {
           "start": 5031,
           "end": 7787
@@ -6349,14 +6435,18 @@
           "start": 0,
           "end": 804
         },
-        "expose du litige": {
-          "start": 804,
-          "end": 10616
-        },
-        "motivations": {
-          "start": 10616,
-          "end": 10678
-        },
+        "expose du litige": [
+          {
+            "start": 804,
+            "end": 10616
+          }
+        ],
+        "motivations": [
+          {
+            "start": 10616,
+            "end": 10678
+          }
+        ],
         "dispositif": {
           "start": 10678,
           "end": 14844
@@ -6439,14 +6529,18 @@
           "start": 0,
           "end": 458
         },
-        "expose du litige": {
-          "start": 458,
-          "end": 1726
-        },
-        "motivations": {
-          "start": 1726,
-          "end": 4382
-        },
+        "expose du litige": [
+          {
+            "start": 458,
+            "end": 1726
+          }
+        ],
+        "motivations": [
+          {
+            "start": 1726,
+            "end": 4382
+          }
+        ],
         "dispositif": {
           "start": 4382,
           "end": 5168
@@ -6549,14 +6643,18 @@
           "start": 0,
           "end": 1319
         },
-        "expose du litige": {
-          "start": 1319,
-          "end": 4072
-        },
-        "motivations": {
-          "start": 4072,
-          "end": 11355
-        },
+        "expose du litige": [
+          {
+            "start": 1319,
+            "end": 4072
+          }
+        ],
+        "motivations": [
+          {
+            "start": 4072,
+            "end": 11355
+          }
+        ],
         "dispositif": {
           "start": 11355,
           "end": 12259
@@ -6655,14 +6753,18 @@
           "start": 0,
           "end": 458
         },
-        "expose du litige": {
-          "start": 458,
-          "end": 1723
-        },
-        "motivations": {
-          "start": 1723,
-          "end": 5498
-        },
+        "expose du litige": [
+          {
+            "start": 458,
+            "end": 1723
+          }
+        ],
+        "motivations": [
+          {
+            "start": 1723,
+            "end": 5498
+          }
+        ],
         "dispositif": {
           "start": 5498,
           "end": 6296
@@ -6748,14 +6850,18 @@
           "start": 0,
           "end": 1162
         },
-        "expose du litige": {
-          "start": 1162,
-          "end": 2864
-        },
-        "motivations": {
-          "start": 2864,
-          "end": 7994
-        },
+        "expose du litige": [
+          {
+            "start": 1162,
+            "end": 2864
+          }
+        ],
+        "motivations": [
+          {
+            "start": 2864,
+            "end": 7994
+          }
+        ],
         "dispositif": {
           "start": 7994,
           "end": 9069
@@ -6855,14 +6961,18 @@
           "start": 0,
           "end": 1122
         },
-        "expose du litige": {
-          "start": 1122,
-          "end": 2008
-        },
-        "motivations": {
-          "start": 2008,
-          "end": 6092
-        },
+        "expose du litige": [
+          {
+            "start": 1122,
+            "end": 2008
+          }
+        ],
+        "motivations": [
+          {
+            "start": 2008,
+            "end": 6092
+          }
+        ],
         "dispositif": {
           "start": 6092,
           "end": 6891
@@ -6945,14 +7055,18 @@
           "start": 0,
           "end": 497
         },
-        "expose du litige": {
-          "start": 497,
-          "end": 1466
-        },
-        "motivations": {
-          "start": 1466,
-          "end": 4092
-        },
+        "expose du litige": [
+          {
+            "start": 497,
+            "end": 1466
+          }
+        ],
+        "motivations": [
+          {
+            "start": 1466,
+            "end": 4092
+          }
+        ],
         "dispositif": {
           "start": 4092,
           "end": 4841
@@ -7035,14 +7149,18 @@
           "start": 0,
           "end": 1369
         },
-        "expose du litige": {
-          "start": 1369,
-          "end": 3642
-        },
-        "motivations": {
-          "start": 3642,
-          "end": 8880
-        },
+        "expose du litige": [
+          {
+            "start": 1369,
+            "end": 3642
+          }
+        ],
+        "motivations": [
+          {
+            "start": 3642,
+            "end": 8880
+          }
+        ],
         "dispositif": {
           "start": 8880,
           "end": 9875
@@ -7140,14 +7258,18 @@
           "start": 0,
           "end": 1200
         },
-        "expose du litige": {
-          "start": 1200,
-          "end": 2401
-        },
-        "motivations": {
-          "start": 2401,
-          "end": 5265
-        },
+        "expose du litige": [
+          {
+            "start": 1200,
+            "end": 2401
+          }
+        ],
+        "motivations": [
+          {
+            "start": 2401,
+            "end": 5265
+          }
+        ],
         "dispositif": {
           "start": 5265,
           "end": 6359
@@ -7247,14 +7369,18 @@
           "start": 0,
           "end": 1746
         },
-        "expose du litige": {
-          "start": 1746,
-          "end": 4738
-        },
-        "motivations": {
-          "start": 4738,
-          "end": 8121
-        },
+        "expose du litige": [
+          {
+            "start": 1746,
+            "end": 4738
+          }
+        ],
+        "motivations": [
+          {
+            "start": 4738,
+            "end": 8121
+          }
+        ],
         "dispositif": {
           "start": 8121,
           "end": 9571
@@ -7357,14 +7483,18 @@
           "start": 0,
           "end": 1701
         },
-        "expose du litige": {
-          "start": 1701,
-          "end": 6030
-        },
-        "motivations": {
-          "start": 6030,
-          "end": 21990
-        },
+        "expose du litige": [
+          {
+            "start": 1701,
+            "end": 6030
+          }
+        ],
+        "motivations": [
+          {
+            "start": 6030,
+            "end": 21990
+          }
+        ],
         "dispositif": {
           "start": 21990,
           "end": 22963

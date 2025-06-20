@@ -5,7 +5,6 @@ import {
   cleanDocuments,
   clearDb,
   deleteDocument,
-  displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,
   freePendingDocuments,
@@ -18,7 +17,6 @@ import {
   renewCache,
   resetUntreatedDocumentsForTest,
 } from './scripts';
-import { cleanDuplicatedDocuments } from './scripts/cleanDocuments';
 
 export { buildBackend };
 
@@ -40,10 +38,6 @@ function buildBackend(settings: settingsType) {
       },
       deleteDocument: {
         run: deleteDocument,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      displayDocumentLinks: {
-        run: displayDocumentLinks,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       displayMultipleAssignatedDocuments: {
@@ -90,10 +84,6 @@ function buildBackend(settings: settingsType) {
       resetUntreatedDocumentsForTest: {
         run: resetUntreatedDocumentsForTest,
         option: { shouldLoadDb: true, shouldExit: true },
-      },
-      cleanDuplicatedDocuments: {
-        run: cleanDuplicatedDocuments,
-        option: { shouldLoadDb: true, shouldExit: false },
       },
     },
   };

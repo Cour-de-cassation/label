@@ -1,7 +1,6 @@
 import { cleanDocuments } from './cleanDocuments';
 import { clearDb } from './clearDb';
 import { deleteDocument } from './deleteDocument';
-import { displayDocumentLinks } from './displayDocumentLinks';
 import { displayMultipleAssignatedDocuments } from './displayMultipleAssignatedDocuments';
 import { dumpDocument } from './dumpDocument';
 import { freePendingDocuments } from './freePendingDocuments';
@@ -19,7 +18,6 @@ export {
   cleanDocuments,
   clearDb,
   deleteDocument,
-  displayDocumentLinks,
   displayMultipleAssignatedDocuments,
   dumpDocument,
   freePendingDocuments,

@@ -14,6 +14,7 @@ import { treatmentService } from '../../modules/treatment';
 import { logger } from '../../utils';
 import { annotatorConfigType } from './annotatorConfigType';
 import { buildPreAssignator } from '../preAssignator';
+import { extractRoute } from '../extractRoute';
 
 export { buildAnnotator };
 
@@ -128,9 +129,7 @@ function buildAnnotator(
           failedDocumentIds.push(updatedDocument._id);
           logger.log({
             operationName: 'annotateDocumentsWithoutAnnotations',
-            msg: `Error while annotating document ${formatDocumentInfos(
-              currentDocumentToAnnotate,
-            )}.`,
+            msg: `${error}`,
             data: {
               decision: {
                 sourceId: currentDocumentToAnnotate.documentNumber,
@@ -210,14 +209,6 @@ function buildAnnotator(
     });
     documentService.updateDocumentNlpVersions(documentId, version);
 
-    if (document.route == 'simple' && annotations.length == 0) {
-      await documentService.updateDocumentRoute(documentId, 'automatic');
-      logger.log({
-        operationName: 'annotateDocument',
-        msg: 'Route switched to automatic',
-      });
-    }
-
     await createAnnotatorTreatment({ annotations, documentId });
     logger.log({
       operationName: 'annotateDocument',
@@ -230,15 +221,15 @@ function buildAnnotator(
       },
     });
 
-    if (document.decisionMetadata.motivationOccultation === true) {
-      if (
-        document.zoning != undefined &&
-        document.zoning.zones?.motivations != undefined &&
-        document.zoning.zones.motivations.length > 0
-      ) {
+    if (document.decisionMetadata.motivationOccultation) {
+      const zones = document.zoning?.zones;
+      const motivations = zones?.motivations;
+      const exposeDuLitige = zones?.['expose du litige'];
+
+      if (motivations || exposeDuLitige) {
         logger.log({
           operationName: 'annotateDocument',
-          msg: 'Annotate motivation zone because motivationOccultation is true',
+          msg: 'Annotate motif zone because motivationOccultation is true',
           data: {
             decision: {
               sourceId: document.documentNumber,
@@ -247,30 +238,27 @@ function buildAnnotator(
           },
         });
 
-        createMotivationOccultationTreatment(
-          documentId,
-          document.zoning.zones.motivations,
-          document.text,
-          annotations,
-        );
-      } else {
-        logger.log({
-          operationName: 'annotateDocument',
-          msg: `Annotate decision motivation zone impossible because motication zone was not found for document ${formatDocumentInfos(
-            document,
-          )}`,
-          data: {
-            decision: {
-              sourceId: document.documentNumber,
-              sourceName: document.source,
-            },
-          },
-        });
+        if (
+          (motivations && motivations?.length > 1) ||
+          (exposeDuLitige && exposeDuLitige?.length > 1)
+        ) {
+          throw new Error(
+            'Cannot annotate motifs with multiple motivations or expose du litige zones',
+          );
+        } else {
+          createMotifOccultationTreatment(
+            documentId,
+            motivations?.[0],
+            exposeDuLitige?.[0],
+            document.text,
+            annotations,
+          );
+        }
       }
     }
 
     if (checklist.length > 0) {
-      documentService.updateDocumentChecklist(document._id, checklist);
+      await documentService.updateDocumentChecklist(document._id, checklist);
       logger.log({
         operationName: 'annotateDocument',
         msg: 'Checklist added to document',
@@ -346,7 +334,7 @@ function buildAnnotator(
           },
         },
       });
-      documentService.updateDocumentCategoriesToOmit(
+      await documentService.updateDocumentCategoriesToOmit(
         documentId,
         newCategoriesToOmit,
       );
@@ -371,16 +359,19 @@ function buildAnnotator(
       );
     }
 
-    const nextDocumentStatus = documentModule.lib.getNextStatus({
-      status: document.status,
-      publicationCategory: document.publicationCategory,
-      route: document.route,
-    });
-
     const preAssignator = buildPreAssignator();
     const isPreassignated = await preAssignator.preAssignDocument(document);
 
+    // in case of pre-assignation, lyfecycle is manage by pre-assignator
     if (!isPreassignated) {
+      const documentRoute = await extractRoute({ ...document, checklist });
+      await documentService.updateDocumentRoute(document._id, documentRoute);
+
+      const nextDocumentStatus = documentModule.lib.getNextStatus({
+        status: document.status,
+        publicationCategory: document.publicationCategory,
+        route: documentRoute,
+      });
       await documentService.updateDocumentStatus(
         document._id,
         nextDocumentStatus,
@@ -417,43 +408,59 @@ function buildAnnotator(
     );
   }
 
-  async function createMotivationOccultationTreatment(
+  async function createMotifOccultationTreatment(
     documentId: documentType['_id'],
-    motivations: { start: number; end: number }[],
+    motivation: { start: number; end: number } | undefined,
+    exposeDuLitige: { start: number; end: number } | undefined,
     documentText: string,
     previousAnnotations: annotationType[],
   ) {
-    const motivationAnnotations: annotationType[] = [];
-    motivations.forEach((motivation) => {
-      const motivationText = documentText.substring(
-        motivation.start,
-        motivation.end,
-      );
+    const motifsAnnotations: annotationType[] = [];
 
-      // Suppression des espaces et des sauts de ligne au début du texte
-      const trimmedStartMotivation = motivationText.replace(/^[\s\r\n]+/, '');
-      // Calcul du nombre de caractères retirés au début du texte
-      const removedCharactersAtStart =
-        motivationText.length - trimmedStartMotivation.length;
+    function extractAndAnnotate(
+      range: { start: number; end: number },
+      source: string,
+    ): annotationType | null {
+      const rawZoneText = documentText.substring(range.start, range.end);
+      const trimmedStart = rawZoneText.replace(/^[\s\r\n]+/, '');
+      const removedCharactersAtStart = rawZoneText.length - trimmedStart.length;
+      const finalTrimmedText = trimmedStart.replace(/[\s\r\n]+$/, '');
 
-      // Suppression des espaces et des sauts de ligne à la fin du texte
-      const trimmedMotivation = trimmedStartMotivation.replace(
-        /[\s\r\n]+$/,
-        '',
-      );
+      if (!finalTrimmedText) return null;
 
-      motivationAnnotations.push(
-        annotationModule.lib.buildAnnotation({
-          start: motivation.start + removedCharactersAtStart,
-          text: trimmedMotivation,
-          category: settingsModule.lib.motivationCategoryHandler.getCategoryName(),
-          certaintyScore: 1,
-        }),
-      );
-    });
+      return annotationModule.lib.buildAnnotation({
+        start: range.start + removedCharactersAtStart,
+        text: finalTrimmedText,
+        category: settingsModule.lib.motivationCategoryHandler.getCategoryName(),
+        score: 1,
+        source,
+      });
+    }
+
+    if (motivation) {
+      const annotation = extractAndAnnotate(motivation, 'motivation');
+      if (annotation) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: 'Motivation zone found, annotating...',
+        });
+        motifsAnnotations.push(annotation);
+      }
+    }
+
+    if (exposeDuLitige) {
+      const annotation = extractAndAnnotate(exposeDuLitige, 'exposeDuLitige');
+      if (annotation) {
+        logger.log({
+          operationName: 'annotateDocument',
+          msg: 'Expose du litige zone found, annotating...',
+        });
+        motifsAnnotations.push(annotation);
+      }
+    }
 
     const annotationWithoutOverlapping = annotationModule.lib.removeOverlappingAnnotations(
-      [...previousAnnotations, ...motivationAnnotations],
+      [...previousAnnotations, ...motifsAnnotations],
     );
 
     await treatmentService.createTreatment(

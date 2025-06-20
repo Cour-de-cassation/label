@@ -225,7 +225,7 @@ const apiSchema = {
             kind: 'array',
             content: {
               kind: 'constant',
-              content: ['recent', 'chained', 'filler', 'manual', 'default'] as const,
+              content: ['recent', 'manual', 'default'] as const,
             },
           },
           sources: {
@@ -296,6 +296,9 @@ const apiSchema = {
                   content: {
                     _id: documentModule.fetchedModel.content._id,
                     documentNumber: documentModule.fetchedModel.content.documentNumber,
+                    source: documentModule.fetchedModel.content.source,
+                    jurisdiction: documentModule.fetchedModel.content.decisionMetadata.content.jurisdiction,
+                    appealNumber: documentModule.fetchedModel.content.decisionMetadata.content.appealNumber,
                     publicationCategory: documentModule.fetchedModel.content.publicationCategory,
                     route: documentModule.fetchedModel.content.route,
                     status: documentModule.fetchedModel.content.status,
@@ -357,10 +360,6 @@ const apiSchema = {
             content: 'number',
           } as const),
           lockedDocuments: buildModel({
-            kind: 'primitive',
-            content: 'number',
-          } as const),
-          rejectedDocuments: buildModel({
             kind: 'primitive',
             content: 'number',
           } as const),
@@ -667,7 +666,7 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
-    rejectDocument: {
+    deleteDocument: {
       in: {
         documentId: buildModel({
           kind: 'custom',

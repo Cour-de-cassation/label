@@ -37,7 +37,6 @@ const fr = {
       done: 'Prêt à être exporté',
       toBeConfirmed: 'A confirmer par un administrateur',
       locked: 'En alerte',
-      rejected: 'Rejeté',
     },
     errors: {
       deleteProblemReportFailed: 'La suppression du signalement a échoué. Veuillez recharger la page.',
@@ -93,9 +92,9 @@ const fr = {
       columnTitles: {
         documentNumber: 'N° décision',
         chamberName: 'Chambre',
-        appealNumber: 'N° de pourvoi',
+        appealNumber: 'N° de pourvoi / RG',
         occultationBlock: { title: 'Bloc', tooltipText: "Bloc d'occultation" },
-        jurisdiction: { title: 'Cour', tooltipText: 'Juridiction de la décision' },
+        jurisdiction: { title: 'Juridiction', tooltipText: 'Juridiction de la décision' },
         publicationCategory: { title: 'Dif.', tooltipText: 'Type de diffusion' },
         session: { title: 'Formation', tooltipText: 'Acronyme de la formation' },
         source: { title: 'Source', tooltipText: 'Base de données source' },
@@ -174,7 +173,8 @@ const fr = {
     identicalOccurrencesSpotted: 'occurence(s) identique(s) détectée(s)',
     link: 'Créer une liaison',
     originalText: 'Texte original',
-    motivationOccultation: 'Les débats de cette décision ne sont pas publics, les motifs sont occultés.',
+    motivationOccultation:
+      "Les débats de cette décision ne sont pas publics, l'exposé du litige et la motivation sont occultés.",
     problemIsBlocking: `Ce problème m'empêche de terminer l'annotation du document.`,
     problemType: 'Type de problème',
     publishedDocument: 'Cette décision sera publiée',
@@ -252,7 +252,8 @@ const fr = {
         validate: 'Débloquer et valider la décision',
       },
       mailSubject: 'Alerte sur le document {documentNumber}',
-      popupConfirmMessage: 'Souhaitez-vous vraiment supprimer ce document ? Cette action est irréversible.',
+      popupConfirmMessage:
+        'Souhaitez-vous vraiment supprimer ce document et les signalements associés ? Cette action est irréversible.',
     },
   },
   preAssignDocumentsPage: {
@@ -344,7 +345,6 @@ const fr = {
         savedDocuments: 'Documents en relecture',
         doneDocuments: 'Documents traités',
         lockedDocuments: 'Documents bloqués',
-        rejectedDocuments: 'Documents rejetés',
       },
     },
   },

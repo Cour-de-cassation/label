@@ -86,6 +86,13 @@ const statisticModel = buildModel({
     },
     wordsCount: { kind: 'primitive', content: 'number' },
     checklist: checklistModel,
+    comment: {
+      kind: 'or',
+      content: [
+        { kind: 'primitive', content: 'string' },
+        { kind: 'primitive', content: 'undefined' },
+      ],
+    },
   },
 } as const);
 

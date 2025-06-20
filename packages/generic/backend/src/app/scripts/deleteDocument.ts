@@ -3,13 +3,15 @@ import {
   buildDocumentRepository,
   documentService,
 } from '../../modules/document';
-import { documentType } from '@label/core';
+import { documentType, settingsType } from '@label/core';
+import { statisticService } from '../../modules/statistic';
 
 export { deleteDocument };
 
 async function deleteDocument(
   documentNumber: documentType['documentNumber'],
   source: documentType['source'],
+  settings: settingsType,
 ) {
   logger.log({ operationName: 'deleteDocument', msg: 'START' });
   const documentRepository = buildDocumentRepository();
@@ -18,7 +20,20 @@ async function deleteDocument(
     source,
   });
 
-  document && (await documentService.deleteDocument(document._id));
-
+  if (document) {
+    if (document.status != 'loaded' && document.status != 'nlpAnnotating') {
+      await statisticService.saveStatisticsOfDocument(
+        document,
+        settings,
+        'deleted with script',
+      );
+    }
+    await documentService.deleteDocument(document._id);
+  } else {
+    logger.log({
+      operationName: 'deleteDocument',
+      msg: `Document ${source}:${documentNumber} not found`,
+    });
+  }
   logger.log({ operationName: 'deleteDocument', msg: 'DONE' });
 }

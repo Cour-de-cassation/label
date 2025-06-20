@@ -46,7 +46,7 @@ const ressourceFilterModel = buildModel({
       content: [
         {
           kind: 'constant',
-          content: ['recent', 'chained', 'filler', 'manual', 'default'] as const,
+          content: ['recent', 'manual', 'default'] as const,
         },
         { kind: 'primitive', content: 'undefined' },
       ],

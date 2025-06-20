@@ -17,7 +17,7 @@ function DocumentAnnotator(props: { onStopAnnotatingDocument?: () => Promise<voi
   const annotatorStateHandler = useAnnotatorStateHandler();
   useKeyboardShortcutsHandler([
     { key: 'z', ctrlKey: true, action: onRevertState },
-    { key: 'Z', ctrlKey: true, shiftKey: true, action: onRestoreState },
+    { key: 'y', ctrlKey: true, action: onRestoreState },
   ]);
   const viewerRef = useRef(null);
 

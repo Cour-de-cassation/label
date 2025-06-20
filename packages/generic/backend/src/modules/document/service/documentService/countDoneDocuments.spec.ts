@@ -29,9 +29,6 @@ describe('countDoneDocuments', () => {
     const toBePublishedDocument = documentModule.generator.generate({
       status: 'toBePublished',
     });
-    const rejectedDocument = documentModule.generator.generate({
-      status: 'rejected',
-    });
     const lockedDocument = documentModule.generator.generate({
       status: 'locked',
     });
@@ -47,10 +44,6 @@ describe('countDoneDocuments', () => {
       documentId: doneDocument._id,
       userId: user._id,
     });
-    const rejectedDocumentAssignation = assignationModule.generator.generate({
-      documentId: rejectedDocument._id,
-      userId: user._id,
-    });
     const lockedDocumentAssignation = assignationModule.generator.generate({
       documentId: lockedDocument._id,
       userId: user._id,
@@ -62,7 +55,6 @@ describe('countDoneDocuments', () => {
         savedDocument,
         doneDocument,
         toBePublishedDocument,
-        rejectedDocument,
         lockedDocument,
       ].map(documentRepository.insert),
     );
@@ -71,7 +63,6 @@ describe('countDoneDocuments', () => {
         pendingDocumentAssignation,
         savedDocumentAssignation,
         doneDocumentAssignation,
-        rejectedDocumentAssignation,
         lockedDocumentAssignation,
       ].map(assignationRepository.insert),
     );

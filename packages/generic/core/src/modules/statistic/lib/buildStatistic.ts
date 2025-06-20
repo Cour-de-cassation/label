@@ -13,6 +13,7 @@ function buildStatistic({
   treatmentInfo,
   lastUpdateDate,
   checklist,
+  comment,
 }: {
   annotationsCount: number;
   humanTreatmentsSummary: statisticType['treatmentsSummary'];
@@ -21,6 +22,7 @@ function buildStatistic({
   treatmentInfo: treatmentInfoType;
   lastUpdateDate: treatmentType['lastUpdateDate'];
   checklist: documentType['checklist'];
+  comment?: string;
 }): statisticType {
   return {
     _id: idModule.lib.buildId(),
@@ -50,5 +52,6 @@ function buildStatistic({
     treatmentsSummary: humanTreatmentsSummary,
     wordsCount: documentModule.lib.countWords(document),
     checklist: checklist,
+    comment: comment,
   };
 }

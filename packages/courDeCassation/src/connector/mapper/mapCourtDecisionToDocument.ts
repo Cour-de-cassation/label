@@ -9,15 +9,14 @@ import {
   extractReadableJurisdictionName,
   extractAppealRegisterRoleGeneralNumber,
 } from './extractors';
-import { extractRoute } from './extractors/extractRoute';
 import { categoriesMapper } from './categoriesMapper';
-import { DecisionDTO, DecisionTJDTO, Sources } from 'dbsder-api-types';
+import { Deprecated } from '@label/core';
 
 export { mapCourtDecisionToDocument };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 async function mapCourtDecisionToDocument(
-  sderCourtDecision: DecisionDTO,
+  sderCourtDecision: Deprecated.DecisionDTO,
   importer: documentType['importer'],
 ): Promise<documentType> {
   const readableChamberName = extractReadableChamberName({
@@ -85,23 +84,7 @@ async function mapCourtDecisionToDocument(
     publicationCategory,
     NACCode,
     importer,
-  );
-
-  const route = extractRoute(
-    {
-      additionalTermsToAnnotate,
-      solution,
-      parties: sderCourtDecision.parties ? sderCourtDecision.parties : [],
-      publicationCategory,
-      chamberName: readableChamberName,
-      civilMatterCode,
-      session,
-      civilCaseCode,
-      criminalCaseCode,
-      NACCode,
-      endCaseCode,
-    },
-    source,
+    sderCourtDecision.selection,
   );
 
   let moyens = undefined;
@@ -211,13 +194,15 @@ async function mapCourtDecisionToDocument(
       solution,
       motivationOccultation:
         sderCourtDecision.occultation.motivationOccultation ?? undefined,
+      selection: sderCourtDecision.selection ?? undefined,
+      sommaire: sderCourtDecision.sommaire ?? '',
     },
     documentNumber: sderCourtDecision.sourceId,
     externalId: idModule.lib.convertToString(sderCourtDecision._id ?? ''),
     loss: undefined,
     priority,
     publicationCategory,
-    route,
+    route: 'default',
     importer,
     source,
     title,
@@ -268,18 +253,20 @@ function computeTitleFromParsedCourtDecision({
     readableJurisdictionName,
   );
 
-  if (source === Sources.TJ) {
+  if (source === Deprecated.Sources.TJ) {
     readableJurisdictionName = `TJ de ${readableJurisdictionName}`;
   }
 
-  if (source === Sources.TCOM) {
+  if (source === Deprecated.Sources.TCOM) {
     readableJurisdictionName = `TCOM de ${readableJurisdictionName}`;
   }
 
   const nomenclatureNumber =
-    source === Sources.CC && NAOCode
+    source === Deprecated.Sources.CC && NAOCode
       ? `NAO ${NAOCode}`
-      : (source === Sources.TJ || source === Sources.CA) && NACCode
+      : (source === Deprecated.Sources.TJ ||
+          source === Deprecated.Sources.CA) &&
+        NACCode
       ? `NAC ${NACCode}`
       : undefined;
 
@@ -302,8 +289,8 @@ function computeTitleFromParsedCourtDecision({
 }
 
 function computePublicationCategory(
-  pubCategory: DecisionDTO['pubCategory'],
-  publication: DecisionDTO['publication'],
+  pubCategory: Deprecated.DecisionDTO['pubCategory'],
+  publication: Deprecated.DecisionDTO['publication'],
 ): documentType['publicationCategory'] {
   const publicationCategory: string[] = [];
   if (!!pubCategory) {
@@ -316,10 +303,11 @@ function computePublicationCategory(
 }
 
 function computePriority(
-  source: DecisionDTO['sourceName'],
+  source: Deprecated.DecisionDTO['sourceName'],
   publicationCategory: documentType['publicationCategory'],
-  NACCode: DecisionDTO['NACCode'],
+  NACCode: Deprecated.DecisionDTO['NACCode'],
   importer: documentType['importer'],
+  selection: documentType['decisionMetadata']['selection'],
 ): documentType['priority'] {
   if (
     documentModule.lib.publicationHandler.mustBePublished(
@@ -329,13 +317,12 @@ function computePriority(
   ) {
     return 4;
   }
+  if (selection === true) {
+    return 2;
+  }
   switch (importer) {
     case 'manual':
       return 3;
-    case 'chained':
-      return 1;
-    case 'filler':
-      return 0;
   }
   switch (source) {
     case 'jurinet':
@@ -357,6 +344,8 @@ function convertToValidDate(date: string | undefined) {
   return convertedDate;
 }
 
-function isDecisionTJ(decision: DecisionDTO): decision is DecisionTJDTO {
-  return decision.sourceName === Sources.TJ;
+function isDecisionTJ(
+  decision: Deprecated.DecisionDTO,
+): decision is Deprecated.DecisionTJDTO {
+  return decision.sourceName === Deprecated.Sources.TJ;
 }

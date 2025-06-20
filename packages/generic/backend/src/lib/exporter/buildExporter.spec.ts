@@ -4,12 +4,12 @@ import {
   settingsModule,
   treatmentModule,
   treatmentType,
+  Deprecated,
 } from '@label/core';
 import { buildDocumentRepository } from '../../modules/document';
 import { buildTreatmentRepository } from '../../modules/treatment';
 import { buildExporter } from './buildExporter';
 import { exporterConfigType } from './exporterConfigType';
-import { LabelTreatment } from 'dbsder-api-types';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 describe('buildExporter', () => {
@@ -61,7 +61,8 @@ describe('buildExporter', () => {
                 entityId: 'firstName_Benoit',
                 start: 0,
                 text: 'Benoit',
-                certaintyScore: 1,
+                score: 1,
+                source: 'NLP',
               },
             ],
           },
@@ -79,7 +80,8 @@ describe('buildExporter', () => {
                 entityId: 'firstName_Romain',
                 start: 0,
                 text: 'Romain',
-                certaintyScore: 1,
+                score: 1,
+                source: 'NLP',
               },
             ],
           },
@@ -110,10 +112,11 @@ describe('buildExporter', () => {
           annotations: [
             {
               category: 'firstName',
-              certaintyScore: 1,
+              score: 1,
               entityId: 'firstName_Benoit',
               start: 0,
               text: 'Benoit',
+              source: 'NLP',
             },
           ],
           order: 1,
@@ -126,10 +129,11 @@ describe('buildExporter', () => {
           annotations: [
             {
               category: 'firstName',
-              certaintyScore: 1,
+              score: 1,
               entityId: 'firstName_Romain',
               start: 0,
               text: 'Romain',
+              source: 'NLP',
             },
           ],
           order: 1,
@@ -146,12 +150,12 @@ describe('buildExporter', () => {
 function buildFakeExporterConfig(): exporterConfigType & {
   getExportedExternalIds: () => string[];
   getExportedPseudonymizationTexts: () => string[];
-  getExportedLabelTreatments: () => LabelTreatment[];
+  getExportedLabelTreatments: () => Deprecated.LabelTreatment[];
   getLockedExternalIds: () => string[];
 } {
   const exportedExternalIds: string[] = [];
   const exportedpseudonymizationTexts: string[] = [];
-  const exportedlabelTreatments: LabelTreatment[] = [];
+  const exportedlabelTreatments: Deprecated.LabelTreatment[] = [];
   const lockedExternalIds: string[] = [];
 
   return {

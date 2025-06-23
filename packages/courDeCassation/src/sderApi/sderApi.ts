@@ -72,13 +72,15 @@ const sderApi = {
       next: async () => {
         const decision = response.decisions[index]
         index++
-        if(decision) return decision
-        if(response.nextCursor) {
+        if (!!decision) return decision
+
+        if (response.nextCursor) {
           response = await fetchDecisions({ labelStatus: "toBeTreated", sourceName, nextCursor: response.nextCursor });
           response.decisions = response.decisions.filter(({ originalText }) => !!originalText)
           index = 1
           return response.decisions[0]
         }
+
         return undefined
       }
     }

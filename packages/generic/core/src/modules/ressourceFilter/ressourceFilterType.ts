@@ -36,7 +36,15 @@ const ressourceFilterModel = buildModel({
       content: [
         {
           kind: 'constant',
-          content: ['automatic', 'exhaustive', 'simple', 'confirmation', 'request', 'default'] as const,
+          content: [
+            'automatic',
+            'exhaustive',
+            'simple',
+            'confirmation',
+            'request',
+            'default',
+            'randomConfirmation',
+          ] as const,
         },
         { kind: 'primitive', content: 'undefined' },
       ],

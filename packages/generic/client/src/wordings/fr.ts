@@ -76,6 +76,7 @@ const fr = {
       simple: 'Simple',
       confirmation: 'Confirmation',
       request: 'Demande',
+      randomConfirmation: 'Confirmation aléatoire',
       default: 'N/A',
     },
     documentStatus: {

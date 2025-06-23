@@ -207,7 +207,12 @@ function buildConnector(connectorConfig: connectorConfigType) {
         operationName: 'importNewDocuments',
         msg: `${newDecisionForSource.length} ${source} decisions to pseudonymise found.`,
       });
-      for (const decision of newDecisionForSource) {
+
+      for (
+        let decision = await newDecisionForSource.next();
+        decision !== undefined;
+        decision = await newDecisionForSource.next()
+      ) {
         const converted = await connectorConfig.mapCourtDecisionToDocument(
           decision,
           'recent',

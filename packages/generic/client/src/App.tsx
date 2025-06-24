@@ -3,12 +3,15 @@ import { ThemeProvider } from 'pelta-design-system';
 import { Router } from './pages';
 import { AlertHandlerContextProvider } from './services/alert';
 import { PopupHandlerContextProvider } from './services/popup';
+import { UserProvider } from './contexts/user.context';
 
 const App = () => (
   <ThemeProvider>
     <AlertHandlerContextProvider>
       <PopupHandlerContextProvider>
-        <Router />
+        <UserProvider>
+          <Router />
+        </UserProvider>
       </PopupHandlerContextProvider>
     </AlertHandlerContextProvider>
   </ThemeProvider>

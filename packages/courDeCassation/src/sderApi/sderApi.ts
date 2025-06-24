@@ -9,7 +9,7 @@ async function fetchApi({
   method,
   path,
   body,
-  query
+  query,
 }: {
   method: Method;
   path: string;
@@ -42,48 +42,55 @@ async function fetchApi({
     });
 }
 
-async function fetchDecisions(
-  query: Record<string, unknown>,
-) {
+async function fetchDecisions(query: Record<string, unknown>) {
   type Response = {
-    decisions: Deprecated.DecisionDTO[]
-    totalDecisions: number
-    nextCursor?: string
-  }
+    decisions: Deprecated.DecisionDTO[];
+    totalDecisions: number;
+    nextCursor?: string;
+  };
   const decisions = ((await fetchApi({
     method: 'get',
     path: `decisions`,
-    query
+    query,
   })) as unknown) as Response;
 
   return decisions;
 }
 
 const sderApi = {
-  async fetchDecisionsToPseudonymise(
-    sourceName: string,
-  ) {
-    let response = await fetchDecisions({ labelStatus: "toBeTreated", sourceName });
-    response.decisions = response.decisions.filter(({ originalText }) => !!originalText)
-    let index = 0
+  async fetchDecisionsToPseudonymise(sourceName: string) {
+    let response = await fetchDecisions({
+      labelStatus: 'toBeTreated',
+      sourceName,
+    });
+    response.decisions = response.decisions.filter(
+      ({ originalText }) => !!originalText,
+    );
+    let index = 0;
 
     return {
       length: response.totalDecisions,
       next: async () => {
-        const decision = response.decisions[index]
-        index++
-        if (!!decision) return decision
+        const decision = response.decisions[index];
+        index++;
+        if (!!decision) return decision;
 
         if (response.nextCursor) {
-          response = await fetchDecisions({ labelStatus: "toBeTreated", sourceName, nextCursor: response.nextCursor });
-          response.decisions = response.decisions.filter(({ originalText }) => !!originalText)
-          index = 1
-          return response.decisions[0]
+          response = await fetchDecisions({
+            labelStatus: 'toBeTreated',
+            sourceName,
+            nextCursor: response.nextCursor,
+          });
+          response.decisions = response.decisions.filter(
+            ({ originalText }) => !!originalText,
+          );
+          index = 1;
+          return response.decisions[0];
         }
 
-        return undefined
-      }
-    }
+        return undefined;
+      },
+    };
   },
 
   async fetchCourtDecisionBySourceIdAndSourceName(

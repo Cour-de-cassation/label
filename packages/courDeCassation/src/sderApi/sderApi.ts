@@ -5,7 +5,7 @@ import QueryString from 'qs';
 
 export { sderApi };
 
-async function fetchApi({
+async function fetchApi<T = Record<string, unknown>>({
   method,
   path,
   body,
@@ -25,11 +25,11 @@ async function fetchApi({
       'x-api-key': process.env.DBSDER_API_KEY ?? '',
     },
   })
-    .then((response: AxiosResponse) => {
+    .then((response: AxiosResponse<T>) => {
       if (response.status != 200 && response.status != 204) {
         throw new Error(`${response.status} ${response.statusText}`);
       } else {
-        return response.data as Record<string, unknown>;
+        return response.data;
       }
     })
     .catch((error: AxiosError) => {
@@ -48,11 +48,11 @@ async function fetchDecisions(query: Record<string, unknown>) {
     totalDecisions: number;
     nextCursor?: string;
   };
-  const decisions = ((await fetchApi({
+  const decisions = await fetchApi<Response>({
     method: 'get',
     path: `decisions`,
     query,
-  })) as unknown) as Response;
+  });
 
   return decisions;
 }

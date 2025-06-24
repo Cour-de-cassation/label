@@ -12,12 +12,8 @@ import { userType } from '@label/core';
 jest.mock('../../../utils/saml', () => ({
   SamlService: jest.fn().mockImplementation(() => ({
     generateMetadata: jest.fn().mockReturnValue('<metadata>'),
-    createLoginRequestUrl: jest
-      .fn()
-      .mockResolvedValue({ context: 'login-url' }),
-    createLogoutRequestUrl: jest
-      .fn()
-      .mockResolvedValue({ context: 'logout-url' }),
+    createLoginRequestUrl: jest.fn().mockResolvedValue('login-url'),
+    createLogoutRequestUrl: jest.fn().mockResolvedValue('logout-url'),
     parseResponse: jest.fn().mockResolvedValue({
       extract: {
         nameID: 'test@example.com',

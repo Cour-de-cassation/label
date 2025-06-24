@@ -74,11 +74,8 @@ export class SamlService {
     return this.sp.getMetadata();
   }
 
-  createLoginRequestUrl(): {
-    context: string;
-    id: string;
-  } {
-    return this.sp.createLoginRequest(this.idp, 'redirect');
+  createLoginRequestUrl() {
+    return this.sp.createLoginRequest(this.idp, 'redirect').context;
   }
 
   async parseResponse(request?: { body?: { SAMLResponse: string } }) {
@@ -144,19 +141,21 @@ export class SamlService {
     };
   }
 
-  async createLogoutRequestUrl(user: { nameID: string; sessionIndex: string }) {
-    return this.sp.createLogoutRequest(
-      this.idp,
-      'redirect',
-      {
-        logoutNameID: user.nameID,
-        id: user.sessionIndex,
-        nameIDFormat: process.env.SSO_NAME_ID_FORMAT,
-        sessionIndex: user.sessionIndex,
-        signRequest: true,
-        signatureAlgorithm: process.env.SSO_SIGNATURE_ALGORITHM,
-      },
-      'logout=1',
-    );
+  createLogoutRequestUrl(user: { nameID: string; sessionIndex: string }) {
+    const { context } = this.sp.createLogoutRequest(this.idp, 'redirect', {
+      logoutNameID: user.nameID,
+      id: user.sessionIndex,
+      nameIDFormat: process.env.SSO_NAME_ID_FORMAT,
+      sessionIndex: user.sessionIndex,
+      signRequest: true,
+      signatureAlgorithm: process.env.SSO_SIGNATURE_ALGORITHM,
+    });
+
+    const urlLogoutRequest = new URL(context);
+
+    // Nécessaire pour le logout de pages blanches
+    urlLogoutRequest.searchParams.append('logout', '1');
+
+    return urlLogoutRequest.toString();
   }
 }

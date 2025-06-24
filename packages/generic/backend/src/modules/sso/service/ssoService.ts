@@ -35,17 +35,11 @@ export async function getMetadata() {
 }
 
 export async function login() {
-  const {
-    context,
-  } = (await samlService.createLoginRequestUrl()) as BindingContext;
-  return context;
+  return samlService.createLoginRequestUrl();
 }
 
 export async function logout(user: { nameID: string; sessionIndex: string }) {
-  const { context } = (await samlService.createLogoutRequestUrl(
-    user,
-  )) as BindingContext;
-  return context;
+  return samlService.createLogoutRequestUrl(user);
 }
 
 export async function acs(req: any) {

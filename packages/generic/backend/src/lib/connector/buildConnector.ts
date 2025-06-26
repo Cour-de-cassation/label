@@ -62,8 +62,9 @@ function buildConnector(connectorConfig: connectorConfigType) {
 
       logger.log({
         operationName: 'importSpecificDocument',
-        msg: `Court decision found. labelStatus: ${courtDecision.labelStatus
-          }, ${!!courtDecision.pseudoText ? 'already' : 'never'} pseudonymised`,
+        msg: `Court decision found. labelStatus: ${
+          courtDecision.labelStatus
+        }, ${!!courtDecision.pseudoText ? 'already' : 'never'} pseudonymised`,
       });
       const document = await connectorConfig.mapCourtDecisionToDocument(
         courtDecision,
@@ -104,17 +105,17 @@ function buildConnector(connectorConfig: connectorConfigType) {
             courtDecision.labelTreatments == undefined
               ? []
               : courtDecision.labelTreatments[
-                courtDecision.labelTreatments.length - 1
-              ].annotations.map((annotation) => {
-                return annotationModule.lib.buildAnnotation({
-                  category: annotation.category,
-                  start: annotation.start,
-                  text: annotation.text,
-                  score: annotation.score,
-                  entityId: annotation.entityId,
-                  source: annotation.source,
+                  courtDecision.labelTreatments.length - 1
+                ].annotations.map((annotation) => {
+                  return annotationModule.lib.buildAnnotation({
+                    category: annotation.category,
+                    start: annotation.start,
+                    text: annotation.text,
+                    score: annotation.score,
+                    entityId: annotation.entityId,
+                    source: annotation.source,
+                  });
                 });
-              });
 
           await treatmentService.createTreatment(
             {
@@ -225,7 +226,7 @@ function buildConnector(connectorConfig: connectorConfigType) {
           logger.error({
             operationName: 'importNewDocuments',
             msg: `${err}`,
-          })
+          });
         }
       }
     }

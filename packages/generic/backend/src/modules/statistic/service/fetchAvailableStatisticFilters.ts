@@ -9,13 +9,9 @@ export { fetchAvailableStatisticFilters };
 async function fetchAvailableStatisticFilters() {
   const statisticRepository = buildStatisticRepository();
 
-  const statisticFields = await statisticRepository.findAllProjection([
-    'publicationCategory',
-    'route',
-    'importer',
-    'source',
-    'jurisdiction',
-  ]);
+  const statisticFields = await statisticRepository.findRecentStatisticsProjection(
+    ['publicationCategory', 'route', 'importer', 'source', 'jurisdiction'],
+  );
 
   const availableDocumentSources = await documentService.fetchAllSources();
   const { minDate, maxDate } = await fetchExtremumDates(

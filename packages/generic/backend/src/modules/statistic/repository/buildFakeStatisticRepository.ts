@@ -1,6 +1,7 @@
 import { statisticType } from '@label/core';
 import {
   buildFakeRepositoryBuilder,
+  projectFakeObjects,
   updateFakeCollection,
 } from '../../../repository';
 import { buildFakeRessourceFilterRequest } from '../../ressourceFilter';
@@ -60,6 +61,12 @@ const buildFakeStatisticRepository = buildFakeRepositoryBuilder<
         }),
       );
       return modifiedCount;
+    },
+
+    async findRecentStatisticsProjection(projections) {
+      return collection.map((statistic) =>
+        projectFakeObjects(statistic, projections),
+      );
     },
   }),
 });

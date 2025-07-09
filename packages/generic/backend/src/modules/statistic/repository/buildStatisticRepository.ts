@@ -75,5 +75,13 @@ const buildStatisticRepository = buildRepositoryBuilder<
       );
       return result.modifiedCount;
     },
+
+    async findRecentStatisticsProjection(projections) {
+      const sixMonthsAgo = Date.now() - 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds
+      return await collection
+        .find({ treatmentDate: { $gte: sixMonthsAgo } })
+        .project(projections)
+        .toArray();
+    },
   }),
 });

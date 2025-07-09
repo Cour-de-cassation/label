@@ -38,6 +38,12 @@ function buildRessourceFilterRequest(
       ...ressourceFilterRequest.treatmentDate,
       $gt: ressourceFilter.startDate,
     };
+  } else {
+    // Prevent fetching too old data by default
+    ressourceFilterRequest.treatmentDate = {
+      ...ressourceFilterRequest.treatmentDate,
+      $gt: Date.now() - 6 * 30 * 24 * 60 * 60 * 1000, // 6 months in milliseconds
+    };
   }
 
   if (ressourceFilter.endDate) {

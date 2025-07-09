@@ -77,7 +77,7 @@ const buildStatisticRepository = buildRepositoryBuilder<
     },
 
     async findRecentStatisticsProjection(projections) {
-      const sixMonthsAgo = Date.now() - 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds
+      const sixMonthsAgo = Date.now() - 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds ajout d'antoine...
       return await collection
         .find({ treatmentDate: { $gte: sixMonthsAgo } })
         .project(projections)

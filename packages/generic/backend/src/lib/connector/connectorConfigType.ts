@@ -11,10 +11,7 @@ type connectorConfigType = {
   ): Promise<Deprecated.DecisionDTO | undefined>;
   fetchDecisionsToPseudonymise(
     sourceName: string,
-  ): Promise<{
-    next: () => Promise<Deprecated.DecisionDTO | undefined>;
-    length: number;
-  }>;
+  ): Promise<Deprecated.DecisionDTO[]>;
   updateDocumentLabelStatusToLoaded: (externalId: string) => Promise<void>;
   mapCourtDecisionToDocument: (
     courtDecision: Deprecated.DecisionDTO,

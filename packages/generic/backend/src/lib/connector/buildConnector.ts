@@ -207,27 +207,15 @@ function buildConnector(connectorConfig: connectorConfigType) {
         operationName: 'importNewDocuments',
         msg: `${newDecisionForSource.length} ${source} decisions to pseudonymise found.`,
       });
-
-      for (
-        let decision = await newDecisionForSource.next();
-        decision !== undefined;
-        decision = await newDecisionForSource.next()
-      ) {
-        try {
-          const converted = await connectorConfig.mapCourtDecisionToDocument(
-            decision,
-            'recent',
-          );
-          await insertDocument(converted, settings);
-          await connectorConfig.updateDocumentLabelStatusToLoaded(
-            converted.externalId,
-          );
-        } catch (err) {
-          logger.error({
-            operationName: 'importNewDocuments',
-            msg: `${err}`,
-          });
-        }
+      for (const decision of newDecisionForSource) {
+        const converted = await connectorConfig.mapCourtDecisionToDocument(
+          decision,
+          'recent',
+        );
+        await insertDocument(converted, settings);
+        await connectorConfig.updateDocumentLabelStatusToLoaded(
+          converted.externalId,
+        );
       }
     }
   }

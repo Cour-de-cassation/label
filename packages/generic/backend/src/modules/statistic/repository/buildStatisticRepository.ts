@@ -17,6 +17,8 @@ const buildStatisticRepository = buildRepositoryBuilder<
     { index: { publicationCategory: 1 } },
     { index: { treatmentDate: 1 } },
     { index: { jurisdiction: 1 } },
+    { index: { source: 1, treatmentDate: 1 } },
+    { index: { source: 1, treatmentDate: -1 } }
   ],
   buildCustomRepository: (collection) => ({
     async findAllStatisticsByDocumentNumber(
@@ -28,12 +30,25 @@ const buildStatisticRepository = buildRepositoryBuilder<
       return statisticDocument;
     },
 
-    async findAllByRessourceFilter(ressourceFilter) {
-      const ressourceFilterRequest = buildRessourceFilterRequest(
-        ressourceFilter,
-      );
+    async findAllByRessourceFilter(ressourceFilter) { // On ajoutera un agrégat pour éviter de faire trop de requêtes, cependant la confugration de l'agrégat est complexe dans le contexte de Label
+      try {
+        const ressourceFilterRequest = buildRessourceFilterRequest(ressourceFilter);
 
-      return collection.find(ressourceFilterRequest).toArray();
+        const sixMonthsAgo = Date.now() - 6 * 30 * 24 * 60 * 60 * 1000;
+
+        const query = {
+          ...ressourceFilterRequest,
+          treatmentDate: {
+            ...(ressourceFilterRequest.treatmentDate || {}),
+            $gte: sixMonthsAgo,
+          },
+        };
+
+        return collection.find(query).toArray();
+      } catch (error) {
+        console.error('Error in findAllByRessourceFilter:', error);
+        throw error;
+      }
     },
 
     async findAllIdsBefore(date) {
@@ -46,22 +61,35 @@ const buildStatisticRepository = buildRepositoryBuilder<
     },
 
     async findExtremumTreatmentDateBySources(sources) {
-      const minDateStatistics = await collection
-        .find({ source: { $in: sources } })
-        .sort({ treatmentDate: 1 })
-        .limit(1)
-        .toArray();
+      try {
+        const sixMonthsAgo = Date.now() - 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds
 
-      const maxDateStatistics = await collection
-        .find({ source: { $in: sources } })
-        .sort({ treatmentDate: -1 })
-        .limit(1)
-        .toArray();
+        const minDateStatistics = await collection
+          .find({
+            source: { $in: sources },
+            treatmentDate: { $gte: sixMonthsAgo },
+          })
+          .sort({ treatmentDate: 1 })
+          .limit(1)
+          .toArray();
 
-      return {
-        minDate: minDateStatistics[0]?.treatmentDate,
-        maxDate: maxDateStatistics[0]?.treatmentDate,
-      };
+        const maxDateStatistics = await collection
+          .find({
+            source: { $in: sources },
+            treatmentDate: { $gte: sixMonthsAgo },
+          })
+          .sort({ treatmentDate: -1 })
+          .limit(1)
+          .toArray();
+
+        return {
+          minDate: minDateStatistics[0]?.treatmentDate,
+          maxDate: maxDateStatistics[0]?.treatmentDate,
+        };
+      } catch (error) {
+        console.error('Error in findExtremumTreatmentDateBySources:', error);
+        throw error;
+      }
     },
 
     async deleteTreatmentsSummaryByIds(ids) {

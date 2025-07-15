@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { httpStatusCodeHandler } from 'sder-core';
 import { annotationType, assignationType, fetchedDocumentType, idModule } from '@label/core';
 import { apiCaller, useApi } from '../../api';
 import { DataFetcher } from '../DataFetcher';
@@ -87,6 +86,6 @@ async function fetchDocumentsForUser(documentsMaxCount: number) {
 
   return {
     documentsForUser,
-    statusCode: httpStatusCodeHandler.merge([statusCodeDocuments, ...statusCodesAnnotations]),
+    statusCode: Math.max(statusCodeDocuments, ...statusCodesAnnotations),
   };
 }

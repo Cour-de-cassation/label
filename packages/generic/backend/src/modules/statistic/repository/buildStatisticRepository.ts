@@ -16,9 +16,8 @@ const buildStatisticRepository = buildRepositoryBuilder<
     { index: { surAnnotationsCount: 1 } },
     { index: { publicationCategory: 1 } },
     { index: { treatmentDate: 1 } },
+    { index: { treatmentDate: -1 } }, // ajout d'index pour maxDateStatistics tri
     { index: { jurisdiction: 1 } },
-    { index: { source: 1, treatmentDate: 1 } },
-    { index: { source: 1, treatmentDate: -1 } }
   ],
   buildCustomRepository: (collection) => ({
     async findAllStatisticsByDocumentNumber(

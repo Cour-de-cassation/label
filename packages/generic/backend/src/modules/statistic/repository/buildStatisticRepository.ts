@@ -29,9 +29,12 @@ const buildStatisticRepository = buildRepositoryBuilder<
       return statisticDocument;
     },
 
-    async findAllByRessourceFilter(ressourceFilter) { // On ajoutera un agrégat pour éviter de faire trop de requêtes, cependant la confugration de l'agrégat est complexe dans le contexte de Label
+    async findAllByRessourceFilter(ressourceFilter) {
+      // On ajoutera un agrégat pour éviter de faire trop de requêtes, cependant la confugration de l'agrégat est complexe dans le contexte de Label
       try {
-        const ressourceFilterRequest = buildRessourceFilterRequest(ressourceFilter);
+        const ressourceFilterRequest = buildRessourceFilterRequest(
+          ressourceFilter,
+        );
 
         const sixMonthsAgo = Date.now() - 6 * 30 * 24 * 60 * 60 * 1000;
 
@@ -45,7 +48,6 @@ const buildStatisticRepository = buildRepositoryBuilder<
 
         return collection.find(query).toArray();
       } catch (error) {
-        console.error('Error in findAllByRessourceFilter:', error);
         throw error;
       }
     },
@@ -86,7 +88,6 @@ const buildStatisticRepository = buildRepositoryBuilder<
           maxDate: maxDateStatistics[0]?.treatmentDate,
         };
       } catch (error) {
-        console.error('Error in findExtremumTreatmentDateBySources:', error);
         throw error;
       }
     },

@@ -7,13 +7,11 @@ variables:
   docker_client_image: '$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_SHORT_SHA'
 
 stages:
-  - build_back
-  - deploy_back
-  - build_front
-  - deploy_front
+  - build
+  - deploy
 
 build_and_push_label_backend:
-  stage: build_back
+  stage: build
   variables:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV
@@ -42,7 +40,7 @@ build_and_push_label_backend:
     - docker
 
 build_and_push_label_client:
-  stage: build_front
+  stage: build
   variables:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV
@@ -72,7 +70,7 @@ build_and_push_label_client:
     - docker
 
 .backend_deploy_template:
-  stage: deploy_back
+  stage: deploy
   environment: $ENV
   image: alpine/ansible:2.16.1
   script:
@@ -86,7 +84,7 @@ build_and_push_label_client:
     - docker
 
 .client_deploy_template:
-  stage: deploy_front
+  stage: deploy
   environment: $ENV
   image: alpine/ansible:2.16.1
   script:

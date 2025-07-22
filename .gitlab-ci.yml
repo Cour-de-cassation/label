@@ -3,48 +3,29 @@ services:
   - docker:20.10.22-dind
 
 variables:
-  dev: dev
-  re7: preprod
-  master: prod
-  docker_backend_image: "$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
-  docker_client_image: "$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+  docker_backend_image: '$CI_REGISTRY/cour-de-cassation/label/backend:$CI_COMMIT_SHORT_SHA'
+  docker_client_image: '$CI_REGISTRY/cour-de-cassation/label/client:$CI_COMMIT_SHORT_SHA'
 
 stages:
-  - test
   - build
   - deploy
 
-# Partie à compléter par les développeurs label
-# test:
-#   stage: test
-#   services:
-#   - docker:20.10.22
-#   script:
-#     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-#     - docker build
-#         --build-arg http_proxy=$HTTP_PROXY
-#         --build-arg https_proxy=$HTTPS_PROXY
-#         #--target test
-#         -t label-test
-#     # docker run label-back-test /bin/sh -c "yarn install -- ; yarn compile ...."
-#     # -> ici on lance un conteneur un par un, donc les données générées par le yarn install ne sont pas sauvegardées.
-#     - docker run label-test yarn install
-#     - docker run label-test yarn compile
-#     - docker run label-test yarn test
-#     - docker run label-test yarn lint
-#   only:
-#     - master
-#     - re7
-#     - dev
-
-build_label_backend:
+build_and_push_label_backend:
   stage: build
   variables:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
-    - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD
+    - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD # utile ?
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+
+    # To avoid rebuild existing image when adding tag to a commit
+    - |
+      if docker pull "$docker_backend_image"; then
+        echo "Docker image $docker_backend_image already exist, skiping build and push."
+        exit 0
+      fi
+
     - docker build
       --build-arg http_proxy=$HTTP_PROXY
       --build-arg https_proxy=$HTTPS_PROXY
@@ -52,22 +33,29 @@ build_label_backend:
       -f Dockerfile.label-backend
       -t $docker_backend_image .
     - docker push $docker_backend_image
-  only:
-    - master
-    - re7
-    - dev
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_TAG'
   tags:
     - docker
 
-build_label_client:
+build_and_push_label_client:
   stage: build
   variables:
     HTTP_PROXY: $HTTP_PROXY_DEV
     HTTPS_PROXY: $HTTPS_PROXY_DEV
   script:
-    - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD
+    - docker login -u $PUBLIC_DOCKER_USERNAME -p $PUBLIC_DOCKER_PASSWORD # utile ?
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - export NODE_OPTIONS=--openssl-legacy-provider
+    - export NODE_OPTIONS=--openssl-legacy-provider # utile ?
+
+    # To avoid rebuild existing image when adding tag to a commit
+    - |
+      if docker pull "$docker_client_image"; then
+        echo "Docker image $docker_client_image already exist, skiping build and push."
+        exit 0
+      fi
+
     - docker build
       --build-arg http_proxy=$HTTP_PROXY
       --build-arg https_proxy=$HTTPS_PROXY
@@ -75,51 +63,98 @@ build_label_client:
       -f Dockerfile.label-client
       -t $docker_client_image .
     - docker push $docker_client_image
-  only:
-    - master
-    - re7
-    - dev
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_TAG'
   tags:
     - docker
 
-deploy_label_backend:
+.backend_deploy_template:
   stage: deploy
+  environment: $ENV
   image: alpine/ansible:2.16.1
   script:
-    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
     - chmod 600 /root/.ssh/id_rsa
     - chmod 600 /root/.ssh/known_hosts
-    - ansible-playbook -e label_backend_image=$docker_backend_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_backend.yml --vault-password-file=$ANSIBLE_VAULT_PASS
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
-      when: manual
-    - if: $CI_COMMIT_BRANCH == "dev"
-      when: on_success
+    - ansible-playbook -e label_backend_image=$docker_backend_image -i ansible/inventories/$ENV.yml ansible/deploy_label_backend.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   tags:
     - docker
-  # dependencies:
-  #   - build_label_backend
 
-deploy_label_client:
+.client_deploy_template:
   stage: deploy
+  environment: $ENV
   image: alpine/ansible:2.16.1
   script:
-    - inventaire=$(eval "echo \$$CI_COMMIT_BRANCH")
     - mkdir /root/.ssh
     - cat $SSH_KEY > /root/.ssh/id_rsa
     - cat $KNOWN_HOSTS > /root/.ssh/known_hosts
     - chmod 600 /root/.ssh/id_rsa
     - chmod 600 /root/.ssh/known_hosts
-    - ansible-playbook -e label_client_image=$docker_client_image -i ansible/inventories/$inventaire.yml ansible/deploy_label_client.yml --vault-password-file=$ANSIBLE_VAULT_PASS
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "re7"
-      when: manual
-    - if: $CI_COMMIT_BRANCH == "dev"
-      when: on_success
+    - ansible-playbook -e label_client_image=$docker_client_image -i ansible/inventories/$ENV.yml ansible/deploy_label_client.yml --vault-password-file=$ANSIBLE_VAULT_PASS
   tags:
     - docker
-  # dependencies:
-  #   - build_label_client
+
+deploy_dev_backend:
+  variables:
+    ENV: dev
+  extends: .backend_deploy_template
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_TAG'
+      when: on_success
+  needs:
+    - build_and_push_label_backend
+
+deploy_preprod_backend:
+  variables:
+    ENV: preprod
+  extends: .backend_deploy_template
+  rules:
+    - if: '$CI_COMMIT_TAG && $CI_COMMIT_BRANCH == "master"'
+      when: manual
+  needs:
+    - deploy_dev_backend
+
+deploy_prod_backend:
+  variables:
+    ENV: prod
+  extends: .backend_deploy_template
+  rules:
+    - if: '$CI_COMMIT_TAG && $CI_COMMIT_BRANCH == "master"'
+      when: manual
+  needs:
+    - deploy_preprod_backend
+
+
+deploy_dev_client:
+  variables:
+    ENV: dev
+  extends: .client_deploy_template
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_TAG'
+      when: on_success
+  needs:
+    - build_and_push_label_client
+
+deploy_preprod_client:
+  variables:
+    ENV: preprod
+  extends: .client_deploy_template
+  rules:
+    - if: '$CI_COMMIT_TAG && $CI_COMMIT_BRANCH == "master"'
+      when: manual
+  needs:
+    - deploy_dev_client
+
+deploy_prod_client:
+  variables:
+    ENV: prod
+  extends: .client_deploy_template
+  rules:
+    - if: '$CI_COMMIT_TAG && $CI_COMMIT_BRANCH == "master"'
+      when: manual
+  needs:
+    - deploy_preprod_client
+

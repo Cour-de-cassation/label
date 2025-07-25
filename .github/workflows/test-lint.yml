@@ -3,13 +3,9 @@ name: "🧪 Tests & ✨ Lint"
 on:
   pull_request:
     branches:
-      - dev
-      - re7
       - master
   push:
     branches:
-      - dev
-      - re7
       - master
 
 jobs:

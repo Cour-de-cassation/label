@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-    name: Build and Test Label
     runs-on: ubuntu-latest
 
     strategy:

@@ -890,5 +890,4 @@ type apiSchemaMethodType = { [key: string]: apiSchemaEntryType };
 type apiSchemaEntryType = { in?: { [param: string]: modelType }; out: modelType };
 
 // We need this line for type checking
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _typeCheck: apiSchemaType = apiSchema;

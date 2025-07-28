@@ -3,7 +3,6 @@ import { projectedType } from '../../../repository';
 
 export type { customStatisticRepositoryType };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 type customStatisticRepositoryType = {
   findAllStatisticsByDocumentNumber: (
     documentNumber: statisticType['documentNumber'],

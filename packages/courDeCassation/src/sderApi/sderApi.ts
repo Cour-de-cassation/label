@@ -105,6 +105,16 @@ const sderApi = {
     return undefined;
   },
 
+  async fetchDecisionByExternalId(
+    externalId: documentType['externalId'],
+  ): Promise<Deprecated.DecisionDTO | undefined> {
+    const decision = await fetchApi<Deprecated.DecisionDTO>({
+      method: 'get',
+      path: `decisions/${externalId}`,
+    });
+    return decision;
+  },
+
   async setCourtDecisionLoaded(externalId: string) {
     await fetchApi({
       method: 'patch',
@@ -117,17 +127,23 @@ const sderApi = {
     externalId,
     labelTreatments,
     pseudoText,
+    labelStatus,
+    publishStatus,
   }: {
     externalId: documentType['externalId'];
     labelTreatments: Deprecated.LabelTreatment[];
     pseudoText: string;
+    labelStatus: Deprecated.LabelStatus;
+    publishStatus: Deprecated.PublishStatus;
   }) {
     await fetchApi({
       method: 'patch',
-      path: `label/${externalId}`,
+      path: `decisions/${externalId}`,
       body: {
         pseudoText,
         labelTreatments,
+        labelStatus,
+        publishStatus,
       },
     });
   },

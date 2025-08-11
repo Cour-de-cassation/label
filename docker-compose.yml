@@ -1,0 +1,28 @@
+name: opendata
+
+services:
+  labelbk:
+    build:
+      dockerfile: Dockerfile.label.local
+    ports:
+      - ${LABEL_API_PORT}:${LABEL_API_PORT}
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  labelct:
+    build:
+      dockerfile: DockerfileLocalDev
+    environment:
+      - RUN_MODE=LOCAL
+    ports:
+      - ${LABEL_CLIENT_PORT}:55432
+    depends_on:
+        - labelbk
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: "yarn start:client:dev"
+    stdin_open: true

@@ -27,7 +27,11 @@
     "start:client:dev": "yarn compile:client && cd packages/generic/client && yarn start",
     "start:client:docker": "docker compose up -d labelct",
     "test": "lerna run test",
-    "type": "lerna run type"
+    "type": "lerna run type",
+    "import:docker": "docker compose run --rm labelbk sh -c 'cd packages/courDeCassation && node dist/scripts/autoImportDocumentsFromSder.js -s settings/settings.json'",
+    "annotateWithNlp:docker": "docker compose run --rm labelbk sh -c 'cd packages/courDeCassation && node dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js -s settings/settings.json'",
+    "exportTreatedDocuments:docker": "docker compose run --rm labelbk sh -c 'cd packages/courDeCassation && node dist/scripts/exportTreatedDocumentsSince.js -s settings/settings.json --days 0'",
+    "exportToBePublished:docker": "docker compose run --rm labelbk sh -c 'cd packages/courDeCassation && node dist/scripts/exportTreatedPublishableDocuments.js -s settings/settings.json'"
   },
   "resolutions": {
     "**/@typescript-eslint/eslint-plugin": "^4.4.1",

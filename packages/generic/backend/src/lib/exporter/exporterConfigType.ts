@@ -5,9 +5,14 @@ export type { exporterConfigType };
 
 type exporterConfigType = {
   name: string;
-  sendDocumentPseudonymisationAndTreatments: (param: {
+  updateDecisionPseudonymisation: (param: {
     externalId: documentType['externalId'];
     pseudoText: string;
     labelTreatments: Deprecated.LabelTreatment[];
+    labelStatus: Deprecated.LabelStatus;
+    publishStatus: Deprecated.PublishStatus;
   }) => Promise<void>;
+  fetchDecisionByExternalId: (
+    externalId: documentType['externalId'],
+  ) => Promise<Deprecated.DecisionDTO | undefined>;
 };

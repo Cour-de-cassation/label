@@ -22,7 +22,11 @@ async function extractRouteForCivilJurisdiction(
     return 'default';
   }
 
-  if (checklist.length > 0) {
+  if (
+    checklist.length > 0 &&
+    // TEMP : ne pas prendre en compte les checklist si occultation des motifs
+    document.decisionMetadata.motivationOccultation != true
+  ) {
     return 'exhaustive';
   }
 

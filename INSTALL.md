@@ -6,14 +6,14 @@
 
 ## Configuration
 
-You can lauch the backend with or withour docker. To configure each of these methods you must have 2 different env file :
-
-- `docker.env`
+You can lauch the backend with or withour docker. To configure these methods you must have an env file :
 - `.env`
 
-Copy and rename `docker.env.example` and `.env.example`.
+Copy and rename `.env.example`.
 
 Label depends on 2 other services from the Cour de cassation : dbsder-api and nlp-pseudonymisation-api. You can lauch these services locally to simulate operation close to production or you can disable theses services from env files. In this case these 2 services are emulated by Label with the storage folder. To do so, follow the `Add documents you want to annotate` step in the [reuser guide](docs/reuserGuide.md) or just rename the `storage-example` folder to `storage`.
+
+You should take a look at [juridependencies](https://github.com/Cour-de-cassation/juridependencies) to install theses services.
 
 ## Installation and lauch
 
@@ -24,6 +24,16 @@ yarn
 ```
 
 ### Frontend
+
+#### With docker:
+
+Start the backend with:
+
+```sh
+yarn start:client:docker
+```
+
+#### Without docker:
 
 To lauch the frontend run:
 
@@ -37,25 +47,13 @@ Then, on your web browser, open http://localhost:55432
 
 #### With docker:
 
-Build the backend with:
-
-```sh
-yarn docker:build:backend
-```
-
 Start the backend with:
 
 ```sh
-yarn docker:start:backend
+yarn start:backend:docker
 ```
 
 #### Without docker:
-
-Start the database:
-
-```sh
-yarn docker:start:db
-```
 
 Start the backend:
 
@@ -89,7 +87,7 @@ You can launch scripts with theses commands :
 #### With docker
 
 ```sh
-docker container exec -it label-backend-1 sh -c "cd packages/courDeCassation; sh scripts/runLocalScript.sh ./dist/scripts/myScript.js --myArgument"
+docker compose exec labelbk sh -c "cd packages/courDeCassation; sh scripts/runLocalScript.sh ./dist/scripts/myScript.js --myArgument"
 ```
 
 #### Without docker

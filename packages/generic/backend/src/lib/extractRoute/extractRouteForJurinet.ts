@@ -7,6 +7,7 @@ function extractRouteForJurinet(document: documentType): documentType['route'] {
   const session = document.decisionMetadata.session;
   const publicationCategory = document.publicationCategory;
   const chamberName = document.decisionMetadata.chamberName;
+  const checklist = document.checklist;
 
   /* Double relecture :
     - Décisions rendues en Assemblée plénière
@@ -22,6 +23,13 @@ function extractRouteForJurinet(document: documentType): documentType['route'] {
   }
   if (['PL', 'MI'].includes(session)) {
     return 'confirmation';
+  }
+
+  /*
+    Relecture exhaustive en cas de mises en doute
+  */
+  if (checklist.length > 0) {
+    return 'exhaustive';
   }
 
   /* Pas de relecture : 

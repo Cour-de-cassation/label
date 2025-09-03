@@ -195,7 +195,11 @@ function buildConnector(connectorConfig: connectorConfigType) {
       msg: `Starting importNewDocuments...`,
     });
 
-    for (const source of Object.values(Deprecated.Sources)) {
+    // on bloque les decisions Deprecated.Sources.TCOM pour l'instant car la normalisation n'est pas encore propre
+    const sources = Object.values(Deprecated.Sources).filter(
+      (src) => src !== Deprecated.Sources.TCOM,
+    );
+    for (const source of sources) {
       logger.log({
         operationName: 'importNewDocuments',
         msg: `Fetching ${source} decisions...`,
@@ -207,15 +211,27 @@ function buildConnector(connectorConfig: connectorConfigType) {
         operationName: 'importNewDocuments',
         msg: `${newDecisionForSource.length} ${source} decisions to pseudonymise found.`,
       });
-      for (const decision of newDecisionForSource) {
-        const converted = await connectorConfig.mapCourtDecisionToDocument(
-          decision,
-          'recent',
-        );
-        await insertDocument(converted, settings);
-        await connectorConfig.updateDocumentLabelStatusToLoaded(
-          converted.externalId,
-        );
+
+      for (
+        let decision = await newDecisionForSource.next();
+        decision !== undefined;
+        decision = await newDecisionForSource.next()
+      ) {
+        try {
+          const converted = await connectorConfig.mapCourtDecisionToDocument(
+            decision,
+            'recent',
+          );
+          await insertDocument(converted, settings);
+          await connectorConfig.updateDocumentLabelStatusToLoaded(
+            converted.externalId,
+          );
+        } catch (err) {
+          logger.error({
+            operationName: 'importNewDocuments',
+            msg: `${err}`,
+          });
+        }
       }
     }
   }

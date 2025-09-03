@@ -20,6 +20,7 @@
               - name: "{{ label_back_app_id }}-service"
                 port: label-backend-port
 
+
 - name: Creation middleware
   k8s:
     apply: true

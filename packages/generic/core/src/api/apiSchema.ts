@@ -565,7 +565,6 @@ const apiSchema = {
           content: {
             _id: userModule.models.user.content._id,
             email: userModule.models.user.content.email,
-            isActivated: userModule.models.user.content.isActivated,
             name: userModule.models.user.content.name,
             role: userModule.models.user.content.role,
           },
@@ -599,16 +598,6 @@ const apiSchema = {
         } as const),
       },
       out: documentModule.fetchedModel,
-    },
-    changePassword: {
-      in: {
-        previousPassword: buildModel({ kind: 'primitive', content: 'string' } as const),
-        newPassword: buildModel({ kind: 'primitive', content: 'string' } as const),
-      },
-      out: buildModel({
-        kind: 'constant',
-        content: ['notValidNewPassword', 'passwordUpdated', 'wrongPassword'] as const,
-      } as const),
     },
     createUser: {
       in: {
@@ -660,29 +649,6 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
-    login: {
-      in: {
-        email: buildModel({
-          kind: 'primitive',
-          content: 'string',
-        } as const),
-        password: buildModel({
-          kind: 'primitive',
-          content: 'string',
-        } as const),
-      },
-      out: buildModel({
-        kind: 'object',
-        content: {
-          _id: userModule.models.user.content._id,
-          email: userModule.models.user.content.email,
-          name: userModule.models.user.content.name,
-          role: userModule.models.user.content.role,
-          token: { kind: 'primitive', content: 'string' },
-          passwordTimeValidityStatus: userModule.models.passwordTimeValidityStatus,
-        },
-      } as const),
-    },
     problemReport: {
       in: {
         documentId: buildModel({
@@ -712,49 +678,12 @@ const apiSchema = {
         content: 'void',
       } as const),
     },
-    resetPassword: {
-      in: {
-        userId: buildModel({
-          kind: 'custom',
-          content: 'id',
-        } as const),
-      },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'string',
-      } as const),
-    },
     resetTreatmentLastUpdateDate: {
       in: {
         assignationId: buildModel({
           kind: 'custom',
           content: 'id',
         } as const),
-      },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
-    },
-    setDeletionDateForUser: {
-      in: {
-        userId: buildModel({
-          kind: 'custom',
-          content: 'id',
-        } as const),
-      },
-      out: buildModel({
-        kind: 'primitive',
-        content: 'void',
-      } as const),
-    },
-    setIsActivatedForUser: {
-      in: {
-        userId: buildModel({
-          kind: 'custom',
-          content: 'id',
-        } as const),
-        isActivated: userModule.models.user.content.isActivated,
       },
       out: buildModel({
         kind: 'primitive',

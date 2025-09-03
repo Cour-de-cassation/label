@@ -11,7 +11,7 @@
         name: "{{ label_back_app_id }}-deployment"
         namespace: "{{ label_kube_namespace }}"
         labels:
-          app: 
+          app: "{{ label_back_app_id }}"
       spec:
         replicas: 1
         selector:
@@ -22,6 +22,22 @@
             labels:
               app: "{{ label_back_app_id }}"
           spec:
+            initContainers:
+              - name: "{{ rclone_app_id }}"
+                image: rclone/rclone:latest
+                command:
+                  - /bin/sh
+                args:
+                  - -c
+                  - |
+                    rclone -v sync s3:{{ sso_bucket }} /sso-files && \
+                    chmod -R 755 /sso-files
+                envFrom:
+                  - secretRef:
+                      name: "{{ rclone_app_id }}-secret"
+                volumeMounts:
+                  - name: "{{ rclone_app_id }}-pvc-sso"
+                    mountPath: /sso-files
             containers:
               - name: "{{ label_back_app_id }}"
                 image: "{{ label_backend_image }}"
@@ -32,37 +48,10 @@
                       name: "{{ label_back_app_id }}-config"
                   - secretRef:
                       name: "{{ label_back_app_id }}-secret"
-                # startupProbe:
-                #   exec:
-                #     command:
-                #     - /bin/sh
-                #     - -c
-                #     - curl -s --fail --max-time 2 "http://localhost:55430/${ROOT_PATH}/health" | egrep -q 'true'
-                #   initialDelaySeconds: 15
-                #   periodSeconds: 5
-                #   failureThreshold: 20
-                # livenessProbe:
-                #   exec:
-                #     command:
-                #     - /bin/sh
-                #     - -c
-                #     - curl -s --fail --retry-delay 0 --max-time 2 --retry 30 --retry-max-time 60 "http://localhost:55430/${ROOT_PATH}/health" | egrep -q 'true'
-                #   initialDelaySeconds: 15
-                #   periodSeconds: 15
-                #   failureThreshold: 10
-                #   timeoutSeconds: 60
-                # securityContext:
-                #   runAsUser: 1000
-                #   capabilities:
-                #     drop:
-                #       - all
-                #   allowPrivilegeEscalation: false
-                #   readOnlyRootFilesystem: true
-            #     volumeMounts:
-            #       - name: label-backend-config
-            #         mountPath: /home/node/packages/courDeCassation/environments
-            #         readOnly: true
-            # volumes:
-            # - name: label-backend-config
-            #   secret:
-            #     secretName: label-backend-config
+                volumeMounts:
+                  - name: "{{ rclone_app_id }}-pvc-sso"
+                    mountPath: /home/node/packages/courDeCassation/sso-files
+            volumes:
+              - name: "{{ rclone_app_id }}-pvc-sso"
+                persistentVolumeClaim:
+                  claimName: "{{ rclone_app_id }}-pvc-sso"

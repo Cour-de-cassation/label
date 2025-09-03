@@ -1,6 +1,4 @@
-import { errorHandlers, httpStatusCodeHandler } from 'sder-core';
 import { apiSchema, apiRouteInType, apiRouteOutType, networkType } from '@label/core';
-import { localStorage } from '../services/localStorage';
 import { urlHandler } from '../utils';
 
 export { apiCaller };
@@ -15,13 +13,12 @@ const apiCaller = {
     data: networkType<apiRouteOutType<'get', routeNameT>>;
     statusCode: number;
   }> {
-    const bearerToken = localStorage.bearerTokenHandler.get();
-
     const response = await fetch(buildUrlWithParams(`${urlHandler.getApiUrl()}/label/api/${routeName}`, args), {
       cache: 'default',
-      headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,
+      headers: DEFAULT_HEADER,
       method: 'get',
       mode: 'cors',
+      credentials: 'include',
     });
 
     const data = (await computeDataFromResponse(response)) as networkType<apiRouteOutType<'get', routeNameT>>;
@@ -39,14 +36,13 @@ const apiCaller = {
     data: networkType<apiRouteOutType<'post', routeNameT>>;
     statusCode: number;
   }> {
-    const bearerToken = localStorage.bearerTokenHandler.get();
-
     const response = await fetch(`${urlHandler.getApiUrl()}/label/api/${routeName}`, {
       body: JSON.stringify(args),
       cache: 'default',
-      headers: bearerToken ? { ...DEFAULT_HEADER, authorization: `Bearer ${bearerToken}` } : DEFAULT_HEADER,
+      headers: DEFAULT_HEADER,
       method: 'post',
       mode: 'cors',
+      credentials: 'include',
     });
 
     const data = (await computeDataFromResponse(response)) as networkType<apiRouteOutType<'post', routeNameT>>;
@@ -72,8 +68,8 @@ function buildUrlWithParams(url: string, params?: { [key: string]: any }) {
 async function computeDataFromResponse(response: Response): Promise<any> {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   /* eslint-disable @typescript-eslint/no-unsafe-return */
-  if (!httpStatusCodeHandler.isSuccess(response.status)) {
-    errorHandlers.lib.throwFromStatusCode(response.status);
+  if (![200, 201].includes(response.status)) {
+    throw new Error(`Unknown error : ${response.status}`);
   }
   try {
     const textData = await response.text();
@@ -84,6 +80,6 @@ async function computeDataFromResponse(response: Response): Promise<any> {
       return textData;
     }
   } catch (error) {
-    errorHandlers.lib.throwFromStatusCode(response.status);
+    throw new Error(`Unknown error : ${response.status}`);
   }
 }

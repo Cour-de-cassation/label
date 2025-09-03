@@ -1,6 +1,27 @@
 git_branch: prod
 
-sder_mongodb_url: "{{ vault_sder_mongodb_url }}"
 label_mongodb_url: "{{ vault_label_mongodb_url }}"
 dbsder_api_key: "{{ vault_dbsder_api_key }}"
-jwt_private_key: "{{ vault_jwt_private_key }}"
+
+cookie_private_key: "{{ vault_cookie_private_key }}"
+sso_sp_assertion_consumer_service_location: "{{ vault_sso_sp_assertion_consumer_service_location }}"
+sso_sp_entity_id: "{{ vault_sso_sp_entity_id }}"
+sso_idp_single_sign_on_service_location: "{{ vault_sso_idp_single_sign_on_service_location }}"
+sso_idp_single_logout_service_location: "{{ vault_sso_idp_single_logout_service_location }}"
+sso_front_success_connexion_annotator_url: "{{ vault_sso_front_success_connexion_annotator_url }}"
+sso_front_success_connexion_admin_scrutator_url: "{{ vault_sso_front_success_connexion_admin_scrutator_url }}"
+sso_front_success_connexion_publicator_url: "{{ vault_sso_front_success_connexion_publicator_url }}"
+
+sso_idp_metadata: "sso-files/idp_mj.xml"
+sso_certificat: "sso-files/certificate.pem"
+sso_sp_private_key: "sso-files/private.key"
+
+# a enlever quand on adaptera le keycloack 
+sso_attribute_name: "nom"
+sso_attribute_firstname: "prenom"
+sso_attribute_mail: "mail"
+sso_attribute_role: "roles"
+
+
+s3_access_key: "{{ vault_s3_access_key }}"
+s3_secret_key: "{{ vault_s3_secret_key }}"

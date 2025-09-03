@@ -1,4 +1,3 @@
-import { bearerTokenHandler } from './bearerTokenHandler';
 import { adminViewHandler, adminViews } from './adminViewHandler';
 import { displayModeHandler } from './displayModeHandler';
 import {
@@ -20,7 +19,6 @@ import {
   toBeConfirmedDocumentOrderByProperties,
   toBeConfirmedDocumentsStateHandler,
 } from './documentStateHandler/toBeConfirmedDocumentsStateHandler';
-import { userHandler } from './userHandler';
 
 export {
   adminViews,
@@ -35,11 +33,9 @@ export type { treatedDocumentFilterType, untreatedDocumentFilterType, toBeConfir
 
 const localStorage = {
   adminViewHandler,
-  bearerTokenHandler,
   displayModeHandler,
   publishableDocumentsStateHandler,
   treatedDocumentsStateHandler,
   untreatedDocumentsStateHandler,
   toBeConfirmedDocumentsStateHandler,
-  userHandler,
 };

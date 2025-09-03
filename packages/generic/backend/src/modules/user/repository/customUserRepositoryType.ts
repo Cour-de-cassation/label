@@ -1,15 +1,12 @@
 import { userType } from '@label/core';
-import { projectedType } from '../../../repository';
 
 export type { customUserRepositoryType };
 
 type customUserRepositoryType = {
-  findAllWithNoDeletionDateProjection: <projectionT extends keyof userType>(
-    projection: Array<projectionT>,
-  ) => Promise<Array<projectedType<userType, projectionT>>>;
-  findByEmail: (email: userType['email']) => Promise<userType>;
-  updateHashedPassword: (
+  findByEmail: (email: userType['email']) => Promise<userType | null>;
+  updateNameAndRoleById: (
     userId: userType['_id'],
-    hashedPassword: string,
+    name: userType['name'],
+    role: userType['role'],
   ) => Promise<{ success: boolean }>;
 };

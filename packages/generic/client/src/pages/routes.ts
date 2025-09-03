@@ -3,7 +3,6 @@ export { defaultRoutes, routes };
 const routes = {
   ADMIN: { getPath: () => '/label/admin' },
   ADMIN_MAIN: { getPath: () => '/label/admin/main/' },
-  WORKING_USERS: { getPath: () => '/label/admin/main/working-users' },
   ANNOTATION: { getPath: () => '/label/annotation' },
   ANONYMIZED_DOCUMENT: {
     getPath: (documentId?: string) => `/label/anonymized-document/${documentId || ':documentId'}`,
@@ -13,7 +12,6 @@ const routes = {
   LOGIN: { getPath: () => '/label/login' },
   PROBLEM_REPORTS: { getPath: () => '/label/admin/main/problem-reports' },
   PRE_ASSIGN_DOCUMENTS: { getPath: () => '/label/admin/main/pre-assign-documents' },
-  RESET_PASSWORD: { getPath: () => '/label/reset-password' },
   PUBLISHABLE_DOCUMENTS: { getPath: () => '/label/publishable-documents' },
   STATISTICS: { getPath: () => '/label/admin/main/statistics' },
   SUMMARY: { getPath: () => '/label/admin/main/summary' },

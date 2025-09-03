@@ -9,14 +9,22 @@ RUN yarn config set proxy $http_proxy; \
 
 WORKDIR /home/node/
 
-# Install git for sder and sder-core package
-RUN apk add git
-
 # Copy context files
 COPY ./package.json ./
 COPY packages/generic/core/package.json ./packages/generic/core/
 COPY packages/generic/backend/package.json ./packages/generic/backend/
 COPY packages/courDeCassation/package.json ./packages/courDeCassation/
+
+# Voir comment améliorer car pour la re7 et la prod les seront ajoutées depuis un bucket dans l'image
+# Si en dev, on copie les fichiers comme ça on enleve le changement de droit
+# COPY sso_files/ ./packages/courDeCassation/sso_files/
+# RUN if [ "$NODE_ENV" = "development" ]; then \
+#       COPY sso_files/ ./packages/courDeCassation/sso_files/; \
+#     fi
+
+COPY sso_files/ ./packages/courDeCassation/sso_files/
+RUN chmod -R 777 ./packages/courDeCassation/sso_files
+RUN chmod -R 777 ./packages/courDeCassation/sso_files/
 
 COPY . .
 

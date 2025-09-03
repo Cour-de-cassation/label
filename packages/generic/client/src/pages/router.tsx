@@ -4,7 +4,6 @@ import { localStorage } from '../services/localStorage';
 import { wordings } from '../wordings';
 import { AdminPage } from './Admin/AdminPage';
 import { AdminInfosDataFetcher } from './Admin/AdminInfosDataFetcher';
-import { WorkingUsers } from './Admin/WorkingUsers';
 import { DocumentInspector } from './Admin/DocumentInspector';
 import { TreatedDocuments } from './Admin/TreatedDocuments';
 import { ProblemReports } from './Admin/ProblemReports';
@@ -13,26 +12,24 @@ import { UntreatedDocuments } from './Admin/UntreatedDocuments';
 import { AnonymizedDocument } from './AnonymizedDocument';
 import { Home } from './Home';
 import { Login } from './Login';
-import { ResetPassword } from './ResetPassword';
 import { PublishableDocuments } from './PublishableDocuments';
 import { SettingsDataFetcher } from './SettingsDataFetcher';
 import { Statistics } from './Admin/Statistics';
 import { defaultRoutes, routes } from './routes';
 import { ToBeConfirmedDocuments } from './Admin/ToBeConfirmedDocuments';
 import { Summary } from './Admin/Summary';
+import { CurrentUser, useCtxUser } from '../contexts/user.context';
 
 export { Router };
 
 function Router() {
+  const { user } = useCtxUser();
   return (
     <BrowserRouter>
       <Switch>
         <UnauthenticatedRoute path={routes.LOGIN.getPath()}>
           <Login />
         </UnauthenticatedRoute>
-        <AuthenticatedRoute path={routes.RESET_PASSWORD.getPath()}>
-          <ResetPassword />
-        </AuthenticatedRoute>
         <AuthenticatedRoute path={routes.ADMIN.getPath()}>
           <AuthenticatedRoute path={routes.DOCUMENT.getPath()}>
             <SettingsDataFetcher>{({ settings }) => <DocumentInspector settings={settings} />}</SettingsDataFetcher>
@@ -44,7 +41,7 @@ function Router() {
                   ({ problemReport }) => !problemReport.hasBeenRead,
                 ).length;
                 const toBeConfirmedDocumentsCount = adminInfos.toBeConfirmedDocuments.length;
-                const userRole = localStorage.adminViewHandler.get() || localStorage.userHandler.getRole();
+                const userRole = localStorage.adminViewHandler.get() || user?.role;
                 if (userRole !== 'admin' && userRole !== 'scrutator') {
                   return <></>;
                 }
@@ -77,18 +74,6 @@ function Router() {
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
-                    {userRole === 'admin' && (
-                      <AuthenticatedRoute path={routes.WORKING_USERS.getPath()}>
-                        <AdminPage
-                          userRole="admin"
-                          header={wordings.workingUsersPage.header}
-                          unreadProblemReportsCount={unreadProblemReportsCount}
-                          toBeConfirmedDocumentsCount={toBeConfirmedDocumentsCount}
-                        >
-                          <WorkingUsers workingUsers={adminInfos.workingUsers} refetch={refetch.workingUsers} />
-                        </AdminPage>
-                      </AuthenticatedRoute>
-                    )}
                     <AuthenticatedRoute path={routes.PROBLEM_REPORTS.getPath()}>
                       <AdminPage
                         userRole={userRole}
@@ -115,6 +100,7 @@ function Router() {
                           refetch={refetch.preAssignDocuments}
                           preAssignations={adminInfos.preAssignations}
                           isLoading={isLoading.preAssignDocuments}
+                          userRole={userRole}
                         />
                       </AdminPage>
                     </AuthenticatedRoute>
@@ -186,44 +172,54 @@ function Router() {
   );
 }
 
-const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
-  <Route
-    {...rest}
-    render={({ location }) =>
-      isAuthenticated() ? (
-        children
-      ) : (
+const AuthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => {
+  const { user, loading } = useCtxUser();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: routes.LOGIN.getPath(),
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
+
+const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => {
+  const { user, loading } = useCtxUser();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <Route
+      {...props}
+      render={({ location }) => (
         <Redirect
           to={{
-            pathname: routes.LOGIN.getPath(),
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            pathname: getRedirectionRoute(user),
             state: { from: location },
           }}
         />
-      )
-    }
-  />
-);
+      )}
+    />
+  );
+};
 
-const HomeRoute: FunctionComponent<RouteProps> = ({ ...props }: RouteProps) => (
-  <Route
-    {...props}
-    render={({ location }) => (
-      <Redirect
-        to={{
-          pathname: getRedirectionRoute(),
-          state: { from: location },
-        }}
-      />
-    )}
-  />
-);
-
-function getRedirectionRoute() {
-  const passwordTimeValidityStatus = localStorage.userHandler.getPasswordTimeValidityStatus();
-  if (passwordTimeValidityStatus === 'outdated') {
-    return routes.RESET_PASSWORD.getPath();
-  }
-  const userRole = localStorage.userHandler.getRole();
+function getRedirectionRoute(user: CurrentUser | null) {
+  const userRole = user?.role;
 
   if (!userRole) {
     return routes.LOGIN.getPath();
@@ -236,27 +232,29 @@ function getRedirectionRoute() {
     }
   }
 
-  return defaultRoutes[userRole];
+  return defaultRoutes[userRole as 'annotator' | 'scrutator' | 'admin'];
 }
 
-const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => (
-  <Route
-    {...rest}
-    render={({ location }) =>
-      !isAuthenticated() ? (
-        children
-      ) : (
-        <Redirect
-          to={{
-            pathname: routes.DEFAULT.getPath(),
-            state: { from: location },
-          }}
-        />
-      )
-    }
-  />
-);
-
-function isAuthenticated() {
-  return !!localStorage.bearerTokenHandler.get() && !!localStorage.userHandler.getRole();
-}
+const UnauthenticatedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }: RouteProps) => {
+  const { user, loading } = useCtxUser();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        !user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: routes.DEFAULT.getPath(),
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};

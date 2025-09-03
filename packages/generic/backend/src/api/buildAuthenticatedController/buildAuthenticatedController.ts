@@ -1,13 +1,6 @@
-import { userModule, userType } from '@label/core';
-import { userService } from '../../modules/user';
+import { idModule, userModule, userType } from '@label/core';
 
 export { buildAuthenticatedController };
-
-export type { authorizationHeaderType };
-
-type authorizationHeaderType = {
-  authorization: string;
-};
 
 function buildAuthenticatedController<inT, outT>({
   permissions,
@@ -16,16 +9,45 @@ function buildAuthenticatedController<inT, outT>({
   permissions: Array<userType['role']>;
   controllerWithUser: (
     user: userType,
-    req: { args: inT; headers: authorizationHeaderType },
+    req: { args: inT; headers: any; session?: any; path?: string },
   ) => Promise<outT>;
-}): (req: { args: inT; headers: authorizationHeaderType }) => Promise<outT> {
-  return async (req: { args: inT; headers: authorizationHeaderType }) => {
-    const user = await userService.fetchAuthenticatedUserFromAuthorizationHeader(
-      req.headers.authorization,
-    );
-    userModule.lib.assertAuthorization(user);
-    userModule.lib.assertPermissions(user, permissions);
+}): (req: {
+  args: inT;
+  headers: any;
+  session?: any;
+  path?: string;
+}) => Promise<outT> {
+  return async (req: {
+    args: inT;
+    headers: any;
+    session?: {
+      user: {
+        _id: string;
+        name: string;
+        role: string;
+        email: string;
+        sessionIndex: string;
+      };
+    };
+    path?: string;
+  }) => {
+    const currentUser = req.session?.user ?? null;
+    if (!currentUser) {
+      throw new Error(`user session has expired or is invalid`);
+    }
 
-    return controllerWithUser(user, req);
+    const resolvedUser = {
+      _id: idModule.lib.buildId(currentUser._id) as userType['_id'],
+      name: currentUser.name,
+      role: currentUser.role as
+        | 'admin'
+        | 'annotator'
+        | 'publicator'
+        | 'scrutator',
+      email: currentUser.email,
+    };
+
+    userModule.lib.assertPermissions(resolvedUser, permissions);
+    return controllerWithUser(resolvedUser, req);
   };
 }

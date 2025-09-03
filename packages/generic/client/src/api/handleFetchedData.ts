@@ -1,5 +1,3 @@
-import { errorHandlers, httpStatusCodeHandler } from 'sder-core';
-
 export { handleFetchedData };
 
 type dataFetchStatus<dataT> =
@@ -16,10 +14,8 @@ function handleFetchedData<dataT>(
   }
 
   if (fetchInfo.statusCode) {
-    if (httpStatusCodeHandler.isSuccess(fetchInfo.statusCode) && fetchInfo.data) {
+    if ([200, 201].includes(fetchInfo.statusCode) && fetchInfo.data) {
       return { kind: 'data', data: fetchInfo.data };
-    } else if (errorHandlers.authenticationErrorHandler.check(fetchInfo.statusCode)) {
-      return { kind: 'error', error: 'authentication' };
     } else {
       return { kind: 'error', error: 'unknown' };
     }

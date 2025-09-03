@@ -1,5 +1,3 @@
-import { errorHandlers } from 'sder-core';
-
 export { indexer };
 
 const indexer = {
@@ -52,6 +50,6 @@ function assertEveryIdIsDefined<T>(
 ) {
   const idWithNoItem = ids.find((_id) => !itemsById[_id]);
   if (idWithNoItem) {
-    throw errorHandlers.notFoundErrorHandler.build(buildErrorDescription(idWithNoItem));
+    throw new Error(buildErrorDescription(idWithNoItem));
   }
 }

@@ -19,7 +19,8 @@ import {
 } from './settings';
 import { statisticModule, statisticType } from './statistic';
 import { treatmentType, treatmentModule, treatmentInfoType } from './treatment';
-import { userModule, userType, passwordTimeValidityStatusType } from './user';
+import { userModule, userType } from './user';
+
 export {
   annotationModule,
   annotationsDiffModule,
@@ -59,7 +60,6 @@ export type {
   categoryIconNameType,
   userType,
   replacementTermType,
-  passwordTimeValidityStatusType,
   treatmentType,
   treatmentInfoType,
 };

@@ -15,15 +15,11 @@ services:
 
   labelct:
     build:
-      dockerfile: DockerfileLocalDev
-    environment:
-      - RUN_MODE=LOCAL
+      dockerfile: Dockerfile.label.local
     ports:
       - ${LABEL_CLIENT_PORT}:55432
     depends_on:
         - labelbk
-    env_file:
-      - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

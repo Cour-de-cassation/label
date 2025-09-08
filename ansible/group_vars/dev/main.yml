@@ -11,9 +11,9 @@ sso_front_success_connexion_annotator_url: "{{ vault_sso_front_success_connexion
 sso_front_success_connexion_admin_scrutator_url: "{{ vault_sso_front_success_connexion_admin_scrutator_url }}" 
 sso_front_success_connexion_publicator_url: "{{ vault_sso_front_success_connexion_publicator_url }}" 
 
-sso_idp_metadata: "sso_files/keycloak-metadata-idp-dev.xml"
-sso_certificat: "sso_files/keycloak-cert.pem"
-sso_sp_private_key: "sso_files/keycloak-private.key"
+sso_idp_metadata: "sso-files/keycloak-metadata-idp-dev.xml"
+sso_certificat: "sso-files/keycloak-cert.pem"
+sso_sp_private_key: "sso-files/keycloak-private.key"
 
 # On ajoutera cette parti dans le all quand on aura les mêmes attributs partout (keyclaock et ldapMJ)
 sso_attribute_name: "lastName" 

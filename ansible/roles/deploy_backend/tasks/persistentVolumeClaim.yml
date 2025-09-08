@@ -1,0 +1,18 @@
+---
+- name: Create PVC for rclone
+  k8s:
+    apply: true
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: "{{ rclone_app_id }}-pvc-sso"
+        namespace: "{{ label_kube_namespace }}"
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: local-path

@@ -13,7 +13,6 @@
       spec:
         entryPoints:
           - web
-
         routes:
           - match: Host(`lbl.judilibre-prive.local`) && PathPrefix(`/label`)
             kind: Rule
@@ -36,5 +35,3 @@
         replacePathRegex:
           regex: /label-client(/|$)(.*)
           replacement: /$2
-
-

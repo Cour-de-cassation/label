@@ -1,15 +1,17 @@
 import { userType } from '@label/core';
 import { buildUserRepository } from '../../repository';
 
-export { setIsActivatedForUser };
+export { updateUser };
 
-async function setIsActivatedForUser({
+async function updateUser({
   userId,
-  isActivated,
+  name,
+  role,
 }: {
   userId: userType['_id'];
-  isActivated: userType['isActivated'];
+  name: string;
+  role: userType['role'];
 }) {
   const userRepository = buildUserRepository();
-  await userRepository.updateOne(userId, { isActivated });
+  return await userRepository.updateNameAndRoleById(userId, name, role);
 }

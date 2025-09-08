@@ -2,11 +2,15 @@
 - name: Deploy namespace
   import_tasks: namespace.yml
 
+- name: Deploy PVC
+  include_tasks: persistentVolumeClaim.yml
+
 - name: Deploy configmap
   include_tasks: configmap.yml
 
 - name: Deploy secret
-  include_tasks: secret.yml
+  include_tasks: '{{item}}'
+  loop: "{{ lookup('fileglob', 'secrets/*.yml', wantlist=True ) }}"
 
 - name: Deploy backend deployment
   include_tasks: deployment.yml

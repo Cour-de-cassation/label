@@ -32,7 +32,7 @@ function buildFetchDocumentsForUser(
 
     // Documents already assignated to the user are fetched
     const alreadyAssignatedDocuments = await fetchAlreadyAssignatedDocuments(
-      userId,
+      idModule.lib.buildId(userId),
     );
     for (
       let i = 0;
@@ -53,7 +53,7 @@ function buildFetchDocumentsForUser(
     for (let i = documents.length; i < documentsMaxCount; i++) {
       try {
         const assignatedDocument = await fetchDocumentForUser(
-          userId,
+          idModule.lib.buildId(userId),
           documentIdsWithAnnotations,
         );
         documents.push(assignatedDocument);

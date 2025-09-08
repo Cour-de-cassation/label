@@ -1,4 +1,4 @@
-import { userModule, userType } from '@label/core';
+import { userType } from '@label/core';
 import { signUpUser } from './signUpUser';
 
 export { createUser };
@@ -12,7 +12,6 @@ async function createUser({
   email: string;
   role: userType['role'];
 }) {
-  const password = userModule.lib.passwordHandler.generate();
-  await signUpUser({ name, email, role, password });
-  return password;
+  await signUpUser({ name, email, role });
+  return `User created successfully `;
 }

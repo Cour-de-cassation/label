@@ -12,7 +12,3 @@ The project itself is splited into 4 packages:
 Label is also using external packages:
 
 - [`pelta-design-system`](https://github.com/Cour-de-cassation/pelta-design-system) is the design system used by the frontend.
-- (to be deprecated) [`sder`](https://github.com/Cour-de-cassation/sder) is a common packages with various modules, functions and type.
-- (to be deprecated) [`sder-core`](https://github.com/Cour-de-cassation/sder-core) is another common packages with functions related to authentification.
-
-

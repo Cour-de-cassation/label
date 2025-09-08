@@ -7,6 +7,8 @@ import { buildApi } from '../api';
 import { setup } from './setup';
 import { envSchema } from './envSchema';
 
+import session from 'express-session';
+
 export { buildRunServer };
 
 function buildRunServer(settings: settingsType) {
@@ -24,10 +26,27 @@ function buildRunServer(settings: settingsType) {
     app.use(
       cors({
         origin: [`${process.env.LABEL_CLIENT_URL}`],
+        credentials: true,
       }),
     );
 
     app.use(bodyParser.json({ limit: '1mb' }));
+    app.use(bodyParser.urlencoded({ extended: true }));
+
+    // Configuration de la session
+    const sessionMiddleware = session({
+      secret: `${process.env.COOKIE_PRIVATE_KEY}`,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: Number(process.env.SESSION_DURATION),
+        secure: false,
+      },
+    });
+
+    app.use((req, res, next) => {
+      sessionMiddleware(req, res, next);
+    });
 
     buildApi(app);
 

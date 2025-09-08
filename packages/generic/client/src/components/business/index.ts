@@ -13,7 +13,6 @@ import { MainHeader } from './MainHeader';
 import { ProblemReportIcon } from './ProblemReportIcon';
 import { PublicationCategoryBadge } from './PublicationCategoryBadge';
 import { UnlinkAnnotationDropdown } from './UnlinkAnnotationDropdown';
-import { ResetPasswordForm } from './ResetPasswordForm';
 
 export {
   AdminMenu,
@@ -31,7 +30,6 @@ export {
   MainHeader,
   ProblemReportIcon,
   PublicationCategoryBadge,
-  ResetPasswordForm,
   UnlinkAnnotationDropdown,
 };
 

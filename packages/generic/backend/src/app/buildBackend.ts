@@ -10,7 +10,6 @@ import {
   freePendingDocuments,
   insertTestStatistics,
   insertTestUsers,
-  insertUser,
   listAllDocuments,
   listAllCaches,
   listDocumentsWithProblemReports,
@@ -60,10 +59,6 @@ function buildBackend(settings: settingsType) {
 
       insertTestUsers: {
         run: insertTestUsers,
-        option: { shouldLoadDb: true, shouldExit: false },
-      },
-      insertUser: {
-        run: insertUser,
         option: { shouldLoadDb: true, shouldExit: false },
       },
       listAllCaches: {

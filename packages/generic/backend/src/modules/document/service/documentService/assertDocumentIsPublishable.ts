@@ -1,4 +1,3 @@
-import { errorHandlers } from 'sder-core';
 import { documentModule, documentType } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 
@@ -10,7 +9,7 @@ async function assertDocumentIsPublishable(documentId: documentType['_id']) {
   const document = await documentRepository.findById(documentId);
   const publishedPublicationCategoryLetters = documentModule.lib.publicationHandler.getPublishedPublicationCategory();
   if (document.status !== 'done' && document.status !== 'toBePublished') {
-    throw errorHandlers.permissionErrorHandler.build(
+    throw new Error(
       `The document is not publishable, because its current status is "${document.status}"`,
     );
   }
@@ -20,7 +19,7 @@ async function assertDocumentIsPublishable(documentId: documentType['_id']) {
       document.publicationCategory.includes(publicationCategoryLetter),
     )
   ) {
-    throw errorHandlers.permissionErrorHandler.build(
+    throw new Error(
       `The document is not publishable, because its publication category is "${document.publicationCategory.join(
         ', ',
       )}"`,

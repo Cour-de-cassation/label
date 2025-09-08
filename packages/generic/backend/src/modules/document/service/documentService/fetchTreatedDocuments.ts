@@ -1,5 +1,5 @@
 import { sumBy } from 'lodash';
-import { errorHandlers } from 'sder-core';
+
 import {
   assignationType,
   idModule,
@@ -60,7 +60,7 @@ async function fetchTreatedDocuments(settings: settingsType) {
         assignations,
       );
       if (humanTreatments.length === 0) {
-        throw errorHandlers.serverErrorHandler.build(
+        throw new Error(
           `No human treatment found for document ${documentIdString}`,
         );
       }

@@ -13,8 +13,8 @@ import { useAlert } from '../../../services/alert';
 import { wordings } from '../../../wordings';
 import { AnnotationsDataFetcher } from './AnnotationsDataFetcher';
 import { DocumentDataFetcher } from './DocumentDataFetcher';
-import { localStorage } from '../../../services/localStorage';
 import { MandatoryReplacementTermsDataFetcher } from './MandatoryReplacementTermsDataFetcher';
+import { useCtxUser } from '../../../contexts/user.context';
 
 export { DocumentInspector };
 
@@ -26,9 +26,10 @@ function DocumentInspector(props: { settings: settingsType }) {
   const params = useParams<DocumentInspectorParamsType>();
   const history = useHistory();
   const { displayAlert } = useAlert();
+  const { user } = useCtxUser();
 
   useEffect(() => {
-    const userRole = localStorage.userHandler.getRole();
+    const userRole = user?.role;
     if (userRole === 'scrutator') {
       displayScrutatorInfo();
     }

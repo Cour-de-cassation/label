@@ -1,4 +1,3 @@
-import { errorHandlers } from 'sder-core';
 import { documentType } from '@label/core';
 import { buildDocumentRepository } from '../../repository';
 
@@ -15,7 +14,7 @@ async function assertDocumentStatus({
 
   const document = await documentRepository.findById(documentId);
   if (document.status !== status) {
-    throw errorHandlers.serverErrorHandler.build(
+    throw new Error(
       `The document status "${document.status}" does not match the following: "${status}"`,
     );
   }

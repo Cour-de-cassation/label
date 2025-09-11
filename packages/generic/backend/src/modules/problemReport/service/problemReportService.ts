@@ -26,6 +26,11 @@ const problemReportService = {
   }) {
     const problemReportRepository = buildProblemReportRepository();
 
+    const documents = await documentService.fetchAllDocumentsByIds([
+      documentId,
+    ]);
+    const users = await userService.fetchUsersByIds([userId]);
+
     await problemReportRepository.insert(
       problemReportModule.lib.buildProblemReport({
         userId,
@@ -36,10 +41,6 @@ const problemReportService = {
         type: problemType,
       }),
     );
-    const documents = await documentService.fetchAllDocumentsByIds([
-      documentId,
-    ]);
-    const users = await userService.fetchUsersByIds([userId]);
 
     const document = documents[idModule.lib.convertToString(documentId)];
     const user = users[idModule.lib.convertToString(userId)];

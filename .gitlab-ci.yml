@@ -116,6 +116,8 @@ deploy_preprod_backend:
   rules:
     - if: '$CI_COMMIT_TAG'
       when: manual
+    - if: '$CI_COMMIT_BRANCH == "fix-backend-workdir"'
+      when: manual
   needs:
     - deploy_dev_backend
 
@@ -148,6 +150,8 @@ deploy_preprod_client:
   extends: .client_deploy_template
   rules:
     - if: '$CI_COMMIT_TAG'
+      when: manual
+    - if: '$CI_COMMIT_BRANCH == "fix-backend-workdir"'
       when: manual
   needs:
     - deploy_dev_client

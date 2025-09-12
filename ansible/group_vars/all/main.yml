@@ -12,7 +12,7 @@ dbsder_api_url: "http://api-service.dbsder:3000" # url not tested
 label_db_name: "labelDb"
 label_client_url: "https://label.cour-de-cassation.justice.fr:55432" # strange url
 label_kube_namespace: "label"
-session_duration: "604800"
+session_duration: "518400000"
 
 # SSO 
 sso_name_id_format: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"

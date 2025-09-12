@@ -35,6 +35,7 @@ build_and_push_label_backend:
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
     - if: '$CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_BRANCH == "fix-backend-workdir"'
   tags:
     - docker
 
@@ -64,6 +65,7 @@ build_and_push_label_client:
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
     - if: '$CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_BRANCH == "fix-backend-workdir"'
   tags:
     - docker
 
@@ -102,6 +104,8 @@ deploy_dev_backend:
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_TAG'
       when: on_success
+    - if: '$CI_COMMIT_BRANCH == "fix-backend-workdir"'
+      when: on_success
   needs:
     - build_and_push_label_backend
 
@@ -132,6 +136,8 @@ deploy_dev_client:
   extends: .client_deploy_template
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_TAG'
+      when: on_success
+    - if: '$CI_COMMIT_BRANCH == "fix-backend-workdir"'
       when: on_success
   needs:
     - build_and_push_label_client

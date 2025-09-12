@@ -16,13 +16,28 @@ spec:
       template:
         spec:
           activeDeadlineSeconds: {{ active_deadline_seconds }}
+          initContainers:
+            - name: "{{ rclone_app_id }}"
+              image: rclone/rclone:latest
+              command:
+                - /bin/sh
+              args:
+                - -c
+                - |
+                  rclone -v sync s3:{{ sso_bucket }} /sso-files && \
+                  chmod -R 755 /sso-files
+              envFrom:
+                - secretRef:
+                    name: "{{ rclone_app_id }}-secret"
+              volumeMounts:
+                - name: "{{ rclone_app_id }}-pvc-sso"
+                  mountPath: /sso-files
           containers:
             - name: "label-backend-{{ name }}"
               image: "{{ label_backend_image }}"
-              # volumeMounts:
-              #   - name: label-backend-config
-              #     mountPath: /home/node/packages/courDeCassation/environments
-              #     readOnly: true
+              volumeMounts:
+                - name: "{{ rclone_app_id }}-pvc-sso"
+                  mountPath: /home/node/packages/courDeCassation/sso-files
               command:
                 - /bin/sh
               args:
@@ -34,7 +49,7 @@ spec:
                 - secretRef:
                     name: "{{ label_back_app_id }}-secret"
           restartPolicy: {{ restartPolicy }}
-          # volumes:
-          #   - name: label-backend-config
-          #     secret:
-          #       secretName: label-backend-config
+          volumes:
+            - name: "{{ rclone_app_id }}-pvc-sso"
+              persistentVolumeClaim:
+                claimName: "{{ rclone_app_id }}-pvc-sso"

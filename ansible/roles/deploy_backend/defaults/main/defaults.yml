@@ -8,7 +8,7 @@ jobs:
     restartPolicy: "Never"
     parallelism: 1
     active_deadline_seconds: 18000
-    command: "annotateDocumentsWithoutAnnotationsWithNlp.js"
+    command: "dist/scripts/annotateDocumentsWithoutAnnotationsWithNlp.js"
   - name: "tobetreated-document-import"
     schedule: "*/15 6-17 * * *"
     successful_jobs_history_limit: 7
@@ -17,7 +17,7 @@ jobs:
     restartPolicy: "Never"
     parallelism: 1
     active_deadline_seconds: 1800
-    command: "autoImportDocumentsFromSder.js"
+    command: "dist/scripts/autoImportDocumentsFromSder.js"
   - name: "export-j-7"
     schedule: "25 18 * * *"
     successful_jobs_history_limit: 7
@@ -26,7 +26,7 @@ jobs:
     restartPolicy: "OnFailure"
     parallelism: 1
     active_deadline_seconds: 300
-    command: "exportTreatedDocumentsSince.js --days 7"
+    command: "dist/scripts/exportTreatedDocumentsSince.js --days 7"
   - name: "export-publishable"
     schedule: "50 13 * * *"
     successful_jobs_history_limit: 7
@@ -35,7 +35,7 @@ jobs:
     restartPolicy: "OnFailure"
     parallelism: 1
     active_deadline_seconds: 300
-    command: "exportTreatedPublishableDocuments.js"
+    command: "dist/scripts/exportTreatedPublishableDocuments.js"
   - name: "free-pending"
     schedule: "*/16 6-17 * * *"
     successful_jobs_history_limit: 7
@@ -44,7 +44,7 @@ jobs:
     restartPolicy: "Never"
     parallelism: 1
     active_deadline_seconds: 300
-    command: "freePendingDocuments.js"
+    command: "dist/scripts/freePendingDocuments.js"
   - name: "purge-m-12"
     schedule: "0 19 * * *"
     successful_jobs_history_limit: 7
@@ -53,7 +53,7 @@ jobs:
     restartPolicy: "Never"
     parallelism: 1
     active_deadline_seconds: 300
-    command: "purgeDb.js --beforeMonths 12"
+    command: "dist/scripts/purgeDb.js --beforeMonths 12"
   - name: "renew-cache"
     schedule: "*/5 6-17 * * *"
     successful_jobs_history_limit: 3
@@ -62,7 +62,7 @@ jobs:
     restartPolicy: "Never"
     parallelism: 1
     active_deadline_seconds: 300
-    command: "renewCache.js --beforeMinutes 5"
+    command: "dist/scripts/renewCache.js --beforeMinutes 5"
   - name: "cleaning"
     schedule: "30 19 * * *"
     successful_jobs_history_limit: 7
@@ -71,4 +71,4 @@ jobs:
     restartPolicy: "OnFailure"
     parallelism: 1
     active_deadline_seconds: 600
-    command: "cleanDocuments.js"
+    command: "dist/scripts/cleanDocuments.js"

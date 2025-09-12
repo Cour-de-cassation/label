@@ -24,40 +24,44 @@ const problemReportService = {
     problemText: string;
     problemType: problemReportType['type'];
   }) {
-    const problemReportRepository = buildProblemReportRepository();
+    try {
+      const problemReportRepository = buildProblemReportRepository();
 
-    const documents = await documentService.fetchAllDocumentsByIds([
-      documentId,
-    ]);
-    const users = await userService.fetchUsersByIds([userId]);
-
-    await problemReportRepository.insert(
-      problemReportModule.lib.buildProblemReport({
-        userId,
+      const documents = await documentService.fetchAllDocumentsByIds([
         documentId,
-        date: new Date().getTime(),
-        hasBeenRead: false,
-        text: problemText,
-        type: problemType,
-      }),
-    );
+      ]);
+      const users = await userService.fetchUsersByIds([userId]);
 
-    const document = documents[idModule.lib.convertToString(documentId)];
-    const user = users[idModule.lib.convertToString(userId)];
+      await problemReportRepository.insert(
+        problemReportModule.lib.buildProblemReport({
+          userId,
+          documentId,
+          date: new Date().getTime(),
+          hasBeenRead: false,
+          text: problemText,
+          type: problemType,
+        }),
+      );
 
-    if (document && user) {
-      logger.log({
-        operationName: 'createProblemReport',
-        msg: `Problem report created on document ${document.source}:${document.documentNumber} by ${user.name}`,
-        data: {
-          decision: {
-            sourceId: document.documentNumber,
-            sourceName: document.source,
+      const document = documents[idModule.lib.convertToString(documentId)];
+      const user = users[idModule.lib.convertToString(userId)];
+
+      if (document && user) {
+        logger.log({
+          operationName: 'createProblemReport',
+          msg: `Problem report created on document ${document.source}:${document.documentNumber} by ${user.name}`,
+          data: {
+            decision: {
+              sourceId: document.documentNumber,
+              sourceName: document.source,
+            },
+            userId: userId,
+            userName: user.name,
           },
-          userId: userId,
-          userName: user.name,
-        },
-      });
+        });
+      }
+    } catch (error) {
+      throw new Error('Error while creating problem report');
     }
   },
 

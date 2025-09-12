@@ -141,7 +141,9 @@ function ReportProblemToolTipMenu(props: {
 
         closeTooltipMenu();
       } catch (error) {
+        displayAlert({ variant: 'alert', text: wordings.business.errors.createProblemReportFailed, autoHide: true });
         console.warn(error);
+        closeTooltipMenu();
       } finally {
         setIsLoading(false);
       }

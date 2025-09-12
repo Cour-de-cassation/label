@@ -81,7 +81,7 @@ You can launch scripts with theses commands :
 #### With docker
 
 ```sh
-docker compose exec labelbk sh -c "cd packages/courDeCassation; sh scripts/runLocalScript.sh ./dist/scripts/myScript.js --myArgument"
+docker compose exec labelbk sh -c "node packages/courDeCassation/dist/scripts/myScript.js --settings packages/courDeCassation/settings settings.json --myArgument=XXX"
 ```
 
 #### Without docker

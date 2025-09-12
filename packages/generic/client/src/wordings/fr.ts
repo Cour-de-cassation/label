@@ -39,6 +39,7 @@ const fr = {
       locked: 'En alerte',
     },
     errors: {
+      createProblemReportFailed: 'La création du signalement a échoué. Veuillez recharger la page.',
       deleteProblemReportFailed: 'La suppression du signalement a échoué. Veuillez recharger la page.',
       deletePreAssignationFailed: 'La suppression de la pré-assignation a échoué. Veuillez recharger la page.',
       deleteDocumentFailed: 'La suppression du document a échoué. Veuillez recharger la page.',

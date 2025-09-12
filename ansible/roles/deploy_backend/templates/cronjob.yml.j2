@@ -27,7 +27,7 @@ spec:
                 - /bin/sh
               args:
                 - -c
-                - node {{ command }} -s settings/settings.json
+                - node packages/courDeCassation/dist/scripts/{{ command }} -s packages/courDeCassation/settings/settings.json
               envFrom:
                 - configMapRef:
                     name: "{{ label_back_app_id }}-config"

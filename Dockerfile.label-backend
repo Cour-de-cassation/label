@@ -45,7 +45,7 @@ ADD packages/generic/core packages/generic/core
 ADD packages/generic/backend packages/generic/backend
 ADD packages/courDeCassation packages/courDeCassation
 
-WORKDIR /home/node/packages/courDeCassation
+WORKDIR /home/node
 
 RUN chown node .
 
@@ -54,4 +54,4 @@ USER node
 # Expose the listening port of your app
 EXPOSE ${API_PORT}
 
-CMD ["sh", "-c", "RUN_MODE=PROD node dist/labelServer.js -s settings/settings.json"]
+CMD ["sh", "-c", "RUN_MODE=PROD node packages/courDeCassation/dist/labelServer.js -s packages/courDeCassation/settings/settings.json"]

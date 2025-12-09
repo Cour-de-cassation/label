@@ -13,7 +13,7 @@
         labels:
           app: "{{ label_back_app_id }}"
       spec:
-        replicas: 1
+        replicas: "{{ deployment_replicas }}"
         selector:
           matchLabels:
             app: "{{ label_back_app_id }}"

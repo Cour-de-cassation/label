@@ -1,6 +1,8 @@
 ---
 ansible_user: iliasaaguida
 ansible_python_interpreter: "/home/{{ ansible_user }}/ansible_venv/bin/python"
+deployment_replicas: 1
+
 
 label_api_port: "55430" # pas encore utilisé, a utiliser dans le dockerfile du backend
 label_client_app_id: "label-client"
